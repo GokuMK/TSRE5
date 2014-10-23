@@ -1,0 +1,28 @@
+10
+
+dir
+0
+https://ww-sonars.googlecode.com/svn/HelloQtWorld_1/build/Debug/MinGW_1-Windows
+https://ww-sonars.googlecode.com/svn
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+662ccc1e-e2bc-6b3b-5932-940d80fc147a
+

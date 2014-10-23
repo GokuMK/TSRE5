@@ -1,0 +1,469 @@
+10
+
+dir
+0
+https://ww-sonars.googlecode.com/svn/HelloQtWorld_1
+https://ww-sonars.googlecode.com/svn
+add
+
+
+
+
+
+has-props
+has-prop-mods
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+662ccc1e-e2bc-6b3b-5932-940d80fc147a
+
+AceLib.cpp
+file
+
+
+
+add
+
+AceLib.h
+file
+
+
+
+add
+
+Camera.cpp
+file
+
+
+
+add
+
+Camera.h
+file
+
+
+
+add
+
+DynTrackObj.cpp
+file
+
+
+
+add
+
+DynTrackObj.h
+file
+
+
+
+add
+
+ENG.cpp
+file
+
+
+
+add
+
+ENG.h
+file
+
+
+
+add
+
+GLMatrix.cpp
+file
+
+
+
+add
+
+GLMatrix.h
+file
+
+
+
+add
+
+GLUU.cpp
+file
+
+
+
+add
+
+GLUU.h
+file
+
+
+
+add
+
+Game.cpp
+file
+
+
+
+add
+
+Game.h
+file
+
+
+
+add
+
+HelloQtWorld_1_resource.rc
+file
+
+
+
+add
+
+Makefile
+file
+
+
+
+add
+
+ParserX.cpp
+file
+
+
+
+add
+
+ParserX.h
+file
+
+
+
+add
+
+ReadFile.cpp
+file
+
+
+
+add
+
+ReadFile.h
+file
+
+
+
+add
+
+Route.cpp
+file
+
+
+
+add
+
+Route.h
+file
+
+
+
+add
+
+SFile.cpp
+file
+
+
+
+add
+
+SFile.h
+file
+
+
+
+add
+
+SFileC.cpp
+file
+
+
+
+add
+
+SFileC.h
+file
+
+
+
+add
+
+SFileX.cpp
+file
+
+
+
+add
+
+SFileX.h
+file
+
+
+
+add
+
+StaticObj.cpp
+file
+
+
+
+add
+
+StaticObj.h
+file
+
+
+
+add
+
+TexLib.cpp
+file
+
+
+
+add
+
+TexLib.h
+file
+
+
+
+add
+
+Texture.cpp
+file
+
+
+
+add
+
+Texture.h
+file
+
+
+
+add
+
+Tile.cpp
+file
+
+
+
+add
+
+Tile.h
+file
+
+
+
+add
+
+Vector2f.cpp
+file
+
+
+
+add
+
+Vector2f.h
+file
+
+
+
+add
+
+Vector2i.cpp
+file
+
+
+
+add
+
+Vector2i.h
+file
+
+
+
+add
+
+Vector3f.cpp
+file
+
+
+
+add
+
+Vector3f.h
+file
+
+
+
+add
+
+WorldObj.cpp
+file
+
+
+
+add
+
+WorldObj.h
+file
+
+
+
+add
+
+build
+dir
+
+
+
+add
+
+dist
+dir
+
+
+
+add
+
+fileBuffer.cpp
+file
+
+
+
+add
+
+fileBuffer.h
+file
+
+
+
+add
+
+glwidget.cpp
+file
+
+
+
+add
+
+glwidget.h
+file
+
+
+
+add
+
+main.cpp
+file
+
+
+
+add
+
+moc_AceLib.cpp
+file
+
+
+
+add
+
+moc_glwidget.cpp
+file
+
+
+
+add
+
+moc_window.cpp
+file
+
+
+
+add
+
+nbproject
+dir
+
+
+
+add
+
+object_script.HelloQtWorld_1
+file
+
+
+
+add
+
+shapeLib.cpp
+file
+
+
+
+add
+
+shapeLib.h
+file
+
+
+
+add
+
+ui_HelloForm.h
+file
+
+
+
+add
+
+window.cpp
+file
+
+
+
+add
+
+window.h
+file
+
+
+
+add
+
+zconf.h
+file
+
+
+
+add
+
+zlib.h
+file
+
+
+
+add
+

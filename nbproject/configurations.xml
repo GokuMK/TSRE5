@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="f5" displayName="camera" projectFiles="true">
+        <itemPath>Camera.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="fileFunctions" projectFiles="true">
+        <itemPath>FileBuffer.h</itemPath>
+        <itemPath>ParserX.h</itemPath>
+        <itemPath>ReadFile.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="math3d" projectFiles="true">
+        <itemPath>GLMatrix.h</itemPath>
+        <itemPath>Vector2f.h</itemPath>
+        <itemPath>Vector2i.h</itemPath>
+        <itemPath>Vector3f.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="shape" projectFiles="true">
+        <logicalFolder name="f1" displayName="sfile" projectFiles="true">
+          <itemPath>SFile.h</itemPath>
+          <itemPath>SFileC.h</itemPath>
+          <itemPath>SFileX.h</itemPath>
+        </logicalFolder>
+        <itemPath>ShapeLib.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="texture" projectFiles="true">
+        <itemPath>AceLib.h</itemPath>
+        <itemPath>TexLib.h</itemPath>
+        <itemPath>Texture.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7" displayName="trains" projectFiles="true">
+        <itemPath>Eng.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="zlib" projectFiles="true">
+        <itemPath>zconf.h</itemPath>
+        <itemPath>zlib.h</itemPath>
+      </logicalFolder>
+      <itemPath>DynTrackObj.h</itemPath>
+      <itemPath>GLUU.h</itemPath>
+      <itemPath>Game.h</itemPath>
+      <itemPath>Route.h</itemPath>
+      <itemPath>StaticObj.h</itemPath>
+      <itemPath>Tile.h</itemPath>
+      <itemPath>WorldObj.h</itemPath>
+      <itemPath>glwidget.h</itemPath>
+      <itemPath>window.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="f4" displayName="camera" projectFiles="true">
+        <itemPath>Camera.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="fileFunctions" projectFiles="true">
+        <itemPath>FileBuffer.cpp</itemPath>
+        <itemPath>ParserX.cpp</itemPath>
+        <itemPath>ReadFile.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="math3d" projectFiles="true">
+        <itemPath>GLMatrix.cpp</itemPath>
+        <itemPath>Vector2f.cpp</itemPath>
+        <itemPath>Vector2i.cpp</itemPath>
+        <itemPath>Vector3f.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="shape" projectFiles="true">
+        <logicalFolder name="f1" displayName="sfile" projectFiles="true">
+          <itemPath>SFile.cpp</itemPath>
+          <itemPath>SFileC.cpp</itemPath>
+          <itemPath>SFileX.cpp</itemPath>
+        </logicalFolder>
+        <itemPath>ShapeLib.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="texture" projectFiles="true">
+        <itemPath>AceLib.cpp</itemPath>
+        <itemPath>TexLib.cpp</itemPath>
+        <itemPath>Texture.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="trains" projectFiles="true">
+        <itemPath>Eng.cpp</itemPath>
+      </logicalFolder>
+      <itemPath>DynTrackObj.cpp</itemPath>
+      <itemPath>GLUU.cpp</itemPath>
+      <itemPath>Game.cpp</itemPath>
+      <itemPath>Route.cpp</itemPath>
+      <itemPath>StaticObj.cpp</itemPath>
+      <itemPath>Tile.cpp</itemPath>
+      <itemPath>WorldObj.cpp</itemPath>
+      <itemPath>glwidget.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
+      <itemPath>window.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="4">
+      <toolsSet>
+        <compilerSet>MinGW_1|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <modules>core gui widgets opengl</modules>
+      </qt>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+        </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-L C:\Users\Piotr\Desktop\Programy\zlib128-dll</linkerOptionItem>
+            <linkerLibLibItem>zlib1</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="AceLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="AceLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DynTrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="DynTrackObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eng.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLMatrix.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GLMatrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLUU.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GLUU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ParserX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ParserX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ReadFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Route.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Route.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFileC.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFileC.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFileX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFileX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StaticObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="StaticObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Texture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Texture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector2f.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vector2f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector2i.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vector2i.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector3f.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vector3f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="WorldObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="glwidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="glwidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="window.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="window.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="zconf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="zlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="4">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <buildMode>1</buildMode>
+        <modules>core gui widgets</modules>
+      </qt>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="AceLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="AceLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DynTrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="DynTrackObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eng.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLMatrix.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GLMatrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLUU.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GLUU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ParserX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ParserX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ReadFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Route.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Route.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFileC.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFileC.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFileX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFileX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StaticObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="StaticObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Texture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Texture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector2f.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vector2f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector2i.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vector2i.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector3f.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vector3f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="WorldObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="glwidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="glwidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="window.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="window.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="zconf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="zlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
