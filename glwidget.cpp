@@ -4,15 +4,16 @@
 #include <QCoreApplication>
 #include <QDateTime>
 #include <math.h>
+#include "GLUU.h"
+#include "SFile.h"
 #include "ReadFile.h"
 #include "FileBuffer.h"
-#include "SFile.h"
 #include "Route.h"
-#include "GLUU.h"
 #include "GLMatrix.h"
 #include "Eng.h"
 #include "Tile.h"
 #include "Game.h"
+
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -42,14 +43,20 @@ void GLWidget::cleanup() {
 }
 
 void GLWidget::timerEvent(QTimerEvent * event) {
+    
     timeNow = QDateTime::currentMSecsSinceEpoch();
     if(timeNow-lastTime < 1)
         fps = 1;
     else
-        fps = 1000/(timeNow-lastTime);
+        fps = 1000.0/(timeNow-lastTime);
+    if(fps < 10) fps = 10;
     lastTime = timeNow;
     
-    Game::allowObjLag = 3;
+    
+    if(Game::allowObjLag < Game::maxObjLag)
+        Game::allowObjLag+=2;
+    
+    camera->update(fps);
     update();
 }
 
@@ -69,7 +76,10 @@ void GLWidget::initializeGL() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glCullFace(GL_BACK);
     
-    float * aaa = new float[2]{-5306.0,-14962.0};
+    //float * aaa = new float[2]{-5306.0,-14962.0};//cmk
+    //float * aaa = new float[2]{-5386,-15369};//aaa
+    float * aaa = new float[2]{-5306,-14961};//bbb
+   //float * aaa = new float[2]{-5417,-15048};//traska
     camera = new Camera(aaa);
     //sFile = new SFile("F:/TrainSim/trains/trainset/pkp_sp47/pkp_sp47-001.s", "F:/TrainSim/trains/trainset/pkp_sp47");
     //sFile = new SFile("f:/train simulator/routes/cmk/shapes/cottage3.s", "cottage3.s", "f:/train simulator/routes/cmk/textures");
@@ -84,9 +94,9 @@ void GLWidget::initializeGL() {
 
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(0.5, 0.5, 0.5, 1.0);
+    glClearColor(gluu->skyc[0], gluu->skyc[1], gluu->skyc[2], 1.0);
     
-    Mat4::perspective(gluu->pMatrix, 45.0f, float(this->width()) / this->height(), 0.1f, 6000.0);
+    Mat4::perspective(gluu->pMatrix, 45.0f, float(this->width()) / this->height(), 0.2f, 4000.0);
     float* lookAt = camera->getMatrix();
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, lookAt);
     Mat4::identity(gluu->mvMatrix);
@@ -121,7 +131,7 @@ void GLWidget::paintGL() {
     //sFile->render();
     //eng->render();
     //tile->render();
-    route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f/4);
+    route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f/3);
     gluu->m_program->release();
 }
 

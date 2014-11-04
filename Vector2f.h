@@ -9,6 +9,7 @@ public:
     Vector2f(float x, float y);
     Vector2f(float x, float y, float a, float r);
     Vector2f(const Vector2f& orig);
+    void set(float x, float y);
     virtual ~Vector2f();
     float getDlugosc();
     Vector2f add(Vector2f r);

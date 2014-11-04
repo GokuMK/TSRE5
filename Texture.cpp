@@ -17,6 +17,7 @@ bool Texture::GLTextures() {
     glGenTextures(1, tex);
     glBindTexture(GL_TEXTURE_2D, tex[0]);
     glTexImage2D(GL_TEXTURE_2D, 0, type, width, height, 0, type, GL_UNSIGNED_BYTE, imageData);
+    
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     delete imageData;

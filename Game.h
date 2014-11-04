@@ -9,6 +9,7 @@ public:
     static QString route;
     static float objectLod;
     static int allowObjLag;
+    static int maxObjLag;
     Game();
     Game(const Game& orig);
     virtual ~Game();

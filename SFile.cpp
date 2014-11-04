@@ -49,6 +49,9 @@ void SFile::Load(QString path) {
         //qDebug() << val << " plik binarny ";
         //wczytanie binarnego
         bufor->off += 5;
+        SFileC::szukajsekcjic(72, bufor);
+        SFileC::odczytajshaders(bufor, this);
+        
         SFileC::szukajsekcjic(7, bufor);
         //qDebug() << "znaleziono sekcje 7 na " << bufor->off;
         SFileC::odczytajpunktyc(bufor, this);
@@ -94,7 +97,10 @@ void SFile::Load(QString path) {
         QString sh = "shape";
         ParserX::szukajsekcji1(sh, bufor);
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
-
+        sh = "shader_names";
+        ParserX::szukajsekcji1(sh, bufor);
+        SFileX::odczytajshaders(bufor, this);
+        
         sh = "points";
         ParserX::szukajsekcji1(sh, bufor);
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
@@ -142,6 +148,10 @@ void SFile::Load(QString path) {
     }
     delete bufor;
     
+    for (int i = 0; i < ishaders; i++) {
+        if(shader[i].name == "texdiff") shader[i].alpha = 1;
+        else shader[i].alpha = 0;
+    }
     return;
 }
 
@@ -167,8 +177,9 @@ void SFile::render() {
     if (isinit != 1 || loaded == 2)
         return;
     if (loaded == 0) {
-        //if(GameSettings::allowObjLag < 1)  return;
-        //GameSettings::allowObjLag--;
+        if(Game::allowObjLag < 1)  return;
+        
+        Game::allowObjLag-=2;
         loaded = 2;
         Load(pathid);
         return;
@@ -198,7 +209,19 @@ void SFile::render() {
                 }
                 gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(&macierz[matrix].fixed));
             }
+            
             //qDebug() << "2";
+            if(primstate[prim_state].arg2 < this->ishaders)
+                gluu->alpha = shader[primstate[prim_state].arg2].alpha;
+            else 
+                gluu->alpha = 0;
+            gluu->m_program->setUniformValue(gluu->shaderAlpha, gluu->alpha);
+            
+            if(primstate[prim_state].arg6 == 1)
+                gluu->m_program->setUniformValue(gluu->shaderAlphaTest, 0.51f);
+            else 
+                gluu->m_program->setUniformValue(gluu->shaderAlphaTest, gluu->alphaTest);
+            
             if(primstate[prim_state].arg4 == -1)
                 glDisable(GL_TEXTURE_2D);
             else if (image[texture[primstate[prim_state].arg4].image].texAddr > 0) {
@@ -225,11 +248,12 @@ void SFile::render() {
             } else {
                 glDisable(GL_TEXTURE_2D);
             }/**/
-
+            
             QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].czesci[j].VAO);
             glDrawArrays(GL_TRIANGLES, 0, distancelevel[0].subobiekty[i].czesci[j].iloscv);/**/
         }
     }
+    gluu->m_program->setUniformValue(gluu->shaderAlphaTest, gluu->alphaTest);
 }
 
 /*======================================================

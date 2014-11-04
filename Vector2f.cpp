@@ -2,7 +2,8 @@
 #include <math.h>
 
 Vector2f::Vector2f() {
-    x = y = 0;
+    this->x = 0;
+    this->y = 0;
 }
 
 Vector2f::Vector2f(const Vector2f& orig) {
@@ -14,6 +15,11 @@ Vector2f::~Vector2f() {
 }
 
 Vector2f::Vector2f(float x, float y) {
+    this->x = x;
+    this->y = y;
+}
+
+void Vector2f::set(float x, float y) {
     this->x = x;
     this->y = y;
 }

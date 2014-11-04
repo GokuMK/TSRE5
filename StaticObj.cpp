@@ -3,18 +3,12 @@
 #include "ShapeLib.h"
 #include "GLMatrix.h"
 #include <math.h>
+#include "ParserX.h"
+#include <QDebug>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-
-QString StaticObj::attributes[5] = {
-    "UiD",
-    "FileName",
-    "Position",
-    "QDirection",
-    "VDbId"
-};
 
 StaticObj::StaticObj() {
     this->shape = -1;
@@ -27,8 +21,8 @@ StaticObj::StaticObj(const StaticObj& orig) {
 StaticObj::~StaticObj() {
 }
 
-void StaticObj::load(QString path, int x, int y) {
-    this->shape = ShapeLib::addShape(path, fileName);
+void StaticObj::load(int x, int y) {
+    this->shape = ShapeLib::addShape(resPath, fileName);
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
@@ -36,20 +30,19 @@ void StaticObj::load(QString path, int x, int y) {
     this->size = -1;
 }
 
-bool StaticObj::isAttribute(QString s){
-    for(QString &n : StaticObj::attributes){
-        if(s.toLower() == n.toLower()) return true;
+void StaticObj::set(QString sh, FileBuffer* data) {
+    if (sh == ("filename")) {
+        fileName = ParserX::odczytajtc(data);
+        return;
     }
-    return false;
-}
-
-void StaticObj::render(GLUU* gluu) {
-    //render(gluu, 0, 0, 0);
+    WorldObj::set(sh, data);
+    return;
 }
 
 void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov) {
     if (!loaded) return;
     if (shape < 0) return;
+    if (jestPQ < 2) return;
     //GLUU* gluu = GLUU::get();
     //if((this.position===undefined)||this.qDirection===undefined) return;
 

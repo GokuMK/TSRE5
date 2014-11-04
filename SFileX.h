@@ -20,7 +20,7 @@ public:
     SFileX();
     SFileX(const SFileX& orig);
     virtual ~SFileX();
-    
+    static void odczytajshaders(FileBuffer* bufor, SFile* pliks);
     static void odczytajpunkty(FileBuffer* bufor, SFile* pliks);
     static void odczytajuvpunkty(FileBuffer* bufor, SFile* pliks);
     static void odczytajnormalne(FileBuffer* bufor, SFile* pliks);

@@ -14,6 +14,7 @@
 class ReadFile {
 public:
     static FileBuffer* read(QFile* file);
+    static FileBuffer* readRAW(QFile* file);
 private:
     
 };

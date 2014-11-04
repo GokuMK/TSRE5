@@ -18,6 +18,10 @@
         <itemPath>Vector2i.h</itemPath>
         <itemPath>Vector3f.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f10" displayName="ogl" projectFiles="true">
+        <itemPath>GLUU.h</itemPath>
+        <itemPath>OglObj.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
           <itemPath>SFile.h</itemPath>
@@ -25,6 +29,12 @@
           <itemPath>SFileX.h</itemPath>
         </logicalFolder>
         <itemPath>ShapeLib.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f8" displayName="TDB" projectFiles="true">
+        <itemPath>TDB.h</itemPath>
+        <itemPath>TRnode.h</itemPath>
+        <itemPath>TSection.h</itemPath>
+        <itemPath>TSectionDAT.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="texture" projectFiles="true">
         <itemPath>AceLib.h</itemPath>
@@ -34,17 +44,25 @@
       <logicalFolder name="f7" displayName="trains" projectFiles="true">
         <itemPath>Eng.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f9" displayName="world" projectFiles="true">
+        <logicalFolder name="f1" displayName="objects" projectFiles="true">
+          <itemPath>DynTrackObj.h</itemPath>
+          <itemPath>ForestObj.h</itemPath>
+          <itemPath>StaticObj.h</itemPath>
+          <itemPath>TransferObj.h</itemPath>
+          <itemPath>WorldObj.h</itemPath>
+        </logicalFolder>
+        <itemPath>Route.h</itemPath>
+        <itemPath>TFile.h</itemPath>
+        <itemPath>Terrain.h</itemPath>
+        <itemPath>TerrainLib.h</itemPath>
+        <itemPath>Tile.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f2" displayName="zlib" projectFiles="true">
         <itemPath>zconf.h</itemPath>
         <itemPath>zlib.h</itemPath>
       </logicalFolder>
-      <itemPath>DynTrackObj.h</itemPath>
-      <itemPath>GLUU.h</itemPath>
       <itemPath>Game.h</itemPath>
-      <itemPath>Route.h</itemPath>
-      <itemPath>StaticObj.h</itemPath>
-      <itemPath>Tile.h</itemPath>
-      <itemPath>WorldObj.h</itemPath>
       <itemPath>glwidget.h</itemPath>
       <itemPath>window.h</itemPath>
     </logicalFolder>
@@ -69,6 +87,10 @@
         <itemPath>Vector2i.cpp</itemPath>
         <itemPath>Vector3f.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f9" displayName="ogl" projectFiles="true">
+        <itemPath>GLUU.cpp</itemPath>
+        <itemPath>OglObj.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
           <itemPath>SFile.cpp</itemPath>
@@ -76,6 +98,12 @@
           <itemPath>SFileX.cpp</itemPath>
         </logicalFolder>
         <itemPath>ShapeLib.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7" displayName="TDB" projectFiles="true">
+        <itemPath>TDB.cpp</itemPath>
+        <itemPath>TRnode.cpp</itemPath>
+        <itemPath>TSection.cpp</itemPath>
+        <itemPath>TSectionDAT.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="texture" projectFiles="true">
         <itemPath>AceLib.cpp</itemPath>
@@ -85,13 +113,21 @@
       <logicalFolder name="f6" displayName="trains" projectFiles="true">
         <itemPath>Eng.cpp</itemPath>
       </logicalFolder>
-      <itemPath>DynTrackObj.cpp</itemPath>
-      <itemPath>GLUU.cpp</itemPath>
+      <logicalFolder name="f8" displayName="world" projectFiles="true">
+        <logicalFolder name="f1" displayName="objects" projectFiles="true">
+          <itemPath>DynTrackObj.cpp</itemPath>
+          <itemPath>ForestObj.cpp</itemPath>
+          <itemPath>StaticObj.cpp</itemPath>
+          <itemPath>TransferObj.cpp</itemPath>
+          <itemPath>WorldObj.cpp</itemPath>
+        </logicalFolder>
+        <itemPath>Route.cpp</itemPath>
+        <itemPath>TFile.cpp</itemPath>
+        <itemPath>Terrain.cpp</itemPath>
+        <itemPath>TerrainLib.cpp</itemPath>
+        <itemPath>Tile.cpp</itemPath>
+      </logicalFolder>
       <itemPath>Game.cpp</itemPath>
-      <itemPath>Route.cpp</itemPath>
-      <itemPath>StaticObj.cpp</itemPath>
-      <itemPath>Tile.cpp</itemPath>
-      <itemPath>WorldObj.cpp</itemPath>
       <itemPath>glwidget.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>window.cpp</itemPath>
@@ -144,6 +180,10 @@
       </item>
       <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ForestObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ForestObj.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GLMatrix.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GLMatrix.h" ex="false" tool="3" flavor2="0">
@@ -155,6 +195,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OglObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ParserX.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -188,6 +232,34 @@
       </item>
       <item path="StaticObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TDB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TDB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TRnode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TRnode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TSection.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TSection.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TSectionDAT.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TSectionDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Terrain.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Terrain.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
@@ -199,6 +271,10 @@
       <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Vector2f.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -275,6 +351,10 @@
       </item>
       <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ForestObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ForestObj.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GLMatrix.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GLMatrix.h" ex="false" tool="3" flavor2="0">
@@ -286,6 +366,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OglObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ParserX.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -319,6 +403,34 @@
       </item>
       <item path="StaticObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TDB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TDB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TRnode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TRnode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TSection.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TSection.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TSectionDAT.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TSectionDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Terrain.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Terrain.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
@@ -330,6 +442,10 @@
       <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Vector2f.cpp" ex="false" tool="1" flavor2="0">
       </item>

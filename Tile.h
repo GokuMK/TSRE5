@@ -7,6 +7,7 @@
 
 class Tile {
 public:
+    
     int loaded;
     bool inUse;
     int x;

@@ -16,7 +16,7 @@ public:
         unsigned short material;
         unsigned short uvpoint;
     };
-
+    static void odczytajshaders(FileBuffer* bufor, SFile* pliks);
     static void szukajsekcjic(int szukane, FileBuffer* bufor);
     static void odczytajpunktyc(FileBuffer* bufor, SFile* pliks);
     static void odczytajuvpunktyc(FileBuffer* bufor, SFile* pliks);

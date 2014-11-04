@@ -5,8 +5,8 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
-		
-QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
+#include <QOpenGLShaderProgram>
+//QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
 class GLUU {
 public:
@@ -19,6 +19,19 @@ public:
     unsigned int mvMatrixUniform;
     unsigned int msMatrixUniform;
     unsigned int samplerUniform;
+    unsigned int lod;
+    unsigned int sun;
+    unsigned int brightness;
+    unsigned int skyColor;
+    unsigned int skyLight;
+    unsigned int shaderAlpha;
+    unsigned int shaderAlphaTest;
+    
+    float alpha;
+    float alphaTest;
+    
+    float skyc[4]{230.0/255.0,248.0/255,255.0/255.0, 1.0};
+    float sky[3]{1.0, 1.0, 1.0};
     
     float* mvMatrixStack[1000];
     int imvMatrixStack;
@@ -41,7 +54,7 @@ public:
     void mvPopMatrix();
     float degToRad(float degrees);
 private:
-    unsigned int getShader(const char *shaderScript, QString type);
+    const char* getShader(QString shaderScript, QString type);
 };
 
 #endif	/* GLUU_H */

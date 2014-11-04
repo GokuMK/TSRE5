@@ -11,14 +11,16 @@ Camera::Camera(float* pt) {
     playerRot[0] = 0.0;
     playerRot[1] = 0.0;
     playerPos[0] = 0;
-    playerPos[1] = 0;
-    playerPos[2] = -30;
+    playerPos[1] = 10;
+    playerPos[2] = 0;
     
     relativeRot[0] = 0;
     relativeRot[1] = 0;
     relativePos[0] = 0;
     relativePos[1] = 0;
     relativePos[2] = 0;
+    
+    moveF = moveR = moveB = moveL = false;
 }
 
 Camera::Camera(const Camera& orig) {
@@ -106,36 +108,61 @@ Vector3f Camera::getUp() {
     return Vector3f(0, 1, 0);
 }*/
 
-void Camera::moveForward() {
-    int fps = 1;
-    playerPos[2] = playerPos[2] + (1 / fps) * przesz * cos(playerRot[0]) * cos(playerRot[1]);
-    playerPos[0] = playerPos[0] + (1 / fps) * przesz * sin(playerRot[0]) * cos(playerRot[1]);
-    playerPos[1] = playerPos[1] + (1 / fps) * przesz * sin(playerRot[1]);
+void Camera::update(float fps) {
+        if(moveF){
+            if (jestcontrol == 1) {
+                moveUp();
+            } else {
+                moveForward(fps);
+            }
+        }
+        if(moveB){
+            if (jestcontrol == 1) {
+                moveDown();
+            } else {
+                moveBackward(fps);
+            }
+        }
+        if(moveR)
+            moveRight(fps);
+        if(moveL)
+            moveLeft(fps);
+        
+        //this.patrzX((this.moveX)/(this.sensitivity));
+        //this.patrzY((this.moveY)/(this.sensitivity));
+        //this.moveX = 0;
+        //this.moveY = 0;
+
+    }
+
+void Camera::moveForward(float fps) {
+    playerPos[2] = playerPos[2] + (30.0 / fps) * przesz * cos(playerRot[0]) * cos(playerRot[1]);
+    playerPos[0] = playerPos[0] + (30.0 / fps) * przesz * sin(playerRot[0]) * cos(playerRot[1]);
+    playerPos[1] = playerPos[1] + (30.0 / fps) * przesz * sin(playerRot[1]);
 
     //playerPos[2] = playerPos[2] + przesz * (float) cos(playerRot[0]);
     // playerPos[0] = playerPos[0] + przesz * (float) sin(playerRot[0]);
     check_coords();
 }
 
-void Camera::moveBackward() {
-     int fps = 1;
-    playerPos[2] = playerPos[2] - (1 / fps) * przesz * cos(playerRot[0]) * cos(playerRot[1]);
-    playerPos[0] = playerPos[0] - (1 / fps) * przesz * sin(playerRot[0]) * cos(playerRot[1]);
-    playerPos[1] = playerPos[1] - (1 / fps) * przesz * sin(playerRot[1]);
+void Camera::moveBackward(float fps) {
+    playerPos[2] = playerPos[2] - (30.0 / fps) * przesz * cos(playerRot[0]) * cos(playerRot[1]);
+    playerPos[0] = playerPos[0] - (30.0 / fps) * przesz * sin(playerRot[0]) * cos(playerRot[1]);
+    playerPos[1] = playerPos[1] - (30.0 / fps) * przesz * sin(playerRot[1]);
     //playerPos[2] = playerPos[2] - przesz * (float) cos(playerRot[0]);
     //playerPos[0] = playerPos[0] - przesz * (float) sin(playerRot[0]);
     check_coords();
 }
 
-void Camera::moveLeft() {
-    playerPos[0] = playerPos[0] + przesx * (float) cos(playerRot[0]);
-    playerPos[2] = playerPos[2] - przesx * (float) sin(playerRot[0]);
+void Camera::moveLeft(float fps) {
+    playerPos[0] = playerPos[0] + (30.0 / fps) * przesx * (float) cos(playerRot[0]);
+    playerPos[2] = playerPos[2] - (30.0 / fps) * przesx * (float) sin(playerRot[0]);
     check_coords();
 }
 
-void Camera::moveRight() {
-    playerPos[0] = playerPos[0] - przesx * (float) cos(playerRot[0]);
-    playerPos[2] = playerPos[2] + przesx * (float) sin(playerRot[0]);
+void Camera::moveRight(float fps) {
+    playerPos[0] = playerPos[0] - (30.0 / fps) * przesx * (float) cos(playerRot[0]);
+    playerPos[2] = playerPos[2] + (30.0 / fps) * przesx * (float) sin(playerRot[0]);
     check_coords();
 }
 
@@ -210,6 +237,21 @@ void Camera::keyUp(QKeyEvent * e) {
         case 69: // E
             przesx = przesz = 3;
             break;
+        case 65: // A 
+            moveL = false;
+            break;
+        case 38:
+        case 87: // W
+            moveF = false;
+            break;
+        case 39:
+        case 68: // D 
+            moveR = false;
+            break;
+        case 40:
+        case 83: // S 
+            moveB = false;
+            break;
         default:
             break;
     }
@@ -226,30 +268,22 @@ void Camera::keyDown(QKeyEvent * e) {
             break;
         case 37: // left
         case 65: // A 
-            moveLeft();
+            moveL = true;
             break;
         case 38:
         case 87: // W
-            if (jestcontrol == 1) {
-                moveUp();
-                break;
-            }
-            moveForward();
+            moveF = true;
             break;
         case 39:
         case 68: // D 
-            moveRight();
+            moveR = true;
             break;
         case 40:
         case 83: // S 
-            if (jestcontrol == 1) {
-                moveDown();
-                break;
-            }
-            moveBackward();
+            moveB = true;
             break;
         case 69: // E
-            przesx = przesz = 15;
+            przesx = przesz = 40;
             break;
         default:
             break;

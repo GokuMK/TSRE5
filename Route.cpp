@@ -2,7 +2,11 @@
 #include "GLUU.h"
 #include "Tile.h"
 #include "GLMatrix.h"
+#include "TerrainLib.h"
+#include "Game.h"
+
 Route::Route() {
+    this->trackDB = new TDB((Game::root+"/routes/"+Game::route+"/"+Game::route+".tdb"));
 }
 
 Route::Route(const Route& orig) {
@@ -15,7 +19,7 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         int mintile = -2;
         int maxtile = 2;
         
-        //TerrainLib.render(playerT, playerW); 
+        TerrainLib::render(gluu, playerT, playerW, target, fov);
         
         //for (var key in this.tile){
        //    this.tile[key].inUse = false;

@@ -1,7 +1,8 @@
 #include "Vector2i.h"
 
 Vector2i::Vector2i() {
-    x = z = 0;
+    this->x = 0;
+    this->z = 0;
 }
 
 Vector2i::Vector2i(int x, int z){

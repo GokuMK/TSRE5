@@ -1,8 +1,10 @@
 #include "GLUU.h"
 #include "zconf.h"
 #include "GLMatrix.h"
-#include <QOpenGLShaderProgram>
+#include "ReadFile.h"
+#include "Game.h"
 #include <QDebug>
+#include <QFile>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -15,6 +17,7 @@ GLUU* GLUU::get() {
 
 GLUU::GLUU() {
     imvMatrixStack = 0;
+    alphaTest = 0.3;
     pMatrix = new float[16];
     mvMatrix = new float[16];
     objStrMatrix = new float[16];
@@ -44,7 +47,7 @@ static const char *fragmentShaderSource =
         "if(gl_FragColor.a < 0.3) discard;\n"
         "}\n";
 
-unsigned int GLUU::getShader(const char *shaderScript, QString type) {
+const char* GLUU::getShader(QString shaderScript, QString type) {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     unsigned int shader;
     if (type == "fs") {
@@ -52,59 +55,18 @@ unsigned int GLUU::getShader(const char *shaderScript, QString type) {
     } else if (type == "vs") {
         shader = f->glCreateShader(GL_VERTEX_SHADER);
     } else {
-        return -1;
+        return "";
     }
-
-    f->glShaderSource(shader, 1, &shaderScript, NULL);
-    f->glCompileShader(shader);
-
-    GLint isCompiled = 0;
-    f->glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
-    if (isCompiled == GL_FALSE) {
-        GLint maxLength = 0;
-        f->glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
-
-        char* errorLog = new char[maxLength];
-        f->glGetShaderInfoLog(shader, maxLength, &maxLength, errorLog);
-        qDebug() << errorLog;
-
-        f->glDeleteShader(shader); //Don't leak the shader.
-        return -1;
-    }
-
-    return shader;
-};
+    QFile* shaderData = new QFile("shaders/"+shaderScript+"."+type);
+    if (!shaderData->open(QIODevice::ReadOnly))
+        return "";
+    return (const char*) ReadFile::readRAW(shaderData)->data;
+}
 
 void GLUU::initShader() {
-    /*QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    
-    unsigned int fragmentShader = getShader(fragmentShaderSource,"fs");
-    unsigned int vertexShader = getShader(vertexShaderSource,"vs");
-        
-    f->glAttachShader(shaderProgram, vertexShader);
-    f->glAttachShader(shaderProgram, fragmentShader);
-    f->glLinkProgram(shaderProgram);
-
-    //if (!gl.getProgramParameter(this.shaderProgram, gl.LINK_STATUS)) {
-    //    alert("Could not initialise shaders");
-    //}
-
-    f->glUseProgram(shaderProgram);
-
-    vertexPositionAttribute = f->glGetAttribLocation(shaderProgram, "vertex");
-    f->glEnableVertexAttribArray(vertexPositionAttribute);
-
-    textureCoordAttribute = f->glGetAttribLocation(shaderProgram, "aTextureCoord");
-    f->glEnableVertexAttribArray(textureCoordAttribute);
-
-    pMatrixUniform = f->glGetUniformLocation(shaderProgram, "uPMatrix");
-    mvMatrixUniform = f->glGetUniformLocation(shaderProgram, "uMVMatrix");
-    msMatrixUniform = f->glGetUniformLocation(shaderProgram, "uMSMatrix");
-    samplerUniform = f->glGetUniformLocation(shaderProgram, "uSampler");*/
-
     m_program = new QOpenGLShaderProgram;
-    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
-    m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
+    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, getShader("vertexShaderSource", "vs"));
+    m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, getShader("fragmentShaderSource", "fs"));
     m_program->bindAttributeLocation("vertex", 0);
     m_program->bindAttributeLocation("aTextureCoord", 1);
     m_program->link();
@@ -113,6 +75,13 @@ void GLUU::initShader() {
     pMatrixUniform = m_program->uniformLocation("uPMatrix");
     mvMatrixUniform = m_program->uniformLocation("uMVMatrix");
     msMatrixUniform = m_program->uniformLocation("uMSMatrix");
+    lod = m_program->uniformLocation("lod");
+    sun = m_program->uniformLocation("sun");
+    brightness = m_program->uniformLocation("brightness");
+    skyColor = m_program->uniformLocation("skyColor");
+    skyLight = m_program->uniformLocation("sky");
+    shaderAlpha = m_program->uniformLocation("isAlpha");
+    shaderAlphaTest = m_program->uniformLocation("alphaTest");
     //m_normalMatrixLoc = m_program->uniformLocation("normalMatrix");
     //m_lightPosLoc = m_program->uniformLocation("lightPos");
     // Light position is fixed.
@@ -122,15 +91,11 @@ void GLUU::initShader() {
 }
 
 void GLUU::mvPushMatrix() {
-    float* copy = Mat4::clone(mvMatrix);
-    mvMatrixStack[imvMatrixStack++] = copy;
+    mvMatrixStack[imvMatrixStack++] = Mat4::clone(mvMatrix);
 }
 
 void GLUU::mvPopMatrix() {
-    imvMatrixStack--;
-    if (imvMatrixStack < 0) {
-        return;
-    }
+    if (--imvMatrixStack < 0) return;
     delete mvMatrix;
     mvMatrix = mvMatrixStack[imvMatrixStack];
 }
@@ -139,6 +104,14 @@ void GLUU::setMatrixUniforms() {
     m_program->setUniformValue(pMatrixUniform, *reinterpret_cast<float(*)[4][4]> (pMatrix));
     m_program->setUniformValue(mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (mvMatrix));
     m_program->setUniformValue(msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (objStrMatrix));
+    
+    m_program->setUniformValue(lod, Game::objectLod);
+    m_program->setUniformValue(sun, 1.0f);
+    m_program->setUniformValue(brightness, 1.0f);
+    m_program->setUniformValue(skyColor, skyc[0],skyc[1],skyc[2],skyc[3]);
+    m_program->setUniformValue(skyLight, sky[0],sky[1],sky[2],sky[3]);
+    m_program->setUniformValue(shaderAlpha, alpha);
+    m_program->setUniformValue(shaderAlphaTest, alphaTest);
 };
 
 float GLUU::degToRad(float degrees) {

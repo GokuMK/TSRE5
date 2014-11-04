@@ -9,6 +9,7 @@ public:
     virtual ~FileBuffer();
     
     int getInt();
+    unsigned short int getShort();
     float getFloat();
     unsigned char get();
     

@@ -8,6 +8,22 @@
 #include <QtCore>
 #include "ParserX.h"
 
+void SFileX::odczytajshaders(FileBuffer* bufor, SFile* pliks) {
+    pliks->ishaders = ParserX::parsujr(bufor);
+
+    pliks->shader = new SFile::fshader[pliks->ishaders];
+    for (int i = 0; i < pliks->ishaders; i++) {
+        while (bufor->get() != 40) {
+            bufor->off++;
+        }
+        bufor->off++;
+        bufor->off += 2;
+        pliks->shader[i].name = ParserX::odczytajtc(bufor).toLower();
+        //qDebug() << pliks->shaderName[i];
+        //console.log(pliks->image[i].name);
+    }
+}
+
 //-----------------------------------
 //Oczytanie i zapisanie sekcji points
 //-----------------------------------

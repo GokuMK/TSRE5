@@ -25,10 +25,10 @@ public:
     void scalPosRot();*/
     float* getPos();
     //Vector3f getUp();
-    void moveForward();
-    void moveBackward();
-    void moveLeft();
-    void moveRight();
+    void moveForward(float fps);
+    void moveBackward(float fps);
+    void moveLeft(float fps);
+    void moveRight(float fps);
     void moveUp();
     void moveDown();
     void patrzX(float f);
@@ -39,6 +39,7 @@ public:
     void MouseUp(QMouseEvent* e);
     void keyDown(QKeyEvent * e);
     void keyUp(QKeyEvent * e);
+    void update(float fps);
     float * pozT;
 private:
     //int aktwx = 0, aktwz = 0;
@@ -53,7 +54,7 @@ private:
     int starex, starey;
     int jestcontrol;
     int lpm = 0;
-
+    bool moveF, moveR, moveB, moveL;
 };
 
 #endif	/* CAMERA_H */

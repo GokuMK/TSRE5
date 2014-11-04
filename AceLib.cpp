@@ -219,6 +219,6 @@ void AceLib::run() {
     }
     //qDebug() << "--";
     delete data;
-
+    //qDebug() << "2";
     return;
 }

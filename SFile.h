@@ -25,6 +25,11 @@ public:
     int texloaded = 0;
     int ref = 0;
 
+    struct fshader {
+        QString name;
+        float alpha;
+    };
+    
     struct czes {
         int iloscv;
         int prim_state_idx;
@@ -99,6 +104,8 @@ public:
     primst* primstate;
     dist* distancelevel;
     
+    int ishaders;
+    fshader* shader;
     float size;
     
     void Load(QString path);

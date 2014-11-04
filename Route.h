@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <QString>
 #include "GLUU.h"
+#include "TDB.h"
 
 class Tile;
 
@@ -15,7 +16,7 @@ public:
     virtual ~Route();
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
 private:
-
+    TDB *trackDB;
 };
 
 #endif	/* ROUTE_H */

@@ -6,6 +6,29 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLBuffer>
 
+    void SFileC::odczytajshaders(FileBuffer* bufor, SFile* pliks) {
+        int temp;
+
+        bufor->off += 5;
+        pliks->ishaders = bufor->getInt();
+
+        pliks->shader = new SFile::fshader[pliks->ishaders];
+        for (int i = 0; i < pliks->ishaders; i++) {
+            bufor->off += 4;
+            temp = bufor->get();
+            bufor->off += 6;
+            //pliks->image[i] = new SFile::imgs();
+            pliks->shader[i].name = "";
+            for (int j = 0; j < (temp - 3) / 2; j++) {
+                pliks->shader[i].name += bufor->get();
+                bufor->get();
+            }
+            pliks->shader[i].name = pliks->shader[i].name.toLower();
+            //qDebug() << pliks->shaderName[i];
+        }
+        return;
+    }
+
     //-----------------------------------
     //Szukanie sekcji
     //-----------------------------------
