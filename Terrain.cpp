@@ -84,43 +84,56 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     
     GLUU* gluu = GLUU::get();
     if (!lines.loaded) {
-        float *punkty = new float[48];
+        float *punkty = new float[256*6*4];
         int ptr = 0;
-        punkty[ptr++] = -1024;
-        punkty[ptr++] = 10;
-        punkty[ptr++] = 1024;
-        punkty[ptr++] = -1024;
-        punkty[ptr++] = 10;
-        punkty[ptr++] = -1024;
-
-        punkty[ptr++] = -1024;
-        punkty[ptr++] = 10;
-        punkty[ptr++] = 1024;
-        punkty[ptr++] = 1024;
-        punkty[ptr++] = 10;
-        punkty[ptr++] = 1024;
-
-        punkty[ptr++] = 1024;
-        punkty[ptr++] = 10;
-        punkty[ptr++] = -1024;
-        punkty[ptr++] = -1024;
-        punkty[ptr++] = 10;
-        punkty[ptr++] = -1024;
-
-        punkty[ptr++] = 1024;
-        punkty[ptr++] = 10;
-        punkty[ptr++] = -1024;
-        punkty[ptr++] = 1024;
-        punkty[ptr++] = 10;
-        punkty[ptr++] = 1024;
+        int i = 0;
         
+        for(i = 0; i < 256; i++){
+            punkty[ptr++] = -1024;
+            punkty[ptr++] = 1 + terrainData[i][0];
+            punkty[ptr++] = -1024 + i*8;
+            punkty[ptr++] = -1024;
+            punkty[ptr++] = 1 + terrainData[i+1][0];
+            punkty[ptr++] = -1024 + i*8 + 8;
+        }
+
+        for(i = 0; i < 256; i++){
+            punkty[ptr++] = -1024 + i*8;
+            punkty[ptr++] = 1 + terrainData[0][i];
+            punkty[ptr++] = -1024;
+            punkty[ptr++] = -1024 + i*8 + 8;
+            punkty[ptr++] = 1 + terrainData[0][i+1];
+            punkty[ptr++] = -1024;
+        }
+        
+        for(i = 0; i < 256; i++){
+            punkty[ptr++] = 1024;
+            punkty[ptr++] = 1 + terrainData[i][256];
+            punkty[ptr++] = -1024 + i*8;
+            punkty[ptr++] = 1024;
+            punkty[ptr++] = 1 + terrainData[i+1][256];
+            punkty[ptr++] = -1024 + i*8 + 8;
+        }
+
+        for(i = 0; i < 256; i++){
+            punkty[ptr++] = -1024 + i*8;
+            punkty[ptr++] = 1 + terrainData[256][i];
+            punkty[ptr++] = 1024;
+            punkty[ptr++] = -1024 + i*8 + 8;
+            punkty[ptr++] = 1 + terrainData[256][i+1];
+            punkty[ptr++] = 1024;
+        }
+        
+        lines.setMaterial(1.0,0.0,0.0);
         lines.init(punkty, ptr, lines.V, GL_LINES);
         delete punkty;
     }
+    
     Mat4::identity(gluu->objStrMatrix);
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     lines.render();
     
+    gluu->enableTextures();
     int off = 0;
     float lod = 0;
     float size = 512;
@@ -179,18 +192,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
             glDrawArrays(GL_TRIANGLES, 0, 16*16*6);
 
             if ((tfile->flags[yy * 16 + uu] & 0xc0) != 0) {
-                if (wTexid == -2) {
-                    } else {
-                        if (wTexid == -1) {
-                            wTexid = TexLib::addTex("Resources", "woda.ace");
-                        }
-                        if (TexLib::mtex[wTexid]->loaded) {
-                            if (!TexLib::mtex[wTexid]->glLoaded)
-                                TexLib::mtex[wTexid]->GLTextures();
-                            glBindTexture(GL_TEXTURE_2D, TexLib::mtex[wTexid]->tex[0]);
-                        } else {
-                        }
-                    }
+                
                 if(!water[uu * 16 + yy].loaded){
                     
                     float x1 = (uu)*128 - 1024;
@@ -252,7 +254,9 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                     punkty[ptr++] = z1;
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
-
+                    
+                    QString *texturePath = new QString("Resources/woda.ace");
+                    water[uu * 16 + yy].setMaterial(texturePath);
                     water[uu * 16 + yy].init(punkty, ptr, water[uu * 16 + yy].VT, GL_TRIANGLES);
                     delete punkty;
                 }

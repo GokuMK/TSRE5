@@ -74,6 +74,7 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->m_program->setUniformValue(gluu->shaderAlpha, 0.0f);
+    gluu->enableTextures();
     drawShape();
 };
 

@@ -26,8 +26,12 @@ void StaticObj::load(int x, int y) {
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
+    this->qDirection[2] = -this->qDirection[2];
     this->loaded = true;
     this->size = -1;
+    
+    Mat4::fromRotationTranslation(this->matrix, qDirection, position);
+    Mat4::rotate(this->matrix, this->matrix, M_PI, 0, -1, 0);
 }
 
 void StaticObj::set(QString sh, FileBuffer* data) {
@@ -70,12 +74,13 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
             size = ShapeLib::shape[shape]->size;
     }
 
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, position);
+    /*Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, position);
     float scale = sqrt(qDirection[0] * qDirection[0] + qDirection[1] * qDirection[1] + qDirection[2] * qDirection[2]);
     float angle = ((acos(qDirection[3])*360) / M_PI);
-    Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, gluu->degToRad(-angle), -qDirection[0] * scale, -qDirection[1] * scale, qDirection[2] * scale);
+    Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, gluu->degToRad(-angle), -qDirection[0] * scale, -qDirection[1] * scale, -qDirection[2] * scale);
     Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, gluu->degToRad(180), 0, -1, 0);
-
+    */
+    Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
     //if(selected){
     //    selected = !selected;
     //    selectionColor = 155;

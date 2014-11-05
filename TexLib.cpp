@@ -40,6 +40,10 @@ int TexLib::addTex(QString path, QString name) {
     QString pathid = (path+"/"+name).toLower();
     pathid.replace("\\", "/");
     pathid.replace("//", "/");
+    return addTex(pathid);
+}
+
+int TexLib::addTex(QString pathid) {
 
     for ( auto it = mtex.begin(); it != mtex.end(); ++it ){
         if (((Texture*) it->second)->pathid == pathid) {

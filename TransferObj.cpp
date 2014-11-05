@@ -94,7 +94,7 @@ void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
     Mat4::identity(gluu->objStrMatrix);    
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
-    
+    gluu->enableTextures();
     drawShape();
 };
 

@@ -20,7 +20,8 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         int maxtile = 2;
         
         TerrainLib::render(gluu, playerT, playerW, target, fov);
-        
+        //trackDB->renderAll(gluu, playerT);
+        //trackDB->renderLines(gluu, playerT);
         //for (var key in this.tile){
        //    this.tile[key].inUse = false;
        // }

@@ -173,7 +173,7 @@ void SFile::getSize() {
     }
 
 void SFile::render() {
-
+    
     if (isinit != 1 || loaded == 2)
         return;
     if (loaded == 0) {
@@ -191,7 +191,7 @@ void SFile::render() {
     //var oldtex = -3;
 
     GLUU *gluu = GLUU::get();
-
+    gluu->enableTextures();
     //for(int iii = 0; iii < 200; iii++)
     for (int i = 0; i < distancelevel[0].iloscs; i++) {
         for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {

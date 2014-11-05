@@ -12,6 +12,7 @@ public:
     QString fileName;
     float position[3];
     float qDirection[4];
+    float matrix[16];
     float staticDetailLevel;
     float staticFlags;
     float vDbId;

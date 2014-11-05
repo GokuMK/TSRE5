@@ -16,6 +16,7 @@ public:
     static void delRef(int texx);
     static void addRef(int texx);
     static int addTex(QString path, QString name);
+    static int addTex(QString pathid);
 private:
 
 };

@@ -25,12 +25,12 @@ private:
     unsigned char **fData;
     bool jestF;
     bool isOgl;
-    int texid[256];
     float mojex;
     float mojez;
     QString texturepath;
     Vector3f **vertexData;//[257][257];
     Vector3f **normalData;//[257][257];
+    int texid[256];
     QOpenGLBuffer VBO[256];
     QOpenGLVertexArrayObject VAO[256];
     

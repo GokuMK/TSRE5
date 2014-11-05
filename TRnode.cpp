@@ -1,6 +1,7 @@
 #include "TRnode.h"
 
 TRnode::TRnode() {
+    typ = -1;
 }
 
 TRnode::TRnode(const TRnode& orig) {

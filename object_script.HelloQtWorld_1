@@ -31,6 +31,7 @@ INPUT(
 ./build/Debug/MinGW_1-Windows/Vector2f.o
 ./build/Debug/MinGW_1-Windows/Vector2i.o
 ./build/Debug/MinGW_1-Windows/Vector3f.o
+./build/Debug/MinGW_1-Windows/Vector4f.o
 ./build/Debug/MinGW_1-Windows/WorldObj.o
 ./build/Debug/MinGW_1-Windows/glwidget.o
 ./build/Debug/MinGW_1-Windows/main.o

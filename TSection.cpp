@@ -22,16 +22,16 @@ float TSection::getDlugosc(){
     }
     
 void TSection::drawSection() {
-       /*     float kierunek;
+            float kierunek;
             if(type==0){
                 //podklady
-                gl.glBegin(GL2.GL_LINES);
-                gl.glVertex3f(0, 2f, 0); 
-                gl.glVertex3f(0, 2f, size);
-                gl.glEnd();
+                //gl.glBegin(GL2.GL_LINES);
+                //gl.glVertex3f(0, 2f, 0); 
+                //gl.glVertex3f(0, 2f, size);
+                //gl.glEnd();
             }
             //krzywa
-            else if(type==1){
+            /*else if(type==1){
                 //if(angle==0||radius==0||angle>6.28) {
                     //System.out.println("fail"+this.id);
                     //return;

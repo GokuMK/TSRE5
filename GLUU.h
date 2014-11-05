@@ -6,6 +6,7 @@
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
 #include <QOpenGLShaderProgram>
+#include "Vector4f.h"
 //QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
 class GLUU {
@@ -26,6 +27,8 @@ public:
     unsigned int skyLight;
     unsigned int shaderAlpha;
     unsigned int shaderAlphaTest;
+    unsigned int shaderTextureEnabled;
+    unsigned int shaderShapeColor;
     
     float alpha;
     float alphaTest;
@@ -53,8 +56,12 @@ public:
     void mvPushMatrix();
     void mvPopMatrix();
     float degToRad(float degrees);
+    void disableTextures(Vector4f* color);
+    void enableTextures();
 private:
     const char* getShader(QString shaderScript, QString type);
+    bool textureEnabled;
+    Vector4f shapeColor;
 };
 
 #endif	/* GLUU_H */

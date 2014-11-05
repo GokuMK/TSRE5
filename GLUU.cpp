@@ -3,6 +3,7 @@
 #include "GLMatrix.h"
 #include "ReadFile.h"
 #include "Game.h"
+#include "Vector4f.h"
 #include <QDebug>
 #include <QFile>
 
@@ -82,6 +83,8 @@ void GLUU::initShader() {
     skyLight = m_program->uniformLocation("sky");
     shaderAlpha = m_program->uniformLocation("isAlpha");
     shaderAlphaTest = m_program->uniformLocation("alphaTest");
+    shaderTextureEnabled = m_program->uniformLocation("textureEnabled");
+    shaderShapeColor = m_program->uniformLocation("shapeColor");
     //m_normalMatrixLoc = m_program->uniformLocation("normalMatrix");
     //m_lightPosLoc = m_program->uniformLocation("lightPos");
     // Light position is fixed.
@@ -112,8 +115,23 @@ void GLUU::setMatrixUniforms() {
     m_program->setUniformValue(skyLight, sky[0],sky[1],sky[2],sky[3]);
     m_program->setUniformValue(shaderAlpha, alpha);
     m_program->setUniformValue(shaderAlphaTest, alphaTest);
+    textureEnabled = true;
+    m_program->setUniformValue(shaderTextureEnabled, 1.0f);
 };
 
 float GLUU::degToRad(float degrees) {
     return degrees * M_PI / 180.0;
+}
+
+void GLUU::disableTextures(Vector4f* color){
+    m_program->setUniformValue(shaderShapeColor, color->x, color->y, color->z, color->c);
+    if(!this->textureEnabled) return;
+    this->textureEnabled = false;
+    m_program->setUniformValue(shaderTextureEnabled, 0.0f);
+}
+
+void GLUU::enableTextures(){
+    if(this->textureEnabled) return;
+    this->textureEnabled = true;
+    m_program->setUniformValue(shaderTextureEnabled, 1.0f);
 }

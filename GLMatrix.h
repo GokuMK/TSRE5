@@ -7,6 +7,7 @@ public:
     static float* clone(float* a);
     static float* create();
     static float* identity(float *out);
+    static float* fromRotationTranslation(float* out, float* q, float* v);
     static float* lookAt(float *out, float *eye, float *center, float *up);
     static float* multiply(float *out, float *a, float *b);
     static float* perspective(float* out, float fovy, float aspect, float near, float far);
