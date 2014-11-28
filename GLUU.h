@@ -7,6 +7,7 @@
 #include <QMatrix4x4>
 #include <QOpenGLShaderProgram>
 #include "Vector4f.h"
+#include "Vector3f.h"
 //QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
 class GLUU {
@@ -57,6 +58,8 @@ public:
     void mvPopMatrix();
     float degToRad(float degrees);
     void disableTextures(Vector4f* color);
+    void disableTextures(Vector3f* color);
+    void disableTextures(float x, float y, float z, float a);
     void enableTextures();
 private:
     const char* getShader(QString shaderScript, QString type);

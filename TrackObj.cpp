@@ -1,4 +1,4 @@
-#include "StaticObj.h"
+#include "TrackObj.h"
 #include "SFile.h"
 #include "ShapeLib.h"
 #include "GLMatrix.h"
@@ -10,18 +10,18 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-StaticObj::StaticObj() {
+TrackObj::TrackObj() {
     this->shape = -1;
     this->loaded = false;
 }
 
-StaticObj::StaticObj(const StaticObj& orig) {
+TrackObj::TrackObj(const TrackObj& orig) {
 }
 
-StaticObj::~StaticObj() {
+TrackObj::~TrackObj() {
 }
 
-void StaticObj::load(int x, int y) {
+void TrackObj::load(int x, int y) {
     this->shape = ShapeLib::addShape(resPath, fileName);
     this->x = x;
     this->y = y;
@@ -33,7 +33,7 @@ void StaticObj::load(int x, int y) {
     setMartix();
 }
 
-void StaticObj::set(QString sh, FileBuffer* data) {
+void TrackObj::set(QString sh, FileBuffer* data) {
     if (sh == ("filename")) {
         fileName = ParserX::odczytajtc(data);
         return;
@@ -42,7 +42,7 @@ void StaticObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
-void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
+void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     if (!loaded) return;
     if (shape < 0) return;
     if (jestPQ < 2) return;
@@ -93,3 +93,5 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     
     ShapeLib::shape[shape]->render();
 };
+
+

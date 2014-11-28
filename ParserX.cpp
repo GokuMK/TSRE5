@@ -2,6 +2,21 @@
 #include "SFile.h"
 #include <QDebug>
 //-----------------------------------
+//Next line
+//-----------------------------------
+int ParserX::nextLine(FileBuffer* bufor){
+    char b;
+    while (bufor->length >= bufor->off + 2) {
+        b = bufor->get();
+        //qDebug() << b;
+        bufor->off++;
+        if(b == '\n'){
+            return 1;
+        }
+    }
+    return 0;
+}
+//-----------------------------------
 //Szukanie sekcji
 //-----------------------------------
 int ParserX::szukajsekcji1(QString sh, FileBuffer* bufor){

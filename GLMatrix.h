@@ -1,6 +1,16 @@
 #ifndef GLMATRIX_H
 #define	GLMATRIX_H
 
+class Vec3 {
+public:
+    static float* transformMat4(float* out, float* a, float* m);
+};
+
+class Quat {
+public:
+    static float* fromRotationXYZ(float *out, float *a);
+};
+
 class Mat4 {
 public:
     static float GLMAT_EPSILON;
@@ -13,6 +23,7 @@ public:
     static float* perspective(float* out, float fovy, float aspect, float near, float far);
     static float* rotate(float* out, float* a, float rad, float* axis);
     static float* rotate(float* out, float* a, float rad, float x, float y, float z);
+    static float* rotateY(float* out, float* a, float rad);
     static float* translate(float* out, float* a, float* v);
     static float* translate(float* out, float* a,float x,float y,float z);
 private:

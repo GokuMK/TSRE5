@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include <QWidget>
+#include "ToolBox.h"
 
 QT_BEGIN_NAMESPACE
 class QSlider;
@@ -20,12 +21,8 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private:
-    //QSlider *createSlider();
-
     GLWidget *glWidget;
-    //QSlider *xSlider;
-    //QSlider *ySlider;
-    //QSlider *zSlider;
+    ToolBox *groupBox;
 };
 //! [0]
 

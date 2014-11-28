@@ -41,6 +41,7 @@ public:
     void keyUp(QKeyEvent * e);
     void update(float fps);
     float * pozT;
+    int starex, starey;
 private:
     //int aktwx = 0, aktwz = 0;
     float pos[3];
@@ -51,7 +52,6 @@ private:
     float relativePos[3];
     float relativeRot[2];
     int przesx = 3, przesy = 1, przesz = 3;
-    int starex, starey;
     int jestcontrol;
     int lpm = 0;
     bool moveF, moveR, moveB, moveL;

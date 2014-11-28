@@ -26,13 +26,21 @@ public:
     bool loaded;
     float size;
     int jestPQ = 0;
+    Vector3f selectionColor;
+    bool selected;
     
     WorldObj();
     WorldObj(const WorldObj& orig);
     virtual ~WorldObj();
     virtual void load(int x, int y);
     virtual void set(QString sh, FileBuffer* data);
-    virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov);
+    void setPosition(float* p);
+    void initPQ(float* p);
+    void setQdirection(float* q);
+    void setNewQdirection();
+    void setMartix();
+    void translate(float px, float py, float pz);
+    virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
 
 };

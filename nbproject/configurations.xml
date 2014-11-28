@@ -20,8 +20,10 @@
         <itemPath>Vector4f.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="ogl" projectFiles="true">
+        <itemPath>GLH.h</itemPath>
         <itemPath>GLUU.h</itemPath>
         <itemPath>OglObj.h</itemPath>
+        <itemPath>Pointer3d.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
@@ -53,6 +55,7 @@
           <itemPath>TransferObj.h</itemPath>
           <itemPath>WorldObj.h</itemPath>
         </logicalFolder>
+        <itemPath>Ref.h</itemPath>
         <itemPath>Route.h</itemPath>
         <itemPath>TFile.h</itemPath>
         <itemPath>Terrain.h</itemPath>
@@ -64,6 +67,7 @@
         <itemPath>zlib.h</itemPath>
       </logicalFolder>
       <itemPath>Game.h</itemPath>
+      <itemPath>ToolBox.h</itemPath>
       <itemPath>glwidget.h</itemPath>
       <itemPath>window.h</itemPath>
     </logicalFolder>
@@ -90,8 +94,10 @@
         <itemPath>Vector4f.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="ogl" projectFiles="true">
+        <itemPath>GLH.cpp</itemPath>
         <itemPath>GLUU.cpp</itemPath>
         <itemPath>OglObj.cpp</itemPath>
+        <itemPath>Pointer3d.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
@@ -120,9 +126,12 @@
           <itemPath>DynTrackObj.cpp</itemPath>
           <itemPath>ForestObj.cpp</itemPath>
           <itemPath>StaticObj.cpp</itemPath>
+          <itemPath>TrackObj.cpp</itemPath>
+          <itemPath>TrackObj.h</itemPath>
           <itemPath>TransferObj.cpp</itemPath>
           <itemPath>WorldObj.cpp</itemPath>
         </logicalFolder>
+        <itemPath>Ref.cpp</itemPath>
         <itemPath>Route.cpp</itemPath>
         <itemPath>TFile.cpp</itemPath>
         <itemPath>Terrain.cpp</itemPath>
@@ -130,6 +139,7 @@
         <itemPath>Tile.cpp</itemPath>
       </logicalFolder>
       <itemPath>Game.cpp</itemPath>
+      <itemPath>ToolBox.cpp</itemPath>
       <itemPath>glwidget.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>window.cpp</itemPath>
@@ -186,6 +196,10 @@
       </item>
       <item path="ForestObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GLH.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GLH.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GLMatrix.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GLMatrix.h" ex="false" tool="3" flavor2="0">
@@ -206,9 +220,17 @@
       </item>
       <item path="ParserX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ReadFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ref.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Ref.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Route.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -273,6 +295,14 @@
       <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ToolBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ToolBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrackObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -361,6 +391,10 @@
       </item>
       <item path="ForestObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GLH.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GLH.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GLMatrix.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GLMatrix.h" ex="false" tool="3" flavor2="0">
@@ -381,9 +415,17 @@
       </item>
       <item path="ParserX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ReadFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ref.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Ref.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Route.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -448,6 +490,14 @@
       <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ToolBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ToolBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrackObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -205,7 +205,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
         Vector3f p;
         Vector3f o;
         sectionHash = hash;
-        
+
         int len = 0;
 
         for (int j = 0; j < iTRnodes; j++) {
@@ -213,7 +213,13 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
             if (n->typ == -1) continue;
             if (n->typ == 1) {
                 for (int i = 0; i < n->iTrv; i++) {
-                    len +=6;
+                    p.set(
+                            (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10],
+                            n->trVectorSection[i].param[11],
+                            (-n->trVectorSection[i].param[9] - playerT[1])*2048 - n->trVectorSection[i].param[12]
+                            );
+                    if (sqrt(p.x * p.x + p.z * p.z) > 3000) continue;
+                    len +=getLineBufferSize((int) n->trVectorSection[i].param[0]);
                 }
             }
         }
@@ -236,6 +242,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
                             n->trVectorSection[i].param[14],
                             n->trVectorSection[i].param[15]
                             );
+                    if (sqrt(p.x * p.x + p.z * p.z) > 3000) continue;
                     drawLine(gluu, ptr, p, o, (int) n->trVectorSection[i].param[0]);
                 }
             } /*else if (n.typ == 0 || n.typ == 2) {
@@ -253,7 +260,6 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
             }*/
         }
         sectionLines.setMaterial(1.0, 1.0, 0.0);
-        qDebug() << ptr-punkty;
         sectionLines.init(punkty, ptr-punkty, sectionLines.V, GL_LINES);
 
         delete punkty;
@@ -265,35 +271,42 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
     sectionLines.render();
 }
 
+int TDB::getLineBufferSize(int idx) {
+    try{
+        return tsection->sekcja.at(idx)->getLineBufferSize() + 6;
+    } catch(const std::out_of_range& oor){
+        
+    }
+    return 6;
+}
+
 void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
+    
+    float matrix[16];
+    float q[4]; q[0] = q[1] = q[2] = 0; q[3] = 1;
+    float rot[3]; rot[0] = M_PI; rot[1] = -o.y; rot[2] = o.z;
+    
+    Quat::fromRotationXYZ(q, rot);
+    Mat4::fromRotationTranslation(matrix, q, reinterpret_cast<float *> (&p));
+    Mat4::rotate(matrix, matrix, o.x, 1, 0, 0);
+    
+    float point1[3]; point1[0] = 0; point1[1] = 0; point1[2] = 0;
+    float point2[3]; point2[0] = 0; point2[1] = 2; point2[2] = 0;
+    Vec3::transformMat4(point1, point1, matrix);
+    Vec3::transformMat4(point2, point2, matrix);
+    *ptr++ = point1[0];
+    *ptr++ = point1[1];
+    *ptr++ = point1[2];
+    *ptr++ = point2[0];
+    *ptr++ = point2[1];
+    *ptr++ = point2[2];
 
-    //if (sqrt(p.x * p.x + p.z * p.z) > 3000) return;
-
-    //gl.glTranslatef(p.x, p.y, p.z);
-
-    /*Vector4f q = Inne.eToQ(new Vector3f((float) M_PI, o.y, o.z));
-    float scale = (float) sqrt(q.x * q.x + q.y * q.y + q.z * q.z);
-    float angle = (float) ((acos(q.c)*360) / M_PI);
-
-    gl.glRotatef(-angle, q.x*scale, q.y*scale, q.z * scale);
-    gl.glRotatef(o.x * 180 / (float) M_PI, 1, 0, 0);*/
-    //
-    //float[] m = Inne.rotation(new Vector3f(-o.x,-o.y+(float)(Math.PI),o.z));
-    //float[] m = Inne.rotation(new Vector3f(-o.x,0,0));
-    //gl.glMultMatrixf(m,0);
-
-    //gl.glBegin(GL_LINES);
-    *ptr++ = p.x;
-    *ptr++ = p.y;
-    *ptr++ = p.z;
-    *ptr++ = p.x;
-    *ptr++ = p.y+2;
-    *ptr++ = p.z;
-    //gl.glEnd();
-
-    //if (tsection.sekcja.containsKey(idx))
-    //    tsection.sekcja.get(idx).drawSection(gl);
-
+    try{
+        tsection->sekcja.at(idx)->drawSection(ptr, matrix);
+    } catch(const std::out_of_range& oor){
+        qDebug() << "nie ma sekcji "<<idx;
+    }
+            
 }
 
 TDB::TDB(const TDB& orig) {

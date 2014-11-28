@@ -46,7 +46,7 @@ void TransferObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
-void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov) {
+void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     if (!loaded) return;
     //if (jestPQ < 2) return;
     //GLUU* gluu = GLUU::get();
@@ -94,7 +94,16 @@ void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
     Mat4::identity(gluu->objStrMatrix);    
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
-    gluu->enableTextures();
+    
+    if(selectionColor != 0){
+        int wColor = (int)(selectionColor/65536);
+        int sColor = (int)(selectionColor - wColor*65536)/256;
+        int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
+        gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
+    } else {
+        gluu->enableTextures();
+    }
+    
     drawShape();
 };
 

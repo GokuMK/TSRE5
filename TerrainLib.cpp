@@ -44,7 +44,7 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR)
             if(terr->loaded == -2) return -1;
             
             if((posx+1024)/8+1>256||(posz+1024)/8+1>256)
-                return terr->terrainData[(int)(posx+1024)/8][(int)(posz+1024)/8];
+                return terr->terrainData[(int)(posz+1024)/8][(int)(posx+1024)/8];
 
             float tx = (posx/8) - (float)floor(posx/8);
             float tz = (posz/8) - (float)floor(posz/8);

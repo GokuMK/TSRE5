@@ -9,6 +9,7 @@ public:
     ParserX(const ParserX& orig);
     virtual ~ParserX();
     
+    static int nextLine(FileBuffer* bufor);
     static int szukajsekcji1(QString sh, FileBuffer* bufor);
     static QString nazwasekcji(FileBuffer* bufor);
     static QString nazwasekcji_inside(FileBuffer* bufor);

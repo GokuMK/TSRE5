@@ -26,13 +26,13 @@ bool TSectionDAT::loadGlobal() {
     if (!file->open(QIODevice::ReadOnly))
         return false;
     FileBuffer* bufor = ReadFile::read(file);
-
+    bufor->off = 0;
     //szukanie TrackSections
     sh = "TrackSections";
     ParserX::szukajsekcji1(sh, bufor);
 
     int index = 0;
-    bufor->off = 0;
+    
     for (;;) {
         sh = ParserX::nazwasekcji(bufor);
         //qDebug() << sh;
@@ -41,12 +41,13 @@ bool TSectionDAT::loadGlobal() {
             index = (int) ParserX::parsujr(bufor);
             //System.out.println("jest "+index);
             sekcja[index] = new TSection(index);
+            //qDebug() << index;
             continue;
         }
         if (sh.toLower() == "sectionsize") {
             sekcja[index]->val1 = (int) ParserX::parsujr(bufor);
             sekcja[index]->size = ParserX::parsujr(bufor);
-            //System.out.println(sekcja.get(index).id+" "+sekcja.get(index).size);
+            //qDebug() << sekcja[index]->id<<" "<<sekcja[index]->size;
             //Parse.pominsekcje(bufor); 
         }
         if (sh.toLower() =="_info") {

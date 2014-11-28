@@ -53,6 +53,13 @@ void Tile::wczytajObiekty() {
         //console.log(obj.type);
         WorldObj* obj = (WorldObj*) it->second;
 
+        wczytajObiekt(obj);
+        if(obj->UiD > maxUiD) maxUiD = obj->UiD;
+    }
+    loaded = 1;
+}
+
+void Tile::wczytajObiekt(WorldObj* obj){
         if (obj->type == "static") {
             obj->skipLevel = 1;
             obj->resPath = Game::root + "/routes/" + Game::route + "/shapes";
@@ -73,8 +80,7 @@ void Tile::wczytajObiekty() {
             obj->skipLevel = 1;
             obj->resPath = Game::root + "/routes/" + Game::route + "/shapes";
             obj->load(x, z);
-        }
-        else if (obj->type == "dyntrack") {
+        } else if (obj->type == "dyntrack") {
             obj->skipLevel = 3;
             obj->resPath = Game::root + "/routes/" + Game::route + "/textures";
             obj->load(x, z);
@@ -87,8 +93,6 @@ void Tile::wczytajObiekty() {
             obj->resPath = Game::root + "/routes/" + Game::route + "/textures";
             obj->load(x, z);
         }
-    }
-    loaded = 1;
 }
 
 void Tile::load() {
@@ -111,7 +115,7 @@ void Tile::load() {
         //wybranie zdarzenia
         sh = ParserX::nazwasekcji(data).toLower();
         //qDebug() << "= " << sh;
-
+        
         WorldObj* nowy;
         if (sh == "") {
             //("wczytano "+obiekty.size());
@@ -119,31 +123,42 @@ void Tile::load() {
             wczytajObiekty();
             return;
         } else if (sh == "vdbidcount") {
+            vDbIdCount = ParserX::parsujr(data);
+            qDebug() <<vDbIdCount;
+            viewDbSphere = new ViewDbSphere[vDbIdCount];
             ParserX::pominsekcje(data);
             continue;
-        } else if (sh == "viewobsphere") {
+        } else if (sh == "viewdbsphere") {
+            //qDebug() <<sh;
+            int j = 0;
+            do {
+                for(int i = 0; i< 3; i++){
+                    sh = ParserX::nazwasekcji_inside(data).toLower();
+                    ParserX::pominsekcje(data);
+                }
+                if(sh == ("vdbid")) {
+                    viewDbSphere[j].vDbId = ParserX::parsujr(data);
+                }
+                if(sh == ("position")) {
+                    viewDbSphere[j].position[0] = ParserX::parsujr(data);
+                    viewDbSphere[j].position[1] = ParserX::parsujr(data);
+                    viewDbSphere[j].position[2] = ParserX::parsujr(data);
+                }
+                if(sh == ("radius")) {
+                    viewDbSphere[j].radius = ParserX::parsujr(data);
+                }
+                if(j > 0) ParserX::pominsekcje(data);
+                j++;
+            } while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == ""));
+            
             ParserX::pominsekcje(data);
             continue;
-        } else if (sh == "static") {
-            nowy = (WorldObj*) (new StaticObj());
-        } else if (sh == "signal") {
-            nowy = (WorldObj*) (new StaticObj());
-        } else if (sh == "speedpost") {
-            nowy = (WorldObj*) (new StaticObj());
-        } else if (sh == "trackobj") {
-            nowy = (WorldObj*) (new StaticObj());
-        } else if (sh == "gantry") {
-            nowy = (WorldObj*) (new StaticObj());
-        } else if (sh == "dyntrack") {
-            nowy = (WorldObj*) (new DynTrackObj());
-        } else if (sh == "forest") {
-            nowy = (WorldObj*) (new ForestObj());
-        } else if (sh == "transfer") {
-            nowy = (WorldObj*) (new TransferObj());
-        } else {
-            nowy = new WorldObj();
+        } 
+
+        if (!createObj(&nowy, sh)) {
+            ParserX::pominsekcje(data);
+            continue;
         }
-        nowy->type = sh;
 
         while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
             nowy->set(sh, data);
@@ -194,17 +209,72 @@ void Tile::load() {
     }
 }
 
+bool Tile::createObj(WorldObj** nowy, QString sh) {
+    if (sh == "static") {
+        *nowy = (WorldObj*) (new StaticObj());
+    } else if (sh == "signal") {
+        *nowy = (WorldObj*) (new StaticObj());
+    } else if (sh == "speedpost") {
+        *nowy = (WorldObj*) (new StaticObj());
+    } else if (sh == "trackobj") {
+        *nowy = (WorldObj*) (new TrackObj());
+    } else if (sh == "gantry") {
+        *nowy = (WorldObj*) (new StaticObj());
+    } else if (sh == "dyntrack") {
+        *nowy = (WorldObj*) (new DynTrackObj());
+    } else if (sh == "forest") {
+        *nowy = (WorldObj*) (new ForestObj());
+    } else if (sh == "transfer") {
+        *nowy = (WorldObj*) (new TransferObj());
+    } else {
+        return false;
+        //nowy = new WorldObj();
+    }
+    (*nowy)->type = sh;
+    return true;
+}
+
+WorldObj* Tile::getObj(int uid) {
+    for (int i = 0; i < jestObiektow; i++) {
+        if (obiekty[i]->UiD == uid) {
+            return obiekty[i];
+        }
+    }
+    return new WorldObj();
+}
+
+void Tile::transalteObj(float px, float py, float pz, int uid) {
+    for (int i = 0; i < jestObiektow; i++) {
+        if (obiekty[i]->UiD == uid) {
+            obiekty[i]->translate(px, py, pz);
+        }
+    }
+}
+
+void Tile::placeObject(float* pozW, Ref::RefItem* itemData) {
+    qDebug() << pozW[0] << " " << pozW[1] << " " << pozW[2] << " " << itemData->type << " " << itemData->filename;
+    
+    WorldObj* nowy;
+    if(!createObj(&nowy, itemData->type)) return;
+    nowy->initPQ(pozW);
+    nowy->UiD = ++maxUiD;
+    nowy->fileName = itemData->filename;
+    wczytajObiekt(nowy);
+    obiekty[jestObiektow++] = nowy;
+    qDebug() << obiekty[jestObiektow-1]->qDirection[3];
+}
+
 void Tile::render() {
     //render(0, 0);
 }
 
-void Tile::render(float * playerT, float* playerW, float* target, float fov) {
+void Tile::render(float * playerT, float* playerW, float* target, float fov, bool selection) {
     if (loaded != 1) return;
     GLUU* gluu = GLUU::get();
     //gl.activeTexture(gl.TEXTURE0);
     //gluu->setMatrixUniforms();
     //this.obiekty.forEach(function(obj) {
-
+    int selectionColor = 0;
     for (int i = 0; i < jestObiektow; i++) {
         if (obiekty[i]->loaded) {//
             float lodx = (x - playerT[0])*2048 + obiekty[i]->position[0] - playerW[0];
@@ -214,7 +284,11 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov) {
             if (lod < Game::objectLod) {
                 gluu->mvPushMatrix();
                 //obiekty[i]->render(gluu, lod, x-playerT[0]*2048, z-playerT[1]*2048);
-                obiekty[i]->render(gluu, lod, lodx, lodz, playerW, target, fov);
+                if (selection) {
+                    int sxx = (x - playerT[0] + 5)*10 + (-z + playerT[1] + 5);
+                    selectionColor = obiekty[i]->UiD + sxx * 65536;
+                }
+                obiekty[i]->render(gluu, lod, lodx, lodz, playerW, target, fov, selectionColor);
                 //obiekty[i]->render(gluu);
                 gluu->mvPopMatrix();
             }

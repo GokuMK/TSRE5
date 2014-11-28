@@ -8,6 +8,9 @@
 #include <QMatrix4x4>
 #include <QBasicTimer>
 #include "Camera.h"
+#include "WorldObj.h"
+#include "Pointer3d.h"
+#include "Ref.h"
 
 class Tile;
 class SFile;
@@ -30,8 +33,10 @@ public:
 
 public slots:
     void cleanup();
+    void enableTool(QString name);
 
 signals:
+    void routeLoaded(Ref * a);
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
@@ -61,6 +66,14 @@ private:
     GLUU* gluu;
     bool m_transparent;
     Camera* camera;
+    bool selection = false;
+    int mousex, mousey;
+    WorldObj* selectedObj = NULL;
+    Pointer3d* pointer3d;
+    float lastPointerPos[3];
+    float aktPointerPos[3];
+    bool mousePressed = false;
+    QString toolEnabled = "";
 };
 
 #endif

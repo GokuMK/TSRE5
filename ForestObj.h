@@ -24,7 +24,7 @@ public:
     ForestObj(const ForestObj& orig);
     void load(int x, int y);
     void set(QString sh, FileBuffer* data);
-    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov);
+    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     
     virtual ~ForestObj();
 private:

@@ -191,7 +191,7 @@ void SFile::render() {
     //var oldtex = -3;
 
     GLUU *gluu = GLUU::get();
-    gluu->enableTextures();
+    //gluu->enableTextures();
     //for(int iii = 0; iii < 200; iii++)
     for (int i = 0; i < distancelevel[0].iloscs; i++) {
         for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {
@@ -222,31 +222,31 @@ void SFile::render() {
             else 
                 gluu->m_program->setUniformValue(gluu->shaderAlphaTest, gluu->alphaTest);
             
-            if(primstate[prim_state].arg4 == -1)
-                glDisable(GL_TEXTURE_2D);
-            else if (image[texture[primstate[prim_state].arg4].image].texAddr > 0) {
-                glEnable(GL_TEXTURE_2D);
+            if(primstate[prim_state].arg4 == -1){
+                //glDisable(GL_TEXTURE_2D);
+            } else if (image[texture[primstate[prim_state].arg4].image].texAddr > 0) {
+                //glEnable(GL_TEXTURE_2D);
                 glBindTexture(GL_TEXTURE_2D, image[texture[primstate[prim_state].arg4].image].texAddr);
             } else if (image[texture[primstate[prim_state].arg4].image].tex == -2) {
-                glDisable(GL_TEXTURE_2D);
+                //glDisable(GL_TEXTURE_2D);
             } else if (image[texture[primstate[prim_state].arg4].image].tex == -1) {
                 //image[texture[primstate[prim_state].arg4].image].tex = -2;
                 image[texture[primstate[prim_state].arg4].image].tex = TexLib::addTex(
                         texPath,
                         image[texture[primstate[prim_state].arg4].image].name
                         );
-                glDisable(GL_TEXTURE_2D);
+                //glDisable(GL_TEXTURE_2D);
             } else if (TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->glLoaded) {
                 image[texture[primstate[prim_state].arg4].image].texAddr = TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->tex[0];
-                glDisable(GL_TEXTURE_2D);
+                //glDisable(GL_TEXTURE_2D);
             } else if (TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->loaded) {
                 //if(allowLag) {
                 //    allowLag = false;
                 TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->GLTextures();
-                glDisable(GL_TEXTURE_2D);
+                //glDisable(GL_TEXTURE_2D);
                 //}
             } else {
-                glDisable(GL_TEXTURE_2D);
+                //glDisable(GL_TEXTURE_2D);
             }/**/
             
             QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].czesci[j].VAO);

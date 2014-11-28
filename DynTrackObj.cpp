@@ -28,6 +28,9 @@ void DynTrackObj::load(int x, int y) {
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
+    this->qDirection[2] = -this->qDirection[2];
+    Mat4::fromRotationTranslation(this->matrix, qDirection, position);
+    Mat4::rotate(this->matrix, this->matrix, M_PI, 0, -1, 0);
     this->loaded = true;
     this->size = -1;
 }
@@ -61,20 +64,25 @@ void DynTrackObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
-void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov) {
+void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     if (!loaded) return;
 
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, position);
-    float scale = sqrt(qDirection[0] * qDirection[0] + qDirection[1] * qDirection[1] + qDirection[2] * qDirection[2]);
-    float angle = ((acos(qDirection[3])*360) / M_PI);
-    Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, gluu->degToRad(-angle), -qDirection[0] * scale, -qDirection[1] * scale, qDirection[2] * scale);
-    Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, gluu->degToRad(180), 0, -1, 0);
+    Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
 
     Mat4::identity(gluu->objStrMatrix);    
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->m_program->setUniformValue(gluu->shaderAlpha, 0.0f);
-    gluu->enableTextures();
+    
+    if(selectionColor != 0){
+        int wColor = (int)(selectionColor/65536);
+        int sColor = (int)(selectionColor - wColor*65536)/256;
+        int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
+        gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
+    } else {
+        gluu->enableTextures();
+    }
+    
     drawShape();
 };
 

@@ -1,15 +1,15 @@
-#ifndef STATICOBJ_H
-#define	STATICOBJ_H
+#ifndef TRACKOBJ_H
+#define	TRACKOBJ_H
 
 #include "WorldObj.h"
 #include <QString>
 #include "FileBuffer.h"
 
-class StaticObj : public WorldObj  {
+class TrackObj : public WorldObj  {
 public:
-    StaticObj();
-    StaticObj(const StaticObj& orig);
-    virtual ~StaticObj();
+    TrackObj();
+    TrackObj(const TrackObj& orig);
+    virtual ~TrackObj();
     void load(int x, int y);
     void set(QString sh, FileBuffer* data);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
@@ -17,5 +17,5 @@ private:
 
 };
 
-#endif	/* STATICOBJ_H */
+#endif	/* TRACKOBJ_H */
 

@@ -15,7 +15,8 @@ public:
     TSection(const TSection& orig);
     virtual ~TSection();
     float getDlugosc();
-    void drawSection();
+    int getLineBufferSize();
+    void drawSection(float* &ptr, float* matrix);
     void setDrawPosition(float metry);
     Vector3f *getDrawPosition(float metry);
     void setCamPosition(float metry, float ob);

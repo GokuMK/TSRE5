@@ -20,6 +20,7 @@ public:
     void renderAll(GLUU *gluu, float * playerT);
     void renderLines(GLUU *gluu, float* playerT);
 private:
+    int getLineBufferSize(int idx);
     void drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx);
     OglObj linieSieci;
     OglObj konceSieci;
