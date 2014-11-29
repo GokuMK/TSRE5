@@ -104,3 +104,7 @@ void WorldObj::initPQ(float* p){
     this->qDirection[3] = 1;
     this->jestPQ = 2;
 }
+
+void WorldObj::save(QTextStream out){
+    
+}

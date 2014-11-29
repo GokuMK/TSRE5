@@ -33,6 +33,7 @@ void DynTrackObj::load(int x, int y) {
     Mat4::rotate(this->matrix, this->matrix, M_PI, 0, -1, 0);
     this->loaded = true;
     this->size = -1;
+    this->skipLevel = 3;
 }
 
 void DynTrackObj::set(QString sh, FileBuffer* data) {

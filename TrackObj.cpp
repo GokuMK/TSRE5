@@ -29,6 +29,7 @@ void TrackObj::load(int x, int y) {
     this->qDirection[2] = -this->qDirection[2];
     this->loaded = true;
     this->size = -1;
+    this->skipLevel = 3;
     
     setMartix();
 }
@@ -38,6 +39,16 @@ void TrackObj::set(QString sh, FileBuffer* data) {
         fileName = ParserX::odczytajtc(data);
         return;
     }
+    if (sh == ("sectionidx")) {
+        sectionidx = ParserX::parsujr(data);
+    }
+    if (sh == ("elevation")) {
+        elevation = ParserX::parsujr(data);
+    }
+    if (sh == ("collideflags")) {
+        collideflags = ParserX::parsujr(data);
+    }
+    
     WorldObj::set(sh, data);
     return;
 }

@@ -52,6 +52,7 @@
           <itemPath>DynTrackObj.h</itemPath>
           <itemPath>ForestObj.h</itemPath>
           <itemPath>StaticObj.h</itemPath>
+          <itemPath>TrackObj.h</itemPath>
           <itemPath>TransferObj.h</itemPath>
           <itemPath>WorldObj.h</itemPath>
         </logicalFolder>
@@ -127,7 +128,6 @@
           <itemPath>ForestObj.cpp</itemPath>
           <itemPath>StaticObj.cpp</itemPath>
           <itemPath>TrackObj.cpp</itemPath>
-          <itemPath>TrackObj.h</itemPath>
           <itemPath>TransferObj.cpp</itemPath>
           <itemPath>WorldObj.cpp</itemPath>
         </logicalFolder>

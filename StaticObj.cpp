@@ -29,6 +29,7 @@ void StaticObj::load(int x, int y) {
     this->qDirection[2] = -this->qDirection[2];
     this->loaded = true;
     this->size = -1;
+    this->skipLevel = 1;
     
     setMartix();
 }
@@ -93,3 +94,13 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     
     ShapeLib::shape[shape]->render();
 };
+
+void StaticObj::save(QTextStream out){
+out << "	Static (\n";
+out << "		UiD ( "<<this->UiD<<" )\n";
+out << "		FileName ( "<<this->fileName<<" )\n";
+out << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
+out << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
+out << "		VDbId ( "<<this->vDbId<<" )\n";
+out << "	)\n";
+}

@@ -31,6 +31,7 @@ INPUT(
 ./build/Debug/MinGW_1-Windows/Texture.o
 ./build/Debug/MinGW_1-Windows/Tile.o
 ./build/Debug/MinGW_1-Windows/ToolBox.o
+./build/Debug/MinGW_1-Windows/TrackObj.o
 ./build/Debug/MinGW_1-Windows/TransferObj.o
 ./build/Debug/MinGW_1-Windows/Vector2f.o
 ./build/Debug/MinGW_1-Windows/Vector2i.o

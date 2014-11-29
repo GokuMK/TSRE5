@@ -27,6 +27,7 @@ void TransferObj::load(int x, int y) {
     this->size = -1;
     this->tex = -1;
     this->init = false;
+    this->skipLevel = 3;
 }
 
 void TransferObj::set(QString sh, FileBuffer* data) {

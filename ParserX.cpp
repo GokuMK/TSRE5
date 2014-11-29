@@ -296,16 +296,17 @@ QString ParserX::odczytajtc(FileBuffer* bufor){
     //bufor.position(bufor.position()-2); 
     if (b == 34) {
         while ((b = bufor->get()) != 34) {
-            bufor->off++;
-            sciezka += b;
+            //bufor->off++;
+            sciezka += QChar(b, bufor->get());
         }
     } else {
         bufor->off -= 2;
         while (((b = bufor->get()) != 32) && (b != 10)) {
-            bufor->off++;
-            sciezka += b;
+            //bufor->off++;
+            sciezka += QChar(b, bufor->get());
         }
     }
+
     bufor->off++;
     //qDebug() << sciezka;
     return sciezka;

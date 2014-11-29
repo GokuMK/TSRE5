@@ -34,6 +34,7 @@ public:
     virtual ~WorldObj();
     virtual void load(int x, int y);
     virtual void set(QString sh, FileBuffer* data);
+    virtual void save(QTextStream out);
     void setPosition(float* p);
     void initPQ(float* p);
     void setQdirection(float* q);

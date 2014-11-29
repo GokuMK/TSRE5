@@ -8,6 +8,7 @@
 #include "DynTrackObj.h"
 #include "ForestObj.h"
 #include "TransferObj.h"
+#include "TrackObj.h"
 #include "GLUU.h"
 #include <QString>
 #include <QDebug>
@@ -21,6 +22,7 @@ Tile::Tile() {
     x = 0;
     z = 0;
     jestObiektow = 0;
+    vDbIdCount = 0;
 }
 
 Tile::Tile(int xx, int zz) {
@@ -29,6 +31,7 @@ Tile::Tile(int xx, int zz) {
     x = xx;
     z = zz;
     jestObiektow = 0;
+    vDbIdCount = 0;
     load();
 }
 
@@ -53,46 +56,12 @@ void Tile::wczytajObiekty() {
         //console.log(obj.type);
         WorldObj* obj = (WorldObj*) it->second;
 
-        wczytajObiekt(obj);
+        obj->load(x, z);
         if(obj->UiD > maxUiD) maxUiD = obj->UiD;
     }
     loaded = 1;
-}
-
-void Tile::wczytajObiekt(WorldObj* obj){
-        if (obj->type == "static") {
-            obj->skipLevel = 1;
-            obj->resPath = Game::root + "/routes/" + Game::route + "/shapes";
-            obj->load(x, z);
-        } else if (obj->type == "signal") {
-            obj->skipLevel = 1;
-            obj->resPath = Game::root + "/routes/" + Game::route + "/shapes";
-            obj->load(x, z);
-        } else if (obj->type == "speedpost") {
-            obj->skipLevel = 1;
-            obj->resPath = Game::root + "/routes/" + Game::route + "/shapes";
-            obj->load(x, z);
-        } else if (obj->type == "trackobj") {
-            obj->skipLevel = 3;
-            obj->resPath = Game::root + "/global/shapes";
-            obj->load(x, z);
-        } else if (obj->type == "gantry") {
-            obj->skipLevel = 1;
-            obj->resPath = Game::root + "/routes/" + Game::route + "/shapes";
-            obj->load(x, z);
-        } else if (obj->type == "dyntrack") {
-            obj->skipLevel = 3;
-            obj->resPath = Game::root + "/routes/" + Game::route + "/textures";
-            obj->load(x, z);
-        } else if (obj->type == "forest") {
-            obj->skipLevel = 3;
-            obj->resPath = Game::root + "/routes/" + Game::route + "/textures";
-            obj->load(x, z);
-        } else if (obj->type == "transfer") {
-            obj->skipLevel = 3;
-            obj->resPath = Game::root + "/routes/" + Game::route + "/textures";
-            obj->load(x, z);
-        }
+    
+    save();
 }
 
 void Tile::load() {
@@ -124,7 +93,7 @@ void Tile::load() {
             return;
         } else if (sh == "vdbidcount") {
             vDbIdCount = ParserX::parsujr(data);
-            qDebug() <<vDbIdCount;
+            //qDebug() <<vDbIdCount;
             viewDbSphere = new ViewDbSphere[vDbIdCount];
             ParserX::pominsekcje(data);
             continue;
@@ -134,19 +103,21 @@ void Tile::load() {
             do {
                 for(int i = 0; i< 3; i++){
                     sh = ParserX::nazwasekcji_inside(data).toLower();
+                    //qDebug() <<sh;
+                    if(sh == ("vdbid")) {
+                        viewDbSphere[j].vDbId = ParserX::parsujr(data);
+                    }
+                    if(sh == ("position")) {
+                        viewDbSphere[j].position[0] = ParserX::parsujr(data);
+                        viewDbSphere[j].position[1] = ParserX::parsujr(data);
+                        viewDbSphere[j].position[2] = ParserX::parsujr(data);
+                    }
+                    if(sh == ("radius")) {
+                        viewDbSphere[j].radius = ParserX::parsujr(data);
+                    }
                     ParserX::pominsekcje(data);
                 }
-                if(sh == ("vdbid")) {
-                    viewDbSphere[j].vDbId = ParserX::parsujr(data);
-                }
-                if(sh == ("position")) {
-                    viewDbSphere[j].position[0] = ParserX::parsujr(data);
-                    viewDbSphere[j].position[1] = ParserX::parsujr(data);
-                    viewDbSphere[j].position[2] = ParserX::parsujr(data);
-                }
-                if(sh == ("radius")) {
-                    viewDbSphere[j].radius = ParserX::parsujr(data);
-                }
+                
                 if(j > 0) ParserX::pominsekcje(data);
                 j++;
             } while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == ""));
@@ -212,20 +183,28 @@ void Tile::load() {
 bool Tile::createObj(WorldObj** nowy, QString sh) {
     if (sh == "static") {
         *nowy = (WorldObj*) (new StaticObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
     } else if (sh == "signal") {
         *nowy = (WorldObj*) (new StaticObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
     } else if (sh == "speedpost") {
         *nowy = (WorldObj*) (new StaticObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
     } else if (sh == "trackobj") {
         *nowy = (WorldObj*) (new TrackObj());
+        (*nowy)->resPath = Game::root + "/global/shapes";
     } else if (sh == "gantry") {
         *nowy = (WorldObj*) (new StaticObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
     } else if (sh == "dyntrack") {
         *nowy = (WorldObj*) (new DynTrackObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
     } else if (sh == "forest") {
         *nowy = (WorldObj*) (new ForestObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
     } else if (sh == "transfer") {
         *nowy = (WorldObj*) (new TransferObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
     } else {
         return false;
         //nowy = new WorldObj();
@@ -252,6 +231,7 @@ void Tile::transalteObj(float px, float py, float pz, int uid) {
 }
 
 void Tile::placeObject(float* pozW, Ref::RefItem* itemData) {
+    if(itemData == NULL) return;
     qDebug() << pozW[0] << " " << pozW[1] << " " << pozW[2] << " " << itemData->type << " " << itemData->filename;
     
     WorldObj* nowy;
@@ -259,9 +239,49 @@ void Tile::placeObject(float* pozW, Ref::RefItem* itemData) {
     nowy->initPQ(pozW);
     nowy->UiD = ++maxUiD;
     nowy->fileName = itemData->filename;
-    wczytajObiekt(nowy);
+    nowy->load(x, z);
     obiekty[jestObiektow++] = nowy;
     qDebug() << obiekty[jestObiektow-1]->qDirection[3];
+}
+
+void Tile::save() {
+    QString sh;
+    QString path;
+    path = Game::root + "/routes/" + Game::route + "/world2/w" + getNameXY(x) + "" + getNameXY(-z) + ".w";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile file(path);
+    
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+    out << "SIMISA@@@@@@@@@@JINX0w0t______\n";
+    out << "\n";
+    out << "Tr_Worldfile (\n";
+    if(this->vDbIdCount > 0){
+        out << "	VDbIdCount ( "<<this->vDbIdCount<<" )\n";
+        out << "	ViewDbSphere (\n";
+        out << "		VDbId ( "<<viewDbSphere[0].vDbId<<" )\n";
+        out << "		Position ( "<<viewDbSphere[0].position[0]<<" "<<viewDbSphere[0].position[1]<<" "<<viewDbSphere[0].position[2]<<" )\n";
+        out << "		Radius ( "<<viewDbSphere[0].radius<<" )\n";
+        for(int i = 1; i < this->vDbIdCount; i++){
+            out << "		ViewDbSphere (\n";
+            out << "			VDbId ( "<<viewDbSphere[i].vDbId<<" )\n";
+            out << "			Position ( "<<viewDbSphere[i].position[0]<<" "<<viewDbSphere[i].position[1]<<" "<<viewDbSphere[i].position[2]<<" )\n";
+            out << "			Radius ( "<<viewDbSphere[i].radius<<" )\n";
+            out << "		)\n";
+        }
+        out << "	)\n";
+    }
+    for(int i = 1; i < this->jestObiektow; i++){
+        this->obiekty[this->jestObiektow]->save(out);
+    }
+    out << ")";
+ 
+    // optional, as QFile destructor will already do it:
+    file.close(); 
+    
 }
 
 void Tile::render() {

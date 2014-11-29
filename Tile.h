@@ -35,11 +35,11 @@ public:
     void transalteObj(float px, float py, float pz, int uid);
     void render();
     void render(float *  playerT, float* playerW, float* target, float fov, bool selection);
+    void save();
     
 private:
     int maxUiD = 0;
     void wczytajObiekty();
-    void wczytajObiekt(WorldObj* obj);
     bool createObj(WorldObj** nowy, QString sh);
 };
 
