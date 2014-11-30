@@ -18,6 +18,7 @@ public:
     
     int loaded;
     bool inUse;
+    bool modified;
     int x;
     int z;
     //obiekty = new Array();
@@ -31,8 +32,10 @@ public:
     QString getNameXY(int e);
     void load();
     WorldObj* getObj(int uid);
-    void placeObject(float* pozW, Ref::RefItem* itemData);
+    WorldObj* placeObject(float* p, Ref::RefItem* itemData);
+    WorldObj* placeObject(float* p, float* q, Ref::RefItem* itemData);
     void transalteObj(float px, float py, float pz, int uid);
+    void initNew();
     void render();
     void render(float *  playerT, float* playerW, float* target, float fov, bool selection);
     void save();

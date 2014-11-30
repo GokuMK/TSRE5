@@ -223,3 +223,28 @@ void ForestObj::drawShape(){
         glDrawArrays(GL_TRIANGLES, 0, shape.iloscv);
     }
 }
+
+void ForestObj::save(QTextStream* out){
+    if (!loaded) return;
+    int l;
+    QString flags;
+    flags = QString::number(this->staticFlags, 16);
+    l = flags.length();
+    for(int i=0; i<8-l; i++)
+        flags = "0"+flags;
+    
+*(out) << "	Forest (\n";
+*(out) << "		UiD ( "<<this->UiD<<" )\n";
+if(this->treeTexture != "")
+*(out) << "		TreeTexture ( "<<this->treeTexture<<" )\n";
+*(out) << "		ScaleRange ( "<<this->scaleRangeX<<" "<<this->scaleRangeZ<<" )\n";
+*(out) << "		Area ( "<<this->areaX<<" "<<this->areaZ<<" )\n";
+*(out) << "		Population ( "<<this->population<<" )\n";
+*(out) << "		TreeSize ( "<<this->treeSizeX/0.7<<" "<<this->treeSizeZ<<" )\n";
+*(out) << "		StaticFlags ( "<<flags<<" )\n";
+*(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
+*(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
+*(out) << "		VDbId ( "<<this->vDbId<<" )\n";
+*(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
+*(out) << "	)\n";
+}

@@ -12,7 +12,9 @@ Window::Window() {
     mainLayout->addWidget(glWidget);
     mainLayout->addWidget(groupBox);
     setLayout(mainLayout);
-
+    setContentsMargins(0,0,0,0);
+    mainLayout->setContentsMargins(1,1,1,1);
+    
     setWindowTitle(tr("TSRE5"));
     
     QObject::connect(glWidget, SIGNAL(routeLoaded(Ref*)),

@@ -9,6 +9,9 @@
 #include "ForestObj.h"
 #include "TransferObj.h"
 #include "TrackObj.h"
+#include "SpeedpostObj.h"
+#include "SignalObj.h"
+#include "PlatformObj.h"
 #include "GLUU.h"
 #include <QString>
 #include <QDebug>
@@ -17,6 +20,7 @@
 #include "GLMatrix.h"
 
 Tile::Tile() {
+    modified = false;
     loaded = -2;
     inUse = false;
     x = 0;
@@ -26,6 +30,7 @@ Tile::Tile() {
 }
 
 Tile::Tile(int xx, int zz) {
+    modified = false;
     loaded = -2;
     inUse = false;
     x = xx;
@@ -33,6 +38,14 @@ Tile::Tile(int xx, int zz) {
     jestObiektow = 0;
     vDbIdCount = 0;
     load();
+}
+
+void Tile::initNew(){
+    loaded = 1;
+    jestObiektow = 0;
+    vDbIdCount = 0;
+    inUse = false;
+    obiekty.clear();
 }
 
 Tile::Tile(const Tile& orig) {
@@ -61,7 +74,7 @@ void Tile::wczytajObiekty() {
     }
     loaded = 1;
     
-    save();
+    //save();
 }
 
 void Tile::load() {
@@ -99,7 +112,7 @@ void Tile::load() {
             continue;
         } else if (sh == "viewdbsphere") {
             //qDebug() <<sh;
-            int j = 0;
+            /*int j = 0;
             do {
                 for(int i = 0; i< 3; i++){
                     sh = ParserX::nazwasekcji_inside(data).toLower();
@@ -121,7 +134,7 @@ void Tile::load() {
                 if(j > 0) ParserX::pominsekcje(data);
                 j++;
             } while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == ""));
-            
+            */
             ParserX::pominsekcje(data);
             continue;
         } 
@@ -133,47 +146,9 @@ void Tile::load() {
 
         while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
             nowy->set(sh, data);
-            //qDebug() << "=== " << sh;
-            /*
-            if(sh == ("JNodePosn") && nowy->isAttribute(sh)) {
-                //nowy->jNodePosn = [ParserX::parsujr(data), ParserX::parsujr(data), ParserX::parsujr(data), 
-                //                  ParserX::parsujr(data), ParserX::parsujr(data)
-                //];
-                ParserX::pominsekcje(data);
-                continue;
-            }
-            if(sh == ("Speed_Digit_Tex") && nowy->isAttribute(sh)) {
-                //nowy->speed_Digit_Tex = ParserX::odczytajtc(data);
-                ParserX::pominsekcje(data);
-                continue;
-            }
-            if(sh == ("Speed_Sign_Shape") && nowy->isAttribute(sh)) {
-                //nowy->speed_Sign_Shape = [ParserX::parsujr(data), ParserX::parsujr(data), ParserX::parsujr(data), 
-                //               ParserX::parsujr(data), ParserX::parsujr(data), ParserX::parsujr(data),
-                //               ParserX::parsujr(data), ParserX::parsujr(data), ParserX::parsujr(data)
-                //];
-                ParserX::pominsekcje(data);
-                continue;
-            }
-            if(sh == ("Speed_Sign_Shape") && nowy->isAttribute(sh)) {
-                //nowy->speed_Sign_Shape = [ParserX::parsujr(data), ParserX::parsujr(data), ParserX::parsujr(data)];
-                ParserX::pominsekcje(data);
-                continue;
-            }
-            if(sh == ("TrItemId") && nowy->isAttribute(sh)) {
-                //nowy->trItemId = [ParserX::parsujr(data), ParserX::parsujr(data)];
-                ParserX::pominsekcje(data);
-                continue;
-            }/*
-            else {
-                //qDebug() << "-----------------------------mam "<<sh;
-                //qDebug() << "= aa";
-            }*/
             ParserX::pominsekcje(data);
         }
         obiekty[jestObiektow++] = nowy;
-        //obiekty.put(nowy.UiD, nowy);
-        //if(wlasciwosci!=0) System.out.println("wlasciwosci fail");
 
         ParserX::pominsekcje(data);
         continue;
@@ -185,10 +160,10 @@ bool Tile::createObj(WorldObj** nowy, QString sh) {
         *nowy = (WorldObj*) (new StaticObj());
         (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
     } else if (sh == "signal") {
-        *nowy = (WorldObj*) (new StaticObj());
+        *nowy = (WorldObj*) (new SignalObj());
         (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
     } else if (sh == "speedpost") {
-        *nowy = (WorldObj*) (new StaticObj());
+        *nowy = (WorldObj*) (new SpeedpostObj());
         (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
     } else if (sh == "trackobj") {
         *nowy = (WorldObj*) (new TrackObj());
@@ -196,6 +171,9 @@ bool Tile::createObj(WorldObj** nowy, QString sh) {
     } else if (sh == "gantry") {
         *nowy = (WorldObj*) (new StaticObj());
         (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+    } else if (sh == "collideobject") {
+        *nowy = (WorldObj*) (new StaticObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
     } else if (sh == "dyntrack") {
         *nowy = (WorldObj*) (new DynTrackObj());
         (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
@@ -205,9 +183,17 @@ bool Tile::createObj(WorldObj** nowy, QString sh) {
     } else if (sh == "transfer") {
         *nowy = (WorldObj*) (new TransferObj());
         (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
+    } else if (sh == "platform") {
+        *nowy = (WorldObj*) (new PlatformObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+    } else if (sh == "siding") {
+        *nowy = (WorldObj*) (new PlatformObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";        
     } else {
+        qDebug() << sh;
+        //(*nowy) = new WorldObj();
         return false;
-        //nowy = new WorldObj();
+        //
     }
     (*nowy)->type = sh;
     return true;
@@ -230,24 +216,38 @@ void Tile::transalteObj(float px, float py, float pz, int uid) {
     }
 }
 
-void Tile::placeObject(float* pozW, Ref::RefItem* itemData) {
-    if(itemData == NULL) return;
-    qDebug() << pozW[0] << " " << pozW[1] << " " << pozW[2] << " " << itemData->type << " " << itemData->filename;
+WorldObj* Tile::placeObject(float* p, Ref::RefItem* itemData) {
+    float q[4];
+    q[0] = 0; 
+    q[1] = 0;
+    q[2] = 0;
+    q[3] = 1;
+    placeObject(p, (float*)&q, itemData);
+}
+
+WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData) {
+    if(loaded != 1) return NULL;
+    if(itemData == NULL) return NULL;
+    //qDebug() << pozW[0] << " " << pozW[1] << " " << pozW[2] << " " << itemData->type << " " << itemData->filename;
     
     WorldObj* nowy;
-    if(!createObj(&nowy, itemData->type)) return;
-    nowy->initPQ(pozW);
+    if(!createObj(&nowy, itemData->type)) return NULL;
+    
+    nowy->initPQ(p, q);
     nowy->UiD = ++maxUiD;
     nowy->fileName = itemData->filename;
     nowy->load(x, z);
     obiekty[jestObiektow++] = nowy;
     qDebug() << obiekty[jestObiektow-1]->qDirection[3];
+    modified = true;
+    
+    return nowy;
 }
 
 void Tile::save() {
     QString sh;
     QString path;
-    path = Game::root + "/routes/" + Game::route + "/world2/w" + getNameXY(x) + "" + getNameXY(-z) + ".w";
+    path = Game::root + "/routes/" + Game::route + "/world/w" + getNameXY(x) + "" + getNameXY(-z) + ".w";
     path.replace("//", "/");
     qDebug() << path;
     QFile file(path);
@@ -259,7 +259,7 @@ void Tile::save() {
     out << "SIMISA@@@@@@@@@@JINX0w0t______\n";
     out << "\n";
     out << "Tr_Worldfile (\n";
-    if(this->vDbIdCount > 0){
+    /*if(this->vDbIdCount > 0){
         out << "	VDbIdCount ( "<<this->vDbIdCount<<" )\n";
         out << "	ViewDbSphere (\n";
         out << "		VDbId ( "<<viewDbSphere[0].vDbId<<" )\n";
@@ -273,9 +273,9 @@ void Tile::save() {
             out << "		)\n";
         }
         out << "	)\n";
-    }
-    for(int i = 1; i < this->jestObiektow; i++){
-        this->obiekty[this->jestObiektow]->save(out);
+    }*/
+    for(int i = 0; i < this->jestObiektow; i++){
+        this->obiekty[i]->save(&out);
     }
     out << ")";
  

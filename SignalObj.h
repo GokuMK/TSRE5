@@ -1,24 +1,25 @@
-#ifndef TRACKOBJ_H
-#define	TRACKOBJ_H
+#ifndef SIGNALOBJ_H
+#define	SIGNALOBJ_H
 
 #include "WorldObj.h"
 #include <QString>
 #include "FileBuffer.h"
 
-class TrackObj : public WorldObj  {
+class SignalObj : public WorldObj  {
 public:
-    TrackObj();
-    TrackObj(const TrackObj& orig);
-    virtual ~TrackObj();
+    SignalObj();
+    SignalObj(const SignalObj& orig);
+    virtual ~SignalObj();
     void load(int x, int y);
     void set(QString sh, FileBuffer* data);
     bool getBorder(float* border);
     void save(QTextStream* out);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
-    int sectionIdx;
-    float elevation;
+    unsigned int signalSubObj;
+    int signalUnits = 0;
+    int *trItemId;
 };
 
-#endif	/* TRACKOBJ_H */
+#endif	/* SIGNALOBJ_H */
 

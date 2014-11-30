@@ -165,6 +165,12 @@ void SFile::getSize() {
             if(tpoints.points[i].y > ty[0]) ty[0] = tpoints.points[i].y;
             if(tpoints.points[i].z > tz[0]) tz[0] = tpoints.points[i].z;
         }
+        bound[0] = tx[0];
+        bound[1] = tx[1];
+        bound[2] = ty[0];
+        bound[3] = ty[1];
+        bound[4] = tz[0];
+        bound[5] = tz[1];
         tx[0] = tx[0] - tx[1];
         ty[0] = ty[0] - ty[1];
         tz[0] = tz[0] - tz[1];

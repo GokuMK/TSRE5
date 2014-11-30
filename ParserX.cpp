@@ -377,6 +377,26 @@ float ParserX::parsujr(FileBuffer* bufor){
     return x;
 }
 //-----------------------------------
+//Parsowanie liczby uint
+//-----------------------------------
+unsigned int ParserX::parsujUint(FileBuffer* bufor){
+    char b = 0;
+    unsigned int x;
+
+    while (b < 45 || (b > 45 && b < 48) || b > 57) {
+        b = bufor->get();
+        bufor->off++;
+    }
+    x = 0;
+    while (b > 47 && b < 58) {
+        x = x * 10 + b - 48;
+        b = bufor->get();
+        bufor->off++;
+    }
+    bufor->off -= 2;
+    return x;
+}
+//-----------------------------------
 //Parsowanie liczby szesnastkowej
 //-----------------------------------
 int ParserX::parsuj16(FileBuffer* bufor){

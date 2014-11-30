@@ -75,13 +75,13 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     }
 
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
-    //if(selected){
-    //    selected = !selected;
-    //    selectionColor = 155;
-    //}
-    //gluu.setMatrixUniforms();
+    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     
-    if(selectionColor != 0 || selected){
+    if(selected){
+        drawBox();
+    }
+    
+    if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
         int sColor = (int)(selectionColor - wColor*65536)/256;
         int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
@@ -90,17 +90,52 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
         gluu->enableTextures();
     }
         
-    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    
     ShapeLib::shape[shape]->render();
 };
 
-void StaticObj::save(QTextStream out){
-out << "	Static (\n";
-out << "		UiD ( "<<this->UiD<<" )\n";
-out << "		FileName ( "<<this->fileName<<" )\n";
-out << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
-out << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
-out << "		VDbId ( "<<this->vDbId<<" )\n";
-out << "	)\n";
+bool StaticObj::getBorder(float* border){
+    if (shape < 0) return false;
+    if (!ShapeLib::shape[shape]->loaded)
+        return false;
+    float* bound = ShapeLib::shape[shape]->bound;
+    border[0] = bound[0];
+    border[1] = bound[1];
+    border[2] = bound[2];
+    border[3] = bound[3];
+    border[4] = bound[4];
+    border[5] = bound[5];
+    return true;
+}
+
+void StaticObj::save(QTextStream* out){
+    if (!loaded) return;
+    if (jestPQ < 2) return;
+int l;
+QString flags;
+if(type == "gantry"){
+    flags = QString::number(this->staticFlags, 16);
+    l = flags.length();
+    for(int i=0; i<8-l; i++)
+        flags = "0"+flags;
+}
+    
+if(type == "static")
+*(out) << "	Static (\n";
+if(type == "gantry")
+*(out) << "	Gantry (\n";
+if(type == "collideobject")
+*(out) << "	CollideObject (\n";
+
+*(out) << "		UiD ( "<<this->UiD<<" )\n";
+if(type == "collideobject")
+*(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
+*(out) << "		FileName ( "<<this->fileName<<" )\n";
+if(type == "gantry")
+*(out) << "		StaticFlags ( "<<flags<<" )\n";
+*(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
+*(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
+*(out) << "		VDbId ( "<<this->vDbId<<" )\n";
+if(this->staticDetailLevel > -1)
+*(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
+*(out) << "	)\n";
 }

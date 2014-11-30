@@ -14,6 +14,7 @@
 #include "Tile.h"
 #include "Game.h"
 #include "GLH.h"
+#include "Vector2f.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -61,7 +62,9 @@ void GLWidget::timerEvent(QTimerEvent * event) {
 }
 
 void GLWidget::initializeGL() {
-
+    
+    Game::load();
+    
     gluu = GLUU::get();
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
 
@@ -76,9 +79,8 @@ void GLWidget::initializeGL() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glCullFace(GL_BACK);
 
-    //float * aaa = new float[2] { -5306.0, -14962.0}; //cmk
-    //float * aaa = new float[2]{-5386,-15369};//aaa
-    float * aaa = new float[2]{-5306,-14961};//bbb
+
+    float * aaa = new float[2]{Game::startTileX,-Game::startTileY};//bbb
     //float * aaa = new float[2]{-5417,-15048};//traska
     camera = new Camera(aaa);
     //sFile = new SFile("F:/TrainSim/trains/trainset/pkp_sp47/pkp_sp47-001.s", "F:/TrainSim/trains/trainset/pkp_sp47");
@@ -252,6 +254,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
     camera->keyDown(event);
     switch (event->key()) {
         case 'M':
+            route->save();
             //selection = true; //!selection;
             // paintGL();
             // selection = !selection;
@@ -259,39 +262,142 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
         default:
             break;
     }
+    if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
+        Vector2f a;
+
+        switch (event->key()) {
+            case Qt::Key_Alt:
+                moveStep = 0.01;
+                break;
+            case Qt::Key_8:
+                if(translateTool && selectedObj != NULL){
+                    a.y = moveStep;
+                    a.rotate(-camera->getRotX(), 0);
+                    this->selectedObj->translate(a.x,0,a.y);
+                }
+                if(rotateTool && selectedObj != NULL){
+                    this->selectedObj->rotate(moveStep/5, 0, 0);
+                }
+                break;
+            case Qt::Key_2:
+                if(translateTool && selectedObj != NULL){
+                    a.y = -moveStep;
+                    a.rotate(-camera->getRotX(), 0);
+                    this->selectedObj->translate(a.x,0,a.y);
+                }
+                if(rotateTool && selectedObj != NULL){
+                    this->selectedObj->rotate(-moveStep/5, 0, 0);
+                }
+                break;    
+            case Qt::Key_4:
+                if(translateTool && selectedObj != NULL){
+                    a.x = moveStep;
+                    a.rotate(-camera->getRotX(), 0);
+                    this->selectedObj->translate(a.x,0,a.y);
+                }
+                if(rotateTool && selectedObj != NULL){
+                    this->selectedObj->rotate(0, -moveStep, 0);
+                }
+                break;
+            case Qt::Key_6:
+                if(translateTool && selectedObj != NULL){
+                    a.x = -moveStep;
+                    a.rotate(-camera->getRotX(), 0);
+                    this->selectedObj->translate(a.x,0,a.y);
+                }
+                if(rotateTool && selectedObj != NULL){
+                    this->selectedObj->rotate(0, moveStep, 0);
+                }
+                break;                 
+            case Qt::Key_9:
+                if(translateTool && selectedObj != NULL){
+                    this->selectedObj->translate(0,moveStep,0);
+                }
+                if(rotateTool && selectedObj != NULL){
+                    this->selectedObj->rotate(0, 0, moveStep/5);
+                }
+                break;
+            case Qt::Key_3:
+                if(translateTool && selectedObj != NULL){
+                    this->selectedObj->translate(0,-moveStep,0);
+                }
+                if(rotateTool && selectedObj != NULL){
+                    this->selectedObj->rotate(0, 0, -moveStep/5);
+                }
+                break;   
+            case Qt::Key_R:
+                translateTool = false;
+                rotateTool = true;
+                break;
+            case Qt::Key_T:    
+                rotateTool = false;
+                translateTool = true;
+                break;
+            case Qt::Key_Delete:
+                if(selectedObj != NULL){
+                    selectedObj->loaded = false;
+                }
+                break;                
+            case Qt::Key_C:
+                if(selectedObj != NULL){
+                    selectedObj->selected = false;
+                    selectedObj = route->placeObject(selectedObj->x, selectedObj->y, selectedObj->position, selectedObj->qDirection, selectedObj->getRefInfo());
+                    if(selectedObj != NULL){
+                        selectedObj->selected = true;
+                    }
+                }
+            default:
+                break;
+        }
+    }
 }
 
 void GLWidget::keyReleaseEvent(QKeyEvent * event) {
     camera->keyUp(event);
+    if(toolEnabled == "selectTool"){
+        switch (event->key()) {
+            case Qt::Key_Alt:
+                moveStep = 0.25;
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event) {
     m_lastPos = event->pos();
     mousePressed = true;
     
-    if(toolEnabled == "placeTool"){
-        if(event->button() == Qt::RightButton){
-            route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+    if(event->buttons() == Qt::RightButton){
+        camera->MouseDown(event);
+    } else {
+        if(toolEnabled == "placeTool"){
+            if(selectedObj != NULL) 
+                selectedObj->selected = false;
+            selectedObj = route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            if(selectedObj != NULL)
+                selectedObj->selected = true;
             //if(route->ref->selected != NULL){
             //qDebug() << route->ref->selected->description;
+            //}
+            //camera->MouseDown(event);
         }
-        //}
-        camera->MouseDown(event);
-    }
-    if(toolEnabled == "selectTool"){
-        selection = true;
-        mousePressed = false;
-        if(selectedObj != NULL){
-            mousePressed = true;
-            lastPointerPos[0] = aktPointerPos[0];
-            lastPointerPos[1] = aktPointerPos[1];
-            lastPointerPos[2] = aktPointerPos[2];
-        } else {
+        if(toolEnabled == "selectTool"){
+            selection = true;
+            mousePressed = false;
+            if(selectedObj != NULL){
+                mousePressed = true;
+                lastPointerPos[0] = aktPointerPos[0];
+                lastPointerPos[1] = aktPointerPos[1];
+                lastPointerPos[2] = aktPointerPos[2];
+            } //else {
+                //camera->MouseDown(event);
+            //}
+        }
+        if(toolEnabled == ""){
             camera->MouseDown(event);
         }
-    }
-    if(toolEnabled == ""){
-        camera->MouseDown(event);
     }
     setFocus();
 }
@@ -314,24 +420,27 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     mousey = event->y();
     m_lastPos = event->pos();
     
-    if(toolEnabled == "selectTool"){
-        if(selectedObj != NULL && mousePressed){
-            //selectedObj->translate(aktPointerPos[0] - lastPointerPos[0], aktPointerPos[1] - lastPointerPos[1], aktPointerPos[2] - lastPointerPos[2]);
-            selectedObj->translate(0, aktPointerPos[1] - lastPointerPos[1], 0);
-            lastPointerPos[0] = aktPointerPos[0];
-            lastPointerPos[1] = aktPointerPos[1];
-            lastPointerPos[2] = aktPointerPos[2];
-        } else {
+    if(event->buttons() == Qt::RightButton){
+        camera->MouseMove(event);
+    } else {
+        if(toolEnabled == "selectTool"){
+            if(selectedObj != NULL && mousePressed){
+                //selectedObj->translate(aktPointerPos[0] - lastPointerPos[0], aktPointerPos[1] - lastPointerPos[1], aktPointerPos[2] - lastPointerPos[2]);
+                selectedObj->translate(0, aktPointerPos[1] - lastPointerPos[1], 0);
+                lastPointerPos[0] = aktPointerPos[0];
+                lastPointerPos[1] = aktPointerPos[1];
+                lastPointerPos[2] = aktPointerPos[2];
+            } //else {
+            //    camera->MouseMove(event);
+            //}
+        }
+        if(toolEnabled == "placeTool"){
+            camera->MouseMove(event);
+        }
+        if(toolEnabled == ""){
             camera->MouseMove(event);
         }
     }
-    if(toolEnabled == "placeTool"){
-        camera->MouseMove(event);
-    }
-    if(toolEnabled == ""){
-        camera->MouseMove(event);
-    }
-    
 }
 
 void GLWidget::enableTool(QString name){

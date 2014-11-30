@@ -81,12 +81,54 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     }*/
 }
 
-void Route::placeObject(int x, int z, float* pozW){
+WorldObj* Route::placeObject(int x, int z, float* p){
+    float q[4];
+    q[0] = 0;
+    q[1] = 0;
+    q[2] = 0;
+    q[3] = 1;
+    placeObject(x, z, p, (float*)&q, ref->selected);
+}
+
+WorldObj* Route::placeObject(int x, int z, float* p, float* q){
+    placeObject(x, z, p, (float*)&q, ref->selected);
+}
+
+WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r){
     Tile *tTile;
     try {
         tTile = tile.at((x)*10000 + z);
-        tTile->placeObject(pozW, ref->selected);
     } catch (const std::out_of_range& oor) {
+        tile[(x)*10000 + z] = new Tile(x, z);
+    }
+    if (tTile->loaded == -2){
+        if(TerrainLib::isLoaded(x, z)){
+            tTile->initNew();
+        } else {
+            return NULL;
+        }
+    }
+    if (tTile->loaded == 1) {
+        //float pozWW[3];
+        //pozWW[2] = pozW[2];
+        //for(int j = -1000; j < 1000; j+=10)
+        //for(int i = -1000; i < 1000; i+=50){
+        //pozWW[0] = pozW[0] + i;
+        //pozWW[2] = pozW[2] + j;
+        return tTile->placeObject(p, q, r);
+        //}
+    }
+    return NULL;
+}
 
+void Route::save(){
+    qDebug() << "save";
+    for (auto it = tile.begin(); it != tile.end(); ++it) {
+        //console.log(obj.type);
+        Tile* tTile = (Tile*) it->second;
+        if (tTile->loaded == 1 && tTile->modified){
+            tTile->save();
+            tTile->modified = false;
+        }
     }
 }

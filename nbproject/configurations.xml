@@ -51,6 +51,9 @@
         <logicalFolder name="f1" displayName="objects" projectFiles="true">
           <itemPath>DynTrackObj.h</itemPath>
           <itemPath>ForestObj.h</itemPath>
+          <itemPath>PlatformObj.h</itemPath>
+          <itemPath>SignalObj.h</itemPath>
+          <itemPath>SpeedpostObj.h</itemPath>
           <itemPath>StaticObj.h</itemPath>
           <itemPath>TrackObj.h</itemPath>
           <itemPath>TransferObj.h</itemPath>
@@ -126,6 +129,9 @@
         <logicalFolder name="f1" displayName="objects" projectFiles="true">
           <itemPath>DynTrackObj.cpp</itemPath>
           <itemPath>ForestObj.cpp</itemPath>
+          <itemPath>PlatformObj.cpp</itemPath>
+          <itemPath>SignalObj.cpp</itemPath>
+          <itemPath>SpeedpostObj.cpp</itemPath>
           <itemPath>StaticObj.cpp</itemPath>
           <itemPath>TrackObj.cpp</itemPath>
           <itemPath>TransferObj.cpp</itemPath>
@@ -159,6 +165,7 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <qt>
+        <target>TSRE5</target>
         <modules>core gui widgets opengl</modules>
       </qt>
       <compileType>
@@ -220,6 +227,10 @@
       </item>
       <item path="ParserX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PlatformObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PlatformObj.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
@@ -251,6 +262,14 @@
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedpostObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SpeedpostObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="StaticObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -415,6 +434,10 @@
       </item>
       <item path="ParserX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PlatformObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PlatformObj.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
@@ -446,6 +469,14 @@
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedpostObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SpeedpostObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="StaticObj.cpp" ex="false" tool="1" flavor2="0">
       </item>

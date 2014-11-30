@@ -26,6 +26,69 @@ float* Quat::fromRotationXYZ(float *out, float *a){
     return out;
 }
 
+/**
+ * Rotates a quaternion by the given angle about the X axis
+ *
+ * @param {quat} out quat receiving operation result
+ * @param {quat} a quat to rotate
+ * @param {number} rad angle (in radians) to rotate
+ * @returns {quat} out
+ */
+float* Quat::rotateX(float *out, float *a, float rad){
+    rad *= 0.5; 
+
+    float ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        bx = sin(rad), bw = cos(rad);
+
+    out[0] = ax * bw + aw * bx;
+    out[1] = ay * bw + az * bx;
+    out[2] = az * bw - ay * bx;
+    out[3] = aw * bw - ax * bx;
+    return out;
+};
+
+/**
+ * Rotates a quaternion by the given angle about the Y axis
+ *
+ * @param {quat} out quat receiving operation result
+ * @param {quat} a quat to rotate
+ * @param {number} rad angle (in radians) to rotate
+ * @returns {quat} out
+ */
+float* Quat::rotateY(float *out, float *a, float rad){
+    rad *= 0.5; 
+
+    float ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        by = sin(rad), bw = cos(rad);
+
+    out[0] = ax * bw - az * by;
+    out[1] = ay * bw + aw * by;
+    out[2] = az * bw + ax * by;
+    out[3] = aw * bw - ay * by;
+    return out;
+};
+
+/**
+ * Rotates a quaternion by the given angle about the Z axis
+ *
+ * @param {quat} out quat receiving operation result
+ * @param {quat} a quat to rotate
+ * @param {number} rad angle (in radians) to rotate
+ * @returns {quat} out
+ */
+float* Quat::rotateZ(float *out, float *a, float rad){
+    rad *= 0.5; 
+
+    float ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        bz = sin(rad), bw = cos(rad);
+
+    out[0] = ax * bw + ay * bz;
+    out[1] = ay * bw - ax * bz;
+    out[2] = az * bw + aw * bz;
+    out[3] = aw * bw - az * bz;
+    return out;
+};
+
 float Mat4::GLMAT_EPSILON = 0.000001f;
 
 float* Mat4::clone(float* a) {

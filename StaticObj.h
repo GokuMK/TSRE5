@@ -12,10 +12,10 @@ public:
     virtual ~StaticObj();
     void load(int x, int y);
     void set(QString sh, FileBuffer* data);
-    void save(QTextStream out);
+    void save(QTextStream* out);
+    bool getBorder(float* border);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
-
 };
 
 #endif	/* STATICOBJ_H */

@@ -103,6 +103,13 @@ float* Camera::getPos() {
     pos[2] = relativePos[2] + (playerPos[0] * (float) sin(-relativeRot[0]) + playerPos[2] * (float) cos(-relativeRot[0]));
     return pos;
 }
+
+float Camera::getRotX() {
+    return playerRot[0] + relativeRot[0];
+}
+float Camera::getRotY() {
+    return playerRot[1] + relativeRot[1];
+}
 /*
 Vector3f Camera::getUp() {
     return Vector3f(0, 1, 0);
@@ -231,25 +238,28 @@ void Camera::MouseUp(QMouseEvent* e) {
 void Camera::keyUp(QKeyEvent * e) {
     int code = e->key();
     switch (code) {
-        case 81:
+        case Qt::Key_Q: // Q
+        case Qt::Key_Space:
             jestcontrol = 0;
             break;
-        case 69: // E
+        case Qt::Key_E: // E
+        case Qt::Key_Shift:
             przesx = przesz = 3;
             break;
-        case 65: // A 
+        case Qt::Key_A: // A 
+        case Qt::Key_Left:
             moveL = false;
             break;
-        case 38:
-        case 87: // W
+        case Qt::Key_W: // W
+        case Qt::Key_Up:
             moveF = false;
             break;
-        case 39:
-        case 68: // D 
+        case Qt::Key_D: // D
+        case Qt::Key_Right:
             moveR = false;
             break;
-        case 40:
-        case 83: // S 
+        case Qt::Key_S: // D
+        case Qt::Key_Down:
             moveB = false;
             break;
         default:
@@ -263,26 +273,28 @@ void Camera::keyDown(QKeyEvent * e) {
             //case 17:
             //    jestcontrol = 1;
             //     break;
-        case 81:
+        case Qt::Key_Q: // Q
+        case Qt::Key_Space:
             jestcontrol = 1;
             break;
-        case 37: // left
-        case 65: // A 
+        case Qt::Key_A: // A 
+        case Qt::Key_Left:
             moveL = true;
             break;
-        case 38:
-        case 87: // W
+        case Qt::Key_W: // W
+        case Qt::Key_Up:
             moveF = true;
             break;
-        case 39:
-        case 68: // D 
+        case Qt::Key_D: // D
+        case Qt::Key_Right:
             moveR = true;
             break;
-        case 40:
-        case 83: // S 
+        case Qt::Key_S: // D
+        case Qt::Key_Down:
             moveB = true;
             break;
-        case 69: // E
+        case Qt::Key_E: // E
+        case Qt::Key_Shift:
             przesx = przesz = 40;
             break;
         default:

@@ -31,7 +31,7 @@ void WorldObj::load(int x, int y) {
 
 void WorldObj::set(QString sh, FileBuffer* data) {
     if (sh == ("uid")) {
-        UiD = ParserX::parsujr(data);
+        UiD = ParserX::parsujUint(data);
     }
     if (sh == ("staticflags")) {
         staticFlags = ParserX::parsuj16(data);
@@ -50,10 +50,15 @@ void WorldObj::set(QString sh, FileBuffer* data) {
         jestPQ++;
     }
     if (sh == ("vdbid")) {
-        vDbId = ParserX::parsujr(data);
+        //qDebug()<< ParserX::parsujr(data);
+        vDbId = ParserX::parsujUint(data);
     }
     if (sh == ("staticdetaillevel")) {
         staticDetailLevel = ParserX::parsujr(data);
+    }
+    if (sh == ("collideflags")) {
+        collideFlags = ParserX::parsujr(data);
+        return;
     }
     return;
 }
@@ -70,6 +75,14 @@ void WorldObj::translate(float px, float py, float pz){
     this->position[0]+=px;
     this->position[1]+=py;
     this->position[2]+=pz;
+
+    setMartix();
+}
+
+void WorldObj::rotate(float x, float y, float z){
+    if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x);
+    if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y);
+    if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z);
     
     setMartix();
 }
@@ -94,17 +107,75 @@ void WorldObj::setQdirection(float* q){
     this->qDirection[3] = q[3];
 }
 
-void WorldObj::initPQ(float* p){
+void WorldObj::initPQ(float* p, float* q){
     this->position[0] = p[0];
     this->position[1] = p[1];
     this->position[2] = -p[2];
-    this->qDirection[0] = 0;
-    this->qDirection[1] = 0;
-    this->qDirection[2] = 0;
-    this->qDirection[3] = 1;
+    this->qDirection[0] = q[0];
+    this->qDirection[1] = q[1];
+    this->qDirection[2] = -q[2];
+    this->qDirection[3] = q[3];
     this->jestPQ = 2;
 }
 
-void WorldObj::save(QTextStream out){
+void WorldObj::save(QTextStream* out){
     
 }
+
+Ref::RefItem* WorldObj::getRefInfo(){
+    Ref::RefItem* r = new Ref::RefItem();
+    r->type = this->type;
+    r->filename = this->fileName;
+    return r;
+}
+
+bool WorldObj::getBorder(float* border){
+    return false;
+}
+
+void WorldObj::drawBox(){
+
+    if (!box.loaded) {
+        float bound[6];
+        if (!getBorder((float*)&bound)) return;
+        
+        float* punkty = new float[72];
+        float* ptr = punkty;
+        
+        for(int i=0; i<2; i++)
+            for(int j=4; j<6; j++){
+                *ptr++ = bound[i];
+                *ptr++ = bound[2];
+                *ptr++ = bound[j];
+                *ptr++ = bound[i];
+                *ptr++ = bound[3];
+                *ptr++ = bound[j];
+            }
+        for(int i=0; i<2; i++)
+            for(int j=2; j<4; j++){
+                *ptr++ = bound[i];
+                *ptr++ = bound[j];
+                *ptr++ = bound[4];
+                *ptr++ = bound[i];
+                *ptr++ = bound[j];
+                *ptr++ = bound[5];
+            }
+        for(int i=4; i<6; i++)
+            for(int j=2; j<4; j++){
+                *ptr++ = bound[0];
+                *ptr++ = bound[j];
+                *ptr++ = bound[i];
+                *ptr++ = bound[1];
+                *ptr++ = bound[j];
+                *ptr++ = bound[i];
+            }
+
+        box.setMaterial(0.0, 0.0, 1.0);
+        box.init(punkty, ptr-punkty, box.V, GL_LINES);
+
+        delete punkty;
+    }
+    
+
+    box.render();
+};

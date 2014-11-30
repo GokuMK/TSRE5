@@ -10,9 +10,9 @@ public:
     static float objectLod;
     static int allowObjLag;
     static int maxObjLag;
-    Game();
-    Game(const Game& orig);
-    virtual ~Game();
+    static void load();
+    static int startTileX;
+    static int startTileY;
 private:
 };
 

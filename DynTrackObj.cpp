@@ -38,6 +38,7 @@ void DynTrackObj::load(int x, int y) {
 
 void DynTrackObj::set(QString sh, FileBuffer* data) {
     if (sh == ("sectionidx")) {
+        //qDebug() << ParserX::parsujr(data);
         sectionIdx = ParserX::parsujr(data);
         return;
     }
@@ -45,15 +46,11 @@ void DynTrackObj::set(QString sh, FileBuffer* data) {
         elevation = ParserX::parsujr(data);
         return;
     }
-    if (sh == ("collideflags")) {
-        collideFlags = ParserX::parsujr(data);
-        return;
-    }
     if (sh == ("tracksections")) {
         sections = new Section[5];
         for (int iii = 0; iii < 5; iii++) {
             sections[iii].type = ParserX::parsujr(data);
-            sections[iii].val1 = ParserX::parsujr(data);
+            sections[iii].val1 = ParserX::parsujUint(data);
             sections[iii].a = ParserX::parsujr(data);
             sections[iii].r = ParserX::parsujr(data);
             ParserX::pominsekcje(data);
@@ -74,6 +71,10 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->m_program->setUniformValue(gluu->shaderAlpha, 0.0f);
+    
+    if(selected){
+        drawBox();
+    }
     
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
@@ -725,7 +726,30 @@ void DynTrackObj::genShape() {
         }
     }
     //qDebug() << ptr << "" << str;
-
+    
+        bound[0] = -9999;
+        bound[1] = 9999;
+        bound[2] = -9999;
+        bound[3] = 9999;
+        bound[4] = -9999;
+        bound[5] = 9999;
+        for (int i = 0; i < ptr ; i+=8) {
+            if(pd[i+0] < bound[1]) bound[1] = pd[i+0];
+            if(pd[i+1] < bound[3]) bound[3] = pd[i+1];
+            if(pd[i+2] < bound[5]) bound[5] = pd[i+2];
+            if(pd[i+0] > bound[0]) bound[0] = pd[i+0];
+            if(pd[i+1] > bound[2]) bound[2] = pd[i+1];
+            if(pd[i+2] > bound[4]) bound[4] = pd[i+2];
+        }
+        for (int i = 0; i < str ; i+=8) {
+            if(sk[i+0] < bound[1]) bound[1] = sk[i+0];
+            if(sk[i+1] < bound[3]) bound[3] = sk[i+1];
+            if(sk[i+2] < bound[5]) bound[5] = sk[i+2];
+            if(sk[i+0] > bound[0]) bound[0] = sk[i+0];
+            if(sk[i+1] > bound[2]) bound[2] = sk[i+1];
+            if(sk[i+2] > bound[4]) bound[4] = sk[i+2];
+        }
+    
     createVBO(&shape[0], ptr, pd);
     createVBO(&shape[1], str, sk);
 }
@@ -746,4 +770,44 @@ void DynTrackObj::createVBO(Shape* shape, int ptr, float * data) {
     shape->iloscv = ptr/8;
     
     delete data;
+}
+
+bool DynTrackObj::getBorder(float* border){
+    border[0] = bound[0];
+    border[1] = bound[1];
+    border[2] = bound[2];
+    border[3] = bound[3];
+    border[4] = bound[4];
+    border[5] = bound[5];
+    return true;
+}
+
+void DynTrackObj::save(QTextStream* out){
+    if (!loaded) return;
+    int l;
+    QString flags;
+    flags = QString::number(this->staticFlags, 16);
+    l = flags.length();
+    for(int i=0; i<8-l; i++)
+        flags = "0"+flags;
+    
+*(out) << "	Dyntrack (\n";
+*(out) << "		UiD ( "<<this->UiD<<" )\n";
+*(out) << "		TrackSections (\n";
+for(int i = 0; i < 5; i++){
+*(out) << "			TrackSection (\n";
+*(out) << "				SectionCurve ( "<<this->sections[i].type<<" ) "<<this->sections[i].val1<<" "<<this->sections[i].a<<" "<<this->sections[i].r<<"\n";
+*(out) << "			)\n";
+}
+*(out) << "		)\n";
+*(out) << "		SectionIdx ( "<<this->sectionIdx<<" )\n";
+*(out) << "		Elevation ( "<<this->elevation<<" )\n";
+*(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
+*(out) << "		StaticFlags ( "<<flags<<" )\n";
+*(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
+*(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
+*(out) << "		VDbId ( "<<this->vDbId<<" )\n";
+if(this->staticDetailLevel > -1)
+*(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
+*(out) << "	)\n";
 }

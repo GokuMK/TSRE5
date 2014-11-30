@@ -1,4 +1,4 @@
-#include "TrackObj.h"
+#include "SignalObj.h"
 #include "SFile.h"
 #include "ShapeLib.h"
 #include "GLMatrix.h"
@@ -10,18 +10,18 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-TrackObj::TrackObj() {
+SignalObj::SignalObj() {
     this->shape = -1;
     this->loaded = false;
 }
 
-TrackObj::TrackObj(const TrackObj& orig) {
+SignalObj::SignalObj(const SignalObj& orig) {
 }
 
-TrackObj::~TrackObj() {
+SignalObj::~SignalObj() {
 }
 
-void TrackObj::load(int x, int y) {
+void SignalObj::load(int x, int y) {
     this->shape = ShapeLib::addShape(resPath, fileName);
     this->x = x;
     this->y = y;
@@ -29,31 +29,35 @@ void TrackObj::load(int x, int y) {
     this->qDirection[2] = -this->qDirection[2];
     this->loaded = true;
     this->size = -1;
-    this->skipLevel = 3;
+    this->skipLevel = 1;
     
     setMartix();
 }
 
-void TrackObj::set(QString sh, FileBuffer* data) {
+void SignalObj::set(QString sh, FileBuffer* data) {
     if (sh == ("filename")) {
         fileName = ParserX::odczytajtc(data);
         return;
     }
-    if (sh == ("sectionidx")) {
-        sectionIdx = ParserX::parsujr(data);
+    if (sh == ("signalsubobj")) {
+        signalSubObj = ParserX::parsuj16(data);
         return;
     }
-    if (sh == ("elevation")) {
-        elevation = ParserX::parsujr(data);
+    if (sh == ("signalunits")) {
+        signalUnits = ParserX::parsujr(data);
+        trItemId = new int[signalUnits*2];
+        for(int i=0; i<signalUnits; i++){
+            ParserX::parsujr(data);
+            trItemId[i*2+0] = ParserX::parsujr(data);
+            trItemId[i*2+1] = ParserX::parsujr(data);
+        }
         return;
     }
-    
     WorldObj::set(sh, data);
     return;
 }
 
-void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
-
+void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     if (!loaded) return;
     if (shape < 0) return;
     if (jestPQ < 2) return;
@@ -103,7 +107,7 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
     ShapeLib::shape[shape]->render();
 };
 
-bool TrackObj::getBorder(float* border){
+bool SignalObj::getBorder(float* border){
     if (shape < 0) return false;
     if (!ShapeLib::shape[shape]->loaded)
         return false;
@@ -117,27 +121,32 @@ bool TrackObj::getBorder(float* border){
     return true;
 }
 
-void TrackObj::save(QTextStream* out){
+void SignalObj::save(QTextStream* out){
     if (!loaded) return;
-    if (jestPQ < 2) return;
-    int l;
-    QString flags;
-    flags = QString::number(this->staticFlags, 16);
+int l;
+QString flags;
+    flags = QString::number(this->signalSubObj, 16);
     l = flags.length();
     for(int i=0; i<8-l; i++)
         flags = "0"+flags;
     
-*(out) << "	TrackObj (\n";
+*(out) << "	Signal (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
-*(out) << "		SectionIdx ( "<<this->sectionIdx<<" )\n";
-*(out) << "		Elevation ( "<<this->elevation<<" )\n";
-*(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
-*(out) << "		StaticFlags ( "<<flags<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";
 if(this->staticDetailLevel > -1)
 *(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
+*(out) << "		SignalSubObj ( "<<flags<<" )\n";
+if(signalUnits > 0){
+*(out) << "		SignalUnits ( "<<this->signalUnits<<"\n";
+for(int i=0; i<signalUnits; i++){
+*(out) << "			SignalUnit ( "<<i<<"\n";
+*(out) << "				TrItemId ( "<<this->trItemId[i*2+0]<<" "<<this->trItemId[i*2+1]<<" )\n";
+*(out) << "			)\n";
+}
+*(out) << "		)\n";
+}
 *(out) << "	)\n";
 }

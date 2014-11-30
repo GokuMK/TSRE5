@@ -9,6 +9,9 @@ public:
 class Quat {
 public:
     static float* fromRotationXYZ(float *out, float *a);
+    static float* rotateX(float *out, float *a, float rad);
+    static float* rotateY(float *out, float *a, float rad);
+    static float* rotateZ(float *out, float *a, float rad);
 };
 
 class Mat4 {

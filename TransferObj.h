@@ -20,13 +20,15 @@ public:
     
     void load(int x, int y);
     void set(QString sh, FileBuffer* data);
+    void save(QTextStream* out);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     void drawShape();
     int tex;
     bool init;
-    float width;
-    float height;
+    float width = 0;
+    float height = 0;
+    float bound[6];
 };
 
 #endif	/* TRANSFEROBJ_H */

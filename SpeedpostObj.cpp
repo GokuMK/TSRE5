@@ -1,4 +1,4 @@
-#include "TrackObj.h"
+#include "SpeedpostObj.h"
 #include "SFile.h"
 #include "ShapeLib.h"
 #include "GLMatrix.h"
@@ -10,18 +10,18 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-TrackObj::TrackObj() {
+SpeedpostObj::SpeedpostObj() {
     this->shape = -1;
     this->loaded = false;
 }
 
-TrackObj::TrackObj(const TrackObj& orig) {
+SpeedpostObj::SpeedpostObj(const SpeedpostObj& orig) {
 }
 
-TrackObj::~TrackObj() {
+SpeedpostObj::~SpeedpostObj() {
 }
 
-void TrackObj::load(int x, int y) {
+void SpeedpostObj::load(int x, int y) {
     this->shape = ShapeLib::addShape(resPath, fileName);
     this->x = x;
     this->y = y;
@@ -29,31 +29,41 @@ void TrackObj::load(int x, int y) {
     this->qDirection[2] = -this->qDirection[2];
     this->loaded = true;
     this->size = -1;
-    this->skipLevel = 3;
+    this->skipLevel = 1;
     
     setMartix();
 }
 
-void TrackObj::set(QString sh, FileBuffer* data) {
+void SpeedpostObj::set(QString sh, FileBuffer* data) {
     if (sh == ("filename")) {
         fileName = ParserX::odczytajtc(data);
         return;
     }
-    if (sh == ("sectionidx")) {
-        sectionIdx = ParserX::parsujr(data);
+    if (sh == ("speed_digit_tex")) {
+        speedDigitTex = ParserX::odczytajtc(data);
         return;
     }
-    if (sh == ("elevation")) {
-        elevation = ParserX::parsujr(data);
+    if (sh == ("speed_sign_shape")) {
+        for(int i = 0; i<9; i++)
+            speedSignShape[i] = ParserX::parsujr(data);
         return;
     }
-    
+    if (sh == ("speed_text_size")) {
+        speedTextSize[0] = ParserX::parsujr(data);
+        speedTextSize[1] = ParserX::parsujr(data);
+        speedTextSize[2] = ParserX::parsujr(data);
+        return;
+    }
+    if (sh == ("tritemid")) {
+        trItemId[0] = ParserX::parsujUint(data);
+        trItemId[1] = ParserX::parsujUint(data);
+        return;
+    }
     WorldObj::set(sh, data);
     return;
 }
 
-void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
-
+void SpeedpostObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     if (!loaded) return;
     if (shape < 0) return;
     if (jestPQ < 2) return;
@@ -103,7 +113,7 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
     ShapeLib::shape[shape]->render();
 };
 
-bool TrackObj::getBorder(float* border){
+bool SpeedpostObj::getBorder(float* border){
     if (shape < 0) return false;
     if (!ShapeLib::shape[shape]->loaded)
         return false;
@@ -117,27 +127,17 @@ bool TrackObj::getBorder(float* border){
     return true;
 }
 
-void TrackObj::save(QTextStream* out){
+void SpeedpostObj::save(QTextStream* out){
     if (!loaded) return;
-    if (jestPQ < 2) return;
-    int l;
-    QString flags;
-    flags = QString::number(this->staticFlags, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
-    
-*(out) << "	TrackObj (\n";
+*(out) << "	Speedpost (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
-*(out) << "		SectionIdx ( "<<this->sectionIdx<<" )\n";
-*(out) << "		Elevation ( "<<this->elevation<<" )\n";
-*(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
+*(out) << "		Speed_Digit_Tex ( "<<this->speedDigitTex<<" )\n";
+*(out) << "		Speed_Sign_Shape ( "<<this->speedSignShape[0]<<" "<<this->speedSignShape[1]<<" "<<this->speedSignShape[2]<<" "<<this->speedSignShape[3]<<" "<<this->speedSignShape[4]<<" "<<this->speedSignShape[5]<<" "<<this->speedSignShape[6]<<" "<<this->speedSignShape[7]<<" "<<this->speedSignShape[8]<<" )\n";
+*(out) << "		Speed_Text_Size ( "<<this->speedTextSize[0]<<" "<<this->speedTextSize[1]<<" "<<this->speedTextSize[2]<<" )\n";
+*(out) << "		TrItemId ( "<<this->trItemId[0]<<" "<<this->trItemId[1]<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
-*(out) << "		StaticFlags ( "<<flags<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";
-if(this->staticDetailLevel > -1)
-*(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
 *(out) << "	)\n";
 }

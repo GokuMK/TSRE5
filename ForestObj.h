@@ -12,7 +12,7 @@ public:
         QOpenGLVertexArrayObject VAO;
     };
     Shape shape;
-    QString treeTexture;
+    QString treeTexture = "";
     float scaleRangeX;
     float scaleRangeZ;
     float areaX;
@@ -24,6 +24,7 @@ public:
     ForestObj(const ForestObj& orig);
     void load(int x, int y);
     void set(QString sh, FileBuffer* data);
+    void save(QTextStream* out);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     
     virtual ~ForestObj();

@@ -118,10 +118,12 @@ void TransferObj::drawShape(){
             glDisable(GL_TEXTURE_2D);
         }
     }
-    float scale = (float) sqrt(qDirection[0] * qDirection[0] + qDirection[1] * qDirection[1] + qDirection[2] * qDirection[2]);
-    float off = ((qDirection[1]+0.000001f)/fabs(scale+0.000001f))*(float)-acos(qDirection[3])*2;
+
         
     if (!init) {
+            float scale = (float) sqrt(qDirection[0] * qDirection[0] + qDirection[1] * qDirection[1] + qDirection[2] * qDirection[2]);
+            float off = ((qDirection[1]+0.000001f)/fabs(scale+0.000001f))*(float)-acos(qDirection[3])*2;
+        
             Vector2f x1y1(-width/2,-height/2, off, 0);
             Vector2f x1y2(-width/2,height/2, off, 0);
             Vector2f x2y1(width/2,-height/2, off, 0);
@@ -226,4 +228,27 @@ void TransferObj::drawShape(){
         QOpenGLVertexArrayObject::Binder vaoBinder1(&shape.VAO);
         glDrawArrays(GL_TRIANGLES, 0, shape.iloscv);
     }
+}
+
+void TransferObj::save(QTextStream* out){
+    if (!loaded) return;
+    int l;
+    QString flags;
+    flags = QString::number(this->staticFlags, 16);
+    l = flags.length();
+    for(int i=0; i<8-l; i++)
+        flags = "0"+flags;
+    
+*(out) << "	Transfer (\n";
+*(out) << "		UiD ( "<<this->UiD<<" )\n";
+*(out) << "		Width ( "<<this->width<<" )\n";
+*(out) << "		Height ( "<<this->height<<" )\n";
+*(out) << "		FileName ( "<<this->texture<<" )\n";
+*(out) << "		StaticFlags ( "<<flags<<" )\n";
+*(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
+*(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
+*(out) << "		VDbId ( "<<this->vDbId<<" )\n";
+if(this->staticDetailLevel > -1)
+*(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
+*(out) << "	)\n";
 }

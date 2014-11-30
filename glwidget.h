@@ -74,6 +74,9 @@ private:
     float aktPointerPos[3];
     bool mousePressed = false;
     QString toolEnabled = "";
+    float moveStep = 0.25;
+    bool rotateTool = false;
+    bool translateTool = false;
 };
 
 #endif

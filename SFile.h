@@ -107,6 +107,7 @@ public:
     int ishaders;
     fshader* shader;
     float size;
+    float bound[6];
     
     void Load(QString path);
     void render();

@@ -17,6 +17,7 @@ public:
     static void fillRAW(float** terrainData, float mojex, float mojez);
     static float getHeight(float x, float z, float posx, float posz);
     static float getHeight(float x, float z, float posx, float posz, bool addR);
+    static bool isLoaded(int x, int z);
     static void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
 private:
 
