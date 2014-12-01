@@ -10,6 +10,76 @@ float* Vec3::transformMat4(float* out, float* a, float* m) {
     return out;
 }
 
+/**
+ * Normalize a vec4
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a vector to normalize
+ * @returns {vec4} out
+ */
+float* Vec4::normalize(float* out, float* a) {
+    float x = a[0],
+        y = a[1],
+        z = a[2],
+        w = a[3];
+    float len = x*x + y*y + z*z + w*w;
+    if (len > 0) {
+        len = 1.0 / sqrt(len);
+        out[0] = a[0] * len;
+        out[1] = a[1] * len;
+        out[2] = a[2] * len;
+        out[3] = a[3] * len;
+    }
+    return out;
+};
+
+/**
+ * Creates a quaternion from the given 3x3 rotation matrix.
+ *
+ * NOTE: The resultant quaternion is not normalized, so you should be sure
+ * to renormalize the quaternion yourself where necessary.
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {mat3} m rotation matrix
+ * @returns {quat} out
+ * @function
+ */
+float* Quat::fromMat3(float *out, float *m) {
+        // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
+        // article "Quaternion Calculus and Fast Animation".
+        float fTrace = m[0] + m[4] + m[8];
+        float fRoot;
+        float s_iNext[3]{1,2,0};
+
+        if ( fTrace > 0.0 ) {
+            // |w| > 1/2, may as well choose w > 1/2
+            fRoot = sqrtf(fTrace + 1.0);  // 2w
+            out[3] = 0.5 * fRoot;
+            fRoot = 0.5/fRoot;  // 1/(4w)
+            out[0] = (m[7]-m[5])*fRoot;
+            out[1] = (m[2]-m[6])*fRoot;
+            out[2] = (m[3]-m[1])*fRoot;
+        } else {
+            // |w| <= 1/2
+            int i = 0;
+            if ( m[4] > m[0] )
+              i = 1;
+            if ( m[8] > m[i*3+i] )
+              i = 2;
+            int j = s_iNext[i];
+            int k = s_iNext[j];
+            
+            fRoot = sqrtf(m[i*3+i]-m[j*3+j]-m[k*3+k] + 1.0);
+            out[i] = 0.5 * fRoot;
+            fRoot = 0.5 / fRoot;
+            out[3] = (m[k*3+j] - m[j*3+k]) * fRoot;
+            out[j] = (m[j*3+i] + m[i*3+j]) * fRoot;
+            out[k] = (m[k*3+i] + m[i*3+k]) * fRoot;
+        }
+        
+        return out;
+    };
+
 float* Quat::fromRotationXYZ(float *out, float *a){
     float sx = (float) sin(a[0]/2); 
     float sy = (float) sin(a[1]/2); 

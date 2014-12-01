@@ -47,6 +47,15 @@ void TrackObj::set(QString sh, FileBuffer* data) {
         elevation = ParserX::parsujr(data);
         return;
     }
+    if (sh == ("jnodeposn")) {
+        jNodePosn = new float[5];
+        jNodePosn[0] = ParserX::parsujr(data);
+        jNodePosn[1] = ParserX::parsujr(data);
+        jNodePosn[2] = ParserX::parsujr(data);
+        jNodePosn[3] = ParserX::parsujr(data);
+        jNodePosn[4] = ParserX::parsujr(data);
+        return;
+    }
     
     WorldObj::set(sh, data);
     return;
@@ -87,10 +96,6 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     
-    if(selected){
-        drawBox();
-    }
-    
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
         int sColor = (int)(selectionColor - wColor*65536)/256;
@@ -101,6 +106,10 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
     }
         
     ShapeLib::shape[shape]->render();
+    
+    if(selected){
+        drawBox();
+    }
 };
 
 bool TrackObj::getBorder(float* border){
@@ -131,10 +140,15 @@ void TrackObj::save(QTextStream* out){
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		SectionIdx ( "<<this->sectionIdx<<" )\n";
 *(out) << "		Elevation ( "<<this->elevation<<" )\n";
+if(this->jNodePosn!=NULL)
+*(out) << "		JNodePosn ( "<<this->jNodePosn[0]<<" "<<this->jNodePosn[1]<<" "<<this->jNodePosn[2]<<" "<<this->jNodePosn[3]<<" "<<this->jNodePosn[4]<<" )\n";
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
 *(out) << "		StaticFlags ( "<<flags<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
+if(this->matrix3x3!=NULL)
+*(out) << "		Matrix3x3 ( "<<this->matrix3x3[0]<<" "<<this->matrix3x3[1]<<" "<<this->matrix3x3[2]<<" "<<this->matrix3x3[3]<<" "<<this->matrix3x3[4]<<" "<<this->matrix3x3[5]<<" "<<this->matrix3x3[6]<<" "<<this->matrix3x3[7]<<" "<<this->matrix3x3[8]<<" )\n";
+else                        
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";
 if(this->staticDetailLevel > -1)

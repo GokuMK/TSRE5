@@ -34,6 +34,7 @@ public:
 public slots:
     void cleanup();
     void enableTool(QString name);
+    void jumpTo(int x, int y);
 
 signals:
     void routeLoaded(Ref * a);
@@ -75,6 +76,8 @@ private:
     bool mousePressed = false;
     QString toolEnabled = "";
     float moveStep = 0.25;
+    float moveMaxStep = 0.25;
+    float moveMinStep = 0.01;
     bool rotateTool = false;
     bool translateTool = false;
 };

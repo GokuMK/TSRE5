@@ -97,10 +97,6 @@ void SpeedpostObj::render(GLUU* gluu, float lod, float posx, float posz, float* 
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     
-    if(selected){
-        drawBox();
-    }
-    
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
         int sColor = (int)(selectionColor - wColor*65536)/256;
@@ -111,6 +107,10 @@ void SpeedpostObj::render(GLUU* gluu, float lod, float posx, float posz, float* 
     }
         
     ShapeLib::shape[shape]->render();
+    
+    if(selected){
+        drawBox();
+    }
 };
 
 bool SpeedpostObj::getBorder(float* border){

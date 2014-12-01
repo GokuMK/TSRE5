@@ -267,7 +267,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
 
         switch (event->key()) {
             case Qt::Key_Alt:
-                moveStep = 0.01;
+                moveStep = moveMinStep;
                 break;
             case Qt::Key_8:
                 if(translateTool && selectedObj != NULL){
@@ -276,7 +276,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->translate(a.x,0,a.y);
                 }
                 if(rotateTool && selectedObj != NULL){
-                    this->selectedObj->rotate(moveStep/5, 0, 0);
+                    this->selectedObj->rotate(moveStep/10, 0, 0);
                 }
                 break;
             case Qt::Key_2:
@@ -286,7 +286,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->translate(a.x,0,a.y);
                 }
                 if(rotateTool && selectedObj != NULL){
-                    this->selectedObj->rotate(-moveStep/5, 0, 0);
+                    this->selectedObj->rotate(-moveStep/10, 0, 0);
                 }
                 break;    
             case Qt::Key_4:
@@ -296,7 +296,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->translate(a.x,0,a.y);
                 }
                 if(rotateTool && selectedObj != NULL){
-                    this->selectedObj->rotate(0, -moveStep, 0);
+                    this->selectedObj->rotate(0, -moveStep/10, 0);
                 }
                 break;
             case Qt::Key_6:
@@ -306,7 +306,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->translate(a.x,0,a.y);
                 }
                 if(rotateTool && selectedObj != NULL){
-                    this->selectedObj->rotate(0, moveStep, 0);
+                    this->selectedObj->rotate(0, moveStep/10, 0);
                 }
                 break;                 
             case Qt::Key_9:
@@ -314,7 +314,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->translate(0,moveStep,0);
                 }
                 if(rotateTool && selectedObj != NULL){
-                    this->selectedObj->rotate(0, 0, moveStep/5);
+                    this->selectedObj->rotate(0, 0, moveStep/10);
                 }
                 break;
             case Qt::Key_3:
@@ -322,7 +322,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->translate(0,-moveStep,0);
                 }
                 if(rotateTool && selectedObj != NULL){
-                    this->selectedObj->rotate(0, 0, -moveStep/5);
+                    this->selectedObj->rotate(0, 0, -moveStep/10);
                 }
                 break;   
             case Qt::Key_R:
@@ -354,10 +354,10 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
 
 void GLWidget::keyReleaseEvent(QKeyEvent * event) {
     camera->keyUp(event);
-    if(toolEnabled == "selectTool"){
+    if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
         switch (event->key()) {
             case Qt::Key_Alt:
-                moveStep = 0.25;
+                moveStep = moveMaxStep;
                 break;
             default:
                 break;
@@ -446,4 +446,10 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
 void GLWidget::enableTool(QString name){
     qDebug() << name;
     toolEnabled = name;
+}
+
+void GLWidget::jumpTo(int x, int y){
+    qDebug() << "jump: "<< x << " "<< y;
+    camera->setPozT(x, -y);
+    
 }

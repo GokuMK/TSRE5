@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "ToolBox.h"
+#include "NaviBox.h"
 
 QT_BEGIN_NAMESPACE
 class QSlider;
@@ -23,6 +24,7 @@ protected:
 private:
     GLWidget *glWidget;
     ToolBox *groupBox;
+    NaviBox *naviBox;
 };
 //! [0]
 

@@ -2,17 +2,27 @@
 
 #include "glwidget.h"
 #include "window.h"
-#include "ToolBox.h"
 
 Window::Window() {
     groupBox = new ToolBox("ToolBox");
+    naviBox = new NaviBox();
     glWidget = new GLWidget;
-
+    
+    QWidget* box = new QWidget();
+    box->setMaximumWidth(250);
+    box->setMinimumWidth(250);
+    QVBoxLayout *mainLayout2 = new QVBoxLayout;
+    mainLayout2->addWidget(groupBox);
+    mainLayout2->addWidget(naviBox);
+    mainLayout2->setAlignment(naviBox, Qt::AlignBottom);
+    mainLayout2->setContentsMargins(0,0,0,0);
+    box->setLayout(mainLayout2);
+    
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->addWidget(glWidget);
-    mainLayout->addWidget(groupBox);
+    mainLayout->addWidget(box);
+    //mainLayout->addWidget(groupBox);
     setLayout(mainLayout);
-    setContentsMargins(0,0,0,0);
     mainLayout->setContentsMargins(1,1,1,1);
     
     setWindowTitle(tr("TSRE5"));
@@ -22,10 +32,13 @@ Window::Window() {
     
     QObject::connect(groupBox, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));
+    
+    QObject::connect(naviBox, SIGNAL(jumpTo(int, int)),
+                      glWidget, SLOT(jumpTo(int, int)));
 }
 
 void Window::keyPressEvent(QKeyEvent *e) {
-    qDebug() << "rr";
+
     if (e->key() == Qt::Key_Escape)
         close();
     else

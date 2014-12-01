@@ -9,6 +9,7 @@ INPUT(
 ./build/Debug/MinGW_1-Windows/GLMatrix.o
 ./build/Debug/MinGW_1-Windows/GLUU.o
 ./build/Debug/MinGW_1-Windows/Game.o
+./build/Debug/MinGW_1-Windows/NaviBox.o
 ./build/Debug/MinGW_1-Windows/OglObj.o
 ./build/Debug/MinGW_1-Windows/ParserX.o
 ./build/Debug/MinGW_1-Windows/PlatformObj.o
@@ -45,6 +46,7 @@ INPUT(
 ./build/Debug/MinGW_1-Windows/main.o
 ./build/Debug/MinGW_1-Windows/window.o
 ./build/Debug/MinGW_1-Windows/moc_AceLib.o
+./build/Debug/MinGW_1-Windows/moc_NaviBox.o
 ./build/Debug/MinGW_1-Windows/moc_ToolBox.o
 ./build/Debug/MinGW_1-Windows/moc_glwidget.o
 ./build/Debug/MinGW_1-Windows/moc_window.o

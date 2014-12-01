@@ -97,6 +97,12 @@ void Camera::scalPosRot() {
     relativeRot = Vector2f();
 }
 */
+
+void Camera::setPozT(int x, int y){
+    pozT[0] = x;
+    pozT[1] = y;
+}
+
 float* Camera::getPos() {
     pos[0] = relativePos[0] + (playerPos[0] * (float) cos(-relativeRot[0]) - playerPos[2] * (float) sin(-relativeRot[0]));
     pos[1] = relativePos[1] + playerPos[1];

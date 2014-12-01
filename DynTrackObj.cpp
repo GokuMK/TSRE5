@@ -57,6 +57,15 @@ void DynTrackObj::set(QString sh, FileBuffer* data) {
         }
         return;
     }
+    if (sh == ("jnodeposn")) {
+        jNodePosn = new float[5];
+        jNodePosn[0] = ParserX::parsujr(data);
+        jNodePosn[1] = ParserX::parsujr(data);
+        jNodePosn[2] = ParserX::parsujr(data);
+        jNodePosn[3] = ParserX::parsujr(data);
+        jNodePosn[4] = ParserX::parsujr(data);
+        return;
+    }    
     //qDebug() <<"A";
     WorldObj::set(sh, data);
     return;
@@ -802,6 +811,8 @@ for(int i = 0; i < 5; i++){
 *(out) << "		)\n";
 *(out) << "		SectionIdx ( "<<this->sectionIdx<<" )\n";
 *(out) << "		Elevation ( "<<this->elevation<<" )\n";
+if(this->jNodePosn!=NULL)
+*(out) << "		JNodePosn ( "<<this->jNodePosn[0]<<" "<<this->jNodePosn[1]<<" "<<this->jNodePosn[2]<<" "<<this->jNodePosn[3]<<" "<<this->jNodePosn[4]<<" )\n";
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
 *(out) << "		StaticFlags ( "<<flags<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";

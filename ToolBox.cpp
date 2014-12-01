@@ -2,12 +2,11 @@
 
 
 ToolBox::ToolBox(QString name)
-    : QGroupBox(name){
-    this->setMaximumWidth(250);
-    this->setMinimumWidth(250);
+    : QWidget(){
     //QRadioButton *radio1 = new QRadioButton(tr("&Radio button 1"));
     //QRadioButton *radio2 = new QRadioButton(tr("R&adio button 2"));
     //QRadioButton *radio3 = new QRadioButton(tr("Ra&dio button 3"));
+
     QPushButton *selectTool = new QPushButton("Select", this);
     QPushButton *placeTool = new QPushButton("Place new", this);
     //radio1->setChecked(true);

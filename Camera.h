@@ -26,6 +26,7 @@ public:
     float* getPos();
     float getRotX();
     float getRotY();
+    void setPozT(int x, int y);
     //Vector3f getUp();
     void moveForward(float fps);
     void moveBackward(float fps);

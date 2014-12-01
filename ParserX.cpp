@@ -36,7 +36,7 @@ int ParserX::szukajsekcji1(QString sh, FileBuffer* bufor){
             poziom--;
         }
         if (poziom > 0) continue;
-        if (b > 64) {
+        if ((b > 64) || (b>47 && b<58 && czytam == 1)) {
             czytam = 1;
             sekcja += b;
             i++;
@@ -85,7 +85,7 @@ QString ParserX::nazwasekcji(FileBuffer* bufor){
         }
         if (poziom > 0) continue;
 
-        if (b > 64) {
+        if ((b > 64) || (b>47 && b<58 && czytam == 1)) {
             czytam = 1;
             sekcja += b;
             i++;
@@ -133,7 +133,7 @@ QString ParserX::nazwasekcji_inside(FileBuffer* bufor){
             return "";
         }
         //console.log("p "+String.fromCharCode(b)+" "+poziom);
-        if (b > 64) {
+        if ((b > 64) || (b>47 && b<58 && czytam == 1)) {
             czytam = 1;
             sekcja += b;
             i++;
@@ -179,7 +179,7 @@ int ParserX::szukajsekcji2(QString sh1, QString sh2, FileBuffer* bufor){
         }
         if (poziom > 0) continue;
         //if (poziom < 0) return -1;
-        if (b > 64) {
+        if ((b > 64) || (b>47 && b<58 && czytam == 1)) {
             czytam = 1;
             sekcja += b;
             i++;

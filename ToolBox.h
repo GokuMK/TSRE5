@@ -4,7 +4,7 @@
 #include <QtWidgets>
 #include "Ref.h"
 
-class ToolBox : public QGroupBox{
+class ToolBox : public QWidget{
     Q_OBJECT
 
 public:

@@ -18,6 +18,7 @@ public:
 private:
     int sectionIdx;
     float elevation;
+    float* jNodePosn = NULL;
 };
 
 #endif	/* TRACKOBJ_H */

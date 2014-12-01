@@ -6,8 +6,15 @@ public:
     static float* transformMat4(float* out, float* a, float* m);
 };
 
+class Vec4 {
+public:
+    static float* normalize(float* out, float* a);
+
+};
+
 class Quat {
 public:
+    static float* fromMat3(float *out, float *m);
     static float* fromRotationXYZ(float *out, float *a);
     static float* rotateX(float *out, float *a, float rad);
     static float* rotateY(float *out, float *a, float rad);

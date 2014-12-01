@@ -35,6 +35,7 @@ private:
     bool init;
     int sectionIdx;
     float elevation;
+    float* jNodePosn = NULL;
     float bound[6];
     void drawShape();
     void genShape();

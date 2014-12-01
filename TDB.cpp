@@ -116,7 +116,7 @@ void TDB::renderAll(GLUU *gluu, float* playerT) {
         //qDebug() <<"update";
         lineHash = hash;
 
-        for (int i = 0; i < iTRnodes; i++) {
+        for (int i = 1; i <= iTRnodes; i++) {
             n = &trackNodes[i];
             if (n->typ == -1) continue;
             if (n->typ == 1) {
@@ -135,7 +135,7 @@ void TDB::renderAll(GLUU *gluu, float* playerT) {
         float* punkty = new float[pLen];
         int lPtr = 0, kPtr = 0, pPtr = 0;
 
-        for (int i = 0; i < iTRnodes; i++) {
+        for (int i = 1; i <= iTRnodes; i++) {
             n = &trackNodes[i];
             if (n->typ == -1) continue;
             if (n->typ == 1) {
@@ -208,7 +208,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
 
         int len = 0;
 
-        for (int j = 0; j < iTRnodes; j++) {
+        for (int j = 1; j <= iTRnodes; j++) {
             TRnode* n = &trackNodes[j];
             if (n->typ == -1) continue;
             if (n->typ == 1) {
@@ -227,7 +227,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
         float* punkty = new float[len];
         float* ptr = punkty;     
         
-        for (int j = 0; j < iTRnodes; j++) {
+        for (int j = 1; j <= iTRnodes; j++) {
             TRnode* n = &trackNodes[j];
             if (n->typ == -1) continue;
             if (n->typ == 1) {

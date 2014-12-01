@@ -32,15 +32,18 @@ void WorldObj::load(int x, int y) {
 void WorldObj::set(QString sh, FileBuffer* data) {
     if (sh == ("uid")) {
         UiD = ParserX::parsujUint(data);
+        return;
     }
     if (sh == ("staticflags")) {
         staticFlags = ParserX::parsuj16(data);
+        return;
     }
     if (sh == ("position")) {
         position[0] = ParserX::parsujr(data);
         position[1] = ParserX::parsujr(data);
         position[2] = ParserX::parsujr(data);
         jestPQ++;
+        return;
     }
     if (sh == ("qdirection")) {
         qDirection[0] = ParserX::parsujr(data);
@@ -48,18 +51,39 @@ void WorldObj::set(QString sh, FileBuffer* data) {
         qDirection[2] = ParserX::parsujr(data);
         qDirection[3] = ParserX::parsujr(data);
         jestPQ++;
+        return;
+    }
+    if (sh == ("matrix3x3")) {
+        matrix3x3 = new float[9];
+        matrix3x3[0] = ParserX::parsujr(data);
+        matrix3x3[1] = ParserX::parsujr(data);
+        matrix3x3[2] = ParserX::parsujr(data);
+        matrix3x3[3] = ParserX::parsujr(data);
+        matrix3x3[4] = ParserX::parsujr(data);
+        matrix3x3[5] = ParserX::parsujr(data);
+        matrix3x3[6] = ParserX::parsujr(data);
+        matrix3x3[7] = ParserX::parsujr(data);
+        matrix3x3[8] = ParserX::parsujr(data);
+        Quat::fromMat3((float*)&qDirection, matrix3x3);
+        Vec4::normalize((float*)&qDirection,(float*)&qDirection);
+        //Vec4::normalize((float*)&qDirection,(float*)&qDirection);
+        jestPQ++;
+        return;
     }
     if (sh == ("vdbid")) {
         //qDebug()<< ParserX::parsujr(data);
         vDbId = ParserX::parsujUint(data);
+        return;
     }
     if (sh == ("staticdetaillevel")) {
         staticDetailLevel = ParserX::parsujr(data);
+        return;
     }
     if (sh == ("collideflags")) {
         collideFlags = ParserX::parsujr(data);
         return;
     }
+    qDebug() << "=" << sh;
     return;
 }
 
@@ -80,6 +104,7 @@ void WorldObj::translate(float px, float py, float pz){
 }
 
 void WorldObj::rotate(float x, float y, float z){
+    if(matrix3x3 != NULL) matrix3x3 = NULL;
     if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x);
     if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y);
     if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z);
