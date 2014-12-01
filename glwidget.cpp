@@ -424,13 +424,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
         camera->MouseMove(event);
     } else {
         if(toolEnabled == "selectTool"){
-            if(selectedObj != NULL && mousePressed){
+            /*if(selectedObj != NULL && mousePressed){
                 //selectedObj->translate(aktPointerPos[0] - lastPointerPos[0], aktPointerPos[1] - lastPointerPos[1], aktPointerPos[2] - lastPointerPos[2]);
                 selectedObj->translate(0, aktPointerPos[1] - lastPointerPos[1], 0);
                 lastPointerPos[0] = aktPointerPos[0];
                 lastPointerPos[1] = aktPointerPos[1];
                 lastPointerPos[2] = aktPointerPos[2];
-            } //else {
+            }*/ //else {
             //    camera->MouseMove(event);
             //}
         }

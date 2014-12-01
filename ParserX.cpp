@@ -428,9 +428,8 @@ int ParserX::pominsekcje(FileBuffer* bufor){
     char b;
     int poziom = 0;
 
-    for (int tt = 0; tt < 1000; tt++)
-        //for (;;)
-    {
+    for (int tt = 0; tt < 10000; tt++){
+    //for (;;){
         if(bufor->length <= bufor->off + 2)
             return 0;
         b = bufor->get();
