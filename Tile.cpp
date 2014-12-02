@@ -12,6 +12,7 @@
 #include "SpeedpostObj.h"
 #include "SignalObj.h"
 #include "PlatformObj.h"
+#include "TrWatermarkObj.h"
 #include "GLUU.h"
 #include <QString>
 #include <QDebug>
@@ -104,6 +105,11 @@ void Tile::load() {
             loaded = 0;
             wczytajObiekty();
             return;
+        } else if (sh == "tr_watermark") {
+            nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::parsujr(data)));
+            obiekty[jestObiektow++] = nowy;
+            ParserX::pominsekcje(data);
+            continue;
         } else if (sh == "vdbidcount") {
             vDbIdCount = ParserX::parsujr(data);
             //qDebug() <<vDbIdCount;
@@ -135,7 +141,10 @@ void Tile::load() {
                 j++;
             } while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == ""));
             */
+            int start = data->off;
             ParserX::pominsekcje(data);
+            int end = data->off;
+            viewDbSphereRaw = (data->getString(start, end));
             continue;
         } 
 
@@ -259,6 +268,12 @@ void Tile::save() {
     out << "SIMISA@@@@@@@@@@JINX0w0t______\n";
     out << "\n";
     out << "Tr_Worldfile (\n";
+    if(!Game::deleteViewDbSpheres && viewDbSphereRaw != NULL && this->vDbIdCount > 0){
+        out << "	VDbIdCount ( "<<this->vDbIdCount<<" )\n";
+        out << "	ViewDbSphere (";
+        out << *viewDbSphereRaw;
+        out << "\n";
+    }
     /*if(this->vDbIdCount > 0){
         out << "	VDbIdCount ( "<<this->vDbIdCount<<" )\n";
         out << "	ViewDbSphere (\n";

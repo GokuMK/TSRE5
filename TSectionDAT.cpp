@@ -25,8 +25,10 @@ bool TSectionDAT::loadGlobal() {
     QFile *file = new QFile(path);
     if (!file->open(QIODevice::ReadOnly))
         return false;
+    
     FileBuffer* bufor = ReadFile::read(file);
     bufor->off = 0;
+
     //szukanie TrackSections
     sh = "TrackSections";
     ParserX::szukajsekcji1(sh, bufor);

@@ -12,6 +12,8 @@ int Game::maxObjLag = 10;
 int Game::startTileX = 0;
 int Game::startTileY = 0;
 float Game::objectLod = 3000;
+bool Game::deleteTrWatermarks = false;
+bool Game::deleteViewDbSpheres = false;
 
 void Game::load() {
     QString sh;
@@ -39,10 +41,18 @@ void Game::load() {
             root = args[1].trimmed();
         if(val == "routeName")
             route = args[1].trimmed();
+        
         if(val == "startTileX")
             startTileX = args[1].trimmed().toInt();
         if(val == "startTileY")
             startTileY = args[1].trimmed().toInt();
+        
+        if(val == "deleteTrWatermarks")
+            if(args[1].trimmed().toLower() == "true")
+                deleteTrWatermarks = true;
+        if(val == "deleteViewDbSpheres")
+            if(args[1].trimmed().toLower() == "true")
+                deleteViewDbSpheres = true;
     }
 
 }

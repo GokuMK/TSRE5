@@ -13,6 +13,8 @@ public:
     static void load();
     static int startTileX;
     static int startTileY;
+    static bool deleteTrWatermarks;
+    static bool deleteViewDbSpheres;
 private:
 };
 

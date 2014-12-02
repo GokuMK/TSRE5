@@ -50,7 +50,7 @@ void ForestObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("treesize")) {
-        treeSizeX = ParserX::parsujr(data)*0.7;
+        treeSizeX = ParserX::parsujr(data);
         treeSizeZ = ParserX::parsujr(data);
         return;
     }
@@ -143,7 +143,7 @@ void ForestObj::drawShape(){
             int seed = (int)(position[0] + position[1] + position[2]);
             //Random random = new Random(seed);
             std::srand(seed);
-
+            float treeSizeXt = treeSizeX*0.7;
             for(int uu = 0; uu < population; uu++){
 
                 float tposx = ((float)((std::rand()%100))/100)*areaX-areaX/2;
@@ -154,42 +154,42 @@ void ForestObj::drawShape(){
                 tposz = uuu.y;
 
                 float wysokosc = TerrainLib::getHeight(x, y, tposx+position[0], tposz+position[2]);
-
+                
                 for(int j = -1; j < 2; j+=2){
                     for(int i = -1; i<2; i+=2){
-                            punkty[ptr++] = -treeSizeX*i*j/2 + tposx;
+                            punkty[ptr++] = -treeSizeXt*i*j/2 + tposx;
                             punkty[ptr++] = wysokosc+treeSizeZ;
-                            punkty[ptr++] = -treeSizeX*i/2 + tposz;
+                            punkty[ptr++] = -treeSizeXt*i/2 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 0; punkty[ptr++] = 0;
                             
-                            punkty[ptr++] = treeSizeX*i*j/2 + tposx;
+                            punkty[ptr++] = treeSizeXt*i*j/2 + tposx;
                             punkty[ptr++] = wysokosc+treeSizeZ;
-                            punkty[ptr++] = treeSizeX*i/2 + tposz;
+                            punkty[ptr++] = treeSizeXt*i/2 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 1; punkty[ptr++] = 0;
                             
-                            punkty[ptr++] = treeSizeX*i*j/2 + tposx;
+                            punkty[ptr++] = treeSizeXt*i*j/2 + tposx;
                             punkty[ptr++] = wysokosc;
-                            punkty[ptr++] = treeSizeX*i/2 + tposz;
+                            punkty[ptr++] = treeSizeXt*i/2 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 1; punkty[ptr++] = 1;
                             
-                            punkty[ptr++] = -treeSizeX*i*j/2 + tposx;
+                            punkty[ptr++] = -treeSizeXt*i*j/2 + tposx;
                             punkty[ptr++] = wysokosc;
-                            punkty[ptr++] = -treeSizeX*i/2 + tposz;
+                            punkty[ptr++] = -treeSizeXt*i/2 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 0; punkty[ptr++] = 1;
                             
-                            punkty[ptr++] = -treeSizeX*i*j/2 + tposx;
+                            punkty[ptr++] = -treeSizeXt*i*j/2 + tposx;
                             punkty[ptr++] = wysokosc+treeSizeZ;
-                            punkty[ptr++] = -treeSizeX*i/2 + tposz;
+                            punkty[ptr++] = -treeSizeXt*i/2 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 0; punkty[ptr++] = 0;
                             
-                            punkty[ptr++] = treeSizeX*i*j/2 + tposx;
+                            punkty[ptr++] = treeSizeXt*i*j/2 + tposx;
                             punkty[ptr++] = wysokosc;
-                            punkty[ptr++] = treeSizeX*i/2 + tposz;
+                            punkty[ptr++] = treeSizeXt*i/2 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 1; punkty[ptr++] = 1;
                     }
@@ -240,7 +240,7 @@ if(this->treeTexture != "")
 *(out) << "		ScaleRange ( "<<this->scaleRangeX<<" "<<this->scaleRangeZ<<" )\n";
 *(out) << "		Area ( "<<this->areaX<<" "<<this->areaZ<<" )\n";
 *(out) << "		Population ( "<<this->population<<" )\n";
-*(out) << "		TreeSize ( "<<this->treeSizeX/0.7<<" "<<this->treeSizeZ<<" )\n";
+*(out) << "		TreeSize ( "<<this->treeSizeX<<" "<<this->treeSizeZ<<" )\n";
 *(out) << "		StaticFlags ( "<<flags<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";

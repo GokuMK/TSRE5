@@ -18,4 +18,12 @@ routeName = cmk
 startTileX = -5306
 startTileY = 14961
 
+# save
+
+deleteTrWatermarks = false
+deleteViewDbSpheres = false
+#deleteTrWatermarks = true
+#deleteViewDbSpheres = true
+
 # różności
+

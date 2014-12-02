@@ -7,10 +7,10 @@ FileBuffer* ReadFile::read(QFile* file) {
     
     QByteArray fileData = file->readAll();
     unsigned char* in = (unsigned char*)fileData.data();
-    unsigned char* out;
-    unsigned char *data;
+    unsigned char* out = NULL;
+    unsigned char *data = NULL;
     int maxSize = 25000000;
-    int nLength;
+    int nLength = 0;
     //for (int i = 0; i < 100; i++)
     //   qDebug() << ":" << (char)in[i];
 
@@ -21,7 +21,6 @@ FileBuffer* ReadFile::read(QFile* file) {
         int ret;
         z_stream strm;
         //unsigned char* in = (unsigned char*)buffer.data() + 7;
-        /* allocate inflate state */
         strm.zalloc = Z_NULL;
         strm.zfree = Z_NULL;
         strm.opaque = Z_NULL;
@@ -47,12 +46,12 @@ FileBuffer* ReadFile::read(QFile* file) {
             //for (int i = 0; i < 128; i++)
             //    std::cout << ":" << (int)data[i];
         }
+        delete out;
     } else {
-        data = new unsigned char[fileData.length()];
+        data = new unsigned char[fileData.length() - 16];
         nLength = fileData.length() - 16;
         std::copy(in + 16, in + nLength + 16, data);
     }
-    delete out;
     delete in;
     return new FileBuffer(data,nLength);
 }

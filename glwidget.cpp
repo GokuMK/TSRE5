@@ -346,6 +346,10 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                         selectedObj->selected = true;
                     }
                 }
+            case Qt::Key_P:
+                if(selectedObj != NULL){
+                    route->ref->selected = selectedObj->getRefInfo();
+                }
             default:
                 break;
         }

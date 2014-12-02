@@ -22,7 +22,7 @@ TDB::TDB(QString path) {
     if (!file->open(QIODevice::ReadOnly))
         return;
     FileBuffer* bufor = ReadFile::read(file);
-
+    
     //szukanie trackdb
     sh = "TrackDB";
     ParserX::szukajsekcji1(sh, bufor);

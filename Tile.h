@@ -42,6 +42,7 @@ public:
     
 private:
     int maxUiD = 0;
+    QString* viewDbSphereRaw = NULL;
     void wczytajObiekty();
     bool createObj(WorldObj** nowy, QString sh);
 };
