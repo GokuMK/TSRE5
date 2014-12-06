@@ -100,7 +100,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q){
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r){
-    check_coords(x, z, p);
+    Game::check_coords(x, z, p);
     
     Tile *tTile;
     //try {
@@ -128,6 +128,9 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r){
         
         if(r->type == "trackobj"){
             this->trackDB->placeTrack(x, z, p, q, r, nowy->UiD);
+            nowy->setPosition(p);
+            nowy->setQdirection(q);
+            nowy->setMartix();
         }
         
         return nowy;
@@ -136,33 +139,16 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r){
     return NULL;
 }
 
-void Route::check_coords(int& x, int& z, float* p) {
-    if (p[0] > 1024) {
-        p[0] -= 2048;
-        x++;
-    }
-    if (p[0]<-1024) {
-        p[0] += 2048;
-        x--;
-    }
-    if (p[2] > 1024) {
-        p[2] -= 2048;
-        z++;
-    }
-    if (p[2]<-1024) {
-        p[2] += 2048;
-        z--;
-    }
-}
-
 void Route::save(){
     qDebug() << "save";
     for (auto it = tile.begin(); it != tile.end(); ++it) {
         //console.log(obj.type);
         Tile* tTile = (Tile*) it->second;
+        if (tTile == NULL) continue;
         if (tTile->loaded == 1 && tTile->modified){
             tTile->save();
             tTile->modified = false;
         }
     }
+    this->trackDB->save();
 }

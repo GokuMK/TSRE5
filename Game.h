@@ -11,6 +11,7 @@ public:
     static int allowObjLag;
     static int maxObjLag;
     static void load();
+    static void check_coords(int& x, int& z, float* p);
     static int startTileX;
     static int startTileY;
     static bool deleteTrWatermarks;

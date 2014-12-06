@@ -24,7 +24,17 @@ float TSection::getDlugosc(){
         }
         return 0;
     }
-    
+
+float TSection::getAngle(){
+        if(type == 0){
+            return 0;
+        }
+        else if(type==1){
+            return angle;
+        }
+        return 0;
+    }
+
 int TSection::getLineBufferSize(){
     float kierunek;
     if(type==0){

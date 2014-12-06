@@ -23,6 +23,8 @@ public:
     void refresh();
     void trpin(TRnode* tr, FileBuffer* bufor );
     void save();
+    int findNearestNode(int &x, int &z, float* p, float* q);
+    bool appendTrack(int id, Ref::RefItem* r, int uid);
     bool placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid);
     void renderAll(GLUU *gluu, float * playerT);
     void renderLines(GLUU *gluu, float* playerT);
