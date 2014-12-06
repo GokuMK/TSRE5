@@ -60,6 +60,15 @@ void Vector3f::div(float d) {
     y /= d;
     z /= d;
 }
+
+void Vector3f::rotateY(float a, float r) { //angle, radius
+    this->x -= r;
+    float nz = (float) (z * cos(-a) - x * sin(-a));
+    float nx = (float) (z * sin(-a) + x * cos(-a));
+    this->x = nx + r;
+    this->z = nz;
+    //x = nx-r;
+}
 /*
 Vector3f Vector3f::add(Vector3f p) {
     return new Vector3f(this.x + p.x, this.y + p.y, this.z + p.z);

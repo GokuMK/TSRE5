@@ -2,6 +2,7 @@
 #define	TOOLBOX_H
 
 #include <QtWidgets>
+#include "Route.h"
 #include "Ref.h"
 
 class ToolBox : public QWidget{
@@ -12,18 +13,21 @@ public:
     virtual ~ToolBox();
     
 public slots:
-    void routeLoaded(Ref * a);
+    void routeLoaded(Route * a);
     void refClassSelected(const QString & text);
     void refListSelected(QListWidgetItem * item);
+    void trackListSelected(QListWidgetItem * item);
     void selectToolEnabled();
     void placeToolEnabled();
 signals:
     void enableTool(QString name);
     
 private:
-    Ref * ref;
+    Route* route;
     QListWidget refList;
+    QListWidget trackList;
     QComboBox refClass;
+    Ref::RefItem trackRef;
 };
 
 #endif	/* TOOLBOX_H */

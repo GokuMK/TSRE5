@@ -32,7 +32,7 @@ TDB::TDB(QString path) {
     ParserX::szukajsekcji1(sh, bufor);
 
     iTRnodes = (int) ParserX::parsujr(bufor); //odczytanie ilosci sciezek
-    trackNodes = new TRnode[iTRnodes + 1]; //przydzielenie pamieci
+    //trackNodes = new TRnode[iTRnodes + 100]; //przydzielenie pamieci
     qDebug() << "N" << iTRnodes;
     //zapisanie x tracknodes
     for (i = 0; i < iTRnodes; i++) {
@@ -41,7 +41,7 @@ TDB::TDB(QString path) {
         t = (int) ParserX::parsujr(bufor); // odczytanie numeru sciezki
         sh = ParserX::nazwasekcji(bufor);
         //System.out.println("----"+sh);
-
+        
         switch (sh.length()) {// wybranie typu sciezki ^^
             case 9:
                 trackNodes[t].typ = 0; //typ endnode
@@ -106,15 +106,114 @@ void TDB::trpin(TRnode *tr, FileBuffer* bufor) {
     }
 }
 
+bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid){
+    
+    //save();
+    //return false;
+    
+    TrackShape* shp = this->tsection->shape[r->value];
+    qDebug() << shp->filename;
+    
+    int end1Id = ++this->iTRnodes;
+    int vecId = ++this->iTRnodes;
+    int end2Id = ++this->iTRnodes;
+    
+    z = -z;
+    ////////////////////////////////////
+    TRnode *newNode = &this->trackNodes[end1Id];
+    newNode->typ = 0;
+    newNode->UiD[0] = x;
+    newNode->UiD[1] = z;
+    newNode->UiD[2] = uid;
+    newNode->UiD[3] = 0;
+    newNode->UiD[4] = x;
+    newNode->UiD[5] = z;
+    newNode->UiD[6] = p[0];
+    newNode->UiD[7] = p[1];
+    newNode->UiD[8] = -p[2];
+    newNode->UiD[9] = 0;
+    newNode->UiD[10] = 0;
+    newNode->UiD[11] = 0;
+    
+    newNode->TrP1 = 1;
+    newNode->TrPinS[0] = vecId;
+    newNode->TrPinK[0] = 1;
+
+    /////////////////////////////////////////////////////
+    newNode = &this->trackNodes[vecId];
+    qDebug() << vecId;
+    newNode->typ = 1;
+    newNode->iTrv = 1;
+    newNode->trVectorSection = new TRnode::TRSect[newNode->iTrv];
+    newNode->trVectorSection[0].param[0] = shp->path[0].sect[0];
+    newNode->trVectorSection[0].param[1] = r->value;
+    newNode->trVectorSection[0].param[2] = x;
+    newNode->trVectorSection[0].param[3] = z;
+    newNode->trVectorSection[0].param[4] = uid;
+    newNode->trVectorSection[0].param[5] = 0;
+    newNode->trVectorSection[0].param[6] = 1;
+    newNode->trVectorSection[0].param[7] = 0;
+    newNode->trVectorSection[0].param[8] = x;
+    newNode->trVectorSection[0].param[9] = z;
+    newNode->trVectorSection[0].param[10] = p[0];
+    newNode->trVectorSection[0].param[11] = p[1];
+    newNode->trVectorSection[0].param[12] = -p[2];
+    newNode->trVectorSection[0].param[13] = 0;
+    newNode->trVectorSection[0].param[14] = 0;
+    newNode->trVectorSection[0].param[15] = 0;
+    
+    newNode->TrP1 = 1;
+    newNode->TrP2 = 1;
+    newNode->TrPinS[0] = end1Id;
+    newNode->TrPinK[0] = 1;
+    newNode->TrPinS[1] = end2Id;
+    newNode->TrPinK[1] = 1;
+    /////////////////////////////////////////////////////
+    qDebug() << shp->path[0].sect[0];
+    float dlugosc = this->tsection->sekcja[shp->path[0].sect[0]]->getDlugosc();
+    qDebug() << dlugosc;
+    Vector3f *aa = this->tsection->sekcja[shp->path[0].sect[0]]->getDrawPosition(dlugosc);
+    aa->rotateY(M_PI, 0);
+    //Quat::
+    newNode = &this->trackNodes[end2Id];
+    newNode->typ = 0;
+    newNode->UiD[0] = x;
+    newNode->UiD[1] = z;
+    newNode->UiD[2] = uid;
+    newNode->UiD[3] = 1;
+    newNode->UiD[4] = x;
+    newNode->UiD[5] = z;
+    newNode->UiD[6] = p[0]+aa->x;
+    newNode->UiD[7] = p[1]+aa->y;
+    newNode->UiD[8] = -p[2]-aa->z;
+    newNode->UiD[9] = 0;
+    newNode->UiD[10] = 0;
+    newNode->UiD[11] = 0;
+    
+    newNode->TrP1 = 1;
+    newNode->TrPinS[0] = vecId;
+    newNode->TrPinK[0] = 0;
+    ////////////////////////////////////////////////////
+    save();
+    refresh();
+    return true;
+}
+
+void TDB::refresh(){
+    isInitSectLines = false;
+    isInitLines = false;
+}
+
 void TDB::renderAll(GLUU *gluu, float* playerT) {
 
     if (!loaded) return;
     int hash = playerT[0] * 10000 + playerT[1];
-    if (!linieSieci.loaded || lineHash != hash) {
+    if (!isInitLines || lineHash != hash) {
         TRnode *n;
         int lLen = 0, kLen = 0, pLen = 0;
         //qDebug() <<"update";
         lineHash = hash;
+        isInitLines = true;
 
         for (int i = 1; i <= iTRnodes; i++) {
             n = &trackNodes[i];
@@ -201,10 +300,11 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
 
     if (!loaded) return;
     int hash = playerT[0] * 10000 + playerT[1];
-    if (!sectionLines.loaded || sectionHash != hash) {
+    if (!sectionLines.loaded || sectionHash != hash || !isInitSectLines) {
         Vector3f p;
         Vector3f o;
         sectionHash = hash;
+        isInitSectLines = true;
 
         int len = 0;
 
@@ -231,6 +331,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
             TRnode* n = &trackNodes[j];
             if (n->typ == -1) continue;
             if (n->typ == 1) {
+                qDebug() << j;
                 for (int i = 0; i < n->iTrv; i++) {
                     p.set(
                             (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10],
@@ -308,6 +409,97 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
     }
             
 }
+
+void TDB::save() {
+        
+    //while(usunNulle());
+
+    QString sh;
+    QString path;
+    path = Game::root + "/routes/" + Game::route + "/" + Game::route + ".tdb";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile file(path);
+    
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setRealNumberPrecision(8);
+    //out.setRealNumberNotation(QTextStream::FixedNotation);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+    out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
+    out << "TrackDB (\n";
+    //out << "	Serial ( "+serial+" )\n";
+    out << "	TrackNodes ( "<<(this->iTRnodes)<<"\n";
+        
+        for(int i = 1; i<= this->iTRnodes; i++){
+             out << "		TrackNode ( "<<i<<"\n";
+            
+            switch(trackNodes[i].typ){
+                case 0:
+                    out << "			TrEndNode ( "<<trackNodes[i].args[0]<<" )\n";
+                    out << "			UiD ( ";
+                    for(int j = 0; j<12; j++){
+                        out << trackNodes[i].UiD[j]<<" ";
+                    }
+                    out << ")\n";
+                    out << "			TrPins ( 1 0\n";
+                    out << "				TrPin ( "<<trackNodes[i].TrPinS[0]<<" "<<trackNodes[i].TrPinK[0]<<" )\n";
+                    out << "			)\n";
+                    break;
+                case 1:
+                    out << "			TrVectorNode ( \n";
+                    out << "				TrVectorSections ( "<<trackNodes[i].iTrv<<"";
+                    for(int j = 0; j<trackNodes[i].iTrv; j++){
+                        for(int jj = 0; jj<7; jj++){
+                            out << " "<<trackNodes[i].trVectorSection[j].param[jj];
+                        }
+                        out << " 00";
+                        for(int jj = 8; jj<16; jj++){
+                            out << " "<<trackNodes[i].trVectorSection[j].param[jj];
+                        }
+                        if(j%10 == 0 && j > 0)
+                            out << "\n					";
+                    }
+                    out << " )\n";
+
+                    
+                    /*if(trackNodes[i].TrItemRefs != null){
+                        out << "				TrItemRefs ( "+trackNodes[i].TrItemRefs.length+"\n";
+                        for(int j = 0; j<trackNodes[i].TrItemRefs.length; j++){
+                            out << "					TrItemRef ( "+trackNodes[i].TrItemRefs[j]+" )\n";
+                        }
+                        out << "				)\n";
+                    }*/
+                    out << "			)\n";                    
+                    out << "			TrPins ( 1 1\n";
+                    out << "				TrPin ( "<<trackNodes[i].TrPinS[0]<<" "<<trackNodes[i].TrPinK[0]<<" )\n";
+                    out << "				TrPin ( "<<trackNodes[i].TrPinS[1]<<" "<<trackNodes[i].TrPinK[1]<<" )\n";
+                    out << "			)\n";
+                    break;
+                case 2:
+                    out << "			TrJunctionNode ( "<<trackNodes[i].args[0]<<" "<<trackNodes[i].args[1]<<" "<<trackNodes[i].args[2]<<" )\n";
+                    out << "			UiD ( ";
+                    for(int j = 0; j<12; j++){
+                        out << trackNodes[i].UiD[j]<<" ";
+                    }
+                    out << ")\n";
+                    out << "			TrPins ( 1 2\n";
+                    out << "				TrPin ( "<<trackNodes[i].TrPinS[0]<<" "<<trackNodes[i].TrPinK[0]<<" )\n";
+                    out << "				TrPin ( "<<trackNodes[i].TrPinS[1]<<" "<<trackNodes[i].TrPinK[1]<<" )\n";
+                    out << "				TrPin ( "<<trackNodes[i].TrPinS[2]<<" "<<trackNodes[i].TrPinK[2]<<" )\n";
+                    out << "			)\n";
+                    break;
+            }
+            
+            out << "		)\n";
+        }
+        out << "	)\n";
+        out << ")";
+        file.close();  
+
+        qDebug() << "Zapisane";
+    }
 
 TDB::TDB(const TDB& orig) {
 }

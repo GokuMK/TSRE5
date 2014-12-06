@@ -18,22 +18,26 @@ Route::~Route() {
 
 WorldObj* Route::getObj(int x, int z, int uid) {
     Tile *tTile;
-    try {
-        tTile = tile.at((x)*10000 + z);
+    //try {
+        tTile = tile[((x)*10000 + z)];
+        if(tTile == NULL)
+            return new WorldObj();
         return tTile->getObj(uid);
-    } catch (const std::out_of_range& oor) {
-        return new WorldObj();
-    }
+    //} catch (const std::out_of_range& oor) {
+        
+    //}
 }
 
 void Route::transalteObj(int x, int z, float px, float py, float pz, int uid) {
     Tile *tTile;
-    try {
-        tTile = tile.at((x)*10000 + z);
+    //try {
+        tTile = tile[((x)*10000 + z)];
+        if(tTile == NULL)
+            return;
         tTile->transalteObj(px,py,pz,uid);
-    } catch (const std::out_of_range& oor) {
+    //} catch (const std::out_of_range& oor) {
 
-    }
+    //}
 }
 
 void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, bool selection) {
@@ -51,12 +55,13 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     Tile *tTile;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
-            try {
-                tTile = tile.at((playerT[0] + i)*10000 + playerT[1] + j);
-                if (tTile->loaded == -2) continue;
-            } catch (const std::out_of_range& oor) {
-                tile[(playerT[0] + i)*10000 + playerT[1] + j] = new Tile(playerT[0] + i, playerT[1] + j);
-            }
+            //try {
+                tTile = tile[(playerT[0] + i)*10000 + playerT[1] + j];
+            //    if (tTile->loaded == -2) continue;
+            //} catch (const std::out_of_range& oor) {
+                if(tTile == NULL)
+                    tile[(playerT[0] + i)*10000 + playerT[1] + j] = new Tile(playerT[0] + i, playerT[1] + j);
+            //}
             tTile = tile[(playerT[0] + i)*10000 + playerT[1] + j];
             //tTile->inUse = true;
             if (tTile->loaded == 1) {
@@ -95,12 +100,15 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q){
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r){
+    check_coords(x, z, p);
+    
     Tile *tTile;
-    try {
-        tTile = tile.at((x)*10000 + z);
-    } catch (const std::out_of_range& oor) {
+    //try {
+        tTile = tile[((x)*10000 + z)];
+    //} catch (const std::out_of_range& oor) {
+    if(tTile == NULL)
         tile[(x)*10000 + z] = new Tile(x, z);
-    }
+    //}
     if (tTile->loaded == -2){
         if(TerrainLib::isLoaded(x, z)){
             tTile->initNew();
@@ -115,10 +123,36 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r){
         //for(int i = -1000; i < 1000; i+=50){
         //pozWW[0] = pozW[0] + i;
         //pozWW[2] = pozW[2] + j;
-        return tTile->placeObject(p, q, r);
+        
+        WorldObj* nowy = tTile->placeObject(p, q, r);
+        
+        if(r->type == "trackobj"){
+            this->trackDB->placeTrack(x, z, p, q, r, nowy->UiD);
+        }
+        
+        return nowy;
         //}
     }
     return NULL;
+}
+
+void Route::check_coords(int& x, int& z, float* p) {
+    if (p[0] > 1024) {
+        p[0] -= 2048;
+        x++;
+    }
+    if (p[0]<-1024) {
+        p[0] += 2048;
+        x--;
+    }
+    if (p[2] > 1024) {
+        p[2] -= 2048;
+        z++;
+    }
+    if (p[2]<-1024) {
+        p[2] += 2048;
+        z--;
+    }
 }
 
 void Route::save(){

@@ -12,6 +12,7 @@ public:
         QString filename;
         QString align;
         QString description;
+        int value = 0;
     };
 
     std::unordered_map<std::string, std::vector<RefItem>> refItems;

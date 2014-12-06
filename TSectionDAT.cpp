@@ -65,6 +65,71 @@ bool TSectionDAT::loadGlobal() {
         }
         ParserX::pominsekcje(bufor);
     }
+    int t=0;
+    int sectionN;
+    TrackShape *shp;
+    if(sh.toLower() == "trackshapes" ){
+        while (!((sh = ParserX::nazwasekcji(bufor).toLower()) == "")) {
+            //nowy->set(sh, data);
+            //qDebug() << sh;
+            if (sh =="trackshape") {
+                t = ParserX::parsujr(bufor);
+                shape[t] = new TrackShape(t);
+                shp = shape[t];
+                sectionN = 0;
+                while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+                    //nowy->set(sh, data);
+                    if (sh == ("filename")) {
+                        shp->filename = ParserX::odczytajtc(bufor);
+                    } else if (sh == ("numpaths")) {
+                        shp->numpaths = ParserX::parsujr(bufor);
+                        shp->path = new TrackShape::SectionIdx[shp->numpaths];
+                    } else if (sh == ("sectionidx")) {
+                        shp->path[sectionN].n = ParserX::parsujr(bufor);
+                        shp->path[sectionN].pos[0] = ParserX::parsujr(bufor);
+                        shp->path[sectionN].pos[1] = ParserX::parsujr(bufor);
+                        shp->path[sectionN].pos[2] = ParserX::parsujr(bufor);
+                        shp->path[sectionN].rotDeg = ParserX::parsujr(bufor);
+                        for(int i = 0; i < shp->path[sectionN].n; i++){
+                            shp->path[sectionN].sect[i] = ParserX::parsujr(bufor);
+                        }
+                        sectionN++;
+                    } else if (sh == ("mainroute")) {
+                        shp->mainroute = ParserX::parsujr(bufor);
+                    } else if (sh == ("clearancedist")) {
+                        shp->clearancedist = true;
+                    } else if (sh == ("crossovershape")) {
+                        shp->crossovershape = true;
+                    } else if (sh == ("xoverpts")) {
+                        shp->xoverpts = ParserX::parsujr(bufor);
+                        shp->xoverpt = new float[shp->xoverpts*3];
+                        for(int i = 0; i < shp->xoverpts; i++){
+                            shp->xoverpt[i*3+0] = ParserX::parsujr(bufor);
+                            shp->xoverpt[i*3+1] = ParserX::parsujr(bufor);
+                            shp->xoverpt[i*3+2] = ParserX::parsujr(bufor);
+                        }
+                        ParserX::pominsekcje(bufor);
+                    } else if (sh == ("tunnelshape")) {
+                        shp->tunnelshape = true;
+                    } else if (sh == ("roadshape")) {
+                        shp->roadshape = true;
+                    } else if (sh == ("manualjunctionshape")) {
+                        shp->manualjunctionshape = true;
+                    } else {
+                        qDebug() << sh;
+                    }
+                    ParserX::pominsekcje(bufor);
+                }
+            }
+            if (sh.toLower() =="_info") {
+                bufor->off+=2;
+            }
+            if (sh.toLower() =="_skip") {
+                bufor->off+=2;
+            }
+            ParserX::pominsekcje(bufor);
+        }
+    }
     return true;
 }
 

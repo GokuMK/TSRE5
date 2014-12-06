@@ -125,7 +125,7 @@ void TSection::setDrawPosition(float metry) {
     
 Vector3f *TSection::getDrawPosition(float metry) {
             //prosta
-        /*    if(type==0){
+            if(type==0){
                 return(new Vector3f(0, 0, metry));
             }
             //krzywa
@@ -135,11 +135,11 @@ Vector3f *TSection::getDrawPosition(float metry) {
 
                 float aa = -metry/radius*kierunek;
                 
-                Vector2f a = new Vector2f(0.0f, 0.0f);
+                Vector2f a;
                 a.rotate(aa, radius);
 
                 return(new Vector3f(kierunek*a.x, 0, kierunek*a.y));
-            }*/
+            }
             return new Vector3f();
     }
     

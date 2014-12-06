@@ -242,14 +242,18 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData) {
     WorldObj* nowy;
     if(!createObj(&nowy, itemData->type)) return NULL;
     
+    if(nowy->type == "trackobj"){
+        nowy->set("sectionidx", itemData->value);
+    }
+    
     nowy->initPQ(p, q);
     nowy->UiD = ++maxUiD;
     nowy->fileName = itemData->filename;
     nowy->load(x, z);
     obiekty[jestObiektow++] = nowy;
-    qDebug() << obiekty[jestObiektow-1]->qDirection[3];
-    modified = true;
+    //qDebug() << obiekty[jestObiektow-1]->qDirection[3];
     
+    modified = true;
     return nowy;
 }
 

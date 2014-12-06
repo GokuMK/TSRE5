@@ -10,37 +10,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/ToolBox.cpp</file>
             <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/glwidget.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/NaviBox.h</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/TerrainLib.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/Game.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/shaders/fragmentShaderSource.fs</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/StaticObj.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/Route.h</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/Game.h</file>
             <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/window.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/ShapeLib.cpp</file>
+            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/TrackShape.cpp</file>
             <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/SFile.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/SpeedpostObj.h</file>
+            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/TSectionDAT.h</file>
             <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/GLUU.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/shaders/vertexShaderSource.vs</file>
+            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/Tile.cpp</file>
+            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/TrackShape.h</file>
             <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/TSectionDAT.cpp</file>
             <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/ParserX.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/ToolBox.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/TerrainLib.h</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/TrWatermarkObj.h</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/NaviBox.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/FileBuffer.h</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/window.h</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/Route.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/TDB.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/FileBuffer.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/TrWatermarkObj.cpp</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/Tile.h</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/glwidget.h</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/ReadFile.h</file>
-            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/ToolBox.h</file>
             <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/ReadFile.cpp</file>
+            <file>file:/C:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/TDB.cpp</file>
         </group>
     </open-files>
 </project-private>

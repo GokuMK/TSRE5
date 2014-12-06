@@ -2,6 +2,9 @@
 
 TRnode::TRnode() {
     typ = -1;
+    TrP1 = 0;
+    TrP1 = 0;
+    args[0] = args[1] = args[2] = 0;
 }
 
 TRnode::TRnode(const TRnode& orig) {

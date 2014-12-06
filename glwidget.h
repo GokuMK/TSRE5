@@ -37,7 +37,7 @@ public slots:
     void jumpTo(int x, int y);
 
 signals:
-    void routeLoaded(Ref * a);
+    void routeLoaded(Route * a);
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;

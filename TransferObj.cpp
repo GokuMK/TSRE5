@@ -17,6 +17,7 @@ TransferObj::TransferObj(const TransferObj& orig) {
 }
 
 TransferObj::~TransferObj() {
+    
 }
 
 void TransferObj::load(int x, int y) {

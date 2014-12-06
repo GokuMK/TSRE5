@@ -17,11 +17,12 @@ TerrainLib::~TerrainLib() {
 
 bool TerrainLib::isLoaded(int x, int z) {
     Terrain *tTile;
-    try {
-        tTile = terrain.at((x)*10000 + z);
-    } catch (const std::out_of_range& oor) {
+    //try {
+        tTile = terrain[((x)*10000 + z)];
+    //} catch (const std::out_of_range& oor) {
+    if(tTile == NULL)
         return false;
-    }
+    //}
     if (tTile->loaded) {
         return true;
     }
@@ -52,9 +53,10 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR)
     }
 
     Terrain *terr;
-    try {
-        terr = terrain.at(x * 10000 + z);
-        if (terr->loaded == -2) return -1;
+    //try {
+        terr = terrain[(x * 10000 + z)];
+        if(terr == NULL) return -1;
+        if (terr->loaded == false) return -1;
 
         if ((posx + 1024) / 8 + 1 > 256 || (posz + 1024) / 8 + 1 > 256)
             return terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
@@ -80,17 +82,18 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR)
                 terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8 + 1]*(tx)*(tz)
                 + fabs(roznica));
 
-    } catch (const std::out_of_range& oor) {
-        return -1;
-    }
-    return -1;
+    //} catch (const std::out_of_range& oor) {
+    ///    return -1;
+    //}
+    //return -1;
 }
 
 void TerrainLib::fillRAW(float** terrainData, float mojex, float mojez) {
     Terrain *tTile;
-    try {
-        tTile = terrain.at((mojex + 1)*10000 + mojez);
-    } catch (const std::out_of_range& oor) {
+    //try {
+        tTile = terrain[((mojex + 1)*10000 + mojez)];
+    //} catch (const std::out_of_range& oor) {
+    if(tTile == NULL){
         terrain[(mojex + 1)*10000 + mojez] = new Terrain(mojex + 1, mojez);
     }
     tTile = terrain[(mojex + 1)*10000 + mojez];
@@ -100,9 +103,10 @@ void TerrainLib::fillRAW(float** terrainData, float mojex, float mojez) {
         }
     }
 
-    try {
-        tTile = terrain.at((mojex)*10000 + mojez + 1);
-    } catch (const std::out_of_range& oor) {
+    //try {
+        tTile = terrain[((mojex)*10000 + mojez + 1)];
+    //} catch (const std::out_of_range& oor) {
+    if(tTile == NULL){
         terrain[(mojex)*10000 + mojez + 1] = new Terrain(mojex, mojez + 1);
     }
     tTile = terrain[(mojex)*10000 + mojez + 1];
@@ -112,9 +116,10 @@ void TerrainLib::fillRAW(float** terrainData, float mojex, float mojez) {
         }
     }
 
-    try {
-        tTile = terrain.at((mojex + 1)*10000 + mojez + 1);
-    } catch (const std::out_of_range& oor) {
+    //try {
+        tTile = terrain[((mojex + 1)*10000 + mojez + 1)];
+    //} catch (const std::out_of_range& oor) {
+    if(tTile == NULL){
         terrain[(mojex + 1)*10000 + mojez + 1] = new Terrain(mojex + 1, mojez + 1);
     }
     tTile = terrain[(mojex + 1)*10000 + mojez + 1];
@@ -137,13 +142,16 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
     Terrain *tTile;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
-            try {
-                tTile = terrain.at((playerT[0] + i)*10000 + playerT[1] + j);
-                if (tTile->loaded == -2) continue;
-            } catch (const std::out_of_range& oor) {
-                terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
-            }
+            //try {
+                tTile = terrain[((playerT[0] + i)*10000 + playerT[1] + j)];
+                if(tTile == NULL){
+                    terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
+                }
+            //} catch (const std::out_of_range& oor) {
+            //    terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
+            //}
             tTile = terrain[(playerT[0] + i)*10000 + playerT[1] + j];
+            if (tTile->loaded == false) continue;
             //tTile->inUse = true;
             if (tTile->loaded) {
                 float lodx = 2048 * i - playerW[0];

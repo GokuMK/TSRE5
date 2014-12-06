@@ -27,8 +27,8 @@ Window::Window() {
     
     setWindowTitle(tr("TSRE5"));
     
-    QObject::connect(glWidget, SIGNAL(routeLoaded(Ref*)),
-                      groupBox, SLOT(routeLoaded(Ref*)));
+    QObject::connect(glWidget, SIGNAL(routeLoaded(Route*)),
+                      groupBox, SLOT(routeLoaded(Route*)));
     
     QObject::connect(groupBox, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));

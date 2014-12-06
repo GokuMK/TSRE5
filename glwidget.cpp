@@ -95,7 +95,7 @@ void GLWidget::initializeGL() {
     setMouseTracking(true);
     pointer3d = new Pointer3d();
     
-    emit routeLoaded(route->ref);
+    emit routeLoaded(route);
 }
 
 void GLWidget::paintGL() {

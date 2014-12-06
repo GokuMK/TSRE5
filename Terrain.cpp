@@ -35,39 +35,34 @@ Terrain::~Terrain() {
 }
 
 QString Terrain::getTileName(int x, int y) {
-    QString name = "-";
-    int n[16]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
     int offset = 16384;
     int xs = offset;
     int ys = offset;
     x += offset;
     y += offset;
-
-    int j = 0;
-    for (int i = offset / 2; j < 15; i /= 2) {
+    unsigned int numer = 0;
+    
+    for (int i = offset / 2, j = 30; j > 0; i /= 2, j-=2) {
         if (x < xs && y < ys) {
-            n[j++] = 3;
+            numer = numer | ( 3 << j);
             xs -= i;
             ys -= i;
         } else if (x < xs) {
-            n[j++] = 0;
             xs -= i;
             ys += i;
         } else if (y < ys) {
-            n[j++] = 2;
+            numer = numer | ( 2 << j);
             xs += i;
             ys -= i;
         } else {
-            n[j++] = 1;
+            numer = numer | ( 1 << j);
             xs += i;
             ys += i;
         }
     }
 
-    for (int i = 0; i < 16; i += 2) {
-        name += QString::number(n[i]*4 + n[i + 1], 16);
-    }
+    QString name = "-"+QString::number(numer, 16);
+    //qDebug() << name;
     return name;
 }
 

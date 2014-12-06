@@ -9,6 +9,7 @@ public:
         float param[16];
     };
     int typ;
+    int args[3];
     float UiD[12];
     int iTrv;
     TRSect *trVectorSection;

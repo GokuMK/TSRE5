@@ -13,6 +13,10 @@
 TrackObj::TrackObj() {
     this->shape = -1;
     this->loaded = false;
+    this->sectionIdx = 0;
+    this->elevation = 0;
+    this->staticFlags = 0x200180;
+    this->collideFlags = 0;
 }
 
 TrackObj::TrackObj(const TrackObj& orig) {
@@ -32,6 +36,13 @@ void TrackObj::load(int x, int y) {
     this->skipLevel = 3;
     
     setMartix();
+}
+
+void TrackObj::set(QString sh, int val) {
+    if (sh == ("sectionidx")) {
+        sectionIdx = val;
+        return;
+    }
 }
 
 void TrackObj::set(QString sh, FileBuffer* data) {

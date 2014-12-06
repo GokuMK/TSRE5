@@ -29,6 +29,10 @@ void WorldObj::load(int x, int y) {
     this->selected = false;
 }
 
+void WorldObj::set(QString sh, int val) {
+
+}
+
 void WorldObj::set(QString sh, FileBuffer* data) {
     if (sh == ("uid")) {
         UiD = ParserX::parsujUint(data);
