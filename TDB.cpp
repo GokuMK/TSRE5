@@ -132,146 +132,106 @@ int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
     return -1;
 }
 
-bool TDB::appendTrack(int id, Ref::RefItem* r, int uid) {
+int TDB::appendTrack(int id, int r, int sect, int uid) {
     TRnode* endNode = &trackNodes[id];
-    TrackShape* shp = this->tsection->shape[r->value];
     float p[3];
+    int ends[2];
+    ends[0] = 0;
+    ends[1] = 1;
 
     if (endNode->typ == 0) {
         int kierunek = endNode->TrPinK[0];
         TRnode* n = &trackNodes[endNode->TrPinS[0]];
         if (n->typ != 1) {
             qDebug() << "tdb error";
-            return false;
+            return -1;
         }
+
+        qDebug() << kierunek;
+        n->iTrv++;
+        TRnode::TRSect *newV = new TRnode::TRSect[n->iTrv];
+
         if (kierunek == 1) {
-            qDebug() << kierunek;
-            n->iTrv++;
-            TRnode::TRSect *newV = new TRnode::TRSect[n->iTrv];
-
             std::copy(n->trVectorSection, n->trVectorSection + n->iTrv - 1, newV + 1);
-            delete n->trVectorSection;
-            n->trVectorSection = newV;
-
-
-            float dlugosc = this->tsection->sekcja[shp->path[0].sect[0]]->getDlugosc();
-            //qDebug() << dlugosc;
-            Vector3f *aa = this->tsection->sekcja[shp->path[0].sect[0]]->getDrawPosition(dlugosc);
-            aa->rotateY(M_PI + endNode->UiD[10], 0);
-            float angle = this->tsection->sekcja[shp->path[0].sect[0]]->getAngle();
-            int sid = shp->path[0].sect[0];
-            if (angle != 0) sid++;
-
-            p[0] = endNode->UiD[6] + aa->x;
-            p[1] = endNode->UiD[7] + aa->y;
-            p[2] = endNode->UiD[8] - aa->z;
-            int x = endNode->UiD[4];
-            int z = endNode->UiD[5];
-            Game::check_coords(x, z, p);
-
-            n->trVectorSection[0].param[0] = sid;
-            n->trVectorSection[0].param[1] = r->value;
-            n->trVectorSection[0].param[2] = endNode->UiD[4];
-            n->trVectorSection[0].param[3] = endNode->UiD[5];
-            n->trVectorSection[0].param[4] = uid;
-            n->trVectorSection[0].param[5] = 1;
-            n->trVectorSection[0].param[6] = 0;
-            n->trVectorSection[0].param[7] = 0;
-            n->trVectorSection[0].param[8] = x;
-            n->trVectorSection[0].param[9] = z;
-            n->trVectorSection[0].param[10] = p[0];
-            n->trVectorSection[0].param[11] = p[1];
-            n->trVectorSection[0].param[12] = p[2];
-            n->trVectorSection[0].param[13] = endNode->UiD[9];
-            n->trVectorSection[0].param[14] = endNode->UiD[10] + angle + M_PI;
-            n->trVectorSection[0].param[15] = endNode->UiD[11];
-
-            endNode->UiD[0] = x;
-            endNode->UiD[1] = z;
-            endNode->UiD[2] = uid;
-            endNode->UiD[3] = 1;
-            endNode->UiD[4] = x;
-            endNode->UiD[5] = z;
-            endNode->UiD[6] = p[0];
-            endNode->UiD[7] = p[1];
-            endNode->UiD[8] = p[2];
-            endNode->UiD[9] = endNode->UiD[9];
-            endNode->UiD[10] = endNode->UiD[10] + angle;
-            endNode->UiD[11] = endNode->UiD[11];
         } else {
-            qDebug() << kierunek;
-            n->iTrv++;
-            TRnode::TRSect *newV = new TRnode::TRSect[n->iTrv];
             std::copy(n->trVectorSection, n->trVectorSection + n->iTrv - 1, newV);
-            delete n->trVectorSection;
-            n->trVectorSection = newV;
-
-            float dlugosc = this->tsection->sekcja[shp->path[0].sect[0]]->getDlugosc();
-            //qDebug() << dlugosc;
-            Vector3f *aa = this->tsection->sekcja[shp->path[0].sect[0]]->getDrawPosition(dlugosc);
-            aa->rotateY(M_PI + endNode->UiD[10], 0);
-            float angle = this->tsection->sekcja[shp->path[0].sect[0]]->getAngle();
-
-            p[0] = endNode->UiD[6] + aa->x;
-            p[1] = endNode->UiD[7] + aa->y;
-            p[2] = endNode->UiD[8] - aa->z;
-            int x = endNode->UiD[4];
-            int z = endNode->UiD[5];
-            Game::check_coords(x, z, p);
-
-            n->trVectorSection[n->iTrv - 1].param[0] = shp->path[0].sect[0];
-            n->trVectorSection[n->iTrv - 1].param[1] = r->value;
-            n->trVectorSection[n->iTrv - 1].param[2] = endNode->UiD[4];
-            n->trVectorSection[n->iTrv - 1].param[3] = endNode->UiD[5];
-            n->trVectorSection[n->iTrv - 1].param[4] = uid;
-            n->trVectorSection[n->iTrv - 1].param[5] = 0;
-            n->trVectorSection[n->iTrv - 1].param[6] = 1;
-            n->trVectorSection[n->iTrv - 1].param[7] = 0;
-            n->trVectorSection[n->iTrv - 1].param[8] = endNode->UiD[4];
-            n->trVectorSection[n->iTrv - 1].param[9] = endNode->UiD[5];
-            n->trVectorSection[n->iTrv - 1].param[10] = endNode->UiD[6];
-            n->trVectorSection[n->iTrv - 1].param[11] = endNode->UiD[7];
-            n->trVectorSection[n->iTrv - 1].param[12] = endNode->UiD[8];
-            n->trVectorSection[n->iTrv - 1].param[13] = endNode->UiD[9];
-            n->trVectorSection[n->iTrv - 1].param[14] = endNode->UiD[10];
-            n->trVectorSection[n->iTrv - 1].param[15] = endNode->UiD[11];
-
-            endNode->UiD[0] = x;
-            endNode->UiD[1] = z;
-            endNode->UiD[2] = uid;
-            endNode->UiD[3] = 1;
-            endNode->UiD[4] = x;
-            endNode->UiD[5] = z;
-            endNode->UiD[6] = p[0];
-            endNode->UiD[7] = p[1];
-            endNode->UiD[8] = p[2];
-            endNode->UiD[9] = endNode->UiD[9];
-            endNode->UiD[10] = endNode->UiD[10] + angle;
-            endNode->UiD[11] = endNode->UiD[11];
         }
+        delete n->trVectorSection;
+        n->trVectorSection = newV;
+
+        float dlugosc = this->tsection->sekcja[sect]->getDlugosc();
+        //qDebug() << dlugosc;
+        Vector3f *aa = this->tsection->sekcja[sect]->getDrawPosition(dlugosc);
+        aa->rotateY(M_PI + endNode->UiD[10], 0);
+        float angle = this->tsection->sekcja[sect]->getAngle();
+        int sid = sect;
+
+        p[0] = endNode->UiD[6] + aa->x;
+        p[1] = endNode->UiD[7] + aa->y;
+        p[2] = endNode->UiD[8] - aa->z;
+        int x = endNode->UiD[4];
+        int z = endNode->UiD[5];
+        int xx = endNode->UiD[4];
+        int zz = endNode->UiD[5];
+        float pp[3];
+        pp[0] = endNode->UiD[6];
+        pp[1] = endNode->UiD[7];
+        pp[2] = endNode->UiD[8];
+        Game::check_coords(x, z, p);
+
+        float vangle = 0;
+        float * vector = n->trVectorSection[n->iTrv - 1].param;
+        if (kierunek == 1) {
+            vector = n->trVectorSection[0].param;
+            int tmp = ends[0];
+            ends[0] = ends[1];
+            ends[1] = tmp;
+            if (angle != 0) sid++;
+            vangle = angle + M_PI;
+            xx = x;
+            zz = z;
+            pp[0] = p[0];
+            pp[1] = p[1];
+            pp[2] = p[2];
+        }
+
+        vector[0] = sid;
+        vector[1] = r;
+        vector[2] = endNode->UiD[4];
+        vector[3] = endNode->UiD[5];
+        vector[4] = uid;
+        vector[5] = ends[0];
+        vector[6] = ends[1];
+        vector[7] = 0;
+        vector[8] = xx;
+        vector[9] = zz;
+        vector[10] = pp[0];
+        vector[11] = pp[1];
+        vector[12] = pp[2];
+        vector[13] = endNode->UiD[9];
+        vector[14] = endNode->UiD[10] + vangle;
+        vector[15] = endNode->UiD[11];
+
+        endNode->UiD[0] = endNode->UiD[4];
+        endNode->UiD[1] = endNode->UiD[5];
+        endNode->UiD[2] = uid;
+        endNode->UiD[3] = 1;
+        endNode->UiD[4] = x;
+        endNode->UiD[5] = z;
+        endNode->UiD[6] = p[0];
+        endNode->UiD[7] = p[1];
+        endNode->UiD[8] = p[2];
+        endNode->UiD[9] = endNode->UiD[9];
+        endNode->UiD[10] = endNode->UiD[10] + angle;
+        endNode->UiD[11] = endNode->UiD[11];
     }
+    return id;
 }
 
-bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid) {
-    float qe[3];
-    qe[0] = 0;
-    qe[1] = 0;
-    qe[2] = 0;
+int TDB::newTrack(int x, int z, float* p, float* qe, int r, int sect, int uid) {
 
-    int append = findNearestNode(x, z, p, (float*) &qe);
-    Quat::rotateY(q, q, -qe[1]);
-    if (append > 0) {
-        bool b = appendTrack(append, r, uid);
-        refresh();
-        return b;
-    }
-
-    //Quat::rotateY(q, q, -qe[1]);
-    //save();
-    //return false;
-
-    TrackShape* shp = this->tsection->shape[r->value];
-    qDebug() << shp->filename;
+    //TrackShape* shp = this->tsection->shape[r->value];
+    //qDebug() << shp->filename;
 
     int end1Id = ++this->iTRnodes;
     int vecId = ++this->iTRnodes;
@@ -304,8 +264,8 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid)
     newNode->typ = 1;
     newNode->iTrv = 1;
     newNode->trVectorSection = new TRnode::TRSect[newNode->iTrv];
-    newNode->trVectorSection[0].param[0] = shp->path[0].sect[0];
-    newNode->trVectorSection[0].param[1] = r->value;
+    newNode->trVectorSection[0].param[0] = sect;
+    newNode->trVectorSection[0].param[1] = r;
     newNode->trVectorSection[0].param[2] = x;
     newNode->trVectorSection[0].param[3] = z;
     newNode->trVectorSection[0].param[4] = uid;
@@ -328,12 +288,12 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid)
     newNode->TrPinS[1] = end2Id;
     newNode->TrPinK[1] = 1;
     /////////////////////////////////////////////////////
-    qDebug() << shp->path[0].sect[0];
-    float dlugosc = this->tsection->sekcja[shp->path[0].sect[0]]->getDlugosc();
+    qDebug() << sect;
+    float dlugosc = this->tsection->sekcja[sect]->getDlugosc();
     qDebug() << dlugosc;
-    Vector3f *aa = this->tsection->sekcja[shp->path[0].sect[0]]->getDrawPosition(dlugosc);
+    Vector3f *aa = this->tsection->sekcja[sect]->getDrawPosition(dlugosc);
     aa->rotateY(M_PI + qe[1], 0);
-    float angle = this->tsection->sekcja[shp->path[0].sect[0]]->getAngle();
+    float angle = this->tsection->sekcja[sect]->getAngle();
     //Quat::
     float pp[3];
     pp[0] = p[0] + aa->x;
@@ -359,6 +319,51 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid)
     newNode->TrP1 = 1;
     newNode->TrPinS[0] = vecId;
     newNode->TrPinK[0] = 0;
+
+    return end2Id;
+}
+
+bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid) {
+    float qe[3];
+    qe[0] = 0;
+    qe[1] = 0;
+    qe[2] = 0;
+    int append = findNearestNode(x, z, p, (float*) &qe);
+    Quat::rotateY(q, q, -qe[1]);
+    bool b;
+    TrackShape* shp = this->tsection->shape[r->value];
+    qDebug() << shp->filename;
+    float pp[3];
+    int endp;
+   // if (append > 0) {
+        Vector3f aa(shp->path[0].pos[0], shp->path[0].pos[1], shp->path[0].pos[2]);
+        aa.rotateY(-qe[1], 0);
+        p[0] += aa.x;
+        p[1] += shp->path[0].pos[1];
+        p[2] -= aa.z;
+   /*     endp = appendTrack(append, r->value, shp->path[0].sect[0], uid);
+    } else {
+*/
+//p[0] += shp->path[0].pos[0];
+//p[1] += shp->path[0].pos[1];
+//p[2] += shp->path[0].pos[2];
+            
+        for (int i = 0; i < shp->numpaths; i++) {
+            //aa.set(0,0,0);
+            aa.set(shp->path[i].pos[0], shp->path[i].pos[1], shp->path[i].pos[2]);
+            aa.rotateY(-qe[1], 0);
+            pp[0] = p[0] + aa.x;
+            pp[1] = p[1] + shp->path[i].pos[1];
+            pp[2] = p[2] - aa.z;
+            endp = newTrack(x, z, pp, qe, r->value, shp->path[i].sect[0], uid);
+            for (int j = 1; j < shp->path[i].n; j++) {
+                if (endp > 0) {
+                    endp = appendTrack(endp, r->value, shp->path[i].sect[j], uid);
+                }
+            }
+        }
+  //  }
+
     ////////////////////////////////////////////////////
     //save();
     refresh();
