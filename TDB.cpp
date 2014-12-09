@@ -132,12 +132,9 @@ int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
     return -1;
 }
 
-int TDB::appendTrack(int id, int r, int sect, int uid) {
+int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
     TRnode* endNode = &trackNodes[id];
     float p[3];
-    int ends[2];
-    ends[0] = 0;
-    ends[1] = 1;
 
     if (endNode->typ == 0) {
         int kierunek = endNode->TrPinK[0];
@@ -215,7 +212,7 @@ int TDB::appendTrack(int id, int r, int sect, int uid) {
         endNode->UiD[0] = endNode->UiD[4];
         endNode->UiD[1] = endNode->UiD[5];
         endNode->UiD[2] = uid;
-        endNode->UiD[3] = 1;
+        endNode->UiD[3] = ends[1];
         endNode->UiD[4] = x;
         endNode->UiD[5] = z;
         endNode->UiD[6] = p[0];
@@ -228,7 +225,10 @@ int TDB::appendTrack(int id, int r, int sect, int uid) {
     return id;
 }
 
-int TDB::newTrack(int x, int z, float* p, float* qe, int r, int sect, int uid) {
+int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect, int uid) {
+    newTrack(x, z,  p,  qe, ends, r, sect, uid, NULL);
+}
+int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect, int uid, int* start) {
 
     //TrackShape* shp = this->tsection->shape[r->value];
     //qDebug() << shp->filename;
@@ -244,7 +244,7 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int r, int sect, int uid) {
     newNode->UiD[0] = x;
     newNode->UiD[1] = z;
     newNode->UiD[2] = uid;
-    newNode->UiD[3] = 0;
+    newNode->UiD[3] = ends[0];
     newNode->UiD[4] = x;
     newNode->UiD[5] = z;
     newNode->UiD[6] = p[0];
@@ -306,7 +306,7 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int r, int sect, int uid) {
     newNode->UiD[0] = x;
     newNode->UiD[1] = z;
     newNode->UiD[2] = uid;
-    newNode->UiD[3] = 1;
+    newNode->UiD[3] = ends[1];
     newNode->UiD[4] = x;
     newNode->UiD[5] = z;
     newNode->UiD[6] = pp[0];
@@ -320,7 +320,130 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int r, int sect, int uid) {
     newNode->TrPinS[0] = vecId;
     newNode->TrPinK[0] = 0;
 
+    if(start != NULL)
+        *start = end1Id;
     return end2Id;
+}
+
+int TDB::joinTracks(int iendp) {
+    TRnode* endp = &trackNodes[iendp];
+
+    for (int j = 1; j <= iTRnodes; j++) {
+        TRnode* n = &trackNodes[j];
+        if (n->typ == 0) {
+            if (j == iendp)
+                continue;
+            if (endp->equals(n)) {
+                qDebug() << "polacze " << iendp << " " << j;
+                qDebug() << n->TrPinS[0] << " " << n->TrPinK[0];
+                qDebug() << endp->TrPinS[0] << " " << endp->TrPinK[0];
+                joinVectorSections(endp->TrPinS[0], n->TrPinS[0]);
+                return 0;
+            }
+        }
+    }
+}
+
+int TDB::joinVectorSections(int id1, int id2) {
+    TRnode* section1 = &trackNodes[id1];
+    TRnode* section2 = &trackNodes[id2];
+    if(section1 == section2)
+        return 0;
+    TRnode* section1e1 = &trackNodes[section1->TrPinS[0]];
+    TRnode* section1e2 = &trackNodes[section1->TrPinS[1]];
+    TRnode* section2e1 = &trackNodes[section2->TrPinS[0]];
+    TRnode* section2e2 = &trackNodes[section2->TrPinS[1]];
+    if (section1e2->equals(section2e1)) {
+        qDebug() << "ok";
+    }
+    else if (section2e2->equals(section1e1)) {
+        qDebug() << "switch";
+        return joinVectorSections(id2, id1);
+    }
+    else if (section1e2->equals(section2e2)) {
+        qDebug() << "rot2";
+        rotate(section2);
+        return joinVectorSections(id1, id2);
+    }
+    else if (section1e1->equals(section2e1)) {
+        qDebug() << "rot1";
+        rotate(section1);
+        return joinVectorSections(id1, id2);
+    }
+
+    TRnode::TRSect *newV = new TRnode::TRSect[section1->iTrv + section2->iTrv];
+
+    std::copy(section1->trVectorSection, section1->trVectorSection + section1->iTrv, newV);
+    std::copy(section2->trVectorSection, section2->trVectorSection + section2->iTrv, newV + section1->iTrv);
+    section1->iTrv = section1->iTrv + section2->iTrv;
+    
+    delete section1->trVectorSection;
+    delete section2->trVectorSection;
+    section1->trVectorSection = newV;
+    section1->TrPinS[1] = section2->TrPinS[1];
+    section2e2->TrPinS[0] = section1e2->TrPinS[0];
+    
+    section2->typ = -1;
+    section1e2->typ = -1;
+    section2e1->typ = -1;
+}
+
+int TDB::rotate(TRnode* vect){
+    TRnode* e1 = &trackNodes[vect->TrPinS[0]];
+    TRnode* e2 = &trackNodes[vect->TrPinS[1]];
+    
+    for(int i = 0; i < vect->iTrv; i++){
+        if(i < vect->iTrv - 1){
+            vect->trVectorSection[i].param[8] = vect->trVectorSection[i+1].param[8];
+            vect->trVectorSection[i].param[9] = vect->trVectorSection[i+1].param[9];
+            vect->trVectorSection[i].param[10] = vect->trVectorSection[i+1].param[10];
+            vect->trVectorSection[i].param[11] = vect->trVectorSection[i+1].param[11];
+            vect->trVectorSection[i].param[12] = vect->trVectorSection[i+1].param[12];
+            vect->trVectorSection[i].param[13] = vect->trVectorSection[i+1].param[13];
+            vect->trVectorSection[i].param[14] = vect->trVectorSection[i+1].param[14];
+            vect->trVectorSection[i].param[15] = vect->trVectorSection[i+1].param[15];
+        } else {
+            vect->trVectorSection[i].param[8] = e2->UiD[4];
+            vect->trVectorSection[i].param[9] = e2->UiD[5];
+            vect->trVectorSection[i].param[10] = e2->UiD[6];
+            vect->trVectorSection[i].param[11] = e2->UiD[7];
+            vect->trVectorSection[i].param[12] = e2->UiD[8];
+            vect->trVectorSection[i].param[13] = e2->UiD[9];
+            vect->trVectorSection[i].param[14] = e2->UiD[10];
+            vect->trVectorSection[i].param[15] = e2->UiD[11];
+        }
+        float angle = this->tsection->sekcja[vect->trVectorSection[i].param[0]]->getAngle();
+        if (angle > 0) vect->trVectorSection[i].param[0]--;
+        if (angle < 0) vect->trVectorSection[i].param[0]++;
+        
+        int tmp = vect->trVectorSection[i].param[5];
+        vect->trVectorSection[i].param[5] = vect->trVectorSection[i].param[6];
+        vect->trVectorSection[i].param[6] = tmp;
+        
+        vect->trVectorSection[i].param[14] += M_PI;
+        if(vect->trVectorSection[i].param[14] > 2*M_PI)
+            vect->trVectorSection[i].param[14] -= 2*M_PI;
+    }
+    for(int i = 0; i < vect->iTrv/2; i++){
+        TRnode::TRSect t = vect->trVectorSection[i];
+        vect->trVectorSection[i] = vect->trVectorSection[vect->iTrv - 1 - i];
+        vect->trVectorSection[vect->iTrv - 1 - i] = t;
+    }
+    
+    
+    e1->TrPinK[0] = 0;
+    e2->TrPinK[0] = 1;
+    /*e1->UiD[10] += M_PI;
+    if(e1->UiD[10] > 2*M_PI)
+        e1->UiD[10] -= 2*M_PI;
+    e2->UiD[10] += M_PI;
+    if(e2->UiD[10] > 2*M_PI)
+        e2->UiD[10] -= 2*M_PI;*/
+    
+    int tmp = vect->TrPinS[0];
+    vect->TrPinS[0] = vect->TrPinS[1];
+    vect->TrPinS[1] = tmp;
+
 }
 
 bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid) {
@@ -335,34 +458,43 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid)
     qDebug() << shp->filename;
     float pp[3];
     int endp;
-   // if (append > 0) {
-        Vector3f aa(shp->path[0].pos[0], shp->path[0].pos[1], shp->path[0].pos[2]);
+    // if (append > 0) {
+    Vector3f aa(shp->path[0].pos[0], shp->path[0].pos[1], shp->path[0].pos[2]);
+    aa.rotateY(-qe[1], 0);
+    p[0] += aa.x;
+    p[1] += shp->path[0].pos[1];
+    p[2] -= aa.z;
+    /*     endp = appendTrack(append, r->value, shp->path[0].sect[0], uid);
+     } else {
+     */
+    //p[0] += shp->path[0].pos[0];
+    //p[1] += shp->path[0].pos[1];
+    //p[2] += shp->path[0].pos[2];
+
+    int start;
+    int ends[2];
+    for (int i = 0; i < shp->numpaths; i++) {
+        //aa.set(0,0,0);
+        aa.set(shp->path[i].pos[0], shp->path[i].pos[1], shp->path[i].pos[2]);
         aa.rotateY(-qe[1], 0);
-        p[0] += aa.x;
-        p[1] += shp->path[0].pos[1];
-        p[2] -= aa.z;
-   /*     endp = appendTrack(append, r->value, shp->path[0].sect[0], uid);
-    } else {
-*/
-//p[0] += shp->path[0].pos[0];
-//p[1] += shp->path[0].pos[1];
-//p[2] += shp->path[0].pos[2];
-            
-        for (int i = 0; i < shp->numpaths; i++) {
-            //aa.set(0,0,0);
-            aa.set(shp->path[i].pos[0], shp->path[i].pos[1], shp->path[i].pos[2]);
-            aa.rotateY(-qe[1], 0);
-            pp[0] = p[0] + aa.x;
-            pp[1] = p[1] + shp->path[i].pos[1];
-            pp[2] = p[2] - aa.z;
-            endp = newTrack(x, z, pp, qe, r->value, shp->path[i].sect[0], uid);
-            for (int j = 1; j < shp->path[i].n; j++) {
-                if (endp > 0) {
-                    endp = appendTrack(endp, r->value, shp->path[i].sect[j], uid);
-                }
+        pp[0] = p[0] + aa.x;
+        pp[1] = p[1] + shp->path[i].pos[1];
+        pp[2] = p[2] - aa.z;
+        
+        ends[0] = 0; ends[1] = 1;
+        endp = newTrack(x, z, pp, qe, (int*)ends, r->value, shp->path[i].sect[0], uid, &start);
+        for (int j = 1; j < shp->path[i].n; j++) {
+            ends[0] = j*2;
+            ends[1] = j*2+1;
+            if (endp > 0) {
+                endp = appendTrack(endp, (int*)ends, r->value, shp->path[i].sect[j], uid);
             }
         }
-  //  }
+        joinTracks(start);
+    }
+    //if (append > 0)
+    //    joinTracks(append);
+    //  }
 
     ////////////////////////////////////////////////////
     //save();

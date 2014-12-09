@@ -24,8 +24,12 @@ public:
     void trpin(TRnode* tr, FileBuffer* bufor );
     void save();
     int findNearestNode(int &x, int &z, float* p, float* q);
-    int appendTrack(int id, int r, int sect, int uid);
-    int newTrack(int x, int z, float* p, float* q, int r, int sect, int uid);
+    int joinTracks(int iendp);
+    int joinVectorSections(int id1, int id2);
+    int rotate(TRnode* vect);
+    int appendTrack(int id, int* ends, int r, int sect, int uid);
+    int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid);
+    int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid, int* start);
     bool placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid);
     void renderAll(GLUU *gluu, float * playerT);
     void renderLines(GLUU *gluu, float* playerT);

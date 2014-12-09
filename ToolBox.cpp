@@ -56,7 +56,7 @@ void ToolBox::routeLoaded(Route* a){
     for (auto it = route->trackDB->tsection->shape.begin(); it != route->trackDB->tsection->shape.end(); ++it ){
         track = it->second;
         //qDebug() << track->filename;
-        if(track->filename.startsWith("a1t1", Qt::CaseInsensitive))
+        if(track->filename.startsWith("a2t1", Qt::CaseInsensitive))
             new QListWidgetItem ( track->filename, &trackList, track->id );
         //refList.addItem(route->ref->refItems[text.toStdString()][it].description);
         //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();

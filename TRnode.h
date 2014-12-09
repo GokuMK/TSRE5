@@ -23,6 +23,7 @@ public:
     virtual ~TRnode();
     Vector2i* getTile();
     bool isEnd();
+    bool equals(TRnode* r);
 private:
 
 };
