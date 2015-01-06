@@ -24,6 +24,9 @@ public:
     Vector2i* getTile();
     bool isEnd();
     bool equals(TRnode* r);
+    bool equalsIgnoreType(TRnode* r);
+    int podmienTrPin(int stare, int nowe);
+    int setTrPinK(int id, int nowe);
 private:
 
 };

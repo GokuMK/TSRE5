@@ -41,48 +41,49 @@ TDB::TDB(QString path) {
         t = (int) ParserX::parsujr(bufor); // odczytanie numeru sciezki
         sh = ParserX::nazwasekcji(bufor);
         //System.out.println("----"+sh);
-
+        trackNodes[t] = new TRnode();
         switch (sh.length()) {// wybranie typu sciezki ^^
             case 9:
-                trackNodes[t].typ = 0; //typ endnode
+                trackNodes[t]->typ = 0; //typ endnode
                 sh = "UiD";
                 ParserX::szukajsekcji1(sh, bufor);
                 for (ii = 0; ii < 12; ii++) {
-                    trackNodes[t].UiD[ii] = ParserX::parsujr(bufor);
+                    trackNodes[t]->UiD[ii] = ParserX::parsujr(bufor);
                 }
-                trpin(&trackNodes[t], bufor);
+                trpin(trackNodes[t], bufor);
                 break;
             case 12:
-                trackNodes[t].typ = 1; //typ vector 
+                trackNodes[t]->typ = 1; //typ vector 
                 sh = "TrVectorSections";
                 ParserX::szukajsekcji1(sh, bufor);
                 uu = (int) ParserX::parsujr(bufor);
-                trackNodes[t].iTrv = uu;
-                trackNodes[t].trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
+                trackNodes[t]->iTrv = uu;
+                trackNodes[t]->trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
 
                 for (j = 0; j < uu; j++) {
                     for (ii = 0; ii < 16; ii++) {
                         xx = ParserX::parsujr(bufor);
-                        trackNodes[t].trVectorSection[j].param[ii] = xx;
+                        trackNodes[t]->trVectorSection[j].param[ii] = xx;
                     }
                     //System.out.println(
                     //this.TrackNodes[t].TrVectorSection[j].param[13]+" "+
                     //this.TrackNodes[t].TrVectorSection[j].param[14]+" "+
                     //this.TrackNodes[t].TrVectorSection[j].param[15]);
                 }
-                trpin(&trackNodes[t], bufor);
+                trpin(trackNodes[t], bufor);
                 break;
             case 14:
-                trackNodes[t].typ = 2; //typ rozjazd
+                trackNodes[t]->typ = 2; //typ rozjazd
                 sh = "UiD";
                 ParserX::szukajsekcji1(sh, bufor);
                 for (ii = 0; ii < 12; ii++) {
-                    trackNodes[t].UiD[ii] = ParserX::parsujr(bufor);
+                    trackNodes[t]->UiD[ii] = ParserX::parsujr(bufor);
                 }
-                trpin(&trackNodes[t], bufor);
+                trpin(trackNodes[t], bufor);
                 break;
             default:
                 qDebug() << "Nieprawidlowa sciezka -> ERROR";
+                trackNodes[t] = NULL;
                 break;
         }
     }
@@ -108,7 +109,8 @@ void TDB::trpin(TRnode *tr, FileBuffer* bufor) {
 
 int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
     for (int j = 1; j <= iTRnodes; j++) {
-        TRnode* n = &trackNodes[j];
+        TRnode* n = trackNodes[j];
+        if(n == NULL) continue;
         if (n->typ == 0) {
             float lenx = ((n->UiD[4] - x)*2048 + n->UiD[6] - p[0]);
             float leny = (n->UiD[7]) - p[1];
@@ -133,12 +135,12 @@ int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
 }
 
 int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
-    TRnode* endNode = &trackNodes[id];
+    TRnode* endNode = trackNodes[id];
     float p[3];
 
     if (endNode->typ == 0) {
         int kierunek = endNode->TrPinK[0];
-        TRnode* n = &trackNodes[endNode->TrPinS[0]];
+        TRnode* n = trackNodes[endNode->TrPinS[0]];
         if (n->typ != 1) {
             qDebug() << "tdb error";
             return -1;
@@ -239,7 +241,8 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
 
     z = -z;
     ////////////////////////////////////
-    TRnode *newNode = &this->trackNodes[end1Id];
+    this->trackNodes[end1Id] = new TRnode();
+    TRnode *newNode = this->trackNodes[end1Id];
     newNode->typ = 0;
     newNode->UiD[0] = x;
     newNode->UiD[1] = z;
@@ -259,7 +262,8 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     newNode->TrPinK[0] = 1;
 
     /////////////////////////////////////////////////////
-    newNode = &this->trackNodes[vecId];
+    this->trackNodes[vecId] = new TRnode();
+    newNode = this->trackNodes[vecId];
     qDebug() << vecId;
     newNode->typ = 1;
     newNode->iTrv = 1;
@@ -269,8 +273,8 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     newNode->trVectorSection[0].param[2] = x;
     newNode->trVectorSection[0].param[3] = z;
     newNode->trVectorSection[0].param[4] = uid;
-    newNode->trVectorSection[0].param[5] = 0;
-    newNode->trVectorSection[0].param[6] = 1;
+    newNode->trVectorSection[0].param[5] = ends[0];
+    newNode->trVectorSection[0].param[6] = ends[1];
     newNode->trVectorSection[0].param[7] = 0;
     newNode->trVectorSection[0].param[8] = x;
     newNode->trVectorSection[0].param[9] = z;
@@ -301,7 +305,8 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     pp[2] = -p[2] - aa->z;
     Game::check_coords(x, z, pp);
 
-    newNode = &this->trackNodes[end2Id];
+    this->trackNodes[end2Id] = new TRnode();
+    newNode = this->trackNodes[end2Id];
     newNode->typ = 0;
     newNode->UiD[0] = x;
     newNode->UiD[1] = z;
@@ -325,34 +330,103 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     return end2Id;
 }
 
-int TDB::joinTracks(int iendp) {
-    TRnode* endp = &trackNodes[iendp];
+int TDB::newJunction(int x, int z, float* p, float* qe, int r, int uid, int end) {
 
-    for (int j = 1; j <= iTRnodes; j++) {
-        TRnode* n = &trackNodes[j];
-        if (n->typ == 0) {
-            if (j == iendp)
-                continue;
-            if (endp->equals(n)) {
-                qDebug() << "polacze " << iendp << " " << j;
-                qDebug() << n->TrPinS[0] << " " << n->TrPinK[0];
-                qDebug() << endp->TrPinS[0] << " " << endp->TrPinK[0];
-                joinVectorSections(endp->TrPinS[0], n->TrPinS[0]);
-                return 0;
+    //TrackShape* shp = this->tsection->shape[r->value];
+    //qDebug() << shp->filename;
+
+    int junction = ++this->iTRnodes;
+
+    z = -z;
+    ////////////////////////////////////
+    this->trackNodes[junction] = new TRnode();
+    TRnode *newNode = this->trackNodes[junction];
+    newNode->typ = 2;
+    newNode->UiD[0] = x;
+    newNode->UiD[1] = z;
+    newNode->UiD[2] = uid;
+    newNode->UiD[3] = end;
+    newNode->UiD[4] = x;
+    newNode->UiD[5] = z;
+    newNode->UiD[6] = p[0];
+    newNode->UiD[7] = p[1];
+    newNode->UiD[8] = -p[2];
+    newNode->UiD[9] = qe[0];
+    newNode->UiD[10] = qe[1] + M_PI;
+    newNode->UiD[11] = qe[2];
+
+    newNode->TrP1 = 1;
+    newNode->TrP2 = 2;
+    newNode->TrPinS[0] = 0;
+    newNode->TrPinK[0] = 0;
+    newNode->TrPinS[1] = 0;
+    newNode->TrPinK[1] = 0;
+    newNode->TrPinS[2] = 0;
+    newNode->TrPinK[2] = 0;
+    
+    newNode->args[1] = r;
+    
+    return junction;
+}
+
+int TDB::joinTracks(int iendp) {
+    TRnode* endp = trackNodes[iendp];
+
+    if(endp->typ == 0){
+        for (int j = 1; j <= iTRnodes; j++) {
+            TRnode* n = trackNodes[j];
+            if(n == NULL) continue;
+            if (n->typ == 0) {
+                if (j == iendp)
+                    continue;
+                if (endp->equals(n)) {
+                    qDebug() << "polacze " << iendp << " " << j;
+                    qDebug() << n->TrPinS[0] << " " << n->TrPinK[0];
+                    qDebug() << endp->TrPinS[0] << " " << endp->TrPinK[0];
+                    joinVectorSections(endp->TrPinS[0], n->TrPinS[0]);
+                    return 0;
+                }
+            }
+        }
+    }
+    
+    if(endp->typ == 2){
+        for (int j = 1; j <= iTRnodes; j++) {
+            TRnode* n = trackNodes[j];
+            if(n == NULL) continue;
+            if (n->typ == 0) {
+                if (j == iendp)
+                    continue;
+                if (endp->equalsIgnoreType(n)) {
+                    qDebug() << "polacze rozjazd " << iendp << " " << j;
+                    appendToJunction(iendp, j, 0);
+                    //qDebug() << n->TrPinS[0] << " " << n->TrPinK[0];
+                    //qDebug() << endp->TrPinS[0] << " " << endp->TrPinK[0];
+                    //joinVectorSections(endp->TrPinS[0], n->TrPinS[0]);
+                    return 0;
+                }
             }
         }
     }
 }
 
+int TDB::fillJunction(int id){
+    
+    return 0;
+}
+
 int TDB::joinVectorSections(int id1, int id2) {
-    TRnode* section1 = &trackNodes[id1];
-    TRnode* section2 = &trackNodes[id2];
+    TRnode* section1 = trackNodes[id1];
+    TRnode* section2 = trackNodes[id2];
     if(section1 == section2)
         return 0;
-    TRnode* section1e1 = &trackNodes[section1->TrPinS[0]];
-    TRnode* section1e2 = &trackNodes[section1->TrPinS[1]];
-    TRnode* section2e1 = &trackNodes[section2->TrPinS[0]];
-    TRnode* section2e2 = &trackNodes[section2->TrPinS[1]];
+    int endpk1 = section1->TrPinS[1];
+    int endpk2 = section2->TrPinS[0];
+    TRnode* section1e1 = trackNodes[section1->TrPinS[0]];
+    TRnode* section1e2 = trackNodes[section1->TrPinS[1]];
+    TRnode* section2e1 = trackNodes[section2->TrPinS[0]];
+    TRnode* section2e2 = trackNodes[section2->TrPinS[1]];
+    
     if (section1e2->equals(section2e1)) {
         qDebug() << "ok";
     }
@@ -362,12 +436,12 @@ int TDB::joinVectorSections(int id1, int id2) {
     }
     else if (section1e2->equals(section2e2)) {
         qDebug() << "rot2";
-        rotate(section2);
+        rotate(id2);
         return joinVectorSections(id1, id2);
     }
     else if (section1e1->equals(section2e1)) {
         qDebug() << "rot1";
-        rotate(section1);
+        rotate(id1);
         return joinVectorSections(id1, id2);
     }
 
@@ -379,18 +453,23 @@ int TDB::joinVectorSections(int id1, int id2) {
     
     delete section1->trVectorSection;
     delete section2->trVectorSection;
+    
+    
     section1->trVectorSection = newV;
     section1->TrPinS[1] = section2->TrPinS[1];
-    section2e2->TrPinS[0] = section1e2->TrPinS[0];
+    section1->TrPinK[1] = section2->TrPinK[1];
+    section2e2->podmienTrPin(id2, id1);
+    //section2e2->TrPinS[0] = section1e2->TrPinS[0];
     
-    section2->typ = -1;
-    section1e2->typ = -1;
-    section2e1->typ = -1;
+    trackNodes[id2] = NULL;
+    trackNodes[endpk1] = NULL;
+    trackNodes[endpk2] = NULL;
 }
 
-int TDB::rotate(TRnode* vect){
-    TRnode* e1 = &trackNodes[vect->TrPinS[0]];
-    TRnode* e2 = &trackNodes[vect->TrPinS[1]];
+int TDB::rotate(int id){
+    TRnode* vect = trackNodes[id];
+    TRnode* e1 = trackNodes[vect->TrPinS[0]];
+    TRnode* e2 = trackNodes[vect->TrPinS[1]];
     
     for(int i = 0; i < vect->iTrv; i++){
         if(i < vect->iTrv - 1){
@@ -430,9 +509,8 @@ int TDB::rotate(TRnode* vect){
         vect->trVectorSection[vect->iTrv - 1 - i] = t;
     }
     
-    
-    e1->TrPinK[0] = 0;
-    e2->TrPinK[0] = 1;
+    e1->setTrPinK(id, 0);
+    e2->setTrPinK(id, 1);
     /*e1->UiD[10] += M_PI;
     if(e1->UiD[10] > 2*M_PI)
         e1->UiD[10] -= 2*M_PI;
@@ -443,7 +521,44 @@ int TDB::rotate(TRnode* vect){
     int tmp = vect->TrPinS[0];
     vect->TrPinS[0] = vect->TrPinS[1];
     vect->TrPinS[1] = tmp;
+    tmp = vect->TrPinK[0];
+    vect->TrPinK[0] = vect->TrPinK[1];
+    vect->TrPinK[1] = tmp;
 
+}
+
+int TDB::appendToJunction(int junctionId, int eId, int idx){
+    TRnode* junction = trackNodes[junctionId];
+
+    if(idx == 1){
+        if(junction->TrPinS[idx] != 0)
+            idx++;
+        if(junction->TrPinS[idx] != 0)
+            return 0;
+    } else {
+        if(junction->TrPinS[idx] != 0)
+            return 0;
+    }
+    
+    TRnode* e1 = trackNodes[eId];
+    int trackId = e1->TrPinS[0];
+    TRnode* track = trackNodes[trackId];
+    trackNodes[eId] = NULL;
+    
+    junction->TrPinS[idx] = trackId;
+    
+    
+    int j = track->podmienTrPin(eId, junctionId);
+    //track->TrPinS[0] = junctionId;
+    if(idx == 0) {
+        track->TrPinK[j] = 1;
+        //junction->TrPinK[idx] = 0;
+        junction->TrPinK[idx] = e1->TrPinK[0];
+    } else {
+        track->TrPinK[j] = 0;
+        //junction->TrPinK[idx] = 1;
+        junction->TrPinK[idx] = e1->TrPinK[0];
+    }
 }
 
 bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid) {
@@ -457,6 +572,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid)
     TrackShape* shp = this->tsection->shape[r->value];
     qDebug() << shp->filename;
     float pp[3];
+    float qee[3];
     int endp;
     // if (append > 0) {
     Vector3f aa(shp->path[0].pos[0], shp->path[0].pos[1], shp->path[0].pos[2]);
@@ -473,6 +589,33 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid)
 
     int start;
     int ends[2];
+    ////////////////////////////////
+    int *endsNumbres = new int[shp->numpaths*2];
+    std::unordered_map<int, int> endsIds;
+    std::unordered_map<int, int> isJunction;
+    std::unordered_map<int, int> junctionId;
+    int nextNumber = 0;
+    //int junctions[6];
+    //int junctionCount = 0;
+    
+    for (int i = 0; i < shp->numpaths; i++) {
+        int posIdx = shp->path[i].pos[0]*10000 + shp->path[i].pos[1]*100 + shp->path[i].pos[2];
+        std::unordered_map<int, int>::iterator iter = endsIds.find(posIdx);
+        if(iter == endsIds.end()){
+            endsNumbres[i*2] = nextNumber++;
+            endsIds[posIdx] = endsNumbres[i*2];
+            isJunction[endsNumbres[i*2]] = 0;
+        } else {
+            endsNumbres[i*2] = endsIds[posIdx];
+            isJunction[endsNumbres[i*2]] = 1;
+            //qDebug() << "rozjazd";
+            //junctions[junctionCount++] = newJunction(x, z, pp, qee, r->value, uid, ends[0]);
+        }
+        junctionId[endsNumbres[i*2]] = 0;
+        endsNumbres[i*2+1] = nextNumber++;
+        qDebug() << "ends: "<< ends[0] <<" "<<ends[1];
+    }
+    
     for (int i = 0; i < shp->numpaths; i++) {
         //aa.set(0,0,0);
         aa.set(shp->path[i].pos[0], shp->path[i].pos[1], shp->path[i].pos[2]);
@@ -480,18 +623,41 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid)
         pp[0] = p[0] + aa.x;
         pp[1] = p[1] + shp->path[i].pos[1];
         pp[2] = p[2] - aa.z;
+        qee[0] = qe[0];
+        qee[1] = qe[1] + shp->path[i].rotDeg*M_PI/180;
+        qee[2] = qe[2];
         
-        ends[0] = 0; ends[1] = 1;
-        endp = newTrack(x, z, pp, qe, (int*)ends, r->value, shp->path[i].sect[0], uid, &start);
+        ends[0] = endsNumbres[i*2];
+        ends[1] = endsNumbres[i*2+1];
+        
+        if(isJunction[ends[0]] == 1){
+            isJunction[ends[0]] = 0;
+            qDebug() << "rozjazd";
+            junctionId[ends[0]] = newJunction(x, z, pp, qee, r->value, uid, ends[0]);
+        }
+        
+        endp = newTrack(x, z, pp, qee, (int*)ends, r->value, shp->path[i].sect[0], uid, &start);
+        
         for (int j = 1; j < shp->path[i].n; j++) {
-            ends[0] = j*2;
-            ends[1] = j*2+1;
             if (endp > 0) {
                 endp = appendTrack(endp, (int*)ends, r->value, shp->path[i].sect[j], uid);
             }
         }
-        joinTracks(start);
+        
+        if(junctionId[ends[0]] != 0){
+            qDebug() << "append to junction";
+            appendToJunction(junctionId[ends[0]], start, 1);
+            joinTracks(junctionId[ends[0]]);
+        } else {
+            joinTracks(start);
+        }
+        
+         joinTracks(endp);
     }
+    
+    //for(int i = 0; i < junctionCount; i++){
+    //    fillJunction(junctions[i]);
+    //}
     //if (append > 0)
     //    joinTracks(append);
     //  }
@@ -519,7 +685,8 @@ void TDB::renderAll(GLUU *gluu, float* playerT) {
         isInitLines = true;
 
         for (int i = 1; i <= iTRnodes; i++) {
-            n = &trackNodes[i];
+            n = trackNodes[i];
+            if (n == NULL) continue;
             if (n->typ == -1) continue;
             if (n->typ == 1) {
                 lLen += 6 * (n->iTrv - 1);
@@ -538,7 +705,8 @@ void TDB::renderAll(GLUU *gluu, float* playerT) {
         int lPtr = 0, kPtr = 0, pPtr = 0;
 
         for (int i = 1; i <= iTRnodes; i++) {
-            n = &trackNodes[i];
+            n = trackNodes[i];
+            if (n == NULL) continue;
             if (n->typ == -1) continue;
             if (n->typ == 1) {
                 for (int i = 0; i < n->iTrv - 1; i++) {
@@ -555,9 +723,9 @@ void TDB::renderAll(GLUU *gluu, float* playerT) {
                     linie[lPtr++] = (n->trVectorSection[n->iTrv - 1].param[11] + wysokoscSieci);
                     linie[lPtr++] = (((-n->trVectorSection[n->iTrv - 1].param[9] - playerT[1])*2048 - n->trVectorSection[n->iTrv - 1].param[12]));
 
-                    linie[lPtr++] = ((trackNodes[n->TrPinS[1]].UiD[4] - playerT[0])*2048 + trackNodes[n->TrPinS[1]].UiD[6]);
-                    linie[lPtr++] = (trackNodes[n->TrPinS[1]].UiD[7] + wysokoscSieci);
-                    linie[lPtr++] = (((-trackNodes[n->TrPinS[1]].UiD[5] - playerT[1])*2048 - trackNodes[n->TrPinS[1]].UiD[8]));
+                    linie[lPtr++] = ((trackNodes[n->TrPinS[1]]->UiD[4] - playerT[0])*2048 + trackNodes[n->TrPinS[1]]->UiD[6]);
+                    linie[lPtr++] = (trackNodes[n->TrPinS[1]]->UiD[7] + wysokoscSieci);
+                    linie[lPtr++] = (((-trackNodes[n->TrPinS[1]]->UiD[5] - playerT[1])*2048 - trackNodes[n->TrPinS[1]]->UiD[8]));
                 }
             } else if (n->typ == 0) {
                 konce[kPtr++] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
@@ -612,7 +780,8 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
         int len = 0;
 
         for (int j = 1; j <= iTRnodes; j++) {
-            TRnode* n = &trackNodes[j];
+            TRnode* n = trackNodes[j];
+            if (n == NULL) continue;
             if (n->typ == -1) continue;
             if (n->typ == 1) {
                 for (int i = 0; i < n->iTrv; i++) {
@@ -631,7 +800,8 @@ void TDB::renderLines(GLUU *gluu, float* playerT) {
         float* ptr = punkty;
 
         for (int j = 1; j <= iTRnodes; j++) {
-            TRnode* n = &trackNodes[j];
+            TRnode* n = trackNodes[j];
+            if (n == NULL) continue;
             if (n->typ == -1) continue;
             if (n->typ == 1) {
                 //qDebug() << j;
@@ -724,9 +894,43 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
 
 }
 
-void TDB::save() {
+ bool TDB::deleteNulls() {
+        for(int i = 1; i <= iTRnodes; i++){
+            if(trackNodes[i] == NULL){
+                qDebug() << "Usuwam NULL na "<<i;
+                int stare = findBiggest();
+                if(stare <= i) {
+                    qDebug() << "Juz nie ma nulli ";
+                    iTRnodes = stare;
+                    return false;
+                }
+                trackNodes[i] = trackNodes[stare];
+                trackNodes[stare] = NULL;
+                qDebug() << "zastopiony przez " << stare;
+                
+                for(int j = 0; j < 3; j++){
+                    if(trackNodes[i]->TrPinS[j] == 0) 
+                        continue;
+                    trackNodes[trackNodes[i]->TrPinS[j]]->podmienTrPin(stare, i);
+                }
+                return true;
+            }
+        }
+        qDebug() << "Juz nie ma nulli ";
+        return false;
+    }
 
-    //while(usunNulle());
+    int TDB::findBiggest() {
+        for(int i = iTRnodes; i > 0; i--){
+            if(trackNodes[i] != NULL)
+                return i;
+        }
+        return 1;
+    }
+
+
+void TDB::save() {
+    while(deleteNulls());
 
     QString sh;
     QString path;
@@ -748,29 +952,29 @@ void TDB::save() {
 
     for (int i = 1; i <= this->iTRnodes; i++) {
         out << "		TrackNode ( " << i << "\n";
-
-        switch (trackNodes[i].typ) {
+        if (trackNodes[i] == NULL) continue;
+        switch (trackNodes[i]->typ) {
             case 0:
-                out << "			TrEndNode ( " << trackNodes[i].args[0] << " )\n";
+                out << "			TrEndNode ( " << trackNodes[i]->args[0] << " )\n";
                 out << "			UiD ( ";
                 for (int j = 0; j < 12; j++) {
-                    out << trackNodes[i].UiD[j] << " ";
+                    out << trackNodes[i]->UiD[j] << " ";
                 }
                 out << ")\n";
                 out << "			TrPins ( 1 0\n";
-                out << "				TrPin ( " << trackNodes[i].TrPinS[0] << " " << trackNodes[i].TrPinK[0] << " )\n";
+                out << "				TrPin ( " << trackNodes[i]->TrPinS[0] << " " << trackNodes[i]->TrPinK[0] << " )\n";
                 out << "			)\n";
                 break;
             case 1:
                 out << "			TrVectorNode ( \n";
-                out << "				TrVectorSections ( " << trackNodes[i].iTrv << "";
-                for (int j = 0; j < trackNodes[i].iTrv; j++) {
+                out << "				TrVectorSections ( " << trackNodes[i]->iTrv << "";
+                for (int j = 0; j < trackNodes[i]->iTrv; j++) {
                     for (int jj = 0; jj < 7; jj++) {
-                        out << " " << trackNodes[i].trVectorSection[j].param[jj];
+                        out << " " << trackNodes[i]->trVectorSection[j].param[jj];
                     }
                     out << " 00";
                     for (int jj = 8; jj < 16; jj++) {
-                        out << " " << trackNodes[i].trVectorSection[j].param[jj];
+                        out << " " << trackNodes[i]->trVectorSection[j].param[jj];
                     }
                     if (j % 10 == 0 && j > 0)
                         out << "\n					";
@@ -787,21 +991,21 @@ void TDB::save() {
                 }*/
                 out << "			)\n";
                 out << "			TrPins ( 1 1\n";
-                out << "				TrPin ( " << trackNodes[i].TrPinS[0] << " " << trackNodes[i].TrPinK[0] << " )\n";
-                out << "				TrPin ( " << trackNodes[i].TrPinS[1] << " " << trackNodes[i].TrPinK[1] << " )\n";
+                out << "				TrPin ( " << trackNodes[i]->TrPinS[0] << " " << trackNodes[i]->TrPinK[0] << " )\n";
+                out << "				TrPin ( " << trackNodes[i]->TrPinS[1] << " " << trackNodes[i]->TrPinK[1] << " )\n";
                 out << "			)\n";
                 break;
             case 2:
-                out << "			TrJunctionNode ( " << trackNodes[i].args[0] << " " << trackNodes[i].args[1] << " " << trackNodes[i].args[2] << " )\n";
+                out << "			TrJunctionNode ( " << trackNodes[i]->args[0] << " " << trackNodes[i]->args[1] << " " << trackNodes[i]->args[2] << " )\n";
                 out << "			UiD ( ";
                 for (int j = 0; j < 12; j++) {
-                    out << trackNodes[i].UiD[j] << " ";
+                    out << trackNodes[i]->UiD[j] << " ";
                 }
                 out << ")\n";
                 out << "			TrPins ( 1 2\n";
-                out << "				TrPin ( " << trackNodes[i].TrPinS[0] << " " << trackNodes[i].TrPinK[0] << " )\n";
-                out << "				TrPin ( " << trackNodes[i].TrPinS[1] << " " << trackNodes[i].TrPinK[1] << " )\n";
-                out << "				TrPin ( " << trackNodes[i].TrPinS[2] << " " << trackNodes[i].TrPinK[2] << " )\n";
+                out << "				TrPin ( " << trackNodes[i]->TrPinS[0] << " " << trackNodes[i]->TrPinK[0] << " )\n";
+                out << "				TrPin ( " << trackNodes[i]->TrPinS[1] << " " << trackNodes[i]->TrPinK[1] << " )\n";
+                out << "				TrPin ( " << trackNodes[i]->TrPinS[2] << " " << trackNodes[i]->TrPinK[2] << " )\n";
                 out << "			)\n";
                 break;
         }
