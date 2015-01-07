@@ -208,3 +208,15 @@ void WorldObj::drawBox(){
 
     box.render();
 };
+
+bool WorldObj::select(){
+    this->selected = true;
+}
+
+bool WorldObj::unselect(){
+    this->selected = false;
+}
+
+bool WorldObj::isSelected(){
+    return this->selected;
+}

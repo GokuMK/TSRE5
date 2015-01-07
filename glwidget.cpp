@@ -221,13 +221,13 @@ void GLWidget::paintGL() {
         int UiD = (int) (winZ[1]*255)*256 + (int) (winZ[2]*255);
 
         qDebug() << wx << " " << wz << " " << UiD;
-        if(selectedObj != NULL) selectedObj->selected = false;
+        if(selectedObj != NULL) selectedObj->unselect();
         selectedObj = route->getObj(wx, wz, UiD);
         if (!selectedObj->loaded){
             qDebug() << "brak obiektu";
             selectedObj = NULL;
         } else {
-            selectedObj->selected = true;
+            selectedObj->select();
             //selectedObj->translate(0,10,0);
         }
         //int objHash = trasa.getObjectHash(wx,wz,UiD);
@@ -340,10 +340,10 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 break;                
             case Qt::Key_C:
                 if(selectedObj != NULL){
-                    selectedObj->selected = false;
+                    selectedObj->unselect();
                     selectedObj = route->placeObject(selectedObj->x, selectedObj->y, selectedObj->position, selectedObj->qDirection, selectedObj->getRefInfo());
                     if(selectedObj != NULL){
-                        selectedObj->selected = true;
+                        selectedObj->select();
                     }
                 }
             case Qt::Key_P:
@@ -352,7 +352,16 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 }
             case Qt::Key_L:
                 route->trackDB->nextDefaultEnd();
-                
+                break;
+            case Qt::Key_Z:
+                //route->refreshObj(selectedObj);
+                route->addToTDB(selectedObj, (float*)&lastNewObjPos);
+                break;
+            case Qt::Key_X:
+                //route->refreshObj(selectedObj);
+                route->trackDB->nextDefaultEnd();
+                route->newPositionTDB(selectedObj, (float*)&lastNewObjPos);                
+                break;
             default:
                 break;
         }
@@ -381,10 +390,13 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
     } else {
         if(toolEnabled == "placeTool"){
             if(selectedObj != NULL) 
-                selectedObj->selected = false;
+                selectedObj->unselect();
+            lastNewObjPos[0] = aktPointerPos[0];
+            lastNewObjPos[1] = aktPointerPos[1];
+            lastNewObjPos[2] = aktPointerPos[2];
             selectedObj = route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
             if(selectedObj != NULL)
-                selectedObj->selected = true;
+                selectedObj->select();
             //if(route->ref->selected != NULL){
             //qDebug() << route->ref->selected->description;
             //}

@@ -16,8 +16,8 @@ public:
     bool getBorder(float* border);
     void save(QTextStream* out);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
-private:
     int sectionIdx;
+private:
     float elevation;
     float* jNodePosn = NULL;
 };

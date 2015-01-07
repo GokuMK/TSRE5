@@ -29,7 +29,6 @@ public:
     float size;
     int jestPQ = 0;
     Vector3f selectionColor;
-    bool selected;
     OglObj box;
     
     WorldObj();
@@ -48,10 +47,14 @@ public:
     void rotate(float x, float y, float z);
     Ref::RefItem* getRefInfo();
     void drawBox();
+    virtual bool select();
+    virtual bool unselect();
+    virtual bool isSelected();
     virtual bool getBorder(float* border);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 protected:
     float* matrix3x3 = NULL;
+    bool selected;
 };
 
 #endif	/* WORLDOBJ_H */

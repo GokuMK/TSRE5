@@ -35,7 +35,8 @@ public:
     int appendToJunction(int junctionId, int eId, int idx);
     int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid);
     int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid, int* start);
-    bool placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid);
+    bool placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid);
+    bool findPosition(int x, int z, float* p, float* q, int sectionIdx, int uid);
     void renderAll(GLUU *gluu, float * playerT);
     void renderLines(GLUU *gluu, float* playerT);
 private:

@@ -80,7 +80,8 @@ private:
     float moveMinStep = 0.01;
     bool rotateTool = false;
     bool translateTool = false;
-    int tdbDefaultEnd = 0;
+    //int tdbDefaultEnd = 0;
+    float lastNewObjPos[3];
 };
 
 #endif

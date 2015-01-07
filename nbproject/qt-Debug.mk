@@ -4726,7 +4726,8 @@ build/Debug/MinGW_1-Windows/Route.o: Route.cpp Route.h \
 		Tile.h \
 		GLMatrix.h \
 		TerrainLib.h \
-		Game.h
+		Game.h \
+		TrackObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_1-Windows/Route.o Route.cpp
 
 build/Debug/MinGW_1-Windows/SFile.o: SFile.cpp SFile.h \
