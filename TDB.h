@@ -30,6 +30,8 @@ public:
     int appendTrack(int id, int* ends, int r, int sect, int uid);
     int newJunction(int x, int z, float* p, float* qe, int r, int uid, int end);
     int fillJunction(int id);
+    void setDefaultEnd(int val);
+    void nextDefaultEnd();
     int appendToJunction(int junctionId, int eId, int idx);
     int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid);
     int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid, int* start);
@@ -45,6 +47,7 @@ private:
     OglObj konceSieci;
     OglObj punktySieci;
     OglObj sectionLines;
+    int defaultEnd = 0;
     int wysokoscSieci;
     int lineHash;
     int sectionHash;

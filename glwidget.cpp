@@ -33,7 +33,7 @@ QSize GLWidget::minimumSizeHint() const {
 }
 
 QSize GLWidget::sizeHint() const {
-    return QSize(900, 600);
+    return QSize(1000, 700);
 }
 
 void GLWidget::cleanup() {
@@ -350,6 +350,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 if(selectedObj != NULL){
                     route->ref->selected = selectedObj->getRefInfo();
                 }
+            case Qt::Key_L:
+                route->trackDB->nextDefaultEnd();
+                
             default:
                 break;
         }

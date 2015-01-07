@@ -80,6 +80,7 @@ private:
     float moveMinStep = 0.01;
     bool rotateTool = false;
     bool translateTool = false;
+    int tdbDefaultEnd = 0;
 };
 
 #endif

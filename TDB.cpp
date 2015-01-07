@@ -111,7 +111,7 @@ int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
     for (int j = 1; j <= iTRnodes; j++) {
         TRnode* n = trackNodes[j];
         if(n == NULL) continue;
-        if (n->typ == 0) {
+        if (n->typ == 0 || n->typ == 2) {
             float lenx = ((n->UiD[4] - x)*2048 + n->UiD[6] - p[0]);
             float leny = (n->UiD[7]) - p[1];
             float lenz = ((-n->UiD[5] - z)*2048 - n->UiD[8] - p[2]);
@@ -388,6 +388,19 @@ int TDB::joinTracks(int iendp) {
                 }
             }
         }
+        for (int j = 1; j <= iTRnodes; j++) {
+            TRnode* n = trackNodes[j];
+            if(n == NULL) continue;
+            if (n->typ == 2) {
+                if (j == iendp)
+                    continue;
+                if (endp->equalsIgnoreType(n)) {
+                    qDebug() << "polacze rozjazd " << iendp << " " << j;
+                    appendToJunction(j, iendp, 0);
+                    return 0;
+                }
+            }
+        }
     }
     
     if(endp->typ == 2){
@@ -400,9 +413,6 @@ int TDB::joinTracks(int iendp) {
                 if (endp->equalsIgnoreType(n)) {
                     qDebug() << "polacze rozjazd " << iendp << " " << j;
                     appendToJunction(iendp, j, 0);
-                    //qDebug() << n->TrPinS[0] << " " << n->TrPinK[0];
-                    //qDebug() << endp->TrPinS[0] << " " << endp->TrPinK[0];
-                    //joinVectorSections(endp->TrPinS[0], n->TrPinS[0]);
                     return 0;
                 }
             }
@@ -561,26 +571,31 @@ int TDB::appendToJunction(int junctionId, int eId, int idx){
     }
 }
 
+void TDB::setDefaultEnd(int val){
+    this->defaultEnd = val;
+}
+
+void TDB::nextDefaultEnd(){
+    this->defaultEnd++;
+}
+
 bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid) {
     float qe[3];
     qe[0] = 0;
     qe[1] = 0;
     qe[2] = 0;
     int append = findNearestNode(x, z, p, (float*) &qe);
-    Quat::rotateY(q, q, -qe[1]);
+    
     bool b;
     TrackShape* shp = this->tsection->shape[r->value];
     qDebug() << shp->filename;
     float pp[3];
     float qee[3];
+    float startPos[3];
+    float objPosOffset[3];
     int endp;
     // if (append > 0) {
-    Vector3f aa(shp->path[0].pos[0], shp->path[0].pos[1], shp->path[0].pos[2]);
-    aa.rotateY(-qe[1], 0);
-    p[0] += aa.x;
-    p[1] += shp->path[0].pos[1];
-    p[2] -= aa.z;
-    /*     endp = appendTrack(append, r->value, shp->path[0].sect[0], uid);
+        /*     endp = appendTrack(append, r->value, shp->path[0].sect[0], uid);
      } else {
      */
     //p[0] += shp->path[0].pos[0];
@@ -615,16 +630,88 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid)
         endsNumbres[i*2+1] = nextNumber++;
         qDebug() << "ends: "<< ends[0] <<" "<<ends[1];
     }
+    //////
+    
+    while(defaultEnd >= shp->numpaths*2){
+        defaultEnd -= shp->numpaths*2;
+    }
+    
+    qDebug() << "defaultEnd" << defaultEnd;
+    
+    int startEnd = defaultEnd/2;
+    int endend = defaultEnd - (startEnd)*2;
+    
+    Vector3f aa;
+    Vector3f bb;
+    Vector3f* aa2;
+    //(-shp->path[startEnd].pos[0], shp->path[startEnd].pos[1], shp->path[startEnd].pos[2]);
+    //aa.rotateY(shp->path[startEnd].rotDeg*M_PI/180, 0);
+    
+    if(endend == 1){
+        //aa.rotateY(shp->path[startEnd].rotDeg*M_PI/180, 0);
+        float angle = 0;
+        
+        float dlugosc = 0;
+        for (int i = 0; i < shp->path[startEnd].n; i++) {
+            dlugosc = this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDlugosc();
+            //qDebug() << dlugosc;
+            aa2 = this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(dlugosc);
+            aa2->rotateY(angle, 0);
+            //qDebug() << "aa " << aa2->x << " "<<aa2->z;
+            aa.x+=aa2->x;
+            aa.z+=aa2->z;
+            angle += this->tsection->sekcja[shp->path[startEnd].sect[i]]->getAngle();
+        }
+        //bb.set(aa.x, aa.y, aa.z);
+        //aa.x += shp->path[startEnd].pos[0];
+        //aa.z += shp->path[startEnd].pos[2];
+        aa.rotateY(-qe[1], 0);
+        startPos[0] = aa.x;
+        startPos[2] = aa.z;
+        
+        bb.x = shp->path[0].pos[0];
+        bb.z = shp->path[0].pos[2];
+        
+        qe[1] -= angle - M_PI;
+        bb.rotateY(-qe[1], 0);
+        //bb.x = -bb.x;
+        //bb.z = -bb.z;
+        //objPosOffset[0] = bb.x;
+        //objPosOffset[2] = bb.z;
+        
+        qDebug() << "aa " << aa.x << " "<<aa.z;
+        //aa.x += shp->path[startEnd].pos[0];
+        //aa.z -= shp->path[startEnd].pos[2];
+        //qe[1] -= shp->path[startEnd].rotDeg*M_PI/180;
+    } else {
+        //aa2->set(aa.x, aa.y, aa.z);
+        //aa.x += shp->path[startEnd].pos[0];
+        //aa.z += shp->path[startEnd].pos[2];
+        //aa.rotateY(-qe[1], 0);
+        startPos[0] = aa.x;
+        startPos[2] = aa.z;
+        
+        bb.x = shp->path[0].pos[0];
+        bb.z = shp->path[0].pos[2];
+        bb.rotateY(-qe[1], 0);
+        //objPosOffset[0] = bb.x;
+        //objPosOffset[2] = bb.z;
+        //qe[1] -= shp->path[startEnd].rotDeg*M_PI/180;
+    }
+   //p[0] -= aa.x;
+   // p[2] += aa.z;
     
     for (int i = 0; i < shp->numpaths; i++) {
         //aa.set(0,0,0);
-        aa.set(shp->path[i].pos[0], shp->path[i].pos[1], shp->path[i].pos[2]);
-        aa.rotateY(-qe[1], 0);
-        pp[0] = p[0] + aa.x;
+        aa.set(shp->path[i].pos[0] - shp->path[startEnd].pos[0], shp->path[i].pos[1], shp->path[i].pos[2] - shp->path[startEnd].pos[2]);
+        //aa.rotateY(-qe[1] + shp->path[i].rotDeg*M_PI/180 - shp->path[startEnd].rotDeg*M_PI/180, 0);
+        aa.rotateY(-qe[1] + shp->path[startEnd].rotDeg*M_PI/180, 0);
+
+        pp[0] = p[0] + aa.x + startPos[0];
         pp[1] = p[1] + shp->path[i].pos[1];
-        pp[2] = p[2] - aa.z;
+        pp[2] = p[2] - aa.z - startPos[2];
         qee[0] = qe[0];
-        qee[1] = qe[1] + shp->path[i].rotDeg*M_PI/180;
+        qee[1] = qe[1] + shp->path[i].rotDeg*M_PI/180 - shp->path[startEnd].rotDeg*M_PI/180;
         qee[2] = qe[2];
         
         ends[0] = endsNumbres[i*2];
@@ -664,6 +751,15 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, Ref::RefItem* r, int uid)
 
     ////////////////////////////////////////////////////
     //save();
+    aa.set(shp->path[0].pos[0] - shp->path[startEnd].pos[0], shp->path[0].pos[1], shp->path[0].pos[2] - shp->path[startEnd].pos[2]);
+    aa.rotateY(-qe[1] + shp->path[startEnd].rotDeg*M_PI/180, 0);
+    p[0] = p[0] + aa.x + startPos[0];
+    p[1] = p[1] + shp->path[0].pos[1];
+    p[2] = p[2] - aa.z - startPos[2];
+    p[0] -= bb.x;
+    p[2] += bb.z;
+    Quat::rotateY(q, q, -qe[1] + shp->path[startEnd].rotDeg*M_PI/180);
+    
     refresh();
     return true;
 }
