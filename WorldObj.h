@@ -45,7 +45,7 @@ public:
     void setMartix();
     void translate(float px, float py, float pz);
     void rotate(float x, float y, float z);
-    Ref::RefItem* getRefInfo();
+    virtual Ref::RefItem* getRefInfo();
     void drawBox();
     virtual bool select();
     virtual bool unselect();

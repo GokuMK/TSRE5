@@ -137,6 +137,14 @@ bool TrackObj::getBorder(float* border){
     return true;
 }
 
+Ref::RefItem* TrackObj::getRefInfo(){
+    Ref::RefItem* r = new Ref::RefItem();
+    r->type = this->type;
+    r->filename = this->fileName;
+    r->value = this->sectionIdx;
+    return r;
+}
+
 void TrackObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;
