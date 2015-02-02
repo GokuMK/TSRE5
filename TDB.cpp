@@ -239,7 +239,13 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     int vecId = ++this->iTRnodes;
     int end2Id = ++this->iTRnodes;
 
+    int xx = x;
+    int zz = z;
+    float pp[3];
+    pp[0] = p[0]; pp[1] = p[1]; pp[2] = p[2];
+    Game::check_coords(xx, zz, pp);
     z = -z;
+    zz = -zz;
     ////////////////////////////////////
     this->trackNodes[end1Id] = new TRnode();
     TRnode *newNode = this->trackNodes[end1Id];
@@ -248,11 +254,11 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     newNode->UiD[1] = z;
     newNode->UiD[2] = uid;
     newNode->UiD[3] = ends[0];
-    newNode->UiD[4] = x;
-    newNode->UiD[5] = z;
-    newNode->UiD[6] = p[0];
-    newNode->UiD[7] = p[1];
-    newNode->UiD[8] = -p[2];
+    newNode->UiD[4] = xx;
+    newNode->UiD[5] = zz;
+    newNode->UiD[6] = pp[0];
+    newNode->UiD[7] = pp[1];
+    newNode->UiD[8] = -pp[2];
     newNode->UiD[9] = qe[0];
     newNode->UiD[10] = qe[1] + M_PI;
     newNode->UiD[11] = qe[2];
@@ -276,11 +282,11 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     newNode->trVectorSection[0].param[5] = ends[0];
     newNode->trVectorSection[0].param[6] = ends[1];
     newNode->trVectorSection[0].param[7] = 0;
-    newNode->trVectorSection[0].param[8] = x;
-    newNode->trVectorSection[0].param[9] = z;
-    newNode->trVectorSection[0].param[10] = p[0];
-    newNode->trVectorSection[0].param[11] = p[1];
-    newNode->trVectorSection[0].param[12] = -p[2];
+    newNode->trVectorSection[0].param[8] = xx;
+    newNode->trVectorSection[0].param[9] = zz;
+    newNode->trVectorSection[0].param[10] = pp[0];
+    newNode->trVectorSection[0].param[11] = pp[1];
+    newNode->trVectorSection[0].param[12] = -pp[2];
     newNode->trVectorSection[0].param[13] = qe[0];
     newNode->trVectorSection[0].param[14] = qe[1];
     newNode->trVectorSection[0].param[15] = qe[2];
@@ -299,11 +305,11 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     aa->rotateY(M_PI + qe[1], 0);
     float angle = this->tsection->sekcja[sect]->getAngle();
     //Quat::
-    float pp[3];
-    pp[0] = p[0] + aa->x;
-    pp[1] = p[1] + aa->y;
-    pp[2] = -p[2] - aa->z;
-    Game::check_coords(x, z, pp);
+    //float pp[3];
+    pp[0] = pp[0] + aa->x;
+    pp[1] = pp[1] + aa->y;
+    pp[2] = -pp[2] - aa->z;
+    Game::check_coords(xx, zz, pp);
 
     this->trackNodes[end2Id] = new TRnode();
     newNode = this->trackNodes[end2Id];
@@ -312,8 +318,8 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     newNode->UiD[1] = z;
     newNode->UiD[2] = uid;
     newNode->UiD[3] = ends[1];
-    newNode->UiD[4] = x;
-    newNode->UiD[5] = z;
+    newNode->UiD[4] = xx;
+    newNode->UiD[5] = zz;
     newNode->UiD[6] = pp[0];
     newNode->UiD[7] = pp[1];
     newNode->UiD[8] = pp[2];
@@ -336,8 +342,14 @@ int TDB::newJunction(int x, int z, float* p, float* qe, int r, int uid, int end)
     //qDebug() << shp->filename;
 
     int junction = ++this->iTRnodes;
-
+    
+    int xx = x;
+    int zz = z;
+    float pp[3];
+    pp[0] = p[0]; pp[1] = p[1]; pp[2] = p[2];
+    Game::check_coords(xx, zz, pp);
     z = -z;
+    zz = -zz;
     ////////////////////////////////////
     this->trackNodes[junction] = new TRnode();
     TRnode *newNode = this->trackNodes[junction];
@@ -346,11 +358,11 @@ int TDB::newJunction(int x, int z, float* p, float* qe, int r, int uid, int end)
     newNode->UiD[1] = z;
     newNode->UiD[2] = uid;
     newNode->UiD[3] = end;
-    newNode->UiD[4] = x;
-    newNode->UiD[5] = z;
-    newNode->UiD[6] = p[0];
-    newNode->UiD[7] = p[1];
-    newNode->UiD[8] = -p[2];
+    newNode->UiD[4] = xx;
+    newNode->UiD[5] = zz;
+    newNode->UiD[6] = pp[0];
+    newNode->UiD[7] = pp[1];
+    newNode->UiD[8] = -pp[2];
     newNode->UiD[9] = qe[0];
     newNode->UiD[10] = qe[1] + M_PI;
     newNode->UiD[11] = qe[2];

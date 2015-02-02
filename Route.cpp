@@ -142,7 +142,14 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r){
     return NULL;
 }
 
-void Route::addToTDB(WorldObj* obj, float* pos){
+void Route::addToTDB(WorldObj* obj, float* post, float* pos){
+    int x = post[0];
+    int z = post[1];
+    float p[3];
+    p[0] = pos[0];
+    p[1] = pos[1];
+    p[2] = pos[2];
+    Game::check_coords(x, z, (float*)&p);
     
     if(obj->type == "trackobj"){
         float q[4];
@@ -150,35 +157,35 @@ void Route::addToTDB(WorldObj* obj, float* pos){
         q[1] = 0;
         q[2] = 0;
         q[3] = 1;
-        float p[3];
-        p[0] = pos[0];
-        p[1] = pos[1];
-        p[2] = pos[2];
         TrackObj* track = (TrackObj*)obj;
             //this->trackDB->placeTrack(x, z, p, q, r, nowy->UiD);
             
-            this->trackDB->placeTrack(track->x, track->y, (float*)&p, (float*)&q, track->sectionIdx, obj->UiD);
+            this->trackDB->placeTrack(x, z, (float*)&p, (float*)&q, track->sectionIdx, obj->UiD);
             obj->setPosition(p);
             obj->setQdirection(q);
             obj->setMartix();
         }
 }
 
-void Route::newPositionTDB(WorldObj* obj, float* pos){
+void Route::newPositionTDB(WorldObj* obj, float* post, float* pos){
+    int x = post[0];
+    int z = post[1];
+    float p[3];
+    p[0] = pos[0];
+    p[1] = pos[1];
+    p[2] = pos[2];
+    Game::check_coords(x, z, (float*)&p);
+    
     if(obj->type == "trackobj"){
         float q[4];
         q[0] = 0;
         q[1] = 0;
         q[2] = 0;
         q[3] = 1;
-        float p[3];
-        p[0] = pos[0];
-        p[1] = pos[1];
-        p[2] = pos[2];
         TrackObj* track = (TrackObj*)obj;
             //this->trackDB->placeTrack(x, z, p, q, r, nowy->UiD);
             
-            this->trackDB->findPosition(track->x, track->y, (float*)&p, (float*)&q, track->sectionIdx, obj->UiD);
+            this->trackDB->findPosition(x, z, (float*)&p, (float*)&q, track->sectionIdx, obj->UiD);
             obj->setPosition(p);
             obj->setQdirection(q);
             obj->setMartix();

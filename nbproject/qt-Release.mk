@@ -1595,8 +1595,8 @@ moc_ToolBox.cpp: C:/Qt/Static/5.4.0-rc/include/QtWidgets/QtWidgets \
 		Vector2i.h \
 		FileBuffer.h \
 		OglObj.h \
-		WorldObj.h \
 		Ref.h \
+		WorldObj.h \
 		ToolBox.h
 	'C:\Qt\Static\5.4.0-rc\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Static/5.4.0-rc/mkspecs/win32-g++ -IC:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/nbproject -IC:/Qt/Static/5.4.0-rc/include -IC:/Qt/Static/5.4.0-rc/include/QtOpenGL -IC:/Qt/Static/5.4.0-rc/include/QtWidgets -IC:/Qt/Static/5.4.0-rc/include/QtGui -IC:/Qt/Static/5.4.0-rc/include/QtCore -I. ToolBox.h -o moc_ToolBox.cpp
 
@@ -2215,8 +2215,8 @@ moc_window.cpp: C:/Qt/Static/5.4.0-rc/include/QtWidgets/QWidget \
 		Vector2i.h \
 		FileBuffer.h \
 		OglObj.h \
-		WorldObj.h \
 		Ref.h \
+		WorldObj.h \
 		NaviBox.h \
 		window.h
 	'C:\Qt\Static\5.4.0-rc\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Static/5.4.0-rc/mkspecs/win32-g++ -IC:/Users/Piotr/Documents/NetBeansProjects/HelloQtWorld_1/nbproject -IC:/Qt/Static/5.4.0-rc/include -IC:/Qt/Static/5.4.0-rc/include/QtOpenGL -IC:/Qt/Static/5.4.0-rc/include/QtWidgets -IC:/Qt/Static/5.4.0-rc/include/QtGui -IC:/Qt/Static/5.4.0-rc/include/QtCore -I. window.h -o moc_window.cpp
@@ -4778,12 +4778,13 @@ build/Release/GNU_MinGW-Windows/Route.o: Route.cpp Route.h \
 		Vector2i.h \
 		FileBuffer.h \
 		OglObj.h \
-		WorldObj.h \
 		Ref.h \
+		WorldObj.h \
 		Tile.h \
 		GLMatrix.h \
 		TerrainLib.h \
-		Game.h
+		Game.h \
+		TrackObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/GNU_MinGW-Windows/Route.o Route.cpp
 
 build/Release/GNU_MinGW-Windows/SFile.o: SFile.cpp SFile.h \
@@ -6089,6 +6090,7 @@ build/Release/GNU_MinGW-Windows/TDB.o: TDB.cpp TDB.h \
 		C:/Qt/Static/5.4.0-rc/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		OglObj.h \
+		Ref.h \
 		C:/Qt/Static/5.4.0-rc/include/QtCore/QDebug \
 		Game.h \
 		ParserX.h \
@@ -7872,8 +7874,8 @@ build/Release/GNU_MinGW-Windows/ToolBox.o: ToolBox.cpp ToolBox.h \
 		Vector2i.h \
 		FileBuffer.h \
 		OglObj.h \
-		WorldObj.h \
-		Ref.h
+		Ref.h \
+		WorldObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/GNU_MinGW-Windows/ToolBox.o ToolBox.cpp
 
 build/Release/GNU_MinGW-Windows/TrWatermarkObj.o: TrWatermarkObj.cpp TrWatermarkObj.h \
@@ -9211,8 +9213,8 @@ build/Release/GNU_MinGW-Windows/main.o: main.cpp C:/Qt/Static/5.4.0-rc/include/Q
 		Vector2i.h \
 		FileBuffer.h \
 		OglObj.h \
-		WorldObj.h \
 		Ref.h \
+		WorldObj.h \
 		NaviBox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/GNU_MinGW-Windows/main.o main.cpp
 

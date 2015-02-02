@@ -355,12 +355,12 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 break;
             case Qt::Key_Z:
                 //route->refreshObj(selectedObj);
-                route->addToTDB(selectedObj, (float*)&lastNewObjPos);
+                route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&lastNewObjPos);
                 break;
             case Qt::Key_X:
                 //route->refreshObj(selectedObj);
                 route->trackDB->nextDefaultEnd();
-                route->newPositionTDB(selectedObj, (float*)&lastNewObjPos);                
+                route->newPositionTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&lastNewObjPos);                
                 break;
             default:
                 break;
@@ -391,6 +391,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         if(toolEnabled == "placeTool"){
             if(selectedObj != NULL) 
                 selectedObj->unselect();
+            lastNewObjPosT[0] = camera->pozT[0];
+            lastNewObjPosT[1] = camera->pozT[1];
             lastNewObjPos[0] = aktPointerPos[0];
             lastNewObjPos[1] = aktPointerPos[1];
             lastNewObjPos[2] = aktPointerPos[2];

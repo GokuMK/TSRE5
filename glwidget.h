@@ -82,6 +82,7 @@ private:
     bool translateTool = false;
     //int tdbDefaultEnd = 0;
     float lastNewObjPos[3];
+    float lastNewObjPosT[2];
 };
 
 #endif
