@@ -11,6 +11,7 @@ public:
     StaticObj(const StaticObj& orig);
     virtual ~StaticObj();
     void load(int x, int y);
+    void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     bool getBorder(float* border);

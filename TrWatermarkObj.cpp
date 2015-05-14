@@ -23,6 +23,7 @@ TrWatermarkObj::TrWatermarkObj(int level) {
     this->dstLevel = level;
     this->shape = -1;
     this->loaded = false;
+    this->modified = false;
 }
 
 TrWatermarkObj::TrWatermarkObj(const TrWatermarkObj& orig) {

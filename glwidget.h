@@ -79,6 +79,7 @@ private:
     float moveStep = 0.25;
     float moveMaxStep = 0.25;
     float moveMinStep = 0.01;
+    bool resizeTool = false;
     bool rotateTool = false;
     bool translateTool = false;
     //int tdbDefaultEnd = 0;

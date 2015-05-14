@@ -34,6 +34,7 @@ void DynTrackObj::load(int x, int y) {
     this->loaded = true;
     this->size = -1;
     this->skipLevel = 3;
+    this->modified = false;
 }
 
 void DynTrackObj::set(QString sh, FileBuffer* data) {

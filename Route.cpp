@@ -240,24 +240,28 @@ void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
 }
 
 void Route::save() {
+    if(!Game::writeEnabled) return;
     qDebug() << "save";
     for (auto it = tile.begin(); it != tile.end(); ++it) {
         //console.log(obj.type);
         Tile* tTile = (Tile*) it->second;
         if (tTile == NULL) continue;
-        if (tTile->loaded == 1 && tTile->modified) {
+        if (tTile->loaded == 1 && tTile->isModified()) {
             tTile->save();
-            tTile->modified = false;
+            tTile->setModified(false);
         }
     }
     this->trackDB->save();
 }
 
 void Route::createNewPaths() {
+    if(!Game::writeEnabled) return;
     Path::CreatePaths(this->trackDB);
 }
 
 void Route::createNew() {
+    if(!Game::writeEnabled) return;
+    
     QString path;
 
     path = Game::root + "/routes/" + Game::route;
@@ -305,6 +309,7 @@ void Route::reloadTile(int x, int z) {
 }
 
 void Route::newTile(int x, int z){
+    if(!Game::writeEnabled) return;
     Tile::saveEmpty(x, -z);
     Terrain::saveEmpty(x, -z);
     TerrainLib::reload(x, z);
@@ -312,6 +317,7 @@ void Route::newTile(int x, int z){
 }
 
 void Route::saveTrk() {
+    if(!Game::writeEnabled) return;
     QFile file;
     QTextStream out;
     QString filepath;

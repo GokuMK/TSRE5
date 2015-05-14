@@ -14,6 +14,7 @@ WorldObj::WorldObj() {
     this->shape = -1;
     this->loaded = false;
     this->selected = false;
+    this->modified = false;
 }
 
 WorldObj::WorldObj(const WorldObj& orig) {
@@ -30,6 +31,10 @@ void WorldObj::load(int x, int y) {
 }
 
 void WorldObj::set(QString sh, int val) {
+
+}
+
+void WorldObj::set(QString sh, QString val) {
 
 }
 
@@ -94,6 +99,10 @@ void WorldObj::set(QString sh, FileBuffer* data) {
 void WorldObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
 }
 
+void WorldObj::deleteVBO(){
+    
+}
+
 void WorldObj::setMartix(){
     Mat4::fromRotationTranslation(this->matrix, qDirection, position);
     Mat4::rotate(this->matrix, this->matrix, M_PI, 0, -1, 0);
@@ -103,7 +112,7 @@ void WorldObj::translate(float px, float py, float pz){
     this->position[0]+=px;
     this->position[1]+=py;
     this->position[2]+=pz;
-
+    this->modified = true;
     setMartix();
 }
 
@@ -112,8 +121,12 @@ void WorldObj::rotate(float x, float y, float z){
     if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x);
     if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y);
     if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z);
-    
+    this->modified = true;
     setMartix();
+}
+
+void WorldObj::resize(float x, float y){
+    
 }
 
 void WorldObj::setPosition(float* p){

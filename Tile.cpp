@@ -223,6 +223,7 @@ void Tile::transalteObj(float px, float py, float pz, int uid) {
             obiekty[i]->translate(px, py, pz);
         }
     }
+    modified = true;
 }
 
 WorldObj* Tile::placeObject(float* p, Ref::RefItem* itemData) {
@@ -246,9 +247,13 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData) {
         nowy->set("sectionidx", itemData->value);
     }
     
+    //if(nowy->type == "transfer"){
+    nowy->set("filename", itemData->filename);
+    // }
+    
     nowy->initPQ(p, q);
     nowy->UiD = ++maxUiD;
-    nowy->fileName = itemData->filename;
+    //nowy->fileName = itemData->filename;
     nowy->load(x, z);
     obiekty[jestObiektow++] = nowy;
     //qDebug() << obiekty[jestObiektow-1]->qDirection[3];
@@ -322,6 +327,30 @@ void Tile::save() {
     // optional, as QFile destructor will already do it:
     file.close(); 
     
+}
+
+
+bool Tile::isModified(){
+    bool value = this->modified;
+    
+    if(value == false)
+        for (int i = 0; i < jestObiektow; i++) {
+            if(obiekty[i]->modified)
+                return true;
+            }
+    
+    return value;
+}
+
+
+void Tile::setModified(bool value){
+    this->modified = value;
+    
+    if(value == false){
+        for (int i = 0; i < jestObiektow; i++) {
+            obiekty[i]->modified = false;
+        }
+    }
 }
 
 void Tile::render() {

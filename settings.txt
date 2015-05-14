@@ -5,11 +5,11 @@ gameRoot = C:/ts
 
 # nazwa trasy (folderu) do wczytania
 
-#routeName = cmk
+routeName = cmk
 #routeName = bbb
 #routeName = poznan_tram
 #routeName = bkd2
-routeName = www
+#routeName = www
 #routeName = ccc
 #routeName = traska
 #routeName = aaa
@@ -21,8 +21,9 @@ routeName = www
 #startTileX = -5306
 #startTileY = 14961
 
-# open route
+# route edit
 createNewIfNotExist = true
+writeEnabled = true
 
 # save
 

@@ -32,6 +32,7 @@ void ForestObj::load(int x, int y) {
     this->tex = -1;
     this->init = false;
     this->skipLevel = 3;
+    this->modified = false;
 }
 
 void ForestObj::set(QString sh, FileBuffer* data) {

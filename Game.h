@@ -18,6 +18,7 @@ public:
     static bool deleteTrWatermarks;
     static bool deleteViewDbSpheres;
     static bool createNewRoutes;
+    static bool writeEnabled;
 private:
 };
 

@@ -300,6 +300,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     a.rotate(-camera->getRotX(), 0);
                     this->selectedObj->translate(a.x,0,a.y);
                 }
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(moveStep, 0);
+                }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(moveStep/10, 0, 0);
                 }
@@ -309,6 +312,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     a.y = -moveStep;
                     a.rotate(-camera->getRotX(), 0);
                     this->selectedObj->translate(a.x,0,a.y);
+                }
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(-moveStep, 0);
                 }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(-moveStep/10, 0, 0);
@@ -320,6 +326,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     a.rotate(-camera->getRotX(), 0);
                     this->selectedObj->translate(a.x,0,a.y);
                 }
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(0, moveStep);
+                }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(0, -moveStep/10, 0);
                 }
@@ -329,6 +338,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     a.x = -moveStep;
                     a.rotate(-camera->getRotX(), 0);
                     this->selectedObj->translate(a.x,0,a.y);
+                }
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(0, -moveStep);
                 }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(0, moveStep/10, 0);
@@ -351,12 +363,19 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 }
                 break;   
             case Qt::Key_R:
+                resizeTool = false;
                 translateTool = false;
                 rotateTool = true;
                 break;
             case Qt::Key_T:    
+                resizeTool = false;
                 rotateTool = false;
                 translateTool = true;
+                break;
+            case Qt::Key_Y:    
+                rotateTool = false;
+                translateTool = false;
+                resizeTool = true;
                 break;
             case Qt::Key_Delete:
                 if(selectedObj != NULL){

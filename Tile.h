@@ -15,10 +15,9 @@ public:
     };
     int vDbIdCount;
     ViewDbSphere* viewDbSphere;
-    
     int loaded;
     bool inUse;
-    bool modified;
+    
     int x;
     int z;
     //obiekty = new Array();
@@ -31,6 +30,8 @@ public:
     static void saveEmpty(int x, int z);
     static QString getNameXY(int e);
     void load();
+    bool isModified();
+    void setModified(bool value);
     WorldObj* getObj(int uid);
     WorldObj* placeObject(float* p, Ref::RefItem* itemData);
     WorldObj* placeObject(float* p, float* q, Ref::RefItem* itemData);
@@ -42,6 +43,7 @@ public:
     
 private:
     int maxUiD = 0;
+    bool modified;
     QString* viewDbSphereRaw = NULL;
     void wczytajObiekty();
     bool createObj(WorldObj** nowy, QString sh);

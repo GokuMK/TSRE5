@@ -23,6 +23,14 @@ void OglObj::setMaterial(QString* path) {
     res = path;
 }
 
+void OglObj::deleteVBO(){
+    if(loaded){
+        VBO.destroy();
+        VAO.destroy();
+    }
+    loaded = false;
+}
+
 void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
     if(loaded){
         VBO.destroy();
@@ -50,7 +58,7 @@ void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
         f->glEnableVertexAttribArray(0);
         f->glEnableVertexAttribArray(1);
         f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), 0);
-        f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (5 * sizeof (GLfloat)));
+        f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
     }
 
     VBO.release();
@@ -66,7 +74,7 @@ void OglObj::render() {
             return;
         } else {
             if (texId == -1) {
-                texId = TexLib::addTex("Resources", "woda.ace");
+                texId = TexLib::addTex(*res);
             }
             if (TexLib::mtex[texId]->loaded) {
                 if (!TexLib::mtex[texId]->glLoaded)

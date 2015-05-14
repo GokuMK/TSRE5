@@ -28,6 +28,7 @@ void PlatformObj::load(int x, int y) {
     this->qDirection[2] = -this->qDirection[2];
     this->loaded = true;
     this->skipLevel = 1;
+    this->modified = false;
     
     setMartix();
 }

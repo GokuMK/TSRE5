@@ -17,6 +17,7 @@ TrackObj::TrackObj() {
     this->elevation = 0;
     this->staticFlags = 0x200180;
     this->collideFlags = 0;
+    this->modified = false;
 }
 
 TrackObj::TrackObj(const TrackObj& orig) {
@@ -43,6 +44,15 @@ void TrackObj::set(QString sh, int val) {
         sectionIdx = val;
         return;
     }
+}
+
+void TrackObj::set(QString sh, QString val){
+    if (sh == ("filename")) {
+        fileName = val;
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
 }
 
 void TrackObj::set(QString sh, FileBuffer* data) {

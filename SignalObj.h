@@ -11,6 +11,7 @@ public:
     SignalObj(const SignalObj& orig);
     virtual ~SignalObj();
     void load(int x, int y);
+    void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     bool getBorder(float* border);
     void save(QTextStream* out);

@@ -12,6 +12,7 @@ public:
     TrackObj(const TrackObj& orig);
     virtual ~TrackObj();
     void load(int x, int y);
+    void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     void set(QString sh, int val);
     bool getBorder(float* border);

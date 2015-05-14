@@ -16,6 +16,7 @@ int Game::start = 0;
 bool Game::deleteTrWatermarks = false;
 bool Game::deleteViewDbSpheres = false;
 bool Game::createNewRoutes = false;
+bool Game::writeEnabled = false;
 
 void Game::load() {
     QString sh;
@@ -59,7 +60,11 @@ void Game::load() {
             if(args[1].trimmed().toLower() == "true")
                 deleteViewDbSpheres = true;
         if(val == "createNewIfNotExist")
-            createNewRoutes = true;
+            if(args[1].trimmed().toLower() == "true")
+                createNewRoutes = true;
+        if(val == "writeEnabled")
+            if(args[1].trimmed().toLower() == "true")
+                writeEnabled = true;
     }
 
 }

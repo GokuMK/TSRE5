@@ -30,8 +30,17 @@ void SignalObj::load(int x, int y) {
     this->loaded = true;
     this->size = -1;
     this->skipLevel = 1;
-    
+    this->modified = false;
     setMartix();
+}
+
+void SignalObj::set(QString sh, QString val){
+    if (sh == ("filename")) {
+        fileName = val;
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
 }
 
 void SignalObj::set(QString sh, FileBuffer* data) {

@@ -11,6 +11,8 @@
 #include <QOpenGLShaderProgram>
 
 TransferObj::TransferObj() {
+    this->width = 10;
+    this->height = 10;
 }
 
 TransferObj::TransferObj(const TransferObj& orig) {
@@ -29,6 +31,16 @@ void TransferObj::load(int x, int y) {
     this->tex = -1;
     this->init = false;
     this->skipLevel = 3;
+    this->modified = false;
+}
+
+void TransferObj::set(QString sh, QString val){
+    if (sh == ("filename")) {
+        texture = val;
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
 }
 
 void TransferObj::set(QString sh, FileBuffer* data) {
@@ -46,6 +58,36 @@ void TransferObj::set(QString sh, FileBuffer* data) {
     }
     WorldObj::set(sh, data);
     return;
+}
+
+
+void TransferObj::deleteVBO(){
+    //this->shape.deleteVBO();
+    this->init = false;
+}
+
+void TransferObj::translate(float px, float py, float pz){
+    this->position[0]+=px;
+    //this->position[1]+=py;
+    this->position[2]+=pz;
+    this->modified = true;
+    deleteVBO();
+}
+
+void TransferObj::rotate(float x, float y, float z){
+    if(matrix3x3 != NULL) matrix3x3 = NULL;
+    if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x);
+    if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y);
+    if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z);
+    this->modified = true;
+    deleteVBO();
+}
+
+void TransferObj::resize(float x, float y){
+    this->width += x;
+    this->height += y;
+    this->modified = true;
+    deleteVBO();
 }
 
 void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
@@ -101,26 +143,18 @@ void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
         int wColor = (int)(selectionColor/65536);
         int sColor = (int)(selectionColor - wColor*65536)/256;
         int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
-        gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
+        shape.setMaterial((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f);
+        //gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
     } else {
-        gluu->enableTextures();
+        shape.setMaterial(texturePath);
+        //gluu->enableTextures();
     }
     
     drawShape();
 };
 
 void TransferObj::drawShape(){
-    if (tex == -2) {
-        glDisable(GL_TEXTURE_2D);
-    } else {
-        glEnable(GL_TEXTURE_2D);
-        if (tex == -1) {
-            tex = TexLib::addTex(resPath, texture);
-            glDisable(GL_TEXTURE_2D);
-        }
-    }
 
-        
     if (!init) {
             float scale = (float) sqrt(qDirection[0] * qDirection[0] + qDirection[1] * qDirection[1] + qDirection[2] * qDirection[2]);
             float off = ((qDirection[1]+0.000001f)/fabs(scale+0.000001f))*(float)-acos(qDirection[3])*2;
@@ -140,10 +174,9 @@ void TransferObj::drawShape(){
                 addR = false;
             }
                 
-            shape.iloscv = (int)((x12y1d/step)+1)*(int)((x1y12d/step)+1);
-            float* punkty = new float[shape.iloscv*48];
+            int iloscv = (int)((x12y1d/step)+1)*(int)((x1y12d/step)+1);
+            float* punkty = new float[iloscv*48];
             
-            //shape.iloscv = shape.iloscv*4;
             int ptr = 0;
             float wysokosc = 0;
             for(float j = 0; j < x12y1d; j+=step){
@@ -203,31 +236,14 @@ void TransferObj::drawShape(){
                         punkty[ptr++] = i/x1y12d;
                 }
             }
-            
-        QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-        shape.VAO.create();
-        QOpenGLVertexArrayObject::Binder vaoBinder(&shape.VAO);
 
-        shape.VBO.create();
-        shape.VBO.bind();
-        shape.VBO.allocate(punkty, ptr * sizeof (GLfloat));
-        f->glEnableVertexAttribArray(0);
-        f->glEnableVertexAttribArray(1);
-        f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), 0);
-        f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
-        shape.VBO.release();
-        shape.iloscv = ptr/8;
-
+        texturePath = new QString(resPath+"/"+texture);
+        shape.setMaterial(texturePath);
+        shape.init(punkty, ptr, shape.VNT, GL_TRIANGLES);
         delete punkty;
         init = true;
     } else {
-        if(TexLib::mtex[tex]->loaded){
-            if(!TexLib::mtex[tex]->glLoaded) TexLib::mtex[tex]->GLTextures();
-            glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex]->tex[0]);
-        }
-        
-        QOpenGLVertexArrayObject::Binder vaoBinder1(&shape.VAO);
-        glDrawArrays(GL_TRIANGLES, 0, shape.iloscv);
+        shape.render();
     }
 }
 

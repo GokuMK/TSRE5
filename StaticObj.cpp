@@ -13,6 +13,7 @@
 StaticObj::StaticObj() {
     this->shape = -1;
     this->loaded = false;
+    this->modified = false;
 }
 
 StaticObj::StaticObj(const StaticObj& orig) {
@@ -32,6 +33,15 @@ void StaticObj::load(int x, int y) {
     this->skipLevel = 1;
     
     setMartix();
+}
+
+void StaticObj::set(QString sh, QString val){
+    if (sh == ("filename")) {
+        fileName = val;
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
 }
 
 void StaticObj::set(QString sh, FileBuffer* data) {

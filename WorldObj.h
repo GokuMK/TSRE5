@@ -28,6 +28,7 @@ public:
     bool loaded;
     float size;
     int jestPQ = 0;
+    bool modified = false;;
     Vector3f selectionColor;
     OglObj box;
     
@@ -36,6 +37,7 @@ public:
     virtual ~WorldObj();
     virtual void load(int x, int y);
     virtual void set(QString sh, FileBuffer* data);
+    virtual void set(QString sh, QString val);
     virtual void set(QString sh, int val);
     virtual void save(QTextStream* out);
     void setPosition(float* p);
@@ -43,8 +45,10 @@ public:
     void setQdirection(float* q);
     void setNewQdirection();
     void setMartix();
-    void translate(float px, float py, float pz);
-    void rotate(float x, float y, float z);
+    virtual void deleteVBO();
+    virtual void translate(float px, float py, float pz);
+    virtual void rotate(float x, float y, float z);
+    virtual void resize(float x, float y);
     virtual Ref::RefItem* getRefInfo();
     void drawBox();
     virtual bool select();
