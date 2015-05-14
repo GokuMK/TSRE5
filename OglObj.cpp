@@ -80,6 +80,8 @@ void OglObj::render() {
                 if (!TexLib::mtex[texId]->glLoaded)
                     TexLib::mtex[texId]->GLTextures();
                 glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texId]->tex[0]);
+                gluu->alpha = 0;
+                gluu->m_program->setUniformValue(gluu->shaderAlpha, gluu->alpha);
             } else {
             }
         }

@@ -15,7 +15,7 @@ public:
     OglObj(const OglObj& orig);
     virtual ~OglObj();
     void init(float* punkty, int ptr, enum VertexAttr v, int type);
-    void render();
+    virtual void render();
     void deleteVBO();
     void setMaterial(float r, float g, float b);
     void setMaterial(QString* path);

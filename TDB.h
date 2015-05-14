@@ -8,6 +8,7 @@
 #include "OglObj.h"
 #include <unordered_map>
 #include "Ref.h"
+#include "TextObj.h"
 
 class TDB {
 public:
@@ -15,6 +16,7 @@ public:
     TSectionDAT *tsection; 
     //TRnode *trackNodes;
     std::unordered_map<int, TRnode*> trackNodes;
+    std::unordered_map<int, TextObj*> endIdObj;
     //std::vector<TRnode> trackNodes;
     int iTRnodes;
     TDB(QString path);
@@ -38,8 +40,8 @@ public:
     int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid, int* start);
     bool placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid);
     bool findPosition(int x, int z, float* p, float* q, int sectionIdx, int uid);
-    void renderAll(GLUU *gluu, float * playerT);
-    void renderLines(GLUU *gluu, float* playerT);
+    void renderAll(GLUU *gluu, float * playerT, float playerRot);
+    void renderLines(GLUU *gluu, float* playerT, float playerRot);
 private:
     bool deleteNulls();
     int findBiggest();

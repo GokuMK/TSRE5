@@ -12,6 +12,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/Game.o
 ./build/Release/MinGW_QT_static-Windows/NaviBox.o
 ./build/Release/MinGW_QT_static-Windows/OglObj.o
+./build/Release/MinGW_QT_static-Windows/PaintTexLib.o
 ./build/Release/MinGW_QT_static-Windows/ParserX.o
 ./build/Release/MinGW_QT_static-Windows/Path.o
 ./build/Release/MinGW_QT_static-Windows/PlatformObj.o
@@ -35,6 +36,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/Terrain.o
 ./build/Release/MinGW_QT_static-Windows/TerrainLib.o
 ./build/Release/MinGW_QT_static-Windows/TexLib.o
+./build/Release/MinGW_QT_static-Windows/TextObj.o
 ./build/Release/MinGW_QT_static-Windows/Texture.o
 ./build/Release/MinGW_QT_static-Windows/Tile.o
 ./build/Release/MinGW_QT_static-Windows/ToolBox.o

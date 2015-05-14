@@ -5,8 +5,8 @@ gameRoot = C:/ts
 
 # nazwa trasy (folderu) do wczytania
 
-routeName = cmk
-#routeName = bbb
+#routeName = cmk
+routeName = bbb
 #routeName = poznan_tram
 #routeName = bkd2
 #routeName = www

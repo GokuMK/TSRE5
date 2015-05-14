@@ -25,6 +25,7 @@
         <itemPath>GLUU.h</itemPath>
         <itemPath>OglObj.h</itemPath>
         <itemPath>Pointer3d.h</itemPath>
+        <itemPath>TextObj.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
@@ -45,6 +46,7 @@
       </logicalFolder>
       <logicalFolder name="f4" displayName="texture" projectFiles="true">
         <itemPath>AceLib.h</itemPath>
+        <itemPath>PaintTexLib.h</itemPath>
         <itemPath>TexLib.h</itemPath>
         <itemPath>Texture.h</itemPath>
       </logicalFolder>
@@ -109,6 +111,7 @@
         <itemPath>GLUU.cpp</itemPath>
         <itemPath>OglObj.cpp</itemPath>
         <itemPath>Pointer3d.cpp</itemPath>
+        <itemPath>TextObj.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
@@ -129,6 +132,7 @@
       </logicalFolder>
       <logicalFolder name="f3" displayName="texture" projectFiles="true">
         <itemPath>AceLib.cpp</itemPath>
+        <itemPath>PaintTexLib.cpp</itemPath>
         <itemPath>TexLib.cpp</itemPath>
         <itemPath>Texture.cpp</itemPath>
       </logicalFolder>
@@ -243,6 +247,10 @@
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PaintTexLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PaintTexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ParserX.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ParserX.h" ex="false" tool="3" flavor2="0">
@@ -334,6 +342,10 @@
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TextObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TextObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Texture.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -482,6 +494,10 @@
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PaintTexLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PaintTexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ParserX.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ParserX.h" ex="false" tool="3" flavor2="0">
@@ -573,6 +589,10 @@
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TextObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TextObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Texture.cpp" ex="false" tool="1" flavor2="0">
       </item>

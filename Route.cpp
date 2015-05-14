@@ -88,14 +88,14 @@ void Route::transalteObj(int x, int z, float px, float py, float pz, int uid) {
     //}
 }
 
-void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, bool selection) {
+void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, bool selection) {
     int mintile = -2;
     int maxtile = 2;
 
     if (!selection) {
         TerrainLib::render(gluu, playerT, playerW, target, fov);
-        trackDB->renderAll(gluu, playerT);
-        trackDB->renderLines(gluu, playerT);
+        //trackDB->renderAll(gluu, playerT, playerRot);
+        //trackDB->renderLines(gluu, playerT, playerRot);
     }
     //for (var key in this.tile){
     //    this.tile[key].inUse = false;
@@ -120,6 +120,10 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
             }
         }
     }
+    if (!selection) {
+        trackDB->renderAll(gluu, playerT, playerRot);
+        trackDB->renderLines(gluu, playerT, playerRot);
+    }
     /*
     for (var key in this.tile){
        if(this.tile[key] === undefined) continue;
@@ -132,6 +136,7 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
            this.tile[key].inUse = false;
        }
     }*/
+    
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p) {

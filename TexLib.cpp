@@ -1,5 +1,6 @@
 #include "TexLib.h"
 #include "AceLib.h"
+#include "PaintTexLib.h"
 #include "Texture.h"
 #include <QDebug>
 
@@ -56,10 +57,19 @@ int TexLib::addTex(QString pathid) {
     Texture* newFile = new Texture(pathid);
     newFile->ref++;
     mtex[jesttextur] = newFile;
-    
-    AceLib* t = new AceLib();
-    t->texture = newFile;
-    t->start();
+    //qDebug() << pathid.toLower();
+    QString tType = pathid.toLower().split(".").last();
+    //qDebug() << tType;
+    if(tType == "ace"){
+        AceLib* t = new AceLib();
+        t->texture = newFile;
+        t->start();
+    } else if(tType == "painttex"){
+        PaintTexLib* t = new PaintTexLib();
+        t->texture = newFile;
+        //t->start();
+        t->run();
+    }
     //AceLib::LoadACE(newFile);
     //tConcurrent::run();
     return jesttextur++;

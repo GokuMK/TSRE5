@@ -160,7 +160,7 @@ void GLWidget::paintGL() {
     //sFile->render();
     //eng->render();
     //tile->render();
-    route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, selection);
+    route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
     
     bool showPos = true;
     if (showPos && !selection) {

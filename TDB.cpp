@@ -123,7 +123,7 @@ int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
                 p[1] = n->UiD[7];
                 p[2] = -n->UiD[8];
 
-                q[0] = n->UiD[9];
+                q[0] = 0;//n->UiD[9]; //fix ??????????
                 q[1] = n->UiD[10];
                 q[2] = n->UiD[11];
                 //Quat::rotateY(q, q, n->UiD[10]);
@@ -500,7 +500,7 @@ int TDB::rotate(int id){
             vect->trVectorSection[i].param[10] = vect->trVectorSection[i+1].param[10];
             vect->trVectorSection[i].param[11] = vect->trVectorSection[i+1].param[11];
             vect->trVectorSection[i].param[12] = vect->trVectorSection[i+1].param[12];
-            vect->trVectorSection[i].param[13] = vect->trVectorSection[i+1].param[13];
+            vect->trVectorSection[i].param[13] = -vect->trVectorSection[i].param[13]; //fix ????
             vect->trVectorSection[i].param[14] = vect->trVectorSection[i+1].param[14];
             vect->trVectorSection[i].param[15] = vect->trVectorSection[i+1].param[15];
         } else {
@@ -509,7 +509,7 @@ int TDB::rotate(int id){
             vect->trVectorSection[i].param[10] = e2->UiD[6];
             vect->trVectorSection[i].param[11] = e2->UiD[7];
             vect->trVectorSection[i].param[12] = e2->UiD[8];
-            vect->trVectorSection[i].param[13] = e2->UiD[9];
+            vect->trVectorSection[i].param[13] = -vect->trVectorSection[i].param[13];
             vect->trVectorSection[i].param[14] = e2->UiD[10];
             vect->trVectorSection[i].param[15] = e2->UiD[11];
         }
@@ -806,7 +806,7 @@ void TDB::refresh() {
     isInitLines = false;
 }
 
-void TDB::renderAll(GLUU *gluu, float* playerT) {
+void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
 
     if (!loaded) return;
     int hash = playerT[0] * 10000 + playerT[1];
@@ -816,7 +816,12 @@ void TDB::renderAll(GLUU *gluu, float* playerT) {
         //qDebug() <<"update";
         lineHash = hash;
         isInitLines = true;
-
+        
+        for (auto it = endIdObj.begin(); it != endIdObj.end(); ++it) {
+            TextObj* obj = (TextObj*) it->second;
+            obj->inUse = false;
+        }
+        
         for (int i = 1; i <= iTRnodes; i++) {
             n = trackNodes[i];
             if (n == NULL) continue;
@@ -868,6 +873,15 @@ void TDB::renderAll(GLUU *gluu, float* playerT) {
                 konce[kPtr++] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
                 konce[kPtr++] = (n->UiD[7] + wysokoscSieci);
                 konce[kPtr++] = ((-n->UiD[5] - playerT[1])*2048 - n->UiD[8]);
+                
+                if(endIdObj[i] == NULL){
+                    endIdObj[i] = new TextObj(i);
+                }    
+                endIdObj[i]->inUse = true;
+                endIdObj[i]->pos[0] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
+                endIdObj[i]->pos[1] = n->UiD[7] + wysokoscSieci;
+                endIdObj[i]->pos[2] = ((-n->UiD[5] - playerT[1])*2048 - n->UiD[8]);
+                
             } else if (n->typ == 2) {
                 punkty[pPtr++] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
                 punkty[pPtr++] = (n->UiD[7]);
@@ -898,9 +912,15 @@ void TDB::renderAll(GLUU *gluu, float* playerT) {
     linieSieci.render();
     konceSieci.render();
     punktySieci.render();
+    
+    for (auto it = endIdObj.begin(); it != endIdObj.end(); ++it) {
+        //console.log(obj.type);
+        TextObj* obj = (TextObj*) it->second;
+        if(obj->inUse) obj->render(playerRot);
+    }
 }
 
-void TDB::renderLines(GLUU *gluu, float* playerT) {
+void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
 
     if (!loaded) return;
     int hash = playerT[0] * 10000 + playerT[1];
@@ -1084,7 +1104,8 @@ void TDB::saveEmpty() {
     
 void TDB::save() {
     while(deleteNulls());
-
+    this->isInitLines = false;
+    
     QString sh;
     QString path;
     path = Game::root + "/routes/" + Game::route + "/" + Game::route + ".tdb";
