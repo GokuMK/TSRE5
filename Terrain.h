@@ -14,7 +14,8 @@ public:
     Terrain(float x, float y);
     Terrain(const Terrain& orig);
     virtual ~Terrain();
-    QString getTileName(int x, int y);
+    static void saveEmpty(int x, int y);
+    static QString getTileName(int x, int y);
     bool readRAW(QString fSfile);
     bool readF(QString fSfile);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov);

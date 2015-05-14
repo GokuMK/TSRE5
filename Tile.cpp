@@ -257,6 +257,27 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData) {
     return nowy;
 }
 
+void Tile::saveEmpty(int nx, int nz) {
+    QString sh;
+    QString path;
+    path = Game::root + "/routes/" + Game::route + "/world/w" + getNameXY(nx) + "" + getNameXY(nz) + ".w";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile file(path);
+    if(file.exists()) return;
+    
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+    out << "SIMISA@@@@@@@@@@JINX0w0t______\n";
+    out << "\n";
+    out << "Tr_Worldfile (\n";
+    out << ")";
+
+    file.close(); 
+}
+
 void Tile::save() {
     QString sh;
     QString path;

@@ -98,6 +98,12 @@ void Camera::scalPosRot() {
 }
 */
 
+void Camera::setPos(float* pos){
+    playerPos[0] = pos[0];
+    playerPos[1] = pos[1];
+    playerPos[2] = pos[2];
+}
+
 void Camera::setPozT(int x, int y){
     pozT[0] = x;
     pozT[1] = y;

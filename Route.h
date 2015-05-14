@@ -13,6 +13,10 @@ class Route {
 public:
     std::unordered_map<int, Tile*> tile;
     bool loaded;
+    int startTileX;
+    int startTileY;
+    float startpX;
+    float startpZ;
     Ref *ref;
     TDB *trackDB;
     Route();
@@ -20,6 +24,11 @@ public:
     virtual ~Route();
     WorldObj* getObj(int x, int z, int uid);
     void save();
+    void saveTrk();
+    void createNewPaths();
+    void createNew();
+    void newTile(int x, int z);
+    void reloadTile(int x, int z);
     WorldObj* placeObject(int x, int z, float* p);
     WorldObj* placeObject(int x, int z, float* p, float* q);
     WorldObj* placeObject(int x, int z, float* p, float* q, Ref::RefItem* r);
@@ -28,7 +37,7 @@ public:
     void transalteObj(int x, int z, float px, float py, float pz, int uid);
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, bool selection);
 private:
-
+    void loadTrk();
 };
 
 #endif	/* ROUTE_H */

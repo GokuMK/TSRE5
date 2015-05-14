@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'AceLib.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.0)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'AceLib.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.4.0. It"
+#error "This file was generated using the moc from 5.4.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -62,7 +62,7 @@ void AceLib::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
 
 const QMetaObject AceLib::staticMetaObject = {
     { &QThread::staticMetaObject, qt_meta_stringdata_AceLib.data,
-      qt_meta_data_AceLib,  qt_static_metacall, 0, 0}
+      qt_meta_data_AceLib,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
@@ -73,7 +73,7 @@ const QMetaObject *AceLib::metaObject() const
 
 void *AceLib::qt_metacast(const char *_clname)
 {
-    if (!_clname) return 0;
+    if (!_clname) return Q_NULLPTR;
     if (!strcmp(_clname, qt_meta_stringdata_AceLib.stringdata))
         return static_cast<void*>(const_cast< AceLib*>(this));
     return QThread::qt_metacast(_clname);

@@ -1061,7 +1061,27 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
         return 1;
     }
 
-
+void TDB::saveEmpty() {    
+    QString sh;
+    QString path;
+    path = Game::root + "/routes/" + Game::route + "/" + Game::route + ".tdb";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile file(path);
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setRealNumberPrecision(8);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+    out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
+    out << "TrackDB (\n";
+    //out << "	Serial ( "+serial+" )\n";
+    out << "	TrackNodes ( 0 \n";
+    out << "	)\n";
+    out << ")";
+    file.close();
+}
+    
 void TDB::save() {
     while(deleteNulls());
 

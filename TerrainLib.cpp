@@ -18,11 +18,40 @@ TerrainLib::~TerrainLib() {
 bool TerrainLib::isLoaded(int x, int z) {
     Terrain *tTile;
     //try {
-        tTile = terrain[((x)*10000 + z)];
+    tTile = terrain[((x)*10000 + z)];
     //} catch (const std::out_of_range& oor) {
-    if(tTile == NULL)
+    if (tTile == NULL)
         return false;
     //}
+    if (tTile->loaded) {
+        return true;
+    }
+    return false;
+}
+
+bool TerrainLib::load(int x, int z) {
+    Terrain* tTile = terrain[x*10000 + z];
+    if (tTile == NULL) {
+        terrain[x*10000 + z] = new Terrain(x, z);
+    }
+    tTile = terrain[x*10000 + z];
+    if (tTile == NULL)
+        return false;
+    if (tTile->loaded) {
+        return true;
+    }
+    return false;
+}
+
+
+bool TerrainLib::reload(int x, int z) {
+    Terrain* tTile;// = terrain[x*10000 + z];
+    //if (tTile == NULL) {
+    terrain[x*10000 + z] = new Terrain(x, z);
+    //}
+    tTile = terrain[x*10000 + z];
+    if (tTile == NULL)
+        return false;
     if (tTile->loaded) {
         return true;
     }
@@ -54,33 +83,33 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR)
 
     Terrain *terr;
     //try {
-        terr = terrain[(x * 10000 + z)];
-        if(terr == NULL) return -1;
-        if (terr->loaded == false) return -1;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return -1;
+    if (terr->loaded == false) return -1;
 
-        if ((posx + 1024) / 8 + 1 > 256 || (posz + 1024) / 8 + 1 > 256)
-            return terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
+    if ((posx + 1024) / 8 + 1 > 256 || (posz + 1024) / 8 + 1 > 256)
+        return terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
 
-        float tx = (posx / 8) - (float) floor(posx / 8);
-        float tz = (posz / 8) - (float) floor(posz / 8);
-        //float min = 1-Math.abs(tx+tz-1);
+    float tx = (posx / 8) - (float) floor(posx / 8);
+    float tz = (posz / 8) - (float) floor(posz / 8);
+    //float min = 1-Math.abs(tx+tz-1);
 
-        float roznica = 0;
+    float roznica = 0;
 
-        if (addR) {
-            roznica = 0.25 * (terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] +
-                    terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8 + 1] +
-                    terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8] +
-                    terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8 + 1]) -
-                    0.5f * (terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] +
-                    terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8 + 1]);
-        }
-        return (
-                terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8]*(1.0 - tx)*(1.0 - tz) +
-                terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8 + 1]*(tx)*(1.0 - tz) +
-                terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8]*(1.0 - tx)*(tz) +
-                terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8 + 1]*(tx)*(tz)
-                + fabs(roznica));
+    if (addR) {
+        roznica = 0.25 * (terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] +
+                terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8 + 1] +
+                terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8] +
+                terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8 + 1]) -
+                0.5f * (terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] +
+                terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8 + 1]);
+    }
+    return (
+            terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8]*(1.0 - tx)*(1.0 - tz) +
+            terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8 + 1]*(tx)*(1.0 - tz) +
+            terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8]*(1.0 - tx)*(tz) +
+            terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8 + 1]*(tx)*(tz)
+            + fabs(roznica));
 
     //} catch (const std::out_of_range& oor) {
     ///    return -1;
@@ -88,12 +117,12 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR)
     //return -1;
 }
 
-void TerrainLib::fillRAW(float** terrainData, float mojex, float mojez) {
+void TerrainLib::fillRAW(float** terrainData, int mojex, int mojez) {
     Terrain *tTile;
     //try {
-        tTile = terrain[((mojex + 1)*10000 + mojez)];
+    tTile = terrain[((mojex + 1)*10000 + mojez)];
     //} catch (const std::out_of_range& oor) {
-    if(tTile == NULL){
+    if (tTile == NULL) {
         terrain[(mojex + 1)*10000 + mojez] = new Terrain(mojex + 1, mojez);
     }
     tTile = terrain[(mojex + 1)*10000 + mojez];
@@ -104,9 +133,9 @@ void TerrainLib::fillRAW(float** terrainData, float mojex, float mojez) {
     }
 
     //try {
-        tTile = terrain[((mojex)*10000 + mojez + 1)];
+    tTile = terrain[((mojex)*10000 + mojez + 1)];
     //} catch (const std::out_of_range& oor) {
-    if(tTile == NULL){
+    if (tTile == NULL) {
         terrain[(mojex)*10000 + mojez + 1] = new Terrain(mojex, mojez + 1);
     }
     tTile = terrain[(mojex)*10000 + mojez + 1];
@@ -117,15 +146,15 @@ void TerrainLib::fillRAW(float** terrainData, float mojex, float mojez) {
     }
 
     //try {
-        tTile = terrain[((mojex + 1)*10000 + mojez + 1)];
+    tTile = terrain[((mojex + 1)*10000 + (mojez + 1))];
     //} catch (const std::out_of_range& oor) {
-    if(tTile == NULL){
+    if (tTile == NULL) {
         terrain[(mojex + 1)*10000 + mojez + 1] = new Terrain(mojex + 1, mojez + 1);
     }
     tTile = terrain[(mojex + 1)*10000 + mojez + 1];
     if (tTile->loaded) {
         terrainData[256][256] = tTile->terrainData[0][0];
-    }
+    }/**/
 }
 
 void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* target, float fov) {
@@ -143,10 +172,10 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
             //try {
-                tTile = terrain[((playerT[0] + i)*10000 + playerT[1] + j)];
-                if(tTile == NULL){
-                    terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
-                }
+            tTile = terrain[((playerT[0] + i)*10000 + playerT[1] + j)];
+            if (tTile == NULL) {
+                terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
+            }
             //} catch (const std::out_of_range& oor) {
             //    terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
             //}

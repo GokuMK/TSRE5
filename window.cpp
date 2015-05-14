@@ -35,6 +35,9 @@ Window::Window() {
     
     QObject::connect(naviBox, SIGNAL(jumpTo(int, int)),
                       glWidget, SLOT(jumpTo(int, int)));
+    
+    QObject::connect(glWidget, SIGNAL(itemSelected(int)),
+                      groupBox, SLOT(itemSelected(int)));
 }
 
 void Window::keyPressEvent(QKeyEvent *e) {

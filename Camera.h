@@ -24,6 +24,7 @@ public:
     void setRelativeRot(Vector2f p);
     void scalPosRot();*/
     float* getPos();
+    void setPos(float* pos);
     float getRotX();
     float getRotY();
     void setPozT(int x, int y);

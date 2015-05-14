@@ -1,13 +1,15 @@
 ﻿# folder główny train sim
 
-gameRoot = F:/Train Simulator
+#gameRoot = F:/train simulator
+gameRoot = C:/ts
 
 # nazwa trasy (folderu) do wczytania
 
 #routeName = cmk
+#routeName = bbb
 #routeName = poznan_tram
 #routeName = bkd2
-routeName = bbb
+routeName = www
 #routeName = ccc
 #routeName = traska
 #routeName = aaa
@@ -16,8 +18,11 @@ routeName = bbb
 
 # start tile
 
-startTileX = -5306
-startTileY = 14961
+#startTileX = -5306
+#startTileY = 14961
+
+# open route
+createNewIfNotExist = true
 
 # save
 

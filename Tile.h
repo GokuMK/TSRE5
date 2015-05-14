@@ -28,8 +28,8 @@ public:
     Tile(int xx, int zz);
     Tile(const Tile& orig);
     virtual ~Tile();
-    
-    QString getNameXY(int e);
+    static void saveEmpty(int x, int z);
+    static QString getNameXY(int e);
     void load();
     WorldObj* getObj(int uid);
     WorldObj* placeObject(float* p, Ref::RefItem* itemData);

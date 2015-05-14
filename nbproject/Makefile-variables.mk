@@ -7,21 +7,21 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=MinGW_1-Windows
-CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW_1-Windows
+CND_PLATFORM_Debug=MinGW_QT-Windows
+CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW_QT-Windows
 CND_ARTIFACT_NAME_Debug=TSRE5
-CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW_1-Windows/TSRE5
-CND_PACKAGE_DIR_Debug=dist/Debug/MinGW_1-Windows/package
+CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW_QT-Windows/TSRE5
+CND_PACKAGE_DIR_Debug=dist/Debug/MinGW_QT-Windows/package
 CND_PACKAGE_NAME_Debug=HelloQtWorld1.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/MinGW_1-Windows/package/HelloQtWorld1.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/MinGW_QT-Windows/package/HelloQtWorld1.tar
 # Release configuration
-CND_PLATFORM_Release=GNU_MinGW-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/GNU_MinGW-Windows
+CND_PLATFORM_Release=MinGW_QT_static-Windows
+CND_ARTIFACT_DIR_Release=dist/Release/MinGW_QT_static-Windows
 CND_ARTIFACT_NAME_Release=TSRE5
-CND_ARTIFACT_PATH_Release=dist/Release/GNU_MinGW-Windows/TSRE5
-CND_PACKAGE_DIR_Release=dist/Release/GNU_MinGW-Windows/package
+CND_ARTIFACT_PATH_Release=dist/Release/MinGW_QT_static-Windows/TSRE5
+CND_PACKAGE_DIR_Release=dist/Release/MinGW_QT_static-Windows/package
 CND_PACKAGE_NAME_Release=HelloQtWorld1.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU_MinGW-Windows/package/HelloQtWorld1.tar
+CND_PACKAGE_PATH_Release=dist/Release/MinGW_QT_static-Windows/package/HelloQtWorld1.tar
 #
 # include compiler specific variables
 #

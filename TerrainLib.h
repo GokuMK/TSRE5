@@ -14,10 +14,12 @@ public:
     TerrainLib();
     TerrainLib(const TerrainLib& orig);
     virtual ~TerrainLib();
-    static void fillRAW(float** terrainData, float mojex, float mojez);
+    static void fillRAW(float** terrainData, int mojex, int mojez);
     static float getHeight(float x, float z, float posx, float posz);
     static float getHeight(float x, float z, float posx, float posz, bool addR);
     static bool isLoaded(int x, int z);
+    static bool load(int x, int z);
+    static bool reload(int x, int z);
     static void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
 private:
 

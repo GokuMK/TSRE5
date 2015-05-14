@@ -23,6 +23,7 @@ public:
     void refresh();
     void trpin(TRnode* tr, FileBuffer* bufor );
     void save();
+    static void saveEmpty();
     int findNearestNode(int &x, int &z, float* p, float* q);
     int joinTracks(int iendp);
     int joinVectorSections(int id1, int id2);

@@ -12,6 +12,7 @@ public:
     ~Vector3f();
     void set(float x, float y, float z);
     void rotateY(float a, float r);
+    void rotate(Vector3f o);
     static Vector3f add(Vector3f out, Vector3f v1, Vector3f v2);
     static Vector3f sub(Vector3f out, Vector3f v1, Vector3f v2);
     static Vector3f cross(Vector3f out, Vector3f v1, Vector3f v2) ;

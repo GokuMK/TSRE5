@@ -69,6 +69,19 @@ void Vector3f::rotateY(float a, float r) { //angle, radius
     this->z = nz;
     //x = nx-r;
 }
+
+void Vector3f::rotate(Vector3f o) {
+        float ny = (float) (z*cos(-o.y) - x*sin(-o.y));
+        float nx = (float) (z*sin(-o.y) + x*cos(-o.y));
+        x = nx;
+        z = ny;
+        ny = (float) (z*cos(-o.z) - x*sin(-o.z));
+        nx = (float) (z*sin(-o.z) + x*cos(-o.z));
+        x = nx;
+        z = ny;
+        ny = (float) (sin(-o.x)*sqrt(x*x+z*z));
+        y = ny;
+    }
 /*
 Vector3f Vector3f::add(Vector3f p) {
     return new Vector3f(this.x + p.x, this.y + p.y, this.z + p.z);

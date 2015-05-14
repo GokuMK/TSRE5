@@ -18,8 +18,11 @@ ToolBox::ToolBox(QString name)
     vbox->addWidget(selectTool);
     vbox->addWidget(placeTool);
     vbox->addWidget(&trackList);
-    //vbox->addWidget(radio2);
-    //vbox->addWidget(radio3);
+    vbox->addWidget(&lastItems);
+    lastItems.setMinimumHeight(200);
+    trackList.setMinimumHeight(200);
+    refList.setMinimumHeight(200);
+
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -31,6 +34,9 @@ ToolBox::ToolBox(QString name)
     
     QObject::connect(&trackList, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(trackListSelected(QListWidgetItem*)));
+    
+    QObject::connect(&lastItems, SIGNAL(itemClicked(QListWidgetItem*)),
+                      this, SLOT(lastItemsListSelected(QListWidgetItem*)));
     
     QObject::connect(selectTool, SIGNAL(released()),
                       this, SLOT(selectToolEnabled()));
@@ -81,7 +87,7 @@ void ToolBox::refListSelected(QListWidgetItem * item){
     //refList.addItem(
     try{
         route->ref->selected = &route->ref->refItems[refClass.currentText().toStdString()][refList.currentRow()];
-
+        itemSelected((int)route->ref->selected);
     } catch(const std::out_of_range& oor){
         route->ref->selected = NULL;
     }
@@ -90,15 +96,23 @@ void ToolBox::refListSelected(QListWidgetItem * item){
 void ToolBox::trackListSelected(QListWidgetItem * item){
     
     qDebug() << item->type() << " " << item->text();
-    trackRef.filename = item->text();
-    trackRef.clas = "";
-    trackRef.type = "trackobj";
-    trackRef.value = item->type();
+    Ref::RefItem* itemRef = new Ref::RefItem(); 
+    itemRef->filename = item->text();
+    itemRef->clas = "";
+    itemRef->type = "trackobj";
+    itemRef->value = item->type();
     try{
-        route->ref->selected = &trackRef;
+        route->ref->selected = itemRef;
+        itemSelected((int)route->ref->selected);
     } catch(const std::out_of_range& oor){
         route->ref->selected = NULL;
     }
+}
+
+void ToolBox::lastItemsListSelected(QListWidgetItem * item){
+    
+    qDebug() << item->type() << " " << item->text();
+    route->ref->selected = (Ref::RefItem*)item->type();
 }
 
 void ToolBox::selectToolEnabled(){
@@ -107,4 +121,16 @@ void ToolBox::selectToolEnabled(){
 
 void ToolBox::placeToolEnabled(){
     emit enableTool("placeTool");
+}
+
+void ToolBox::itemSelected(int pointer){
+    Ref::RefItem* item = (Ref::RefItem*) pointer;
+    QString text;
+    if(item->description.length() > 1) 
+        text = item->description;
+    else
+        text = item->filename;
+    new QListWidgetItem ( text, &lastItems, pointer );
+        if(lastItems.count() > 11)
+            delete lastItems.takeItem(0);
 }

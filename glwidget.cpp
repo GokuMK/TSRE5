@@ -15,6 +15,7 @@
 #include "Game.h"
 #include "GLH.h"
 #include "Vector2f.h"
+#include "TerrainLib.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -80,15 +81,32 @@ void GLWidget::initializeGL() {
     glCullFace(GL_BACK);
 
 
-    float * aaa = new float[2]{Game::startTileX,-Game::startTileY};//bbb
-    //float * aaa = new float[2]{-5417,-15048};//traska
-    camera = new Camera(aaa);
     //sFile = new SFile("F:/TrainSim/trains/trainset/pkp_sp47/pkp_sp47-001.s", "F:/TrainSim/trains/trainset/pkp_sp47");
     //sFile = new SFile("f:/train simulator/routes/cmk/shapes/cottage3.s", "cottage3.s", "f:/train simulator/routes/cmk/textures");
     //eng = new Eng("F:/Train Simulator/trains/trainset/PKP-ST44-992/","PKP-ST44-992.eng",0);
     //sFile->Load("f:/train simulator/routes/cmk/shapes/cottage3.s");
     //tile = new Tile(-5303,-14963);
     route = new Route();
+    
+    
+    float * aaa = new float[2]{0,0};
+    camera = new Camera(aaa);
+    float spos[3];
+    if(Game::start == 2){
+        camera->setPozT(Game::startTileX, -Game::startTileY);
+    } else {
+        camera->setPozT(route->startTileX, -route->startTileY);
+        spos[0] = route->startpX;
+        spos[2] = -route->startpZ;
+    }
+    if(TerrainLib::load(route->startTileX, -route->startTileY)){
+        spos[1] = 20 + TerrainLib::getHeight(route->startTileX, -route->startTileY, route->startpX, -route->startpZ);
+    } else {
+        spos[1] = 0;
+    }
+    camera->setPos((float*)&spos);
+    
+    
     lastTime = QDateTime::currentMSecsSinceEpoch();
     timer.start(15, this);
     setFocus();
@@ -105,6 +123,8 @@ void GLWidget::paintGL() {
     //else
     //    glClearColor(0, 0, 0, 1.0);
 
+    
+    
     Mat4::perspective(gluu->pMatrix, 45.0f, float(this->width()) / this->height(), 0.2f, 4000.0);
     float* lookAt = camera->getMatrix();
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, lookAt);
@@ -134,7 +154,7 @@ void GLWidget::paintGL() {
     //Mat4::identity(gluu->mvMatrix);
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0.0, 0.0, -20.0);
     Mat4::identity(gluu->objStrMatrix);
-
+    
     gluu->m_program->bind();
     gluu->setMatrixUniforms();
     //sFile->render();
@@ -259,6 +279,11 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             // paintGL();
             // selection = !selection;
             break;
+        case Qt::Key_0:
+            route->createNewPaths();
+            break;
+        case Qt::Key_B:
+            route->newTile((int)camera->pozT[0], (int)camera->pozT[1]);
         default:
             break;
     }
@@ -349,6 +374,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_P:
                 if(selectedObj != NULL){
                     route->ref->selected = selectedObj->getRefInfo();
+                    emit itemSelected((int) route->ref->selected);
                 }
             case Qt::Key_L:
                 route->trackDB->nextDefaultEnd();

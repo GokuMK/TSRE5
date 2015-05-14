@@ -22,8 +22,14 @@ Terrain::Terrain(float x, float y) {
 
     QString filename = getTileName((int) x, (int) -y);
     //qDebug() << filename;
-    if (!tfile->readT((path + filename + ".t"))) return;
-    if (!readRAW((path + filename + "_y.raw"))) return;
+    if (!tfile->readT((path + filename + ".t"))) {
+        //qDebug() << " t fail";
+        return;
+    }
+    if (!readRAW((path + filename + "_y.raw"))) {
+        //qDebug() << " y fail";
+        return;
+    }
     jestF = readF(path + filename + "_f.raw");
     loaded = true;
 }
@@ -32,6 +38,17 @@ Terrain::Terrain(const Terrain& orig) {
 }
 
 Terrain::~Terrain() {
+}
+
+void Terrain::saveEmpty(int x, int y) {
+    QString name = getTileName(x, y);
+    qDebug() << "Aa";
+    QFile file(Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw");
+    if(!file.exists())
+        QFile::copy("resources/templateRoute/tiles/template_y.raw", Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw");
+    file.setFileName(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
+    if(!file.exists())
+        QFile::copy("resources/templateRoute/tiles/template.t", Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
 }
 
 QString Terrain::getTileName(int x, int y) {
@@ -70,7 +87,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     if (!loaded) 
         return;
     if (!isOgl) {
-        TerrainLib::fillRAW(terrainData, mojex, mojez);
+        TerrainLib::fillRAW(terrainData, (int)mojex, (int)mojez);
         vertexInit();
         //normalInit();
         oglInit();
@@ -250,7 +267,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
                     
-                    QString *texturePath = new QString("Resources/woda.ace");
+                    QString *texturePath = new QString("resources/woda.ace");
                     water[uu * 16 + yy].setMaterial(texturePath);
                     water[uu * 16 + yy].init(punkty, ptr, water[uu * 16 + yy].VT, GL_TRIANGLES);
                     delete punkty;

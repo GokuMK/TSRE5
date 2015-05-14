@@ -38,6 +38,7 @@ public slots:
 
 signals:
     void routeLoaded(Route * a);
+    void itemSelected(int pointer);
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
