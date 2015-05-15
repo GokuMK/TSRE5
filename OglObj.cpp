@@ -11,6 +11,7 @@ OglObj::OglObj(const OglObj& orig) {
 }
 
 OglObj::~OglObj() {
+
 }
 
 void OglObj::setMaterial(float r, float g, float b) {

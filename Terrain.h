@@ -10,7 +10,7 @@ class Terrain {
 public:
     int loaded;
     float **terrainData;
-    
+    bool inUse = true;
     Terrain(float x, float y);
     Terrain(const Terrain& orig);
     virtual ~Terrain();

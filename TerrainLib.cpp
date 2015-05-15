@@ -163,16 +163,20 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
 
     //TerrainLib.render(playerT, playerW); 
 
-    //for (var key in this.tile){
-    //    this.tile[key].inUse = false;
-    // }
+    /*for (auto it = terrain.begin(); it != terrain.end(); ++it) {
+        //console.log(obj.type);
+        Terrain* obj = (Terrain*) it->second;
+        if(obj == NULL) continue;
+        obj->inUse = false;
+    }*/
+    
     gluu->m_program->setUniformValue(gluu->shaderAlpha, 0.0f);
 
     Terrain *tTile;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
-            //try {
             tTile = terrain[((playerT[0] + i)*10000 + playerT[1] + j)];
+            
             if (tTile == NULL) {
                 terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
             }
@@ -180,6 +184,7 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
             //    terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
             //}
             tTile = terrain[(playerT[0] + i)*10000 + playerT[1] + j];
+            tTile->inUse = true;
             if (tTile->loaded == false) continue;
             //tTile->inUse = true;
             if (tTile->loaded) {
@@ -192,6 +197,29 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
                 gluu->mvPopMatrix();
             }
         }
+    }
+    
+    mintile = -3;
+    maxtile = 3;
+    for (int i = mintile; i <= maxtile; i++) {
+        for (int j = maxtile; j >= mintile; j--) {
+            tTile = terrain[((playerT[0] + i)*10000 + playerT[1] + j)];
+            if (tTile != NULL)
+                tTile->inUse = true;
+        }
+    }
+    
+    for (auto it = terrain.begin(); it != terrain.end(); ++it) {
+        //console.log(obj.type);
+        Terrain* obj = (Terrain*) it->second;
+        if(obj == NULL) continue;
+        if(!obj->inUse && obj->loaded){
+           //console.log("a"+this.tile[key]);
+           delete obj;
+           terrain[(int)it->first] = NULL;
+       } else {
+           obj->inUse = false;
+       }
     }
     /*
     for (var key in this.tile){

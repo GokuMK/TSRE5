@@ -38,6 +38,19 @@ Terrain::Terrain(const Terrain& orig) {
 }
 
 Terrain::~Terrain() {
+    qDebug() << "= release terrain";
+
+    if(this->loaded){
+        for (int i = 0; i < 257; i++){
+            delete terrainData[i];
+            if(this->jestF)
+                delete fData[i];
+        }
+
+        delete terrainData;
+        if(this->jestF)
+            delete fData;
+    }
 }
 
 void Terrain::saveEmpty(int x, int y) {
@@ -462,7 +475,7 @@ bool Terrain::readF(QString fSfile) {
         int u = 0;
         fData = new unsigned char*[257];
         for(int j = 0; j<257; j++){
-             fData[j] = new unsigned char[257];
+            fData[j] = new unsigned char[257];
             for(int i = 0; i<257; i++){
                 if(i==256||j==256)
                     fData[j][i] = 0;
