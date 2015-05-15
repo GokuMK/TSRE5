@@ -39,6 +39,7 @@ public slots:
 signals:
     void routeLoaded(Route * a);
     void itemSelected(int pointer);
+    void naviInfo(int x, int z, int all, int hidden);
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;

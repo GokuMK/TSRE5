@@ -17,6 +17,7 @@ ToolBox::ToolBox(QString name)
     vbox->addWidget(&refList);
     vbox->addWidget(selectTool);
     vbox->addWidget(placeTool);
+    vbox->addWidget(&refTrack);
     vbox->addWidget(&trackList);
     vbox->addWidget(&lastItems);
     lastItems.setMinimumHeight(200);
@@ -28,6 +29,9 @@ ToolBox::ToolBox(QString name)
     
     QObject::connect(&refClass, SIGNAL(activated(QString)),
                       this, SLOT(refClassSelected(QString)));
+    
+    QObject::connect(&refTrack, SIGNAL(activated(QString)),
+                      this, SLOT(refTrackSelected(QString)));
     
     QObject::connect(&refList, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(refListSelected(QListWidgetItem*)));
@@ -51,14 +55,19 @@ ToolBox::~ToolBox() {
 void ToolBox::routeLoaded(Route* a){
     this->route = a;
 
+    QStringList hash;
     for ( auto it = route->ref->refItems.begin(); it != route->ref->refItems.end(); ++it ){
         //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
-        refClass.addItem(QString::fromStdString(it->first), QVariant(QString::fromStdString(it->first)));
+        hash.append(QString::fromStdString(it->first));
+        //refClass.addItem(QString::fromStdString(it->first), QVariant(QString::fromStdString(it->first)));
       //std::cout << " " << it->first << ":" << it->second;
     }
-    
-    trackList.clear();
-    TrackShape * track;
+    hash.sort(Qt::CaseInsensitive);
+    hash.removeDuplicates();
+    refClass.addItems(hash);
+    refClass.setMaxVisibleItems(25);
+    //trackList.clear();
+    /*TrackShape * track;
     for (auto it = route->trackDB->tsection->shape.begin(); it != route->trackDB->tsection->shape.end(); ++it ){
         track = it->second;
         //qDebug() << track->filename;
@@ -68,8 +77,29 @@ void ToolBox::routeLoaded(Route* a){
         //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
         //refClass.addItem(QString::fromStdString(it->first), QVariant(QString::fromStdString(it->first)));
       //std::cout << " " << it->first << ":" << it->second;
+    }*/
+    TrackShape * track;
+    //std::string hash;
+    //std::unordered_map<std::string, int> types;
+    //refTrack.setInsertPolicy(refTrack.InsertAlphabetically);
+    hash.clear();
+    for (auto it = route->trackDB->tsection->shape.begin(); it != route->trackDB->tsection->shape.end(); ++it ){
+        track = it->second;
+        //hash = track->filename.left(3).toStdString();
+        if(!track->roadshape)
+            hash.append(track->filename.left(3).toLower());
+        //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
+        //if(types[hash] != 1){
+        //    refTrack.addItem(QString::fromStdString(hash));//, QVariant(QString::fromStdString(hash)));
+            //types[hash] = 1;
+        //}
+      //std::cout << " " << it->first << ":" << it->second;
     }
-    trackList.sortItems(Qt::AscendingOrder);
+    hash.sort(Qt::CaseInsensitive);
+    hash.removeDuplicates();
+    refTrack.addItems(hash);
+    refTrack.setMaxVisibleItems(25);
+    //refTrack.s .sortItems(Qt::AscendingOrder);
 }
 
 void ToolBox::refClassSelected(const QString & text){
@@ -81,6 +111,22 @@ void ToolBox::refClassSelected(const QString & text){
         //refClass.addItem(QString::fromStdString(it->first), QVariant(QString::fromStdString(it->first)));
       //std::cout << " " << it->first << ":" << it->second;
     }
+}
+
+void ToolBox::refTrackSelected(const QString & text){
+    trackList.clear();
+    TrackShape * track;
+    for (auto it = route->trackDB->tsection->shape.begin(); it != route->trackDB->tsection->shape.end(); ++it ){
+        track = it->second;
+        //qDebug() << track->filename;
+        if(track->filename.startsWith(text, Qt::CaseInsensitive) )
+            new QListWidgetItem ( track->filename, &trackList, track->id );
+        //refList.addItem(route->ref->refItems[text.toStdString()][it].description);
+        //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
+        //refClass.addItem(QString::fromStdString(it->first), QVariant(QString::fromStdString(it->first)));
+      //std::cout << " " << it->first << ":" << it->second;
+    }
+    trackList.sortItems(Qt::AscendingOrder);
 }
 
 void ToolBox::refListSelected(QListWidgetItem * item){

@@ -22,6 +22,7 @@ public:
     int z;
     //obiekty = new Array();
     int jestObiektow;
+    int jestHiddenObj = 0;
     std::unordered_map<int, WorldObj*> obiekty;
     Tile();
     Tile(int xx, int zz);

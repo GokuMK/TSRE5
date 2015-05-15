@@ -16,10 +16,10 @@
 Route::Route() {
 
     QFile file(Game::root + "/routes");
-    if(!file.exists()) return;
+    if (!file.exists()) return;
     file.setFileName(Game::root + "/global");
-    if(!file.exists()) return;
-    
+    if (!file.exists()) return;
+
     file.setFileName(Game::root + "/routes/" + Game::route);
     if (!file.exists()) {
         qDebug() << "route does not exist";
@@ -28,7 +28,7 @@ Route::Route() {
             Route::createNew();
         }
     }
-    
+
     this->loadTrk();
     this->trackDB = new TDB((Game::root + "/routes/" + Game::route + "/" + Game::route + ".tdb"));
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::route + ".ref"));
@@ -40,7 +40,7 @@ Route::Route(const Route& orig) {
 Route::~Route() {
 }
 
-void Route::loadTrk(){
+void Route::loadTrk() {
     QString path = Game::root + "/routes/" + Game::route + "/" + Game::route + ".trk";
     path.replace("//", "/");
     qDebug() << path;
@@ -49,7 +49,7 @@ void Route::loadTrk(){
         return;
     FileBuffer* data = ReadFile::read(file);
     ParserX::nextLine(data);
-    
+
     QString sh = "Tr_RouteFile";
     ParserX::szukajsekcji1(sh, data);
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
@@ -136,7 +136,7 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
            this.tile[key].inUse = false;
        }
     }*/
-    
+
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p) {
@@ -206,18 +206,18 @@ void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
     if (obj->type == "trackobj") {
         float q[4];
         TrackObj* track = (TrackObj*) obj;
-        q[0] = track->tRotation[0];//track->qDirection[0];
-        q[1] = track->tRotation[1];//qDirection[1];
-        q[2] = 0;//track->qDirection[2];
-        q[3] = 1;//track->qDirection[3];
-        
+        q[0] = track->tRotation[0]; //track->qDirection[0];
+        q[1] = track->tRotation[1]; //qDirection[1];
+        q[2] = 0; //track->qDirection[2];
+        q[3] = 1; //track->qDirection[3];
+
         //this->trackDB->placeTrack(x, z, p, q, r, nowy->UiD);
-        
+
         float scale = (float) sqrt(track->qDirection[0] * track->qDirection[0] + track->qDirection[1] * track->qDirection[1] + track->qDirection[2] * track->qDirection[2]);
-        float elevation = ((track->qDirection[0]+0.0000001f)/fabs(scale+0.0000001f))*(float)-acos(track->qDirection[3])*2;
+        float elevation = ((track->qDirection[0] + 0.0000001f) / fabs(scale + 0.0000001f))*(float) -acos(track->qDirection[3])*2;
         //float elevation = -3.14/16.0;
         //q[0] = elevation;
-        
+
         this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
         obj->setPosition(p);
         obj->setQdirection(q);
@@ -249,11 +249,41 @@ void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
         obj->setMartix();
     }
 }
-void Route::removeTrackFromTDB(WorldObj* selectedObj){
-    this->trackDB->removeTrackFromTDB(selectedObj->x, selectedObj->y, selectedObj->UiD);
+
+void Route::deleteObj(WorldObj* obj) {
+    obj->loaded = false;
+    obj->modified = true;
+    if (obj->type == "trackobj") {
+        removeTrackFromTDB(obj);
+    }
+    Tile *tTile;
+    tTile = tile[((obj->x)*10000 + obj->y)];
+    if (tTile != NULL)
+        tTile->jestHiddenObj++;
 }
+
+void Route::removeTrackFromTDB(WorldObj* obj) {
+    this->trackDB->removeTrackFromTDB(obj->x, obj->y, obj->UiD);
+}
+
+int Route::getTileObjCount(int x, int z) {
+    Tile *tTile;
+    tTile = tile[((x)*10000 + z)];
+    if (tTile == NULL)
+        return 0;
+    return tTile->jestObiektow;
+}
+
+int Route::getTileHiddenObjCount(int x, int z) {
+    Tile *tTile;
+    tTile = tile[((x)*10000 + z)];
+    if (tTile == NULL)
+        return 0;
+    return tTile->jestHiddenObj;
+}
+
 void Route::save() {
-    if(!Game::writeEnabled) return;
+    if (!Game::writeEnabled) return;
     qDebug() << "save";
     for (auto it = tile.begin(); it != tile.end(); ++it) {
         //console.log(obj.type);
@@ -268,13 +298,13 @@ void Route::save() {
 }
 
 void Route::createNewPaths() {
-    if(!Game::writeEnabled) return;
+    if (!Game::writeEnabled) return;
     Path::CreatePaths(this->trackDB);
 }
 
 void Route::createNew() {
-    if(!Game::writeEnabled) return;
-    
+    if (!Game::writeEnabled) return;
+
     QString path;
 
     path = Game::root + "/routes/" + Game::route;
@@ -317,12 +347,12 @@ void Route::createNew() {
 }
 
 void Route::reloadTile(int x, int z) {
-    tile[x*10000 + z] = new Tile(x, z);
+    tile[x * 10000 + z] = new Tile(x, z);
     return;
 }
 
-void Route::newTile(int x, int z){
-    if(!Game::writeEnabled) return;
+void Route::newTile(int x, int z) {
+    if (!Game::writeEnabled) return;
     Tile::saveEmpty(x, -z);
     Terrain::saveEmpty(x, -z);
     TerrainLib::reload(x, z);
@@ -330,7 +360,7 @@ void Route::newTile(int x, int z){
 }
 
 void Route::saveTrk() {
-    if(!Game::writeEnabled) return;
+    if (!Game::writeEnabled) return;
     QFile file;
     QTextStream out;
     QString filepath;

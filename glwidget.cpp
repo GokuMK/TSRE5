@@ -261,6 +261,8 @@ void GLWidget::paintGL() {
         paintGL();
     }
 
+    emit this->naviInfo((int)camera->pozT[0], -(int)camera->pozT[1], route->getTileObjCount((int)camera->pozT[0], (int)camera->pozT[1]), route->getTileHiddenObjCount((int)camera->pozT[0], (int)camera->pozT[1]));
+    
     gluu->m_program->release();
 
 }
@@ -379,11 +381,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 break;
             case Qt::Key_Delete:
                 if(selectedObj != NULL){
-                    selectedObj->loaded = false;
-                    selectedObj->modified = true;
-                    if(selectedObj->type == "trackobj"){
-                        route->removeTrackFromTDB(selectedObj);
-                    }
+                    route->deleteObj(selectedObj);
                 }
                 break;                
             case Qt::Key_C:

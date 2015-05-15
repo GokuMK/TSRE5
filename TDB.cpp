@@ -596,15 +596,29 @@ void TDB::deleteJunction(int id){
     }
     if(count == 1){
         int vecId = 0;
-        junction->typ = 0;
-        junction->TrP1 = 1;
-        junction->TrP2 = 0;
         for(int i = 0; i < 3; i++){
-            if(junction->TrPinS[i] != 0) 
+            if(junction->TrPinS[i] != 0){
+                junction->TrPinS[0] = junction->TrPinS[i];
+                junction->TrPinK[0] = junction->TrPinK[i];
                 vecId = junction->TrPinS[i];
+                break;
+            }
         }
         TRnode* vect = trackNodes[vecId];
         vect->setTrPinK(id, 1);
+
+        if(junction->TrPinK[0] == 1){
+            junction->UiD[2] = vect->trVectorSection[0].param[4];
+            junction->UiD[3] = vect->trVectorSection[0].param[5];
+        } else if(junction->TrPinK[0] == 0){
+            junction->UiD[2] = vect->trVectorSection[vect->iTrv-1].param[4];
+            junction->UiD[3] = vect->trVectorSection[vect->iTrv-1].param[6];
+        }
+        junction->UiD[10] += M_PI;
+        
+        junction->typ = 0;
+        junction->TrP1 = 1;
+        junction->TrP2 = 0;
     }
 }
 

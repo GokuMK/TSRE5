@@ -27,6 +27,9 @@ Window::Window() {
     
     setWindowTitle(tr("TSRE5"));
     
+    QObject::connect(glWidget, SIGNAL(naviInfo(int, int, int, int)),
+                      naviBox, SLOT(naviInfo(int, int, int, int)));
+    
     QObject::connect(glWidget, SIGNAL(routeLoaded(Route*)),
                       groupBox, SLOT(routeLoaded(Route*)));
     

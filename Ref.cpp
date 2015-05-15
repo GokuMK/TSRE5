@@ -51,7 +51,7 @@ Ref::Ref(QString path) {
             ParserX::pominsekcje(data);
         }
         if(item.clas != ""){
-            refItems[item.clas.toStdString()].push_back(item);
+            refItems[item.clas.trimmed().toStdString()].push_back(item);
         }
         ParserX::pominsekcje(data);
     }

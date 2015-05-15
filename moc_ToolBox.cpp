@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ToolBox_t {
-    QByteArrayData data[18];
-    char stringdata[202];
+    QByteArrayData data[19];
+    char stringdata[219];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,23 +38,24 @@ QT_MOC_LITERAL(5, 37, 6), // "Route*"
 QT_MOC_LITERAL(6, 44, 1), // "a"
 QT_MOC_LITERAL(7, 46, 16), // "refClassSelected"
 QT_MOC_LITERAL(8, 63, 4), // "text"
-QT_MOC_LITERAL(9, 68, 15), // "refListSelected"
-QT_MOC_LITERAL(10, 84, 16), // "QListWidgetItem*"
-QT_MOC_LITERAL(11, 101, 4), // "item"
-QT_MOC_LITERAL(12, 106, 17), // "trackListSelected"
-QT_MOC_LITERAL(13, 124, 21), // "lastItemsListSelected"
-QT_MOC_LITERAL(14, 146, 17), // "selectToolEnabled"
-QT_MOC_LITERAL(15, 164, 16), // "placeToolEnabled"
-QT_MOC_LITERAL(16, 181, 12), // "itemSelected"
-QT_MOC_LITERAL(17, 194, 7) // "pointer"
+QT_MOC_LITERAL(9, 68, 16), // "refTrackSelected"
+QT_MOC_LITERAL(10, 85, 15), // "refListSelected"
+QT_MOC_LITERAL(11, 101, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(12, 118, 4), // "item"
+QT_MOC_LITERAL(13, 123, 17), // "trackListSelected"
+QT_MOC_LITERAL(14, 141, 21), // "lastItemsListSelected"
+QT_MOC_LITERAL(15, 163, 17), // "selectToolEnabled"
+QT_MOC_LITERAL(16, 181, 16), // "placeToolEnabled"
+QT_MOC_LITERAL(17, 198, 12), // "itemSelected"
+QT_MOC_LITERAL(18, 211, 7) // "pointer"
 
     },
     "ToolBox\0enableTool\0\0name\0routeLoaded\0"
     "Route*\0a\0refClassSelected\0text\0"
-    "refListSelected\0QListWidgetItem*\0item\0"
-    "trackListSelected\0lastItemsListSelected\0"
-    "selectToolEnabled\0placeToolEnabled\0"
-    "itemSelected\0pointer"
+    "refTrackSelected\0refListSelected\0"
+    "QListWidgetItem*\0item\0trackListSelected\0"
+    "lastItemsListSelected\0selectToolEnabled\0"
+    "placeToolEnabled\0itemSelected\0pointer"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,7 +65,7 @@ static const uint qt_meta_data_ToolBox[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -72,17 +73,18 @@ static const uint qt_meta_data_ToolBox[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   59,    2, 0x06 /* Public */,
+       1,    1,   64,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   62,    2, 0x0a /* Public */,
-       7,    1,   65,    2, 0x0a /* Public */,
-       9,    1,   68,    2, 0x0a /* Public */,
-      12,    1,   71,    2, 0x0a /* Public */,
-      13,    1,   74,    2, 0x0a /* Public */,
-      14,    0,   77,    2, 0x0a /* Public */,
-      15,    0,   78,    2, 0x0a /* Public */,
-      16,    1,   79,    2, 0x0a /* Public */,
+       4,    1,   67,    2, 0x0a /* Public */,
+       7,    1,   70,    2, 0x0a /* Public */,
+       9,    1,   73,    2, 0x0a /* Public */,
+      10,    1,   76,    2, 0x0a /* Public */,
+      13,    1,   79,    2, 0x0a /* Public */,
+      14,    1,   82,    2, 0x0a /* Public */,
+      15,    0,   85,    2, 0x0a /* Public */,
+      16,    0,   86,    2, 0x0a /* Public */,
+      17,    1,   87,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -90,12 +92,13 @@ static const uint qt_meta_data_ToolBox[] = {
  // slots: parameters
     QMetaType::Void, 0x80000000 | 5,    6,
     QMetaType::Void, QMetaType::QString,    8,
-    QMetaType::Void, 0x80000000 | 10,   11,
-    QMetaType::Void, 0x80000000 | 10,   11,
-    QMetaType::Void, 0x80000000 | 10,   11,
+    QMetaType::Void, QMetaType::QString,    8,
+    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, 0x80000000 | 11,   12,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   17,
+    QMetaType::Void, QMetaType::Int,   18,
 
        0        // eod
 };
@@ -108,12 +111,13 @@ void ToolBox::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 0: _t->enableTool((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 1: _t->routeLoaded((*reinterpret_cast< Route*(*)>(_a[1]))); break;
         case 2: _t->refClassSelected((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 3: _t->refListSelected((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
-        case 4: _t->trackListSelected((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
-        case 5: _t->lastItemsListSelected((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
-        case 6: _t->selectToolEnabled(); break;
-        case 7: _t->placeToolEnabled(); break;
-        case 8: _t->itemSelected((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->refTrackSelected((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 4: _t->refListSelected((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 5: _t->trackListSelected((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 6: _t->lastItemsListSelected((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 7: _t->selectToolEnabled(); break;
+        case 8: _t->placeToolEnabled(); break;
+        case 9: _t->itemSelected((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -153,13 +157,13 @@ int ToolBox::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 10;
     }
     return _id;
 }

@@ -15,6 +15,7 @@ public:
 public slots:
     void routeLoaded(Route * a);
     void refClassSelected(const QString & text);
+    void refTrackSelected(const QString & text);
     void refListSelected(QListWidgetItem * item);
     void trackListSelected(QListWidgetItem * item);
     void lastItemsListSelected(QListWidgetItem * item);
@@ -30,6 +31,7 @@ private:
     QListWidget trackList;
     QListWidget lastItems;
     QComboBox refClass;
+    QComboBox refTrack;
     Ref::RefItem itemRef;
 };
 
