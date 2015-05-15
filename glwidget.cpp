@@ -400,6 +400,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 break;
             case Qt::Key_Z:
                 //route->refreshObj(selectedObj);
+                //route->trackDB->setDefaultEnd(0);
+                //route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&selectedObj->position);
                 route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&lastNewObjPos);
                 break;
             case Qt::Key_X:

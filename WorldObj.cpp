@@ -15,6 +15,8 @@ WorldObj::WorldObj() {
     this->loaded = false;
     this->selected = false;
     this->modified = false;
+    this->tRotation[0] = 0;
+    this->tRotation[1] = 0;
 }
 
 WorldObj::WorldObj(const WorldObj& orig) {
@@ -117,6 +119,8 @@ void WorldObj::translate(float px, float py, float pz){
 }
 
 void WorldObj::rotate(float x, float y, float z){
+    this->tRotation[0] += x;
+    this->tRotation[1] += y;
     if(matrix3x3 != NULL) matrix3x3 = NULL;
     if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x);
     if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y);

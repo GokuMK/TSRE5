@@ -117,6 +117,7 @@ float* Quat::rotateX(float *out, float *a, float rad){
     return out;
 };
 
+
 /**
  * Rotates a quaternion by the given angle about the Y axis
  *

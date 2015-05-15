@@ -205,13 +205,19 @@ void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
 
     if (obj->type == "trackobj") {
         float q[4];
-        q[0] = 0;
-        q[1] = 0;
-        q[2] = 0;
-        q[3] = 1;
         TrackObj* track = (TrackObj*) obj;
+        q[0] = track->tRotation[0];//track->qDirection[0];
+        q[1] = track->tRotation[1];//qDirection[1];
+        q[2] = 0;//track->qDirection[2];
+        q[3] = 1;//track->qDirection[3];
+        
         //this->trackDB->placeTrack(x, z, p, q, r, nowy->UiD);
-
+        
+        float scale = (float) sqrt(track->qDirection[0] * track->qDirection[0] + track->qDirection[1] * track->qDirection[1] + track->qDirection[2] * track->qDirection[2]);
+        float elevation = ((track->qDirection[0]+0.0000001f)/fabs(scale+0.0000001f))*(float)-acos(track->qDirection[3])*2;
+        //float elevation = -3.14/16.0;
+        //q[0] = elevation;
+        
         this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
         obj->setPosition(p);
         obj->setQdirection(q);

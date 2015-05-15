@@ -31,6 +31,7 @@ public:
     bool modified = false;;
     Vector3f selectionColor;
     OglObj box;
+    float tRotation[2];
     
     WorldObj();
     WorldObj(const WorldObj& orig);

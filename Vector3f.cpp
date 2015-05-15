@@ -70,6 +70,15 @@ void Vector3f::rotateY(float a, float r) { //angle, radius
     //x = nx-r;
 }
 
+void Vector3f::rotateX(float a, float r) { //angle, radius
+    this->y -= r;
+    float nz = (float) (z * cos(-a) - y * sin(-a));
+    float ny = (float) (z * sin(-a) + y * cos(-a));
+    this->y = ny + r;
+    this->z = nz;
+    //x = nx-r;
+}
+
 void Vector3f::rotate(Vector3f o) {
         float ny = (float) (z*cos(-o.y) - x*sin(-o.y));
         float nx = (float) (z*sin(-o.y) + x*cos(-o.y));
