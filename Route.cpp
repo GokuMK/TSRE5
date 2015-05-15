@@ -249,7 +249,9 @@ void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
         obj->setMartix();
     }
 }
-
+void Route::removeTrackFromTDB(WorldObj* selectedObj){
+    this->trackDB->removeTrackFromTDB(selectedObj->x, selectedObj->y, selectedObj->UiD);
+}
 void Route::save() {
     if(!Game::writeEnabled) return;
     qDebug() << "save";

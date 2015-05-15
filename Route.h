@@ -29,6 +29,7 @@ public:
     void createNew();
     void newTile(int x, int z);
     void reloadTile(int x, int z);
+    void removeTrackFromTDB(WorldObj* selectedObj);
     WorldObj* placeObject(int x, int z, float* p);
     WorldObj* placeObject(int x, int z, float* p, float* q);
     WorldObj* placeObject(int x, int z, float* p, float* q, Ref::RefItem* r);

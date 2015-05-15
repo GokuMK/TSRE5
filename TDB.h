@@ -26,9 +26,14 @@ public:
     void trpin(TRnode* tr, FileBuffer* bufor );
     void save();
     static void saveEmpty();
+    void removeTrackFromTDB(int x, int y, int UiD);
     int findNearestNode(int &x, int &z, float* p, float* q);
     int joinTracks(int iendp);
     int joinVectorSections(int id1, int id2);
+    void deleteJunction(int id);
+    void deleteVectorSection(int id);
+    bool deleteFromVectorSection(int id, int j);
+    int splitVectorSection(int id, int j);
     int rotate(int id);
     int appendTrack(int id, int* ends, int r, int sect, int uid);
     int newJunction(int x, int z, float* p, float* qe, int r, int uid, int end);

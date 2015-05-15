@@ -495,6 +495,227 @@ int TDB::joinVectorSections(int id1, int id2) {
     trackNodes[endpk2] = NULL;
 }
 
+int TDB::splitVectorSection(int id, int j){
+    TRnode* vect = trackNodes[id];
+    TRnode* end2 = trackNodes[vect->TrPinS[1]];
+    TRnode* newNode;
+    
+    int end1Id = ++this->iTRnodes;
+    int vecId = ++this->iTRnodes;
+    int end2Id = ++this->iTRnodes;
+    end2->podmienTrPin(id, vecId);
+    
+    this->trackNodes[vecId] = new TRnode();
+    newNode = this->trackNodes[vecId];
+    newNode->typ = 1;
+    newNode->iTrv = vect->iTrv - j;
+    
+    TRnode::TRSect *newV = new TRnode::TRSect[newNode->iTrv];
+    std::copy(vect->trVectorSection + j, vect->trVectorSection + vect->iTrv, newV);
+    newNode->trVectorSection = newV;
+    
+    newNode->TrP1 = 1;
+    newNode->TrP2 = 1;
+    newNode->TrPinS[0] = end2Id;
+    newNode->TrPinK[0] = 1;
+    newNode->TrPinS[1] = vect->TrPinS[1];
+    newNode->TrPinK[1] = vect->TrPinK[1];
+    
+    newV = new TRnode::TRSect[j];
+    std::copy(vect->trVectorSection, vect->trVectorSection + j, newV);
+    
+    vect->iTrv = j;
+    vect->TrPinS[1] = end1Id;
+    vect->TrPinK[1] = 1;
+    
+    
+    ////////////////////
+    this->trackNodes[end1Id] = new TRnode();
+    newNode = this->trackNodes[end1Id];
+    newNode->typ = 0;
+    newNode->UiD[0] = vect->trVectorSection[j-1].param[2];
+    newNode->UiD[1] = vect->trVectorSection[j-1].param[3];
+    newNode->UiD[2] = vect->trVectorSection[j-1].param[4];
+    newNode->UiD[3] = vect->trVectorSection[j-1].param[6];
+    newNode->UiD[4] = vect->trVectorSection[j].param[8];
+    newNode->UiD[5] = vect->trVectorSection[j].param[9];
+    newNode->UiD[6] = vect->trVectorSection[j].param[10];
+    newNode->UiD[7] = vect->trVectorSection[j].param[11];
+    newNode->UiD[8] = vect->trVectorSection[j].param[12];
+    newNode->UiD[9] = vect->trVectorSection[j].param[13];
+    newNode->UiD[10] = vect->trVectorSection[j].param[14];
+    newNode->UiD[11] = vect->trVectorSection[j].param[15];
+
+    newNode->TrP1 = 1;
+    newNode->TrPinS[0] = id;
+    newNode->TrPinK[0] = 0;
+    /////////////////
+    this->trackNodes[end2Id] = new TRnode();
+    newNode = this->trackNodes[end2Id];
+    newNode->typ = 0;
+    newNode->UiD[0] = vect->trVectorSection[j].param[2];
+    newNode->UiD[1] = vect->trVectorSection[j].param[3];
+    newNode->UiD[2] = vect->trVectorSection[j].param[4];
+    newNode->UiD[3] = vect->trVectorSection[j].param[5];
+    newNode->UiD[4] = vect->trVectorSection[j].param[8];
+    newNode->UiD[5] = vect->trVectorSection[j].param[9];
+    newNode->UiD[6] = vect->trVectorSection[j].param[10];
+    newNode->UiD[7] = vect->trVectorSection[j].param[11];
+    newNode->UiD[8] = vect->trVectorSection[j].param[12];
+    newNode->UiD[9] = vect->trVectorSection[j].param[13];
+    newNode->UiD[10] = vect->trVectorSection[j].param[14] + M_PI;
+    newNode->UiD[11] = vect->trVectorSection[j].param[15];
+
+    newNode->TrP1 = 1;
+    newNode->TrPinS[0] = vecId;
+    newNode->TrPinK[0] = 1;
+    
+    delete vect->trVectorSection;
+    vect->trVectorSection = newV;
+    
+    return vecId;
+}
+
+void TDB::deleteJunction(int id){
+    TRnode* junction = trackNodes[id];
+    if(junction->typ != 2) return;
+    
+    int count = 0;
+    
+    for(int i = 0; i < 3; i++){
+        if(junction->TrPinS[i] != 0) count++;
+    }
+    if(count > 1){
+        qDebug() << "junction delete fail";
+        return;
+    }
+    if(count == 0){
+        delete trackNodes[id];
+        trackNodes[id] = NULL;
+        return;
+    }
+    if(count == 1){
+        int vecId = 0;
+        junction->typ = 0;
+        junction->TrP1 = 1;
+        junction->TrP2 = 0;
+        for(int i = 0; i < 3; i++){
+            if(junction->TrPinS[i] != 0) 
+                vecId = junction->TrPinS[i];
+        }
+        TRnode* vect = trackNodes[vecId];
+        vect->setTrPinK(id, 1);
+    }
+}
+
+void TDB::deleteVectorSection(int id){
+    TRnode* vect = trackNodes[id];
+    TRnode* end1 = trackNodes[vect->TrPinS[0]];
+    TRnode* end2 = trackNodes[vect->TrPinS[1]];
+    
+    delete trackNodes[id];
+    trackNodes[id] = NULL;
+    
+    if(end1->typ == 0){
+        delete trackNodes[vect->TrPinS[0]];
+        trackNodes[vect->TrPinS[0]] = NULL;
+    } else if (end1->typ == 2) {
+        end1->podmienTrPin(id, 0);
+        end1->setTrPinK(0, 0);
+    } 
+    
+    if(end2->typ == 0){
+        delete trackNodes[vect->TrPinS[1]];
+        trackNodes[vect->TrPinS[1]] = NULL;
+    } else if (end2->typ == 2) {
+        end2->podmienTrPin(id, 0);
+        end2->setTrPinK(0, 0);
+    }
+}
+
+bool TDB::deleteFromVectorSection(int id, int j){
+    TRnode* vect = trackNodes[id];
+    if(vect->iTrv == 1){
+        deleteVectorSection(id);
+        return false;
+    }
+    if(j > 0 && j < vect->iTrv - 1){
+        vect = trackNodes[splitVectorSection(id, j)];
+        j = 0;
+    }
+    
+    TRnode* end1 = trackNodes[vect->TrPinS[0]];
+    TRnode* end2 = trackNodes[vect->TrPinS[1]];
+    
+    TRnode::TRSect *newV = new TRnode::TRSect[vect->iTrv - 1];
+    if(j == 0){
+        std::copy(vect->trVectorSection + 1, vect->trVectorSection + vect->iTrv, newV);
+        if(end1->typ == 2){
+            end1->podmienTrPin(id, 0);
+            end1->setTrPinK(0, 0);
+            
+            int endNId = ++this->iTRnodes;
+            this->trackNodes[endNId] = new TRnode();
+            end1 = trackNodes[endNId];
+            end1->typ = 0;
+            end1->TrP1 = 1;
+            end1->TrPinS[0] = id;
+            end1->TrPinK[0] = 1;
+            vect->TrPinS[0] = endNId;
+            vect->TrPinK[0] = 1;
+        }
+        
+            end1->UiD[0] = vect->trVectorSection[1].param[2];
+            end1->UiD[1] = vect->trVectorSection[1].param[3];
+            end1->UiD[2] = vect->trVectorSection[1].param[4];
+            end1->UiD[3] = vect->trVectorSection[1].param[5];
+            end1->UiD[4] = vect->trVectorSection[1].param[8];
+            end1->UiD[5] = vect->trVectorSection[1].param[9];
+            end1->UiD[6] = vect->trVectorSection[1].param[10];
+            end1->UiD[7] = vect->trVectorSection[1].param[11];
+            end1->UiD[8] = vect->trVectorSection[1].param[12];
+            end1->UiD[9] = vect->trVectorSection[1].param[13];
+            end1->UiD[10] = vect->trVectorSection[1].param[14] + M_PI;
+            end1->UiD[11] = vect->trVectorSection[1].param[15];
+
+    } else if(j == vect->iTrv - 1) {
+        std::copy(vect->trVectorSection , vect->trVectorSection + vect->iTrv - 1, newV);
+        if(end2->typ == 2){
+            end2->podmienTrPin(id, 0);
+            end2->setTrPinK(0, 0);
+            
+            int endNId = ++this->iTRnodes;
+            this->trackNodes[endNId] = new TRnode();
+            end2 = trackNodes[endNId];
+            end2->typ = 0;
+            end2->TrP1 = 1;
+            end2->TrPinS[0] = id;
+            end2->TrPinK[0] = 0;
+            vect->TrPinS[1] = endNId;
+            vect->TrPinK[1] = 1;
+        }
+            end2->UiD[0] = vect->trVectorSection[vect->iTrv-2].param[2];
+            end2->UiD[1] = vect->trVectorSection[vect->iTrv-2].param[3];
+            end2->UiD[2] = vect->trVectorSection[vect->iTrv-2].param[4];
+            end2->UiD[3] = vect->trVectorSection[vect->iTrv-2].param[6];
+            end2->UiD[4] = vect->trVectorSection[vect->iTrv-2].param[8];
+            end2->UiD[5] = vect->trVectorSection[vect->iTrv-2].param[9];
+            end2->UiD[6] = vect->trVectorSection[vect->iTrv-1].param[10];
+            end2->UiD[7] = vect->trVectorSection[vect->iTrv-1].param[11];
+            end2->UiD[8] = vect->trVectorSection[vect->iTrv-1].param[12];
+            end2->UiD[9] = vect->trVectorSection[vect->iTrv-1].param[13];
+            end2->UiD[10] = vect->trVectorSection[vect->iTrv-1].param[14];
+            end2->UiD[11] = vect->trVectorSection[vect->iTrv-1].param[15];
+
+    }
+    
+    vect->iTrv -= 1;
+    delete vect->trVectorSection;
+    vect->trVectorSection = newV;
+    
+    return true;
+}
+
 int TDB::rotate(int id){
     TRnode* vect = trackNodes[id];
     TRnode* e1 = trackNodes[vect->TrPinS[0]];
@@ -830,6 +1051,42 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     
     refresh();
     return true;
+}
+
+void TDB::removeTrackFromTDB(int x, int y, int UiD){
+    y = -y;
+    qDebug() << "usune Track " << x << " " << y << " " << UiD; 
+    
+    TRnode *n;
+    for (int i = 1; i <= iTRnodes; i++) {
+            n = trackNodes[i];
+            if (n == NULL) continue;
+            if (n ->typ == -1) continue;
+            if (n->typ == 1) {
+                for(int j = 0; j < n->iTrv; j++)
+                    if(n->trVectorSection[j].param[2] == x)
+                        if(n->trVectorSection[j].param[3] == y)
+                            if(n->trVectorSection[j].param[4] == UiD){
+                                qDebug() << "jest";
+                                if(deleteFromVectorSection(i, j))
+                                    j = -1;
+                    }
+            }
+        }
+    for (int i = 1; i <= iTRnodes; i++) {
+            n = trackNodes[i];
+            if (n == NULL) continue;
+            if (n ->typ == -1) continue;
+            if (n->typ == 2) {
+                if(n->UiD[0] == x)
+                    if(n->UiD[1] == y)
+                        if(n->UiD[2] == UiD){
+                            qDebug() << "jest j";
+                            deleteJunction(i);
+                }
+            }
+        }
+    TDB::refresh();
 }
 
 void TDB::refresh() {

@@ -1,16 +1,16 @@
 ﻿# folder główny train sim
 
-#gameRoot = F:/train simulator
-gameRoot = C:/ts
+gameRoot = F:/train simulator
+#gameRoot = C:/ts
 
 # nazwa trasy (folderu) do wczytania
 
-routeName = cmk
+#routeName = cmk
 #routeName = bbb
 #routeName = poznan_tram
 #routeName = bkd2
 #routeName = www
-#routeName = ccc
+routeName = ccc
 #routeName = traska
 #routeName = aaa
 #routeName = ICE-HB

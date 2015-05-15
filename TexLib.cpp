@@ -64,7 +64,7 @@ int TexLib::addTex(QString pathid) {
         AceLib* t = new AceLib();
         t->texture = newFile;
         t->start();
-    } else if(tType == "painttex"){
+    } else if(tType == ":painttex"){
         PaintTexLib* t = new PaintTexLib();
         t->texture = newFile;
         //t->start();

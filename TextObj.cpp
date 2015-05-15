@@ -78,7 +78,7 @@ void TextObj::init(){
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 1.0;
 
-    this->setMaterial(new QString(text+".paintTex"));
+    this->setMaterial(new QString(text+".:paintTex"));
     OglObj::init(punkty, ptr, this->VNT, GL_TRIANGLES);
     delete punkty;
 }

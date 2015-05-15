@@ -380,6 +380,10 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_Delete:
                 if(selectedObj != NULL){
                     selectedObj->loaded = false;
+                    selectedObj->modified = true;
+                    if(selectedObj->type == "trackobj"){
+                        route->removeTrackFromTDB(selectedObj);
+                    }
                 }
                 break;                
             case Qt::Key_C:
