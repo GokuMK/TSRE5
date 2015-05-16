@@ -20,9 +20,17 @@ ToolBox::ToolBox(QString name)
     vbox->addWidget(&refTrack);
     vbox->addWidget(&trackList);
     vbox->addWidget(&lastItems);
-    lastItems.setMinimumHeight(200);
-    trackList.setMinimumHeight(200);
-    refList.setMinimumHeight(200);
+    vbox->setContentsMargins(0,1,5,1);
+    lastItems.setMinimumHeight(170);
+    //QSizePolicy* sizePolicy = new QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    //astItems.setSizePolicy(*sizePolicy);
+    //) QSizePolicy::MinimumExpanding);
+    //lastItems.setMaximumHeight(999);
+    trackList.setMinimumHeight(170);
+    refList.setMinimumHeight(170);
+   
+    refClass.setStyleSheet("combobox-popup: 0;");
+    refTrack.setStyleSheet("combobox-popup: 0;");
 
     vbox->addStretch(1);
     this->setLayout(vbox);

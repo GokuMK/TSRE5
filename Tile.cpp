@@ -90,6 +90,7 @@ void Tile::load() {
         return;
     FileBuffer* data = ReadFile::read(file);
     //qDebug() << "Date:" << data->length;
+
     data->off = 0;
     sh = "Tr_Worldfile";
     ParserX::szukajsekcji1(sh, data);

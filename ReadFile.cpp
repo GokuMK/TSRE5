@@ -8,7 +8,7 @@ FileBuffer* ReadFile::read(QFile* file) {
     QByteArray fileData = file->readAll();
     unsigned char* in = (unsigned char*)fileData.data();
     unsigned char* out = NULL;
-    unsigned char *data = NULL;
+    unsigned char* data = NULL;
     int maxSize = 25000000;
     int nLength = 0;
     //for (int i = 0; i < 100; i++)
@@ -62,7 +62,8 @@ FileBuffer* ReadFile::readRAW(QFile* file) {
     unsigned char* in = (unsigned char*)fileData.data();
     int nLength = fileData.length();
     
-    unsigned char* data = new unsigned char[nLength];
+    unsigned char* data = new unsigned char[nLength+1];
+    data[nLength] = 0;
     std::copy(in, in + nLength, data);
     delete in;
     return new FileBuffer(data,nLength);

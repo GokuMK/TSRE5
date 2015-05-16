@@ -17,8 +17,15 @@ bool Game::deleteTrWatermarks = false;
 bool Game::deleteViewDbSpheres = false;
 bool Game::createNewRoutes = false;
 bool Game::writeEnabled = false;
+bool Game::writeTDB = false;
+bool Game::systemTheme = false;
+bool Game::toolsHidden = false;
+
+Window* Game::window = NULL;
+LoadWindow* Game::loadWindow = NULL;
 
 void Game::load() {
+    
     QString sh;
     QString path;
     path = "settings.txt";
@@ -65,8 +72,53 @@ void Game::load() {
         if(val == "writeEnabled")
             if(args[1].trimmed().toLower() == "true")
                 writeEnabled = true;
+        if(val == "writeTDB")
+            if(args[1].trimmed().toLower() == "true")
+                writeTDB = true;
+        if(val == "systemTheme")
+            if(args[1].trimmed().toLower() == "true")
+                systemTheme = true;
+        if(val == "toolsHidden")
+            if(args[1].trimmed().toLower() == "true")
+                toolsHidden = true;
     }
 
+}
+
+bool Game::checkSettings(){
+    window = new Window();
+    window->resize(1280, 720);
+    
+    loadWindow = new LoadWindow();
+    QObject::connect(window, SIGNAL(exitNow()),
+                      loadWindow, SLOT(exitNow()));
+    
+    QObject::connect(loadWindow, SIGNAL(showMainWindow()),
+                      window, SLOT(show()));
+    
+    if(Game::checkRoot(Game::root) && (Game::checkRoute(Game::route) || Game::createNewRoutes))
+        Game::window->show();
+    else
+        Game::loadWindow->show();
+}
+
+bool Game::checkRoot(QString dir){
+    QFile file(dir + "/routes");
+    if (!file.exists()) return false;
+    file.setFileName(dir + "/global");
+    if (!file.exists()) return false;
+    file.setFileName(dir + "/global/tsection.dat");
+    if (!file.exists()) return false;
+    
+    return true;
+}
+
+bool Game::checkRoute(QString dir){
+    QFile file;
+    file.setFileName(Game::root+"/routes/"+dir+"/"+dir+".trk");
+    //qDebug() << file.fileName();
+    //qDebug() << file.exists();
+    return file.exists();
 }
 
 void Game::check_coords(int& x, int& z, float* p) {

@@ -95,45 +95,45 @@ void SFile::Load(QString path) {
         //for (int i = 0; i < 100; i++)
         //qDebug() << ":" << (char)bufor->data[i];
         QString sh = "shape";
-        ParserX::szukajsekcji1(sh, bufor);
+        if(!ParserX::szukajsekcji1(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         sh = "shader_names";
-        ParserX::szukajsekcji1(sh, bufor);
+        if(!ParserX::szukajsekcji1(sh, bufor)) return;
         SFileX::odczytajshaders(bufor, this);
         
         sh = "points";
-        ParserX::szukajsekcji1(sh, bufor);
+        if(!ParserX::szukajsekcji1(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         SFileX::odczytajpunkty(bufor, this);
         getSize();
         
         sh = "uv_points";
-        ParserX::szukajsekcji1(sh, bufor);
+        if(!ParserX::szukajsekcji1(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje "<< sh <<" na " << bufor->off;
         SFileX::odczytajuvpunkty(bufor, this);
 
         sh = "normals";
-        ParserX::szukajsekcji1(sh, bufor);
+        if(!ParserX::szukajsekcji1(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje "<< sh <<" na " << bufor->off;
         SFileX::odczytajnormalne(bufor, this);
 
         sh = "matrices";
-        ParserX::szukajsekcji1(sh, bufor);
+        if(!ParserX::szukajsekcji1(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         SFileX::odczytajmatrices(bufor, this);
 
         sh = "images";
-        ParserX::szukajsekcji1(sh, bufor);
+        if(!ParserX::szukajsekcji1(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         SFileX::odczytajimages(bufor, this);
 
         sh = "textures";
-        ParserX::szukajsekcji1(sh, bufor);
+        if(!ParserX::szukajsekcji1(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         SFileX::odczytajtextures(bufor, this);
 
         sh = "vtx_states";
-        ParserX::szukajsekcji1(sh, bufor);
+        if(!ParserX::szukajsekcji1(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         SFileX::odczytajvtx_states(bufor, this);
 
@@ -147,7 +147,7 @@ void SFile::Load(QString path) {
         this->loaded = 1;
     }
     delete bufor;
-    
+
     for (int i = 0; i < ishaders; i++) {
         if(shader[i].name == "texdiff") shader[i].alpha = 1;
         else shader[i].alpha = 0;

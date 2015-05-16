@@ -1405,6 +1405,9 @@ void TDB::saveEmpty() {
 }
     
 void TDB::save() {
+    if(!Game::writeEnabled) return;
+    if(!Game::writeTDB) return;
+    
     while(deleteNulls());
     this->isInitLines = false;
     

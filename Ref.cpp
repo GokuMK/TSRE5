@@ -60,6 +60,7 @@ Ref::Ref(QString path) {
     //    qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
     //  //std::cout << " " << it->first << ":" << it->second;
     //}
+    selected = NULL;
 }
 
 Ref::Ref() {

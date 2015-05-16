@@ -17,10 +17,13 @@ class Window : public QWidget
 
 public:
     Window();
+    
+signals:
+    void exitNow();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
-
+    void closeEvent(QCloseEvent * event );
 private:
     GLWidget *glWidget;
     ToolBox *groupBox;

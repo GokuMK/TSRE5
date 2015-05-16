@@ -10,6 +10,7 @@ NaviBox::NaviBox() : QWidget(){
     vbox->addRow(yLabel,&yBox);
     vbox->addRow(" ",&tileInfo);
     vbox->addWidget(jumpButton);
+    vbox->setContentsMargins(0,1,5,1);
     //vbox->addStretch(1);
     this->setLayout(vbox);
     

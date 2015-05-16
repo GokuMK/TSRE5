@@ -64,8 +64,6 @@ void GLWidget::timerEvent(QTimerEvent * event) {
 
 void GLWidget::initializeGL() {
     
-    Game::load();
-    
     gluu = GLUU::get();
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
 
@@ -87,7 +85,7 @@ void GLWidget::initializeGL() {
     //sFile->Load("f:/train simulator/routes/cmk/shapes/cottage3.s");
     //tile = new Tile(-5303,-14963);
     route = new Route();
-    
+    if(!route->loaded) return;
     
     float * aaa = new float[2]{0,0};
     camera = new Camera(aaa);
@@ -112,11 +110,13 @@ void GLWidget::initializeGL() {
     setFocus();
     setMouseTracking(true);
     pointer3d = new Pointer3d();
+    selectedObj = NULL;
     
     emit routeLoaded(route);
 }
 
 void GLWidget::paintGL() {
+    if(!route->loaded) return;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //if (!selection)
     glClearColor(gluu->skyc[0], gluu->skyc[1], gluu->skyc[2], 1.0);
@@ -273,6 +273,7 @@ void GLWidget::resizeGL(int w, int h) {
 }
 
 void GLWidget::keyPressEvent(QKeyEvent * event) {
+    if(!route->loaded) return;
     camera->keyDown(event);
     switch (event->key()) {
         case 'M':
@@ -382,6 +383,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_Delete:
                 if(selectedObj != NULL){
                     route->deleteObj(selectedObj);
+                    selectedObj->unselect();
+                    selectedObj = NULL;
                 }
                 break;                
             case Qt::Key_C:
@@ -405,6 +408,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 //route->trackDB->setDefaultEnd(0);
                 //route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&selectedObj->position);
                 route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&lastNewObjPos);
+                selectedObj->unselect();
+                selectedObj = NULL;
                 break;
             case Qt::Key_X:
                 //route->refreshObj(selectedObj);
@@ -418,6 +423,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
 }
 
 void GLWidget::keyReleaseEvent(QKeyEvent * event) {
+    if(!route->loaded) return;
     camera->keyUp(event);
     if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
         switch (event->key()) {
@@ -431,6 +437,7 @@ void GLWidget::keyReleaseEvent(QKeyEvent * event) {
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event) {
+    if(!route->loaded) return;
     m_lastPos = event->pos();
     mousePressed = true;
     
@@ -438,7 +445,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         camera->MouseDown(event);
     } else {
         if(toolEnabled == "placeTool"){
-            if(selectedObj != NULL) 
+            if(selectedObj != NULL)
                 selectedObj->unselect();
             lastNewObjPosT[0] = camera->pozT[0];
             lastNewObjPosT[1] = camera->pozT[1];
@@ -473,11 +480,13 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent* event) {
+    if(!route->loaded) return;
     camera->MouseUp(event);
     mousePressed = false;
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event) {
+    if(!route->loaded) return;
     /*int dx = event->x() - m_lastPos.x();
     int dy = event->y() - m_lastPos.y();
 

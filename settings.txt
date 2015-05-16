@@ -9,28 +9,27 @@ gameRoot = C:/ts
 #routeName = bbb
 #routeName = poznan_tram
 #routeName = bkd2
-#routeName = www
-routeName = ccc
+#routeName = www45
+#routeName = ccc
 #routeName = traska
 #routeName = aaa
-#routeName = ICE-HB
+routeName = ICE-HB
 #routeName = tutorial
+#routeName = Warszawa - Kraków
 
 # start tile
-
 #startTileX = -5306
 #startTileY = 14961
 
 # route edit
-createNewIfNotExist = true
+#createNewIfNotExist = true
 writeEnabled = true
-
-# save
-
-deleteTrWatermarks = false
-deleteViewDbSpheres = false
+writeTDB = true
 #deleteTrWatermarks = true
 #deleteViewDbSpheres = true
 
-# różności
+# misc
+#systemTheme = true
+#toolsHidden = true
+
 

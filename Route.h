@@ -12,7 +12,7 @@ class Tile;
 class Route {
 public:
     std::unordered_map<int, Tile*> tile;
-    bool loaded;
+    bool loaded = false;
     int startTileX;
     int startTileY;
     float startpX;

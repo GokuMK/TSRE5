@@ -3,8 +3,9 @@
 #include <QDebug>
 #include <QtCore>
 #include <iostream>
-
+#include "Game.h"
 #include "window.h"
+#include "LoadWindow.h"
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg){
     const char symbols[] = { 'I', 'E', '!', 'X' };
@@ -14,18 +15,43 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 }
 
 int main(int argc, char *argv[]){
-     qInstallMessageHandler( myMessageOutput );
-     QApplication app(argc, argv);
-     Window window;
-     window.resize(window.sizeHint());
+    qInstallMessageHandler( myMessageOutput );
+    QApplication app(argc, argv);
+    
+    Game::load();
      
-     int desktopArea = QApplication::desktop()->width() *
-                      QApplication::desktop()->height();
-     int widgetArea = window.width() * window.height();
-     if (((float)widgetArea / (float)desktopArea) < 0.75f)
-         window.show();
-     else
-         window.showMaximized();
+    if(!Game::systemTheme){
+        app.setStyle(QStyleFactory::create("Fusion"));
+        QPalette darkPalette;
+        darkPalette.setColor(QPalette::Window, QColor(53,53,53));
+        darkPalette.setColor(QPalette::WindowText, Qt::white);
+        darkPalette.setColor(QPalette::Base, QColor(25,25,25));
+        darkPalette.setColor(QPalette::AlternateBase, QColor(53,53,53));
+        darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+        darkPalette.setColor(QPalette::ToolTipText, Qt::white);
+        darkPalette.setColor(QPalette::Text, Qt::white);
+        darkPalette.setColor(QPalette::Button, QColor(53,53,53));
+        darkPalette.setColor(QPalette::ButtonText, Qt::white);
+        darkPalette.setColor(QPalette::BrightText, Qt::red);
+        darkPalette.setColor(QPalette::Link, QColor(220, 90, 0));
+        darkPalette.setColor(QPalette::Highlight, QColor(220, 90, 0));
+        darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+        app.setPalette(darkPalette);
+        app.setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
+    }
+    
+    //Game::window.resize(1280, 720);
+    //window.resize(window.sizeHint());
+     
+    //int desktopArea = QApplication::desktop()->width() *
+    //                  QApplication::desktop()->height();
+    //int widgetArea = window.width() * window.height();
+    //if (((float)widgetArea / (float)desktopArea) < 1.0f)
+    //    window.show();
+    //else
+    //    window.showMaximized();
 
-     return app.exec();
+    //Game::loadWindow.show();
+    Game::checkSettings();
+    return app.exec();
  }

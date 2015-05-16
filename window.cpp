@@ -2,6 +2,8 @@
 
 #include "glwidget.h"
 #include "window.h"
+#include "Game.h"
+#include <QDebug>
 
 Window::Window() {
     groupBox = new ToolBox("ToolBox");
@@ -12,16 +14,18 @@ Window::Window() {
     box->setMaximumWidth(250);
     box->setMinimumWidth(250);
     QVBoxLayout *mainLayout2 = new QVBoxLayout;
+    mainLayout2->setContentsMargins(0,0,0,0);
     mainLayout2->addWidget(groupBox);
     mainLayout2->addWidget(naviBox);
     mainLayout2->setAlignment(naviBox, Qt::AlignBottom);
-    mainLayout2->setContentsMargins(0,0,0,0);
     box->setLayout(mainLayout2);
+    if(Game::toolsHidden)
+        box->hide();
     
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->addWidget(glWidget);
     mainLayout->addWidget(box);
-    //mainLayout->addWidget(groupBox);
+    //mainLayout->addWidget(naviBox);
     setLayout(mainLayout);
     mainLayout->setContentsMargins(1,1,1,1);
     
@@ -41,6 +45,7 @@ Window::Window() {
     
     QObject::connect(glWidget, SIGNAL(itemSelected(int)),
                       groupBox, SLOT(itemSelected(int)));
+
 }
 
 void Window::keyPressEvent(QKeyEvent *e) {
@@ -50,3 +55,13 @@ void Window::keyPressEvent(QKeyEvent *e) {
     else
         QWidget::keyPressEvent(e);
 }
+
+void Window::closeEvent(QCloseEvent * event ){
+    //qDebug() << "Aaaa";
+    emit exitNow();
+    QWidget::closeEvent(event);
+}
+
+//void Window::exitNow(){
+//    this->hide();
+//}

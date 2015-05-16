@@ -61,7 +61,8 @@ void WorldObj::set(QString sh, FileBuffer* data) {
         qDirection[1] = ParserX::parsujr(data);
         qDirection[2] = ParserX::parsujr(data);
         qDirection[3] = ParserX::parsujr(data);
-        jestPQ++;
+        if(fabs(qDirection[0]) + fabs(qDirection[1]) + fabs(qDirection[2]) + fabs(qDirection[3]) < 3)
+            jestPQ++;
         return;
     }
     if (sh == ("matrix3x3")) {

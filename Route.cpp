@@ -32,6 +32,8 @@ Route::Route() {
     this->loadTrk();
     this->trackDB = new TDB((Game::root + "/routes/" + Game::route + "/" + Game::route + ".tdb"));
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::route + ".ref"));
+    
+    loaded = true;
 }
 
 Route::Route(const Route& orig) {
@@ -89,6 +91,8 @@ void Route::transalteObj(int x, int z, float px, float py, float pz, int uid) {
 }
 
 void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, bool selection) {
+    if(!loaded) return;
+    
     int mintile = -2;
     int maxtile = 2;
 
@@ -153,6 +157,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q) {
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) {
+    if(r == NULL) return NULL;
     Game::check_coords(x, z, p);
 
     Tile *tTile;
