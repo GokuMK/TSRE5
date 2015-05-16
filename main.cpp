@@ -33,8 +33,8 @@ int main(int argc, char *argv[]){
         darkPalette.setColor(QPalette::Button, QColor(53,53,53));
         darkPalette.setColor(QPalette::ButtonText, Qt::white);
         darkPalette.setColor(QPalette::BrightText, Qt::red);
-        darkPalette.setColor(QPalette::Link, QColor(220, 90, 0));
-        darkPalette.setColor(QPalette::Highlight, QColor(220, 90, 0));
+        darkPalette.setColor(QPalette::Link, QColor(240, 130, 0));
+        darkPalette.setColor(QPalette::Highlight, QColor(240, 130, 0));
         darkPalette.setColor(QPalette::HighlightedText, Qt::black);
         app.setPalette(darkPalette);
         app.setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");

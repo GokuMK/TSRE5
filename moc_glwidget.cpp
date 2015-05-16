@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GLWidget_t {
-    QByteArrayData data[17];
-    char stringdata[109];
+    QByteArrayData data[19];
+    char stringdata[118];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,13 +45,15 @@ QT_MOC_LITERAL(12, 76, 7), // "cleanup"
 QT_MOC_LITERAL(13, 84, 10), // "enableTool"
 QT_MOC_LITERAL(14, 95, 4), // "name"
 QT_MOC_LITERAL(15, 100, 6), // "jumpTo"
-QT_MOC_LITERAL(16, 107, 1) // "y"
+QT_MOC_LITERAL(16, 107, 1), // "y"
+QT_MOC_LITERAL(17, 109, 3), // "msg"
+QT_MOC_LITERAL(18, 113, 4) // "text"
 
     },
     "GLWidget\0routeLoaded\0\0Route*\0a\0"
     "itemSelected\0pointer\0naviInfo\0x\0z\0all\0"
     "hidden\0cleanup\0enableTool\0name\0jumpTo\0"
-    "y"
+    "y\0msg\0text"
 };
 #undef QT_MOC_LITERAL
 
@@ -61,7 +63,7 @@ static const uint qt_meta_data_GLWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -69,14 +71,15 @@ static const uint qt_meta_data_GLWidget[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   44,    2, 0x06 /* Public */,
-       5,    1,   47,    2, 0x06 /* Public */,
-       7,    4,   50,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
+       5,    1,   52,    2, 0x06 /* Public */,
+       7,    4,   55,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      12,    0,   59,    2, 0x0a /* Public */,
-      13,    1,   60,    2, 0x0a /* Public */,
-      15,    2,   63,    2, 0x0a /* Public */,
+      12,    0,   64,    2, 0x0a /* Public */,
+      13,    1,   65,    2, 0x0a /* Public */,
+      15,    2,   68,    2, 0x0a /* Public */,
+      17,    1,   73,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -87,6 +90,7 @@ static const uint qt_meta_data_GLWidget[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   14,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    8,   16,
+    QMetaType::Void, QMetaType::QString,   18,
 
        0        // eod
 };
@@ -102,6 +106,7 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 3: _t->cleanup(); break;
         case 4: _t->enableTool((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 5: _t->jumpTo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 6: _t->msg((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -155,13 +160,13 @@ int GLWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }

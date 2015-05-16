@@ -73,7 +73,6 @@ void Tile::wczytajObiekty() {
         WorldObj* obj = (WorldObj*) it->second;
 
         obj->load(x, z);
-        qDebug() << obj->UiD <<" m "<< maxUiD;
         if(obj->UiD > maxUiD) maxUiD = obj->UiD;
     }
     loaded = 1;

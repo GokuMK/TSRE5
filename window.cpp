@@ -3,6 +3,7 @@
 #include "glwidget.h"
 #include "window.h"
 #include "Game.h"
+#include "AceLib.h"
 #include <QDebug>
 
 Window::Window() {
@@ -10,6 +11,7 @@ Window::Window() {
     naviBox = new NaviBox();
     glWidget = new GLWidget;
     
+    QWidget* main = new QWidget();
     QWidget* box = new QWidget();
     box->setMaximumWidth(250);
     box->setMinimumWidth(250);
@@ -19,17 +21,39 @@ Window::Window() {
     mainLayout2->addWidget(naviBox);
     mainLayout2->setAlignment(naviBox, Qt::AlignBottom);
     box->setLayout(mainLayout2);
-    if(Game::toolsHidden)
-        box->hide();
     
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->addWidget(glWidget);
     mainLayout->addWidget(box);
     //mainLayout->addWidget(naviBox);
-    setLayout(mainLayout);
-    mainLayout->setContentsMargins(1,1,1,1);
+    main->setLayout(mainLayout);
+    mainLayout->setContentsMargins(0,0,0,0);
     
-    setWindowTitle(tr("TSRE5"));
+    this->setCentralWidget(main);
+    setWindowTitle(tr("TSRE5 v0.5"));
+    
+    saveAction = new QAction(tr("&Save"), this);
+    QObject::connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
+    createPathsAction = new QAction(tr("&Save Paths"), this);
+    QObject::connect(createPathsAction, SIGNAL(triggered()), this, SLOT(createPaths()));
+    exitAction = new QAction(tr("&Exit"), this);
+    QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
+    routeMenu = menuBar()->addMenu(tr("&Route"));
+    routeMenu->addAction(saveAction);
+    routeMenu->addAction(createPathsAction);
+    routeMenu->addAction(exitAction);
+    
+    editMenu = menuBar()->addMenu(tr("&Edit"));
+    viewMenu = menuBar()->addMenu(tr("&View"));
+    aboutAction = new QAction(tr("&About"), this);
+    QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
+    helpMenu = menuBar()->addMenu(tr("&Help"));
+    helpMenu->addAction(aboutAction);
+    
+    if(Game::toolsHidden){
+        box->hide();
+        menuBar()->hide();
+    }
     
     QObject::connect(glWidget, SIGNAL(naviInfo(int, int, int, int)),
                       naviBox, SLOT(naviInfo(int, int, int, int)));
@@ -46,6 +70,11 @@ Window::Window() {
     QObject::connect(glWidget, SIGNAL(itemSelected(int)),
                       groupBox, SLOT(itemSelected(int)));
 
+    QObject::connect(this, SIGNAL(sendMsg(QString)),
+                      glWidget, SLOT(msg(QString)));
+    
+    QObject::connect(this, SIGNAL(exitNow()),
+                      &aboutWindow, SLOT(exitNow()));
 }
 
 void Window::keyPressEvent(QKeyEvent *e) {
@@ -60,6 +89,18 @@ void Window::closeEvent(QCloseEvent * event ){
     //qDebug() << "Aaaa";
     emit exitNow();
     QWidget::closeEvent(event);
+}
+
+void Window::save(){
+    emit sendMsg(QString("save"));
+}
+
+void Window::createPaths(){
+    emit sendMsg(QString("createPaths"));
+}
+
+void Window::about(){
+    aboutWindow.show();
 }
 
 //void Window::exitNow(){

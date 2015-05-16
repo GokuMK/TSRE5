@@ -35,6 +35,7 @@ public slots:
     void cleanup();
     void enableTool(QString name);
     void jumpTo(int x, int y);
+    void msg(QString text);
 
 signals:
     void routeLoaded(Route * a);

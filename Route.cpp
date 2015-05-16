@@ -381,12 +381,12 @@ void Route::saveTrk() {
 
     out << "SIMISA@@@@@@@@@@JINX0r1t______" << "\n\n";
     out << "Tr_RouteFile (" << "\n";
-    out << "	RouteID ( " << Game::route << " )" << "\n";
-    out << "	Name ( " << Game::route << " )" << "\n";
-    out << "	Description ( "" )" << "\n";
-    out << "	Graphic ( " << Game::route << ".ace )" << "\n";
+    out << "	RouteID ( \"" << Game::route << "\" )" << "\n";
+    out << "	Name ( \"" << Game::route << "\" )" << "\n";
+    out << "	Description ( \"\" )" << "\n";
+    out << "	Graphic ( \"" << Game::route << ".ace\" )" << "\n";
     out << "	LoadingScreen ( Load.ace )" << "\n";
-    out << "	FileName ( " << Game::route << " )" << "\n";
+    out << "	FileName ( \"" << Game::route << "\" )" << "\n";
     out << "	Electrified ( 00000000 )" << "\n";
     out << "	Mountains ( 00000000 )" << "\n";
     out << "	OverheadWireHeight ( 7.23 )" << "\n";

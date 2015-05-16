@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Window_t {
-    QByteArrayData data[3];
-    char stringdata[16];
+    QByteArrayData data[8];
+    char stringdata[52];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -31,10 +31,16 @@ static const qt_meta_stringdata_Window_t qt_meta_stringdata_Window = {
     {
 QT_MOC_LITERAL(0, 0, 6), // "Window"
 QT_MOC_LITERAL(1, 7, 7), // "exitNow"
-QT_MOC_LITERAL(2, 15, 0) // ""
+QT_MOC_LITERAL(2, 15, 0), // ""
+QT_MOC_LITERAL(3, 16, 7), // "sendMsg"
+QT_MOC_LITERAL(4, 24, 4), // "text"
+QT_MOC_LITERAL(5, 29, 4), // "save"
+QT_MOC_LITERAL(6, 34, 11), // "createPaths"
+QT_MOC_LITERAL(7, 46, 5) // "about"
 
     },
-    "Window\0exitNow\0"
+    "Window\0exitNow\0\0sendMsg\0text\0save\0"
+    "createPaths\0about"
 };
 #undef QT_MOC_LITERAL
 
@@ -44,17 +50,29 @@ static const uint qt_meta_data_Window[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   19,    2, 0x06 /* Public */,
+       1,    0,   39,    2, 0x06 /* Public */,
+       3,    1,   40,    2, 0x06 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags
+       5,    0,   43,    2, 0x0a /* Public */,
+       6,    0,   44,    2, 0x0a /* Public */,
+       7,    0,   45,    2, 0x0a /* Public */,
 
  // signals: parameters
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    4,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -66,6 +84,10 @@ void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         Window *_t = static_cast<Window *>(_o);
         switch (_id) {
         case 0: _t->exitNow(); break;
+        case 1: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: _t->save(); break;
+        case 3: _t->createPaths(); break;
+        case 4: _t->about(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -77,12 +99,17 @@ void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
                 *result = 0;
             }
         }
+        {
+            typedef void (Window::*_t)(QString );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Window::sendMsg)) {
+                *result = 1;
+            }
+        }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject Window::staticMetaObject = {
-    { &QWidget::staticMetaObject, qt_meta_stringdata_Window.data,
+    { &QMainWindow::staticMetaObject, qt_meta_stringdata_Window.data,
       qt_meta_data_Window,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
@@ -97,22 +124,22 @@ void *Window::qt_metacast(const char *_clname)
     if (!_clname) return Q_NULLPTR;
     if (!strcmp(_clname, qt_meta_stringdata_Window.stringdata))
         return static_cast<void*>(const_cast< Window*>(this));
-    return QWidget::qt_metacast(_clname);
+    return QMainWindow::qt_metacast(_clname);
 }
 
 int Window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QWidget::qt_metacall(_c, _id, _a);
+    _id = QMainWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 5)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 1;
+        _id -= 5;
     }
     return _id;
 }
@@ -121,5 +148,12 @@ int Window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 void Window::exitNow()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
+}
+
+// SIGNAL 1
+void Window::sendMsg(QString _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

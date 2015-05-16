@@ -522,6 +522,18 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     }
 }
 
+void GLWidget::msg(QString text){
+    qDebug() << text;
+    if(text == "save"){
+        route->save();
+        return;
+    }
+    if(text == "createPaths"){
+        route->createNewPaths();
+        return;
+    }
+}
+
 void GLWidget::enableTool(QString name){
     qDebug() << name;
     toolEnabled = name;

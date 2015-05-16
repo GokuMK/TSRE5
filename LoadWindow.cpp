@@ -131,6 +131,7 @@ void LoadWindow::handleBrowseButton(){
 void LoadWindow::routeLoad(){
     if(this->newRoute){
         if(!Game::checkRoot(Game::root)) return;
+        if(nowaTrasa->text().length() < 2) return;
         Game::route = nowaTrasa->text();
         Game::writeEnabled = true;
         Game::createNewRoutes = true;

@@ -79,6 +79,7 @@
         <itemPath>zconf.h</itemPath>
         <itemPath>zlib.h</itemPath>
       </logicalFolder>
+      <itemPath>AboutWindow.h</itemPath>
       <itemPath>Game.h</itemPath>
       <itemPath>LoadWindow.h</itemPath>
       <itemPath>NaviBox.h</itemPath>
@@ -164,6 +165,7 @@
         <itemPath>TerrainLib.cpp</itemPath>
         <itemPath>Tile.cpp</itemPath>
       </logicalFolder>
+      <itemPath>AboutWindow.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
       <itemPath>LoadWindow.cpp</itemPath>
       <itemPath>NaviBox.cpp</itemPath>
@@ -201,6 +203,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="AboutWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="AboutWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="AceLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="AceLib.h" ex="false" tool="3" flavor2="0">
@@ -460,6 +466,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="AboutWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="AboutWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="AceLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="AceLib.h" ex="false" tool="3" flavor2="0">

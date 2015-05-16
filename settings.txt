@@ -9,15 +9,15 @@ gameRoot = C:/ts
 #routeName = bbb
 #routeName = poznan_tram
 #routeName = bkd2
-#routeName = www45
-routeName = ccc
+routeName = www45
+#routeName = ccc
 #routeName = traska
 #routeName = aaa
 #routeName = ICE-HB
 #routeName = tutorial
 #routeName = Warszawa - Kraków
 
-# start tile
+# optional start tile
 #startTileX = -5306
 #startTileY = 14961
 
