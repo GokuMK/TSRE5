@@ -25,6 +25,10 @@ WorldObj::WorldObj(const WorldObj& orig) {
 WorldObj::~WorldObj() {
 }
 
+bool WorldObj::allowNew(){
+    return false;
+}
+
 void WorldObj::load(int x, int y) {
     this->x = x;
     this->y = y;

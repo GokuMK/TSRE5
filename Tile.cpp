@@ -73,6 +73,7 @@ void Tile::wczytajObiekty() {
         WorldObj* obj = (WorldObj*) it->second;
 
         obj->load(x, z);
+        qDebug() << obj->UiD <<" m "<< maxUiD;
         if(obj->UiD > maxUiD) maxUiD = obj->UiD;
     }
     loaded = 1;
@@ -254,6 +255,10 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData) {
     
     WorldObj* nowy;
     if(!createObj(&nowy, itemData->type)) return NULL;
+    if(!nowy->allowNew()) {
+        qDebug() << itemData->type << " <- object not supported yet ";
+        return NULL;
+    }
     
     if(nowy->type == "trackobj"){
         nowy->set("sectionidx", itemData->value);
@@ -265,6 +270,7 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData) {
     
     nowy->initPQ(p, q);
     nowy->UiD = ++maxUiD;
+    qDebug() << itemData->type << " " << itemData->filename << nowy->UiD;
     //nowy->fileName = itemData->filename;
     nowy->load(x, z);
     obiekty[jestObiektow++] = nowy;

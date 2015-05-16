@@ -184,7 +184,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
 
         WorldObj* nowy = tTile->placeObject(p, q, r);
 
-        if (r->type == "trackobj") {
+        if (r->type == "trackobj" && nowy != NULL) {
             //this->trackDB->placeTrack(x, z, p, q, r->value, nowy->UiD);
             this->trackDB->findPosition(x, z, p, q, r->value, nowy->UiD);
             //findPosition

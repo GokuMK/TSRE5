@@ -11,6 +11,7 @@ public:
     TrackObj();
     TrackObj(const TrackObj& orig);
     virtual ~TrackObj();
+    bool allowNew();
     void load(int x, int y);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);

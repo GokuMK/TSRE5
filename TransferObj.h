@@ -19,7 +19,7 @@ public:
     TransferObj();
     TransferObj(const TransferObj& orig);
     virtual ~TransferObj();
-    
+    bool allowNew();
     void load(int x, int y);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);

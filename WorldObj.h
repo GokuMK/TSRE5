@@ -10,13 +10,13 @@
 
 class WorldObj {
 public:
-    unsigned int UiD;
+    unsigned int UiD = 0;
     QString fileName;
     float position[3];
     float qDirection[4];
     float matrix[16];
     int staticDetailLevel = -1;
-    unsigned int staticFlags;
+    unsigned int staticFlags = 0;
     unsigned int vDbId = 4294967295;
     int collideFlags;
     QString type;
@@ -46,6 +46,7 @@ public:
     void setQdirection(float* q);
     void setNewQdirection();
     void setMartix();
+    virtual bool allowNew();
     virtual void deleteVBO();
     virtual void translate(float px, float py, float pz);
     virtual void rotate(float x, float y, float z);

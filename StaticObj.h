@@ -10,6 +10,7 @@ public:
     StaticObj();
     StaticObj(const StaticObj& orig);
     virtual ~StaticObj();
+    bool allowNew();
     void load(int x, int y);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
@@ -17,6 +18,7 @@ public:
     bool getBorder(float* border);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
+
 };
 
 #endif	/* STATICOBJ_H */

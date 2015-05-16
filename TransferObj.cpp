@@ -13,6 +13,7 @@
 TransferObj::TransferObj() {
     this->width = 10;
     this->height = 10;
+    this->texture = "shadwrct.ace";
 }
 
 TransferObj::TransferObj(const TransferObj& orig) {
@@ -32,6 +33,10 @@ void TransferObj::load(int x, int y) {
     this->init = false;
     this->skipLevel = 3;
     this->modified = false;
+}
+
+bool TransferObj::allowNew(){
+    return true;
 }
 
 void TransferObj::set(QString sh, QString val){

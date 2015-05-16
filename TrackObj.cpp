@@ -39,6 +39,10 @@ void TrackObj::load(int x, int y) {
     setMartix();
 }
 
+bool TrackObj::allowNew(){
+    return true;
+}
+
 void TrackObj::set(QString sh, int val) {
     if (sh == ("sectionidx")) {
         sectionIdx = val;

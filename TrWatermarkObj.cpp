@@ -13,13 +13,13 @@
 
 TrWatermarkObj::TrWatermarkObj() {
     this->shape = -1;
-    this->UiD = -1;
+    this->UiD = 0;
     this->dstLevel = 0;
     this->loaded = false;
 }
 
 TrWatermarkObj::TrWatermarkObj(int level) {
-    this->UiD = -1;
+    this->UiD = 0;
     this->dstLevel = level;
     this->shape = -1;
     this->loaded = false;

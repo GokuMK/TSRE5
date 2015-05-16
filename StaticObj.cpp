@@ -16,6 +16,10 @@ StaticObj::StaticObj() {
     this->modified = false;
 }
 
+bool StaticObj::allowNew(){
+    return true;
+}
+
 StaticObj::StaticObj(const StaticObj& orig) {
 }
 
@@ -31,7 +35,7 @@ void StaticObj::load(int x, int y) {
     this->loaded = true;
     this->size = -1;
     this->skipLevel = 1;
-    
+
     setMartix();
 }
 
