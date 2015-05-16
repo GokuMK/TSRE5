@@ -30,7 +30,7 @@ Window::Window() {
     mainLayout->setContentsMargins(0,0,0,0);
     
     this->setCentralWidget(main);
-    setWindowTitle(tr("TSRE5 v0.5"));
+    setWindowTitle(tr("TSRE5 v0.501"));
     
     saveAction = new QAction(tr("&Save"), this);
     QObject::connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));

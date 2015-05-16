@@ -121,10 +121,11 @@ QString ParserX::nazwasekcji_inside(FileBuffer* bufor){
     while (bufor->length >= bufor->off + 2) {
         b = bufor->get();
         bufor->off++;
-        if (b == 40) {
+        if (b == 40 && czytam == 0) {
             poziom++;
         }
-        if (b == 41) {
+
+        if (b == 41 && czytam == 0) {
             poziom--;
         }
         if (poziom > 0) continue;

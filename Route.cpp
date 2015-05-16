@@ -30,8 +30,9 @@ Route::Route() {
     }
 
     this->loadTrk();
-    this->trackDB = new TDB((Game::root + "/routes/" + Game::route + "/" + Game::route + ".tdb"));
-    this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::route + ".ref"));
+    qDebug() << Game::routeName;
+    this->trackDB = new TDB((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".tdb"));
+    this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
     
     loaded = true;
 }
@@ -55,12 +56,21 @@ void Route::loadTrk() {
     QString sh = "Tr_RouteFile";
     ParserX::szukajsekcji1(sh, data);
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+        //qDebug() << sh;
         if (sh == ("routestart")) {
             startTileX = ParserX::parsujr(data);
             startTileY = ParserX::parsujr(data);
+            //qDebug() << startTileX << startTileY;
+            //break;
             startpX = ParserX::parsujr(data);
             startpZ = ParserX::parsujr(data);
-            break;
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("filename")) {
+            Game::routeName = ParserX::odczytajtc(data);
+            ParserX::pominsekcje(data);
+            continue;
         }
         ParserX::pominsekcje(data);
     }

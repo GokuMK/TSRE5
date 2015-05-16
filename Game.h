@@ -9,6 +9,7 @@ class Game {
 public:
     static QString root;
     static QString route;
+    static QString routeName;
     static float objectLod;
     static int allowObjLag;
     static int maxObjLag;

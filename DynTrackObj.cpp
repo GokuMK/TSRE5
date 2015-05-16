@@ -516,12 +516,245 @@ void DynTrackObj::genShape() {
         }
         //krzywa
         if(sections[i].type==1){
-            if(sections[i].a>0) continue;
+            float kierunek = 1;
+            if(sections[i].a > 0){
+                kierunek = -1;
+            }
             float aa = 0;
             float angle;
-            for(angle = 0; angle>sections[i].a; angle-=0.03){
-                if(sections[i].a-angle<-0.03) aa = -0.03;
-                else aa = sections[i].a-angle;
+            float angle2;
+            for(angle = 0, angle2 = 0; angle2>sections[i].a*kierunek; angle-=0.03*kierunek,angle2-=0.03){
+                if(sections[i].a*kierunek-angle2<-0.03) 
+                    aa = -0.03*kierunek;
+                else 
+                    aa = (sections[i].a*kierunek-angle2)*kierunek;
+                //podklady
+                b1.set(-2.5, 0.0);
+                a1.set(2.5, 0.0);
+                a.set(-2.5, 0.0);
+                b.set(2.5, 0.0);
+                a1.rotate(angle, sections[i].r*kierunek);
+                b1.rotate(angle, sections[i].r*kierunek);           
+                a.rotate(angle+aa, sections[i].r*kierunek);
+                b.rotate(angle+aa, sections[i].r*kierunek);
+                a1.rotate(offrot, 0);
+                b1.rotate(offrot, 0);
+                a.rotate(offrot, 0);
+                b.rotate(offrot, 0);
+                dl.set(0.0, 0.0);
+                dl.rotate(aa, sections[i].r); 
+                float dlugosc = dl.getDlugosc();
+                    
+                pd[ptr++] = offpos.x+a1.x;  pd[ptr++] = 0.2; pd[ptr++] = offpos.y+a1.y;
+                pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
+                pd[ptr++] = -0.139000;      pd[ptr++] = -1.0;
+                    
+                pd[ptr++] = offpos.x+b1.x;  pd[ptr++] = 0.2; pd[ptr++] = offpos.y+b1.y;
+                pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
+                pd[ptr++] = 0.862000;       pd[ptr++] = -1.0;
+                    
+                pd[ptr++] = offpos.x+a.x;   pd[ptr++] = 0.2; pd[ptr++] = offpos.y+a.y;
+                pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
+                pd[ptr++] = 0.862000;       pd[ptr++] = -1.0 + 0.2*dlugosc;
+                  
+                pd[ptr++] = offpos.x+b.x;   pd[ptr++] = 0.2; pd[ptr++] = offpos.y+b.y;
+                pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
+                pd[ptr++] = -0.139000;      pd[ptr++] = -1.0 + 0.2*dlugosc;
+
+                pd[ptr++] = offpos.x+a1.x;  pd[ptr++] = 0.2; pd[ptr++] = offpos.y+a1.y;
+                pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
+                pd[ptr++] = -0.139000;      pd[ptr++] = -1.0;
+                    
+                pd[ptr++] = offpos.x+a.x;   pd[ptr++] = 0.2; pd[ptr++] = offpos.y+a.y;
+                pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
+                pd[ptr++] = 0.862000;       pd[ptr++] = -1.0 + 0.2*dlugosc;
+                
+                //szyny
+                   
+                tx.set(-0.717500, 0.0);
+                ty.set(-0.867500, 0.0);
+              
+                for( int jj = 0; jj < 2; jj++){
+                    a.set(tx.x, 0.0);
+                    b.set(ty.x, 0.0);
+                    tx.rotate(angle, sections[i].r*kierunek);
+                    ty.rotate(angle, sections[i].r*kierunek);
+                    a.rotate(angle+aa, sections[i].r*kierunek);
+                    b.rotate(angle+aa, sections[i].r*kierunek);
+                    a.rotate(offrot, 0);
+                    b.rotate(offrot, 0);      
+                    tx.rotate(offrot, 0); 
+                    ty.rotate(offrot, 0); 
+                        sk[str++] = offpos.x+tx.x; sk[str++] = 0.325000; sk[str++] = offpos.y+tx.y;
+                        sk[str++] = 0.0; sk[str++] = 1.0; sk[str++] = 0.0;
+                        sk[str++] = 0.0; sk[str++] = 0.2270;
+                        
+                        sk[str++] = offpos.x+ty.x; sk[str++] = 0.325000; sk[str++] = offpos.y+ty.y;
+                        sk[str++] = 0.0; sk[str++] = 1.0; sk[str++] = 0.0;
+                        sk[str++] = 0.0; sk[str++] = 0.1330;
+                        
+                        sk[str++] = offpos.x+b.x; sk[str++] = 0.325000; sk[str++] = offpos.y+b.y;
+                        sk[str++] = 0.0; sk[str++] = 1.0; sk[str++] = 0.0;
+                        sk[str++] = 0.2; sk[str++] = 0.1330;
+                        
+                        sk[str++] = offpos.x+a.x; sk[str++] =  0.325000; sk[str++] =  offpos.y+a.y;
+                        sk[str++] = 0.0; sk[str++] =  1.0; sk[str++] = 0.0;
+                        sk[str++] = 0.2; sk[str++] =  0.2270;
+
+                        sk[str++] = offpos.x+tx.x; sk[str++] = 0.325000; sk[str++] = offpos.y+tx.y;
+                        sk[str++] = 0.0; sk[str++] = 1.0; sk[str++] = 0.0;
+                        sk[str++] = 0.0; sk[str++] = 0.2270;
+                        
+                        sk[str++] = offpos.x+b.x; sk[str++] = 0.325000; sk[str++] = offpos.y+b.y;
+                        sk[str++] = 0.0; sk[str++] = 1.0; sk[str++] = 0.0;
+                        sk[str++] = 0.2; sk[str++] = 0.1330;
+                    ty.set(0.717500, 0.0);
+                    tx.set(0.867500, 0.0);
+                }
+                ///
+                tx.set(0.717500, 0.0);
+                a.set(tx.x, 0.0);
+                tx.rotate(angle, sections[i].r*kierunek);
+                a.rotate(angle+aa, sections[i].r*kierunek);
+                a.rotate(offrot, 0); 
+                tx.rotate(offrot, 0); 
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.002;
+
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.07;
+                    
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.07;
+                    
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.002;
+                    
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.002;
+                    
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.07;
+                tx.set(-0.717500, 0.0);
+                a.set(tx.x, 0.0);
+                tx.rotate(angle, sections[i].r*kierunek);
+                a.rotate(angle+aa, sections[i].r*kierunek);
+                a.rotate(offrot, 0); 
+                tx.rotate(offrot, 0); 
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.07;
+                    
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.002;
+                    
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.002;
+
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.07;
+                    
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.07;
+                    
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.002;
+
+                tx.set(-0.867500, 0.0);
+                a.set(tx.x, 0.0);
+                tx.rotate(angle, sections[i].r*kierunek);
+                a.rotate(angle+aa, sections[i].r*kierunek);
+                a.rotate(offrot, 0); 
+                tx.rotate(offrot, 0); 
+
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.002;
+
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.07;
+                    
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;                
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.07;
+
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.002;
+                    
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.002;
+                    
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;                
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.07;
+
+                tx.set(0.867500, 0.0);
+                a.set(tx.x, 0.0);
+                tx.rotate(angle, sections[i].r*kierunek);
+                a.rotate(angle+aa, sections[i].r*kierunek);
+                a.rotate(offrot, 0); 
+                tx.rotate(offrot, 0); 
+
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.07;
+                    
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.002;
+                    
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.002;
+
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.07;
+                    
+                    sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.0; sk[str++] = 0.07;
+                    
+                    sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
+                    sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
+                    sk[str++] = 0.069; sk[str++] = 0.002;
+            }
+            a.set(0.0, 0.0);
+            a.rotate(sections[i].a, sections[i].r*kierunek);
+            a.rotate(offrot, 0);
+            offpos.x+=a.x; offpos.y+=a.y;
+            offrot+=sections[i].a;
+        }
+        /*if(sections[i].type==1){
+            //if(sections[i].a>0) continue;
+            float kierunek = 1;
+            float aaaaaaaa = 0;
+            if(sections[i].a > 0){
+                aaaaaaaa = 1;
+                kierunek = -1;
+            }
+            float aa = 0;
+            float angle;
+            float angle2;
+            for(angle = 0, angle2 = 0; angle2>sections[i].a*kierunek; angle-=0.03*kierunek,angle2-=0.03){
+                //if(sections[i].a*kierunek-angle2<-0.03) 
+                    aa = -0.03*kierunek;
+                //else 
+                //    aa = sections[i].a-angle;
 
                 //podklady
                 b1.set(-2.5, 0.0);
@@ -529,9 +762,13 @@ void DynTrackObj::genShape() {
                 a.set(-2.5, 0.0);
                 b.set(2.5, 0.0);
                 a1.rotate(angle, sections[i].r);
-                b1.rotate(angle, sections[i].r);                    
+                a1.rotate(M_PI*aaaaaaaa, 0);
+                b1.rotate(angle, sections[i].r);           
+                b1.rotate(M_PI*aaaaaaaa, 0);
                 a.rotate(angle+aa, sections[i].r);
+                a.rotate(M_PI*aaaaaaaa, 0);
                 b.rotate(angle+aa, sections[i].r);
+                b.rotate(M_PI*aaaaaaaa, 0);
                 a1.rotate(offrot, 0);
                 b1.rotate(offrot, 0);
                 a.rotate(offrot, 0);
@@ -730,10 +967,11 @@ void DynTrackObj::genShape() {
             }
             a.set(0.0, 0.0);
             a.rotate(sections[i].a, sections[i].r);
+            a.rotate(M_PI*aaaaaaaa, 0);
             a.rotate(offrot, 0);
             offpos.x+=a.x; offpos.y+=a.y;
             offrot+=sections[i].a;
-        }
+        }*/
     }
     //qDebug() << ptr << "" << str;
     

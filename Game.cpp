@@ -5,6 +5,7 @@
 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb";
+QString Game::routeName = "bbb";
 //QString Game::route = "traska";
 //QString Game::route = "cmk";
 int Game::allowObjLag = 1000;

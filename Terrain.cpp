@@ -31,6 +31,7 @@ Terrain::Terrain(float x, float y) {
         return;
     }
     jestF = readF(path + filename + "_f.raw");
+    //qDebug() << " ok";
     loaded = true;
 }
 
@@ -91,9 +92,12 @@ QString Terrain::getTileName(int x, int y) {
         }
     }
 
-    QString name = "-"+QString::number(numer, 16);
+    QString name = QString::number(numer, 16);
+    int len = 8 - name.length();
+    for(int i=0; i<len; i++)
+        name = "0"+name;
     //qDebug() << name;
-    return name;
+    return "-"+name;
 }
 
 void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov) {
