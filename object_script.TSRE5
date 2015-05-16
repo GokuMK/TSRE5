@@ -10,12 +10,14 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/GLMatrix.o
 ./build/Release/MinGW_QT_static-Windows/GLUU.o
 ./build/Release/MinGW_QT_static-Windows/Game.o
+./build/Release/MinGW_QT_static-Windows/LevelCrObj.o
 ./build/Release/MinGW_QT_static-Windows/LoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/NaviBox.o
 ./build/Release/MinGW_QT_static-Windows/OglObj.o
 ./build/Release/MinGW_QT_static-Windows/PaintTexLib.o
 ./build/Release/MinGW_QT_static-Windows/ParserX.o
 ./build/Release/MinGW_QT_static-Windows/Path.o
+./build/Release/MinGW_QT_static-Windows/PickupObj.o
 ./build/Release/MinGW_QT_static-Windows/PlatformObj.o
 ./build/Release/MinGW_QT_static-Windows/Pointer3d.o
 ./build/Release/MinGW_QT_static-Windows/ReadFile.o

@@ -38,6 +38,14 @@ void PlatformObj::set(QString sh, FileBuffer* data) {
         platformData = ParserX::parsuj16(data);
         return;
     }
+    if (sh == ("carfrequency")) {
+        carFrequency = ParserX::parsujr(data);
+        return;
+    }
+    if (sh == ("caravspeed")) {
+        carAvSpeed = ParserX::parsujr(data);
+        return;
+    }
     if (sh == ("tritemid")) {
         trItemId[trItemIdCount++] = ParserX::parsujr(data);
         trItemId[trItemIdCount++] = ParserX::parsujr(data);
@@ -70,12 +78,18 @@ if(type == "siding")
 *(out) << "	Siding (\n";
 if(type == "platform")
 *(out) << "	Platform (\n";
-
+if(type == "carspawner")
+*(out) << "	CarSpawner (\n";
+    
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 if(type == "siding")
 *(out) << "		SidingData ( "<<flags2<<" )\n";
 if(type == "platform")
 *(out) << "		PlatformData ( "<<flags2<<" )\n";
+if(type == "carspawner"){
+*(out) << "		CarFrequency ( "<<this->carFrequency<<" )\n";
+*(out) << "		CarAvSpeed ( "<<this->carAvSpeed<<" )\n";
+}
 *(out) << "		TrItemId ( "<<this->trItemId[0]<<" "<<this->trItemId[1]<<" )\n";
 *(out) << "		TrItemId ( "<<this->trItemId[2]<<" "<<this->trItemId[3]<<" )\n";
 *(out) << "		StaticFlags ( "<<flags<<" )\n";

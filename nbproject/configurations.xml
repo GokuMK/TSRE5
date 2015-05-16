@@ -57,6 +57,8 @@
         <logicalFolder name="f1" displayName="objects" projectFiles="true">
           <itemPath>DynTrackObj.h</itemPath>
           <itemPath>ForestObj.h</itemPath>
+          <itemPath>LevelCrObj.h</itemPath>
+          <itemPath>PickupObj.h</itemPath>
           <itemPath>PlatformObj.h</itemPath>
           <itemPath>SignalObj.h</itemPath>
           <itemPath>SpeedpostObj.h</itemPath>
@@ -144,6 +146,8 @@
         <logicalFolder name="f1" displayName="objects" projectFiles="true">
           <itemPath>DynTrackObj.cpp</itemPath>
           <itemPath>ForestObj.cpp</itemPath>
+          <itemPath>LevelCrObj.cpp</itemPath>
+          <itemPath>PickupObj.cpp</itemPath>
           <itemPath>PlatformObj.cpp</itemPath>
           <itemPath>SignalObj.cpp</itemPath>
           <itemPath>SpeedpostObj.cpp</itemPath>
@@ -241,6 +245,10 @@
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="LevelCrObj.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="LoadWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
@@ -264,6 +272,10 @@
       <item path="Path.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Path.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PickupObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PickupObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PlatformObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -492,6 +504,10 @@
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="LevelCrObj.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="LoadWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
@@ -515,6 +531,10 @@
       <item path="Path.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Path.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PickupObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PickupObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PlatformObj.cpp" ex="false" tool="1" flavor2="0">
       </item>

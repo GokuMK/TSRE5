@@ -13,6 +13,8 @@
 #include "SignalObj.h"
 #include "PlatformObj.h"
 #include "TrWatermarkObj.h"
+#include "LevelCrObj.h"
+#include "PickupObj.h"
 #include "GLUU.h"
 #include <QString>
 #include <QDebug>
@@ -199,6 +201,15 @@ bool Tile::createObj(WorldObj** nowy, QString sh) {
     } else if (sh == "siding") {
         *nowy = (WorldObj*) (new PlatformObj());
         (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";        
+    } else if (sh == "carspawner") {
+        *nowy = (WorldObj*) (new PlatformObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";        
+    } else if (sh == "levelcr") {
+        *nowy = (WorldObj*) (new LevelCrObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";   
+    } else if (sh == "pickup") {
+        *nowy = (WorldObj*) (new PickupObj());
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
     } else {
         qDebug() << sh;
         //(*nowy) = new WorldObj();
