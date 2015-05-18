@@ -10,6 +10,8 @@
 #include "Ref.h"
 #include "TextObj.h"
 
+class DynTrackObj;
+
 class TDB {
 public:
     bool loaded;
@@ -37,6 +39,7 @@ public:
     int rotate(int id);
     int appendTrack(int id, int* ends, int r, int sect, int uid);
     int newJunction(int x, int z, float* p, float* qe, int r, int uid, int end);
+    void fillDynTrack(DynTrackObj* track);
     int fillJunction(int id);
     void setDefaultEnd(int val);
     void nextDefaultEnd();

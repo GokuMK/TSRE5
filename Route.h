@@ -33,6 +33,7 @@ public:
     void removeTrackFromTDB(WorldObj* obj);
     int getTileObjCount(int x, int z);
     int getTileHiddenObjCount(int x, int z);
+    void makeFlexTrack(int x, int z, float* pos);
     WorldObj* placeObject(int x, int z, float* p);
     WorldObj* placeObject(int x, int z, float* p, float* q);
     WorldObj* placeObject(int x, int z, float* p, float* q, Ref::RefItem* r);

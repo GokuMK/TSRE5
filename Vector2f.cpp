@@ -76,3 +76,17 @@ float Vector2f::getDlugosc() {
 Vector2f Vector2f::add(Vector2f r) {
     return Vector2f(this->x + r.x, this->y + r.y);
 }
+/*
+Vector2f Vector2f::Vector(a,b,c){
+	a[0] = b[0] - c[0];
+	a[1] = b[1] - c[1];
+	a[2] = b[2] - c[2];
+    };
+  */  
+float Vector2f::dot(Vector2f b,Vector2f c){
+        return b.x*c.x + b.y*c.y;
+    };
+    
+float Vector2f::cross(Vector2f a,Vector2f b){
+        return a.x*b.y - a.y*b.x;
+    };

@@ -8,7 +8,7 @@ public:
     struct SectionIdx{
         int n = 0;
         float pos[3];
-        float rotDeg;
+        float rotDeg = 0;
         unsigned short sect[12];
     };
     
@@ -21,6 +21,7 @@ public:
     bool tunnelshape = false;
     bool roadshape = false;
     bool manualjunctionshape = false;
+    bool dyntrack = false;
     SectionIdx *path;
     int xoverpts = 0;
     float *xoverpt;

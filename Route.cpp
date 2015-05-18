@@ -12,6 +12,8 @@
 #include "FileFunctions.h"
 #include "ParserX.h"
 #include "ReadFile.h"
+#include "DynTrackObj.h"
+#include "Flex.h"
 
 Route::Route() {
 
@@ -114,6 +116,7 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     //for (var key in this.tile){
     //    this.tile[key].inUse = false;
     // }
+    
     Tile *tTile;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
@@ -209,7 +212,20 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     return NULL;
 }
 
+void Route::makeFlexTrack(int x, int z, float* p) {
+    float qe[3];
+    qe[0] = 0;
+    qe[1] = 0;
+    qe[2] = 0;
+
+    this->trackDB->findNearestNode(x, z, p,(float*) &qe);
+    Flex::NewFlex(x, z, p, (float*)qe);
+    
+}
+
 void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
+    if(obj == NULL) return;
+    
     int x = post[0];
     int z = post[1];
     float p[3];
@@ -217,27 +233,32 @@ void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
     p[1] = pos[1];
     p[2] = pos[2];
     Game::check_coords(x, z, (float*) &p);
+    float q[4];
+    q[0] = obj->tRotation[0]; //track->qDirection[0];
+    q[1] = obj->tRotation[1]; //qDirection[1];
+    q[2] = 0; //track->qDirection[2];
+    q[3] = 1; //track->qDirection[3];
 
     if (obj->type == "trackobj") {
-        float q[4];
         TrackObj* track = (TrackObj*) obj;
-        q[0] = track->tRotation[0]; //track->qDirection[0];
-        q[1] = track->tRotation[1]; //qDirection[1];
-        q[2] = 0; //track->qDirection[2];
-        q[3] = 1; //track->qDirection[3];
-
         //this->trackDB->placeTrack(x, z, p, q, r, nowy->UiD);
-
-        float scale = (float) sqrt(track->qDirection[0] * track->qDirection[0] + track->qDirection[1] * track->qDirection[1] + track->qDirection[2] * track->qDirection[2]);
-        float elevation = ((track->qDirection[0] + 0.0000001f) / fabs(scale + 0.0000001f))*(float) -acos(track->qDirection[3])*2;
+        //float scale = (float) sqrt(track->qDirection[0] * track->qDirection[0] + track->qDirection[1] * track->qDirection[1] + track->qDirection[2] * track->qDirection[2]);
+        //float elevation = ((track->qDirection[0] + 0.0000001f) / fabs(scale + 0.0000001f))*(float) -acos(track->qDirection[3])*2;
         //float elevation = -3.14/16.0;
         //q[0] = elevation;
-
         this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
         obj->setPosition(p);
         obj->setQdirection(q);
         obj->setMartix();
-    }
+    } else if(obj->type == "dyntrack"){
+        DynTrackObj* dynTrack = (DynTrackObj*) obj;
+        if(dynTrack->sectionIdx == -1)
+            this->trackDB->fillDynTrack(dynTrack);
+        this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, dynTrack->sectionIdx, obj->UiD);
+        obj->setPosition(p);
+        obj->setQdirection(q);
+        obj->setMartix();
+    } 
 }
 
 void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {

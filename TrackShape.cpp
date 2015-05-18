@@ -1,6 +1,7 @@
 #include "TrackShape.h"
 
 TrackShape::TrackShape() {
+    
 }
 
 TrackShape::TrackShape(int t) {

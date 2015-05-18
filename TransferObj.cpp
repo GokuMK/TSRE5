@@ -88,7 +88,8 @@ void TransferObj::rotate(float x, float y, float z){
     deleteVBO();
 }
 
-void TransferObj::resize(float x, float y){
+void TransferObj::resize(float x, float y, float z){
+    if(x == 0 && y == 0) return;
     this->width += x;
     this->height += y;
     this->modified = true;

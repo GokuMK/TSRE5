@@ -134,7 +134,7 @@ void WorldObj::rotate(float x, float y, float z){
     setMartix();
 }
 
-void WorldObj::resize(float x, float y){
+void WorldObj::resize(float x, float y, float z){
     
 }
 

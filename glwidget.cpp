@@ -285,6 +285,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
         case Qt::Key_0:
             route->createNewPaths();
             break;
+        case Qt::Key_F:
+            route->makeFlexTrack((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            break;
         case Qt::Key_B:
             route->newTile((int)camera->pozT[0], (int)camera->pozT[1]);
         default:
@@ -304,7 +307,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->translate(a.x,0,a.y);
                 }
                 if(resizeTool && selectedObj != NULL){
-                    this->selectedObj->resize(moveStep, 0);
+                    this->selectedObj->resize(moveStep, 0, 0);
                 }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(moveStep/10, 0, 0);
@@ -317,7 +320,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->translate(a.x,0,a.y);
                 }
                 if(resizeTool && selectedObj != NULL){
-                    this->selectedObj->resize(-moveStep, 0);
+                    this->selectedObj->resize(-moveStep, 0, 0);
                 }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(-moveStep/10, 0, 0);
@@ -330,7 +333,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->translate(a.x,0,a.y);
                 }
                 if(resizeTool && selectedObj != NULL){
-                    this->selectedObj->resize(0, moveStep);
+                    this->selectedObj->resize(0, moveStep, 0);
                 }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(0, -moveStep/10, 0);
@@ -343,15 +346,23 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->translate(a.x,0,a.y);
                 }
                 if(resizeTool && selectedObj != NULL){
-                    this->selectedObj->resize(0, -moveStep);
+                    this->selectedObj->resize(0, -moveStep, 0);
                 }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(0, moveStep/10, 0);
                 }
                 break;                 
+            case Qt::Key_7:
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(0, 0, -moveStep);
+                }
+                break;                
             case Qt::Key_9:
                 if(translateTool && selectedObj != NULL){
                     this->selectedObj->translate(0,moveStep,0);
+                }
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(0, 0, moveStep);
                 }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(0, 0, moveStep/10);
@@ -408,7 +419,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 //route->trackDB->setDefaultEnd(0);
                 //route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&selectedObj->position);
                 route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&lastNewObjPos);
-                selectedObj->unselect();
+                if(selectedObj != NULL) selectedObj->unselect();
                 selectedObj = NULL;
                 break;
             case Qt::Key_X:

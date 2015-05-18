@@ -94,7 +94,9 @@ void ToolBox::routeLoaded(Route* a){
     for (auto it = route->trackDB->tsection->shape.begin(); it != route->trackDB->tsection->shape.end(); ++it ){
         track = it->second;
         //hash = track->filename.left(3).toStdString();
-        if(!track->roadshape)
+        if(track == NULL) continue;
+        if(track->dyntrack) continue;
+        if(track->roadshape) continue;
             hash.append(track->filename.left(3).toLower());
         //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
         //if(types[hash] != 1){

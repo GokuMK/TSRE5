@@ -4,6 +4,8 @@
 #include "ParserX.h"
 #include "ReadFile.h"
 #include "GLMatrix.h"
+#include "DynTrackObj.h"
+#include "TrackShape.h"
 
 TDB::TDB(QString path) {
     loaded = false;
@@ -107,6 +109,108 @@ void TDB::trpin(TRnode *tr, FileBuffer* bufor) {
     }
 }
 
+void TDB::fillDynTrack(DynTrackObj* track){
+    int tType[5];
+    float tAngle[5];
+    float tRadius[5];
+    int count = 0;
+    
+    int foundIdx = -1;
+    TrackShape::SectionIdx* newRShape = NULL;
+    for (int i = 0; i < 5; i++) {
+        if(track->sections[i].sectIdx > 1000000) {
+            continue;
+        }
+        tType[count] = track->sections[i].type;
+        tAngle[count] = track->sections[i].a;
+        tRadius[count] = track->sections[i].r;
+        count++;
+    }
+
+    bool success;
+    for(int i = 40000; i< tsection->routeShapes; i++){
+        success = true;
+        if(tsection->shape[i] == NULL) continue;
+        
+        if(tsection->shape[i]->path[0].n == count){
+            for(int j = 0; j<count; j++){
+                if(!tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->type == tType[j]){
+                    success = false;
+                    break;
+                }
+                if(tType[j] == 1){
+                    if(!tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->angle == tAngle[j])
+                        if(!tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->radius == tRadius[j]){
+                            success = false;
+                            break;
+                        }
+                } 
+                else if(tType[j] == 0){
+                    if(!tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->size == tAngle[j])
+                        if(!tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->val1 == tRadius[j]){
+                            success = false;
+                            break;
+                        }
+                }
+            }
+            ////
+            if(success){
+                foundIdx = i;
+                break;
+            }
+        }
+    }
+    //qDebug() << "foundIdx "<<foundIdx;
+    if(foundIdx == -1){
+        newRShape = new TrackShape::SectionIdx[1];
+        newRShape->n = count;
+        
+        for(int j = 0; j<count; j++){
+            TSection* newSect0 = new TSection(tsection->routeMaxIdx);
+            TSection* newSect1 = new TSection(tsection->routeMaxIdx+1);
+            
+            if(tType[j] == 1){
+                newSect0->type = 1;
+                newSect0->angle = -fabs(tAngle[j]);
+                newSect0->radius = tRadius[j];
+                newSect1->type = 1;
+                newSect1->angle = fabs(tAngle[j]);
+                newSect1->radius = tRadius[j];
+                tsection->sekcja[newSect0->id] = newSect0;
+                tsection->sekcja[newSect1->id] = newSect1;
+                
+                if(tAngle[j]<0) 
+                    newRShape[0].sect[j] = newSect0->id;
+                else 
+                    newRShape[0].sect[j] = newSect1->id;
+            } 
+            else if(tType[j] == 0){
+                newSect0->type = 0;
+                newSect0->size = tAngle[j];
+                newSect0->val1 = tRadius[j];
+                
+                tsection->sekcja[newSect0->id] = newSect0;
+                newRShape[0].sect[j] = newSect0->id;
+            }
+            //qDebug() << "sid "<< newSect0->id;
+            //qDebug() << "sid "<< newSect1->id;
+            tsection->routeMaxIdx+=2;
+        }
+        foundIdx = tsection->routeShapes;
+        TrackShape* newShape = new TrackShape();
+        newShape->dyntrack = true;
+        newShape->path = newRShape;
+        newRShape->pos[0] = 0;
+        newRShape->pos[1] = 0;
+        newRShape->pos[2] = 0;
+        newShape->numpaths = 1;
+        tsection->shape[tsection->routeShapes++] = newShape;
+    }
+    //qDebug() << "foundIdx "<<foundIdx;
+    
+    track->sectionIdx = foundIdx;
+}
+
 int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
     for (int j = 1; j <= iTRnodes; j++) {
         TRnode* n = trackNodes[j];
@@ -157,9 +261,9 @@ int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
         }
         delete n->trVectorSection;
         n->trVectorSection = newV;
-
+        //qDebug() <<"sect"<< sect;
         float dlugosc = this->tsection->sekcja[sect]->getDlugosc();
-        //qDebug() << dlugosc;
+        //qDebug() <<"dlugosc"<< dlugosc;
         Vector3f *aa = this->tsection->sekcja[sect]->getDrawPosition(dlugosc);
         aa->rotateY(M_PI + endNode->UiD[10], 0);
         float angle = this->tsection->sekcja[sect]->getAngle();
@@ -921,6 +1025,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     //elevation;
     
     bool b;
+    
     TrackShape* shp = this->tsection->shape[sectionIdx];
     qDebug() << shp->filename;
     float pp[3];
@@ -1023,7 +1128,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
             qDebug() << "rozjazd";
             junctionId[ends[0]] = newJunction(x, z, pp, qee, sectionIdx, uid, ends[0]);
         }
-        
+
         endp = newTrack(x, z, pp, qee, (int*)ends, sectionIdx, shp->path[i].sect[0], uid, &start);
         
         for (int j = 1; j < shp->path[i].n; j++) {

@@ -133,6 +133,49 @@ bool TSectionDAT::loadGlobal() {
     return true;
 }
 
+bool TSectionDAT::saveRoute() {
+    
+    if(this->routeMaxIdx < 3) return true;
+    
+    QString sh;
+    QString path;
+    path = Game::root + "/routes/" + Game::route + "/tsection222.dat";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile file(path);
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setRealNumberPrecision(6);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+    out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
+    out << "TrackSections ( "<<this->routeMaxIdx-40000<<"\n";
+    for(int i = 40000; i< this->routeMaxIdx; i++){
+        if(this->sekcja[i] != NULL){
+            out << "	TrackSection ( \n";
+            if (sekcja[i]->type == 0)
+                out << "		SectionCurve ( "<<sekcja[i]->type<<" ) "<<i<<" "<<sekcja[i]->size<<" "<<sekcja[i]->val1<<" \n";
+            else
+                out << "		SectionCurve ( "<<sekcja[i]->type<<" ) "<<i<<" "<<sekcja[i]->angle<<" "<<sekcja[i]->radius<<" \n";
+            out << "	)\n";
+        }
+    }
+    out << ")\n";
+    //return true;
+    out << "SectionIdx ( "<<this->routeShapes - 40000<<"\n";
+    for(int i = 40000; i<this->routeShapes; i++){
+        if(this->shape[i] != NULL){
+            out << "	TrackPath ( "<<i<<" "<<shape[i]->path[0].n;
+            for(int j = 0; j<shape[i]->path[0].n; j++)
+                out <<" "<<shape[i]->path[0].sect[j];
+            out <<" ) \n";
+        }
+    }
+    out << ")";
+    
+    file.close();
+}
+
 bool TSectionDAT::loadRoute() {
 
     QString sh;
@@ -151,18 +194,23 @@ bool TSectionDAT::loadRoute() {
 
     int index = 0;
 
-    for (;;) {
-        sh = ParserX::nazwasekcji(bufor);
+    //for (;;) {
+    this->routeMaxIdx = 0;
+    this->routeShapes = 0;
+    while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+    //    sh = ParserX::nazwasekcji(bufor);
         //qDebug() << sh;
-        if (sh.toLower() =="sectionidx") break;
+        //if (sh.toLower() =="sectionidx") break;
         if (sh.toLower() =="tracksection") {
-            bufor->get();
-            bufor->get();
-            continue;
-        }
-        if (sh.toLower() =="sectioncurve") {
+        //    bufor->get();
+        //    bufor->get();
+        //    continue;
+        //}
+        //if (sh.toLower() =="sectioncurve") {
             int typ = (int) ParserX::parsujr(bufor);
             index = (int) ParserX::parsujr(bufor);
+            if(index > this->routeMaxIdx)
+                this->routeMaxIdx = index;
             sekcja[index] = new TSection(index);
             sekcja[index]->type = typ;
             if (typ == 0) {
@@ -177,5 +225,31 @@ bool TSectionDAT::loadRoute() {
         }
         ParserX::pominsekcje(bufor);
     }
+    this->routeMaxIdx += 2 - this->routeMaxIdx%2;
+    
+    sh = "SectionIdx";
+    ParserX::szukajsekcji1(sh, bufor);
+    while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+        if (sh.toLower() =="trackpath") {
+            //   qDebug() << (int) ParserX::parsujr(bufor);
+            index = (int) ParserX::parsujr(bufor);
+            if(index > this->routeShapes)
+                this->routeShapes = index;
+            shape[index] = new TrackShape(index);
+            shape[index]->dyntrack = true;
+            shape[index]->numpaths = 1;
+            shape[index]->path = new TrackShape::SectionIdx[1];
+            //this->routeShape[index] = new TrackShape::SectionIdx;
+            shape[index]->path[0].n = ParserX::parsujr(bufor);
+            shape[index]->path[0].pos[0] = 0;
+            shape[index]->path[0].pos[1] = 0;
+            shape[index]->path[0].pos[2] = 0;
+            for(int i = 0; i < shape[index]->path[0].n; i++)
+                shape[index]->path[0].sect[i] = ParserX::parsujr(bufor);
+        }
+        ParserX::pominsekcje(bufor);
+    }
+    this->routeShapes++;
+    saveRoute();
     return true;
 }

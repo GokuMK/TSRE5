@@ -6,6 +6,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/Eng.o
 ./build/Release/MinGW_QT_static-Windows/FileBuffer.o
 ./build/Release/MinGW_QT_static-Windows/FileFunctions.o
+./build/Release/MinGW_QT_static-Windows/Flex.o
 ./build/Release/MinGW_QT_static-Windows/ForestObj.o
 ./build/Release/MinGW_QT_static-Windows/GLH.o
 ./build/Release/MinGW_QT_static-Windows/GLMatrix.o

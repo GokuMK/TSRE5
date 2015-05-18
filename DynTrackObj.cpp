@@ -13,12 +13,25 @@
 #endif
 
 DynTrackObj::DynTrackObj() {
+    sectionIdx = -1;
+    sections = NULL;
 }
 
 DynTrackObj::DynTrackObj(const DynTrackObj& orig) {
 }
 
 DynTrackObj::~DynTrackObj() {
+}
+
+bool DynTrackObj::allowNew(){
+    return true;
+}
+
+void DynTrackObj::deleteVBO(){
+    //this->shape.deleteVBO();
+    this->init = false;
+    shape[0].VAO.destroy();
+    shape[1].VBO.destroy();
 }
 
 void DynTrackObj::load(int x, int y) {
@@ -35,6 +48,73 @@ void DynTrackObj::load(int x, int y) {
     this->size = -1;
     this->skipLevel = 3;
     this->modified = false;
+    
+    if(sections == NULL)
+    sections = new Section[5];
+    sections[0].type = 0;
+    sections[0].sectIdx = 0;
+    sections[0].a = 10;
+    sections[0].r = 0;
+    for (int iii = 1; iii < 5; iii++) {
+        sections[iii].type = iii%2;
+        sections[iii].sectIdx = 4294967295;
+        sections[iii].a = 0;
+        sections[iii].r = 0;
+    }
+    //sections[1].type = 1;
+    //sections[1].sectIdx = 0;
+    //sections[1].a = 0.1;
+    //sections[1].r = 100;
+}
+
+void DynTrackObj::resize(float x, float y, float z){
+    if(z < 0)
+        this->sidxSelected--;
+    if(z > 0)
+        this->sidxSelected++;
+    if(this->sidxSelected < 0 )
+        this->sidxSelected = 0;
+    if(this->sidxSelected > 4 )
+        this->sidxSelected = 4;
+
+    if(this->sections[this->sidxSelected].sectIdx > 1000000 && x == 0) return;
+    
+    if(this->sections[this->sidxSelected].sectIdx > 1000000){
+        this->sections[this->sidxSelected].sectIdx = 0;
+        this->sections[this->sidxSelected].a = 0.1;
+        if(this->sections[this->sidxSelected].type == 1) 
+            this->sections[this->sidxSelected].r = 100;
+    }
+    
+    
+
+    if(this->sections[this->sidxSelected].type == 1){
+        if(x < 0)
+            this->sections[this->sidxSelected].a -= 0.01;
+        if(x > 0)
+            this->sections[this->sidxSelected].a += 0.01;
+        if(y < 0)
+            this->sections[this->sidxSelected].r -= 10;
+        if(y > 0)
+            this->sections[this->sidxSelected].r += 10;
+        if(this->sections[this->sidxSelected].a > 3.14) this->sections[this->sidxSelected].a = 3.14;
+        if(this->sections[this->sidxSelected].a < -3.14) this->sections[this->sidxSelected].a = -3.14;
+        if(this->sections[this->sidxSelected].r < 20) this->sections[this->sidxSelected].r = 20;
+        
+        if(x < 0 && this->sections[this->sidxSelected].a < 0.01 && this->sections[this->sidxSelected].a > -0.01) 
+            this->sections[this->sidxSelected].a = -0.01;
+        if(x > 0 && this->sections[this->sidxSelected].a > -0.01 && this->sections[this->sidxSelected].a < 0.01) 
+            this->sections[this->sidxSelected].a = 0.01;
+    } else {
+        if(x < 0)
+            this->sections[this->sidxSelected].a -= 0.1;
+        if(x > 0)
+            this->sections[this->sidxSelected].a += 0.1;
+        if(this->sections[this->sidxSelected].a < 0) this->sections[this->sidxSelected].a = 0;
+    }
+
+    this->modified = true;
+    deleteVBO();
 }
 
 void DynTrackObj::set(QString sh, FileBuffer* data) {
@@ -48,10 +128,10 @@ void DynTrackObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("tracksections")) {
-        sections = new Section[5];
+        if(sections == NULL) sections = new Section[5];
         for (int iii = 0; iii < 5; iii++) {
             sections[iii].type = ParserX::parsujr(data);
-            sections[iii].val1 = ParserX::parsujUint(data);
+            sections[iii].sectIdx = ParserX::parsujUint(data);
             sections[iii].a = ParserX::parsujr(data);
             sections[iii].r = ParserX::parsujr(data);
             ParserX::pominsekcje(data);
@@ -153,7 +233,7 @@ void DynTrackObj::genShape() {
     float offrot = 0;
 
     for (int i = 0; i < 5; i++) {
-        if (sections[i].val1 > 100000000) continue;
+        if (sections[i].sectIdx > 100000000) continue;
         //prosta
         if (sections[i].type == 0) {
             //podklady
@@ -1044,7 +1124,7 @@ void DynTrackObj::save(QTextStream* out){
 *(out) << "		TrackSections (\n";
 for(int i = 0; i < 5; i++){
 *(out) << "			TrackSection (\n";
-*(out) << "				SectionCurve ( "<<this->sections[i].type<<" ) "<<this->sections[i].val1<<" "<<this->sections[i].a<<" "<<this->sections[i].r<<"\n";
+*(out) << "				SectionCurve ( "<<this->sections[i].type<<" ) "<<this->sections[i].sectIdx<<" "<<this->sections[i].a<<" "<<this->sections[i].r<<"\n";
 *(out) << "			)\n";
 }
 *(out) << "		)\n";

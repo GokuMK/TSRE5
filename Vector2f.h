@@ -20,6 +20,8 @@ public:
     Vector2f subv(Vector2f v);
     Vector2f divf(float d);
     void div(float d);
+    float dot(Vector2f b,Vector2f c);
+    float cross(Vector2f a,Vector2f b);
 
 private:
 

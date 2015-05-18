@@ -8,7 +8,7 @@ class DynTrackObj : WorldObj{
 public:
     struct Section{
         int type;
-        unsigned int val1;
+        unsigned int sectIdx;
         float a;
         float r;
     };
@@ -20,23 +20,26 @@ public:
     
     Section* sections;
     Shape shape[2];
-    
+    int sectionIdx;
     DynTrackObj();
     DynTrackObj(const DynTrackObj& orig);
     virtual ~DynTrackObj();
+    bool allowNew();
     void load(int x, int y);
     void set(QString sh, FileBuffer* data);
     bool getBorder(float* border);
     void save(QTextStream* out);
+    void resize(float x, float y, float z);
+    virtual void deleteVBO();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     int tex1;
     int tex2;
     bool init;
-    int sectionIdx;
     float elevation;
     float* jNodePosn = NULL;
     float bound[6];
+    int sidxSelected = 0;
     void drawShape();
     void genShape();
     void createVBO(Shape* shape, int ptr, float * data);
