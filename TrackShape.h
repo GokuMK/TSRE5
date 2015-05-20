@@ -31,6 +31,7 @@ public:
     TrackShape();
     TrackShape(int t);
     virtual ~TrackShape();
+    //void getShapePath();
 private:
 
 };

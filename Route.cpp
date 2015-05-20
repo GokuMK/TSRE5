@@ -161,6 +161,12 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
 
 }
 
+void Route::setTerrainToTrackObj(WorldObj* obj){
+    if(obj == NULL) return;
+    TrackObj* track = (TrackObj*)obj;
+    this->tsection->getShapeData(track->sectionIdx);
+}
+
 WorldObj* Route::placeObject(int x, int z, float* p) {
     float q[4];
     q[0] = 0;
@@ -177,7 +183,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q) {
 WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) {
     if(r == NULL) return NULL;
     Game::check_coords(x, z, p);
-
+    
     Tile *tTile;
     //try {
     tTile = tile[((x)*10000 + z)];
@@ -286,7 +292,7 @@ void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
         obj->setPosition(p);
         obj->setQdirection(q);
         obj->setMartix();
-    } 
+    }
 }
 
 void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
@@ -361,6 +367,7 @@ void Route::save() {
             tTile->setModified(false);
         }
     }
+    TerrainLib::save();
     this->trackDB->save();
 }
 

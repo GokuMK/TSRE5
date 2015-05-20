@@ -17,7 +17,10 @@ public:
     static bool checkSettings();
     static bool checkRoot(QString dir);
     static bool checkRoute(QString dir);
-    static void check_coords(int& x, int& z, float* p);
+    template<class T>
+    static void check_coords(T&& x, T&& z, float* p);
+    template<class T>
+    static void check_coords(T&& x, T&& z, float& px, float& pz);
     static int start;
     static int startTileX;
     static int startTileY;

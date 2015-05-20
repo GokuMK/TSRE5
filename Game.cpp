@@ -122,7 +122,8 @@ bool Game::checkRoute(QString dir){
     return file.exists();
 }
 
-void Game::check_coords(int& x, int& z, float* p) {
+template<class T>
+void Game::check_coords(T&& x, T&& z, float* p) {
     if (p[0] > 1024) {
         p[0] -= 2048;
         x++;
@@ -140,3 +141,27 @@ void Game::check_coords(int& x, int& z, float* p) {
         z--;
     }
 }
+template void Game::check_coords(int& x, int& z, float* p);
+template void Game::check_coords(float& x, float& z, float* p);
+
+template<class T>
+void Game::check_coords(T&& x, T&& z, float& px, float& pz) {
+    if (px > 1024) {
+        px -= 2048;
+        x++;
+    }
+    if (px < -1024) {
+        px += 2048;
+        x--;
+    }
+    if (pz > 1024) {
+        pz -= 2048;
+        z++;
+    }
+    if (pz < -1024) {
+        pz += 2048;
+        z--;
+    }
+}
+template void Game::check_coords(int& x, int& z, float& px, float& pz);
+template void Game::check_coords(float& x, float& z, float& px, float& pz);

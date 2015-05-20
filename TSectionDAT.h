@@ -17,6 +17,7 @@ public:
     TSectionDAT(const TSectionDAT& orig);
     virtual ~TSectionDAT();
     bool isRoadShape(int id);
+    void getShapeData(int id);
 private:
     bool loadGlobal();
     bool loadRoute();

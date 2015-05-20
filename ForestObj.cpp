@@ -147,10 +147,11 @@ void ForestObj::drawShape(){
             float treeSizeXt = treeSizeX*0.7;
             for(int uu = 0; uu < population; uu++){
 
-                float tposx = ((float)((std::rand()%100))/100)*areaX-areaX/2;
-                float tposz = ((float)((std::rand()%100))/100)*areaZ-areaZ/2;
+                float tposx = ((float)((std::rand()%100))/100)*areaX-areaX/2.0;
+                float tposz = ((float)((std::rand()%100))/100)*areaZ-areaZ/2.0;
                 Vector2f uuu(tposx,tposz);
-                uuu.rotate(((qDirection[2]+0.00001f)/fabs(qDirection[2]+0.00001f))*(float)-acos(qDirection[3])*2, 0);
+                qDebug() << qDirection[2] << " " << qDirection[3];
+                uuu.rotate(((qDirection[1]+0.00001f)/fabs(qDirection[1]+0.00001f))*(float)-acos(qDirection[3])*2.0, 0);
                 tposx = uuu.x;
                 tposz = uuu.y;
 
@@ -158,39 +159,39 @@ void ForestObj::drawShape(){
                 
                 for(int j = -1; j < 2; j+=2){
                     for(int i = -1; i<2; i+=2){
-                            punkty[ptr++] = -treeSizeXt*i*j/2 + tposx;
+                            punkty[ptr++] = -treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc+treeSizeZ;
-                            punkty[ptr++] = -treeSizeXt*i/2 + tposz;
+                            punkty[ptr++] = -treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 0; punkty[ptr++] = 0;
                             
-                            punkty[ptr++] = treeSizeXt*i*j/2 + tposx;
+                            punkty[ptr++] = treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc+treeSizeZ;
-                            punkty[ptr++] = treeSizeXt*i/2 + tposz;
+                            punkty[ptr++] = treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 1; punkty[ptr++] = 0;
                             
-                            punkty[ptr++] = treeSizeXt*i*j/2 + tposx;
+                            punkty[ptr++] = treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc;
-                            punkty[ptr++] = treeSizeXt*i/2 + tposz;
+                            punkty[ptr++] = treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 1; punkty[ptr++] = 1;
                             
-                            punkty[ptr++] = -treeSizeXt*i*j/2 + tposx;
+                            punkty[ptr++] = -treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc;
-                            punkty[ptr++] = -treeSizeXt*i/2 + tposz;
+                            punkty[ptr++] = -treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 0; punkty[ptr++] = 1;
                             
-                            punkty[ptr++] = -treeSizeXt*i*j/2 + tposx;
+                            punkty[ptr++] = -treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc+treeSizeZ;
-                            punkty[ptr++] = -treeSizeXt*i/2 + tposz;
+                            punkty[ptr++] = -treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 0; punkty[ptr++] = 0;
                             
-                            punkty[ptr++] = treeSizeXt*i*j/2 + tposx;
+                            punkty[ptr++] = treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc;
-                            punkty[ptr++] = treeSizeXt*i/2 + tposz;
+                            punkty[ptr++] = treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 1; punkty[ptr++] = 1;
                     }

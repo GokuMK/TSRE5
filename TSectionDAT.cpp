@@ -258,3 +258,52 @@ bool TSectionDAT::isRoadShape(int id){
     if(shape[id] == NULL) return false;
     return shape[id]->roadshape;
 }
+
+void TSectionDAT::getShapeData(int id){
+    if(shape[id] == NULL) return;
+    
+    TrackShape* shp = shape[id];
+    qDebug() << shp->filename;
+    
+    Vector3f aa;
+    /*
+    for (int i = 0; i < shp->numpaths; i++) {
+        aa.set(shp->path[i].pos[0] - shp->path[startEnd].pos[0], shp->path[i].pos[1], shp->path[i].pos[2] - shp->path[startEnd].pos[2]);
+        //aa.rotateY(-qe[1] + shp->path[i].rotDeg*M_PI/180 - shp->path[startEnd].rotDeg*M_PI/180, 0);
+        aa.rotateY(-qe[1] + shp->path[startEnd].rotDeg*M_PI/180, 0);
+
+        pp[0] = p[0] + aa.x + startPos[0];
+        pp[1] = p[1] + shp->path[i].pos[1];
+        pp[2] = p[2] - aa.z - startPos[2];
+        qee[0] = qe[0];
+        qee[1] = qe[1] + shp->path[i].rotDeg*M_PI/180 - shp->path[startEnd].rotDeg*M_PI/180;
+        qee[2] = qe[2];
+        
+        ends[0] = endsNumbres[i*2];
+        ends[1] = endsNumbres[i*2+1];
+        
+        if(isJunction[ends[0]] == 1){
+            isJunction[ends[0]] = 0;
+            qDebug() << "rozjazd";
+            junctionId[ends[0]] = newJunction(x, z, pp, qee, sectionIdx, uid, ends[0]);
+        }
+
+        endp = newTrack(x, z, pp, qee, (int*)ends, sectionIdx, shp->path[i].sect[0], uid, &start);
+        
+        for (int j = 1; j < shp->path[i].n; j++) {
+            if (endp > 0) {
+                endp = appendTrack(endp, (int*)ends, sectionIdx, shp->path[i].sect[j], uid);
+            }
+        }
+        
+        if(junctionId[ends[0]] != 0){
+            qDebug() << "append to junction";
+            appendToJunction(junctionId[ends[0]], start, 1);
+            joinTracks(junctionId[ends[0]]);
+        } else {
+            joinTracks(start);
+        }
+        
+         joinTracks(endp);
+    }*/
+}

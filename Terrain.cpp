@@ -10,6 +10,7 @@
 Terrain::Terrain(float x, float y) {
     loaded = false;
     isOgl = false;
+    modified = false;
     wTexid = -1;
     for (int i = 0; i < 256; i++) {
         texid[i] = -1;
@@ -33,6 +34,15 @@ Terrain::Terrain(float x, float y) {
     jestF = readF(path + filename + "_f.raw");
     //qDebug() << " ok";
     loaded = true;
+    //save();
+}
+
+bool Terrain::isModified(){
+    return this->modified;
+}
+
+void Terrain::setModified(bool value){
+    this->modified = value;
 }
 
 Terrain::Terrain(const Terrain& orig) {
@@ -98,6 +108,10 @@ QString Terrain::getTileName(int x, int y) {
         name = "0"+name;
     //qDebug() << name;
     return "-"+name;
+}
+
+void Terrain::refresh(){
+    isOgl = false;
 }
 
 void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov) {
@@ -465,6 +479,37 @@ bool Terrain::readRAW(QString fSfile) {
     }
     delete data;
     return true;
+}
+
+void Terrain::save(){
+    QString path = Game::root + "/routes/" + Game::route + "/tiles/";
+    QString filename = getTileName((int) this->mojex, (int)-this->mojez);
+    saveRAW(path + filename + "_y.raw");
+}
+
+void Terrain::saveRAW(QString name) {
+    name.replace("//", "/");
+    QFile *file = new QFile(name);
+    qDebug() << "zapis "<<name;
+    if (!file->open(QIODevice::WriteOnly))
+        return;
+    qDebug() << "w";
+    QDataStream write(file);
+    write.setByteOrder(QDataStream::LittleEndian);
+
+    float fvalue;
+    unsigned short value;
+    for (int i = 0; i < 256; i++) {
+        for (int j = 0; j < 256; j++) {
+            fvalue = (terrainData[i][j] - tfile->floor)/tfile->scale;
+            if(fvalue < 65535) value = fvalue;
+            else value = 65535;
+            write << value;
+            //terrainData[i][j] = tfile->floor + tfile->scale * (data->get() + 256*data->get());
+        }
+    }
+    file->close();
+    return;
 }
 
 bool Terrain::readF(QString fSfile) {

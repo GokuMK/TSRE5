@@ -285,7 +285,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
         case Qt::Key_0:
             route->createNewPaths();
             break;
-        case Qt::Key_F:
+        //case Qt::Key_F:
             /*if(this->selectedObj != NULL){
                 this->selectedObj->unselect();
                 this->selectedObj = NULL;
@@ -299,7 +299,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 lastNewObjPos[1] = this->selectedObj->position[1];
                 lastNewObjPos[2] = this->selectedObj->position[2];
             }*/
-            break;
+        //    break;
         case Qt::Key_B:
             route->newTile((int)camera->pozT[0], (int)camera->pozT[1]);
         default:
@@ -402,6 +402,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 rotateTool = false;
                 translateTool = false;
                 resizeTool = true;
+                break;
+            case Qt::Key_F:
+                route->setTerrainToTrackObj(selectedObj);
                 break;
             case Qt::Key_Delete:
                 if(selectedObj != NULL){

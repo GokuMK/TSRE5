@@ -334,7 +334,7 @@ float ParserX::parsujr(FileBuffer* bufor){
         bufor->off++;
     }
     while (b > 47 && b < 58) {
-        x = x * 10 + b - 48;
+        x = x * 10.0 + b - 48;
         b = bufor->get();
         bufor->off++;
     }
@@ -360,17 +360,17 @@ float ParserX::parsujr(FileBuffer* bufor){
         } else ujemna = 0;
         liczba = 0;
         while (b > 47 && b < 58) {
-            liczba = liczba * 10 + b - 48;
+            liczba = liczba * 10.0 + b - 48;
             b = bufor->get();
             bufor->off++;
         }
         if (ujemna == 1) {
             for (j = 0; j < liczba; j++) {
-                x = x / 10;
+                x = x / 10.0;
             }
         } else {
             for (j = 0; j < liczba; j++) {
-                x = x * 10;
+                x = x * 10.0;
             }
         }
     }

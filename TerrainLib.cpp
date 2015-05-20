@@ -3,6 +3,7 @@
 #include "GLMatrix.h"
 #include <QOpenGLShaderProgram>
 #include <math.h>
+#include "Game.h"
 
 std::unordered_map<int, Terrain*> TerrainLib::terrain;
 
@@ -43,6 +44,19 @@ bool TerrainLib::load(int x, int z) {
     return false;
 }
 
+void TerrainLib::save(){
+    if (!Game::writeEnabled) return;
+    qDebug() << "save terrain";
+    for (auto it = terrain.begin(); it != terrain.end(); ++it) {
+        //console.log(obj.type);
+        Terrain* tTile = (Terrain*) it->second;
+        if (tTile == NULL) continue;
+        if (tTile->loaded && tTile->isModified()) {
+            tTile->save();
+            tTile->setModified(false);
+        }
+    }
+}
 
 bool TerrainLib::reload(int x, int z) {
     Terrain* tTile;// = terrain[x*10000 + z];
@@ -62,27 +76,32 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz) {
     return TerrainLib::getHeight(x, z, posx, posz, false);
 }
 
+void TerrainLib::refresh(int x, int z) {
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->refresh();
+}
+
+void TerrainLib::setHeight(float x, float z, float posx, float posz) {
+    Game::check_coords(x, z, posx, posz);
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    
+    float value = terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
+    terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] = 20;
+    terr->setModified(true);
+}
+
 float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR) {
-    //return 0;
-    if (posx < -1024) {
-        x--;
-        posx += 2048;
-    }
-    if (posx > 1024) {
-        x++;
-        posx -= 2048;
-    }
-    if (posz < -1024) {
-        z--;
-        posz += 2048;
-    }
-    if (posz > 1024) {
-        z++;
-        posz -= 2048;
-    }
+    Game::check_coords(x, z, posx, posz);
 
     Terrain *terr;
-    //try {
     terr = terrain[(x * 10000 + z)];
     if (terr == NULL) return -1;
     if (terr->loaded == false) return -1;
@@ -221,16 +240,4 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
            obj->inUse = false;
        }
     }
-    /*
-    for (var key in this.tile){
-       if(this.tile[key] === undefined) continue;
-       if(this.tile[key] === null) continue;
-       //console.log(this.tile[key].inUse);
-       if(!this.tile[key].inUse){
-           //console.log("a"+this.tile[key]);
-           this.tile[key] = undefined;
-       } else {
-           this.tile[key].inUse = false;
-       }
-    }*/
 }

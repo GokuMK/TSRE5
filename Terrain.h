@@ -16,16 +16,17 @@ public:
     virtual ~Terrain();
     static void saveEmpty(int x, int y);
     static QString getTileName(int x, int y);
-    bool readRAW(QString fSfile);
-    bool readF(QString fSfile);
+    void save();
+    void refresh();
+    bool isModified();
+    void setModified(bool value);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov);
-    void vertexInit();
-    void normalInit();
-    void oglInit();
+
 private:
     unsigned char **fData;
     bool jestF;
     bool isOgl;
+    bool modified;
     float mojex;
     float mojez;
     QString texturepath;
@@ -42,6 +43,13 @@ private:
     //bool jestW[256];
     int wTexid = -1;
     TFile* tfile;
+    
+    void saveRAW(QString name);
+    bool readRAW(QString fSfile);
+    bool readF(QString fSfile);
+    void vertexInit();
+    void normalInit();
+    void oglInit();
 };
 
 #endif	/* TERRAIN_H */
