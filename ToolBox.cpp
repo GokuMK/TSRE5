@@ -91,7 +91,7 @@ void ToolBox::routeLoaded(Route* a){
     //std::unordered_map<std::string, int> types;
     //refTrack.setInsertPolicy(refTrack.InsertAlphabetically);
     hash.clear();
-    for (auto it = route->trackDB->tsection->shape.begin(); it != route->trackDB->tsection->shape.end(); ++it ){
+    for (auto it = route->tsection->shape.begin(); it != route->tsection->shape.end(); ++it ){
         track = it->second;
         //hash = track->filename.left(3).toStdString();
         if(track == NULL) continue;
@@ -126,9 +126,10 @@ void ToolBox::refClassSelected(const QString & text){
 void ToolBox::refTrackSelected(const QString & text){
     trackList.clear();
     TrackShape * track;
-    for (auto it = route->trackDB->tsection->shape.begin(); it != route->trackDB->tsection->shape.end(); ++it ){
+    for (auto it = route->tsection->shape.begin(); it != route->tsection->shape.end(); ++it ){
         track = it->second;
         //qDebug() << track->filename;
+        if(track == NULL) continue;
         if(track->filename.startsWith(text, Qt::CaseInsensitive) )
             new QListWidgetItem ( track->filename, &trackList, track->id );
         //refList.addItem(route->ref->refItems[text.toStdString()][it].description);

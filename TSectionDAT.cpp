@@ -253,3 +253,8 @@ bool TSectionDAT::loadRoute() {
     saveRoute();
     return true;
 }
+
+bool TSectionDAT::isRoadShape(int id){
+    if(shape[id] == NULL) return false;
+    return shape[id]->roadshape;
+}

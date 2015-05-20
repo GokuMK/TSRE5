@@ -5,7 +5,7 @@
 #include "OglObj.h"
 #include <QString>
 
-class TransferObj : WorldObj {
+class TransferObj : public WorldObj {
 public:
     /*struct Shape{
         int iloscv;

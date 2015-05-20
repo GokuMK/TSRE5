@@ -17,8 +17,8 @@ public:
     int startTileY;
     float startpX;
     float startpZ;
+    TSectionDAT *tsection; 
     Ref *ref;
-    TDB *trackDB;
     Route();
     Route(const Route& orig);
     virtual ~Route();
@@ -31,9 +31,10 @@ public:
     void reloadTile(int x, int z);
     void deleteObj(WorldObj* obj);
     void removeTrackFromTDB(WorldObj* obj);
+    void nextDefaultEnd();
     int getTileObjCount(int x, int z);
     int getTileHiddenObjCount(int x, int z);
-    void makeFlexTrack(int x, int z, float* pos);
+    WorldObj* makeFlexTrack(int x, int z, float* pos);
     WorldObj* placeObject(int x, int z, float* p);
     WorldObj* placeObject(int x, int z, float* p, float* q);
     WorldObj* placeObject(int x, int z, float* p, float* q, Ref::RefItem* r);
@@ -43,6 +44,8 @@ public:
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, bool selection);
 private:
     void loadTrk();
+    TDB *trackDB;
+    TDB *roadDB; 
 };
 
 #endif	/* ROUTE_H */

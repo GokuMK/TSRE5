@@ -4,7 +4,7 @@
 #include "WorldObj.h"
 #include <QString>
 
-class DynTrackObj : WorldObj{
+class DynTrackObj : public WorldObj{
 public:
     struct Section{
         int type;
@@ -27,6 +27,7 @@ public:
     bool allowNew();
     void load(int x, int y);
     void set(QString sh, FileBuffer* data);
+    void set(QString sh, float* val);
     bool getBorder(float* border);
     void save(QTextStream* out);
     void resize(float x, float y, float z);

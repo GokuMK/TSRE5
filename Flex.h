@@ -17,11 +17,11 @@ class QPen;
 class Flex {
 public:
 
-    static void NewFlex(int x, int z, float *p, float *q);
+    static bool NewFlex(int x, int z, float *p, float *q, float * dyntrackSections);
 private:
     static int FlexStage;
     static float FlexP0[3];
-    static float FlexQ0[3];
+    static float FlexQ0[4];
     static int FlexX;
     static int FlexZ;
     static QWidget* window;

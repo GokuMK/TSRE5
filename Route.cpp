@@ -33,7 +33,10 @@ Route::Route() {
 
     this->loadTrk();
     qDebug() << Game::routeName;
-    this->trackDB = new TDB((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".tdb"));
+    
+    this->tsection = new TSectionDAT();
+    this->trackDB = new TDB(tsection, false, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".tdb"));
+    this->roadDB = new TDB(tsection, true, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".rdb"));
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
     
     loaded = true;
@@ -140,6 +143,8 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     if (!selection) {
         trackDB->renderAll(gluu, playerT, playerRot);
         trackDB->renderLines(gluu, playerT, playerRot);
+        roadDB->renderAll(gluu, playerT, playerRot);
+        roadDB->renderLines(gluu, playerT, playerRot);
     }
     /*
     for (var key in this.tile){
@@ -197,9 +202,12 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
 
         WorldObj* nowy = tTile->placeObject(p, q, r);
 
-        if (r->type == "trackobj" && nowy != NULL) {
+        if ((r->type == "trackobj" || r->type == "dyntrack" )&& nowy != NULL) {
             //this->trackDB->placeTrack(x, z, p, q, r->value, nowy->UiD);
-            this->trackDB->findPosition(x, z, p, q, r->value, nowy->UiD);
+            if(this->tsection->isRoadShape(r->value))
+                this->roadDB->findPosition(x, z, p, q, r->value, nowy->UiD);
+            else
+                this->trackDB->findPosition(x, z, p, q, r->value, nowy->UiD);
             //findPosition
             nowy->setPosition(p);
             nowy->setQdirection(q);
@@ -212,15 +220,32 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     return NULL;
 }
 
-void Route::makeFlexTrack(int x, int z, float* p) {
-    float qe[3];
+WorldObj* Route::makeFlexTrack(int x, int z, float* p) {
+    float qe[4];
     qe[0] = 0;
     qe[1] = 0;
     qe[2] = 0;
-
+    qe[3] = 1;
     this->trackDB->findNearestNode(x, z, p,(float*) &qe);
-    Flex::NewFlex(x, z, p, (float*)qe);
+    float* dyntrackData[10];
+    bool success = Flex::NewFlex(x, z, p, (float*)qe, (float*)dyntrackData);
+    if(!success) return NULL;
     
+    Ref::RefItem r;
+    r.type = "dyntrack";
+    r.value = -1;
+    qDebug() << "1";
+    qe[0] = 0;
+    qe[1] = 0;
+    qe[2] = 0;
+    qe[3] = 1;
+    DynTrackObj* track = (DynTrackObj*)placeObject(x, z, p, (float*)&qe, &r);
+    if(track != NULL){
+        qDebug() << "2";
+        QString sh = "dyntrackdata";
+        track->set(sh, (float*)dyntrackData);
+    }
+    return track;
 }
 
 void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
@@ -246,7 +271,10 @@ void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
         //float elevation = ((track->qDirection[0] + 0.0000001f) / fabs(scale + 0.0000001f))*(float) -acos(track->qDirection[3])*2;
         //float elevation = -3.14/16.0;
         //q[0] = elevation;
-        this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
+        if(this->tsection->isRoadShape(track->sectionIdx))
+            this->roadDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
+        else
+            this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
         obj->setPosition(p);
         obj->setQdirection(q);
         obj->setMartix();
@@ -278,8 +306,10 @@ void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
         q[3] = 1;
         TrackObj* track = (TrackObj*) obj;
         //this->trackDB->placeTrack(x, z, p, q, r, nowy->UiD);
-
-        this->trackDB->findPosition(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
+        if(this->tsection->isRoadShape(track->sectionIdx))
+            this->roadDB->findPosition(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
+        else
+            this->trackDB->findPosition(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
         obj->setPosition(p);
         obj->setQdirection(q);
         obj->setMartix();
@@ -289,7 +319,7 @@ void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
 void Route::deleteObj(WorldObj* obj) {
     obj->loaded = false;
     obj->modified = true;
-    if (obj->type == "trackobj") {
+    if (obj->type == "trackobj" || obj->type == "dyntrack") {
         removeTrackFromTDB(obj);
     }
     Tile *tTile;
@@ -299,6 +329,7 @@ void Route::deleteObj(WorldObj* obj) {
 }
 
 void Route::removeTrackFromTDB(WorldObj* obj) {
+    this->roadDB->removeTrackFromTDB(obj->x, obj->y, obj->UiD);
     this->trackDB->removeTrackFromTDB(obj->x, obj->y, obj->UiD);
 }
 
@@ -336,6 +367,11 @@ void Route::save() {
 void Route::createNewPaths() {
     if (!Game::writeEnabled) return;
     Path::CreatePaths(this->trackDB);
+}
+
+void Route::nextDefaultEnd(){
+    this->trackDB->nextDefaultEnd();
+    this->roadDB->nextDefaultEnd();
 }
 
 void Route::createNew() {

@@ -1,7 +1,7 @@
 ﻿# folder główny train sim
 
-#gameRoot = F:/train simulator
-gameRoot = C:/ts
+gameRoot = F:/train simulator
+#gameRoot = C:/ts
 
 # nazwa trasy (folderu) do wczytania
 

@@ -21,7 +21,7 @@ public:
     std::unordered_map<int, TextObj*> endIdObj;
     //std::vector<TRnode> trackNodes;
     int iTRnodes;
-    TDB(QString path);
+    TDB(TSectionDAT* tsection, bool road, QString path);
     TDB(const TDB& orig);
     virtual ~TDB();
     void refresh();
@@ -66,6 +66,7 @@ private:
     int sectionHash;
     bool isInitSectLines = false;
     bool isInitLines = false;
+    bool road = false;
 };
 
 #endif	/* TDB_H */

@@ -40,6 +40,10 @@ void WorldObj::set(QString sh, int val) {
 
 }
 
+void WorldObj::set(QString sh, float* val) {
+
+}
+
 void WorldObj::set(QString sh, QString val) {
 
 }

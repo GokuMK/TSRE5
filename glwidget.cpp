@@ -286,7 +286,19 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             route->createNewPaths();
             break;
         case Qt::Key_F:
-            route->makeFlexTrack((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            /*if(this->selectedObj != NULL){
+                this->selectedObj->unselect();
+                this->selectedObj = NULL;
+            }
+            this->selectedObj = route->makeFlexTrack((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            if(this->selectedObj != NULL){
+                this->selectedObj->select();
+                lastNewObjPosT[0] = this->selectedObj->x;
+                lastNewObjPosT[1] = this->selectedObj->y;
+                lastNewObjPos[0] = this->selectedObj->position[0];
+                lastNewObjPos[1] = this->selectedObj->position[1];
+                lastNewObjPos[2] = this->selectedObj->position[2];
+            }*/
             break;
         case Qt::Key_B:
             route->newTile((int)camera->pozT[0], (int)camera->pozT[1]);
@@ -412,7 +424,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     emit itemSelected((int) route->ref->selected);
                 }
             case Qt::Key_L:
-                route->trackDB->nextDefaultEnd();
+                route->nextDefaultEnd();
                 break;
             case Qt::Key_Z:
                 //route->refreshObj(selectedObj);
@@ -424,7 +436,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 break;
             case Qt::Key_X:
                 //route->refreshObj(selectedObj);
-                route->trackDB->nextDefaultEnd();
+                route->nextDefaultEnd();
                 route->newPositionTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&lastNewObjPos);                
                 break;
             default:

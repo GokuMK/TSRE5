@@ -8,7 +8,7 @@
 
 int Flex::FlexStage = 0;
 float Flex::FlexP0[3];
-float Flex::FlexQ0[3];
+float Flex::FlexQ0[4];
 int Flex::FlexX;
 int Flex::FlexZ;
 QWidget* Flex::window;
@@ -17,7 +17,8 @@ QPainter* Flex::painter;
 QImage* Flex::img;
 QLabel* Flex::myLabel;
 
-void Flex::NewFlex(int x, int z, float* p, float* q){
+bool Flex::NewFlex(int x, int z, float* p, float* q, float * dyntrackSections){
+    
     if(FlexStage == 0){
         FlexP0[0] = p[0];
         FlexP0[1] = p[1];
@@ -25,10 +26,11 @@ void Flex::NewFlex(int x, int z, float* p, float* q){
         FlexQ0[0] = q[0];
         FlexQ0[1] = q[1];
         FlexQ0[2] = q[2];
+        FlexQ0[3] = q[3];
         FlexX = x;
         FlexZ = z;
         FlexStage = 1;
-        return;
+        return false;
     }
 
     if(windowInit == 0){
@@ -66,10 +68,10 @@ void Flex::NewFlex(int x, int z, float* p, float* q){
     p[2] = -p[2];
     FlexP0[2] = -FlexP0[2];
     
-    v1.x = sin(FlexQ0[1])*10;
-    v1.y = cos(FlexQ0[1])*10;
-    v2.x = sin(q[1])*10;
-    v2.y = cos(q[1])*10;
+    v1.x = sin(FlexQ0[1])*1;
+    v1.y = cos(FlexQ0[1])*1;
+    v2.x = sin(q[1])*1;
+    v2.y = cos(q[1])*1;
     p1.x = FlexP0[0];
     p1.y = FlexP0[2];
     p2.x = p[0];
@@ -89,8 +91,8 @@ void Flex::NewFlex(int x, int z, float* p, float* q){
     qDebug() << v1.x << " = "<< v1.y;
     qDebug() << v2.x << " = "<< v2.y;
 
-    drawLine(niebieski, p1.x, p1.y, p1.x+v1.x*100,p1.y+v1.y*100);
-    drawLine(niebieski, p2.x, p2.y, p2.x+v2.x*100,p2.y+v2.y*100);
+    drawLine(niebieski, p1.x, p1.y, p1.x+v1.x*1000,p1.y+v1.y*1000);
+    drawLine(niebieski, p2.x, p2.y, p2.x+v2.x*1000,p2.y+v2.y*1000);
     
     //Vector2f line(p2);
     //line.subv(p1);
@@ -113,19 +115,92 @@ void Flex::NewFlex(int x, int z, float* p, float* q){
     qDebug() << srodek1.x << " = "<< srodek1.y;
     qDebug() << srodek2.x << " = "<< srodek2.y;
     
-    drawLine(czerwony, p1.x, p1.y, srodek1.x,srodek1.y);
-    //drawLine(czerwony, p2.x, p2.y, srodek2.x,srodek2.y);
     //if(t1 < 0 || t2 < 0){
     //    qDebug() << "flex fail";
     //    FlexStage = 0;
     //    return;
     //}
+    Vector2f line1(p1.x, p1.y);
+    line1.x-=srodek1.x;
+    line1.y-=srodek1.y;
+    Vector2f line2(p2.x, p2.y);
+    line2.x-=srodek1.x;
+    line2.y-=srodek1.y;
+    float dlugosc1 = line1.getDlugosc();
+    float dlugosc2 = line2.getDlugosc();
+    float dlugosc = dlugosc1;
+    if(dlugosc2 < dlugosc1)
+        dlugosc = dlugosc2;
+    
+    //Vector punkt
+    Vector2f kp1, kp2;
+    kp1.x = srodek1.x - v1.x*dlugosc;
+    kp1.y = srodek1.y - v1.y*dlugosc;
+    kp2.x = srodek1.x - v2.x*dlugosc;
+    kp2.y = srodek1.y - v2.y*dlugosc;
+    Vector2f kc;
+    kc.x = kp2.x - kp1.x;
+    kc.y = kp2.y - kp1.y;
+    float length = kc.getDlugosc();
+    //Vector2f ks;
+    //ks.x = (kp1.x + kc.x/2) - srodek1.x;
+    //ks.y = (kp1.y + kc.y/2) - srodek1.y;
+    //float height = ks.getDlugosc();
+    
+
+    //float radius = height/2 + (length*length)/(8*height);
+    //drawLine(czerwony, p2.x, p2.y, srodek1.x,srodek1.y);
+    //drawLine(czerwony, p1.x, p1.y, srodek1.x,srodek1.y);
+    //drawLine(czerwony, kp1.x, kp1.y, srodek1.x,srodek1.y);
+    //drawLine(czerwony, kp2.x, kp2.y, srodek1.x,srodek1.y);
+    drawLine(czerwony, kp1.x, kp1.y, kp2.x, kp2.y);
     
     float angle = (q[1] - FlexQ0[1]);
-    qDebug() << "angle " << angle*180/M_PI; 
+    int sign = -1;
+    if(angle < 0) sign = 1;
+    angle = M_PI - fabs(angle);
+    //if(angle > M_PI) angle -= M_PI;
+    angle*=sign;
     
+    float radius = (length/2.0)/sin(fabs(angle/2.0));
+    
+    qDebug() << "angle " << angle*180/M_PI; 
+    qDebug() << "dlugosc " << dlugosc; 
+    qDebug() << "length " << length; 
+    qDebug() << "radius " << radius; 
+    
+    ////////////////////////////////////////////////////////////////////////
+    dlugosc1 = fabs(dlugosc1 - dlugosc);
+    dlugosc2 = fabs(dlugosc2 - dlugosc);
+    
+    if(dlugosc1 > 0.01 && dlugosc1 < 1000){
+        dyntrackSections[0] = dlugosc1;
+        dyntrackSections[1] = 0;
+    } else {
+        dyntrackSections[0] = 0;
+    }
+    dyntrackSections[2] = angle;
+    dyntrackSections[3] = radius;
+    if(dlugosc2 > 0.01 && dlugosc2 < 1000){
+        dyntrackSections[4] = dlugosc2;
+        dyntrackSections[5] = 0;
+    } else {
+        dyntrackSections[4] = 0;
+        dyntrackSections[5] = 0;
+    }
+    dyntrackSections[6] = 0;
+    dyntrackSections[8] = 0;
     myLabel->setPixmap(QPixmap::fromImage(*img));
     FlexStage = 0;
+    
+    p[0] = FlexP0[0];
+    p[1] = FlexP0[1];
+    p[2] = -FlexP0[2];
+    q[0] = FlexQ0[0];
+    q[1] = FlexQ0[1];
+    q[2] = FlexQ0[2];
+    q[3] = FlexQ0[3];
+    return true;
 }
 
 void Flex::drawLine(QPen niebieski, int x1, int y1, int x2, int y2){

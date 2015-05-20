@@ -4,7 +4,7 @@
 #include "WorldObj.h"
 #include <QString>
 
-class ForestObj : WorldObj{
+class ForestObj : public WorldObj{
 public:
     struct Shape{
         int iloscv;

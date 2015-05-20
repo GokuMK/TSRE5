@@ -7,13 +7,17 @@
 #include "DynTrackObj.h"
 #include "TrackShape.h"
 
-TDB::TDB(QString path) {
+TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
     loaded = false;
+    this->road = road;
     wysokoscSieci = 4;
     qDebug() << "Wczytywanie pliku tdb: " << path;
 
-    tsection = new TSectionDAT();
-
+    if(tsection == NULL)
+        this->tsection = new TSectionDAT();
+    else
+        this->tsection = tsection;
+    
     int x, i, j, ii, jj, uu;
     float xx;
     int t;
@@ -945,6 +949,12 @@ bool TDB::findPosition(int x, int z, float* p, float* q, int sectionIdx, int uid
     findNearestNode(x, z, p, (float*) &qe);
     
     bool b;
+    
+    if(sectionIdx < 0){
+        Quat::rotateY(q, q, -qe[1]);
+        return true;
+    }
+    
     TrackShape* shp = this->tsection->shape[sectionIdx];
     qDebug() << shp->filename;
     float startPos[3];
@@ -1281,14 +1291,15 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
                 konce[kPtr++] = (n->UiD[7] + wysokoscSieci);
                 konce[kPtr++] = ((-n->UiD[5] - playerT[1])*2048 - n->UiD[8]);
                 
-                if(endIdObj[i] == NULL){
-                    endIdObj[i] = new TextObj(i);
-                }    
-                endIdObj[i]->inUse = true;
-                endIdObj[i]->pos[0] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
-                endIdObj[i]->pos[1] = n->UiD[7] + wysokoscSieci;
-                endIdObj[i]->pos[2] = ((-n->UiD[5] - playerT[1])*2048 - n->UiD[8]);
-                
+                if(!road){
+                    if(endIdObj[i] == NULL){
+                        endIdObj[i] = new TextObj(i);
+                    }    
+                    endIdObj[i]->inUse = true;
+                    endIdObj[i]->pos[0] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
+                    endIdObj[i]->pos[1] = n->UiD[7] + wysokoscSieci;
+                    endIdObj[i]->pos[2] = ((-n->UiD[5] - playerT[1])*2048 - n->UiD[8]);
+                }
             } else if (n->typ == 2) {
                 punkty[pPtr++] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
                 punkty[pPtr++] = (n->UiD[7]);
@@ -1320,11 +1331,12 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
     konceSieci.render();
     punktySieci.render();
     
-    for (auto it = endIdObj.begin(); it != endIdObj.end(); ++it) {
-        //console.log(obj.type);
-        TextObj* obj = (TextObj*) it->second;
-        if(obj->inUse) obj->render(playerRot);
-    }
+    if(!road)
+        for (auto it = endIdObj.begin(); it != endIdObj.end(); ++it) {
+            //console.log(obj.type);
+            TextObj* obj = (TextObj*) it->second;
+            if(obj->inUse) obj->render(playerRot);
+        }
 }
 
 void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
@@ -1393,7 +1405,10 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
                 renderT.end3DRendering();
             }*/
         }
-        sectionLines.setMaterial(1.0, 1.0, 0.0);
+        if(road)
+            sectionLines.setMaterial(0.0, 0.0, 1.0);
+        else
+            sectionLines.setMaterial(1.0, 1.0, 0.0);
         sectionLines.init(punkty, ptr - punkty, sectionLines.V, GL_LINES);
 
         delete punkty;
