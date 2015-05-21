@@ -17,7 +17,8 @@ public:
     static void fillRAW(float** terrainData, int mojex, int mojez);
     static float getHeight(float x, float z, float posx, float posz);
     static float getHeight(float x, float z, float posx, float posz, bool addR);
-    static void setHeight(float x, float z, float posx, float posz);
+    static void setHeight(float x, float z, float posx, float posz, float h);
+    static void setHeight256(int x, int z, int posx, int posz, float h);
     static bool isLoaded(int x, int z);
     static bool load(int x, int z);
     static void save();

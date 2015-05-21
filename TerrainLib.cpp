@@ -85,7 +85,7 @@ void TerrainLib::refresh(int x, int z) {
     terr->refresh();
 }
 
-void TerrainLib::setHeight(float x, float z, float posx, float posz) {
+void TerrainLib::setHeight(float x, float z, float posx, float posz, float h) {
     Game::check_coords(x, z, posx, posz);
     Terrain *terr;
     terr = terrain[(x * 10000 + z)];
@@ -93,8 +93,21 @@ void TerrainLib::setHeight(float x, float z, float posx, float posz) {
     if (terr == NULL) return;
     if (terr->loaded == false) return;
     
-    float value = terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
-    terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] = 20;
+    //float value = terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
+    terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] = h;
+    terr->setModified(true);
+}
+
+void TerrainLib::setHeight256(int x, int z, int posx, int posz, float h) {
+    Game::check_coords(x, z, posx, posz);
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    
+    //float value = terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
+    terr->terrainData[posz+128][posx+128] = h;
     terr->setModified(true);
 }
 

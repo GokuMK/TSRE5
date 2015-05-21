@@ -111,6 +111,50 @@ void TSection::drawSection(float* &ptr, float* matrix) {
             }
     }
     
+void TSection::getPoints(float* &ptr, float* matrix) {
+            float kierunek;
+            if(type==0){
+                
+                float dlugosc = getDlugosc();
+
+                float point1[3]; 
+                for(int i = 0; i < size; i+=4){
+                    point1[0] = 0; 
+                    point1[1] = 0;
+                    point1[2] = i;
+                    Vec3::transformMat4(point1, point1, matrix);
+                    *ptr++ = point1[0];
+                    *ptr++ = point1[1];
+                    *ptr++ = point1[2];
+                }
+            }
+            //krzywa
+            else if(type==1){
+                kierunek = 1;
+                if(angle > 0) kierunek = -1;
+                float point1[3]; 
+                float dlugosc = getDlugosc() / 4;
+                float step = fabs(angle) / dlugosc;
+                
+                float aa = -step*kierunek;
+                for(float angle2 = angle*kierunek; angle2<0; angle2+=step){
+
+                    Vector2f a(0, 0);
+                    a.rotate(aa, radius);
+
+                    point1[0] = 0; point1[1] = 0; point1[2] = 0;
+                    //point2[0] = kierunek*a.x; point2[1] = 2; point2[2] = kierunek*a.y;
+    
+                    Vec3::transformMat4(point1, point1, matrix);
+                    *ptr++ = point1[0];
+                    *ptr++ = point1[1];
+                    *ptr++ = point1[2];
+                    Mat4::translate(matrix, matrix, kierunek*a.x,0,kierunek*a.y);
+                    Mat4::rotateY(matrix, matrix, -aa);
+                }
+            }
+    }
+
 void TSection::setDrawPosition(float metry) {
             //prosta
        /*     if(type==0){

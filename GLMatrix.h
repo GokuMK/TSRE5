@@ -4,6 +4,7 @@
 class Vec3 {
 public:
     static float* transformMat4(float* out, float* a, float* m);
+    static  float* transformQuat(float* out, float* a, float* q);
 };
 
 class Vec4 {

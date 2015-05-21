@@ -1466,7 +1466,66 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
     } catch (const std::out_of_range& oor) {
         qDebug() << "nie ma sekcji " << idx;
     }
+    
+}
 
+float TDB::setTerrainToTrackObj(int x, int y, int uid, float* objMatrix, float * &ptr){
+        Vector3f p;
+        Vector3f o;
+        //qDebug() << x << " "<< y << " "<< uid;
+        int len = 0;
+        float* matrix;
+        float q[4];
+        q[0] = 0; q[1] = 0; q[2] = 0;
+        float rot = 0;
+        y = -y;
+        
+        //float* punkty = new float[10000];
+        //float* ptr = punkty;
+        
+        for (int j = 1; j <= iTRnodes; j++) {
+            TRnode* n = trackNodes[j];
+            if (n == NULL) continue;
+            if (n->typ == -1) continue;
+            if (n->typ == 1) {
+                for (int i = 0; i < n->iTrv; i++) {
+                    if(n->trVectorSection[i].param[2] == x && n->trVectorSection[i].param[3] == y && n->trVectorSection[i].param[4] == uid ){
+                        qDebug() << "mam";
+                    
+                        //p.set(
+                        //    (n->trVectorSection[i].param[8] - x)*2048 + n->trVectorSection[i].param[10],
+                        //    n->trVectorSection[i].param[11],
+                        //    (-n->trVectorSection[i].param[9] - y)*2048 - n->trVectorSection[i].param[12]
+                        //    );
+                        //o.set(
+                        rot = n->trVectorSection[i].param[13];
+                        //    n->trVectorSection[i].param[14],
+                        //    n->trVectorSection[i].param[15]
+                        //    );
+                    
+                        //q[0] = q[1] = q[2] = 0;  q[3] = 1;
+                        //rot[0] = M_PI; rot[1] = -o.y; rot[2] = o.z;
+                        
+                        //Quat::fromRotationXYZ(q, rot);
+                        
+                        //Mat4::fromRotationTranslation(matrix, q, reinterpret_cast<float *> (&p));
+                        //Mat4::rotate(matrix, matrix, o.x, 1, 0, 0);
+                        //Mat4::identity(matrix);
+                        //Mat4:: rotate(matrix, matrix, o.x, 1, 0, 0);
+                        //Mat4::multiply(matrix, matrix, objMatrix);
+                        matrix = Mat4::clone(objMatrix);
+                        //Mat4::fromRotationTranslation(matrix, q, objMatrix);
+                        try {
+                            tsection->sekcja.at((int) n->trVectorSection[i].param[0])->getPoints(ptr, matrix);
+                        } catch (const std::out_of_range& oor) {
+                            qDebug() << "nie ma sekcji " << (int) n->trVectorSection[i].param[0];
+                        }
+                    }
+                }
+            }
+            
+    }
+    return rot;
 }
 
  bool TDB::deleteNulls() {

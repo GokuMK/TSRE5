@@ -17,6 +17,7 @@ public:
     float getDlugosc();
     int getLineBufferSize();
     void drawSection(float* &ptr, float* matrix);
+    void getPoints(float* &ptr, float* matrix);
     void setDrawPosition(float metry);
     float getAngle();
     Vector3f *getDrawPosition(float metry);

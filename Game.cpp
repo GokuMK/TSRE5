@@ -144,8 +144,8 @@ void Game::check_coords(T&& x, T&& z, float* p) {
 template void Game::check_coords(int& x, int& z, float* p);
 template void Game::check_coords(float& x, float& z, float* p);
 
-template<class T>
-void Game::check_coords(T&& x, T&& z, float& px, float& pz) {
+template<class T, class K>
+void Game::check_coords(T&& x, T&& z, K&& px, K&& pz) {
     if (px > 1024) {
         px -= 2048;
         x++;
@@ -163,5 +163,6 @@ void Game::check_coords(T&& x, T&& z, float& px, float& pz) {
         z--;
     }
 }
+template void Game::check_coords(int& x, int& z, int& px, int& pz);
 template void Game::check_coords(int& x, int& z, float& px, float& pz);
 template void Game::check_coords(float& x, float& z, float& px, float& pz);

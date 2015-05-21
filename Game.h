@@ -19,8 +19,8 @@ public:
     static bool checkRoute(QString dir);
     template<class T>
     static void check_coords(T&& x, T&& z, float* p);
-    template<class T>
-    static void check_coords(T&& x, T&& z, float& px, float& pz);
+    template<class T, class K>
+    static void check_coords(T&& x, T&& z, K&& px, K&& pz);
     static int start;
     static int startTileX;
     static int startTileY;

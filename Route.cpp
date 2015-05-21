@@ -163,8 +163,73 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
 
 void Route::setTerrainToTrackObj(WorldObj* obj){
     if(obj == NULL) return;
-    TrackObj* track = (TrackObj*)obj;
-    this->tsection->getShapeData(track->sectionIdx);
+    //TrackObj* track = (TrackObj*)obj;
+    float* punkty = new float[10000];
+    float* ptr = punkty;
+    this->trackDB->setTerrainToTrackObj(obj->x, obj->y, obj->UiD, obj->matrix, ptr);
+    
+    int length = ptr - punkty;
+    qDebug() << "l "<<length;
+    //for(int i = 0; i < length; ){
+    //    qDebug() << punkty[i++] << " " << punkty[i++] <<" "<<punkty[i++] <<"";
+    //}
+    
+    float p1[3];
+    float p2[3];
+    float p3[3];
+    
+    p1[0] = punkty[0];
+    p1[1] = punkty[1];
+    p1[2] = punkty[2];
+    p2[0] = punkty[length-3];
+    p2[1] = punkty[length-2];
+    p2[2] = punkty[length-1];
+    p3[0] = 10;
+    p3[1] = 0;
+    p3[2] = 10;
+    Vec3::transformMat4(p3, p3, obj->matrix);
+    qDebug() << p1[0] << " " << p1[1] <<" " << p1[2];
+    qDebug() << p2[0] << " " << p2[1] <<" " << p2[2];
+    qDebug() << p3[0] << " " << p3[1] <<" " << p3[2];
+    Vector3f vec1, vec2, vec3;
+    vec1.x = p2[0] - p1[0]; vec1.y = p2[1] - p1[1]; vec1.z = p2[2] - p1[2];
+    vec2.x = p3[0] - p1[0]; vec2.y = p3[1] - p1[1]; vec2.z = p3[2] - p1[2];
+
+    //Vector3f::cross(vec3, vec1, vec2);
+    vec3.x = vec1.y * vec2.z - vec1.z * vec2.y;
+    vec3.y = vec1.z * vec2.x - vec1.x * vec2.z;
+    vec3.z = vec1.x * vec2.y - vec1.y * vec2.x;
+    qDebug() << vec1.x << " " << vec1.y <<" " << vec1.z;
+    qDebug() << vec2.x << " " << vec2.y <<" " << vec2.z;
+    qDebug() << vec3.x << " " << vec3.y <<" " << vec3.z;
+    float vec3d = vec3.x*p1[0] + vec3.y*p1[1] + vec3.z*p1[2];
+    vec3.x /= vec3.y;
+    vec3.z /= vec3.y;
+    vec3d /= vec3.y;
+    
+    for(int i = 0; i < length;i+=3 ){
+        float h = vec3d - vec3.x*punkty[i] - vec3.z*punkty[i+2];
+        qDebug() << punkty[i] << " " << punkty[i+1] <<" " << punkty[i+2] <<" "<<h <<"";
+    }
+    //qDebug() << p1[0] << " " << p1[1] <<" "<<p1[2] <<"";
+    //qDebug() << p2[0] << " " << p2[1] <<" "<<p2[2] <<"";
+    //qDebug() << p3[0] << " " << p3[1] <<" "<<p3[2] <<"";
+    int xx, zz;
+    float h; 
+    
+    for(int ii = -1; ii < 3; ii++)
+        for(int jj = -1; jj < 3; jj++)
+            for(int i = 0; i< length; i+=3){
+                xx = punkty[i]/8;
+                zz = punkty[i+2]/8;
+                xx+=ii;
+                zz+=jj;
+                h = vec3d - vec3.x*xx*8 - vec3.z*zz*8;
+                TerrainLib::setHeight256(obj->x, obj->y, xx, zz, h);
+                //qDebug() << xx << " " << zz << " " << h;
+            }
+    
+    TerrainLib::refresh(obj->x, obj->y);
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p) {
