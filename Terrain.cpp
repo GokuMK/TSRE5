@@ -213,7 +213,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                 if (texid[yy * 16 + uu] == -1) {
                     //texid[uu*16+yy] = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
                     //qDebug() << texturepath << " "<<tfile->tdata[(yy * 16 + uu)*7+0] <<" "<< tfile->materials[(int)tfile->tdata[(yy * 16 + uu)*7+0]].tex[0];
-                    texid[yy * 16 + uu] = TexLib::addTex(texturepath, tfile->materials[(int)tfile->tdata[(yy * 16 + uu)*7+0]].tex[0]);
+                    texid[yy * 16 + uu] = TexLib::addTex(texturepath, *tfile->materials[(int)tfile->tdata[(yy * 16 + uu)*13+0+6]].tex[0]);
                     //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
                     //texid = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
                 //    gl.glDisable(GL2.GL_TEXTURE_2D);
@@ -379,38 +379,38 @@ void Terrain::oglInit() {
                     punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
                     punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
                     punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
-                    punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*7 + 3] + ii * tfile->tdata[(yy * 16 + uu)*7 + 4] + tfile->tdata[(yy * 16 + uu)*7 + 1];
-                    punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*7 + 5] + ii * tfile->tdata[(yy * 16 + uu)*7 + 6] + tfile->tdata[(yy * 16 + uu)*7 + 2];
+                    punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                    punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                     
                     punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
                     punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
                     punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
-                    punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*7 + 3] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*7 + 4] + tfile->tdata[(yy * 16 + uu)*7 + 1];
-                    punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*7 + 5] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*7 + 6] + tfile->tdata[(yy * 16 + uu)*7 + 2];
+                    punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                    punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                     
                     punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
                     punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
                     punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
-                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*7 + 3] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*7 + 4] + tfile->tdata[(yy * 16 + uu)*7 + 1];
-                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*7 + 5] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*7 + 6] + tfile->tdata[(yy * 16 + uu)*7 + 2];
+                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                     
                     punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
                     punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
                     punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
-                    punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*7 + 3] + ii * tfile->tdata[(yy * 16 + uu)*7 + 4] + tfile->tdata[(yy * 16 + uu)*7 + 1];
-                    punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*7 + 5] + ii * tfile->tdata[(yy * 16 + uu)*7 + 6] + tfile->tdata[(yy * 16 + uu)*7 + 2];
+                    punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                    punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                     
                     punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
                     punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
                     punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
-                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*7 + 3] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*7 + 4] + tfile->tdata[(yy * 16 + uu)*7 + 1];
-                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*7 + 5] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*7 + 6] + tfile->tdata[(yy * 16 + uu)*7 + 2];
+                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                     
                     punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
                     punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
                     punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
-                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*7 + 3] + (ii) * tfile->tdata[(yy * 16 + uu)*7 + 4] + tfile->tdata[(yy * 16 + uu)*7 + 1];
-                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*7 + 5] + (ii) * tfile->tdata[(yy * 16 + uu)*7 + 6] + tfile->tdata[(yy * 16 + uu)*7 + 2];
+                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                    punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                     }
                 }
             }
@@ -485,6 +485,7 @@ void Terrain::save(){
     QString path = Game::root + "/routes/" + Game::route + "/tiles/";
     QString filename = getTileName((int) this->mojex, (int)-this->mojez);
     saveRAW(path + filename + "_y.raw");
+    this->tfile->save(path + filename + ".t");
 }
 
 void Terrain::saveRAW(QString name) {

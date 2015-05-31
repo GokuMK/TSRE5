@@ -22,10 +22,15 @@ int FileBuffer::getInt() {
     return *((int*) & this->data[this->off - 4]);
 }
 
+unsigned int FileBuffer::getUint() {
+    this->off += 4;
+    return *((unsigned int*) & this->data[this->off - 4]);
+}
+
 unsigned short int FileBuffer::getShort() {
     this->off += 2;
-    return this->data[this->off - 2]*256 + 0;
-    //return *((unsigned short int*)&this->data[this->off-2]);
+    //return this->data[this->off - 2]*256 + 0;
+    return *((unsigned short int*)&this->data[this->off-2]);
 }
 
 float FileBuffer::getFloat() {

@@ -36,6 +36,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/TDB.o
 ./build/Release/MinGW_QT_static-Windows/TFile.o
 ./build/Release/MinGW_QT_static-Windows/TRnode.o
+./build/Release/MinGW_QT_static-Windows/TS.o
 ./build/Release/MinGW_QT_static-Windows/TSection.o
 ./build/Release/MinGW_QT_static-Windows/TSectionDAT.o
 ./build/Release/MinGW_QT_static-Windows/Terrain.o

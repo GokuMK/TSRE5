@@ -150,7 +150,6 @@ void ForestObj::drawShape(){
                 float tposx = ((float)((std::rand()%100))/100)*areaX-areaX/2.0;
                 float tposz = ((float)((std::rand()%100))/100)*areaZ-areaZ/2.0;
                 Vector2f uuu(tposx,tposz);
-                qDebug() << qDirection[2] << " " << qDirection[3];
                 uuu.rotate(((qDirection[1]+0.00001f)/fabs(qDirection[1]+0.00001f))*(float)-acos(qDirection[3])*2.0, 0);
                 tposx = uuu.x;
                 tposz = uuu.y;
