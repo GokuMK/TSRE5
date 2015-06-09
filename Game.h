@@ -2,8 +2,9 @@
 #define	GAMESETTINGS_H
 
 #include <QString>
-#include "window.h"
-#include "LoadWindow.h"
+
+class Window;
+class LoadWindow;
 
 class Game {
 public:

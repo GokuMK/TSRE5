@@ -5,12 +5,12 @@
 #include "Route.h"
 #include "Ref.h"
 
-class ToolBox : public QWidget{
+class ObjTools : public QWidget{
     Q_OBJECT
 
 public:
-    ToolBox(QString name);
-    virtual ~ToolBox();
+    ObjTools(QString name);
+    virtual ~ObjTools();
     
 public slots:
     void routeLoaded(Route * a);

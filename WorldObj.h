@@ -3,7 +3,6 @@
 
 #include <QString>
 #include "GLUU.h"
-#include <QString>
 #include "FileBuffer.h"
 #include "OglObj.h"
 #include "Ref.h"

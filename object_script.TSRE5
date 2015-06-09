@@ -15,6 +15,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/LevelCrObj.o
 ./build/Release/MinGW_QT_static-Windows/LoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/NaviBox.o
+./build/Release/MinGW_QT_static-Windows/ObjTools.o
 ./build/Release/MinGW_QT_static-Windows/OglObj.o
 ./build/Release/MinGW_QT_static-Windows/PaintTexLib.o
 ./build/Release/MinGW_QT_static-Windows/ParserX.o
@@ -41,11 +42,11 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/TSectionDAT.o
 ./build/Release/MinGW_QT_static-Windows/Terrain.o
 ./build/Release/MinGW_QT_static-Windows/TerrainLib.o
+./build/Release/MinGW_QT_static-Windows/TerrainTools.o
 ./build/Release/MinGW_QT_static-Windows/TexLib.o
 ./build/Release/MinGW_QT_static-Windows/TextObj.o
 ./build/Release/MinGW_QT_static-Windows/Texture.o
 ./build/Release/MinGW_QT_static-Windows/Tile.o
-./build/Release/MinGW_QT_static-Windows/ToolBox.o
 ./build/Release/MinGW_QT_static-Windows/TrWatermarkObj.o
 ./build/Release/MinGW_QT_static-Windows/TrackObj.o
 ./build/Release/MinGW_QT_static-Windows/TrackShape.o
@@ -63,7 +64,8 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_AceLib.o
 ./build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_NaviBox.o
-./build/Release/MinGW_QT_static-Windows/moc_ToolBox.o
+./build/Release/MinGW_QT_static-Windows/moc_ObjTools.o
+./build/Release/MinGW_QT_static-Windows/moc_TerrainTools.o
 ./build/Release/MinGW_QT_static-Windows/moc_glwidget.o
 ./build/Release/MinGW_QT_static-Windows/moc_window.o
 );

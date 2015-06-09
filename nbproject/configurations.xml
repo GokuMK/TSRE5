@@ -14,6 +14,13 @@
         <itemPath>ReadFile.h</itemPath>
         <itemPath>TS.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f11" displayName="gui" projectFiles="true">
+        <itemPath>AboutWindow.h</itemPath>
+        <itemPath>LoadWindow.h</itemPath>
+        <itemPath>NaviBox.h</itemPath>
+        <itemPath>ObjTools.h</itemPath>
+        <itemPath>TerrainTools.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f6" displayName="math3d" projectFiles="true">
         <itemPath>Flex.h</itemPath>
         <itemPath>GLMatrix.h</itemPath>
@@ -81,11 +88,7 @@
         <itemPath>zconf.h</itemPath>
         <itemPath>zlib.h</itemPath>
       </logicalFolder>
-      <itemPath>AboutWindow.h</itemPath>
       <itemPath>Game.h</itemPath>
-      <itemPath>LoadWindow.h</itemPath>
-      <itemPath>NaviBox.h</itemPath>
-      <itemPath>ToolBox.h</itemPath>
       <itemPath>glwidget.h</itemPath>
       <itemPath>window.h</itemPath>
     </logicalFolder>
@@ -105,6 +108,13 @@
         <itemPath>ParserX.cpp</itemPath>
         <itemPath>ReadFile.cpp</itemPath>
         <itemPath>TS.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="gui" projectFiles="true">
+        <itemPath>AboutWindow.cpp</itemPath>
+        <itemPath>LoadWindow.cpp</itemPath>
+        <itemPath>NaviBox.cpp</itemPath>
+        <itemPath>ObjTools.cpp</itemPath>
+        <itemPath>TerrainTools.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="math3d" projectFiles="true">
         <itemPath>Flex.cpp</itemPath>
@@ -169,11 +179,7 @@
         <itemPath>TerrainLib.cpp</itemPath>
         <itemPath>Tile.cpp</itemPath>
       </logicalFolder>
-      <itemPath>AboutWindow.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
-      <itemPath>LoadWindow.cpp</itemPath>
-      <itemPath>NaviBox.cpp</itemPath>
-      <itemPath>ToolBox.cpp</itemPath>
       <itemPath>glwidget.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>window.cpp</itemPath>
@@ -270,6 +276,10 @@
       <item path="NaviBox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NaviBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ObjTools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="OglObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -375,6 +385,10 @@
       </item>
       <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainTools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
@@ -390,10 +404,6 @@
       <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tile.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ToolBox.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ToolBox.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TrWatermarkObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -542,6 +552,10 @@
       </item>
       <item path="NaviBox.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ObjTools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="OglObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
@@ -646,6 +660,10 @@
       </item>
       <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainTools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
@@ -661,10 +679,6 @@
       <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tile.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ToolBox.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ToolBox.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TrWatermarkObj.cpp" ex="false" tool="1" flavor2="0">
       </item>

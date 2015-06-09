@@ -33,7 +33,7 @@ bool TFile::readT(QString fSfile) {
             pozycja = data->getInt();
             offset = data->getInt();
             akto = data->off;
-           qDebug() << "znaleziono sekcje " << pozycja <<" na " << data->off << " " << offset;
+            //qDebug() << "znaleziono sekcje " << pozycja <<" na " << data->off << " " << offset;
 
             switch (pozycja) {
                 case 137:
@@ -63,7 +63,7 @@ bool TFile::readT(QString fSfile) {
                     i--;
                     break;
             }
-            if(pozycja==157) qDebug() << " ok";
+            //if(pozycja==157) qDebug() << " ok";
             data->off = akto + offset;
             if(data->off >= data->length) break;
         }
@@ -81,7 +81,7 @@ void TFile::get139(FileBuffer* data, int length) {
             pozycja = data->getInt();
             offset = data->getInt();
             akto = data->off;
-            qDebug() << "139 znaleziono sekcje " << pozycja <<" na " << data->off << " " << offset;
+            //qDebug() << "139 znaleziono sekcje " << pozycja <<" na " << data->off << " " << offset;
 
             switch (pozycja) {
                 case 140:
@@ -263,7 +263,7 @@ void TFile::get157(FileBuffer* data) {
         //System.out.println("=znaleziono sekcje " + pozycja + " na " + data.position() + " " + offset);
         data->off++;
         int ttilosc = data->getInt();
-        qDebug() << "ttilosc " << ttilosc;
+        //qDebug() << "ttilosc " << ttilosc;
         //System.out.println("ilosc " + ttilosc);
         int tttpozycja, tttoffset, tttakto;
         //

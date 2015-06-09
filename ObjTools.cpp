@@ -1,8 +1,8 @@
-#include "ToolBox.h"
+#include "ObjTools.h"
 #include "Route.h"
 
 
-ToolBox::ToolBox(QString name)
+ObjTools::ObjTools(QString name)
     : QWidget(){
     //QRadioButton *radio1 = new QRadioButton(tr("&Radio button 1"));
     //QRadioButton *radio2 = new QRadioButton(tr("R&adio button 2"));
@@ -57,10 +57,10 @@ ToolBox::ToolBox(QString name)
                       this, SLOT(placeToolEnabled()));
 }
 
-ToolBox::~ToolBox() {
+ObjTools::~ObjTools() {
 }
 
-void ToolBox::routeLoaded(Route* a){
+void ObjTools::routeLoaded(Route* a){
     this->route = a;
 
     QStringList hash;
@@ -112,7 +112,7 @@ void ToolBox::routeLoaded(Route* a){
     //refTrack.s .sortItems(Qt::AscendingOrder);
 }
 
-void ToolBox::refClassSelected(const QString & text){
+void ObjTools::refClassSelected(const QString & text){
     //qDebug() << "Bbbb " << text;
     refList.clear();
     for (int it = 0; it < route->ref->refItems[text.toStdString()].size(); ++it ){
@@ -123,7 +123,7 @@ void ToolBox::refClassSelected(const QString & text){
     }
 }
 
-void ToolBox::refTrackSelected(const QString & text){
+void ObjTools::refTrackSelected(const QString & text){
     trackList.clear();
     TrackShape * track;
     for (auto it = route->tsection->shape.begin(); it != route->tsection->shape.end(); ++it ){
@@ -140,7 +140,7 @@ void ToolBox::refTrackSelected(const QString & text){
     trackList.sortItems(Qt::AscendingOrder);
 }
 
-void ToolBox::refListSelected(QListWidgetItem * item){
+void ObjTools::refListSelected(QListWidgetItem * item){
     //refList.addItem(
     try{
         route->ref->selected = &route->ref->refItems[refClass.currentText().toStdString()][refList.currentRow()];
@@ -150,7 +150,7 @@ void ToolBox::refListSelected(QListWidgetItem * item){
     }
 }
 
-void ToolBox::trackListSelected(QListWidgetItem * item){
+void ObjTools::trackListSelected(QListWidgetItem * item){
     
     qDebug() << item->type() << " " << item->text();
     Ref::RefItem* itemRef = new Ref::RefItem(); 
@@ -166,21 +166,21 @@ void ToolBox::trackListSelected(QListWidgetItem * item){
     }
 }
 
-void ToolBox::lastItemsListSelected(QListWidgetItem * item){
+void ObjTools::lastItemsListSelected(QListWidgetItem * item){
     
     qDebug() << item->type() << " " << item->text();
     route->ref->selected = (Ref::RefItem*)item->type();
 }
 
-void ToolBox::selectToolEnabled(){
+void ObjTools::selectToolEnabled(){
     emit enableTool("selectTool");
 }
 
-void ToolBox::placeToolEnabled(){
+void ObjTools::placeToolEnabled(){
     emit enableTool("placeTool");
 }
 
-void ToolBox::itemSelected(int pointer){
+void ObjTools::itemSelected(int pointer){
     Ref::RefItem* item = (Ref::RefItem*) pointer;
     QString text;
     if(item->description.length() > 1) 

@@ -3,7 +3,8 @@
 
 #include <QWidget>
 #include <QMainWindow>
-#include "ToolBox.h"
+#include "ObjTools.h"
+#include "TerrainTools.h"
 #include "NaviBox.h"
 #include "AboutWindow.h"
 
@@ -24,6 +25,7 @@ public slots:
     void save();
     void createPaths();
     void about();
+    void setToolbox(QString name);
     
 signals:
     void exitNow();
@@ -32,9 +34,11 @@ signals:
 protected:
     void keyPressEvent(QKeyEvent *event);
     void closeEvent(QCloseEvent * event );
+    void hideAllTools();
 private:
     GLWidget *glWidget;
-    ToolBox *groupBox;
+    ObjTools *objTools;
+    TerrainTools *terrainTools;
     NaviBox *naviBox;
     
     QMenu *routeMenu;

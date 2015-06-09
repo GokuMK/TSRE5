@@ -2,6 +2,8 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include "window.h"
+#include "LoadWindow.h"
 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb";

@@ -41,6 +41,7 @@ signals:
     void routeLoaded(Route * a);
     void itemSelected(int pointer);
     void naviInfo(int x, int z, int all, int hidden);
+    void setToolbox(QString name);
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
