@@ -92,6 +92,7 @@ bool Game::checkSettings(){
     window = new Window();
     window->resize(1280, 720);
     
+    
     loadWindow = new LoadWindow();
     QObject::connect(window, SIGNAL(exitNow()),
                       loadWindow, SLOT(exitNow()));

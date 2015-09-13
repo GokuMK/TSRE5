@@ -14,6 +14,8 @@ Terrain::Terrain(float x, float y) {
     wTexid = -1;
     for (int i = 0; i < 256; i++) {
         texid[i] = -1;
+        hidden[i] = false;
+        texModified[i] = false;
     }
     mojex = x;
     mojez = y;
@@ -114,6 +116,34 @@ void Terrain::refresh(){
     isOgl = false;
 }
 
+void Terrain::paintTexture(int x, int z, float posx, float posz){
+
+    int u = (posx+1024)/128;
+    int y = (posz+1024)/128;
+    //hidden[y*16 + u] = true;
+    float tx = posx+1024 - u*128;
+    float tz = posz+1024 - y*128;
+    tx/= 128;
+    tz/= 128;
+    qDebug() << tx<<" "<< tz;
+    
+    QString name = this->getTileName(mojex, -mojez)+"_"+QString::number(y)+"_"+QString::number(u)+".ace";
+    if(name != *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0]){
+        tfile->tdata[(y * 16 + u)*13+0+6] = tfile->cloneMat(tfile->tdata[(y * 16 + u)*13+0+6]);
+        *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0] = name;
+        qDebug() << *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0];
+        texid[y * 16 + u] = TexLib::cloneTex(texid[y * 16 + u]);
+        
+        TexLib::save("ace", texturepath+name, texid[y * 16 + u]);
+        //TexLib::mtex[texid[y * 16 + u]]->GLTextures();
+    }
+    
+    TexLib::mtex[texid[y * 16 + u]]->paint(tz, tx);
+    TexLib::mtex[texid[y * 16 + u]]->update();
+    this->texModified[y * 16 + u] = true;
+    this->modified = true;
+}
+
 void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov) {
     if (!loaded) 
         return;
@@ -170,11 +200,39 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
         lines.setMaterial(1.0,0.0,0.0);
         lines.init(punkty, ptr, lines.V, GL_LINES);
         delete punkty;
+        
+        punkty = new float[256*6*32];
+        ptr = 0;
+        i = 0;
+        
+        for(int j = 0; j<256; j+=16){
+            for(i = 0; i < 256; i++){
+            punkty[ptr++] = -1024 + j*8;
+            punkty[ptr++] = 0.9 + terrainData[i][j];
+            punkty[ptr++] = -1024 + i*8;
+            punkty[ptr++] = -1024 + j*8;
+            punkty[ptr++] = 0.9 + terrainData[i+1][j];
+            punkty[ptr++] = -1024 + i*8 + 8;
+            }
+
+            for(i = 0; i < 256; i++){
+                punkty[ptr++] = -1024 + i*8;
+                punkty[ptr++] = 0.9 + terrainData[j][i];
+                punkty[ptr++] = -1024 + j*8;
+                punkty[ptr++] = -1024 + i*8 + 8;
+                punkty[ptr++] = 0.9 + terrainData[j][i+1];
+                punkty[ptr++] = -1024 + j*8;
+            }
+        }
+        slines.setMaterial(0.1,0.1,1.0);
+        slines.init(punkty, ptr, lines.V, GL_LINES);
+        delete punkty;
     }
     
     Mat4::identity(gluu->objStrMatrix);
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     lines.render();
+    //slines.render();
     
     gluu->enableTextures();
     int off = 0;
@@ -182,6 +240,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     float size = 512;
     for (int uu = 0; uu < 16; uu++) {
         for (int yy = 0; yy < 16; yy++) {
+            if(hidden[yy * 16 + uu]) continue;
             float lodxx = lodx + uu * 128 - 1024;
             float lodzz = lodz + yy * 128 - 1024;
             lod = sqrt(lodxx * lodxx + lodzz * lodzz);
@@ -486,6 +545,14 @@ void Terrain::save(){
     QString filename = getTileName((int) this->mojex, (int)-this->mojez);
     saveRAW(path + filename + "_y.raw");
     this->tfile->save(path + filename + ".t");
+    
+    for (int u = 0; u < 16; u++)
+        for (int y = 0; y < 16; y++) {
+            if(this->texModified[y * 16 + u] == false) continue;
+            QString name = this->getTileName(mojex, -mojez)+"_"+QString::number(y)+"_"+QString::number(u)+".ace";
+            TexLib::save("ace", texturepath+name, texid[y * 16 + u]);
+            this->texModified[y * 16 + u] = false;
+    }
 }
 
 void Terrain::saveRAW(QString name) {

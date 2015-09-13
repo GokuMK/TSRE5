@@ -149,6 +149,48 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR)
     //return -1;
 }
 
+void TerrainLib::paintTexture(int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->paintTexture(x, z, posx, posz);
+}
+
+void TerrainLib::paintHeightMap(int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    //terr->paintTexture(x, z, posx, posz);
+    
+    int px = (posx + 1024)/8;
+    int pz = (posz + 1024)/8;
+    
+    float h = 0;
+    for(int i = -5; i < 5; i++)
+        for(int j = -5; j < 5; j++){
+            if(px+i >= 256) continue;
+            if(pz+j >= 256) continue;
+            if(px+i < 0) continue;
+            if(pz+j < 0) continue;
+            h = (fabs(i) + fabs(j))/2.0;
+            terr->terrainData[pz+j][px+i] += (10.0 - h)/5.0;
+        }
+    terr->setModified(true);
+    terr->refresh();
+}
+
 void TerrainLib::fillRAW(float** terrainData, int mojex, int mojez) {
     Terrain *tTile;
     //try {

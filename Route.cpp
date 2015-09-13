@@ -111,11 +111,11 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     int mintile = -2;
     int maxtile = 2;
 
-    if (!selection) {
-        TerrainLib::render(gluu, playerT, playerW, target, fov);
+    //if (!selection) {
+        //TerrainLib::render(gluu, playerT, playerW, target, fov);
         //trackDB->renderAll(gluu, playerT, playerRot);
         //trackDB->renderLines(gluu, playerT, playerRot);
-    }
+    //}
     //for (var key in this.tile){
     //    this.tile[key].inUse = false;
     // }

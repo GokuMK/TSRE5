@@ -1,5 +1,6 @@
 #include "FileBuffer.h"
 #include <QString>
+#include <unordered_map>
 
 #ifndef TFILE_H
 #define	TFILE_H
@@ -9,7 +10,7 @@ public:
     struct mat {
         QString* tex[2];
         QString* name = NULL;
-        int atex[2];
+        int atex[2][2];
         int itex[2][4];
         int count153 = 0;
         int count155 = 0;
@@ -18,7 +19,8 @@ public:
     bool used = false;
     float* tdata;
     float* erroeBias;
-    mat* materials;
+    //mat* materials;
+    std::unordered_map<int, mat> materials;
     int* flags;
     float WSW;
     float WSE;
@@ -49,6 +51,7 @@ public:
     virtual ~TFile();
     bool readT(QString fSfile);
     void save(QString name);
+    int cloneMat(int id);
     
 private:
     void get139(FileBuffer* data, int length);

@@ -10,8 +10,8 @@
 TerrainTools::TerrainTools(QString name)
     : QWidget(){
     
-    QPushButton *heightTool = new QPushButton("height", this);
-    QPushButton *paintTool = new QPushButton("paint", this);
+    QPushButton *heightTool = new QPushButton("Paint HeightMap", this);
+    QPushButton *paintTool = new QPushButton("Paint Texture", this);
     
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(heightTool);

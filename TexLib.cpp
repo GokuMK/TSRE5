@@ -75,3 +75,20 @@ int TexLib::addTex(QString pathid) {
     return jesttextur++;
 }
 
+int TexLib::cloneTex(int id) {
+
+    Texture* t = mtex.at(id);
+    if(t == NULL) return -2;
+    
+    Texture* newFile = new Texture(t);
+    newFile->ref++;
+    mtex[jesttextur] = newFile;
+ 
+    return jesttextur++;
+}
+
+void TexLib::save(QString type, QString path, int id){
+    Texture* t = mtex.at(id);
+    if(t == NULL) return;
+    AceLib::save(path, t);
+}

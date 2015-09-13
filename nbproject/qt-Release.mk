@@ -12397,7 +12397,15 @@ build/Release/MinGW_QT_static-Windows/Texture.o: Texture.cpp Texture.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qrect.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qmargins.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qsize.h \
-		C:/Qt/Static/5.4.1/include/QtCore/QDebug
+		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
+		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglfunctions.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglcontext.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QObject \
+		C:/Qt/Static/5.4.1/include/QtCore/QScopedPointer \
+		C:/Qt/Static/5.4.1/include/QtGui/QSurfaceFormat \
+		C:/Qt/Static/5.4.1/include/QtGui/qsurfaceformat.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglversionfunctions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Texture.o Texture.cpp
 
 build/Release/MinGW_QT_static-Windows/Tile.o: Tile.cpp Tile.h \

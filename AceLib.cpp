@@ -86,7 +86,12 @@ void AceLib::run() {
         if (typ == 1) ptr = 248 + offset;
         if (typ == 2) ptr = 232 + offset;
         if (dane == 0) ptr += texture->height * 4;
-        if (dane == 5) ptr += texture->height * 8 - 4;
+        else if (dane == 1) ptr += texture->height * 8 - 4;
+        else if (dane == 4) ptr += texture->height * 4;
+        else if (dane == 5) ptr += texture->height * 8 - 4;
+        //if (dane == 5) {
+        //    qDebug() << "ace dane: " << dane << texture->pathid;
+        //}
 
         //console.log("tekstura wtyp = " + typ);
         if (typ == 0) {
@@ -221,4 +226,71 @@ void AceLib::run() {
     delete data;
     //qDebug() << "2";
     return;
+}
+
+void AceLib::save(QString path, Texture* t){
+    path.replace("//", "/");
+    QFile *file = new QFile(path);
+    qDebug() << "zapis .ace "<<path;
+    if (!file->open(QIODevice::WriteOnly))
+        return;
+    QDataStream write(file);
+    write.setByteOrder(QDataStream::LittleEndian);
+    write.setFloatingPointPrecision(QDataStream::SinglePrecision);
+    
+    const char header[] = {
+        0x53,0x49,0x4D,0x49,0x53,0x41,0x40,0x40,0x40,0x40,0x40,0x40,0x40,0x40,0x40,0x40
+    };
+    //header
+    write.writeRawData(header, 16);
+    write << (qint32)1;
+    //options
+    write << (qint32)0;
+    //width
+    write << (qint32)t->width;
+    //height
+    write << (qint32)t->height;
+    //pixel format
+    write << (qint32)14;
+    //channels
+    write << (qint32)3;
+    //0
+    write << (qint32)0;
+    //empty strings
+    for(int i = 0; i < 31; i++)
+        write << (qint32)0;
+    
+    //channels
+    write << (qint32)8;
+    write << (qint32)0;
+    write << (qint32)3;
+    write << (qint32)0;
+    write << (qint32)8;
+    write << (qint32)0;
+    write << (qint32)4;
+    write << (qint32)0;
+    write << (qint32)8;
+    write << (qint32)0;
+    write << (qint32)5;
+    write << (qint32)0;
+    //200
+    int offset = t->height*4 + 200;
+    for(int i = 0; i < t->height; i++){
+        write << (qint32)offset + i*t->width*3*4;
+    }
+    //data
+    for(int i = 0; i < t->height; i++){
+        for (int j = 0; j<t->width; j++) {
+            write << (qint8)t->imageData[3*t->width*i + j*3];
+        }
+        for (int j = 0; j<t->width; j++) {
+            write << (qint8)t->imageData[3*t->width*i + j*3+1];
+        }
+        for (int j = 0; j<t->width; j++) {
+            write << (qint8)t->imageData[3*t->width*i + j*3+2];
+        }
+    }
+    
+    write.unsetDevice();
+    file->close();
 }

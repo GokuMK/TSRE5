@@ -148,7 +148,7 @@ void TFile::get151(FileBuffer* data) {
         int slen;
         
         int ttilosc = data->getInt();
-        materials = new mat[ttilosc];
+        //materials = new mat[ttilosc];
         materialsCount = ttilosc;
         //System.out.println("ilosc " + ttilosc);
         for (int j = 0; j < ttilosc; j++) {
@@ -224,8 +224,8 @@ void TFile::get153(FileBuffer* data, TFile::mat* m) {
             
             //qDebug() << j << " "<< m->tex[j];
             //data->off -= 3;
-            m->atex[0] = data->getInt();
-            m->atex[1] = data->getInt();
+            m->atex[j][0] = data->getInt();
+            m->atex[j][1] = data->getInt();
             
             data->off = akto + offset;
         }
@@ -356,6 +356,31 @@ void TFile::get251(FileBuffer* data) {
         //tdata = new float[n*n][7];
         //flags = new int[n*n];
     }
+
+int TFile::cloneMat(int id){
+    QString* name = new QString();
+    *name += *materials[id].name;
+    materials[materialsCount].name = name;
+    
+    materials[materialsCount].count153 = materials[id].count153;
+    for(int i = 0; i < materials[id].count153; i++){
+        name = new QString();
+        *name += *materials[id].tex[i];
+        materials[materialsCount].tex[i] = name;
+        materials[materialsCount].atex[i][0] = materials[id].atex[i][0];
+        materials[materialsCount].atex[i][1] = materials[id].atex[i][1];
+    }
+    
+    materials[materialsCount].count155 = materials[id].count155;
+    for(int i = 0; i < materials[id].count155; i++){
+        materials[materialsCount].itex[i][0] = materials[id].itex[i][0];
+        materials[materialsCount].itex[i][1] = materials[id].itex[i][1];
+        materials[materialsCount].itex[i][2] = materials[id].itex[i][2];
+        materials[materialsCount].itex[i][3] = materials[id].itex[i][3];
+    }
+        
+    return this->materialsCount++;
+}
 
 void TFile::save(QString name){
     name.replace("//", "/");
@@ -576,22 +601,22 @@ void TFile::save(QString name){
         write << (qint32)materials[j].count153;
         for(int i = 0; i < materials[j].count153; i++){
             write << (qint32)154;
-            write << (qint32)materials[j].tex[i]->length()*2+3;
+            write << (qint32)(materials[j].tex[i]->length()*2+3+8);
             write << (qint8)0;
             write << (qint16)materials[j].tex[i]->length();
             for(int ii = 0; ii < materials[j].tex[i]->length(); ii++){
                 write << materials[j].tex[i]->at(ii).unicode();
             }
-            write << (qint32)materials[j].atex[0];
-            write << (qint32)materials[j].atex[1];
+            write << (qint32)materials[j].atex[i][0];
+            write << (qint32)materials[j].atex[i][1];
         }
         write << (qint32)155;
-        write << (qint32)29*materials[j].count155+5;
+        write << (qint32)(25*materials[j].count155+5);
         write << (qint8)0;
         write << (qint32)materials[j].count155;
         for(int i = 0; i < materials[j].count155; i++){
             write << (qint32)156;
-            write << (qint32)21;
+            write << (qint32)17;
             write << (qint8)0;
             write << (qint32)materials[j].itex[i][0];
             write << (qint32)materials[j].itex[i][1];

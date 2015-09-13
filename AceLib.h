@@ -14,6 +14,7 @@ public:
     virtual ~AceLib();
     //static bool LoadACE(Texture* texture);
     Texture* texture;
+    static void save(QString path, Texture* t);
 private:
     
 protected:

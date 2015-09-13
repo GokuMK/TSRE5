@@ -150,7 +150,7 @@ void Tile::load() {
             viewDbSphereRaw = (data->getString(start, end));
             continue;
         } 
-
+        //if(sh == "signal") sh = "static";
         if (!createObj(&nowy, sh)) {
             ParserX::pominsekcje(data);
             continue;

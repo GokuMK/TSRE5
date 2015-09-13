@@ -7,6 +7,8 @@
 #include <QDebug>
 
 Window::Window() {
+
+    
     objTools = new ObjTools("ObjTools");
     terrainTools = new TerrainTools("TerrainTools");
     naviBox = new NaviBox();

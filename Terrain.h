@@ -20,6 +20,7 @@ public:
     void refresh();
     bool isModified();
     void setModified(bool value);
+    void paintTexture(int x, int z, float posx, float posz);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov);
 
 private:
@@ -32,11 +33,15 @@ private:
     QString texturepath;
     Vector3f **vertexData;//[257][257];
     Vector3f **normalData;//[257][257];
+    bool hidden[256];
     int texid[256];
+    bool texModified[256];
     QOpenGLBuffer VBO[256];
     QOpenGLVertexArrayObject VAO[256];
-    
+
     OglObj lines;
+    OglObj mlines;
+    OglObj slines;
     OglObj water[256];
     //QOpenGLBuffer wVBO[256];
     //QOpenGLVertexArrayObject wVAO[256];

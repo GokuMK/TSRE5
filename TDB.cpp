@@ -1592,7 +1592,9 @@ void TDB::save() {
     
     QString sh;
     QString path;
-    path = Game::root + "/routes/" + Game::route + "/" + Game::route + ".tdb";
+    QString extension = "tdb";
+    if(this->road) extension = "rdb";
+    path = Game::root + "/routes/" + Game::route + "/" + Game::route + "." + extension;
     path.replace("//", "/");
     qDebug() << path;
     QFile file(path);

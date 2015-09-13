@@ -1,4 +1,5 @@
 #include <QString>
+//#include <QOpenGLFunctions>
 
 #ifndef TEXTURE_H
 #define	TEXTURE_H
@@ -6,7 +7,7 @@
 class Texture {
 public:
     Texture();
-    Texture(const Texture& orig);
+    Texture(const Texture* orig);
     virtual ~Texture();
     
      unsigned char* imageData;		
@@ -30,9 +31,12 @@ public:
     }
 
     bool GLTextures();
+    void update();
+    void paint(float x, float z);
     void delVBO();
 private:
-
+    bool editable = false;
+    void setEditable();
 };
 
 #endif	/* TEXTURE_H */

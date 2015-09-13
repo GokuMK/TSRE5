@@ -10,12 +10,13 @@ gameRoot = C:/ts
 #routeName = poznan_tram
 #routeName = bkd2
 #routeName = usa2l
-routeName = ccc
+#routeName = www
 #routeName = traska
 #routeName = aaa
 #routeName = ICE-HB
 #routeName = tutorial
 #routeName = Warszawa - Kraków
+routeName = Reda-Hel_ver1
 
 # optional start tile
 #startTileX = -5306

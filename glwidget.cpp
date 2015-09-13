@@ -160,59 +160,14 @@ void GLWidget::paintGL() {
     //sFile->render();
     //eng->render();
     //tile->render();
+    if (!selection)
+        TerrainLib::render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
+    
+    if (!selection) drawPointer();
+    
     route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
     
-    bool showPos = true;
-    if (showPos && !selection) {
-        int x = mousex;
-        int y = mousey;
-
-        float winZ[4];
-        int viewport[4];
-        //float wcoord[4];
-
-        glGetIntegerv(GL_VIEWPORT, viewport);
-        //glGetFloatv(GL_MODELVIEW_MATRIX, mvmatrix);
-        //glGetFloatv(GL_PROJECTION_MATRIX, projmatrix);
-        int realy = viewport[3] - (int) y - 1;
-        glReadPixels(x, realy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
-
-        GLH::glhUnProjectf((float) x, (float) realy, winZ[0], // 
-                gluu->mvMatrix,
-                gluu->pMatrix,
-                viewport,
-                aktPointerPos);
-        
-        //if(selection)
-        //    qDebug() << wcoord[0] << ", " << wcoord[1] << ", " << wcoord[2];
-        //showPos = false;
-        
-        //aktPointerPos[0] = 
-        
-        gluu->mvPushMatrix();
-        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, aktPointerPos[0], aktPointerPos[1], aktPointerPos[2]);
-        Mat4::identity(gluu->objStrMatrix);
-        gluu->setMatrixUniforms();
-        //gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-        pointer3d->render();
-        gluu->mvPopMatrix();
-        /*gl.glDisable(GL2.GL_TEXTURE_2D);
-        gl.glDisable(GL2.GL_LIGHTING);
-        gl.glColor3f(1.0f, 1.0f, 0f);
-        gl.glLineWidth(3);
-        gl.glBegin(GL2.GL_LINES);
-        gl.glVertex3f(wcoord[0], wcoord[1], wcoord[2]);
-        gl.glVertex3f(wcoord[0], wcoord[1] + 2, wcoord[2]);
-        gl.glVertex3f(wcoord[0] - 2, wcoord[1], wcoord[2]);
-        gl.glVertex3f(wcoord[0] + 2, wcoord[1], wcoord[2]);
-        gl.glVertex3f(wcoord[0], wcoord[1], wcoord[2] - 2);
-        gl.glVertex3f(wcoord[0], wcoord[1], wcoord[2] + 2);
-        gl.glEnd();
-        gl.glLineWidth(1);
-        gl.glEnable(GL2.GL_LIGHTING);*/
-
-        ////////////
-    }
+    //if (!selection) drawPointer();
 
     if (selection) {
         int x = mousex;
@@ -233,6 +188,7 @@ void GLWidget::paintGL() {
 
         qDebug() << winZ[0] << " " << winZ[1] << " " << winZ[2] << " ";
         int ww = (int) (winZ[0]*255);
+        
         int wx = (int) (ww / 10);
         int wz = (int) (ww - (wx)*10);
         wx = camera->pozT[0] + wx - 5;
@@ -265,6 +221,35 @@ void GLWidget::paintGL() {
     
     gluu->m_program->release();
 
+}
+
+void GLWidget::drawPointer(){
+        int x = mousex;
+        int y = mousey;
+
+        float winZ[4];
+        int viewport[4];
+        //float wcoord[4];
+
+        glGetIntegerv(GL_VIEWPORT, viewport);
+        //glGetFloatv(GL_MODELVIEW_MATRIX, mvmatrix);
+        //glGetFloatv(GL_PROJECTION_MATRIX, projmatrix);
+        int realy = viewport[3] - (int) y - 1;
+        glReadPixels(x, realy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+
+        GLH::glhUnProjectf((float) x, (float) realy, winZ[0], // 
+                gluu->mvMatrix,
+                gluu->pMatrix,
+                viewport,
+                aktPointerPos);
+        
+        gluu->mvPushMatrix();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, aktPointerPos[0], aktPointerPos[1], aktPointerPos[2]);
+        Mat4::identity(gluu->objStrMatrix);
+        gluu->setMatrixUniforms();
+        //gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        pointer3d->render();
+        gluu->mvPopMatrix();
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -303,9 +288,11 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
         case Qt::Key_B:
             route->newTile((int)camera->pozT[0], (int)camera->pozT[1]);
         case Qt::Key_F1:
+            toolEnabled = "";
             emit setToolbox("objTools");
             break;
         case Qt::Key_F2:
+            toolEnabled = "";
             emit setToolbox("terrainTools");    
             break;
         default:
@@ -504,6 +491,14 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
                 //camera->MouseDown(event);
             //}
         }
+        if(toolEnabled == "heightTool"){
+           // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
+            TerrainLib::paintHeightMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
+        if(toolEnabled == "paintTool"){
+           // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
+            TerrainLib::paintTexture((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
         if(toolEnabled == ""){
             camera->MouseDown(event);
         }
@@ -529,11 +524,20 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     }*/
     mousex = event->x();
     mousey = event->y();
-    m_lastPos = event->pos();
     
     if(event->buttons() == Qt::RightButton){
         camera->MouseMove(event);
     } else {
+        if(toolEnabled == "paintTool" && mousePressed == true){
+            if(mousex != m_lastPos.x() || mousey != m_lastPos.y()){
+                TerrainLib::paintTexture((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            }
+        }
+        if(toolEnabled == "heightTool" && mousePressed == true){
+            if(mousex != m_lastPos.x() || mousey != m_lastPos.y()){
+        TerrainLib::paintHeightMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            }
+        }
         if(toolEnabled == "selectTool"){
             /*if(selectedObj != NULL && mousePressed){
                 //selectedObj->translate(aktPointerPos[0] - lastPointerPos[0], aktPointerPos[1] - lastPointerPos[1], aktPointerPos[2] - lastPointerPos[2]);
@@ -552,6 +556,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
             camera->MouseMove(event);
         }
     }
+    m_lastPos = event->pos();
 }
 
 void GLWidget::msg(QString text){
