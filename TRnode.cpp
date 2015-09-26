@@ -5,6 +5,8 @@ TRnode::TRnode() {
     typ = -1;
     TrP1 = 0;
     TrP1 = 0;
+    iTri = 0;
+    trItemRef = nullptr;
     args[0] = args[1] = args[2] = 0;
     TrPinS[0] = TrPinS[1] = TrPinS[2] = 0;
     TrPinK[0] = TrPinK[1] = TrPinK[2] = 0;

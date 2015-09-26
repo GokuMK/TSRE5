@@ -19,7 +19,7 @@ public:
     static QString odczytajtc(FileBuffer* bufor);
     static float parsujr(FileBuffer* bufor);
     static unsigned int parsujUint(FileBuffer* bufor);
-    static int parsuj16(FileBuffer* bufor);
+    static unsigned int parsuj16(FileBuffer* bufor);
     static int pominsekcje(FileBuffer* bufor);
     static int sekcjap(FileBuffer* bufor);
 

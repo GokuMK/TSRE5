@@ -6,6 +6,7 @@
 #include "TexLib.h"
 #include "TerrainLib.h"
 #include "GLMatrix.h"
+#include "Brush.h"
 
 Terrain::Terrain(float x, float y) {
     loaded = false;
@@ -116,7 +117,53 @@ void Terrain::refresh(){
     isOgl = false;
 }
 
-void Terrain::paintTexture(int x, int z, float posx, float posz){
+int Terrain::getTexture(int x, int z, float posx, float posz){
+
+    int u = (posx+1024)/128;
+    int y = (posz+1024)/128;
+    //hidden[y*16 + u] = true;
+    float tx = posx+1024 - u*128;
+    float tz = posz+1024 - y*128;
+    tx/= 128;
+    tz/= 128;
+    qDebug() << tx<<" "<< tz;
+    
+    return texid[y * 16 + u];
+}
+
+void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz){
+
+    int u = (posx+1024)/128;
+    int y = (posz+1024)/128;
+    //hidden[y*16 + u] = true;
+    float tx = posx+1024 - u*128;
+    float tz = posz+1024 - y*128;
+    tx/= 128;
+    tz/= 128;
+    qDebug() << tx<<" "<< tz;
+    
+    if(brush->texId == texid[y * 16 + u]){
+        qDebug() << "same tex";
+
+    } else {
+        texid[y * 16 + u] = brush->texId;
+    }
+    /*QString name = this->getTileName(mojex, -mojez)+"_"+QString::number(y)+"_"+QString::number(u)+".ace";
+    
+    if(name != *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0]){
+        tfile->tdata[(y * 16 + u)*13+0+6] = tfile->cloneMat(tfile->tdata[(y * 16 + u)*13+0+6]);
+        *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0] = name;
+        qDebug() << *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0];
+        texid[y * 16 + u] = TexLib::cloneTex(texid[y * 16 + u]);
+        
+        TexLib::save("ace", texturepath+name, texid[y * 16 + u]);
+        //TexLib::mtex[texid[y * 16 + u]]->GLTextures();
+    }*/
+
+    this->modified = true;
+}
+
+void Terrain::paintTexture(Brush* brush, int x, int z, float posx, float posz){
 
     int u = (posx+1024)/128;
     int y = (posz+1024)/128;
@@ -128,6 +175,7 @@ void Terrain::paintTexture(int x, int z, float posx, float posz){
     qDebug() << tx<<" "<< tz;
     
     QString name = this->getTileName(mojex, -mojez)+"_"+QString::number(y)+"_"+QString::number(u)+".ace";
+    
     if(name != *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0]){
         tfile->tdata[(y * 16 + u)*13+0+6] = tfile->cloneMat(tfile->tdata[(y * 16 + u)*13+0+6]);
         *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0] = name;
@@ -138,7 +186,7 @@ void Terrain::paintTexture(int x, int z, float posx, float posz){
         //TexLib::mtex[texid[y * 16 + u]]->GLTextures();
     }
     
-    TexLib::mtex[texid[y * 16 + u]]->paint(tz, tx);
+    TexLib::mtex[texid[y * 16 + u]]->paint(brush, tz, tx);
     TexLib::mtex[texid[y * 16 + u]]->update();
     this->texModified[y * 16 + u] = true;
     this->modified = true;
@@ -232,7 +280,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     Mat4::identity(gluu->objStrMatrix);
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     lines.render();
-    //slines.render();
+    slines.render();
     
     gluu->enableTextures();
     int off = 0;

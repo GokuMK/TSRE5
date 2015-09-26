@@ -35,6 +35,7 @@
         <itemPath>OglObj.h</itemPath>
         <itemPath>Pointer3d.h</itemPath>
         <itemPath>TextObj.h</itemPath>
+        <itemPath>TrackItemObj.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
@@ -48,6 +49,7 @@
         <itemPath>Path.h</itemPath>
         <itemPath>Ruch.h</itemPath>
         <itemPath>TDB.h</itemPath>
+        <itemPath>TRitem.h</itemPath>
         <itemPath>TRnode.h</itemPath>
         <itemPath>TSection.h</itemPath>
         <itemPath>TSectionDAT.h</itemPath>
@@ -55,6 +57,8 @@
       </logicalFolder>
       <logicalFolder name="f4" displayName="texture" projectFiles="true">
         <itemPath>AceLib.h</itemPath>
+        <itemPath>Brush.h</itemPath>
+        <itemPath>ImageLib.h</itemPath>
         <itemPath>PaintTexLib.h</itemPath>
         <itemPath>TexLib.h</itemPath>
         <itemPath>Texture.h</itemPath>
@@ -130,6 +134,7 @@
         <itemPath>OglObj.cpp</itemPath>
         <itemPath>Pointer3d.cpp</itemPath>
         <itemPath>TextObj.cpp</itemPath>
+        <itemPath>TrackItemObj.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
@@ -143,6 +148,7 @@
         <itemPath>Path.cpp</itemPath>
         <itemPath>Ruch.cpp</itemPath>
         <itemPath>TDB.cpp</itemPath>
+        <itemPath>TRitem.cpp</itemPath>
         <itemPath>TRnode.cpp</itemPath>
         <itemPath>TSection.cpp</itemPath>
         <itemPath>TSectionDAT.cpp</itemPath>
@@ -150,6 +156,8 @@
       </logicalFolder>
       <logicalFolder name="f3" displayName="texture" projectFiles="true">
         <itemPath>AceLib.cpp</itemPath>
+        <itemPath>Brush.cpp</itemPath>
+        <itemPath>ImageLib.cpp</itemPath>
         <itemPath>PaintTexLib.cpp</itemPath>
         <itemPath>TexLib.cpp</itemPath>
         <itemPath>Texture.cpp</itemPath>
@@ -221,6 +229,10 @@
       </item>
       <item path="AceLib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Brush.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Camera.h" ex="false" tool="3" flavor2="0">
@@ -264,6 +276,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ImageLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ImageLib.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -361,6 +377,10 @@
       </item>
       <item path="TFile.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TRitem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TRitem.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TRnode.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TRnode.h" ex="false" tool="3" flavor2="0">
@@ -408,6 +428,10 @@
       <item path="TrWatermarkObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TrWatermarkObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackItemObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrackItemObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -496,6 +520,10 @@
       </item>
       <item path="AceLib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Brush.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Camera.h" ex="false" tool="3" flavor2="0">
@@ -539,6 +567,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ImageLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ImageLib.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -636,6 +668,10 @@
       </item>
       <item path="TFile.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TRitem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TRitem.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TRnode.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TRnode.h" ex="false" tool="3" flavor2="0">
@@ -683,6 +719,10 @@
       <item path="TrWatermarkObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TrWatermarkObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackItemObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrackItemObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>

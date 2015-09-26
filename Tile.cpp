@@ -198,12 +198,15 @@ bool Tile::createObj(WorldObj** nowy, QString sh) {
     } else if (sh == "platform") {
         *nowy = (WorldObj*) (new PlatformObj());
         (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (*nowy)->typeID = (*nowy)->platform;
     } else if (sh == "siding") {
         *nowy = (WorldObj*) (new PlatformObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";        
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
+        (*nowy)->typeID = (*nowy)->siding;
     } else if (sh == "carspawner") {
         *nowy = (WorldObj*) (new PlatformObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";        
+        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";     
+        (*nowy)->typeID = (*nowy)->carspawner;
     } else if (sh == "levelcr") {
         *nowy = (WorldObj*) (new LevelCrObj());
         (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";   

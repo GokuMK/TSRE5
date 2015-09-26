@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GLWidget_t {
-    QByteArrayData data[20];
-    char stringdata[129];
+    QByteArrayData data[25];
+    char stringdata[178];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,18 +43,24 @@ QT_MOC_LITERAL(10, 65, 3), // "all"
 QT_MOC_LITERAL(11, 69, 6), // "hidden"
 QT_MOC_LITERAL(12, 76, 10), // "setToolbox"
 QT_MOC_LITERAL(13, 87, 4), // "name"
-QT_MOC_LITERAL(14, 92, 7), // "cleanup"
-QT_MOC_LITERAL(15, 100, 10), // "enableTool"
-QT_MOC_LITERAL(16, 111, 6), // "jumpTo"
-QT_MOC_LITERAL(17, 118, 1), // "y"
-QT_MOC_LITERAL(18, 120, 3), // "msg"
-QT_MOC_LITERAL(19, 124, 4) // "text"
+QT_MOC_LITERAL(14, 92, 17), // "setBrushTextureId"
+QT_MOC_LITERAL(15, 110, 3), // "val"
+QT_MOC_LITERAL(16, 114, 7), // "cleanup"
+QT_MOC_LITERAL(17, 122, 10), // "enableTool"
+QT_MOC_LITERAL(18, 133, 13), // "setPaintBrush"
+QT_MOC_LITERAL(19, 147, 6), // "Brush*"
+QT_MOC_LITERAL(20, 154, 5), // "brush"
+QT_MOC_LITERAL(21, 160, 6), // "jumpTo"
+QT_MOC_LITERAL(22, 167, 1), // "y"
+QT_MOC_LITERAL(23, 169, 3), // "msg"
+QT_MOC_LITERAL(24, 173, 4) // "text"
 
     },
     "GLWidget\0routeLoaded\0\0Route*\0a\0"
     "itemSelected\0pointer\0naviInfo\0x\0z\0all\0"
-    "hidden\0setToolbox\0name\0cleanup\0"
-    "enableTool\0jumpTo\0y\0msg\0text"
+    "hidden\0setToolbox\0name\0setBrushTextureId\0"
+    "val\0cleanup\0enableTool\0setPaintBrush\0"
+    "Brush*\0brush\0jumpTo\0y\0msg\0text"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,36 +70,40 @@ static const uint qt_meta_data_GLWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       5,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   54,    2, 0x06 /* Public */,
-       5,    1,   57,    2, 0x06 /* Public */,
-       7,    4,   60,    2, 0x06 /* Public */,
-      12,    1,   69,    2, 0x06 /* Public */,
+       1,    1,   64,    2, 0x06 /* Public */,
+       5,    1,   67,    2, 0x06 /* Public */,
+       7,    4,   70,    2, 0x06 /* Public */,
+      12,    1,   79,    2, 0x06 /* Public */,
+      14,    1,   82,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      14,    0,   72,    2, 0x0a /* Public */,
-      15,    1,   73,    2, 0x0a /* Public */,
-      16,    2,   76,    2, 0x0a /* Public */,
-      18,    1,   81,    2, 0x0a /* Public */,
+      16,    0,   85,    2, 0x0a /* Public */,
+      17,    1,   86,    2, 0x0a /* Public */,
+      18,    1,   89,    2, 0x0a /* Public */,
+      21,    2,   92,    2, 0x0a /* Public */,
+      23,    1,   97,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
     QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int,    8,    9,   10,   11,
     QMetaType::Void, QMetaType::QString,   13,
+    QMetaType::Void, QMetaType::Int,   15,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   13,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,    8,   17,
-    QMetaType::Void, QMetaType::QString,   19,
+    QMetaType::Void, 0x80000000 | 19,   20,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    8,   22,
+    QMetaType::Void, QMetaType::QString,   24,
 
        0        // eod
 };
@@ -107,10 +117,12 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 1: _t->itemSelected((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->naviInfo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
         case 3: _t->setToolbox((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 4: _t->cleanup(); break;
-        case 5: _t->enableTool((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 6: _t->jumpTo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 7: _t->msg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 4: _t->setBrushTextureId((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->cleanup(); break;
+        case 6: _t->enableTool((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 7: _t->setPaintBrush((*reinterpret_cast< Brush*(*)>(_a[1]))); break;
+        case 8: _t->jumpTo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 9: _t->msg((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -138,6 +150,12 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             typedef void (GLWidget::*_t)(QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::setToolbox)) {
                 *result = 3;
+            }
+        }
+        {
+            typedef void (GLWidget::*_t)(int );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::setBrushTextureId)) {
+                *result = 4;
             }
         }
     }
@@ -170,13 +188,13 @@ int GLWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 8;
+        _id -= 10;
     }
     return _id;
 }
@@ -207,5 +225,12 @@ void GLWidget::setToolbox(QString _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
+}
+
+// SIGNAL 4
+void GLWidget::setBrushTextureId(int _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 4, _a);
 }
 QT_END_MOC_NAMESPACE

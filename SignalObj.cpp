@@ -5,6 +5,9 @@
 #include <math.h>
 #include "ParserX.h"
 #include <QDebug>
+#include "TrackItemObj.h"
+#include "TDB.h"
+#include "Game.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -13,6 +16,8 @@
 SignalObj::SignalObj() {
     this->shape = -1;
     this->loaded = false;
+    pointer3d = new TrackItemObj();
+    pointer3d->setMaterial(1,0,0);
 }
 
 SignalObj::SignalObj(const SignalObj& orig) {
@@ -72,7 +77,7 @@ void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     if (jestPQ < 2) return;
     //GLUU* gluu = GLUU::get();
     //if((this.position===undefined)||this.qDirection===undefined) return;
-
+    //
     if (size > 0) {
         if ((lod > size + 150)) {
             float v1[2];
@@ -96,7 +101,8 @@ void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
         if (ShapeLib::shape[shape]->loaded)
             size = ShapeLib::shape[shape]->size;
     }
-
+    
+    gluu->mvPushMatrix();
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     
@@ -113,6 +119,45 @@ void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     
     if(selected){
         drawBox();
+    }
+    gluu->mvPopMatrix();
+    
+    this->renderTritems(gluu);
+};
+
+void SignalObj::renderTritems(GLUU* gluu){
+    
+    ///////////////////////////////
+    if (drawPositions == NULL) {
+        drawPositions = new float*[this->signalUnits];
+        TDB* tdb = Game::trackDB;
+        for(int i = 0; i < this->signalUnits; i++){
+            int id = tdb->findTrItemNodeId(this->trItemId[i*2+1]);
+            if (id < 0) {
+                qDebug() << "fail id";
+                return;
+            }
+            //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
+            drawPositions[i] = new float[6];
+            tdb->getDrawPositionOnTrNode(drawPositions[i], id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
+            drawPositions[i][0] += 2048 * (drawPositions[i][4] - this->x);
+            drawPositions[i][2] -= 2048 * (-drawPositions[i][5] - this->y);
+        }
+    }
+
+    //if(pos == NULL) return;
+    Mat4::identity(gluu->objStrMatrix);
+    gluu->setMatrixUniforms();
+
+    for(int i = 0; i < this->signalUnits; i++){
+        gluu->mvPushMatrix();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][0] + 0 * (drawPositions[i][4] - this->x), drawPositions[i][1] + 1, -drawPositions[i][2] + 0 * (-drawPositions[i][5] - this->y));
+        Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][3]);
+        //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
+        //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
+        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        pointer3d->render();
+        gluu->mvPopMatrix();
     }
 };
 

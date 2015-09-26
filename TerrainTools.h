@@ -11,6 +11,8 @@
 #ifndef TERRAINTOOLS_H
 #define	TERRAINTOOLS_H
 
+class Brush;
+
 class TerrainTools : public QWidget{
     Q_OBJECT
 
@@ -21,12 +23,22 @@ public:
 public slots:
     void heightToolEnabled();
     void paintToolEnabled();
+    void pickTexToolEnabled();
+    void setTexToolEnabled();
+    void putTexToolEnabled();
+    void updateTexPrev();
+    void setBrushSize(int val);
+    void setBrushAlpha(int val);
+    void setBrushTextureId(int val);
     
 signals:
     void enableTool(QString name);
+    void setPaintBrush(Brush* brush);
     
 private:
-
+    Brush* paintBrush;
+    QPixmap* texPreview;
+    QLabel* texPreviewLabel;
 };
 
 #endif	/* TERRAINTOOLS_H */

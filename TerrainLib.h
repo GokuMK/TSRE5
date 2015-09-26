@@ -6,6 +6,7 @@
 #include "GLUU.h"
 
 class Terrain;
+class Brush;
 
 class TerrainLib {
 public:
@@ -21,7 +22,9 @@ public:
     static void setHeight256(int x, int z, int posx, int posz, float h);
     static bool isLoaded(int x, int z);
     static void paintHeightMap(int x, int z, float* p);
-    static void paintTexture(int x, int z, float* p);
+    static void paintTexture(Brush* brush, int x, int z, float* p);
+    static void setTerrainTexture(Brush* brush, int x, int z, float* p);
+    static int getTexture(int x, int z, float* p);
     static bool load(int x, int z);
     static void save();
     static void refresh(int x, int z);

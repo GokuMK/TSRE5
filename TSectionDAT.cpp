@@ -149,7 +149,7 @@ bool TSectionDAT::saveRoute() {
     out.setCodec("UTF-16");
     out.setGenerateByteOrderMark(true);
     out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
-    out << "TrackSections ( "<<this->routeMaxIdx-40000<<"\n";
+    out << "TrackSections ( "<<this->routeMaxIdx-40000+2<<"\n";
     for(int i = 40000; i< this->routeMaxIdx; i++){
         if(this->sekcja[i] != NULL){
             out << "	TrackSection ( \n";
@@ -162,7 +162,7 @@ bool TSectionDAT::saveRoute() {
     }
     out << ")\n";
     //return true;
-    out << "SectionIdx ( "<<this->routeShapes - 40000<<"\n";
+    out << "SectionIdx ( "<<this->routeShapes - 40000+1<<"\n";
     for(int i = 40000; i<this->routeShapes; i++){
         if(this->shape[i] != NULL){
             out << "	TrackPath ( "<<i<<" "<<shape[i]->path[0].n;

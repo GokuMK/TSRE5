@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_TerrainTools_t {
-    QByteArrayData data[6];
-    char stringdata[65];
+    QByteArrayData data[17];
+    char stringdata[210];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,12 +33,27 @@ QT_MOC_LITERAL(0, 0, 12), // "TerrainTools"
 QT_MOC_LITERAL(1, 13, 10), // "enableTool"
 QT_MOC_LITERAL(2, 24, 0), // ""
 QT_MOC_LITERAL(3, 25, 4), // "name"
-QT_MOC_LITERAL(4, 30, 17), // "heightToolEnabled"
-QT_MOC_LITERAL(5, 48, 16) // "paintToolEnabled"
+QT_MOC_LITERAL(4, 30, 13), // "setPaintBrush"
+QT_MOC_LITERAL(5, 44, 6), // "Brush*"
+QT_MOC_LITERAL(6, 51, 5), // "brush"
+QT_MOC_LITERAL(7, 57, 17), // "heightToolEnabled"
+QT_MOC_LITERAL(8, 75, 16), // "paintToolEnabled"
+QT_MOC_LITERAL(9, 92, 18), // "pickTexToolEnabled"
+QT_MOC_LITERAL(10, 111, 17), // "setTexToolEnabled"
+QT_MOC_LITERAL(11, 129, 17), // "putTexToolEnabled"
+QT_MOC_LITERAL(12, 147, 13), // "updateTexPrev"
+QT_MOC_LITERAL(13, 161, 12), // "setBrushSize"
+QT_MOC_LITERAL(14, 174, 3), // "val"
+QT_MOC_LITERAL(15, 178, 13), // "setBrushAlpha"
+QT_MOC_LITERAL(16, 192, 17) // "setBrushTextureId"
 
     },
     "TerrainTools\0enableTool\0\0name\0"
-    "heightToolEnabled\0paintToolEnabled"
+    "setPaintBrush\0Brush*\0brush\0heightToolEnabled\0"
+    "paintToolEnabled\0pickTexToolEnabled\0"
+    "setTexToolEnabled\0putTexToolEnabled\0"
+    "updateTexPrev\0setBrushSize\0val\0"
+    "setBrushAlpha\0setBrushTextureId"
 };
 #undef QT_MOC_LITERAL
 
@@ -48,26 +63,42 @@ static const uint qt_meta_data_TerrainTools[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   29,    2, 0x06 /* Public */,
+       1,    1,   69,    2, 0x06 /* Public */,
+       4,    1,   72,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   32,    2, 0x0a /* Public */,
-       5,    0,   33,    2, 0x0a /* Public */,
+       7,    0,   75,    2, 0x0a /* Public */,
+       8,    0,   76,    2, 0x0a /* Public */,
+       9,    0,   77,    2, 0x0a /* Public */,
+      10,    0,   78,    2, 0x0a /* Public */,
+      11,    0,   79,    2, 0x0a /* Public */,
+      12,    0,   80,    2, 0x0a /* Public */,
+      13,    1,   81,    2, 0x0a /* Public */,
+      15,    1,   84,    2, 0x0a /* Public */,
+      16,    1,   87,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, 0x80000000 | 5,    6,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   14,
+    QMetaType::Void, QMetaType::Int,   14,
+    QMetaType::Void, QMetaType::Int,   14,
 
        0        // eod
 };
@@ -78,8 +109,16 @@ void TerrainTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         TerrainTools *_t = static_cast<TerrainTools *>(_o);
         switch (_id) {
         case 0: _t->enableTool((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 1: _t->heightToolEnabled(); break;
-        case 2: _t->paintToolEnabled(); break;
+        case 1: _t->setPaintBrush((*reinterpret_cast< Brush*(*)>(_a[1]))); break;
+        case 2: _t->heightToolEnabled(); break;
+        case 3: _t->paintToolEnabled(); break;
+        case 4: _t->pickTexToolEnabled(); break;
+        case 5: _t->setTexToolEnabled(); break;
+        case 6: _t->putTexToolEnabled(); break;
+        case 7: _t->updateTexPrev(); break;
+        case 8: _t->setBrushSize((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 9: _t->setBrushAlpha((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 10: _t->setBrushTextureId((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -89,6 +128,12 @@ void TerrainTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             typedef void (TerrainTools::*_t)(QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&TerrainTools::enableTool)) {
                 *result = 0;
+            }
+        }
+        {
+            typedef void (TerrainTools::*_t)(Brush * );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&TerrainTools::setPaintBrush)) {
+                *result = 1;
             }
         }
     }
@@ -119,13 +164,13 @@ int TerrainTools::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 11;
     }
     return _id;
 }
@@ -135,5 +180,12 @@ void TerrainTools::enableTool(QString _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void TerrainTools::setPaintBrush(Brush * _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

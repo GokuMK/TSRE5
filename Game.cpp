@@ -5,6 +5,9 @@
 #include "window.h"
 #include "LoadWindow.h"
 
+TDB *Game::trackDB = NULL;
+TDB *Game::roadDB = NULL;    
+
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb";
 QString Game::routeName = "bbb";

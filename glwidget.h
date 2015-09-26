@@ -18,6 +18,7 @@ class SFile;
 class Eng;
 class GLUU;
 class Route;
+class Brush;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -35,6 +36,7 @@ public:
 public slots:
     void cleanup();
     void enableTool(QString name);
+    void setPaintBrush(Brush* brush);
     void jumpTo(int x, int y);
     void msg(QString text);
 
@@ -43,6 +45,7 @@ signals:
     void itemSelected(int pointer);
     void naviInfo(int x, int z, int all, int hidden);
     void setToolbox(QString name);
+    void setBrushTextureId(int val);
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
@@ -90,6 +93,8 @@ private:
     //int tdbDefaultEnd = 0;
     float lastNewObjPos[3];
     float lastNewObjPosT[2];
+    
+    Brush* defaultPaintBrush;
 };
 
 #endif

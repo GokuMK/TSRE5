@@ -5,6 +5,9 @@
 #include <QString>
 #include "FileBuffer.h"
 
+class TrackItemObj;
+class OglObj;
+
 class PlatformObj : public WorldObj  {
 public:
     PlatformObj();
@@ -21,6 +24,11 @@ private:
     int trItemIdCount = 0;
     int carFrequency = 0;
     int	carAvSpeed = 0;
+    TrackItemObj* pointer3d = NULL;
+    OglObj* line = NULL;
+    float* drawPositionB = NULL;
+    float* drawPositionE = NULL;
+    void renderTritems(GLUU* gluu);
 };
 
 #endif	/* PLATFORMOBJ_H */

@@ -5,6 +5,8 @@
 #include <QString>
 #include "FileBuffer.h"
 
+class TrackItemObj;
+
 class SignalObj : public WorldObj  {
 public:
     SignalObj();
@@ -20,6 +22,9 @@ private:
     unsigned int signalSubObj;
     int signalUnits = 0;
     int *trItemId;
+    TrackItemObj* pointer3d = NULL;
+    float** drawPositions = NULL;
+    void renderTritems(GLUU* gluu);
 };
 
 #endif	/* SIGNALOBJ_H */

@@ -145,6 +145,7 @@ void AceLib::run() {
             }
         }
         texture->loaded = true;
+        texture->editable = true;        
     } else {
         //var start = new Date().getTime();
         ptr = 216 + offset;
@@ -220,7 +221,7 @@ void AceLib::run() {
             }
         }
         texture->loaded = true;
-
+        texture->editable = true;
     }
     //qDebug() << "--";
     delete data;

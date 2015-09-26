@@ -400,9 +400,9 @@ unsigned int ParserX::parsujUint(FileBuffer* bufor){
 //-----------------------------------
 //Parsowanie liczby szesnastkowej
 //-----------------------------------
-int ParserX::parsuj16(FileBuffer* bufor){
+unsigned int ParserX::parsuj16(FileBuffer* bufor){
     char b = 0, sb = 0;
-    int x;
+    unsigned int x;
 
     while (((b < 48) || (b > 57 && b < 65) || (b > 70 && b < 97) || (b > 102)) || sb != 32) {
         sb = b;
@@ -429,7 +429,7 @@ int ParserX::pominsekcje(FileBuffer* bufor){
     char b;
     int poziom = 0;
 
-    for (int tt = 0; tt < 20000; tt++){
+    for (int tt = 0; tt < 20000000; tt++){
     //for (;;){
         if(bufor->length <= bufor->off + 2)
             return 0;

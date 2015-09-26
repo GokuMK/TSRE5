@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "Brush.h"
 #include <QOpenGLShaderProgram>
 #include <QString>
 #include <QDebug>
@@ -52,22 +53,96 @@ void Texture::setEditable(){
     this->editable = true;
 }
 
-void Texture::paint(float x, float z){
+unsigned char * Texture::getImageData(int width, int height){
     if(!editable) 
         setEditable();
     
+    unsigned char * out = new unsigned char[width*height*bytesPerPixel];
+    
+    float scalew = (float)this->width/width;
+    float scaleh = (float)this->height/height;
+    
+    qDebug() << this->width <<" "<< this->height;
+    
+    int lineWidth = (this->width*bytesPerPixel);
+    //if( lineWidth%4 !=0) 
+    //    lineWidth = lineWidth + 4 - lineWidth%4;
+    //lineWidth /= 4;
+    //if(lineWidth*4 < this->width*bytesPerPixel)
+    //    lineWidth = lineWidth*4+4;
+    //else
+    //    lineWidth = lineWidth*4;
+    
+    for(int i = 0; i < height; i++ )
+        for(int j = 0; j < width; j++ ){
+            int wsi = scaleh*i;
+            int hsi = scalew*j;
+            out[i*width*bytesPerPixel + j*bytesPerPixel+0] = imageData[wsi*lineWidth + hsi*bytesPerPixel+0];
+            out[i*width*bytesPerPixel + j*bytesPerPixel+1] = imageData[wsi*lineWidth + hsi*bytesPerPixel+1];
+            out[i*width*bytesPerPixel + j*bytesPerPixel+2] = imageData[wsi*lineWidth + hsi*bytesPerPixel+2];
+            if(bytesPerPixel == 4)
+                out[i*width*bytesPerPixel + j*bytesPerPixel+3] = imageData[wsi*lineWidth + hsi*bytesPerPixel+3];
+        }
+    
+    return out;
+}
+
+void Texture::paint(Brush* brush, float x, float z){
+    if(!editable) 
+        setEditable();
+    
+    Texture* tex = brush->tex;
+    
+    if(tex != NULL){
+        if(!tex->loaded) tex = NULL;
+        else if(!tex->editable)
+            tex->setEditable();
+    }
+    
     int tx = x*width;
     int tz = z*height;
-    for(int i = -10; i < 10; i++)
-        for(int j = -10; j < 10; j++){
-            if(tx+i >= width) continue;
-            if(tz+j >= height) continue;
+    
+    int txi, tzj;
+    
+    float talpha = 0;
+    
+    for(int i = -brush->size; i < brush->size; i++)
+        for(int j = -brush->size; j < brush->size; j++){
+            txi = tx+i;
+            tzj = tz+j;
+            if(tx+i >= height) continue;
+            if(tz+j >= width) continue;
             if(tx+i < 0) continue;
             if(tz+j < 0) continue;
-            if(sqrt(i*i + j*j) > 10) continue;
-            imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel] = 0;
-            imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+1] = 0;
-            imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+2] = 0;
+            if(sqrt(i*i + j*j) > brush->size) continue;
+            
+            talpha = (brush->alpha)*(1.0-(float)sqrt(i*i + j*j)/brush->size);
+            txi*=1;
+            tzj*=1;
+            
+            if(tex != NULL){
+                
+                if(tzj >= tex->width){
+                    tzj = tzj%tex->width;
+                }
+                if(txi >= tex->height){
+                    txi = txi%tex->height;
+                }
+                
+                imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel] 
+                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel] + (talpha)*tex->imageData[(txi)*tex->width*tex->bytesPerPixel + (tzj)*tex->bytesPerPixel];
+                imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+1] 
+                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+1] + (talpha)*tex->imageData[(txi)*tex->width*tex->bytesPerPixel + (tzj)*tex->bytesPerPixel+1];
+                imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+2] 
+                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+2] + (talpha)*tex->imageData[(txi)*tex->width*tex->bytesPerPixel + (tzj)*tex->bytesPerPixel+2];
+            } else {
+                imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel] 
+                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel] + (talpha)*(0);
+                imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+1] 
+                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+1] + (talpha)*(0);
+                imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+2] 
+                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+2] + (talpha)*(0);
+            }
         }
 }
 

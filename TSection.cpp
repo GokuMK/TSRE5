@@ -197,6 +197,20 @@ Vector3f *TSection::getDrawPosition(float metry) {
             return new Vector3f();
     }
     
+float TSection::getDrawAngle(float metry) {
+            //prosta
+            if(type==0){
+                return 0;
+            }
+            //krzywa
+            else if(type==1){
+                float kierunek = 1;
+                if(angle > 0) kierunek = -1;
+                return -metry/radius*kierunek;
+            }
+            return 0;
+    }
+
 void TSection::setCamPosition(float metry, float ob) {
          /*   if(type==0){
                 gl.glTranslatef(0, 0, metry*ob);

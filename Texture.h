@@ -4,6 +4,8 @@
 #ifndef TEXTURE_H
 #define	TEXTURE_H
 
+class Brush;
+
 class Texture {
 public:
     Texture();
@@ -25,6 +27,7 @@ public:
      bool loaded = false;
      int ref = 0;
      bool glLoaded = false;
+     bool editable = false;
 
     Texture(QString pathid) {
         this->pathid = pathid;
@@ -32,10 +35,11 @@ public:
 
     bool GLTextures();
     void update();
-    void paint(float x, float z);
+    void paint(Brush* brush, float x, float z);
+    unsigned char * getImageData(int width, int height);
     void delVBO();
 private:
-    bool editable = false;
+    
     void setEditable();
 };
 

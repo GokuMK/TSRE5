@@ -84,7 +84,16 @@ Window::Window() {
     
     QObject::connect(terrainTools, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));   
-
+    
+    QObject::connect(terrainTools, SIGNAL(setPaintBrush(Brush*)),
+                      glWidget, SLOT(setPaintBrush(Brush*)));   
+    
+    QObject::connect(terrainTools, SIGNAL(putTerrainTexture(int)),
+                      glWidget, SLOT(putTerrainTexture(int)));   
+    
+    QObject::connect(glWidget, SIGNAL(setBrushTextureId(int)),
+                      terrainTools, SLOT(setBrushTextureId(int)));   
+    
     QObject::connect(naviBox, SIGNAL(jumpTo(int, int)),
                       glWidget, SLOT(jumpTo(int, int)));
     

@@ -9,6 +9,26 @@
 
 class WorldObj {
 public:
+    enum TypeID {
+        none = 0,
+        undefined = 1,
+        sstatic = 2,
+        signal = 3,
+        speedpost = 4,
+        trackobj = 5,
+        gantry = 6,
+        collideobject = 7,
+        dyntrack = 8,
+        forest = 9,
+        transfer = 10,
+        platform = 11,
+        siding = 12,
+        carspawner = 13,
+        levelcr = 14,
+        pickup = 15
+    };
+    TypeID typeID = this->undefined;
+    
     unsigned int UiD = 0;
     QString fileName;
     float position[3];

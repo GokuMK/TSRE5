@@ -1,5 +1,6 @@
 #include "TexLib.h"
 #include "AceLib.h"
+#include "ImageLib.h"
 #include "PaintTexLib.h"
 #include "Texture.h"
 #include <QDebug>
@@ -62,6 +63,10 @@ int TexLib::addTex(QString pathid) {
     //qDebug() << tType;
     if(tType == "ace"){
         AceLib* t = new AceLib();
+        t->texture = newFile;
+        t->start();
+    } else if(tType == "png"||tType == "bmp"||tType == "jpg"){
+        ImageLib* t = new ImageLib();
         t->texture = newFile;
         t->start();
     } else if(tType == ":painttex"){

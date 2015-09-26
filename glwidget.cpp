@@ -16,6 +16,7 @@
 #include "GLH.h"
 #include "Vector2f.h"
 #include "TerrainLib.h"
+#include "Brush.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -111,6 +112,7 @@ void GLWidget::initializeGL() {
     setMouseTracking(true);
     pointer3d = new Pointer3d();
     selectedObj = NULL;
+    defaultPaintBrush = new Brush();
     
     emit routeLoaded(route);
 }
@@ -497,7 +499,15 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if(toolEnabled == "paintTool"){
            // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
-            TerrainLib::paintTexture((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            TerrainLib::paintTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
+        if(toolEnabled == "pickTerrainTexTool"){
+           // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
+           int textureId = TerrainLib::getTexture((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+           emit setBrushTextureId(textureId);
+        }
+        if(toolEnabled == "putTerrainTexTool"){
+            TerrainLib::setTerrainTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == ""){
             camera->MouseDown(event);
@@ -530,12 +540,12 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     } else {
         if(toolEnabled == "paintTool" && mousePressed == true){
             if(mousex != m_lastPos.x() || mousey != m_lastPos.y()){
-                TerrainLib::paintTexture((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+                TerrainLib::paintTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
             }
         }
         if(toolEnabled == "heightTool" && mousePressed == true){
             if(mousex != m_lastPos.x() || mousey != m_lastPos.y()){
-        TerrainLib::paintHeightMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+                TerrainLib::paintHeightMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
             }
         }
         if(toolEnabled == "selectTool"){
@@ -580,4 +590,8 @@ void GLWidget::jumpTo(int x, int y){
     qDebug() << "jump: "<< x << " "<< y;
     camera->setPozT(x, -y);
     
+}
+
+void GLWidget::setPaintBrush(Brush* brush){
+    this->defaultPaintBrush = brush;
 }

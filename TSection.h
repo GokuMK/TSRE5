@@ -23,7 +23,7 @@ public:
     Vector3f *getDrawPosition(float metry);
     void setCamPosition(float metry, float ob);
     void setCamRotation(float metry, float ob);
-
+    float getDrawAngle(float metry);
 private:
 
 };

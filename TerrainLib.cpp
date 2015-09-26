@@ -149,7 +149,7 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR)
     //return -1;
 }
 
-void TerrainLib::paintTexture(int x, int z, float* p){
+void TerrainLib::setTerrainTexture(Brush* brush, int x, int z, float* p){
     float posx = p[0];
     float posz = p[2];
     Game::check_coords(x, z, posx, posz);
@@ -159,7 +159,33 @@ void TerrainLib::paintTexture(int x, int z, float* p){
     terr = terrain[(x * 10000 + z)];
     if (terr == NULL) return;
     if (terr->loaded == false) return;
-    terr->paintTexture(x, z, posx, posz);
+    terr->setTexture(brush, x, z, posx, posz);
+}
+
+int TerrainLib::getTexture(int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return -1;
+    if (terr->loaded == false) return -1;
+    return terr->getTexture(x, z, posx, posz);
+}
+
+void TerrainLib::paintTexture(Brush* brush, int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->paintTexture(brush, x, z, posx, posz);
 }
 
 void TerrainLib::paintHeightMap(int x, int z, float* p){

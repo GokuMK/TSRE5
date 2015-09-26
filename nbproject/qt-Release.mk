@@ -46,6 +46,7 @@ OBJECTS_DIR   = build/Release/MinGW_QT_static-Windows/
 
 SOURCES       = AboutWindow.cpp \
 		AceLib.cpp \
+		Brush.cpp \
 		Camera.cpp \
 		DynTrackObj.cpp \
 		Eng.cpp \
@@ -57,6 +58,7 @@ SOURCES       = AboutWindow.cpp \
 		GLMatrix.cpp \
 		GLUU.cpp \
 		Game.cpp \
+		ImageLib.cpp \
 		LevelCrObj.cpp \
 		LoadWindow.cpp \
 		NaviBox.cpp \
@@ -81,6 +83,7 @@ SOURCES       = AboutWindow.cpp \
 		StaticObj.cpp \
 		TDB.cpp \
 		TFile.cpp \
+		TRitem.cpp \
 		TRnode.cpp \
 		TS.cpp \
 		TSection.cpp \
@@ -93,6 +96,7 @@ SOURCES       = AboutWindow.cpp \
 		Texture.cpp \
 		Tile.cpp \
 		TrWatermarkObj.cpp \
+		TrackItemObj.cpp \
 		TrackObj.cpp \
 		TrackShape.cpp \
 		TransferObj.cpp \
@@ -106,6 +110,7 @@ SOURCES       = AboutWindow.cpp \
 		window.cpp \
 		tsre5_plugin_import.cpp moc_AboutWindow.cpp \
 		moc_AceLib.cpp \
+		moc_ImageLib.cpp \
 		moc_LoadWindow.cpp \
 		moc_NaviBox.cpp \
 		moc_ObjTools.cpp \
@@ -114,6 +119,7 @@ SOURCES       = AboutWindow.cpp \
 		moc_window.cpp
 OBJECTS       = build/Release/MinGW_QT_static-Windows/AboutWindow.o \
 		build/Release/MinGW_QT_static-Windows/AceLib.o \
+		build/Release/MinGW_QT_static-Windows/Brush.o \
 		build/Release/MinGW_QT_static-Windows/Camera.o \
 		build/Release/MinGW_QT_static-Windows/DynTrackObj.o \
 		build/Release/MinGW_QT_static-Windows/Eng.o \
@@ -125,6 +131,7 @@ OBJECTS       = build/Release/MinGW_QT_static-Windows/AboutWindow.o \
 		build/Release/MinGW_QT_static-Windows/GLMatrix.o \
 		build/Release/MinGW_QT_static-Windows/GLUU.o \
 		build/Release/MinGW_QT_static-Windows/Game.o \
+		build/Release/MinGW_QT_static-Windows/ImageLib.o \
 		build/Release/MinGW_QT_static-Windows/LevelCrObj.o \
 		build/Release/MinGW_QT_static-Windows/LoadWindow.o \
 		build/Release/MinGW_QT_static-Windows/NaviBox.o \
@@ -149,6 +156,7 @@ OBJECTS       = build/Release/MinGW_QT_static-Windows/AboutWindow.o \
 		build/Release/MinGW_QT_static-Windows/StaticObj.o \
 		build/Release/MinGW_QT_static-Windows/TDB.o \
 		build/Release/MinGW_QT_static-Windows/TFile.o \
+		build/Release/MinGW_QT_static-Windows/TRitem.o \
 		build/Release/MinGW_QT_static-Windows/TRnode.o \
 		build/Release/MinGW_QT_static-Windows/TS.o \
 		build/Release/MinGW_QT_static-Windows/TSection.o \
@@ -161,6 +169,7 @@ OBJECTS       = build/Release/MinGW_QT_static-Windows/AboutWindow.o \
 		build/Release/MinGW_QT_static-Windows/Texture.o \
 		build/Release/MinGW_QT_static-Windows/Tile.o \
 		build/Release/MinGW_QT_static-Windows/TrWatermarkObj.o \
+		build/Release/MinGW_QT_static-Windows/TrackItemObj.o \
 		build/Release/MinGW_QT_static-Windows/TrackObj.o \
 		build/Release/MinGW_QT_static-Windows/TrackShape.o \
 		build/Release/MinGW_QT_static-Windows/TransferObj.o \
@@ -175,6 +184,7 @@ OBJECTS       = build/Release/MinGW_QT_static-Windows/AboutWindow.o \
 		build/Release/MinGW_QT_static-Windows/tsre5_plugin_import.o \
 		build/Release/MinGW_QT_static-Windows/moc_AboutWindow.o \
 		build/Release/MinGW_QT_static-Windows/moc_AceLib.o \
+		build/Release/MinGW_QT_static-Windows/moc_ImageLib.o \
 		build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o \
 		build/Release/MinGW_QT_static-Windows/moc_NaviBox.o \
 		build/Release/MinGW_QT_static-Windows/moc_ObjTools.o \
@@ -184,6 +194,7 @@ OBJECTS       = build/Release/MinGW_QT_static-Windows/AboutWindow.o \
 
 DIST          =  AboutWindow.h \
 		AceLib.h \
+		Brush.h \
 		Camera.h \
 		DynTrackObj.h \
 		Eng.h \
@@ -195,6 +206,7 @@ DIST          =  AboutWindow.h \
 		GLMatrix.h \
 		GLUU.h \
 		Game.h \
+		ImageLib.h \
 		LevelCrObj.h \
 		LoadWindow.h \
 		NaviBox.h \
@@ -219,6 +231,7 @@ DIST          =  AboutWindow.h \
 		StaticObj.h \
 		TDB.h \
 		TFile.h \
+		TRitem.h \
 		TRnode.h \
 		TS.h \
 		TSection.h \
@@ -231,6 +244,7 @@ DIST          =  AboutWindow.h \
 		Texture.h \
 		Tile.h \
 		TrWatermarkObj.h \
+		TrackItemObj.h \
 		TrackObj.h \
 		TrackShape.h \
 		TransferObj.h \
@@ -244,6 +258,7 @@ DIST          =  AboutWindow.h \
 		zconf.h \
 		zlib.h AboutWindow.cpp \
 		AceLib.cpp \
+		Brush.cpp \
 		Camera.cpp \
 		DynTrackObj.cpp \
 		Eng.cpp \
@@ -255,6 +270,7 @@ DIST          =  AboutWindow.h \
 		GLMatrix.cpp \
 		GLUU.cpp \
 		Game.cpp \
+		ImageLib.cpp \
 		LevelCrObj.cpp \
 		LoadWindow.cpp \
 		NaviBox.cpp \
@@ -279,6 +295,7 @@ DIST          =  AboutWindow.h \
 		StaticObj.cpp \
 		TDB.cpp \
 		TFile.cpp \
+		TRitem.cpp \
 		TRnode.cpp \
 		TS.cpp \
 		TSection.cpp \
@@ -291,6 +308,7 @@ DIST          =  AboutWindow.h \
 		Texture.cpp \
 		Tile.cpp \
 		TrWatermarkObj.cpp \
+		TrackItemObj.cpp \
 		TrackObj.cpp \
 		TrackShape.cpp \
 		TransferObj.cpp \
@@ -657,8 +675,8 @@ dist:
 	$(ZIP) TSRE5.zip $(SOURCES) $(DIST) nbproject/nbproject/qt-Release.pro C:/Qt/Static/5.4.1/mkspecs/features/spec_pre.prf C:/Qt/Static/5.4.1/mkspecs/qdevice.pri C:/Qt/Static/5.4.1/mkspecs/features/device_config.prf C:/Qt/Static/5.4.1/mkspecs/common/shell-unix.conf C:/Qt/Static/5.4.1/mkspecs/qconfig.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_axbase.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_axbase_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_axcontainer.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_axcontainer_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_axserver.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_axserver_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_bluetooth.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_bluetooth_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_bootstrap_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_clucene_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_concurrent.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_concurrent_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_core.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_core_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_declarative.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_declarative_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_gui.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_gui_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_help.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_help_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_location.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_location_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_multimedia.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_multimedia_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_multimediawidgets.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_multimediawidgets_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_network.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_network_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_nfc.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_nfc_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_opengl.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_opengl_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_openglextensions.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_openglextensions_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_platformsupport_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_positioning.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_positioning_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_printsupport.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_printsupport_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_qml.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_qml_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_qmldevtools_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_qmltest.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_qmltest_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_quick.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_quick_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_quickparticles_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_quickwidgets.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_quickwidgets_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_script.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_script_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_scripttools.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_scripttools_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_sensors.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_sensors_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_serialport.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_serialport_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_sql.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_sql_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_svg.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_svg_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_testlib.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_testlib_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_uitools.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_uitools_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_webchannel.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_webchannel_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_websockets.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_websockets_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_widgets.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_widgets_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_winextras.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_winextras_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_xml.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_xml_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_xmlpatterns.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_lib_xmlpatterns_private.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_dsengine.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qdds.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qgenericbearer.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qicns.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qico.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qjp2.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qminimal.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qmldbg_inspector.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qmldbg_qtquick2.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qmldbg_tcp.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qmldbg_tcp_qtdeclarative.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qmng.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qnativewifibearer.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qoffscreen.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qsvg.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qsvgicon.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtaudio_windows.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtga.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtgeoservices_nokia.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtgeoservices_osm.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtiff.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtmedia_audioengine.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtmultimedia_m3u.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtposition_positionpoll.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtsensorgestures_plugin.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtsensorgestures_shakeplugin.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qtsensors_generic.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qwbmp.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qwebp.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_qwindows.pri C:/Qt/Static/5.4.1/mkspecs/modules/qt_plugin_windowsprintersupport.pri C:/Qt/Static/5.4.1/mkspecs/features/qt_functions.prf C:/Qt/Static/5.4.1/mkspecs/features/qt_config.prf C:/Qt/Static/5.4.1/mkspecs/features/win32/qt_config.prf C:/Qt/Static/5.4.1/mkspecs/win32-g++/qmake.conf C:/Qt/Static/5.4.1/mkspecs/features/spec_post.prf C:/Qt/Static/5.4.1/mkspecs/features/exclusive_builds.prf C:/Qt/Static/5.4.1/mkspecs/features/default_pre.prf C:/Qt/Static/5.4.1/mkspecs/features/win32/default_pre.prf C:/Qt/Static/5.4.1/mkspecs/features/resolve_config.prf C:/Qt/Static/5.4.1/mkspecs/features/default_post.prf C:/Qt/Static/5.4.1/mkspecs/features/c++11.prf C:/Qt/Static/5.4.1/mkspecs/features/win32/rtti.prf C:/Qt/Static/5.4.1/mkspecs/features/precompile_header.prf C:/Qt/Static/5.4.1/mkspecs/features/warn_on.prf C:/Qt/Static/5.4.1/mkspecs/features/qt.prf C:/Qt/Static/5.4.1/mkspecs/features/resources.prf C:/Qt/Static/5.4.1/mkspecs/features/moc.prf C:/Qt/Static/5.4.1/mkspecs/features/win32/opengl.prf C:/Qt/Static/5.4.1/mkspecs/features/uic.prf C:/Qt/Static/5.4.1/mkspecs/features/win32/windows.prf C:/Qt/Static/5.4.1/mkspecs/features/testcase_targets.prf C:/Qt/Static/5.4.1/mkspecs/features/exceptions.prf C:/Qt/Static/5.4.1/mkspecs/features/yacc.prf C:/Qt/Static/5.4.1/mkspecs/features/lex.prf nbproject/qt-Release.pro C:/Qt/Static/5.4.1/lib/qtmain.prl C:/Qt/Static/5.4.1/lib/Qt5Core.prl C:/Qt/Static/5.4.1/lib/Qt5OpenGL.prl C:/Qt/Static/5.4.1/lib/Qt5Widgets.prl C:/Qt/Static/5.4.1/lib/Qt5Gui.prl C:/Qt/Static/5.4.1/lib/qtharfbuzzng.prl C:/Qt/Static/5.4.1/plugins/platforms/qwindows.prl C:/Qt/Static/5.4.1/lib/Qt5PlatformSupport.prl C:/Qt/Static/5.4.1/plugins/imageformats/qdds.prl C:/Qt/Static/5.4.1/plugins/imageformats/qicns.prl C:/Qt/Static/5.4.1/plugins/imageformats/qico.prl C:/Qt/Static/5.4.1/plugins/imageformats/qjp2.prl C:/Qt/Static/5.4.1/plugins/imageformats/qmng.prl C:/Qt/Static/5.4.1/plugins/imageformats/qtga.prl C:/Qt/Static/5.4.1/plugins/imageformats/qtiff.prl C:/Qt/Static/5.4.1/plugins/imageformats/qwbmp.prl C:/Qt/Static/5.4.1/plugins/imageformats/qwebp.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) build/Release/MinGW_QT_static-Windows/AboutWindow.o build/Release/MinGW_QT_static-Windows/AceLib.o build/Release/MinGW_QT_static-Windows/Camera.o build/Release/MinGW_QT_static-Windows/DynTrackObj.o build/Release/MinGW_QT_static-Windows/Eng.o build/Release/MinGW_QT_static-Windows/FileBuffer.o build/Release/MinGW_QT_static-Windows/FileFunctions.o build/Release/MinGW_QT_static-Windows/Flex.o build/Release/MinGW_QT_static-Windows/ForestObj.o build/Release/MinGW_QT_static-Windows/GLH.o build/Release/MinGW_QT_static-Windows/GLMatrix.o build/Release/MinGW_QT_static-Windows/GLUU.o build/Release/MinGW_QT_static-Windows/Game.o build/Release/MinGW_QT_static-Windows/LevelCrObj.o build/Release/MinGW_QT_static-Windows/LoadWindow.o build/Release/MinGW_QT_static-Windows/NaviBox.o build/Release/MinGW_QT_static-Windows/ObjTools.o build/Release/MinGW_QT_static-Windows/OglObj.o build/Release/MinGW_QT_static-Windows/PaintTexLib.o build/Release/MinGW_QT_static-Windows/ParserX.o build/Release/MinGW_QT_static-Windows/Path.o build/Release/MinGW_QT_static-Windows/PickupObj.o build/Release/MinGW_QT_static-Windows/PlatformObj.o build/Release/MinGW_QT_static-Windows/Pointer3d.o build/Release/MinGW_QT_static-Windows/ReadFile.o build/Release/MinGW_QT_static-Windows/Ref.o build/Release/MinGW_QT_static-Windows/Route.o build/Release/MinGW_QT_static-Windows/Ruch.o build/Release/MinGW_QT_static-Windows/SFile.o build/Release/MinGW_QT_static-Windows/SFileC.o build/Release/MinGW_QT_static-Windows/SFileX.o build/Release/MinGW_QT_static-Windows/ShapeLib.o build/Release/MinGW_QT_static-Windows/SignalObj.o build/Release/MinGW_QT_static-Windows/SpeedpostObj.o build/Release/MinGW_QT_static-Windows/StaticObj.o build/Release/MinGW_QT_static-Windows/TDB.o build/Release/MinGW_QT_static-Windows/TFile.o build/Release/MinGW_QT_static-Windows/TRnode.o build/Release/MinGW_QT_static-Windows/TS.o build/Release/MinGW_QT_static-Windows/TSection.o build/Release/MinGW_QT_static-Windows/TSectionDAT.o build/Release/MinGW_QT_static-Windows/Terrain.o
-	-$(DEL_FILE) build/Release/MinGW_QT_static-Windows/TerrainLib.o build/Release/MinGW_QT_static-Windows/TerrainTools.o build/Release/MinGW_QT_static-Windows/TexLib.o build/Release/MinGW_QT_static-Windows/TextObj.o build/Release/MinGW_QT_static-Windows/Texture.o build/Release/MinGW_QT_static-Windows/Tile.o build/Release/MinGW_QT_static-Windows/TrWatermarkObj.o build/Release/MinGW_QT_static-Windows/TrackObj.o build/Release/MinGW_QT_static-Windows/TrackShape.o build/Release/MinGW_QT_static-Windows/TransferObj.o build/Release/MinGW_QT_static-Windows/Vector2f.o build/Release/MinGW_QT_static-Windows/Vector2i.o build/Release/MinGW_QT_static-Windows/Vector3f.o build/Release/MinGW_QT_static-Windows/Vector4f.o build/Release/MinGW_QT_static-Windows/WorldObj.o build/Release/MinGW_QT_static-Windows/glwidget.o build/Release/MinGW_QT_static-Windows/main.o build/Release/MinGW_QT_static-Windows/window.o build/Release/MinGW_QT_static-Windows/tsre5_plugin_import.o build/Release/MinGW_QT_static-Windows/moc_AboutWindow.o build/Release/MinGW_QT_static-Windows/moc_AceLib.o build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o build/Release/MinGW_QT_static-Windows/moc_NaviBox.o build/Release/MinGW_QT_static-Windows/moc_ObjTools.o build/Release/MinGW_QT_static-Windows/moc_TerrainTools.o build/Release/MinGW_QT_static-Windows/moc_glwidget.o build/Release/MinGW_QT_static-Windows/moc_window.o
+	-$(DEL_FILE) build/Release/MinGW_QT_static-Windows/AboutWindow.o build/Release/MinGW_QT_static-Windows/AceLib.o build/Release/MinGW_QT_static-Windows/Brush.o build/Release/MinGW_QT_static-Windows/Camera.o build/Release/MinGW_QT_static-Windows/DynTrackObj.o build/Release/MinGW_QT_static-Windows/Eng.o build/Release/MinGW_QT_static-Windows/FileBuffer.o build/Release/MinGW_QT_static-Windows/FileFunctions.o build/Release/MinGW_QT_static-Windows/Flex.o build/Release/MinGW_QT_static-Windows/ForestObj.o build/Release/MinGW_QT_static-Windows/GLH.o build/Release/MinGW_QT_static-Windows/GLMatrix.o build/Release/MinGW_QT_static-Windows/GLUU.o build/Release/MinGW_QT_static-Windows/Game.o build/Release/MinGW_QT_static-Windows/ImageLib.o build/Release/MinGW_QT_static-Windows/LevelCrObj.o build/Release/MinGW_QT_static-Windows/LoadWindow.o build/Release/MinGW_QT_static-Windows/NaviBox.o build/Release/MinGW_QT_static-Windows/ObjTools.o build/Release/MinGW_QT_static-Windows/OglObj.o build/Release/MinGW_QT_static-Windows/PaintTexLib.o build/Release/MinGW_QT_static-Windows/ParserX.o build/Release/MinGW_QT_static-Windows/Path.o build/Release/MinGW_QT_static-Windows/PickupObj.o build/Release/MinGW_QT_static-Windows/PlatformObj.o build/Release/MinGW_QT_static-Windows/Pointer3d.o build/Release/MinGW_QT_static-Windows/ReadFile.o build/Release/MinGW_QT_static-Windows/Ref.o build/Release/MinGW_QT_static-Windows/Route.o build/Release/MinGW_QT_static-Windows/Ruch.o build/Release/MinGW_QT_static-Windows/SFile.o build/Release/MinGW_QT_static-Windows/SFileC.o build/Release/MinGW_QT_static-Windows/SFileX.o build/Release/MinGW_QT_static-Windows/ShapeLib.o build/Release/MinGW_QT_static-Windows/SignalObj.o build/Release/MinGW_QT_static-Windows/SpeedpostObj.o build/Release/MinGW_QT_static-Windows/StaticObj.o build/Release/MinGW_QT_static-Windows/TDB.o build/Release/MinGW_QT_static-Windows/TFile.o build/Release/MinGW_QT_static-Windows/TRitem.o build/Release/MinGW_QT_static-Windows/TRnode.o build/Release/MinGW_QT_static-Windows/TS.o
+	-$(DEL_FILE) build/Release/MinGW_QT_static-Windows/TSection.o build/Release/MinGW_QT_static-Windows/TSectionDAT.o build/Release/MinGW_QT_static-Windows/Terrain.o build/Release/MinGW_QT_static-Windows/TerrainLib.o build/Release/MinGW_QT_static-Windows/TerrainTools.o build/Release/MinGW_QT_static-Windows/TexLib.o build/Release/MinGW_QT_static-Windows/TextObj.o build/Release/MinGW_QT_static-Windows/Texture.o build/Release/MinGW_QT_static-Windows/Tile.o build/Release/MinGW_QT_static-Windows/TrWatermarkObj.o build/Release/MinGW_QT_static-Windows/TrackItemObj.o build/Release/MinGW_QT_static-Windows/TrackObj.o build/Release/MinGW_QT_static-Windows/TrackShape.o build/Release/MinGW_QT_static-Windows/TransferObj.o build/Release/MinGW_QT_static-Windows/Vector2f.o build/Release/MinGW_QT_static-Windows/Vector2i.o build/Release/MinGW_QT_static-Windows/Vector3f.o build/Release/MinGW_QT_static-Windows/Vector4f.o build/Release/MinGW_QT_static-Windows/WorldObj.o build/Release/MinGW_QT_static-Windows/glwidget.o build/Release/MinGW_QT_static-Windows/main.o build/Release/MinGW_QT_static-Windows/window.o build/Release/MinGW_QT_static-Windows/tsre5_plugin_import.o build/Release/MinGW_QT_static-Windows/moc_AboutWindow.o build/Release/MinGW_QT_static-Windows/moc_AceLib.o build/Release/MinGW_QT_static-Windows/moc_ImageLib.o build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o build/Release/MinGW_QT_static-Windows/moc_NaviBox.o build/Release/MinGW_QT_static-Windows/moc_ObjTools.o build/Release/MinGW_QT_static-Windows/moc_TerrainTools.o build/Release/MinGW_QT_static-Windows/moc_glwidget.o build/Release/MinGW_QT_static-Windows/moc_window.o
 	-$(DEL_FILE) build/Release/MinGW_QT_static-Windows/TSRE5_resource_res.o
 
 distclean: clean 
@@ -676,9 +694,9 @@ compiler_no_pch_compiler_make_all:
 compiler_no_pch_compiler_clean:
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_AboutWindow.cpp moc_AceLib.cpp moc_LoadWindow.cpp moc_NaviBox.cpp moc_ObjTools.cpp moc_TerrainTools.cpp moc_glwidget.cpp moc_window.cpp
+compiler_moc_header_make_all: moc_AboutWindow.cpp moc_AceLib.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_NaviBox.cpp moc_ObjTools.cpp moc_TerrainTools.cpp moc_glwidget.cpp moc_window.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_AboutWindow.cpp moc_AceLib.cpp moc_LoadWindow.cpp moc_NaviBox.cpp moc_ObjTools.cpp moc_TerrainTools.cpp moc_glwidget.cpp moc_window.cpp
+	-$(DEL_FILE) moc_AboutWindow.cpp moc_AceLib.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_NaviBox.cpp moc_ObjTools.cpp moc_TerrainTools.cpp moc_glwidget.cpp moc_window.cpp
 moc_AboutWindow.cpp: C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgets \
 		C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgetsDepends \
 		C:/Qt/Static/5.4.1/include/QtCore/QtCore \
@@ -1187,6 +1205,62 @@ moc_AceLib.cpp: C:/Qt/Static/5.4.1/include/QtCore/QThread \
 		C:/Qt/Static/5.4.1/include/QtCore/QString \
 		AceLib.h
 	'C:\Qt\Static\5.4.1\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Static/5.4.1/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/nbproject -IC:/Qt/Static/5.4.1/include -IC:/Qt/Static/5.4.1/include/QtOpenGL -IC:/Qt/Static/5.4.1/include/QtWidgets -IC:/Qt/Static/5.4.1/include/QtGui -IC:/Qt/Static/5.4.1/include/QtCore -I. AceLib.h -o moc_AceLib.cpp
+
+moc_ImageLib.cpp: C:/Qt/Static/5.4.1/include/QtCore/QThread \
+		C:/Qt/Static/5.4.1/include/QtCore/qthread.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnamespace.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qglobal.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qconfig.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qfeatures.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsystemdetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qprocessordetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtypeinfo.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtypetraits.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsysinfo.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlogging.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qflags.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbasicatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qgenericatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv7.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv6.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv5.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_ia64.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_mips.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_x86.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_gcc.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_unix.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qglobalstatic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmutex.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnumeric.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstring.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qchar.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbytearray.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qrefcount.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qarraydata.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringbuilder.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qalgorithms.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qiterator.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbytearraylist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcoreevent.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qscopedpointer.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmetatype.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qisenum.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject_impl.h \
+		Texture.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QString \
+		ImageLib.h
+	'C:\Qt\Static\5.4.1\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Static/5.4.1/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/nbproject -IC:/Qt/Static/5.4.1/include -IC:/Qt/Static/5.4.1/include/QtOpenGL -IC:/Qt/Static/5.4.1/include/QtWidgets -IC:/Qt/Static/5.4.1/include/QtGui -IC:/Qt/Static/5.4.1/include/QtCore -I. ImageLib.h -o moc_ImageLib.cpp
 
 moc_LoadWindow.cpp: C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgets \
 		C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgetsDepends \
@@ -2559,8 +2633,10 @@ moc_ObjTools.cpp: C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgets \
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
 		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
 		WorldObj.h \
@@ -3032,8 +3108,10 @@ moc_TerrainTools.cpp: C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgets \
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
 		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
 		WorldObj.h \
@@ -3654,8 +3732,10 @@ moc_window.cpp: C:/Qt/Static/5.4.1/include/QtWidgets/QWidget \
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
 		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
 		WorldObj.h \
@@ -4340,6 +4420,9 @@ build/Release/MinGW_QT_static-Windows/AceLib.o: AceLib.cpp AceLib.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qquaternion.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qgenericmatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/AceLib.o AceLib.cpp
+
+build/Release/MinGW_QT_static-Windows/Brush.o: Brush.cpp Brush.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Brush.o Brush.cpp
 
 build/Release/MinGW_QT_static-Windows/Camera.o: Camera.cpp Camera.h \
 		Vector2i.h \
@@ -6178,8 +6261,10 @@ build/Release/MinGW_QT_static-Windows/Game.o: Game.cpp Game.h \
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
 		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
 		WorldObj.h \
@@ -6188,6 +6273,96 @@ build/Release/MinGW_QT_static-Windows/Game.o: Game.cpp Game.h \
 		AboutWindow.h \
 		LoadWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Game.o Game.cpp
+
+build/Release/MinGW_QT_static-Windows/ImageLib.o: ImageLib.cpp ImageLib.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QThread \
+		C:/Qt/Static/5.4.1/include/QtCore/qthread.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnamespace.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qglobal.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qconfig.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qfeatures.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsystemdetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qprocessordetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtypeinfo.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtypetraits.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsysinfo.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlogging.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qflags.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbasicatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qgenericatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv7.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv6.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv5.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_ia64.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_mips.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_x86.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_gcc.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_unix.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qglobalstatic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmutex.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnumeric.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstring.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qchar.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbytearray.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qrefcount.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qarraydata.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringbuilder.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qalgorithms.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qiterator.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbytearraylist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcoreevent.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qscopedpointer.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmetatype.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qisenum.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject_impl.h \
+		Texture.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QString \
+		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
+		C:/Qt/Static/5.4.1/include/QtCore/qdebug.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qhash.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qpair.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmap.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtextstream.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qiodevice.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlocale.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvariant.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringlist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qdatastream.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qregexp.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringmatcher.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qshareddata.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvector.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qpoint.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qset.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QImage \
+		C:/Qt/Static/5.4.1/include/QtGui/qimage.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qtransform.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qmatrix.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpolygon.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qrect.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmargins.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsize.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qregion.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qwindowdefs.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qline.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpainterpath.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpaintdevice.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qrgb.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpixelformat.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/ImageLib.o ImageLib.cpp
 
 build/Release/MinGW_QT_static-Windows/LevelCrObj.o: LevelCrObj.cpp LevelCrObj.h \
 		WorldObj.h \
@@ -7708,8 +7883,10 @@ build/Release/MinGW_QT_static-Windows/ObjTools.o: ObjTools.cpp ObjTools.h \
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
 		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
 		WorldObj.h
@@ -8225,7 +8402,9 @@ build/Release/MinGW_QT_static-Windows/Path.o: Path.cpp Path.h \
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
+		OglObj.h \
 		GLUU.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
 		C:/Qt/Static/5.4.1/include/QtGui/qopenglfunctions.h \
@@ -8287,7 +8466,7 @@ build/Release/MinGW_QT_static-Windows/Path.o: Path.cpp Path.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qopenglshaderprogram.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
 		Vector4f.h \
-		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
@@ -8587,7 +8766,18 @@ build/Release/MinGW_QT_static-Windows/PlatformObj.o: PlatformObj.cpp PlatformObj
 		ShapeLib.h \
 		GLMatrix.h \
 		ParserX.h \
-		C:/Qt/Static/5.4.1/include/QtCore/QDebug
+		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
+		Game.h \
+		TDB.h \
+		TSectionDAT.h \
+		TSection.h \
+		TrackShape.h \
+		TRnode.h \
+		Vector2i.h \
+		TRitem.h \
+		Pointer3d.h \
+		TextObj.h \
+		TrackItemObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/PlatformObj.o PlatformObj.cpp
 
 build/Release/MinGW_QT_static-Windows/Pointer3d.o: Pointer3d.cpp Pointer3d.h \
@@ -9189,8 +9379,10 @@ build/Release/MinGW_QT_static-Windows/Route.o: Route.cpp C:/Qt/Static/5.4.1/incl
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
 		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
 		WorldObj.h \
@@ -9363,7 +9555,9 @@ build/Release/MinGW_QT_static-Windows/Ruch.o: Ruch.cpp Ruch.h \
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
+		OglObj.h \
 		GLUU.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
 		C:/Qt/Static/5.4.1/include/QtGui/qopenglfunctions.h \
@@ -9425,7 +9619,7 @@ build/Release/MinGW_QT_static-Windows/Ruch.o: Ruch.cpp Ruch.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qopenglshaderprogram.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
 		Vector4f.h \
-		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
 		Vector2f.h
@@ -10337,7 +10531,18 @@ build/Release/MinGW_QT_static-Windows/SignalObj.o: SignalObj.cpp SignalObj.h \
 		ShapeLib.h \
 		GLMatrix.h \
 		ParserX.h \
-		C:/Qt/Static/5.4.1/include/QtCore/QDebug
+		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
+		TrackItemObj.h \
+		TDB.h \
+		TSectionDAT.h \
+		TSection.h \
+		TrackShape.h \
+		TRnode.h \
+		Vector2i.h \
+		TRitem.h \
+		Pointer3d.h \
+		TextObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/SignalObj.o SignalObj.cpp
 
 build/Release/MinGW_QT_static-Windows/SpeedpostObj.o: SpeedpostObj.cpp SpeedpostObj.h \
@@ -10671,7 +10876,9 @@ build/Release/MinGW_QT_static-Windows/TDB.o: TDB.cpp TDB.h \
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
+		OglObj.h \
 		GLUU.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
 		C:/Qt/Static/5.4.1/include/QtGui/qopenglfunctions.h \
@@ -10733,7 +10940,7 @@ build/Release/MinGW_QT_static-Windows/TDB.o: TDB.cpp TDB.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qopenglshaderprogram.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
 		Vector4f.h \
-		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
@@ -11052,6 +11259,121 @@ build/Release/MinGW_QT_static-Windows/TFile.o: TFile.cpp TFile.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qxmlstream.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qtcoreversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TFile.o TFile.cpp
+
+build/Release/MinGW_QT_static-Windows/TRitem.o: TRitem.cpp TRitem.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QString \
+		C:/Qt/Static/5.4.1/include/QtCore/qstring.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qchar.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qglobal.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qconfig.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qfeatures.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsystemdetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qprocessordetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtypeinfo.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtypetraits.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsysinfo.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlogging.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qflags.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbasicatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qgenericatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv7.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv6.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv5.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_ia64.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_mips.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_x86.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_gcc.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_unix.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qglobalstatic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmutex.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnumeric.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbytearray.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qrefcount.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnamespace.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qarraydata.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringbuilder.h \
+		Pointer3d.h \
+		OglObj.h \
+		GLUU.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglfunctions.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopengl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qt_windows.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopengles2ext.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglext.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglcontext.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QObject \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qalgorithms.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qiterator.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbytearraylist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcoreevent.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qscopedpointer.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmetatype.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qisenum.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject_impl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QScopedPointer \
+		C:/Qt/Static/5.4.1/include/QtGui/QSurfaceFormat \
+		C:/Qt/Static/5.4.1/include/QtGui/qsurfaceformat.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qpair.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglversionfunctions.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qhash.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvariant.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmap.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qdebug.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtextstream.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qiodevice.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlocale.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qshareddata.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvector.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qpoint.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qset.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringlist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qdatastream.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qregexp.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringmatcher.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLVertexArrayObject \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglvertexarrayobject.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLBuffer \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglbuffer.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QMatrix4x4 \
+		C:/Qt/Static/5.4.1/include/QtGui/qmatrix4x4.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector3d.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector4d.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qquaternion.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qgenericmatrix.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qrect.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmargins.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsize.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLShaderProgram \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglshaderprogram.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
+		Vector4f.h \
+		Vector3f.h \
+		FileBuffer.h \
+		ParserX.h \
+		GLMatrix.h \
+		TDB.h \
+		TSectionDAT.h \
+		TSection.h \
+		TrackShape.h \
+		TRnode.h \
+		Vector2i.h \
+		Ref.h \
+		TextObj.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TRitem.o TRitem.cpp
 
 build/Release/MinGW_QT_static-Windows/TRnode.o: TRnode.cpp TRnode.h \
 		Vector2i.h
@@ -12128,11 +12450,16 @@ build/Release/MinGW_QT_static-Windows/TerrainTools.o: TerrainTools.cpp TerrainTo
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
 		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
-		WorldObj.h
+		WorldObj.h \
+		TexLib.h \
+		Texture.h \
+		Brush.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TerrainTools.o TerrainTools.cpp
 
 build/Release/MinGW_QT_static-Windows/TexLib.o: TexLib.cpp TexLib.h \
@@ -12190,6 +12517,7 @@ build/Release/MinGW_QT_static-Windows/TexLib.o: TexLib.cpp TexLib.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qcontainerfwd.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qisenum.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qobject_impl.h \
+		ImageLib.h \
 		PaintTexLib.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
 		C:/Qt/Static/5.4.1/include/QtCore/qdebug.h \
@@ -12351,6 +12679,7 @@ build/Release/MinGW_QT_static-Windows/Texture.o: Texture.cpp Texture.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qnamespace.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qarraydata.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qstringbuilder.h \
+		Brush.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLShaderProgram \
 		C:/Qt/Static/5.4.1/include/QtGui/qopenglshaderprogram.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qopengl.h \
@@ -12788,6 +13117,108 @@ build/Release/MinGW_QT_static-Windows/TrWatermarkObj.o: TrWatermarkObj.cpp TrWat
 		Game.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TrWatermarkObj.o TrWatermarkObj.cpp
+
+build/Release/MinGW_QT_static-Windows/TrackItemObj.o: TrackItemObj.cpp TrackItemObj.h \
+		OglObj.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QString \
+		C:/Qt/Static/5.4.1/include/QtCore/qstring.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qchar.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qglobal.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qconfig.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qfeatures.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsystemdetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qprocessordetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtypeinfo.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtypetraits.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsysinfo.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlogging.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qflags.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbasicatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qgenericatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv7.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv6.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv5.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_ia64.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_mips.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_x86.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_gcc.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_unix.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qglobalstatic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmutex.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnumeric.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbytearray.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qrefcount.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnamespace.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qarraydata.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringbuilder.h \
+		GLUU.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglfunctions.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopengl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qt_windows.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopengles2ext.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglext.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglcontext.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QObject \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qalgorithms.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qiterator.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbytearraylist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcoreevent.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qscopedpointer.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmetatype.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qisenum.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject_impl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QScopedPointer \
+		C:/Qt/Static/5.4.1/include/QtGui/QSurfaceFormat \
+		C:/Qt/Static/5.4.1/include/QtGui/qsurfaceformat.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qpair.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglversionfunctions.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qhash.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvariant.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmap.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qdebug.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtextstream.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qiodevice.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlocale.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qshareddata.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvector.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qpoint.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qset.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringlist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qdatastream.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qregexp.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringmatcher.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLVertexArrayObject \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglvertexarrayobject.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLBuffer \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglbuffer.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QMatrix4x4 \
+		C:/Qt/Static/5.4.1/include/QtGui/qmatrix4x4.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector3d.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector4d.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qquaternion.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qgenericmatrix.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qrect.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmargins.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsize.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLShaderProgram \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglshaderprogram.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
+		Vector4f.h \
+		Vector3f.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TrackItemObj.o TrackItemObj.cpp
 
 build/Release/MinGW_QT_static-Windows/TrackObj.o: TrackObj.cpp TrackObj.h \
 		WorldObj.h \
@@ -13500,13 +13931,15 @@ build/Release/MinGW_QT_static-Windows/glwidget.o: glwidget.cpp glwidget.h \
 		TSection.h \
 		TrackShape.h \
 		TRnode.h \
+		TRitem.h \
 		TextObj.h \
 		GLMatrix.h \
 		Eng.h \
 		Tile.h \
 		Game.h \
 		GLH.h \
-		TerrainLib.h
+		TerrainLib.h \
+		Brush.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/glwidget.o glwidget.cpp
 
 build/Release/MinGW_QT_static-Windows/main.o: main.cpp C:/Qt/Static/5.4.1/include/QtWidgets/QApplication \
@@ -13981,8 +14414,10 @@ build/Release/MinGW_QT_static-Windows/main.o: main.cpp C:/Qt/Static/5.4.1/includ
 		TrackShape.h \
 		TRnode.h \
 		Vector2i.h \
-		FileBuffer.h \
+		TRitem.h \
+		Pointer3d.h \
 		OglObj.h \
+		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
 		WorldObj.h \
@@ -14471,6 +14906,7 @@ build/Release/MinGW_QT_static-Windows/window.o: window.cpp C:/Qt/Static/5.4.1/in
 		TSection.h \
 		TrackShape.h \
 		TRnode.h \
+		TRitem.h \
 		TextObj.h \
 		TerrainTools.h \
 		NaviBox.h \
@@ -14548,6 +14984,9 @@ build/Release/MinGW_QT_static-Windows/moc_AboutWindow.o: moc_AboutWindow.cpp
 
 build/Release/MinGW_QT_static-Windows/moc_AceLib.o: moc_AceLib.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/moc_AceLib.o moc_AceLib.cpp
+
+build/Release/MinGW_QT_static-Windows/moc_ImageLib.o: moc_ImageLib.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/moc_ImageLib.o moc_ImageLib.cpp
 
 build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o: moc_LoadWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o moc_LoadWindow.cpp

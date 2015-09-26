@@ -10,7 +10,9 @@
 TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
     loaded = false;
     this->road = road;
+    serial = 0;
     wysokoscSieci = 4;
+    iTRitems = 0;
     qDebug() << "Wczytywanie pliku tdb: " << path;
 
     if(tsection == NULL)
@@ -33,76 +35,141 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
     sh = "TrackDB";
     ParserX::szukajsekcji1(sh, bufor);
     qDebug() << "znaleziono sekcje na " << bufor->off;
-    //szukanie tracknodes
-    sh = "TrackNodes";
-    ParserX::szukajsekcji1(sh, bufor);
+    
+    while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+        qDebug() << "sh " << sh;
+        if(sh == "tracknodes"){
+            iTRnodes = (int) ParserX::parsujr(bufor); //odczytanie ilosci sciezek
+            //trackNodes = new TRnode[iTRnodes + 100]; //przydzielenie pamieci
+            qDebug() << "N" << iTRnodes;
+            //zapisanie x tracknodes
+            for (i = 0; i < iTRnodes; i++) {
+                sh = "TrackNode";
+                ParserX::szukajsekcji1(sh, bufor);
+                t = (int) ParserX::parsujr(bufor); // odczytanie numeru sciezki
+                sh = ParserX::nazwasekcji(bufor);
+                //System.out.println("----"+sh);
+                trackNodes[t] = new TRnode();
+                switch (sh.length()) {// wybranie typu sciezki ^^
+                    case 9:
+                        trackNodes[t]->typ = 0; //typ endnode
+                        sh = "UiD";
+                        ParserX::szukajsekcji1(sh, bufor);
+                        for (ii = 0; ii < 12; ii++) {
+                            trackNodes[t]->UiD[ii] = ParserX::parsujr(bufor);
+                        }
+                        sh = "TrPins";
+                        ParserX::szukajsekcji1(sh, bufor);
+                        trpin(trackNodes[t], bufor);
+                        ParserX::pominsekcje(bufor);
+                        ParserX::pominsekcje(bufor);
+                        break;
+                    case 12:
+                        trackNodes[t]->typ = 1; //typ vector 
 
-    iTRnodes = (int) ParserX::parsujr(bufor); //odczytanie ilosci sciezek
-    //trackNodes = new TRnode[iTRnodes + 100]; //przydzielenie pamieci
-    qDebug() << "N" << iTRnodes;
-    //zapisanie x tracknodes
-    for (i = 0; i < iTRnodes; i++) {
-        sh = "TrackNode";
-        ParserX::szukajsekcji1(sh, bufor);
-        t = (int) ParserX::parsujr(bufor); // odczytanie numeru sciezki
-        sh = ParserX::nazwasekcji(bufor);
-        //System.out.println("----"+sh);
-        trackNodes[t] = new TRnode();
-        switch (sh.length()) {// wybranie typu sciezki ^^
-            case 9:
-                trackNodes[t]->typ = 0; //typ endnode
-                sh = "UiD";
-                ParserX::szukajsekcji1(sh, bufor);
-                for (ii = 0; ii < 12; ii++) {
-                    trackNodes[t]->UiD[ii] = ParserX::parsujr(bufor);
-                }
-                trpin(trackNodes[t], bufor);
-                break;
-            case 12:
-                trackNodes[t]->typ = 1; //typ vector 
-                sh = "TrVectorSections";
-                ParserX::szukajsekcji1(sh, bufor);
-                uu = (int) ParserX::parsujr(bufor);
-                trackNodes[t]->iTrv = uu;
-                trackNodes[t]->trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
+                        while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+                            if(sh == "trvectorsections"){
+                                uu = (int) ParserX::parsujr(bufor);
+                                trackNodes[t]->iTrv = uu;
+                                trackNodes[t]->trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
 
-                for (j = 0; j < uu; j++) {
-                    for (ii = 0; ii < 16; ii++) {
-                        xx = ParserX::parsujr(bufor);
-                        trackNodes[t]->trVectorSection[j].param[ii] = xx;
-                    }
-                    //System.out.println(
-                    //this.TrackNodes[t].TrVectorSection[j].param[13]+" "+
-                    //this.TrackNodes[t].TrVectorSection[j].param[14]+" "+
-                    //this.TrackNodes[t].TrVectorSection[j].param[15]);
+                                for (j = 0; j < uu; j++) {
+                                    for (ii = 0; ii < 16; ii++) {
+                                        xx = ParserX::parsujr(bufor);
+                                        trackNodes[t]->trVectorSection[j].param[ii] = xx;
+                                    }
+                                    //System.out.println(
+                                    //this.TrackNodes[t].TrVectorSection[j].param[13]+" "+
+                                    //this.TrackNodes[t].TrVectorSection[j].param[14]+" "+
+                                    //this.TrackNodes[t].TrVectorSection[j].param[15]);
+                                }
+                            }
+                            if(sh == "tritemrefs"){
+                                uu = (int) ParserX::parsujr(bufor);
+                                trackNodes[t]->iTri = uu;
+                                trackNodes[t]->trItemRef = new int[uu]; // przydzielenie pamieci dla sciezki
+
+                                for (j = 0; j < uu; j++) {
+                                    trackNodes[t]->trItemRef[j] = ParserX::parsujr(bufor);
+                                }
+                                ParserX::pominsekcje(bufor);
+                            }
+                            ParserX::pominsekcje(bufor);
+                        }
+                        sh = "TrPins";
+                        ParserX::szukajsekcji1(sh, bufor);
+                        trpin(trackNodes[t], bufor);
+                        ParserX::pominsekcje(bufor);
+                        ParserX::pominsekcje(bufor);
+                        break;
+                    case 14:
+                        trackNodes[t]->typ = 2; //typ rozjazd
+                        sh = "UiD";
+                        ParserX::szukajsekcji1(sh, bufor);
+                        for (ii = 0; ii < 12; ii++) {
+                            trackNodes[t]->UiD[ii] = ParserX::parsujr(bufor);
+                        }
+                        sh = "TrPins";
+                        ParserX::szukajsekcji1(sh, bufor);
+                        trpin(trackNodes[t], bufor);
+                        ParserX::pominsekcje(bufor);
+                        ParserX::pominsekcje(bufor);
+                        break;
+                    default:
+                        qDebug() << "Nieprawidlowa sciezka -> ERROR";
+                        trackNodes[t] = NULL;
+                        break;
                 }
-                trpin(trackNodes[t], bufor);
-                break;
-            case 14:
-                trackNodes[t]->typ = 2; //typ rozjazd
-                sh = "UiD";
-                ParserX::szukajsekcji1(sh, bufor);
-                for (ii = 0; ii < 12; ii++) {
-                    trackNodes[t]->UiD[ii] = ParserX::parsujr(bufor);
+                ParserX::pominsekcje(bufor);
+            }
+            ParserX::pominsekcje(bufor);
+        }
+        if(sh == "serial"){
+            this->serial = (int) ParserX::parsujr(bufor);
+            ParserX::pominsekcje(bufor);
+        }
+        if(sh == "tritemtable"){
+            iTRitems = (int) ParserX::parsujr(bufor); //odczytanie ilosci sciezek
+            
+            TRitem* nowy;// = new TRitem();
+            
+            for (int i = 0; i < iTRitems; i++) {
+                sh = ParserX::nazwasekcji(bufor).toLower();
+
+                if (sh == "") {
+                    qDebug() << "tritemtable Fail";
+                    ParserX::pominsekcje(bufor);
+                    break;
                 }
-                trpin(trackNodes[t], bufor);
-                break;
-            default:
-                qDebug() << "Nieprawidlowa sciezka -> ERROR";
-                trackNodes[t] = NULL;
-                break;
+                
+                nowy = new TRitem();
+                if(!nowy->init(sh)){
+                    ParserX::pominsekcje(bufor);
+                    qDebug() << "-" << sh;
+                    continue;
+                }
+
+                while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+                    nowy->set(sh, bufor);
+                    ParserX::pominsekcje(bufor);
+                }
+                this->trackItems[nowy->trItemId] = nowy;
+
+                ParserX::pominsekcje(bufor);
+                continue;
+            }
+            
+            ParserX::pominsekcje(bufor);
         }
     }
 
+    
+    //save();
     loaded = true;
     return;
 }
 
 void TDB::trpin(TRnode *tr, FileBuffer* bufor) {
-    QString sh;
-
-    sh = "TrPins";
-    ParserX::szukajsekcji1(sh, bufor);
 
     tr->TrP1 = (int) ParserX::parsujr(bufor);
     tr->TrP2 = (int) ParserX::parsujr(bufor);
@@ -1420,6 +1487,90 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
     sectionLines.render();
 }
 
+bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
+    TRnode* n = trackNodes[id];
+    if (n == NULL) return false;
+    if (n->typ != 1) return false;
+    
+    float sectionLength = 0;
+    float length = 0;
+    int idx = 0;
+    for (int i = 0; i < n->iTrv; i++) {
+        idx = n->trVectorSection[i].param[0];
+        
+        try {
+            sectionLength = tsection->sekcja.at(idx)->getDlugosc();
+            
+        } catch (const std::out_of_range& oor) {
+            qDebug() << "nie ma sekcji " << idx;
+        }
+        
+        length += sectionLength;
+        if(length < metry)
+            continue;
+        
+        Vector3f *position = tsection->sekcja.at(idx)->getDrawPosition(metry - length + sectionLength);
+        
+        float matrix[16];
+        float q[4];
+        q[0] = q[1] = q[2] = 0; q[3] = 1;
+        float rot[3];
+        rot[0] = M_PI;
+        rot[1] = n->trVectorSection[i].param[14];
+        rot[2] = n->trVectorSection[i].param[15];
+
+        float pos[3];
+        pos[0] = n->trVectorSection[i].param[10];
+        pos[1] = n->trVectorSection[i].param[11];
+        pos[2] = n->trVectorSection[i].param[12];
+        
+        Quat::fromRotationXYZ(q, rot);
+        Mat4::fromRotationTranslation(matrix, q, pos);
+        Mat4::rotate(matrix, matrix, -n->trVectorSection[i].param[13], 1, 0, 0);
+
+        pos[0] = position->x;
+        pos[1] = position->y;
+        pos[2] = -position->z;
+        Vec3::transformMat4(pos, pos, matrix);
+        
+        out[0] = pos[0];
+        out[1] = pos[1];
+        out[2] = pos[2];
+        out[3] = -n->trVectorSection[i].param[14] - tsection->sekcja.at(idx)->getDrawAngle(metry - length + sectionLength);
+        out[4] = n->trVectorSection[i].param[8];
+        out[5] = n->trVectorSection[i].param[9];
+        
+        //position->x += (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10];
+        //position->y += n->trVectorSection[i].param[11];
+        //position->z += (-n->trVectorSection[i].param[9] - playerT[1])*2048 - n->trVectorSection[i].param[12];
+        return true;
+    }
+    return false;
+}
+
+int TDB::findTrItemNodeId(int id){
+    for (int j = 1; j <= iTRnodes; j++) {
+        TRnode* n = trackNodes[j];
+        if (n == NULL) continue;
+        if (n->typ == 1) {
+            for (int i = 0; i < n->iTri; i++) {
+                if(n->trItemRef[i] == id)
+                    return j;
+            }
+        }
+    }
+    return -1;
+}
+
+void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot) {
+    for (auto it = this->trackItems.begin(); it != this->trackItems.end(); ++it) {
+        //console.log(obj.type);
+        TRitem* obj = (TRitem*) it->second;
+
+        obj->render(this, gluu, playerT, playerRot);
+    }
+}
+
 int TDB::getLineBufferSize(int idx) {
     try {
         return tsection->sekcja.at(idx)->getLineBufferSize() + 6;
@@ -1554,7 +1705,7 @@ float TDB::setTerrainToTrackObj(int x, int y, int uid, float* objMatrix, float *
         return false;
     }
 
-    int TDB::findBiggest() {
+int TDB::findBiggest() {
         for(int i = iTRnodes; i > 0; i--){
             if(trackNodes[i] != NULL)
                 return i;
@@ -1576,7 +1727,7 @@ void TDB::saveEmpty() {
     out.setGenerateByteOrderMark(true);
     out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
     out << "TrackDB (\n";
-    //out << "	Serial ( "+serial+" )\n";
+    out << "	Serial ( 0 )\n";
     out << "	TrackNodes ( 0 \n";
     out << "	)\n";
     out << ")";
@@ -1594,7 +1745,7 @@ void TDB::save() {
     QString path;
     QString extension = "tdb";
     if(this->road) extension = "rdb";
-    path = Game::root + "/routes/" + Game::route + "/" + Game::route + "." + extension;
+    path = Game::root + "/routes/" + Game::route + "/" + Game::route + "222." + extension;
     path.replace("//", "/");
     qDebug() << path;
     QFile file(path);
@@ -1607,7 +1758,7 @@ void TDB::save() {
     out.setGenerateByteOrderMark(true);
     out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
     out << "TrackDB (\n";
-    //out << "	Serial ( "+serial+" )\n";
+    out << "	Serial ( " << this->serial << " )\n";
     out << "	TrackNodes ( " << (this->iTRnodes) << "\n";
 
     for (int i = 1; i <= this->iTRnodes; i++) {
@@ -1636,19 +1787,17 @@ void TDB::save() {
                     for (int jj = 8; jj < 16; jj++) {
                         out << " " << trackNodes[i]->trVectorSection[j].param[jj];
                     }
-                    if (j % 10 == 0 && j > 0)
+                    if (j % 11 == 0 && j > 0 && j < trackNodes[i]->iTrv - 1)
                         out << "\n					";
                 }
                 out << " )\n";
-
-
-                /*if(trackNodes[i].TrItemRefs != null){
-                    out << "				TrItemRefs ( "+trackNodes[i].TrItemRefs.length+"\n";
-                    for(int j = 0; j<trackNodes[i].TrItemRefs.length; j++){
-                        out << "					TrItemRef ( "+trackNodes[i].TrItemRefs[j]+" )\n";
+                if(trackNodes[i]->trItemRef != 0){
+                    out << "				TrItemRefs ( "<<trackNodes[i]->iTri<<"\n";
+                    for(int j = 0; j<trackNodes[i]->iTri; j++){
+                        out << "					TrItemRef ( "<<trackNodes[i]->trItemRef[j]<<" )\n";
                     }
                     out << "				)\n";
-                }*/
+                }
                 out << "			)\n";
                 out << "			TrPins ( 1 1\n";
                 out << "				TrPin ( " << trackNodes[i]->TrPinS[0] << " " << trackNodes[i]->TrPinK[0] << " )\n";
@@ -1673,6 +1822,17 @@ void TDB::save() {
         out << "		)\n";
     }
     out << "	)\n";
+    
+    if(this->iTRitems > 0){
+        out << "	TrItemTable ( " << (this->iTRitems) << "\n";
+        for (int i = 0; i <= this->iTRitems; i++) {
+            if(this->trackItems[i] != NULL)
+                this->trackItems[i]->save(&out);
+        }
+        out << "	)\n";
+    }
+    
+    
     out << ")";
     file.close();
 

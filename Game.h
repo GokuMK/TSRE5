@@ -5,9 +5,13 @@
 
 class Window;
 class LoadWindow;
+class TDB;
 
 class Game {
 public:
+    static TDB *trackDB;
+    static TDB *roadDB;     
+    
     static QString root;
     static QString route;
     static QString routeName;

@@ -1,6 +1,7 @@
 INPUT(
 ./build/Release/MinGW_QT_static-Windows/AboutWindow.o
 ./build/Release/MinGW_QT_static-Windows/AceLib.o
+./build/Release/MinGW_QT_static-Windows/Brush.o
 ./build/Release/MinGW_QT_static-Windows/Camera.o
 ./build/Release/MinGW_QT_static-Windows/DynTrackObj.o
 ./build/Release/MinGW_QT_static-Windows/Eng.o
@@ -12,6 +13,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/GLMatrix.o
 ./build/Release/MinGW_QT_static-Windows/GLUU.o
 ./build/Release/MinGW_QT_static-Windows/Game.o
+./build/Release/MinGW_QT_static-Windows/ImageLib.o
 ./build/Release/MinGW_QT_static-Windows/LevelCrObj.o
 ./build/Release/MinGW_QT_static-Windows/LoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/NaviBox.o
@@ -36,6 +38,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/StaticObj.o
 ./build/Release/MinGW_QT_static-Windows/TDB.o
 ./build/Release/MinGW_QT_static-Windows/TFile.o
+./build/Release/MinGW_QT_static-Windows/TRitem.o
 ./build/Release/MinGW_QT_static-Windows/TRnode.o
 ./build/Release/MinGW_QT_static-Windows/TS.o
 ./build/Release/MinGW_QT_static-Windows/TSection.o
@@ -48,6 +51,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/Texture.o
 ./build/Release/MinGW_QT_static-Windows/Tile.o
 ./build/Release/MinGW_QT_static-Windows/TrWatermarkObj.o
+./build/Release/MinGW_QT_static-Windows/TrackItemObj.o
 ./build/Release/MinGW_QT_static-Windows/TrackObj.o
 ./build/Release/MinGW_QT_static-Windows/TrackShape.o
 ./build/Release/MinGW_QT_static-Windows/TransferObj.o
@@ -62,6 +66,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/tsre5_plugin_import.o
 ./build/Release/MinGW_QT_static-Windows/moc_AboutWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_AceLib.o
+./build/Release/MinGW_QT_static-Windows/moc_ImageLib.o
 ./build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_NaviBox.o
 ./build/Release/MinGW_QT_static-Windows/moc_ObjTools.o

@@ -3,6 +3,7 @@
 #include <QString>
 #include "TSectionDAT.h"
 #include "TRnode.h"
+#include "TRitem.h"
 #include "FileBuffer.h"
 #include "GLUU.h"
 #include "OglObj.h"
@@ -17,10 +18,13 @@ public:
     bool loaded;
     TSectionDAT *tsection; 
     //TRnode *trackNodes;
+    std::unordered_map<int, TRitem*> trackItems;
     std::unordered_map<int, TRnode*> trackNodes;
     std::unordered_map<int, TextObj*> endIdObj;
     //std::vector<TRnode> trackNodes;
     int iTRnodes;
+    int iTRitems;
+    int serial;
     TDB(TSectionDAT* tsection, bool road, QString path);
     TDB(const TDB& orig);
     virtual ~TDB();
@@ -52,6 +56,10 @@ public:
     bool findPosition(int x, int z, float* p, float* q, int sectionIdx, int uid);
     void renderAll(GLUU *gluu, float * playerT, float playerRot);
     void renderLines(GLUU *gluu, float* playerT, float playerRot);
+    void renderItems(GLUU *gluu, float* playerT, float playerRot);
+    
+    bool getDrawPositionOnTrNode(float* out, int id, float metry);
+    int findTrItemNodeId(int id);
 private:
     bool deleteNulls();
     int findBiggest();

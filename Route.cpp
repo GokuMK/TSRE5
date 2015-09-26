@@ -39,6 +39,8 @@ Route::Route() {
     this->roadDB = new TDB(tsection, true, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".rdb"));
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
     
+    Game::trackDB = this->trackDB;
+    Game::roadDB = this->roadDB;
     loaded = true;
 }
 
@@ -146,6 +148,8 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         roadDB->renderAll(gluu, playerT, playerRot);
         roadDB->renderLines(gluu, playerT, playerRot);
     }
+    
+    //trackDB->renderItems(gluu, playerT, playerRot);
     /*
     for (var key in this.tile){
        if(this.tile[key] === undefined) continue;

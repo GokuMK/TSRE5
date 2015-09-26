@@ -13,6 +13,8 @@ public:
     float UiD[12];
     int iTrv;
     TRSect *trVectorSection;
+    int iTri;
+    int *trItemRef;
     int TrP1;
     int TrP2;
     int TrPinS[3];

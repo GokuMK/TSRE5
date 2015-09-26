@@ -6,6 +6,8 @@
 #include "Vector3f.h"
 #include "OglObj.h"
 
+class Brush;
+
 class Terrain {
 public:
     int loaded;
@@ -20,7 +22,9 @@ public:
     void refresh();
     bool isModified();
     void setModified(bool value);
-    void paintTexture(int x, int z, float posx, float posz);
+    void paintTexture(Brush* brush, int x, int z, float posx, float posz);
+    void setTexture(Brush* brush, int x, int z, float posx, float posz);
+    int getTexture(int x, int z, float posx, float posz);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov);
 
 private:
