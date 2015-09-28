@@ -33,17 +33,17 @@ void OglObj::deleteVBO(){
 }
 
 void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
-    if(loaded){
-        VBO.destroy();
-        VAO.destroy();
-    }
-    
-    shapeType = type;
+    //if(loaded){
+    //    VBO.destroy();
+    //    VAO.destroy();
+    //}
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    VAO.create();
+    shapeType = type;
+    if(!loaded){
+        VAO.create();
+        VBO.create();
+    }
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
-
-    VBO.create();
     VBO.bind();
     VBO.allocate(punkty, ptr * sizeof (GLfloat));
 

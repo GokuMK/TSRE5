@@ -28,7 +28,7 @@ Pointer3d::Pointer3d() : OglObj() {
 
     this->setMaterial(1.0, 1.0, 0.0);
     this->init(punkty, ptr, this->V, GL_LINES);
-    delete punkty;
+    delete[] punkty;
 }
 
 Pointer3d::Pointer3d(const Pointer3d& orig) {

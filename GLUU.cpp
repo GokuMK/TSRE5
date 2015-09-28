@@ -99,7 +99,7 @@ void GLUU::mvPushMatrix() {
 
 void GLUU::mvPopMatrix() {
     if (--imvMatrixStack < 0) return;
-    delete mvMatrix;
+    delete[] mvMatrix;
     mvMatrix = mvMatrixStack[imvMatrixStack];
 }
 

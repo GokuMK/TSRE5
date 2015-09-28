@@ -14,7 +14,7 @@ FileBuffer::FileBuffer(const FileBuffer& orig) {
 }
 
 FileBuffer::~FileBuffer() {
-    delete this->data;
+    delete[] this->data;
 }
 
 int FileBuffer::getInt() {

@@ -145,7 +145,7 @@ void Texture::crop(float x1, float y1, float x2, float y2){
         this->width = ii;
     }
     
-    delete this->imageData;
+    delete[] this->imageData;
     this->imageData = newData;
     
     this->update();
@@ -236,7 +236,7 @@ bool Texture::GLTextures() {
     //f->glGenerateMipmap(GL_TEXTURE_2D);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,  GL_LINEAR );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    delete imageData;
+    delete[] imageData;
     this->editable = false;
     glLoaded = true;
     return true;

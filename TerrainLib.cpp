@@ -215,6 +215,7 @@ void TerrainLib::paintHeightMap(int x, int z, float* p){
         }
     terr->setModified(true);
     terr->refresh();
+    
 }
 
 void TerrainLib::fillRAW(float** terrainData, int mojex, int mojez) {

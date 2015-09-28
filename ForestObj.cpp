@@ -211,7 +211,7 @@ void ForestObj::drawShape(){
         shape.VBO.release();
         //shape.iloscv = ptr/8;
 
-        delete punkty;
+        delete[] punkty;
         init = true;
     } else {
         

@@ -389,7 +389,7 @@
                         f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<void *>(6 * sizeof(GLfloat)));
                         pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VBO.release();
                         
-                        delete wierzcholki;
+                        delete[] wierzcholki;
                         
                         bufor->off += 4;
                         temp = bufor->getInt();
@@ -406,9 +406,9 @@
                 pliks->distancelevel[j].subobiekty[ii].iloscc = czilosc;
             }
         }
-        delete vert;
-        delete pliks->tpoints.normals;
-        delete pliks->tpoints.points;
-        delete pliks->tpoints.uv_points;
+        delete[] vert;
+        delete[] pliks->tpoints.normals;
+        delete[] pliks->tpoints.points;
+        delete[] pliks->tpoints.uv_points;
         return;
     }

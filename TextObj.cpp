@@ -80,7 +80,7 @@ void TextObj::init(){
 
     this->setMaterial(new QString(text+".:paintTex"));
     OglObj::init(punkty, ptr, this->VNT, GL_TRIANGLES);
-    delete punkty;
+    delete[] punkty;
 }
 
 TextObj::TextObj(const TextObj& orig) {

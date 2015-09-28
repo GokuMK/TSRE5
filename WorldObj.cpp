@@ -228,7 +228,7 @@ void WorldObj::drawBox(){
         box.setMaterial(0.0, 0.0, 1.0);
         box.init(punkty, ptr-punkty, box.V, GL_LINES);
 
-        delete punkty;
+        delete[] punkty;
     }
     
 

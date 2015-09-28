@@ -127,7 +127,7 @@ void PlatformObj::renderTritems(GLUU* gluu){
         }
         
         line->init(punkty, ptr, line->V, GL_LINES);
-        delete punkty;
+        delete[] punkty;
     }
     //if(pos == NULL) return;
     Mat4::identity(gluu->objStrMatrix);
