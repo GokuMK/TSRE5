@@ -61,6 +61,7 @@ void GLWidget::timerEvent(QTimerEvent * event) {
 
     camera->update(fps);
     update();
+    
 }
 
 void GLWidget::initializeGL() {

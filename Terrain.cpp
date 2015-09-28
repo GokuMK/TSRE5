@@ -17,6 +17,8 @@ Terrain::Terrain(float x, float y) {
         texid[i] = -1;
         hidden[i] = false;
         texModified[i] = false;
+        VBO[i] = new QOpenGLBuffer();
+        VAO[i] = new QOpenGLVertexArrayObject();
     }
     mojex = x;
     mojez = y;
@@ -52,19 +54,30 @@ Terrain::Terrain(const Terrain& orig) {
 }
 
 Terrain::~Terrain() {
-    qDebug() << "= release terrain";
-
-    /*if (this->loaded) {
+    long timeNow1 = QDateTime::currentMSecsSinceEpoch();
+    if (this->loaded) {
         for (int i = 0; i < 257; i++) {
             delete[] terrainData[i];
             if (this->jestF)
                 delete[] fData[i];
         }
+        //for (int i = 0; i < 256; i++) {
+        //    //delete VBO[i];
+        //    //delete VAO[i];
+        //    //GC::VBO.push_back(VBO[i]);
+        //    //GC::VAO.push_back(VAO[i]);
+        //}
+        delete VBO[0];
+        delete VAO[0];
+        delete[] VBO;
+        delete[] VAO;
 
         delete[] terrainData;
         if (this->jestF)
             delete[] fData;
-    }*/
+    }
+    long timeNow2 = QDateTime::currentMSecsSinceEpoch();
+    qDebug() << "= release terrain "<< timeNow2 - timeNow1;
 }
 
 void Terrain::saveEmpty(int x, int y) {
@@ -114,14 +127,8 @@ QString Terrain::getTileName(int x, int y) {
 }
 
 void Terrain::refresh() {
-    //for (int uu = 0; uu < 16; uu++)
-    //    for (int yy = 0; yy < 16; yy++) {
-            //VAO[uu * 16 + yy].destroy();
-            //VBO[uu * 16 + yy].destroy();
-    //    }
-
     isOgl = false;
-    //reloadLines();
+    reloadLines();
 }
 
 int Terrain::getTexture(int x, int z, float posx, float posz) {
@@ -332,6 +339,9 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     int off = 0;
     float lod = 0;
     float size = 512;
+    
+    QOpenGLVertexArrayObject::Binder vaoBinder(VAO[0]);
+
     for (int uu = 0; uu < 16; uu++) {
         for (int yy = 0; yy < 16; yy++) {
             if (hidden[yy * 16 + uu]) continue;
@@ -384,9 +394,22 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                 }
             }
 
-            QOpenGLVertexArrayObject::Binder vaoBinder(&VAO[uu * 16 + yy]);
-            glDrawArrays(GL_TRIANGLES, 0, 16 * 16 * 6);
+            //QOpenGLVertexArrayObject::Binder vaoBinder(VAO[uu * 16 + yy]);
+            
 
+            glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
+        }
+    }
+    
+    for (int uu = 0; uu < 16; uu++) {
+        for (int yy = 0; yy < 16; yy++) {
+            if (hidden[yy * 16 + uu]) continue;
+            float lodxx = lodx + uu * 128 - 1024;
+            float lodzz = lodz + yy * 128 - 1024;
+            lod = sqrt(lodxx * lodxx + lodzz * lodzz);
+            //System.out.println("-- "+lodxx+" "+lodzz);
+            if (lod > Game::objectLod) continue;
+            
             if ((tfile->flags[yy * 16 + uu] & 0xc0) != 0) {
 
                 if (!water[uu * 16 + yy].loaded) {
@@ -586,6 +609,19 @@ void Terrain::normalInit() {
 };
 
 void Terrain::oglInit() {
+    if(!VAO[0]->isCreated()){
+       VAO[0]->create();
+       VBO[0]->create();
+    }
+    QOpenGLVertexArrayObject::Binder vaoBinder(VAO[0]);
+    VBO[0]->bind();
+    VBO[0]->allocate(256 * 16 * 16 * 6 * 5 * sizeof (GLfloat));
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    f->glEnableVertexAttribArray(0);
+    f->glEnableVertexAttribArray(1);
+    f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), 0);
+    f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
+    
     int ilosc = 16 * 16;
     int suma;
     float * punkty = new float[16 * 16 * 30];
@@ -654,24 +690,27 @@ void Terrain::oglInit() {
                 }
             }*/
 
-            QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-            if(!VAO[uu * 16 + yy].isCreated()){
-                VAO[uu * 16 + yy].create();
-                VBO[uu * 16 + yy].create();
-            }
+            //QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+            //if(!VBO[0]->isCreated()){
+                //VAO[uu * 16 + yy]->create();
+           //     VBO[0]->create();
+            //}
             
-            QOpenGLVertexArrayObject::Binder vaoBinder(&VAO[uu * 16 + yy]);
+            //QOpenGLVertexArrayObject::Binder vaoBinder(VAO[uu * 16 + yy]);
             
-            VBO[uu * 16 + yy].bind();
-            VBO[uu * 16 + yy].allocate(punkty, 16 * 16 * 6 * 5 * sizeof (GLfloat));
-            f->glEnableVertexAttribArray(0);
-            f->glEnableVertexAttribArray(1);
-            f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), 0);
-            f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
-            VBO[uu * 16 + yy].release();
+            //VBO[0]->bind();
+            //VBO[0]->
+            VBO[0]->write((uu * 16 + yy) * 16 * 16 * 6 * 5 * sizeof (GLfloat), punkty, 16 * 16 * 6 * 5 * sizeof (GLfloat));
+            //VBO[0]->allocate(punkty, 16 * 16 * 6 * 5 * sizeof (GLfloat));
+            //f->glEnableVertexAttribArray(0);
+            //f->glEnableVertexAttribArray(1);
+            //f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), 0);
+            //f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
+            //VBO[0]->release();
         }
     }
 
+    VBO[0]->release();
     delete[] punkty;
     //for (int i = 0; i < 257; i++)
     //    delete normalData[i];

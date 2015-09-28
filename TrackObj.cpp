@@ -87,7 +87,6 @@ void TrackObj::set(QString sh, FileBuffer* data) {
 }
 
 void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
-
     if (!loaded) return;
     if (shape < 0) return;
     if (jestPQ < 2) return;

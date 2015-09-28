@@ -63,7 +63,7 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     if (jestPQ < 2) return;
     //GLUU* gluu = GLUU::get();
     //if((this.position===undefined)||this.qDirection===undefined) return;
-
+    
     if (size > 0) {
         if ((lod > size + 150)) {
             float v1[2];
