@@ -5,7 +5,6 @@
 #include <QDebug>
 #include <QOpenGLShaderProgram>
 #include <QString>
-#include <QOpenGLShaderProgram>
 
 AceLib::AceLib(){
     

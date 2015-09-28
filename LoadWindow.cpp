@@ -12,7 +12,7 @@
 
 LoadWindow::LoadWindow() {
     this->setWindowFlags( Qt::CustomizeWindowHint );
-    this->setFixedSize(600, 400);
+    this->setFixedSize(600, 500);
     QImage* myImage = new QImage();
     myImage->load("resources/load.png");
 

@@ -26,6 +26,7 @@ public slots:
     void pickTexToolEnabled();
     void setTexToolEnabled();
     void putTexToolEnabled();
+    void chooseColorEnabled();
     void updateTexPrev();
     void setBrushSize(int val);
     void setBrushAlpha(int val);

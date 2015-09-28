@@ -32,7 +32,7 @@
     //-----------------------------------
     //Szukanie sekcji
     //-----------------------------------
-    void SFileC::szukajsekcjic(int szukane, FileBuffer* bufor) {
+    /*void SFileC::szukajsekcjic(int szukane, FileBuffer* bufor) {
         int s;
         while (bufor->length>bufor->off) {
             s = (int)bufor->getInt();
@@ -45,7 +45,7 @@
         }
         //Console.WriteLine("nie znaleziono 7");
         return;
-    }
+    }*/
     //-----------------------------------
     //Oczytanie i zapisanie sekcji points
     //-----------------------------------
@@ -300,7 +300,7 @@
 
                 // Wczytanie wierzcholkow
                 bufor->off += 9;
-                szukajsekcjic(50, bufor);
+                bufor->findToken(50);
                 bufor->off += 5;
                 v_ilosc = bufor->getInt();
                 
@@ -325,7 +325,7 @@
                 }
 
                 // odczytanie primitives-'czesci'
-                szukajsekcjic(53, bufor);
+                bufor->findToken(53);
                 bufor->off += 5;
                 // odczytanie ich ilosci
                 pliks->distancelevel[j].subobiekty[ii].iloscc = bufor->getInt();

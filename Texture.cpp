@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDebug>
 #include <QOpenGLFunctions>
+#include <QColor>
 
 Texture::Texture() {
 }
@@ -87,6 +88,69 @@ unsigned char * Texture::getImageData(int width, int height){
     return out;
 }
 
+void Texture::crop(float x1, float y1, float x2, float y2){
+    if(!editable) 
+        setEditable();
+
+    qDebug() << x1 <<" "<<y1<<" "<<x2<<" "<<y2;
+
+    if(x1 < x2 && y1 < y2)
+        return;   
+    
+    unsigned char* newData = new unsigned char[this->width*this->height*this->bytesPerPixel];    
+    
+    if(x1 > x2 && y1 > y2){
+        int ii, jj;
+        for(int i = 0; i < width; i++)
+            for(int j = 0; j < height; j++){
+                ii = width - i - 1;
+                jj = height - j - 1;
+                newData[i*width*bytesPerPixel+j*bytesPerPixel+0] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+0];
+                newData[i*width*bytesPerPixel+j*bytesPerPixel+1] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+1];
+                newData[i*width*bytesPerPixel+j*bytesPerPixel+2] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+2];
+                if(this->bytesPerPixel == 4)
+                    newData[i*width*bytesPerPixel+j*bytesPerPixel+3] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+3];            }
+    }
+    
+    if(x1 > x2 && y1 < y2){
+        int ii, jj;
+        for(int i = 0; i < width; i++)
+            for(int j = 0; j < height; j++){
+                ii = j;
+                jj = width - i - 1;
+                newData[i*width*bytesPerPixel+j*bytesPerPixel+0] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+0];
+                newData[i*width*bytesPerPixel+j*bytesPerPixel+1] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+1];
+                newData[i*width*bytesPerPixel+j*bytesPerPixel+2] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+2];
+                if(this->bytesPerPixel == 4)
+                    newData[i*width*bytesPerPixel+j*bytesPerPixel+3] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+3];            }
+        ii = this->height;
+        this->height = this->width;
+        this->width = ii;
+    }
+
+    if(x1 < x2 && y1 > y2){
+        int ii, jj;
+        for(int i = 0; i < width; i++)
+            for(int j = 0; j < height; j++){
+                ii = height - j - 1;
+                jj = i;
+                newData[i*width*bytesPerPixel+j*bytesPerPixel+0] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+0];
+                newData[i*width*bytesPerPixel+j*bytesPerPixel+1] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+1];
+                newData[i*width*bytesPerPixel+j*bytesPerPixel+2] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+2];
+                if(this->bytesPerPixel == 4)
+                    newData[i*width*bytesPerPixel+j*bytesPerPixel+3] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+3];
+            }
+        ii = this->height;
+        this->height = this->width;
+        this->width = ii;
+    }
+    
+    delete this->imageData;
+    this->imageData = newData;
+    
+    this->update();
+}
+
 void Texture::paint(Brush* brush, float x, float z){
     if(!editable) 
         setEditable();
@@ -106,17 +170,20 @@ void Texture::paint(Brush* brush, float x, float z){
     
     float talpha = 0;
     
-    for(int i = -brush->size; i < brush->size; i++)
-        for(int j = -brush->size; j < brush->size; j++){
+    int size = (brush->size*this->width)/512;
+    //size = (size/512);
+    
+    for(int i = -size; i < size; i++)
+        for(int j = -size; j < size; j++){
             txi = tx+i;
             tzj = tz+j;
             if(tx+i >= height) continue;
             if(tz+j >= width) continue;
             if(tx+i < 0) continue;
             if(tz+j < 0) continue;
-            if(sqrt(i*i + j*j) > brush->size) continue;
+            if(sqrt(i*i + j*j) > size) continue;
             
-            talpha = (brush->alpha)*(1.0-(float)sqrt(i*i + j*j)/brush->size);
+            talpha = (brush->alpha)*(1.0-(float)sqrt(i*i + j*j)/size);
             txi*=1;
             tzj*=1;
             
@@ -137,11 +204,11 @@ void Texture::paint(Brush* brush, float x, float z){
                         = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+2] + (talpha)*tex->imageData[(txi)*tex->width*tex->bytesPerPixel + (tzj)*tex->bytesPerPixel+2];
             } else {
                 imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel] 
-                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel] + (talpha)*(0);
+                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel] + (talpha)*(brush->color[0]);
                 imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+1] 
-                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+1] + (talpha)*(0);
+                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+1] + (talpha)*(brush->color[1]);
                 imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+2] 
-                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+2] + (talpha)*(0);
+                        = (1-talpha)*imageData[(tx+i)*width*bytesPerPixel + (tz + j)*bytesPerPixel+2] + (talpha)*(brush->color[2]);
             }
         }
 }

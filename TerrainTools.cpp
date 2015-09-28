@@ -22,6 +22,9 @@ TerrainTools::TerrainTools(QString name)
     QPushButton *pickTexTool = new QPushButton("Pick Texture", this);
     QPushButton *setTexTool = new QPushButton("Load Texture", this);
     QPushButton *putTexTool = new QPushButton("Put Texture", this);
+    QPushButton* colorw = new QPushButton("Choose color", this);
+    colorw->setStyleSheet("background-color:black;");
+    //colorw->show();
     QSlider *slider = new QSlider(Qt::Horizontal);
     slider->setMinimum(1);
     slider->setMaximum(100);
@@ -40,6 +43,7 @@ TerrainTools::TerrainTools(QString name)
     vbox->addWidget(paintTool);
     vbox->addWidget(pickTexTool);
     vbox->addWidget(setTexTool);
+    vbox->addWidget(colorw);
     vbox->addWidget(texPreviewLabel);
     vbox->setAlignment(texPreviewLabel, Qt::AlignHCenter);
     vbox->addWidget(putTexTool);
@@ -63,6 +67,9 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(setTexTool, SIGNAL(released()),
                       this, SLOT(setTexToolEnabled()));
     
+    QObject::connect(colorw, SIGNAL(released()),
+                      this, SLOT(chooseColorEnabled()));
+    
     QObject::connect(slider, SIGNAL(valueChanged(int)),
                       this, SLOT(setBrushSize(int)));
     
@@ -84,6 +91,13 @@ void TerrainTools::heightToolEnabled(){
 void TerrainTools::paintToolEnabled(){
     emit setPaintBrush(this->paintBrush);
     emit enableTool("paintTool");
+}
+
+void TerrainTools::chooseColorEnabled(){
+    QColor color = QColorDialog::getColor(Qt::black, this, "Text Color",  QColorDialog::DontUseNativeDialog);
+    this->paintBrush->color[0] = color.red();
+    this->paintBrush->color[1] = color.green();
+    this->paintBrush->color[2] = color.blue();
 }
 
 void TerrainTools::pickTexToolEnabled(){

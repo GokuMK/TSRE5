@@ -49,43 +49,43 @@ void SFile::Load(QString path) {
         //qDebug() << val << " plik binarny ";
         //wczytanie binarnego
         bufor->off += 5;
-        SFileC::szukajsekcjic(72, bufor);
+        bufor->findToken(72);
         SFileC::odczytajshaders(bufor, this);
         
-        SFileC::szukajsekcjic(7, bufor);
+        bufor->findToken(7);
         //qDebug() << "znaleziono sekcje 7 na " << bufor->off;
         SFileC::odczytajpunktyc(bufor, this);
         getSize();
         
-        SFileC::szukajsekcjic(9, bufor);
+        bufor->findToken(9);
         //qDebug() << "znaleziono sekcje 9 na " << bufor->off;
         SFileC::odczytajuvpunktyc(bufor, this);
 
-        SFileC::szukajsekcjic(5, bufor);
+        bufor->findToken(5);
         //qDebug() << "znaleziono sekcje 5 na " << bufor->off;
         SFileC::odczytajnormalnec(bufor, this);
 
-        SFileC::szukajsekcjic(66, bufor);
+        bufor->findToken(66);
         //qDebug() << "znaleziono sekcje 66 na " << bufor->off;
         SFileC::odczytajmatricesc(bufor, this);
 
-        SFileC::szukajsekcjic(14, bufor);
+        bufor->findToken(14);
         //qDebug() << "znaleziono sekcje 14 na " << bufor->off;
         SFileC::odczytajimagesc(bufor, this);
 
-        SFileC::szukajsekcjic(16, bufor);
+        bufor->findToken(16);
         //qDebug() << "znaleziono sekcje 16 na " << bufor->off;
         SFileC::odczytajtexturesc(bufor, this);
 
-        SFileC::szukajsekcjic(47, bufor);
+        bufor->findToken(47);
         //qDebug() << "znaleziono sekcje 47 na " << bufor->off;
         SFileC::odczytajvtx_statesc(bufor, this);
 
-        SFileC::szukajsekcjic(55, bufor);
+        bufor->findToken(55);
         //qDebug() << "znaleziono sekcje 55 na " << bufor->off;
         SFileC::odczytajprim_statesc(bufor, this);
 
-        SFileC::szukajsekcjic(31, bufor);
+        bufor->findToken(31);
         //qDebug() << "znaleziono sekcje 31 na " << bufor->off;
         SFileC::odczytajloddc(bufor, this);
         this->loaded = 1;

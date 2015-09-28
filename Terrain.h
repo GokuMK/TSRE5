@@ -59,6 +59,9 @@ private:
     void vertexInit();
     void normalInit();
     void oglInit();
+    void rotateTex(int idx);
+    void convertTexToDefaultCoords(int idx);
+    void paintTextureOnTile(Brush* brush, int y, int u, float x, float z);
 };
 
 #endif	/* TERRAIN_H */

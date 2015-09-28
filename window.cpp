@@ -88,9 +88,6 @@ Window::Window() {
     QObject::connect(terrainTools, SIGNAL(setPaintBrush(Brush*)),
                       glWidget, SLOT(setPaintBrush(Brush*)));   
     
-    QObject::connect(terrainTools, SIGNAL(putTerrainTexture(int)),
-                      glWidget, SLOT(putTerrainTexture(int)));   
-    
     QObject::connect(glWidget, SIGNAL(setBrushTextureId(int)),
                       terrainTools, SLOT(setBrushTextureId(int)));   
     

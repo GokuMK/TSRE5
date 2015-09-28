@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QString>
 #include <QImage>
+#include <QOpenGLShaderProgram>
 
 ImageLib::ImageLib() {
 }
@@ -14,9 +15,11 @@ void ImageLib::run(){
     
     if(img.hasAlphaChannel()){
         texture->bytesPerPixel = 4;
+        texture->type = GL_RGBA;
         img = img.convertToFormat(QImage::Format_RGBA8888);
     } else {
         texture->bytesPerPixel = 3;
+        texture->type = GL_RGB;
         img = img.convertToFormat(QImage::Format_RGB888);
     }
     texture->width = img.width();

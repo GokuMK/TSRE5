@@ -1,6 +1,5 @@
 #include "TFile.h"
 #include <QDebug>
-#include "SFileC.h"
 #include <QFile>
 #include "ReadFile.h"
 
@@ -26,7 +25,7 @@ bool TFile::readT(QString fSfile) {
         data->off = 16;
         
         int pozycja, offset, akto;
-        SFileC::szukajsekcjic(136, data);
+        data->findToken(136);
         //qDebug() << "znaleziono sekcje 136 na " << data->off << " ";
         data->off += 5;
         for (int i = 0; i < 6; i++) {
@@ -226,7 +225,7 @@ void TFile::get153(FileBuffer* data, TFile::mat* m) {
             //data->off -= 3;
             m->atex[j][0] = data->getInt();
             m->atex[j][1] = data->getInt();
-            
+            //qDebug() << m->atex[j][0] << " " << m->atex[j][1];
             data->off = akto + offset;
         }
     }
@@ -244,10 +243,11 @@ void TFile::get156(FileBuffer* data, TFile::mat* m) {
             //System.out.println("===znaleziono sekcje " + pozycja + " na " + data.position() + " " + offset);     
             data->off++;
             
-            m->itex[j][0] = data->getInt()&0xff;
-            m->itex[j][1] = data->getInt()&0xff;
-            m->itex[j][2] = data->getInt()&0xff;
-            m->itex[j][3] = data->getInt()&0xff;
+            m->itex[j][0] = data->getInt();//&0xff;
+            m->itex[j][1] = data->getInt();//&0xff;
+            m->itex[j][2] = data->getInt();//&0xff;
+            m->itex[j][3] = data->getInt();//&0xff;
+            //qDebug() << m->itex[j][0] << " " << m->itex[j][1] << " " << m->itex[j][2] << " " << m->itex[j][3];
 
             data->off = akto + offset;
         }

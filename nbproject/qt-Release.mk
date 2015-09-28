@@ -6361,7 +6361,19 @@ build/Release/MinGW_QT_static-Windows/ImageLib.o: ImageLib.cpp ImageLib.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qpainterpath.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qpaintdevice.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qrgb.h \
-		C:/Qt/Static/5.4.1/include/QtGui/qpixelformat.h
+		C:/Qt/Static/5.4.1/include/QtGui/qpixelformat.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLShaderProgram \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglshaderprogram.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopengl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qt_windows.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopengles2ext.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglext.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector3d.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector4d.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qmatrix4x4.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qquaternion.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qgenericmatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/ImageLib.o ImageLib.cpp
 
 build/Release/MinGW_QT_static-Windows/LevelCrObj.o: LevelCrObj.cpp LevelCrObj.h \
@@ -11136,7 +11148,6 @@ build/Release/MinGW_QT_static-Windows/TFile.o: TFile.cpp TFile.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qpoint.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qset.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qcontiguouscache.h \
-		SFileC.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QFile \
 		C:/Qt/Static/5.4.1/include/QtCore/qfile.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qfiledevice.h \
@@ -11874,7 +11885,8 @@ build/Release/MinGW_QT_static-Windows/Terrain.o: Terrain.cpp Terrain.h \
 		TexLib.h \
 		Texture.h \
 		TerrainLib.h \
-		GLMatrix.h
+		GLMatrix.h \
+		Brush.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Terrain.o Terrain.cpp
 
 build/Release/MinGW_QT_static-Windows/TerrainLib.o: TerrainLib.cpp TerrainLib.h \
@@ -12734,7 +12746,10 @@ build/Release/MinGW_QT_static-Windows/Texture.o: Texture.cpp Texture.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QScopedPointer \
 		C:/Qt/Static/5.4.1/include/QtGui/QSurfaceFormat \
 		C:/Qt/Static/5.4.1/include/QtGui/qsurfaceformat.h \
-		C:/Qt/Static/5.4.1/include/QtGui/qopenglversionfunctions.h
+		C:/Qt/Static/5.4.1/include/QtGui/qopenglversionfunctions.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QColor \
+		C:/Qt/Static/5.4.1/include/QtGui/qcolor.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qrgb.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Texture.o Texture.cpp
 
 build/Release/MinGW_QT_static-Windows/Tile.o: Tile.cpp Tile.h \

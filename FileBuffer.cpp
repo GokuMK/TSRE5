@@ -30,7 +30,7 @@ unsigned int FileBuffer::getUint() {
 unsigned short int FileBuffer::getShort() {
     this->off += 2;
     //return this->data[this->off - 2]*256 + 0;
-    return *((unsigned short int*)&this->data[this->off-2]);
+    return *((unsigned short int*) & this->data[this->off - 2]);
 }
 
 float FileBuffer::getFloat() {
@@ -45,10 +45,22 @@ unsigned char FileBuffer::get() {
 QString* FileBuffer::getString(int start, int end) {
     QString* s = new QString();
 
-    for (int i = start; i < end; i+=2) {
-        if(data[i] == 13) continue;
-        *s += QChar(data[i], data[i+1]);
+    for (int i = start; i < end; i += 2) {
+        if (data[i] == 13) continue;
+        *s += QChar(data[i], data[i + 1]);
     }
     return s;
 
+}
+
+void FileBuffer::findToken(int id) {
+    int s;
+    while (length > off) {
+        s = (int) getInt();
+        if (s == id)
+            return;
+        s = getInt();
+        off += s;
+    }
+    return;
 }

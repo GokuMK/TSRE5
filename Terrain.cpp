@@ -114,6 +114,12 @@ QString Terrain::getTileName(int x, int y) {
 }
 
 void Terrain::refresh(){
+    for(int uu = 0; uu < 16; uu++)
+        for(int yy = 0; yy < 16; yy++){
+            VAO[uu * 16 + yy].destroy();
+            VBO[uu * 16 + yy].destroy();
+        }
+    
     isOgl = false;
 }
 
@@ -131,6 +137,92 @@ int Terrain::getTexture(int x, int z, float posx, float posz){
     return texid[y * 16 + u];
 }
 
+void Terrain::convertTexToDefaultCoords(int idx){
+    float x11 = (0) * tfile->tdata[(idx)*13 + 3 + 6] + (0) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    float y11 = (0) * tfile->tdata[(idx)*13 + 5 + 6] + (0) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+    //qDebug() << x11 << " " <<y11;
+    float x21 = (16) * tfile->tdata[(idx)*13 + 3 + 6] + (0) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    float y21 = (16) * tfile->tdata[(idx)*13 + 5 + 6] + (0) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+    //qDebug() << x21 << " " <<y21;
+    float x12 = (0) * tfile->tdata[(idx)*13 + 3 + 6] + (16) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    float y12 = (0) * tfile->tdata[(idx)*13 + 5 + 6] + (16) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+    //qDebug() << x12 << " " <<y12;
+    float x22 = (16) * tfile->tdata[(idx)*13 + 3 + 6] + (16) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    float y22 = (16) * tfile->tdata[(idx)*13 + 5 + 6] + (16) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+    //qDebug() << x22 << " " <<y22;
+    float t;
+    if((x11 < x21) && (y11 == y21)){
+        qDebug() << "rot1 - ok";
+    } else {
+        qDebug() << "rot";
+        TexLib::mtex[texid[idx]]->crop(x11, y11, x22, y22);
+    }
+    
+    tfile->tdata[(idx)*13 + 1 + 6] = 0;
+    tfile->tdata[(idx)*13 + 2 + 6] = 0;
+    
+    tfile->tdata[(idx)*13 + 3 + 6] = 0.0625;
+    tfile->tdata[(idx)*13 + 4 + 6] = 0.0;
+    tfile->tdata[(idx)*13 + 5 + 6] = 0.0;
+    tfile->tdata[(idx)*13 + 6 + 6] = 0.0625;
+    this->refresh();
+}
+
+void Terrain::rotateTex(int idx){
+    
+    float x11 = (0) * tfile->tdata[(idx)*13 + 3 + 6] + (0) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    float y11 = (0) * tfile->tdata[(idx)*13 + 5 + 6] + (0) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+    qDebug() << x11 << " " <<y11;
+    float x21 = (16) * tfile->tdata[(idx)*13 + 3 + 6] + (0) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    float y21 = (16) * tfile->tdata[(idx)*13 + 5 + 6] + (0) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+    qDebug() << x21 << " " <<y21;
+    float x12 = (0) * tfile->tdata[(idx)*13 + 3 + 6] + (16) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    float y12 = (0) * tfile->tdata[(idx)*13 + 5 + 6] + (16) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+    qDebug() << x12 << " " <<y12;
+    float x22 = (16) * tfile->tdata[(idx)*13 + 3 + 6] + (16) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    float y22 = (16) * tfile->tdata[(idx)*13 + 5 + 6] + (16) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+    qDebug() << x22 << " " <<y22;
+    float t;
+    if((x11 < x21) && (y11 == y21)){
+        qDebug() << "rot1";
+        tfile->tdata[(idx)*13 + 1 + 6] = x21;
+        t = tfile->tdata[(idx)*13 + 4 + 6];
+        tfile->tdata[(idx)*13 + 4 + 6] = -tfile->tdata[(idx)*13 + 3 + 6];
+        tfile->tdata[(idx)*13 + 3 + 6] = t;
+        t = tfile->tdata[(idx)*13 + 5 + 6];
+        tfile->tdata[(idx)*13 + 5 + 6] = tfile->tdata[(idx)*13 + 6 + 6];
+        tfile->tdata[(idx)*13 + 6 + 6] = t;
+    } else if((x11 == x21) && (y11 < y21)){
+        qDebug() << "rot2";
+        tfile->tdata[(idx)*13 + 2 + 6] = y21;
+        t = tfile->tdata[(idx)*13 + 4 + 6];
+        tfile->tdata[(idx)*13 + 4 + 6] = -tfile->tdata[(idx)*13 + 3 + 6];
+        tfile->tdata[(idx)*13 + 3 + 6] = t;
+        t = tfile->tdata[(idx)*13 + 5 + 6];
+        tfile->tdata[(idx)*13 + 5 + 6] = tfile->tdata[(idx)*13 + 6 + 6];
+        tfile->tdata[(idx)*13 + 6 + 6] = -t;
+    } else if((x11 > x21) && (y11 == y21)){
+        qDebug() << "rot3";
+        tfile->tdata[(idx)*13 + 1 + 6] = x21;
+        t = tfile->tdata[(idx)*13 + 4 + 6];
+        tfile->tdata[(idx)*13 + 4 + 6] = -tfile->tdata[(idx)*13 + 3 + 6];
+        tfile->tdata[(idx)*13 + 3 + 6] = t;
+        t = tfile->tdata[(idx)*13 + 5 + 6];
+        tfile->tdata[(idx)*13 + 5 + 6] = tfile->tdata[(idx)*13 + 6 + 6];
+        tfile->tdata[(idx)*13 + 6 + 6] = t;
+    } else if((x11 == x21) && (y11 > y21)){
+        qDebug() << "rot4";
+        tfile->tdata[(idx)*13 + 2 + 6] = y21;
+        t = tfile->tdata[(idx)*13 + 4 + 6];
+        tfile->tdata[(idx)*13 + 4 + 6] = tfile->tdata[(idx)*13 + 3 + 6];
+        tfile->tdata[(idx)*13 + 3 + 6] = t;
+        t = tfile->tdata[(idx)*13 + 5 + 6];
+        tfile->tdata[(idx)*13 + 5 + 6] = -tfile->tdata[(idx)*13 + 6 + 6];
+        tfile->tdata[(idx)*13 + 6 + 6] = -t;
+    }
+    this->refresh();
+}
+
 void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz){
 
     int u = (posx+1024)/128;
@@ -144,7 +236,7 @@ void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz){
     
     if(brush->texId == texid[y * 16 + u]){
         qDebug() << "same tex";
-
+        this->rotateTex(y * 16 + u);
     } else {
         texid[y * 16 + u] = brush->texId;
     }
@@ -170,9 +262,30 @@ void Terrain::paintTexture(Brush* brush, int x, int z, float posx, float posz){
     //hidden[y*16 + u] = true;
     float tx = posx+1024 - u*128;
     float tz = posz+1024 - y*128;
-    tx/= 128;
-    tz/= 128;
-    qDebug() << tx<<" "<< tz;
+    //tx/= 128;
+    //tz/= 128;
+    
+    float size = (float)(brush->size)/(512);    
+    qDebug() <<"size "<< size<<" "<< tx/128<<" "<< tz/128;
+    
+    for(int i = u - 1; i < u+2; i++)
+        for(int j = y - 1; j < y+2; j++){
+            float tx = posx+1024 - i*128;
+            float tz = posz+1024 - j*128;
+            tx/= 128;
+            tz/= 128;
+            qDebug() << tx<<" "<< tz;
+            if((tx < 0.0-size) || (tx > 1.0+size) || (tz < 0.0-size) || (tz > 1.0+size)) 
+                continue;
+            
+            this->paintTextureOnTile(brush, j, i, tx, tz);
+        }
+    
+}
+
+void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z){
+    qDebug() << "painttile "<< x<<" "<< z;
+    if(y > 15 || u > 15 || y < 0 || u < 0) return;
     
     QString name = this->getTileName(mojex, -mojez)+"_"+QString::number(y)+"_"+QString::number(u)+".ace";
     
@@ -181,12 +294,13 @@ void Terrain::paintTexture(Brush* brush, int x, int z, float posx, float posz){
         *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0] = name;
         qDebug() << *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0];
         texid[y * 16 + u] = TexLib::cloneTex(texid[y * 16 + u]);
+        convertTexToDefaultCoords(y * 16 + u);
         
-        TexLib::save("ace", texturepath+name, texid[y * 16 + u]);
+        //TexLib::save("ace", texturepath+name, texid[y * 16 + u]);
         //TexLib::mtex[texid[y * 16 + u]]->GLTextures();
     }
     
-    TexLib::mtex[texid[y * 16 + u]]->paint(brush, tz, tx);
+    TexLib::mtex[texid[y * 16 + u]]->paint(brush, z, x);
     TexLib::mtex[texid[y * 16 + u]]->update();
     this->texModified[y * 16 + u] = true;
     this->modified = true;

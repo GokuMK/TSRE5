@@ -16,6 +16,7 @@ public:
     float getFloat();
     QString* getString(int start, int end);
     unsigned char get();
+    void findToken(int id);
     
     int off = 0;
     int length = 0;

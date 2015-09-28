@@ -35,6 +35,7 @@ public:
 
     bool GLTextures();
     void update();
+    void crop(float x1, float y1, float x2, float y2);
     void paint(Brush* brush, float x, float z);
     unsigned char * getImageData(int width, int height);
     void delVBO();
