@@ -40,6 +40,7 @@ private:
     Brush* paintBrush;
     QPixmap* texPreview;
     QLabel* texPreviewLabel;
+    QPushButton* colorw;
 };
 
 #endif	/* TERRAINTOOLS_H */

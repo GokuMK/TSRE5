@@ -52,6 +52,7 @@ public:
     bool readT(QString fSfile);
     void save(QString name);
     int cloneMat(int id);
+    int getMatByTexture(QString tname);
     
 private:
     void get139(FileBuffer* data, int length);

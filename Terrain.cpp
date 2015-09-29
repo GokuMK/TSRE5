@@ -17,6 +17,7 @@ Terrain::Terrain(float x, float y) {
         texid[i] = -1;
         hidden[i] = false;
         texModified[i] = false;
+        uniqueTex[i] = false;
         VBO[i] = new QOpenGLBuffer();
         VAO[i] = new QOpenGLVertexArrayObject();
     }
@@ -38,6 +39,16 @@ Terrain::Terrain(float x, float y) {
     }
     jestF = readF(path + filename + "_f.raw");
     //qDebug() << " ok";
+    
+    QString name = this->getTileName(mojex, -mojez);
+    QString name2;
+    for (int u = 0; u < 16; u++)
+        for (int y = 0; y < 16; y++) {
+            name2 = name + "_" + QString::number(y) + "_" + QString::number(u) + ".ace";
+            if (name2 == *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0])
+                this->uniqueTex[y*16+u] = true;
+        }
+    
     loaded = true;
     //save();
 }
@@ -247,6 +258,22 @@ void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
         this->rotateTex(y * 16 + u);
     } else {
         texid[y * 16 + u] = brush->texId;
+        uniqueTex[y * 16 + u] = false;
+        QStringList tpath = TexLib::mtex[brush->texId]->pathid.split("/");
+        qDebug() << TexLib::mtex[brush->texId]->pathid;
+        qDebug() << tpath.last();
+        QString tname = tpath.last();
+        int mid = tfile->getMatByTexture(tname);
+        if(mid < 0){
+            tfile->tdata[(y * 16 + u)*13 + 0 + 6] = tfile->cloneMat(tfile->tdata[(y * 16 + u)*13 + 0 + 6]);
+            *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0] = tname;
+            qDebug() << *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0];
+            qDebug() << "new material";
+        } else {
+            tfile->tdata[(y * 16 + u)*13 + 0 + 6] = mid;
+            qDebug() << "existed material";
+        }
+        reloadLines();
     }
     /*QString name = this->getTileName(mojex, -mojez)+"_"+QString::number(y)+"_"+QString::number(u)+".ace";
     
@@ -303,7 +330,8 @@ void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
         qDebug() << *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0];
         texid[y * 16 + u] = TexLib::cloneTex(texid[y * 16 + u]);
         convertTexToDefaultCoords(y * 16 + u);
-
+        uniqueTex[y * 16 + u] = true;
+        reloadLines();
         //TexLib::save("ace", texturepath+name, texid[y * 16 + u]);
         //TexLib::mtex[texid[y * 16 + u]]->GLTextures();
     }
@@ -334,6 +362,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     lines.render();
     slines.render();
+    ulines.render();
 
     gluu->enableTextures();
     int off = 0;
@@ -400,7 +429,11 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
             glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
         }
     }
-    
+    renderWater(lodx, lodz, playerT, playerW, target, fov);
+}
+
+void Terrain::renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov) {
+    float lod;
     for (int uu = 0; uu < 16; uu++) {
         for (int yy = 0; yy < 16; yy++) {
             if (hidden[yy * 16 + uu]) continue;
@@ -531,7 +564,7 @@ void Terrain::reloadLines() {
     lines.init(punkty, ptr, lines.V, GL_LINES);
     delete punkty;
     //s tile lines
-    punkty = new float[256 * 6 * 32];
+    punkty = new float[256 * 32 * 6];
     ptr = 0;
     i = 0;
 
@@ -556,6 +589,59 @@ void Terrain::reloadLines() {
     }
     slines.setMaterial(0.5, 0.5, 0.5);
     slines.init(punkty, ptr, lines.V, GL_LINES);
+    delete punkty;
+    
+    //////////////////////
+    
+    int ui = 0;
+    for (int uu = 0; uu < 16; uu++)
+        for (int yy = 0; yy < 16; yy++)
+            if(this->uniqueTex[uu*16+yy]) ui++;
+    
+    punkty = new float[256 * 128 * 6];
+    ptr = 0;
+    i = 0;
+    
+    for (int uu = 0; uu < 16; uu++)
+        for (int yy = 0; yy < 16; yy++){
+            if(!this->uniqueTex[yy*16+uu]) continue;
+            
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = 0.95 + terrainData[yy*16+i][uu*16+0];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8;
+                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = 0.95 + terrainData[yy*16+ i + 1][uu*16+0];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+            }
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = 0.95 + terrainData[yy*16+0][uu*16+i];
+                 punkty[ptr++] = -1024 + yy*128;
+                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = 0.95 + terrainData[yy*16+0][uu*16+i + 1];
+                 punkty[ptr++] = -1024 + yy*128;
+            }
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = 0.95 + terrainData[yy*16+i][uu*16+16];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8;
+                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = 0.95 + terrainData[yy*16+ i + 1][uu*16+16];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+            }
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = 0.95 + terrainData[yy*16+16][uu*16+i];
+                 punkty[ptr++] = -1024 + yy*128+128;
+                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = 0.95 + terrainData[yy*16+16][uu*16+i + 1];
+                 punkty[ptr++] = -1024 + yy*128+128;
+            }
+        }
+    
+    ulines.setMaterial(0.8, 0.8, 0.8);
+    ulines.init(punkty, ptr, lines.V, GL_LINES);
     delete punkty;
     
 }

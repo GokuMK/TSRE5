@@ -33,13 +33,17 @@ public:
     struct czes {
         int iloscv;
         int prim_state_idx;
-        QOpenGLBuffer VBO;
-        QOpenGLVertexArrayObject VAO;
+        //QOpenGLBuffer VBO;
+        //QOpenGLVertexArrayObject VAO;
+        int offset;
+        int* idx;
     };
 
     struct sub {
         int iloscc;
         czes* czesci;
+        QOpenGLBuffer VBO;
+        QOpenGLVertexArrayObject VAO;
     };
 
     struct dist {

@@ -200,6 +200,8 @@ void SFile::render() {
     //gluu->enableTextures();
     //for(int iii = 0; iii < 200; iii++)
     for (int i = 0; i < distancelevel[0].iloscs; i++) {
+        QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].VAO);
+        
         for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {
 
             int prim_state = distancelevel[0].subobiekty[i].czesci[j].prim_state_idx;
@@ -255,8 +257,8 @@ void SFile::render() {
                 //glDisable(GL_TEXTURE_2D);
             }/**/
             
-            QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].czesci[j].VAO);
-            glDrawArrays(GL_TRIANGLES, 0, distancelevel[0].subobiekty[i].czesci[j].iloscv);/**/
+            //QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].czesci[j].VAO);
+            glDrawArrays(GL_TRIANGLES, distancelevel[0].subobiekty[i].czesci[j].offset, distancelevel[0].subobiekty[i].czesci[j].iloscv);/**/
         }
     }
     gluu->m_program->setUniformValue(gluu->shaderAlphaTest, gluu->alphaTest);

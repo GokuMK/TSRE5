@@ -38,6 +38,7 @@ private:
     Vector3f **vertexData;//[257][257];
     Vector3f **normalData;//[257][257];
     bool hidden[256];
+    bool uniqueTex[256];
     int texid[256];
     bool texModified[256];
     QOpenGLBuffer *VBO[256];
@@ -46,6 +47,7 @@ private:
     OglObj lines;
     OglObj mlines;
     OglObj slines;
+    OglObj ulines;
     OglObj water[256];
     //QOpenGLBuffer wVBO[256];
     //QOpenGLVertexArrayObject wVAO[256];
@@ -63,6 +65,7 @@ private:
     void convertTexToDefaultCoords(int idx);
     void paintTextureOnTile(Brush* brush, int y, int u, float x, float z);
     void reloadLines();
+    void renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov);
 };
 
 #endif	/* TERRAIN_H */

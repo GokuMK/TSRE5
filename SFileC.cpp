@@ -349,18 +349,19 @@
                         pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].prim_state_idx = aktidx;
                         pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv = bufor->getInt();
 
-                        float *wierzcholki = new float[pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv*8];
+                        //float *wierzcholki = new float[pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv*8];
 
                         // wczytanie listy wierzcholkow
                         //int directxSmierdzi = 0;
                         //for (int iii = 0; iii < pliks.distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv; iii++) {
-
+                        
+                        pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].idx = new int[pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv];
                         for (int iii = pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv - 1; iii >= 0; iii--) {
                             //pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].wierzcholki[iii] = new SFile::wie();
-
-                            w = bufor->getInt();
+                            pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].idx[iii] = bufor->getInt();
+                            //w = bufor->getInt();
                             //System.out.println("----v "+w);
-                            n = vert[w].normal;
+                            /*n = vert[w].normal;
                             txt = vert[w].uvpoint;
                             p = vert[w].point;
 
@@ -372,11 +373,11 @@
                             wierzcholki[iii*8+5] = pliks->tpoints.normals[n].z;
                             wierzcholki[iii*8+6] = pliks->tpoints.uv_points[txt].x;
                             wierzcholki[iii*8+7] = pliks->tpoints.uv_points[txt].y;
-                        
+                        */
                             //directxSmierdzi-=2;
                             //if(directxSmierdzi<-2) directxSmierdzi = 2;
                         }
-                        QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+                        /*QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
                         pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VAO.create();
                         QOpenGLVertexArrayObject::Binder vaoBinder(&pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VAO);
                         
@@ -389,7 +390,7 @@
                         f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<void *>(6 * sizeof(GLfloat)));
                         pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VBO.release();
                         
-                        delete[] wierzcholki;
+                        delete[] wierzcholki;*/
                         
                         bufor->off += 4;
                         temp = bufor->getInt();
@@ -404,6 +405,55 @@
                     }
                 }
                 pliks->distancelevel[j].subobiekty[ii].iloscc = czilosc;
+                /////////////////////////
+                int iloscv = 0;
+                int offset = 0;
+                for (int jj = 0; jj < pliks->distancelevel[j].subobiekty[ii].iloscc; jj++) {
+                    iloscv += pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv;
+                }
+                QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+                pliks->distancelevel[j].subobiekty[ii].VAO.create();
+                QOpenGLVertexArrayObject::Binder vaoBinder(&pliks->distancelevel[j].subobiekty[ii].VAO);
+                        
+                pliks->distancelevel[j].subobiekty[ii].VBO.create();
+                pliks->distancelevel[j].subobiekty[ii].VBO.bind();
+                pliks->distancelevel[j].subobiekty[ii].VBO.allocate(iloscv * 8 * sizeof(GLfloat));
+                f->glEnableVertexAttribArray(0);
+                f->glEnableVertexAttribArray(1);
+                f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
+                f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<void *>(6 * sizeof(GLfloat)));
+
+                for (int jj = 0; jj < pliks->distancelevel[j].subobiekty[ii].iloscc; jj++) {
+                    float *wierzcholki = new float[pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv*8];
+
+                    for (int iii = pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv - 1; iii >= 0; iii--) {
+                            //pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].wierzcholki[iii] = new SFile::wie();
+
+                        w = pliks->distancelevel[j].subobiekty[ii].czesci[jj].idx[iii];
+                            //System.out.println("----v "+w);
+                        n = vert[w].normal;
+                        txt = vert[w].uvpoint;
+                        p = vert[w].point;
+
+                        wierzcholki[iii*8+0] = pliks->tpoints.points[p].x;
+                        wierzcholki[iii*8+1] = pliks->tpoints.points[p].y;
+                        wierzcholki[iii*8+2] = pliks->tpoints.points[p].z;
+                        wierzcholki[iii*8+3] = pliks->tpoints.normals[n].x;
+                        wierzcholki[iii*8+4] = pliks->tpoints.normals[n].y;
+                        wierzcholki[iii*8+5] = pliks->tpoints.normals[n].z;
+                        wierzcholki[iii*8+6] = pliks->tpoints.uv_points[txt].x;
+                        wierzcholki[iii*8+7] = pliks->tpoints.uv_points[txt].y;
+                        
+                            //directxSmierdzi-=2;
+                            //if(directxSmierdzi<-2) directxSmierdzi = 2;
+                    }
+                    pliks->distancelevel[j].subobiekty[ii].VBO.write(offset * 8 * sizeof(GLfloat), wierzcholki, pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv * 8 * sizeof(GLfloat));
+                    delete[] wierzcholki;
+                    pliks->distancelevel[j].subobiekty[ii].czesci[jj].offset = offset;
+                    offset += pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv;
+                    delete[] pliks->distancelevel[j].subobiekty[ii].czesci[jj].idx;
+                }
+                pliks->distancelevel[j].subobiekty[ii].VBO.release();
             }
         }
         delete[] vert;

@@ -1350,6 +1350,9 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
                     linie[lPtr++] = (((-trackNodes[n->TrPinS[1]]->UiD[5] - playerT[1])*2048 - trackNodes[n->TrPinS[1]]->UiD[8]));
                 }
             } else if (n->typ == 0) {
+                if(fabs(n->UiD[4] - playerT[0]) > 2) continue;
+                if(fabs(-n->UiD[5] - playerT[1]) > 2) continue;
+                
                 konce[kPtr++] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
                 konce[kPtr++] = (n->UiD[7]);
                 konce[kPtr++] = ((-n->UiD[5] - playerT[1])*2048 - n->UiD[8]);

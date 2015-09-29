@@ -382,6 +382,15 @@ int TFile::cloneMat(int id){
     return this->materialsCount++;
 }
 
+int TFile::getMatByTexture(QString tname){
+    for(int j = 0; j < materialsCount; j++)
+        for(int i = 0; i < materials[j].count153; i++){
+            if(tname.toLower() == materials[j].tex[i]->toLower())
+                return j;
+        }
+    return -1;
+}
+
 void TFile::save(QString name){
     name.replace("//", "/");
     QFile *file = new QFile(name);

@@ -22,7 +22,7 @@ TerrainTools::TerrainTools(QString name)
     QPushButton *pickTexTool = new QPushButton("Pick Texture", this);
     QPushButton *setTexTool = new QPushButton("Load Texture", this);
     QPushButton *putTexTool = new QPushButton("Put Texture", this);
-    QPushButton* colorw = new QPushButton("Choose color", this);
+    colorw = new QPushButton("Choose color", this);
     colorw->setStyleSheet("background-color:black;");
     //colorw->show();
     QSlider *slider = new QSlider(Qt::Horizontal);
@@ -98,6 +98,7 @@ void TerrainTools::chooseColorEnabled(){
     this->paintBrush->color[0] = color.red();
     this->paintBrush->color[1] = color.green();
     this->paintBrush->color[2] = color.blue();
+    colorw->setStyleSheet("background-color:"+color.name()+";");
 }
 
 void TerrainTools::pickTexToolEnabled(){
