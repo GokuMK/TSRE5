@@ -270,16 +270,23 @@ void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
     int x = post[0];
     int z = post[1];
     float p[3];
-    p[0] = pos[0];
-    p[1] = pos[1];
-    p[2] = pos[2];
+    //p[0] = pos[0];
+    //p[1] = pos[1];
+    //p[2] = pos[2];
+    p[0] = obj->position[0];
+    p[1] = obj->position[1];
+    p[2] = obj->position[2];
     Game::check_coords(x, z, (float*) &p);
     float q[4];
-    q[0] = obj->tRotation[0]; //track->qDirection[0];
-    q[1] = obj->tRotation[1]; //qDirection[1];
-    q[2] = 0; //track->qDirection[2];
-    q[3] = 1; //track->qDirection[3];
-
+    //q[0] = obj->tRotation[0]; //track->qDirection[0];
+    //q[1] = obj->tRotation[1]; //qDirection[1];
+    //q[2] = 0; //track->qDirection[2];
+    //q[3] = 1; //track->qDirection[3];
+    q[0] = obj->qDirection[0];
+    q[1] = obj->qDirection[1];
+    q[2] = obj->qDirection[2];
+    q[3] = obj->qDirection[3];
+    
     if (obj->type == "trackobj") {
         TrackObj* track = (TrackObj*) obj;
         //this->trackDB->placeTrack(x, z, p, q, r, nowy->UiD);
@@ -291,9 +298,9 @@ void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
             this->roadDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
         else
             this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
-        obj->setPosition(p);
-        obj->setQdirection(q);
-        obj->setMartix();
+        //obj->setPosition(p);
+        //obj->setQdirection(q);
+        //obj->setMartix();
     } else if(obj->type == "dyntrack"){
         DynTrackObj* dynTrack = (DynTrackObj*) obj;
         if(dynTrack->sectionIdx == -1)
