@@ -67,7 +67,8 @@ bool TFile::readT(QString fSfile) {
             if(data->off >= data->length) break;
         }
         delete data;
-
+        
+        //print();
         return true;
     }
 
@@ -148,9 +149,16 @@ void TFile::get151(FileBuffer* data) {
         
         int ttilosc = data->getInt();
         //materials = new mat[ttilosc];
-        materialsCount = ttilosc;
+        materialsCount = ttilosc/2;
         //System.out.println("ilosc " + ttilosc);
+        Mat *tmat;
+        //int mtilosc = ttilosc/2;
         for (int j = 0; j < ttilosc; j++) {
+            
+            if(j < materialsCount)
+                tmat = &materials[j];
+            else
+                tmat = &amaterials[j-materialsCount];
             pozycja = data->getInt();
             offset = data->getInt();
             akto = data->off;
@@ -160,7 +168,7 @@ void TFile::get151(FileBuffer* data) {
             data->off++;
 
             slen = data->getShort()*2;
-            materials[j].name = data->getString(data->off, data->off + slen);
+            tmat->name = data->getString(data->off, data->off + slen);
             //*tname = tname->trimmed();
             //qDebug() << *tname;
             data->off += slen;
@@ -174,11 +182,11 @@ void TFile::get151(FileBuffer* data) {
 
                 switch (tttpozycja) {
                     case 153:
-                        get153(data, &materials[j]);
+                        get153(data, tmat);
                         jj++;
                         break;
                     case 155:
-                        get156(data, &materials[j]);
+                        get156(data, tmat);
                         jj++;
                         break;
                     default:
@@ -191,7 +199,7 @@ void TFile::get151(FileBuffer* data) {
         }
     }
 
-void TFile::get153(FileBuffer* data, TFile::mat* m) {
+void TFile::get153(FileBuffer* data, TFile::Mat* m) {
         int pozycja, offset, akto;
         int slen;
         
@@ -230,7 +238,7 @@ void TFile::get153(FileBuffer* data, TFile::mat* m) {
         }
     }
     
-void TFile::get156(FileBuffer* data, TFile::mat* m) {
+void TFile::get156(FileBuffer* data, TFile::Mat* m) {
         int pozycja, offset, akto;
         data->off++;
         int ilosc = data->getInt();
@@ -379,7 +387,33 @@ int TFile::cloneMat(int id){
         materials[materialsCount].itex[i][3] = materials[id].itex[i][3];
     }
         
+    cloneAMat(id);
     return this->materialsCount++;
+}
+
+int TFile::cloneAMat(int id){
+    QString* name = new QString();
+    *name += *amaterials[id].name;
+    amaterials[materialsCount].name = name;
+    
+    amaterials[materialsCount].count153 = amaterials[id].count153;
+    for(int i = 0; i < amaterials[id].count153; i++){
+        name = new QString();
+        *name += *amaterials[id].tex[i];
+        amaterials[materialsCount].tex[i] = name;
+        amaterials[materialsCount].atex[i][0] = amaterials[id].atex[i][0];
+        amaterials[materialsCount].atex[i][1] = amaterials[id].atex[i][1];
+    }
+    
+    amaterials[materialsCount].count155 = amaterials[id].count155;
+    for(int i = 0; i < materials[id].count155; i++){
+        amaterials[materialsCount].itex[i][0] = amaterials[id].itex[i][0];
+        amaterials[materialsCount].itex[i][1] = amaterials[id].itex[i][1];
+        amaterials[materialsCount].itex[i][2] = amaterials[id].itex[i][2];
+        amaterials[materialsCount].itex[i][3] = amaterials[id].itex[i][3];
+    }
+        
+    return this->materialsCount;
 }
 
 int TFile::getMatByTexture(QString tname){
@@ -448,23 +482,28 @@ void TFile::save(QString name){
     // 151 
     int t151 = 0;
     t151+=5;
-    int* t152 = new int[materialsCount];
-    int* t153 = new int[materialsCount];
-    for(int j = 0; j < materialsCount; j++){
+    int* t152 = new int[materialsCount*2];
+    int* t153 = new int[materialsCount*2];
+    Mat tmat;
+    for(int j = 0; j < materialsCount*2; j++){
         t152[j] = 1;
-        t152[j] += materials[j].name->length()*2+2;
+        if(j < materialsCount)
+            tmat = materials[j];
+        else
+            tmat = amaterials[j-materialsCount];
+        t152[j] += tmat.name->length()*2+2;
         t152[j] += 13;
         t153[j] = 5;
-        for(int i = 0; i < materials[j].count153; i++){
+        for(int i = 0; i < tmat.count153; i++){
             t152[j] += 11;
-            t152[j] += materials[j].tex[i]->length()*2;
+            t152[j] += tmat.tex[i]->length()*2;
             t152[j] += 8;
             t153[j] += 11;
-            t153[j] += materials[j].tex[i]->length()*2;
+            t153[j] += tmat.tex[i]->length()*2;
             t153[j] += 8;
         }
         t152[j] += 13;
-        t152[j] += 25*materials[j].count155;
+        t152[j] += 25*tmat.count155;
         t151 += t152[j] + 8;
     }
 
@@ -594,43 +633,47 @@ void TFile::save(QString name){
     write << (qint32)151;
     write << (qint32)t151;
     write << (qint8)0;
-    write << (qint32)materialsCount;
+    write << (qint32)materialsCount*2;
     
-    for(int j = 0; j < materialsCount; j++){
+    for(int j = 0; j < materialsCount*2; j++){
+        if(j < materialsCount)
+            tmat = materials[j];
+        else
+            tmat = amaterials[j-materialsCount];
         write << (qint32)152;
         write << (qint32)t152[j];
         write << (qint8)0;
-        write << (qint16)materials[j].name->length();
-        for(int i = 0; i < materials[j].name->length(); i++){
-            write << materials[j].name->at(i).unicode();
+        write << (qint16)tmat.name->length();
+        for(int i = 0; i < tmat.name->length(); i++){
+            write << tmat.name->at(i).unicode();
         }
         write << (qint32)153;
         write << (qint32)t153[j];
         write << (qint8)0;
-        write << (qint32)materials[j].count153;
-        for(int i = 0; i < materials[j].count153; i++){
+        write << (qint32)tmat.count153;
+        for(int i = 0; i < tmat.count153; i++){
             write << (qint32)154;
-            write << (qint32)(materials[j].tex[i]->length()*2+3+8);
+            write << (qint32)(tmat.tex[i]->length()*2+3+8);
             write << (qint8)0;
-            write << (qint16)materials[j].tex[i]->length();
-            for(int ii = 0; ii < materials[j].tex[i]->length(); ii++){
-                write << materials[j].tex[i]->at(ii).unicode();
+            write << (qint16)tmat.tex[i]->length();
+            for(int ii = 0; ii < tmat.tex[i]->length(); ii++){
+                write << tmat.tex[i]->at(ii).unicode();
             }
-            write << (qint32)materials[j].atex[i][0];
-            write << (qint32)materials[j].atex[i][1];
+            write << (qint32)tmat.atex[i][0];
+            write << (qint32)tmat.atex[i][1];
         }
         write << (qint32)155;
-        write << (qint32)(25*materials[j].count155+5);
+        write << (qint32)(25*tmat.count155+5);
         write << (qint8)0;
-        write << (qint32)materials[j].count155;
-        for(int i = 0; i < materials[j].count155; i++){
+        write << (qint32)tmat.count155;
+        for(int i = 0; i < tmat.count155; i++){
             write << (qint32)156;
             write << (qint32)17;
             write << (qint8)0;
-            write << (qint32)materials[j].itex[i][0];
-            write << (qint32)materials[j].itex[i][1];
-            write << (qint32)materials[j].itex[i][2];
-            write << (qint32)materials[j].itex[i][3];
+            write << (qint32)tmat.itex[i][0];
+            write << (qint32)tmat.itex[i][1];
+            write << (qint32)tmat.itex[i][2];
+            write << (qint32)tmat.itex[i][3];
         }
     }
     
@@ -685,4 +728,33 @@ void TFile::save(QString name){
     
     write.unsetDevice();
     file->close();
+}
+
+void TFile::print(){
+    qDebug() << "Materials count " << (qint32)materialsCount;
+    
+    Mat tmat;
+    for(int j = 0; j < materialsCount*2; j++){
+        if(j < materialsCount)
+            tmat = materials[j];
+        else
+            tmat = amaterials[j-materialsCount];
+        qDebug() << "Material " << j <<" "<< *tmat.name;
+
+        qDebug() << (qint32)tmat.count153;
+        for(int i = 0; i < tmat.count153; i++){
+
+            qDebug() << "- "<< i << " " << *tmat.tex[i]
+            << " " << (qint32)tmat.atex[i][0]
+            << " " << (qint32)tmat.atex[i][1];
+        }
+
+        /*qDebug() << (qint32)tmat.count155;
+        for(int i = 0; i < tmat.count155; i++){
+            qDebug() << "+ "<< i << " " << (qint32)tmat.itex[i][0]
+            << " " << (qint32)tmat.itex[i][1]
+            << " " << (qint32)tmat.itex[i][2]
+            << " " << (qint32)tmat.itex[i][3];
+        }*/
+    }
 }

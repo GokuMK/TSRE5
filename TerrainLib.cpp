@@ -2,8 +2,10 @@
 #include "Terrain.h"
 #include "GLMatrix.h"
 #include <QOpenGLShaderProgram>
+#include <set>
 #include <math.h>
 #include "Game.h"
+#include "Brush.h"
 
 std::unordered_map<int, Terrain*> TerrainLib::terrain;
 
@@ -98,17 +100,32 @@ void TerrainLib::setHeight(float x, float z, float posx, float posz, float h) {
     terr->setModified(true);
 }
 
-void TerrainLib::setHeight256(int x, int z, int posx, int posz, float h) {
+int TerrainLib::setHeight256(int x, int z, int posx, int posz, float h){
+    return setHeight256(x, z, posx, posz, h, 0);
+}
+
+int TerrainLib::setHeight256(int x, int z, int posx, int posz, float h, float diff) {
     Game::check_coords(x, z, posx, posz);
     Terrain *terr;
     terr = terrain[(x * 10000 + z)];
 
-    if (terr == NULL) return;
-    if (terr->loaded == false) return;
+    if (terr == NULL) return -1;
+    if (terr->loaded == false) return -1;
     
     //float value = terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
-    terr->terrainData[posz+128][posx+128] = h;
+    if(diff == 0){
+        terr->terrainData[(posz+1024)/8][(posx+1024)/8] = h;
+    } else {
+        if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] < h)
+            if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] < h - diff) 
+                terr->terrainData[(posz+1024)/8][(posx+1024)/8] = h - diff;
+        if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] > h)
+            if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] > h + diff) 
+                terr->terrainData[(posz+1024)/8][(posx+1024)/8] = h + diff;
+    }
     terr->setModified(true);
+    
+    return x * 10000 + z;
 }
 
 float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR) {
@@ -147,6 +164,100 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR)
     ///    return -1;
     //}
     //return -1;
+}
+
+void TerrainLib::setTerrainToTrackObj(float* punkty, int length, int tx, int tz, float* matrix){
+    std::set<int> uterr;
+    // calculating plane equation
+    float p1[3];
+    float p2[3];
+    float p3[3];
+    
+    p1[0] = punkty[0];
+    p1[1] = punkty[1];
+    p1[2] = punkty[2];
+    p2[0] = punkty[length-3];
+    p2[1] = punkty[length-2];
+    p2[2] = punkty[length-1];
+    p3[0] = 10;
+    p3[1] = 0;
+    p3[2] = 10;
+    Vec3::transformMat4(p3, p3, matrix);
+    qDebug() << p1[0] << " " << p1[1] <<" " << p1[2];
+    qDebug() << p2[0] << " " << p2[1] <<" " << p2[2];
+    qDebug() << p3[0] << " " << p3[1] <<" " << p3[2];
+    Vector3f vec1, vec2, vec3;
+    vec1.x = p2[0] - p1[0]; vec1.y = p2[1] - p1[1]; vec1.z = p2[2] - p1[2];
+    vec2.x = p3[0] - p1[0]; vec2.y = p3[1] - p1[1]; vec2.z = p3[2] - p1[2];
+
+    //Vector3f::cross(vec3, vec1, vec2);
+    vec3.x = vec1.y * vec2.z - vec1.z * vec2.y;
+    vec3.y = vec1.z * vec2.x - vec1.x * vec2.z;
+    vec3.z = vec1.x * vec2.y - vec1.y * vec2.x;
+    qDebug() << vec1.x << " " << vec1.y <<" " << vec1.z;
+    qDebug() << vec2.x << " " << vec2.y <<" " << vec2.z;
+    qDebug() << vec3.x << " " << vec3.y <<" " << vec3.z;
+    float vec3d = vec3.x*p1[0] + vec3.y*p1[1] + vec3.z*p1[2];
+    vec3.x /= vec3.y;
+    vec3.z /= vec3.y;
+    vec3d /= vec3.y;
+    
+    // end of calculating plane equation
+    
+    for(int i = 0; i < length;i+=3 ){
+        float h = vec3d - vec3.x*punkty[i] - vec3.z*punkty[i+2];
+        qDebug() << punkty[i] << " " << punkty[i+1] <<" " << punkty[i+2] <<" "<<h <<"";
+    }
+    //qDebug() << p1[0] << " " << p1[1] <<" "<<p1[2] <<"";
+    //qDebug() << p2[0] << " " << p2[1] <<" "<<p2[2] <<"";
+    //qDebug() << p3[0] << " " << p3[1] <<" "<<p3[2] <<"";
+    
+    // use equation
+    int xxf, zzf;
+    int xxc, zzc;
+    int xx, zz;
+    float h; 
+
+    float diff = 0;
+    for(int ii = -4; ii < 20; ii++)
+        for(int jj = -4; jj < 20; jj++)
+            for(int i = 0; i< length; i+=3){
+                xx = floor((float)punkty[i]/8.0);
+                zz = floor((float)punkty[i+2]/8.0);
+                xx += ii;
+                zz += jj;
+                h = vec3d - vec3.x*xx*8 - vec3.z*zz*8;
+                if(sqrt(ii*ii + jj*jj) > 5) continue;
+                diff = sqrt(ii*ii + jj*jj)*4;
+                uterr.insert(setHeight256(tx, tz, xx*8, zz*8, h, diff));
+            }
+    
+    for(int i = 0; i< length; i+=3){
+        xxf = floor((float)punkty[i]/8.0);
+        zzf = floor((float)punkty[i+2]/8.0);
+        xxc = ceil((float)punkty[i]/8.0);
+        zzc = ceil((float)punkty[i+2]/8.0);
+        //xx+=ii;
+        //zz+=jj;
+        h = vec3d - vec3.x*xxf*8 - vec3.z*zzf*8;
+        uterr.insert(setHeight256(tx, tz, xxf*8, zzf*8, h));
+        h = vec3d - vec3.x*xxc*8 - vec3.z*zzf*8;
+        uterr.insert(setHeight256(tx, tz, xxc*8, zzf*8, h));
+        h = vec3d - vec3.x*xxf*8 - vec3.z*zzc*8;
+        uterr.insert(setHeight256(tx, tz, xxf*8, zzc*8, h));
+        h = vec3d - vec3.x*xxc*8 - vec3.z*zzc*8;
+        uterr.insert(setHeight256(tx, tz, xxc*8, zzc*8, h));
+        //qDebug() << xx << " " << zz << " " << h;
+    }
+    
+    Terrain *terr;
+    for (std::set<int>::iterator it = uterr.begin(); it != uterr.end(); ++it) {
+        if(*it == -1) continue;
+        //console.log(obj.type);
+        terr = terrain[(int)*it];
+        terr->setModified(true);
+        terr->refresh();
+    }
 }
 
 void TerrainLib::setTerrainTexture(Brush* brush, int x, int z, float* p){
@@ -188,7 +299,10 @@ void TerrainLib::paintTexture(Brush* brush, int x, int z, float* p){
     terr->paintTexture(brush, x, z, posx, posz);
 }
 
-void TerrainLib::paintHeightMap(int x, int z, float* p){
+void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
+    
+    std::set<int> uterr;
+    
     float posx = p[0];
     float posz = p[2];
     Game::check_coords(x, z, posx, posz);
@@ -200,21 +314,62 @@ void TerrainLib::paintHeightMap(int x, int z, float* p){
     if (terr->loaded == false) return;
     //terr->paintTexture(x, z, posx, posz);
     
-    int px = (posx + 1024)/8;
-    int pz = (posz + 1024)/8;
-    
+    //int px = (posx + 1024)/8;
+    //int pz = (posz + 1024)/8;
+    int px = posx;
+    int pz = posz;
+    float size = brush->size;
     float h = 0;
-    for(int i = -5; i < 5; i++)
-        for(int j = -5; j < 5; j++){
-            if(px+i >= 256) continue;
-            if(pz+j >= 256) continue;
-            if(px+i < 0) continue;
-            if(pz+j < 0) continue;
-            h = (fabs(i) + fabs(j))/2.0;
-            terr->terrainData[pz+j][px+i] += (10.0 - h)/5.0;
+    
+    h = brush->alpha*brush->direction*10.0;
+    terr->terrainData[(pz+1024)/8][(px+1024)/8] += h;
+    //float rh = brush->alpha*brush->direction*10.0;
+    float rd = terr->terrainData[(pz+1024)/8][(px+1024)/8];
+    
+    int tx, tz;
+    int tpx, tpz;
+    for(int i = -size; i < size; i++)
+        for(int j = -size; j < size; j++){
+            if(i == 0 && j == 0) continue;
+            //if(px+i >= 256) continue;
+            //if(pz+j >= 256) continue;
+            //if(px+i < 0) continue;
+            //if(pz+j < 0) continue;
+            //h = (fabs(i) + fabs(j))/2.0;
+            tx = x;
+            tz = z;
+            tpx = px+i*8;
+            tpz = pz+j*8;
+            Game::check_coords(tx, tz, tpx, tpz);
+            terr = terrain[(tx * 10000 + tz)];
+            if (terr == NULL) continue;
+            if (!terr->loaded) continue;
+            uterr.insert(tx * 10000 + tz);
+            
+            if(sqrt(i*i + j*j) > size) continue;
+            h = (float)(size - (sqrt(i*i + j*j)))/size;
+            h = h*brush->alpha*brush->direction*10.0;
+            
+            tpz = (tpz + 1024)/8;
+            tpx = (tpx + 1024)/8;
+            if(h < 0){
+                if(terr->terrainData[tpz][tpx] > rd)
+                    terr->terrainData[tpz][tpx] += h;
+            }
+            if(h > 0){
+                if(terr->terrainData[tpz][tpx] < rd)
+                    terr->terrainData[tpz][tpx] += h;
+            }
         }
-    terr->setModified(true);
-    terr->refresh();
+    
+    for (std::set<int>::iterator it = uterr.begin(); it != uterr.end(); ++it) {
+        //console.log(obj.type);
+        terr = terrain[(int)*it];
+        terr->setModified(true);
+        terr->refresh();
+    }
+    //terr->setModified(true);
+    //terr->refresh();
     
 }
 

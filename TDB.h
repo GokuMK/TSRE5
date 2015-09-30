@@ -47,7 +47,7 @@ public:
     int fillJunction(int id);
     void setDefaultEnd(int val);
     void nextDefaultEnd();
-    float setTerrainToTrackObj(int x, int y, int uid, float* objMatrix, float * &ptr);
+    float setTerrainToTrackObj(int x, int y, int uid, float * &ptr);
     int appendToJunction(int junctionId, int eId, int idx);
     int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid);
     int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid, int* start);

@@ -85,6 +85,7 @@ TerrainTools::~TerrainTools() {
 }
 
 void TerrainTools::heightToolEnabled(){
+    emit setPaintBrush(this->paintBrush);
     emit enableTool("heightTool");
 }
 

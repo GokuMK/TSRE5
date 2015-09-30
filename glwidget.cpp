@@ -166,11 +166,11 @@ void GLWidget::paintGL() {
     if (!selection)
         TerrainLib::render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
     
-    if (!selection) drawPointer();
+    //if (!selection) drawPointer();
     
     route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
     
-    //if (!selection) drawPointer();
+    if (!selection) drawPointer();
 
     if (selection) {
         int x = mousex;
@@ -300,6 +300,15 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             break;
         default:
             break;
+    }
+    if(toolEnabled == "heightTool"){
+        switch (event->key()) {
+            case Qt::Key_Z:
+                this->defaultPaintBrush->direction = -this->defaultPaintBrush->direction;
+                break;
+            default:
+                break;
+        }
     }
     if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
         Vector2f a;
@@ -496,7 +505,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if(toolEnabled == "heightTool"){
            // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
-            TerrainLib::paintHeightMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            TerrainLib::paintHeightMap(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == "paintTool"){
            // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
@@ -546,7 +555,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
         }
         if(toolEnabled == "heightTool" && mousePressed == true){
             if(mousex != m_lastPos.x() || mousey != m_lastPos.y()){
-                TerrainLib::paintHeightMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+                TerrainLib::paintHeightMap(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
             }
         }
         if(toolEnabled == "selectTool"){

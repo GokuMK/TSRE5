@@ -13,6 +13,7 @@ public:
     int size = 10;
     float scale = 1;
     float alpha = 1;
+    float direction = 1;
 private:
 
 };

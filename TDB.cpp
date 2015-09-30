@@ -1623,15 +1623,16 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
     
 }
 
-float TDB::setTerrainToTrackObj(int x, int y, int uid, float* objMatrix, float * &ptr){
-        Vector3f p;
+float TDB::setTerrainToTrackObj(int x, int y, int uid, float * &ptr){
+        //Vector3f p;
         Vector3f o;
         //qDebug() << x << " "<< y << " "<< uid;
-        int len = 0;
-        float* matrix;
+        //int len = 0;
+        float matrix[16];
         float q[4];
-        q[0] = 0; q[1] = 0; q[2] = 0;
-        float rot = 0;
+        float p[3];
+        q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
+        float rot[3];
         y = -y;
         
         //float* punkty = new float[10000];
@@ -1652,7 +1653,7 @@ float TDB::setTerrainToTrackObj(int x, int y, int uid, float* objMatrix, float *
                         //    (-n->trVectorSection[i].param[9] - y)*2048 - n->trVectorSection[i].param[12]
                         //    );
                         //o.set(
-                        rot = n->trVectorSection[i].param[13];
+                        //rot = n->trVectorSection[i].param[13];
                         //    n->trVectorSection[i].param[14],
                         //    n->trVectorSection[i].param[15]
                         //    );
@@ -1667,7 +1668,24 @@ float TDB::setTerrainToTrackObj(int x, int y, int uid, float* objMatrix, float *
                         //Mat4::identity(matrix);
                         //Mat4:: rotate(matrix, matrix, o.x, 1, 0, 0);
                         //Mat4::multiply(matrix, matrix, objMatrix);
-                        matrix = Mat4::clone(objMatrix);
+                        //matrix = Mat4::clone(objMatrix);
+                        
+                        //float matrix[16];
+                        //float q[4];
+                        //q[0] = q[1] = q[2] = 0;
+                        //q[3] = 1;
+                        //float rot[3];
+                        rot[0] = M_PI;
+                        rot[1] = -n->trVectorSection[i].param[14];
+                        rot[2] = n->trVectorSection[i].param[15];
+                        p[0] = n->trVectorSection[i].param[10];
+                        p[1] = n->trVectorSection[i].param[11];
+                        p[2] = -n->trVectorSection[i].param[12];
+                        
+                        Quat::fromRotationXYZ(q, rot);
+                        Mat4::fromRotationTranslation(matrix, q, p);
+                        Mat4::rotate(matrix, matrix, n->trVectorSection[i].param[13], 1, 0, 0);
+                        
                         //Mat4::fromRotationTranslation(matrix, q, objMatrix);
                         try {
                             tsection->sekcja.at((int) n->trVectorSection[i].param[0])->getPoints(ptr, matrix);
@@ -1679,7 +1697,7 @@ float TDB::setTerrainToTrackObj(int x, int y, int uid, float* objMatrix, float *
             }
             
     }
-    return rot;
+    return 0;
 }
 
  bool TDB::deleteNulls() {

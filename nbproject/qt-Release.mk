@@ -11993,7 +11993,8 @@ build/Release/MinGW_QT_static-Windows/TerrainLib.o: TerrainLib.cpp TerrainLib.h 
 		FileBuffer.h \
 		OglObj.h \
 		GLMatrix.h \
-		Game.h
+		Game.h \
+		Brush.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TerrainLib.o TerrainLib.cpp
 
 build/Release/MinGW_QT_static-Windows/TerrainTools.o: TerrainTools.cpp TerrainTools.h \

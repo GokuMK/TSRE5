@@ -7,7 +7,7 @@
 
 class TFile {
 public:
-    struct mat {
+    struct Mat {
         QString* tex[2];
         QString* name = NULL;
         int atex[2][2];
@@ -20,7 +20,8 @@ public:
     float* tdata;
     float* erroeBias;
     //mat* materials;
-    std::unordered_map<int, mat> materials;
+    std::unordered_map<int, Mat> materials;
+    std::unordered_map<int, Mat> amaterials;
     int* flags;
     float WSW;
     float WSE;
@@ -57,11 +58,14 @@ public:
 private:
     void get139(FileBuffer* data, int length);
     void get151(FileBuffer* data);
-    void get153(FileBuffer* data, TFile::mat* m);
-    void get156(FileBuffer* data, TFile::mat* m);
+    void get153(FileBuffer* data, TFile::Mat* m);
+    void get156(FileBuffer* data, TFile::Mat* m);
     void get157(FileBuffer* data);
     void get163(FileBuffer* data, int n);
     void get251(FileBuffer* data);
+    
+    void print();
+    int cloneAMat(int id);
 };
 
 #endif	/* TFILE_H */

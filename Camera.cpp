@@ -209,19 +209,19 @@ void Camera::patrzY(float f) {
 
 void Camera::check_coords() {
     if (playerPos[0] > 1024) {
-        playerPos[0] = -1024;
+        playerPos[0] -= 2048;
         pozT[0]++;
     }
     if (playerPos[0]<-1024) {
-        playerPos[0] = 1024;
+        playerPos[0] += 2048;
         pozT[0]--;
     }
     if (playerPos[2] > 1024) {
-        playerPos[2] = -1024;
+        playerPos[2] -= 2048;
         pozT[1]++;
     }
     if (playerPos[2]<-1024) {
-        playerPos[2] = 1024;
+        playerPos[2] += 2048;
         pozT[1]--;
     }
 }
