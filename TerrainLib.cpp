@@ -228,27 +228,28 @@ void TerrainLib::setTerrainToTrackObj(float* punkty, int length, int tx, int tz,
                 zz += jj;
                 h = vec3d - vec3.x*xx*8 - vec3.z*zz*8;
                 if(sqrt(ii*ii + jj*jj) > 5) continue;
-                diff = sqrt(ii*ii + jj*jj)*4;
+                diff = sqrt(ii*ii + jj*jj)*3;
                 uterr.insert(setHeight256(tx, tz, xx*8, zz*8, h, diff));
             }
     
-    for(int i = 0; i< length; i+=3){
-        xxf = floor((float)punkty[i]/8.0);
-        zzf = floor((float)punkty[i+2]/8.0);
-        xxc = ceil((float)punkty[i]/8.0);
-        zzc = ceil((float)punkty[i+2]/8.0);
-        //xx+=ii;
-        //zz+=jj;
-        h = vec3d - vec3.x*xxf*8 - vec3.z*zzf*8;
-        uterr.insert(setHeight256(tx, tz, xxf*8, zzf*8, h));
-        h = vec3d - vec3.x*xxc*8 - vec3.z*zzf*8;
-        uterr.insert(setHeight256(tx, tz, xxc*8, zzf*8, h));
-        h = vec3d - vec3.x*xxf*8 - vec3.z*zzc*8;
-        uterr.insert(setHeight256(tx, tz, xxf*8, zzc*8, h));
-        h = vec3d - vec3.x*xxc*8 - vec3.z*zzc*8;
-        uterr.insert(setHeight256(tx, tz, xxc*8, zzc*8, h));
-        //qDebug() << xx << " " << zz << " " << h;
-    }
+    for(int j = 0; j < 2; j++)
+        for(int i = 0; i< length; i+=3){
+            xxf = floor((float)punkty[i]/8.0 -1*j);
+            zzf = floor((float)punkty[i+2]/8.0 -1*j);
+            xxc = ceil((float)punkty[i]/8.0 +1*j);
+            zzc = ceil((float)punkty[i+2]/8.0 +1*j);
+            //xx+=ii;
+            //zz+=jj;
+            h = vec3d - vec3.x*xxf*8 - vec3.z*zzf*8;
+            uterr.insert(setHeight256(tx, tz, xxf*8, zzf*8, h));
+            h = vec3d - vec3.x*xxc*8 - vec3.z*zzf*8;
+            uterr.insert(setHeight256(tx, tz, xxc*8, zzf*8, h));
+            h = vec3d - vec3.x*xxf*8 - vec3.z*zzc*8;
+            uterr.insert(setHeight256(tx, tz, xxf*8, zzc*8, h));
+            h = vec3d - vec3.x*xxc*8 - vec3.z*zzc*8;
+            uterr.insert(setHeight256(tx, tz, xxc*8, zzc*8, h));
+            //qDebug() << xx << " " << zz << " " << h;
+        }
     
     Terrain *terr;
     for (std::set<int>::iterator it = uterr.begin(); it != uterr.end(); ++it) {

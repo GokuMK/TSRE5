@@ -1110,9 +1110,9 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     if(vect[2] < 0)
         pitch = M_PI - pitch;
     if(vect[2] == 0 && vect[0] < 0)
-        pitch = -M_PI/2;
-    if(vect[2] == 0 && vect[0] > 0)
         pitch = M_PI/2;
+    if(vect[2] == 0 && vect[0] > 0)
+        pitch = -M_PI/2;
 
     qe[0] = tan((vect[1]/10.0));
     qe[1] = pitch;

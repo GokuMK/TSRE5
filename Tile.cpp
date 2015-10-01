@@ -271,6 +271,7 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData) {
     nowy->set("filename", itemData->filename);
     // }
     
+    //Quat::rotateY(q, q, M_PI/2);
     nowy->initPQ(p, q);
     //qDebug() << maxUiD;
     nowy->UiD = ++maxUiD;
