@@ -749,12 +749,12 @@ void TFile::print(){
             << " " << (qint32)tmat.atex[i][1];
         }
 
-        /*qDebug() << (qint32)tmat.count155;
+        qDebug() << (qint32)tmat.count155;
         for(int i = 0; i < tmat.count155; i++){
             qDebug() << "+ "<< i << " " << (qint32)tmat.itex[i][0]
             << " " << (qint32)tmat.itex[i][1]
             << " " << (qint32)tmat.itex[i][2]
             << " " << (qint32)tmat.itex[i][3];
-        }*/
+        }
     }
 }

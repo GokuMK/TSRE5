@@ -73,7 +73,8 @@ void Tile::wczytajObiekty() {
         WorldObj* obj = (WorldObj*) it->second;
 
         obj->load(x, z);
-        if(obj->UiD > maxUiD) maxUiD = obj->UiD;
+        if(obj->UiD < 1000000)
+            if(obj->UiD > maxUiD) maxUiD = obj->UiD;
     }
     loaded = 1;
     
@@ -271,6 +272,7 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData) {
     // }
     
     nowy->initPQ(p, q);
+    //qDebug() << maxUiD;
     nowy->UiD = ++maxUiD;
     qDebug() << itemData->type << " " << itemData->filename << nowy->UiD;
     //nowy->fileName = itemData->filename;

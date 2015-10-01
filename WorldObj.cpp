@@ -146,6 +146,9 @@ void WorldObj::setPosition(float* p){
     this->position[0] = p[0];
     this->position[1] = p[1];
     this->position[2] = p[2];
+    this->placedAtPosition[0] = this->position[0];
+    this->placedAtPosition[1] = this->position[1];
+    this->placedAtPosition[2] = this->position[2];
 }
 
 void WorldObj::setNewQdirection(){
@@ -166,6 +169,9 @@ void WorldObj::initPQ(float* p, float* q){
     this->position[0] = p[0];
     this->position[1] = p[1];
     this->position[2] = -p[2];
+    this->placedAtPosition[0] = this->position[0];
+    this->placedAtPosition[1] = this->position[1];
+    this->placedAtPosition[2] = this->position[2];
     this->qDirection[0] = q[0];
     this->qDirection[1] = q[1];
     this->qDirection[2] = -q[2];

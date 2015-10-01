@@ -32,6 +32,7 @@ public:
     unsigned int UiD = 0;
     QString fileName;
     float position[3];
+    float placedAtPosition[3];
     float qDirection[4];
     float matrix[16];
     int staticDetailLevel = -1;
@@ -47,10 +48,11 @@ public:
     bool loaded;
     float size;
     int jestPQ = 0;
-    bool modified = false;;
+    bool modified = false;
     Vector3f selectionColor;
     OglObj box;
     float tRotation[2];
+    float *endp = 0;
     
     WorldObj();
     WorldObj(const WorldObj& orig);

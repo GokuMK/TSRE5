@@ -217,13 +217,15 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         //pozWW[2] = pozW[2] + j;
 
         WorldObj* nowy = tTile->placeObject(p, q, r);
-
+        
+        
         if ((r->type == "trackobj" || r->type == "dyntrack" )&& nowy != NULL) {
+            if(nowy->endp == 0) nowy->endp = new float[5];
             //this->trackDB->placeTrack(x, z, p, q, r->value, nowy->UiD);
             if(this->tsection->isRoadShape(r->value))
-                this->roadDB->findPosition(x, z, p, q, r->value, nowy->UiD);
+                this->roadDB->findPosition(x, z, p, q, nowy->endp, r->value, nowy->UiD);
             else
-                this->trackDB->findPosition(x, z, p, q, r->value, nowy->UiD);
+                this->trackDB->findPosition(x, z, p, q, nowy->endp, r->value, nowy->UiD);
             //findPosition
             nowy->setPosition(p);
             nowy->setQdirection(q);
@@ -267,8 +269,8 @@ WorldObj* Route::makeFlexTrack(int x, int z, float* p) {
 void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
     if(obj == NULL) return;
     
-    int x = post[0];
-    int z = post[1];
+    int x = obj->x;//post[0];
+    int z = obj->y;//post[1];
     float p[3];
     //p[0] = pos[0];
     //p[1] = pos[1];
@@ -330,9 +332,9 @@ void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
         TrackObj* track = (TrackObj*) obj;
         //this->trackDB->placeTrack(x, z, p, q, r, nowy->UiD);
         if(this->tsection->isRoadShape(track->sectionIdx))
-            this->roadDB->findPosition(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
+            this->roadDB->findPosition(x, z, (float*) &p, (float*) &q, track->endp, track->sectionIdx, obj->UiD);
         else
-            this->trackDB->findPosition(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
+            this->trackDB->findPosition(x, z, (float*) &p, (float*) &q, track->endp, track->sectionIdx, obj->UiD);
         obj->setPosition(p);
         obj->setQdirection(q);
         obj->setMartix();

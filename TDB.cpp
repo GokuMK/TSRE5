@@ -887,8 +887,8 @@ bool TDB::deleteFromVectorSection(int id, int j){
             end2->UiD[1] = vect->trVectorSection[vect->iTrv-2].param[3];
             end2->UiD[2] = vect->trVectorSection[vect->iTrv-2].param[4];
             end2->UiD[3] = vect->trVectorSection[vect->iTrv-2].param[6];
-            end2->UiD[4] = vect->trVectorSection[vect->iTrv-2].param[8];
-            end2->UiD[5] = vect->trVectorSection[vect->iTrv-2].param[9];
+            end2->UiD[4] = vect->trVectorSection[vect->iTrv-1].param[8];
+            end2->UiD[5] = vect->trVectorSection[vect->iTrv-1].param[9];
             end2->UiD[6] = vect->trVectorSection[vect->iTrv-1].param[10];
             end2->UiD[7] = vect->trVectorSection[vect->iTrv-1].param[11];
             end2->UiD[8] = vect->trVectorSection[vect->iTrv-1].param[12];
@@ -1008,7 +1008,7 @@ void TDB::nextDefaultEnd(){
     this->defaultEnd++;
 }
 
-bool TDB::findPosition(int x, int z, float* p, float* q, int sectionIdx, int uid){
+bool TDB::findPosition(int x, int z, float* p, float* q, float* endp, int sectionIdx, int uid){
     float qe[3];
     qe[0] = 0;
     qe[1] = 0;
@@ -1052,12 +1052,19 @@ bool TDB::findPosition(int x, int z, float* p, float* q, int sectionIdx, int uid
             aa.z+=aa2->z;
             angle += this->tsection->sekcja[shp->path[startEnd].sect[i]]->getAngle();
         }
+        endp[0] = -aa.x;
+        endp[1] = 0;
+        endp[2] = -aa.z;
         aa.rotateY(-qe[1], 0);
         startPos[0] = aa.x;
         startPos[2] = aa.z;
         qe[1] -= angle - M_PI;
-        
+        endp[4] = -qe[1] + shp->path[startEnd].rotDeg*M_PI/180;
     } else {
+        endp[0] = aa.x;
+        endp[1] = 0;
+        endp[2] = aa.z;
+        endp[4] = 0;
         startPos[0] = aa.x;
         startPos[2] = aa.z;
     }
@@ -1074,7 +1081,15 @@ bool TDB::findPosition(int x, int z, float* p, float* q, int sectionIdx, int uid
     p[2] += bb.z;
     
     Quat::rotateY(q, q, -qe[1] + shp->path[startEnd].rotDeg*M_PI/180);
-
+    
+    if(endend == 0)
+        endp[3] = 1;
+    if(endend == 1)
+        endp[3] = -1;
+    
+    qDebug() << "ccc";
+    qDebug() << startPos[0] << " " << startPos[2];
+    
     return true;
 }
 
@@ -1084,30 +1099,13 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid) 
 
 bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, float elevation) {
     float qe[4];
-    //float scale = (float) sqrt(q[0] * q[0] + q[1] * q[1] + q[2] * q[2]);
-        //qe[0] = -q[0];//((q[0]+0.0000001f)/fabs(scale+0.0000001f))*(float)-acos(q[3])*2;
-        //qe[1] = -q[1];//((q[1]+0.0000001f)/fabs(scale+0.0000001f))*(float)-acos(q[3])*2;
-        //qe[2] = 0;//((q[2]+0.0000001f)/fabs(scale+0.0000001f))*(float)-acos(q[3])*2;
-    //qe[0] = q[0];
-    //qe[1] = q[1];
-    //qe[2] = q[2];
-    //qe[3] = q[3];
-    //int append = findNearestNode(x, z, p, (float*) &qe);
-    
-    //qe[0] = -q[0];//((q[0]+0.0000001f)/fabs(scale+0.0000001f))*(float)-acos(q[3])*2;
-    //qe[1] = 0;
-    //qe[2] = 0;
-    //qe[0] = elevation;
-    //Quat::rotateX(qe, qe, elevation*2.0);
-    //elevation;
     float vect[3];
     vect[0] = 0; vect[1] = 0; vect [2] = 10;
-    //qDebug() << "vect " << vect[0] << " " << vect[1]
     Vec3::transformQuat(vect, vect, q);
     
-    float roll = atan2((2*(q[0]*q[1] + q[2]*q[3])),(1-((q[0]*q[0])+(q[1]*q[1]))));
+    //float roll = atan2((2*(q[0]*q[1] + q[2]*q[3])),(1-((q[0]*q[0])+(q[1]*q[1]))));
     float pitch = asin(2*(q[0]*q[2] - q[1]*q[3]));
-    float yaw = atan2((2*(q[0]*q[3] + q[1]*q[2])),(1-((q[2]*q[2])+(q[3]*q[3]))));
+    //float yaw = atan2((2*(q[0]*q[3] + q[1]*q[2])),(1-((q[2]*q[2])+(q[3]*q[3]))));
     
     if(vect[2] < 0)
         pitch = M_PI - pitch;
@@ -1115,16 +1113,10 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
         pitch = -M_PI/2;
     if(vect[2] == 0 && vect[0] > 0)
         pitch = M_PI/2;
-    
-    
-    //float RYproj = sin(pitch) + sin(yaw);
-    //float elev = asin(RYproj);
-    //float elev = tan((vect[1]/(sqrt(vect[0]*vect[0] + vect[2]*vect[2]))));
-    float elev = tan((vect[1]/10.0));
+
+    qe[0] = tan((vect[1]/10.0));
     qe[1] = pitch;
-    qe[0] = elev*1.0;
-    
-    bool b;
+    qe[2] = 0;
     
     TrackShape* shp = this->tsection->shape[sectionIdx];
     qDebug() << shp->filename;
