@@ -1072,8 +1072,12 @@ bool TDB::findPosition(int x, int z, float* p, float* q, float* endp, int sectio
     bb.x = shp->path[0].pos[0];
     bb.z = shp->path[0].pos[2];
     bb.rotateY(-qe[1], 0);
-    aa.set(shp->path[0].pos[0] - shp->path[startEnd].pos[0], shp->path[0].pos[1], shp->path[0].pos[2] - shp->path[startEnd].pos[2]);
-    aa.rotateY(-qe[1] + shp->path[startEnd].rotDeg*M_PI/180, 0);
+    //aa.set(shp->path[0].pos[0] - shp->path[startEnd].pos[0], shp->path[0].pos[1], shp->path[0].pos[2] - shp->path[startEnd].pos[2]);
+    aa.set(0 - shp->path[startEnd].pos[0], shp->path[0].pos[1], 0 - shp->path[startEnd].pos[2]);
+    aa.rotateY(shp->path[startEnd].rotDeg*M_PI/180, 0);
+    aa.x += shp->path[0].pos[0];
+    aa.z += shp->path[0].pos[2];
+    aa.rotateY(-qe[1], 0);
     p[0] = p[0] + aa.x + startPos[0];
     p[1] = p[1] + shp->path[0].pos[1];
     p[2] = p[2] - aa.z - startPos[2];
