@@ -125,7 +125,6 @@
           <itemPath>PropertiesAbstract.cpp</itemPath>
           <itemPath>PropertiesStatic.cpp</itemPath>
           <itemPath>PropertiesTransfer.cpp</itemPath>
-          <itemPath>PropertiesUndefined.cpp</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>GuiFunct.cpp</itemPath>
@@ -354,8 +353,6 @@
       <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesTransfer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="PropertiesUndefined.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesUndefined.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -665,8 +662,6 @@
       <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesTransfer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="PropertiesUndefined.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesUndefined.h" ex="false" tool="3" flavor2="0">
       </item>
