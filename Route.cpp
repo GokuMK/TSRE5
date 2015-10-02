@@ -270,7 +270,7 @@ WorldObj* Route::makeFlexTrack(int x, int z, float* p) {
     return track;
 }
 
-void Route::addToTDB(WorldObj* obj, float* post, float* pos) {
+void Route::addToTDB(WorldObj* obj) {
     if(obj == NULL) return;
     
     int x = obj->x;//post[0];

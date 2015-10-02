@@ -63,6 +63,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/WorldObj.o
 ./build/Release/MinGW_QT_static-Windows/glwidget.o
 ./build/Release/MinGW_QT_static-Windows/main.o
+./build/Release/MinGW_QT_static-Windows/propertiesUndefined.o
 ./build/Release/MinGW_QT_static-Windows/window.o
 ./build/Release/MinGW_QT_static-Windows/tsre5_plugin_import.o
 ./build/Release/MinGW_QT_static-Windows/moc_AboutWindow.o
@@ -71,6 +72,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_NaviBox.o
 ./build/Release/MinGW_QT_static-Windows/moc_ObjTools.o
+./build/Release/MinGW_QT_static-Windows/moc_PropertiesUndefined.o
 ./build/Release/MinGW_QT_static-Windows/moc_TerrainTools.o
 ./build/Release/MinGW_QT_static-Windows/moc_glwidget.o
 ./build/Release/MinGW_QT_static-Windows/moc_window.o

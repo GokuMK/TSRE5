@@ -118,6 +118,8 @@ void ObjTools::routeLoaded(Route* a){
     //refTrack.setInsertPolicy(refTrack.InsertAlphabetically);
     hash.clear();
     hash2.clear();
+    int i = 0;
+    int a1ti = 0;
     for (auto it = route->tsection->shape.begin(); it != route->tsection->shape.end(); ++it ){
         track = it->second;
         //hash = track->filename.left(3).toStdString();
@@ -125,8 +127,12 @@ void ObjTools::routeLoaded(Route* a){
         if(track->dyntrack) continue;
         if(track->roadshape)
             hash2.append(track->filename.left(3).toLower());
-        else
+        else {
+            i++;
+            if(track->filename.left(3).toLower() == "a1t")
+                a1ti = i;
             hash.append(track->filename.left(3).toLower());
+        }
         //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
         //if(types[hash] != 1){
         //    refTrack.addItem(QString::fromStdString(hash));//, QVariant(QString::fromStdString(hash)));
@@ -144,6 +150,7 @@ void ObjTools::routeLoaded(Route* a){
     refRoad.setMaxVisibleItems(25);
     //refTrack.s .sortItems(Qt::AscendingOrder);
     
+    refTrack.setCurrentText("a1t");
     refTrackSelected("a1t");
 }
 

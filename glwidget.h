@@ -46,6 +46,7 @@ signals:
     void naviInfo(int x, int z, int all, int hidden);
     void setToolbox(QString name);
     void setBrushTextureId(int val);
+    void showProperties(WorldObj* obj);
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
@@ -60,6 +61,7 @@ protected:
     void drawPointer();
 private:
     void setupVertexAttribs();
+    void setSelectedObj(WorldObj* o);
     QBasicTimer timer;
     unsigned long long int lastTime;
     unsigned long long int timeNow;
@@ -91,7 +93,6 @@ private:
     bool resizeTool = false;
     bool rotateTool = false;
     bool translateTool = false;
-    //int tdbDefaultEnd = 0;
     float lastNewObjPos[3];
     float lastNewObjPosT[2];
     

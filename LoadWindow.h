@@ -1,10 +1,3 @@
-/* 
- * File:   loadWindow.h
- * Author: Goku
- *
- * Created on 16 maja 2015, 01:22
- */
-
 #ifndef LOADWINDOW_H
 #define	LOADWINDOW_H
 

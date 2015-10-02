@@ -112,7 +112,8 @@ void GLWidget::initializeGL() {
     setFocus();
     setMouseTracking(true);
     pointer3d = new Pointer3d();
-    selectedObj = NULL;
+    //selectedObj = NULL;
+    setSelectedObj(NULL);
     defaultPaintBrush = new Brush();
     
     emit routeLoaded(route);
@@ -202,10 +203,10 @@ void GLWidget::paintGL() {
         qDebug() << wx << " " << wz << " " << UiD;
         if(selectedObj != NULL) selectedObj->unselect();
         lastSelectedObj = selectedObj;
-        selectedObj = route->getObj(wx, wz, UiD);
+        setSelectedObj(route->getObj(wx, wz, UiD));
         if (!selectedObj->loaded){
             qDebug() << "brak obiektu";
-            selectedObj = NULL;
+            setSelectedObj(NULL);
         } else {
             selectedObj->select();
             //selectedObj->translate(0,10,0);
@@ -419,14 +420,14 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 if(selectedObj != NULL){
                     route->deleteObj(selectedObj);
                     selectedObj->unselect();
-                    selectedObj = NULL;
+                    setSelectedObj(NULL);
                     lastSelectedObj = NULL;
                 }
                 break;                
             case Qt::Key_C:
                 if(selectedObj != NULL){
                     selectedObj->unselect();
-                    selectedObj = route->placeObject(selectedObj->x, selectedObj->y, selectedObj->position, selectedObj->qDirection, selectedObj->getRefInfo());
+                    setSelectedObj(route->placeObject(selectedObj->x, selectedObj->y, selectedObj->position, selectedObj->qDirection, selectedObj->getRefInfo()));
                     if(selectedObj != NULL){
                         selectedObj->select();
                     }
@@ -443,10 +444,10 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 //route->refreshObj(selectedObj);
                 //route->trackDB->setDefaultEnd(0);
                 //route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&selectedObj->position);
-                route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&lastNewObjPos);
+                route->addToTDB(selectedObj);
                 if(selectedObj != NULL) selectedObj->unselect();
                 lastSelectedObj = selectedObj;
-                selectedObj = NULL;
+                setSelectedObj(NULL);
                 break;
             case Qt::Key_X:
                 //route->refreshObj(selectedObj);
@@ -489,7 +490,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             lastNewObjPos[0] = aktPointerPos[0];
             lastNewObjPos[1] = aktPointerPos[1];
             lastNewObjPos[2] = aktPointerPos[2];
-            selectedObj = route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            setSelectedObj(route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos));
             if(selectedObj != NULL)
                 selectedObj->select();
             //if(route->ref->selected != NULL){
@@ -610,4 +611,9 @@ void GLWidget::jumpTo(int x, int y){
 
 void GLWidget::setPaintBrush(Brush* brush){
     this->defaultPaintBrush = brush;
+}
+
+void GLWidget::setSelectedObj(WorldObj* o){
+    this->selectedObj = o;
+    emit showProperties(selectedObj);
 }

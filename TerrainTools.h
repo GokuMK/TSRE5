@@ -1,15 +1,8 @@
-/* 
- * File:   TerrainTools.h
- * Author: Goku
- *
- * Created on 1 czerwca 2015, 20:39
- */
+#ifndef TERRAINTOOLS_H
+#define	TERRAINTOOLS_H
 
 #include <QtWidgets>
 #include "Route.h"
-
-#ifndef TERRAINTOOLS_H
-#define	TERRAINTOOLS_H
 
 class Brush;
 

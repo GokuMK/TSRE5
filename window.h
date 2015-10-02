@@ -7,11 +7,13 @@
 #include "TerrainTools.h"
 #include "NaviBox.h"
 #include "AboutWindow.h"
+#include "PropertiesUndefined.h"
 
-QT_BEGIN_NAMESPACE
-class QSlider;
-QT_END_NAMESPACE
+//QT_BEGIN_NAMESPACE
+
+//QT_END_NAMESPACE
 //! [0]
+class QSlider;
 class GLWidget;
 
 class Window : public QMainWindow
@@ -26,6 +28,7 @@ public slots:
     void createPaths();
     void about();
     void setToolbox(QString name);
+    void showProperties(WorldObj* obj);
     
 signals:
     void exitNow();
@@ -40,6 +43,8 @@ private:
     ObjTools *objTools;
     TerrainTools *terrainTools;
     NaviBox *naviBox;
+    
+    PropertiesUndefined * propertiesUndefined;
     
     QMenu *routeMenu;
     QMenu *editMenu;

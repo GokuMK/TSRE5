@@ -15,6 +15,9 @@
         <itemPath>TS.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="gui" projectFiles="true">
+        <logicalFolder name="f1" displayName="properties" projectFiles="true">
+          <itemPath>PropertiesUndefined.h</itemPath>
+        </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
         <itemPath>GuiFunct.h</itemPath>
         <itemPath>LoadWindow.h</itemPath>
@@ -115,6 +118,9 @@
         <itemPath>TS.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="gui" projectFiles="true">
+        <logicalFolder name="f1" displayName="properties" projectFiles="true">
+          <itemPath>propertiesUndefined.cpp</itemPath>
+        </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>GuiFunct.cpp</itemPath>
         <itemPath>LoadWindow.cpp</itemPath>
@@ -331,6 +337,8 @@
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesUndefined.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ReadFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ReadFile.h" ex="false" tool="3" flavor2="0">
@@ -476,6 +484,8 @@
       <item path="glwidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="propertiesUndefined.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="window.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -626,6 +636,8 @@
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesUndefined.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ReadFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ReadFile.h" ex="false" tool="3" flavor2="0">
@@ -771,6 +783,8 @@
       <item path="glwidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="propertiesUndefined.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="window.cpp" ex="false" tool="1" flavor2="0">
       </item>

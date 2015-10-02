@@ -14,6 +14,8 @@ Window::Window() {
     naviBox = new NaviBox();
     glWidget = new GLWidget;
     
+    propertiesUndefined = new PropertiesUndefined();
+    
     QWidget* main = new QWidget();
     QWidget* box = new QWidget();
     QWidget* box2 = new QWidget();
@@ -38,6 +40,7 @@ Window::Window() {
     mainLayout3->setContentsMargins(0,0,0,0);
     mainLayout2->setMargin(0);
     mainLayout2->setSpacing(0);
+    mainLayout3->addWidget(propertiesUndefined);
     //mainLayout3->addWidget(terrainTools);
     //mainLayout3->setAlignment(naviBox, Qt::AlignBottom);
     box2->setLayout(mainLayout3);
@@ -83,7 +86,7 @@ Window::Window() {
         box2->hide();
         menuBar()->hide();
     }
-    box2->hide();
+    //box2->hide();
     
     
     QObject::connect(glWidget, SIGNAL(naviInfo(int, int, int, int)),
@@ -112,6 +115,9 @@ Window::Window() {
 
     QObject::connect(this, SIGNAL(sendMsg(QString)),
                       glWidget, SLOT(msg(QString)));
+    
+    QObject::connect(glWidget, SIGNAL(showProperties(WorldObj*)),
+                      this, SLOT(showProperties(WorldObj*)));
     
     QObject::connect(this, SIGNAL(exitNow()),
                       &aboutWindow, SLOT(exitNow()));
@@ -160,6 +166,10 @@ void Window::setToolbox(QString name){
 void Window::hideAllTools(){
     objTools->hide();
     terrainTools->hide();
+}
+
+void Window::showProperties(WorldObj* obj){
+    propertiesUndefined->showObj(obj);
 }
 
 //void Window::exitNow(){
