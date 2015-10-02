@@ -19,9 +19,13 @@ Window::Window() {
     QWidget* box2 = new QWidget();
     box->setMaximumWidth(250);
     box->setMinimumWidth(250);
+    box2->setMaximumWidth(150);
+    box2->setMinimumWidth(150);
     //box2->setMaximumWidth(250);
     //box2->setMinimumWidth(250);
     QVBoxLayout *mainLayout2 = new QVBoxLayout;
+    mainLayout2->setMargin(0);
+    mainLayout2->setSpacing(0);
     mainLayout2->setContentsMargins(0,0,0,0);
     mainLayout2->addWidget(objTools);
     mainLayout2->addWidget(terrainTools);
@@ -29,13 +33,19 @@ Window::Window() {
     mainLayout2->setAlignment(naviBox, Qt::AlignBottom);
     box->setLayout(mainLayout2);
     
-    //QVBoxLayout *mainLayout3 = new QVBoxLayout;
-    //mainLayout3->setContentsMargins(0,0,0,0);
+    
+    QVBoxLayout *mainLayout3 = new QVBoxLayout;
+    mainLayout3->setContentsMargins(0,0,0,0);
+    mainLayout2->setMargin(0);
+    mainLayout2->setSpacing(0);
     //mainLayout3->addWidget(terrainTools);
     //mainLayout3->setAlignment(naviBox, Qt::AlignBottom);
-    //box2->setLayout(mainLayout3);
+    box2->setLayout(mainLayout3);
     
     QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout->setMargin(3);
+    mainLayout->setSpacing(3);
+    mainLayout->addWidget(box2);
     mainLayout->addWidget(glWidget);
     mainLayout->addWidget(box);
     //mainLayout->addWidget(box2);
@@ -70,8 +80,11 @@ Window::Window() {
     
     if(Game::toolsHidden){
         box->hide();
+        box2->hide();
         menuBar()->hide();
     }
+    box2->hide();
+    
     
     QObject::connect(glWidget, SIGNAL(naviInfo(int, int, int, int)),
                       naviBox, SLOT(naviInfo(int, int, int, int)));

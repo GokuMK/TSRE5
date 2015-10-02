@@ -16,6 +16,7 @@
       </logicalFolder>
       <logicalFolder name="f11" displayName="gui" projectFiles="true">
         <itemPath>AboutWindow.h</itemPath>
+        <itemPath>GuiFunct.h</itemPath>
         <itemPath>LoadWindow.h</itemPath>
         <itemPath>NaviBox.h</itemPath>
         <itemPath>ObjTools.h</itemPath>
@@ -115,6 +116,7 @@
       </logicalFolder>
       <logicalFolder name="f10" displayName="gui" projectFiles="true">
         <itemPath>AboutWindow.cpp</itemPath>
+        <itemPath>GuiFunct.cpp</itemPath>
         <itemPath>LoadWindow.cpp</itemPath>
         <itemPath>NaviBox.cpp</itemPath>
         <itemPath>ObjTools.cpp</itemPath>
@@ -276,6 +278,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ImageLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -567,6 +573,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ImageLib.cpp" ex="false" tool="1" flavor2="0">
       </item>

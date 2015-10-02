@@ -79,6 +79,7 @@ private:
     bool selection = false;
     int mousex, mousey;
     WorldObj* selectedObj = NULL;
+    WorldObj* lastSelectedObj = NULL;
     Pointer3d* pointer3d;
     float lastPointerPos[3];
     float aktPointerPos[3];

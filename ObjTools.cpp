@@ -13,25 +13,47 @@ ObjTools::ObjTools(QString name)
     //radio1->setChecked(true);
     
     QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(&refClass);
+    vbox->setSpacing(2);
+    vbox->setContentsMargins(0,1,1,1);
+    QLabel *label1 = new QLabel("Objects:");
+    label1->setStyleSheet("QLabel { color : #999999; }");
+    label1->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label1);
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("Ref file:",&refClass);
+    vlist->addRow("Tracks:",&refTrack);
+    vlist->addRow("Roads:",&refRoad);
+    vbox->addItem(vlist);
     vbox->addWidget(&refList);
+    refList.hide();
+    vbox->addWidget(&trackList);
     vbox->addWidget(selectTool);
     vbox->addWidget(placeTool);
-    vbox->addWidget(&refTrack);
-    vbox->addWidget(&trackList);
+    QLabel *label2 = new QLabel("Recent items:");
+    label2->setStyleSheet("QLabel { color : #999999; }");
+    label2->setContentsMargins(3,0,0,0);
+    //refClasssetMargin(0);
+    //refTrack->sets >setMargin(0);
+    //refRoad->setMargin(0);
+    //label1->setMargin(0);
+    vbox->addWidget(label2);
     vbox->addWidget(&lastItems);
-    vbox->setContentsMargins(0,1,5,1);
+
     lastItems.setMinimumHeight(170);
+    lastItems.setMaximumHeight(170);
     //QSizePolicy* sizePolicy = new QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     //astItems.setSizePolicy(*sizePolicy);
     //) QSizePolicy::MinimumExpanding);
     //lastItems.setMaximumHeight(999);
-    trackList.setMinimumHeight(170);
-    refList.setMinimumHeight(170);
+    trackList.setMinimumHeight(250);
+    refList.setMinimumHeight(250);
    
     refClass.setStyleSheet("combobox-popup: 0;");
     refTrack.setStyleSheet("combobox-popup: 0;");
-
+    refRoad.setStyleSheet("combobox-popup: 0;");
+    
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -39,6 +61,9 @@ ObjTools::ObjTools(QString name)
                       this, SLOT(refClassSelected(QString)));
     
     QObject::connect(&refTrack, SIGNAL(activated(QString)),
+                      this, SLOT(refTrackSelected(QString)));
+    
+    QObject::connect(&refRoad, SIGNAL(activated(QString)),
                       this, SLOT(refTrackSelected(QString)));
     
     QObject::connect(&refList, SIGNAL(itemClicked(QListWidgetItem*)),
@@ -64,6 +89,7 @@ void ObjTools::routeLoaded(Route* a){
     this->route = a;
 
     QStringList hash;
+    QStringList hash2;
     for ( auto it = route->ref->refItems.begin(); it != route->ref->refItems.end(); ++it ){
         //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
         hash.append(QString::fromStdString(it->first));
@@ -91,12 +117,15 @@ void ObjTools::routeLoaded(Route* a){
     //std::unordered_map<std::string, int> types;
     //refTrack.setInsertPolicy(refTrack.InsertAlphabetically);
     hash.clear();
+    hash2.clear();
     for (auto it = route->tsection->shape.begin(); it != route->tsection->shape.end(); ++it ){
         track = it->second;
         //hash = track->filename.left(3).toStdString();
         if(track == NULL) continue;
         if(track->dyntrack) continue;
-        if(track->roadshape) continue;
+        if(track->roadshape)
+            hash2.append(track->filename.left(3).toLower());
+        else
             hash.append(track->filename.left(3).toLower());
         //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
         //if(types[hash] != 1){
@@ -109,12 +138,20 @@ void ObjTools::routeLoaded(Route* a){
     hash.removeDuplicates();
     refTrack.addItems(hash);
     refTrack.setMaxVisibleItems(25);
+    hash2.sort(Qt::CaseInsensitive);
+    hash2.removeDuplicates();
+    refRoad.addItems(hash2);
+    refRoad.setMaxVisibleItems(25);
     //refTrack.s .sortItems(Qt::AscendingOrder);
+    
+    refTrackSelected("a1t");
 }
 
 void ObjTools::refClassSelected(const QString & text){
     //qDebug() << "Bbbb " << text;
     refList.clear();
+    trackList.hide();
+    refList.show();
     for (int it = 0; it < route->ref->refItems[text.toStdString()].size(); ++it ){
         refList.addItem(route->ref->refItems[text.toStdString()][it].description);
         //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
@@ -125,6 +162,8 @@ void ObjTools::refClassSelected(const QString & text){
 
 void ObjTools::refTrackSelected(const QString & text){
     trackList.clear();
+    refList.hide();
+    trackList.show();
     TrackShape * track;
     for (auto it = route->tsection->shape.begin(); it != route->tsection->shape.end(); ++it ){
         track = it->second;

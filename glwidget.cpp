@@ -201,6 +201,7 @@ void GLWidget::paintGL() {
 
         qDebug() << wx << " " << wz << " " << UiD;
         if(selectedObj != NULL) selectedObj->unselect();
+        lastSelectedObj = selectedObj;
         selectedObj = route->getObj(wx, wz, UiD);
         if (!selectedObj->loaded){
             qDebug() << "brak obiektu";
@@ -409,13 +410,17 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 resizeTool = true;
                 break;
             case Qt::Key_F:
-                route->setTerrainToTrackObj(selectedObj);
+                if(selectedObj != NULL)
+                    route->setTerrainToTrackObj(selectedObj);
+                else
+                    route->setTerrainToTrackObj(lastSelectedObj);
                 break;
             case Qt::Key_Delete:
                 if(selectedObj != NULL){
                     route->deleteObj(selectedObj);
                     selectedObj->unselect();
                     selectedObj = NULL;
+                    lastSelectedObj = NULL;
                 }
                 break;                
             case Qt::Key_C:
@@ -440,6 +445,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 //route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&selectedObj->position);
                 route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&lastNewObjPos);
                 if(selectedObj != NULL) selectedObj->unselect();
+                lastSelectedObj = selectedObj;
                 selectedObj = NULL;
                 break;
             case Qt::Key_X:

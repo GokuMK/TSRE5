@@ -5,7 +5,12 @@ NaviBox::NaviBox() : QWidget(){
     QLabel *xLabel = new QLabel("x", this);
     QLabel *yLabel = new QLabel("y", this);
     
+    QLabel *label1 = new QLabel("Position:");
+    label1->setContentsMargins(3,0,0,0);
+    label1->setStyleSheet("QLabel { color : #999999; }");
     QFormLayout *vbox = new QFormLayout;
+    vbox->setSpacing(2);
+    vbox->addRow(label1);
     vbox->addRow(xLabel,&xBox);
     vbox->addRow(yLabel,&yBox);
     vbox->addRow(" ",&tileInfo);

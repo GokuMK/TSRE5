@@ -32,6 +32,7 @@ private:
     QListWidget lastItems;
     QComboBox refClass;
     QComboBox refTrack;
+    QComboBox refRoad;
     Ref::RefItem itemRef;
 };
 

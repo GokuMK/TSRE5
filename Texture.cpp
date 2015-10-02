@@ -187,7 +187,7 @@ void Texture::paint(Brush* brush, float x, float z){
             txi*=1;
             tzj*=1;
             
-            if(tex != NULL){
+            if(tex != NULL && brush->useTexture){
                 
                 if(tzj >= tex->width){
                     tzj = tzj%tex->width;

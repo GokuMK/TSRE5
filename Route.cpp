@@ -167,11 +167,15 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
 
 void Route::setTerrainToTrackObj(WorldObj* obj){
     if(obj == NULL) return;
+    if(obj->type != "trackobj") return;
+    TrackObj* tobj = (TrackObj*)obj;
     //TrackObj* track = (TrackObj*)obj;
     float* punkty = new float[10000];
     float* ptr = punkty;
-    this->trackDB->setTerrainToTrackObj(obj->x, obj->y, obj->UiD, ptr);
-    
+    if(this->tsection->isRoadShape(tobj->sectionIdx))
+        this->roadDB->setTerrainToTrackObj(obj->x, obj->y, obj->UiD, ptr);
+    else
+        this->trackDB->setTerrainToTrackObj(obj->x, obj->y, obj->UiD, ptr);
     int length = ptr - punkty;
     qDebug() << "l "<<length;
     TerrainLib::setTerrainToTrackObj(punkty, length, obj->x, obj->y, obj->matrix);
