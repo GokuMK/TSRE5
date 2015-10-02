@@ -321,7 +321,7 @@ void Route::addToTDB(WorldObj* obj) {
 void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
     int x = post[0];
     int z = post[1];
-    float p[3];
+    float p[3]; 
     p[0] = pos[0];
     p[1] = pos[1];
     p[2] = pos[2];
