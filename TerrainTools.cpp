@@ -1,15 +1,9 @@
-/* 
- * File:   TerrainTools.cpp
- * Author: Goku
- * 
- * Created on 1 czerwca 2015, 20:39
- */
-
 #include "TerrainTools.h"
 #include "TexLib.h"
 #include "Brush.h"
 #include "Texture.h"
 #include "GuiFunct.h"
+#include "TransferObj.h"
 
 TerrainTools::TerrainTools(QString name)
     : QWidget(){

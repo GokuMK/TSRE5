@@ -16,6 +16,9 @@
       </logicalFolder>
       <logicalFolder name="f11" displayName="gui" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
+          <itemPath>PropertiesAbstract.h</itemPath>
+          <itemPath>PropertiesStatic.h</itemPath>
+          <itemPath>PropertiesTransfer.h</itemPath>
           <itemPath>PropertiesUndefined.h</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
@@ -119,7 +122,10 @@
       </logicalFolder>
       <logicalFolder name="f10" displayName="gui" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
-          <itemPath>propertiesUndefined.cpp</itemPath>
+          <itemPath>PropertiesAbstract.cpp</itemPath>
+          <itemPath>PropertiesStatic.cpp</itemPath>
+          <itemPath>PropertiesTransfer.cpp</itemPath>
+          <itemPath>PropertiesUndefined.cpp</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>GuiFunct.cpp</itemPath>
@@ -337,6 +343,20 @@
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTransfer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesUndefined.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="PropertiesUndefined.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ReadFile.cpp" ex="false" tool="1" flavor2="0">
@@ -484,8 +504,6 @@
       <item path="glwidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="propertiesUndefined.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="window.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -636,6 +654,20 @@
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTransfer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesUndefined.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="PropertiesUndefined.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ReadFile.cpp" ex="false" tool="1" flavor2="0">
@@ -783,8 +815,6 @@
       <item path="glwidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="propertiesUndefined.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="window.cpp" ex="false" tool="1" flavor2="0">
       </item>

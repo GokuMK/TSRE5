@@ -7,8 +7,7 @@
 #include "TerrainTools.h"
 #include "NaviBox.h"
 #include "AboutWindow.h"
-#include "PropertiesUndefined.h"
-
+#include "PropertiesAbstract.h"
 //QT_BEGIN_NAMESPACE
 
 //QT_END_NAMESPACE
@@ -29,6 +28,8 @@ public slots:
     void about();
     void setToolbox(QString name);
     void showProperties(WorldObj* obj);
+    void hideShowToolWidget(bool show);
+    void hideShowPropertiesWidget(bool show);
     
 signals:
     void exitNow();
@@ -39,12 +40,16 @@ protected:
     void closeEvent(QCloseEvent * event );
     void hideAllTools();
 private:
+    QWidget* box;
+    QWidget* box2;
+    
     GLWidget *glWidget;
     ObjTools *objTools;
     TerrainTools *terrainTools;
     NaviBox *naviBox;
     
-    PropertiesUndefined * propertiesUndefined;
+    std::vector<PropertiesAbstract*> objProperties;
+    //PropertiesUndefined * propertiesUndefined;
     
     QMenu *routeMenu;
     QMenu *editMenu;
@@ -55,6 +60,9 @@ private:
     QAction *createPathsAction;
     QAction *exitAction;
     QAction *aboutAction;
+    QAction *propertiesAction;
+    QAction *toolsAction;
+    
     
     AboutWindow aboutWindow;
 };

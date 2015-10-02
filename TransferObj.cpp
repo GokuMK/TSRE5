@@ -253,6 +253,10 @@ void TransferObj::drawShape(){
     }
 }
 
+int TransferObj::getTexId(){
+    return this->shape.getTexId();
+}
+
 void TransferObj::save(QTextStream* out){
     if (!loaded) return;
     int l;

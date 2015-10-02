@@ -5,7 +5,7 @@
 #ifndef TRITEM_H
 #define	TRITEM_H
 
-#include <QString>;
+#include <QString>
 #include "Pointer3d.h"
 
 class FileBuffer;

@@ -15,6 +15,8 @@ public:
     //Shape shape;
     OglObj shape;
     QString texture;
+    float width = 0;
+    float height = 0;
     
     TransferObj();
     TransferObj(const TransferObj& orig);
@@ -25,6 +27,7 @@ public:
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     void deleteVBO();
+    int getTexId();
     void translate(float px, float py, float pz);
     void rotate(float x, float y, float z);
     void resize(float x, float y, float z);
@@ -33,8 +36,6 @@ private:
     void drawShape();
     int tex;
     bool init;
-    float width = 0;
-    float height = 0;
     float bound[6];
     QString *texturePath;
 };

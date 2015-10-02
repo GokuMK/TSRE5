@@ -5,20 +5,28 @@
 #include "Game.h"
 #include "AceLib.h"
 #include <QDebug>
+#include "PropertiesUndefined.h"
+#include "PropertiesStatic.h"
+#include "PropertiesTransfer.h"
 
 Window::Window() {
-
     
     objTools = new ObjTools("ObjTools");
     terrainTools = new TerrainTools("TerrainTools");
     naviBox = new NaviBox();
     glWidget = new GLWidget;
     
-    propertiesUndefined = new PropertiesUndefined();
+    PropertiesUndefined* propertiesUndefined = new PropertiesUndefined();
+    PropertiesStatic* propertiesStatic = new PropertiesStatic();
+    PropertiesTransfer* propertiesTransfer = new PropertiesTransfer();
+    objProperties.push_back(propertiesStatic);
+    objProperties.push_back(propertiesTransfer);
+    objProperties.push_back(propertiesUndefined);
+    
     
     QWidget* main = new QWidget();
-    QWidget* box = new QWidget();
-    QWidget* box2 = new QWidget();
+    box = new QWidget();
+    box2 = new QWidget();
     box->setMaximumWidth(250);
     box->setMinimumWidth(250);
     box2->setMaximumWidth(150);
@@ -40,7 +48,15 @@ Window::Window() {
     mainLayout3->setContentsMargins(0,0,0,0);
     mainLayout2->setMargin(0);
     mainLayout2->setSpacing(0);
-    mainLayout3->addWidget(propertiesUndefined);
+    //mainLayout3->addWidget(propertiesUndefined);
+    
+    for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
+        if(*it == NULL) continue;
+        (*it)->hide();
+        //console.log(obj.type);
+        mainLayout3->addWidget(*it);
+    }
+    
     //mainLayout3->addWidget(terrainTools);
     //mainLayout3->setAlignment(naviBox, Qt::AlignBottom);
     box2->setLayout(mainLayout3);
@@ -61,8 +77,10 @@ Window::Window() {
     objTools->show();
     
     this->setCentralWidget(main);
-    setWindowTitle(tr("TSRE5 v0.501"));
+    setWindowTitle(tr("TSRE5 v0.600"));
     
+    // MENUBAR
+    // Route
     saveAction = new QAction(tr("&Save"), this);
     QObject::connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
     createPathsAction = new QAction(tr("&Save Paths"), this);
@@ -73,9 +91,21 @@ Window::Window() {
     routeMenu->addAction(saveAction);
     routeMenu->addAction(createPathsAction);
     routeMenu->addAction(exitAction);
-    
+    // Edit
     editMenu = menuBar()->addMenu(tr("&Edit"));
+    // View
     viewMenu = menuBar()->addMenu(tr("&View"));
+    propertiesAction = new QAction(tr("&Properties"), this);
+    propertiesAction->setCheckable(true);
+    propertiesAction->setChecked(true);
+    viewMenu->addAction(propertiesAction);
+    QObject::connect(propertiesAction, SIGNAL(triggered(bool)), this, SLOT(hideShowPropertiesWidget(bool)));
+    toolsAction = new QAction(tr("&Tools"), this);
+    toolsAction->setCheckable(true);
+    toolsAction->setChecked(true);
+    viewMenu->addAction(toolsAction);
+    QObject::connect(toolsAction, SIGNAL(triggered(bool)), this, SLOT(hideShowToolWidget(bool)));
+    // Help
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
     helpMenu = menuBar()->addMenu(tr("&Help"));
@@ -169,7 +199,29 @@ void Window::hideAllTools(){
 }
 
 void Window::showProperties(WorldObj* obj){
-    propertiesUndefined->showObj(obj);
+    // hide all
+    for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
+        if(*it == NULL) continue;
+        (*it)->hide();
+    }
+    // show 
+    for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
+        if(*it == NULL) continue;
+        if(!(*it)->support(obj)) continue;
+        (*it)->show();
+        (*it)->showObj(obj);
+        return;
+    }
+}
+
+void Window::hideShowPropertiesWidget(bool show){
+    if(show) box2->show();
+    else box2->hide();
+}
+
+void Window::hideShowToolWidget(bool show){
+    if(show) box->show();
+    else box->hide();
 }
 
 //void Window::exitNow(){

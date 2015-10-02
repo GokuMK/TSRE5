@@ -126,7 +126,7 @@ void StaticObj::save(QTextStream* out){
     if (jestPQ < 2) return;
 int l;
 QString flags;
-if(type == "gantry"){
+if(this->staticFlags != 0){
     flags = QString::number(this->staticFlags, 16);
     l = flags.length();
     for(int i=0; i<8-l; i++)
@@ -144,7 +144,7 @@ if(type == "collideobject")
 if(type == "collideobject")
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
-if(type == "gantry")
+if(this->staticFlags != 0)
 *(out) << "		StaticFlags ( "<<flags<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";

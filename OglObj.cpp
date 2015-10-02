@@ -96,3 +96,6 @@ void OglObj::render() {
     glDrawArrays(shapeType, 0, length); /**/
 }
 
+int OglObj::getTexId(){
+    return this->texId;
+}

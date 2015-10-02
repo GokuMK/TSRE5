@@ -19,6 +19,7 @@ public:
     void deleteVBO();
     void setMaterial(float r, float g, float b);
     void setMaterial(QString* path);
+    int getTexId();
 private:
     QOpenGLBuffer VBO;
     QOpenGLVertexArrayObject VAO;
