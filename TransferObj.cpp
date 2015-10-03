@@ -9,6 +9,7 @@
 #include "Vector2f.h"
 #include "TerrainLib.h"
 #include <QOpenGLShaderProgram>
+#include "Game.h"
 
 TransferObj::TransferObj() {
     this->width = 10;
@@ -97,7 +98,7 @@ void TransferObj::resize(float x, float y, float z){
 }
 
 void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
-   // if (!loaded) 
+    if (!loaded) 
         return;
     //if (jestPQ < 2) return;
     //GLUU* gluu = GLUU::get();
@@ -163,6 +164,9 @@ void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
 void TransferObj::drawShape(){
 
     if (!init) {
+            if(Game::allowObjLag < 1)  return;
+            Game::allowObjLag-=2;
+        
             float scale = (float) sqrt(qDirection[0] * qDirection[0] + qDirection[1] * qDirection[1] + qDirection[2] * qDirection[2]);
             float off = ((qDirection[1]+0.000001f)/fabs(scale+0.000001f))*(float)-acos(qDirection[3])*2;
         

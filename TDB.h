@@ -50,6 +50,7 @@ public:
     void setDefaultEnd(int val);
     void nextDefaultEnd();
     float getVectorSectionLength(int id);
+    float getVectorSectionLengthToIdx(int id, int idx);
     void getVectorSectionPoints(int x, int y, int uid, float * &ptr);
     void moveItemsFrom2to1(int id2, int id1);
     int appendToJunction(int junctionId, int eId, int idx);
@@ -68,6 +69,7 @@ private:
     bool deleteNulls();
     int findBiggest();
     int getLineBufferSize(int idx);
+    void checkSignals();
     void drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx);
     OglObj linieSieci;
     OglObj konceSieci;

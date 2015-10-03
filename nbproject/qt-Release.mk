@@ -17686,7 +17686,8 @@ build/Release/MinGW_QT_static-Windows/TransferObj.o: TransferObj.cpp TransferObj
 		TexLib.h \
 		Texture.h \
 		Vector2f.h \
-		TerrainLib.h
+		TerrainLib.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TransferObj.o TransferObj.cpp
 
 build/Release/MinGW_QT_static-Windows/Vector2f.o: Vector2f.cpp Vector2f.h

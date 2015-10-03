@@ -168,6 +168,8 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
 
     if(!this->road)
         loadTit();
+    
+    checkSignals();
     //save();
     loaded = true;
     return;
@@ -190,13 +192,13 @@ void TDB::loadTit(){
     ParserX::szukajsekcji1(sh, bufor);
     qDebug() << "znaleziono sekcje TrItemTable na " << bufor->off;
     
-            iTRitems = (int) ParserX::parsujr(bufor); //odczytanie ilosci sciezek
+            int iiTRitems = (int) ParserX::parsujr(bufor); //odczytanie ilosci sciezek
             
             TRitem* nowy;// = new TRitem();
             nowy = new TRitem();
             nowy->titLoading = true;
             
-            for (int i = 0; i < iTRitems; i++) {
+            for (int i = 0; i < iiTRitems; i++) {
                 sh = ParserX::nazwasekcji(bufor).toLower();
 
                 if (sh == "") {
@@ -766,10 +768,21 @@ void TDB::moveItemsFrom2to1(int id2, int id1){
 
 float TDB::getVectorSectionLength(int id){
     TRnode* n = trackNodes[id];
-    
     float dlugosc = 0;
     TSection* sect;
     for (int i = 0; i < n->iTrv; i++) {
+        sect = tsection->sekcja[(int)n->trVectorSection[i].param[0]];
+        if(sect != NULL)
+            dlugosc += sect->getDlugosc();
+    }
+    return dlugosc;
+}
+
+float TDB::getVectorSectionLengthToIdx(int id, int idx){
+    TRnode* n = trackNodes[id];
+    float dlugosc = 0;
+    TSection* sect;
+    for (int i = 0; i < idx; i++) {
         sect = tsection->sekcja[(int)n->trVectorSection[i].param[0]];
         if(sect != NULL)
             dlugosc += sect->getDlugosc();
@@ -791,6 +804,42 @@ int TDB::splitVectorSection(int id, int j){
     newNode = this->trackNodes[vecId];
     newNode->typ = 1;
     newNode->iTrv = vect->iTrv - j;
+    
+    // slpit items
+    if(vect->iTri > 0){
+        float vectDlugosc = this->getVectorSectionLengthToIdx(id, j);
+        // calculate
+        int ivecItems = 0;
+        int inewItems = 0;
+        TRitem* trit; 
+        for(int i = 0; i < vect->iTri; i++){
+            trit = this->trackItems[vect->trItemRef[i]];
+            if(trit == NULL) continue;
+            if(trit->trItemSData1 < vectDlugosc) ivecItems++;
+            else inewItems++;
+        }
+        int* vecItems = new int[ivecItems];
+        int* newItems = new int[inewItems];
+        // fill
+        ivecItems = 0;
+        inewItems = 0;
+        for(int i = 0; i < vect->iTri; i++){
+            trit = this->trackItems[vect->trItemRef[i]];
+            if(trit == NULL) 
+                continue;
+            if(trit->trItemSData1 < vectDlugosc) 
+                vecItems[ivecItems++] = vect->trItemRef[i];
+            else {
+                trit->trItemSData1 -= vectDlugosc;
+                newItems[inewItems++] = vect->trItemRef[i];
+            }
+        }
+        vect->iTri = ivecItems;
+        newNode->iTri = inewItems;
+        delete[] vect->trItemRef;
+        vect->trItemRef = vecItems;
+        newNode->trItemRef = newItems;
+    }
     
     TRnode::TRSect *newV = new TRnode::TRSect[newNode->iTrv];
     std::copy(vect->trVectorSection + j, vect->trVectorSection + vect->iTrv, newV);
@@ -2023,6 +2072,32 @@ void TDB::saveTit() {
     file.close();
 
     qDebug() << "Zapisane";
+}
+
+void TDB::checkSignals(){
+    int trtype[3];
+    trtype[0] = 0;
+    trtype[1] = 0;
+    trtype[2] = 0;
+    trtype[3] = 0;
+    if(this->iTRitems > 0){
+        int tid = 0;
+        TRnode* n;
+        for (int i = 0; i <= this->iTRitems; i++) {
+            if(trackItems[i] == NULL) continue;
+            if(trackItems[i]->trSignalDir != NULL){
+                for(int j = 0; j < trackItems[i]->trSignalDirs*4; j+=4){
+                    tid = trackItems[i]->trSignalDir[j+0];
+                    n = trackNodes[tid];
+                    if(n == NULL)
+                        trtype[3]++;
+                    else
+                        trtype[n->typ]++;
+                }
+            }
+        }
+    }
+    qDebug() << "suma: "<<trtype[0]<<" "<<trtype[1]<<" "<<trtype[2]<<" "<<trtype[3];
 }
 
 TDB::TDB(const TDB& orig) {
