@@ -191,12 +191,16 @@ void GLWidget::paintGL() {
         glReadPixels(x, realy, 1, 1, GL_RGBA, GL_FLOAT, &winZ);
 
         qDebug() << winZ[0] << " " << winZ[1] << " " << winZ[2] << " ";
-        int ww = (int) (winZ[0]*255);
+        int ww1 = (int) (winZ[0]*255);
+        //int ww = ww1/10;
+        int cdata = (int) (ww1 / 16);
+        int ww  = (ww1 - cdata*16);
         
         int wx = (int) (ww / 10);
         int wz = (int) (ww - (wx)*10);
-        wx = camera->pozT[0] + wx - 5;
-        wz = camera->pozT[1] - (wz - 5);
+        wx = camera->pozT[0] + wx - 1;
+        wz = camera->pozT[1] - (wz - 1);
+        qDebug() << "color data: " << cdata;
 
         int UiD = (int) (winZ[1]*255)*256 + (int) (winZ[2]*255);
 
@@ -208,7 +212,7 @@ void GLWidget::paintGL() {
             qDebug() << "brak obiektu";
             setSelectedObj(NULL);
         } else {
-            selectedObj->select();
+            selectedObj->select(cdata);
             //selectedObj->translate(0,10,0);
         }
         //int objHash = trasa.getObjectHash(wx,wz,UiD);

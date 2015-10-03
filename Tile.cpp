@@ -397,7 +397,7 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, boo
                 gluu->mvPushMatrix();
                 //obiekty[i]->render(gluu, lod, x-playerT[0]*2048, z-playerT[1]*2048);
                 if (selection) {
-                    int sxx = (x - playerT[0] + 5)*10 + (-z + playerT[1] + 5);
+                    int sxx = (x - playerT[0] + 1)*10 + (-z + playerT[1] + 1);
                     selectionColor = obiekty[i]->UiD + sxx * 65536;
                 }
                 obiekty[i]->render(gluu, lod, lodx, lodz, playerW, target, fov, selectionColor);

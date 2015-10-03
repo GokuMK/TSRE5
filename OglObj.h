@@ -16,6 +16,7 @@ public:
     virtual ~OglObj();
     void init(float* punkty, int ptr, enum VertexAttr v, int type);
     virtual void render();
+    virtual void render(int selectionColor);
     void deleteVBO();
     void setMaterial(float r, float g, float b);
     void setMaterial(QString* path);

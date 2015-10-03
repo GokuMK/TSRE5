@@ -161,11 +161,11 @@ void TRitem::set(QString sh, FileBuffer* data) {
     return;
 }
 
-void TRitem::addToTrackPos(int d){
+void TRitem::addToTrackPos(float d){
     this->trItemSData1 += d;
 }
     
-void TRitem::flipTrackPos(int d){
+void TRitem::flipTrackPos(float d){
     this->trItemSData1 = d - this->trItemSData1;
 }
     

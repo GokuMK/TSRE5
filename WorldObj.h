@@ -76,6 +76,7 @@ public:
     virtual Ref::RefItem* getRefInfo();
     void drawBox();
     virtual bool select();
+    virtual bool select(int value);
     virtual bool unselect();
     virtual bool isSelected();
     virtual bool getBorder(float* border);

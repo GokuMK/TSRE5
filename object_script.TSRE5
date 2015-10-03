@@ -27,6 +27,9 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/PlatformObj.o
 ./build/Release/MinGW_QT_static-Windows/Pointer3d.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesAbstract.o
+./build/Release/MinGW_QT_static-Windows/PropertiesCarspawner.o
+./build/Release/MinGW_QT_static-Windows/PropertiesPlatform.o
+./build/Release/MinGW_QT_static-Windows/PropertiesSiding.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesStatic.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesTransfer.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesUndefined.o
@@ -76,6 +79,9 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_NaviBox.o
 ./build/Release/MinGW_QT_static-Windows/moc_ObjTools.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesAbstract.o
+./build/Release/MinGW_QT_static-Windows/moc_PropertiesCarspawner.o
+./build/Release/MinGW_QT_static-Windows/moc_PropertiesPlatform.o
+./build/Release/MinGW_QT_static-Windows/moc_PropertiesSiding.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesStatic.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesTransfer.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesUndefined.o

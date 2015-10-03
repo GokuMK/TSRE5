@@ -243,6 +243,11 @@ void WorldObj::drawBox(){
 
 bool WorldObj::select(){
     this->selected = true;
+    return true;
+}
+
+bool WorldObj::select(int value){
+    return select();
 }
 
 bool WorldObj::unselect(){

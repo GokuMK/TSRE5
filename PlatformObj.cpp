@@ -19,6 +19,7 @@ PlatformObj::PlatformObj() {
     this->shape = -1;
     this->loaded = false;
     pointer3d = new TrackItemObj();
+    pointer3dSelected = new TrackItemObj();
 }
 
 PlatformObj::PlatformObj(const PlatformObj& orig) {
@@ -61,13 +62,59 @@ void PlatformObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
+void PlatformObj::translate(float px, float py, float pz){
+    if(pz == 0) 
+        return;
+    TDB* tdb = Game::trackDB;
+    if(this->typeID == this->carspawner)
+        tdb = Game::roadDB;
+    
+    int id = tdb->findTrItemNodeId(this->trItemId[this->selectionValue]);
+    if (id < 0) {
+        qDebug() << "fail id";
+        return;
+    }
+    
+    float dlugosc = tdb->getVectorSectionLength(id);
+    TRitem* trit = tdb->trackItems[this->trItemId[this->selectionValue]];
+    if(trit == NULL) 
+        return;
+    if(pz < 0){
+        trit->trItemSData1 -= 1;
+        if(trit->trItemSData1 < 0)
+            trit->trItemSData1 = 0;
+
+    } else if(pz > 0){
+        trit->trItemSData1 += 1;
+        if(trit->trItemSData1 > dlugosc)
+            trit->trItemSData1 = dlugosc;
+
+    }
+    if(this->selectionValue == 1){
+        delete[] drawPositionB;
+        drawPositionB = NULL;   
+    } else if(this->selectionValue == 3){
+        delete[] drawPositionE;
+        drawPositionE = NULL;
+    }
+    delete line;
+    line = NULL;
+    this->modified = true;
+    setMartix();
+}
+
+bool PlatformObj::select(int value){
+    this->selectionValue = value;
+    this->selected = true;
+}
+
 void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
     
-    this->renderTritems(gluu);
+    this->renderTritems(gluu, selectionColor);
 };
 
-void PlatformObj::renderTritems(GLUU* gluu){
+void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     
     if (drawPositionB == NULL) {
         TDB* tdb = Game::trackDB;
@@ -116,14 +163,17 @@ void PlatformObj::renderTritems(GLUU* gluu){
         if(this->typeID == this->platform){
             line->setMaterial(0.0, 1.0, 0.0);
             pointer3d->setMaterial(0.0, 1.0, 0.0);
+            pointer3dSelected->setMaterial(0.5, 1.0, 0.5);
         }
         if(this->typeID == this->siding){
             line->setMaterial(1.0, 0.7, 0.0);
             pointer3d->setMaterial(1.0, 0.7, 0.0);
+            pointer3dSelected->setMaterial(1.0, 1.0, 0.5);
         }
         if(this->typeID == this->carspawner){
             line->setMaterial(0.4, 0.0, 1.0);
             pointer3d->setMaterial(0.4, 0.0, 1.0);
+            pointer3dSelected->setMaterial(0.9, 0.5, 1.0);
         }
         
         line->init(punkty, ptr, line->V, GL_LINES);
@@ -139,14 +189,19 @@ void PlatformObj::renderTritems(GLUU* gluu){
     float rot = (aa+1)*M_PI/2 + (float)(atan((drawPositionB[0]-drawPositionE[0])/(drawPositionB[2]-drawPositionE[2]))); 
     
     //(-(float)(atan((drawPositionB[1]-drawPositionE[1])/(dlugosc))
-    
+    int useSC;
     gluu->mvPushMatrix();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[0] + 0 * (drawPositionB[4] - this->x), drawPositionB[1] + 1, -drawPositionB[2] + 0 * (-drawPositionB[5] - this->y));
     Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rot);
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    pointer3d->render();
+    
+    useSC = (float)selectionColor/(float)(selectionColor+0.000001);
+    if(this->selected && this->selectionValue == 1) 
+        pointer3dSelected->render(selectionColor + 1*65536*16*useSC);
+    else
+        pointer3d->render(selectionColor + 1*65536*16*useSC);
     gluu->mvPopMatrix();
     
     gluu->mvPushMatrix();
@@ -155,7 +210,11 @@ void PlatformObj::renderTritems(GLUU* gluu){
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    pointer3d->render();
+    useSC = (float)selectionColor/(float)(selectionColor+0.000001);
+    if(this->selected && this->selectionValue == 3) 
+        pointer3dSelected->render(selectionColor + 3*65536*16*useSC);
+    else
+        pointer3d->render(selectionColor + 3*65536*16*useSC);
     gluu->mvPopMatrix();
     
     gluu->mvPushMatrix();

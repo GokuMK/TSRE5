@@ -8,7 +8,9 @@
 #include "PropertiesUndefined.h"
 #include "PropertiesStatic.h"
 #include "PropertiesTransfer.h"
-
+#include "PropertiesPlatform.h"
+#include "PropertiesSiding.h"
+#include "PropertiesCarspawner.h"
 Window::Window() {
     
     objTools = new ObjTools("ObjTools");
@@ -16,13 +18,13 @@ Window::Window() {
     naviBox = new NaviBox();
     glWidget = new GLWidget;
     
-    PropertiesUndefined* propertiesUndefined = new PropertiesUndefined();
-    PropertiesStatic* propertiesStatic = new PropertiesStatic();
-    PropertiesTransfer* propertiesTransfer = new PropertiesTransfer();
-    objProperties.push_back(propertiesStatic);
-    objProperties.push_back(propertiesTransfer);
-    objProperties.push_back(propertiesUndefined);
-    
+    objProperties.push_back(new PropertiesStatic);
+    objProperties.push_back(new PropertiesTransfer);
+    objProperties.push_back(new PropertiesPlatform);
+    objProperties.push_back(new PropertiesSiding);
+    objProperties.push_back(new PropertiesCarspawner);
+    // last 
+    objProperties.push_back(new PropertiesUndefined);
     
     QWidget* main = new QWidget();
     box = new QWidget();

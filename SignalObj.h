@@ -24,7 +24,7 @@ private:
     int *trItemId;
     TrackItemObj* pointer3d = NULL;
     float** drawPositions = NULL;
-    void renderTritems(GLUU* gluu);
+    void renderTritems(GLUU* gluu, int selectionColor);
 };
 
 #endif	/* SIGNALOBJ_H */

@@ -988,12 +988,26 @@ bool TDB::deleteFromVectorSection(int id, int j){
         vect = trackNodes[splitVectorSection(id, j)];
         j = 0;
     }
-    
+
     TRnode* end1 = trackNodes[vect->TrPinS[0]];
     TRnode* end2 = trackNodes[vect->TrPinS[1]];
     
     TRnode::TRSect *newV = new TRnode::TRSect[vect->iTrv - 1];
     if(j == 0){
+        // move & check items
+        if(vect->iTri > 0){
+            float sectDlugosc = this->tsection->sekcja[vect->trVectorSection[0].param[0]]->getDlugosc();
+            TRitem* trit;
+            for(int i = 0; i < vect->iTri; i++){
+                trit = this->trackItems[vect->trItemRef[i]];
+                if(trit == NULL) 
+                    continue;
+                trit->addToTrackPos(-sectDlugosc);
+                if(trit->trItemSData1 < 0)
+                    qDebug() << "delete item? - before section";
+            }
+        }
+        
         std::copy(vect->trVectorSection + 1, vect->trVectorSection + vect->iTrv, newV);
         if(end1->typ == 2){
             end1->podmienTrPin(id, 0);
@@ -1024,6 +1038,19 @@ bool TDB::deleteFromVectorSection(int id, int j){
             end1->UiD[11] = vect->trVectorSection[1].param[15];
 
     } else if(j == vect->iTrv - 1) {
+        // check items
+        if(vect->iTri > 0){
+            float vectDlugosc = this->getVectorSectionLengthToIdx(id, j);
+            TRitem* trit;
+            for(int i = 0; i < vect->iTri; i++){
+                trit = this->trackItems[vect->trItemRef[i]];
+                if(trit == NULL) 
+                    continue;
+                if(trit->trItemSData1 > vectDlugosc)
+                    qDebug() << "delete item? - behind section";
+            }
+        }
+        
         std::copy(vect->trVectorSection , vect->trVectorSection + vect->iTrv - 1, newV);
         if(end2->typ == 2){
             end2->podmienTrPin(id, 0);
@@ -1943,7 +1970,7 @@ void TDB::save() {
     QString path;
     QString extension = "tdb";
     if(this->road) extension = "rdb";
-    path = Game::root + "/routes/" + Game::route + "/" + Game::route + "222." + extension;
+    path = Game::root + "/routes/" + Game::route + "/" + Game::route + "." + extension;
     path.replace("//", "/");
     qDebug() << path;
     QFile file(path);
@@ -2045,7 +2072,7 @@ void TDB::saveTit() {
     QString path;
     QString extension = "tit";
     if(this->road) extension = "rit";
-    path = Game::root + "/routes/" + Game::route + "/" + Game::route + "222." + extension;
+    path = Game::root + "/routes/" + Game::route + "/" + Game::route + "." + extension;
     path.replace("//", "/");
     qDebug() << path;
     QFile file(path);

@@ -1,7 +1,7 @@
 ﻿# folder główny train sim
 
-#gameRoot = F:/train simulator
-gameRoot = C:/ts
+gameRoot = F:/train simulator
+#gameRoot = C:/ts
 
 # nazwa trasy (folderu) do wczytania
 
@@ -16,7 +16,7 @@ gameRoot = C:/ts
 #routeName = ICE-HB
 #routeName = tutorial
 #routeName = Warszawa - Kraków
-routeName = Reda-Hel_ver1
+routeName = Reda-Hel_ver11
 
 # optional start tile
 #startTileX = -5306
