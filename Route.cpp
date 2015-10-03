@@ -392,6 +392,7 @@ void Route::save() {
     }
     TerrainLib::save();
     this->trackDB->save();
+    this->roadDB->save();
 }
 
 void Route::createNewPaths() {
@@ -428,7 +429,8 @@ void Route::createNew() {
     int x = -5000;
     int z = 15000;
     saveTrk();
-    TDB::saveEmpty();
+    TDB::saveEmpty(false);
+    TDB::saveEmpty(true);
     Tile::saveEmpty(x, z);
     Terrain::saveEmpty(x, z);
 

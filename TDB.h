@@ -31,7 +31,9 @@ public:
     void refresh();
     void trpin(TRnode* tr, FileBuffer* bufor );
     void save();
-    static void saveEmpty();
+    void saveTit();
+    void loadTit();
+    static void saveEmpty(bool road);
     void removeTrackFromTDB(int x, int y, int UiD);
     int findNearestNode(int &x, int &z, float* p, float* q);
     int joinTracks(int iendp);

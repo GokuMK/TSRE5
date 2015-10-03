@@ -104,6 +104,9 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
                         break;
                     case 14:
                         trackNodes[t]->typ = 2; //typ rozjazd
+                        trackNodes[t]->args[0] = ParserX::parsujr(bufor);
+                        trackNodes[t]->args[1] = ParserX::parsujr(bufor);
+                        trackNodes[t]->args[2] = ParserX::parsujr(bufor);
                         sh = "UiD";
                         ParserX::szukajsekcji1(sh, bufor);
                         for (ii = 0; ii < 12; ii++) {
@@ -163,9 +166,65 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
         }
     }
 
-    
+    if(!this->road)
+        loadTit();
     //save();
     loaded = true;
+    return;
+}
+
+void TDB::loadTit(){
+    QString sh;
+    QString extension = "tit";
+    if(this->road) extension = "rit";
+    QString path = Game::root + "/routes/" + Game::route + "/" + Game::route + "." + extension;
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile *file = new QFile(path);
+    if (!file->open(QIODevice::ReadOnly))
+        return;
+    FileBuffer* bufor = ReadFile::read(file);
+
+    //szukanie trackdb
+    sh = "TrItemTable";
+    ParserX::szukajsekcji1(sh, bufor);
+    qDebug() << "znaleziono sekcje TrItemTable na " << bufor->off;
+    
+            iTRitems = (int) ParserX::parsujr(bufor); //odczytanie ilosci sciezek
+            
+            TRitem* nowy;// = new TRitem();
+            nowy = new TRitem();
+            nowy->titLoading = true;
+            
+            for (int i = 0; i < iTRitems; i++) {
+                sh = ParserX::nazwasekcji(bufor).toLower();
+
+                if (sh == "") {
+                    qDebug() << "tritemtable Fail";
+                    ParserX::pominsekcje(bufor);
+                    break;
+                }
+                
+                if(!nowy->init(sh)){
+                    ParserX::pominsekcje(bufor);
+                    qDebug() << "-" << sh;
+                    continue;
+                }
+
+                while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+                    nowy->set(sh, bufor);
+                    ParserX::pominsekcje(bufor);
+                }
+                
+                if(this->trackItems[nowy->trItemId] == NULL){
+                    qDebug() << "tit tdb fail" << nowy->trItemId;
+                } else {
+                    this->trackItems[nowy->trItemId]->trSignalRDir = nowy->trSignalRDir;
+                }
+                ParserX::pominsekcje(bufor);
+                continue;
+            }
+
     return;
 }
 
@@ -1801,10 +1860,12 @@ int TDB::findBiggest() {
         return 1;
     }
 
-void TDB::saveEmpty() {    
+void TDB::saveEmpty(bool road) {    
     QString sh;
     QString path;
-    path = Game::root + "/routes/" + Game::route + "/" + Game::route + ".tdb";
+    QString extension = "tdb";
+    if(road) extension = "rdb";
+    path = Game::root + "/routes/" + Game::route + "/" + Game::route + "." + extension;
     path.replace("//", "/");
     qDebug() << path;
     QFile file(path);
@@ -1922,6 +1983,43 @@ void TDB::save() {
     
     
     out << ")";
+    file.close();
+
+    saveTit();
+    qDebug() << "Zapisane";
+}
+
+void TDB::saveTit() {
+    if(!Game::writeEnabled) return;
+    if(!Game::writeTDB) return;
+    
+    QString path;
+    QString extension = "tit";
+    if(this->road) extension = "rit";
+    path = Game::root + "/routes/" + Game::route + "/" + Game::route + "222." + extension;
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile file(path);
+
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setRealNumberPrecision(8);
+    //out.setRealNumberNotation(QTextStream::FixedNotation);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+    out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
+
+    bool tit = true;
+    if(this->iTRitems > 0){
+        out << "TrItemTable ( " << (this->iTRitems) << "\n";
+        for (int i = 0; i <= this->iTRitems; i++) {
+            if(this->trackItems[i] != NULL)
+                this->trackItems[i]->save(&out, tit);
+        }
+        out << ")";
+    }
+    
+
     file.close();
 
     qDebug() << "Zapisane";

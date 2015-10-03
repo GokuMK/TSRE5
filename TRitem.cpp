@@ -134,9 +134,24 @@ void TRitem::set(QString sh, FileBuffer* data) {
     
     if (sh == ("trsignaldirs")) {
         trSignalDirs = ParserX::parsujr(data);
-        trSignalDir = new int[trSignalDirs*4];
-        for(int i = 0; i < trSignalDirs; i++){
-            trSignalDir[i] = ParserX::parsujr(data);
+        if(!titLoading){
+            trSignalDir = new int[trSignalDirs*4];
+            for(int i = 0; i < trSignalDirs*4; i+=4){
+                trSignalDir[i+0] = ParserX::parsujr(data);
+                trSignalDir[i+1] = ParserX::parsujr(data);
+                trSignalDir[i+2] = ParserX::parsujr(data);
+                trSignalDir[i+3] = ParserX::parsujr(data);
+            }
+        }else{
+            trSignalRDir = new float[trSignalDirs*6];
+            for(int i = 0; i < trSignalDirs*6; i+=6){
+                trSignalRDir[i+0] = ParserX::parsujr(data);
+                trSignalRDir[i+1] = ParserX::parsujr(data);
+                trSignalRDir[i+2] = ParserX::parsujr(data);
+                trSignalRDir[i+3] = ParserX::parsujr(data);
+                trSignalRDir[i+4] = ParserX::parsujr(data);
+                trSignalRDir[i+5] = ParserX::parsujr(data);
+            }
         }
         ParserX::pominsekcje(data);
         return;
@@ -183,11 +198,19 @@ void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot){
 }
 
 void TRitem::save(QTextStream* out){
+    save(out, false);
+}
+
+void TRitem::save(QTextStream* out, bool tit){
 
 int l;
 QString tritemsdata = QString::number(this->trItemSData2, 16);
 l = tritemsdata.length();
 for(int i=0; i<8-l; i++) tritemsdata = "0"+tritemsdata;
+
+QString woff = "";
+if(tit)
+    woff = "	";
 
 QString flags;
 if(type == "platformitem" || type == "sidingitem"){
@@ -202,62 +225,67 @@ if(type == "signalitem"){
 }
 
 if(type == "crossoveritem")
-*(out) << "		CrossoverItem (\n";
+*(out) << woff+"	CrossoverItem (\n";
 if(type == "signalitem")
-*(out) << "		SignalItem (\n";
+*(out) << woff+"	SignalItem (\n";
 if(type == "soundregionitem")
-*(out) << "		SoundRegionItem (\n";
+*(out) << woff+"	SoundRegionItem (\n";
 if(type == "levelcritem")
-*(out) << "		LevelCrItem (\n";
+*(out) << woff+"	LevelCrItem (\n";
 if(type == "speedpostitem")
-*(out) << "		SpeedPostItem (\n";
+*(out) << woff+"	SpeedPostItem (\n";
 if(type == "platformitem")
-*(out) << "		PlatformItem (\n";
+*(out) << woff+"	PlatformItem (\n";
 if(type == "sidingitem")
-*(out) << "		SidingItem (\n";
+*(out) << woff+"	SidingItem (\n";
 if(type == "carspawneritem")
-*(out) << "		CarSpawnerItem (\n";
+*(out) << woff+"	CarSpawnerItem (\n";
 
-*(out) << "			TrItemId ( "<<this->trItemId<<" )\n";
-*(out) << "			TrItemSData ( "<<this->trItemSData1<<" "<< tritemsdata <<" )\n";
+*(out) << woff+"		TrItemId ( "<<this->trItemId<<" )\n";
+*(out) << woff+"		TrItemSData ( "<<this->trItemSData1<<" "<< tritemsdata <<" )\n";
 if(this->trItemPData != NULL)
-*(out) << "			TrItemPData ( "<<this->trItemPData[0]<<" "<< this->trItemPData[1]<<" "<< this->trItemPData[2]<<" "<< this->trItemPData[3]<<" )\n";
+*(out) << woff+"		TrItemPData ( "<<this->trItemPData[0]<<" "<< this->trItemPData[1]<<" "<< this->trItemPData[2]<<" "<< this->trItemPData[3]<<" )\n";
 if(this->trItemRData != NULL)
-*(out) << "			TrItemRData ( "<<this->trItemRData[0]<<" "<< this->trItemRData[1]<<" "<< this->trItemRData[2]<<" "<< this->trItemRData[3]<<" "<< this->trItemRData[4] <<" )\n";
+*(out) << woff+"		TrItemRData ( "<<this->trItemRData[0]<<" "<< this->trItemRData[1]<<" "<< this->trItemRData[2]<<" "<< this->trItemRData[3]<<" "<< this->trItemRData[4] <<" )\n";
 
 if(type == "crossoveritem" && this->crossoverTrItemData != NULL)
-*(out) << "			CrossoverTrItemData ( "<<this->crossoverTrItemData[0]<<" "<< this->crossoverTrItemData[1] <<" )\n";
+*(out) << woff+"		CrossoverTrItemData ( "<<this->crossoverTrItemData[0]<<" "<< this->crossoverTrItemData[1] <<" )\n";
 
 if(type == "soundregionitem" && this->trItemSRData != NULL)
-*(out) << "			TrItemSRData ( "<<this->trItemSRData[0]<<" "<< this->trItemSRData[1] <<" "<< this->trItemSRData[2] <<" )\n";
+*(out) << woff+"		TrItemSRData ( "<<this->trItemSRData[0]<<" "<< this->trItemSRData[1] <<" "<< this->trItemSRData[2] <<" )\n";
 
 if(type == "speedpostitem" && this->speedpostTrItemData != NULL)
-*(out) << "			SpeedpostTrItemData ( "<<this->speedpostTrItemData[0]<<" "<< this->speedpostTrItemData[1] <<" "<< this->speedpostTrItemData[2] <<" )\n";
+*(out) << woff+"		SpeedpostTrItemData ( "<<this->speedpostTrItemData[0]<<" "<< this->speedpostTrItemData[1] <<" "<< this->speedpostTrItemData[2] <<" )\n";
 
 if(type == "sidingitem"){
 if(this->platformTrItemData != NULL)
-*(out) << "			SidingTrItemData ( "<<flags<<" "<< this->platformTrItemData[1]<<" )\n";
-*(out) << "			SidingName ( \""<<this->platformName<<"\" )\n";
+*(out) << woff+"		SidingTrItemData ( "<<flags<<" "<< this->platformTrItemData[1]<<" )\n";
+*(out) << woff+"		SidingName ( \""<<this->platformName<<"\" )\n";
 }
 
 if(type == "platformitem"){
 if(this->platformTrItemData != NULL)
-*(out) << "			PlatformTrItemData ( "<<flags<<" "<< this->platformTrItemData[1]<<" )\n";
-*(out) << "			PlatformName ( \""<<this->platformName<<"\" )\n";
-*(out) << "			Station ( \""<<this->station<<"\" )\n";
-*(out) << "			PlatformMinWaitingTime ( "<<this->platformMinWaitingTime<<" )\n";
-*(out) << "			PlatformNumPassengersWaiting ( "<<this->platformNumPassengersWaiting<<" )\n";
+*(out) << woff+"		PlatformTrItemData ( "<<flags<<" "<< this->platformTrItemData[1]<<" )\n";
+*(out) << woff+"		PlatformName ( \""<<this->platformName<<"\" )\n";
+*(out) << woff+"		Station ( \""<<this->station<<"\" )\n";
+*(out) << woff+"		PlatformMinWaitingTime ( "<<this->platformMinWaitingTime<<" )\n";
+*(out) << woff+"		PlatformNumPassengersWaiting ( "<<this->platformNumPassengersWaiting<<" )\n";
 }
 
 if(type == "signalitem"){
-*(out) << "			TrSignalType ( "<<flags<<" "<<this->trSignalType2<<" "<<this->trSignalType3<<" "<<this->trSignalType4<<" )\n";
+*(out) << woff+"		TrSignalType ( "<<flags<<" "<<this->trSignalType2<<" "<<this->trSignalType3<<" "<<this->trSignalType4<<" )\n";
 if(this->trSignalDir != NULL){
-    *(out) << "			TrSignalDirs ( "<<this->trSignalDirs<<"\n";
-    for(int i = 0; i < this->trSignalDirs; i++)
-        *(out) << "				TrSignalDir ( "<<this->trSignalDir[i+0]<<" "<< this->trSignalDir[i+1]<<" "<< this->trSignalDir[i+2]<<" "<< this->trSignalDir[i+3]<<" )\n";
-    *(out) << "			)\n";
+    *(out) << woff+"		TrSignalDirs ( "<<this->trSignalDirs<<"\n";
+    if(!tit){
+        for(int i = 0; i < this->trSignalDirs*4; i+=4)
+        *(out) << woff+"			TrSignalDir ( "<<this->trSignalDir[i+0]<<" "<< this->trSignalDir[i+1]<<" "<< this->trSignalDir[i+2]<<" "<< this->trSignalDir[i+3]<<" )\n";
+    } else {
+        for(int i = 0; i < this->trSignalDirs*6; i+=6)
+        *(out) << woff+"			TrSignalRDir ( "<<this->trSignalRDir[i+0]<<" "<< this->trSignalRDir[i+1]<<" "<< this->trSignalRDir[i+2]<<" "<< this->trSignalRDir[i+3]<<" "<< this->trSignalRDir[i+4]<<" "<< this->trSignalRDir[i+5]<<" )\n";
+    }
+    *(out) << woff+"		)\n";
 }
 }
 
-*(out) << "		)\n";
+*(out) << woff+"	)\n";
 }

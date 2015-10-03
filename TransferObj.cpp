@@ -97,7 +97,8 @@ void TransferObj::resize(float x, float y, float z){
 }
 
 void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
-    if (!loaded) return;
+   // if (!loaded) 
+        return;
     //if (jestPQ < 2) return;
     //GLUU* gluu = GLUU::get();
     //if((this.position===undefined)||this.qDirection===undefined) return;

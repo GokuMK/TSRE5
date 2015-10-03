@@ -44,10 +44,13 @@ public:
     QString trSignalType4;
     int trSignalDirs;
     int *trSignalDir;
+    float *trSignalRDir;
+    bool titLoading = false;
     
     bool init(QString sh);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
+    void save(QTextStream* out, bool tit);
     void addToTrackPos(int d);
     void flipTrackPos(int d);
     void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);
