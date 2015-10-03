@@ -405,6 +405,7 @@ int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
 int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect, int uid) {
     newTrack(x, z,  p,  qe, ends, r, sect, uid, NULL);
 }
+
 int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect, int uid, int* start) {
 
     //TrackShape* shp = this->tsection->shape[r->value];
@@ -649,6 +650,11 @@ int TDB::joinVectorSections(int id1, int id2) {
         return joinVectorSections(id1, id2);
     }
 
+    if(section2->iTri > 0){
+        qDebug() << "przeniose " << section2->iTri << " items z " << id2 << " do " << id1;
+    }
+    moveItemsFrom2to1(id2, id1);
+    
     TRnode::TRSect *newV = new TRnode::TRSect[section1->iTrv + section2->iTrv];
 
     std::copy(section1->trVectorSection, section1->trVectorSection + section1->iTrv, newV);
@@ -668,6 +674,48 @@ int TDB::joinVectorSections(int id1, int id2) {
     trackNodes[id2] = NULL;
     trackNodes[endpk1] = NULL;
     trackNodes[endpk2] = NULL;
+}
+
+void TDB::moveItemsFrom2to1(int id2, int id1){
+    TRnode* section1 = trackNodes[id1];
+    TRnode* section2 = trackNodes[id2];
+    if(section1 == section2)
+        return;
+    
+    // join arrays
+    int iTri = section1->iTri + section2->iTri;
+    int* array = new int[iTri];
+    std::copy(section1->trItemRef, section1->trItemRef + section1->iTri, array);
+    std::copy(section2->trItemRef, section2->trItemRef + section2->iTri, array + section1->iTri);
+    
+    // update items
+    float d = getVectorSectionLength(id1);
+    qDebug() << "d: " << d;
+    TRitem* trit;
+    for(int i = 0; i < section2->iTri; i++){
+        trit = this->trackItems[section2->trItemRef[i]];
+        if(trit == NULL){
+            qDebug() << "NULL Item: " << i << " " << section2->trItemRef[i];
+        } else {
+            trit->addToTrackPos(d);
+        }
+    }
+    
+    section1->trItemRef = array;
+    section1->iTri = iTri;
+}
+
+float TDB::getVectorSectionLength(int id){
+    TRnode* n = trackNodes[id];
+    
+    float dlugosc = 0;
+    TSection* sect;
+    for (int i = 0; i < n->iTrv; i++) {
+        sect = tsection->sekcja[(int)n->trVectorSection[i].param[0]];
+        if(sect != NULL)
+            dlugosc += sect->getDlugosc();
+    }
+    return dlugosc;
 }
 
 int TDB::splitVectorSection(int id, int j){
@@ -963,6 +1011,13 @@ int TDB::rotate(int id){
     tmp = vect->TrPinK[0];
     vect->TrPinK[0] = vect->TrPinK[1];
     vect->TrPinK[1] = tmp;
+    
+    // update items
+    float d = getVectorSectionLength(id);
+    qDebug() << "d: " << d;
+    for(int i = 0; i < vect->iTri; i++){
+        this->trackItems[vect->trItemRef[i]]->flipTrackPos(d);
+    }
 
 }
 
@@ -1520,13 +1575,11 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
     for (int i = 0; i < n->iTrv; i++) {
         idx = n->trVectorSection[i].param[0];
         
-        try {
-            sectionLength = tsection->sekcja.at(idx)->getDlugosc();
-            
-        } catch (const std::out_of_range& oor) {
+        if(tsection->sekcja[idx] == NULL){
             qDebug() << "nie ma sekcji " << idx;
+        } else {
+            sectionLength = tsection->sekcja[idx]->getDlugosc();
         }
-        
         length += sectionLength;
         if(length < metry)
             continue;
@@ -1594,12 +1647,10 @@ void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot) {
 }
 
 int TDB::getLineBufferSize(int idx) {
-    try {
-        return tsection->sekcja.at(idx)->getLineBufferSize() + 6;
-    } catch (const std::out_of_range& oor) {
-
-    }
-    return 6;
+    if(tsection->sekcja[idx] == NULL)
+        return 6;
+    
+    return tsection->sekcja[idx]->getLineBufferSize() + 6;
 }
 
 void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
@@ -1634,15 +1685,13 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
     *ptr++ = point2[1];
     *ptr++ = point2[2];
 
-    try {
-        tsection->sekcja.at(idx)->drawSection(ptr, matrix);
-    } catch (const std::out_of_range& oor) {
-        qDebug() << "nie ma sekcji " << idx;
+    if(tsection->sekcja[idx] != NULL){
+        tsection->sekcja[idx]->drawSection(ptr, matrix);
     }
     
 }
 
-float TDB::setTerrainToTrackObj(int x, int y, int uid, float * &ptr){
+void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
         //Vector3f p;
         Vector3f o;
         //qDebug() << x << " "<< y << " "<< uid;
@@ -1706,17 +1755,16 @@ float TDB::setTerrainToTrackObj(int x, int y, int uid, float * &ptr){
                         Mat4::rotate(matrix, matrix, n->trVectorSection[i].param[13], 1, 0, 0);
                         
                         //Mat4::fromRotationTranslation(matrix, q, objMatrix);
-                        try {
-                            tsection->sekcja.at((int) n->trVectorSection[i].param[0])->getPoints(ptr, matrix);
-                        } catch (const std::out_of_range& oor) {
+                        if(tsection->sekcja[(int) n->trVectorSection[i].param[0]] == NULL){
                             qDebug() << "nie ma sekcji " << (int) n->trVectorSection[i].param[0];
                         }
+                        
+                        tsection->sekcja[(int) n->trVectorSection[i].param[0]]->getPoints(ptr, matrix);
                     }
                 }
             }
-            
     }
-    return 0;
+    return;
 }
 
  bool TDB::deleteNulls() {

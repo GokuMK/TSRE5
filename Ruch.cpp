@@ -208,15 +208,13 @@ Vector3f* Ruch::getPosition(){
         float y = pozW.y;
         float z = -pozW.z;
         
-        try {
-            if(trackDB->trackNodes[aktt]->typ==1){
-                Vector3f* poss = trackDB->tsection->sekcja.at(idx)->getDrawPosition(metry);
-                poss->rotate(pozO);
-                return new Vector3f(x-poss->x, y+poss->y, z-poss->z);
-            } else {
+        if(trackDB->trackNodes[aktt]->typ==1){
+            if(trackDB->tsection->sekcja[idx] == NULL)
                 return new Vector3f(x,y,z);
-            }
-        } catch (const std::out_of_range& oor) {
+            Vector3f* poss = trackDB->tsection->sekcja[idx]->getDrawPosition(metry);
+            poss->rotate(pozO);
+            return new Vector3f(x-poss->x, y+poss->y, z-poss->z);
+        } else {
             return new Vector3f(x,y,z);
         }
     }

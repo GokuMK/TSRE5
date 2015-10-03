@@ -48,7 +48,8 @@ public:
     bool init(QString sh);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
-    
+    void addToTrackPos(int d);
+    void flipTrackPos(int d);
     void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);
 private:
     Pointer3d* pointer3d;

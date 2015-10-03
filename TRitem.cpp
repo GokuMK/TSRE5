@@ -146,6 +146,14 @@ void TRitem::set(QString sh, FileBuffer* data) {
     return;
 }
 
+void TRitem::addToTrackPos(int d){
+    this->trItemSData1 += d;
+}
+    
+void TRitem::flipTrackPos(int d){
+    this->trItemSData1 = d - this->trItemSData1;
+}
+    
 void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot){
     if(type == "platformitem" || type == "sidingitem"){
         gluu->mvPushMatrix();

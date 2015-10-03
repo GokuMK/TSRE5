@@ -173,9 +173,9 @@ void Route::setTerrainToTrackObj(WorldObj* obj){
     float* punkty = new float[10000];
     float* ptr = punkty;
     if(this->tsection->isRoadShape(tobj->sectionIdx))
-        this->roadDB->setTerrainToTrackObj(obj->x, obj->y, obj->UiD, ptr);
+        this->roadDB->getVectorSectionPoints(obj->x, obj->y, obj->UiD, ptr);
     else
-        this->trackDB->setTerrainToTrackObj(obj->x, obj->y, obj->UiD, ptr);
+        this->trackDB->getVectorSectionPoints(obj->x, obj->y, obj->UiD, ptr);
     int length = ptr - punkty;
     qDebug() << "l "<<length;
     TerrainLib::setTerrainToTrackObj(punkty, length, obj->x, obj->y, obj->matrix);
