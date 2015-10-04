@@ -1639,7 +1639,7 @@ void TDB::getLines(float * &lineBuffer, int &length, float* playerT){
         if (n->typ == 1) {
             for (int i = 0; i < n->iTrv; i++) {
                 if (fabs(n->trVectorSection[i].param[8] - playerT[0]) > 1 || fabs(-n->trVectorSection[i].param[9] - playerT[1]) > 1) continue;
-                len += getLineBufferSize((int) n->trVectorSection[i].param[0], 5, 0);
+                len += getLineBufferSize((int) n->trVectorSection[i].param[0], 6, 0);
             }
         }
     }
@@ -1664,11 +1664,11 @@ void TDB::getLines(float * &lineBuffer, int &length, float* playerT){
                         n->trVectorSection[i].param[14],
                         n->trVectorSection[i].param[15]
                         );
-                getLine(ptr, p, o, (int) n->trVectorSection[i].param[0], j);
+                getLine(ptr, p, o, (int) n->trVectorSection[i].param[0], j, i);
             }
         }
     }
-    this->collisionLineLength = (ptr - this->collisionLineBuffer)/10;
+    this->collisionLineLength = (ptr - this->collisionLineBuffer)/12;
     length = this->collisionLineLength;
     lineBuffer = this->collisionLineBuffer;
 }
@@ -1800,12 +1800,13 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
         pos[2] = -position->z;
         Vec3::transformMat4(pos, pos, matrix);
         
+        out[3] = -n->trVectorSection[i].param[14] - tsection->sekcja.at(idx)->getDrawAngle(metry - length + sectionLength);
+        out[4] = n->trVectorSection[i].param[13];
+        out[5] = n->trVectorSection[i].param[8];
+        out[6] = n->trVectorSection[i].param[9];
         out[0] = pos[0];
         out[1] = pos[1];
-        out[2] = pos[2];
-        out[3] = -n->trVectorSection[i].param[14] - tsection->sekcja.at(idx)->getDrawAngle(metry - length + sectionLength);
-        out[4] = n->trVectorSection[i].param[8];
-        out[5] = n->trVectorSection[i].param[9];
+        out[2] = pos[2];        
         
         //position->x += (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10];
         //position->y += n->trVectorSection[i].param[11];
@@ -1845,7 +1846,7 @@ int TDB::getLineBufferSize(int idx, int pointSize, int offset) {
     return tsection->sekcja[idx]->getLineBufferSize(pointSize) + offset;
 }
 
-void TDB::getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id) {
+void TDB::getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid) {
 
     float matrix[16];
     float q[4];
@@ -1861,7 +1862,7 @@ void TDB::getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id) {
     Mat4::rotate(matrix, matrix, o.x, 1, 0, 0);
 
     if(tsection->sekcja[idx] != NULL){
-        tsection->sekcja[idx]->drawSection(ptr, matrix, 0, id);
+        tsection->sekcja[idx]->drawSection(ptr, matrix, 0, id, vid);
     }
 }
 
@@ -1902,33 +1903,52 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
     }
 }
 
-void TDB::findNearestPositionOnTDB(float* posT, float* &pos){
+void TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q){
     float *lineBuffer;
     int length = 0;
     getLines(lineBuffer, length, posT);
     
     qDebug() << "lines length" << length;
-    float best[6];
+    float best[7];
     best[0] = 99999;
     float dist = 0;
     float intersectionPoint[3];
-    for(int i = 0; i < length*10; i+=10){
-        //qDebug() << lineBuffer[i+0] << " "<< lineBuffer[i+1] << " " << lineBuffer[i+2] << " "<< lineBuffer[i+3] << " "<< lineBuffer[i+4] << " ";
-        //qDebug() << lineBuffer[i+5] << " "<< lineBuffer[i+6] << " " << lineBuffer[i+7] << " "<< lineBuffer[i+8] << " "<< lineBuffer[i+9] << " ";
-        dist = Intersections::pointSegmentDistance(lineBuffer + i, lineBuffer + i+5, pos, (float*)&intersectionPoint);
+    int uu;
+    for(int i = 0; i < length*12; i+=12){
+        //qDebug() << i/12;
+        //qDebug() << lineBuffer[i+0] << " "<< lineBuffer[i+1] << " " << lineBuffer[i+2] << " "<< lineBuffer[i+3] << " "<< lineBuffer[i+4] << " " << lineBuffer[i+5] ;
+        //qDebug() << lineBuffer[i+6] << " "<< lineBuffer[i+7] << " " << lineBuffer[i+8] << " "<< lineBuffer[i+9] << " "<< lineBuffer[i+10] << " " << lineBuffer[i+11] ;
+        dist = Intersections::pointSegmentDistance(lineBuffer + i, lineBuffer + i+6, pos, (float*)&intersectionPoint);
         if(dist < best[0]){
             best[0] = dist;
             best[1] = lineBuffer[i+3];
             best[2] = lineBuffer[i+4];
-            best[3] = intersectionPoint[0];
-            best[4] = intersectionPoint[1];
-            best[5] = intersectionPoint[2];
+
+            float dist1 = Vec3::distance(lineBuffer + i, lineBuffer + i+6);
+            float dist2 = Vec3::distance(lineBuffer + i, intersectionPoint);
+            dist1 = dist2/dist1;
+            best[3] = lineBuffer[i+5] + (lineBuffer[i+11] - lineBuffer[i+5])*dist1;
+            //best[3] = intersectionPoint[0];
+            //best[4] = intersectionPoint[1];
+            //best[5] = intersectionPoint[2];
         }
     }
-    qDebug() << "item pos: " << best[0] << " " << best[1] << " " << best[2];
-    pos[0] = best[3];
-    pos[1] = best[4];
-    pos[2] = best[5];
+    qDebug() << "item pos: " << best[0] << " " << best[1] << " " << best[2] << " " << best[3];
+    
+    //TRnode* n = trackNodes[(int)best[1]];
+    //posT[0] = n->trVectorSection[(int)best[2]].param[8];
+    //posT[1] = -n->trVectorSection[(int)best[2]].param[9];
+    
+    float metry = this->getVectorSectionLengthToIdx(best[1], best[2]);
+    this->getDrawPositionOnTrNode((float*)best, best[1], metry + best[3]);
+    pos[0] = best[0];
+    pos[1] = best[1];
+    pos[2] = -best[2];
+    posT[0] = best[5];
+    posT[1] = -best[6];
+    q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
+    Quat::rotateY(q, q, best[3]);
+    Quat::rotateX(q, q, -best[4]);
 }
 
 void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){

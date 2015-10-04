@@ -38,7 +38,12 @@ public slots:
     void enableTool(QString name);
     void setPaintBrush(Brush* brush);
     void jumpTo(int x, int y);
+    
     void msg(QString text);
+    void msg(QString name, bool val);
+    void msg(QString name, int val);
+    void msg(QString name, float val);
+    void msg(QString name, QString val);
 
 signals:
     void routeLoaded(Route * a);
@@ -47,6 +52,13 @@ signals:
     void setToolbox(QString name);
     void setBrushTextureId(int val);
     void showProperties(WorldObj* obj);
+    
+    void sendMsg(QString name);
+    void sendMsg(QString name, bool val);
+    void sendMsg(QString name, int val);
+    void sendMsg(QString name, float val);
+    void sendMsg(QString name, QString val);
+    
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;

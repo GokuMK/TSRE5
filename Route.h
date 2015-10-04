@@ -19,6 +19,7 @@ public:
     float startpZ;
     TSectionDAT *tsection; 
     Ref *ref;
+    bool stickToTDB = false;
     Route();
     Route(const Route& orig);
     virtual ~Route();

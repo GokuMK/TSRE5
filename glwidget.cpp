@@ -590,18 +590,6 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     m_lastPos = event->pos();
 }
 
-void GLWidget::msg(QString text){
-    qDebug() << text;
-    if(text == "save"){
-        route->save();
-        return;
-    }
-    if(text == "createPaths"){
-        route->createNewPaths();
-        return;
-    }
-}
-
 void GLWidget::enableTool(QString name){
     qDebug() << name;
     toolEnabled = name;
@@ -620,4 +608,35 @@ void GLWidget::setPaintBrush(Brush* brush){
 void GLWidget::setSelectedObj(WorldObj* o){
     this->selectedObj = o;
     emit showProperties(selectedObj);
+}
+
+void GLWidget::msg(QString text){
+    qDebug() << text;
+    if(text == "save"){
+        route->save();
+        return;
+    }
+    if(text == "createPaths"){
+        route->createNewPaths();
+        return;
+    }
+}
+
+void GLWidget::msg(QString text, bool val){
+    qDebug() << text;
+    if(text == "stickToTDB"){
+        this->route->stickToTDB = val;
+        return;
+    }
+}
+
+
+void GLWidget::msg(QString text, int val){
+}
+
+void GLWidget::msg(QString text, float val){
+}
+
+
+void GLWidget::msg(QString text, QString val){
 }

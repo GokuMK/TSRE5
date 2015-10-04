@@ -65,14 +65,14 @@ public:
     void renderItems(GLUU *gluu, float* playerT, float playerRot);
     bool getDrawPositionOnTrNode(float* out, int id, float metry);
     int findTrItemNodeId(int id);
-    void findNearestPositionOnTDB(float* posT, float* &pos);
+    void findNearestPositionOnTDB(float* posT, float* pos, float* q);
 private:
     bool deleteNulls();
     int findBiggest();
     int getLineBufferSize(int idx, int pointSize, int offset);
     void checkSignals();
     void drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx);
-    void getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id);
+    void getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid);
     OglObj linieSieci;
     OglObj konceSieci;
     OglObj punktySieci;

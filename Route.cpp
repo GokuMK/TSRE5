@@ -206,9 +206,12 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     Game::check_coords(x, z, p);
     
     // pozycja wzgledem TDB:
-    float* playerT = Vec2::fromValues(x, z);
-    this->trackDB->findNearestPositionOnTDB(playerT, p);
-    
+    if(stickToTDB){
+        float* playerT = Vec2::fromValues(x, z);
+        this->trackDB->findNearestPositionOnTDB(playerT, p, q);
+        x = playerT[0];
+        z = playerT[1];
+    }
     
     Tile *tTile;
     //try {

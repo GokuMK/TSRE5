@@ -17,7 +17,7 @@ public:
     float getDlugosc();
     int getLineBufferSize(int pointSize);
     void drawSection(float* &ptr, float* matrix, float height);
-    void drawSection(float* &ptr, float* matrix, float height, int idx);
+    void drawSection(float* &ptr, float* matrix, float height, int idx, int vidx);
     void getPoints(float* &ptr, float* matrix);
     void setDrawPosition(float metry);
     float getAngle();

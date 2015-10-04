@@ -138,10 +138,10 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
                 return;
             }
             //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
-            drawPositions[i] = new float[6];
+            drawPositions[i] = new float[7];
             tdb->getDrawPositionOnTrNode(drawPositions[i], id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
-            drawPositions[i][0] += 2048 * (drawPositions[i][4] - this->x);
-            drawPositions[i][2] -= 2048 * (-drawPositions[i][5] - this->y);
+            drawPositions[i][0] += 2048 * (drawPositions[i][5] - this->x);
+            drawPositions[i][2] -= 2048 * (-drawPositions[i][6] - this->y);
         }
     }
 

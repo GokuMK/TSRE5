@@ -170,7 +170,7 @@ void TRitem::flipTrackPos(float d){
 }
     
 void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot){
-    if(type == "platformitem" || type == "sidingitem"){
+    /*if(type == "platformitem" || type == "sidingitem"){
         gluu->mvPushMatrix();
         
         //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
@@ -194,7 +194,7 @@ void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot){
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         pointer3d->render();
         gluu->mvPopMatrix();
-    }
+    }*/
 }
 
 void TRitem::save(QTextStream* out){

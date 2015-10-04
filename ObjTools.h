@@ -23,8 +23,21 @@ public slots:
     void selectToolEnabled();
     void placeToolEnabled();
     void itemSelected(Ref::RefItem* item);
+    void stickToTDBEnabled(int state);
+    
+    void msg(QString name);
+    void msg(QString name, bool val);
+    void msg(QString name, int val);
+    void msg(QString name, float val);
+    void msg(QString name, QString val);
 signals:
     void enableTool(QString name);
+
+    void sendMsg(QString name);
+    void sendMsg(QString name, bool val);
+    void sendMsg(QString name, int val);
+    void sendMsg(QString name, float val);
+    void sendMsg(QString name, QString val);
     
 private:
     Route* route;
@@ -36,6 +49,8 @@ private:
     QComboBox refRoad;
     Ref::RefItem itemRef;
     std::deque<Ref::RefItem*> lastItemsPtr;
+    QCheckBox stickToTDB;
+    QCheckBox stickToRDB;
 };
 
 #endif	/* TOOLBOX_H */

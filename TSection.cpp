@@ -54,10 +54,10 @@ int TSection::getLineBufferSize(int pointSize){
 }
 
 void TSection::drawSection(float* &ptr, float* matrix, float height) {
-    drawSection(ptr, matrix, height, -1);
+    drawSection(ptr, matrix, height, -1, 0);
 }
 
-void TSection::drawSection(float* &ptr, float* matrix, float height, int idx) {
+void TSection::drawSection(float* &ptr, float* matrix, float height, int idx, int vidx) {
 
             float kierunek;
             if(type==0){
@@ -73,6 +73,7 @@ void TSection::drawSection(float* &ptr, float* matrix, float height, int idx) {
                 *ptr++ = point1[2];
                 if(idx >= 0){
                     *ptr++ = idx;
+                    *ptr++ = vidx;
                     *ptr++ = 0;
                 }
                 *ptr++ = point2[0];
@@ -80,6 +81,7 @@ void TSection::drawSection(float* &ptr, float* matrix, float height, int idx) {
                 *ptr++ = point2[2];
                 if(idx >= 0){
                     *ptr++ = idx;
+                    *ptr++ = vidx;
                     *ptr++ = size;
                 }
                 //podklady
@@ -116,14 +118,18 @@ void TSection::drawSection(float* &ptr, float* matrix, float height, int idx) {
                     *ptr++ = point1[2];
                     if(idx >= 0){
                         *ptr++ = idx;
+                        *ptr++ = vidx;
                         *ptr++ = fabs(radius*(angle2 - angle*kierunek));
                     }
                     *ptr++ = point2[0];
                     *ptr++ = point2[1];
                     *ptr++ = point2[2];
                     if(idx >= 0){
+                        float d = ((angle2+0.05) - angle*kierunek);
+                        if(d > -angle*kierunek) d = -angle*kierunek;
                         *ptr++ = idx;
-                        *ptr++ = fabs(radius*((angle2+0.05) - angle*kierunek));
+                        *ptr++ = vidx;
+                        *ptr++ = fabs(radius*d);
                     }
                     Mat4::translate(matrix, matrix, kierunek*a.x,0,kierunek*a.y);
                     Mat4::rotateY(matrix, matrix, -aa);
@@ -198,6 +204,9 @@ void TSection::setDrawPosition(float metry) {
     }
     
 Vector3f *TSection::getDrawPosition(float metry) {
+    
+    if(metry > this->getDlugosc())
+       metry = this->getDlugosc();
             //prosta
             if(type==0){
                 return(new Vector3f(0, 0, metry));
@@ -218,6 +227,9 @@ Vector3f *TSection::getDrawPosition(float metry) {
     }
     
 float TSection::getDrawAngle(float metry) {
+    
+    if(metry > this->getDlugosc())
+        metry = this->getDlugosc();
             //prosta
             if(type==0){
                 return 0;

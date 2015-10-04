@@ -31,6 +31,9 @@ ObjTools::ObjTools(QString name)
     vbox->addWidget(&trackList);
     vbox->addWidget(selectTool);
     vbox->addWidget(placeTool);
+    stickToTDB.setText("Stick To TrackDB");
+    stickToTDB.setChecked(false);
+    vbox->addWidget(&stickToTDB);
     QLabel *label2 = new QLabel("Recent items:");
     label2->setStyleSheet("QLabel { color : #999999; }");
     label2->setContentsMargins(3,0,0,0);
@@ -80,6 +83,11 @@ ObjTools::ObjTools(QString name)
     
     QObject::connect(placeTool, SIGNAL(released()),
                       this, SLOT(placeToolEnabled()));
+    
+    QObject::connect(&stickToTDB, SIGNAL(stateChanged(int)),
+                      this, SLOT(stickToTDBEnabled(int)));
+    
+    
 }
 
 ObjTools::~ObjTools() {
@@ -237,4 +245,26 @@ void ObjTools::itemSelected(Ref::RefItem* item){
     new QListWidgetItem ( text, &lastItems, lastItemsPtr.size() - 1 );
         if(lastItems.count() > 11)
             delete lastItems.takeItem(0);
+}
+
+void ObjTools::stickToTDBEnabled(int state){
+    if(state == Qt::Checked)
+        this->sendMsg("stickToTDB", true);
+    else
+        this->sendMsg("stickToTDB", false);
+}
+
+void ObjTools::msg(QString text){
+}
+
+void ObjTools::msg(QString text, bool val){
+}
+
+void ObjTools::msg(QString text, int val){
+}
+
+void ObjTools::msg(QString text, float val){
+}
+
+void ObjTools::msg(QString text, QString val){
 }

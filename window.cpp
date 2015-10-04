@@ -121,6 +121,25 @@ Window::Window() {
     //box2->hide();
     
     
+    QObject::connect(this, SIGNAL(sendMsg(QString)),
+                      glWidget, SLOT(msg(QString)));
+    
+    //ObjTools <-> qlWidget
+    QObject::connect(objTools, SIGNAL(sendMsg(QString)), glWidget, SLOT(msg(QString)));
+    QObject::connect(objTools, SIGNAL(sendMsg(QString, bool)), glWidget, SLOT(msg(QString, bool)));
+    QObject::connect(objTools, SIGNAL(sendMsg(QString, int)), glWidget, SLOT(msg(QString, int)));
+    QObject::connect(objTools, SIGNAL(sendMsg(QString, float)), glWidget, SLOT(msg(QString, float)));
+    QObject::connect(objTools, SIGNAL(sendMsg(QString, QString)), glWidget, SLOT(msg(QString, QString)));
+    
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), objTools, SLOT(msg(QString)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString)), objTools, SLOT(msg(QString)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, bool)), objTools, SLOT(msg(QString, bool)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, int)), objTools, SLOT(msg(QString, int)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, float)), objTools, SLOT(msg(QString, float)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), objTools, SLOT(msg(QString, QString)));
+    
+    ///
+    
     QObject::connect(glWidget, SIGNAL(naviInfo(int, int, int, int)),
                       naviBox, SLOT(naviInfo(int, int, int, int)));
     
@@ -145,9 +164,6 @@ Window::Window() {
     QObject::connect(glWidget, SIGNAL(itemSelected(Ref::RefItem*)),
                       objTools, SLOT(itemSelected(Ref::RefItem*)));
 
-    QObject::connect(this, SIGNAL(sendMsg(QString)),
-                      glWidget, SLOT(msg(QString)));
-    
     QObject::connect(glWidget, SIGNAL(showProperties(WorldObj*)),
                       this, SLOT(showProperties(WorldObj*)));
     
