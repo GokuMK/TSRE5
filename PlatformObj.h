@@ -17,6 +17,7 @@ public:
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     bool select(int value);
+    bool isTrackItem();
     void translate(float px, float py, float pz);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 

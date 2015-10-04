@@ -108,6 +108,10 @@ bool PlatformObj::select(int value){
     this->selected = true;
 }
 
+bool PlatformObj::isTrackItem(){
+    return true;
+}
+
 void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
     

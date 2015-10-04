@@ -129,7 +129,7 @@ void GLWidget::paintGL() {
 
     
     
-    Mat4::perspective(gluu->pMatrix, 45.0f, float(this->width()) / this->height(), 0.2f, 4000.0);
+    Mat4::perspective(gluu->pMatrix, 45.0f, float(this->width()) / this->height(), 0.2f, Game::objectLod);
     float* lookAt = camera->getMatrix();
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, lookAt);
     Mat4::identity(gluu->mvMatrix);

@@ -16,6 +16,7 @@ public:
     static QString route;
     static QString routeName;
     static float objectLod;
+    static int tileLod;
     static int allowObjLag;
     static int maxObjLag;
     static void load();
@@ -36,6 +37,8 @@ public:
     static bool writeTDB;
     static bool systemTheme;
     static bool toolsHidden;
+    static bool renderTdbLines;
+    static bool renderTsectionLines;
     
 private:
     static Window* window;

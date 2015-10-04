@@ -415,8 +415,8 @@ void TerrainLib::fillRAW(float** terrainData, int mojex, int mojez) {
 }
 
 void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* target, float fov) {
-    int mintile = -2;
-    int maxtile = 2;
+    int mintile = -Game::tileLod;
+    int maxtile = Game::tileLod;
 
     //TerrainLib.render(playerT, playerW); 
 

@@ -118,6 +118,8 @@ bool PropertiesStatic::support(WorldObj* obj){
         return false;
     if(obj->type == "static")
         return true;
+    if(obj->type == "gantry")
+        return true;
     return false;
 }
 

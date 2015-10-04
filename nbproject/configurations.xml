@@ -143,6 +143,8 @@
       <logicalFolder name="f5" displayName="math3d" projectFiles="true">
         <itemPath>Flex.cpp</itemPath>
         <itemPath>GLMatrix.cpp</itemPath>
+        <itemPath>Intersections.cpp</itemPath>
+        <itemPath>Intersections.h</itemPath>
         <itemPath>Vector2f.cpp</itemPath>
         <itemPath>Vector2i.cpp</itemPath>
         <itemPath>Vector3f.cpp</itemPath>
@@ -304,6 +306,10 @@
       <item path="ImageLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ImageLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Intersections.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Intersections.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -627,6 +633,10 @@
       <item path="ImageLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ImageLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Intersections.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Intersections.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -15,6 +15,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/Game.o
 ./build/Release/MinGW_QT_static-Windows/GuiFunct.o
 ./build/Release/MinGW_QT_static-Windows/ImageLib.o
+./build/Release/MinGW_QT_static-Windows/Intersections.o
 ./build/Release/MinGW_QT_static-Windows/LevelCrObj.o
 ./build/Release/MinGW_QT_static-Windows/LoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/NaviBox.o

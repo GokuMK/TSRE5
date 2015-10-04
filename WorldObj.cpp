@@ -29,6 +29,10 @@ bool WorldObj::allowNew(){
     return false;
 }
 
+bool WorldObj::isTrackItem(){
+    return false;
+}
+
 void WorldObj::load(int x, int y) {
     this->x = x;
     this->y = y;

@@ -2,6 +2,730 @@
 #include <math.h>
 #include <iostream>
 
+/**
+ * Creates a new, empty vec2
+ * @returns {vec2} a new 2D vector
+ */
+float* Vec2::create() {
+    float * out = new float[2];
+    out[0] = 0;
+    out[1] = 0;
+    return out; 
+};
+/**
+ * Creates a new vec2 initialized with values from an existing vector
+ * @param {vec2} a vector to clone
+ * @returns {vec2} a new 2D vector
+ */
+float* Vec2::clone(float* a) {
+    float * out = new float[2];
+    out[0] = a[0];
+    out[1] = a[1];
+    return out;
+};
+/**
+ * Creates a new vec2 initialized with the given values
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @returns {vec2} a new 2D vector
+ */
+float* Vec2::fromValues(float x, float y) {
+    float* out = new float[2];
+    out[0] = x;
+    out[1] = y;
+    return out;
+};
+/**
+ * Copy the values from one vec2 to another
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the source vector
+ * @returns {vec2} out
+ */
+float* Vec2::copy(float* out, float* a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    return out;
+};
+/**
+ * Set the components of a vec2 to the given values
+ * @param {vec2} out the receiving vector
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @returns {vec2} out
+ */
+float* Vec2::set(float* out, float x, float y) {
+    out[0] = x;
+    out[1] = y;
+    return out;
+};
+/**
+ * Adds two vec2's
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+float* Vec2::add(float *out, float *a, float *b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    return out;
+}
+/**
+ * Subtracts vector b from vector a
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+float* Vec2::subtract(float *out, float *a, float *b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    return out;
+}
+/**
+ * Alias for {@link vec2.subtract}
+ * @function
+ */
+float* Vec2::sub(float *out, float *a, float *b) {
+    return subtract(out, a, b);
+}
+/**
+ * Multiplies two vec2's
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+float* Vec2::multiply(float *out, float *a, float *b) {
+    out[0] = a[0] * b[0];
+    out[1] = a[1] * b[1];
+    return out;
+}
+/**
+ * Alias for {@link vec2.multiply}
+ * @function
+ */
+float* Vec2::mul(float *out, float *a, float *b) {
+    return multiply(out, a, b);
+}
+/**
+ * Divides two vec2's
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+float* Vec2::divide(float *out, float *a, float *b) {
+    out[0] = a[0] / b[0];
+    out[1] = a[1] / b[1];
+    return out;
+}
+/**
+ * Alias for {@link vec2.divide}
+ * @function
+ */
+float* Vec2::div(float *out, float *a, float *b) {
+    return divide(out, a, b);
+}
+/**
+ * Returns the minimum of two vec2's
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+float* Vec2::min(float *out, float *a, float *b) {
+    out[0] = fmin(a[0], b[0]);
+    out[1] = fmin(a[1], b[1]);
+    return out;
+}
+/**
+ * Returns the maximum of two vec2's
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */
+float* Vec2::max(float *out, float *a, float *b) {
+    out[0] = fmax(a[0], b[0]);
+    out[1] = fmax(a[1], b[1]);
+    return out;
+}
+/**
+ * Scales a vec2 by a scalar number
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to scale
+ * @param {Number} b amount to scale the vector by
+ * @returns {vec2} out
+ */
+float* Vec2::scale(float *out, float *a, float b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    return out;
+}
+/**
+ * Adds two vec2's after scaling the second operand by a scalar value
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @param {Number} scale the amount to scale b by before adding
+ * @returns {vec2} out
+ */
+float* Vec2::scaleAndAdd(float *out, float *a, float *b, float scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    return out;
+}
+/**
+ * Calculates the euclidian distance between two vec2's
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {Number} distance between a and b
+ */
+float Vec2::distance(float *a, float *b) {
+    float x = b[0] - a[0],
+        y = b[1] - a[1];
+    return sqrt(x*x + y*y);
+}
+/**
+ * Alias for {@link vec2.distance}
+ * @function
+ */
+float Vec2::dist(float *a, float *b) {
+    return distance(a, b);
+}
+/**
+ * Calculates the squared euclidian distance between two vec2's
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {Number} squared distance between a and b
+ */
+float Vec2::squaredDistance(float *a, float *b) {
+    float x = b[0] - a[0],
+        y = b[1] - a[1];
+    return x*x + y*y;
+}
+/**
+ * Alias for {@link vec2.squaredDistance}
+ * @function
+ */
+float Vec2::sqrDist(float *a, float *b) {
+    return squaredDistance(a, b);
+}
+/**
+ * Calculates the length of a vec2
+ * @param {vec2} a vector to calculate length of
+ * @returns {Number} length of a
+ */
+float Vec2::length(float *a) {
+    float x = a[0],
+        y = a[1];
+    return sqrt(x*x + y*y);
+}
+/**
+ * Alias for {@link vec2.length}
+ * @function
+ */
+float Vec2::len(float *a) {
+    return length(a);
+}
+/**
+ * Calculates the squared length of a vec2
+ * @param {vec2} a vector to calculate squared length of
+ * @returns {Number} squared length of a
+ */
+float Vec2::squaredLength(float *a) {
+    float x = a[0],
+        y = a[1];
+    return x*x + y*y;
+}
+/**
+ * Alias for {@link vec2.squaredLength}
+ * @function
+ */
+float Vec2::sqrLen(float *a) {
+    return squaredLength(a);
+}
+/**
+ * Negates the components of a vec2
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to negate
+ * @returns {vec2} out
+ */
+float* Vec2::negate(float *out, float *a) {
+    out[0] = -a[0];
+    out[1] = -a[1];
+    return out;
+}
+/**
+ * Normalize a vec2
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to normalize
+ * @returns {vec2} out
+ */
+float* Vec2::normalize(float *out, float *a) {
+    float x = a[0],
+        y = a[1];
+    float len = x*x + y*y;
+    if (len > 0) {
+        //TODO: evaluate use of glm_invsqrt here?
+        len = 1.0 / sqrt(len);
+        out[0] = a[0] * len;
+        out[1] = a[1] * len;
+    }
+    return out;
+}
+/**
+ * Calculates the dot product of two vec2's
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {Number} dot product of a and b
+ */
+float Vec2::dot(float *a, float *b) {
+    return a[0] * b[0] + a[1] * b[1];
+}
+/**
+ * Computes the cross product of two vec2's
+ * Note that the cross product must by definition produce a 3D vector
+ * @param {vec3} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec3} out
+ */
+float* Vec2::cross(float *out, float *a, float *b) {
+    float z = a[0] * b[1] - a[1] * b[0];
+    out[0] = out[1] = 0;
+    out[2] = z;
+    return out;
+}
+/**
+ * Performs a linear interpolation between two vec2's
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {vec2} out
+ */
+float* Vec2::lerp(float *out, float *a, float *b, float t) {
+    float ax = a[0],
+        ay = a[1];
+    out[0] = ax + t * (b[0] - ax);
+    out[1] = ay + t * (b[1] - ay);
+    return out;
+}
+/**
+ * Transforms the vec2 with a mat2
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat2} m matrix to transform with
+ * @returns {vec2} out
+ */
+float* Vec2::transformMat2(float *out, float *a, float *m) {
+    float x = a[0],
+        y = a[1];
+    out[0] = m[0] * x + m[2] * y;
+    out[1] = m[1] * x + m[3] * y;
+    return out;
+}
+/**
+ * Transforms the vec2 with a mat2d
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat2d} m matrix to transform with
+ * @returns {vec2} out
+ */
+float* Vec2::transformMat2d(float *out, float *a, float *m) {
+    float x = a[0],
+        y = a[1];
+    out[0] = m[0] * x + m[2] * y + m[4];
+    out[1] = m[1] * x + m[3] * y + m[5];
+    return out;
+}
+/**
+ * Transforms the vec2 with a mat3
+ * 3rd vector component is implicitly '1'
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat3} m matrix to transform with
+ * @returns {vec2} out
+ */
+float* Vec2::transformMat3(float *out, float *a, float *m) {
+    float x = a[0],
+        y = a[1];
+    out[0] = m[0] * x + m[3] * y + m[6];
+    out[1] = m[1] * x + m[4] * y + m[7];
+    return out;
+}
+/**
+ * Transforms the vec2 with a mat4
+ * 3rd vector component is implicitly '0'
+ * 4th vector component is implicitly '1'
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat4} m matrix to transform with
+ * @returns {vec2} out
+ */
+float* Vec2::transformMat4(float *out, float *a, float *m) {
+    float x = a[0], 
+        y = a[1];
+    out[0] = m[0] * x + m[4] * y + m[12];
+    out[1] = m[1] * x + m[5] * y + m[13];
+    return out;
+}
+
+/**
+ * Creates a new, empty vec3
+ * @returns {vec3} a new 3D vector
+ */
+float* Vec3::create() {
+    float* out = new float[3];
+    out[0] = 0;
+    out[1] = 0;
+    out[2] = 0;
+    return out;
+}
+/**
+ * Creates a new vec3 initialized with values from an existing vector
+ * @param {vec3} a vector to clone
+ * @returns {vec3} a new 3D vector
+ */
+float* Vec3::clone(float* a) {
+    float* out = new float[3];
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    return out;
+}
+/**
+ * Creates a new vec3 initialized with the given values
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @returns {vec3} a new 3D vector
+ */
+float* Vec3::fromValues(float x, float y, float z) {
+    float* out = new float[3];
+    out[0] = x;
+    out[1] = y;
+    out[2] = z;
+    return out;
+}
+/**
+ * Copy the values from one vec3 to another
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the source vector
+ * @returns {vec3} out
+ */
+float* Vec3::copy(float* out, float* a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    return out;
+}
+/**
+ * Set the components of a vec3 to the given values
+ * @param {vec3} out the receiving vector
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @param {Number} z Z component
+ * @returns {vec3} out
+ */
+float* Vec3::set(float* out, float x, float y, float z) {
+    out[0] = x;
+    out[1] = y;
+    out[2] = z;
+    return out;
+}
+/*
+ * Adds two vec3's
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+float* Vec3::add(float* out, float* a, float* b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    out[2] = a[2] + b[2];
+    return out;
+}
+/**
+ * Subtracts vector b from vector a
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+float* Vec3::subtract(float* out, float* a, float* b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    out[2] = a[2] - b[2];
+    return out;
+}
+/**
+ * Alias for {@link float* Vec3::subtract}
+ * @function
+ */
+float* Vec3::sub(float* out, float* a, float* b) {
+    return Vec3::subtract( out, a, b);
+}
+/**
+ * Multiplies two vec3's
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+float* Vec3::multiply(float* out, float* a, float* b) {
+    out[0] = a[0] * b[0];
+    out[1] = a[1] * b[1];
+    out[2] = a[2] * b[2];
+    return out;
+}
+/**
+ * Alias for {@link float* Vec3::multiply}
+ * @function
+ */
+float* Vec3::mul(float* out, float* a, float* b) {
+    return Vec3::multiply( out, a, b);
+}
+/**
+ * Divides two vec3's
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+float* Vec3::divide(float* out, float* a, float* b) {
+    out[0] = a[0] / b[0];
+    out[1] = a[1] / b[1];
+    out[2] = a[2] / b[2];
+    return out;
+}
+/**
+ * Alias for {@link float* Vec3::divide}
+ * @function
+ */
+float* Vec3::div(float* out, float* a, float* b) {
+    return Vec3::divide( out, a, b);
+}
+/**
+ * Returns the minimum of two vec3's
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+float* Vec3::min(float* out, float* a, float* b) {
+    out[0] = fmin(a[0], b[0]);
+    out[1] = fmin(a[1], b[1]);
+    out[2] = fmin(a[2], b[2]);
+    return out;
+}
+/**
+ * Returns the maximum of two vec3's
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+float* Vec3::max(float* out, float* a, float* b) {
+    out[0] = fmax(a[0], b[0]);
+    out[1] = fmax(a[1], b[1]);
+    out[2] = fmax(a[2], b[2]);
+    return out;
+}
+/**
+ * Scales a vec3 by a scalar number
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the vector to scale
+ * @param {Number} b amount to scale the vector by
+ * @returns {vec3} out
+ */
+float* Vec3::scale(float* out, float* a, float b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    out[2] = a[2] * b;
+    return out;
+}
+/**
+ * Adds two vec3's after scaling the second operand by a scalar value
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @param {Number} scale the amount to scale b by before adding
+ * @returns {vec3} out
+ */
+float* Vec3::scaleAndAdd(float* out, float* a, float* b, float scale) {
+    out[0] = a[0] + (b[0] * scale);
+    out[1] = a[1] + (b[1] * scale);
+    out[2] = a[2] + (b[2] * scale);
+    return out;
+}
+/**
+ * Calculates the euclidian distance between two vec3's
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {Number} distance between a and b
+ */
+float Vec3::distance(float* a, float* b) {
+    float x = b[0] - a[0],
+        y = b[1] - a[1],
+        z = b[2] - a[2];
+    return sqrt(x*x + y*y + z*z);
+}
+/*
+ * Alias for {@link float* Vec3::distance}
+ * @function
+ */
+float Vec3::dist(float* a, float* b) {
+    return Vec3::distance(a, b);
+}
+
+/**
+ * Calculates the squared euclidian distance between two vec3's
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {Number} squared distance between a and b
+ */
+float Vec3::squaredDistance(float* a, float* b) {
+    float x = b[0] - a[0],
+        y = b[1] - a[1],
+        z = b[2] - a[2];
+    return x*x + y*y + z*z;
+};
+/**
+ * Alias for {@link float* Vec3::squaredDistance}
+ * @function
+ */
+float Vec3::sqrDist(float* a, float* b) {
+    return Vec3::squaredDistance(a, b);
+}
+/**
+ * Calculates the length of a vec3
+ * @param {vec3} a vector to calculate length of
+ * @returns {Number} length of a
+ */
+float Vec3::length (float* a) {
+    float  x = a[0],
+        y = a[1],
+        z = a[2];
+    return sqrt(x*x + y*y + z*z);
+}
+/**
+ * Alias for {@link float* Vec3::length}
+ * @function
+ */
+float Vec3::len (float* a) {
+    return Vec3::length (a);
+}
+/**
+ * Calculates the squared length of a vec3
+ * @param {vec3} a vector to calculate squared length of
+ * @returns {Number} squared length of a
+ */
+float Vec3::squaredLength(float* a) {
+    float x = a[0],
+        y = a[1],
+        z = a[2];
+    return x*x + y*y + z*z;
+}
+/**
+ * Alias for {@link float* Vec3::squaredLength}
+ * @function
+ */
+float Vec3::sqrLen(float* a) {
+    return Vec3::squaredLength(a);
+}
+/**
+ * Negates the components of a vec3
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to negate
+ * @returns {vec3} out
+ */
+float* Vec3::negate(float* out, float* a) {
+    out[0] = -a[0];
+    out[1] = -a[1];
+    out[2] = -a[2];
+    return out;
+}
+/**
+ * Normalize a vec3
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a vector to normalize
+ * @returns {vec3} out
+ */
+float* Vec3::normalize(float* out, float* a) {
+    float x = a[0],
+        y = a[1],
+        z = a[2];
+    float len = x*x + y*y + z*z;
+    if (len > 0) {
+        //TODO: evaluate use of glm_invsqrt here?
+        len = 1.0 / sqrt(len);
+        out[0] = a[0] * len;
+        out[1] = a[1] * len;
+        out[2] = a[2] * len;
+    }
+    return out;
+}
+/**
+ * Calculates the dot product of two vec3's
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {Number} dot product of a and b
+ */
+float Vec3::dot (float* a, float* b) {
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+}
+/**
+ * Computes the cross product of two vec3's
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @returns {vec3} out
+ */
+float* Vec3::cross(float* out, float* a, float* b) {
+    float  ax = a[0], ay = a[1], az = a[2],
+        bx = b[0], by = b[1], bz = b[2];
+
+    out[0] = ay * bz - az * by;
+    out[1] = az * bx - ax * bz;
+    out[2] = ax * by - ay * bx;
+    return out;
+}
+/**
+ * Performs a linear interpolation between two vec3's
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the first operand
+ * @param {vec3} b the second operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {vec3} out
+ */
+float* Vec3::lerp (float* out, float* a, float* b, float t) {
+    float  ax = a[0],
+        ay = a[1],
+        az = a[2];
+    out[0] = ax + t * (b[0] - ax);
+    out[1] = ay + t * (b[1] - ay);
+    out[2] = az + t * (b[2] - az);
+    return out;
+}
+/**
+ * Transforms the vec3 with a mat3.
+ * @param {vec3} out the receiving vector
+ * @param {vec3} a the vector to transform
+ * @param {mat4} m the 3x3 matrix to transform with
+ * @returns {vec3} out
+ */
+float* Vec3::transformMat3(float* out, float* a, float* m) {
+    float  x = a[0], y = a[1], z = a[2];
+    out[0] = x * m[0] + y * m[3] + z * m[6];
+    out[1] = x * m[1] + y * m[4] + z * m[7];
+    out[2] = x * m[2] + y * m[5] + z * m[8];
+    return out;
+}
+
 float* Vec3::transformMat4(float* out, float* a, float* m) {
     float x = a[0], y = a[1], z = a[2];
     out[0] = m[0] * x + m[4] * y + m[8] * z + m[12];

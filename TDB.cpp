@@ -1559,9 +1559,6 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
                     linie[lPtr++] = (((-trackNodes[n->TrPinS[1]]->UiD[5] - playerT[1])*2048 - trackNodes[n->TrPinS[1]]->UiD[8]));
                 }
             } else if (n->typ == 0) {
-                if(fabs(n->UiD[4] - playerT[0]) > 2) continue;
-                if(fabs(-n->UiD[5] - playerT[1]) > 2) continue;
-                
                 konce[kPtr++] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
                 konce[kPtr++] = (n->UiD[7]);
                 konce[kPtr++] = ((-n->UiD[5] - playerT[1])*2048 - n->UiD[8]);
@@ -1569,6 +1566,9 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
                 konce[kPtr++] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
                 konce[kPtr++] = (n->UiD[7] + wysokoscSieci);
                 konce[kPtr++] = ((-n->UiD[5] - playerT[1])*2048 - n->UiD[8]);
+                
+                if(fabs(n->UiD[4] - playerT[0]) > 1) continue;
+                if(fabs(-n->UiD[5] - playerT[1]) > 1) continue;
                 
                 if(!road){
                     if(endIdObj[i] == NULL){
@@ -1636,12 +1636,13 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
             if (n->typ == -1) continue;
             if (n->typ == 1) {
                 for (int i = 0; i < n->iTrv; i++) {
-                    p.set(
-                            (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10],
-                            n->trVectorSection[i].param[11],
-                            (-n->trVectorSection[i].param[9] - playerT[1])*2048 - n->trVectorSection[i].param[12]
-                            );
-                    if (sqrt(p.x * p.x + p.z * p.z) > 3000) continue;
+                    if (fabs(n->trVectorSection[i].param[8] - playerT[0]) > 1 || fabs(-n->trVectorSection[i].param[9] - playerT[1]) > 1) continue;
+                    //p.set(
+                    //        (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10],
+                    //        n->trVectorSection[i].param[11],
+                    //        (-n->trVectorSection[i].param[9] - playerT[1])*2048 - n->trVectorSection[i].param[12]
+                    //        );
+                    //if (sqrt(p.x * p.x + p.z * p.z) > Game::objectLod) continue;
                     len += getLineBufferSize((int) n->trVectorSection[i].param[0]);
                 }
             }
@@ -1657,6 +1658,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
             if (n->typ == 1) {
                 //qDebug() << j;
                 for (int i = 0; i < n->iTrv; i++) {
+                    if (fabs(n->trVectorSection[i].param[8] - playerT[0]) > 1 || fabs(-n->trVectorSection[i].param[9] - playerT[1]) > 1) continue;
                     p.set(
                             (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10],
                             n->trVectorSection[i].param[11],
@@ -1667,7 +1669,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
                             n->trVectorSection[i].param[14],
                             n->trVectorSection[i].param[15]
                             );
-                    if (sqrt(p.x * p.x + p.z * p.z) > 3000) continue;
+                    //if (sqrt(p.x * p.x + p.z * p.z) > Game::objectLod) continue;
                     drawLine(gluu, ptr, p, o, (int) n->trVectorSection[i].param[0]);
                 }
             } /*else if (n.typ == 0 || n.typ == 2) {

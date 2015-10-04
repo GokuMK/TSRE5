@@ -110,8 +110,8 @@ void Route::transalteObj(int x, int z, float px, float py, float pz, int uid) {
 void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, bool selection) {
     if(!loaded) return;
     
-    int mintile = -2;
-    int maxtile = 2;
+    int mintile = -Game::tileLod;
+    int maxtile = Game::tileLod;
     if(selection){
         mintile = -1;
         maxtile = 1;
@@ -146,9 +146,13 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         }
     }
     if (!selection) {
-        trackDB->renderAll(gluu, playerT, playerRot);
+        if(Game::renderTdbLines)
+            trackDB->renderAll(gluu, playerT, playerRot);
+        if(Game::renderTsectionLines)
         trackDB->renderLines(gluu, playerT, playerRot);
+        if(Game::renderTdbLines)
         roadDB->renderAll(gluu, playerT, playerRot);
+        if(Game::renderTsectionLines)
         roadDB->renderLines(gluu, playerT, playerRot);
     }
     
