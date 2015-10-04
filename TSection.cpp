@@ -35,10 +35,10 @@ float TSection::getAngle(){
         return 0;
     }
 
-int TSection::getLineBufferSize(){
+int TSection::getLineBufferSize(int pointSize){
     float kierunek;
     if(type==0){
-        return 6;
+        return pointSize*2;
     } else if(type==1){
         kierunek = 1;
         int bufSize = 0;
@@ -46,20 +46,24 @@ int TSection::getLineBufferSize(){
         float aa = -0.05f*kierunek;
         for(float angle2 = angle*kierunek; angle2<0; angle2+=0.05){
             if(angle2 > -0.05f) aa = angle2*kierunek;
-               bufSize+=6;
+               bufSize+=pointSize*2;
         }
         return bufSize;
     }
     return 0;
 }
 
-void TSection::drawSection(float* &ptr, float* matrix) {
+void TSection::drawSection(float* &ptr, float* matrix, float height) {
+    drawSection(ptr, matrix, height, -1);
+}
+
+void TSection::drawSection(float* &ptr, float* matrix, float height, int idx) {
 
             float kierunek;
             if(type==0){
 
-                float point1[3]; point1[0] = 0; point1[1] = 2; point1[2] = 0;
-                float point2[3]; point2[0] = 0; point2[1] = 2; point2[2] = size;
+                float point1[3]; point1[0] = 0; point1[1] = height; point1[2] = 0;
+                float point2[3]; point2[0] = 0; point2[1] = height; point2[2] = size;
     
                 Vec3::transformMat4(point1, point1, matrix);
                 Vec3::transformMat4(point2, point2, matrix);
@@ -67,9 +71,17 @@ void TSection::drawSection(float* &ptr, float* matrix) {
                 *ptr++ = point1[0];
                 *ptr++ = point1[1];
                 *ptr++ = point1[2];
+                if(idx >= 0){
+                    *ptr++ = idx;
+                    *ptr++ = 0;
+                }
                 *ptr++ = point2[0];
                 *ptr++ = point2[1];
                 *ptr++ = point2[2];
+                if(idx >= 0){
+                    *ptr++ = idx;
+                    *ptr++ = size;
+                }
                 //podklady
                 //gl.glBegin(GL2.GL_LINES);
                 //gl.glVertex3f(0, 2f, 0); 
@@ -94,17 +106,25 @@ void TSection::drawSection(float* &ptr, float* matrix) {
                     Vector2f a(0, 0);
                     a.rotate(aa, radius);
 
-                    point1[0] = 0; point1[1] = 2; point1[2] = 0;
-                    point2[0] = kierunek*a.x; point2[1] = 2; point2[2] = kierunek*a.y;
+                    point1[0] = 0; point1[1] = height; point1[2] = 0;
+                    point2[0] = kierunek*a.x; point2[1] = height; point2[2] = kierunek*a.y;
     
                     Vec3::transformMat4(point1, point1, matrix);
                     Vec3::transformMat4(point2, point2, matrix);
                     *ptr++ = point1[0];
                     *ptr++ = point1[1];
                     *ptr++ = point1[2];
+                    if(idx >= 0){
+                        *ptr++ = idx;
+                        *ptr++ = fabs(radius*(angle2 - angle*kierunek));
+                    }
                     *ptr++ = point2[0];
                     *ptr++ = point2[1];
                     *ptr++ = point2[2];
+                    if(idx >= 0){
+                        *ptr++ = idx;
+                        *ptr++ = fabs(radius*((angle2+0.05) - angle*kierunek));
+                    }
                     Mat4::translate(matrix, matrix, kierunek*a.x,0,kierunek*a.y);
                     Mat4::rotateY(matrix, matrix, -aa);
                 }
@@ -115,7 +135,7 @@ void TSection::getPoints(float* &ptr, float* matrix) {
             float kierunek;
             if(type==0){
                 
-                float dlugosc = getDlugosc();
+                //float dlugosc = getDlugosc();
 
                 float point1[3]; 
                 for(int i = 0; i < size; i+=4){

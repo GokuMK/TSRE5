@@ -59,18 +59,20 @@ public:
     bool placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, float elevation);
     bool placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid);
     bool findPosition(int x, int z, float* p, float* q, float* endp, int sectionIdx, int uid);
+    void getLines(float * &lineBuffer, int &length, float* playerT);
     void renderAll(GLUU *gluu, float * playerT, float playerRot);
     void renderLines(GLUU *gluu, float* playerT, float playerRot);
     void renderItems(GLUU *gluu, float* playerT, float playerRot);
-    
     bool getDrawPositionOnTrNode(float* out, int id, float metry);
     int findTrItemNodeId(int id);
+    void findNearestPositionOnTDB(float* posT, float* &pos);
 private:
     bool deleteNulls();
     int findBiggest();
-    int getLineBufferSize(int idx);
+    int getLineBufferSize(int idx, int pointSize, int offset);
     void checkSignals();
     void drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx);
+    void getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id);
     OglObj linieSieci;
     OglObj konceSieci;
     OglObj punktySieci;
@@ -82,6 +84,10 @@ private:
     bool isInitSectLines = false;
     bool isInitLines = false;
     bool road = false;
+    
+    float *collisionLineBuffer = NULL;
+    int collisionLineLength = 0;
+    int collisionLineHash = 0;
 };
 
 #endif	/* TDB_H */

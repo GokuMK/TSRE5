@@ -18014,7 +18014,8 @@ build/Release/MinGW_QT_static-Windows/TDB.o: TDB.cpp TDB.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qtcoreversion.h \
 		GLMatrix.h \
 		DynTrackObj.h \
-		WorldObj.h
+		WorldObj.h \
+		Intersections.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TDB.o TDB.cpp
 
 build/Release/MinGW_QT_static-Windows/TFile.o: TFile.cpp TFile.h \

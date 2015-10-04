@@ -15,8 +15,9 @@ public:
     TSection(const TSection& orig);
     virtual ~TSection();
     float getDlugosc();
-    int getLineBufferSize();
-    void drawSection(float* &ptr, float* matrix);
+    int getLineBufferSize(int pointSize);
+    void drawSection(float* &ptr, float* matrix, float height);
+    void drawSection(float* &ptr, float* matrix, float height, int idx);
     void getPoints(float* &ptr, float* matrix);
     void setDrawPosition(float metry);
     float getAngle();

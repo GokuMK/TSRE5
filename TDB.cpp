@@ -6,6 +6,7 @@
 #include "GLMatrix.h"
 #include "DynTrackObj.h"
 #include "TrackShape.h"
+#include "Intersections.h"
 
 TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
     loaded = false;
@@ -1618,6 +1619,60 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
         }
 }
 
+void TDB::getLines(float * &lineBuffer, int &length, float* playerT){
+    if (!loaded) return;
+    int hash = playerT[0] * 10000 + playerT[1];
+    if (collisionLineHash == hash && this->collisionLineBuffer != NULL){
+        length = this->collisionLineLength;
+        lineBuffer = this->collisionLineBuffer;
+        return;
+    }
+    Vector3f p;
+    Vector3f o;
+    collisionLineHash = hash;
+    int len = 0;
+
+    for (int j = 1; j <= iTRnodes; j++) {
+        TRnode* n = trackNodes[j];
+        if (n == NULL) continue;
+        if (n->typ == -1) continue;
+        if (n->typ == 1) {
+            for (int i = 0; i < n->iTrv; i++) {
+                if (fabs(n->trVectorSection[i].param[8] - playerT[0]) > 1 || fabs(-n->trVectorSection[i].param[9] - playerT[1]) > 1) continue;
+                len += getLineBufferSize((int) n->trVectorSection[i].param[0], 5, 0);
+            }
+        }
+    }
+    qDebug() << "len" << len;
+    this->collisionLineBuffer = new float[len];
+    float* ptr = this->collisionLineBuffer;
+
+    for (int j = 1; j <= iTRnodes; j++) {
+        TRnode* n = trackNodes[j];
+        if (n == NULL) continue;
+        if (n->typ == -1) continue;
+        if (n->typ == 1) {
+            for (int i = 0; i < n->iTrv; i++) {
+                if (fabs(n->trVectorSection[i].param[8] - playerT[0]) > 1 || fabs(-n->trVectorSection[i].param[9] - playerT[1]) > 1) continue;
+                p.set(
+                        (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10],
+                        n->trVectorSection[i].param[11],
+                        (-n->trVectorSection[i].param[9] - playerT[1])*2048 - n->trVectorSection[i].param[12]
+                        );
+                o.set(
+                        n->trVectorSection[i].param[13],
+                        n->trVectorSection[i].param[14],
+                        n->trVectorSection[i].param[15]
+                        );
+                getLine(ptr, p, o, (int) n->trVectorSection[i].param[0], j);
+            }
+        }
+    }
+    this->collisionLineLength = (ptr - this->collisionLineBuffer)/10;
+    length = this->collisionLineLength;
+    lineBuffer = this->collisionLineBuffer;
+}
+
 void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
 
     if (!loaded) return;
@@ -1643,7 +1698,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
                     //        (-n->trVectorSection[i].param[9] - playerT[1])*2048 - n->trVectorSection[i].param[12]
                     //        );
                     //if (sqrt(p.x * p.x + p.z * p.z) > Game::objectLod) continue;
-                    len += getLineBufferSize((int) n->trVectorSection[i].param[0]);
+                    len += getLineBufferSize((int) n->trVectorSection[i].param[0], 3, 6);
                 }
             }
         }
@@ -1783,11 +1838,31 @@ void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot) {
     }
 }
 
-int TDB::getLineBufferSize(int idx) {
+int TDB::getLineBufferSize(int idx, int pointSize, int offset) {
     if(tsection->sekcja[idx] == NULL)
-        return 6;
+        return offset;
     
-    return tsection->sekcja[idx]->getLineBufferSize() + 6;
+    return tsection->sekcja[idx]->getLineBufferSize(pointSize) + offset;
+}
+
+void TDB::getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id) {
+
+    float matrix[16];
+    float q[4];
+    q[0] = q[1] = q[2] = 0;
+    q[3] = 1;
+    float rot[3];
+    rot[0] = M_PI;
+    rot[1] = -o.y;
+    rot[2] = o.z;
+
+    Quat::fromRotationXYZ(q, rot);
+    Mat4::fromRotationTranslation(matrix, q, reinterpret_cast<float *> (&p));
+    Mat4::rotate(matrix, matrix, o.x, 1, 0, 0);
+
+    if(tsection->sekcja[idx] != NULL){
+        tsection->sekcja[idx]->drawSection(ptr, matrix, 0, id);
+    }
 }
 
 void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
@@ -1823,9 +1898,37 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
     *ptr++ = point2[2];
 
     if(tsection->sekcja[idx] != NULL){
-        tsection->sekcja[idx]->drawSection(ptr, matrix);
+        tsection->sekcja[idx]->drawSection(ptr, matrix, 2);
     }
+}
+
+void TDB::findNearestPositionOnTDB(float* posT, float* &pos){
+    float *lineBuffer;
+    int length = 0;
+    getLines(lineBuffer, length, posT);
     
+    qDebug() << "lines length" << length;
+    float best[6];
+    best[0] = 99999;
+    float dist = 0;
+    float intersectionPoint[3];
+    for(int i = 0; i < length*10; i+=10){
+        //qDebug() << lineBuffer[i+0] << " "<< lineBuffer[i+1] << " " << lineBuffer[i+2] << " "<< lineBuffer[i+3] << " "<< lineBuffer[i+4] << " ";
+        //qDebug() << lineBuffer[i+5] << " "<< lineBuffer[i+6] << " " << lineBuffer[i+7] << " "<< lineBuffer[i+8] << " "<< lineBuffer[i+9] << " ";
+        dist = Intersections::pointSegmentDistance(lineBuffer + i, lineBuffer + i+5, pos, (float*)&intersectionPoint);
+        if(dist < best[0]){
+            best[0] = dist;
+            best[1] = lineBuffer[i+3];
+            best[2] = lineBuffer[i+4];
+            best[3] = intersectionPoint[0];
+            best[4] = intersectionPoint[1];
+            best[5] = intersectionPoint[2];
+        }
+    }
+    qDebug() << "item pos: " << best[0] << " " << best[1] << " " << best[2];
+    pos[0] = best[3];
+    pos[1] = best[4];
+    pos[2] = best[5];
 }
 
 void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
@@ -1904,7 +2007,7 @@ void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
     return;
 }
 
- bool TDB::deleteNulls() {
+bool TDB::deleteNulls() {
         for(int i = 1; i <= iTRnodes; i++){
             if(trackNodes[i] == NULL){
                 qDebug() << "Usuwam NULL na "<<i;
