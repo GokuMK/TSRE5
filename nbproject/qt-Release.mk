@@ -18,7 +18,7 @@ CXXFLAGS      = -pipe -fno-keep-inline-dllexport -O2 -std=c++0x -frtti -Wall -We
 INCPATH       = -I'nbproject' -I'.' -I'C:/Qt/Static/5.4.1/include' -I'C:/Qt/Static/5.4.1/include/QtOpenGL' -I'C:/Qt/Static/5.4.1/include/QtWidgets' -I'C:/Qt/Static/5.4.1/include/QtGui' -I'C:/Qt/Static/5.4.1/include/QtCore' -I'.' -I'C:/Qt/Static/5.4.1/mkspecs/win32-g++' 
 LINKER      =        g++
 LFLAGS        =        -static -static-libgcc -Wl,-s -Wl,-subsystem,windows -mthreads
-LIBS        =        -lmingw32 -LC:/Qt/Static/5.4.1/lib -lqtmain -L C:\Users\Goku\Desktop\Programy\zlib128-dll\lib -lzdll -lQt5OpenGL -lQt5Widgets -LC:/Qt/Static/5.4.1/plugins/platforms -lqwindows -lwinspool -lshlwapi -lQt5PlatformSupport -LC:/Qt/Static/5.4.1/plugins/imageformats -lqdds -lqicns -lqico -lqjp2 -lqmng -lqtga -lqtiff -lqwbmp -lqwebp -lQt5Gui -lcomdlg32 -loleaut32 -limm32 -lwinmm -lglu32 -lopengl32 -lgdi32 -lqtharfbuzzng -lQt5Core -lole32 -luuid -lws2_32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmpr build/Release/MinGW_QT_static-Windows/TSRE5_resource_res.o 
+LIBS        =        -lmingw32 -LC:/Qt/Static/5.4.1/lib -lqtmain -lQt5OpenGL -lQt5Widgets -LC:/Qt/Static/5.4.1/plugins/platforms -lqwindows -lwinspool -lshlwapi -lQt5PlatformSupport -LC:/Qt/Static/5.4.1/plugins/imageformats -lqdds -lqicns -lqico -lqjp2 -lqmng -lqtga -lqtiff -lqwbmp -lqwebp -lQt5Gui -lcomdlg32 -loleaut32 -limm32 -lwinmm -lglu32 -lopengl32 -lgdi32 -lqtharfbuzzng -lQt5Core -lole32 -luuid -lws2_32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmpr build/Release/MinGW_QT_static-Windows/TSRE5_resource_res.o 
 QMAKE         = c:/Qt/Static/5.4.1/bin/qmake.exe
 IDC           = idc
 IDL           = midl
@@ -10061,7 +10061,8 @@ build/Release/MinGW_QT_static-Windows/ImageLib.o: ImageLib.cpp ImageLib.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qgenericmatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/ImageLib.o ImageLib.cpp
 
-build/Release/MinGW_QT_static-Windows/Intersections.o: Intersections.cpp Intersections.h
+build/Release/MinGW_QT_static-Windows/Intersections.o: Intersections.cpp Intersections.h \
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Intersections.o Intersections.cpp
 
 build/Release/MinGW_QT_static-Windows/LevelCrObj.o: LevelCrObj.cpp LevelCrObj.h \
@@ -16021,9 +16022,7 @@ build/Release/MinGW_QT_static-Windows/ReadFile.o: ReadFile.cpp ReadFile.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qxmlstream.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qtcoreversion.h \
 		FileBuffer.h \
-		C:/Qt/Static/5.4.1/include/QtCore/QString \
-		zlib.h \
-		zconf.h
+		C:/Qt/Static/5.4.1/include/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/ReadFile.o ReadFile.cpp
 
 build/Release/MinGW_QT_static-Windows/Ref.o: Ref.cpp Ref.h \
@@ -19682,14 +19681,6 @@ build/Release/MinGW_QT_static-Windows/Texture.o: Texture.cpp Texture.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qmargins.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qsize.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
-		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
-		C:/Qt/Static/5.4.1/include/QtGui/qopenglfunctions.h \
-		C:/Qt/Static/5.4.1/include/QtGui/qopenglcontext.h \
-		C:/Qt/Static/5.4.1/include/QtCore/QObject \
-		C:/Qt/Static/5.4.1/include/QtCore/QScopedPointer \
-		C:/Qt/Static/5.4.1/include/QtGui/QSurfaceFormat \
-		C:/Qt/Static/5.4.1/include/QtGui/qsurfaceformat.h \
-		C:/Qt/Static/5.4.1/include/QtGui/qopenglversionfunctions.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QColor \
 		C:/Qt/Static/5.4.1/include/QtGui/qcolor.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qrgb.h

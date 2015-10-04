@@ -70,6 +70,7 @@ void OglObj::render() {
     render(0);
 }
 void OglObj::render(int selectionColor) {
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     GLUU *gluu = GLUU::get();
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
@@ -87,7 +88,7 @@ void OglObj::render(int selectionColor) {
             if (TexLib::mtex[texId]->loaded) {
                 if (!TexLib::mtex[texId]->glLoaded)
                     TexLib::mtex[texId]->GLTextures();
-                glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texId]->tex[0]);
+                f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texId]->tex[0]);
                 gluu->alpha = 0;
                 gluu->m_program->setUniformValue(gluu->shaderAlpha, gluu->alpha);
             } else {
@@ -100,7 +101,7 @@ void OglObj::render(int selectionColor) {
     }
 
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
-    glDrawArrays(shapeType, 0, length); /**/
+    f->glDrawArrays(shapeType, 0, length); /**/
 }
 
 int OglObj::getTexId(){

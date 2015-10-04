@@ -126,13 +126,14 @@ void ForestObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
 };
 
 void ForestObj::drawShape(){
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     if (tex == -2) {
-        glDisable(GL_TEXTURE_2D);
+        f->glDisable(GL_TEXTURE_2D);
     } else {
-        glEnable(GL_TEXTURE_2D);
+        f->glEnable(GL_TEXTURE_2D);
         if (tex == -1) {
             tex = TexLib::addTex(resPath, treeTexture);
-            glDisable(GL_TEXTURE_2D);
+            f->glDisable(GL_TEXTURE_2D);
         }
     }
 
@@ -197,7 +198,6 @@ void ForestObj::drawShape(){
                 }
             }
             
-        QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
         shape.VAO.create();
         QOpenGLVertexArrayObject::Binder vaoBinder(&shape.VAO);
 
@@ -217,11 +217,11 @@ void ForestObj::drawShape(){
         
         if(TexLib::mtex[tex]->loaded){
             if(!TexLib::mtex[tex]->glLoaded) TexLib::mtex[tex]->GLTextures();
-            glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex]->tex[0]);
+            f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex]->tex[0]);
         }
         
         QOpenGLVertexArrayObject::Binder vaoBinder1(&shape.VAO);
-        glDrawArrays(GL_TRIANGLES, 0, shape.iloscv);
+        f->glDrawArrays(GL_TRIANGLES, 0, shape.iloscv);
     }
 }
 

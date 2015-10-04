@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ObjTools.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'ObjTools.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.4.1. It"
+#error "This file was generated using the moc from 5.5.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,11 +20,11 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ObjTools_t {
     QByteArrayData data[19];
-    char stringdata[220];
+    char stringdata0[226];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_ObjTools_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_ObjTools_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
 static const qt_meta_stringdata_ObjTools_t qt_meta_stringdata_ObjTools = {
@@ -47,7 +47,7 @@ QT_MOC_LITERAL(14, 142, 21), // "lastItemsListSelected"
 QT_MOC_LITERAL(15, 164, 17), // "selectToolEnabled"
 QT_MOC_LITERAL(16, 182, 16), // "placeToolEnabled"
 QT_MOC_LITERAL(17, 199, 12), // "itemSelected"
-QT_MOC_LITERAL(18, 212, 7) // "pointer"
+QT_MOC_LITERAL(18, 212, 13) // "Ref::RefItem*"
 
     },
     "ObjTools\0enableTool\0\0name\0routeLoaded\0"
@@ -55,7 +55,8 @@ QT_MOC_LITERAL(18, 212, 7) // "pointer"
     "refTrackSelected\0refListSelected\0"
     "QListWidgetItem*\0item\0trackListSelected\0"
     "lastItemsListSelected\0selectToolEnabled\0"
-    "placeToolEnabled\0itemSelected\0pointer"
+    "placeToolEnabled\0itemSelected\0"
+    "Ref::RefItem*"
 };
 #undef QT_MOC_LITERAL
 
@@ -98,7 +99,7 @@ static const uint qt_meta_data_ObjTools[] = {
     QMetaType::Void, 0x80000000 | 11,   12,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   18,
+    QMetaType::Void, 0x80000000 | 18,   12,
 
        0        // eod
 };
@@ -107,6 +108,7 @@ void ObjTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         ObjTools *_t = static_cast<ObjTools *>(_o);
+        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->enableTool((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 1: _t->routeLoaded((*reinterpret_cast< Route*(*)>(_a[1]))); break;
@@ -117,7 +119,7 @@ void ObjTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 6: _t->lastItemsListSelected((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
         case 7: _t->selectToolEnabled(); break;
         case 8: _t->placeToolEnabled(); break;
-        case 9: _t->itemSelected((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 9: _t->itemSelected((*reinterpret_cast< Ref::RefItem*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -146,7 +148,7 @@ const QMetaObject *ObjTools::metaObject() const
 void *ObjTools::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_ObjTools.stringdata))
+    if (!strcmp(_clname, qt_meta_stringdata_ObjTools.stringdata0))
         return static_cast<void*>(const_cast< ObjTools*>(this));
     return QWidget::qt_metacast(_clname);
 }

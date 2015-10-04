@@ -1,7 +1,7 @@
 # This file is generated automatically. Do not edit.
 # Use project properties -> Build -> Qt -> Expert -> Custom Definitions.
 TEMPLATE = app
-DESTDIR = dist/Debug/MinGW_QT-Windows
+DESTDIR = dist/Debug/QT_MinGW_510_64-Windows
 TARGET = TSRE5
 VERSION = 1.0.0
 CONFIG -= debug_and_release app_bundle lib_bundle
@@ -13,7 +13,7 @@ HEADERS += AboutWindow.h AceLib.h Brush.h Camera.h DynTrackObj.h Eng.h FileBuffe
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=
-OBJECTS_DIR = build/Debug/MinGW_QT-Windows
+OBJECTS_DIR = build/Debug/QT_MinGW_510_64-Windows
 MOC_DIR = 
 RCC_DIR = 
 UI_DIR = 

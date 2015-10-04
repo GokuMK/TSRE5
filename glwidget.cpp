@@ -439,7 +439,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_P:
                 if(selectedObj != NULL){
                     route->ref->selected = selectedObj->getRefInfo();
-                    emit itemSelected((int) route->ref->selected);
+                    emit itemSelected(route->ref->selected);
                 }
             case Qt::Key_L:
                 route->nextDefaultEnd();

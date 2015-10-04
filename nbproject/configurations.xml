@@ -34,6 +34,7 @@
       <logicalFolder name="f6" displayName="math3d" projectFiles="true">
         <itemPath>Flex.h</itemPath>
         <itemPath>GLMatrix.h</itemPath>
+        <itemPath>Intersections.h</itemPath>
         <itemPath>Vector2f.h</itemPath>
         <itemPath>Vector2i.h</itemPath>
         <itemPath>Vector3f.h</itemPath>
@@ -144,7 +145,6 @@
         <itemPath>Flex.cpp</itemPath>
         <itemPath>GLMatrix.cpp</itemPath>
         <itemPath>Intersections.cpp</itemPath>
-        <itemPath>Intersections.h</itemPath>
         <itemPath>Vector2f.cpp</itemPath>
         <itemPath>Vector2i.cpp</itemPath>
         <itemPath>Vector3f.cpp</itemPath>
@@ -224,7 +224,7 @@
   <confs>
     <conf name="Debug" type="4">
       <toolsSet>
-        <compilerSet>MinGW_QT|MinGW</compilerSet>
+        <compilerSet>QT_MinGW_510_64|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -563,12 +563,6 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
-        <linkerTool>
-          <linkerLibItems>
-            <linkerOptionItem>-L C:\Users\Goku\Desktop\Programy\zlib128-dll\lib</linkerOptionItem>
-            <linkerLibLibItem>zdll</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
       </compileType>
       <item path="AboutWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -190,7 +190,7 @@ void ObjTools::refListSelected(QListWidgetItem * item){
     //refList.addItem(
     try{
         route->ref->selected = &route->ref->refItems[refClass.currentText().toStdString()][refList.currentRow()];
-        itemSelected((int)route->ref->selected);
+        itemSelected((Ref::RefItem*)route->ref->selected);
     } catch(const std::out_of_range& oor){
         route->ref->selected = NULL;
     }
@@ -206,7 +206,7 @@ void ObjTools::trackListSelected(QListWidgetItem * item){
     itemRef->value = item->type();
     try{
         route->ref->selected = itemRef;
-        itemSelected((int)route->ref->selected);
+        itemSelected((Ref::RefItem*)route->ref->selected);
     } catch(const std::out_of_range& oor){
         route->ref->selected = NULL;
     }
@@ -215,7 +215,7 @@ void ObjTools::trackListSelected(QListWidgetItem * item){
 void ObjTools::lastItemsListSelected(QListWidgetItem * item){
     
     qDebug() << item->type() << " " << item->text();
-    route->ref->selected = (Ref::RefItem*)item->type();
+    route->ref->selected = lastItemsPtr[item->type()];
 }
 
 void ObjTools::selectToolEnabled(){
@@ -226,14 +226,15 @@ void ObjTools::placeToolEnabled(){
     emit enableTool("placeTool");
 }
 
-void ObjTools::itemSelected(int pointer){
-    Ref::RefItem* item = (Ref::RefItem*) pointer;
+void ObjTools::itemSelected(Ref::RefItem* item){
     QString text;
     if(item->description.length() > 1) 
         text = item->description;
     else
         text = item->filename;
-    new QListWidgetItem ( text, &lastItems, pointer );
+    lastItemsPtr.push_back(item);
+    
+    new QListWidgetItem ( text, &lastItems, lastItemsPtr.size() - 1 );
         if(lastItems.count() > 11)
             delete lastItems.takeItem(0);
 }

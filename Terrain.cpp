@@ -356,6 +356,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     }
 
     GLUU* gluu = GLUU::get();
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     if (!lines.loaded) {
         reloadLines();
     }
@@ -415,7 +416,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                 if (TexLib::mtex[texid[yy * 16 + uu]]->loaded) {
                     if (!TexLib::mtex[texid[yy * 16 + uu]]->glLoaded)
                         TexLib::mtex[texid[yy * 16 + uu]]->GLTextures();
-                    glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
+                    f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
                     //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
                     //  gl.glEnable(GL2.GL_TEXTURE_2D);
                     //gl.glDisable(GL2.GL_ALPHA_TEST);
@@ -428,7 +429,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
             //QOpenGLVertexArrayObject::Binder vaoBinder(VAO[uu * 16 + yy]);
             
 
-            glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
+            f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
         }
     }
     renderWater(lodx, lodz, playerT, playerW, target, fov);

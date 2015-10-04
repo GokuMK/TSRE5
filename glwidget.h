@@ -3,7 +3,7 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
-//#include <QOpenGLFunctions>
+//#include <QOpenGLFunctions_3_2_Core>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
@@ -42,7 +42,7 @@ public slots:
 
 signals:
     void routeLoaded(Route * a);
-    void itemSelected(int pointer);
+    void itemSelected(Ref::RefItem* pointer);
     void naviInfo(int x, int z, int all, int hidden);
     void setToolbox(QString name);
     void setBrushTextureId(int val);

@@ -1,9 +1,7 @@
-#include <QString>
-//#include <QOpenGLFunctions>
-
 #ifndef TEXTURE_H
 #define	TEXTURE_H
 
+#include <QString>
 class Brush;
 
 class Texture {

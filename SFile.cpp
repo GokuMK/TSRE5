@@ -195,7 +195,7 @@ void SFile::render() {
     float m[16];
     //var tex;
     //var oldtex = -3;
-
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     GLUU *gluu = GLUU::get();
     //gluu->enableTextures();
     //for(int iii = 0; iii < 200; iii++)
@@ -234,7 +234,7 @@ void SFile::render() {
                 //glDisable(GL_TEXTURE_2D);
             } else if (image[texture[primstate[prim_state].arg4].image].texAddr > 0) {
                 //glEnable(GL_TEXTURE_2D);
-                glBindTexture(GL_TEXTURE_2D, image[texture[primstate[prim_state].arg4].image].texAddr);
+                f->glBindTexture(GL_TEXTURE_2D, image[texture[primstate[prim_state].arg4].image].texAddr);
             } else if (image[texture[primstate[prim_state].arg4].image].tex == -2) {
                 //glDisable(GL_TEXTURE_2D);
             } else if (image[texture[primstate[prim_state].arg4].image].tex == -1) {
@@ -258,7 +258,7 @@ void SFile::render() {
             }/**/
             
             //QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].czesci[j].VAO);
-            glDrawArrays(GL_TRIANGLES, distancelevel[0].subobiekty[i].czesci[j].offset, distancelevel[0].subobiekty[i].czesci[j].iloscv);/**/
+            f->glDrawArrays(GL_TRIANGLES, distancelevel[0].subobiekty[i].czesci[j].offset, distancelevel[0].subobiekty[i].czesci[j].iloscv);/**/
         }
     }
     gluu->m_program->setUniformValue(gluu->shaderAlphaTest, gluu->alphaTest);

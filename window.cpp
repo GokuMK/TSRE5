@@ -142,8 +142,8 @@ Window::Window() {
     QObject::connect(naviBox, SIGNAL(jumpTo(int, int)),
                       glWidget, SLOT(jumpTo(int, int)));
     
-    QObject::connect(glWidget, SIGNAL(itemSelected(int)),
-                      objTools, SLOT(itemSelected(int)));
+    QObject::connect(glWidget, SIGNAL(itemSelected(Ref::RefItem*)),
+                      objTools, SLOT(itemSelected(Ref::RefItem*)));
 
     QObject::connect(this, SIGNAL(sendMsg(QString)),
                       glWidget, SLOT(msg(QString)));

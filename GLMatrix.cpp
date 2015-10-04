@@ -449,6 +449,13 @@ float* Vec3::add(float* out, float* a, float* b) {
     out[2] = a[2] + b[2];
     return out;
 }
+
+float* Vec3::add(float* out, float* a, float b) {
+    out[0] = a[0] + b;
+    out[1] = a[1] + b;
+    out[2] = a[2] + b;
+    return out;
+}
 /**
  * Subtracts vector b from vector a
  * @param {vec3} out the receiving vector

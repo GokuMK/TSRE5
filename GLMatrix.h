@@ -45,6 +45,7 @@ public:
     static float* fromValues(float x, float y, float z);
     static float* copy(float* out, float* a);
     static float* set(float* out, float x, float y, float z);
+    static float* add(float* out, float* a, float b);
     static float* add(float* out, float* a, float* b);
     static float* subtract(float* out, float* a, float* b);
     static float* sub(float* out, float* a, float* b);

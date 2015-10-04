@@ -4,6 +4,7 @@
 #include <QtWidgets>
 #include "Route.h"
 #include "Ref.h"
+#include <deque>
 
 class ObjTools : public QWidget{
     Q_OBJECT
@@ -21,7 +22,7 @@ public slots:
     void lastItemsListSelected(QListWidgetItem * item);
     void selectToolEnabled();
     void placeToolEnabled();
-    void itemSelected(int pointer);
+    void itemSelected(Ref::RefItem* item);
 signals:
     void enableTool(QString name);
     
@@ -34,6 +35,7 @@ private:
     QComboBox refTrack;
     QComboBox refRoad;
     Ref::RefItem itemRef;
+    std::deque<Ref::RefItem*> lastItemsPtr;
 };
 
 #endif	/* TOOLBOX_H */

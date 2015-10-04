@@ -1,21 +1,23 @@
 #include "ReadFile.h"
-#include "zlib.h"
+//#include "zlib.h"
 
 //unsigned char* ReadFile::out = new unsigned char[10000000];
 
 FileBuffer* ReadFile::read(QFile* file) {
-    
-    QByteArray fileData = file->readAll();
-    unsigned char* in = (unsigned char*)fileData.data();
-    unsigned char* out = NULL;
+    int size = file->size();
+    unsigned char* in = new unsigned char[size];
+    file->read((char*)in, size);
+    //QByteArray fileData = file->readAll();
+    //unsigned char* in = (unsigned char*)fileData.data();
+    //unsigned char* out = NULL;
     unsigned char* data = NULL;
-    int maxSize = 25000000;
+    //int maxSize = 25000000;
     int nLength = 0;
     //for (int i = 0; i < 100; i++)
     //   qDebug() << ":" << (char)in[i];
 
     if (in[7] == 'F') {
-        out = new unsigned char[maxSize];
+        /*out = new unsigned char[maxSize];
         //System.out.println("plik skompresowany");
         int aLength =  fileData.length() - 16;
         int ret;
@@ -45,14 +47,24 @@ FileBuffer* ReadFile::read(QFile* file) {
             std::copy(out, out + nLength, data);
             //for (int i = 0; i < 128; i++)
             //    std::cout << ":" << (int)data[i];
-        }
-        delete[] out;
+        }*/
+        in[12] = in[11];
+        in[13] = in[10];
+        in[14] = in[9];
+        in[15] = in[8];
+        QByteArray out = qUncompress(QByteArray::fromRawData((const char*)(in+12), size-12));
+        nLength = out.length();
+        data = new unsigned char[nLength];
+        std::copy(out.data(), out.data() + nLength, data);
+        delete[] in;
+        //delete[] out;
     } else {
-        data = new unsigned char[fileData.length() - 16];
-        nLength = fileData.length() - 16;
-        std::copy(in + 16, in + nLength + 16, data);
+        data = in + 16;// new unsigned char[fileData.length() - 16];
+        nLength = size - 16;
+        //std::copy(in + 16, in + nLength + 16, data);
+        //delete[] in;
     }
-    delete[] in;
+    //delete[] in;
     return new FileBuffer(data,nLength);
 }
 

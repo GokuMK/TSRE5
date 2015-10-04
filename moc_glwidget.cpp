@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GLWidget_t {
-    QByteArrayData data[28];
-    char stringdata[207];
+    QByteArrayData data[29];
+    char stringdata[221];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,36 +35,38 @@ QT_MOC_LITERAL(2, 21, 0), // ""
 QT_MOC_LITERAL(3, 22, 6), // "Route*"
 QT_MOC_LITERAL(4, 29, 1), // "a"
 QT_MOC_LITERAL(5, 31, 12), // "itemSelected"
-QT_MOC_LITERAL(6, 44, 7), // "pointer"
-QT_MOC_LITERAL(7, 52, 8), // "naviInfo"
-QT_MOC_LITERAL(8, 61, 1), // "x"
-QT_MOC_LITERAL(9, 63, 1), // "z"
-QT_MOC_LITERAL(10, 65, 3), // "all"
-QT_MOC_LITERAL(11, 69, 6), // "hidden"
-QT_MOC_LITERAL(12, 76, 10), // "setToolbox"
-QT_MOC_LITERAL(13, 87, 4), // "name"
-QT_MOC_LITERAL(14, 92, 17), // "setBrushTextureId"
-QT_MOC_LITERAL(15, 110, 3), // "val"
-QT_MOC_LITERAL(16, 114, 14), // "showProperties"
-QT_MOC_LITERAL(17, 129, 9), // "WorldObj*"
-QT_MOC_LITERAL(18, 139, 3), // "obj"
-QT_MOC_LITERAL(19, 143, 7), // "cleanup"
-QT_MOC_LITERAL(20, 151, 10), // "enableTool"
-QT_MOC_LITERAL(21, 162, 13), // "setPaintBrush"
-QT_MOC_LITERAL(22, 176, 6), // "Brush*"
-QT_MOC_LITERAL(23, 183, 5), // "brush"
-QT_MOC_LITERAL(24, 189, 6), // "jumpTo"
-QT_MOC_LITERAL(25, 196, 1), // "y"
-QT_MOC_LITERAL(26, 198, 3), // "msg"
-QT_MOC_LITERAL(27, 202, 4) // "text"
+QT_MOC_LITERAL(6, 44, 13), // "Ref::RefItem*"
+QT_MOC_LITERAL(7, 58, 7), // "pointer"
+QT_MOC_LITERAL(8, 66, 8), // "naviInfo"
+QT_MOC_LITERAL(9, 75, 1), // "x"
+QT_MOC_LITERAL(10, 77, 1), // "z"
+QT_MOC_LITERAL(11, 79, 3), // "all"
+QT_MOC_LITERAL(12, 83, 6), // "hidden"
+QT_MOC_LITERAL(13, 90, 10), // "setToolbox"
+QT_MOC_LITERAL(14, 101, 4), // "name"
+QT_MOC_LITERAL(15, 106, 17), // "setBrushTextureId"
+QT_MOC_LITERAL(16, 124, 3), // "val"
+QT_MOC_LITERAL(17, 128, 14), // "showProperties"
+QT_MOC_LITERAL(18, 143, 9), // "WorldObj*"
+QT_MOC_LITERAL(19, 153, 3), // "obj"
+QT_MOC_LITERAL(20, 157, 7), // "cleanup"
+QT_MOC_LITERAL(21, 165, 10), // "enableTool"
+QT_MOC_LITERAL(22, 176, 13), // "setPaintBrush"
+QT_MOC_LITERAL(23, 190, 6), // "Brush*"
+QT_MOC_LITERAL(24, 197, 5), // "brush"
+QT_MOC_LITERAL(25, 203, 6), // "jumpTo"
+QT_MOC_LITERAL(26, 210, 1), // "y"
+QT_MOC_LITERAL(27, 212, 3), // "msg"
+QT_MOC_LITERAL(28, 216, 4) // "text"
 
     },
     "GLWidget\0routeLoaded\0\0Route*\0a\0"
-    "itemSelected\0pointer\0naviInfo\0x\0z\0all\0"
-    "hidden\0setToolbox\0name\0setBrushTextureId\0"
-    "val\0showProperties\0WorldObj*\0obj\0"
-    "cleanup\0enableTool\0setPaintBrush\0"
-    "Brush*\0brush\0jumpTo\0y\0msg\0text"
+    "itemSelected\0Ref::RefItem*\0pointer\0"
+    "naviInfo\0x\0z\0all\0hidden\0setToolbox\0"
+    "name\0setBrushTextureId\0val\0showProperties\0"
+    "WorldObj*\0obj\0cleanup\0enableTool\0"
+    "setPaintBrush\0Brush*\0brush\0jumpTo\0y\0"
+    "msg\0text"
 };
 #undef QT_MOC_LITERAL
 
@@ -84,32 +86,32 @@ static const uint qt_meta_data_GLWidget[] = {
  // signals: name, argc, parameters, tag, flags
        1,    1,   69,    2, 0x06 /* Public */,
        5,    1,   72,    2, 0x06 /* Public */,
-       7,    4,   75,    2, 0x06 /* Public */,
-      12,    1,   84,    2, 0x06 /* Public */,
-      14,    1,   87,    2, 0x06 /* Public */,
-      16,    1,   90,    2, 0x06 /* Public */,
+       8,    4,   75,    2, 0x06 /* Public */,
+      13,    1,   84,    2, 0x06 /* Public */,
+      15,    1,   87,    2, 0x06 /* Public */,
+      17,    1,   90,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      19,    0,   93,    2, 0x0a /* Public */,
-      20,    1,   94,    2, 0x0a /* Public */,
-      21,    1,   97,    2, 0x0a /* Public */,
-      24,    2,  100,    2, 0x0a /* Public */,
-      26,    1,  105,    2, 0x0a /* Public */,
+      20,    0,   93,    2, 0x0a /* Public */,
+      21,    1,   94,    2, 0x0a /* Public */,
+      22,    1,   97,    2, 0x0a /* Public */,
+      25,    2,  100,    2, 0x0a /* Public */,
+      27,    1,  105,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
-    QMetaType::Void, QMetaType::Int,    6,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int,    8,    9,   10,   11,
-    QMetaType::Void, QMetaType::QString,   13,
-    QMetaType::Void, QMetaType::Int,   15,
-    QMetaType::Void, 0x80000000 | 17,   18,
+    QMetaType::Void, 0x80000000 | 6,    7,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int,    9,   10,   11,   12,
+    QMetaType::Void, QMetaType::QString,   14,
+    QMetaType::Void, QMetaType::Int,   16,
+    QMetaType::Void, 0x80000000 | 18,   19,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   13,
-    QMetaType::Void, 0x80000000 | 22,   23,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,    8,   25,
-    QMetaType::Void, QMetaType::QString,   27,
+    QMetaType::Void, QMetaType::QString,   14,
+    QMetaType::Void, 0x80000000 | 23,   24,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    9,   26,
+    QMetaType::Void, QMetaType::QString,   28,
 
        0        // eod
 };
@@ -120,7 +122,7 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         GLWidget *_t = static_cast<GLWidget *>(_o);
         switch (_id) {
         case 0: _t->routeLoaded((*reinterpret_cast< Route*(*)>(_a[1]))); break;
-        case 1: _t->itemSelected((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->itemSelected((*reinterpret_cast< Ref::RefItem*(*)>(_a[1]))); break;
         case 2: _t->naviInfo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
         case 3: _t->setToolbox((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 4: _t->setBrushTextureId((*reinterpret_cast< int(*)>(_a[1]))); break;
@@ -142,7 +144,7 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             }
         }
         {
-            typedef void (GLWidget::*_t)(int );
+            typedef void (GLWidget::*_t)(Ref::RefItem * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::itemSelected)) {
                 *result = 1;
             }
@@ -220,7 +222,7 @@ void GLWidget::routeLoaded(Route * _t1)
 }
 
 // SIGNAL 1
-void GLWidget::itemSelected(int _t1)
+void GLWidget::itemSelected(Ref::RefItem * _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

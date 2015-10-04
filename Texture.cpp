@@ -3,13 +3,13 @@
 #include <QOpenGLShaderProgram>
 #include <QString>
 #include <QDebug>
-#include <QOpenGLFunctions>
 #include <QColor>
 
 Texture::Texture() {
 }
 
 Texture::Texture(const Texture* orig) {
+    //QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()->functions();
     width = orig->width;
     height = orig->height;
     bpp = orig->bpp;
@@ -49,6 +49,8 @@ Texture::Texture(const Texture* orig) {
 
 void Texture::setEditable(){
     imageData = new unsigned char[bytesPerPixel*width*height];
+
+    //QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()-> functions();
     glBindTexture(GL_TEXTURE_2D, tex[0]);
     glGetTexImage(GL_TEXTURE_2D, 0, type, GL_UNSIGNED_BYTE, imageData);
     this->editable = true;
@@ -214,6 +216,7 @@ void Texture::paint(Brush* brush, float x, float z){
 }
 
 void Texture::update(){
+    //QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     glBindTexture(GL_TEXTURE_2D, tex[0]);
     glTexImage2D(GL_TEXTURE_2D, 0, type, width, height, 0, type, GL_UNSIGNED_BYTE, imageData);
 }
@@ -225,7 +228,7 @@ bool Texture::GLTextures() {
     if(!loaded) return false;
     
     tex = new unsigned int[1];
-    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    //QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     
     glGenTextures(1, tex);
     glBindTexture(GL_TEXTURE_2D, tex[0]);

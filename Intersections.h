@@ -3,7 +3,7 @@
 
 class Intersections {
 public:
-    static float pointSegmentDistance(float* point, float* lp1, float* lp2);
+    static float pointSegmentDistance(float* v, float* w, float* p);
 private:
 
 };

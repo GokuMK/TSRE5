@@ -207,15 +207,16 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
 };
 
 void DynTrackObj::drawShape() {
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     if (tex1 == -2) {
-        glDisable(GL_TEXTURE_2D);
+        f->glDisable(GL_TEXTURE_2D);
     } else {
-        glEnable(GL_TEXTURE_2D);
+        f->glEnable(GL_TEXTURE_2D);
         if (tex1 == -1) {
             //tex1 = 0;
             tex1 = TexLib::addTex(resPath, "ACleanTrack1.ace");
             tex2 = TexLib::addTex(resPath, "ACleanTrack2.ace");
-            glDisable(GL_TEXTURE_2D);
+            f->glDisable(GL_TEXTURE_2D);
         }
     }
 
@@ -226,19 +227,19 @@ void DynTrackObj::drawShape() {
         
         if(TexLib::mtex[tex1]->loaded){
             if(!TexLib::mtex[tex1]->glLoaded) TexLib::mtex[tex1]->GLTextures();
-            glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex1]->tex[0]);
+            f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex1]->tex[0]);
         }
         
         QOpenGLVertexArrayObject::Binder vaoBinder1(&shape[0].VAO);
-        glDrawArrays(GL_TRIANGLES, 0, shape[0].iloscv);
+        f->glDrawArrays(GL_TRIANGLES, 0, shape[0].iloscv);
         
         if(TexLib::mtex[tex2]->loaded){
             if(!TexLib::mtex[tex2]->glLoaded) TexLib::mtex[tex2]->GLTextures();
-            glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex2]->tex[0]);
+            f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex2]->tex[0]);
         }
         
         QOpenGLVertexArrayObject::Binder vaoBinder2(&shape[1].VAO);
-        glDrawArrays(GL_TRIANGLES, 0, shape[1].iloscv);
+        f->glDrawArrays(GL_TRIANGLES, 0, shape[1].iloscv);
     }
 }
 

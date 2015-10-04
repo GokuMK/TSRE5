@@ -7,13 +7,13 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=MinGW_QT-Windows
-CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW_QT-Windows
+CND_PLATFORM_Debug=QT_MinGW_510_64-Windows
+CND_ARTIFACT_DIR_Debug=dist/Debug/QT_MinGW_510_64-Windows
 CND_ARTIFACT_NAME_Debug=TSRE5
-CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW_QT-Windows/TSRE5
-CND_PACKAGE_DIR_Debug=dist/Debug/MinGW_QT-Windows/package
+CND_ARTIFACT_PATH_Debug=dist/Debug/QT_MinGW_510_64-Windows/TSRE5
+CND_PACKAGE_DIR_Debug=dist/Debug/QT_MinGW_510_64-Windows/package
 CND_PACKAGE_NAME_Debug=HelloQtWorld1.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/MinGW_QT-Windows/package/HelloQtWorld1.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/QT_MinGW_510_64-Windows/package/HelloQtWorld1.tar
 # Release configuration
 CND_PLATFORM_Release=MinGW_QT_static-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/MinGW_QT_static-Windows
