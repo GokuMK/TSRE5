@@ -48,6 +48,7 @@ bool TRitem::init(QString sh){
     trItemSRData = NULL;
     speedpostTrItemData = NULL;
     trSignalDir = NULL;
+    pickupTrItemData = NULL;
     
     if(sh == "crossoveritem") return true;
     if(sh == "signalitem") return true;
@@ -57,7 +58,9 @@ bool TRitem::init(QString sh){
     if(sh == "platformitem") return true;
     if(sh == "sidingitem") return true;
     if(sh == "carspawneritem") return true;    
-    
+    if(sh == "emptyitem") return true;
+    if(sh == "hazzarditem") return true;    
+    if(sh == "pickupitem") return true;    
     return false;
 }
 
@@ -121,7 +124,7 @@ void TRitem::set(QString sh, FileBuffer* data) {
         return;
     }
     
-    //soundregion
+    // soundregion
     if (sh == ("tritemsrdata")) {
         trItemSRData = new float[3];
         trItemSRData[0] = ParserX::parsujr(data);
@@ -130,7 +133,7 @@ void TRitem::set(QString sh, FileBuffer* data) {
         return;
     }
     
-    //speed
+    // speed
     if (sh == ("speedposttritemdata")){
         speedpostTrItemData = new float[3];
         speedpostTrItemData[0] = ParserX::parsujr(data);
@@ -171,6 +174,14 @@ void TRitem::set(QString sh, FileBuffer* data) {
             }
         }
         ParserX::pominsekcje(data);
+        return;
+    }
+    
+    // pickup
+    if (sh == ("pickuptritemdata")) {
+        pickupTrItemData = new unsigned int[2];
+        pickupTrItemData[0] = ParserX::parsujr(data);
+        pickupTrItemData[1] = ParserX::parsuj16(data);
         return;
     }
     
@@ -226,7 +237,7 @@ l = tritemsdata.length();
 for(int i=0; i<8-l; i++) tritemsdata = "0"+tritemsdata;
 
 QString woff = "";
-if(tit)
+if(!tit)
     woff = "	";
 
 QString flags;
@@ -237,6 +248,12 @@ if(type == "platformitem" || type == "sidingitem"){
 }
 if(type == "signalitem"){
     flags = QString::number(this->trSignalType1, 16);
+    l = flags.length();
+    for(int i=0; i<8-l; i++) flags = "0"+flags;
+}
+
+if(type == "pickupitem"){
+    flags = QString::number(this->pickupTrItemData[1], 16);
     l = flags.length();
     for(int i=0; i<8-l; i++) flags = "0"+flags;
 }
@@ -257,8 +274,15 @@ if(type == "sidingitem")
 *(out) << woff+"	SidingItem (\n";
 if(type == "carspawneritem")
 *(out) << woff+"	CarSpawnerItem (\n";
+if(type == "emptyitem")
+*(out) << woff+"	EmptyItem (\n";
+if(type == "hazzarditem")
+*(out) << woff+"	HazzardItem (\n";
+if(type == "pickupitem")
+*(out) << woff+"	PickupItem (\n";
 
 *(out) << woff+"		TrItemId ( "<<this->trItemId<<" )\n";
+if(type != "emptyitem")
 *(out) << woff+"		TrItemSData ( "<<this->trItemSData1<<" "<< tritemsdata <<" )\n";
 if(this->trItemPData != NULL)
 *(out) << woff+"		TrItemPData ( "<<this->trItemPData[0]<<" "<< this->trItemPData[1]<<" "<< this->trItemPData[2]<<" "<< this->trItemPData[3]<<" )\n";
@@ -302,6 +326,9 @@ if(this->trSignalDir != NULL){
     }
     *(out) << woff+"		)\n";
 }
+}
+if(type == "pickupitem"){
+*(out) << woff+"		PickupTrItemData ( "<<this->pickupTrItemData[0]<<" "<<flags<<" )\n";
 }
 
 *(out) << woff+"	)\n";

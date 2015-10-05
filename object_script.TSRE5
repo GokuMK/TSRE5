@@ -14,6 +14,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/GLUU.o
 ./build/Release/MinGW_QT_static-Windows/Game.o
 ./build/Release/MinGW_QT_static-Windows/GuiFunct.o
+./build/Release/MinGW_QT_static-Windows/HazardObj.o
 ./build/Release/MinGW_QT_static-Windows/ImageLib.o
 ./build/Release/MinGW_QT_static-Windows/Intersections.o
 ./build/Release/MinGW_QT_static-Windows/LevelCrObj.o

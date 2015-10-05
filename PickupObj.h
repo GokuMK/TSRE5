@@ -1,10 +1,3 @@
-/* 
- * File:   PickupObj.h
- * Author: Goku
- *
- * Created on 16 maja 2015, 08:45
- */
-
 #ifndef PICKUPOBJ_H
 #define	PICKUPOBJ_H
 

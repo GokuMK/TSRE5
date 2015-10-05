@@ -16,6 +16,7 @@
 #include "TrWatermarkObj.h"
 #include "LevelCrObj.h"
 #include "PickupObj.h"
+#include "HazardObj.h"
 #include "Game.h"
 
 #ifndef M_PI
@@ -38,6 +39,8 @@ int WorldObj::isTrackObj(QString sh) {
     } else if (sh == "levelcr") {
         return 3;
     } else if (sh == "pickup") {
+        return 1;
+    } else if (sh == "hazard") {
         return 1;
     } 
     return 0;
@@ -90,6 +93,9 @@ WorldObj* WorldObj::createObj(QString sh) {
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";   
     } else if (sh == "pickup") {
         nowy = (WorldObj*) (new PickupObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
+    } else if (sh == "hazard") {
+        nowy = (WorldObj*) (new HazardObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
     } else {
         qDebug() << " Unsupported WorldObj !!! " + sh;

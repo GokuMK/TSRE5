@@ -49,6 +49,7 @@ public:
     int *trSignalDir;
     float *trSignalRDir;
     bool titLoading = false;
+    unsigned int *pickupTrItemData;
     
     bool init(QString sh);
     void set(QString sh, FileBuffer* data);
