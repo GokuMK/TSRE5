@@ -1,5 +1,6 @@
 #include "PropertiesSiding.h"
 #include "WorldObj.h"
+#include "PlatformObj.h"
 
 PropertiesSiding::PropertiesSiding() {
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -37,28 +38,9 @@ void PropertiesSiding::showObj(WorldObj* obj){
     }
     
     this->infoLabel->setText("Object: "+obj->type);
-    /*this->fileName.setText(obj->fileName);
-    
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    this->posX.setText(QString::number(obj->position[0], 'G', 4));
-    this->posY.setText(QString::number(obj->position[1], 'G', 4));
-    this->posZ.setText(QString::number(obj->position[2], 'G', 4));
-    this->quat.setText(
-            QString::number(obj->qDirection[0], 'G', 4) + " " +
-            QString::number(obj->qDirection[1], 'G', 4) + " " +
-            QString::number(obj->qDirection[2], 'G', 4) + " " +
-            QString::number(obj->qDirection[3], 'G', 4)
-            );
-    
-    
-    int l;
-    QString flags;
-    flags = QString::number(obj->staticFlags, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
-    this->flags.setText(flags);*/
+    PlatformObj* pobj = (PlatformObj*)obj;
+    this->namePlatform.setText(pobj->getPlatformName());
+    this->disablePlatform.setChecked(pobj->getDisabled());
 }
 
 bool PropertiesSiding::support(WorldObj* obj){

@@ -13499,7 +13499,8 @@ build/Release/MinGW_QT_static-Windows/PropertiesCarspawner.o: PropertiesCarspawn
 		Vector3f.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		PlatformObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/PropertiesCarspawner.o PropertiesCarspawner.cpp
 
 build/Release/MinGW_QT_static-Windows/PropertiesPlatform.o: PropertiesPlatform.cpp PropertiesPlatform.h \
@@ -13965,7 +13966,8 @@ build/Release/MinGW_QT_static-Windows/PropertiesPlatform.o: PropertiesPlatform.c
 		Vector3f.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		PlatformObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/PropertiesPlatform.o PropertiesPlatform.cpp
 
 build/Release/MinGW_QT_static-Windows/PropertiesSiding.o: PropertiesSiding.cpp PropertiesSiding.h \
@@ -14431,7 +14433,8 @@ build/Release/MinGW_QT_static-Windows/PropertiesSiding.o: PropertiesSiding.cpp P
 		Vector3f.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		PlatformObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/PropertiesSiding.o PropertiesSiding.cpp
 
 build/Release/MinGW_QT_static-Windows/PropertiesStatic.o: PropertiesStatic.cpp PropertiesStatic.h \

@@ -14,6 +14,8 @@ class TDB;
 
 class TRitem {
 public:
+    static TRitem* newPlatformItem(int trItemId, int metry);
+    
     TRitem();
     TRitem(int id);
     TRitem(const TRitem& orig);
@@ -31,7 +33,7 @@ public:
     
     unsigned int *platformTrItemData;
     QString platformName;
-    QString station;
+    QString stationName;
     int platformMinWaitingTime;
     int platformNumPassengersWaiting;
     

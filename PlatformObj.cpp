@@ -124,6 +124,8 @@ void PlatformObj::initTrItems(float* tpos){
     int metry = tpos[1];
     
     TDB* tdb = Game::trackDB;
+    if(this->typeID == this->carspawner)
+        tdb = Game::roadDB;
     
     int trItemId[2];
     
@@ -136,9 +138,130 @@ void PlatformObj::initTrItems(float* tpos){
     this->trItemId[3] = trItemId[1];
 }
 
+QString PlatformObj::getStationName(){
+    TDB* tdb = Game::trackDB;
+    int id = this->trItemId[1];
+    TRitem* trit = tdb->trackItems[id];
+    if(trit == NULL) return "";
+    return trit->stationName;
+}
+
+QString PlatformObj::getPlatformName(){
+    TDB* tdb = Game::trackDB;
+    int id = this->trItemId[1];
+    TRitem* trit = tdb->trackItems[id];
+    if(trit == NULL) return "";
+    return trit->platformName;
+}
+int PlatformObj::getPlatformMinWaitingTime(){
+    TDB* tdb = Game::trackDB;
+    int id = this->trItemId[1];
+    TRitem* trit = tdb->trackItems[id];
+    if(trit == NULL) return 0;
+    return trit->platformMinWaitingTime;
+}
+int PlatformObj::getPlatformNumPassengersWaiting(){
+    TDB* tdb = Game::trackDB;
+    int id = this->trItemId[1];
+    TRitem* trit = tdb->trackItems[id];
+    if(trit == NULL) return 0;
+    return trit->platformNumPassengersWaiting;
+}
+void PlatformObj::setStationName(QString name){
+    TDB* tdb = Game::trackDB;
+    int id = this->trItemId[1];
+    TRitem* trit = tdb->trackItems[id];
+    if(trit == NULL) return;
+    trit->stationName = name;
+    id = this->trItemId[3];
+    trit = tdb->trackItems[id];
+    if(trit == NULL) return;
+    trit->stationName = name;
+}
+void PlatformObj::setPlatformName(QString name){
+    TDB* tdb = Game::trackDB;
+    int id = this->trItemId[1];
+    TRitem* trit = tdb->trackItems[id];
+    if(trit == NULL) return;
+    trit->platformName = name;
+    id = this->trItemId[3];
+    trit = tdb->trackItems[id];
+    if(trit == NULL) return;
+    trit->platformName = name;
+}
+void PlatformObj::setPlatformMinWaitingTime(int val){
+    TDB* tdb = Game::trackDB;
+    int id = this->trItemId[1];
+    TRitem* trit = tdb->trackItems[id];
+    if(trit == NULL) return;
+    trit->platformMinWaitingTime = val;
+    id = this->trItemId[3];
+    trit = tdb->trackItems[id];
+    if(trit == NULL) return;
+    trit->platformMinWaitingTime = val;
+}
+void PlatformObj::setPlatformNumPassengersWaiting(int val){
+    TDB* tdb = Game::trackDB;
+    int id = this->trItemId[1];
+    TRitem* trit = tdb->trackItems[id];
+    if(trit == NULL) return;
+    trit->platformNumPassengersWaiting = val;
+    id = this->trItemId[3];
+    trit = tdb->trackItems[id];
+    if(trit == NULL) return;
+    trit->platformNumPassengersWaiting = val;
+}
+    
+bool PlatformObj::getSideLeft(){
+    return ((this->platformData & 2) == 2);
+}
+bool PlatformObj::getSideRight(){
+    return ((this->platformData & 4) == 4);
+}
+bool PlatformObj::getDisabled(){
+    TDB* tdb = Game::trackDB;
+    int id = this->trItemId[1];
+    TRitem* trit = tdb->trackItems[id];
+    if(trit == NULL) return false;
+    return ((trit->platformTrItemData[0] & 1) == 1);
+}
+void PlatformObj::setSideLeft(bool val){
+    if(!val) return;
+    this->platformData = this->platformData | 2;
+}
+void PlatformObj::setSideRight(bool val){
+    if(!val) return;
+    this->platformData = this->platformData | 4;
+}
+void PlatformObj::setDisabled(bool val){
+    if(!val) return;
+    TDB* tdb = Game::trackDB;
+    int id = this->trItemId[1];
+    TRitem* trit = tdb->trackItems[id];
+    if(trit == NULL) return;
+    trit->platformTrItemData[0] = trit->platformTrItemData[0] | 1;
+}
+
+int PlatformObj::getCarNumber(){
+    return this->carFrequency;
+}
+
+int PlatformObj::getCarSpeed(){
+    return this->carAvSpeed;
+}
+
+void PlatformObj::setCarNumber(int val){
+    this->carFrequency = val;
+}
+
+void PlatformObj::setCarSpeed(int val){
+    this->carAvSpeed = val;
+}
+
+
 void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
-    
+    if(!this->loaded) return;
     this->renderTritems(gluu, selectionColor);
 };
 
@@ -150,7 +273,8 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
             tdb = Game::roadDB;
         int id = tdb->findTrItemNodeId(this->trItemId[1]);
         if (id < 0) {
-            qDebug() << "fail id";
+            qDebug() << "fail id "<<id;
+            this->loaded = false;
             return;
         }
         //qDebug() << "id: "<< this->trItemId[1] << " "<< id;

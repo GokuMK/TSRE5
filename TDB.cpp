@@ -2034,8 +2034,15 @@ void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
 }
 
 void TDB::newPlatformObject(int* itemId, int trNodeId, int metry){
-    itemId[0] = this->newPlatformItem(trNodeId, metry - 1);
-    itemId[1] = this->newPlatformItem(trNodeId, metry + 1);
+    int dlugosc = this->getVectorSectionLength(trNodeId);
+    int m = metry - 1;
+    if(metry < 0) metry = 0;
+    this->trackItems[this->iTRitems] = TRitem::newPlatformItem(this->iTRitems, m);
+    itemId[0] = this->iTRitems++;
+    m = metry + 1;
+    if(metry > dlugosc) metry = dlugosc;
+    this->trackItems[this->iTRitems] = TRitem::newPlatformItem(this->iTRitems, m);
+    itemId[1] = this->iTRitems++;
     
     this->addItemToTrNode(trNodeId, itemId[0]);
     this->addItemToTrNode(trNodeId, itemId[1]);
@@ -2049,16 +2056,6 @@ void TDB::addItemToTrNode(int tid, int iid){
     newVec[n->iTri++] = iid;
     delete[] n->trItemRef;
     n->trItemRef = newVec;
-}
-
-int TDB::newPlatformItem(int trNodeId, int metry){
-    this->trackItems[this->iTRitems] = new TRitem(this->iTRitems-1);
-    TRitem* trit = this->trackItems[this->iTRitems];
-    if(!trit->init("platformitem")) return -1;
-    trit->trItemSData1 = metry;
-    trit->trItemSData2 = 2;
-    
-    return this->iTRitems++;
 }
 
 bool TDB::deleteNulls() {

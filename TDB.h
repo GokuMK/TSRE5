@@ -74,7 +74,6 @@ private:
     void checkSignals();
     void drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx);
     void getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid);
-    int newPlatformItem(int trNodeId, int metry);
     void addItemToTrNode(int tid, int iid);
     OglObj linieSieci;
     OglObj konceSieci;

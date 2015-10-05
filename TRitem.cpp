@@ -11,6 +11,21 @@
 #include <QString>
 #include <QDebug>
 
+TRitem* TRitem::newPlatformItem(int trItemId, int metry){
+    TRitem* trit = new TRitem(trItemId);
+    if(!trit->init("platformitem")) return NULL;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 2;
+    trit->platformTrItemData = new unsigned int[2];
+    trit->platformTrItemData[0] = 0;
+    trit->platformTrItemData[1] = 0;
+    trit->platformName = "new platform";
+    trit->stationName = "new station";
+    trit->platformMinWaitingTime = 180;
+    trit->platformNumPassengersWaiting = 7;
+    return trit;
+}
+
 TRitem::TRitem() {
 }
 
@@ -94,7 +109,7 @@ void TRitem::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("station")) {
-        station = ParserX::odczytajtc(data);
+        stationName = ParserX::odczytajtc(data);
         return;
     }
     if (sh == ("platformminwaitingtime")) {
@@ -269,7 +284,7 @@ if(type == "platformitem"){
 if(this->platformTrItemData != NULL)
 *(out) << woff+"		PlatformTrItemData ( "<<flags<<" "<< this->platformTrItemData[1]<<" )\n";
 *(out) << woff+"		PlatformName ( \""<<this->platformName<<"\" )\n";
-*(out) << woff+"		Station ( \""<<this->station<<"\" )\n";
+*(out) << woff+"		Station ( \""<<this->stationName<<"\" )\n";
 *(out) << woff+"		PlatformMinWaitingTime ( "<<this->platformMinWaitingTime<<" )\n";
 *(out) << woff+"		PlatformNumPassengersWaiting ( "<<this->platformNumPassengersWaiting<<" )\n";
 }

@@ -3,6 +3,8 @@
 
 #include "PropertiesAbstract.h"
 
+class PlatformObj;
+
 class PropertiesPlatform : public PropertiesAbstract{
     Q_OBJECT
 public:
@@ -12,10 +14,17 @@ public:
     void showObj(WorldObj* obj);
     
 public slots:
-    //void copyFEnabled();
+    void leftSideEnabled(int state);
+    void rightSideEnabled(int state);
+    void disablePlatformEnabled(int state);
+    void nameStationEnabled(QString val);
+    void namePlatformEnabled(QString val);
+    void waitMinEnabled(QString val);
+    void waitSecEnabled(QString val);
+    void waitPasEnabled(QString val);
         
 signals:
-    
+
 private:
     QCheckBox leftSide;
     QCheckBox rightSide;
@@ -25,7 +34,7 @@ private:
     QLineEdit waitMin;
     QLineEdit waitSec;
     QLineEdit waitPas;
-    
+    PlatformObj* pobj;
 };
 
 #endif	/* PROPERTIESPLATFORM_H */

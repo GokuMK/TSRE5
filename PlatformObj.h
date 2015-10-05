@@ -21,6 +21,24 @@ public:
     bool isTrackItem();
     void initTrItems(float* tpos);
     void translate(float px, float py, float pz);
+    QString getStationName();
+    QString getPlatformName();
+    int getPlatformMinWaitingTime();
+    int getPlatformNumPassengersWaiting();
+    void setStationName(QString name);
+    void setPlatformName(QString name);
+    void setPlatformMinWaitingTime(int val);
+    void setPlatformNumPassengersWaiting(int val);
+    bool getSideLeft();
+    bool getSideRight();
+    bool getDisabled();
+    void setSideLeft(bool val);
+    void setSideRight(bool val);
+    void setDisabled(bool val);
+    int getCarNumber();
+    int getCarSpeed();
+    void setCarNumber(int val);
+    void setCarSpeed(int val);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 
 private:

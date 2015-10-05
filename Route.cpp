@@ -215,6 +215,13 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         x = playerT[0];
         z = playerT[1];
     }
+    if(itemTrackType == 2){
+        tpos = new float[2];
+        float* playerT = Vec2::fromValues(x, z);
+        this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
+        x = playerT[0];
+        z = playerT[1];
+    }
     
     Tile *tTile;
     //try {

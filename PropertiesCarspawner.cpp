@@ -1,5 +1,6 @@
 #include "PropertiesCarspawner.h"
 #include "WorldObj.h"
+#include "PlatformObj.h"
 
 PropertiesCarspawner::PropertiesCarspawner() {
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -35,28 +36,9 @@ void PropertiesCarspawner::showObj(WorldObj* obj){
     }
     
     this->infoLabel->setText("Object: "+obj->type);
-    /*this->fileName.setText(obj->fileName);
-    
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    this->posX.setText(QString::number(obj->position[0], 'G', 4));
-    this->posY.setText(QString::number(obj->position[1], 'G', 4));
-    this->posZ.setText(QString::number(obj->position[2], 'G', 4));
-    this->quat.setText(
-            QString::number(obj->qDirection[0], 'G', 4) + " " +
-            QString::number(obj->qDirection[1], 'G', 4) + " " +
-            QString::number(obj->qDirection[2], 'G', 4) + " " +
-            QString::number(obj->qDirection[3], 'G', 4)
-            );
-    
-    
-    int l;
-    QString flags;
-    flags = QString::number(obj->staticFlags, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
-    this->flags.setText(flags);*/
+    PlatformObj* pobj = (PlatformObj*)obj;
+    this->carNumber.setText(QString::number(pobj->getCarNumber(),10));
+    this->carSpeed.setText(QString::number(pobj->getCarSpeed(),10));
 }
 
 bool PropertiesCarspawner::support(WorldObj* obj){
