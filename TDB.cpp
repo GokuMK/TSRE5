@@ -89,11 +89,12 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
                                 uu = (int) ParserX::parsujr(bufor);
                                 trackNodes[t]->iTri = uu;
                                 trackNodes[t]->trItemRef = new int[uu]; // przydzielenie pamieci dla sciezki
-
-                                for (j = 0; j < uu; j++) {
-                                    trackNodes[t]->trItemRef[j] = ParserX::parsujr(bufor);
-                                }
+                                if(uu > 0){
+                                    for (j = 0; j < uu; j++) {
+                                        trackNodes[t]->trItemRef[j] = ParserX::parsujr(bufor);
+                                    }
                                 ParserX::pominsekcje(bufor);
+                                }
                             }
                             ParserX::pominsekcje(bufor);
                         }
@@ -157,6 +158,7 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
                     nowy->set(sh, bufor);
                     ParserX::pominsekcje(bufor);
                 }
+                //qDebug() << "itid: "<<nowy->trItemId;
                 this->trackItems[nowy->trItemId] = nowy;
 
                 ParserX::pominsekcje(bufor);
@@ -2172,7 +2174,7 @@ void TDB::save() {
                         out << "\n					";
                 }
                 out << " )\n";
-                if(trackNodes[i]->trItemRef != 0){
+                if(trackNodes[i]->trItemRef != 0 && trackNodes[i]->iTri > 0){
                     out << "				TrItemRefs ( "<<trackNodes[i]->iTri<<"\n";
                     for(int j = 0; j<trackNodes[i]->iTri; j++){
                         out << "					TrItemRef ( "<<trackNodes[i]->trItemRef[j]<<" )\n";
@@ -2218,6 +2220,8 @@ void TDB::save() {
     file.close();
 
     saveTit();
+    if(!this->road) 
+        this->tsection->saveRoute();
     qDebug() << "Zapisane";
 }
 

@@ -180,7 +180,8 @@ void DynTrackObj::set(QString sh, float* val) {
 }
 
 void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
-    if (!loaded) return;
+    if (!loaded) 
+        return;
 
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
 

@@ -18,10 +18,10 @@ public:
     virtual ~TSectionDAT();
     bool isRoadShape(int id);
     void getShapeData(int id);
+    bool saveRoute();
 private:
     bool loadGlobal();
     bool loadRoute();
-    bool saveRoute();
 };
 
 #endif	/* TSECTIONDAT_H */

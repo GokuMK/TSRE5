@@ -261,7 +261,8 @@ void PlatformObj::setCarSpeed(int val){
 
 void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
-    if(!this->loaded) return;
+    if(!this->loaded) 
+        return;
     this->renderTritems(gluu, selectionColor);
 };
 
@@ -272,12 +273,13 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
         if(this->typeID == this->carspawner)
             tdb = Game::roadDB;
         int id = tdb->findTrItemNodeId(this->trItemId[1]);
-        if (id < 0) {
+        if (id < 1) {
             qDebug() << "fail id "<<id;
             this->loaded = false;
             return;
         }
         //qDebug() << "id: "<< this->trItemId[1] << " "<< id;
+        //qDebug() << "d: "<< tdb->trackItems[this->trItemId[1]]->trItemSData1;
         drawPositionB = new float[7];
         tdb->getDrawPositionOnTrNode(drawPositionB, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
         drawPositionB[0] += 2048 * (drawPositionB[5] - this->x);
@@ -288,8 +290,9 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
         if(this->typeID == this->carspawner)
             tdb = Game::roadDB;
         int id = tdb->findTrItemNodeId(this->trItemId[3]);
-        if (id < 0) {
+        if (id < 1) {
             qDebug() << "fail id";
+            this->loaded = false;
             return;
         }
         drawPositionE = new float[7];
@@ -297,8 +300,8 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
         
         drawPositionE[0] += 2048 * (drawPositionE[5] - this->x);
         drawPositionE[2] -= 2048 * (-drawPositionE[6] - this->y);
-        
     }
+
     if(line == NULL){
         if(pointer3d == NULL) pointer3d = new TrackItemObj();
         if(pointer3dSelected == NULL) pointer3dSelected = new TrackItemObj();
