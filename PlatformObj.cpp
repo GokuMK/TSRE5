@@ -18,8 +18,9 @@
 PlatformObj::PlatformObj() {
     this->shape = -1;
     this->loaded = false;
-    pointer3d = new TrackItemObj();
-    pointer3dSelected = new TrackItemObj();
+
+    //pointer3d = new TrackItemObj();
+    //pointer3dSelected = new TrackItemObj();
 }
 
 PlatformObj::PlatformObj(const PlatformObj& orig) {
@@ -38,6 +39,10 @@ void PlatformObj::load(int x, int y) {
     this->modified = false;
 
     setMartix();
+}
+
+bool PlatformObj::allowNew(){
+    return true;
 }
 
 void PlatformObj::set(QString sh, FileBuffer* data) {
@@ -112,6 +117,25 @@ bool PlatformObj::isTrackItem(){
     return true;
 }
 
+void PlatformObj::initTrItems(float* tpos){
+    if(tpos == NULL)
+        return;
+    int trNodeId = tpos[0];
+    int metry = tpos[1];
+    
+    TDB* tdb = Game::trackDB;
+    
+    int trItemId[2];
+    
+    tdb->newPlatformObject(trItemId, trNodeId, metry);
+    
+    this->trItemIdCount = 4;
+    this->trItemId[0] = 0;
+    this->trItemId[1] = trItemId[0];
+    this->trItemId[2] = 0;
+    this->trItemId[3] = trItemId[1];
+}
+
 void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
     
@@ -152,6 +176,8 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
         
     }
     if(line == NULL){
+        if(pointer3d == NULL) pointer3d = new TrackItemObj();
+        if(pointer3dSelected == NULL) pointer3dSelected = new TrackItemObj();
         line = new OglObj();
         float *punkty = new float[6];
         int ptr = 0;

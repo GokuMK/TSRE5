@@ -64,7 +64,6 @@ TrackItemObj::TrackItemObj() : OglObj() {
         punkty[ptr++] = 0;
         punkty[ptr++] = 0;
         punkty[ptr++] = 1;
-        
     this->setMaterial(0.0, 1.0, 0.0);
     this->init(punkty, ptr, this->V, GL_TRIANGLES);
     delete[] punkty;

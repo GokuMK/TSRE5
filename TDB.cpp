@@ -1903,7 +1903,7 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
     }
 }
 
-void TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q){
+void TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpos){
     float *lineBuffer;
     int length = 0;
     getLines(lineBuffer, length, posT);
@@ -1939,7 +1939,13 @@ void TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q){
     //posT[0] = n->trVectorSection[(int)best[2]].param[8];
     //posT[1] = -n->trVectorSection[(int)best[2]].param[9];
     
+
+    
     float metry = this->getVectorSectionLengthToIdx(best[1], best[2]);
+    if(tpos != NULL){
+        tpos[0] = best[1];
+        tpos[1] = metry + best[3];
+    }    
     this->getDrawPositionOnTrNode((float*)best, best[1], metry + best[3]);
     pos[0] = best[0];
     pos[1] = best[1];
@@ -2025,6 +2031,34 @@ void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
             }
     }
     return;
+}
+
+void TDB::newPlatformObject(int* itemId, int trNodeId, int metry){
+    itemId[0] = this->newPlatformItem(trNodeId, metry - 1);
+    itemId[1] = this->newPlatformItem(trNodeId, metry + 1);
+    
+    this->addItemToTrNode(trNodeId, itemId[0]);
+    this->addItemToTrNode(trNodeId, itemId[1]);
+}
+
+void TDB::addItemToTrNode(int tid, int iid){
+    TRnode* n = this->trackNodes[tid];
+    if(n == NULL) return;
+    int* newVec = new int[n->iTri+1];
+    std::copy(n->trItemRef, n->trItemRef+n->iTri, newVec);
+    newVec[n->iTri++] = iid;
+    delete[] n->trItemRef;
+    n->trItemRef = newVec;
+}
+
+int TDB::newPlatformItem(int trNodeId, int metry){
+    this->trackItems[this->iTRitems] = new TRitem(this->iTRitems-1);
+    TRitem* trit = this->trackItems[this->iTRitems];
+    if(!trit->init("platformitem")) return -1;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 2;
+    
+    return this->iTRitems++;
 }
 
 bool TDB::deleteNulls() {

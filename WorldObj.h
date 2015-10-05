@@ -7,6 +7,8 @@
 #include "OglObj.h"
 #include "Ref.h"
 
+class QString;
+
 class WorldObj {
 public:
     enum TypeID {
@@ -28,6 +30,9 @@ public:
         pickup = 15
     };
     TypeID typeID = this->undefined;
+    
+    static WorldObj* createObj(QString sh);
+    static int isTrackObj(QString sh);
     
     unsigned int UiD = 0;
     QString fileName;
@@ -65,6 +70,7 @@ public:
     virtual void save(QTextStream* out);
     void setPosition(float* p);
     void initPQ(float* p, float* q);
+    virtual void initTrItems(float *tpos);
     void setQdirection(float* q);
     void setNewQdirection();
     void setMartix();

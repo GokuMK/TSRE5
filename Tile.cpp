@@ -152,7 +152,7 @@ void Tile::load() {
             continue;
         } 
         //if(sh == "signal") sh = "static";
-        if (!createObj(&nowy, sh)) {
+        if ((nowy = WorldObj::createObj(sh)) == NULL) {
             ParserX::pominsekcje(data);
             continue;
         }
@@ -166,62 +166,6 @@ void Tile::load() {
         ParserX::pominsekcje(data);
         continue;
     }
-}
-
-bool Tile::createObj(WorldObj** nowy, QString sh) {
-    if (sh == "static") {
-        *nowy = (WorldObj*) (new StaticObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
-    } else if (sh == "signal") {
-        *nowy = (WorldObj*) (new SignalObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
-    } else if (sh == "speedpost") {
-        *nowy = (WorldObj*) (new SpeedpostObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
-    } else if (sh == "trackobj") {
-        *nowy = (WorldObj*) (new TrackObj());
-        (*nowy)->resPath = Game::root + "/global/shapes";
-    } else if (sh == "gantry") {
-        *nowy = (WorldObj*) (new StaticObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
-    } else if (sh == "collideobject") {
-        *nowy = (WorldObj*) (new StaticObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
-    } else if (sh == "dyntrack") {
-        *nowy = (WorldObj*) (new DynTrackObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
-    } else if (sh == "forest") {
-        *nowy = (WorldObj*) (new ForestObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
-    } else if (sh == "transfer") {
-        *nowy = (WorldObj*) (new TransferObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
-    } else if (sh == "platform") {
-        *nowy = (WorldObj*) (new PlatformObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
-        (*nowy)->typeID = (*nowy)->platform;
-    } else if (sh == "siding") {
-        *nowy = (WorldObj*) (new PlatformObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
-        (*nowy)->typeID = (*nowy)->siding;
-    } else if (sh == "carspawner") {
-        *nowy = (WorldObj*) (new PlatformObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";     
-        (*nowy)->typeID = (*nowy)->carspawner;
-    } else if (sh == "levelcr") {
-        *nowy = (WorldObj*) (new LevelCrObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";   
-    } else if (sh == "pickup") {
-        *nowy = (WorldObj*) (new PickupObj());
-        (*nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
-    } else {
-        qDebug() << sh;
-        //(*nowy) = new WorldObj();
-        return false;
-        //
-    }
-    (*nowy)->type = sh;
-    return true;
 }
 
 WorldObj* Tile::getObj(int uid) {
@@ -248,16 +192,16 @@ WorldObj* Tile::placeObject(float* p, Ref::RefItem* itemData) {
     q[1] = 0;
     q[2] = 0;
     q[3] = 1;
-    placeObject(p, (float*)&q, itemData);
+    placeObject(p, (float*)&q, itemData, NULL);
 }
 
-WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData) {
+WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* tpos) {
     if(loaded != 1) return NULL;
     if(itemData == NULL) return NULL;
     //qDebug() << pozW[0] << " " << pozW[1] << " " << pozW[2] << " " << itemData->type << " " << itemData->filename;
     
-    WorldObj* nowy;
-    if(!createObj(&nowy, itemData->type)) return NULL;
+    WorldObj* nowy = WorldObj::createObj(itemData->type);
+    if(nowy == NULL) return NULL;
     if(!nowy->allowNew()) {
         qDebug() << itemData->type << " <- object not supported yet ";
         return NULL;
@@ -272,12 +216,20 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData) {
     // }
     
     //Quat::rotateY(q, q, M_PI/2);
+    if(nowy->isTrackItem()){
+        nowy->initTrItems(tpos);
+        q[0] = 0;
+        q[1] = 0;
+        q[2] = 0;
+        q[3] = 1;
+    }
     nowy->initPQ(p, q);
     //qDebug() << maxUiD;
     nowy->UiD = ++maxUiD;
     qDebug() << itemData->type << " " << itemData->filename << nowy->UiD;
     //nowy->fileName = itemData->filename;
     nowy->load(x, z);
+    
     obiekty[jestObiektow++] = nowy;
     //qDebug() << obiekty[jestObiektow-1]->qDirection[3];
     

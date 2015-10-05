@@ -3,7 +3,7 @@
 
 #include "OglObj.h"
 
-class TrackItemObj : public  OglObj {
+class TrackItemObj : public OglObj {
 public:
     TrackItemObj();
     TrackItemObj(const TrackItemObj& orig);

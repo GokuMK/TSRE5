@@ -206,9 +206,12 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     Game::check_coords(x, z, p);
     
     // pozycja wzgledem TDB:
-    if(stickToTDB){
+    int itemTrackType =  WorldObj::isTrackObj(r->type);
+    float* tpos = NULL;
+    if(stickToTDB || itemTrackType == 1){
+        tpos = new float[2];
         float* playerT = Vec2::fromValues(x, z);
-        this->trackDB->findNearestPositionOnTDB(playerT, p, q);
+        this->trackDB->findNearestPositionOnTDB(playerT, p, q, tpos);
         x = playerT[0];
         z = playerT[1];
     }
@@ -235,7 +238,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         //pozWW[0] = pozW[0] + i;
         //pozWW[2] = pozW[2] + j;
 
-        WorldObj* nowy = tTile->placeObject(p, q, r);
+        WorldObj* nowy = tTile->placeObject(p, q, r, tpos);
         
         
         if ((r->type == "trackobj" || r->type == "dyntrack" )&& nowy != NULL) {

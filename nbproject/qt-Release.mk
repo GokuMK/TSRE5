@@ -20618,7 +20618,19 @@ build/Release/MinGW_QT_static-Windows/WorldObj.o: WorldObj.cpp WorldObj.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qtouchdevice.h \
 		ShapeLib.h \
 		ParserX.h \
-		GLMatrix.h
+		GLMatrix.h \
+		StaticObj.h \
+		DynTrackObj.h \
+		ForestObj.h \
+		TransferObj.h \
+		TrackObj.h \
+		SpeedpostObj.h \
+		SignalObj.h \
+		PlatformObj.h \
+		TrWatermarkObj.h \
+		LevelCrObj.h \
+		PickupObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/WorldObj.o WorldObj.cpp
 
 build/Release/MinGW_QT_static-Windows/glwidget.o: glwidget.cpp glwidget.h \

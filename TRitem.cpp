@@ -14,6 +14,10 @@
 TRitem::TRitem() {
 }
 
+TRitem::TRitem(int id) {
+    this->trItemId = id;
+}
+
 TRitem::TRitem(const TRitem& orig) {
 }
 
@@ -29,8 +33,6 @@ bool TRitem::init(QString sh){
     trItemSRData = NULL;
     speedpostTrItemData = NULL;
     trSignalDir = NULL;
-    
-    pointer3d = new Pointer3d();
     
     if(sh == "crossoveritem") return true;
     if(sh == "signalitem") return true;

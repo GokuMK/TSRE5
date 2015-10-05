@@ -35,7 +35,7 @@ public:
     void setModified(bool value);
     WorldObj* getObj(int uid);
     WorldObj* placeObject(float* p, Ref::RefItem* itemData);
-    WorldObj* placeObject(float* p, float* q, Ref::RefItem* itemData);
+    WorldObj* placeObject(float* p, float* q, Ref::RefItem* itemData, float* tpos = NULL);
     void transalteObj(float px, float py, float pz, int uid);
     void initNew();
     void render();
@@ -47,7 +47,6 @@ private:
     bool modified;
     QString* viewDbSphereRaw = NULL;
     void wczytajObiekty();
-    bool createObj(WorldObj** nowy, QString sh);
 };
 
 #endif	/* TILE_H */

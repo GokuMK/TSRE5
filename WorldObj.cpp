@@ -4,11 +4,102 @@
 #include "ParserX.h"
 #include "GLMatrix.h"
 #include <math.h>
+#include <QString>
+#include "StaticObj.h"
+#include "DynTrackObj.h"
+#include "ForestObj.h"
+#include "TransferObj.h"
+#include "TrackObj.h"
+#include "SpeedpostObj.h"
+#include "SignalObj.h"
+#include "PlatformObj.h"
+#include "TrWatermarkObj.h"
+#include "LevelCrObj.h"
+#include "PickupObj.h"
+#include "Game.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
 
+int WorldObj::isTrackObj(QString sh) {
+    if (sh == "signal") {
+        return 1;
+    } else if (sh == "speedpost") {
+        return 1;
+    } else if (sh == "collideobject") {
+        return 0;
+    } else if (sh == "platform") {
+        return 1;
+    } else if (sh == "siding") {
+        return 1;
+    } else if (sh == "carspawner") {
+        return 2;
+    } else if (sh == "levelcr") {
+        return 3;
+    } else if (sh == "pickup") {
+        return 1;
+    } 
+    return 0;
+}
+
+
+WorldObj* WorldObj::createObj(QString sh) {
+    WorldObj* nowy;
+    if (sh == "static") {
+        nowy = (WorldObj*) (new StaticObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+    } else if (sh == "signal") {
+       nowy = (WorldObj*) (new SignalObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+    } else if (sh == "speedpost") {
+        nowy = (WorldObj*) (new SpeedpostObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+    } else if (sh == "trackobj") {
+        nowy = (WorldObj*) (new TrackObj());
+        (nowy)->resPath = Game::root + "/global/shapes";
+    } else if (sh == "gantry") {
+        nowy = (WorldObj*) (new StaticObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+    } else if (sh == "collideobject") {
+        nowy = (WorldObj*) (new StaticObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
+    } else if (sh == "dyntrack") {
+        nowy = (WorldObj*) (new DynTrackObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
+    } else if (sh == "forest") {
+        nowy = (WorldObj*) (new ForestObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
+    } else if (sh == "transfer") {
+        nowy = (WorldObj*) (new TransferObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
+    } else if (sh == "platform") {
+        nowy = (WorldObj*) (new PlatformObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (nowy)->typeID = (nowy)->platform;
+    } else if (sh == "siding") {
+        nowy = (WorldObj*) (new PlatformObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
+        (nowy)->typeID = (nowy)->siding;
+    } else if (sh == "carspawner") {
+        nowy = (WorldObj*) (new PlatformObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";     
+        (nowy)->typeID = (nowy)->carspawner;
+    } else if (sh == "levelcr") {
+        nowy = (WorldObj*) (new LevelCrObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";   
+    } else if (sh == "pickup") {
+        nowy = (WorldObj*) (new PickupObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
+    } else {
+        qDebug() << " Unsupported WorldObj !!! " + sh;
+        //(*nowy) = new WorldObj();
+        return NULL;
+        //
+    }
+    (nowy)->type = sh;
+    return nowy;
+}
 
 WorldObj::WorldObj() {
     this->shape = -1;
@@ -260,4 +351,8 @@ bool WorldObj::unselect(){
 
 bool WorldObj::isSelected(){
     return this->selected;
+}
+
+void WorldObj::initTrItems(float *tpos){
+    
 }

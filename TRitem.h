@@ -15,6 +15,7 @@ class TDB;
 class TRitem {
 public:
     TRitem();
+    TRitem(int id);
     TRitem(const TRitem& orig);
     virtual ~TRitem();
     
@@ -55,7 +56,6 @@ public:
     void flipTrackPos(float d);
     void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);
 private:
-    Pointer3d* pointer3d;
     float* drawPosition = NULL;
 };
 
