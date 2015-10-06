@@ -214,7 +214,7 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
     //if(nowy->type == "transfer"){
     nowy->set("filename", itemData->filename);
     // }
-    
+
     //Quat::rotateY(q, q, M_PI/2);
     if(nowy->isTrackItem()){
         nowy->initTrItems(tpos);

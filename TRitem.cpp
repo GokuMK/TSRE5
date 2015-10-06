@@ -26,6 +26,29 @@ TRitem* TRitem::newPlatformItem(int trItemId, int metry){
     return trit;
 }
 
+TRitem* TRitem::newSidingItem(int trItemId, int metry){
+    TRitem* trit = new TRitem(trItemId);
+    if(!trit->init("sidingitem")) return NULL;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 2;
+    trit->platformTrItemData = new unsigned int[2];
+    trit->platformTrItemData[0] = 0;
+    trit->platformTrItemData[1] = 0;
+    trit->platformName = "new siding";
+    return trit;
+}
+
+TRitem* TRitem::newCarspawnerItem(int trItemId, int metry){
+    TRitem* trit = new TRitem(trItemId);
+    if(!trit->init("carspawneritem")) return NULL;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 1;
+    trit->platformTrItemData = new unsigned int[2];
+    trit->platformTrItemData[0] = 0;
+    trit->platformTrItemData[1] = 0;
+    return trit;
+}
+
 TRitem::TRitem() {
 }
 
@@ -187,6 +210,16 @@ void TRitem::set(QString sh, FileBuffer* data) {
     
     qDebug() << "=" << sh;
     return;
+}
+
+void TRitem::setTrItemRData(float* posT, float* pos){
+    if(this->trItemRData == NULL)
+        this->trItemRData = new float[5];
+    this->trItemRData[0] = pos[0];
+    this->trItemRData[1] = pos[1];
+    this->trItemRData[2] = pos[2];
+    this->trItemRData[3] = posT[0];
+    this->trItemRData[4] = posT[1];
 }
 
 void TRitem::addToTrackPos(float d){

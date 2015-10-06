@@ -222,7 +222,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         x = playerT[0];
         z = playerT[1];
     }
-    
+
     Tile *tTile;
     //try {
     tTile = tile[((x)*10000 + z)];
@@ -247,7 +247,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
 
         WorldObj* nowy = tTile->placeObject(p, q, r, tpos);
         
-        
+
         if ((r->type == "trackobj" || r->type == "dyntrack" )&& nowy != NULL) {
             if(nowy->endp == 0) nowy->endp = new float[5];
             //this->trackDB->placeTrack(x, z, p, q, r->value, nowy->UiD);

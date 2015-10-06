@@ -15,7 +15,8 @@ class TDB;
 class TRitem {
 public:
     static TRitem* newPlatformItem(int trItemId, int metry);
-    
+    static TRitem* newSidingItem(int trItemId, int metry);
+    static TRitem* newCarspawnerItem(int trItemId, int metry);
     TRitem();
     TRitem(int id);
     TRitem(const TRitem& orig);
@@ -57,6 +58,7 @@ public:
     void save(QTextStream* out, bool tit);
     void addToTrackPos(float d);
     void flipTrackPos(float d);
+    void setTrItemRData(float* posT, float*pos);
     void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);
 private:
     float* drawPosition = NULL;

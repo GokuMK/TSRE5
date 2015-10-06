@@ -37,7 +37,12 @@ void PlatformObj::load(int x, int y) {
     this->loaded = true;
     this->skipLevel = 1;
     this->modified = false;
-
+    
+    if(this->typeID == this->carspawner){
+        this->carAvSpeed = 20;
+        this->carFrequency = 5;
+    }
+    
     setMartix();
 }
 
@@ -123,18 +128,21 @@ void PlatformObj::initTrItems(float* tpos){
     int trNodeId = tpos[0];
     int metry = tpos[1];
     
+    int isRoad = 0;
     TDB* tdb = Game::trackDB;
-    if(this->typeID == this->carspawner)
+    if(this->typeID == this->carspawner){
+        isRoad = 1;
         tdb = Game::roadDB;
-    
+    }
+
     int trItemId[2];
-    
-    tdb->newPlatformObject(trItemId, trNodeId, metry);
-    
+
+    tdb->newPlatformObject(trItemId, trNodeId, metry, this->typeID);
+
     this->trItemIdCount = 4;
-    this->trItemId[0] = 0;
+    this->trItemId[0] = isRoad;
     this->trItemId[1] = trItemId[0];
-    this->trItemId[2] = 0;
+    this->trItemId[2] = isRoad;
     this->trItemId[3] = trItemId[1];
 }
 

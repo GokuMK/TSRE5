@@ -7,6 +7,7 @@
 #include "DynTrackObj.h"
 #include "TrackShape.h"
 #include "Intersections.h"
+#include <functional>
 
 TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
     loaded = false;
@@ -1779,7 +1780,7 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
             continue;
         
         Vector3f *position = tsection->sekcja.at(idx)->getDrawPosition(metry - length + sectionLength);
-        
+
         float matrix[16];
         float q[4];
         q[0] = q[1] = q[2] = 0; q[3] = 1;
@@ -1809,7 +1810,6 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
         out[0] = pos[0];
         out[1] = pos[1];
         out[2] = pos[2];        
-        
         //position->x += (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10];
         //position->y += n->trVectorSection[i].param[11];
         //position->z += (-n->trVectorSection[i].param[9] - playerT[1])*2048 - n->trVectorSection[i].param[12];
@@ -2035,15 +2035,28 @@ void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
     return;
 }
 
-void TDB::newPlatformObject(int* itemId, int trNodeId, int metry){
+void TDB::newPlatformObject(int* itemId, int trNodeId, int metry, int type){
+    std::function<TRitem*(int, int)> newTRitem;
+    if(type == WorldObj::platform) newTRitem = &TRitem::newPlatformItem;
+    if(type == WorldObj::siding) newTRitem = &TRitem::newSidingItem;
+    if(type == WorldObj::carspawner) newTRitem = &TRitem::newCarspawnerItem;
+
     int dlugosc = this->getVectorSectionLength(trNodeId);
     int m = metry - 1;
     if(metry < 0) metry = 0;
-    this->trackItems[this->iTRitems] = TRitem::newPlatformItem(this->iTRitems, m);
+    float trPosition[7];
+    this->trackItems[this->iTRitems] = newTRitem(this->iTRitems, m);
+    this->trackItems[this->iTRitems]->platformTrItemData[1] = this->iTRitems + 1;
+    getDrawPositionOnTrNode((float*)&trPosition, trNodeId, m);
+    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
     itemId[0] = this->iTRitems++;
     m = metry + 1;
     if(metry > dlugosc) metry = dlugosc;
-    this->trackItems[this->iTRitems] = TRitem::newPlatformItem(this->iTRitems, m);
+    this->trackItems[this->iTRitems] = newTRitem(this->iTRitems, m);
+    this->trackItems[this->iTRitems]->platformTrItemData[1] = this->iTRitems - 1;
+    this->trackItems[this->iTRitems]->platformTrItemData[0] = 0xFFFF0000;
+    getDrawPositionOnTrNode((float*)&trPosition, trNodeId, m);
+    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
     itemId[1] = this->iTRitems++;
     
     this->addItemToTrNode(trNodeId, itemId[0]);

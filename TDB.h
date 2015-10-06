@@ -66,7 +66,7 @@ public:
     bool getDrawPositionOnTrNode(float* out, int id, float metry);
     int findTrItemNodeId(int id);
     void findNearestPositionOnTDB(float* posT, float* pos, float* q, float* tpos = NULL);
-    void newPlatformObject(int* itemId, int trNodeId, int metry);
+    void newPlatformObject(int* itemId, int trNodeId, int metry, int type);
 private:
     bool deleteNulls();
     int findBiggest();
