@@ -105,7 +105,7 @@ void Tile::load() {
         
         WorldObj* nowy;
         if (sh == "") {
-            //("wczytano "+obiekty.size());
+            //qDebug() << "wczytano " << obiekty.size();
             loaded = 0;
             wczytajObiekty();
             return;
@@ -156,7 +156,7 @@ void Tile::load() {
             ParserX::pominsekcje(data);
             continue;
         }
-
+        
         while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
             nowy->set(sh, data);
             ParserX::pominsekcje(data);

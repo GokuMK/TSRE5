@@ -177,13 +177,13 @@ void Terrain::convertTexToDefaultCoords(int idx) {
         TexLib::mtex[texid[idx]]->crop(x11, y11, x22, y22);
     }
 
-    tfile->tdata[(idx)*13 + 1 + 6] = 0;
-    tfile->tdata[(idx)*13 + 2 + 6] = 0;
+    tfile->tdata[(idx)*13 + 1 + 6] = 0.001;
+    tfile->tdata[(idx)*13 + 2 + 6] = 0.001;
 
-    tfile->tdata[(idx)*13 + 3 + 6] = 0.0625;
+    tfile->tdata[(idx)*13 + 3 + 6] = 0.062375;
     tfile->tdata[(idx)*13 + 4 + 6] = 0.0;
     tfile->tdata[(idx)*13 + 5 + 6] = 0.0;
-    tfile->tdata[(idx)*13 + 6 + 6] = 0.0625;
+    tfile->tdata[(idx)*13 + 6 + 6] = 0.062375;
     this->refresh();
 }
 

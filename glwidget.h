@@ -52,6 +52,7 @@ signals:
     void setToolbox(QString name);
     void setBrushTextureId(int val);
     void showProperties(WorldObj* obj);
+    void flexData(int x, int z, float* p);
     
     void sendMsg(QString name);
     void sendMsg(QString name, bool val);

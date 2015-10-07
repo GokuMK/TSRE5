@@ -12,11 +12,13 @@
 #include "TextObj.h"
 
 class DynTrackObj;
+class SigCfg;
 
 class TDB {
 public:
     bool loaded;
     TSectionDAT *tsection; 
+    SigCfg* sigCfg;
     //TRnode *trackNodes;
     std::unordered_map<int, TRitem*> trackItems;
     std::unordered_map<int, TRnode*> trackNodes;
@@ -66,6 +68,7 @@ public:
     bool getDrawPositionOnTrNode(float* out, int id, float metry);
     int findTrItemNodeId(int id);
     void findNearestPositionOnTDB(float* posT, float* pos, float* q, float* tpos = NULL);
+    void deleteTrItem(int trid);
     void newPlatformObject(int* itemId, int trNodeId, int metry, int type);
 private:
     bool deleteNulls();
@@ -75,6 +78,7 @@ private:
     void drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx);
     void getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid);
     void addItemToTrNode(int tid, int iid);
+    void deleteItemFromTrNode(int tid, int iid);
     OglObj linieSieci;
     OglObj konceSieci;
     OglObj punktySieci;

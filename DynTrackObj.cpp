@@ -161,7 +161,9 @@ void DynTrackObj::set(QString sh, float* val) {
     if(sh == "dyntrackdata"){
         for (int iii = 0; iii < 5; iii++) {
             if(val[iii*2] == 0) {
-                sections[iii].sectIdx = 4294967295;
+                sections[iii].sectIdx = 0;
+                if(iii != 0)
+                    sections[iii].sectIdx = 4294967295;
                 sections[iii].a = 0;
                 sections[iii].r = 0;
                 continue;

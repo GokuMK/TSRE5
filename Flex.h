@@ -1,10 +1,3 @@
-/* 
- * File:   Flex.h
- * Author: Goku
- *
- * Created on 19 maja 2015, 00:06
- */
-
 #ifndef FLEX_H
 #define	FLEX_H
 
@@ -18,6 +11,7 @@ class Flex {
 public:
 
     static bool NewFlex(int x, int z, float *p, float *q, float * dyntrackSections);
+    static bool AutoFlex(int x1, int z1, float* p1, int x2, int z2, float* p2, float* dyntrackSections);
 private:
     static int FlexStage;
     static float FlexP0[3];
@@ -29,6 +23,7 @@ private:
     static QImage* img;
     static QLabel* myLabel;
     static int windowInit;
+    static int offx, offy;
     static void drawLine(QPen niebieski, int x1, int y1, int x2, int y2);
 };
 

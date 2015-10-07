@@ -46,7 +46,7 @@ public:
     int trSignalType2;
     float trSignalType3;
     QString trSignalType4;
-    int trSignalDirs;
+    int trSignalDirs = 0;
     int *trSignalDir;
     float *trSignalRDir;
     bool titLoading = false;

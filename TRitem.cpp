@@ -1,7 +1,3 @@
-/* 
- * Author: Goku
- */
-
 #include "TRitem.h"
 #include "FileBuffer.h"
 #include "ParserX.h"

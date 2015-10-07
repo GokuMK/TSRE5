@@ -18,6 +18,8 @@ SignalObj::SignalObj() {
     this->loaded = false;
     pointer3d = new TrackItemObj();
     pointer3d->setMaterial(1,0,0);
+    pointer3dSelected = new TrackItemObj();
+    pointer3dSelected->setMaterial(1,0.5,0.5);
 }
 
 SignalObj::SignalObj(const SignalObj& orig) {
@@ -69,6 +71,19 @@ void SignalObj::set(QString sh, FileBuffer* data) {
     }
     WorldObj::set(sh, data);
     return;
+}
+
+int SignalObj::getLinkedJunctionValue(int i){
+    if(i >= this->signalUnits) return -1;
+    TDB* tdb = Game::trackDB;
+    int tritId = this->trItemId[i*2+1];
+    TRitem* trit = tdb->trackItems[tritId];
+    if(trit == NULL) return -1;
+    if(trit->trSignalDirs < 1) return 0;
+    return trit->trSignalDir[0];
+}
+bool SignalObj::isSubObjEnabled(int i){
+    return ((this->signalSubObj >> i) & 1) == 1;
 }
 
 void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
@@ -138,8 +153,9 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
                 return;
             }
             //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
-            drawPositions[i] = new float[7];
+            drawPositions[i] = new float[8];
             tdb->getDrawPositionOnTrNode(drawPositions[i], id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
+            drawPositions[i][7] = tdb->trackItems[this->trItemId[i*2+1]]->trSignalType2;
             drawPositions[i][0] += 2048 * (drawPositions[i][5] - this->x);
             drawPositions[i][2] -= 2048 * (-drawPositions[i][6] - this->y);
         }
@@ -149,18 +165,28 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
     Mat4::identity(gluu->objStrMatrix);
     gluu->setMatrixUniforms();
     int useSC;
-    for(int i = 0; i < this->signalUnits; i++){
+    int w = 1;
+    //w = this->signalUnits;
+    for(int i = 0; i < w; i++){
         gluu->mvPushMatrix();
-        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][0] + 0 * (drawPositions[i][4] - this->x), drawPositions[i][1] + 1, -drawPositions[i][2] + 0 * (-drawPositions[i][5] - this->y));
-        Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][3]);
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][0] + 0 * (drawPositions[i][4] - this->x), drawPositions[i][1] /*+ i*/ + 1, -drawPositions[i][2] + 0 * (-drawPositions[i][5] - this->y));
+        Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][3] + drawPositions[i][7]*M_PI);
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-        pointer3d->render(selectionColor + (i+1)*65536*16*useSC);
+        if(this->selected && this->selectionValue > 0) 
+            pointer3dSelected->render(selectionColor + (i+1)*65536*16*useSC);
+        else
+            pointer3d->render(selectionColor + (i+1)*65536*16*useSC);
         gluu->mvPopMatrix();
     }
 };
+
+bool SignalObj::select(int value){
+    this->selectionValue = value;
+    this->selected = true;
+}
 
 bool SignalObj::getBorder(float* border){
     if (shape < 0) return false;

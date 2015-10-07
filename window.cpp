@@ -11,6 +11,9 @@
 #include "PropertiesPlatform.h"
 #include "PropertiesSiding.h"
 #include "PropertiesCarspawner.h"
+#include "PropertiesDyntrack.h"
+#include "PropertiesSignal.h"
+
 Window::Window() {
     
     objTools = new ObjTools("ObjTools");
@@ -23,6 +26,9 @@ Window::Window() {
     objProperties.push_back(new PropertiesPlatform);
     objProperties.push_back(new PropertiesSiding);
     objProperties.push_back(new PropertiesCarspawner);
+    PropertiesDyntrack * propertiesDyntrack = new PropertiesDyntrack();
+    objProperties.push_back(propertiesDyntrack);
+    objProperties.push_back(new PropertiesSignal);
     // last 
     objProperties.push_back(new PropertiesUndefined);
     
@@ -151,6 +157,12 @@ Window::Window() {
     
     QObject::connect(terrainTools, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));   
+    
+    QObject::connect(propertiesDyntrack, SIGNAL(enableTool(QString)),
+                      glWidget, SLOT(enableTool(QString)));
+    
+    QObject::connect(glWidget, SIGNAL(flexData(int, int, float*)),
+                      propertiesDyntrack, SLOT(flexData(int, int, float*)));
     
     QObject::connect(terrainTools, SIGNAL(setPaintBrush(Brush*)),
                       glWidget, SLOT(setPaintBrush(Brush*)));   

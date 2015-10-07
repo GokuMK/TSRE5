@@ -7,6 +7,7 @@
 #include "DynTrackObj.h"
 #include "TrackShape.h"
 #include "Intersections.h"
+#include "SigCfg.h"
 #include <functional>
 
 TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
@@ -172,6 +173,8 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
 
     if(!this->road)
         loadTit();
+    
+    this->sigCfg = new SigCfg();
     
     checkSignals();
     //save();
@@ -1501,6 +1504,7 @@ void TDB::removeTrackFromTDB(int x, int y, int UiD){
 void TDB::refresh() {
     isInitSectLines = false;
     isInitLines = false;
+    collisionLineHash = 0;
 }
 
 void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
@@ -2063,12 +2067,42 @@ void TDB::newPlatformObject(int* itemId, int trNodeId, int metry, int type){
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
 
+void TDB::deleteTrItem(int trid){
+    TRitem* trit = this->trackItems[trid];
+    if(trit != NULL){
+        trit->type = "emptyitem";
+    }
+    int nid = findTrItemNodeId(trid);
+    if(nid < 1) return;
+    deleteItemFromTrNode(nid, trid);
+    
+}
+
 void TDB::addItemToTrNode(int tid, int iid){
     TRnode* n = this->trackNodes[tid];
     if(n == NULL) return;
     int* newVec = new int[n->iTri+1];
     std::copy(n->trItemRef, n->trItemRef+n->iTri, newVec);
     newVec[n->iTri++] = iid;
+    delete[] n->trItemRef;
+    n->trItemRef = newVec;
+}
+
+void TDB::deleteItemFromTrNode(int tid, int iid){
+    TRnode* n = this->trackNodes[tid];
+    if(n == NULL) return;
+    if(n->iTri == 1){
+        n->iTri = 0;
+        return;
+    }
+    int* newVec = new int[n->iTri-1];
+    for(int i = 0, j = 0; i < n->iTri; i++){
+        if(n->trItemRef[i] == iid){
+            continue;
+        }
+        newVec[j++] = n->trItemRef[i];
+    }
+    n->iTri--;
     delete[] n->trItemRef;
     n->trItemRef = newVec;
 }

@@ -87,6 +87,7 @@ public:
     virtual bool unselect();
     virtual bool isSelected();
     virtual bool getBorder(float* border);
+    virtual void deleteTrItems();
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 protected:
     float* matrix3x3 = NULL;

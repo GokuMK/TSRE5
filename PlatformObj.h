@@ -39,6 +39,7 @@ public:
     int getCarSpeed();
     void setCarNumber(int val);
     void setCarSpeed(int val);
+    void deleteTrItems();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 
 private:
@@ -55,6 +56,7 @@ private:
     int selectionValue = 0;
     void renderTritems(GLUU* gluu, int selectionColor);
 };
+
 
 #endif	/* PLATFORMOBJ_H */
 

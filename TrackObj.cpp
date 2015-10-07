@@ -49,7 +49,7 @@ void TrackObj::rotate(float x, float y, float z){
     if(matrix3x3 != NULL) matrix3x3 = NULL;
     
     //if(this->endp[3] == 1){
-    qDebug() << "aaaa";
+    qDebug() << "rot";
     //Mat4::translate(this->matrix, this->matrix, this->endp);
     float vect2[3];
     float vect[3];

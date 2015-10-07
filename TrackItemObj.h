@@ -5,7 +5,7 @@
 
 class TrackItemObj : public OglObj {
 public:
-    TrackItemObj();
+    TrackItemObj(int type = 0);
     TrackItemObj(const TrackItemObj& orig);
     virtual ~TrackItemObj();
 private:

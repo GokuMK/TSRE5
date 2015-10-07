@@ -5,6 +5,8 @@
 #include <QDebug>
 #include "Vector2f.h"
 #include "Vector3f.h"
+#include "Game.h"
+#include "TDB.h"
 
 int Flex::FlexStage = 0;
 float Flex::FlexP0[3];
@@ -13,9 +15,34 @@ int Flex::FlexX;
 int Flex::FlexZ;
 QWidget* Flex::window;
 int Flex::windowInit = 0;
+int Flex::offx = 0;
+int Flex::offy = 0;
 QPainter* Flex::painter;
 QImage* Flex::img;
 QLabel* Flex::myLabel;
+
+bool Flex::AutoFlex(int x1, int z1, float* p1, int x2, int z2, float* p2, float* dyntrackSections){
+    float qe[4];
+    qe[0] = 0;
+    qe[1] = 0;
+    qe[2] = 0;
+    qe[3] = 1;
+    TDB* tdb = Game::trackDB;
+    bool success;
+    qDebug() <<"flex "<< x1 << " " << z1 << " " << p1[0] << " " << p1[1] << " " << p1[2];
+    qDebug() <<"flex "<< x2 << " " << z2 << " " << p2[0] << " " << p2[1] << " " << p2[2];
+    
+    tdb->findNearestNode(x1, z1, p1,(float*) &qe);
+    success = Flex::NewFlex(x1, z1, p1, (float*)qe, dyntrackSections);
+    qe[0] = 0;
+    qe[1] = 0;
+    qe[2] = 0;
+    qe[3] = 1;
+    tdb->findNearestNode(x2, z2, p2,(float*) &qe);
+    success = Flex::NewFlex(x2, z2, p2, (float*)qe, dyntrackSections);
+    
+    return success;
+}
 
 bool Flex::NewFlex(int x, int z, float* p, float* q, float * dyntrackSections){
     
@@ -36,9 +63,9 @@ bool Flex::NewFlex(int x, int z, float* p, float* q, float * dyntrackSections){
     if(windowInit == 0){
         window = new QWidget();
         windowInit = 1;
-        window->setFixedSize(600, 600);
+        window->setFixedSize(800, 800);
         window->show();
-        img = new QImage(600, 600, QImage::Format_RGBA8888);
+        img = new QImage(800, 800, QImage::Format_RGBA8888);
         painter = new QPainter();
         
         //QImage* myImage = new QImage();
@@ -85,6 +112,9 @@ bool Flex::NewFlex(int x, int z, float* p, float* q, float * dyntrackSections){
     //v2.rotate(FlexQ0[1], 0);
     //v1.x = 0;
     //v1.y = 1;
+    offx = (p1.x + p2.x)/2;
+    offy = (p1.y + p2.y)/2;
+    qDebug() << offx <<" "<<offy;
     
     qDebug() << p1.x << " = "<< p1.y;
     qDebug() << p2.x << " = "<< p2.y;
@@ -204,11 +234,16 @@ bool Flex::NewFlex(int x, int z, float* p, float* q, float * dyntrackSections){
 }
 
 void Flex::drawLine(QPen niebieski, int x1, int y1, int x2, int y2){
-        int off = 300;
-        int start = 600;
+        int off = 400;
+        int start = 800;
+        //x1 /= 4;
+        //x2 /= 4;
+        //y1 /= 4;
+        //y2 /= 4;
+        
         painter->begin(img);
         painter->setRenderHint(QPainter::RenderHint::Antialiasing, false);
         painter->setPen(niebieski); 
-        painter->drawLine((x1+off),start-(y1+off),(x2+off),start-(y2+off));
+        painter->drawLine((x1-offx+off),start-(y1-offy+off),(x2-offx+off),start-(y2-offy+off));
         painter->end();
 }

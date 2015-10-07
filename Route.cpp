@@ -149,11 +149,11 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         if(Game::renderTdbLines)
             trackDB->renderAll(gluu, playerT, playerRot);
         if(Game::renderTsectionLines)
-        trackDB->renderLines(gluu, playerT, playerRot);
+            trackDB->renderLines(gluu, playerT, playerRot);
         if(Game::renderTdbLines)
-        roadDB->renderAll(gluu, playerT, playerRot);
+            roadDB->renderAll(gluu, playerT, playerRot);
         if(Game::renderTsectionLines)
-        roadDB->renderLines(gluu, playerT, playerRot);
+            roadDB->renderLines(gluu, playerT, playerRot);
     }
     
     //trackDB->renderItems(gluu, playerT, playerRot);
@@ -375,6 +375,9 @@ void Route::deleteObj(WorldObj* obj) {
     obj->modified = true;
     if (obj->type == "trackobj" || obj->type == "dyntrack") {
         removeTrackFromTDB(obj);
+    }
+    if (obj->isTrackItem()) {
+        obj->deleteTrItems();
     }
     Tile *tTile;
     tTile = tile[((obj->x)*10000 + obj->y)];

@@ -146,6 +146,18 @@ void PlatformObj::initTrItems(float* tpos){
     this->trItemId[3] = trItemId[1];
 }
 
+void PlatformObj::deleteTrItems(){
+    TDB* tdb = Game::trackDB;
+    if(this->typeID == this->carspawner){
+        tdb = Game::roadDB;
+    }
+    tdb->deleteTrItem(this->trItemId[1]);
+    tdb->deleteTrItem(this->trItemId[3]);
+    
+    this->trItemId[1] = -1;
+    this->trItemId[3] = -1;
+}
+
 QString PlatformObj::getStationName(){
     TDB* tdb = Game::trackDB;
     int id = this->trItemId[1];

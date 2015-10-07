@@ -11,7 +11,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     const char symbols[] = { 'I', 'E', '!', 'X' };
     QString output = QString("[%1] %2").arg( symbols[type] ).arg( msg );
     std::cout << output.toStdString() << std::endl;
-    if( type == QtFatalMsg ) abort();
+    if( type == QtFatalMsg ) abort(); 
 }
 
 int main(int argc, char *argv[]){
@@ -20,8 +20,10 @@ int main(int argc, char *argv[]){
     QSurfaceFormat format;
     //format.setVersion(3, 2);
     //format.setProfile(QSurfaceFormat::CoreProfile);
-    //format.setDepthBufferSize(24);
+    //format.setDepthBufferSize(32);
     //format.setStencilBufferSize(8);
+    //format.setSamples(2);
+    //format.set
     format.setSwapInterval(0);
     QSurfaceFormat::setDefaultFormat(format);
     Game::load();

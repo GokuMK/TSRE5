@@ -362,3 +362,7 @@ bool WorldObj::isSelected(){
 void WorldObj::initTrItems(float *tpos){
     
 }
+
+void WorldObj::deleteTrItems(){
+    
+}

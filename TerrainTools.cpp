@@ -299,33 +299,33 @@ void TerrainTools::setTexToolEnabled(){
 // brush
 
 void TerrainTools::setBrushSize(QString val){
-    qDebug() << "a";
+    //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sSize->setValue(ival);
     this->paintBrush->size = ival;
 }
 
 void TerrainTools::setBrushAlpha(QString val){
-    qDebug() << "a";
+    //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sIntensity->setValue(ival);
     this->paintBrush->alpha = (float)ival/100;
 }
 
 void TerrainTools::setBrushSize(int val){
-    qDebug() << "a";
+    //qDebug() << "a";
     this->leSize->setText(QString::number(val,10));
     this->paintBrush->size = val;
 }
 
 void TerrainTools::setBrushAlpha(int val){
-    qDebug() << "a";
+    //qDebug() << "a";
     this->leIntensity->setText(QString::number(val,10));
     this->paintBrush->alpha = (float)val/100;
 }
 
 void TerrainTools::setFheight(QString val){
-    qDebug() << "a";
+    //qDebug() << "a";
     float ival = val.toFloat(0);
     this->paintBrush->hFixed = ival;
 }
@@ -333,45 +333,45 @@ void TerrainTools::setFheight(QString val){
 // embarkment
 
 void TerrainTools::setEsize(int val){
-    qDebug() << "a";
+    //qDebug() << "a";
     this->leEsize->setText(QString::number(val,10));
     this->paintBrush->eSize = val;
 }
 void TerrainTools::setEsize(QString val){
-    qDebug() << "a";
+    //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sEsize->setValue(ival);
     this->paintBrush->eSize = (float)ival/100;
 }
 void TerrainTools::setEemb(int val){
-    qDebug() << "a";
+    //qDebug() << "a";
     this->leEemb->setText(QString::number(val,10));
     this->paintBrush->eEmb = val;
 }
 void TerrainTools::setEemb(QString val){
-    qDebug() << "a";
+    //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sEemb->setValue(ival);
     this->paintBrush->eEmb = (float)ival/100;
 }
 void TerrainTools::setEcut(int val){
-    qDebug() << "a";
+    //qDebug() << "a";
     this->leEcut->setText(QString::number(val,10));
     this->paintBrush->eCut = val;
 }
 void TerrainTools::setEcut(QString val){
-    qDebug() << "a";
+    //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sEcut->setValue(ival);
     this->paintBrush->eCut = (float)ival/100;
 }
 void TerrainTools::setEradius(int val){
-    qDebug() << "a";
+    //qDebug() << "a";
     this->leEradius->setText(QString::number(val,10));
     this->paintBrush->eRadius = val;
 }
 void TerrainTools::setEradius(QString val){
-    qDebug() << "a";
+    //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sEradius->setValue(ival);
     this->paintBrush->eRadius = (float)ival/100;

@@ -17,13 +17,18 @@ public:
     void set(QString sh, FileBuffer* data);
     bool getBorder(float* border);
     void save(QTextStream* out);
+    bool select(int value);
+    int getLinkedJunctionValue(int i);
+    bool isSubObjEnabled(int i);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     unsigned int signalSubObj;
     int signalUnits = 0;
     int *trItemId;
     TrackItemObj* pointer3d = NULL;
+    TrackItemObj* pointer3dSelected = NULL;
     float** drawPositions = NULL;
+    int selectionValue = 0;
     void renderTritems(GLUU* gluu, int selectionColor);
 };
 

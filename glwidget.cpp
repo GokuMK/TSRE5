@@ -269,6 +269,7 @@ void GLWidget::resizeGL(int w, int h) {
 void GLWidget::keyPressEvent(QKeyEvent * event) {
     if(!route->loaded) return;
     camera->keyDown(event);
+    
     switch (event->key()) {
         case 'M':
             route->save();
@@ -513,6 +514,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             } //else {
                 //camera->MouseDown(event);
             //}
+        }
+        if(toolEnabled == "FlexTool"){
+            emit flexData((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == "heightTool"){
            // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];

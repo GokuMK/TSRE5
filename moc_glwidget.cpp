@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GLWidget_t {
-    QByteArrayData data[30];
-    char stringdata[229];
+    QByteArrayData data[33];
+    char stringdata[247];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -49,25 +49,28 @@ QT_MOC_LITERAL(16, 124, 3), // "val"
 QT_MOC_LITERAL(17, 128, 14), // "showProperties"
 QT_MOC_LITERAL(18, 143, 9), // "WorldObj*"
 QT_MOC_LITERAL(19, 153, 3), // "obj"
-QT_MOC_LITERAL(20, 157, 7), // "sendMsg"
-QT_MOC_LITERAL(21, 165, 7), // "cleanup"
-QT_MOC_LITERAL(22, 173, 10), // "enableTool"
-QT_MOC_LITERAL(23, 184, 13), // "setPaintBrush"
-QT_MOC_LITERAL(24, 198, 6), // "Brush*"
-QT_MOC_LITERAL(25, 205, 5), // "brush"
-QT_MOC_LITERAL(26, 211, 6), // "jumpTo"
-QT_MOC_LITERAL(27, 218, 1), // "y"
-QT_MOC_LITERAL(28, 220, 3), // "msg"
-QT_MOC_LITERAL(29, 224, 4) // "text"
+QT_MOC_LITERAL(20, 157, 8), // "flexData"
+QT_MOC_LITERAL(21, 166, 6), // "float*"
+QT_MOC_LITERAL(22, 173, 1), // "p"
+QT_MOC_LITERAL(23, 175, 7), // "sendMsg"
+QT_MOC_LITERAL(24, 183, 7), // "cleanup"
+QT_MOC_LITERAL(25, 191, 10), // "enableTool"
+QT_MOC_LITERAL(26, 202, 13), // "setPaintBrush"
+QT_MOC_LITERAL(27, 216, 6), // "Brush*"
+QT_MOC_LITERAL(28, 223, 5), // "brush"
+QT_MOC_LITERAL(29, 229, 6), // "jumpTo"
+QT_MOC_LITERAL(30, 236, 1), // "y"
+QT_MOC_LITERAL(31, 238, 3), // "msg"
+QT_MOC_LITERAL(32, 242, 4) // "text"
 
     },
     "GLWidget\0routeLoaded\0\0Route*\0a\0"
     "itemSelected\0Ref::RefItem*\0pointer\0"
     "naviInfo\0x\0z\0all\0hidden\0setToolbox\0"
     "name\0setBrushTextureId\0val\0showProperties\0"
-    "WorldObj*\0obj\0sendMsg\0cleanup\0enableTool\0"
-    "setPaintBrush\0Brush*\0brush\0jumpTo\0y\0"
-    "msg\0text"
+    "WorldObj*\0obj\0flexData\0float*\0p\0sendMsg\0"
+    "cleanup\0enableTool\0setPaintBrush\0"
+    "Brush*\0brush\0jumpTo\0y\0msg\0text"
 };
 #undef QT_MOC_LITERAL
 
@@ -77,36 +80,37 @@ static const uint qt_meta_data_GLWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      21,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      11,       // signalCount
+      12,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  114,    2, 0x06 /* Public */,
-       5,    1,  117,    2, 0x06 /* Public */,
-       8,    4,  120,    2, 0x06 /* Public */,
-      13,    1,  129,    2, 0x06 /* Public */,
-      15,    1,  132,    2, 0x06 /* Public */,
-      17,    1,  135,    2, 0x06 /* Public */,
-      20,    1,  138,    2, 0x06 /* Public */,
-      20,    2,  141,    2, 0x06 /* Public */,
-      20,    2,  146,    2, 0x06 /* Public */,
-      20,    2,  151,    2, 0x06 /* Public */,
-      20,    2,  156,    2, 0x06 /* Public */,
+       1,    1,  119,    2, 0x06 /* Public */,
+       5,    1,  122,    2, 0x06 /* Public */,
+       8,    4,  125,    2, 0x06 /* Public */,
+      13,    1,  134,    2, 0x06 /* Public */,
+      15,    1,  137,    2, 0x06 /* Public */,
+      17,    1,  140,    2, 0x06 /* Public */,
+      20,    3,  143,    2, 0x06 /* Public */,
+      23,    1,  150,    2, 0x06 /* Public */,
+      23,    2,  153,    2, 0x06 /* Public */,
+      23,    2,  158,    2, 0x06 /* Public */,
+      23,    2,  163,    2, 0x06 /* Public */,
+      23,    2,  168,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      21,    0,  161,    2, 0x0a /* Public */,
-      22,    1,  162,    2, 0x0a /* Public */,
-      23,    1,  165,    2, 0x0a /* Public */,
-      26,    2,  168,    2, 0x0a /* Public */,
-      28,    1,  173,    2, 0x0a /* Public */,
-      28,    2,  176,    2, 0x0a /* Public */,
-      28,    2,  181,    2, 0x0a /* Public */,
-      28,    2,  186,    2, 0x0a /* Public */,
-      28,    2,  191,    2, 0x0a /* Public */,
+      24,    0,  173,    2, 0x0a /* Public */,
+      25,    1,  174,    2, 0x0a /* Public */,
+      26,    1,  177,    2, 0x0a /* Public */,
+      29,    2,  180,    2, 0x0a /* Public */,
+      31,    1,  185,    2, 0x0a /* Public */,
+      31,    2,  188,    2, 0x0a /* Public */,
+      31,    2,  193,    2, 0x0a /* Public */,
+      31,    2,  198,    2, 0x0a /* Public */,
+      31,    2,  203,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -115,6 +119,7 @@ static const uint qt_meta_data_GLWidget[] = {
     QMetaType::Void, QMetaType::QString,   14,
     QMetaType::Void, QMetaType::Int,   16,
     QMetaType::Void, 0x80000000 | 18,   19,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, 0x80000000 | 21,    9,   10,   22,
     QMetaType::Void, QMetaType::QString,   14,
     QMetaType::Void, QMetaType::QString, QMetaType::Bool,   14,   16,
     QMetaType::Void, QMetaType::QString, QMetaType::Int,   14,   16,
@@ -124,9 +129,9 @@ static const uint qt_meta_data_GLWidget[] = {
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   14,
-    QMetaType::Void, 0x80000000 | 24,   25,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,    9,   27,
-    QMetaType::Void, QMetaType::QString,   29,
+    QMetaType::Void, 0x80000000 | 27,   28,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    9,   30,
+    QMetaType::Void, QMetaType::QString,   32,
     QMetaType::Void, QMetaType::QString, QMetaType::Bool,   14,   16,
     QMetaType::Void, QMetaType::QString, QMetaType::Int,   14,   16,
     QMetaType::Void, QMetaType::QString, QMetaType::Float,   14,   16,
@@ -146,20 +151,21 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 3: _t->setToolbox((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 4: _t->setBrushTextureId((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 5: _t->showProperties((*reinterpret_cast< WorldObj*(*)>(_a[1]))); break;
-        case 6: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 7: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 8: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 9: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
-        case 10: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 11: _t->cleanup(); break;
-        case 12: _t->enableTool((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 13: _t->setPaintBrush((*reinterpret_cast< Brush*(*)>(_a[1]))); break;
-        case 14: _t->jumpTo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 15: _t->msg((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 16: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 17: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 18: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
-        case 19: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 6: _t->flexData((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< float*(*)>(_a[3]))); break;
+        case 7: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 8: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 9: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 10: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
+        case 11: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 12: _t->cleanup(); break;
+        case 13: _t->enableTool((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 14: _t->setPaintBrush((*reinterpret_cast< Brush*(*)>(_a[1]))); break;
+        case 15: _t->jumpTo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 16: _t->msg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 17: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 18: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 19: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
+        case 20: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -202,33 +208,39 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             }
         }
         {
-            typedef void (GLWidget::*_t)(QString );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
+            typedef void (GLWidget::*_t)(int , int , float * );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::flexData)) {
                 *result = 6;
             }
         }
         {
-            typedef void (GLWidget::*_t)(QString , bool );
+            typedef void (GLWidget::*_t)(QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
                 *result = 7;
             }
         }
         {
-            typedef void (GLWidget::*_t)(QString , int );
+            typedef void (GLWidget::*_t)(QString , bool );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
                 *result = 8;
             }
         }
         {
-            typedef void (GLWidget::*_t)(QString , float );
+            typedef void (GLWidget::*_t)(QString , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
                 *result = 9;
             }
         }
         {
-            typedef void (GLWidget::*_t)(QString , QString );
+            typedef void (GLWidget::*_t)(QString , float );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
                 *result = 10;
+            }
+        }
+        {
+            typedef void (GLWidget::*_t)(QString , QString );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
+                *result = 11;
             }
         }
     }
@@ -261,13 +273,13 @@ int GLWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 21)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 21;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 21)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 20;
+        _id -= 21;
     }
     return _id;
 }
@@ -315,37 +327,44 @@ void GLWidget::showProperties(WorldObj * _t1)
 }
 
 // SIGNAL 6
-void GLWidget::sendMsg(QString _t1)
+void GLWidget::flexData(int _t1, int _t2, float * _t3)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 6, _a);
 }
 
 // SIGNAL 7
-void GLWidget::sendMsg(QString _t1, bool _t2)
+void GLWidget::sendMsg(QString _t1)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 7, _a);
 }
 
 // SIGNAL 8
-void GLWidget::sendMsg(QString _t1, int _t2)
+void GLWidget::sendMsg(QString _t1, bool _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 8, _a);
 }
 
 // SIGNAL 9
-void GLWidget::sendMsg(QString _t1, float _t2)
+void GLWidget::sendMsg(QString _t1, int _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 9, _a);
 }
 
 // SIGNAL 10
-void GLWidget::sendMsg(QString _t1, QString _t2)
+void GLWidget::sendMsg(QString _t1, float _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 10, _a);
+}
+
+// SIGNAL 11
+void GLWidget::sendMsg(QString _t1, QString _t2)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    QMetaObject::activate(this, &staticMetaObject, 11, _a);
 }
 QT_END_MOC_NAMESPACE
