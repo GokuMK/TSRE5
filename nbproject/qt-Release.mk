@@ -8677,7 +8677,9 @@ build/Release/MinGW_QT_static-Windows/Camera.o: Camera.cpp Camera.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qfiledevice.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qtouchdevice.h \
-		GLMatrix.h
+		GLMatrix.h \
+		Game.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Camera.o Camera.cpp
 
 build/Release/MinGW_QT_static-Windows/DynTrackObj.o: DynTrackObj.cpp DynTrackObj.h \

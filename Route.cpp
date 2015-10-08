@@ -251,11 +251,13 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         if ((r->type == "trackobj" || r->type == "dyntrack" )&& nowy != NULL) {
             if(nowy->endp == 0) nowy->endp = new float[5];
             //this->trackDB->placeTrack(x, z, p, q, r->value, nowy->UiD);
+            qDebug() <<"1: "<< x <<" "<<z<<" "<<p[0]<<" "<<p[1]<<" "<<p[2]; 
             if(this->tsection->isRoadShape(r->value))
                 this->roadDB->findPosition(x, z, p, q, nowy->endp, r->value, nowy->UiD);
             else
                 this->trackDB->findPosition(x, z, p, q, nowy->endp, r->value, nowy->UiD);
             //findPosition
+            qDebug() <<"2: "<< x <<" "<<z<<" "<<p[0]<<" "<<p[1]<<" "<<p[2]; 
             nowy->setPosition(p);
             nowy->setQdirection(q);
             nowy->setMartix();
@@ -307,7 +309,7 @@ void Route::addToTDB(WorldObj* obj) {
     p[0] = obj->position[0];
     p[1] = obj->position[1];
     p[2] = obj->position[2];
-    Game::check_coords(x, z, (float*) &p);
+    //Game::check_coords(x, z, (float*) &p);
     float q[4];
     //q[0] = obj->tRotation[0]; //track->qDirection[0];
     //q[1] = obj->tRotation[1]; //qDirection[1];

@@ -27,26 +27,6 @@ GLUU::GLUU() {
 GLUU::~GLUU() {
 
 }
-static const char *vertexShaderSource =
-        "attribute vec4 vertex;\n"
-        "attribute vec2 aTextureCoord;\n"
-        "uniform mat4 uPMatrix;\n"
-        "uniform mat4 uMVMatrix;\n"
-        "uniform mat4 uMSMatrix;\n"
-        "varying vec2 vTextureCoord;\n"
-        "void main() {\n"
-        "   vTextureCoord = aTextureCoord;\n"
-        "   gl_Position = uPMatrix * uMVMatrix * uMSMatrix * vertex;\n"
-        "}\n";
-
-static const char *fragmentShaderSource =
-        "varying vec2 vTextureCoord;\n"
-        "uniform sampler2D uSampler;\n"
-        "void main() {\n"
-        "   gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));\n"
-        "//gl_FragColor  =vec4(1.0,1.0,1.0,1.0);\n"
-        "if(gl_FragColor.a < 0.3) discard;\n"
-        "}\n";
 
 const char* GLUU::getShader(QString shaderScript, QString type) {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();

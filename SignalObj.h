@@ -20,6 +20,7 @@ public:
     bool select(int value);
     int getLinkedJunctionValue(int i);
     bool isSubObjEnabled(int i);
+    bool isJunctionAvailable(int i);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     unsigned int signalSubObj;

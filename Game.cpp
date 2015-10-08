@@ -29,6 +29,8 @@ bool Game::writeEnabled = false;
 bool Game::writeTDB = false;
 bool Game::systemTheme = false;
 bool Game::toolsHidden = false;
+bool Game::usenNumPad = false;
+float Game::cameraFov = 55.0f;
 
 Window* Game::window = NULL;
 LoadWindow* Game::loadWindow = NULL;
@@ -90,8 +92,25 @@ void Game::load() {
         if(val == "toolsHidden")
             if(args[1].trimmed().toLower() == "true")
                 toolsHidden = true;
+        if(val == "usenNumPad")
+            if(args[1].trimmed().toLower() == "true")
+                usenNumPad = true;
+        if(val == "tileLod"){
+            tileLod = args[1].trimmed().toInt();
+        }
+        if(val == "objectLod"){
+            objectLod = args[1].trimmed().toInt();
+        }
+        if(val == "maxObjLag"){
+            maxObjLag = args[1].trimmed().toInt();
+        }
+        if(val == "allowObjLag"){
+            allowObjLag = args[1].trimmed().toInt();
+        }
+        if(val == "cameraFov"){
+            cameraFov = args[1].trimmed().toFloat();
+        }
     }
-
 }
 
 bool Game::checkSettings(){

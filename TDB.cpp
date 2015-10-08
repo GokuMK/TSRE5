@@ -1836,6 +1836,15 @@ int TDB::findTrItemNodeId(int id){
     return -1;
 }
 
+int TDB::getEndpointType(int trid, int endp){
+    TRnode* n = this->trackNodes[trid];
+    if(n->typ !=1 )
+        return -1;
+    n = this->trackNodes[n->TrPinS[endp]];
+    if(n == NULL) return -1;
+    return n->typ;
+}
+
 void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot) {
     for (auto it = this->trackItems.begin(); it != this->trackItems.end(); ++it) {
         //console.log(obj.type);

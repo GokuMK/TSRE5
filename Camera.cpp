@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include <math.h>
 #include "GLMatrix.h"
+#include "Game.h"
 
 Camera::Camera(float* pt) {
     pozT = pt;
@@ -228,8 +229,8 @@ void Camera::check_coords() {
 
 void Camera::MouseMove(QMouseEvent* e) {
     if (lpm != 0) {
-        patrzX((float) (float) (starex - e->x()) / 30);
-        patrzY((float) (float) (starey - e->y()) / 30);
+        patrzX((float) (float) (starex - e->x()) / 30*(Game::cameraFov/45.0));
+        patrzY((float) (float) (starey - e->y()) / 30*(Game::cameraFov/45.0));
     }
     starex = e->x();
     starey = e->y();
@@ -258,20 +259,24 @@ void Camera::keyUp(QKeyEvent * e) {
         case Qt::Key_Shift:
             przesx = przesz = 3;
             break;
+        case Qt::Key_Left:    
+            if(!Game::usenNumPad) break;
         case Qt::Key_A: // A 
-        case Qt::Key_Left:
             moveL = false;
             break;
+        case Qt::Key_Up:    
+            if(!Game::usenNumPad) break;
         case Qt::Key_W: // W
-        case Qt::Key_Up:
             moveF = false;
             break;
+        case Qt::Key_Right:   
+            if(!Game::usenNumPad) break;
         case Qt::Key_D: // D
-        case Qt::Key_Right:
             moveR = false;
             break;
+        case Qt::Key_Down:    
+            if(!Game::usenNumPad) break;
         case Qt::Key_S: // D
-        case Qt::Key_Down:
             moveB = false;
             break;
         default:
@@ -289,20 +294,24 @@ void Camera::keyDown(QKeyEvent * e) {
         case Qt::Key_Space:
             jestcontrol = 1;
             break;
+        case Qt::Key_Left:    
+            if(!Game::usenNumPad) break;
         case Qt::Key_A: // A 
-        case Qt::Key_Left:
             moveL = true;
             break;
+        case Qt::Key_Up:    
+            if(!Game::usenNumPad) break;
         case Qt::Key_W: // W
-        case Qt::Key_Up:
             moveF = true;
             break;
+        case Qt::Key_Right:   
+            if(!Game::usenNumPad) break;
         case Qt::Key_D: // D
-        case Qt::Key_Right:
             moveR = true;
             break;
+        case Qt::Key_Down:    
+            if(!Game::usenNumPad) break;
         case Qt::Key_S: // D
-        case Qt::Key_Down:
             moveB = true;
             break;
         case Qt::Key_E: // E

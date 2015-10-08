@@ -129,7 +129,7 @@ void GLWidget::paintGL() {
 
     
     
-    Mat4::perspective(gluu->pMatrix, 45.0f, float(this->width()) / this->height(), 0.2f, Game::objectLod);
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
     float* lookAt = camera->getMatrix();
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, lookAt);
     Mat4::identity(gluu->mvMatrix);
@@ -193,13 +193,13 @@ void GLWidget::paintGL() {
         qDebug() << winZ[0] << " " << winZ[1] << " " << winZ[2] << " ";
         int ww1 = (int) (winZ[0]*255);
         //int ww = ww1/10;
-        int cdata = (int) (ww1 / 16);
-        int ww  = (ww1 - cdata*16);
-        
+        int cdata = (int) (ww1 / 25);
+        int ww  = (ww1 - cdata*25);
+        qDebug() << "selected " <<ww1 <<" "<<ww;
         int wx = (int) (ww / 10);
         int wz = (int) (ww - (wx)*10);
-        wx = camera->pozT[0] + wx - 1;
-        wz = camera->pozT[1] - (wz - 1);
+        wx = camera->pozT[0] + (wx - 1);
+        wz = camera->pozT[1] + (wz - 1);
         qDebug() << "color data: " << cdata;
 
         int UiD = (int) (winZ[1]*255)*256 + (int) (winZ[2]*255);
@@ -324,6 +324,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_Alt:
                 moveStep = moveMinStep;
                 break;
+            case Qt::Key_Up:    
+                if(Game::usenNumPad) break;
             case Qt::Key_8:
                 if(translateTool && selectedObj != NULL){
                     a.y = moveStep;
@@ -337,6 +339,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->rotate(moveStep/10, 0, 0);
                 }
                 break;
+            case Qt::Key_Down:    
+                if(Game::usenNumPad) break;    
             case Qt::Key_2:
                 if(translateTool && selectedObj != NULL){
                     a.y = -moveStep;
@@ -350,6 +354,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->rotate(-moveStep/10, 0, 0);
                 }
                 break;    
+            case Qt::Key_Left:    
+                if(Game::usenNumPad) break;    
             case Qt::Key_4:
                 if(translateTool && selectedObj != NULL){
                     a.x = moveStep;
@@ -363,6 +369,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->rotate(0, -moveStep/10, 0);
                 }
                 break;
+            case Qt::Key_Right:    
+                if(Game::usenNumPad) break;     
             case Qt::Key_6:
                 if(translateTool && selectedObj != NULL){
                     a.x = -moveStep;
@@ -376,11 +384,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->rotate(0, moveStep/10, 0);
                 }
                 break;                 
-            case Qt::Key_7:
-                if(resizeTool && selectedObj != NULL){
-                    this->selectedObj->resize(0, 0, -moveStep);
-                }
-                break;                
+            case Qt::Key_PageUp:
+                //Game::cameraFov += 1;
+                //qDebug() << Game::cameraFov;
             case Qt::Key_9:
                 if(translateTool && selectedObj != NULL){
                     this->selectedObj->translate(0,moveStep,0);
@@ -392,14 +398,21 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->rotate(0, 0, moveStep/10);
                 }
                 break;
+            case Qt::Key_PageDown:
+                //Game::cameraFov -= 1;
+                //qDebug() << Game::cameraFov;
             case Qt::Key_3:
+            case Qt::Key_7:    
                 if(translateTool && selectedObj != NULL){
                     this->selectedObj->translate(0,-moveStep,0);
                 }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(0, 0, -moveStep/10);
                 }
-                break;   
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(0, 0, -moveStep);
+                }
+                break;                
             case Qt::Key_R:
                 resizeTool = false;
                 translateTool = false;

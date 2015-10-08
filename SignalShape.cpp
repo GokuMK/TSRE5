@@ -16,14 +16,14 @@ void SignalShape::set(QString sh, FileBuffer* data) {
     //}
     if (sh == "signalsubobjs") {
         iSubObj = ParserX::parsujr(data);
-        qDebug() << iSubObj;
+        //qDebug() << iSubObj;
         subObj = new SubObj[iSubObj];
         int idx;
         for(int i = 0; i < iSubObj; i++){
-           idx = ParserX::parsujr(data);
+            idx = ParserX::parsujr(data);
+            subObj[idx].iLink = 0;
             subObj[idx].type = ParserX::odczytajtc(data);
             subObj[idx].desc = ParserX::odczytajtc(data);
-        SignalShape* nowySs;
             while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
                 if (sh == "") {
                     break;

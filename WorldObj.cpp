@@ -224,6 +224,9 @@ void WorldObj::translate(float px, float py, float pz){
     this->position[0]+=px;
     this->position[1]+=py;
     this->position[2]+=pz;
+    this->placedAtPosition[0] = this->position[0];
+    this->placedAtPosition[1] = this->position[1];
+    this->placedAtPosition[2] = this->position[2];
     this->modified = true;
     setMartix();
 }

@@ -22,6 +22,8 @@ PropertiesSignal::PropertiesSignal() {
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vbox->addWidget(&description);
+    QPushButton *button = new QPushButton("Flip", this);
+    vbox->addWidget(button);
     label = new QLabel("SubObjects:");
     label->setStyleSheet("QLabel { color : #999999; }");
     label->setContentsMargins(3,0,0,0);
@@ -68,7 +70,7 @@ void PropertiesSignal::showObj(WorldObj* obj){
     
     this->name.setText(sobj->fileName);
     this->description.setText(signalShape->desc);
-    
+
     for (int i = 0; i < signalShape->iSubObj; i++) {
         this->wSub[i].show();
         this->dSub[i].setText(signalShape->subObj[i].desc);
@@ -76,9 +78,12 @@ void PropertiesSignal::showObj(WorldObj* obj){
             this->chSub[i].setChecked(true);
     }
     int linkPtr;
+
     for (int i = 0; i < signalShape->iSubObj; i++) {
         if(signalShape->subObj[i].iLink > 0){
             this->bSub[i].show();
+            this->bSub[i].setStyleSheet("color: gray"); 
+            this->bSub[i].setText("Link");
             linkPtr = signalShape->subObj[i].sigSubJnLinkIf[0];
             if(this->chSub[linkPtr].isChecked()){
                 int linkId = sobj->getLinkedJunctionValue(i);
@@ -87,14 +92,19 @@ void PropertiesSignal::showObj(WorldObj* obj){
                     this->bSub[i].setStyleSheet("color: red"); 
                     this->bSub[i].setText("NULL");
                 } else if(linkId == 0){
-                    this->bSub[i].setEnabled(true);
                     this->bSub[i].setStyleSheet(""); 
-                    this->bSub[i].setText("Link");
+                    if(sobj->isJunctionAvailable(i)){
+                        this->bSub[i].setText("Link");
+                        this->bSub[i].setEnabled(true);
+                    } else {
+                        this->bSub[i].setText("No Junction");
+                        this->bSub[i].setEnabled(false);
+                    }
                 } else {
                     this->bSub[i].setEnabled(true);
                     this->bSub[i].setStyleSheet("color: green"); 
                     this->bSub[i].setText("Linked: "+QString::number(linkId, 10));
-                } 
+                }
             } else {
                 this->bSub[i].setEnabled(false);
             }

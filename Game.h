@@ -39,6 +39,8 @@ public:
     static bool toolsHidden;
     static bool renderTdbLines;
     static bool renderTsectionLines;
+    static bool usenNumPad;
+    static float cameraFov;
     
 private:
     static Window* window;

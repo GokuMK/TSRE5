@@ -376,9 +376,9 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
     if(this->selected && this->selectionValue == 1) 
-        pointer3dSelected->render(selectionColor + 1*65536*16*useSC);
+        pointer3dSelected->render(selectionColor + 1*65536*25*useSC);
     else
-        pointer3d->render(selectionColor + 1*65536*16*useSC);
+        pointer3d->render(selectionColor + 1*65536*25*useSC);
     gluu->mvPopMatrix();
     
     gluu->mvPushMatrix();
@@ -389,9 +389,9 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
     if(this->selected && this->selectionValue == 3) 
-        pointer3dSelected->render(selectionColor + 3*65536*16*useSC);
+        pointer3dSelected->render(selectionColor + 3*65536*25*useSC);
     else
-        pointer3d->render(selectionColor + 3*65536*16*useSC);
+        pointer3d->render(selectionColor + 3*65536*25*useSC);
     gluu->mvPopMatrix();
     
     gluu->mvPushMatrix();

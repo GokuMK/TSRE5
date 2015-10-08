@@ -82,6 +82,22 @@ int SignalObj::getLinkedJunctionValue(int i){
     if(trit->trSignalDirs < 1) return 0;
     return trit->trSignalDir[0];
 }
+
+bool SignalObj::isJunctionAvailable(int i){
+    if(i >= this->signalUnits) return false;
+    TDB* tdb = Game::trackDB;
+    int tritId = this->trItemId[i*2+1];
+    TRitem* trit = tdb->trackItems[tritId];
+    if(trit == NULL) return false;
+    int nid = tdb->findTrItemNodeId(tritId);
+    if(nid < 0) return false;
+    int direction = fabs(trit->trSignalType2 - 1);
+    int endPointType = tdb->getEndpointType(nid, direction);
+       
+    if(endPointType == 2) return true;
+    return false;
+}
+
 bool SignalObj::isSubObjEnabled(int i){
     return ((this->signalSubObj >> i) & 1) == 1;
 }
@@ -176,9 +192,9 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         useSC = (float)selectionColor/(float)(selectionColor+0.000001);
         if(this->selected && this->selectionValue > 0) 
-            pointer3dSelected->render(selectionColor + (i+1)*65536*16*useSC);
+            pointer3dSelected->render(selectionColor + (i+1)*65536*25*useSC);
         else
-            pointer3d->render(selectionColor + (i+1)*65536*16*useSC);
+            pointer3d->render(selectionColor + (i+1)*65536*25*useSC);
         gluu->mvPopMatrix();
     }
 };
