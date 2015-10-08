@@ -1,4 +1,3 @@
-
 #include "Flex.h"
 #include <QtWidgets>
 #include "Game.h"
@@ -7,6 +6,8 @@
 #include "Vector3f.h"
 #include "Game.h"
 #include "TDB.h"
+#include "Intersections.h"
+#include "GLMatrix.h"
 
 int Flex::FlexStage = 0;
 float Flex::FlexP0[3];
@@ -124,6 +125,21 @@ bool Flex::NewFlex(int x, int z, float* p, float* q, float * dyntrackSections){
     drawLine(niebieski, p1.x, p1.y, p1.x+v1.x*1000,p1.y+v1.y*1000);
     drawLine(niebieski, p2.x, p2.y, p2.x+v2.x*1000,p2.y+v2.y*1000);
     
+    // if prosta
+    float dp1[3], dp2[3];
+    Vec3::set((float*)dp1, p1.x, 0, p1.y);
+    Vec3::set((float*)dp2, p1.x+v1.x*1000, 0, p1.y+v1.y*1000);
+    
+    int distance = Intersections::pointSegmentDistance((float*)dp1,(float*)dp2, p, NULL);
+    if(distance < 0.001){
+        qDebug() <<"prosta";
+        for(int i = 0; i < 10; i++){
+            dyntrackSections[i] = 0;
+        }
+        dyntrackSections[0] = Vec3::len(Vec3::sub(FlexP0, FlexP0, p));
+        FlexStage = 0;
+        return true;
+    }
     //Vector2f line(p2);
     //line.subv(p1);
     

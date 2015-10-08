@@ -33,6 +33,9 @@ void SignalType::set(QString sh, FileBuffer* data) {
         if (sh == "signalnumclearahead") {   
             return;
         }
+        if (sh == "sigflashduration") {   
+            return;
+        }
         
     qDebug() << "-- " << sh;
     return;

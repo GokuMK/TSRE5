@@ -17,6 +17,7 @@ public:
     static int szukajsekcjiN(QString sh, FileBuffer* bufor);
     static int pominsekcjec(FileBuffer* bufor);
     static QString odczytajtc(FileBuffer* bufor);
+    static QString odczytajtcInside(FileBuffer* bufor);
     static float parsujr(FileBuffer* bufor);
     static unsigned int parsujUint(FileBuffer* bufor);
     static unsigned int parsuj16(FileBuffer* bufor);

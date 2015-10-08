@@ -265,7 +265,7 @@ void TDB::fillDynTrack(DynTrackObj* track){
         tRadius[count] = track->sections[i].r;
         count++;
     }
-
+    
     bool success;
     for(int i = 40000; i< tsection->routeShapes; i++){
         success = true;
@@ -273,23 +273,29 @@ void TDB::fillDynTrack(DynTrackObj* track){
         
         if(tsection->shape[i]->path[0].n == count){
             for(int j = 0; j<count; j++){
-                if(!tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->type == tType[j]){
+                if(!(tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->type == tType[j])){
                     success = false;
                     break;
                 }
                 if(tType[j] == 1){
-                    if(!tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->angle == tAngle[j])
-                        if(!tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->radius == tRadius[j]){
-                            success = false;
-                            break;
-                        }
+                    if(!(tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->angle == tAngle[j])){
+                        success = false;
+                        break;
+                    }
+                    if(!(tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->radius == tRadius[j])){
+                        success = false;
+                        break;
+                    }
                 } 
                 else if(tType[j] == 0){
-                    if(!tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->size == tAngle[j])
-                        if(!tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->val1 == tRadius[j]){
-                            success = false;
-                            break;
-                        }
+                    if(!(tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->size == tAngle[j])){
+                        success = false;
+                        break;
+                    }
+                    if(!(tsection->sekcja[tsection->shape[i]->path[0].sect[j]]->val1 == tRadius[j])){
+                        success = false;
+                        break;
+                    }
                 }
             }
             ////
@@ -299,7 +305,7 @@ void TDB::fillDynTrack(DynTrackObj* track){
             }
         }
     }
-    //qDebug() << "foundIdx "<<foundIdx;
+    qDebug() << "foundIdx "<<foundIdx;
     if(foundIdx == -1){
         newRShape = new TrackShape::SectionIdx[1];
         newRShape->n = count;

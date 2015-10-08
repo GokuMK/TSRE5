@@ -20,7 +20,7 @@ PropertiesDyntrack::PropertiesDyntrack() {
     
     this->chSect[0].setText("First Straight section");
     this->chSect[0].setChecked(true);
-    this->chSect[0].setCheckable(false);
+    this->chSect[0].setEnabled(false);// .setCheckable(false);
     vbox->addWidget(&chSect[0]);
     vSect[0].setSpacing(2);
     vSect[0].setContentsMargins(3,0,3,0);
@@ -207,4 +207,6 @@ void PropertiesDyntrack::flexData(int x, int z, float* p){
     bool success = Flex::AutoFlex(dobj->x, dobj->y, (float*)p1, x, z, (float*)p2, (float*)dyntrackData);
     qDebug() << "flex2";
     dobj->set("dyntrackdata", (float*)dyntrackData);
+    this->showObj(dobj);
+    emit enableTool("selectTool");
 }

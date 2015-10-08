@@ -313,6 +313,36 @@ QString ParserX::odczytajtc(FileBuffer* bufor){
     return sciezka;
 }
 //-----------------------------------
+//Parsowanie stringa
+//-----------------------------------
+QString ParserX::odczytajtcInside(FileBuffer* bufor){
+    QString sciezka = "";
+    char b = 0;
+    while ((b < 46) && (b != 34)) {
+        b = bufor->get();
+        bufor->off++;
+        if (b == 41)
+            return "";
+    }
+    //bufor.position(bufor.position()-2); 
+    if (b == 34) {
+        while ((b = bufor->get()) != 34) {
+            //bufor->off++;
+            sciezka += QChar(b, bufor->get());
+        }
+    } else {
+        bufor->off -= 2;
+        while (((b = bufor->get()) != 32) && (b != 10)) {
+            //bufor->off++;
+            sciezka += QChar(b, bufor->get());
+        }
+    }
+
+    bufor->off++;
+    //qDebug() << sciezka;
+    return sciezka;
+}
+//-----------------------------------
 //Parsowanie liczby rzeczywistej
 //-----------------------------------
 float ParserX::parsujr(FileBuffer* bufor){

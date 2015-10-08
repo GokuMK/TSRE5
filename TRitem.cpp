@@ -4,6 +4,9 @@
 #include "GLMatrix.h"
 #include "TDB.h"
 #include "Vector3f.h"
+#include "Game.h"
+#include "SigCfg.h"
+#include "SignalShape.h"
 #include <QString>
 #include <QDebug>
 
@@ -165,6 +168,8 @@ void TRitem::set(QString sh, FileBuffer* data) {
     
     if (sh == ("trsignaltype")) {
         trSignalType1 = ParserX::parsuj16(data);
+        //if((trSignalType1 & 6) != 0)
+        //    qDebug() << "tst "<< this->trItemId << " "<<trSignalType1;
         trSignalType2 = ParserX::parsujr(data);
         trSignalType3 = ParserX::parsujr(data);
         trSignalType4 = ParserX::odczytajtc(data);

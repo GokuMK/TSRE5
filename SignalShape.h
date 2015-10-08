@@ -20,6 +20,7 @@ public:
     SubObj* subObj;
     QString name;
     QString desc;
+    bool isJnLink = false;
     
     SignalShape();
     virtual ~SignalShape();

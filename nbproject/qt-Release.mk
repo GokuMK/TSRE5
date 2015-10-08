@@ -9628,7 +9628,9 @@ build/Release/MinGW_QT_static-Windows/Flex.o: Flex.cpp Flex.h \
 		Vector4f.h \
 		FileBuffer.h \
 		Ref.h \
-		TextObj.h
+		TextObj.h \
+		Intersections.h \
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Flex.o Flex.cpp
 
 build/Release/MinGW_QT_static-Windows/ForestObj.o: ForestObj.cpp ForestObj.h \
@@ -20732,6 +20734,9 @@ build/Release/MinGW_QT_static-Windows/TRitem.o: TRitem.cpp TRitem.h \
 		Vector2i.h \
 		Ref.h \
 		TextObj.h \
+		Game.h \
+		SigCfg.h \
+		SignalShape.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TRitem.o TRitem.cpp
 

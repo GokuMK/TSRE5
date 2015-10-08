@@ -336,8 +336,9 @@ void Route::addToTDB(WorldObj* obj) {
         //obj->setMartix();
     } else if(obj->type == "dyntrack"){
         DynTrackObj* dynTrack = (DynTrackObj*) obj;
-        if(dynTrack->sectionIdx == -1)
+        if(dynTrack->sectionIdx == -1){
             this->trackDB->fillDynTrack(dynTrack);
+        }
         this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, dynTrack->sectionIdx, obj->UiD);
         obj->setPosition(p);
         obj->setQdirection(q);

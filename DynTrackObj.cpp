@@ -160,18 +160,19 @@ void DynTrackObj::set(QString sh, FileBuffer* data) {
 void DynTrackObj::set(QString sh, float* val) {
     if(sh == "dyntrackdata"){
         for (int iii = 0; iii < 5; iii++) {
-            if(val[iii*2] == 0) {
-                sections[iii].sectIdx = 0;
-                if(iii != 0)
-                    sections[iii].sectIdx = 4294967295;
-                sections[iii].a = 0;
-                sections[iii].r = 0;
-                continue;
-            }
-            sections[iii].type = iii%2;
-            sections[iii].sectIdx = 0;
             sections[iii].a = val[iii*2];
             sections[iii].r = val[iii*2+1];
+            if(iii%2 == 0){
+                sections[iii].sectIdx = 0;
+                if(sections[iii].a == 0 && iii > 0)
+                    sections[iii].sectIdx = 4294967295;
+            } else {
+                sections[iii].sectIdx = 0;
+                if(sections[iii].a < 0.01 && sections[iii].a > -0.01)
+                    sections[iii].sectIdx = 4294967295;
+                if(sections[iii].r < 0.1)
+                    sections[iii].sectIdx = 4294967295;
+            }
         }
     }
     //sections[0].sectIdx = 4294967295;

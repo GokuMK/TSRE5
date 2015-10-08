@@ -34,8 +34,15 @@ void SignalShape::set(QString sh, FileBuffer* data) {
                     continue;
                 }
                 if (sh == "signalflags") {
-                    subObj[idx].signalFlags = ParserX::odczytajtc(data);
-                    ParserX::pominsekcje(data);
+                    QString sflags;
+                    while((sflags = ParserX::odczytajtcInside(data)) != "" ){
+                        if(sflags == "JN_LINK"){
+                            //qDebug() << "JN_LINK";
+                            this->isJnLink = true;
+                        }
+                        subObj[idx].signalFlags = sflags;
+                    }
+                    //ParserX::pominsekcje(data);
                     continue;
                 }
                 if (sh == "sigsubstype") {
