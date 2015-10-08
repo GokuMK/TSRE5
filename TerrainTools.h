@@ -29,6 +29,7 @@ public slots:
     void setBrushAlpha(int val);
     void setBrushAlpha(QString val);
     void setFheight(QString val);
+    void setHtype(int val);
     // embarkment
     void setEsize(int val);
     void setEsize(QString val);

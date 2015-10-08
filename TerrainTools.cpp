@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "GuiFunct.h"
 #include "TransferObj.h"
+#include "Game.h"
 
 TerrainTools::TerrainTools(QString name)
     : QWidget(){
@@ -70,17 +71,18 @@ TerrainTools::TerrainTools(QString name)
     sSize = new QSlider(Qt::Horizontal);
     sSize->setMinimum(1);
     sSize->setMaximum(100);
-    sSize->setValue(10);
+    sSize->setValue(paintBrush->size);
     sIntensity = new QSlider(Qt::Horizontal);
     sIntensity->setMinimum(1);
     sIntensity->setMaximum(100);
-    sIntensity->setValue(100);
+    sIntensity->setValue(paintBrush->alpha*100);
     hType = new QComboBox;
     hType->setStyleSheet("combobox-popup: 0;");
     hType->addItem("Add - simple");
     hType->addItem("Add - if inside 'Size' radius");
     hType->addItem("Fixed Height");
     hType->addItem("Flatten");
+    hType->setCurrentIndex(paintBrush->hType);
     fheight = new QLineEdit();
     fheight->setValidator(new QDoubleValidator(-5000, 5000, 2, this));
     
@@ -111,19 +113,19 @@ TerrainTools::TerrainTools(QString name)
     sEsize = new QSlider(Qt::Horizontal);
     sEsize->setMinimum(1);
     sEsize->setMaximum(3);
-    sEsize->setValue(2);
+    sEsize->setValue(paintBrush->eSize);
     sEemb = new QSlider(Qt::Horizontal);
     sEemb->setMinimum(1);
     sEemb->setMaximum(10);
-    sEemb->setValue(2);
+    sEemb->setValue(paintBrush->eEmb);
     sEcut = new QSlider(Qt::Horizontal);
     sEcut->setMinimum(1);
     sEcut->setMaximum(10);
-    sEcut->setValue(2);
+    sEcut->setValue(paintBrush->eCut);
     sEradius = new QSlider(Qt::Horizontal);
     sEradius->setMinimum(1);
     sEradius->setMaximum(100);
-    sEradius->setValue(10);
+    sEradius->setValue(paintBrush->eRadius);
     leEsize = GuiFunct::newQLineEdit(25,3);
     leEsize->setValidator(new QIntValidator(1, 3, this));
     leEemb = GuiFunct::newQLineEdit(25,3);
@@ -222,6 +224,9 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(fheight, SIGNAL(textChanged(QString)),
                       this, SLOT(setFheight(QString)));
     
+    QObject::connect(hType, SIGNAL(currentIndexChanged(int)),
+                      this, SLOT(setHtype(int)));
+    
     this->setBrushSize(this->sSize->value());
     this->setBrushAlpha(this->sIntensity->value());
     this->setEsize(this->sEsize->value());
@@ -272,7 +277,9 @@ void TerrainTools::putTexToolEnabled(){
 
 void TerrainTools::setTexToolEnabled(){
     QFileDialog *fd = new QFileDialog();
-    fd->setDirectory("C:/ts/routes/CMK/Terrtex");
+    QString path = Game::root+"/routes/"+Game::route+"/terrtex";
+    path.replace("//", "/");
+    fd->setDirectory(path);
     //QTreeView *tree = fd->findChild <QTreeView*>();
     //tree->setRootIsDecorated(true);
     //tree->setItemsExpandable(true);
@@ -299,6 +306,7 @@ void TerrainTools::setTexToolEnabled(){
 // brush
 
 void TerrainTools::setBrushSize(QString val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sSize->setValue(ival);
@@ -306,6 +314,7 @@ void TerrainTools::setBrushSize(QString val){
 }
 
 void TerrainTools::setBrushAlpha(QString val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sIntensity->setValue(ival);
@@ -313,64 +322,81 @@ void TerrainTools::setBrushAlpha(QString val){
 }
 
 void TerrainTools::setBrushSize(int val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     this->leSize->setText(QString::number(val,10));
     this->paintBrush->size = val;
 }
 
 void TerrainTools::setBrushAlpha(int val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     this->leIntensity->setText(QString::number(val,10));
     this->paintBrush->alpha = (float)val/100;
 }
 
 void TerrainTools::setFheight(QString val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     float ival = val.toFloat(0);
     this->paintBrush->hFixed = ival;
 }
 
+void TerrainTools::setHtype(int val){
+    emit setPaintBrush(this->paintBrush);
+    if(val < 0) return;
+    this->paintBrush->hType = val;
+}
+
 // embarkment
 
 void TerrainTools::setEsize(int val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     this->leEsize->setText(QString::number(val,10));
     this->paintBrush->eSize = val;
 }
 void TerrainTools::setEsize(QString val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sEsize->setValue(ival);
     this->paintBrush->eSize = (float)ival/100;
 }
 void TerrainTools::setEemb(int val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     this->leEemb->setText(QString::number(val,10));
     this->paintBrush->eEmb = val;
 }
 void TerrainTools::setEemb(QString val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sEemb->setValue(ival);
     this->paintBrush->eEmb = (float)ival/100;
 }
 void TerrainTools::setEcut(int val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     this->leEcut->setText(QString::number(val,10));
     this->paintBrush->eCut = val;
 }
 void TerrainTools::setEcut(QString val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sEcut->setValue(ival);
     this->paintBrush->eCut = (float)ival/100;
 }
 void TerrainTools::setEradius(int val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     this->leEradius->setText(QString::number(val,10));
     this->paintBrush->eRadius = val;
 }
 void TerrainTools::setEradius(QString val){
+    emit setPaintBrush(this->paintBrush);
     //qDebug() << "a";
     int ival = val.toInt(0, 10);
     this->sEradius->setValue(ival);
@@ -380,6 +406,7 @@ void TerrainTools::setEradius(QString val){
 //
 
 void TerrainTools::setBrushTextureId(int val){
+    emit setPaintBrush(this->paintBrush);
     if(val < 0) return;
     if(TexLib::mtex[val] == NULL) return;
     this->paintBrush->texId = val;

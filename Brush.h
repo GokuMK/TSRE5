@@ -20,10 +20,10 @@ public:
     float hFixed = 0;
     int hType = 0;
     // embarkment
-    int eSize = 3;
-    int eEmb = 2;
-    int eCut = 2;
-    int eRadius = 2;
+    int eSize = 2;
+    int eEmb = 5;
+    int eCut = 5;
+    int eRadius = 20;
 private:
 
 };

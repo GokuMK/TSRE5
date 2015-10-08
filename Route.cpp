@@ -172,7 +172,7 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
 
 }
 
-void Route::setTerrainToTrackObj(WorldObj* obj){
+void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
     if(obj == NULL) return;
     if(obj->type != "trackobj") return;
     TrackObj* tobj = (TrackObj*)obj;
@@ -185,7 +185,7 @@ void Route::setTerrainToTrackObj(WorldObj* obj){
         this->trackDB->getVectorSectionPoints(obj->x, obj->y, obj->UiD, ptr);
     int length = ptr - punkty;
     qDebug() << "l "<<length;
-    TerrainLib::setTerrainToTrackObj(punkty, length, obj->x, obj->y, obj->matrix);
+    TerrainLib::setTerrainToTrackObj(brush, punkty, length, obj->x, obj->y, obj->matrix);
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p) {

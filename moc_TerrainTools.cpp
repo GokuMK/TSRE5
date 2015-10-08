@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_TerrainTools_t {
-    QByteArrayData data[24];
-    char stringdata[301];
+    QByteArrayData data[25];
+    char stringdata[310];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -49,10 +49,11 @@ QT_MOC_LITERAL(16, 223, 3), // "val"
 QT_MOC_LITERAL(17, 227, 12), // "setBrushSize"
 QT_MOC_LITERAL(18, 240, 13), // "setBrushAlpha"
 QT_MOC_LITERAL(19, 254, 10), // "setFheight"
-QT_MOC_LITERAL(20, 265, 8), // "setEsize"
-QT_MOC_LITERAL(21, 274, 7), // "setEemb"
-QT_MOC_LITERAL(22, 282, 7), // "setEcut"
-QT_MOC_LITERAL(23, 290, 10) // "setEradius"
+QT_MOC_LITERAL(20, 265, 8), // "setHtype"
+QT_MOC_LITERAL(21, 274, 8), // "setEsize"
+QT_MOC_LITERAL(22, 283, 7), // "setEemb"
+QT_MOC_LITERAL(23, 291, 7), // "setEcut"
+QT_MOC_LITERAL(24, 299, 10) // "setEradius"
 
     },
     "TerrainTools\0enableTool\0\0name\0"
@@ -62,7 +63,8 @@ QT_MOC_LITERAL(23, 290, 10) // "setEradius"
     "putTexToolEnabled\0chooseColorEnabled\0"
     "updateTexPrev\0setBrushTextureId\0val\0"
     "setBrushSize\0setBrushAlpha\0setFheight\0"
-    "setEsize\0setEemb\0setEcut\0setEradius"
+    "setHtype\0setEsize\0setEemb\0setEcut\0"
+    "setEradius"
 };
 #undef QT_MOC_LITERAL
 
@@ -72,7 +74,7 @@ static const uint qt_meta_data_TerrainTools[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      24,   14, // methods
+      25,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -80,32 +82,33 @@ static const uint qt_meta_data_TerrainTools[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  134,    2, 0x06 /* Public */,
-       4,    1,  137,    2, 0x06 /* Public */,
+       1,    1,  139,    2, 0x06 /* Public */,
+       4,    1,  142,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,  140,    2, 0x0a /* Public */,
-       8,    0,  141,    2, 0x0a /* Public */,
-       9,    0,  142,    2, 0x0a /* Public */,
-      10,    0,  143,    2, 0x0a /* Public */,
-      11,    0,  144,    2, 0x0a /* Public */,
-      12,    0,  145,    2, 0x0a /* Public */,
-      13,    0,  146,    2, 0x0a /* Public */,
-      14,    0,  147,    2, 0x0a /* Public */,
-      15,    1,  148,    2, 0x0a /* Public */,
-      17,    1,  151,    2, 0x0a /* Public */,
-      17,    1,  154,    2, 0x0a /* Public */,
-      18,    1,  157,    2, 0x0a /* Public */,
-      18,    1,  160,    2, 0x0a /* Public */,
-      19,    1,  163,    2, 0x0a /* Public */,
-      20,    1,  166,    2, 0x0a /* Public */,
-      20,    1,  169,    2, 0x0a /* Public */,
-      21,    1,  172,    2, 0x0a /* Public */,
-      21,    1,  175,    2, 0x0a /* Public */,
-      22,    1,  178,    2, 0x0a /* Public */,
-      22,    1,  181,    2, 0x0a /* Public */,
-      23,    1,  184,    2, 0x0a /* Public */,
-      23,    1,  187,    2, 0x0a /* Public */,
+       7,    0,  145,    2, 0x0a /* Public */,
+       8,    0,  146,    2, 0x0a /* Public */,
+       9,    0,  147,    2, 0x0a /* Public */,
+      10,    0,  148,    2, 0x0a /* Public */,
+      11,    0,  149,    2, 0x0a /* Public */,
+      12,    0,  150,    2, 0x0a /* Public */,
+      13,    0,  151,    2, 0x0a /* Public */,
+      14,    0,  152,    2, 0x0a /* Public */,
+      15,    1,  153,    2, 0x0a /* Public */,
+      17,    1,  156,    2, 0x0a /* Public */,
+      17,    1,  159,    2, 0x0a /* Public */,
+      18,    1,  162,    2, 0x0a /* Public */,
+      18,    1,  165,    2, 0x0a /* Public */,
+      19,    1,  168,    2, 0x0a /* Public */,
+      20,    1,  171,    2, 0x0a /* Public */,
+      21,    1,  174,    2, 0x0a /* Public */,
+      21,    1,  177,    2, 0x0a /* Public */,
+      22,    1,  180,    2, 0x0a /* Public */,
+      22,    1,  183,    2, 0x0a /* Public */,
+      23,    1,  186,    2, 0x0a /* Public */,
+      23,    1,  189,    2, 0x0a /* Public */,
+      24,    1,  192,    2, 0x0a /* Public */,
+      24,    1,  195,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -126,6 +129,7 @@ static const uint qt_meta_data_TerrainTools[] = {
     QMetaType::Void, QMetaType::Int,   16,
     QMetaType::Void, QMetaType::QString,   16,
     QMetaType::Void, QMetaType::QString,   16,
+    QMetaType::Void, QMetaType::Int,   16,
     QMetaType::Void, QMetaType::Int,   16,
     QMetaType::Void, QMetaType::QString,   16,
     QMetaType::Void, QMetaType::Int,   16,
@@ -159,14 +163,15 @@ void TerrainTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 13: _t->setBrushAlpha((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 14: _t->setBrushAlpha((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 15: _t->setFheight((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 16: _t->setEsize((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 17: _t->setEsize((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 18: _t->setEemb((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 19: _t->setEemb((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 20: _t->setEcut((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 21: _t->setEcut((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 22: _t->setEradius((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 23: _t->setEradius((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 16: _t->setHtype((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 17: _t->setEsize((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 18: _t->setEsize((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 19: _t->setEemb((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 20: _t->setEemb((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 21: _t->setEcut((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 22: _t->setEcut((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 23: _t->setEradius((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 24: _t->setEradius((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -212,13 +217,13 @@ int TerrainTools::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 24)
+        if (_id < 25)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 24;
+        _id -= 25;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 24)
+        if (_id < 25)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 24;
+        _id -= 25;
     }
     return _id;
 }

@@ -21823,7 +21823,8 @@ build/Release/MinGW_QT_static-Windows/TerrainTools.o: TerrainTools.cpp TerrainTo
 		Texture.h \
 		Brush.h \
 		GuiFunct.h \
-		TransferObj.h
+		TransferObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TerrainTools.o TerrainTools.cpp
 
 build/Release/MinGW_QT_static-Windows/TexLib.o: TexLib.cpp TexLib.h \

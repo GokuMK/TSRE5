@@ -430,9 +430,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 break;
             case Qt::Key_F:
                 if(selectedObj != NULL)
-                    route->setTerrainToTrackObj(selectedObj);
+                    route->setTerrainToTrackObj(selectedObj, defaultPaintBrush);
                 else
-                    route->setTerrainToTrackObj(lastSelectedObj);
+                    route->setTerrainToTrackObj(lastSelectedObj, defaultPaintBrush);
                 break;
             case Qt::Key_Delete:
                 if(selectedObj != NULL){

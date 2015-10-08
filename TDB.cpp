@@ -2027,9 +2027,9 @@ void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
                         rot[0] = M_PI;
                         rot[1] = -n->trVectorSection[i].param[14];
                         rot[2] = n->trVectorSection[i].param[15];
-                        p[0] = n->trVectorSection[i].param[10];
+                        p[0] = (n->trVectorSection[i].param[8] - x)*2048 + n->trVectorSection[i].param[10];
                         p[1] = n->trVectorSection[i].param[11];
-                        p[2] = -n->trVectorSection[i].param[12];
+                        p[2] = (-n->trVectorSection[i].param[9] + y)*2048 - n->trVectorSection[i].param[12];
                         
                         Quat::fromRotationXYZ(q, rot);
                         Mat4::fromRotationTranslation(matrix, q, p);

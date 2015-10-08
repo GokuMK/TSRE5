@@ -8,6 +8,7 @@
 #include "Ref.h"
 
 class Tile;
+class Brush;
 
 class Route {
 public:
@@ -33,7 +34,7 @@ public:
     void deleteObj(WorldObj* obj);
     void removeTrackFromTDB(WorldObj* obj);
     void nextDefaultEnd();
-    void setTerrainToTrackObj(WorldObj* obj);
+    void setTerrainToTrackObj(WorldObj* obj, Brush* brush);
     int getTileObjCount(int x, int z);
     int getTileHiddenObjCount(int x, int z);
     WorldObj* makeFlexTrack(int x, int z, float* pos);

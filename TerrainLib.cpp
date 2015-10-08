@@ -101,10 +101,10 @@ void TerrainLib::setHeight(float x, float z, float posx, float posz, float h) {
 }
 
 int TerrainLib::setHeight256(int x, int z, int posx, int posz, float h){
-    return setHeight256(x, z, posx, posz, h, 0);
+    return setHeight256(x, z, posx, posz, h, 0, 0);
 }
 
-int TerrainLib::setHeight256(int x, int z, int posx, int posz, float h, float diff) {
+int TerrainLib::setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE) {
     Game::check_coords(x, z, posx, posz);
     Terrain *terr;
     terr = terrain[(x * 10000 + z)];
@@ -113,15 +113,15 @@ int TerrainLib::setHeight256(int x, int z, int posx, int posz, float h, float di
     if (terr->loaded == false) return -1;
     
     //float value = terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
-    if(diff == 0){
+    if(diffC == 0 && diffE == 0){
         terr->terrainData[(posz+1024)/8][(posx+1024)/8] = h;
     } else {
         if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] < h)
-            if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] < h - diff) 
-                terr->terrainData[(posz+1024)/8][(posx+1024)/8] = h - diff;
+            if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] < h - diffE) 
+                terr->terrainData[(posz+1024)/8][(posx+1024)/8] = h - diffE;
         if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] > h)
-            if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] > h + diff) 
-                terr->terrainData[(posz+1024)/8][(posx+1024)/8] = h + diff;
+            if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] > h + diffC) 
+                terr->terrainData[(posz+1024)/8][(posx+1024)/8] = h + diffC;
     }
     terr->setModified(true);
     
@@ -166,7 +166,7 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR)
     //return -1;
 }
 
-void TerrainLib::setTerrainToTrackObj(float* punkty, int length, int tx, int tz, float* matrix){
+void TerrainLib::setTerrainToTrackObj(Brush* brush, float* punkty, int length, int tx, int tz, float* matrix){
     std::set<int> uterr;
     // calculating plane equation
     float p1[3];
@@ -204,7 +204,7 @@ void TerrainLib::setTerrainToTrackObj(float* punkty, int length, int tx, int tz,
     
     // end of calculating plane equation
     
-    for(int i = 0; i < length;i+=3 ){
+    for(int i = 0; i < length; i+=3 ){
         float h = vec3d - vec3.x*punkty[i] - vec3.z*punkty[i+2];
         qDebug() << punkty[i] << " " << punkty[i+1] <<" " << punkty[i+2] <<" "<<h <<"";
     }
@@ -218,21 +218,37 @@ void TerrainLib::setTerrainToTrackObj(float* punkty, int length, int tx, int tz,
     int xx, zz;
     float h; 
 
-    float diff = 0;
-    for(int ii = -4; ii < 20; ii++)
-        for(int jj = -4; jj < 20; jj++)
+    float diffC = 0;
+    float diffE = 0;
+    int iis, jjs;
+    for(int ii = -brush->eRadius; ii < brush->eRadius; ii++)
+        for(int jj = -brush->eRadius; jj < brush->eRadius; jj++)
             for(int i = 0; i< length; i+=3){
                 xx = floor((float)punkty[i]/8.0);
                 zz = floor((float)punkty[i+2]/8.0);
                 xx += ii;
                 zz += jj;
+                if(ii <= -brush->eSize) 
+                    iis = ii+brush->eSize-1;
+                else if(ii >= brush->eSize) 
+                    iis = ii-brush->eSize;
+                else
+                    iis = 0;
+                if(jj <= -brush->eSize) 
+                    jjs = jj+brush->eSize-1;
+                else if(jj >= brush->eSize) 
+                    jjs = jj-brush->eSize;
+                else
+                    jjs = 0;
                 h = vec3d - vec3.x*xx*8 - vec3.z*zz*8;
-                if(sqrt(ii*ii + jj*jj) > 5) continue;
-                diff = sqrt(ii*ii + jj*jj)*3;
-                uterr.insert(setHeight256(tx, tz, xx*8, zz*8, h, diff));
+                if(sqrt(ii*ii + jj*jj) > brush->eRadius) continue;
+                diffC = sqrt(iis*iis + jjs*jjs)*brush->eCut;
+                diffE = sqrt(iis*iis + jjs*jjs)*brush->eEmb;
+                //qDebug() << diffC <<" "<<diffE;
+                uterr.insert(setHeight256(tx, tz, xx*8, zz*8, h, diffC, diffE));
             }
     
-    for(int j = 0; j < 2; j++)
+    /*for(int j = 0; j < brush->eSize; j++)
         for(int i = 0; i< length; i+=3){
             xxf = floor((float)punkty[i]/8.0 -1*j);
             zzf = floor((float)punkty[i+2]/8.0 -1*j);
@@ -249,7 +265,7 @@ void TerrainLib::setTerrainToTrackObj(float* punkty, int length, int tx, int tz,
             h = vec3d - vec3.x*xxc*8 - vec3.z*zzc*8;
             uterr.insert(setHeight256(tx, tz, xxc*8, zzc*8, h));
             //qDebug() << xx << " " << zz << " " << h;
-        }
+        }*/
     
     Terrain *terr;
     for (std::set<int>::iterator it = uterr.begin(); it != uterr.end(); ++it) {
@@ -321,17 +337,20 @@ void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
     int pz = posz;
     float size = brush->size;
     float h = 0;
-    
+    float rd = 0;
     h = brush->alpha*brush->direction*10.0;
-    terr->terrainData[(pz+1024)/8][(px+1024)/8] += h;
-    //float rh = brush->alpha*brush->direction*10.0;
-    float rd = terr->terrainData[(pz+1024)/8][(px+1024)/8];
+    if(brush->hType == 1){
+        terr->terrainData[(pz+1024)/8][(px+1024)/8] += h;
+        //float rh = brush->alpha*brush->direction*10.0;
+        rd = terr->terrainData[(pz+1024)/8][(px+1024)/8];
+    }
     
     int tx, tz;
     int tpx, tpz;
     for(int i = -size; i < size; i++)
         for(int j = -size; j < size; j++){
-            if(i == 0 && j == 0) continue;
+            if(brush->hType == 1)
+                if(i == 0 && j == 0) continue;
             //if(px+i >= 256) continue;
             //if(pz+j >= 256) continue;
             //if(px+i < 0) continue;
@@ -353,13 +372,28 @@ void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
             
             tpz = (tpz + 1024)/8;
             tpx = (tpx + 1024)/8;
-            if(h < 0){
-                if(terr->terrainData[tpz][tpx] > rd)
+            if(brush->hType == 0){
                     terr->terrainData[tpz][tpx] += h;
-            }
-            if(h > 0){
-                if(terr->terrainData[tpz][tpx] < rd)
-                    terr->terrainData[tpz][tpx] += h;
+            } else if(brush->hType == 1){
+                if(h < 0){
+                    if(terr->terrainData[tpz][tpx] > rd)
+                        terr->terrainData[tpz][tpx] += h;
+                }
+                if(h > 0){
+                    if(terr->terrainData[tpz][tpx] < rd)
+                        terr->terrainData[tpz][tpx] += h;
+                }
+            } else if(brush->hType == 2){
+                if(terr->terrainData[tpz][tpx] > brush->hFixed){
+                    terr->terrainData[tpz][tpx] -= h*brush->direction;
+                    if(terr->terrainData[tpz][tpx] < brush->hFixed)
+                        terr->terrainData[tpz][tpx] = brush->hFixed;
+                }
+                if(terr->terrainData[tpz][tpx] < brush->hFixed){
+                    terr->terrainData[tpz][tpx] += h*brush->direction;
+                    if(terr->terrainData[tpz][tpx] > brush->hFixed)
+                        terr->terrainData[tpz][tpx] = brush->hFixed;
+                }
             }
         }
     
