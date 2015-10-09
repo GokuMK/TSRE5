@@ -9,7 +9,7 @@ TDB *Game::trackDB = NULL;
 TDB *Game::roadDB = NULL;    
 
 QString Game::root = "F:/Train Simulator";
-QString Game::route = "bbb";
+QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
 //QString Game::route = "traska";
 //QString Game::route = "cmk";
@@ -19,8 +19,6 @@ int Game::startTileX = 0;
 int Game::startTileY = 0;
 float Game::objectLod = 3000;
 int Game::tileLod = 2;
-bool Game::renderTdbLines = true;
-bool Game::renderTsectionLines = true;
 int Game::start = 0;
 bool Game::deleteTrWatermarks = false;
 bool Game::deleteViewDbSpheres = false;
@@ -32,6 +30,14 @@ bool Game::toolsHidden = false;
 bool Game::usenNumPad = false;
 float Game::cameraFov = 55.0f;
 
+bool Game::viewWorldGrid = true;
+bool Game::viewTileGrid = true;
+bool Game::viewInteractives = true;
+bool Game::viewTrackDbLines = true;
+bool Game::viewTsectionLines = true;
+bool Game::viewPointer3d = true;
+bool Game::warningBox = false;
+    
 Window* Game::window = NULL;
 LoadWindow* Game::loadWindow = NULL;
 
@@ -110,13 +116,23 @@ void Game::load() {
         if(val == "cameraFov"){
             cameraFov = args[1].trimmed().toFloat();
         }
+        if(val == "warningBox")
+            if(args[1].trimmed().toLower() == "true")
+                warningBox = true;
     }
 }
 
 bool Game::checkSettings(){
+    if(Game::warningBox){
+        QMessageBox msgBox;
+        msgBox.setText("This is experimental version.\nUsing it may seriously damage your routes."
+                       "\nMake backup first!\n\nTo disable this window, set 'warningBox = false' in settings.txt.");
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+    }
+    
     window = new Window();
     window->resize(1280, 720);
-    
     
     loadWindow = new LoadWindow();
     QObject::connect(window, SIGNAL(exitNow()),

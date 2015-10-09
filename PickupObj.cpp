@@ -164,16 +164,23 @@ void PickupObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     }
     gluu->mvPopMatrix();
     
-    this->renderTritems(gluu, selectionColor);
+    if(Game::viewInteractives) 
+        this->renderTritems(gluu, selectionColor);
 };
 void PickupObj::renderTritems(GLUU* gluu, int selectionColor){
     
     ///////////////////////////////
     TDB* tdb = Game::trackDB;
     if(drawPosition == NULL){
+        if(this->trItemId == NULL){
+            qDebug() << "PickupObj: fail trItemId";
+            loaded = false;
+            return;
+        }
         int id = tdb->findTrItemNodeId(this->trItemId[1]);
         if (id < 0) {
-            qDebug() << "fail id";
+            qDebug() << "PickupObj: fail id";
+            loaded = false;
             return;
         }
                 //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;

@@ -31,7 +31,7 @@ public:
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 
 private:
-    int *trItemId;
+    int *trItemId = NULL;
     int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL;
     float* drawPosition = NULL;

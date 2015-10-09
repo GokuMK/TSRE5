@@ -5,6 +5,8 @@
 #include <QString>
 #include "FileBuffer.h"
 
+class TrackItemObj;
+
 class SpeedpostObj : public WorldObj  {
 public:
     SpeedpostObj();
@@ -20,7 +22,11 @@ private:
     QString speedDigitTex;
     float speedSignShape[9];
     float speedTextSize[3];
-    unsigned int trItemId[2];
+    int *trItemId = NULL;
+    int trItemIdCount = 0;
+    TrackItemObj* pointer3d = NULL;
+    float* drawPosition = NULL;
+    void renderTritems(GLUU* gluu, int selectionColor);
 };
 
 #endif	/* SPEEDPOSTOBJ_H */

@@ -5,11 +5,14 @@
 
 class QLabel;
 class QLineEdit;
+class QAction;
+class Window;
 
 class GuiFunct {
 public:
     static QLabel* newQLabel(QString text, int width);
     static QLineEdit* newQLineEdit(int width, int length);
+    static QAction* newMenuCheckAction(QString desc, Window* window);
 private:
 
 };

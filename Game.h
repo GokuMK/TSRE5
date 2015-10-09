@@ -41,10 +41,15 @@ public:
     static bool writeTDB;
     static bool systemTheme;
     static bool toolsHidden;
-    static bool renderTdbLines;
-    static bool renderTsectionLines;
     static bool usenNumPad;
     static float cameraFov;
+    static bool viewWorldGrid;
+    static bool viewTileGrid;
+    static bool viewInteractives;
+    static bool viewTrackDbLines;
+    static bool viewTsectionLines;
+    static bool warningBox;
+    static bool viewPointer3d;
     
 private:
     static Window* window;

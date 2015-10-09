@@ -283,7 +283,8 @@ void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
     //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
     if(!this->loaded) 
         return;
-    this->renderTritems(gluu, selectionColor);
+    if(Game::viewInteractives) 
+        this->renderTritems(gluu, selectionColor);
 };
 
 void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){

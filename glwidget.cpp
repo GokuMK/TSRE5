@@ -233,25 +233,26 @@ void GLWidget::paintGL() {
 }
 
 void GLWidget::drawPointer(){
-        int x = mousex;
-        int y = mousey;
+    int x = mousex;
+    int y = mousey;
 
-        float winZ[4];
-        int viewport[4];
-        //float wcoord[4];
+    float winZ[4];
+    int viewport[4];
+    //float wcoord[4];
 
-        glGetIntegerv(GL_VIEWPORT, viewport);
-        //glGetFloatv(GL_MODELVIEW_MATRIX, mvmatrix);
-        //glGetFloatv(GL_PROJECTION_MATRIX, projmatrix);
-        int realy = viewport[3] - (int) y - 1;
-        glReadPixels(x, realy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+    glGetIntegerv(GL_VIEWPORT, viewport);
+    //glGetFloatv(GL_MODELVIEW_MATRIX, mvmatrix);
+    //glGetFloatv(GL_PROJECTION_MATRIX, projmatrix);
+    int realy = viewport[3] - (int) y - 1;
+    glReadPixels(x, realy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
 
-        GLH::glhUnProjectf((float) x, (float) realy, winZ[0], // 
-                gluu->mvMatrix,
-                gluu->pMatrix,
-                viewport,
-                aktPointerPos);
+    GLH::glhUnProjectf((float) x, (float) realy, winZ[0], // 
+        gluu->mvMatrix,
+        gluu->pMatrix,
+        viewport,
+        aktPointerPos);
         
+    if(Game::viewPointer3d){
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, aktPointerPos[0], aktPointerPos[1], aktPointerPos[2]);
         Mat4::identity(gluu->objStrMatrix);
@@ -259,6 +260,7 @@ void GLWidget::drawPointer(){
         //gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         pointer3d->render();
         gluu->mvPopMatrix();
+    }
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -298,11 +300,11 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
         case Qt::Key_B:
             route->newTile((int)camera->pozT[0], (int)camera->pozT[1]);
         case Qt::Key_F1:
-            toolEnabled = "";
+            //toolEnabled = "";
             emit setToolbox("objTools");
             break;
         case Qt::Key_F2:
-            toolEnabled = "";
+            //toolEnabled = "";
             emit setToolbox("terrainTools");    
             break;
         default:

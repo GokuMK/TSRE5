@@ -125,6 +125,7 @@ bool TRitem::init(QString sh){
 }
 
 void TRitem::set(QString sh, FileBuffer* data) {
+    //qDebug() << "---"<< sh;
     if (sh == ("tritemid")) {
         trItemId = ParserX::parsujUint(data);
         return;
@@ -196,14 +197,20 @@ void TRitem::set(QString sh, FileBuffer* data) {
     // speed
     if (sh == ("speedposttritemdata")){
         speedpostTrItemData = new float[3];
-        speedpostTrItemData[0] = ParserX::parsujr(data);
-        speedpostTrItemData[1] = ParserX::parsujr(data);
-        speedpostTrItemData[2] = ParserX::parsujr(data);
+        bool ok = false;
+        speedpostTrItemData[0] = ParserX::parsujrInside(data, ok);
+        if(!ok) return;
+        speedpostTrItemDataLength++;
+        speedpostTrItemData[1] = ParserX::parsujrInside(data, ok);
+        if(!ok) return;
+        speedpostTrItemDataLength++;
+        speedpostTrItemData[2] = ParserX::parsujrInside(data, ok);
+        if(!ok) return;
+        speedpostTrItemDataLength++;
         return;
     }
     
     // signal
-    
     if (sh == ("trsignaltype")) {
         trSignalType1 = ParserX::parsuj16(data);
         //if((trSignalType1 & 6) != 0)
@@ -392,9 +399,12 @@ if(type == "crossoveritem" && this->crossoverTrItemData != NULL)
 if(type == "soundregionitem" && this->trItemSRData != NULL)
 *(out) << woff+"		TrItemSRData ( "<<this->trItemSRData[0]<<" "<< this->trItemSRData[1] <<" "<< this->trItemSRData[2] <<" )\n";
 
-if(type == "speedpostitem" && this->speedpostTrItemData != NULL)
-*(out) << woff+"		SpeedpostTrItemData ( "<<this->speedpostTrItemData[0]<<" "<< this->speedpostTrItemData[1] <<" "<< this->speedpostTrItemData[2] <<" )\n";
-
+if(type == "speedpostitem" && this->speedpostTrItemData != NULL){
+*(out) << woff+"		SpeedpostTrItemData (";
+for(int i = 0; i < speedpostTrItemDataLength; i++)
+    *(out) <<" "<<this->speedpostTrItemData[i];
+    *(out) <<" )\n";
+}
 if(type == "sidingitem"){
 if(this->platformTrItemData != NULL)
 *(out) << woff+"		SidingTrItemData ( "<<flags<<" "<< this->platformTrItemData[1]<<" )\n";

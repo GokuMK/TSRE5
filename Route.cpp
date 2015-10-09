@@ -146,13 +146,13 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         }
     }
     if (!selection) {
-        if(Game::renderTdbLines)
+        if(Game::viewTrackDbLines)
             trackDB->renderAll(gluu, playerT, playerRot);
-        if(Game::renderTsectionLines)
+        if(Game::viewTsectionLines)
             trackDB->renderLines(gluu, playerT, playerRot);
-        if(Game::renderTdbLines)
+        if(Game::viewTrackDbLines)
             roadDB->renderAll(gluu, playerT, playerRot);
-        if(Game::renderTsectionLines)
+        if(Game::viewTsectionLines)
             roadDB->renderLines(gluu, playerT, playerRot);
     }
     

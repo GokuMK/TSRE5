@@ -4,6 +4,9 @@
 #include "GLMatrix.h"
 #include <math.h>
 #include "ParserX.h"
+#include "TDB.h"
+#include "Game.h"
+#include "TrackItemObj.h"
 #include <QDebug>
 
 #ifndef M_PI
@@ -53,8 +56,9 @@ void SpeedpostObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("speed_sign_shape")) {
-        for(int i = 0; i<9; i++)
-            speedSignShape[i] = ParserX::parsujr(data);
+        speedSignShape[0] = ParserX::parsujr(data);
+        for(int i = 0; i<speedSignShape[0]*4; i++)
+            speedSignShape[i+1] = ParserX::parsujr(data);
         return;
     }
     if (sh == ("speed_text_size")) {
@@ -64,8 +68,9 @@ void SpeedpostObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("tritemid")) {
-        trItemId[0] = ParserX::parsujUint(data);
-        trItemId[1] = ParserX::parsujUint(data);
+        this->trItemId = new int[2];
+        this->trItemId[0] = ParserX::parsujUint(data);
+        this->trItemId[1] = ParserX::parsujUint(data);
         return;
     }
     WorldObj::set(sh, data);
@@ -74,52 +79,54 @@ void SpeedpostObj::set(QString sh, FileBuffer* data) {
 
 void SpeedpostObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     if (!loaded) return;
-    if (shape < 0) return;
-    if (jestPQ < 2) return;
-    //GLUU* gluu = GLUU::get();
-    //if((this.position===undefined)||this.qDirection===undefined) return;
+    
+    if(Game::viewInteractives) 
+        this->renderTritems(gluu, selectionColor);
+};
 
-    if (size > 0) {
-        if ((lod > size + 150)) {
-            float v1[2];
-            v1[0] = pos[0] - (target[0]);
-            v1[1] = pos[2] - (target[2]);
-            float v2[2];
-            v2[0] = posx;
-            v2[1] = posz;
-            float iloczyn = v1[0] * v2[0] + v1[1] * v2[1];
-            float d1 = sqrt(v1[0] * v1[0] + v1[1] * v1[1]);
-            float d2 = sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
-            float zz = iloczyn / (d1 * d2);
-            if (zz > 0) return;
-
-            float ccos = cos(fov) + zz;
-            float xxx = sqrt(2 * d2 * d2 * (1 - ccos));
-            //if((ccos > 0) && (xxx > 200+50)) return;
-            if ((ccos > 0) && (xxx > size) && (skipLevel == 1)) return;
+void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
+    
+    ///////////////////////////////
+    TDB* tdb = Game::trackDB;
+    if(drawPosition == NULL){
+        if(this->trItemId == NULL){
+            qDebug() << "speedpost: fail trItemId";
+            loaded = false;
+            return;
         }
-    } else {
-        if (ShapeLib::shape[shape]->loaded)
-            size = ShapeLib::shape[shape]->size;
+        int id = tdb->findTrItemNodeId(this->trItemId[1]);
+        if (id < 0) {
+            qDebug() << "speedpost: fail id";
+            loaded = false;
+            return;
+        }
+                //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
+        drawPosition = new float[7];
+        //qDebug() << this->trItemId[1];
+        tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
+        drawPosition[0] += 2048 * (drawPosition[5] - this->x);
+        drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0.7,0.7,0.7);
+        }
     }
 
-    Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
+    //if(pos == NULL) return;
+    Mat4::identity(gluu->objStrMatrix);
+    gluu->setMatrixUniforms();
+    int useSC;
+
+    gluu->mvPushMatrix();
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 0 * (drawPosition[4] - this->x), drawPosition[1] + 1, -drawPosition[2] + 0 * (-drawPosition[5] - this->y));
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3]);
+    //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
+    //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    
-    if(selectionColor != 0){
-        int wColor = (int)(selectionColor/65536);
-        int sColor = (int)(selectionColor - wColor*65536)/256;
-        int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
-        gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
-    } else {
-        gluu->enableTextures();
-    }
-        
-    ShapeLib::shape[shape]->render();
-    
-    if(selected){
-        drawBox();
-    }
+    useSC = (float)selectionColor/(float)(selectionColor+0.000001);
+    pointer3d->render(selectionColor + (1)*65536*25*useSC);
+    gluu->mvPopMatrix();
+
 };
 
 bool SpeedpostObj::getBorder(float* border){
@@ -141,7 +148,11 @@ void SpeedpostObj::save(QTextStream* out){
 *(out) << "	Speedpost (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		Speed_Digit_Tex ( "<<this->speedDigitTex<<" )\n";
-*(out) << "		Speed_Sign_Shape ( "<<this->speedSignShape[0]<<" "<<this->speedSignShape[1]<<" "<<this->speedSignShape[2]<<" "<<this->speedSignShape[3]<<" "<<this->speedSignShape[4]<<" "<<this->speedSignShape[5]<<" "<<this->speedSignShape[6]<<" "<<this->speedSignShape[7]<<" "<<this->speedSignShape[8]<<" )\n";
+*(out) << "		Speed_Sign_Shape ( "<<this->speedSignShape[0];
+for(int i = 0; i < this->speedSignShape[0]*4; i++)
+    *(out) <<" "<<this->speedSignShape[i+1];
+*(out) <<" )\n";
+//<<" "<<this->speedSignShape[1]<<" "<<this->speedSignShape[2]<<" "<<this->speedSignShape[3]<<" "<<this->speedSignShape[4]<<" "<<this->speedSignShape[5]<<" "<<this->speedSignShape[6]<<" "<<this->speedSignShape[7]<<" "<<this->speedSignShape[8]<<" )\n";
 *(out) << "		Speed_Text_Size ( "<<this->speedTextSize[0]<<" "<<this->speedTextSize[1]<<" "<<this->speedTextSize[2]<<" )\n";
 *(out) << "		TrItemId ( "<<this->trItemId[0]<<" "<<this->trItemId[1]<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";

@@ -574,6 +574,7 @@
       </toolsSet>
       <qt>
         <target>TSRE5</target>
+        <version>0.60</version>
         <buildMode>1</buildMode>
         <modules>core gui widgets opengl</modules>
         <defs>

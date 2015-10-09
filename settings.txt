@@ -38,3 +38,4 @@ objectLod = 3000
 maxObjLag = 10
 allowObjLag = 1000
 #cameraFov = 20.0
+warningBox = false

@@ -4,6 +4,12 @@
 #include "Game.h"
 #include "AceLib.h"
 #include <QDebug>
+#include "GuiFunct.h"
+#include "ObjTools.h"
+#include "TerrainTools.h"
+#include "NaviBox.h"
+#include "AboutWindow.h"
+#include "PropertiesAbstract.h"
 #include "PropertiesUndefined.h"
 #include "PropertiesStatic.h"
 #include "PropertiesTransfer.h"
@@ -20,6 +26,7 @@ Window::Window() {
     terrainTools = new TerrainTools("TerrainTools");
     naviBox = new NaviBox();
     glWidget = new GLWidget;
+    aboutWindow = new AboutWindow();
     
     objProperties.push_back(new PropertiesStatic);
     objProperties.push_back(new PropertiesTransfer);
@@ -86,7 +93,7 @@ Window::Window() {
     objTools->show();
     
     this->setCentralWidget(main);
-    setWindowTitle(tr("TSRE5 v0.600"));
+    setWindowTitle(tr("TSRE5 v0.601"));
     
     // MENUBAR
     // Route
@@ -104,16 +111,32 @@ Window::Window() {
     editMenu = menuBar()->addMenu(tr("&Edit"));
     // View
     viewMenu = menuBar()->addMenu(tr("&View"));
-    propertiesAction = new QAction(tr("&Properties"), this);
-    propertiesAction->setCheckable(true);
-    propertiesAction->setChecked(true);
+    propertiesAction = GuiFunct::newMenuCheckAction(tr("&Properties"), this); 
     viewMenu->addAction(propertiesAction);
     QObject::connect(propertiesAction, SIGNAL(triggered(bool)), this, SLOT(hideShowPropertiesWidget(bool)));
-    toolsAction = new QAction(tr("&Tools"), this);
-    toolsAction->setCheckable(true);
-    toolsAction->setChecked(true);
+    toolsAction = GuiFunct::newMenuCheckAction(tr("&Tools"), this); 
     viewMenu->addAction(toolsAction);
     QObject::connect(toolsAction, SIGNAL(triggered(bool)), this, SLOT(hideShowToolWidget(bool)));
+    viewMenu->addSeparator();
+    QAction* viewWorldGrid = GuiFunct::newMenuCheckAction(tr("&World Grid"), this); 
+    viewMenu->addAction(viewWorldGrid);
+    QObject::connect(viewWorldGrid, SIGNAL(triggered(bool)), this, SLOT(viewWorldGrid(bool)));
+    QAction* viewTileGrid = GuiFunct::newMenuCheckAction(tr("&Tile Grid"), this); 
+    viewMenu->addAction(viewTileGrid);
+    QObject::connect(viewTileGrid, SIGNAL(triggered(bool)), this, SLOT(viewTileGrid(bool)));    
+    QAction* viewInteractives = GuiFunct::newMenuCheckAction(tr("&Interactives"), this); 
+    viewMenu->addAction(viewInteractives);
+    QObject::connect(viewInteractives, SIGNAL(triggered(bool)), this, SLOT(viewInteractives(bool)));
+    QAction* viewTrackDbLines = GuiFunct::newMenuCheckAction(tr("&TrackDB Lines"), this); 
+    viewMenu->addAction(viewTrackDbLines);
+    QObject::connect(viewTrackDbLines, SIGNAL(triggered(bool)), this, SLOT(viewTrackDbLines(bool)));    
+    QAction* viewTsectionLines = GuiFunct::newMenuCheckAction(tr("&Tsection Lines"), this); 
+    viewMenu->addAction(viewTsectionLines);
+    QObject::connect(viewTsectionLines, SIGNAL(triggered(bool)), this, SLOT(viewTsectionLines(bool)));
+    QAction* viewPointer3d = GuiFunct::newMenuCheckAction(tr("&3D Pointer"), this); 
+    viewMenu->addAction(viewPointer3d);
+    QObject::connect(viewPointer3d, SIGNAL(triggered(bool)), this, SLOT(viewPointer3d(bool)));
+
     // Help
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -181,7 +204,7 @@ Window::Window() {
                       this, SLOT(showProperties(WorldObj*)));
     
     QObject::connect(this, SIGNAL(exitNow()),
-                      &aboutWindow, SLOT(exitNow()));
+                      aboutWindow, SLOT(exitNow())); 
     
     QObject::connect(glWidget, SIGNAL(setToolbox(QString)),
                       this, SLOT(setToolbox(QString)));
@@ -210,7 +233,7 @@ void Window::createPaths(){
 }
 
 void Window::about(){
-    aboutWindow.show();
+    aboutWindow->show();
 }
 
 void Window::setToolbox(QString name){
@@ -255,6 +278,24 @@ void Window::hideShowToolWidget(bool show){
     else box->hide();
 }
 
+void Window::viewWorldGrid(bool show){
+    Game::viewWorldGrid = show;
+}
+void Window::viewTileGrid(bool show){
+    Game::viewTileGrid = show;
+}
+void Window::viewInteractives(bool show){
+    Game::viewInteractives = show;
+}
+void Window::viewTrackDbLines(bool show){
+    Game::viewTrackDbLines = show;
+}
+void Window::viewTsectionLines(bool show){
+    Game::viewTsectionLines = show;
+}
+void Window::viewPointer3d(bool show){
+    Game::viewPointer3d = show;
+}
 //void Window::exitNow(){
 //    this->hide();
 //}

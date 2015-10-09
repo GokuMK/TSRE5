@@ -73,6 +73,7 @@ public:
     void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);
 private:
     float* drawPosition = NULL;
+    int speedpostTrItemDataLength = 0;
 };
 
 #endif	/* TRITEM_H */

@@ -98,7 +98,8 @@ void HazardObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     }
     gluu->mvPopMatrix();
     
-    this->renderTritems(gluu, selectionColor);
+    if(Game::viewInteractives) 
+        this->renderTritems(gluu, selectionColor);
 };
 
 void HazardObj::renderTritems(GLUU* gluu, int selectionColor){

@@ -363,11 +363,14 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
 
     Mat4::identity(gluu->objStrMatrix);
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
-    lines.render();
-    slines.render();
-    ulines.render();
+    if(Game::viewWorldGrid)
+        lines.render();
+    if(Game::viewTileGrid){
+        slines.render();
+        ulines.render();
+    }
 
-    gluu->enableTextures();
+    gluu->enableTextures();  
     int off = 0;
     float lod = 0;
     float size = 512;

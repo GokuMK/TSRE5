@@ -3,17 +3,19 @@
 
 #include <QWidget>
 #include <QMainWindow>
-#include "ObjTools.h"
-#include "TerrainTools.h"
-#include "NaviBox.h"
-#include "AboutWindow.h"
-#include "PropertiesAbstract.h"
+
 //QT_BEGIN_NAMESPACE
 
 //QT_END_NAMESPACE
 //! [0]
 class QSlider;
 class GLWidget;
+class ObjTools;
+class TerrainTools;
+class NaviBox;
+class AboutWindow;
+class PropertiesAbstract;
+class WorldObj;
 
 class Window : public QMainWindow
 {
@@ -30,6 +32,12 @@ public slots:
     void showProperties(WorldObj* obj);
     void hideShowToolWidget(bool show);
     void hideShowPropertiesWidget(bool show);
+    void viewWorldGrid(bool show);
+    void viewTileGrid(bool show);
+    void viewInteractives(bool show);
+    void viewTrackDbLines(bool show);
+    void viewTsectionLines(bool show);
+    void viewPointer3d(bool show);
     
 signals:
     void exitNow();
@@ -64,7 +72,7 @@ private:
     QAction *toolsAction;
     
     
-    AboutWindow aboutWindow;
+    AboutWindow* aboutWindow;
 };
 //! [0]
 

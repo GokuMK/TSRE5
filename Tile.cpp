@@ -76,6 +76,7 @@ void Tile::wczytajObiekty() {
         if(obj->UiD < 1000000)
             if(obj->UiD > maxUiD) maxUiD = obj->UiD;
     }
+    //qDebug() << "ok";
     loaded = 1;
     
     //save();
@@ -105,7 +106,7 @@ void Tile::load() {
         
         WorldObj* nowy;
         if (sh == "") {
-            //qDebug() << "wczytano " << obiekty.size();
+            qDebug() << "wczytano " << obiekty.size();
             loaded = 0;
             wczytajObiekty();
             return;

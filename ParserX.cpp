@@ -408,6 +408,76 @@ float ParserX::parsujr(FileBuffer* bufor){
     return x;
 }
 //-----------------------------------
+//Parsowanie liczby rzeczywistej
+//-----------------------------------
+float ParserX::parsujrInside(FileBuffer* bufor, bool &ok){
+    char b = 0;
+    int j;
+    float x, t;
+    int liczba = 1, ujemna = 0;
+    while (b < 45 || (b > 45 && b < 48) || b > 57) {
+        b = bufor->get();
+        bufor->off++;
+        if (b == 41){
+            bufor->off = bufor->off - 2;
+            ok = false;
+            return 0;
+        }
+    }
+    x = 0;
+    liczba = 1;
+    ujemna = 0;
+    if (b == 45) {
+        ujemna = 1;
+        b = bufor->get();
+        bufor->off++;
+    }
+    while (b > 47 && b < 58) {
+        x = x * 10.0 + b - 48;
+        b = bufor->get();
+        bufor->off++;
+    }
+    if (b == 46 || b == 44) {
+        b = bufor->get();
+        bufor->off++;
+        while (b > 47 && b < 58) {
+            liczba = liczba * 10;
+            t = b;
+            x = x + (t - 48) / liczba;
+            b = bufor->get();
+            bufor->off++;
+        }
+    }
+    if (ujemna == 1) x = -x;
+    if (b == 69 || b == 101) {
+        b = bufor->get();
+        bufor->off++;
+        if (b == 45) {
+            ujemna = 1;
+            b = bufor->get();
+            bufor->off++;
+        } else ujemna = 0;
+        liczba = 0;
+        while (b > 47 && b < 58) {
+            liczba = liczba * 10.0 + b - 48;
+            b = bufor->get();
+            bufor->off++;
+        }
+        if (ujemna == 1) {
+            for (j = 0; j < liczba; j++) {
+                x = x / 10.0;
+            }
+        } else {
+            for (j = 0; j < liczba; j++) {
+                x = x * 10.0;
+            }
+        }
+    }
+    bufor->off -= 2;
+    ok = true;
+    return x;
+}
+//-----------------------------------
 //Parsowanie liczby uint
 //-----------------------------------
 unsigned int ParserX::parsujUint(FileBuffer* bufor){
