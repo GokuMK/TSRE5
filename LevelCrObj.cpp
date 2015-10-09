@@ -12,7 +12,7 @@
 LevelCrObj::LevelCrObj() {
     this->shape = -1;
     this->loaded = false;
-    this->trItemId = new int[20];
+    this->trItemId;
 }
 
 LevelCrObj::LevelCrObj(const LevelCrObj& orig) {
@@ -47,6 +47,7 @@ void LevelCrObj::set(QString sh, FileBuffer* data) {
     if (sh == ("levelcrdata")) {
         levelCrData[0] = ParserX::parsuj16(data);
         levelCrData[1] = ParserX::parsujr(data);
+        trItemId = new int[levelCrData[1]*4];
         return;
     }
     if (sh == ("levelcrtiming")) {
@@ -196,10 +197,11 @@ void LevelCrObj::save(QTextStream* out){
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		LevelCrParameters ( "<<this->levelCrParameters[0]<<" "<<this->levelCrParameters[1]<<" )\n";
 *(out) << "		CrashProbability ( "<<this->crashProbability<<" )\n";
-*(out) << "		LevelCrData ( "<<flags2<<" "<<this->levelCrData[2]<<" )\n";
+*(out) << "		LevelCrData ( "<<flags2<<" "<<this->levelCrData[1]<<" )\n";
 *(out) << "		LevelCrTiming ( "<<this->levelCrTiming[0]<<" "<<this->levelCrTiming[1]<<" "<<this->levelCrTiming[2]<<" )\n";
-*(out) << "		TrItemId ( "<<this->trItemId[0]<<" "<<this->trItemId[1]<<" )\n";
-*(out) << "		TrItemId ( "<<this->trItemId[2]<<" "<<this->trItemId[3]<<" )\n";
+for(int i = 0; i < trItemIdCount; i+=2){
+*(out) << "		TrItemId ( "<<this->trItemId[i]<<" "<<this->trItemId[i+1]<<" )\n";
+}
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
