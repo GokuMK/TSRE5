@@ -2055,14 +2055,30 @@ void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
     return;
 }
 
-void TDB::newPlatformObject(int* itemId, int trNodeId, int metry, int type){
+void TDB::newPickupObject(int* &itemId, int trNodeId, float metry, int type){
+    if(type != WorldObj::pickup) 
+        return;
+    
+    float trPosition[7];
+    this->trackItems[this->iTRitems] = TRitem::newPickupItem(this->iTRitems, metry);
+    getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
+    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[this->iTRitems]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
+    itemId = new int[2];
+    itemId[0] = 0;
+    itemId[1] = this->iTRitems++;
+    
+    this->addItemToTrNode(trNodeId, itemId[1]);
+}
+
+void TDB::newPlatformObject(int* itemId, int trNodeId, float metry, int type){
     std::function<TRitem*(int, int)> newTRitem;
     if(type == WorldObj::platform) newTRitem = &TRitem::newPlatformItem;
     if(type == WorldObj::siding) newTRitem = &TRitem::newSidingItem;
     if(type == WorldObj::carspawner) newTRitem = &TRitem::newCarspawnerItem;
 
     int dlugosc = this->getVectorSectionLength(trNodeId);
-    int m = metry - 1;
+    float m = metry - 1;
     if(metry < 0) metry = 0;
     float trPosition[7];
     this->trackItems[this->iTRitems] = newTRitem(this->iTRitems, m);
@@ -2083,7 +2099,7 @@ void TDB::newPlatformObject(int* itemId, int trNodeId, int metry, int type){
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
 
-void TDB::newSignalObject(QString filename, int* &itemId, int &signalUnits, int trNodeId, int metry, int type){
+void TDB::newSignalObject(QString filename, int* &itemId, int &signalUnits, int trNodeId, float metry, int type){
     if(type != WorldObj::signal) 
         return;
     SignalShape* sShape = this->sigCfg->signalShape[filename.toStdString()];

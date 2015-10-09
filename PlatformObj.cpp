@@ -126,7 +126,7 @@ void PlatformObj::initTrItems(float* tpos){
     if(tpos == NULL)
         return;
     int trNodeId = tpos[0];
-    int metry = tpos[1];
+    float metry = tpos[1];
     
     int isRoad = 0;
     TDB* tdb = Game::trackDB;

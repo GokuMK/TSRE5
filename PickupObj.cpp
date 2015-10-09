@@ -1,10 +1,3 @@
-/* 
- * File:   PickupObj.cpp
- * Author: Goku
- * 
- * Created on 16 maja 2015, 08:45
- */
-
 #include "PickupObj.h"
 #include "SFile.h"
 #include "ShapeLib.h"
@@ -19,8 +12,7 @@
 PickupObj::PickupObj() {
     this->shape = -1;
     this->loaded = false;
-    pointer3d = new TrackItemObj(1);
-    pointer3d->setMaterial(1,0,0);
+    pointer3d = NULL;
 }
 
 PickupObj::PickupObj(const PickupObj& orig) {
@@ -42,6 +34,52 @@ void PickupObj::load(int x, int y) {
     setMartix();
 }
 
+bool PickupObj::allowNew(){
+    return true;
+}
+
+bool PickupObj::isTrackItem(){
+    return true;
+}
+
+void PickupObj::initTrItems(float* tpos){
+    if(tpos == NULL)
+        return;
+    int trNodeId = tpos[0];
+    float metry = tpos[1];
+    
+    TDB* tdb = Game::trackDB;
+    qDebug() <<"new pickup  "<<this->fileName;
+
+    tdb->newPickupObject(trItemId, trNodeId, metry, this->typeID);
+    drawPosition = NULL;
+    pickupType[0] = 5;
+    pickupCapacity1 = 20000;
+    setPickupContent(20000);
+    pickupCapacity2 = 2000;
+    speedRange[0] = 0;
+    speedRange[1] = 0;
+    pickupAnimData1 = 3;
+    pickupAnimData2 = 2;
+    pickupType[1] = 0;
+}
+
+void PickupObj::setPickupContent(float val){
+    TDB* tdb = Game::trackDB;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return;
+    tdb->trackItems[this->trItemId[1]]->setPickupContent(val);
+}
+
+void PickupObj::set(QString sh, QString val){
+    if (sh == ("filename")) {
+        fileName = val;
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
+}
+
 void PickupObj::set(QString sh, FileBuffer* data) {
     if (sh == ("speedrange")) {
         speedRange[0] = ParserX::parsujr(data);
@@ -54,16 +92,17 @@ void PickupObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("pickupanimdata")) {
-        pickupAnimData[0] = ParserX::parsujr(data);
-        pickupAnimData[1] = ParserX::parsujr(data);
+        pickupAnimData1 = ParserX::parsujr(data);
+        pickupAnimData2 = ParserX::parsujr(data);
         return;
     }
     if (sh == ("pickupcapacity")) {
-        pickupCapacity[0] = ParserX::parsujr(data);
-        pickupCapacity[1] = ParserX::parsujr(data);
+        pickupCapacity1 = ParserX::parsujr(data);
+        pickupCapacity2 = ParserX::parsujr(data);
         return;
     }
     if (sh == ("tritemid")) {
+        trItemId = new int[2];
         trItemId[trItemIdCount++] = ParserX::parsujr(data);
         trItemId[trItemIdCount++] = ParserX::parsujr(data);
         return;
@@ -142,7 +181,10 @@ void PickupObj::renderTritems(GLUU* gluu, int selectionColor){
         tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
         drawPosition[0] += 2048 * (drawPosition[5] - this->x);
         drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
-        pointer3d->setMaterial(0.8,0.2,0.8);
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0.8,0.2,0.8);
+        }
     }
 
     //if(pos == NULL) return;
@@ -157,7 +199,7 @@ void PickupObj::renderTritems(GLUU* gluu, int selectionColor){
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    pointer3d->render(selectionColor + (1)*65536*16*useSC);
+    pointer3d->render(selectionColor + (1)*65536*25*useSC);
     gluu->mvPopMatrix();
 
 };
@@ -176,6 +218,13 @@ bool PickupObj::getBorder(float* border){
     return true;
 }
 
+float PickupObj::getPickupContent(){
+    TRitem* trit = Game::trackDB->trackItems[this->trItemId[1]];
+    if(trit == NULL) return 0;
+    return trit->pickupTrItemData1;
+    return 0;
+}
+
 void PickupObj::save(QTextStream* out){
     if (!loaded) return;
 
@@ -183,8 +232,8 @@ void PickupObj::save(QTextStream* out){
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		SpeedRange ( "<<this->speedRange[0]<<" "<<this->speedRange[1]<<" )\n";
 *(out) << "		PickupType ( "<<this->pickupType[0]<<" "<<this->pickupType[1]<<" )\n";
-*(out) << "		PickupAnimData ( "<<this->pickupAnimData[0]<<" "<<this->pickupAnimData[1]<<" )\n";
-*(out) << "		PickupCapacity ( "<<this->pickupCapacity[0]<<" "<<this->pickupCapacity[1]<<" )\n";
+*(out) << "		PickupAnimData ( "<<this->pickupAnimData1<<" "<<this->pickupAnimData2<<" )\n";
+*(out) << "		PickupCapacity ( "<<this->pickupCapacity1<<" "<<this->pickupCapacity2<<" )\n";
 *(out) << "		TrItemId ( "<<this->trItemId[0]<<" "<<this->trItemId[1]<<" )\n";
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";

@@ -1,5 +1,4 @@
 #include "PropertiesPlatform.h"
-#include "WorldObj.h"
 #include "PlatformObj.h"
 
 PropertiesPlatform::PropertiesPlatform() {

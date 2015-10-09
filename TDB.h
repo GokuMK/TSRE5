@@ -70,8 +70,9 @@ public:
     void findNearestPositionOnTDB(float* posT, float* pos, float* q, float* tpos = NULL);
     void deleteTrItem(int trid);
     int getEndpointType(int trid, int endp);
-    void newPlatformObject(int* itemId, int trNodeId, int metry, int type);
-    void newSignalObject(QString filename, int* &itemId, int &signalUnits, int trNodeId, int metry, int type);
+    void newPlatformObject(int* itemId, int trNodeId, float metry, int type);
+    void newPickupObject(int* &itemId, int trNodeId, float metry, int type);
+    void newSignalObject(QString filename, int* &itemId, int &signalUnits, int trNodeId, float metry, int type);
 private:
     bool deleteNulls();
     int findBiggest();

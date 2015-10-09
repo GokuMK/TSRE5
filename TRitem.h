@@ -14,10 +14,11 @@ class TDB;
 
 class TRitem {
 public:
-    static TRitem* newPlatformItem(int trItemId, int metry);
-    static TRitem* newSidingItem(int trItemId, int metry);
-    static TRitem* newCarspawnerItem(int trItemId, int metry);
-    static TRitem* newSignalItem(int trItemId, int metry, unsigned int flags, QString type);
+    static TRitem* newPlatformItem(int trItemId, float metry);
+    static TRitem* newSidingItem(int trItemId, float metry);
+    static TRitem* newCarspawnerItem(int trItemId, float metry);
+    static TRitem* newPickupItem(int trItemId, float metry);
+    static TRitem* newSignalItem(int trItemId, float metry, unsigned int flags, QString type);
     
     TRitem();
     TRitem(int id);
@@ -52,7 +53,8 @@ public:
     int *trSignalDir;
     float *trSignalRDir;
     bool titLoading = false;
-    unsigned int *pickupTrItemData;
+    float pickupTrItemData1;
+    unsigned int pickupTrItemData2;
     
     bool init(QString sh);
     void set(QString sh, FileBuffer* data);
@@ -61,6 +63,8 @@ public:
     void addToTrackPos(float d);
     void flipTrackPos(float d);
     void setTrItemRData(float* posT, float*pos);
+    void setTrItemPData(float* posT, float* pos);
+    void setPickupContent(float val);
     void setSignalRot(float rot);
     void setSignalDirection(int dir);
     void flipSignal();

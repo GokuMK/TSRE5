@@ -1,5 +1,4 @@
 #include <QtWidgets>
-
 #include "glwidget.h"
 #include "window.h"
 #include "Game.h"
@@ -13,6 +12,7 @@
 #include "PropertiesCarspawner.h"
 #include "PropertiesDyntrack.h"
 #include "PropertiesSignal.h"
+#include "PropertiesPickup.h"
 
 Window::Window() {
     
@@ -29,6 +29,7 @@ Window::Window() {
     PropertiesDyntrack * propertiesDyntrack = new PropertiesDyntrack();
     objProperties.push_back(propertiesDyntrack);
     objProperties.push_back(new PropertiesSignal);
+    objProperties.push_back(new PropertiesPickup);
     // last 
     objProperties.push_back(new PropertiesUndefined);
     

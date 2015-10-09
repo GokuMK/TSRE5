@@ -11,7 +11,7 @@
 #include <QString>
 #include <QDebug>
 
-TRitem* TRitem::newPlatformItem(int trItemId, int metry){
+TRitem* TRitem::newPlatformItem(int trItemId, float metry){
     TRitem* trit = new TRitem(trItemId);
     if(!trit->init("platformitem")) return NULL;
     trit->trItemSData1 = metry;
@@ -26,7 +26,7 @@ TRitem* TRitem::newPlatformItem(int trItemId, int metry){
     return trit;
 }
 
-TRitem* TRitem::newSidingItem(int trItemId, int metry){
+TRitem* TRitem::newSidingItem(int trItemId, float metry){
     TRitem* trit = new TRitem(trItemId);
     if(!trit->init("sidingitem")) return NULL;
     trit->trItemSData1 = metry;
@@ -38,7 +38,7 @@ TRitem* TRitem::newSidingItem(int trItemId, int metry){
     return trit;
 }
 
-TRitem* TRitem::newCarspawnerItem(int trItemId, int metry){
+TRitem* TRitem::newCarspawnerItem(int trItemId, float metry){
     TRitem* trit = new TRitem(trItemId);
     if(!trit->init("carspawneritem")) return NULL;
     trit->trItemSData1 = metry;
@@ -49,7 +49,18 @@ TRitem* TRitem::newCarspawnerItem(int trItemId, int metry){
     return trit;
 }
 
-TRitem* TRitem::newSignalItem(int trItemId, int metry, unsigned int flags, QString type){
+
+TRitem* TRitem::newPickupItem(int trItemId, float metry){
+    TRitem* trit = new TRitem(trItemId);
+    if(!trit->init("pickupitem")) return NULL;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 6;
+    trit->pickupTrItemData1 = 0;
+    trit->pickupTrItemData2 = 0;
+    return trit;
+}
+
+TRitem* TRitem::newSignalItem(int trItemId, float metry, unsigned int flags, QString type){
     TRitem* trit = new TRitem(trItemId);
     if(!trit->init("signalitem")) return NULL;
     trit->trItemSData1 = metry;
@@ -61,6 +72,10 @@ TRitem* TRitem::newSignalItem(int trItemId, int metry, unsigned int flags, QStri
     trit->trSignalType4 = type;
     qDebug() << "aa ";
     return trit;
+}
+
+void TRitem::setPickupContent(float val){
+    this->pickupTrItemData1 = val;
 }
 
 void TRitem::enableSignalSubObj(int i){
@@ -93,7 +108,7 @@ bool TRitem::init(QString sh){
     trItemSRData = NULL;
     speedpostTrItemData = NULL;
     trSignalDir = NULL;
-    pickupTrItemData = NULL;
+    //pickupTrItemData = NULL;
     
     if(sh == "crossoveritem") return true;
     if(sh == "signalitem") return true;
@@ -226,9 +241,8 @@ void TRitem::set(QString sh, FileBuffer* data) {
     
     // pickup
     if (sh == ("pickuptritemdata")) {
-        pickupTrItemData = new unsigned int[2];
-        pickupTrItemData[0] = ParserX::parsujr(data);
-        pickupTrItemData[1] = ParserX::parsuj16(data);
+        pickupTrItemData1 = ParserX::parsujr(data);
+        pickupTrItemData2 = ParserX::parsuj16(data);
         return;
     }
     
@@ -244,6 +258,15 @@ void TRitem::setTrItemRData(float* posT, float* pos){
     this->trItemRData[2] = pos[2];
     this->trItemRData[3] = posT[0];
     this->trItemRData[4] = posT[1];
+}
+
+void TRitem::setTrItemPData(float* posT, float* pos){
+    if(this->trItemRData == NULL)
+        this->trItemRData = new float[4];
+    this->trItemRData[0] = pos[0];
+    this->trItemRData[1] = pos[2];
+    this->trItemRData[2] = posT[0];
+    this->trItemRData[3] = posT[1];
 }
 
 void TRitem::setSignalRot(float rot){
@@ -327,7 +350,7 @@ if(type == "signalitem"){
 }
 
 if(type == "pickupitem"){
-    flags = QString::number(this->pickupTrItemData[1], 16);
+    flags = QString::number(this->pickupTrItemData2, 16);
     l = flags.length();
     for(int i=0; i<8-l; i++) flags = "0"+flags;
 }
@@ -402,7 +425,7 @@ if(this->trSignalDir != NULL){
 }
 }
 if(type == "pickupitem"){
-*(out) << woff+"		PickupTrItemData ( "<<this->pickupTrItemData[0]<<" "<<flags<<" )\n";
+*(out) << woff+"		PickupTrItemData ( "<<this->pickupTrItemData1<<" "<<flags<<" )\n";
 }
 
 *(out) << woff+"	)\n";

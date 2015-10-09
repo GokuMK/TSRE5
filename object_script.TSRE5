@@ -31,6 +31,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/PropertiesAbstract.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesCarspawner.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesDyntrack.o
+./build/Release/MinGW_QT_static-Windows/PropertiesPickup.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesPlatform.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesSiding.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesSignal.o
@@ -88,6 +89,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesAbstract.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesCarspawner.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesDyntrack.o
+./build/Release/MinGW_QT_static-Windows/moc_PropertiesPickup.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesPlatform.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesSiding.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesSignal.o
