@@ -5,28 +5,17 @@
     </code-assistance-data>
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>4</activeConfTypeElem>
-        <activeConfIndexElem>0</activeConfIndexElem>
+        <activeConfIndexElem>1</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PlatformObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesCarspawner.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TRitem.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TSection.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesPlatform.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TDB.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/window.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TSectionDAT.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TerrainTools.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesSiding.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesPlatform.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Route.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/DynTrackObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SignalObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TDB.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TRitem.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/HazardObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/glwidget.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PlatformObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SignalObj.h</file>
         </group>
     </open-files>
 </project-private>

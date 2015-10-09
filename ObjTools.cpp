@@ -1,6 +1,8 @@
 #include "ObjTools.h"
 #include "Route.h"
-
+#include "Game.h"
+#include "SigCfg.h"
+#include "SignalShape.h"
 
 ObjTools::ObjTools(QString name)
     : QWidget(){
@@ -25,10 +27,13 @@ ObjTools::ObjTools(QString name)
     vlist->addRow("Ref file:",&refClass);
     vlist->addRow("Tracks:",&refTrack);
     vlist->addRow("Roads:",&refRoad);
+    vlist->addRow("Other:",&refOther);
     vbox->addItem(vlist);
     vbox->addWidget(&refList);
     refList.hide();
     vbox->addWidget(&trackList);
+    vbox->addWidget(&otherList);
+    otherList.hide();
     vbox->addWidget(selectTool);
     vbox->addWidget(placeTool);
     stickToTDB.setText("Stick To TrackDB");
@@ -52,10 +57,11 @@ ObjTools::ObjTools(QString name)
     //lastItems.setMaximumHeight(999);
     trackList.setMinimumHeight(250);
     refList.setMinimumHeight(250);
-   
+    otherList.setMinimumHeight(250);
     refClass.setStyleSheet("combobox-popup: 0;");
     refTrack.setStyleSheet("combobox-popup: 0;");
     refRoad.setStyleSheet("combobox-popup: 0;");
+    refOther.setStyleSheet("combobox-popup: 0;");
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -69,11 +75,17 @@ ObjTools::ObjTools(QString name)
     QObject::connect(&refRoad, SIGNAL(activated(QString)),
                       this, SLOT(refTrackSelected(QString)));
     
+    QObject::connect(&refOther, SIGNAL(activated(QString)),
+                      this, SLOT(refOtherSelected(QString)));
+    
     QObject::connect(&refList, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(refListSelected(QListWidgetItem*)));
     
     QObject::connect(&trackList, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(trackListSelected(QListWidgetItem*)));
+    
+    QObject::connect(&otherList, SIGNAL(itemClicked(QListWidgetItem*)),
+                      this, SLOT(otherListSelected(QListWidgetItem*)));
     
     QObject::connect(&lastItems, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(lastItemsListSelected(QListWidgetItem*)));
@@ -160,12 +172,15 @@ void ObjTools::routeLoaded(Route* a){
     
     refTrack.setCurrentText("a1t");
     refTrackSelected("a1t");
+    
+    refOther.addItem("Signals");
+    refOther.setMaxVisibleItems(25);
 }
 
 void ObjTools::refClassSelected(const QString & text){
     //qDebug() << "Bbbb " << text;
     refList.clear();
-    trackList.hide();
+    hideAllLists();
     refList.show();
     for (int it = 0; it < route->ref->refItems[text.toStdString()].size(); ++it ){
         refList.addItem(route->ref->refItems[text.toStdString()][it].description);
@@ -177,7 +192,7 @@ void ObjTools::refClassSelected(const QString & text){
 
 void ObjTools::refTrackSelected(const QString & text){
     trackList.clear();
-    refList.hide();
+    hideAllLists();
     trackList.show();
     TrackShape * track;
     for (auto it = route->tsection->shape.begin(); it != route->tsection->shape.end(); ++it ){
@@ -194,6 +209,21 @@ void ObjTools::refTrackSelected(const QString & text){
     trackList.sortItems(Qt::AscendingOrder);
 }
 
+void ObjTools::refOtherSelected(const QString & text){
+    otherList.clear();
+    hideAllLists();
+    otherList.show();
+    if(text.toLower() == "signals"){
+        SignalShape * signal;
+        for (auto it = Game::trackDB->sigCfg->signalShape.begin(); it != Game::trackDB->sigCfg->signalShape.end(); ++it ){
+            signal = it->second;
+            if(signal == NULL) continue;
+            new QListWidgetItem ( signal->desc, &otherList, signal->listId );
+        }
+    }
+    otherList.sortItems(Qt::AscendingOrder);
+}
+
 void ObjTools::refListSelected(QListWidgetItem * item){
     //refList.addItem(
     try{
@@ -204,8 +234,13 @@ void ObjTools::refListSelected(QListWidgetItem * item){
     }
 }
 
+void ObjTools::hideAllLists(){
+    otherList.hide();
+    refList.hide();
+    trackList.hide();
+}
+
 void ObjTools::trackListSelected(QListWidgetItem * item){
-    
     qDebug() << item->type() << " " << item->text();
     Ref::RefItem* itemRef = new Ref::RefItem(); 
     itemRef->filename = item->text();
@@ -217,6 +252,24 @@ void ObjTools::trackListSelected(QListWidgetItem * item){
         itemSelected((Ref::RefItem*)route->ref->selected);
     } catch(const std::out_of_range& oor){
         route->ref->selected = NULL;
+    }
+}
+
+void ObjTools::otherListSelected(QListWidgetItem * item){
+    if(refOther.currentText().toLower() == "signals"){
+        qDebug() << item->type() << " " << item->text();
+        SignalShape * signal = Game::trackDB->sigCfg->signalShapeById[item->type()];
+        Ref::RefItem* itemRef = new Ref::RefItem(); 
+        itemRef->filename = signal->name;
+        itemRef->clas = "";
+        itemRef->type = "signal";
+        itemRef->value = item->type();
+        try{
+            route->ref->selected = itemRef;
+            itemSelected((Ref::RefItem*)route->ref->selected);
+        } catch(const std::out_of_range& oor){
+            route->ref->selected = NULL;
+        }
     }
 }
 

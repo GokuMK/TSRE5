@@ -24,6 +24,9 @@ PropertiesSignal::PropertiesSignal() {
     vbox->addWidget(&description);
     QPushButton *button = new QPushButton("Flip", this);
     vbox->addWidget(button);
+    chFlipShape.setText("Flip Shape");
+    chFlipShape.setChecked(true);
+    vbox->addWidget(&chFlipShape);
     label = new QLabel("SubObjects:");
     label->setStyleSheet("QLabel { color : #999999; }");
     label->setContentsMargins(3,0,0,0);
@@ -38,8 +41,16 @@ PropertiesSignal::PropertiesSignal() {
         vSub[i].addWidget(&this->dSub[i],1,0,1,2);
         wSub[i].setLayout(&vSub[i]);
         vbox->addWidget(&wSub[i]);
+
+        signalsChSect.setMapping(&chSub[i], i);
+        connect(&chSub[i], SIGNAL(clicked()), &signalsChSect, SLOT(map()));
     }
 
+    QObject::connect(&signalsChSect, SIGNAL(mapped(int)),
+        this, SLOT(chSubEnabled(int)));
+    
+    QObject::connect(button, SIGNAL(released()),
+        this, SLOT(flipSignal()));
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -54,6 +65,7 @@ void PropertiesSignal::showObj(WorldObj* obj){
         return;
     }
     sobj = (SignalObj*)obj;
+    
     this->infoLabel->setText("Object: "+obj->type);
     
     for (int i = 0; i < 10; i++) {
@@ -65,8 +77,10 @@ void PropertiesSignal::showObj(WorldObj* obj){
     
     TDB* tdb = Game::trackDB;
     SignalShape* signalShape = tdb->sigCfg->signalShape[sobj->fileName.toStdString()];
-    if(signalShape == NULL) 
+    if(signalShape == NULL){ 
+        infoLabel->setText("NULL");
         return;
+    }
     
     this->name.setText(sobj->fileName);
     this->description.setText(signalShape->desc);
@@ -76,6 +90,10 @@ void PropertiesSignal::showObj(WorldObj* obj){
         this->dSub[i].setText(signalShape->subObj[i].desc);
         if(sobj->isSubObjEnabled(i))
             this->chSub[i].setChecked(true);
+        if(!signalShape->subObj[i].optional)
+            this->chSub[i].setEnabled(false);
+        else
+            this->chSub[i].setEnabled(true);
     }
     int linkPtr;
 
@@ -113,6 +131,23 @@ void PropertiesSignal::showObj(WorldObj* obj){
     
     //this->carNumber.setText(QString::number(pobj->getCarNumber(),10));
     //this->carSpeed.setText(QString::number(pobj->getCarSpeed(),10));
+}
+void PropertiesSignal::flipSignal(){
+    if(sobj == NULL)
+        return;
+    sobj->flip(chFlipShape.isChecked());
+}
+
+void PropertiesSignal::chSubEnabled(int i){
+    if(sobj == NULL)
+        return;
+    
+    if(chSub[i].isChecked())
+        sobj->enableSubObj(i);
+    else
+        sobj->disableSubObj(i);
+    
+    showObj(sobj);
 }
 
 bool PropertiesSignal::support(WorldObj* obj){

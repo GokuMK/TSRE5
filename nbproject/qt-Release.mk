@@ -12698,7 +12698,10 @@ build/Release/MinGW_QT_static-Windows/ObjTools.o: ObjTools.cpp ObjTools.h \
 		FileBuffer.h \
 		Ref.h \
 		TextObj.h \
-		WorldObj.h
+		WorldObj.h \
+		Game.h \
+		SigCfg.h \
+		SignalShape.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/ObjTools.o ObjTools.cpp
 
 build/Release/MinGW_QT_static-Windows/OglObj.o: OglObj.cpp OglObj.h \
@@ -19758,6 +19761,8 @@ build/Release/MinGW_QT_static-Windows/SignalObj.o: SignalObj.cpp SignalObj.h \
 		TRitem.h \
 		Pointer3d.h \
 		TextObj.h \
+		SigCfg.h \
+		SignalShape.h \
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/SignalObj.o SignalObj.cpp
 
@@ -20426,7 +20431,8 @@ build/Release/MinGW_QT_static-Windows/TDB.o: TDB.cpp TDB.h \
 		DynTrackObj.h \
 		WorldObj.h \
 		Intersections.h \
-		SigCfg.h
+		SigCfg.h \
+		SignalShape.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TDB.o TDB.cpp
 
 build/Release/MinGW_QT_static-Windows/TFile.o: TFile.cpp TFile.h \

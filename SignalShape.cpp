@@ -51,7 +51,6 @@ void SignalShape::set(QString sh, FileBuffer* data) {
                             continue;
                         }
                         if(sflags == "BACK_FACING"){
-                            //qDebug() << "JN_LINK";
                             subObj[idx].backFacing = true;
                             continue;
                         }

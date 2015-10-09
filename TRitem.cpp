@@ -6,6 +6,7 @@
 #include "Vector3f.h"
 #include "Game.h"
 #include "SigCfg.h"
+#include <math.h>
 #include "SignalShape.h"
 #include <QString>
 #include <QDebug>
@@ -47,6 +48,28 @@ TRitem* TRitem::newCarspawnerItem(int trItemId, int metry){
     trit->platformTrItemData[1] = 0;
     return trit;
 }
+
+TRitem* TRitem::newSignalItem(int trItemId, int metry, unsigned int flags, QString type){
+    TRitem* trit = new TRitem(trItemId);
+    if(!trit->init("signalitem")) return NULL;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 2;
+    trit->platformTrItemData = new unsigned int[2];
+    trit->trSignalType1 = flags;
+    trit->trSignalType2 = 1;
+    trit->trSignalType3 = 0;
+    trit->trSignalType4 = type;
+    qDebug() << "aa ";
+    return trit;
+}
+
+void TRitem::enableSignalSubObj(int i){
+    this->trSignalType1 = this->trSignalType1 | (1 << (i+3) );
+}
+void TRitem::disableSignalSubObj(int i){
+    this->trSignalType1 = this->trSignalType1 ^ (1 << (i+3) );
+}
+
 
 TRitem::TRitem() {
 }
@@ -221,6 +244,23 @@ void TRitem::setTrItemRData(float* posT, float* pos){
     this->trItemRData[2] = pos[2];
     this->trItemRData[3] = posT[0];
     this->trItemRData[4] = posT[1];
+}
+
+void TRitem::setSignalRot(float rot){
+    this->trSignalType3 = rot;
+}
+
+void TRitem::setSignalDirection(int dir){
+    this->trSignalType2 = dir;
+}
+
+void TRitem::flipSignal(){
+    this->trSignalType2 = abs(this->trSignalType2-1);
+    this->trSignalType3 += M_PI;
+    if(this->trSignalType3 > 2*M_PI)
+        this->trSignalType3 -= 2*M_PI;
+    if(this->trSignalType3 < 0)
+        this->trSignalType3 += 2*M_PI;
 }
 
 void TRitem::addToTrackPos(float d){

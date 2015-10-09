@@ -18,6 +18,7 @@ public:
         bool optional = false;
         bool backFacing = false;
     };
+    int listId;
     int iSubObj;
     SubObj* subObj;
     QString name;

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_PropertiesDyntrack_t {
-    QByteArrayData data[14];
-    char stringdata[101];
+    QByteArrayData data[12];
+    char stringdata[87];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,21 +33,19 @@ QT_MOC_LITERAL(0, 0, 18), // "PropertiesDyntrack"
 QT_MOC_LITERAL(1, 19, 10), // "enableTool"
 QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 3), // "val"
-QT_MOC_LITERAL(4, 35, 7), // "chSect1"
-QT_MOC_LITERAL(5, 43, 7), // "chSect2"
-QT_MOC_LITERAL(6, 51, 7), // "chSect3"
-QT_MOC_LITERAL(7, 59, 7), // "chSect4"
-QT_MOC_LITERAL(8, 67, 11), // "flexEnabled"
-QT_MOC_LITERAL(9, 79, 8), // "flexData"
-QT_MOC_LITERAL(10, 88, 1), // "x"
-QT_MOC_LITERAL(11, 90, 1), // "z"
-QT_MOC_LITERAL(12, 92, 6), // "float*"
-QT_MOC_LITERAL(13, 99, 1) // "p"
+QT_MOC_LITERAL(4, 35, 11), // "flexEnabled"
+QT_MOC_LITERAL(5, 47, 8), // "flexData"
+QT_MOC_LITERAL(6, 56, 1), // "x"
+QT_MOC_LITERAL(7, 58, 1), // "z"
+QT_MOC_LITERAL(8, 60, 6), // "float*"
+QT_MOC_LITERAL(9, 67, 1), // "p"
+QT_MOC_LITERAL(10, 69, 13), // "chSectEnabled"
+QT_MOC_LITERAL(11, 83, 3) // "idx"
 
     },
     "PropertiesDyntrack\0enableTool\0\0val\0"
-    "chSect1\0chSect2\0chSect3\0chSect4\0"
-    "flexEnabled\0flexData\0x\0z\0float*\0p"
+    "flexEnabled\0flexData\0x\0z\0float*\0p\0"
+    "chSectEnabled\0idx"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,7 +55,7 @@ static const uint qt_meta_data_PropertiesDyntrack[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -65,26 +63,20 @@ static const uint qt_meta_data_PropertiesDyntrack[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x06 /* Public */,
+       1,    1,   34,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   52,    2, 0x0a /* Public */,
-       5,    0,   53,    2, 0x0a /* Public */,
-       6,    0,   54,    2, 0x0a /* Public */,
-       7,    0,   55,    2, 0x0a /* Public */,
-       8,    0,   56,    2, 0x0a /* Public */,
-       9,    3,   57,    2, 0x0a /* Public */,
+       4,    0,   37,    2, 0x0a /* Public */,
+       5,    3,   38,    2, 0x0a /* Public */,
+      10,    1,   45,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, 0x80000000 | 12,   10,   11,   13,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, 0x80000000 | 8,    6,    7,    9,
+    QMetaType::Void, QMetaType::Int,   11,
 
        0        // eod
 };
@@ -95,12 +87,9 @@ void PropertiesDyntrack::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         PropertiesDyntrack *_t = static_cast<PropertiesDyntrack *>(_o);
         switch (_id) {
         case 0: _t->enableTool((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 1: _t->chSect1(); break;
-        case 2: _t->chSect2(); break;
-        case 3: _t->chSect3(); break;
-        case 4: _t->chSect4(); break;
-        case 5: _t->flexEnabled(); break;
-        case 6: _t->flexData((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< float*(*)>(_a[3]))); break;
+        case 1: _t->flexEnabled(); break;
+        case 2: _t->flexData((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< float*(*)>(_a[3]))); break;
+        case 3: _t->chSectEnabled((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -140,13 +129,13 @@ int PropertiesDyntrack::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 4)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 4;
     }
     return _id;
 }

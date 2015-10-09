@@ -17,6 +17,8 @@ public:
     static TRitem* newPlatformItem(int trItemId, int metry);
     static TRitem* newSidingItem(int trItemId, int metry);
     static TRitem* newCarspawnerItem(int trItemId, int metry);
+    static TRitem* newSignalItem(int trItemId, int metry, unsigned int flags, QString type);
+    
     TRitem();
     TRitem(int id);
     TRitem(const TRitem& orig);
@@ -42,7 +44,7 @@ public:
     
     float *speedpostTrItemData;
     
-    int trSignalType1;
+    unsigned int trSignalType1;
     int trSignalType2;
     float trSignalType3;
     QString trSignalType4;
@@ -59,6 +61,11 @@ public:
     void addToTrackPos(float d);
     void flipTrackPos(float d);
     void setTrItemRData(float* posT, float*pos);
+    void setSignalRot(float rot);
+    void setSignalDirection(int dir);
+    void flipSignal();
+    void enableSignalSubObj(int i);
+    void disableSignalSubObj(int i);
     void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);
 private:
     float* drawPosition = NULL;

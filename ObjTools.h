@@ -17,8 +17,10 @@ public slots:
     void routeLoaded(Route * a);
     void refClassSelected(const QString & text);
     void refTrackSelected(const QString & text);
+    void refOtherSelected(const QString & text);
     void refListSelected(QListWidgetItem * item);
     void trackListSelected(QListWidgetItem * item);
+    void otherListSelected(QListWidgetItem * item);
     void lastItemsListSelected(QListWidgetItem * item);
     void selectToolEnabled();
     void placeToolEnabled();
@@ -43,14 +45,17 @@ private:
     Route* route;
     QListWidget refList;
     QListWidget trackList;
+    QListWidget otherList;
     QListWidget lastItems;
     QComboBox refClass;
     QComboBox refTrack;
     QComboBox refRoad;
+    QComboBox refOther;
     Ref::RefItem itemRef;
     std::deque<Ref::RefItem*> lastItemsPtr;
     QCheckBox stickToTDB;
     QCheckBox stickToRDB;
+    void hideAllLists();
 };
 
 #endif	/* TOOLBOX_H */

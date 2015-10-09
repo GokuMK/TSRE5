@@ -14,12 +14,9 @@ public:
     void showObj(WorldObj* obj);
     
 public slots:
-    void chSect1();
-    void chSect2();
-    void chSect3();
-    void chSect4();
     void flexEnabled();
     void flexData(int x, int z, float* p);
+    void chSectEnabled(int idx);
     
 signals:
     void enableTool(QString val);
@@ -31,7 +28,7 @@ private:
     QFormLayout vSect[5];
     QWidget wSect[5];
     DynTrackObj* dobj;
-    void chSectEnabled(int idx);
+    QSignalMapper dyntrackChSect;
 };
 
 #endif	/* PROPERTIESDYNTRACK_H */

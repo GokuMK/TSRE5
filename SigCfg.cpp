@@ -73,8 +73,15 @@ SigCfg::SigCfg() {
                         ParserX::pominsekcje(bufor);
                     }
                     //this->signalShape[iSignalShape++] = nowySs;
-                    iSignalShape++;
+                    //for(int i = 0; i < nowySs->iSubObj; i++){
+                    //    if(nowySs->subObj[i].optional){
+                    //        qDebug() << nowySs->subObj[i].sigSubSType;
+                    //    }
+                    //}
+                    nowySs->listId = iSignalShape;
                     this->signalShape[nowySs->name.toStdString()] = nowySs;
+                    this->signalShapeById[iSignalShape] = nowySs;
+                    iSignalShape++;
                 }
                 
                 ParserX::pominsekcje(bufor);

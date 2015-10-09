@@ -21,6 +21,12 @@ public:
     int getLinkedJunctionValue(int i);
     bool isSubObjEnabled(int i);
     bool isJunctionAvailable(int i);
+    bool allowNew();
+    bool isTrackItem();
+    void initTrItems(float* tpos);
+    void enableSubObj(int i);
+    void disableSubObj(int i);
+    void flip(bool flipShape);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     unsigned int signalSubObj;

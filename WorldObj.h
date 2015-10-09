@@ -27,7 +27,8 @@ public:
         siding = 12,
         carspawner = 13,
         levelcr = 14,
-        pickup = 15
+        pickup = 15,
+        hazard = 16
     };
     TypeID typeID = this->undefined;
     

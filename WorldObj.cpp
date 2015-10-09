@@ -52,30 +52,39 @@ WorldObj* WorldObj::createObj(QString sh) {
     if (sh == "static") {
         nowy = (WorldObj*) (new StaticObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (nowy)->typeID = (nowy)->sstatic;
     } else if (sh == "signal") {
-       nowy = (WorldObj*) (new SignalObj());
+        nowy = (WorldObj*) (new SignalObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (nowy)->typeID = (nowy)->signal;
     } else if (sh == "speedpost") {
         nowy = (WorldObj*) (new SpeedpostObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (nowy)->typeID = (nowy)->speedpost;
     } else if (sh == "trackobj") {
         nowy = (WorldObj*) (new TrackObj());
         (nowy)->resPath = Game::root + "/global/shapes";
+        (nowy)->typeID = (nowy)->trackobj;
     } else if (sh == "gantry") {
         nowy = (WorldObj*) (new StaticObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (nowy)->typeID = (nowy)->gantry;
     } else if (sh == "collideobject") {
         nowy = (WorldObj*) (new StaticObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
+        (nowy)->typeID = (nowy)->collideobject;
     } else if (sh == "dyntrack") {
         nowy = (WorldObj*) (new DynTrackObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
+        (nowy)->typeID = (nowy)->dyntrack;
     } else if (sh == "forest") {
         nowy = (WorldObj*) (new ForestObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
+        (nowy)->typeID = (nowy)->forest;
     } else if (sh == "transfer") {
         nowy = (WorldObj*) (new TransferObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
+        (nowy)->typeID = (nowy)->transfer;
     } else if (sh == "platform") {
         nowy = (WorldObj*) (new PlatformObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
@@ -91,12 +100,15 @@ WorldObj* WorldObj::createObj(QString sh) {
     } else if (sh == "levelcr") {
         nowy = (WorldObj*) (new LevelCrObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";   
+        (nowy)->typeID = (nowy)->levelcr;
     } else if (sh == "pickup") {
         nowy = (WorldObj*) (new PickupObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
+        (nowy)->typeID = (nowy)->pickup;
     } else if (sh == "hazard") {
         nowy = (WorldObj*) (new HazardObj());
-        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
+        (nowy)->typeID = (nowy)->hazard;
     } else {
         qDebug() << " Unsupported WorldObj !!! " + sh;
         //(*nowy) = new WorldObj();

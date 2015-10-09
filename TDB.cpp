@@ -8,6 +8,7 @@
 #include "TrackShape.h"
 #include "Intersections.h"
 #include "SigCfg.h"
+#include "SignalShape.h"
 #include <functional>
 
 TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
@@ -2080,6 +2081,41 @@ void TDB::newPlatformObject(int* itemId, int trNodeId, int metry, int type){
     
     this->addItemToTrNode(trNodeId, itemId[0]);
     this->addItemToTrNode(trNodeId, itemId[1]);
+}
+
+void TDB::newSignalObject(QString filename, int* &itemId, int &signalUnits, int trNodeId, int metry, int type){
+    if(type != WorldObj::signal) 
+        return;
+    SignalShape* sShape = this->sigCfg->signalShape[filename.toStdString()];
+    if(sShape == NULL)
+        return;
+    
+    std::vector<int> subObjI;
+    for(int i = 0; i < sShape->iSubObj; i++){
+        if(!sShape->subObj[i].optional){
+            subObjI.push_back(i);
+        }
+    }
+    
+    signalUnits = subObjI.size();
+    qDebug() << "tdb signalUnits" << signalUnits;
+    itemId = new int[signalUnits*2];
+    float trPosition[7];
+
+    unsigned int flags = 0;
+    if(sShape->isJnLink) flags = 1;
+    int sidx = 0;
+    getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
+    
+    for(int i = 0; i<signalUnits; i++){
+        sidx = subObjI[i];
+        this->trackItems[this->iTRitems] = TRitem::newSignalItem(this->iTRitems, metry, flags, sShape->subObj[sidx].sigSubSType);
+        this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+        this->trackItems[this->iTRitems]->setSignalRot(trPosition[3]);
+        itemId[i*2] = 0;
+        itemId[i*2+1] = this->iTRitems++;
+        this->addItemToTrNode(trNodeId, itemId[i*2+1]);
+    }
 }
 
 void TDB::deleteTrItem(int trid){

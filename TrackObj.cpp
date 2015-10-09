@@ -136,6 +136,7 @@ void TrackObj::set(QString sh, int val) {
         sectionIdx = val;
         return;
     }
+    this->modified = true;
 }
 
 void TrackObj::set(QString sh, QString val){

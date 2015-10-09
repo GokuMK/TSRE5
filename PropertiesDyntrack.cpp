@@ -88,14 +88,13 @@ PropertiesDyntrack::PropertiesDyntrack() {
         sSectR[i].setSingleStep(1.0);
     }
     
-    QObject::connect(&chSect[1], SIGNAL(clicked()),
-                      this, SLOT(chSect1()));
-    QObject::connect(&chSect[2], SIGNAL(clicked()),
-                      this, SLOT(chSect2()));
-    QObject::connect(&chSect[3], SIGNAL(clicked()),
-                      this, SLOT(chSect3()));
-    QObject::connect(&chSect[4], SIGNAL(clicked()),
-                      this, SLOT(chSect4()));
+    for(int i = 1; i < 5; i++){
+        dyntrackChSect.setMapping(&chSect[i], i);
+        connect(&chSect[i], SIGNAL(clicked()), &dyntrackChSect, SLOT(map()));
+    }
+    
+    QObject::connect(&dyntrackChSect, SIGNAL(mapped(int)),
+            this, SLOT(chSectEnabled(int)));
     
     QObject::connect(flex, SIGNAL(released()),
                       this, SLOT(flexEnabled()));
@@ -127,22 +126,6 @@ void PropertiesDyntrack::showObj(WorldObj* obj){
     
     //this->carNumber.setText(QString::number(pobj->getCarNumber(),10));
     //this->carSpeed.setText(QString::number(pobj->getCarSpeed(),10));
-}
-
-void PropertiesDyntrack::chSect1(){
-     chSectEnabled(1);
-}
-
-void PropertiesDyntrack::chSect2(){
-     chSectEnabled(2);
-}
-
-void PropertiesDyntrack::chSect3(){
-     chSectEnabled(3);
-}
-
-void PropertiesDyntrack::chSect4(){
-    chSectEnabled(4);
 }
 
 void PropertiesDyntrack::chSectEnabled(int idx){
