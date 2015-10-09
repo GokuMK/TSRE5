@@ -8679,7 +8679,9 @@ build/Debug/MinGW_QT_static-Windows/Camera.o: Camera.cpp Camera.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qfiledevice.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qtouchdevice.h \
-		GLMatrix.h
+		GLMatrix.h \
+		Game.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_static-Windows/Camera.o Camera.cpp
 
 build/Debug/MinGW_QT_static-Windows/DynTrackObj.o: DynTrackObj.cpp DynTrackObj.h \
@@ -9628,7 +9630,9 @@ build/Debug/MinGW_QT_static-Windows/Flex.o: Flex.cpp Flex.h \
 		Vector4f.h \
 		FileBuffer.h \
 		Ref.h \
-		TextObj.h
+		TextObj.h \
+		Intersections.h \
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_static-Windows/Flex.o Flex.cpp
 
 build/Debug/MinGW_QT_static-Windows/ForestObj.o: ForestObj.cpp ForestObj.h \
@@ -20732,6 +20736,9 @@ build/Debug/MinGW_QT_static-Windows/TRitem.o: TRitem.cpp TRitem.h \
 		Vector2i.h \
 		Ref.h \
 		TextObj.h \
+		Game.h \
+		SigCfg.h \
+		SignalShape.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_static-Windows/TRitem.o TRitem.cpp
 
@@ -21823,7 +21830,8 @@ build/Debug/MinGW_QT_static-Windows/TerrainTools.o: TerrainTools.cpp TerrainTool
 		Texture.h \
 		Brush.h \
 		GuiFunct.h \
-		TransferObj.h
+		TransferObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_static-Windows/TerrainTools.o TerrainTools.cpp
 
 build/Debug/MinGW_QT_static-Windows/TexLib.o: TexLib.cpp TexLib.h \

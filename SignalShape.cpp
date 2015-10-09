@@ -39,8 +39,24 @@ void SignalShape::set(QString sh, FileBuffer* data) {
                         if(sflags == "JN_LINK"){
                             //qDebug() << "JN_LINK";
                             this->isJnLink = true;
+                            subObj[idx].isJnLink = true;
+                            continue;
                         }
-                        subObj[idx].signalFlags = sflags;
+                        if(sflags == "DEFAULT"){
+                            subObj[idx].optional = false;
+                            continue;
+                        }
+                        if(sflags == "OPTIONAL"){
+                            subObj[idx].optional = true;
+                            continue;
+                        }
+                        if(sflags == "BACK_FACING"){
+                            //qDebug() << "JN_LINK";
+                            subObj[idx].backFacing = true;
+                            continue;
+                        }
+                        qDebug() << "signalFlags" << sflags;
+                        //subObj[idx].signalFlags = sflags;
                     }
                     //ParserX::pominsekcje(data);
                     continue;

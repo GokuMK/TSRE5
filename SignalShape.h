@@ -13,8 +13,10 @@ public:
         QString sigSubType;
         int* sigSubJnLinkIf;
         int iLink;
-        QString signalFlags;
         QString sigSubSType;
+        bool isJnLink = false;
+        bool optional = false;
+        bool backFacing = false;
     };
     int iSubObj;
     SubObj* subObj;

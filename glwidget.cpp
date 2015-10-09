@@ -321,7 +321,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
         Vector2f a;
 
         switch (event->key()) {
-            case Qt::Key_Alt:
+            case Qt::Key_Control:
                 moveStep = moveMinStep;
                 break;
             case Qt::Key_Up:    
@@ -483,7 +483,8 @@ void GLWidget::keyReleaseEvent(QKeyEvent * event) {
     camera->keyUp(event);
     if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
         switch (event->key()) {
-            case Qt::Key_Alt:
+            //case Qt::Key_Alt:
+            case Qt::Key_Control:
                 moveStep = moveMaxStep;
                 break;
             default:
