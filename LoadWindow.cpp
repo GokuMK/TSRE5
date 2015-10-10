@@ -152,14 +152,12 @@ void LoadWindow::listRoutes(){
     QDir dir(Game::root+"/routes");
     dir.setFilter(QDir::Dirs);
     
-    foreach(QString dirFile, dir.entryList())
-    {
-        //qDebug() << dirFile;
-        if(dirFile == "." || dirFile == "..") 
+    foreach(QString dirFile, dir.entryList()){
+        if(dirFile == "." || dirFile == "..")   
             continue;
-        if(!Game::checkRoute(dirFile)) 
+        if(!Game::checkRoute(dirFile))  
             continue;
-        this->routeList.addItem(dirFile); 
+        this->routeList.addItem(dirFile);  
     }
 } 
 
