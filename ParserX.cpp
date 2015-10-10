@@ -302,12 +302,13 @@ QString ParserX::odczytajtc(FileBuffer* bufor){
         }
     } else {
         bufor->off -= 2;
-        while (((b = bufor->get()) != 32) && (b != 10)) {
+        while (((b = bufor->get()) != 32) && (b != 10) && (b != 41)) {
             //bufor->off++;
             sciezka += QChar(b, bufor->get());
         }
     }
-
+    if(b == 41)
+        bufor->off-=2;
     bufor->off++;
     //qDebug() << sciezka;
     return sciezka;

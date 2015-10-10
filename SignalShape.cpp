@@ -24,7 +24,10 @@ void SignalShape::set(QString sh, FileBuffer* data) {
             subObj[idx].iLink = 0;
             subObj[idx].type = ParserX::odczytajtc(data);
             subObj[idx].desc = ParserX::odczytajtc(data);
+            //qDebug() <<subObj[idx].type;
+            //qDebug() <<subObj[idx].desc;
             while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                //qDebug() << sh;
                 if (sh == "") {
                     break;
                 }
