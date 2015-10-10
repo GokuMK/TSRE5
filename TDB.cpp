@@ -172,12 +172,11 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
         }
     }
 
-    if(!this->road)
+    if(!this->road){
         loadTit();
-    
-    this->sigCfg = new SigCfg();
-    
-    checkSignals();
+        this->sigCfg = new SigCfg();
+        //checkSignals();
+    }
     //save();
     loaded = true;
     return;
