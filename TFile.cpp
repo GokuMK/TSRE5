@@ -16,7 +16,7 @@ TFile::~TFile() {
 
 bool TFile::readT(QString fSfile) {
         fSfile.replace("//","/");
-        //qDebug() << fSfile;
+        qDebug() << fSfile;
         QFile *file = new QFile(fSfile);
         if (!file->open(QIODevice::ReadOnly))
             return false;

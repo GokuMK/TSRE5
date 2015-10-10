@@ -37,7 +37,7 @@ void ForestObj::load(int x, int y) {
 }
 
 void ForestObj::set(int sh, FileBuffer* data) {
-    if (sh == TS::FileName) {
+    if (sh == TS::TreeTexture) {
         data->off++;
         int slen = data->getShort()*2;
         treeTexture = *data->getString(data->off, data->off + slen);

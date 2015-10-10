@@ -54,6 +54,10 @@ void StaticObj::set(int sh, FileBuffer* data) {
         data->off += slen;
         return;
     }
+    if (sh == TS::NoDirLight) {
+        //data->off++;
+        return;
+    }
     WorldObj::set(sh, data);
     return;
 }
