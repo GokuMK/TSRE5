@@ -209,6 +209,10 @@ void TrackObj::set(QString sh, FileBuffer* data) {
         jNodePosn[4] = ParserX::parsujr(data);
         return;
     }
+    if (sh == ("collidefunction")) {
+        collideFunction = ParserX::parsujr(data);
+        return;
+    }
     
     WorldObj::set(sh, data);
     return;

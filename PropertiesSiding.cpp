@@ -26,6 +26,11 @@ PropertiesSiding::PropertiesSiding() {
     vbox->addWidget(&disablePlatform);
     vbox->addStretch(1);
     this->setLayout(vbox);
+    
+    QObject::connect(&disablePlatform, SIGNAL(stateChanged(int)),
+                      this, SLOT(disablePlatformEnabled(int)));
+    QObject::connect(&namePlatform, SIGNAL(textChanged(QString)),
+                      this, SLOT(namePlatformEnabled(QString)));
 }
 
 PropertiesSiding::~PropertiesSiding() {
@@ -38,9 +43,22 @@ void PropertiesSiding::showObj(WorldObj* obj){
     }
     
     this->infoLabel->setText("Object: "+obj->type);
-    PlatformObj* pobj = (PlatformObj*)obj;
+    pobj = (PlatformObj*)obj;
     this->namePlatform.setText(pobj->getPlatformName());
     this->disablePlatform.setChecked(pobj->getDisabled());
+}
+
+void PropertiesSiding:: disablePlatformEnabled(int state){
+    if(pobj == NULL) return;
+    if(state == Qt::Checked)
+        pobj->setDisabled(true);
+    else
+        pobj->setDisabled(false);
+}
+
+void PropertiesSiding::namePlatformEnabled(QString val){
+    if(pobj == NULL) return;
+    pobj->setPlatformName(val);
 }
 
 bool PropertiesSiding::support(WorldObj* obj){

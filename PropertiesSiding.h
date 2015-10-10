@@ -3,8 +3,10 @@
 
 #include "PropertiesAbstract.h"
 
+class PlatformObj;
+
 class PropertiesSiding : public PropertiesAbstract{
-    Q_OBJECT
+    Q_OBJECT 
 public:
     PropertiesSiding();
     virtual ~PropertiesSiding();
@@ -12,11 +14,13 @@ public:
     void showObj(WorldObj* obj);
     
 public slots:
-    //void copyFEnabled();
+    void disablePlatformEnabled(int state);
+    void namePlatformEnabled(QString val);
         
 signals:
     
 private:
+    PlatformObj* pobj;
     QCheckBox disablePlatform;
     QLineEdit namePlatform;
 };

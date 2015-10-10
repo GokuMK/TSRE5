@@ -338,15 +338,39 @@ void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
     float size = brush->size;
     float h = 0;
     float rd = 0;
+    float hAvg = 0;
+    int tx, tz;
+    int tpx, tpz;
+    int count = 0;
+    
     h = brush->alpha*brush->direction*10.0;
     if(brush->hType == 1){
         terr->terrainData[(pz+1024)/8][(px+1024)/8] += h;
         //float rh = brush->alpha*brush->direction*10.0;
         rd = terr->terrainData[(pz+1024)/8][(px+1024)/8];
     }
+    if(brush->hType == 2){
+        hAvg = brush->hFixed;
+    }
+    if(brush->hType == 3){
+        for(int i = -size; i < size; i++)
+            for(int j = -size; j < size; j++){
+                tpx = px+i*8;
+                tpz = pz+j*8;
+                tx = x;
+                tz = z;
+                Game::check_coords(tx, tz, tpx, tpz);
+                terr = terrain[(tx * 10000 + tz)];
+                if (terr == NULL) continue;
+                if (!terr->loaded) continue;
+                tpx = (tpx + 1024)/8;
+                tpz = (tpz + 1024)/8;
+                hAvg += terr->terrainData[tpz][tpx];
+                count++;
+            }
+        hAvg /= count;
+    }
     
-    int tx, tz;
-    int tpx, tpz;
     for(int i = -size; i < size; i++)
         for(int j = -size; j < size; j++){
             if(brush->hType == 1)
@@ -383,16 +407,16 @@ void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
                     if(terr->terrainData[tpz][tpx] < rd)
                         terr->terrainData[tpz][tpx] += h;
                 }
-            } else if(brush->hType == 2){
-                if(terr->terrainData[tpz][tpx] > brush->hFixed){
+            } else if(brush->hType == 2 || brush->hType == 3){
+                if(terr->terrainData[tpz][tpx] >hAvg){
                     terr->terrainData[tpz][tpx] -= h*brush->direction;
-                    if(terr->terrainData[tpz][tpx] < brush->hFixed)
-                        terr->terrainData[tpz][tpx] = brush->hFixed;
+                    if(terr->terrainData[tpz][tpx] < hAvg)
+                        terr->terrainData[tpz][tpx] = hAvg;
                 }
-                if(terr->terrainData[tpz][tpx] < brush->hFixed){
+                if(terr->terrainData[tpz][tpx] < hAvg){
                     terr->terrainData[tpz][tpx] += h*brush->direction;
-                    if(terr->terrainData[tpz][tpx] > brush->hFixed)
-                        terr->terrainData[tpz][tpx] = brush->hFixed;
+                    if(terr->terrainData[tpz][tpx] > hAvg)
+                        terr->terrainData[tpz][tpx] = hAvg;
                 }
             }
         }

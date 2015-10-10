@@ -89,10 +89,12 @@ void Tile::load() {
     QString path;
     path = Game::root + "/routes/" + Game::route + "/world/w" + getNameXY(x) + "" + getNameXY(-z) + ".w";
     path.replace("//", "/");
-    qDebug() << path;
+    
     QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
+    if (!file->open(QIODevice::ReadOnly)){
+        qDebug() << "w file not exist    " << path;
         return;
+    }
     FileBuffer* data = ReadFile::read(file);
     //qDebug() << "Date:" << data->length;
     //data->off = 0;
@@ -102,81 +104,76 @@ void Tile::load() {
     //}
     data->setTokenOffset(261844);
     data->off = 16;
-    //qDebug() << data->getInt() - 375;
     if (data->getToken() != 375){
-    
-    data->off = 0;
-    sh = "Tr_Worldfile";
-    ParserX::szukajsekcji1(sh, data);
+        data->off = 0;
+        sh = "Tr_Worldfile";
+        ParserX::szukajsekcji1(sh, data);
 
-    for (int tt = 0;; tt++) {
-        //wybranie zdarzenia
-        sh = ParserX::nazwasekcji(data).toLower();
-        //qDebug() << "= " << sh;
-        
-        WorldObj* nowy;
-        if (sh == "") {
-            qDebug() << "wczytano " << obiekty.size();
-            loaded = 0;
-            wczytajObiekty();
-            return;
-        } else if (sh == "tr_watermark") {
-            nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::parsujr(data)));
+        for (int tt = 0;; tt++) {
+            sh = ParserX::nazwasekcji(data).toLower();
+            //qDebug() << "= " << sh;
+
+            WorldObj* nowy;
+            if (sh == "") {
+                qDebug() << "w file uncompressed " << path << " "<< obiekty.size();
+                loaded = 0;
+                wczytajObiekty();
+                return;
+            } else if (sh == "tr_watermark") {
+                nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::parsujr(data)));
+                obiekty[jestObiektow++] = nowy;
+                ParserX::pominsekcje(data);
+                continue;
+            } else if (sh == "vdbidcount") {
+                vDbIdCount = ParserX::parsujr(data);
+                viewDbSphere = new ViewDbSphere[vDbIdCount];
+                ParserX::pominsekcje(data);
+                continue;
+            } else if (sh == "viewdbsphere") {
+                //qDebug() <<sh;
+                /*int j = 0;
+                do {
+                    for(int i = 0; i< 3; i++){
+                        sh = ParserX::nazwasekcji_inside(data).toLower();
+                        //qDebug() <<sh;
+                        if(sh == ("vdbid")) {
+                            viewDbSphere[j].vDbId = ParserX::parsujr(data);
+                        }
+                        if(sh == ("position")) {
+                            viewDbSphere[j].position[0] = ParserX::parsujr(data);
+                            viewDbSphere[j].position[1] = ParserX::parsujr(data);
+                            viewDbSphere[j].position[2] = ParserX::parsujr(data);
+                        }
+                        if(sh == ("radius")) {
+                            viewDbSphere[j].radius = ParserX::parsujr(data);
+                        }
+                        ParserX::pominsekcje(data);
+                    }
+
+                    if(j > 0) ParserX::pominsekcje(data);
+                    j++;
+                } while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == ""));
+                */
+                int start = data->off;
+                ParserX::pominsekcje(data);
+                int end = data->off;
+                viewDbSphereRaw = (data->getString(start, end));
+                continue;
+            } 
+            if ((nowy = WorldObj::createObj(sh)) == NULL) {
+                ParserX::pominsekcje(data);
+                continue;
+            }
+
+            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                nowy->set(sh, data);
+                ParserX::pominsekcje(data);
+            }
             obiekty[jestObiektow++] = nowy;
-            ParserX::pominsekcje(data);
-            continue;
-        } else if (sh == "vdbidcount") {
-            vDbIdCount = ParserX::parsujr(data);
-            //qDebug() <<vDbIdCount;
-            viewDbSphere = new ViewDbSphere[vDbIdCount];
-            ParserX::pominsekcje(data);
-            continue;
-        } else if (sh == "viewdbsphere") {
-            //qDebug() <<sh;
-            /*int j = 0;
-            do {
-                for(int i = 0; i< 3; i++){
-                    sh = ParserX::nazwasekcji_inside(data).toLower();
-                    //qDebug() <<sh;
-                    if(sh == ("vdbid")) {
-                        viewDbSphere[j].vDbId = ParserX::parsujr(data);
-                    }
-                    if(sh == ("position")) {
-                        viewDbSphere[j].position[0] = ParserX::parsujr(data);
-                        viewDbSphere[j].position[1] = ParserX::parsujr(data);
-                        viewDbSphere[j].position[2] = ParserX::parsujr(data);
-                    }
-                    if(sh == ("radius")) {
-                        viewDbSphere[j].radius = ParserX::parsujr(data);
-                    }
-                    ParserX::pominsekcje(data);
-                }
-                
-                if(j > 0) ParserX::pominsekcje(data);
-                j++;
-            } while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == ""));
-            */
-            int start = data->off;
-            ParserX::pominsekcje(data);
-            int end = data->off;
-            viewDbSphereRaw = (data->getString(start, end));
-            continue;
-        } 
-        //if(sh == "signal") sh = "static";
-        if ((nowy = WorldObj::createObj(sh)) == NULL) {
-            ParserX::pominsekcje(data);
-            continue;
-        }
-        
-        while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
-            nowy->set(sh, data);
-            ParserX::pominsekcje(data);
-        }
-        obiekty[jestObiektow++] = nowy;
 
-        ParserX::pominsekcje(data);
-        continue;
-    }
+            ParserX::pominsekcje(data);
+            continue;
+        }
     } else {
         qDebug() << "compressed w file";
         data->off+=5;
@@ -217,7 +214,7 @@ void Tile::load() {
             obiekty[jestObiektow++] = nowy;
             data->off = offset;
        }
-       qDebug() << "wczytano " << obiekty.size();
+       qDebug() << "w file compressed   " << path << " "<< obiekty.size();
        loaded = 0;
        wczytajObiekty();
     }
