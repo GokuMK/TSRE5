@@ -7,6 +7,7 @@
 #include "TDB.h"
 #include "Game.h"
 #include "TrackItemObj.h"
+#include "TS.h"
 #include <QDebug>
 
 LevelCrObj::LevelCrObj() {
@@ -32,6 +33,49 @@ void LevelCrObj::load(int x, int y) {
     this->skipLevel = 1;
     this->modified = false;
     setMartix();
+}
+
+void LevelCrObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::LevelCrParameters) {
+        data->off++;
+        levelCrParameters[0] = data->getFloat();
+        levelCrParameters[1] = data->getFloat();
+        return;
+    }
+    if (sh == TS::CrashProbability) {
+        data->off++;
+        crashProbability = data->getFloat();
+        return;
+    }
+    if (sh == TS::LevelCrData) {
+        data->off++;
+        levelCrData[0] = data->getUint();
+        levelCrData[1] = data->getUint();
+        trItemId = new int[levelCrData[1]*4];
+        return;
+    }
+    if (sh == TS::LevelCrTiming) {
+        data->off++;
+        levelCrTiming[0] = data->getFloat();
+        levelCrTiming[1] = data->getFloat();
+        levelCrTiming[2] = data->getFloat();
+        return;
+    }
+    if (sh == TS::TrItemId) {
+        data->off++;
+        trItemId[trItemIdCount++] = data->getUint();
+        trItemId[trItemIdCount++] = data->getUint();
+        return;
+    }
+    if (sh == TS::FileName) {
+        data->off++;
+        int slen = data->getShort()*2;
+        fileName = *data->getString(data->off, data->off + slen);
+        data->off += slen;
+        return;
+    }
+    WorldObj::set(sh, data);
+    return;
 }
 
 void LevelCrObj::set(QString sh, FileBuffer* data) {

@@ -26,6 +26,7 @@ public:
     virtual ~DynTrackObj();
     bool allowNew();
     void load(int x, int y);
+    void set(int sh, FileBuffer* val);
     void set(QString sh, FileBuffer* data);
     void set(QString sh, float* val);
     bool getBorder(float* border);

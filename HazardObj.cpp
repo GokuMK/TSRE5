@@ -7,6 +7,7 @@
 #include <QDebug>
 #include "Game.h"
 #include "TDB.h"
+#include "TS.h"
 #include "TrackItemObj.h"
 
 HazardObj::HazardObj() {
@@ -33,6 +34,24 @@ void HazardObj::load(int x, int y) {
     this->skipLevel = 1;
 
     setMartix();
+}
+
+void HazardObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::FileName) {
+        data->off++;
+        int slen = data->getShort()*2;
+        fileName = *data->getString(data->off, data->off + slen);
+        data->off += slen;
+        return;
+    }
+    if (sh == TS::TrItemId) {
+        data->off++;
+        trItemId[0] = data->getUint();
+        trItemId[1] = data->getUint();
+        return;
+    }
+    WorldObj::set(sh, data);
+    return;
 }
 
 void HazardObj::set(QString sh, FileBuffer* data) {

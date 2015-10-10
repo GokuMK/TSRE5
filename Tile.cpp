@@ -21,6 +21,7 @@
 #include <QFile>
 #include "GLUU.h"
 #include "GLMatrix.h"
+#include "TS.h"
 
 Tile::Tile() {
     modified = false;
@@ -94,7 +95,16 @@ void Tile::load() {
         return;
     FileBuffer* data = ReadFile::read(file);
     //qDebug() << "Date:" << data->length;
-
+    //data->off = 0;
+    //for(int i = 0; i < 64; i++){
+    //    data->off = i;
+    //    qDebug() << (char)data->get()<<"-"<<data->get();
+    //}
+    data->setTokenOffset(261844);
+    data->off = 16;
+    //qDebug() << data->getInt() - 375;
+    if (data->getToken() != 375){
+    
     data->off = 0;
     sh = "Tr_Worldfile";
     ParserX::szukajsekcji1(sh, data);
@@ -166,6 +176,50 @@ void Tile::load() {
 
         ParserX::pominsekcje(data);
         continue;
+    }
+    } else {
+        qDebug() << "compressed w file";
+        data->off+=5;
+        int offset, offsetO;
+        int idx, idxO;
+        WorldObj* nowy;
+        while(data->length > data->off){
+            idx = data->getToken();
+            offset = data->off + data->getInt() + 4;
+            //qDebug() << idx;
+            if(idx == TS::ViewDbSphere){
+                data->off = offset;
+                continue;
+            }
+            if(idx == TS::VDbIdCount){
+                data->off = offset;
+                continue;
+            }
+            if(idx == TS::Tr_Watermark){
+                data->off++;
+                nowy = (WorldObj*)(new TrWatermarkObj(data->getInt()));
+                obiekty[jestObiektow++] = nowy;
+                data->off = offset;
+                continue;
+            }
+            if ((nowy = WorldObj::createObj(idx)) == NULL) {
+                data->off = offset;
+                continue;
+            }
+            data->off++;
+            while (data->off < offset) {
+                idxO = data->getToken();
+                offsetO = data->off + data->getInt() + 4;
+                //qDebug() << "- "<< idxO;
+                nowy->set(idxO, data);
+                data->off = offsetO;
+            }
+            obiekty[jestObiektow++] = nowy;
+            data->off = offset;
+       }
+       qDebug() << "wczytano " << obiekty.size();
+       loaded = 0;
+       wczytajObiekty();
     }
 }
 

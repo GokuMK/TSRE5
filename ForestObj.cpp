@@ -8,6 +8,7 @@
 #include "TexLib.h"
 #include "Vector2f.h"
 #include "TerrainLib.h"
+#include "TS.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -33,6 +34,41 @@ void ForestObj::load(int x, int y) {
     this->init = false;
     this->skipLevel = 3;
     this->modified = false;
+}
+
+void ForestObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::FileName) {
+        data->off++;
+        int slen = data->getShort()*2;
+        treeTexture = *data->getString(data->off, data->off + slen);
+        data->off += slen;
+        return;
+    }
+    if (sh == TS::ScaleRange) {
+        data->off++;
+        scaleRangeX = data->getFloat();
+        scaleRangeZ = data->getFloat();
+        return;
+    }
+    if (sh == TS::Area) {
+        data->off++;
+        areaX = data->getFloat();
+        areaZ = data->getFloat();
+        return;
+    }
+    if (sh == TS::TreeSize) {
+        data->off++;
+        treeSizeX = data->getFloat();
+        treeSizeZ = data->getFloat();
+        return;
+    }
+    if (sh == TS::Population) {
+        data->off++;
+        population = data->getUint();
+        return;
+    }
+    WorldObj::set(sh, data);
+    return;
 }
 
 void ForestObj::set(QString sh, FileBuffer* data) {

@@ -23,6 +23,7 @@ public:
     virtual ~TransferObj();
     bool allowNew();
     void load(int x, int y);
+    void set(int sh, FileBuffer* val);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);

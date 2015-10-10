@@ -8878,7 +8878,8 @@ build/Release/MinGW_QT_static-Windows/DynTrackObj.o: DynTrackObj.cpp DynTrackObj
 		GLMatrix.h \
 		TexLib.h \
 		Texture.h \
-		Vector2f.h
+		Vector2f.h \
+		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/DynTrackObj.o DynTrackObj.cpp
 
 build/Release/MinGW_QT_static-Windows/Eng.o: Eng.cpp Eng.h \
@@ -9830,7 +9831,8 @@ build/Release/MinGW_QT_static-Windows/ForestObj.o: ForestObj.cpp ForestObj.h \
 		TexLib.h \
 		Texture.h \
 		Vector2f.h \
-		TerrainLib.h
+		TerrainLib.h \
+		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/ForestObj.o ForestObj.cpp
 
 build/Release/MinGW_QT_static-Windows/GLH.o: GLH.cpp GLH.h
@@ -11128,6 +11130,7 @@ build/Release/MinGW_QT_static-Windows/HazardObj.o: HazardObj.cpp HazardObj.h \
 		TRitem.h \
 		Pointer3d.h \
 		TextObj.h \
+		TS.h \
 		TrackItemObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/HazardObj.o HazardObj.cpp
 
@@ -11389,6 +11392,7 @@ build/Release/MinGW_QT_static-Windows/LevelCrObj.o: LevelCrObj.cpp LevelCrObj.h 
 		TextObj.h \
 		Game.h \
 		TrackItemObj.h \
+		TS.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/LevelCrObj.o LevelCrObj.cpp
 
@@ -13520,7 +13524,8 @@ build/Release/MinGW_QT_static-Windows/PickupObj.o: PickupObj.cpp PickupObj.h \
 		TRitem.h \
 		Pointer3d.h \
 		TextObj.h \
-		TrackItemObj.h
+		TrackItemObj.h \
+		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/PickupObj.o PickupObj.cpp
 
 build/Release/MinGW_QT_static-Windows/PlatformObj.o: PlatformObj.cpp PlatformObj.h \
@@ -13675,7 +13680,8 @@ build/Release/MinGW_QT_static-Windows/PlatformObj.o: PlatformObj.cpp PlatformObj
 		TRitem.h \
 		Pointer3d.h \
 		TextObj.h \
-		TrackItemObj.h
+		TrackItemObj.h \
+		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/PlatformObj.o PlatformObj.cpp
 
 build/Release/MinGW_QT_static-Windows/Pointer3d.o: Pointer3d.cpp Pointer3d.h \
@@ -20306,7 +20312,8 @@ build/Release/MinGW_QT_static-Windows/SignalObj.o: SignalObj.cpp SignalObj.h \
 		TextObj.h \
 		SigCfg.h \
 		SignalShape.h \
-		Game.h
+		Game.h \
+		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/SignalObj.o SignalObj.cpp
 
 build/Release/MinGW_QT_static-Windows/SignalShape.o: SignalShape.cpp SignalShape.h \
@@ -20606,6 +20613,7 @@ build/Release/MinGW_QT_static-Windows/SpeedpostObj.o: SpeedpostObj.cpp Speedpost
 		TextObj.h \
 		Game.h \
 		TrackItemObj.h \
+		TS.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/SpeedpostObj.o SpeedpostObj.cpp
 
@@ -20750,6 +20758,7 @@ build/Release/MinGW_QT_static-Windows/StaticObj.o: StaticObj.cpp StaticObj.h \
 		ShapeLib.h \
 		GLMatrix.h \
 		ParserX.h \
+		TS.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/StaticObj.o StaticObj.cpp
 
@@ -22895,7 +22904,8 @@ build/Release/MinGW_QT_static-Windows/Tile.o: Tile.cpp Tile.h \
 		PickupObj.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
 		C:/Qt/Static/5.4.1/include/QtCore/QFile \
-		GLMatrix.h
+		GLMatrix.h \
+		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Tile.o Tile.cpp
 
 build/Release/MinGW_QT_static-Windows/TrWatermarkObj.o: TrWatermarkObj.cpp TrWatermarkObj.h \
@@ -23286,6 +23296,7 @@ build/Release/MinGW_QT_static-Windows/TrackObj.o: TrackObj.cpp TrackObj.h \
 		ShapeLib.h \
 		GLMatrix.h \
 		ParserX.h \
+		TS.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TrackObj.o TrackObj.cpp
 
@@ -23439,7 +23450,8 @@ build/Release/MinGW_QT_static-Windows/TransferObj.o: TransferObj.cpp TransferObj
 		Texture.h \
 		Vector2f.h \
 		TerrainLib.h \
-		Game.h
+		Game.h \
+		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TransferObj.o TransferObj.cpp
 
 build/Release/MinGW_QT_static-Windows/Vector2f.o: Vector2f.cpp Vector2f.h
@@ -23606,7 +23618,8 @@ build/Release/MinGW_QT_static-Windows/WorldObj.o: WorldObj.cpp WorldObj.h \
 		LevelCrObj.h \
 		PickupObj.h \
 		HazardObj.h \
-		Game.h
+		Game.h \
+		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/WorldObj.o WorldObj.cpp
 
 build/Release/MinGW_QT_static-Windows/glwidget.o: glwidget.cpp glwidget.h \

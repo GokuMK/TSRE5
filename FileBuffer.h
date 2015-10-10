@@ -17,9 +17,12 @@ public:
     QString* getString(int start, int end);
     unsigned char get();
     void findToken(int id);
+    int getToken();
+    void setTokenOffset(int val);
     
     int off = 0;
     int length = 0;
+    int tokenOffset = 0;
     unsigned char * data = NULL;
 private:
     

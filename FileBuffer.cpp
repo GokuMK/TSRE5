@@ -22,6 +22,14 @@ int FileBuffer::getInt() {
     return *((int*) & this->data[this->off - 4]);
 }
 
+int FileBuffer::getToken(){
+    this->off += 4;
+    return (*((int*) & this->data[this->off - 4]) - this->tokenOffset);
+}
+void FileBuffer::setTokenOffset(int val){
+    this->tokenOffset = val;
+}
+
 unsigned int FileBuffer::getUint() {
     this->off += 4;
     return *((unsigned int*) & this->data[this->off - 4]);

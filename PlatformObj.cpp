@@ -9,6 +9,7 @@
 #include "TDB.h"
 #include "TrackItemObj.h"
 #include "OglObj.h"
+#include "TS.h"
 #include <Math.h>
 
 #ifndef M_PI
@@ -48,6 +49,32 @@ void PlatformObj::load(int x, int y) {
 
 bool PlatformObj::allowNew(){
     return true;
+}
+
+void PlatformObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::SidingData || sh == TS::PlatformData) {
+        data->off++;
+        platformData = data->getUint();
+        return;
+    }
+    if (sh == TS::CarFrequency) {
+        data->off++;
+        carFrequency = data->getFloat();
+        return;
+    }
+    if (sh == TS::CarAvSpeed) {
+        data->off++;
+        carAvSpeed = data->getFloat();
+        return;
+    }
+    if (sh == TS::TrItemId) {
+        data->off++;
+        trItemId[trItemIdCount++] = data->getUint();
+        trItemId[trItemIdCount++] = data->getUint();
+        return;
+    }
+    WorldObj::set(sh, data);
+    return;
 }
 
 void PlatformObj::set(QString sh, FileBuffer* data) {

@@ -39,7 +39,7 @@ void SFile::Load(QString path) {
         return;
     FileBuffer* bufor = ReadFile::read(file);
     //qDebug() << "--" << path << "--" << bufor->length;
-
+    
     bufor->off = 16;
     //qDebug() << bufor->getInt() << " - ";
     bufor->off = 16;

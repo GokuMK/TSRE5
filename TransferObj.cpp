@@ -10,6 +10,7 @@
 #include "TerrainLib.h"
 #include <QOpenGLShaderProgram>
 #include "Game.h"
+#include "TS.h"
 
 TransferObj::TransferObj() {
     this->width = 10;
@@ -46,6 +47,28 @@ void TransferObj::set(QString sh, QString val){
         return;
     }
     WorldObj::set(sh, val);
+    return;
+}
+
+void TransferObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::FileName) {
+        data->off++;
+        int slen = data->getShort()*2;
+        texture = *data->getString(data->off, data->off + slen);
+        data->off += slen;
+        return;
+    }
+    if (sh == TS::Width) {
+        data->off++;
+        width = data->getFloat();
+        return;
+    }
+    if (sh == TS::Height) {
+        data->off++;
+        height = data->getFloat();
+        return;
+    }
+    WorldObj::set(sh, data);
     return;
 }
 

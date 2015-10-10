@@ -32,6 +32,7 @@ public:
     };
     TypeID typeID = this->undefined;
     
+    static WorldObj* createObj(int sh);
     static WorldObj* createObj(QString sh);
     static int isTrackObj(QString sh);
     
@@ -64,6 +65,7 @@ public:
     WorldObj(const WorldObj& orig);
     virtual ~WorldObj();
     virtual void load(int x, int y);
+    virtual void set(int sh, FileBuffer* data);
     virtual void set(QString sh, FileBuffer* data);
     virtual void set(QString sh, QString val);
     virtual void set(QString sh, float* val);

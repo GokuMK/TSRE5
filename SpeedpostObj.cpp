@@ -7,6 +7,7 @@
 #include "TDB.h"
 #include "Game.h"
 #include "TrackItemObj.h"
+#include "TS.h"
 #include <QDebug>
 
 #ifndef M_PI
@@ -43,6 +44,46 @@ void SpeedpostObj::set(QString sh, QString val){
         return;
     }
     WorldObj::set(sh, val);
+    return;
+}
+
+void SpeedpostObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::FileName) {
+        data->off++;
+        int slen = data->getShort()*2;
+        fileName = *data->getString(data->off, data->off + slen);
+        data->off += slen;
+        return;
+    }
+    if (sh == TS::Speed_Digit_Tex) {
+        data->off++;
+        int slen = data->getShort()*2;
+        speedDigitTex = *data->getString(data->off, data->off + slen);
+        data->off += slen;
+        return;
+    }
+    if (sh == TS::Speed_Sign_Shape) {
+        data->off++;
+        speedSignShape[0] = data->getUint();
+        for(int i = 0; i<speedSignShape[0]*4; i++)
+            speedSignShape[i+1] = data->getFloat();
+        return;
+    }
+    if (sh == TS::Speed_Text_Size) {
+        data->off++;
+        speedTextSize[0] = data->getFloat();
+        speedTextSize[1] = data->getFloat();
+        speedTextSize[2] = data->getFloat();
+        return;
+    }
+    if (sh == TS::TrItemId) {
+        data->off++;
+        this->trItemId = new int[2];
+        trItemId[0] = data->getUint();
+        trItemId[1] = data->getUint();
+        return;
+    }
+    WorldObj::set(sh, data);
     return;
 }
 

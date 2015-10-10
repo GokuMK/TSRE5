@@ -58,7 +58,7 @@ bool TFile::readT(QString fSfile) {
                     get157(data);
                     break;
                 default:
-                    qDebug() << "unknown section";
+                    qDebug() << "TFile - unknown token: "<< pozycja;
                     i--;
                     break;
             }
@@ -134,7 +134,7 @@ void TFile::get139(FileBuffer* data, int length) {
                         sampleASbuffer[i] = data->get();
                     break;
                 default:
-                    qDebug() << "unknown section";
+                    qDebug() << "TFile - unknown token: "<< pozycja;
                     break;
             }
             data->off = akto + offset;

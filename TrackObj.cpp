@@ -4,6 +4,7 @@
 #include "GLMatrix.h"
 #include <math.h>
 #include "ParserX.h"
+#include "TS.h"
 #include <QDebug>
 
 #ifndef M_PI
@@ -139,12 +140,50 @@ void TrackObj::set(QString sh, int val) {
     this->modified = true;
 }
 
-void TrackObj::set(QString sh, QString val){
+void TrackObj::set(QString sh, QString val){ 
     if (sh == ("filename")) {
         fileName = val;
         return;
     }
     WorldObj::set(sh, val);
+    return;
+}
+
+void TrackObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::FileName) {
+        data->off++;
+        int slen = data->getShort()*2;
+        fileName = *data->getString(data->off, data->off + slen);
+        data->off += slen;
+        return;
+    }
+    if (sh == TS::SectionIdx) {
+        data->off++;
+        sectionIdx = data->getUint();
+        return;
+    }
+    if (sh == TS::CollideFunction) {
+        data->off++;
+        collideFunction = data->getUint();
+        return;
+    }
+    if (sh == TS::Elevation) {
+        data->off++;
+        elevation = data->getFloat();
+        return;
+    }
+    if (sh == TS::JNodePosn) {
+        data->off++;
+        jNodePosn = new float[5];
+        jNodePosn[0] = data->getFloat();
+        jNodePosn[1] = data->getFloat();
+        jNodePosn[2] = data->getFloat();
+        jNodePosn[3] = data->getFloat();
+        jNodePosn[4] = data->getFloat();
+        return;
+    }
+    
+    WorldObj::set(sh, data);
     return;
 }
 

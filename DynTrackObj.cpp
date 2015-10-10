@@ -7,6 +7,7 @@
 #include "Vector3f.h"
 #include <QOpenGLShaderProgram>
 #include "GLUU.h"
+#include "TS.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -120,6 +121,46 @@ void DynTrackObj::resize(float x, float y, float z){
 
     this->modified = true;
     deleteVBO();
+}
+
+void DynTrackObj::set(int sh, FileBuffer* data) {
+    //qDebug() << "dyntrack: "<<sh;
+    if (sh == TS::SectionIdx) {
+        data->off++;
+        sectionIdx = data->getUint();
+        return;
+    }
+    if (sh == TS::Elevation) {
+        data->off++;
+        elevation = data->getFloat();
+        return;
+    }
+    if (sh == TS::JNodePosn) {
+        data->off++;
+        jNodePosn = new float[5];
+        jNodePosn[0] = data->getFloat();
+        jNodePosn[1] = data->getFloat();
+        jNodePosn[2] = data->getFloat();
+        jNodePosn[3] = data->getFloat();
+        jNodePosn[4] = data->getFloat();
+        return;
+    }
+    if (sh == TS::TrackSections) {
+        if(sections == NULL) sections = new Section[5];
+        data->off++;
+        
+        for (int iii = 0; iii < 5; iii++) {
+            data->off+=18;
+            sections[iii].type = data->getUint();
+            sections[iii].sectIdx = data->getUint();
+            sections[iii].a = data->getFloat();
+            sections[iii].r = data->getFloat();
+        }
+        return;
+    }
+    //qDebug() <<"A";
+    WorldObj::set(sh, data);
+    return;
 }
 
 void DynTrackObj::set(QString sh, FileBuffer* data) {

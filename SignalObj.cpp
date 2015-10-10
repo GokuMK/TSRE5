@@ -10,6 +10,7 @@
 #include "SigCfg.h"
 #include "SignalShape.h"
 #include "Game.h"
+#include "TS.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -80,6 +81,41 @@ void SignalObj::set(QString sh, QString val){
         return;
     }
     WorldObj::set(sh, val);
+    return;
+}
+
+void SignalObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::FileName) {
+        data->off++;
+        int slen = data->getShort()*2;
+        fileName = *data->getString(data->off, data->off + slen);
+        data->off += slen;
+        return;
+    }
+    if (sh == TS::SignalSubObj) {
+        data->off++;
+        signalSubObj = data->getUint();
+        return;
+    }
+    if (sh == TS::SignalUnits) {
+        data->off++;
+        signalUnits = data->getUint();
+        trItemId = new int[signalUnits*2];
+        for(int i=0; i<signalUnits; i++){
+            data->getToken();
+            data->getInt();
+            data->off++;
+            data->getInt();
+            data->getToken();
+            data->getInt();
+            data->off++;
+            trItemId[i*2+0] = data->getUint();
+            trItemId[i*2+1] = data->getUint();
+        }
+        return;
+    }
+    
+    WorldObj::set(sh, data);
     return;
 }
 

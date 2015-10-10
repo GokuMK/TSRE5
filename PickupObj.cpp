@@ -8,6 +8,7 @@
 #include "Game.h"
 #include "TDB.h"
 #include "TrackItemObj.h"
+#include "TS.h"
 
 PickupObj::PickupObj() {
     this->shape = -1;
@@ -77,6 +78,49 @@ void PickupObj::set(QString sh, QString val){
         return;
     }
     WorldObj::set(sh, val);
+    return;
+}
+
+void PickupObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::SpeedRange) {
+        data->off++;
+        speedRange[0] = data->getFloat();
+        speedRange[1] = data->getFloat();
+        return;
+    }
+    if (sh == TS::PickupType) {
+        data->off++;
+        pickupType[0] = data->getUint();
+        pickupType[1] = data->getUint();
+        return;
+    }
+    if (sh == TS::PickupAnimData) {
+        data->off++;
+        pickupAnimData1 = data->getUint();
+        pickupAnimData2 = data->getFloat();
+        return;
+    }
+    if (sh == TS::PickupCapacity) {
+        data->off++;
+        pickupCapacity1 = data->getFloat();
+        pickupCapacity2 = data->getFloat();
+        return;
+    }
+    if (sh == TS::TrItemId) {
+        data->off++;
+        this->trItemId = new int[2];
+        trItemId[trItemIdCount++] = data->getUint();
+        trItemId[trItemIdCount++] = data->getUint();
+        return;
+    }
+    if (sh == TS::FileName) {
+        data->off++;
+        int slen = data->getShort()*2;
+        fileName = *data->getString(data->off, data->off + slen);
+        data->off += slen;
+        return;
+    }
+    WorldObj::set(sh, data);
     return;
 }
 

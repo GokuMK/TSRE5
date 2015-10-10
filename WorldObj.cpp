@@ -18,6 +18,7 @@
 #include "PickupObj.h"
 #include "HazardObj.h"
 #include "Game.h"
+#include "TS.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -46,6 +47,78 @@ int WorldObj::isTrackObj(QString sh) {
     return 0;
 }
 
+
+WorldObj* WorldObj::createObj(int sh) {
+    WorldObj* nowy;
+    if (sh == TS::Static) {
+        nowy = (WorldObj*) (new StaticObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (nowy)->typeID = (nowy)->sstatic;
+    } else if(sh == TS::Signal) {
+        nowy = (WorldObj*) (new SignalObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (nowy)->typeID = (nowy)->signal;
+    } else if (sh == TS::Speedpost) {
+        nowy = (WorldObj*) (new SpeedpostObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (nowy)->typeID = (nowy)->speedpost;
+    } else if (sh == TS::TrackObj) {
+        nowy = (WorldObj*) (new TrackObj());
+        (nowy)->resPath = Game::root + "/global/shapes";
+        (nowy)->typeID = (nowy)->trackobj;
+    } else if (sh == TS::Gantry || sh == TS::Gantry2) {
+        nowy = (WorldObj*) (new StaticObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (nowy)->typeID = (nowy)->gantry;
+    } else if (sh == TS::CollideObject) {
+        nowy = (WorldObj*) (new StaticObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
+        (nowy)->typeID = (nowy)->collideobject;
+    } else if (sh == TS::Dyntrack || sh == TS::DynTrack2) {
+        nowy = (WorldObj*) (new DynTrackObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
+        (nowy)->typeID = (nowy)->dyntrack;
+    } else if (sh == TS::Forest) {
+        nowy = (WorldObj*) (new ForestObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
+        (nowy)->typeID = (nowy)->forest;
+    } else if (sh == TS::Transfer || sh == TS::Transfer2) {
+        nowy = (WorldObj*) (new TransferObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/textures";
+        (nowy)->typeID = (nowy)->transfer;
+    } else if (sh == TS::Platform) {
+        nowy = (WorldObj*) (new PlatformObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";
+        (nowy)->typeID = (nowy)->platform;
+    } else if (sh == TS::Siding || sh == TS::Siding2) {
+        nowy = (WorldObj*) (new PlatformObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
+        (nowy)->typeID = (nowy)->siding;
+    } else if (sh == TS::CarSpawner || sh == TS::CarSpawner2) {
+        nowy = (WorldObj*) (new PlatformObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";     
+        (nowy)->typeID = (nowy)->carspawner;
+    } else if (sh == TS::LevelCr) {
+        nowy = (WorldObj*) (new LevelCrObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";   
+        (nowy)->typeID = (nowy)->levelcr;
+    } else if (sh == TS::Pickup || sh == TS::Pickup2) {
+        nowy = (WorldObj*) (new PickupObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
+        (nowy)->typeID = (nowy)->pickup;
+    } else if (sh == TS::Hazard) {
+        nowy = (WorldObj*) (new HazardObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
+        (nowy)->typeID = (nowy)->hazard;
+    } else {
+        qDebug() << " Unsupported WorldObj !!! " << sh;
+        //(*nowy) = new WorldObj();
+        return NULL;
+        //
+    }
+    (nowy)->type = TS::IdName[sh];
+    return nowy;
+}
 
 WorldObj* WorldObj::createObj(QString sh) {
     WorldObj* nowy;
@@ -161,6 +234,72 @@ void WorldObj::set(QString sh, QString val) {
 
 }
 
+void WorldObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::UiD) {
+        data->off++;
+        UiD = data->getUint();
+        return;
+    }
+    if (sh == TS::StaticFlags) {
+        data->off++;
+        staticFlags = data->getUint();
+        return;
+    }
+    if (sh == TS::Position) {
+        data->off++;
+        position[0] = data->getFloat();
+        position[1] = data->getFloat();
+        position[2] = data->getFloat();
+        jestPQ++;
+        return;
+    }
+    if (sh == TS::QDirection) {
+        data->off++;
+        qDirection[0] = data->getFloat();
+        qDirection[1] = data->getFloat();
+        qDirection[2] = data->getFloat();
+        qDirection[3] = data->getFloat();
+        if(fabs(qDirection[0]) + fabs(qDirection[1]) + fabs(qDirection[2]) + fabs(qDirection[3]) < 3)
+            jestPQ++;
+        return;
+    }
+    if (sh == TS::Matrix3x3) {
+        data->off++;
+        matrix3x3 = new float[9];
+        matrix3x3[0] = data->getFloat();
+        matrix3x3[1] = data->getFloat();
+        matrix3x3[2] = data->getFloat();
+        matrix3x3[3] = data->getFloat();
+        matrix3x3[4] = data->getFloat();
+        matrix3x3[5] = data->getFloat();
+        matrix3x3[6] = data->getFloat();
+        matrix3x3[7] = data->getFloat();
+        matrix3x3[8] = data->getFloat();
+        Quat::fromMat3((float*)&qDirection, matrix3x3);
+        Vec4::normalize((float*)&qDirection,(float*)&qDirection);
+        //Vec4::normalize((float*)&qDirection,(float*)&qDirection);
+        jestPQ++;
+        return;
+    }
+    if (sh == TS::VDbId) {
+        data->off++;
+        vDbId = data->getUint();
+        return;
+    }
+    if (sh == TS::StaticDetailLevel) {
+        data->off++;
+        staticDetailLevel = data->getUint();
+        return;
+    }
+    if (sh == TS::CollideFlags) {
+        data->off++;
+        collideFlags = data->getUint();
+        return;
+    }
+    qDebug() << "worldObj "<<this->type<<" unknown: " << sh;
+    return;
+}
+
 void WorldObj::set(QString sh, FileBuffer* data) {
     if (sh == ("uid")) {
         UiD = ParserX::parsujUint(data);
@@ -216,7 +355,7 @@ void WorldObj::set(QString sh, FileBuffer* data) {
         collideFlags = ParserX::parsujr(data);
         return;
     }
-    qDebug() << "=" << sh;
+    qDebug() << "worldObj "<<this->type<<" unknown: " << sh;
     return;
 }
 

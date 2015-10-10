@@ -23,6 +23,7 @@ public:
     ForestObj();
     ForestObj(const ForestObj& orig);
     void load(int x, int y);
+    void set(int sh, FileBuffer* data);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);

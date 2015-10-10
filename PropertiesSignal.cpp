@@ -31,7 +31,7 @@ PropertiesSignal::PropertiesSignal() {
     label->setStyleSheet("QLabel { color : #999999; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < maxSubObj; i++){
         this->chSub[i].setText("");
         vSub[i].setSpacing(2);
         vSub[i].setContentsMargins(3,0,1,0);    
@@ -41,6 +41,7 @@ PropertiesSignal::PropertiesSignal() {
         vSub[i].addWidget(&this->dSub[i],1,0,1,2);
         wSub[i].setLayout(&vSub[i]);
         vbox->addWidget(&wSub[i]);
+        wSub[i].hide();
 
         signalsChSect.setMapping(&chSub[i], i);
         connect(&chSub[i], SIGNAL(clicked()), &signalsChSect, SLOT(map()));
@@ -68,7 +69,7 @@ void PropertiesSignal::showObj(WorldObj* obj){
     
     this->infoLabel->setText("Object: "+obj->type);
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < maxSubObj; i++) {
         this->wSub[i].hide();
         this->chSub[i].setChecked(false);
         this->bSub[i].hide();
@@ -84,8 +85,10 @@ void PropertiesSignal::showObj(WorldObj* obj){
     
     this->name.setText(sobj->fileName);
     this->description.setText(signalShape->desc);
-
-    for (int i = 0; i < signalShape->iSubObj; i++) {
+    
+    int iSubObj = signalShape->iSubObj;
+    if(iSubObj > maxSubObj) iSubObj = maxSubObj;
+    for (int i = 0; i < iSubObj; i++) {
         this->wSub[i].show();
         this->dSub[i].setText(signalShape->subObj[i].desc);
         if(sobj->isSubObjEnabled(i))
@@ -97,7 +100,7 @@ void PropertiesSignal::showObj(WorldObj* obj){
     }
     int linkPtr;
 
-    for (int i = 0; i < signalShape->iSubObj; i++) {
+    for (int i = 0; i < iSubObj; i++) {
         if(signalShape->subObj[i].iLink > 0){
             this->bSub[i].show();
             this->bSub[i].setStyleSheet("color: gray"); 

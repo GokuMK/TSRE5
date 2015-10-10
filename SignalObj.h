@@ -13,6 +13,7 @@ public:
     SignalObj(const SignalObj& orig);
     virtual ~SignalObj();
     void load(int x, int y);
+    void set(int sh, FileBuffer* val);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     bool getBorder(float* border);

@@ -4,6 +4,7 @@
 #include "GLMatrix.h"
 #include <math.h>
 #include "ParserX.h"
+#include "TS.h"
 #include <QDebug>
 
 
@@ -42,6 +43,18 @@ void StaticObj::set(QString sh, QString val){
         return;
     }
     WorldObj::set(sh, val);
+    return;
+}
+
+void StaticObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::FileName) {
+        data->off++;
+        int slen = data->getShort()*2;
+        fileName = *data->getString(data->off, data->off + slen);
+        data->off += slen;
+        return;
+    }
+    WorldObj::set(sh, data);
     return;
 }
 

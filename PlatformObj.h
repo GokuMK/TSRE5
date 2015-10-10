@@ -15,6 +15,7 @@ public:
     virtual ~PlatformObj();
     void load(int x, int y);
     bool allowNew();
+    void set(int sh, FileBuffer* val);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     bool select(int value);

@@ -21,14 +21,15 @@ public slots:
 signals:
     
 private:
+    static const int maxSubObj = 10;
     QLineEdit name;
     QLineEdit description;
-    QCheckBox chSub[10];
+    QCheckBox chSub[maxSubObj];
     QCheckBox chFlipShape;
-    QPushButton bSub[10];
-    QLineEdit dSub[10];
-    QGridLayout vSub[10];
-    QWidget wSub[10];
+    QPushButton bSub[maxSubObj];
+    QLineEdit dSub[maxSubObj];
+    QGridLayout vSub[maxSubObj];
+    QWidget wSub[maxSubObj];
     SignalObj* sobj;
     QSignalMapper signalsChSect;
 };

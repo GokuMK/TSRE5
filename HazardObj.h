@@ -13,6 +13,7 @@ public:
     HazardObj(const HazardObj& orig);
     virtual ~HazardObj();
     void load(int x, int y);
+    void set(int sh, FileBuffer* data);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     bool getBorder(float* border);

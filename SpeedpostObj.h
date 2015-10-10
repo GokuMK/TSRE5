@@ -13,6 +13,7 @@ public:
     SpeedpostObj(const SpeedpostObj& orig);
     virtual ~SpeedpostObj();
     void load(int x, int y);
+    void set(int sh, FileBuffer* val);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     bool getBorder(float* border);
