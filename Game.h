@@ -19,6 +19,7 @@ public:
     static QString root;
     static QString route;
     static QString routeName;
+    static QString trkName;
     static float objectLod;
     static int tileLod;
     static int allowObjLag;
@@ -50,7 +51,7 @@ public:
     static bool viewTsectionLines;
     static bool warningBox;
     static bool viewPointer3d;
-    
+
 private:
     static Window* window;
     static LoadWindow* loadWindow;

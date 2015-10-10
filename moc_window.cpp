@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Window_t {
-    QByteArrayData data[22];
-    char stringdata[239];
+    QByteArrayData data[24];
+    char stringdata[272];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -50,7 +50,9 @@ QT_MOC_LITERAL(17, 160, 12), // "viewTileGrid"
 QT_MOC_LITERAL(18, 173, 16), // "viewInteractives"
 QT_MOC_LITERAL(19, 190, 16), // "viewTrackDbLines"
 QT_MOC_LITERAL(20, 207, 17), // "viewTsectionLines"
-QT_MOC_LITERAL(21, 225, 13) // "viewPointer3d"
+QT_MOC_LITERAL(21, 225, 13), // "viewPointer3d"
+QT_MOC_LITERAL(22, 239, 15), // "showToolsObject"
+QT_MOC_LITERAL(23, 255, 16) // "showToolsTerrain"
 
     },
     "Window\0exitNow\0\0sendMsg\0text\0save\0"
@@ -60,7 +62,8 @@ QT_MOC_LITERAL(21, 225, 13) // "viewPointer3d"
     "hideShowPropertiesWidget\0viewWorldGrid\0"
     "viewTileGrid\0viewInteractives\0"
     "viewTrackDbLines\0viewTsectionLines\0"
-    "viewPointer3d"
+    "viewPointer3d\0showToolsObject\0"
+    "showToolsTerrain"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,7 +73,7 @@ static const uint qt_meta_data_Window[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -78,23 +81,25 @@ static const uint qt_meta_data_Window[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   89,    2, 0x06 /* Public */,
-       3,    1,   90,    2, 0x06 /* Public */,
+       1,    0,   99,    2, 0x06 /* Public */,
+       3,    1,  100,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   93,    2, 0x0a /* Public */,
-       6,    0,   94,    2, 0x0a /* Public */,
-       7,    0,   95,    2, 0x0a /* Public */,
-       8,    1,   96,    2, 0x0a /* Public */,
-      10,    1,   99,    2, 0x0a /* Public */,
-      13,    1,  102,    2, 0x0a /* Public */,
-      15,    1,  105,    2, 0x0a /* Public */,
-      16,    1,  108,    2, 0x0a /* Public */,
-      17,    1,  111,    2, 0x0a /* Public */,
-      18,    1,  114,    2, 0x0a /* Public */,
-      19,    1,  117,    2, 0x0a /* Public */,
-      20,    1,  120,    2, 0x0a /* Public */,
-      21,    1,  123,    2, 0x0a /* Public */,
+       5,    0,  103,    2, 0x0a /* Public */,
+       6,    0,  104,    2, 0x0a /* Public */,
+       7,    0,  105,    2, 0x0a /* Public */,
+       8,    1,  106,    2, 0x0a /* Public */,
+      10,    1,  109,    2, 0x0a /* Public */,
+      13,    1,  112,    2, 0x0a /* Public */,
+      15,    1,  115,    2, 0x0a /* Public */,
+      16,    1,  118,    2, 0x0a /* Public */,
+      17,    1,  121,    2, 0x0a /* Public */,
+      18,    1,  124,    2, 0x0a /* Public */,
+      19,    1,  127,    2, 0x0a /* Public */,
+      20,    1,  130,    2, 0x0a /* Public */,
+      21,    1,  133,    2, 0x0a /* Public */,
+      22,    1,  136,    2, 0x0a /* Public */,
+      23,    1,  139,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -106,6 +111,8 @@ static const uint qt_meta_data_Window[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,    9,
     QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, QMetaType::Bool,   14,
+    QMetaType::Void, QMetaType::Bool,   14,
     QMetaType::Void, QMetaType::Bool,   14,
     QMetaType::Void, QMetaType::Bool,   14,
     QMetaType::Void, QMetaType::Bool,   14,
@@ -138,6 +145,8 @@ void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 12: _t->viewTrackDbLines((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 13: _t->viewTsectionLines((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 14: _t->viewPointer3d((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 15: _t->showToolsObject((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 16: _t->showToolsTerrain((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -183,13 +192,13 @@ int Window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 17;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 17)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 15;
+        _id -= 17;
     }
     return _id;
 }

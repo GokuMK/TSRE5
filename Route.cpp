@@ -51,7 +51,7 @@ Route::~Route() {
 }
 
 void Route::loadTrk() {
-    QString path = Game::root + "/routes/" + Game::route + "/" + Game::route + ".trk";
+    QString path = Game::root + "/routes/" + Game::route + "/" + Game::trkName + ".trk";
     path.replace("//", "/");
     qDebug() << path;
     QFile *file = new QFile(path);

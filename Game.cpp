@@ -11,6 +11,7 @@ TDB *Game::roadDB = NULL;
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
+QString Game::trkName = "bbb";
 //QString Game::route = "traska";
 //QString Game::route = "cmk";
 int Game::allowObjLag = 1000;
@@ -161,9 +162,22 @@ bool Game::checkRoot(QString dir){
 bool Game::checkRoute(QString dir){
     QFile file;
     file.setFileName(Game::root+"/routes/"+dir+"/"+dir+".trk");
+    if(file.exists()){
+        Game::trkName = dir;
+        return true;
+    }
+    QDir folder(Game::root+"/routes/"+dir+"/");
+    folder.setNameFilters(QStringList() << "*.trk");
+    folder.setFilter(QDir::Files);
+    foreach(QString dirFile, folder.entryList()){
+        Game::trkName = dirFile.split(".")[0];
+        //qDebug() << Game::trkName;
+        return true;
+    }
+    
     //qDebug() << file.fileName();
     //qDebug() << file.exists();
-    return file.exists();
+    return false;
 }
 
 template<class T>

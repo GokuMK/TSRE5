@@ -38,7 +38,8 @@ public slots:
     void viewTrackDbLines(bool show);
     void viewTsectionLines(bool show);
     void viewPointer3d(bool show);
-    
+    void showToolsObject(bool show);
+    void showToolsTerrain(bool show);
 signals:
     void exitNow();
     void sendMsg(QString text);
@@ -63,6 +64,7 @@ private:
     QMenu *editMenu;
     QMenu *viewMenu;
     QMenu *helpMenu;
+    QMenu *toolsMenu;
     
     QAction *saveAction;
     QAction *createPathsAction;
@@ -70,7 +72,8 @@ private:
     QAction *aboutAction;
     QAction *propertiesAction;
     QAction *toolsAction;
-    
+    QAction *objectsAction;
+    QAction *terrainAction;
     
     AboutWindow* aboutWindow;
 };

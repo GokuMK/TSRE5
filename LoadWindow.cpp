@@ -133,12 +133,15 @@ void LoadWindow::routeLoad(){
         if(!Game::checkRoot(Game::root)) return;
         if(nowaTrasa->text().length() < 2) return;
         Game::route = nowaTrasa->text();
+        Game::routeName = Game::route;
+        Game::trkName = Game::route;
         Game::writeEnabled = true;
         Game::createNewRoutes = true;
         Game::writeTDB = true;
     }else{
         if(routeList.currentRow() < 0) return;
         Game::route = routeList.currentItem()->text();
+        Game::checkRoute(Game::route);
     }
     qDebug() << Game::route;
     this->hide();

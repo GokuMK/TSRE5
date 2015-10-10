@@ -93,7 +93,7 @@ Window::Window() {
     objTools->show();
     
     this->setCentralWidget(main);
-    setWindowTitle(tr("TSRE5 v0.604"));
+    setWindowTitle(tr("TSRE5 v0.605"));
     
     // MENUBAR
     // Route
@@ -111,13 +111,9 @@ Window::Window() {
     editMenu = menuBar()->addMenu(tr("&Edit"));
     // View
     viewMenu = menuBar()->addMenu(tr("&View"));
-    propertiesAction = GuiFunct::newMenuCheckAction(tr("&Properties"), this); 
-    viewMenu->addAction(propertiesAction);
-    QObject::connect(propertiesAction, SIGNAL(triggered(bool)), this, SLOT(hideShowPropertiesWidget(bool)));
-    toolsAction = GuiFunct::newMenuCheckAction(tr("&Tools"), this); 
-    viewMenu->addAction(toolsAction);
-    QObject::connect(toolsAction, SIGNAL(triggered(bool)), this, SLOT(hideShowToolWidget(bool)));
-    viewMenu->addSeparator();
+    //toolsAction = GuiFunct::newMenuCheckAction(tr("&Tools"), this); 
+    //viewMenu->addAction(toolsAction);
+    //QObject::connect(toolsAction, SIGNAL(triggered(bool)), this, SLOT(hideShowToolWidget(bool)));
     QAction* viewWorldGrid = GuiFunct::newMenuCheckAction(tr("&World Grid"), this); 
     viewMenu->addAction(viewWorldGrid);
     QObject::connect(viewWorldGrid, SIGNAL(triggered(bool)), this, SLOT(viewWorldGrid(bool)));
@@ -136,7 +132,21 @@ Window::Window() {
     QAction* viewPointer3d = GuiFunct::newMenuCheckAction(tr("&3D Pointer"), this); 
     viewMenu->addAction(viewPointer3d);
     QObject::connect(viewPointer3d, SIGNAL(triggered(bool)), this, SLOT(viewPointer3d(bool)));
-
+    // Tools
+    toolsMenu = menuBar()->addMenu(tr("&Tools"));
+    propertiesAction = GuiFunct::newMenuCheckAction(tr("&Properties"), this); 
+    toolsMenu->addAction(propertiesAction);
+    QObject::connect(propertiesAction, SIGNAL(triggered(bool)), this, SLOT(hideShowPropertiesWidget(bool)));
+    toolsMenu->addSeparator();
+    objectsAction = GuiFunct::newMenuCheckAction(tr("&Objects"), this); 
+    objectsAction->setShortcut(QKeySequence("F1"));
+    toolsMenu->addAction(objectsAction);
+    QObject::connect(objectsAction, SIGNAL(triggered(bool)), this, SLOT(showToolsObject(bool)));
+    terrainAction = GuiFunct::newMenuCheckAction(tr("&Terrain"), this); 
+    terrainAction->setChecked(false);    
+    terrainAction->setShortcut(QKeySequence("F2"));
+    toolsMenu->addAction(terrainAction);
+    QObject::connect(terrainAction, SIGNAL(triggered(bool)), this, SLOT(showToolsTerrain(bool)));
     // Help
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -234,6 +244,28 @@ void Window::createPaths(){
 
 void Window::about(){
     aboutWindow->show();
+}
+
+void Window::showToolsObject(bool show){
+    if(show){
+        hideShowToolWidget(true);
+        setToolbox("objTools");
+        objectsAction->setChecked(true);
+        terrainAction->setChecked(false);
+    } else {
+        hideShowToolWidget(false);
+    }
+}
+
+void Window::showToolsTerrain(bool show){
+    if(show){
+        hideShowToolWidget(true);
+        setToolbox("terrainTools");
+        objectsAction->setChecked(false);
+        terrainAction->setChecked(true);        
+    } else {
+        hideShowToolWidget(false);
+    }
 }
 
 void Window::setToolbox(QString name){
