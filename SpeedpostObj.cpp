@@ -35,6 +35,8 @@ void SpeedpostObj::load(int x, int y) {
     this->size = -1;
     this->skipLevel = 1;
     this->modified = false;
+    this->drawPosition = NULL;
+    this->pointer3d = NULL;
     setMartix();
 }
 
@@ -64,7 +66,9 @@ void SpeedpostObj::set(int sh, FileBuffer* data) {
     }
     if (sh == TS::Speed_Sign_Shape) {
         data->off++;
-        speedSignShape[0] = data->getUint();
+        int len = data->getUint();
+        speedSignShape = new float[len*4+1];
+        speedSignShape[0] = len;
         for(int i = 0; i<speedSignShape[0]*4; i++)
             speedSignShape[i+1] = data->getFloat();
         return;
@@ -97,7 +101,9 @@ void SpeedpostObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("speed_sign_shape")) {
-        speedSignShape[0] = ParserX::parsujr(data);
+        int len = ParserX::parsujr(data);
+        speedSignShape = new float[len*4+1];
+        speedSignShape[0] = len;
         for(int i = 0; i<speedSignShape[0]*4; i++)
             speedSignShape[i+1] = ParserX::parsujr(data);
         return;
@@ -120,7 +126,7 @@ void SpeedpostObj::set(QString sh, FileBuffer* data) {
 
 void SpeedpostObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     if (!loaded) return;
-    
+
     if(Game::viewInteractives) 
         this->renderTritems(gluu, selectionColor);
 };
@@ -152,7 +158,8 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
             pointer3d->setMaterial(0.7,0.7,0.7);
         }
     }
-
+    
+    //int aaa = drawPosition[0];
     //if(pos == NULL) return;
     Mat4::identity(gluu->objStrMatrix);
     gluu->setMatrixUniforms();

@@ -10,7 +10,16 @@ PropertiesPlatform::PropertiesPlatform() {
     infoLabel->setStyleSheet("QLabel { color : #999999; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
-    
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    this->uid.setDisabled(true);
+    this->tX.setDisabled(true);
+    this->tY.setDisabled(true);
+    vlist->addRow("UiD:",&this->uid);
+    vlist->addRow("Tile X:",&this->tX);
+    vlist->addRow("Tile Z:",&this->tY);
+    vbox->addItem(vlist);
     // names
     QLabel * label = new QLabel("Station Name:");
     label->setContentsMargins(3,0,0,0);
@@ -33,7 +42,7 @@ PropertiesPlatform::PropertiesPlatform() {
     label->setStyleSheet("QLabel { color : #999999; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
-    QFormLayout *vlist = new QFormLayout;
+    vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
     vlist->addRow("Minutes:",&this->waitMin);
@@ -50,6 +59,10 @@ PropertiesPlatform::PropertiesPlatform() {
     vbox->addStretch(1);
     this->setLayout(vbox);
 
+    waitMin.setValidator( new QIntValidator(0, 100, this) );
+    waitSec.setValidator( new QIntValidator(0, 60, this) );
+    waitPas.setValidator( new QIntValidator(0, 999, this) );
+    
     QObject::connect(&leftSide, SIGNAL(stateChanged(int)),
                       this, SLOT(leftSideEnabled(int)));
     QObject::connect(&rightSide, SIGNAL(stateChanged(int)),
@@ -78,6 +91,9 @@ void PropertiesPlatform::showObj(WorldObj* obj){
     }
     
     this->infoLabel->setText("Object: "+obj->type);
+    this->uid.setText(QString::number(obj->UiD, 10));
+    this->tX.setText(QString::number(obj->x, 10));
+    this->tY.setText(QString::number(-obj->y, 10));
     pobj = (PlatformObj*)obj;
     this->nameStation.setText(pobj->getStationName());
     this->namePlatform.setText(pobj->getPlatformName());

@@ -16,6 +16,10 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 int main(int argc, char *argv[]){
     qInstallMessageHandler( myMessageOutput );
+    QLocale lepsze(QLocale::English);
+    //loc.setNumberOptions(lepsze.numberOptions());
+    QLocale::setDefault(lepsze);
+    
     QApplication app(argc, argv);
     QSurfaceFormat format;
     //format.setVersion(3, 2);

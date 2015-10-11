@@ -9,14 +9,16 @@ PropertiesStatic::PropertiesStatic(){
     infoLabel->setStyleSheet("QLabel { color : #999999; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
-    QFormLayout *vlistt = new QFormLayout;
-    vlistt->setSpacing(2);
-    vlistt->setContentsMargins(3,0,3,0);
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    this->uid.setDisabled(true);
     this->tX.setDisabled(true);
     this->tY.setDisabled(true);
-    vlistt->addRow("Tile X:",&this->tX);
-    vlistt->addRow("Tile Z:",&this->tY);
-    vbox->addItem(vlistt);
+    vlist->addRow("UiD:",&this->uid);
+    vlist->addRow("Tile X:",&this->tX);
+    vlist->addRow("Tile Z:",&this->tY);
+    vbox->addItem(vlist);
     
     QLabel * label1 = new QLabel("FileName:");
     label1->setContentsMargins(3,0,0,0);
@@ -31,7 +33,7 @@ PropertiesStatic::PropertiesStatic(){
     label2->setStyleSheet("QLabel { color : #999999; }");
     label2->setContentsMargins(3,0,0,0);
     vbox->addWidget(label2);
-    QFormLayout *vlist = new QFormLayout;
+    vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
     vlist->addRow("X:",&this->posX);
@@ -91,6 +93,7 @@ void PropertiesStatic::showObj(WorldObj* obj){
     this->infoLabel->setText("Object: "+obj->type);
     this->fileName.setText(obj->fileName);
     
+    this->uid.setText(QString::number(obj->UiD, 10));
     this->tX.setText(QString::number(obj->x, 10));
     this->tY.setText(QString::number(-obj->y, 10));
     this->posX.setText(QString::number(obj->position[0], 'G', 4));

@@ -105,6 +105,7 @@ void Tile::load() {
     data->setTokenOffset(261844);
     data->off = 16;
     if (data->getToken() != 375){
+        qDebug() << "w file uncompressed " << path;
         data->off = 0;
         sh = "Tr_Worldfile";
         ParserX::szukajsekcji1(sh, data);
@@ -115,7 +116,7 @@ void Tile::load() {
 
             WorldObj* nowy;
             if (sh == "") {
-                qDebug() << "w file uncompressed " << path << " "<< obiekty.size();
+                qDebug() << obiekty.size();
                 loaded = 0;
                 wczytajObiekty();
                 return;
@@ -164,7 +165,7 @@ void Tile::load() {
                 ParserX::pominsekcje(data);
                 continue;
             }
-
+            //qDebug() << nowy->type;
             while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
                 nowy->set(sh, data);
                 ParserX::pominsekcje(data);
@@ -175,7 +176,7 @@ void Tile::load() {
             continue;
         }
     } else {
-        qDebug() << "compressed w file";
+        qDebug() << "w file compressed   " << path;
         data->off+=5;
         int offset, offsetO;
         int idx, idxO;
@@ -214,7 +215,7 @@ void Tile::load() {
             obiekty[jestObiektow++] = nowy;
             data->off = offset;
        }
-       qDebug() << "w file compressed   " << path << " "<< obiekty.size();
+       qDebug() << obiekty.size();
        loaded = 0;
        wczytajObiekty();
     }

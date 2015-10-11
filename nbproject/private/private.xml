@@ -10,41 +10,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TransferObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/LoadWindow.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/LevelCrObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SpeedpostObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TransferObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/StaticObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Path.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SignalObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesCarspawner.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesPlatform.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesSiding.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesStatic.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesPlatform.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesSignal.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TS.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PickupObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/StaticObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TrackObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SignalType.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Game.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SpeedpostObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Route.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ForestObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Game.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PlatformObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Tile.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PlatformObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ForestObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/WorldObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/LevelCrObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/HazardObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/window.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/FileBuffer.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PickupObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/DynTrackObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TDB.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TrackObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesSignal.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/window.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/HazardObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesSiding.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TrackObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesCarspawner.h</file>
         </group>
     </open-files>
 </project-private>

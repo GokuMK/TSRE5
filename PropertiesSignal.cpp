@@ -14,6 +14,16 @@ PropertiesSignal::PropertiesSignal() {
     infoLabel->setStyleSheet("QLabel { color : #999999; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    this->uid.setDisabled(true);
+    this->tX.setDisabled(true);
+    this->tY.setDisabled(true);
+    vlist->addRow("UiD:",&this->uid);
+    vlist->addRow("Tile X:",&this->tX);
+    vlist->addRow("Tile Z:",&this->tY);
+    vbox->addItem(vlist);
     QLabel* label = new QLabel("Name:");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
@@ -66,8 +76,10 @@ void PropertiesSignal::showObj(WorldObj* obj){
         return;
     }
     sobj = (SignalObj*)obj;
-    
     this->infoLabel->setText("Object: "+obj->type);
+    this->uid.setText(QString::number(obj->UiD, 10));
+    this->tX.setText(QString::number(obj->x, 10));
+    this->tY.setText(QString::number(-obj->y, 10));
     
     for (int i = 0; i < maxSubObj; i++) {
         this->wSub[i].hide();

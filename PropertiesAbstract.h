@@ -23,6 +23,7 @@ protected:
     QLineEdit quat;
     QLineEdit tX;
     QLineEdit tY;
+    QLineEdit uid;
 private:
 
 };

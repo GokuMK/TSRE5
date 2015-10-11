@@ -3,6 +3,8 @@
 
 #include "PropertiesAbstract.h"
 
+class PlatformObj;
+
 class PropertiesCarspawner : public PropertiesAbstract{
     Q_OBJECT
 public:
@@ -12,14 +14,15 @@ public:
     void showObj(WorldObj* obj);
     
 public slots:
-    //void copyFEnabled();
+    void carNumberEnabled(QString val);
+    void carSpeedEnabled(QString val);
         
 signals:
     
 private:
     QLineEdit carNumber;
     QLineEdit carSpeed;
-    
+    PlatformObj* cobj;
 };
 
 #endif	/* PROPERTIESCARSPAWNER_H */

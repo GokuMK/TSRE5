@@ -21,7 +21,7 @@ public:
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     QString speedDigitTex;
-    float speedSignShape[9];
+    float* speedSignShape;
     float speedTextSize[3];
     int *trItemId = NULL;
     int trItemIdCount = 0;
