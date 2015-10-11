@@ -4,6 +4,7 @@
 #include "WorldObj.h"
 #include <QString>
 #include "FileBuffer.h"
+#include <vector>
 
 class TrackItemObj;
 
@@ -23,8 +24,9 @@ private:
     QString speedDigitTex;
     float* speedSignShape;
     float speedTextSize[3];
-    int *trItemId = NULL;
-    int trItemIdCount = 0;
+    //int *trItemId = NULL;
+    std::vector<int> trItemId;
+    //int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL;
     float* drawPosition = NULL;
     void renderTritems(GLUU* gluu, int selectionColor);

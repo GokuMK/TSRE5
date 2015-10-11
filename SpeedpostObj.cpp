@@ -82,9 +82,11 @@ void SpeedpostObj::set(int sh, FileBuffer* data) {
     }
     if (sh == TS::TrItemId) {
         data->off++;
-        this->trItemId = new int[2];
-        trItemId[0] = data->getUint();
-        trItemId[1] = data->getUint();
+        //this->trItemId = new int[2];
+        //trItemId[0] = data->getUint();
+        //trItemId[1] = data->getUint();
+        trItemId.push_back(data->getUint());
+        trItemId.push_back(data->getUint());
         return;
     }
     WorldObj::set(sh, data);
@@ -115,9 +117,11 @@ void SpeedpostObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("tritemid")) {
-        this->trItemId = new int[2];
-        this->trItemId[0] = ParserX::parsujUint(data);
-        this->trItemId[1] = ParserX::parsujUint(data);
+        //this->trItemId = new int[2];
+        //his->trItemId[0] = ParserX::parsujUint(data);
+        //this->trItemId[1] = ParserX::parsujUint(data);
+        trItemId.push_back(ParserX::parsujUint(data));
+        trItemId.push_back(ParserX::parsujUint(data));
         return;
     }
     WorldObj::set(sh, data);
@@ -136,7 +140,7 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
     ///////////////////////////////
     TDB* tdb = Game::trackDB;
     if(drawPosition == NULL){
-        if(this->trItemId == NULL){
+        if(this->trItemId.size() < 2){
             qDebug() << "speedpost: fail trItemId";
             loaded = false;
             return;
@@ -206,7 +210,8 @@ for(int i = 0; i < this->speedSignShape[0]*4; i++)
 *(out) <<" )\n";
 //<<" "<<this->speedSignShape[1]<<" "<<this->speedSignShape[2]<<" "<<this->speedSignShape[3]<<" "<<this->speedSignShape[4]<<" "<<this->speedSignShape[5]<<" "<<this->speedSignShape[6]<<" "<<this->speedSignShape[7]<<" "<<this->speedSignShape[8]<<" )\n";
 *(out) << "		Speed_Text_Size ( "<<this->speedTextSize[0]<<" "<<this->speedTextSize[1]<<" "<<this->speedTextSize[2]<<" )\n";
-*(out) << "		TrItemId ( "<<this->trItemId[0]<<" "<<this->trItemId[1]<<" )\n";
+for(int i = 0; i < this->trItemId.size(); i+=2)
+    *(out) << "		TrItemId ( "<<this->trItemId[i]<<" "<<this->trItemId[i+1]<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
