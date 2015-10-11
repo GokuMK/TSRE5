@@ -329,7 +329,11 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
         //qDebug() << "id: "<< this->trItemId[1] << " "<< id;
         //qDebug() << "d: "<< tdb->trackItems[this->trItemId[1]]->trItemSData1;
         drawPositionB = new float[7];
-        tdb->getDrawPositionOnTrNode(drawPositionB, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
+        bool ok = tdb->getDrawPositionOnTrNode(drawPositionB, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
+        if(!ok){
+            this->loaded = false;
+            return;
+        }
         drawPositionB[0] += 2048 * (drawPositionB[5] - this->x);
         drawPositionB[2] -= 2048 * (-drawPositionB[6] - this->y);
     }
@@ -344,8 +348,11 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
             return;
         }
         drawPositionE = new float[7];
-        tdb->getDrawPositionOnTrNode(drawPositionE, id, tdb->trackItems[this->trItemId[3]]->trItemSData1);
-        
+        bool ok = tdb->getDrawPositionOnTrNode(drawPositionE, id, tdb->trackItems[this->trItemId[3]]->trItemSData1);
+        if(!ok){
+            this->loaded = false;
+            return;
+        }
         drawPositionE[0] += 2048 * (drawPositionE[5] - this->x);
         drawPositionE[2] -= 2048 * (-drawPositionE[6] - this->y);
     }

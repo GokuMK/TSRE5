@@ -32,7 +32,7 @@ bool TSectionDAT::loadGlobal() {
     //szukanie TrackSections
     sh = "TrackSections";
     ParserX::szukajsekcji1(sh, bufor);
-
+    tsectionMaxIdx = ParserX::parsujr(bufor);
     int index = 0;
     
     for (;;) {
@@ -69,6 +69,7 @@ bool TSectionDAT::loadGlobal() {
     int sectionN;
     TrackShape *shp;
     if(sh.toLower() == "trackshapes" ){
+        tsectionShapes = ParserX::parsujr(bufor);
         while (!((sh = ParserX::nazwasekcji(bufor).toLower()) == "")) {
             //nowy->set(sh, data);
             //qDebug() << sh;
@@ -130,6 +131,9 @@ bool TSectionDAT::loadGlobal() {
             ParserX::pominsekcje(bufor);
         }
     }
+    qDebug() << "TsectionDAT: "<<tsectionMaxIdx<<" "<<tsectionShapes;
+    routeMaxIdx = tsectionMaxIdx;
+    routeShapes = tsectionShapes;
     return true;
 }
 
@@ -149,8 +153,8 @@ bool TSectionDAT::saveRoute() {
     out.setCodec("UTF-16");
     out.setGenerateByteOrderMark(true);
     out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
-    out << "TrackSections ( "<<this->routeMaxIdx-40000<<"\n";
-    for(int i = 40000; i< this->routeMaxIdx; i++){
+    out << "TrackSections ( "<<this->routeMaxIdx-tsectionMaxIdx<<"\n";
+    for(int i = tsectionMaxIdx; i< this->routeMaxIdx; i++){
         if(this->sekcja[i] != NULL){
             out << "	TrackSection ( \n";
             if (sekcja[i]->type == 0)
@@ -162,8 +166,8 @@ bool TSectionDAT::saveRoute() {
     }
     out << ")\n";
     //return true;
-    out << "SectionIdx ( "<<this->routeShapes - 40000<<"\n";
-    for(int i = 40000; i<this->routeShapes; i++){
+    out << "SectionIdx ( "<<this->routeShapes - tsectionShapes<<"\n";
+    for(int i = tsectionShapes; i<this->routeShapes; i++){
         if(this->shape[i] != NULL){
             out << "	TrackPath ( "<<i<<" "<<shape[i]->path[0].n;
             for(int j = 0; j<shape[i]->path[0].n; j++)
@@ -195,8 +199,8 @@ bool TSectionDAT::loadRoute() {
     int index = 0;
 
     //for (;;) {
-    this->routeMaxIdx = 0;
-    this->routeShapes = 0;
+    //this->routeMaxIdx = 0;
+    //this->routeShapes = 0;
     while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
     //    sh = ParserX::nazwasekcji(bufor);
         //qDebug() << sh;

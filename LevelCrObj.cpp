@@ -186,7 +186,11 @@ void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
         }
                 //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
         drawPosition = new float[7];
-        tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
+        bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
+        if(!ok){
+            this->loaded = false;
+            return;
+        }
         drawPosition[0] += 2048 * (drawPosition[5] - this->x);
         drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
         if(pointer3d == NULL){

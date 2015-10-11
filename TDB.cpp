@@ -1782,6 +1782,7 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
         
         if(tsection->sekcja[idx] == NULL){
             qDebug() << "nie ma sekcji " << idx;
+            return false;
         } else {
             sectionLength = tsection->sekcja[idx]->getDlugosc();
         }
