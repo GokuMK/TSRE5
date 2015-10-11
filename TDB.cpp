@@ -1686,6 +1686,43 @@ void TDB::getLines(float * &lineBuffer, int &length, float* playerT){
     lineBuffer = this->collisionLineBuffer;
 }
 
+void TDB::getVectorSectionLine(float * &buffer, int &len, int x, int y, int uid, float begin, float end){
+    if (!loaded) return;
+
+    Vector3f p;
+    Vector3f o;
+    len = 0;
+
+    TRnode* n = trackNodes[uid];
+    if (n == NULL) return;
+        
+    for (int i = 0; i < n->iTrv; i++) {
+        len += getLineBufferSize((int) n->trVectorSection[i].param[0], 6, 0, 1);
+    }
+    //qDebug() << "len" << len;
+    buffer = new float[len]; 
+    float* ptr = buffer;
+    
+    float dlugosc = 0;
+    for (int i = 0; i < n->iTrv; i++) {
+        p.set(
+            (n->trVectorSection[i].param[8] - x)*2048 + n->trVectorSection[i].param[10],
+            n->trVectorSection[i].param[11],
+            (-n->trVectorSection[i].param[9] - y)*2048 - n->trVectorSection[i].param[12]
+            );
+        o.set(
+            n->trVectorSection[i].param[13],
+            n->trVectorSection[i].param[14],
+            n->trVectorSection[i].param[15]
+        );
+        getLine(ptr, p, o, (int) n->trVectorSection[i].param[0], uid, i, dlugosc, 2);
+        if(tsection->sekcja[n->trVectorSection[i].param[0]] != NULL)
+            dlugosc += tsection->sekcja[n->trVectorSection[i].param[0]]->getDlugosc();
+    }
+    len = ptr - buffer;
+    //qDebug() << "len" << len;
+}
+
 void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
 
     if (!loaded) return;
@@ -1715,10 +1752,9 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
                 }
             }
         }
-
+        //qDebug() << len;
         float* punkty = new float[len];
         float* ptr = punkty;
-
         for (int j = 1; j <= iTRnodes; j++) {
             TRnode* n = trackNodes[j];
             if (n == NULL) continue;
@@ -1754,15 +1790,14 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
                 renderT.end3DRendering();
             }*/
         }
+        //qDebug() << "aaaa4 "<<ptr - punkty;
         if(road)
             sectionLines.setMaterial(0.0, 0.0, 1.0);
         else
             sectionLines.setMaterial(1.0, 1.0, 0.0);
         sectionLines.init(punkty, ptr - punkty, sectionLines.V, GL_LINES);
-
-        delete punkty;
+        delete[] punkty;
     }
-
     Mat4::identity(gluu->objStrMatrix);
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
@@ -1861,14 +1896,14 @@ void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot) {
     }
 }
 
-int TDB::getLineBufferSize(int idx, int pointSize, int offset) {
+int TDB::getLineBufferSize(int idx, int pointSize, int offset, int step) {
     if(tsection->sekcja[idx] == NULL)
         return offset;
     
-    return tsection->sekcja[idx]->getLineBufferSize(pointSize) + offset;
+    return tsection->sekcja[idx]->getLineBufferSize(pointSize, step) + offset + 6;
 }
 
-void TDB::getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid) {
+void TDB::getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid, float offset, int step) {
 
     float matrix[16];
     float q[4];
@@ -1884,7 +1919,7 @@ void TDB::getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid)
     Mat4::rotate(matrix, matrix, o.x, 1, 0, 0);
 
     if(tsection->sekcja[idx] != NULL){
-        tsection->sekcja[idx]->drawSection(ptr, matrix, 0, id, vid);
+        tsection->sekcja[idx]->drawSection(ptr, matrix, 0, id, vid, offset, step);
     }
 }
 
@@ -1921,7 +1956,7 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
     *ptr++ = point2[2];
 
     if(tsection->sekcja[idx] != NULL){
-        tsection->sekcja[idx]->drawSection(ptr, matrix, 2);
+        tsection->sekcja[idx]->drawSection(ptr, matrix, 2, -1, 0, 0, 0);
     }
 }
 

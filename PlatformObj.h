@@ -54,6 +54,8 @@ private:
     OglObj* line = NULL;
     float* drawPositionB = NULL;
     float* drawPositionE = NULL;
+    int rotB = 0;
+    int rotE = 0;
     int selectionValue = 0;
     void renderTritems(GLUU* gluu, int selectionColor);
 };

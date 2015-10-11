@@ -361,16 +361,72 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
         if(pointer3d == NULL) pointer3d = new TrackItemObj();
         if(pointer3dSelected == NULL) pointer3dSelected = new TrackItemObj();
         line = new OglObj();
-        float *punkty = new float[6];
-        int ptr = 0;
-        int i = 0;
-
-        punkty[ptr++] = 0;
-        punkty[ptr++] = 0;
-        punkty[ptr++] = 0;
-        punkty[ptr++] = drawPositionE[0]-drawPositionB[0];
-        punkty[ptr++] = drawPositionE[1]-drawPositionB[1];
-        punkty[ptr++] = -drawPositionE[2]+drawPositionB[2];
+        float *ptr, *punkty;// = new float[6];
+        int length, len = 0;
+        TDB* tdb = Game::trackDB;
+        if(this->typeID == this->carspawner)
+            tdb = Game::roadDB;
+        int id = tdb->findTrItemNodeId(this->trItemId[1]);
+        tdb->getVectorSectionLine(ptr, length, x, y, id);
+        
+        float beg = tdb->trackItems[this->trItemId[1]]->trItemSData1;
+        float end = tdb->trackItems[this->trItemId[3]]->trItemSData1;
+        float posB[3], posE[3];
+        if(end < beg){
+            rotE = 1;
+            rotB = 0;
+            float t = end;
+            end = beg;
+            beg = t;
+            posE[0] = drawPositionB[0];
+            posE[1] = drawPositionB[1];
+            posE[2] = drawPositionB[2];
+            posB[0] = drawPositionE[0];
+            posB[1] = drawPositionE[1];
+            posB[2] = drawPositionE[2];     
+        } else {
+            rotE = 0;
+            rotB = 1;
+            posB[0] = drawPositionB[0];
+            posB[1] = drawPositionB[1];
+            posB[2] = drawPositionB[2];
+            posE[0] = drawPositionE[0];
+            posE[1] = drawPositionE[1];
+            posE[2] = drawPositionE[2];
+        }
+        //for(int i = 0; i < length; i+=12){
+        //    qDebug() << ptr[i+5] << "-"<<ptr[i+11];
+        //}
+        if(end - beg > 4){
+            punkty = new float[length/2];
+            //qDebug() << beg <<" "<<end;
+            for(int i = 0; i < length; i+=12){
+                if(ptr[i+5] < beg) continue;
+                if(ptr[i+5] > end) break;
+                punkty[len++] = ptr[i+0];
+                punkty[len++] = ptr[i+1]+1;
+                punkty[len++] = ptr[i+2];
+                punkty[len++] = ptr[i+6];
+                punkty[len++] = ptr[i+7]+1;
+                punkty[len++] = ptr[i+8];
+            }
+        } else {
+            punkty = new float[6];
+            len = 6;
+        }
+        punkty[0] = posB[0];
+        punkty[1] = posB[1]+1;
+        punkty[2] = -posB[2];
+        punkty[len-3] = posE[0];
+        punkty[len-2] = posE[1]+1;
+        punkty[len-1] = -posE[2];
+        //qDebug() << "len "<<len;
+        //punkty[ptr++] = 0;
+        //punkty[ptr++] = 0;
+        //punkty[ptr++] = 0;
+        //punkty[ptr++] = drawPositionE[0]-drawPositionB[0];
+        //punkty[ptr++] = drawPositionE[1]-drawPositionB[1];
+       // punkty[ptr++] = -drawPositionE[2]+drawPositionB[2];
         
         if(this->typeID == this->platform){
             line->setMaterial(0.0, 1.0, 0.0);
@@ -388,8 +444,9 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
             pointer3dSelected->setMaterial(0.9, 0.5, 1.0);
         }
         
-        line->init(punkty, ptr, line->V, GL_LINES);
+        line->init(punkty, len, line->V, GL_LINES);
         delete[] punkty;
+        delete[] ptr;
     }
     //if(pos == NULL) return;
     Mat4::identity(gluu->objStrMatrix);
@@ -398,13 +455,13 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     //float dlugosc = (float) sqrt(pow(drawPositionB[2]-drawPositionE[2], 2) + pow(drawPositionB[0]-drawPositionE[0], 2));
     float aa = (drawPositionE[2]-drawPositionB[2]);
     if(aa != 0) aa = (aa/fabs(aa));
-    float rot = (aa+1)*M_PI/2 + (float)(atan((drawPositionB[0]-drawPositionE[0])/(drawPositionB[2]-drawPositionE[2]))); 
+    //float rot = (aa+1)*M_PI/2 + (float)(atan((drawPositionB[0]-drawPositionE[0])/(drawPositionB[2]-drawPositionE[2]))); 
     
     //(-(float)(atan((drawPositionB[1]-drawPositionE[1])/(dlugosc))
     int useSC;
     gluu->mvPushMatrix();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[0] + 0 * (drawPositionB[4] - this->x), drawPositionB[1] + 1, -drawPositionB[2] + 0 * (-drawPositionB[5] - this->y));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rot);
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[3] + rotB*M_PI);
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
@@ -418,7 +475,7 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     
     gluu->mvPushMatrix();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[0] + 0 * (drawPositionE[4] - this->x), drawPositionE[1] + 1, -drawPositionE[2] + 0 * (-drawPositionE[5] - this->y));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rot + M_PI);
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[3] + rotE*M_PI);
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
@@ -430,7 +487,7 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     gluu->mvPopMatrix();
     
     gluu->mvPushMatrix();
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[0] + 0 * (drawPositionB[4] - this->x), drawPositionB[1] + 1, -drawPositionB[2] + 0 * (-drawPositionB[5] - this->y));
+    //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[0] + 0 * (drawPositionB[4] - this->x), drawPositionB[1] + 1, -drawPositionB[2] + 0 * (-drawPositionB[5] - this->y));
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     line->render();
     gluu->mvPopMatrix();

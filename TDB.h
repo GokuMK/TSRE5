@@ -54,6 +54,7 @@ public:
     float getVectorSectionLength(int id);
     float getVectorSectionLengthToIdx(int id, int idx);
     void getVectorSectionPoints(int x, int y, int uid, float * &ptr);
+    void getVectorSectionLine(float * &buffer, int &len, int x, int y, int uid, float begin = 0, float end = 0);
     void moveItemsFrom2to1(int id2, int id1);
     int appendToJunction(int junctionId, int eId, int idx);
     int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid);
@@ -76,10 +77,10 @@ public:
 private:
     bool deleteNulls();
     int findBiggest();
-    int getLineBufferSize(int idx, int pointSize, int offset);
+    int getLineBufferSize(int idx, int pointSize, int offset, int step = 0);
     void checkSignals();
     void drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx);
-    void getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid);
+    void getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid, float offset = 0, int step = 0);
     void addItemToTrNode(int tid, int iid);
     void deleteItemFromTrNode(int tid, int iid);
     OglObj linieSieci;
