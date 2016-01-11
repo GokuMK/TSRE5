@@ -1,10 +1,3 @@
-/* 
- * File:   AboutWindow.cpp
- * Author: Goku
- * 
- * Created on 16 maja 2015, 13:43
- */
-
 #include "AboutWindow.h"
 #include <QtWidgets>
 #include <QDebug>

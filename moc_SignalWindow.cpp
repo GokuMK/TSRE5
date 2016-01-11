@@ -1,16 +1,16 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'PropertiesSignal.h'
+** Meta object code from reading C++ file 'SignalWindow.h'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "PropertiesSignal.h"
+#include "SignalWindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'PropertiesSignal.h' doesn't include <QObject>."
+#error "The header file 'SignalWindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.4.1. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -18,29 +18,29 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_PropertiesSignal_t {
-    QByteArrayData data[4];
-    char stringdata[44];
+struct qt_meta_stringdata_SignalWindow_t {
+    QByteArrayData data[5];
+    char stringdata[37];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_PropertiesSignal_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_SignalWindow_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_PropertiesSignal_t qt_meta_stringdata_PropertiesSignal = {
+static const qt_meta_stringdata_SignalWindow_t qt_meta_stringdata_SignalWindow = {
     {
-QT_MOC_LITERAL(0, 0, 16), // "PropertiesSignal"
-QT_MOC_LITERAL(1, 17, 10), // "flipSignal"
-QT_MOC_LITERAL(2, 28, 0), // ""
-QT_MOC_LITERAL(3, 29, 14) // "showSubObjList"
+QT_MOC_LITERAL(0, 0, 12), // "SignalWindow"
+QT_MOC_LITERAL(1, 13, 7), // "exitNow"
+QT_MOC_LITERAL(2, 21, 0), // ""
+QT_MOC_LITERAL(3, 22, 12), // "chSubEnabled"
+QT_MOC_LITERAL(4, 35, 1) // "i"
 
     },
-    "PropertiesSignal\0flipSignal\0\0"
-    "showSubObjList"
+    "SignalWindow\0exitNow\0\0chSubEnabled\0i"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_PropertiesSignal[] = {
+static const uint qt_meta_data_SignalWindow[] = {
 
  // content:
        7,       // revision
@@ -55,50 +55,49 @@ static const uint qt_meta_data_PropertiesSignal[] = {
 
  // slots: name, argc, parameters, tag, flags
        1,    0,   24,    2, 0x0a /* Public */,
-       3,    0,   25,    2, 0x0a /* Public */,
+       3,    1,   25,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    4,
 
        0        // eod
 };
 
-void PropertiesSignal::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void SignalWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        PropertiesSignal *_t = static_cast<PropertiesSignal *>(_o);
+        SignalWindow *_t = static_cast<SignalWindow *>(_o);
         switch (_id) {
-        case 0: _t->flipSignal(); break;
-        case 1: _t->showSubObjList(); break;
+        case 0: _t->exitNow(); break;
+        case 1: _t->chSubEnabled((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
-const QMetaObject PropertiesSignal::staticMetaObject = {
-    { &PropertiesAbstract::staticMetaObject, qt_meta_stringdata_PropertiesSignal.data,
-      qt_meta_data_PropertiesSignal,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+const QMetaObject SignalWindow::staticMetaObject = {
+    { &QWidget::staticMetaObject, qt_meta_stringdata_SignalWindow.data,
+      qt_meta_data_SignalWindow,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
-const QMetaObject *PropertiesSignal::metaObject() const
+const QMetaObject *SignalWindow::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *PropertiesSignal::qt_metacast(const char *_clname)
+void *SignalWindow::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_PropertiesSignal.stringdata))
-        return static_cast<void*>(const_cast< PropertiesSignal*>(this));
-    return PropertiesAbstract::qt_metacast(_clname);
+    if (!strcmp(_clname, qt_meta_stringdata_SignalWindow.stringdata))
+        return static_cast<void*>(const_cast< SignalWindow*>(this));
+    return QWidget::qt_metacast(_clname);
 }
 
-int PropertiesSignal::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int SignalWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = PropertiesAbstract::qt_metacall(_c, _id, _a);
+    _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

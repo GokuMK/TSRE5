@@ -23,6 +23,7 @@ private:
     PlatformObj* pobj;
     QCheckBox disablePlatform;
     QLineEdit namePlatform;
+    QLineEdit lengthPlatform;
 };
 
 #endif	/* PROPERTIESSIDING_H */

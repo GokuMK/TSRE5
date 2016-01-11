@@ -23,6 +23,7 @@ private:
     QLineEdit carNumber;
     QLineEdit carSpeed;
     PlatformObj* cobj;
+    QLineEdit lengthPlatform;
 };
 
 #endif	/* PROPERTIESCARSPAWNER_H */

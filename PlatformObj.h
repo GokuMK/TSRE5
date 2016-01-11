@@ -38,6 +38,7 @@ public:
     void setDisabled(bool val);
     int getCarNumber();
     int getCarSpeed();
+    float getLength();
     void setCarNumber(int val);
     void setCarSpeed(int val);
     void deleteTrItems();
@@ -58,6 +59,7 @@ private:
     int rotE = 0;
     int selectionValue = 0;
     void renderTritems(GLUU* gluu, int selectionColor);
+    void makelineShape();
 };
 
 

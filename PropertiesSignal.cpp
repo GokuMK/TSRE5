@@ -1,4 +1,5 @@
 #include "PropertiesSignal.h"
+#include "SignalWindow.h"
 #include "SignalObj.h"
 #include "Game.h"
 #include "TDB.h"
@@ -6,6 +7,8 @@
 #include "SignalShape.h"
 
 PropertiesSignal::PropertiesSignal() {
+    signalWindow = new SignalWindow();
+    
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
@@ -34,6 +37,7 @@ PropertiesSignal::PropertiesSignal() {
     vbox->addWidget(&description);
     QPushButton *button = new QPushButton("Flip", this);
     vbox->addWidget(button);
+    connect(button, SIGNAL(released()), this, SLOT(flipSignal()));
     chFlipShape.setText("Flip Shape");
     chFlipShape.setChecked(true);
     vbox->addWidget(&chFlipShape);
@@ -41,7 +45,10 @@ PropertiesSignal::PropertiesSignal() {
     label->setStyleSheet("QLabel { color : #999999; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
-    for(int i = 0; i < maxSubObj; i++){
+    button = new QPushButton("Show list", this);
+    vbox->addWidget(button);
+    connect(button, SIGNAL(released()), this, SLOT(showSubObjList()));
+    /*for(int i = 0; i < maxSubObj; i++){
         this->chSub[i].setText("");
         vSub[i].setSpacing(2);
         vSub[i].setContentsMargins(3,0,1,0);    
@@ -55,13 +62,12 @@ PropertiesSignal::PropertiesSignal() {
 
         signalsChSect.setMapping(&chSub[i], i);
         connect(&chSub[i], SIGNAL(clicked()), &signalsChSect, SLOT(map()));
-    }
+    }*/
 
-    QObject::connect(&signalsChSect, SIGNAL(mapped(int)),
-        this, SLOT(chSubEnabled(int)));
+    //QObject::connect(&signalsChSect, SIGNAL(mapped(int)),
+    //    this, SLOT(chSubEnabled(int)));
     
-    QObject::connect(button, SIGNAL(released()),
-        this, SLOT(flipSignal()));
+    
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -75,18 +81,19 @@ void PropertiesSignal::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
+    
     sobj = (SignalObj*)obj;
     this->infoLabel->setText("Object: "+obj->type);
     this->uid.setText(QString::number(obj->UiD, 10));
     this->tX.setText(QString::number(obj->x, 10));
     this->tY.setText(QString::number(-obj->y, 10));
     
-    for (int i = 0; i < maxSubObj; i++) {
+    /*for (int i = 0; i < maxSubObj; i++) {
         this->wSub[i].hide();
         this->chSub[i].setChecked(false);
         this->bSub[i].hide();
         this->bSub[i].setEnabled(false);
-    }
+    }*/
     
     TDB* tdb = Game::trackDB;
     SignalShape* signalShape = tdb->sigCfg->signalShape[sobj->fileName.toStdString()];
@@ -97,72 +104,21 @@ void PropertiesSignal::showObj(WorldObj* obj){
     
     this->name.setText(sobj->fileName);
     this->description.setText(signalShape->desc);
-    
-    int iSubObj = signalShape->iSubObj;
-    if(iSubObj > maxSubObj) iSubObj = maxSubObj;
-    for (int i = 0; i < iSubObj; i++) {
-        this->wSub[i].show();
-        this->dSub[i].setText(signalShape->subObj[i].desc);
-        if(sobj->isSubObjEnabled(i))
-            this->chSub[i].setChecked(true);
-        if(!signalShape->subObj[i].optional)
-            this->chSub[i].setEnabled(false);
-        else
-            this->chSub[i].setEnabled(true);
-    }
-    int linkPtr;
 
-    for (int i = 0; i < iSubObj; i++) {
-        if(signalShape->subObj[i].iLink > 0){
-            this->bSub[i].show();
-            this->bSub[i].setStyleSheet("color: gray"); 
-            this->bSub[i].setText("Link");
-            linkPtr = signalShape->subObj[i].sigSubJnLinkIf[0];
-            if(this->chSub[linkPtr].isChecked()){
-                int linkId = sobj->getLinkedJunctionValue(i);
-                if(linkId == -1){
-                    this->bSub[i].setEnabled(false);
-                    this->bSub[i].setStyleSheet("color: red"); 
-                    this->bSub[i].setText("NULL");
-                } else if(linkId == 0){
-                    this->bSub[i].setStyleSheet(""); 
-                    if(sobj->isJunctionAvailable(i)){
-                        this->bSub[i].setText("Link");
-                        this->bSub[i].setEnabled(true);
-                    } else {
-                        this->bSub[i].setText("No Junction");
-                        this->bSub[i].setEnabled(false);
-                    }
-                } else {
-                    this->bSub[i].setEnabled(true);
-                    this->bSub[i].setStyleSheet("color: green"); 
-                    this->bSub[i].setText("Linked: "+QString::number(linkId, 10));
-                }
-            } else {
-                this->bSub[i].setEnabled(false);
-            }
-        }
-    }
+    signalWindow->showObj(sobj);
     
-    //this->carNumber.setText(QString::number(pobj->getCarNumber(),10));
-    //this->carSpeed.setText(QString::number(pobj->getCarSpeed(),10));
+    QRect rec = QApplication::desktop()->screenGeometry();
+    signalWindow->move(rec.width()/2-signalWindow->width()/2 ,rec.height()/2-signalWindow->height()/2);
 }
+
 void PropertiesSignal::flipSignal(){
     if(sobj == NULL)
         return;
     sobj->flip(chFlipShape.isChecked());
 }
 
-void PropertiesSignal::chSubEnabled(int i){
-    if(sobj == NULL)
-        return;
-    
-    if(chSub[i].isChecked())
-        sobj->enableSubObj(i);
-    else
-        sobj->disableSubObj(i);
-    
-    showObj(sobj);
+void PropertiesSignal::showSubObjList(){
+    this->signalWindow->show();
 }
 
 bool PropertiesSignal::support(WorldObj* obj){

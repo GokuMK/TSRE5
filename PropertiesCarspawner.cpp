@@ -17,9 +17,11 @@ PropertiesCarspawner::PropertiesCarspawner() {
     this->uid.setDisabled(true);
     this->tX.setDisabled(true);
     this->tY.setDisabled(true);
+    this->lengthPlatform.setDisabled(true);
     vlist->addRow("UiD:",&this->uid);
     vlist->addRow("Tile X:",&this->tX);
     vlist->addRow("Tile Z:",&this->tY);
+    vlist->addRow("Length:",&this->lengthPlatform);
     vbox->addItem(vlist);
     // names
     QLabel * label = new QLabel("Car Number:");
@@ -57,6 +59,7 @@ void PropertiesCarspawner::showObj(WorldObj* obj){
     this->tX.setText(QString::number(obj->x, 10));
     this->tY.setText(QString::number(-obj->y, 10));
     cobj = (PlatformObj*)obj;
+    this->lengthPlatform.setText(QString::number(cobj->getLength())+" m");
     this->carNumber.setText(QString::number(cobj->getCarNumber(),10));
     this->carSpeed.setText(QString::number(cobj->getCarSpeed(),10));
 }

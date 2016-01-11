@@ -29,6 +29,7 @@ private:
     QCheckBox leftSide;
     QCheckBox rightSide;
     QCheckBox disablePlatform;
+    QLineEdit lengthPlatform;
     QLineEdit nameStation;
     QLineEdit namePlatform;
     QLineEdit waitMin;

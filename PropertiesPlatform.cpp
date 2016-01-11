@@ -16,9 +16,11 @@ PropertiesPlatform::PropertiesPlatform() {
     this->uid.setDisabled(true);
     this->tX.setDisabled(true);
     this->tY.setDisabled(true);
+    this->lengthPlatform.setDisabled(true);
     vlist->addRow("UiD:",&this->uid);
     vlist->addRow("Tile X:",&this->tX);
     vlist->addRow("Tile Z:",&this->tY);
+    vlist->addRow("Length:",&this->lengthPlatform);
     vbox->addItem(vlist);
     // names
     QLabel * label = new QLabel("Station Name:");
@@ -89,12 +91,12 @@ void PropertiesPlatform::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
-    
+    pobj = (PlatformObj*)obj;
     this->infoLabel->setText("Object: "+obj->type);
     this->uid.setText(QString::number(obj->UiD, 10));
     this->tX.setText(QString::number(obj->x, 10));
     this->tY.setText(QString::number(-obj->y, 10));
-    pobj = (PlatformObj*)obj;
+    this->lengthPlatform.setText(QString::number(pobj->getLength())+" m");
     this->nameStation.setText(pobj->getStationName());
     this->namePlatform.setText(pobj->getPlatformName());
     int sec = pobj->getPlatformMinWaitingTime();

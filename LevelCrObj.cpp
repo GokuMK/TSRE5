@@ -103,6 +103,7 @@ void LevelCrObj::set(QString sh, FileBuffer* data) {
     if (sh == ("tritemid")) {
         trItemId[trItemIdCount++] = ParserX::parsujr(data);
         trItemId[trItemIdCount++] = ParserX::parsujr(data);
+        qDebug() <<"levelcr "<<trItemId[trItemIdCount-2] <<" "<<trItemId[trItemIdCount-1];
         return;
     }
     if (sh == ("filename")) {

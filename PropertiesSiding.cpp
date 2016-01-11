@@ -17,9 +17,11 @@ PropertiesSiding::PropertiesSiding() {
     this->uid.setDisabled(true);
     this->tX.setDisabled(true);
     this->tY.setDisabled(true);
+    this->lengthPlatform.setDisabled(true);
     vlist->addRow("UiD:",&this->uid);
     vlist->addRow("Tile X:",&this->tX);
     vlist->addRow("Tile Z:",&this->tY);
+    vlist->addRow("Length:",&this->lengthPlatform);
     vbox->addItem(vlist);
     // name
     QLabel* label = new QLabel("Siding Name:");
@@ -55,6 +57,7 @@ void PropertiesSiding::showObj(WorldObj* obj){
     this->tY.setText(QString::number(-obj->y, 10));
     this->infoLabel->setText("Object: "+obj->type);
     pobj = (PlatformObj*)obj;
+    this->lengthPlatform.setText(QString::number(pobj->getLength())+" m");
     this->namePlatform.setText(pobj->getPlatformName());
     this->disablePlatform.setChecked(pobj->getDisabled());
 }

@@ -1,10 +1,3 @@
-/* 
- * File:   AboutWindow.h
- * Author: Goku
- *
- * Created on 16 maja 2015, 13:43
- */
-
 #ifndef ABOUTWINDOW_H
 #define	ABOUTWINDOW_H
 

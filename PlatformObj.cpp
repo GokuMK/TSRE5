@@ -259,12 +259,22 @@ void PlatformObj::setPlatformNumPassengersWaiting(int val){
     trit->platformNumPassengersWaiting = val;
 }
     
+float PlatformObj::getLength(){
+    TDB* tdb = Game::trackDB;
+    TRitem* p1 = tdb->trackItems[this->trItemId[1]];
+    TRitem* p2 = tdb->trackItems[this->trItemId[3]];
+    if(p1 == NULL || p2 == NULL) return 0;
+    return fabs(p2->trItemSData1 - p1->trItemSData1);
+}
+
 bool PlatformObj::getSideLeft(){
     return ((this->platformData & 2) == 2);
 }
+
 bool PlatformObj::getSideRight(){
     return ((this->platformData & 4) == 4);
 }
+
 bool PlatformObj::getDisabled(){
     TDB* tdb = Game::trackDB;
     int id = this->trItemId[1];
@@ -273,20 +283,28 @@ bool PlatformObj::getDisabled(){
     return ((trit->platformTrItemData[0] & 1) == 1);
 }
 void PlatformObj::setSideLeft(bool val){
-    if(!val) return;
-    this->platformData = this->platformData | 2;
+    if(val)
+        this->platformData = this->platformData | 2;
+    else 
+        this->platformData = this->platformData ^ 2;
 }
+
 void PlatformObj::setSideRight(bool val){
-    if(!val) return;
-    this->platformData = this->platformData | 4;
+    if(val)
+        this->platformData = this->platformData | 4;
+    else 
+        this->platformData = this->platformData ^ 4;
 }
+
 void PlatformObj::setDisabled(bool val){
-    if(!val) return;
     TDB* tdb = Game::trackDB;
     int id = this->trItemId[1];
     TRitem* trit = tdb->trackItems[id];
     if(trit == NULL) return;
-    trit->platformTrItemData[0] = trit->platformTrItemData[0] | 1;
+    if(val)
+        trit->platformTrItemData[0] = trit->platformTrItemData[0] | 1;
+    else
+        trit->platformTrItemData[0] = trit->platformTrItemData[0] ^ 1;
 }
 
 int PlatformObj::getCarNumber(){
@@ -360,73 +378,8 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     if(line == NULL){
         if(pointer3d == NULL) pointer3d = new TrackItemObj();
         if(pointer3dSelected == NULL) pointer3dSelected = new TrackItemObj();
-        line = new OglObj();
-        float *ptr, *punkty;// = new float[6];
-        int length, len = 0;
-        TDB* tdb = Game::trackDB;
-        if(this->typeID == this->carspawner)
-            tdb = Game::roadDB;
-        int id = tdb->findTrItemNodeId(this->trItemId[1]);
-        tdb->getVectorSectionLine(ptr, length, x, y, id);
-        
-        float beg = tdb->trackItems[this->trItemId[1]]->trItemSData1;
-        float end = tdb->trackItems[this->trItemId[3]]->trItemSData1;
-        float posB[3], posE[3];
-        if(end < beg){
-            rotE = 1;
-            rotB = 0;
-            float t = end;
-            end = beg;
-            beg = t;
-            posE[0] = drawPositionB[0];
-            posE[1] = drawPositionB[1];
-            posE[2] = drawPositionB[2];
-            posB[0] = drawPositionE[0];
-            posB[1] = drawPositionE[1];
-            posB[2] = drawPositionE[2];     
-        } else {
-            rotE = 0;
-            rotB = 1;
-            posB[0] = drawPositionB[0];
-            posB[1] = drawPositionB[1];
-            posB[2] = drawPositionB[2];
-            posE[0] = drawPositionE[0];
-            posE[1] = drawPositionE[1];
-            posE[2] = drawPositionE[2];
-        }
-        //for(int i = 0; i < length; i+=12){
-        //    qDebug() << ptr[i+5] << "-"<<ptr[i+11];
-        //}
-        if(end - beg > 4){
-            punkty = new float[length/2];
-            //qDebug() << beg <<" "<<end;
-            for(int i = 0; i < length; i+=12){
-                if(ptr[i+5] < beg) continue;
-                if(ptr[i+5] > end) break;
-                punkty[len++] = ptr[i+0];
-                punkty[len++] = ptr[i+1]+1;
-                punkty[len++] = ptr[i+2];
-                punkty[len++] = ptr[i+6];
-                punkty[len++] = ptr[i+7]+1;
-                punkty[len++] = ptr[i+8];
-            }
-        } else {
-            punkty = new float[6];
-            len = 6;
-        }
-        punkty[0] = posB[0];
-        punkty[1] = posB[1]+1;
-        punkty[2] = -posB[2];
-        punkty[len-3] = posE[0];
-        punkty[len-2] = posE[1]+1;
-        punkty[len-1] = -posE[2];
-        //qDebug() << "len "<<len;
-        //punkty[ptr++] = 0;
-        //punkty[ptr++] = 0;
-        //punkty[ptr++] = 0;
-        //punkty[ptr++] = drawPositionE[0]-drawPositionB[0];
-        //punkty[ptr++] = drawPositionE[1]-drawPositionB[1];
-       // punkty[ptr++] = -drawPositionE[2]+drawPositionB[2];
+
+        makelineShape();
         
         if(this->typeID == this->platform){
             line->setMaterial(0.0, 1.0, 0.0);
@@ -443,10 +396,6 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
             pointer3d->setMaterial(0.4, 0.0, 1.0);
             pointer3dSelected->setMaterial(0.9, 0.5, 1.0);
         }
-        
-        line->init(punkty, len, line->V, GL_LINES);
-        delete[] punkty;
-        delete[] ptr;
     }
     //if(pos == NULL) return;
     Mat4::identity(gluu->objStrMatrix);
@@ -492,6 +441,147 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     line->render();
     gluu->mvPopMatrix();
 };
+
+void PlatformObj::makelineShape(){
+        line = new OglObj();
+        float *ptr, *punkty;// = new float[6];
+        int length, len = 0;
+        TDB* tdb = Game::trackDB;
+        if(this->typeID == this->carspawner)
+            tdb = Game::roadDB;
+        int id = tdb->findTrItemNodeId(this->trItemId[1]);
+        tdb->getVectorSectionLine(ptr, length, x, y, id);
+        
+        float beg = tdb->trackItems[this->trItemId[1]]->trItemSData1;
+        float end = tdb->trackItems[this->trItemId[3]]->trItemSData1;
+        float posB[3], posE[3];
+        int side = 0;
+        if(end < beg){
+            rotE = 1;
+            rotB = 0;
+            side = 1;
+            float t = end;
+            end = beg;
+            beg = t;
+            posE[0] = drawPositionB[0];
+            posE[1] = drawPositionB[1];
+            posE[2] = drawPositionB[2];
+            posB[0] = drawPositionE[0];
+            posB[1] = drawPositionE[1];
+            posB[2] = drawPositionE[2];     
+        } else {
+            rotE = 0;
+            rotB = 1;
+            side = -1;
+            posB[0] = drawPositionB[0];
+            posB[1] = drawPositionB[1];
+            posB[2] = drawPositionB[2];
+            posE[0] = drawPositionE[0];
+            posE[1] = drawPositionE[1];
+            posE[2] = drawPositionE[2];
+        }
+        //for(int i = 0; i < length; i+=12){
+        //    qDebug() << ptr[i+5] << "-"<<ptr[i+11];
+        //}
+        float quat90[4]{0.707,0,-0.707,0};
+        if(end - beg > 4){
+            punkty = new float[length+6];
+            //qDebug() << beg <<" "<<end;
+            float tp[3], tp1[3], tp2[3], tp3[3];
+            bool endd = false;
+            for(int i = 0; i < length; i+=12){
+                if(ptr[i+5] < beg) continue;
+                if(ptr[i+5+12] > end)
+                    endd = true;
+                
+                if(len == 0)
+                    Vec3::set(tp1, posB[0], posB[1]+1, -posB[2]);
+                else 
+                    Vec3::set(tp1, ptr[i+0], ptr[i+1]+1, ptr[i+2]);
+                
+                if(endd)
+                    Vec3::set(tp2, posE[0], posE[1]+1, -posE[2]); 
+                else
+                    Vec3::set(tp2, ptr[i+6], ptr[i+7]+1, ptr[i+8]);
+                
+                Vec3::sub(tp, tp2, tp1);
+                Vec3::normalize(tp, tp);
+                Vec3::transformQuat(tp3, tp, quat90);
+                if(!this->getSideRight() && !this->getSideLeft()){
+                    punkty[len++] = tp1[0];
+                    punkty[len++] = tp1[1];
+                    punkty[len++] = tp1[2];
+                    punkty[len++] = tp2[0];
+                    punkty[len++] = tp2[1];
+                    punkty[len++] = tp2[2];
+                }
+                if(this->getSideRight()){
+                    punkty[len++] = tp1[0] + tp3[0]*side;
+                    punkty[len++] = tp1[1] + tp3[1]*side;
+                    punkty[len++] = tp1[2] - tp3[2]*side;
+                    punkty[len++] = tp2[0] + tp3[0]*side;
+                    punkty[len++] = tp2[1] + tp3[1]*side;
+                    punkty[len++] = tp2[2] - tp3[2]*side;
+                }
+                if(this->getSideLeft()){
+                    punkty[len++] = tp1[0] - tp3[0]*side;
+                    punkty[len++] = tp1[1] - tp3[1]*side;
+                    punkty[len++] = tp1[2] + tp3[2]*side;
+                    punkty[len++] = tp2[0] - tp3[0]*side;
+                    punkty[len++] = tp2[1] - tp3[1]*side;
+                    punkty[len++] = tp2[2] + tp3[2]*side;
+                }
+                if(endd) break;
+            }
+            if(this->getSideRight() && this->getSideLeft()){
+                punkty[len++] = punkty[0];
+                punkty[len++] = punkty[1];
+                punkty[len++] = punkty[2];
+                punkty[len++] = punkty[6];
+                punkty[len++] = punkty[7];
+                punkty[len++] = punkty[8];
+                punkty[len++] = punkty[len-3-7];
+                punkty[len++] = punkty[len-2-8];
+                punkty[len++] = punkty[len-1-9];
+                punkty[len++] = punkty[len-9-10];
+                punkty[len++] = punkty[len-8-11];
+                punkty[len++] = punkty[len-7-12];
+            } else if(this->getSideLeft() || this->getSideRight()){
+                punkty[len++] = punkty[0];
+                punkty[len++] = punkty[1];
+                punkty[len++] = punkty[2];
+                punkty[len++] = posB[0];
+                punkty[len++] = posB[1]+1;
+                punkty[len++] = -posB[2];
+                punkty[len++] = punkty[len-3-7];
+                punkty[len++] = punkty[len-2-8];
+                punkty[len++] = punkty[len-1-9];
+                punkty[len++] = posE[0];
+                punkty[len++] = posE[1]+1;
+                punkty[len++] = -posE[2];
+            }
+        } else {
+            punkty = new float[6];
+            len = 6;
+            punkty[0] = posB[0];
+            punkty[1] = posB[1]+1;
+            punkty[2] = -posB[2];
+            punkty[len-3] = posE[0];
+            punkty[len-2] = posE[1]+1;
+            punkty[len-1] = -posE[2];
+        }
+        
+        //qDebug() << "len "<<len;
+        //punkty[ptr++] = 0;
+        //punkty[ptr++] = 0;
+        //punkty[ptr++] = 0;
+        //punkty[ptr++] = drawPositionE[0]-drawPositionB[0];
+        //punkty[ptr++] = drawPositionE[1]-drawPositionB[1];
+        //punkty[ptr++] = -drawPositionE[2]+drawPositionB[2];
+        line->init(punkty, len, line->V, GL_LINES);
+        delete[] ptr;
+        delete[] punkty;
+}
 
 void PlatformObj::save(QTextStream* out) {
     if (!loaded) return;

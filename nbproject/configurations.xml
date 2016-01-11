@@ -26,6 +26,7 @@
           <itemPath>PropertiesStatic.h</itemPath>
           <itemPath>PropertiesTransfer.h</itemPath>
           <itemPath>PropertiesUndefined.h</itemPath>
+          <itemPath>SignalWindow.h</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
         <itemPath>GuiFunct.h</itemPath>
@@ -139,6 +140,7 @@
           <itemPath>PropertiesStatic.cpp</itemPath>
           <itemPath>PropertiesTransfer.cpp</itemPath>
           <itemPath>PropertiesUndefined.cpp</itemPath>
+          <itemPath>SignalWindow.cpp</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>GuiFunct.cpp</itemPath>
@@ -450,6 +452,10 @@
       <item path="SignalType.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SignalType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpeedpostObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -799,6 +805,10 @@
       <item path="SignalType.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SignalType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpeedpostObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
