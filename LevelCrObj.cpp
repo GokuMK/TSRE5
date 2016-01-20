@@ -5,6 +5,7 @@
 #include <math.h>
 #include "ParserX.h"
 #include "TDB.h"
+#include "TRitem.h"
 #include "Game.h"
 #include "TrackItemObj.h"
 #include "TS.h"

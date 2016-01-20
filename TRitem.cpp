@@ -10,6 +10,9 @@
 #include "SignalShape.h"
 #include <QString>
 #include <QDebug>
+#include "TrackItemObj.h"
+
+TrackItemObj* TRitem::pointer3d = NULL; 
 
 TRitem* TRitem::newPlatformItem(int trItemId, float metry){
     TRitem* trit = new TRitem(trItemId);
@@ -302,31 +305,40 @@ void TRitem::flipTrackPos(float d){
 }
     
 void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot){
-    /*if(type == "platformitem" || type == "sidingitem"){
-        gluu->mvPushMatrix();
-        
-        //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
+    if(this->type == "emptyitem"){
+        //qDebug() << "empty";
+        return;
+    }
+    
         if(drawPosition == NULL){
+            drawPosition = new float[6];
             int id = tdb->findTrItemNodeId(this->trItemId);
             if(id < 0) {
-                qDebug() << "fail id";
+                //qDebug() << "fail id";
                 return;
             }
-            drawPosition = new float[6];
             tdb->getDrawPositionOnTrNode(drawPosition, id, this->trItemSData1);
+            //drawPosition[0] += 2048 * (drawPosition[5] - playerT[0]);
+            //drawPosition[2] -= 2048 * (-drawPosition[6] - playerT[1]);
         }
-        
+
+        if( fabs(drawPosition[5] - playerT[0]) + fabs(-drawPosition[6] - playerT[1]) > 2){
+            return;
+        }
+    
+        gluu->mvPushMatrix();
         //if(pos == NULL) return;
-        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 2048*(drawPosition[4] - playerT[0]), drawPosition[1]+1, -drawPosition[2] + 2048*(-drawPosition[5] - playerT[1]));
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 2048*(drawPosition[5] - playerT[0]), drawPosition[1]+2, -drawPosition[2] + 2048*(-drawPosition[6] - playerT[1]));
         Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3]);
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
-        Mat4::identity(gluu->objStrMatrix);
-        gluu->setMatrixUniforms();
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0,0,0);
+        }
         pointer3d->render();
         gluu->mvPopMatrix();
-    }*/
 }
 
 void TRitem::save(QTextStream* out){

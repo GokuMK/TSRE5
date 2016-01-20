@@ -7,6 +7,7 @@
 #include <QDebug>
 #include "TrackItemObj.h"
 #include "TDB.h"
+#include "TRitem.h"
 #include "SigCfg.h"
 #include "SignalShape.h"
 #include "Game.h"

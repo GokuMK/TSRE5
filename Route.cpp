@@ -1,6 +1,7 @@
 #include <QFile>
 #include <QDir>
 #include "Route.h"
+#include "TSectionDAT.h"
 #include "GLUU.h"
 #include "Tile.h"
 #include "GLMatrix.h"
@@ -146,8 +147,11 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         }
     }
     if (!selection) {
-        if(Game::viewTrackDbLines)
+        if(Game::viewTrackDbLines){
+            if(Game::renderTrItems)
+                trackDB->renderItems(gluu, playerT, playerRot);
             trackDB->renderAll(gluu, playerT, playerRot);
+        }
         if(Game::viewTsectionLines)
             trackDB->renderLines(gluu, playerT, playerRot);
         if(Game::viewTrackDbLines)
@@ -373,12 +377,21 @@ void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
     }
 }
 
+void Route::deleteTDBTree(WorldObj* obj){
+    if (obj->type == "trackobj" || obj->type == "dyntrack") {
+        this->roadDB->deleteTree(obj->x, obj->y, obj->UiD);
+        this->trackDB->deleteTree(obj->x, obj->y, obj->UiD);
+    }
+}
+
 void Route::deleteObj(WorldObj* obj) {
-    obj->loaded = false;
-    obj->modified = true;
     if (obj->type == "trackobj" || obj->type == "dyntrack") {
         removeTrackFromTDB(obj);
+        if(Game::leaveTrackShapeAfterDelete)
+            return;
     }
+    obj->loaded = false;
+    obj->modified = true;
     if (obj->isTrackItem()) {
         obj->deleteTrItems();
     }

@@ -1,15 +1,22 @@
 #include "TDB.h"
 #include <QDebug>
+#include <functional>
 #include "Game.h"
 #include "ParserX.h"
 #include "ReadFile.h"
 #include "GLMatrix.h"
+#include "Ref.h"
+#include "TRnode.h"
+#include "TRitem.h"
 #include "DynTrackObj.h"
 #include "TrackShape.h"
 #include "Intersections.h"
+#include "TSectionDAT.h"
 #include "SigCfg.h"
 #include "SignalShape.h"
-#include <functional>
+#include "FileBuffer.h"
+#include "GLUU.h"
+
 
 TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
     loaded = false;
@@ -971,6 +978,8 @@ void TDB::deleteVectorSection(int id){
     TRnode* end1 = trackNodes[vect->TrPinS[0]];
     TRnode* end2 = trackNodes[vect->TrPinS[1]];
     
+    deleteAllTrItemsFromVectorSection(id);
+    
     delete trackNodes[id];
     trackNodes[id] = NULL;
     
@@ -991,6 +1000,25 @@ void TDB::deleteVectorSection(int id){
     }
 }
 
+bool TDB::deleteAllTrItemsFromVectorSection(int id){
+    TRnode* vect = trackNodes[id];
+    if(vect->iTri > 0){
+        TRitem* trit;
+        for(int i = 0; i < vect->iTri; i++){
+            qDebug() << vect->trItemRef[i];
+            trit = this->trackItems[vect->trItemRef[i]];
+            if(trit == NULL){
+                continue;
+            }
+            // item delete
+            qDebug() << "item delete " << vect->trItemRef[i]<< " "<<trit->trItemId;
+            deleteTrItem(trit->trItemId);
+            i--;
+        }
+    }
+    vect->iTri = 0;
+}
+
 bool TDB::deleteFromVectorSection(int id, int j){
     TRnode* vect = trackNodes[id];
     if(vect->iTrv == 1){
@@ -1004,7 +1032,7 @@ bool TDB::deleteFromVectorSection(int id, int j){
 
     TRnode* end1 = trackNodes[vect->TrPinS[0]];
     TRnode* end2 = trackNodes[vect->TrPinS[1]];
-    
+    //deleteAllTrItemsFromVectorSection(id);
     TRnode::TRSect *newV = new TRnode::TRSect[vect->iTrv - 1];
     if(j == 0){
         // move & check items
@@ -1016,8 +1044,13 @@ bool TDB::deleteFromVectorSection(int id, int j){
                 if(trit == NULL) 
                     continue;
                 trit->addToTrackPos(-sectDlugosc);
-                if(trit->trItemSData1 < 0)
+                if(trit->trItemSData1 < 0){
                     qDebug() << "delete item? - before section";
+                    // item delete
+                    qDebug() << "item delete " << trit->trItemId;
+                    this->deleteTrItem(trit->trItemId);
+                    i--;
+                }
             }
         }
         
@@ -1059,8 +1092,13 @@ bool TDB::deleteFromVectorSection(int id, int j){
                 trit = this->trackItems[vect->trItemRef[i]];
                 if(trit == NULL) 
                     continue;
-                if(trit->trItemSData1 > vectDlugosc)
+                if(trit->trItemSData1 > vectDlugosc){
                     qDebug() << "delete item? - behind section";
+                    // item delete
+                    qDebug() << "item delete " << trit->trItemId;
+                    this->deleteTrItem(trit->trItemId);
+                    i--;
+                }
             }
         }
         
@@ -1888,6 +1926,13 @@ int TDB::getEndpointType(int trid, int endp){
 }
 
 void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot) {
+    Mat4::identity(gluu->objStrMatrix);
+    gluu->setMatrixUniforms();
+    int hash = playerT[0] * 10000 + playerT[1];
+    if (!isInitLines || lineHash != hash) {
+        
+    }
+    
     for (auto it = this->trackItems.begin(); it != this->trackItems.end(); ++it) {
         //console.log(obj.type);
         TRitem* obj = (TRitem*) it->second;
@@ -2208,6 +2253,74 @@ void TDB::deleteItemFromTrNode(int tid, int iid){
     delete[] n->trItemRef;
     n->trItemRef = newVec;
 }
+
+void TDB::deleteTree(int x, int y, int UiD){
+    y = -y;
+    
+    TRnode *n;
+    int tid = -1;
+    for (int i = 1; i <= iTRnodes; i++) {
+            n = trackNodes[i];
+            if (n == NULL) continue;
+            if (n ->typ == -1) continue;
+            if (n->typ == 1) {
+                for(int j = 0; j < n->iTrv; j++)
+                    if(n->trVectorSection[j].param[2] == x)
+                        if(n->trVectorSection[j].param[3] == y)
+                            if(n->trVectorSection[j].param[4] == UiD){
+                                tid = i;
+                                break;
+                    }
+            }
+        }
+    if(tid > 0){
+        qDebug() << "mam id: " << tid;
+        deleteTree(tid);
+    }
+}
+
+void TDB::deleteTree(int d) {
+        //if(trackNodes[d].typ!=0){
+        //    System.out.println("to nie endpoint");
+        //}
+        
+        int* drzewo = new int[iTRnodes+1];
+        for(int i = 1; i <= iTRnodes; i++)
+            drzewo[i] = 0;
+         
+        addToDeletedTree(drzewo, d);
+        
+        int w = 0;
+        for(int i = 1; i <= iTRnodes; i++){
+            if(drzewo[i] == 1) w++;
+        }
+        qDebug() << "Ilosc elementów w tym drzewie: " << w;
+        
+        if(w > 1000) {
+            qDebug() << "Za duzo elementow do usuniecia, lepiej nie usuwac";
+            return;
+        }
+
+        for(int i = 1; i <= iTRnodes; i++){
+            if(drzewo[i] == 1){
+                qDebug() << "Usuwam " << i;
+                trackNodes[i] = NULL;
+            }
+        }
+        TDB::refresh();
+    }
+    
+void TDB::addToDeletedTree(int* drzewo, int d){
+        drzewo[d] = 1;
+        for(int i = 0; i < 3; i++){
+            //qDebug() << trackNodes[d]->TrPinS[i];
+            if(trackNodes[d]->TrPinS[i] == 0) 
+                continue;
+            //qDebug() << drzewo[trackNodes[d]->TrPinS[i]];
+            if(drzewo[trackNodes[d]->TrPinS[i]] == 0)
+                addToDeletedTree(drzewo, trackNodes[d]->TrPinS[i]);
+        }
+    }
 
 bool TDB::deleteNulls() {
         for(int i = 1; i <= iTRnodes; i++){

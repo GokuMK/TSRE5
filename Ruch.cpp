@@ -1,11 +1,6 @@
-/* 
- * File:   Ruch.cpp
- * Author: Goku
- * 
- * Created on 13 maja 2015, 23:57
- */
-
 #include "Ruch.h"
+#include "TRnode.h"
+#include "TSectionDAT.h"
 
 Ruch::Ruch(TDB *t) {
     this->trackDB = t;

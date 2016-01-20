@@ -38,7 +38,9 @@ bool Game::viewTrackDbLines = true;
 bool Game::viewTsectionLines = true;
 bool Game::viewPointer3d = true;
 bool Game::warningBox = false;
-    
+bool Game::leaveTrackShapeAfterDelete = false;
+bool Game::renderTrItems = false;
+
 Window* Game::window = NULL;
 LoadWindow* Game::loadWindow = NULL;
 
@@ -120,6 +122,13 @@ void Game::load() {
         if(val == "warningBox")
             if(args[1].trimmed().toLower() == "true")
                 warningBox = true;
+        if(val == "leaveTrackShapeAfterDelete")
+            if(args[1].trimmed().toLower() == "true")
+                leaveTrackShapeAfterDelete = true;
+        if(val == "renderTrItems")
+            if(args[1].trimmed().toLower() == "true")
+                renderTrItems = true;
+        
     }
 }
 

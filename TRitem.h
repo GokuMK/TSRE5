@@ -11,6 +11,7 @@
 class FileBuffer;
 class QTextStream;
 class TDB;
+class TrackItemObj;
 
 class TRitem {
 public:
@@ -74,6 +75,7 @@ public:
 private:
     float* drawPosition = NULL;
     int speedpostTrItemDataLength = 0;
+    static TrackItemObj* pointer3d; 
 };
 
 #endif	/* TRITEM_H */

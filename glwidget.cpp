@@ -279,7 +279,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             // paintGL();
             // selection = !selection;
             break;
-        case Qt::Key_F:
+        case Qt::Key_N:
+            if(selectedObj != NULL)
+                route->deleteTDBTree(selectedObj);
             /*if(this->selectedObj != NULL){
                 this->selectedObj->unselect();
                 this->selectedObj = NULL;

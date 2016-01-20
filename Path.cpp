@@ -1,10 +1,5 @@
-/* 
- * File:   Path.cpp
- * Author: Goku
- * 
- * Created on 14 maja 2015, 00:36
- */
 #include "Path.h"
+#include "TRnode.h"
 #include <QString>
 #include <QDebug>
 #include <QFile>

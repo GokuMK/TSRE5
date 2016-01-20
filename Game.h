@@ -51,6 +51,8 @@ public:
     static bool viewTsectionLines;
     static bool warningBox;
     static bool viewPointer3d;
+    static bool leaveTrackShapeAfterDelete;
+    static bool renderTrItems;
 
 private:
     static Window* window;

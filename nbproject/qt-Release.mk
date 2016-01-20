@@ -2715,18 +2715,11 @@ moc_ObjTools.cpp: C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgets \
 		Vector4f.h \
 		Vector3f.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
 		OglObj.h \
-		FileBuffer.h \
-		Ref.h \
 		TextObj.h \
 		WorldObj.h \
+		FileBuffer.h \
+		Ref.h \
 		ObjTools.h
 	'C:\Qt\Static\5.4.1\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Static/5.4.1/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/nbproject -IC:/Qt/Static/5.4.1/include -IC:/Qt/Static/5.4.1/include/QtOpenGL -IC:/Qt/Static/5.4.1/include/QtWidgets -IC:/Qt/Static/5.4.1/include/QtGui -IC:/Qt/Static/5.4.1/include/QtCore -I. ObjTools.h -o moc_ObjTools.cpp
 
@@ -8182,18 +8175,11 @@ moc_TerrainTools.cpp: C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgets \
 		Vector4f.h \
 		Vector3f.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
 		OglObj.h \
-		FileBuffer.h \
-		Ref.h \
 		TextObj.h \
 		WorldObj.h \
+		FileBuffer.h \
+		Ref.h \
 		TerrainTools.h
 	'C:\Qt\Static\5.4.1\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Static/5.4.1/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/nbproject -IC:/Qt/Static/5.4.1/include -IC:/Qt/Static/5.4.1/include/QtOpenGL -IC:/Qt/Static/5.4.1/include/QtWidgets -IC:/Qt/Static/5.4.1/include/QtGui -IC:/Qt/Static/5.4.1/include/QtCore -I. TerrainTools.h -o moc_TerrainTools.cpp
 
@@ -10160,13 +10146,6 @@ build/Release/MinGW_QT_static-Windows/Flex.o: Flex.cpp Flex.h \
 		Vector2f.h \
 		Vector3f.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
 		OglObj.h \
 		GLUU.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
@@ -10174,8 +10153,6 @@ build/Release/MinGW_QT_static-Windows/Flex.o: Flex.cpp Flex.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLBuffer \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
-		FileBuffer.h \
-		Ref.h \
 		TextObj.h \
 		Intersections.h \
 		GLMatrix.h
@@ -11581,14 +11558,9 @@ build/Release/MinGW_QT_static-Windows/HazardObj.o: HazardObj.cpp HazardObj.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
 		Game.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
+		TextObj.h \
 		TRitem.h \
 		Pointer3d.h \
-		TextObj.h \
 		TS.h \
 		TrackItemObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/HazardObj.o HazardObj.cpp
@@ -11841,14 +11813,9 @@ build/Release/MinGW_QT_static-Windows/LevelCrObj.o: LevelCrObj.cpp LevelCrObj.h 
 		GLMatrix.h \
 		ParserX.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
+		TextObj.h \
 		TRitem.h \
 		Pointer3d.h \
-		TextObj.h \
 		Game.h \
 		TrackItemObj.h \
 		TS.h \
@@ -12764,15 +12731,13 @@ build/Release/MinGW_QT_static-Windows/NaviBox.o: NaviBox.cpp NaviBox.h \
 		C:/Qt/Static/5.4.1/include/QtWidgets/qtwidgetsversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/NaviBox.o NaviBox.cpp
 
-build/Release/MinGW_QT_static-Windows/ObjTools.o: ObjTools.cpp ObjTools.h \
-		C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgets \
-		C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgetsDepends \
-		C:/Qt/Static/5.4.1/include/QtCore/QtCore \
-		C:/Qt/Static/5.4.1/include/QtCore/QtCoreDepends \
-		C:/Qt/Static/5.4.1/include/QtCore/qabstractanimation.h \
-		C:/Qt/Static/5.4.1/include/QtCore/qobject.h \
-		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs.h \
-		C:/Qt/Static/5.4.1/include/QtCore/qnamespace.h \
+build/Release/MinGW_QT_static-Windows/ObjTools.o: ObjTools.cpp TSectionDAT.h \
+		TSection.h \
+		Vector3f.h \
+		TrackShape.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QString \
+		C:/Qt/Static/5.4.1/include/QtCore/qstring.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qchar.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qglobal.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qconfig.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qfeatures.h \
@@ -12801,13 +12766,20 @@ build/Release/MinGW_QT_static-Windows/ObjTools.o: ObjTools.cpp ObjTools.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qglobalstatic.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qmutex.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qnumeric.h \
-		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs_impl.h \
-		C:/Qt/Static/5.4.1/include/QtCore/qstring.h \
-		C:/Qt/Static/5.4.1/include/QtCore/qchar.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qbytearray.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qrefcount.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnamespace.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qarraydata.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qstringbuilder.h \
+		ObjTools.h \
+		C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgets \
+		C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgetsDepends \
+		C:/Qt/Static/5.4.1/include/QtCore/QtCore \
+		C:/Qt/Static/5.4.1/include/QtCore/QtCoreDepends \
+		C:/Qt/Static/5.4.1/include/QtCore/qabstractanimation.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs_impl.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qlist.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qalgorithms.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qiterator.h \
@@ -13216,27 +13188,18 @@ build/Release/MinGW_QT_static-Windows/ObjTools.o: ObjTools.cpp ObjTools.h \
 		C:/Qt/Static/5.4.1/include/QtWidgets/qtoolbutton.h \
 		C:/Qt/Static/5.4.1/include/QtWidgets/qtwidgetsversion.h \
 		Route.h \
-		C:/Qt/Static/5.4.1/include/QtCore/QString \
 		GLUU.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLVertexArrayObject \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLBuffer \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
-		Vector3f.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
 		OglObj.h \
-		FileBuffer.h \
-		Ref.h \
 		TextObj.h \
 		WorldObj.h \
+		FileBuffer.h \
+		Ref.h \
 		Game.h \
 		SigCfg.h \
 		SignalShape.h
@@ -13746,14 +13709,6 @@ build/Release/MinGW_QT_static-Windows/Path.o: Path.cpp Path.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qnamespace.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qarraydata.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qstringbuilder.h \
-		TSectionDAT.h \
-		TSection.h \
-		Vector3f.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
 		OglObj.h \
 		GLUU.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
@@ -13816,9 +13771,10 @@ build/Release/MinGW_QT_static-Windows/Path.o: Path.cpp Path.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qopenglshaderprogram.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
 		Vector4f.h \
-		FileBuffer.h \
-		Ref.h \
+		Vector3f.h \
 		TextObj.h \
+		TRnode.h \
+		Vector2i.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
 		C:/Qt/Static/5.4.1/include/QtCore/QFile \
 		C:/Qt/Static/5.4.1/include/QtCore/qfile.h \
@@ -13827,6 +13783,7 @@ build/Release/MinGW_QT_static-Windows/Path.o: Path.cpp Path.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qdir.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qfileinfo.h \
 		Game.h \
+		FileBuffer.h \
 		Ruch.h \
 		Vector2f.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Path.o Path.cpp
@@ -13975,14 +13932,9 @@ build/Release/MinGW_QT_static-Windows/PickupObj.o: PickupObj.cpp PickupObj.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
 		Game.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
+		TextObj.h \
 		TRitem.h \
 		Pointer3d.h \
-		TextObj.h \
 		TrackItemObj.h \
 		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/PickupObj.o PickupObj.cpp
@@ -14131,14 +14083,9 @@ build/Release/MinGW_QT_static-Windows/PlatformObj.o: PlatformObj.cpp PlatformObj
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
 		Game.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
+		TextObj.h \
 		TRitem.h \
 		Pointer3d.h \
-		TextObj.h \
 		TrackItemObj.h \
 		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/PlatformObj.o PlatformObj.cpp
@@ -17503,13 +17450,6 @@ build/Release/MinGW_QT_static-Windows/PropertiesSignal.o: PropertiesSignal.cpp P
 		Ref.h \
 		Game.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
 		TextObj.h \
 		SigCfg.h \
 		SignalShape.h
@@ -19406,18 +19346,14 @@ build/Release/MinGW_QT_static-Windows/Route.o: Route.cpp C:/Qt/Static/5.4.1/incl
 		Vector4f.h \
 		Vector3f.h \
 		TDB.h \
+		OglObj.h \
+		TextObj.h \
+		WorldObj.h \
+		FileBuffer.h \
+		Ref.h \
 		TSectionDAT.h \
 		TSection.h \
 		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
-		OglObj.h \
-		FileBuffer.h \
-		Ref.h \
-		TextObj.h \
-		WorldObj.h \
 		Tile.h \
 		GLMatrix.h \
 		TerrainLib.h \
@@ -19581,14 +19517,6 @@ build/Release/MinGW_QT_static-Windows/Ruch.o: Ruch.cpp Ruch.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qarraydata.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qstringbuilder.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		Vector3f.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
 		OglObj.h \
 		GLUU.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
@@ -19651,10 +19579,14 @@ build/Release/MinGW_QT_static-Windows/Ruch.o: Ruch.cpp Ruch.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qopenglshaderprogram.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
 		Vector4f.h \
-		FileBuffer.h \
-		Ref.h \
+		Vector3f.h \
 		TextObj.h \
-		Vector2f.h
+		Vector2f.h \
+		TRnode.h \
+		Vector2i.h \
+		TSectionDAT.h \
+		TSection.h \
+		TrackShape.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Ruch.o Ruch.cpp
 
 build/Release/MinGW_QT_static-Windows/SFile.o: SFile.cpp SFile.h \
@@ -20762,14 +20694,9 @@ build/Release/MinGW_QT_static-Windows/SignalObj.o: SignalObj.cpp SignalObj.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
 		TrackItemObj.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
+		TextObj.h \
 		TRitem.h \
 		Pointer3d.h \
-		TextObj.h \
 		SigCfg.h \
 		SignalShape.h \
 		Game.h \
@@ -21388,13 +21315,6 @@ build/Release/MinGW_QT_static-Windows/SignalWindow.o: SignalWindow.cpp SignalWin
 		Ref.h \
 		Game.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
 		TextObj.h \
 		SigCfg.h \
 		SignalShape.h
@@ -21542,14 +21462,9 @@ build/Release/MinGW_QT_static-Windows/SpeedpostObj.o: SpeedpostObj.cpp Speedpost
 		GLMatrix.h \
 		ParserX.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
+		TextObj.h \
 		TRitem.h \
 		Pointer3d.h \
-		TextObj.h \
 		Game.h \
 		TrackItemObj.h \
 		TS.h \
@@ -21738,14 +21653,6 @@ build/Release/MinGW_QT_static-Windows/TDB.o: TDB.cpp TDB.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qnamespace.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qarraydata.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qstringbuilder.h \
-		TSectionDAT.h \
-		TSection.h \
-		Vector3f.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
 		OglObj.h \
 		GLUU.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QOpenGLFunctions \
@@ -21808,12 +21715,12 @@ build/Release/MinGW_QT_static-Windows/TDB.o: TDB.cpp TDB.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qopenglshaderprogram.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
 		Vector4f.h \
-		FileBuffer.h \
-		Ref.h \
+		Vector3f.h \
 		TextObj.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
 		Game.h \
 		ParserX.h \
+		FileBuffer.h \
 		ReadFile.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QtCore \
 		C:/Qt/Static/5.4.1/include/QtCore/QtCoreDepends \
@@ -21930,9 +21837,17 @@ build/Release/MinGW_QT_static-Windows/TDB.o: TDB.cpp TDB.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qxmlstream.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qtcoreversion.h \
 		GLMatrix.h \
+		Ref.h \
+		TRnode.h \
+		Vector2i.h \
+		TRitem.h \
+		Pointer3d.h \
 		DynTrackObj.h \
 		WorldObj.h \
+		TrackShape.h \
 		Intersections.h \
+		TSectionDAT.h \
+		TSection.h \
 		SigCfg.h \
 		SignalShape.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TDB.o TDB.cpp
@@ -22235,17 +22150,12 @@ build/Release/MinGW_QT_static-Windows/TRitem.o: TRitem.cpp TRitem.h \
 		ParserX.h \
 		GLMatrix.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		Ref.h \
 		TextObj.h \
 		Game.h \
 		SigCfg.h \
 		SignalShape.h \
-		C:/Qt/Static/5.4.1/include/QtCore/QDebug
+		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
+		TrackItemObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/TRitem.o TRitem.cpp
 
 build/Release/MinGW_QT_static-Windows/TRnode.o: TRnode.cpp TRnode.h \
@@ -23320,18 +23230,11 @@ build/Release/MinGW_QT_static-Windows/TerrainTools.o: TerrainTools.cpp TerrainTo
 		Vector4f.h \
 		Vector3f.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		Vector2i.h \
-		TRitem.h \
-		Pointer3d.h \
 		OglObj.h \
-		FileBuffer.h \
-		Ref.h \
 		TextObj.h \
 		WorldObj.h \
+		FileBuffer.h \
+		Ref.h \
 		TexLib.h \
 		Texture.h \
 		Brush.h \
@@ -24818,11 +24721,6 @@ build/Release/MinGW_QT_static-Windows/glwidget.o: glwidget.cpp glwidget.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qtcoreversion.h \
 		Route.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		TRitem.h \
 		TextObj.h \
 		GLMatrix.h \
 		Eng.h \
@@ -25774,11 +25672,6 @@ build/Release/MinGW_QT_static-Windows/window.o: window.cpp C:/Qt/Static/5.4.1/in
 		ObjTools.h \
 		Route.h \
 		TDB.h \
-		TSectionDAT.h \
-		TSection.h \
-		TrackShape.h \
-		TRnode.h \
-		TRitem.h \
 		TextObj.h \
 		TerrainTools.h \
 		NaviBox.h \

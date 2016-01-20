@@ -1,18 +1,18 @@
 #ifndef TDB_H
 #define	TDB_H
 #include <QString>
-#include "TSectionDAT.h"
-#include "TRnode.h"
-#include "TRitem.h"
-#include "FileBuffer.h"
-#include "GLUU.h"
-#include "OglObj.h"
 #include <unordered_map>
-#include "Ref.h"
+#include "OglObj.h"
 #include "TextObj.h"
 
+class TRnode;
+class TRitem;
+class TSectionDAT;
 class DynTrackObj;
 class SigCfg;
+class Ref;
+class GLUU;
+class FileBuffer;
 
 class TDB {
 public:
@@ -43,6 +43,7 @@ public:
     void deleteJunction(int id);
     void deleteVectorSection(int id);
     bool deleteFromVectorSection(int id, int j);
+    bool deleteAllTrItemsFromVectorSection(int id);
     int splitVectorSection(int id, int j);
     int rotate(int id);
     int appendTrack(int id, int* ends, int r, int sect, int uid);
@@ -70,6 +71,8 @@ public:
     int findTrItemNodeId(int id);
     void findNearestPositionOnTDB(float* posT, float* pos, float* q, float* tpos = NULL);
     void deleteTrItem(int trid);
+    void deleteTree(int x, int y, int UiD);
+    void deleteTree(int d);
     int getEndpointType(int trid, int endp);
     void newPlatformObject(int* itemId, int trNodeId, float metry, int type);
     void newPickupObject(int* &itemId, int trNodeId, float metry, int type);
@@ -77,6 +80,7 @@ public:
 private:
     bool deleteNulls();
     int findBiggest();
+    void addToDeletedTree(int* drzewo, int d);
     int getLineBufferSize(int idx, int pointSize, int offset, int step = 0);
     void checkSignals();
     void drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx);
@@ -91,6 +95,7 @@ private:
     int wysokoscSieci;
     int lineHash;
     int sectionHash;
+    int iobjHash;
     bool isInitSectLines = false;
     bool isInitLines = false;
     bool road = false;

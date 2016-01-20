@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
     format.setSwapInterval(0);
     QSurfaceFormat::setDefaultFormat(format);
     Game::load();
-     
+    
     if(!Game::systemTheme){
         app.setStyle(QStyleFactory::create("Fusion"));
         QPalette darkPalette;
@@ -64,6 +64,17 @@ int main(int argc, char *argv[]){
     //    window.showMaximized();
 
     //Game::loadWindow.show();
+    
+    if(app.arguments().count() > 1){
+        qDebug() << "arg1 " << app.arguments().at(1);    
+        if(app.arguments().at(1) == "-aceconv"){
+            // Run ace converter
+            qDebug() << "Run ace converter";
+            Game::checkSettings();
+            return app.exec();
+        }
+    }
+    // Run route editor
     Game::checkSettings();
     return app.exec();
  }
