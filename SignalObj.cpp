@@ -76,6 +76,16 @@ void SignalObj::initTrItems(float* tpos){
     this->drawPositions = NULL;
 }
 
+void SignalObj::set(QString sh, int val) {
+    if (sh == ("_refvalue")) {
+        SignalShape * signal = Game::trackDB->sigCfg->signalShapeById[val];
+        fileName = signal->name;
+        return;
+    }
+    WorldObj::set(sh, val);
+    this->modified = true;
+}
+
 void SignalObj::set(QString sh, QString val){
     if (sh == ("filename")) {
         fileName = val;

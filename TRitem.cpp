@@ -202,6 +202,21 @@ void TRitem::set(QString sh, FileBuffer* data) {
         speedpostTrItemData = new float[3];
         bool ok = false;
         speedpostTrItemData[0] = ParserX::parsujrInside(data, ok);
+        /*
+        10 - speed or dot
+        9 - mph
+        8 - both
+        7 - tow
+        6 - pas
+        5 - number instead speed
+        4 - set speed
+        3 - ?
+        1, 2 - speed, warning, resume
+        00 - spost; 2 - 3;
+        01 - warning 2 - 3;
+        10 - speed; 2 - 3
+        11 - resume; 1 - 2*/
+        //if(speedpostTrItemData[0] !=384)qDebug() << ":sp " << speedpostTrItemData[0];
         if(!ok) return;
         speedpostTrItemDataLength++;
         speedpostTrItemData[1] = ParserX::parsujrInside(data, ok);

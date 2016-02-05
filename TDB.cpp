@@ -15,6 +15,7 @@
 #include "SigCfg.h"
 #include "SignalShape.h"
 #include "FileBuffer.h"
+#include "SpeedPostDAT.h"
 #include "GLUU.h"
 
 
@@ -181,6 +182,7 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
 
     if(!this->road){
         loadTit();
+        this->speedPostDAT = new SpeedPostDAT();
         this->sigCfg = new SigCfg();
         //checkSignals();
     }

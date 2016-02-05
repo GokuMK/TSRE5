@@ -13,12 +13,14 @@ class SigCfg;
 class Ref;
 class GLUU;
 class FileBuffer;
+class SpeedPostDAT;
 
 class TDB {
 public:
     bool loaded;
     TSectionDAT *tsection; 
     SigCfg* sigCfg;
+    SpeedPostDAT* speedPostDAT;
     //TRnode *trackNodes;
     std::unordered_map<int, TRitem*> trackItems;
     std::unordered_map<int, TRnode*> trackNodes;

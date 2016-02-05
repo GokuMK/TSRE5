@@ -4,6 +4,9 @@
 #include "Game.h"
 #include "SigCfg.h"
 #include "SignalShape.h"
+#include "ForestObj.h"
+#include "SpeedPost.h"
+#include "SpeedPostDAT.h"
 
 ObjTools::ObjTools(QString name)
     : QWidget(){
@@ -175,6 +178,8 @@ void ObjTools::routeLoaded(Route* a){
     refTrackSelected("a1t");
     
     refOther.addItem("Signals");
+    refOther.addItem("Forests");
+    refOther.addItem("Speedposts");
     refOther.setMaxVisibleItems(25);
 }
 
@@ -222,6 +227,16 @@ void ObjTools::refOtherSelected(const QString & text){
             new QListWidgetItem ( signal->desc, &otherList, signal->listId );
         }
     }
+    if(text.toLower() == "forests"){
+        for (int i = 0; i < ForestObj::forestList.size(); i++){
+            new QListWidgetItem ( ForestObj::forestList[i].name, &otherList, i );
+        }
+    }
+    if(text.toLower() == "speedposts"){
+        for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
+            new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i].name, &otherList, i );
+        }
+    }
     otherList.sortItems(Qt::AscendingOrder);
 }
 
@@ -257,20 +272,17 @@ void ObjTools::trackListSelected(QListWidgetItem * item){
 }
 
 void ObjTools::otherListSelected(QListWidgetItem * item){
-    if(refOther.currentText().toLower() == "signals"){
-        qDebug() << item->type() << " " << item->text();
-        SignalShape * signal = Game::trackDB->sigCfg->signalShapeById[item->type()];
-        Ref::RefItem* itemRef = new Ref::RefItem(); 
-        itemRef->filename = signal->name;
-        itemRef->clas = "";
-        itemRef->type = "signal";
-        itemRef->value = item->type();
-        try{
-            route->ref->selected = itemRef;
-            itemSelected((Ref::RefItem*)route->ref->selected);
-        } catch(const std::out_of_range& oor){
-            route->ref->selected = NULL;
-        }
+    Ref::RefItem* itemRef = new Ref::RefItem(); 
+    if(refOther.currentText().toLower() == "signals") itemRef->type = "signal";
+    if(refOther.currentText().toLower() == "forests") itemRef->type = "forest";
+    qDebug() << item->type() << " " << item->text();
+    itemRef->clas = "";
+    itemRef->value = item->type();
+    try{
+        route->ref->selected = itemRef;
+        itemSelected((Ref::RefItem*)route->ref->selected);
+    } catch(const std::out_of_range& oor){
+        route->ref->selected = NULL;
     }
 }
 

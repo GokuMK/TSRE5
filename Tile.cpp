@@ -260,13 +260,8 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
         return NULL;
     }
     
-    if(nowy->type == "trackobj"){
-        nowy->set("sectionidx", itemData->value);
-    }
-    
-    //if(nowy->type == "transfer"){
     nowy->set("filename", itemData->filename);
-    // }
+    nowy->set("_refvalue", itemData->value);
 
     //Quat::rotateY(q, q, M_PI/2);
     if(nowy->isTrackItem()){

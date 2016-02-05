@@ -11,6 +11,15 @@ public:
         QOpenGLBuffer VBO;
         QOpenGLVertexArrayObject VAO;
     };
+    struct ForestList{
+        QString name;
+        QString texture;
+        float scaleRangeX = 0;
+        float scaleRangeZ = 0;
+        float treeSizeX = 0;
+        float treeSizeZ = 0;
+    };
+    static std::vector<ForestList> forestList;
     Shape shape;
     QString treeTexture = "";
     float scaleRangeX = 0;
@@ -22,12 +31,14 @@ public:
     float population = 0;
     ForestObj();
     ForestObj(const ForestObj& orig);
+    bool allowNew();
     void load(int x, int y);
     void set(int sh, FileBuffer* data);
+    void set(QString sh, int val);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
-    
+    static void loadForestList();
     virtual ~ForestObj();
 private:
     void drawShape();

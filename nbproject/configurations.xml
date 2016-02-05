@@ -66,6 +66,8 @@
         <itemPath>SigCfg.h</itemPath>
         <itemPath>SignalShape.h</itemPath>
         <itemPath>SignalType.h</itemPath>
+        <itemPath>SpeedPost.h</itemPath>
+        <itemPath>SpeedPostDAT.h</itemPath>
         <itemPath>TDB.h</itemPath>
         <itemPath>TRitem.h</itemPath>
         <itemPath>TRnode.h</itemPath>
@@ -180,6 +182,8 @@
         <itemPath>SigCfg.cpp</itemPath>
         <itemPath>SignalShape.cpp</itemPath>
         <itemPath>SignalType.cpp</itemPath>
+        <itemPath>SpeedPost.cpp</itemPath>
+        <itemPath>SpeedPostDAT.cpp</itemPath>
         <itemPath>TDB.cpp</itemPath>
         <itemPath>TRitem.cpp</itemPath>
         <itemPath>TRnode.cpp</itemPath>
@@ -456,6 +460,14 @@
       <item path="SignalWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SignalWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedPost.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SpeedPost.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedPostDAT.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SpeedPostDAT.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpeedpostObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -809,6 +821,14 @@
       <item path="SignalWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SignalWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedPost.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SpeedPost.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedPostDAT.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SpeedPostDAT.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpeedpostObj.cpp" ex="false" tool="1" flavor2="0">
       </item>

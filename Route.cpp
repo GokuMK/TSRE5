@@ -15,6 +15,7 @@
 #include "ReadFile.h"
 #include "DynTrackObj.h"
 #include "Flex.h"
+#include "ForestObj.h"
 
 Route::Route() {
 
@@ -39,6 +40,8 @@ Route::Route() {
     this->trackDB = new TDB(tsection, false, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".tdb"));
     this->roadDB = new TDB(tsection, true, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".rdb"));
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
+    
+    ForestObj::loadForestList();
     
     Game::trackDB = this->trackDB;
     Game::roadDB = this->roadDB;

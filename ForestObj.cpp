@@ -1,3 +1,4 @@
+#include <QFile>
 #include "ForestObj.h"
 #include "GLMatrix.h"
 #include <math.h>
@@ -9,10 +10,14 @@
 #include "Vector2f.h"
 #include "TerrainLib.h"
 #include "TS.h"
-
+#include "Game.h"
+#include "FileFunctions.h"
+#include "ReadFile.h"
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+
+std::vector<ForestObj::ForestList> ForestObj::forestList;
 
 ForestObj::ForestObj() {
     this->loaded = false;
@@ -22,6 +27,36 @@ ForestObj::ForestObj(const ForestObj& orig) {
 }
 
 ForestObj::~ForestObj() {
+}
+
+void ForestObj::loadForestList(){
+    QString path = Game::root + "/routes/" + Game::route + "/forests.dat";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile *file = new QFile(path);
+    if (!file->open(QIODevice::ReadOnly))
+        return;
+    FileBuffer* data = ReadFile::read(file);
+    ParserX::nextLine(data);
+
+    QString sh = "";
+    //ParserX::szukajsekcji1(sh, data);
+    //ParserX::parsujr(data);
+    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == ("forest")) {
+            ForestObj::forestList.emplace_back();
+            ForestObj::forestList.back().name = ParserX::odczytajtc(data);
+            ForestObj::forestList.back().texture = ParserX::odczytajtc(data);
+            ForestObj::forestList.back().treeSizeX = ParserX::parsujr(data);
+            ForestObj::forestList.back().treeSizeZ = ParserX::parsujr(data);
+            ForestObj::forestList.back().scaleRangeX = ParserX::parsujr(data);
+            ForestObj::forestList.back().scaleRangeZ = ParserX::parsujr(data);
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        ParserX::pominsekcje(data);
+    }
 }
 
 void ForestObj::load(int x, int y) {
@@ -35,6 +70,23 @@ void ForestObj::load(int x, int y) {
     this->skipLevel = 3;
     this->modified = false;
 }
+
+void ForestObj::set(QString sh, int val) {
+    if (sh == ("_refvalue")) {
+        treeTexture = ForestObj::forestList[val].texture;
+        scaleRangeX = ForestObj::forestList[val].scaleRangeX;
+        scaleRangeZ = ForestObj::forestList[val].scaleRangeZ;
+        areaX = 100;
+        areaZ = 100;
+        treeSizeX = ForestObj::forestList[val].treeSizeX;
+        treeSizeZ = ForestObj::forestList[val].treeSizeZ;
+        population = 10;
+        return;
+    }
+    WorldObj::set(sh, val);
+    this->modified = true;
+}
+
 
 void ForestObj::set(int sh, FileBuffer* data) {
     if (sh == TS::TreeTexture) {
@@ -284,4 +336,8 @@ if(this->treeTexture != "")
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";
 *(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
 *(out) << "	)\n";
+}
+
+bool ForestObj::allowNew(){
+    return true;
 }

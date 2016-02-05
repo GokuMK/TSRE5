@@ -137,6 +137,11 @@ void TrackObj::set(QString sh, int val) {
         sectionIdx = val;
         return;
     }
+    if (sh == ("_refvalue")) {
+        sectionIdx = val;
+        return;
+    }
+    WorldObj::set(sh, val);
     this->modified = true;
 }
 
