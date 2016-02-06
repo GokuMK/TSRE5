@@ -9,11 +9,21 @@
 #include "Game.h"
 #include "TrackItemObj.h"
 #include "TS.h"
+#include "SpeedPostDAT.h"
+#include "SpeedPost.h"
 #include <QDebug>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+
+bool SpeedpostObj::allowNew(){
+    return true;
+}
+
+bool SpeedpostObj::isTrackItem(){
+    return true;
+}
 
 SpeedpostObj::SpeedpostObj() {
     this->shape = -1;
@@ -41,12 +51,78 @@ void SpeedpostObj::load(int x, int y) {
     setMartix();
 }
 
+void SpeedpostObj::initTrItems(float* tpos){
+    if(tpos == NULL)
+        return;
+    int trNodeId = tpos[0];
+    float metry = tpos[1];
+    
+    TDB* tdb = Game::trackDB;
+    qDebug() <<"new speedpost  "<<this->fileName;
+
+    tdb->newSpeedPostObject(speedPostId, speedPostType, trItemId, trNodeId, metry, this->typeID);
+    
+    //this->signalSubObj = 0;
+    //qDebug() <<"signalUnits  "<<this->signalUnits;
+    //for(int i = 0; i < this->signalUnits; i++)
+    //    this->signalSubObj = this->signalSubObj | (1 << i);
+   // this->trItemIdCount = 4;
+  //  this->trItemId[0] = isRoad;
+   // this->trItemId[1] = trItemId[0];
+   // this->trItemId[2] = isRoad;
+  //  this->trItemId[3] = trItemId[1];
+    this->drawPositions = NULL;
+}
+
+void SpeedpostObj::set(QString sh, int val){
+    if (sh == ("_refvalue")) {
+        speedPostId = val/1000;
+        speedPostType = val - speedPostId*1000;
+        qDebug() << "speedPostId "<<speedPostId<< " speedPostType " << speedPostType;
+        SpeedPost *speedPost = Game::trackDB->speedPostDAT->speedPost[speedPostId];
+        
+        if(speedPostType == 0){
+            fileName = speedPost->speedSignShapeName;
+            speedSignShape = new float[speedPost->speedSignShapeCount*4+1];
+            speedSignShape[0] = speedPost->speedSignShapeCount;
+            for(int i = 0; i<speedSignShape[0]*4; i++)
+                speedSignShape[i+1] = speedPost->speedSignShape[i];
+        }else if(speedPostType == 1){
+            fileName = speedPost->speedResumeSignShapeName;
+            speedSignShape = new float[speedPost->speedResumeSignShapeCount*4+1];
+            speedSignShape[0] = speedPost->speedResumeSignShapeCount;
+            for(int i = 0; i<speedSignShape[0]*4; i++)
+                speedSignShape[i+1] = speedPost->speedResumeSignShape[i];
+        }else if(speedPostType == 2){
+            fileName = speedPost->speedWarningSignShapeName;
+            speedSignShape = new float[speedPost->speedWarningSignShapeCount*4+1];
+            speedSignShape[0] = speedPost->speedWarningSignShapeCount;
+            for(int i = 0; i<speedSignShape[0]*4; i++)
+                speedSignShape[i+1] = speedPost->speedWarningSignShape[i];
+        }else if(speedPostType == 3){
+            fileName = speedPost->milepostShapeName;
+            speedSignShape = new float[speedPost->milepostShapeCount*4+1];
+            speedSignShape[0] = speedPost->milepostShapeCount;
+            for(int i = 0; i<speedSignShape[0]*4; i++)
+                speedSignShape[i+1] = speedPost->milepostShape[i];
+        }
+        
+        speedDigitTex = speedPost->speedDigitTex;
+        speedTextSize[0] = speedPost->speedTextSize[0];
+        speedTextSize[1] = speedPost->speedTextSize[0];
+        speedTextSize[2] = speedPost->speedTextSize[0];
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
+}
+
 void SpeedpostObj::set(QString sh, QString val){
     if (sh == ("filename")) {
         fileName = val;
         return;
     }
-    WorldObj::set(sh, val);
+     WorldObj::set(sh, val);
     return;
 }
 
@@ -132,6 +208,55 @@ void SpeedpostObj::set(QString sh, FileBuffer* data) {
 void SpeedpostObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     if (!loaded) return;
 
+    if (shape < 0) return;
+    if (jestPQ < 2) return;
+    //GLUU* gluu = GLUU::get();
+    //if((this.position===undefined)||this.qDirection===undefined) return;
+    //
+    if (size > 0) {
+        if ((lod > size + 150)) {
+            float v1[2];
+            v1[0] = pos[0] - (target[0]);
+            v1[1] = pos[2] - (target[2]);
+            float v2[2];
+            v2[0] = posx;
+            v2[1] = posz;
+            float iloczyn = v1[0] * v2[0] + v1[1] * v2[1];
+            float d1 = sqrt(v1[0] * v1[0] + v1[1] * v1[1]);
+            float d2 = sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
+            float zz = iloczyn / (d1 * d2);
+            if (zz > 0) return;
+
+            float ccos = cos(fov) + zz;
+            float xxx = sqrt(2 * d2 * d2 * (1 - ccos));
+            //if((ccos > 0) && (xxx > 200+50)) return;
+            if ((ccos > 0) && (xxx > size) && (skipLevel == 1)) return;
+        }
+    } else {
+        if (ShapeLib::shape[shape]->loaded)
+            size = ShapeLib::shape[shape]->size;
+    }
+    
+    gluu->mvPushMatrix();
+    Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
+    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    
+    if(selectionColor != 0){
+        int wColor = (int)(selectionColor/65536);
+        int sColor = (int)(selectionColor - wColor*65536)/256;
+        int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
+        gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
+    } else {
+        gluu->enableTextures();
+    }
+        
+    ShapeLib::shape[shape]->render();
+    
+    if(selected){
+        drawBox();
+    }
+    gluu->mvPopMatrix();
+    
     if(Game::viewInteractives) 
         this->renderTritems(gluu, selectionColor);
 };

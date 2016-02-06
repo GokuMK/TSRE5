@@ -20,7 +20,8 @@ public:
     static TRitem* newCarspawnerItem(int trItemId, float metry);
     static TRitem* newPickupItem(int trItemId, float metry);
     static TRitem* newSignalItem(int trItemId, float metry, unsigned int flags, QString type);
-    
+    static TRitem* newSpeedPostItem(int trItemId, float metry, int speedPostType);
+    static TRitem* newLevelCrItem(int trItemId, float metry);
     TRitem();
     TRitem(int id);
     TRitem(const TRitem& orig);
@@ -67,6 +68,7 @@ public:
     void setTrItemPData(float* posT, float* pos);
     void setPickupContent(float val);
     void setSignalRot(float rot);
+    void setSpeedpostRot(float rot);
     void setSignalDirection(int dir);
     void flipSignal();
     void enableSignalSubObj(int i);

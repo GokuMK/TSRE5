@@ -13,10 +13,14 @@ public:
     LevelCrObj(const LevelCrObj& orig);
     virtual ~LevelCrObj();
     void load(int x, int y);
+    void set(QString sh, QString val);
     void set(int sh, FileBuffer* data);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     bool getBorder(float* border);
+    bool allowNew();
+    bool isTrackItem();
+    void initTrItems(float* tpos);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 
 private:

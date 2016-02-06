@@ -179,7 +179,10 @@ void ObjTools::routeLoaded(Route* a){
     
     refOther.addItem("Signals");
     refOther.addItem("Forests");
-    refOther.addItem("Speedposts");
+    refOther.addItem("SpeedSign");
+    refOther.addItem("SpeedResume");
+    refOther.addItem("SpeedWarning");
+    refOther.addItem("Milepost");
     refOther.setMaxVisibleItems(25);
 }
 
@@ -232,9 +235,28 @@ void ObjTools::refOtherSelected(const QString & text){
             new QListWidgetItem ( ForestObj::forestList[i].name, &otherList, i );
         }
     }
-    if(text.toLower() == "speedposts"){
+    if(text.toLower() == "speedsign"){
         for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
-            new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i].name, &otherList, i );
+            if(Game::trackDB->speedPostDAT->speedPost[i]->speedSignShapeCount > 0)
+                new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i]->name, &otherList, i*1000+0 );
+        }
+    }
+    if(text.toLower() == "speedresume"){
+        for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
+            if(Game::trackDB->speedPostDAT->speedPost[i]->speedResumeSignShapeCount > 0)
+                new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i]->name, &otherList, i*1000+1 );
+        }
+    }
+    if(text.toLower() == "speedwarning"){
+        for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
+            if(Game::trackDB->speedPostDAT->speedPost[i]->speedWarningSignShapeCount > 0)
+                new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i]->name, &otherList, i*1000+2 );
+        }
+    }
+    if(text.toLower() == "milepost"){
+        for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
+            if(Game::trackDB->speedPostDAT->speedPost[i]->milepostShapeCount > 0)
+                new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i]->name, &otherList, i*1000+3 );
         }
     }
     otherList.sortItems(Qt::AscendingOrder);
@@ -275,6 +297,10 @@ void ObjTools::otherListSelected(QListWidgetItem * item){
     Ref::RefItem* itemRef = new Ref::RefItem(); 
     if(refOther.currentText().toLower() == "signals") itemRef->type = "signal";
     if(refOther.currentText().toLower() == "forests") itemRef->type = "forest";
+    if(refOther.currentText().toLower() == "speedsign") itemRef->type = "speedpost";
+    if(refOther.currentText().toLower() == "speedresume") itemRef->type = "speedpost";
+    if(refOther.currentText().toLower() == "speedwarning") itemRef->type = "speedpost";
+    if(refOther.currentText().toLower() == "milepost") itemRef->type = "speedpost";
     qDebug() << item->type() << " " << item->text();
     itemRef->clas = "";
     itemRef->value = item->type();

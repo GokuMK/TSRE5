@@ -11,7 +11,7 @@ public:
     QString restricted_Shape;
     QString end_Restricted_Shape;
     
-    std::vector<SpeedPost> speedPost;
+    std::vector<SpeedPost*> speedPost;
     
     SpeedPostDAT();
     virtual ~SpeedPostDAT();

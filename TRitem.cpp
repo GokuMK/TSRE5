@@ -63,6 +63,14 @@ TRitem* TRitem::newPickupItem(int trItemId, float metry){
     return trit;
 }
 
+TRitem* TRitem::newLevelCrItem(int trItemId, float metry){
+    TRitem* trit = new TRitem(trItemId);
+    if(!trit->init("levelcritem")) return NULL;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 6;
+    return trit;
+}
+
 TRitem* TRitem::newSignalItem(int trItemId, float metry, unsigned int flags, QString type){
     TRitem* trit = new TRitem(trItemId);
     if(!trit->init("signalitem")) return NULL;
@@ -73,6 +81,43 @@ TRitem* TRitem::newSignalItem(int trItemId, float metry, unsigned int flags, QSt
     trit->trSignalType2 = 1;
     trit->trSignalType3 = 0;
     trit->trSignalType4 = type;
+    qDebug() << "aa ";
+    return trit;
+}
+
+TRitem* TRitem::newSpeedPostItem(int trItemId, float metry, int speedPostType){
+    TRitem* trit = new TRitem(trItemId);
+    if(!trit->init("speedpostitem")) return NULL;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 6;
+    trit->platformTrItemData = new unsigned int[2];
+    if(speedPostType == 0){ // sing
+        trit->speedpostTrItemDataLength = 3;
+        trit->speedpostTrItemData = new float[4];
+        trit->speedpostTrItemData[0] = 0;
+        trit->speedpostTrItemData[1] = 0;
+        trit->speedpostTrItemData[2] = 0;
+    }
+    if(speedPostType == 1){ // resume
+        trit->speedpostTrItemDataLength = 2;
+        trit->speedpostTrItemData = new float[4];
+        trit->speedpostTrItemData[0] = 0;
+        trit->speedpostTrItemData[1] = 0;
+    }
+    if(speedPostType == 2){ // warning
+        trit->speedpostTrItemDataLength = 3;
+        trit->speedpostTrItemData = new float[4];
+        trit->speedpostTrItemData[0] = 0;
+        trit->speedpostTrItemData[1] = 0;
+        trit->speedpostTrItemData[2] = 0;
+    }
+    if(speedPostType == 3){ // milepost
+        trit->speedpostTrItemDataLength = 3;
+        trit->speedpostTrItemData = new float[4];
+        trit->speedpostTrItemData[0] = 0;
+        trit->speedpostTrItemData[1] = 0;
+        trit->speedpostTrItemData[2] = 0;
+    }
     qDebug() << "aa ";
     return trit;
 }
@@ -199,8 +244,9 @@ void TRitem::set(QString sh, FileBuffer* data) {
     
     // speed
     if (sh == ("speedposttritemdata")){
-        speedpostTrItemData = new float[3];
+        speedpostTrItemData = new float[4];
         bool ok = false;
+        speedpostTrItemDataLength = 0;
         speedpostTrItemData[0] = ParserX::parsujrInside(data, ok);
         /*
         10 - speed or dot
@@ -223,6 +269,9 @@ void TRitem::set(QString sh, FileBuffer* data) {
         if(!ok) return;
         speedpostTrItemDataLength++;
         speedpostTrItemData[2] = ParserX::parsujrInside(data, ok);
+        if(!ok) return;
+        speedpostTrItemDataLength++;
+        speedpostTrItemData[3] = ParserX::parsujrInside(data, ok);
         if(!ok) return;
         speedpostTrItemDataLength++;
         return;
@@ -302,6 +351,10 @@ void TRitem::setSignalDirection(int dir){
     this->trSignalType2 = dir;
 }
 
+void TRitem::setSpeedpostRot(float rot){
+    this->speedpostTrItemData[this->speedpostTrItemDataLength-1] = rot;
+}
+
 void TRitem::flipSignal(){
     this->trSignalType2 = abs(this->trSignalType2-1);
     this->trSignalType3 += M_PI;
@@ -318,7 +371,7 @@ void TRitem::addToTrackPos(float d){
 void TRitem::flipTrackPos(float d){
     this->trItemSData1 = d - this->trItemSData1;
 }
-    
+
 void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot){
     if(this->type == "emptyitem"){
         //qDebug() << "empty";

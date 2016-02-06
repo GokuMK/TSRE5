@@ -2061,6 +2061,78 @@ void TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tp
     Quat::rotateX(q, q, -best[4]);
 }
 
+void TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos){
+    float *lineBuffer;
+    int length = 0;
+    getLines(lineBuffer, length, posT);
+    
+    qDebug() << "lines length" << length;
+    float best[7];
+    best[0] = 99999;
+    float dist = 0;
+    float intersectionPoint[3];
+    intersectionPoint[1] = pos[1];
+    int uu;
+    for(int i = 0; i < length*12; i+=12){
+        //qDebug() << i/12;
+        //qDebug() << lineBuffer[i+0] << " "<< lineBuffer[i+1] << " " << lineBuffer[i+2] << " "<< lineBuffer[i+3] << " "<< lineBuffer[i+4] << " " << lineBuffer[i+5] ;
+        //qDebug() << lineBuffer[i+6] << " "<< lineBuffer[i+7] << " " << lineBuffer[i+8] << " "<< lineBuffer[i+9] << " "<< lineBuffer[i+10] << " " << lineBuffer[i+11] ;
+        
+        for(int j = 0; j < len; j+=12){
+            bool ok = Intersections::segmentIntersection(
+                lineBuffer[i], lineBuffer[i + 2], 
+                lineBuffer[i+6 + 0], lineBuffer[i+6 + 2], 
+                segment [ j + 0], segment [ j + 2], 
+                segment [ j+6 + 0], segment [ j+6 + 2], 
+                intersectionPoint[0], intersectionPoint[2]
+            );
+            if(!ok) continue;
+            qDebug() << "intersection";
+            qDebug() <<  lineBuffer[i]<< " " << lineBuffer[i + 2]<< " " <<
+                lineBuffer[i+6 + 0]<< " " << lineBuffer[i+6 + 2]<< " -- " <<
+                segment [ j + 0]<< " " << segment [ j + 2]<< " " <<
+                segment [ j+6 + 0]<< " " << segment [ j+6 + 2]<< " " ;
+            dist = Vec3::distance(intersectionPoint, pos);
+
+            if(dist < best[0]){
+                best[0] = dist;
+                best[1] = lineBuffer[i+3];
+                best[2] = lineBuffer[i+4];
+
+                float dist1 = Vec3::distance(lineBuffer + i, lineBuffer + i+6);
+                float dist2 = Vec3::distance(lineBuffer + i, intersectionPoint);
+                dist1 = dist2/dist1;
+                best[3] = lineBuffer[i+5] + (lineBuffer[i+11] - lineBuffer[i+5])*dist1;
+                //best[3] = intersectionPoint[0];
+                //best[4] = intersectionPoint[1];
+                //best[5] = intersectionPoint[2];
+            }
+        }
+    }
+    qDebug() << "item pos: " << best[0] << " " << best[1] << " " << best[2] << " " << best[3];
+    
+    //TRnode* n = trackNodes[(int)best[1]];
+    //posT[0] = n->trVectorSection[(int)best[2]].param[8];
+    //posT[1] = -n->trVectorSection[(int)best[2]].param[9];
+    
+
+    
+    float metry = this->getVectorSectionLengthToIdx(best[1], best[2]);
+    if(tpos != NULL){
+        tpos[0] = best[1];
+        tpos[1] = metry + best[3];
+    }    
+    this->getDrawPositionOnTrNode((float*)best, best[1], metry + best[3]);
+    pos[0] = best[0];
+    pos[1] = best[1];
+    pos[2] = -best[2];
+    posT[0] = best[5];
+    posT[1] = -best[6];
+    q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
+    Quat::rotateY(q, q, best[3]);
+    Quat::rotateX(q, q, -best[4]);
+}
+
 void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
         //Vector3f p;
         Vector3f o;
@@ -2214,6 +2286,41 @@ void TDB::newSignalObject(QString filename, int* &itemId, int &signalUnits, int 
         itemId[i*2+1] = this->iTRitems++;
         this->addItemToTrNode(trNodeId, itemId[i*2+1]);
     }
+}
+
+void TDB::newSpeedPostObject(int speedPostId, int speedPostType, std::vector<int> & itemId, int trNodeId, float metry, int type){
+    if(type != WorldObj::speedpost) 
+        return;
+    SpeedPost* sShape = this->speedPostDAT->speedPost[speedPostId];
+    if(sShape == NULL)
+        return;
+    
+    float trPosition[7];
+    getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
+    
+    this->trackItems[this->iTRitems] = TRitem::newSpeedPostItem(this->iTRitems, metry, speedPostType);
+    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[this->iTRitems]->setSpeedpostRot(trPosition[3]);
+    itemId.clear();
+    itemId.push_back(0);
+    itemId.push_back(this->iTRitems++);
+    //qDebug() << "tritem size"<<itemId.size();
+    this->addItemToTrNode(trNodeId, itemId[1]);
+}
+
+void TDB::newLevelCrObject(int* &itemId, int trNodeId, float metry, int type){
+    if(type != WorldObj::levelcr) 
+        return;
+    
+    float trPosition[7];
+    getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
+    
+    this->trackItems[this->iTRitems] = TRitem::newLevelCrItem(this->iTRitems, metry);
+    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    itemId = new int[2];
+    itemId[0] = 0;
+    itemId[1] = this->iTRitems++;
+    this->addItemToTrNode(trNodeId, itemId[1]);
 }
 
 void TDB::deleteTrItem(int trid){

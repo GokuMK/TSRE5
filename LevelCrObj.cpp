@@ -23,6 +23,14 @@ LevelCrObj::LevelCrObj(const LevelCrObj& orig) {
 LevelCrObj::~LevelCrObj() {
 }
 
+bool LevelCrObj::allowNew(){
+    return true;
+}
+
+bool LevelCrObj::isTrackItem(){
+    return true;
+}
+
 void LevelCrObj::load(int x, int y) {
     this->shape = ShapeLib::addShape(resPath, fileName);
     this->x = x;
@@ -34,6 +42,38 @@ void LevelCrObj::load(int x, int y) {
     this->skipLevel = 1;
     this->modified = false;
     setMartix();
+}
+
+void LevelCrObj::initTrItems(float* tpos){
+    if(tpos == NULL)
+        return;
+    int trNodeId = tpos[0];
+    float metry = tpos[1];
+    
+    TDB* tdb = Game::trackDB;
+    qDebug() <<"new levelcr  "<<this->fileName;
+
+    tdb->newLevelCrObject(trItemId, trNodeId, metry, this->typeID);
+    
+    //this->signalSubObj = 0;
+    //qDebug() <<"signalUnits  "<<this->signalUnits;
+    //for(int i = 0; i < this->signalUnits; i++)
+    //    this->signalSubObj = this->signalSubObj | (1 << i);
+   // this->trItemIdCount = 4;
+  //  this->trItemId[0] = isRoad;
+   // this->trItemId[1] = trItemId[0];
+   // this->trItemId[2] = isRoad;
+  //  this->trItemId[3] = trItemId[1];
+    this->drawPosition = NULL;
+}
+
+void LevelCrObj::set(QString sh, QString val){
+    if (sh == ("filename")) {
+        fileName = val;
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
 }
 
 void LevelCrObj::set(int sh, FileBuffer* data) {

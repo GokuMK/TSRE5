@@ -259,7 +259,7 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
         qDebug() << itemData->type << " <- object not supported yet ";
         return NULL;
     }
-    
+
     nowy->set("filename", itemData->filename);
     nowy->set("_refvalue", itemData->value);
 

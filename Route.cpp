@@ -213,7 +213,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     Game::check_coords(x, z, p);
     
     // pozycja wzgledem TDB:
-    int itemTrackType =  WorldObj::isTrackObj(r->type);
+    int itemTrackType = WorldObj::isTrackObj(r->type);
     float* tpos = NULL;
     if(stickToTDB || itemTrackType == 1){
         tpos = new float[2];
@@ -228,6 +228,18 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
         x = playerT[0];
         z = playerT[1];
+    } if(itemTrackType == 3){
+        tpos = new float[2];
+        float* playerT = Vec2::fromValues(x, z);
+        this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
+        x = playerT[0];
+        z = playerT[1];
+        float* buffer;
+        int len;
+        this->roadDB->getVectorSectionLine(buffer, len, playerT[0], playerT[1], tpos[0], 0, 0);
+        qDebug() << "len "<<len;
+        this->trackDB->getSegmentIntersectionPositionOnTDB(playerT, buffer, len, p, q, tpos);
+        //return NULL;
     }
 
     Tile *tTile;

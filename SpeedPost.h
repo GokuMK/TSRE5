@@ -8,15 +8,22 @@ class FileBuffer;
 class SpeedPost {
 public:
     QString name;
-    QString speedResumeSignShape;
+    QString speedResumeSignShapeName;
+    int speedResumeSignShapeCount = 0;
+    float* speedResumeSignShape;
+
+    QString speedWarningSignShapeName;
+    int speedWarningSignShapeCount = 0;
+    float* speedWarningSignShape;
+    
     QString speedSignShapeName;
-    int speedSignShapeCount;
+    int speedSignShapeCount = 0;
     float* speedSignShape;
     QString speedDigitTex;
     float speedTextSize[3];
     
     QString milepostShapeName;
-    int milepostShapeCount;
+    int milepostShapeCount = 0;
     float* milepostShape;
     QString milepostDigitTex;
     float milepostTextSize[3];

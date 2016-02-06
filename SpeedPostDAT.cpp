@@ -35,9 +35,10 @@ SpeedPostDAT::SpeedPostDAT() {
             continue;
         }
         if (sh == "speedpost_set") {
-            this->speedPost.emplace_back();
+            SpeedPost* spost = new SpeedPost();
+            this->speedPost.push_back(spost);
             while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
-                this->speedPost.back().set(sh, bufor);
+                spost->set(sh, bufor);
                 ParserX::pominsekcje(bufor);
                 continue;
             }

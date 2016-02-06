@@ -21866,6 +21866,8 @@ build/Release/MinGW_QT_static-Windows/SpeedpostObj.o: SpeedpostObj.cpp Speedpost
 		Game.h \
 		TrackItemObj.h \
 		TS.h \
+		SpeedPostDAT.h \
+		SpeedPost.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/SpeedpostObj.o SpeedpostObj.cpp
 
