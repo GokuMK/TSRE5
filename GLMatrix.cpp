@@ -759,6 +759,18 @@ float* Vec3::transformQuat(float* out, float* a, float* q) {
 };
 
 /**
+ * Creates a new, empty vec4
+ * @returns {vec4} a new 2D vector
+ */
+float* Vec4::create() {
+    float * out = new float[4];
+    out[0] = 0;
+    out[1] = 0;
+    out[0] = 0;
+    out[1] = 0;
+    return out; 
+};
+/**
  * Normalize a vec4
  *
  * @param {vec4} out the receiving vector
@@ -781,6 +793,25 @@ float* Vec4::normalize(float* out, float* a) {
     return out;
 };
 
+/**
+ * Creates a new, empty quaternion
+ * @returns {vec4} 
+ */
+float* Quat::create() {
+    float * out = new float[4];
+    out[0] = 0;
+    out[1] = 0;
+    out[0] = 0;
+    out[1] = 1;
+    return out; 
+};
+float* Quat::fill(float* out) {
+    out[0] = 0;
+    out[1] = 0;
+    out[0] = 0;
+    out[1] = 1;
+    return out; 
+};
 /**
  * Creates a quaternion from the given 3x3 rotation matrix.
  *

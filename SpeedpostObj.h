@@ -7,6 +7,7 @@
 #include <vector>
 
 class TrackItemObj;
+class OglObj;
 
 class SpeedpostObj : public WorldObj  {
 public:
@@ -35,6 +36,8 @@ private:
     //int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL;
     float* drawPosition = NULL;
+    OglObj* drawLine = NULL;
+    
     void renderTritems(GLUU* gluu, int selectionColor);
     float* drawPositions = NULL;
     int selectionValue = 0;

@@ -21,9 +21,11 @@ public:
     int x;
     int z;
     //obiekty = new Array();
-    int jestObiektow;
+    int jestObiektow = 0;
+    int jestObiektowWS = 0;
     int jestHiddenObj = 0;
     std::unordered_map<int, WorldObj*> obiekty;
+    std::unordered_map<int, WorldObj*> obiektyWS;
     Tile();
     Tile(int xx, int zz);
     Tile(const Tile& orig);
@@ -31,6 +33,7 @@ public:
     static void saveEmpty(int x, int z);
     static QString getNameXY(int e);
     void load();
+    void loadWS();
     bool isModified();
     void setModified(bool value);
     WorldObj* getObj(int uid);
@@ -40,10 +43,13 @@ public:
     void initNew();
     void render();
     void render(float *  playerT, float* playerW, float* target, float fov, bool selection);
+    void renderWS(float *  playerT, float* playerW, float* target, float fov, bool selection);
     void save();
+    void saveWS();
     
 private:
     int maxUiD = 0;
+    int maxUiDWS = 0;    
     bool modified;
     QString* viewDbSphereRaw = NULL;
     void wczytajObiekty();

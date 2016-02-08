@@ -16,6 +16,7 @@
 #include "DynTrackObj.h"
 #include "Flex.h"
 #include "ForestObj.h"
+#include "CoordsMkr.h"
 
 Route::Route() {
 
@@ -40,6 +41,7 @@ Route::Route() {
     this->trackDB = new TDB(tsection, false, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".tdb"));
     this->roadDB = new TDB(tsection, true, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".rdb"));
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
+    this->mkr = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + Game::routeName +".mkr");
     
     ForestObj::loadForestList();
     
@@ -161,8 +163,9 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
             roadDB->renderAll(gluu, playerT, playerRot);
         if(Game::viewTsectionLines)
             roadDB->renderLines(gluu, playerT, playerRot);
+        
+        //this->mkr->render(gluu, playerT, playerW);
     }
-    
     //trackDB->renderItems(gluu, playerT, playerRot);
     /*
     for (var key in this.tile){

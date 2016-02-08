@@ -77,12 +77,15 @@ public:
 
 class Vec4 {
 public:
+    static float* create();
     static float* normalize(float* out, float* a);
 
 };
 
 class Quat {
 public:
+    static float* create();
+    static float* fill(float *out);
     static float* fromMat3(float *out, float *m);
     static float* fromRotationXYZ(float *out, float *a);
     static float* rotateX(float *out, float *a, float rad);

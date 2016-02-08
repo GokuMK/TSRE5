@@ -28,7 +28,9 @@ public:
         carspawner = 13,
         levelcr = 14,
         pickup = 15,
-        hazard = 16
+        hazard = 16,
+        soundsource = 17,
+        soundregion = 18
     };
     TypeID typeID = this->undefined;
     

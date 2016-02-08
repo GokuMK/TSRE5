@@ -291,6 +291,41 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
             pointer3d = new TrackItemObj(1);
             pointer3d->setMaterial(0.7,0.7,0.7);
         }
+        
+        // line
+        drawLine = new OglObj();
+        float* tpoints = new float[7];
+        float* lpoints = new float[trItemId.size()*6];
+        int ptr = 0;
+
+        for(int i = 0; i < trItemId.size()/2; i++){
+            if(this->trItemId[i*2] != 0)
+                continue;
+            int id = tdb->findTrItemNodeId(this->trItemId[i*2+1]);
+            if (id < 0) {
+                qDebug() << "speedpost: fail id";
+                loaded = false;
+                return;
+            }
+            //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
+            bool ok = tdb->getDrawPositionOnTrNode(tpoints, id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
+            if(!ok){
+                this->loaded = false;
+                return;
+            }
+            tpoints[0] += 2048 * (tpoints[5] - this->x);
+            tpoints[2] -= 2048 * (-tpoints[6] - this->y);
+            lpoints[ptr++] = tpoints[0];
+            lpoints[ptr++] = tpoints[1]+0.5;
+            lpoints[ptr++] = -tpoints[2];
+            if((i > 0 && i < trItemId.size()/2-1) || trItemId.size() == 2){
+                lpoints[ptr++] = tpoints[0];
+                lpoints[ptr++] = tpoints[1]+0.5;
+                lpoints[ptr++] = -tpoints[2];
+            }
+        }
+        drawLine->init(lpoints, ptr, drawLine->V, GL_LINES);
+        drawLine->setMaterial(1.0, 0.0, 0.0);
     }
     
     //int aaa = drawPosition[0];
@@ -300,6 +335,7 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
     int useSC;
 
     gluu->mvPushMatrix();
+    drawLine->render();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 0 * (drawPosition[4] - this->x), drawPosition[1] + 1, -drawPosition[2] + 0 * (-drawPosition[5] - this->y));
     Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3]);
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
@@ -308,7 +344,6 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
     pointer3d->render(selectionColor + (1)*65536*25*useSC);
     gluu->mvPopMatrix();
-
 };
 
 bool SpeedpostObj::getBorder(float* border){

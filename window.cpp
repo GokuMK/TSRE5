@@ -19,6 +19,7 @@
 #include "PropertiesDyntrack.h"
 #include "PropertiesSignal.h"
 #include "PropertiesPickup.h"
+#include "PropertiesForest.h"
 
 Window::Window() {
     
@@ -37,6 +38,7 @@ Window::Window() {
     objProperties.push_back(propertiesDyntrack);
     objProperties.push_back(new PropertiesSignal);
     objProperties.push_back(new PropertiesPickup);
+    objProperties.push_back(new PropertiesForest);
     // last 
     objProperties.push_back(new PropertiesUndefined);
     

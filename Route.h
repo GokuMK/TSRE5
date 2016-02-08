@@ -9,6 +9,7 @@
 
 class Tile;
 class Brush;
+class CoordsMkr;
 
 class Route {
 public:
@@ -50,6 +51,7 @@ private:
     void loadTrk();
     TDB *trackDB;
     TDB *roadDB; 
+    CoordsMkr * mkr;
 };
 
 #endif	/* ROUTE_H */

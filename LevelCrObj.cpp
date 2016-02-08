@@ -214,30 +214,35 @@ void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
     
     ///////////////////////////////
     TDB* tdb = Game::trackDB;
-    if(drawPosition == NULL){
+    if(drawPositions.size() == 0){
         if(this->trItemId == NULL){
             qDebug() << "LevelCrObj: fail trItemId";
             loaded = false;
             return;
         }
-        int id = tdb->findTrItemNodeId(this->trItemId[1]);
-        if (id < 0) {
-            qDebug() << "LevelCrObj: fail id";
-            loaded = false;
-            return;
-        }
-                //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
-        drawPosition = new float[7];
-        bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
-        if(!ok){
-            this->loaded = false;
-            return;
-        }
-        drawPosition[0] += 2048 * (drawPosition[5] - this->x);
-        drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
-        if(pointer3d == NULL){
-            pointer3d = new TrackItemObj(1);
-            pointer3d->setMaterial(0.9,0.5,0.0);
+        for(int i = 0; i < trItemIdCount; i++){
+            if(this->trItemId[i*2] != 0)
+                continue;
+            int id = tdb->findTrItemNodeId(this->trItemId[i*2+1]);
+            if (id < 0) {
+                qDebug() << "LevelCrObj: fail id";
+                loaded = false;
+                return;
+            }
+            //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
+            drawPosition = new float[7];
+            bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
+            if(!ok){
+                this->loaded = false;
+                return;
+            }
+            drawPosition[0] += 2048 * (drawPosition[5] - this->x);
+            drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
+            if(pointer3d == NULL){
+                pointer3d = new TrackItemObj(1);
+                pointer3d->setMaterial(0.9,0.5,0.0);
+            }
+            drawPositions.push_back(drawPosition);
         }
     }
 
@@ -246,15 +251,18 @@ void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
     gluu->setMatrixUniforms();
     int useSC;
 
-    gluu->mvPushMatrix();
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 0 * (drawPosition[4] - this->x), drawPosition[1] + 1, -drawPosition[2] + 0 * (-drawPosition[5] - this->y));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3]);
-    //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
-    //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
-    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    pointer3d->render(selectionColor + (1)*65536*25*useSC);
-    gluu->mvPopMatrix();
+    for(int i = 0; i < drawPositions.size(); i++){
+        drawPosition = drawPositions[i];
+        gluu->mvPushMatrix();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 0 * (drawPosition[4] - this->x), drawPosition[1] + 1, -drawPosition[2] + 0 * (-drawPosition[5] - this->y));
+        Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3]);
+        //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
+        //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
+        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        useSC = (float)selectionColor/(float)(selectionColor+0.000001);
+        pointer3d->render(selectionColor + (1)*65536*25*useSC);
+        gluu->mvPopMatrix();
+    }
 
 };
 

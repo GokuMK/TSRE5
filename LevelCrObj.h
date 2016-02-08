@@ -31,6 +31,7 @@ private:
     int *trItemId = NULL;
     int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL;
+    std::vector<float*> drawPositions;
     float* drawPosition = NULL;
     void renderTritems(GLUU* gluu, int selectionColor);
 };

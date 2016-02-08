@@ -22,6 +22,7 @@
 #include "GLUU.h"
 #include "GLMatrix.h"
 #include "TS.h"
+#include "IghCoords.h"
 
 Tile::Tile() {
     modified = false;
@@ -72,14 +73,12 @@ void Tile::wczytajObiekty() {
     for (auto it = obiekty.begin(); it != obiekty.end(); ++it) {
         //console.log(obj.type);
         WorldObj* obj = (WorldObj*) it->second;
-
         obj->load(x, z);
         if(obj->UiD < 1000000)
             if(obj->UiD > maxUiD) maxUiD = obj->UiD;
     }
     //qDebug() << "ok";
     loaded = 1;
-    
     //save();
 }
 
@@ -119,6 +118,7 @@ void Tile::load() {
                 qDebug() << obiekty.size();
                 loaded = 0;
                 wczytajObiekty();
+                loadWS();
                 return;
             } else if (sh == "tr_watermark") {
                 nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::parsujr(data)));
@@ -218,6 +218,94 @@ void Tile::load() {
        qDebug() << obiekty.size();
        loaded = 0;
        wczytajObiekty();
+       loadWS();
+    }
+}
+
+void Tile::loadWS() {
+
+    QString sh;
+    QString path;
+    path = Game::root + "/routes/" + Game::route + "/world/w" + getNameXY(x) + "" + getNameXY(-z) + ".ws";
+    path.replace("//", "/");
+    
+    QFile *file = new QFile(path);
+    if (!file->open(QIODevice::ReadOnly)){
+        //qDebug() << "ws file not exist    " << path;
+        return;
+    }
+    FileBuffer* data = ReadFile::read(file);
+    //qDebug() << "Date:" << data->length;
+    //data->off = 0;
+    //for(int i = 0; i < 64; i++){
+    //    data->off = i;
+    //    qDebug() << (char)data->get()<<"-"<<data->get();
+    //}
+    data->setTokenOffset(261844);
+    data->off = 16;
+    if (data->getToken() != 375){
+        qDebug() << "w file uncompressed " << path;
+        data->off = 0;
+        sh = "Tr_Worldsoundfile";
+        ParserX::szukajsekcji1(sh, data);
+
+        for (int tt = 0;; tt++) {
+            sh = ParserX::nazwasekcji(data).toLower();
+            //qDebug() << "= " << sh;
+
+            WorldObj* nowy;
+            if (sh == "") {
+                qDebug() <<"WS size: "<< obiektyWS.size();
+                //loaded = 0;
+                return;
+            }
+            if ((nowy = WorldObj::createObj(sh)) == NULL) {
+                ParserX::pominsekcje(data);
+                continue;
+            }
+            //qDebug() << nowy->type;
+            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                nowy->set(sh, data);
+                ParserX::pominsekcje(data);
+            }
+            nowy->load(x, z);
+            if(nowy->UiD < 1000000)
+                if(nowy->UiD > maxUiDWS) maxUiDWS = nowy->UiD;
+            obiektyWS[jestObiektowWS++] = nowy;
+
+            ParserX::pominsekcje(data);
+            continue;
+        }
+    } else {
+        qDebug() << "w file compressed   " << path;
+        data->off+=5;
+        int offset, offsetO;
+        int idx, idxO;
+        WorldObj* nowy;
+        while(data->length > data->off){
+            idx = data->getToken();
+            offset = data->off + data->getInt() + 4;
+            //qDebug() << idx;
+            if ((nowy = WorldObj::createObj(idx)) == NULL) {
+                data->off = offset;
+                continue;
+            }
+            data->off++;
+            while (data->off < offset) {
+                idxO = data->getToken();
+                offsetO = data->off + data->getInt() + 4;
+                //qDebug() << "- "<< idxO;
+                nowy->set(idxO, data);
+                data->off = offsetO;
+            }
+            nowy->load(x, z);
+            if(nowy->UiD < 1000000)
+                if(nowy->UiD > maxUiDWS) maxUiDWS = nowy->UiD;
+            obiektyWS[jestObiektowWS++] = nowy;
+            data->off = offset;
+       }
+       qDebug() << obiektyWS.size();
+       //loaded = 0;
     }
 }
 
@@ -387,12 +475,13 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, boo
     //gluu->setMatrixUniforms();
     //this.obiekty.forEach(function(obj) {
     int selectionColor = 0;
+    float lodx, lodz, lod;
     for (int i = 0; i < jestObiektow; i++) {
         if (obiekty[i]->loaded) {//
-            float lodx = (x - playerT[0])*2048 + obiekty[i]->position[0] - playerW[0];
-            float lodz = (z - playerT[1])*2048 + obiekty[i]->position[2] - playerW[2];
+            lodx = (x - playerT[0])*2048 + obiekty[i]->position[0] - playerW[0];
+            lodz = (z - playerT[1])*2048 + obiekty[i]->position[2] - playerW[2];
             //console.log(this.x);
-            float lod = (float) sqrt(lodx * lodx + lodz * lodz);
+            lod = (float) sqrt(lodx * lodx + lodz * lodz);
             if (lod < Game::objectLod) {
                 gluu->mvPushMatrix();
                 //obiekty[i]->render(gluu, lod, x-playerT[0]*2048, z-playerT[1]*2048);
@@ -407,8 +496,20 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, boo
             }
         }
     }
-    //});
-
+    
+    for (int i = 0; i < jestObiektowWS; i++) {
+        if (obiektyWS[i]->loaded) {//
+            gluu->mvPushMatrix();
+            if (selection) {
+                int sxx = (x - playerT[0] + 1)*10 + (z - playerT[1] + 1);
+                //qDebug() << sxx;
+                selectionColor = (obiektyWS[i]->UiD-100000) + sxx * 65536;
+            }
+            obiektyWS[i]->render(gluu, lod, lodx, lodz, playerW, target, fov, selectionColor);
+            //obiekty[i]->render(gluu);
+            gluu->mvPopMatrix();
+        }
+    }
 }
 /*
 Tile.prototype.getObjHash = function(UiD) {
