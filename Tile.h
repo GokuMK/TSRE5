@@ -22,10 +22,10 @@ public:
     int z;
     //obiekty = new Array();
     int jestObiektow = 0;
-    int jestObiektowWS = 0;
+    //int jestObiektowWS = 0;
     int jestHiddenObj = 0;
     std::unordered_map<int, WorldObj*> obiekty;
-    std::unordered_map<int, WorldObj*> obiektyWS;
+    //std::unordered_map<int, WorldObj*> obiektyWS;
     Tile();
     Tile(int xx, int zz);
     Tile(const Tile& orig);

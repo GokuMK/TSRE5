@@ -85,6 +85,7 @@ public:
     virtual void rotate(float x, float y, float z);
     virtual void resize(float x, float y, float z);
     virtual bool isTrackItem();
+    virtual bool isSoundItem();
     virtual Ref::RefItem* getRefInfo();
     void drawBox();
     virtual bool select();

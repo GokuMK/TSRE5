@@ -191,20 +191,24 @@ void GLWidget::paintGL() {
         glGetFloatv(GL_PROJECTION_MATRIX, projmatrix);
         int realy = viewport[3] - (int) y - 1;
         glReadPixels(x, realy, 1, 1, GL_RGBA, GL_FLOAT, &winZ);
-
-        qDebug() << winZ[0] << " " << winZ[1] << " " << winZ[2] << " ";
-        int ww1 = (int) (winZ[0]*255);
+        
+        qDebug() << winZ[0] << " " << winZ[1] << " " << winZ[2] << " " << winZ[3];
+        int colorHash = (int)(winZ[0]*255)*256*256 + (int)(winZ[1]*255)*256 + (int)(winZ[2]*255);
+        int wdata = colorHash / 131072;
+        int UiD = colorHash - wdata*131072;
+        
+        int ww1 = wdata;//(int) (winZ[0]*255);
         //int ww = ww1/10;
-        int cdata = (int) (ww1 / 25);
-        int ww  = (ww1 - cdata*25);
+        int cdata = (int) (ww1 / 8);
+        int ww  = (ww1 - cdata*8);
         qDebug() << "selected " <<ww1 <<" "<<ww;
-        int wx = (int) (ww / 10);
-        int wz = (int) (ww - (wx)*10);
+        int wx = (int) (ww / 4);
+        int wz = (int) (ww - (wx)*4);
         wx = camera->pozT[0] + (wx - 1);
         wz = camera->pozT[1] + (wz - 1);
         qDebug() << "color data: " << cdata;
 
-        int UiD = (int) (winZ[1]*255)*256 + (int) (winZ[2]*255);
+        //int UiD = (int) (winZ[1]*255)*256 + (int) (winZ[2]*255);
 
         qDebug() << wx << " " << wz << " " << UiD;
         if(selectedObj != NULL) selectedObj->unselect();

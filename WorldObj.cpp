@@ -229,6 +229,10 @@ bool WorldObj::isTrackItem(){
     return false;
 }
 
+bool WorldObj::isSoundItem(){
+    return false;
+}
+
 void WorldObj::load(int x, int y) {
     this->x = x;
     this->y = y;

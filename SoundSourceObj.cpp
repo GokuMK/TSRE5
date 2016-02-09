@@ -4,6 +4,8 @@
 #include "TS.h"
 #include "ParserX.h"
 #include "FileBuffer.h"
+#include "SoundList.h"
+#include "Game.h"
 
 SoundSourceObj::SoundSourceObj() {
 }
@@ -15,6 +17,10 @@ bool SoundSourceObj::allowNew(){
     return true;
 }
 
+bool SoundSourceObj::isSoundItem(){
+    return true;
+}
+
 void SoundSourceObj::load(int x, int y) {
     this->x = x;
     this->y = y;
@@ -23,6 +29,20 @@ void SoundSourceObj::load(int x, int y) {
     this->loaded = true;
 
     setMartix();
+}
+
+void SoundSourceObj::set(QString sh, int val){
+    if (sh == ("_refvalue")) {
+        this->fileName = "";
+        for (auto it = Game::soundList->sources.begin(); it != Game::soundList->sources.end(); ++it ){
+            if(it->second->id == val){
+                this->fileName = it->second->file1;
+            }
+        }
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
 }
 
 void SoundSourceObj::set(QString sh, QString val){
@@ -74,5 +94,5 @@ void SoundSourceObj::render(GLUU* gluu, float lod, float posx, float posz, float
     if(pointer3d == NULL)
         pointer3d = new PoleObj();
         
-    pointer3d->render();
+    pointer3d->render(selectionColor);
 };

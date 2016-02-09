@@ -10,11 +10,13 @@
 class Window;
 class LoadWindow;
 class TDB;
+class SoundList;
 
 class Game {
 public:
     static TDB *trackDB;
-    static TDB *roadDB;     
+    static TDB *roadDB;
+    static SoundList *soundList;
     
     static QString root;
     static QString route;

@@ -10,6 +10,7 @@
 class Tile;
 class Brush;
 class CoordsMkr;
+class SoundList;
 
 class Route {
 public:
@@ -20,6 +21,7 @@ public:
     float startpX;
     float startpZ;
     TSectionDAT *tsection; 
+    SoundList* soundList;
     Ref *ref;
     bool stickToTDB = false;
     Route();

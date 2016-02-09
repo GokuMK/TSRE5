@@ -7,6 +7,7 @@
 #include "ForestObj.h"
 #include "SpeedPost.h"
 #include "SpeedPostDAT.h"
+#include "SoundList.h"
 
 ObjTools::ObjTools(QString name)
     : QWidget(){
@@ -179,6 +180,8 @@ void ObjTools::routeLoaded(Route* a){
     
     refOther.addItem("Signals");
     refOther.addItem("Forests");
+    refOther.addItem("Sound Sources");
+    refOther.addItem("Sound Regions");    
     refOther.addItem("SpeedSign");
     refOther.addItem("SpeedResume");
     refOther.addItem("SpeedWarning");
@@ -259,6 +262,16 @@ void ObjTools::refOtherSelected(const QString & text){
                 new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i]->name, &otherList, i*1000+3 );
         }
     }
+    if(text.toLower() == "sound sources"){
+        for (auto it = route->soundList->sources.begin(); it != route->soundList->sources.end(); ++it ){
+            new QListWidgetItem ( it->second->name, &otherList, it->second->id );
+        }
+    }
+    if(text.toLower() == "sound regions"){
+        for (auto it = route->soundList->regions.begin(); it != route->soundList->regions.end(); ++it ){
+            new QListWidgetItem ( it->second->name, &otherList, it->second->id );
+        }
+    }
     otherList.sortItems(Qt::AscendingOrder);
 }
 
@@ -301,6 +314,8 @@ void ObjTools::otherListSelected(QListWidgetItem * item){
     if(refOther.currentText().toLower() == "speedresume") itemRef->type = "speedpost";
     if(refOther.currentText().toLower() == "speedwarning") itemRef->type = "speedpost";
     if(refOther.currentText().toLower() == "milepost") itemRef->type = "speedpost";
+    if(refOther.currentText().toLower() == "sound sources") itemRef->type = "soundsource";
+    if(refOther.currentText().toLower() == "sound regions") itemRef->type = "soundregion";
     qDebug() << item->type() << " " << item->text();
     itemRef->clas = "";
     itemRef->value = item->type();

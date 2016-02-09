@@ -7,12 +7,13 @@
 
 class TrackItemObj;
 
-class SoundRegionObj : WorldObj{
+class SoundRegionObj : public WorldObj{
 public:
     SoundRegionObj();
     virtual ~SoundRegionObj();
     bool allowNew();
     bool isTrackItem();
+    bool isSoundItem();
     void initTrItems(float* tpos);
     void load(int x, int y);
     void set(int sh, FileBuffer* val);

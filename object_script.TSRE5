@@ -40,6 +40,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/PropertiesPlatform.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesSiding.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesSignal.o
+./build/Release/MinGW_QT_static-Windows/PropertiesSoundSource.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesStatic.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesTransfer.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesUndefined.o
@@ -56,6 +57,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/SignalShape.o
 ./build/Release/MinGW_QT_static-Windows/SignalType.o
 ./build/Release/MinGW_QT_static-Windows/SignalWindow.o
+./build/Release/MinGW_QT_static-Windows/SoundList.o
 ./build/Release/MinGW_QT_static-Windows/SoundRegionObj.o
 ./build/Release/MinGW_QT_static-Windows/SoundSourceObj.o
 ./build/Release/MinGW_QT_static-Windows/SpeedPost.o
@@ -105,6 +107,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesPlatform.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesSiding.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesSignal.o
+./build/Release/MinGW_QT_static-Windows/moc_PropertiesSoundSource.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesStatic.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesTransfer.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesUndefined.o

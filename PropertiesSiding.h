@@ -20,7 +20,7 @@ public slots:
 signals:
     
 private:
-    PlatformObj* pobj;
+    PlatformObj* pobj = NULL;
     QCheckBox disablePlatform;
     QLineEdit namePlatform;
     QLineEdit lengthPlatform;

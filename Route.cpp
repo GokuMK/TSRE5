@@ -17,6 +17,7 @@
 #include "Flex.h"
 #include "ForestObj.h"
 #include "CoordsMkr.h"
+#include "SoundList.h"
 
 Route::Route() {
 
@@ -54,6 +55,11 @@ Route::Route() {
         this->mkr = mkrList[(Game::routeName+".mkr").toStdString()];
     else
         this->mkr = mkrList.begin()->second;
+    
+    soundList = new SoundList();
+    soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
+    soundList->loadSoundRegions(Game::root + "/routes/" + Game::route + "/ttype.dat");
+    Game::soundList = soundList;
     
     ForestObj::loadForestList();
     

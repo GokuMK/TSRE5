@@ -4,9 +4,11 @@
 #include <QDebug>
 #include "window.h"
 #include "LoadWindow.h"
+#include "SoundList.h"
 
 TDB *Game::trackDB = NULL;
 TDB *Game::roadDB = NULL;    
+SoundList *Game::soundList = NULL;    
 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";

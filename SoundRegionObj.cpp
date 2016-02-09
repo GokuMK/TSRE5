@@ -26,6 +26,10 @@ bool SoundRegionObj::isTrackItem(){
     return true;
 }
 
+bool SoundRegionObj::isSoundItem(){
+    return true;
+}
+
 void SoundRegionObj::load(int x, int y) {
     this->x = x;
     this->y = y;
@@ -178,11 +182,11 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
             }
             tpoints[0] += 2048 * (tpoints[5] - this->x);
             tpoints[2] -= 2048 * (-tpoints[6] - this->y);
-            lpoints[ptr++] = tpoints[0];
-            lpoints[ptr++] = tpoints[1]+1.0;
-            lpoints[ptr++] = -tpoints[2];
-            if((i > 0 && i < trItemId.size()/2-1) || trItemId.size() == 2){
-            //if(i == 0 || i == trItemId.size()/2 - 1){
+            //lpoints[ptr++] = tpoints[0];
+            //lpoints[ptr++] = tpoints[1]+1.0;
+            //lpoints[ptr++] = -tpoints[2];
+            //if((i > 0 && i < trItemId.size()/2-1) || trItemId.size() == 2){
+            if(i == 0 || i == trItemId.size()/2 - 1){
                 lpoints[ptr++] = tpoints[0];
                 lpoints[ptr++] = tpoints[1]+1.0;
                 lpoints[ptr++] = -tpoints[2];
@@ -205,13 +209,13 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
     Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[3]);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    pointer3d->render(selectionColor + (1)*65536*25*useSC);
+    pointer3d->render(selectionColor + (1)*131072*8*useSC);
     gluu->mvPopMatrix();
     gluu->mvPushMatrix();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[0] + 0 * (drawPositionE[4] - this->x), drawPositionE[1] + 1, -drawPositionE[2] + 0 * (-drawPositionE[5] - this->y));
     Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[3]);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    pointer3d->render(selectionColor + (1)*65536*25*useSC);
+    pointer3d->render(selectionColor + (1)*131072*8*useSC);
     gluu->mvPopMatrix();
 };

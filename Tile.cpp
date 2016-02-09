@@ -255,7 +255,7 @@ void Tile::loadWS() {
 
             WorldObj* nowy;
             if (sh == "") {
-                qDebug() <<"WS size: "<< obiektyWS.size();
+                qDebug() <<"WS size: "<< obiekty.size();
                 //loaded = 0;
                 return;
             }
@@ -271,7 +271,7 @@ void Tile::loadWS() {
             nowy->load(x, z);
             if(nowy->UiD < 1000000)
                 if(nowy->UiD > maxUiDWS) maxUiDWS = nowy->UiD;
-            obiektyWS[jestObiektowWS++] = nowy;
+            obiekty[jestObiektow++] = nowy;
 
             ParserX::pominsekcje(data);
             continue;
@@ -301,10 +301,10 @@ void Tile::loadWS() {
             nowy->load(x, z);
             if(nowy->UiD < 1000000)
                 if(nowy->UiD > maxUiDWS) maxUiDWS = nowy->UiD;
-            obiektyWS[jestObiektowWS++] = nowy;
+            obiekty[jestObiektow++] = nowy;
             data->off = offset;
        }
-       qDebug() << obiektyWS.size();
+       qDebug() << obiekty.size();
        //loaded = 0;
     }
 }
@@ -361,7 +361,10 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
     }
     nowy->initPQ(p, q);
     //qDebug() << maxUiD;
-    nowy->UiD = ++maxUiD;
+    if(nowy->isSoundItem())
+        nowy->UiD = ++maxUiDWS;
+    else
+        nowy->UiD = ++maxUiD;
     qDebug() << itemData->type << " " << itemData->filename << nowy->UiD;
     //nowy->fileName = itemData->filename;
     nowy->load(x, z);
@@ -431,7 +434,8 @@ void Tile::save() {
         out << "	)\n";
     }*/
     for(int i = 0; i < this->jestObiektow; i++){
-        this->obiekty[i]->save(&out);
+        if(this->obiekty[i]->isSoundItem()) continue;
+            this->obiekty[i]->save(&out);
     }
     out << ")";
  
@@ -486,9 +490,9 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, boo
                 gluu->mvPushMatrix();
                 //obiekty[i]->render(gluu, lod, x-playerT[0]*2048, z-playerT[1]*2048);
                 if (selection) {
-                    int sxx = (x - playerT[0] + 1)*10 + (z - playerT[1] + 1);
+                    int sxx = (x - playerT[0] + 1)*4 + (z - playerT[1] + 1);
                     //qDebug() << sxx;
-                    selectionColor = obiekty[i]->UiD + sxx * 65536;
+                    selectionColor = obiekty[i]->UiD + sxx * 131072;
                 }
                 obiekty[i]->render(gluu, lod, lodx, lodz, playerW, target, fov, selectionColor);
                 //obiekty[i]->render(gluu);
@@ -497,19 +501,19 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, boo
         }
     }
     
-    for (int i = 0; i < jestObiektowWS; i++) {
+    /*for (int i = 0; i < jestObiektowWS; i++) {
         if (obiektyWS[i]->loaded) {//
             gluu->mvPushMatrix();
             if (selection) {
-                int sxx = (x - playerT[0] + 1)*10 + (z - playerT[1] + 1);
+                int sxx = (x - playerT[0] + 1)*4 + (z - playerT[1] + 1);
                 //qDebug() << sxx;
-                selectionColor = (obiektyWS[i]->UiD-100000) + sxx * 65536;
+                selectionColor = (obiektyWS[i]->UiD) + sxx * 131072;
             }
             obiektyWS[i]->render(gluu, lod, lodx, lodz, playerW, target, fov, selectionColor);
             //obiekty[i]->render(gluu);
             gluu->mvPopMatrix();
         }
-    }
+    }*/
 }
 /*
 Tile.prototype.getObjHash = function(UiD) {
