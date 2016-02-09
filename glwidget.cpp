@@ -17,6 +17,7 @@
 #include "Vector2f.h"
 #include "TerrainLib.h"
 #include "Brush.h"
+#include "IghCoords.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -226,8 +227,10 @@ void GLWidget::paintGL() {
         paintGL();
     }
 
-    emit this->naviInfo((int)camera->pozT[0], -(int)camera->pozT[1], route->getTileObjCount((int)camera->pozT[0], (int)camera->pozT[1]), route->getTileHiddenObjCount((int)camera->pozT[0], (int)camera->pozT[1]));
-    
+    if(this->isActiveWindow()){
+        emit this->naviInfo(route->getTileObjCount((int)camera->pozT[0], (int)camera->pozT[1]), route->getTileHiddenObjCount((int)camera->pozT[0], (int)camera->pozT[1]));
+        emit this->posInfo(camera->getCurrentPos());
+    }
     gluu->m_program->release();
 
 }
@@ -614,9 +617,13 @@ void GLWidget::enableTool(QString name){
     toolEnabled = name;
 }
 
-void GLWidget::jumpTo(int x, int y){
-    qDebug() << "jump: "<< x << " "<< y;
-    camera->setPozT(x, -y);
+void GLWidget::jumpTo(PreciseTileCoordinate* c){
+    qDebug() << "jump: "<< c->TileX << " "<< c->TileZ;
+    TerrainLib::load(c->TileX, -c->TileZ);
+    float h = TerrainLib::getHeight(c->TileX, -c->TileZ, c->wX, c->wY, -c->wZ);
+    if(c->wY < h || c->wY > h+100) c->wY = h + 20;
+    camera->setPozT(c->TileX, -c->TileZ);
+    camera->setPos(c->wX, c->wY, -c->wZ);
     
 }
 

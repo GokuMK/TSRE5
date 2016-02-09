@@ -18,6 +18,10 @@ struct PreciseTileCoordinate {
     double X;
     double Y;
     double Z;
+    float wX;
+    float wY;
+    float wZ;
+    float alt;
 
     PreciseTileCoordinate(int tileX, int tileZ, double x, double z)
     : PreciseTileCoordinate(tileX, tileZ, x, 0, z) {
@@ -30,6 +34,46 @@ struct PreciseTileCoordinate {
         X = x;
         Y = y;
         Z = z;
+    }
+    void set(int tileX, int tileZ, double x, double z){
+        set(tileX, tileZ, x, 0, z);
+    }
+    void set(int tileX, int tileZ, double x, double y, double z){
+        TileX = tileX;
+        TileZ = tileZ;
+        Size = 1;
+        X = x;
+        Y = y;
+        Z = z;
+    }
+    void setWxyz(float x, float y, float z){
+        this->wX = x;
+        this->wY = y;
+        this->wZ = z;
+        this->X = (x + 1024.0)/2048.0;
+        this->Y = y;
+        this->Z = (z + 1024.0)/2048.0;
+    }
+    void setXYZ(double x, double y, double z){
+        this->X = x;
+        this->Y = y;
+        this->Z = z;
+        this->wX = (x*2048.0) - 1024;
+        this->wY = y;
+        this->wZ = (z*2048.0) - 1024;
+    }
+    void setXYZ(){
+        this->X = (wX + 1024.0)/2048.0;
+        this->Y = wY;
+        this->Z = (wZ + 1024.0)/2048.0;
+    }
+    void setWxyz(){
+        this->wX = (X*2048.0) - 1024;
+        this->wY = Y;
+        this->wZ = (Z*2048.0) - 1024;
+    }
+    PreciseTileCoordinate(){
+        wX = wY = wZ = X = Y = Z = TileX = TileZ = 0;
     }
 };
 
@@ -45,8 +89,11 @@ struct IghCoordinate {
         Line = line;
         Sample = sample;
     }
+   void set(double line, double sample) {
+        Line = line;
+        Sample = sample;
+    }
 };
-
 /// <summary>
 /// Contains a location as a <see cref="Latitude"/> and <see cref="Longitude"/>.
 /// </summary>
@@ -59,7 +106,11 @@ struct LatitudeLongitudeCoordinate {
         Latitude = latitude;
         Longitude = longitude;
     }
-};
+    void set(double latitude, double longitude) {
+        Latitude = latitude;
+        Longitude = longitude;
+    }
+};  
 
 class MstsCoordinates {
 
@@ -94,16 +145,16 @@ public:
     static constexpr double IghMeridian100 = 100.0 / 180 * M_PI; // 100deg
     
     
-    static IghCoordinate* ConvertToIgh(PreciseTileCoordinate* coordinates);
+    static IghCoordinate* ConvertToIgh(PreciseTileCoordinate* coordinates, IghCoordinate* out = 0);
     // MSTS Tile -> IGH
-    static IghCoordinate* ConvertToIgh(int tilex, int tilez, double x, double z);
+    static IghCoordinate* ConvertToIgh(int tilex, int tilez, double x, double z, IghCoordinate* out = 0);
     // IGH -> MSTS Precise Tile
-    static PreciseTileCoordinate* ConvertToTile(IghCoordinate* coordinates);
+    static PreciseTileCoordinate* ConvertToTile(IghCoordinate* coordinates, PreciseTileCoordinate* out = 0);
     // IGH -> Lat/Lon
-    static LatitudeLongitudeCoordinate* ConvertToLatLon(IghCoordinate* coordinates);
+    static LatitudeLongitudeCoordinate* ConvertToLatLon(IghCoordinate* coordinates, LatitudeLongitudeCoordinate* out = 0);
     // Lat/Lon -> MSTS IGH
-    static IghCoordinate* ConvertToIgh(LatitudeLongitudeCoordinate* coordinates);
-    static IghCoordinate* ConvertToIgh(double lat, double lon);
+    static IghCoordinate* ConvertToIgh(LatitudeLongitudeCoordinate* coordinates, IghCoordinate* out = 0);
+    static IghCoordinate* ConvertToIgh(double lat, double lon, IghCoordinate* out = 0);
     static double adjust_lon(double temp);
     static double sign(double a);
 };

@@ -808,8 +808,8 @@ float* Quat::create() {
 float* Quat::fill(float* out) {
     out[0] = 0;
     out[1] = 0;
-    out[0] = 0;
-    out[1] = 1;
+    out[2] = 0;
+    out[3] = 1;
     return out; 
 };
 /**

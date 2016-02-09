@@ -2,6 +2,7 @@
 #include <math.h>
 #include "GLMatrix.h"
 #include "Game.h"
+#include "IghCoords.h"
 
 Camera::Camera(float* pt) {
     pozT = pt;
@@ -28,6 +29,16 @@ Camera::Camera(const Camera& orig) {
 }
 
 Camera::~Camera() {
+}
+
+PreciseTileCoordinate* Camera::getCurrentPos(){
+    if(this->currentPos == NULL)
+        this->currentPos = new PreciseTileCoordinate();
+    this->currentPos->TileX = this->pozT[0];
+    this->currentPos->TileZ = -this->pozT[1];
+    float* p = this->getPos();
+    this->currentPos->setWxyz(p[0], p[1], -p[2]);
+    return this->currentPos;
 }
 
 /*
@@ -103,6 +114,12 @@ void Camera::setPos(float* pos){
     playerPos[0] = pos[0];
     playerPos[1] = pos[1];
     playerPos[2] = pos[2];
+}
+
+void Camera::setPos(float x, float y, float z){
+    playerPos[0] = x;
+    playerPos[1] = y;
+    playerPos[2] = z;
 }
 
 void Camera::setPozT(int x, int y){

@@ -20,14 +20,16 @@
 #include "PropertiesSignal.h"
 #include "PropertiesPickup.h"
 #include "PropertiesForest.h"
+#include "NaviWindow.h"
 
 Window::Window() {
     
     objTools = new ObjTools("ObjTools");
     terrainTools = new TerrainTools("TerrainTools");
-    naviBox = new NaviBox();
+    //naviBox = new NaviBox();
     glWidget = new GLWidget;
     aboutWindow = new AboutWindow();
+    naviWindow = new NaviWindow();
     
     objProperties.push_back(new PropertiesStatic);
     objProperties.push_back(new PropertiesTransfer);
@@ -57,8 +59,8 @@ Window::Window() {
     mainLayout2->setContentsMargins(0,0,0,0);
     mainLayout2->addWidget(objTools);
     mainLayout2->addWidget(terrainTools);
-    mainLayout2->addWidget(naviBox);
-    mainLayout2->setAlignment(naviBox, Qt::AlignBottom);
+    //mainLayout2->addWidget(naviBox);
+    //mainLayout2->setAlignment(naviBox, Qt::AlignBottom);
     box->setLayout(mainLayout2);
     
     
@@ -134,11 +136,17 @@ Window::Window() {
     QAction* viewPointer3d = GuiFunct::newMenuCheckAction(tr("&3D Pointer"), this); 
     viewMenu->addAction(viewPointer3d);
     QObject::connect(viewPointer3d, SIGNAL(triggered(bool)), this, SLOT(viewPointer3d(bool)));
+    QAction* viewMarkers = GuiFunct::newMenuCheckAction(tr("&Markers"), this, false); 
+    viewMenu->addAction(viewMarkers);
+    QObject::connect(viewMarkers, SIGNAL(triggered(bool)), this, SLOT(viewMarkers(bool)));
     // Tools
     toolsMenu = menuBar()->addMenu(tr("&Tools"));
     propertiesAction = GuiFunct::newMenuCheckAction(tr("&Properties"), this); 
     toolsMenu->addAction(propertiesAction);
     QObject::connect(propertiesAction, SIGNAL(triggered(bool)), this, SLOT(hideShowPropertiesWidget(bool)));
+    naviAction = GuiFunct::newMenuCheckAction(tr("&Navi Window"), this); 
+    toolsMenu->addAction(naviAction);
+    QObject::connect(naviAction, SIGNAL(triggered(bool)), this, SLOT(hideShowNaviWidget(bool)));
     toolsMenu->addSeparator();
     objectsAction = GuiFunct::newMenuCheckAction(tr("&Objects"), this); 
     objectsAction->setShortcut(QKeySequence("F1"));
@@ -182,8 +190,11 @@ Window::Window() {
     
     ///
     
-    QObject::connect(glWidget, SIGNAL(naviInfo(int, int, int, int)),
-                      naviBox, SLOT(naviInfo(int, int, int, int)));
+    QObject::connect(glWidget, SIGNAL(naviInfo(int, int)),
+                      naviWindow, SLOT(naviInfo(int, int)));
+    
+    QObject::connect(glWidget, SIGNAL(posInfo(PreciseTileCoordinate*)),
+                      naviWindow, SLOT(posInfo(PreciseTileCoordinate*)));
     
     QObject::connect(glWidget, SIGNAL(routeLoaded(Route*)),
                       objTools, SLOT(routeLoaded(Route*)));
@@ -206,8 +217,8 @@ Window::Window() {
     QObject::connect(glWidget, SIGNAL(setBrushTextureId(int)),
                       terrainTools, SLOT(setBrushTextureId(int)));   
     
-    QObject::connect(naviBox, SIGNAL(jumpTo(int, int)),
-                      glWidget, SLOT(jumpTo(int, int)));
+    QObject::connect(naviWindow, SIGNAL(jumpTo(PreciseTileCoordinate*)),
+                      glWidget, SLOT(jumpTo(PreciseTileCoordinate*)));
     
     QObject::connect(glWidget, SIGNAL(itemSelected(Ref::RefItem*)),
                       objTools, SLOT(itemSelected(Ref::RefItem*)));
@@ -234,6 +245,7 @@ void Window::closeEvent(QCloseEvent * event ){
     //qDebug() << "Aaaa";
     emit exitNow();
     QWidget::closeEvent(event);
+    qApp->quit();
 }
 
 void Window::save(){
@@ -307,6 +319,11 @@ void Window::hideShowPropertiesWidget(bool show){
     else box2->hide();
 }
 
+void Window::hideShowNaviWidget(bool show){
+    if(show) naviWindow->show();
+    else naviWindow->hide();
+}
+
 void Window::hideShowToolWidget(bool show){
     if(show) box->show();
     else box->hide();
@@ -329,6 +346,14 @@ void Window::viewTsectionLines(bool show){
 }
 void Window::viewPointer3d(bool show){
     Game::viewPointer3d = show;
+}
+void Window::viewMarkers(bool show){
+    Game::viewMarkers = show;
+}
+void Window::show(){
+    naviWindow->move(0, this->height() - naviWindow->height() );
+    naviWindow->show();
+    QMainWindow::show();
 }
 //void Window::exitNow(){
 //    this->hide();

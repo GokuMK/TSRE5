@@ -12,7 +12,7 @@ class GuiFunct {
 public:
     static QLabel* newQLabel(QString text, int width);
     static QLineEdit* newQLineEdit(int width, int length);
-    static QAction* newMenuCheckAction(QString desc, Window* window);
+    static QAction* newMenuCheckAction(QString desc, Window* window, bool checked = true);
 private:
 
 };

@@ -14,8 +14,10 @@ class ObjTools;
 class TerrainTools;
 class NaviBox;
 class AboutWindow;
+class NaviWindow;
 class PropertiesAbstract;
 class WorldObj;
+class PreciseTileCoordinate;
 
 class Window : public QMainWindow
 {
@@ -26,18 +28,21 @@ public:
     
 public slots:
     void save();
+    void show();
     void createPaths();
     void about();
     void setToolbox(QString name);
     void showProperties(WorldObj* obj);
     void hideShowToolWidget(bool show);
     void hideShowPropertiesWidget(bool show);
+    void hideShowNaviWidget(bool);
     void viewWorldGrid(bool show);
     void viewTileGrid(bool show);
     void viewInteractives(bool show);
     void viewTrackDbLines(bool show);
     void viewTsectionLines(bool show);
     void viewPointer3d(bool show);
+    void viewMarkers(bool show);
     void showToolsObject(bool show);
     void showToolsTerrain(bool show);
 signals:
@@ -48,6 +53,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
     void closeEvent(QCloseEvent * event );
     void hideAllTools();
+    
 private:
     QWidget* box;
     QWidget* box2;
@@ -55,7 +61,7 @@ private:
     GLWidget *glWidget;
     ObjTools *objTools;
     TerrainTools *terrainTools;
-    NaviBox *naviBox;
+    //NaviBox *naviBox;
     
     std::vector<PropertiesAbstract*> objProperties;
     //PropertiesUndefined * propertiesUndefined;
@@ -71,11 +77,13 @@ private:
     QAction *exitAction;
     QAction *aboutAction;
     QAction *propertiesAction;
+    QAction *naviAction;
     QAction *toolsAction;
     QAction *objectsAction;
     QAction *terrainAction;
     
     AboutWindow* aboutWindow;
+    NaviWindow* naviWindow;
 };
 //! [0]
 

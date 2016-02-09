@@ -7,6 +7,8 @@
 #include <QVector3D>
 #include <QMouseEvent>
 
+class PreciseTileCoordinate;
+
 class Camera {
 public:
     Camera(float* pt);
@@ -25,6 +27,7 @@ public:
     void scalPosRot();*/
     float* getPos();
     void setPos(float* pos);
+    void setPos(float x, float y, float z);
     float getRotX();
     float getRotY();
     void setPozT(int x, int y);
@@ -44,6 +47,7 @@ public:
     void keyDown(QKeyEvent * e);
     void keyUp(QKeyEvent * e);
     void update(float fps);
+    PreciseTileCoordinate* getCurrentPos();
     float * pozT;
     int starex, starey;
 private:
@@ -59,6 +63,7 @@ private:
     int jestcontrol;
     int lpm = 0;
     bool moveF, moveR, moveB, moveL;
+    PreciseTileCoordinate* currentPos = NULL;
 };
 
 #endif	/* CAMERA_H */

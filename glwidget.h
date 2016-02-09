@@ -19,6 +19,7 @@ class Eng;
 class GLUU;
 class Route;
 class Brush;
+class PreciseTileCoordinate;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -37,7 +38,7 @@ public slots:
     void cleanup();
     void enableTool(QString name);
     void setPaintBrush(Brush* brush);
-    void jumpTo(int x, int y);
+    void jumpTo(PreciseTileCoordinate*);
     
     void msg(QString text);
     void msg(QString name, bool val);
@@ -48,7 +49,8 @@ public slots:
 signals:
     void routeLoaded(Route * a);
     void itemSelected(Ref::RefItem* pointer);
-    void naviInfo(int x, int z, int all, int hidden);
+    void naviInfo(int all, int hidden);
+    void posInfo(PreciseTileCoordinate* pos);
     void setToolbox(QString name);
     void setBrushTextureId(int val);
     void showProperties(WorldObj* obj);

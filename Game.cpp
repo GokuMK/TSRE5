@@ -37,6 +37,7 @@ bool Game::viewInteractives = true;
 bool Game::viewTrackDbLines = true;
 bool Game::viewTsectionLines = true;
 bool Game::viewPointer3d = true;
+bool Game::viewMarkers = false;
 bool Game::warningBox = false;
 bool Game::leaveTrackShapeAfterDelete = false;
 bool Game::renderTrItems = false;

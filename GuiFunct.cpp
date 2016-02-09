@@ -16,9 +16,9 @@ QLineEdit* GuiFunct::newQLineEdit(int width, int length){
     return edit;
 }
 
-QAction* GuiFunct::newMenuCheckAction(QString desc, Window* window){
+QAction* GuiFunct::newMenuCheckAction(QString desc, Window* window, bool checked){
     QAction *action = new QAction(desc, window);
     action->setCheckable(true);
-    action->setChecked(true);
+    action->setChecked(checked);
     return action;
 }

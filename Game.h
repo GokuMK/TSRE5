@@ -49,6 +49,7 @@ public:
     static bool viewInteractives;
     static bool viewTrackDbLines;
     static bool viewTsectionLines;
+    static bool viewMarkers;
     static bool warningBox;
     static bool viewPointer3d;
     static bool leaveTrackShapeAfterDelete;

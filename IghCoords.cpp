@@ -3,23 +3,26 @@
 
 constexpr double MstsCoordinates::IghLongitudeCenter[12];
 
-IghCoordinate* MstsCoordinates::ConvertToIgh(PreciseTileCoordinate* coordinates) {
-    return ConvertToIgh(coordinates->TileX, coordinates->TileZ, coordinates->X, coordinates->Z);
+IghCoordinate* MstsCoordinates::ConvertToIgh(PreciseTileCoordinate* coordinates, IghCoordinate* out) {
+    return ConvertToIgh(coordinates->TileX, coordinates->TileZ, coordinates->X, coordinates->Z, out);
 }
 
 // MSTS Tile -> IGH
 
-IghCoordinate* MstsCoordinates::ConvertToIgh(int tilex, int tilez, double x, double z) {
+IghCoordinate* MstsCoordinates::ConvertToIgh(int tilex, int tilez, double x, double z, IghCoordinate* out) {
     //Debug.Assert(z >= 0, "tileZ is off the top");
     //Debug.Assert(z <= 1, "tileZ is off the bottom");
     //Debug.Assert(x >= 0, "tileX is off the left");
     //Debug.Assert(x <= 1, "tileX is off the right");
-    return new IghCoordinate(2048 * (16384 - tilez - 1 + z), 2048 * (tilex + 16384 + x));
+    if(out == 0)
+        return new IghCoordinate(2048 * (16384 - tilez - 1 + z), 2048 * (tilex + 16384 + x));
+    out->set(2048 * (16384 - tilez - 1 + z), 2048 * (tilex + 16384 + x));
+    return out;
 }
 
 // IGH -> MSTS Precise Tile
 
-PreciseTileCoordinate* MstsCoordinates::ConvertToTile(IghCoordinate* coordinates) {
+PreciseTileCoordinate* MstsCoordinates::ConvertToTile(IghCoordinate* coordinates, PreciseTileCoordinate* out) {
     double tileX = coordinates->Sample / 2048;
     double tileZ = coordinates->Line / 2048;
     double x = tileX - floor(tileX);
@@ -30,10 +33,13 @@ PreciseTileCoordinate* MstsCoordinates::ConvertToTile(IghCoordinate* coordinates
     //Debug.Assert(z <= 1, "tileZ is off the bottom");
     //Debug.Assert(x >= 0, "tileX is off the left");
     //Debug.Assert(x <= 1, "tileX is off the right");
-    return new PreciseTileCoordinate((int) floor(tileX) - 16384, 16384 - (int) floor(tileZ) - 1, x, z);
+    if(out == 0)
+        return new PreciseTileCoordinate((int) floor(tileX) - 16384, 16384 - (int) floor(tileZ) - 1, x, z);
+    out->set((int) floor(tileX) - 16384, 16384 - (int) floor(tileZ) - 1, x, z);
+    return out;
 }
 
-LatitudeLongitudeCoordinate* MstsCoordinates::ConvertToLatLon(IghCoordinate* coordinates) {
+LatitudeLongitudeCoordinate* MstsCoordinates::ConvertToLatLon(IghCoordinate* coordinates, LatitudeLongitudeCoordinate* out) {
     // Line/Sample -> Latitude/Longitude Algorithm
     // Based on C code provided by the USGS, available at ftp://edcftp.cr.usgs.gov/pub/software/misc/gihll2ls.c.
     // By D. Steinwand, HSTX/EROS Data Center, June, 1993.
@@ -120,16 +126,18 @@ LatitudeLongitudeCoordinate* MstsCoordinates::ConvertToLatLon(IghCoordinate* coo
     }
 
     ///////////////////////////////////////////////////////////////////
-
-    return new LatitudeLongitudeCoordinate(lat * 180 / M_PI, lon * 180 / M_PI);
+    if(out == 0)
+        return new LatitudeLongitudeCoordinate(lat * 180 / M_PI, lon * 180 / M_PI);
+    out->set(lat * 180 / M_PI, lon * 180 / M_PI);
+    return out;
 }
 
 // Lat/Lon -> MSTS IGH
-IghCoordinate* MstsCoordinates::ConvertToIgh(LatitudeLongitudeCoordinate* coordinates) {
-    MstsCoordinates::ConvertToIgh(coordinates->Latitude, coordinates->Longitude);
+IghCoordinate* MstsCoordinates::ConvertToIgh(LatitudeLongitudeCoordinate* coordinates, IghCoordinate* out) {
+    MstsCoordinates::ConvertToIgh(coordinates->Latitude, coordinates->Longitude, out);
 }
 
-IghCoordinate* MstsCoordinates::ConvertToIgh(double lat, double lon) {
+IghCoordinate* MstsCoordinates::ConvertToIgh(double lat, double lon, IghCoordinate* out) {
     // Latitude/Longitude -> Line/Sample Algorithm
     // Based on C code provided by the USGS, available at ftp://edcftp.cr.usgs.gov/pub/software/misc/gihll2ls.c.
     // By D. Steinwand, HSTX/EROS Data Center, June, 1993.
@@ -209,14 +217,17 @@ IghCoordinate* MstsCoordinates::ConvertToIgh(double lat, double lon) {
     //Debug.Assert(x >= -M_PI, "x is off the left");
     //Debug.Assert(x <= +M_PI, "x is off the right");
 
-    IghCoordinate* igh = new IghCoordinate(IghImageTop - y * IghRadius, x * IghRadius - IghImageLeft);
+    //IghCoordinate* igh = new IghCoordinate(IghImageTop - y * IghRadius, x * IghRadius - IghImageLeft);
 
     //Debug.Assert(igh.Line >= 0, "line is off the top");
     //Debug.Assert(igh.Line <= IghImageHeight, "line is off the bottom");
     //Debug.Assert(igh.Sample >= 0, "line is off the left");
     //Debug.Assert(igh.Sample <= IghImageWidth, "line is off the right");
 
-    return igh;
+    if(out == 0)
+        return new IghCoordinate(IghImageTop - y * IghRadius, x * IghRadius - IghImageLeft);
+    out->set(IghImageTop - y * IghRadius, x * IghRadius - IghImageLeft);
+    return out;
 }
 
 double MstsCoordinates::adjust_lon(double temp) {
