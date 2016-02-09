@@ -122,8 +122,6 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         mintile = -1;
         maxtile = 1;
     }
-    mintile = 0;
-    maxtile = 0;
     //if (!selection) {
         //TerrainLib::render(gluu, playerT, playerW, target, fov);
         //trackDB->renderAll(gluu, playerT, playerRot);
