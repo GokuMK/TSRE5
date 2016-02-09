@@ -316,11 +316,11 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
             tpoints[0] += 2048 * (tpoints[5] - this->x);
             tpoints[2] -= 2048 * (-tpoints[6] - this->y);
             lpoints[ptr++] = tpoints[0];
-            lpoints[ptr++] = tpoints[1]+0.5;
+            lpoints[ptr++] = tpoints[1]+1.0;
             lpoints[ptr++] = -tpoints[2];
             if((i > 0 && i < trItemId.size()/2-1) || trItemId.size() == 2){
                 lpoints[ptr++] = tpoints[0];
-                lpoints[ptr++] = tpoints[1]+0.5;
+                lpoints[ptr++] = tpoints[1]+1.0;
                 lpoints[ptr++] = -tpoints[2];
             }
         }

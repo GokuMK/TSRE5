@@ -1,10 +1,3 @@
-/* 
- * File:   loadWindow.cpp
- * Author: Goku
- * 
- * Created on 16 maja 2015, 01:22
- */
-
 #include "LoadWindow.h"
 #include <QtWidgets>
 #include "Game.h"

@@ -32,6 +32,7 @@ private:
     void renderTritems(GLUU* gluu, int selectionColor);
     float* drawPositions = NULL;
     int selectionValue = 0;
+    float angle;
 };
 
 #endif	/* SOUNDREGION_H */

@@ -14549,7 +14549,9 @@ build/Release/MinGW_QT_static-Windows/NaviWindow.o: NaviWindow.cpp NaviWindow.h 
 		C:/Qt/Static/5.4.1/include/QtWidgets/qtoolbutton.h \
 		C:/Qt/Static/5.4.1/include/QtWidgets/qtwidgetsversion.h \
 		IghCoords.h \
-		C:/Qt/Static/5.4.1/include/QtCore/QDebug
+		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
+		CoordsMkr.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/NaviWindow.o NaviWindow.cpp
 
 build/Release/MinGW_QT_static-Windows/ObjTools.o: ObjTools.cpp TSectionDAT.h \

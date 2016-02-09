@@ -32,28 +32,28 @@ public:
     unsigned int trItemId;
     float trItemSData1;
     int trItemSData2;
-    float *trItemPData;
-    float *trItemRData;
+    float *trItemPData = NULL;
+    float *trItemRData = NULL;
     
     int *crossoverTrItemData;
     
-    unsigned int *platformTrItemData;
+    unsigned int *platformTrItemData = NULL;
     QString platformName;
     QString stationName;
     int platformMinWaitingTime;
     int platformNumPassengersWaiting;
     
-    float *trItemSRData;
+    float *trItemSRData = NULL;
     
-    float *speedpostTrItemData;
+    float *speedpostTrItemData = NULL;
     
     unsigned int trSignalType1;
     int trSignalType2;
     float trSignalType3;
     QString trSignalType4;
     int trSignalDirs = 0;
-    int *trSignalDir;
-    float *trSignalRDir;
+    int *trSignalDir = NULL;
+    float *trSignalRDir = NULL;
     bool titLoading = false;
     float pickupTrItemData1;
     unsigned int pickupTrItemData2;

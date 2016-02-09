@@ -41,7 +41,19 @@ Route::Route() {
     this->trackDB = new TDB(tsection, false, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".tdb"));
     this->roadDB = new TDB(tsection, true, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".rdb"));
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
-    this->mkr = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + Game::routeName +".mkr");
+    
+    
+    //this->mkr = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + Game::routeName +".mkr");
+    QDir dir(Game::root + "/routes/" + Game::route);
+    dir.setFilter(QDir::Files);
+    foreach(QString dirFile, dir.entryList()){
+        if(!dirFile.endsWith(".mkr", Qt::CaseInsensitive)) continue;   
+        mkrList[(dirFile).toStdString()] = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + dirFile);
+    }
+    if(mkrList[(Game::routeName+".mkr").toStdString()] != NULL)
+        this->mkr = mkrList[(Game::routeName+".mkr").toStdString()];
+    else
+        this->mkr = mkrList.begin()->second;
     
     ForestObj::loadForestList();
     
@@ -54,6 +66,11 @@ Route::Route(const Route& orig) {
 }
 
 Route::~Route() {
+}
+
+void Route::setMkrFile(QString name){
+    if(mkrList[name.toStdString()] != NULL)
+        this->mkr = mkrList[name.toStdString()];
 }
 
 void Route::loadTrk() {
@@ -461,6 +478,10 @@ void Route::save() {
 void Route::createNewPaths() {
     if (!Game::writeEnabled) return;
     Path::CreatePaths(this->trackDB);
+}
+
+std::unordered_map<std::string, CoordsMkr*> Route::getMkrList(){
+    return this->mkrList;
 }
 
 void Route::nextDefaultEnd(){

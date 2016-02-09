@@ -38,6 +38,8 @@ public:
     void setTerrainToTrackObj(WorldObj* obj, Brush* brush);
     int getTileObjCount(int x, int z);
     int getTileHiddenObjCount(int x, int z);
+    std::unordered_map<std::string, CoordsMkr*> getMkrList();
+    void setMkrFile(QString name);
     WorldObj* makeFlexTrack(int x, int z, float* pos);
     WorldObj* placeObject(int x, int z, float* p);
     WorldObj* placeObject(int x, int z, float* p, float* q);
@@ -51,6 +53,7 @@ private:
     void loadTrk();
     TDB *trackDB;
     TDB *roadDB; 
+    std::unordered_map<std::string, CoordsMkr*> mkrList;
     CoordsMkr * mkr;
 };
 

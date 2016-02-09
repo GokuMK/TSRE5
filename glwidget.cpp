@@ -118,6 +118,7 @@ void GLWidget::initializeGL() {
     defaultPaintBrush = new Brush();
     
     emit routeLoaded(route);
+    emit mkrList(route->getMkrList());
 }
 
 void GLWidget::paintGL() {
@@ -665,4 +666,9 @@ void GLWidget::msg(QString text, float val){
 
 
 void GLWidget::msg(QString text, QString val){
+    qDebug() << text;
+    if(text == "mkrFile"){
+        this->route->setMkrFile(val);
+        return;
+    }
 }

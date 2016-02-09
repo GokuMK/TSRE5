@@ -20,6 +20,7 @@ class GLUU;
 class Route;
 class Brush;
 class PreciseTileCoordinate;
+class CoordsMkr;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -55,6 +56,7 @@ signals:
     void setBrushTextureId(int val);
     void showProperties(WorldObj* obj);
     void flexData(int x, int z, float* p);
+    void mkrList(std::unordered_map<std::string, CoordsMkr*> list);
     
     void sendMsg(QString name);
     void sendMsg(QString name, bool val);

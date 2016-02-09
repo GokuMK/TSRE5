@@ -128,6 +128,9 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
             loaded = false;
             return;
         }
+        float *srd = tdb->trackItems[this->trItemId[1]]->trItemSRData;
+        if(srd != NULL)
+            angle = srd[2];
         drawPositionB = new float[7];
         drawPositionE = new float[7];
         //qDebug() << this->trItemId[1];
@@ -148,7 +151,7 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
         drawPositionE[2] -= 2048 * (-drawPositionE[6] - this->y);
         
         if(pointer3d == NULL){
-            pointer3d = new TrackItemObj(0);
+            pointer3d = new TrackItemObj(1);
             pointer3d->setMaterial(1.0,1.0,0.0);
         }
         
@@ -176,12 +179,12 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
             tpoints[0] += 2048 * (tpoints[5] - this->x);
             tpoints[2] -= 2048 * (-tpoints[6] - this->y);
             lpoints[ptr++] = tpoints[0];
-            lpoints[ptr++] = tpoints[1]+0.5;
+            lpoints[ptr++] = tpoints[1]+1.0;
             lpoints[ptr++] = -tpoints[2];
             if((i > 0 && i < trItemId.size()/2-1) || trItemId.size() == 2){
             //if(i == 0 || i == trItemId.size()/2 - 1){
                 lpoints[ptr++] = tpoints[0];
-                lpoints[ptr++] = tpoints[1]+0.5;
+                lpoints[ptr++] = tpoints[1]+1.0;
                 lpoints[ptr++] = -tpoints[2];
             }
         }

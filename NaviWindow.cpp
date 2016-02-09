@@ -2,12 +2,15 @@
 #include "IghCoords.h"
 #include <QtWidgets>
 #include <QDebug>
+#include "CoordsMkr.h"
 
 NaviWindow::NaviWindow(){
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
-    this->setFixedWidth(250);
+    this->setFixedWidth(300);
     this->setFixedHeight(160);
     this->setWindowTitle(tr("World Position"));
+    markerFiles.setStyleSheet("combobox-popup: 0;");
+    markerList.setStyleSheet("combobox-popup: 0;");
     
     QPushButton *jumpButton = new QPushButton("Jump", this);
     QLabel *txLabel = new QLabel("X", this);
@@ -80,6 +83,11 @@ NaviWindow::NaviWindow(){
     QObject::connect(jumpButton, SIGNAL(released()),
                       this, SLOT(jumpTileSelected()));
     
+    QObject::connect(&markerFiles, SIGNAL(activated(QString)),
+                      this, SLOT(mkrFilesSelected(QString)));
+    QObject::connect(&markerList, SIGNAL(activated(QString)),
+                      this, SLOT(mkrListSelected(QString)));
+    
 
     tileInfo.setText(" ");
 }
@@ -105,9 +113,18 @@ void NaviWindow::jumpTileSelected(){
         igh = MstsCoordinates::ConvertToIgh(latBox.text().toDouble(), lonBox.text().toDouble(), igh);
         aCoords = MstsCoordinates::ConvertToTile(igh, aCoords);
         aCoords->setWxyz();
+        aCoords->wZ = -aCoords->wZ;
         emit jumpTo(aCoords);
     }
-    
+    if(this->jumpType == "marker"){
+        if(mkrPlaces[markerList.currentText().toStdString()] == NULL) return;
+        igh = MstsCoordinates::ConvertToIgh(mkrPlaces[markerList.currentText().toStdString()]->Latitude, mkrPlaces[markerList.currentText().toStdString()]->Longitude, igh);
+        aCoords = MstsCoordinates::ConvertToTile(igh, aCoords);
+        aCoords->setWxyz();
+        aCoords->wZ = -aCoords->wZ;
+        emit jumpTo(aCoords);
+    }
+
 }
 
 void NaviWindow::naviInfo(int all, int hidden){
@@ -137,6 +154,38 @@ void NaviWindow::posInfo(PreciseTileCoordinate* coords){
     }
 }
 
+void NaviWindow::mkrList(std::unordered_map<std::string, CoordsMkr*> list){
+    mkrFiles = list;
+    for (auto it = list.begin(); it != list.end(); ++it ){
+        markerFiles.addItem(QString::fromStdString(it->first));
+    }
+}
+
+void NaviWindow::mkrFilesSelected(QString item){
+    CoordsMkr* c = mkrFiles[item.toStdString()];
+    if(c == NULL) return;
+    this->sendMsg("mkrFile", item);
+    this->mkrPlaces.clear();
+    
+    QStringList hash;
+
+    for(int i = 0; i < c->markerList.size(); i++){
+        if(this->mkrPlaces[c->markerList[i].name.toStdString()] == NULL)
+            this->mkrPlaces[c->markerList[i].name.toStdString()] = new LatitudeLongitudeCoordinate();
+        this->mkrPlaces[c->markerList[i].name.toStdString()]->Latitude = c->markerList[i].lat;
+        this->mkrPlaces[c->markerList[i].name.toStdString()]->Longitude = c->markerList[i].lon;
+        hash.append(c->markerList[i].name);
+    }
+    hash.sort(Qt::CaseInsensitive);
+    hash.removeDuplicates();
+    markerList.clear();
+    markerList.addItems(hash);
+    markerList.setMaxVisibleItems(25);
+}
+
+void NaviWindow::mkrListSelected(QString item){
+        this->jumpType = "marker";
+}
 NaviWindow::~NaviWindow() {
 }
 

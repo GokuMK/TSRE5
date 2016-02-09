@@ -102,7 +102,7 @@ struct LatitudeLongitudeCoordinate {
     double Latitude;
     double Longitude;
 
-    LatitudeLongitudeCoordinate(double latitude, double longitude) {
+    LatitudeLongitudeCoordinate(double latitude = 0, double longitude = 0) {
         Latitude = latitude;
         Longitude = longitude;
     }
