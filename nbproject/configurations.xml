@@ -37,6 +37,7 @@
         <itemPath>NaviWindow.h</itemPath>
         <itemPath>ObjTools.h</itemPath>
         <itemPath>TerrainTools.h</itemPath>
+        <itemPath>TerrainWaterWindow.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="math3d" projectFiles="true">
         <itemPath>Flex.h</itemPath>
@@ -162,6 +163,7 @@
         <itemPath>NaviWindow.cpp</itemPath>
         <itemPath>ObjTools.cpp</itemPath>
         <itemPath>TerrainTools.cpp</itemPath>
+        <itemPath>TerrainWaterWindow.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="math3d" projectFiles="true">
         <itemPath>Flex.cpp</itemPath>
@@ -571,6 +573,10 @@
       </item>
       <item path="TerrainTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainWaterWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
@@ -967,6 +973,10 @@
       <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_TerrainTools_t {
-    QByteArrayData data[25];
-    char stringdata[310];
+    QByteArrayData data[29];
+    char stringdata[399];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -53,7 +53,11 @@ QT_MOC_LITERAL(20, 265, 8), // "setHtype"
 QT_MOC_LITERAL(21, 274, 8), // "setEsize"
 QT_MOC_LITERAL(22, 283, 7), // "setEemb"
 QT_MOC_LITERAL(23, 291, 7), // "setEcut"
-QT_MOC_LITERAL(24, 299, 10) // "setEradius"
+QT_MOC_LITERAL(24, 299, 10), // "setEradius"
+QT_MOC_LITERAL(25, 310, 20), // "waterTerrToolEnabled"
+QT_MOC_LITERAL(26, 331, 19), // "drawTerrToolEnabled"
+QT_MOC_LITERAL(27, 351, 26), // "waterHeightTileToolEnabled"
+QT_MOC_LITERAL(28, 378, 20) // "fixedTileToolEnabled"
 
     },
     "TerrainTools\0enableTool\0\0name\0"
@@ -64,7 +68,9 @@ QT_MOC_LITERAL(24, 299, 10) // "setEradius"
     "updateTexPrev\0setBrushTextureId\0val\0"
     "setBrushSize\0setBrushAlpha\0setFheight\0"
     "setHtype\0setEsize\0setEemb\0setEcut\0"
-    "setEradius"
+    "setEradius\0waterTerrToolEnabled\0"
+    "drawTerrToolEnabled\0waterHeightTileToolEnabled\0"
+    "fixedTileToolEnabled"
 };
 #undef QT_MOC_LITERAL
 
@@ -74,7 +80,7 @@ static const uint qt_meta_data_TerrainTools[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      25,   14, // methods
+      29,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -82,33 +88,37 @@ static const uint qt_meta_data_TerrainTools[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  139,    2, 0x06 /* Public */,
-       4,    1,  142,    2, 0x06 /* Public */,
+       1,    1,  159,    2, 0x06 /* Public */,
+       4,    1,  162,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,  145,    2, 0x0a /* Public */,
-       8,    0,  146,    2, 0x0a /* Public */,
-       9,    0,  147,    2, 0x0a /* Public */,
-      10,    0,  148,    2, 0x0a /* Public */,
-      11,    0,  149,    2, 0x0a /* Public */,
-      12,    0,  150,    2, 0x0a /* Public */,
-      13,    0,  151,    2, 0x0a /* Public */,
-      14,    0,  152,    2, 0x0a /* Public */,
-      15,    1,  153,    2, 0x0a /* Public */,
-      17,    1,  156,    2, 0x0a /* Public */,
-      17,    1,  159,    2, 0x0a /* Public */,
-      18,    1,  162,    2, 0x0a /* Public */,
-      18,    1,  165,    2, 0x0a /* Public */,
-      19,    1,  168,    2, 0x0a /* Public */,
-      20,    1,  171,    2, 0x0a /* Public */,
-      21,    1,  174,    2, 0x0a /* Public */,
-      21,    1,  177,    2, 0x0a /* Public */,
-      22,    1,  180,    2, 0x0a /* Public */,
-      22,    1,  183,    2, 0x0a /* Public */,
-      23,    1,  186,    2, 0x0a /* Public */,
-      23,    1,  189,    2, 0x0a /* Public */,
-      24,    1,  192,    2, 0x0a /* Public */,
-      24,    1,  195,    2, 0x0a /* Public */,
+       7,    0,  165,    2, 0x0a /* Public */,
+       8,    0,  166,    2, 0x0a /* Public */,
+       9,    0,  167,    2, 0x0a /* Public */,
+      10,    0,  168,    2, 0x0a /* Public */,
+      11,    0,  169,    2, 0x0a /* Public */,
+      12,    0,  170,    2, 0x0a /* Public */,
+      13,    0,  171,    2, 0x0a /* Public */,
+      14,    0,  172,    2, 0x0a /* Public */,
+      15,    1,  173,    2, 0x0a /* Public */,
+      17,    1,  176,    2, 0x0a /* Public */,
+      17,    1,  179,    2, 0x0a /* Public */,
+      18,    1,  182,    2, 0x0a /* Public */,
+      18,    1,  185,    2, 0x0a /* Public */,
+      19,    1,  188,    2, 0x0a /* Public */,
+      20,    1,  191,    2, 0x0a /* Public */,
+      21,    1,  194,    2, 0x0a /* Public */,
+      21,    1,  197,    2, 0x0a /* Public */,
+      22,    1,  200,    2, 0x0a /* Public */,
+      22,    1,  203,    2, 0x0a /* Public */,
+      23,    1,  206,    2, 0x0a /* Public */,
+      23,    1,  209,    2, 0x0a /* Public */,
+      24,    1,  212,    2, 0x0a /* Public */,
+      24,    1,  215,    2, 0x0a /* Public */,
+      25,    0,  218,    2, 0x0a /* Public */,
+      26,    0,  219,    2, 0x0a /* Public */,
+      27,    0,  220,    2, 0x0a /* Public */,
+      28,    0,  221,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -138,6 +148,10 @@ static const uint qt_meta_data_TerrainTools[] = {
     QMetaType::Void, QMetaType::QString,   16,
     QMetaType::Void, QMetaType::Int,   16,
     QMetaType::Void, QMetaType::QString,   16,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -172,6 +186,10 @@ void TerrainTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 22: _t->setEcut((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 23: _t->setEradius((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 24: _t->setEradius((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 25: _t->waterTerrToolEnabled(); break;
+        case 26: _t->drawTerrToolEnabled(); break;
+        case 27: _t->waterHeightTileToolEnabled(); break;
+        case 28: _t->fixedTileToolEnabled(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -217,13 +235,13 @@ int TerrainTools::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 25)
+        if (_id < 29)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 25;
+        _id -= 29;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 25)
+        if (_id < 29)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 25;
+        _id -= 29;
     }
     return _id;
 }

@@ -7,6 +7,7 @@
 #include "TerrainLib.h"
 #include "GLMatrix.h"
 #include "Brush.h"
+#include "TerrainWaterWindow.h"
 
 Terrain::Terrain(float x, float y) {
     loaded = false;
@@ -242,6 +243,65 @@ void Terrain::rotateTex(int idx) {
     this->refresh();
 }
 
+void Terrain::setWaterDraw(int x, int z, float posx, float posz) {
+
+    int u = (posx + 1024) / 128;
+    int y = (posz + 1024) / 128;
+    //hidden[y*16 + u] = true;
+    float tx = posx + 1024 - u * 128;
+    float tz = posz + 1024 - y * 128;
+    tx /= 128;
+    tz /= 128;
+    qDebug() << tx << " " << tz;
+    //qDebug() << tfile->erroeBias[y * 16 + u];
+    tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x10000c0;
+    this->setModified(true);
+}
+
+void Terrain::setDraw(int x, int z, float posx, float posz) {
+
+    int u = (posx + 1024) / 128;
+    int y = (posz + 1024) / 128;
+    //hidden[y*16 + u] = true;
+    float tx = posx + 1024 - u * 128;
+    float tz = posz + 1024 - y * 128;
+    tx /= 128;
+    tz /= 128;
+    qDebug() << tx << " " << tz;
+    qDebug() << tfile->flags[y * 16 + u];
+    //tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x1;
+    this->setModified(true);
+}
+
+void Terrain::setErrorBias(int x, int z, float val){
+    int u = (x + 1024) / 128;
+    int y = (z + 1024) / 128;
+    tfile->erroeBias[y * 16 + u] = val;
+}
+
+void Terrain::setWaterLevelGui(){
+    TerrainWaterWindow waterWindow;
+    waterWindow.WNE = tfile->WNE;
+    waterWindow.WSE = tfile->WSE;
+    waterWindow.WNW = tfile->WNW;
+    waterWindow.WSW = tfile->WSW;    
+    waterWindow.setWater();
+    waterWindow.exec();
+    //qDebug() << waterWindow->changed;
+    if(waterWindow.changed){
+        tfile->WNE = waterWindow.WNE;
+        tfile->WSE = waterWindow.WSE;
+        tfile->WNW = waterWindow.WNW;
+        tfile->WSW = waterWindow.WSW;    
+        for (int uu = 0; uu < 16; uu++) {
+            for (int yy = 0; yy < 16; yy++) {
+                water[uu * 16 + yy].loaded = false;
+            }
+        }
+        this->setModified(true);
+    }
+}
+
 void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
 
     int u = (posx + 1024) / 128;
@@ -380,6 +440,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     for (int uu = 0; uu < 16; uu++) {
         for (int yy = 0; yy < 16; yy++) {
             if (hidden[yy * 16 + uu]) continue;
+            if ((tfile->flags[yy * 16 + uu] & 1) != 0) continue;
             float lodxx = lodx + uu * 128 - 1024;
             float lodzz = lodz + yy * 128 - 1024;
             lod = sqrt(lodxx * lodxx + lodzz * lodzz);
@@ -868,13 +929,28 @@ void Terrain::saveRAW(QString name) {
     QDataStream write(file);
     write.setByteOrder(QDataStream::LittleEndian);
 
+    float min = 999999, max = -999999;
+    for (int i = 0; i < 256; i++) {
+        for (int j = 0; j < 256; j++) {
+            if(terrainData[i][j] < min) min = terrainData[i][j];
+            if(terrainData[i][j] > max) max = terrainData[i][j];
+            //terrainData[i][j] = tfile->floor + tfile->scale * (data->get() + 256*data->get());
+        }
+    }
+    min -= 10;
+    max += 10;
+    // new tfile floor/scale
+    tfile->floor = min;
+    tfile->scale = (max - min)/65535;
+    
     float fvalue;
     unsigned short value;
     for (int i = 0; i < 256; i++) {
         for (int j = 0; j < 256; j++) {
             fvalue = (terrainData[i][j] - tfile->floor) / tfile->scale;
-            if (fvalue < 65535) value = fvalue;
-            else value = 65535;
+            if (fvalue > 65535) value = 65535;
+            else if(fvalue < 0) value = 0;
+            else value = fvalue;
             write << value;
             //terrainData[i][j] = tfile->floor + tfile->scale * (data->get() + 256*data->get());
         }

@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QFile>
 #include "ReadFile.h"
+#include <QDataStream>
 
 TFile::TFile() {
     loaded = false;

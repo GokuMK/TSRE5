@@ -74,6 +74,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/Terrain.o
 ./build/Release/MinGW_QT_static-Windows/TerrainLib.o
 ./build/Release/MinGW_QT_static-Windows/TerrainTools.o
+./build/Release/MinGW_QT_static-Windows/TerrainWaterWindow.o
 ./build/Release/MinGW_QT_static-Windows/TexLib.o
 ./build/Release/MinGW_QT_static-Windows/TextObj.o
 ./build/Release/MinGW_QT_static-Windows/Texture.o
@@ -113,6 +114,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesUndefined.o
 ./build/Release/MinGW_QT_static-Windows/moc_SignalWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_TerrainTools.o
+./build/Release/MinGW_QT_static-Windows/moc_TerrainWaterWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_glwidget.o
 ./build/Release/MinGW_QT_static-Windows/moc_window.o
 );

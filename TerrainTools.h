@@ -39,6 +39,10 @@ public slots:
     void setEcut(QString val);
     void setEradius(int val);
     void setEradius(QString val);
+    void waterTerrToolEnabled();
+    void drawTerrToolEnabled();
+    void waterHeightTileToolEnabled();
+    void fixedTileToolEnabled();
     
 signals:
     void enableTool(QString name);

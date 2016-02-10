@@ -97,6 +97,7 @@ void TerrainLib::setHeight(float x, float z, float posx, float posz, float h) {
     
     //float value = terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
     terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] = h;
+    terr->setErrorBias(posx, posz, 0);
     terr->setModified(true);
 }
 
@@ -123,6 +124,7 @@ int TerrainLib::setHeight256(int x, int z, int posx, int posz, float h, float di
             if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] > h + diffC) 
                 terr->terrainData[(posz+1024)/8][(posx+1024)/8] = h + diffC;
     }
+    terr->setErrorBias(posx, posz, 0);
     terr->setModified(true);
     
     return x * 10000 + z;
@@ -290,6 +292,45 @@ void TerrainLib::setTerrainTexture(Brush* brush, int x, int z, float* p){
     terr->setTexture(brush, x, z, posx, posz);
 }
 
+void TerrainLib::setWaterDraw(int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->setWaterDraw(x, z, posx, posz);
+}
+
+void TerrainLib::setWaterLevelGui(int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->setWaterLevelGui();
+}
+
+void TerrainLib::setDraw(int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->setDraw(x, z, posx, posz);
+}
+
 int TerrainLib::getTexture(int x, int z, float* p){
     float posx = p[0];
     float posz = p[2];
@@ -314,6 +355,24 @@ void TerrainLib::paintTexture(Brush* brush, int x, int z, float* p){
     if (terr == NULL) return;
     if (terr->loaded == false) return;
     terr->paintTexture(brush, x, z, posx, posz);
+}
+
+void TerrainLib::setFixedTileHeight(Brush* brush, int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    
+    for (int i = 0; i < 256; i++)
+        for (int j = 0; j < 256; j++) {
+            terr->terrainData[i][j] = brush->hFixed;
+        }
+    terr->refresh();
+    terr->setModified(true);
 }
 
 void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
@@ -394,6 +453,7 @@ void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
             h = (float)(size - (sqrt(i*i + j*j)))/size;
             h = h*brush->alpha*brush->direction*10.0;
             
+            terr->setErrorBias(tpx, tpz, 0);
             tpz = (tpz + 1024)/8;
             tpx = (tpx + 1024)/8;
             if(brush->hType == 0){

@@ -20,14 +20,39 @@ TerrainTools::TerrainTools(QString name)
     QPushButton *pickTexTool = new QPushButton("Pick", this);
     QPushButton *setTexTool = new QPushButton("Load", this);
     QPushButton *putTexTool = new QPushButton("Put", this);
+    QPushButton *lockTexTool = new QPushButton("Lock", this);
+    QPushButton *waterTerrTool = new QPushButton("Show/H Water", this);
+    QPushButton *drawTerrTool = new QPushButton("Show/H Tile", this);
+    QPushButton *gapsTerrTool = new QPushButton("Gaps", this);
+    QPushButton *waterTileTool = new QPushButton("Water level", this);
+    QPushButton *fixedTileTool = new QPushButton("Fixed Height", this);
+    //QPushButton *fixedTerrTool = new QPushButton("Fixed Height", this);
+    
+    
+    QGridLayout *vlist3 = new QGridLayout;
+    vlist3->setSpacing(2);
+    vlist3->setContentsMargins(3,0,1,0);    
+    row = 0;
+    vlist3->addWidget(heightTool,row,0);
+    vlist3->addWidget(waterTileTool,row,1);
+    vlist3->addWidget(fixedTileTool,row,2);
+    
+    QGridLayout *vlist4 = new QGridLayout;
+    vlist4->setSpacing(2);
+    vlist4->setContentsMargins(3,0,1,0);    
+    row = 0;
+    vlist4->addWidget(waterTerrTool,row,0);
+    vlist4->addWidget(drawTerrTool,row,1);
+    vlist4->addWidget(gapsTerrTool,row++,2);
     
     QGridLayout *vlist0 = new QGridLayout;
     vlist0->setSpacing(2);
     vlist0->setContentsMargins(3,0,1,0);    
     row = 0;
-    vlist0->addWidget(heightTool,row,0);
-    vlist0->addWidget(paintTool,row,1);
-    vlist0->addWidget(paintTool2,row++,2);
+    vlist0->addWidget(paintTool,row,0);
+    vlist0->addWidget(paintTool2,row,1);
+    vlist0->addWidget(lockTexTool,row++,2);
+    
     QGridLayout *vlist1 = new QGridLayout;
     vlist1->setSpacing(2);
     vlist1->setContentsMargins(3,0,1,0);    
@@ -43,18 +68,30 @@ TerrainTools::TerrainTools(QString name)
     texPreviewLabel->setContentsMargins(0,0,0,0);
     texPreviewLabel->setPixmap(*texPreview);
     
+    QLabel *label0;
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
-    QLabel *label0 = new QLabel("Paint:");
+    
+    label0 = new QLabel("World Tile:");
+    label0->setContentsMargins(3,0,0,0);
+    label0->setStyleSheet("QLabel { color : #999999; }");
+    vbox->addWidget(label0);
+    vbox->addItem(vlist3);
+    label0 = new QLabel("Tile:");
+    label0->setContentsMargins(3,0,0,0);
+    label0->setStyleSheet("QLabel { color : #999999; }");
+    vbox->addWidget(label0);
+    vbox->addItem(vlist4);
+    label0 = new QLabel("Paint:");
     label0->setContentsMargins(3,0,0,0);
     label0->setStyleSheet("QLabel { color : #999999; }");
     vbox->addWidget(label0);
     vbox->addItem(vlist0);
-    QLabel *label1 = new QLabel("Texture:");
-    label1->setContentsMargins(3,0,0,0);
-    label1->setStyleSheet("QLabel { color : #999999; }");
-    vbox->addWidget(label1);
+    label0 = new QLabel("Texture:");
+    label0->setContentsMargins(3,0,0,0);
+    label0->setStyleSheet("QLabel { color : #999999; }");
+    vbox->addWidget(label0);
     vbox->addItem(vlist1);
 
     vbox->addWidget(texPreviewLabel);
@@ -177,6 +214,18 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(setTexTool, SIGNAL(released()),
                       this, SLOT(setTexToolEnabled()));
     
+    QObject::connect(waterTerrTool, SIGNAL(released()),
+                      this, SLOT(waterTerrToolEnabled()));
+    
+    QObject::connect(waterTileTool, SIGNAL(released()),
+                      this, SLOT(waterHeightTileToolEnabled()));
+    
+     QObject::connect(fixedTileTool, SIGNAL(released()),
+                      this, SLOT(fixedTileToolEnabled()));
+    
+    QObject::connect(drawTerrTool, SIGNAL(released()),
+                      this, SLOT(drawTerrToolEnabled()));
+    
     QObject::connect(colorw, SIGNAL(released()),
                       this, SLOT(chooseColorEnabled()));
     
@@ -270,9 +319,26 @@ void TerrainTools::pickTexToolEnabled(){
     emit enableTool("pickTerrainTexTool");
 }
 
+void TerrainTools::waterTerrToolEnabled(){
+    emit enableTool("waterTerrTool");
+}
+
+void TerrainTools::drawTerrToolEnabled(){
+    emit enableTool("drawTerrTool");
+}
+
+void TerrainTools::waterHeightTileToolEnabled(){
+    emit enableTool("waterHeightTileTool");
+}
+
 void TerrainTools::putTexToolEnabled(){
     emit setPaintBrush(this->paintBrush);
     emit enableTool("putTerrainTexTool");
+}
+
+void TerrainTools::fixedTileToolEnabled(){
+    emit setPaintBrush(this->paintBrush);
+    emit enableTool("fixedTileTool");
 }
 
 void TerrainTools::setTexToolEnabled(){

@@ -557,6 +557,18 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         if(toolEnabled == "putTerrainTexTool"){
             TerrainLib::setTerrainTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
+        if(toolEnabled == "waterTerrTool"){
+            TerrainLib::setWaterDraw((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
+        if(toolEnabled == "drawTerrTool"){
+            TerrainLib::setDraw((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
+        if(toolEnabled == "waterHeightTileTool"){
+            TerrainLib::setWaterLevelGui((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
+        if(toolEnabled == "fixedTileTool"){
+            TerrainLib::setFixedTileHeight(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
         if(toolEnabled == ""){
             camera->MouseDown(event);
         }

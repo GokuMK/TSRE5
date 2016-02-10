@@ -24,6 +24,10 @@ public:
     void setModified(bool value);
     void paintTexture(Brush* brush, int x, int z, float posx, float posz);
     void setTexture(Brush* brush, int x, int z, float posx, float posz);
+    void setWaterDraw(int x, int z, float posx, float posz);
+    void setWaterLevelGui();
+    void setDraw(int x, int z, float posx, float posz);
+    void setErrorBias(int x, int z, float val);
     int getTexture(int x, int z, float posx, float posz);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov);
 
@@ -54,7 +58,7 @@ private:
     //bool jestW[256];
     int wTexid = -1;
     TFile* tfile;
-    
+        
     void saveRAW(QString name);
     bool readRAW(QString fSfile);
     bool readF(QString fSfile);

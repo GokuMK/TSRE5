@@ -10,25 +10,55 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Terrain.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/LevelCrObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesSoundSource.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/NaviWindow.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Route.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PlatformObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TerrainLib.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TerrainLib.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TRitem.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Tile.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SignalObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ForestObj.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PlatformObj.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SoundList.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SoundRegionObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SignalWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/WorldObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SpeedPost.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SpeedPostDAT.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/HazardObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SpeedPost.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ObjTools.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SigCfg.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Game.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SpeedPostDAT.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TerrainTools.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesStatic.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesSiding.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesSoundSource.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/IghCoords.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TRitem.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SignalShape.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ForestObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Camera.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/HazardObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TerrainWaterWindow.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Route.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SpeedpostObj.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesSignal.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PickupObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SignalObj.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/OglObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SoundList.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SoundRegionObj.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TerrainTools.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/GuiFunct.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SpeedpostObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Game.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/glwidget.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/NaviWindow.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/AboutWindow.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SoundSourceObj.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SoundSourceObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesSiding.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Terrain.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/PropertiesAbstract.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ObjTools.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/window.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/window.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TerrainWaterWindow.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Camera.h</file>
         </group>
     </open-files>
 </project-private>
