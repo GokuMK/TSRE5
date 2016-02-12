@@ -281,6 +281,7 @@ void Terrain::setErrorBias(int x, int z, float val){
 
 void Terrain::setWaterLevelGui(){
     TerrainWaterWindow waterWindow;
+    waterWindow.setWindowTitle("Water Level");
     waterWindow.WNE = tfile->WNE;
     waterWindow.WSE = tfile->WSE;
     waterWindow.WNW = tfile->WNW;
