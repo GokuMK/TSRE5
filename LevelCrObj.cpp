@@ -14,7 +14,13 @@
 LevelCrObj::LevelCrObj() {
     this->shape = -1;
     this->loaded = false;
-    this->trItemId;
+    this->levelCrParameters[0] = 30; 
+    this->levelCrParameters[1] = 20; 
+    this->crashProbability = 0;
+    this->levelCrData[0] = 0;
+    this->levelCrTiming[0] = 60;
+    this->levelCrTiming[1] = 60;
+    this->levelCrTiming[2] = 4;
 }
 
 LevelCrObj::LevelCrObj(const LevelCrObj& orig) {
@@ -63,20 +69,29 @@ void LevelCrObj::initTrItems(float* tpos){
     float metry = tpos[1];
     
     TDB* tdb = Game::trackDB;
+    TDB* rdb = Game::roadDB;
     qDebug() <<"new levelcr  "<<this->fileName;
 
-    trItemIdCount = 2;
-    tdb->newLevelCrObject(trItemId, trNodeId, metry, this->typeID);
-    
-    //this->signalSubObj = 0;
-    //qDebug() <<"signalUnits  "<<this->signalUnits;
-    //for(int i = 0; i < this->signalUnits; i++)
-    //    this->signalSubObj = this->signalSubObj | (1 << i);
-   // this->trItemIdCount = 4;
-  //  this->trItemId[0] = isRoad;
-   // this->trItemId[1] = trItemId[0];
-   // this->trItemId[2] = isRoad;
-  //  this->trItemId[3] = trItemId[1];
+    trItemIdCount = 4;
+    levelCrData[1] = 1;
+    trItemId = new int[4];
+    int* tid;
+    tdb->newLevelCrObject(tid, trNodeId, metry, this->typeID);
+    trItemId[0] = 0;
+    trItemId[1] = tid[1];
+    float* playerT = Vec2::fromValues(this->x, this->y);
+    float pos[3];
+    Vec3::set(pos, position[0], position[1], -position[2]);
+    float quat[4];
+    qDebug() << "find ";
+    rdb->findNearestPositionOnTDB(playerT, (float*)&pos, (float*)&quat, tpos);
+    qDebug() << "road pos "<<tpos[0]<<" "<<tpos[1];
+    trNodeId = tpos[0];
+    metry = tpos[1];
+    rdb->newLevelCrObject(tid, trNodeId, metry, this->typeID);
+    trItemId[2] = 1;
+    trItemId[3] = tid[1];
+
     this->drawPosition = NULL;
 }
 

@@ -243,7 +243,14 @@ void WorldObj::load(int x, int y) {
 }
 
 void WorldObj::set(QString sh, int val) {
-
+    if (sh == ("x")) {
+        this->x = val;
+        return;
+    }
+    if (sh == ("z")) {
+        this->y = val;
+        return;
+    }
 }
 
 void WorldObj::set(QString sh, float* val) {

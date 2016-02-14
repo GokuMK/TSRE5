@@ -352,7 +352,8 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
     nowy->set("_refvalue", itemData->value);
 
     //Quat::rotateY(q, q, M_PI/2);
-    
+    nowy->set("x", x);
+    nowy->set("z", z);
     if(nowy->isTrackItem()){
         q[0] = 0;
         q[1] = 0;

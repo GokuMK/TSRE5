@@ -107,18 +107,21 @@ TRitem* TRitem::newSpeedPostItem(int trItemId, float metry, int speedPostType){
     trit->trItemSData1 = metry;
     trit->trItemSData2 = 6;
     trit->platformTrItemData = new unsigned int[2];
-    if(speedPostType == 0){ // sing
+    if(speedPostType == 0){ // sign
         trit->speedpostTrItemDataLength = 3;
         trit->speedpostTrItemData = new float[4];
         trit->speedpostTrItemData[0] = 0;
         trit->speedpostTrItemData[1] = 0;
         trit->speedpostTrItemData[2] = 0;
+        trit->speedpostTrItemData[3] = 0;
     }
     if(speedPostType == 1){ // resume
         trit->speedpostTrItemDataLength = 2;
         trit->speedpostTrItemData = new float[4];
         trit->speedpostTrItemData[0] = 0;
         trit->speedpostTrItemData[1] = 0;
+        trit->speedpostTrItemData[2] = 0;
+        trit->speedpostTrItemData[3] = 0;
     }
     if(speedPostType == 2){ // warning
         trit->speedpostTrItemDataLength = 3;
@@ -126,6 +129,7 @@ TRitem* TRitem::newSpeedPostItem(int trItemId, float metry, int speedPostType){
         trit->speedpostTrItemData[0] = 0;
         trit->speedpostTrItemData[1] = 0;
         trit->speedpostTrItemData[2] = 0;
+        trit->speedpostTrItemData[3] = 0;
     }
     if(speedPostType == 3){ // milepost
         trit->speedpostTrItemDataLength = 3;
@@ -133,6 +137,7 @@ TRitem* TRitem::newSpeedPostItem(int trItemId, float metry, int speedPostType){
         trit->speedpostTrItemData[0] = 0;
         trit->speedpostTrItemData[1] = 0;
         trit->speedpostTrItemData[2] = 0;
+        trit->speedpostTrItemData[3] = 0;
     }
     qDebug() << "aa ";
     return trit;
@@ -361,12 +366,12 @@ void TRitem::setTrItemRData(float* posT, float* pos){
 }
 
 void TRitem::setTrItemPData(float* posT, float* pos){
-    if(this->trItemRData == NULL)
-        this->trItemRData = new float[4];
-    this->trItemRData[0] = pos[0];
-    this->trItemRData[1] = pos[2];
-    this->trItemRData[2] = posT[0];
-    this->trItemRData[3] = posT[1];
+    if(this->trItemPData == NULL)
+        this->trItemPData = new float[4];
+    this->trItemPData[0] = pos[0];
+    this->trItemPData[1] = pos[2];
+    this->trItemPData[2] = posT[0];
+    this->trItemPData[3] = posT[1];
 }
 
 void TRitem::setSignalRot(float rot){
@@ -407,6 +412,8 @@ void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot){
         //qDebug() << "undefined";
         return;
     }
+    int offy = 0;
+    if(tdb->isRoad()) offy++;
     
         if(drawPosition == NULL){
             drawPosition = new float[7];
@@ -426,15 +433,18 @@ void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot){
     
         gluu->mvPushMatrix();
         //if(pos == NULL) return;
-        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 2048*(drawPosition[5] - playerT[0]), drawPosition[1]+2, -drawPosition[2] + 2048*(-drawPosition[6] - playerT[1]));
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 2048*(drawPosition[5] - playerT[0]), drawPosition[1]+2+offy, -drawPosition[2] + 2048*(-drawPosition[6] - playerT[1]));
         Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3]);
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         if(pointer3d == NULL){
             pointer3d = new TrackItemObj(1);
-            pointer3d->setMaterial(0,0,0);
         }
+        if(tdb->isRoad())
+            pointer3d->setMaterial(0.5,0.5,0.5);
+        else
+            pointer3d->setMaterial(0,0,0);
         pointer3d->render();
         gluu->mvPopMatrix();
 }

@@ -1947,6 +1947,10 @@ int TDB::getLineBufferSize(int idx, int pointSize, int offset, int step) {
     return tsection->sekcja[idx]->getLineBufferSize(pointSize, step) + offset + 6;
 }
 
+bool TDB::isRoad(){
+    return this->road;
+}
+
 void TDB::getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid, float offset, int step) {
 
     float matrix[16];
@@ -2010,6 +2014,7 @@ void TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tp
     getLines(lineBuffer, length, posT);
     
     qDebug() << "lines length" << length;
+    qDebug() << ": " << posT[0]<<" "<<posT[1]<<" "<<pos[0]<<" "<<pos[1]<<" "<<pos[2];
     float best[7];
     best[0] = 99999;
     float dist = 0;
@@ -2311,11 +2316,17 @@ void TDB::newLevelCrObject(int* &itemId, int trNodeId, float metry, int type){
     
     float trPosition[7];
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
-    
+    //qDebug() <<"a1";
     this->trackItems[this->iTRitems] = TRitem::newLevelCrItem(this->iTRitems, metry);
     this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[this->iTRitems]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
+    //qDebug() <<"a2";
     itemId = new int[2];
     itemId[0] = 0;
+    if(this->road){
+        itemId[0] = 1;
+        this->trackItems[this->iTRitems]->trItemSData2 = 5;
+    }
     itemId[1] = this->iTRitems++;
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
