@@ -14,14 +14,20 @@
 HazardObj::HazardObj() {
     this->shape = -1;
     this->loaded = false;
-    pointer3d = new TrackItemObj(1);
-    pointer3d->setMaterial(1,0,0);
 }
 
 HazardObj::HazardObj(const HazardObj& orig) {
 }
 
 HazardObj::~HazardObj() {
+}
+
+bool HazardObj::allowNew(){
+    return true;
+}
+
+bool HazardObj::isTrackItem(){
+    return true;
 }
 
 void HazardObj::load(int x, int y) {
@@ -37,6 +43,41 @@ void HazardObj::load(int x, int y) {
     setMartix();
 }
 
+void HazardObj::deleteTrItems(){
+    TDB* tdb = Game::trackDB;
+    TDB* rdb = Game::roadDB;
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == 0)
+            tdb->deleteTrItem(this->trItemId[i*2+1]);
+        else if(this->trItemId[i*2] == 1)
+            rdb->deleteTrItem(this->trItemId[i*2+1]);
+        this->trItemId[i*2+1] = -1;
+    }
+}
+
+void HazardObj::initTrItems(float* tpos){
+    if(tpos == NULL)
+        return;
+    int trNodeId = tpos[0];
+    float metry = tpos[1];
+    
+    TDB* tdb = Game::trackDB;
+    qDebug() <<"new hazard  "<<this->fileName;
+    
+    trItemIdCount = 2;
+    tdb->newHazardObject(trItemId, trNodeId, metry, this->typeID);
+    drawPosition = NULL;
+}
+
+void HazardObj::set(QString sh, QString val){
+    if (sh == ("filename")) {
+        fileName = val;
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
+}
+
 void HazardObj::set(int sh, FileBuffer* data) {
     if (sh == TS::FileName) {
         data->off++;
@@ -47,6 +88,8 @@ void HazardObj::set(int sh, FileBuffer* data) {
     }
     if (sh == TS::TrItemId) {
         data->off++;
+        this->trItemIdCount = 2;
+        trItemId = new int[2];
         trItemId[0] = data->getUint();
         trItemId[1] = data->getUint();
         return;
@@ -61,6 +104,8 @@ void HazardObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("tritemid")) {
+        this->trItemIdCount = 2;
+        trItemId = new int[2];
         trItemId[0] = ParserX::parsujr(data);
         trItemId[1] = ParserX::parsujr(data);
         return;
@@ -70,7 +115,8 @@ void HazardObj::set(QString sh, FileBuffer* data) {
 }
 
 void HazardObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
-    if (!loaded) return;
+    if (!loaded) 
+        return;
     if (shape < 0) return;
     if (jestPQ < 2) return;
 
@@ -141,7 +187,10 @@ void HazardObj::renderTritems(GLUU* gluu, int selectionColor){
         }
         drawPosition[0] += 2048 * (drawPosition[5] - this->x);
         drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
-        pointer3d->setMaterial(0.8,0.2,0.8);
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0.8,0.2,0.8);
+        }
     }
 
     //if(pos == NULL) return;

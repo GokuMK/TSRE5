@@ -44,6 +44,18 @@ bool PickupObj::isTrackItem(){
     return true;
 }
 
+void PickupObj::deleteTrItems(){
+    TDB* tdb = Game::trackDB;
+    TDB* rdb = Game::roadDB;
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == 0)
+            tdb->deleteTrItem(this->trItemId[i*2+1]);
+        else if(this->trItemId[i*2] == 1)
+            rdb->deleteTrItem(this->trItemId[i*2+1]);
+        this->trItemId[i*2+1] = -1;
+    }
+}
+
 void PickupObj::initTrItems(float* tpos){
     if(tpos == NULL)
         return;
@@ -53,6 +65,7 @@ void PickupObj::initTrItems(float* tpos){
     TDB* tdb = Game::trackDB;
     qDebug() <<"new pickup  "<<this->fileName;
 
+    trItemIdCount = 2;
     tdb->newPickupObject(trItemId, trNodeId, metry, this->typeID);
     drawPosition = NULL;
     pickupType[0] = 5;

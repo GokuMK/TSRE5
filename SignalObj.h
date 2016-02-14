@@ -26,6 +26,7 @@ public:
     bool allowNew();
     bool isTrackItem();
     void initTrItems(float* tpos);
+    void deleteTrItems();
     void enableSubObj(int i);
     void disableSubObj(int i);
     void flip(bool flipShape);

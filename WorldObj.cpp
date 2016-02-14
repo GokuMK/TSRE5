@@ -45,6 +45,8 @@ int WorldObj::isTrackObj(QString sh) {
         return 1;
     } else if (sh == "hazard") {
         return 1;
+    } else if (sh == "soundregion") {
+        return 1;
     } 
     return 0;
 }

@@ -10,6 +10,7 @@
 #include "Game.h"
 #include "TrackItemObj.h"
 #include "TS.h"
+#include "SoundList.h"
 #include <QDebug>
 
 SoundRegionObj::SoundRegionObj() {
@@ -35,32 +36,52 @@ void SoundRegionObj::load(int x, int y) {
     this->y = y;
     this->position[2] = -this->position[2];
     this->qDirection[2] = -this->qDirection[2];
+    this->fileName = "IMRegionPoint.s";
+    this->staticFlags = 1048576;
     this->loaded = true;
-
     setMartix();
 }
 
+void SoundRegionObj::deleteTrItems(){
+    TDB* tdb = Game::trackDB;
+    TDB* rdb = Game::roadDB;
+    for(int i = 0; i<this->trItemId.size()/2; i++){
+        if(this->trItemId[i*2] == 0)
+            tdb->deleteTrItem(this->trItemId[i*2+1]);
+        else if(this->trItemId[i*2] == 1)
+            rdb->deleteTrItem(this->trItemId[i*2+1]);
+        this->trItemId[i*2+1] = -1;
+    }
+}
+
 void SoundRegionObj::initTrItems(float* tpos){
-    /*if(tpos == NULL)
+    if(tpos == NULL)
         return;
     int trNodeId = tpos[0];
     float metry = tpos[1];
     
     TDB* tdb = Game::trackDB;
-    qDebug() <<"new speedpost  "<<this->fileName;
+    qDebug() <<"new soundregion  "<<this->fileName;
 
-    tdb->newSpeedPostObject(speedPostId, speedPostType, trItemId, trNodeId, metry, this->typeID);
-    
-    //this->signalSubObj = 0;
-    //qDebug() <<"signalUnits  "<<this->signalUnits;
-    //for(int i = 0; i < this->signalUnits; i++)
-    //    this->signalSubObj = this->signalSubObj | (1 << i);
-   // this->trItemIdCount = 4;
-  //  this->trItemId[0] = isRoad;
-   // this->trItemId[1] = trItemId[0];
-   // this->trItemId[2] = isRoad;
-  //  this->trItemId[3] = trItemId[1];
-    this->drawPositions = NULL;*/
+    tdb->newSoundRegionObject(this->soundregionTrackType, trItemId, trNodeId, metry, this->typeID);
+    float *srd = tdb->trackItems[this->trItemId[1]]->trItemSRData;
+    this->soundregionRoty = srd[2];
+    this->position[1] += 1;
+    this->drawPositionB = NULL;
+}
+
+void SoundRegionObj::set(QString sh, int val){
+    if (sh == ("_refvalue")) {
+        this->fileName = "";
+        for (auto it = Game::soundList->regions.begin(); it != Game::soundList->sources.end(); ++it ){
+            if(it->second->id == val){
+                this->soundregionRoty = val;
+            }
+        }
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
 }
 
 void SoundRegionObj::set(QString sh, QString val){
@@ -219,3 +240,33 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
     pointer3d->render(selectionColor + (1)*131072*8*useSC);
     gluu->mvPopMatrix();
 };
+
+void SoundRegionObj::save(QTextStream* out){
+    if (!loaded) return;
+    if (jestPQ < 2) return;
+int l;
+QString flags;
+if(this->staticFlags != 0){
+    flags = QString::number(this->staticFlags, 16);
+    l = flags.length();
+    for(int i=0; i<8-l; i++)
+        flags = "0"+flags;
+}
+    
+*(out) << "	Soundregion (\n";
+    
+*(out) << "		SoundregionRoty ( "<<this->soundregionRoty<<" )\n";
+*(out) << "		SoundregionTrackType ( "<<this->soundregionTrackType<<" )\n";
+for(int i = 0; i < this->trItemId.size(); i+=2){
+*(out) << "		TrItemId ( "<<this->trItemId[i]<<" "<<this->trItemId[i+1]<<" )\n";
+}
+*(out) << "		UiD ( "<<this->UiD<<" )\n";
+*(out) << "		FileName ( "<<this->fileName<<" )\n";
+*(out) << "		StaticFlags ( "<<flags<<" )\n";
+*(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
+*(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
+*(out) << "		VDbId ( "<<this->vDbId<<" )\n";
+if(this->staticDetailLevel > -1)
+*(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
+*(out) << "	)\n";
+}

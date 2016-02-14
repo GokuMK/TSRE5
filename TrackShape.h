@@ -24,7 +24,7 @@ public:
     bool dyntrack = false;
     SectionIdx *path;
     int xoverpts = 0;
-    float *xoverpt;
+    float *xoverpt = NULL;
     
  //      } else if (sh == ("xoverpts")) {    
         

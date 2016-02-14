@@ -80,8 +80,10 @@ public:
     void newPickupObject(int* &itemId, int trNodeId, float metry, int type);
     void newSignalObject(QString filename, int* &itemId, int &signalUnits, int trNodeId, float metry, int type);
     void newLevelCrObject(int* &itemId, int trNodeId, float metry, int type);
+    void newHazardObject(int* &itemId, int trNodeId, float metry, int type);
     void getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos);
     void newSpeedPostObject(int speedPostId, int speedPostType, std::vector<int> & itemId, int trNodeId, float metry, int type);
+    void newSoundRegionObject(int soundregionTrackType, std::vector<int> & itemId, int trNodeId, float metry, int type);
 private:
     bool deleteNulls();
     int findBiggest();

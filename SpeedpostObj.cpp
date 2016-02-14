@@ -51,6 +51,18 @@ void SpeedpostObj::load(int x, int y) {
     setMartix();
 }
 
+void SpeedpostObj::deleteTrItems(){
+    TDB* tdb = Game::trackDB;
+    TDB* rdb = Game::roadDB;
+    for(int i = 0; i<this->trItemId.size()/2; i++){
+        if(this->trItemId[i*2] == 0)
+            tdb->deleteTrItem(this->trItemId[i*2+1]);
+        else if(this->trItemId[i*2] == 1)
+            rdb->deleteTrItem(this->trItemId[i*2+1]);
+        this->trItemId[i*2+1] = -1;
+    }
+}
+
 void SpeedpostObj::initTrItems(float* tpos){
     if(tpos == NULL)
         return;

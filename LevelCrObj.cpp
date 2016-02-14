@@ -44,6 +44,18 @@ void LevelCrObj::load(int x, int y) {
     setMartix();
 }
 
+void LevelCrObj::deleteTrItems(){
+    TDB* tdb = Game::trackDB;
+    TDB* rdb = Game::roadDB;
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == 0)
+            tdb->deleteTrItem(this->trItemId[i*2+1]);
+        else if(this->trItemId[i*2] == 1)
+            rdb->deleteTrItem(this->trItemId[i*2+1]);
+        this->trItemId[i*2+1] = -1;
+    }
+}
+
 void LevelCrObj::initTrItems(float* tpos){
     if(tpos == NULL)
         return;
@@ -53,6 +65,7 @@ void LevelCrObj::initTrItems(float* tpos){
     TDB* tdb = Game::trackDB;
     qDebug() <<"new levelcr  "<<this->fileName;
 
+    trItemIdCount = 2;
     tdb->newLevelCrObject(trItemId, trNodeId, metry, this->typeID);
     
     //this->signalSubObj = 0;
@@ -211,7 +224,7 @@ void LevelCrObj::render(GLUU* gluu, float lod, float posx, float posz, float* po
 };
 
 void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
-    
+
     ///////////////////////////////
     TDB* tdb = Game::trackDB;
     if(drawPositions.size() == 0){
@@ -220,9 +233,10 @@ void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
             loaded = false;
             return;
         }
-        for(int i = 0; i < trItemIdCount; i++){
+        for(int i = 0; i < trItemIdCount/2; i++){
             if(this->trItemId[i*2] != 0)
                 continue;
+
             int id = tdb->findTrItemNodeId(this->trItemId[i*2+1]);
             if (id < 0) {
                 qDebug() << "LevelCrObj: fail id";

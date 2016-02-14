@@ -96,3 +96,13 @@ void SoundSourceObj::render(GLUU* gluu, float lod, float posx, float posz, float
         
     pointer3d->render(selectionColor);
 };
+
+void SoundSourceObj::save(QTextStream* out){
+    if (!loaded) return;
+    
+*(out) << "	Soundsource (\n";
+*(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
+*(out) << "		FileName ( "<<this->fileName<<" )\n";
+*(out) << "		UiD ( "<<this->UiD<<" )\n";
+*(out) << "	)\n";
+}

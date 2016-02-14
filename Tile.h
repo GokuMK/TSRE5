@@ -45,14 +45,14 @@ public:
     void render(float *  playerT, float* playerW, float* target, float fov, bool selection);
     void renderWS(float *  playerT, float* playerW, float* target, float fov, bool selection);
     void save();
-    void saveWS();
     
 private:
     int maxUiD = 0;
-    int maxUiDWS = 0;    
+    int maxUiDWS = 100000;    
     bool modified;
     QString* viewDbSphereRaw = NULL;
     void wczytajObiekty();
+    void saveWS();
 };
 
 #endif	/* TILE_H */

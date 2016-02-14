@@ -20,6 +20,7 @@ public:
     virtual ~PickupObj();
     bool allowNew();
     bool isTrackItem();
+    void deleteTrItems();
     void initTrItems(float* tpos);
     void load(int x, int y);
     void set(int sh, FileBuffer* data);

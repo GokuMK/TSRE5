@@ -1930,16 +1930,13 @@ int TDB::getEndpointType(int trid, int endp){
 void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot) {
     Mat4::identity(gluu->objStrMatrix);
     gluu->setMatrixUniforms();
-    int hash = playerT[0] * 10000 + playerT[1];
-    if (!isInitLines || lineHash != hash) {
-        
-    }
     
     for (auto it = this->trackItems.begin(); it != this->trackItems.end(); ++it) {
         //console.log(obj.type);
         TRitem* obj = (TRitem*) it->second;
-
-        obj->render(this, gluu, playerT, playerRot);
+        if(obj != NULL){
+            obj->render(this, gluu, playerT, playerRot);
+        }
     }
 }
 
@@ -2320,6 +2317,39 @@ void TDB::newLevelCrObject(int* &itemId, int trNodeId, float metry, int type){
     itemId = new int[2];
     itemId[0] = 0;
     itemId[1] = this->iTRitems++;
+    this->addItemToTrNode(trNodeId, itemId[1]);
+}
+
+void TDB::newSoundRegionObject(int soundregionTrackType, std::vector<int> &itemId, int trNodeId, float metry, int type){
+    if(type != WorldObj::soundregion) 
+        return;
+    
+    float trPosition[7];
+    this->trackItems[this->iTRitems] = TRitem::newSoundRegionItem(this->iTRitems, metry);
+    getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
+    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[this->iTRitems]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[this->iTRitems]->setSoundRegionData(trPosition[3], soundregionTrackType);
+    itemId.clear();
+    itemId.push_back(0);
+    itemId.push_back(this->iTRitems++);
+    
+    this->addItemToTrNode(trNodeId, itemId[1]);
+}
+
+void TDB::newHazardObject(int * &itemId, int trNodeId, float metry, int type){
+    if(type != WorldObj::hazard) 
+        return;
+    
+    float trPosition[7];
+    this->trackItems[this->iTRitems] = TRitem::newHazardItem(this->iTRitems, metry);
+    getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
+    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[this->iTRitems]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
+    itemId = new int[2];
+    itemId[0] = 0;
+    itemId[1] = this->iTRitems++;
+    
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
 

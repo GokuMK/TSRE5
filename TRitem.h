@@ -22,6 +22,8 @@ public:
     static TRitem* newSignalItem(int trItemId, float metry, unsigned int flags, QString type);
     static TRitem* newSpeedPostItem(int trItemId, float metry, int speedPostType);
     static TRitem* newLevelCrItem(int trItemId, float metry);
+    static TRitem* newSoundRegionItem(int trItemId, float metry);
+    static TRitem* newHazardItem(int trItemId, float metry);
     TRitem();
     TRitem(int id);
     TRitem(const TRitem& orig);
@@ -69,6 +71,8 @@ public:
     void setPickupContent(float val);
     void setSignalRot(float rot);
     void setSpeedpostRot(float rot);
+    void setSoundRegionRot(float rot);
+    void setSoundRegionData(float rot, float ttype, float val = 0);
     void setSignalDirection(int dir);
     void flipSignal();
     void enableSignalSubObj(int i);

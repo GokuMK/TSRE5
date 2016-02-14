@@ -352,14 +352,18 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
     nowy->set("_refvalue", itemData->value);
 
     //Quat::rotateY(q, q, M_PI/2);
+    
     if(nowy->isTrackItem()){
-        nowy->initTrItems(tpos);
         q[0] = 0;
         q[1] = 0;
         q[2] = 0;
         q[3] = 1;
+        nowy->initPQ(p, q);
+        nowy->initTrItems(tpos);
+    } else {
+        nowy->initPQ(p, q);
     }
-    nowy->initPQ(p, q);
+    
     //qDebug() << maxUiD;
     if(nowy->isSoundItem())
         nowy->UiD = ++maxUiDWS;
@@ -441,9 +445,42 @@ void Tile::save() {
  
     // optional, as QFile destructor will already do it:
     file.close(); 
-    
+    saveWS();
 }
 
+void Tile::saveWS() {
+    QString path;
+    
+    int countWS = 0;
+    for(int i = 0; i < this->jestObiektow; i++){
+        if(this->obiekty[i]->isSoundItem()) countWS++;
+    }
+    if(countWS == 0){
+        //delete ws file if exist
+        return;
+    }
+    
+    path = Game::root + "/routes/" + Game::route + "/world/w" + getNameXY(x) + "" + getNameXY(-z) + ".ws";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile file(path);
+    
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+    out << "SIMISA@@@@@@@@@@JINX0w0t______\n";
+    out << "\n";
+    out << "Tr_Worldsoundfile (\n";
+    for(int i = 0; i < this->jestObiektow; i++){
+        if(!this->obiekty[i]->isSoundItem()) continue;
+            this->obiekty[i]->save(&out);
+    }
+    out << ")";
+ 
+    file.close(); 
+    
+}
 
 bool Tile::isModified(){
     bool value = this->modified;

@@ -52,7 +52,6 @@ TRitem* TRitem::newCarspawnerItem(int trItemId, float metry){
     return trit;
 }
 
-
 TRitem* TRitem::newPickupItem(int trItemId, float metry){
     TRitem* trit = new TRitem(trItemId);
     if(!trit->init("pickupitem")) return NULL;
@@ -66,6 +65,23 @@ TRitem* TRitem::newPickupItem(int trItemId, float metry){
 TRitem* TRitem::newLevelCrItem(int trItemId, float metry){
     TRitem* trit = new TRitem(trItemId);
     if(!trit->init("levelcritem")) return NULL;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 6;
+    return trit;
+}
+
+TRitem* TRitem::newSoundRegionItem(int trItemId, float metry){
+    TRitem* trit = new TRitem(trItemId);
+    if(!trit->init("soundregionitem")) return NULL;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 6;
+    trit->trItemSRData = new float[3];
+    return trit;
+}
+
+TRitem* TRitem::newHazardItem(int trItemId, float metry){
+    TRitem* trit = new TRitem(trItemId);
+    if(!trit->init("hazzarditem")) return NULL;
     trit->trItemSData1 = metry;
     trit->trItemSData2 = 6;
     return trit;
@@ -120,6 +136,16 @@ TRitem* TRitem::newSpeedPostItem(int trItemId, float metry, int speedPostType){
     }
     qDebug() << "aa ";
     return trit;
+}
+
+void  TRitem::setSoundRegionRot(float rot){
+    this->trItemSRData[2] = rot; 
+}
+
+void  TRitem::setSoundRegionData(float rot, float ttype, float val){
+    this->trItemSRData[0] = val; 
+    this->trItemSRData[1] = ttype; 
+    this->trItemSRData[2] = rot; 
 }
 
 void TRitem::setPickupContent(float val){
@@ -377,9 +403,13 @@ void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot){
         //qDebug() << "empty";
         return;
     }
+    if(this->type == ""){
+        //qDebug() << "undefined";
+        return;
+    }
     
         if(drawPosition == NULL){
-            drawPosition = new float[6];
+            drawPosition = new float[7];
             int id = tdb->findTrItemNodeId(this->trItemId);
             if(id < 0) {
                 //qDebug() << "fail id";

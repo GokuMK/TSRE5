@@ -23,6 +23,7 @@ public:
     bool allowNew();
     bool isTrackItem();
     void initTrItems(float* tpos);
+    void deleteTrItems();
     void save(QTextStream* out);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:

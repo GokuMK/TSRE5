@@ -25421,6 +25421,7 @@ build/Release/MinGW_QT_static-Windows/SoundRegionObj.o: SoundRegionObj.cpp Sound
 		Pointer3d.h \
 		Game.h \
 		TrackItemObj.h \
+		SoundList.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/SoundRegionObj.o SoundRegionObj.cpp
 
