@@ -91,6 +91,10 @@ void PickupObj::set(QString sh, QString val){
         fileName = val;
         return;
     }
+    if (sh == ("ref_filename")) {
+        fileName = val;
+        return;
+    }
     WorldObj::set(sh, val);
     return;
 }

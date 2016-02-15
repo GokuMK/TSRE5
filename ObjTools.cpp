@@ -317,7 +317,8 @@ void ObjTools::otherListSelected(QListWidgetItem * item){
     if(refOther.currentText().toLower() == "sound sources") itemRef->type = "soundsource";
     if(refOther.currentText().toLower() == "sound regions") itemRef->type = "soundregion";
     qDebug() << item->type() << " " << item->text();
-    itemRef->clas = "";
+    itemRef->clas = refOther.currentText().toLower();
+    itemRef->filename = item->text();
     itemRef->value = item->type();
     try{
         route->ref->selected = itemRef;

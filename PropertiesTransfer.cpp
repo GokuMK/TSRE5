@@ -126,6 +126,8 @@ void PropertiesTransfer::showObj(WorldObj* obj){
 
     
     Texture* tex = TexLib::mtex[tobj->getTexId()];
+    if(tex == NULL) 
+        return;
     
     unsigned char * out = tex->getImageData(128,128);
     if(tex->bytesPerPixel == 3)

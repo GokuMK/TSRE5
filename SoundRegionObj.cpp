@@ -71,7 +71,7 @@ void SoundRegionObj::initTrItems(float* tpos){
 }
 
 void SoundRegionObj::set(QString sh, int val){
-    if (sh == ("_refvalue")) {
+    if (sh == ("ref_value")) {
         this->fileName = "";
         for (auto it = Game::soundList->regions.begin(); it != Game::soundList->sources.end(); ++it ){
             if(it->second->id == val){
@@ -86,6 +86,10 @@ void SoundRegionObj::set(QString sh, int val){
 
 void SoundRegionObj::set(QString sh, QString val){
     if (sh == ("filename")) {
+        fileName = val;
+        return;
+    }
+    if (sh == ("ref_filename")) {
         fileName = val;
         return;
     }

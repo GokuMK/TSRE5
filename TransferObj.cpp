@@ -46,6 +46,11 @@ void TransferObj::set(QString sh, QString val){
         texture = val;
         return;
     }
+    if (sh == ("ref_filename")) {
+        texture = val;
+        //TexLib::addTex(resPath+"/"+texture);
+        return;
+    }
     WorldObj::set(sh, val);
     return;
 }

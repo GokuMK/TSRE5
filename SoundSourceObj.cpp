@@ -32,7 +32,7 @@ void SoundSourceObj::load(int x, int y) {
 }
 
 void SoundSourceObj::set(QString sh, int val){
-    if (sh == ("_refvalue")) {
+    if (sh == ("ref_value")) {
         this->fileName = "";
         for (auto it = Game::soundList->sources.begin(); it != Game::soundList->sources.end(); ++it ){
             if(it->second->id == val){
@@ -47,6 +47,10 @@ void SoundSourceObj::set(QString sh, int val){
 
 void SoundSourceObj::set(QString sh, QString val){
     if (sh == ("filename")) {
+        fileName = val;
+        return;
+    }
+    if (sh == ("ref_filename")) {
         fileName = val;
         return;
     }

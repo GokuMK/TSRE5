@@ -137,7 +137,7 @@ void TrackObj::set(QString sh, int val) {
         sectionIdx = val;
         return;
     }
-    if (sh == ("_refvalue")) {
+    if (sh == ("ref_value")) {
         sectionIdx = val;
         return;
     }
@@ -147,6 +147,10 @@ void TrackObj::set(QString sh, int val) {
 
 void TrackObj::set(QString sh, QString val){ 
     if (sh == ("filename")) {
+        fileName = val;
+        return;
+    }
+    if (sh == ("ref_filename")) {
         fileName = val;
         return;
     }

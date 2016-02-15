@@ -11,6 +11,12 @@ class OglObj;
 
 class SpeedpostObj : public WorldObj  {
 public:
+    enum SType {
+        MILEPOST = 0,
+        WARNING = 1,
+        SIGN = 2,
+        RESUME = 3
+    };
     SpeedpostObj();
     SpeedpostObj(const SpeedpostObj& orig);
     virtual ~SpeedpostObj();
@@ -42,6 +48,7 @@ private:
     void renderTritems(GLUU* gluu, int selectionColor);
     float* drawPositions = NULL;
     int selectionValue = 0;
+    //SType sType = 0;
 };
 
 #endif	/* SPEEDPOSTOBJ_H */

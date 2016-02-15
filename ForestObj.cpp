@@ -72,7 +72,7 @@ void ForestObj::load(int x, int y) {
 }
 
 void ForestObj::set(QString sh, int val) {
-    if (sh == ("_refvalue")) {
+    if (sh == ("ref_value")) {
         treeTexture = ForestObj::forestList[val].texture;
         scaleRangeX = ForestObj::forestList[val].scaleRangeX;
         scaleRangeZ = ForestObj::forestList[val].scaleRangeZ;

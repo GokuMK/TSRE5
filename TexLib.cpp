@@ -48,6 +48,7 @@ int TexLib::addTex(QString path, QString name) {
 int TexLib::addTex(QString pathid) {
 
     for ( auto it = mtex.begin(); it != mtex.end(); ++it ){
+        if(it->second == NULL) continue;
         if (((Texture*) it->second)->pathid.length() == pathid.length()) 
             if (((Texture*) it->second)->pathid == pathid) {
                 ((Texture*) it->second)->ref++;

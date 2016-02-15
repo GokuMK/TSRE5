@@ -56,7 +56,7 @@ bool SignalObj::isTrackItem(){
 void SignalObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
-    for(int i = 0; i<this->signalUnits/2; i++){
+    for(int i = 0; i<this->signalUnits; i++){
         if(this->trItemId[i*2] == 0)
             tdb->deleteTrItem(this->trItemId[i*2+1]);
         else if(this->trItemId[i*2] == 1)
@@ -89,7 +89,7 @@ void SignalObj::initTrItems(float* tpos){
 }
 
 void SignalObj::set(QString sh, int val) {
-    if (sh == ("_refvalue")) {
+    if (sh == ("ref_value")) {
         SignalShape * signal = Game::trackDB->sigCfg->signalShapeById[val];
         fileName = signal->name;
         return;
@@ -100,6 +100,10 @@ void SignalObj::set(QString sh, int val) {
 
 void SignalObj::set(QString sh, QString val){
     if (sh == ("filename")) {
+        fileName = val;
+        return;
+    }
+    if (sh == ("ref_filename")) {
         fileName = val;
         return;
     }

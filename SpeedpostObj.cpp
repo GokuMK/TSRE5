@@ -87,7 +87,7 @@ void SpeedpostObj::initTrItems(float* tpos){
 }
 
 void SpeedpostObj::set(QString sh, int val){
-    if (sh == ("_refvalue")) {
+    if (sh == ("ref_value")) {
         speedPostId = val/1000;
         speedPostType = val - speedPostId*1000;
         qDebug() << "speedPostId "<<speedPostId<< " speedPostType " << speedPostType;
@@ -134,7 +134,24 @@ void SpeedpostObj::set(QString sh, QString val){
         fileName = val;
         return;
     }
-     WorldObj::set(sh, val);
+    if (sh == ("ref_filename")) {
+        fileName = val;
+        return;
+    }
+    /*if (sh == ("ref_class")) {
+        if(val == "speedsign")
+            this->sType = SIGN;
+        else if(val == "speedresume")
+            this->sType = RESUME;
+        else if(val == "speedwarning")
+            this->sType = WARNING;
+        else if(val == "milepost")
+            this->sType = MILEPOST;
+        else
+            this->sType = UNDEFINED;
+        return;
+    }*/
+    WorldObj::set(sh, val);
     return;
 }
 

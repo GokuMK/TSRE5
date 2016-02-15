@@ -40,4 +40,4 @@ allowObjLag = 1000
 #cameraFov = 20.0
 warningBox = false
 leaveTrackShapeAfterDelete = false
-renderTrItems = true
+renderTrItems = false

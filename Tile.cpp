@@ -340,16 +340,17 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
     if(loaded != 1) return NULL;
     if(itemData == NULL) return NULL;
     //qDebug() << pozW[0] << " " << pozW[1] << " " << pozW[2] << " " << itemData->type << " " << itemData->filename;
-    
+
     WorldObj* nowy = WorldObj::createObj(itemData->type);
     if(nowy == NULL) return NULL;
     if(!nowy->allowNew()) {
         qDebug() << itemData->type << " <- object not supported yet ";
         return NULL;
     }
-
-    nowy->set("filename", itemData->filename);
-    nowy->set("_refvalue", itemData->value);
+    
+    nowy->set("ref_class", itemData->clas);
+    nowy->set("ref_filename", itemData->filename);
+    nowy->set("ref_value", itemData->value);
 
     //Quat::rotateY(q, q, M_PI/2);
     nowy->set("x", x);
@@ -364,7 +365,7 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
     } else {
         nowy->initPQ(p, q);
     }
-    
+       
     //qDebug() << maxUiD;
     if(nowy->isSoundItem())
         nowy->UiD = ++maxUiDWS;
@@ -376,7 +377,7 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
     
     obiekty[jestObiektow++] = nowy;
     //qDebug() << obiekty[jestObiektow-1]->qDirection[3];
-    
+
     modified = true;
     return nowy;
 }
