@@ -17,6 +17,16 @@ class SpeedPostDAT;
 
 class TDB {
 public:
+    struct IntersectionPoint{
+        float distance;
+        float idx;
+        float m;
+        float sidx;
+        float sm;
+        bool operator < (const IntersectionPoint& s) const{
+            return (distance < s.distance);
+        }
+    };
     bool loaded;
     TSectionDAT *tsection; 
     SigCfg* sigCfg;
@@ -83,6 +93,7 @@ public:
     void newLevelCrObject(int* &itemId, int trNodeId, float metry, int type);
     void newHazardObject(int* &itemId, int trNodeId, float metry, int type);
     void getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos);
+    void getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint*> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos);
     void newSpeedPostObject(int speedPostId, int speedPostType, std::vector<int> & itemId, int trNodeId, float metry, int type);
     void newSoundRegionObject(int soundregionTrackType, std::vector<int> & itemId, int trNodeId, float metry, int type);
 private:

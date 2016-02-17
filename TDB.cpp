@@ -2117,13 +2117,11 @@ void TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float
     //posT[0] = n->trVectorSection[(int)best[2]].param[8];
     //posT[1] = -n->trVectorSection[(int)best[2]].param[9];
     
-
-    
     float metry = this->getVectorSectionLengthToIdx(best[1], best[2]);
     if(tpos != NULL){
         tpos[0] = best[1];
         tpos[1] = metry + best[3];
-    }    
+    }
     this->getDrawPositionOnTrNode((float*)best, best[1], metry + best[3]);
     pos[0] = best[0];
     pos[1] = best[1];
@@ -2133,6 +2131,68 @@ void TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float
     q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
     Quat::rotateY(q, q, best[3]);
     Quat::rotateX(q, q, -best[4]);
+}
+
+void TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint*> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos){
+    float *lineBuffer;
+    int length = 0;
+    getLines(lineBuffer, length, posT);
+    
+    qDebug() << "lines length" << length;
+    float best[7];
+    best[0] = 99999;
+    float dist = 0;
+    float intersectionPoint[3];
+    intersectionPoint[1] = pos[1];
+    int uu;
+    float metry;
+    float dist1, dist2;
+    
+    IntersectionPoint* p;
+    for(int i = 0; i < length*12; i+=12){
+        //qDebug() << i/12;
+        //qDebug() << lineBuffer[i+0] << " "<< lineBuffer[i+1] << " " << lineBuffer[i+2] << " "<< lineBuffer[i+3] << " "<< lineBuffer[i+4] << " " << lineBuffer[i+5] ;
+        //qDebug() << lineBuffer[i+6] << " "<< lineBuffer[i+7] << " " << lineBuffer[i+8] << " "<< lineBuffer[i+9] << " "<< lineBuffer[i+10] << " " << lineBuffer[i+11] ;
+        
+        for(int j = 0; j < len; j+=12){
+            bool ok = Intersections::segmentIntersection(
+                lineBuffer[i], lineBuffer[i + 2], 
+                lineBuffer[i+6 + 0], lineBuffer[i+6 + 2], 
+                segment [ j + 0], segment [ j + 2], 
+                segment [ j+6 + 0], segment [ j+6 + 2], 
+                intersectionPoint[0], intersectionPoint[2]
+            );
+            if(!ok) continue;
+            qDebug() << "intersection";
+            qDebug() <<  lineBuffer[i]<< " " << lineBuffer[i + 2]<< " " <<
+                lineBuffer[i+6 + 0]<< " " << lineBuffer[i+6 + 2]<< " -- " <<
+                segment [ j + 0]<< " " << segment [ j + 2]<< " " <<
+                segment [ j+6 + 0]<< " " << segment [ j+6 + 2]<< " " ;
+            dist = Vec3::distance(intersectionPoint, pos);
+
+            p = new IntersectionPoint;
+            p->distance = dist;
+            p->idx = lineBuffer[i+3];
+            p->sidx = segment[j+3];
+
+            dist1 = Vec3::distance(lineBuffer + i, lineBuffer + i+6);
+            dist2 = Vec3::distance(lineBuffer + i, intersectionPoint);
+            dist1 = dist2/dist1;
+            metry = this->getVectorSectionLengthToIdx(p->idx, lineBuffer[i+4]);
+            p->m = metry + lineBuffer[i+5] + (lineBuffer[i+11] - lineBuffer[i+5])*dist1;
+            
+            dist1 = Vec3::distance(segment + j, segment + j+6);
+            dist2 = Vec3::distance(segment + j, intersectionPoint);
+            dist1 = dist2/dist1;
+            metry = segmentTDB->getVectorSectionLengthToIdx(p->sidx, segment[j+4]);
+            p->sm = metry + segment[j+5] + (segment[j+11] - segment[j+5])*dist1;
+            
+            qDebug() << "item p: " << p->distance << " " << p->idx << " " << p->m<< " " << p->sidx << " " << p->sm;
+            ipoints.push_back(p);
+        }
+    }
+    std::sort(ipoints.begin(), ipoints.end());
+    return;
 }
 
 void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
