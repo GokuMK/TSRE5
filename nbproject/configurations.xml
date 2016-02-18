@@ -25,6 +25,7 @@
           <itemPath>PropertiesSiding.h</itemPath>
           <itemPath>PropertiesSignal.h</itemPath>
           <itemPath>PropertiesSoundSource.h</itemPath>
+          <itemPath>PropertiesSpeedpost.h</itemPath>
           <itemPath>PropertiesStatic.h</itemPath>
           <itemPath>PropertiesTransfer.h</itemPath>
           <itemPath>PropertiesUndefined.h</itemPath>
@@ -151,6 +152,7 @@
           <itemPath>PropertiesSiding.cpp</itemPath>
           <itemPath>PropertiesSignal.cpp</itemPath>
           <itemPath>PropertiesSoundSource.cpp</itemPath>
+          <itemPath>PropertiesSpeedpost.cpp</itemPath>
           <itemPath>PropertiesStatic.cpp</itemPath>
           <itemPath>PropertiesTransfer.cpp</itemPath>
           <itemPath>PropertiesUndefined.cpp</itemPath>
@@ -440,6 +442,10 @@
       <item path="PropertiesSoundSource.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesSoundSource.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSpeedpost.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSpeedpost.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -841,6 +847,10 @@
       <item path="PropertiesSoundSource.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesSoundSource.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSpeedpost.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSpeedpost.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
       </item>

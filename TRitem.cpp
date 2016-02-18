@@ -395,6 +395,48 @@ void TRitem::flipSignal(){
         this->trSignalType3 += 2*M_PI;
 }
 
+void TRitem::flipSpeedpost(){
+    //this->trSignalType2 = abs(this->trSignalType2-1);
+    this->speedpostTrItemData[this->speedpostTrItemDataLength-1] += M_PI;
+    if(this->speedpostTrItemData[this->speedpostTrItemDataLength-1] > 2*M_PI)
+        this->speedpostTrItemData[this->speedpostTrItemDataLength-1] -= 2*M_PI;
+    if(this->speedpostTrItemData[this->speedpostTrItemDataLength-1] < 0)
+        this->speedpostTrItemData[this->speedpostTrItemDataLength-1] += 2*M_PI;
+}
+
+void TRitem::setSpeedpostSpeed(float val){
+    SType stype = getSpeedpostType();
+    if(stype == TRitem::RESUME){
+        return;
+    }
+    if(stype == TRitem::MILEPOST){
+        return;
+    }
+    if(stype == TRitem::WARNING || stype == TRitem::SIGN){
+        this->speedpostTrItemData[1] = val;
+        return;
+    }
+}
+void TRitem::setSpeedpostNum(float val){
+    SType stype = getSpeedpostType();
+    if(stype == TRitem::RESUME){
+        return;
+    }
+    if(stype == TRitem::MILEPOST){
+        this->speedpostTrItemData[1] = val;
+        return;
+    }
+    if(stype == TRitem::WARNING || stype == TRitem::SIGN){
+        
+        //this->speedpostTrItemData[1] = val;
+        return;
+    }
+}
+
+TRitem::SType TRitem::getSpeedpostType(){
+    return (TRitem::SType)((int)(this->speedpostTrItemData[0]) & 0b11);
+}
+
 void TRitem::addToTrackPos(float d){
     this->trItemSData1 += d;
 }

@@ -21,6 +21,7 @@
 #include "PropertiesPickup.h"
 #include "PropertiesForest.h"
 #include "PropertiesSoundSource.h"
+#include "PropertiesSpeedpost.h"
 #include "NaviWindow.h"
 
 Window::Window() {
@@ -42,6 +43,7 @@ Window::Window() {
     objProperties.push_back(new PropertiesSignal);
     objProperties.push_back(new PropertiesPickup);
     objProperties.push_back(new PropertiesForest);
+    objProperties.push_back(new PropertiesSpeedpost);
     objProperties.push_back(new PropertiesSoundSource);
     // last 
     objProperties.push_back(new PropertiesUndefined);

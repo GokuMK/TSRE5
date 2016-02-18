@@ -15,6 +15,12 @@ class TrackItemObj;
 
 class TRitem {
 public:
+    enum SType {
+        MILEPOST = 0,
+        WARNING = 1,
+        SIGN = 2,
+        RESUME = 3
+    };
     static TRitem* newPlatformItem(int trItemId, float metry);
     static TRitem* newSidingItem(int trItemId, float metry);
     static TRitem* newCarspawnerItem(int trItemId, float metry);
@@ -75,6 +81,10 @@ public:
     void setSoundRegionData(float rot, float ttype, float val = 0);
     void setSignalDirection(int dir);
     void flipSignal();
+    void flipSpeedpost();
+    void setSpeedpostSpeed(float val);
+    void setSpeedpostNum(float val);
+    SType getSpeedpostType();
     void enableSignalSubObj(int i);
     void disableSignalSubObj(int i);
     void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);

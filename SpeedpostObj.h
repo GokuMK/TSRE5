@@ -11,12 +11,6 @@ class OglObj;
 
 class SpeedpostObj : public WorldObj  {
 public:
-    enum SType {
-        MILEPOST = 0,
-        WARNING = 1,
-        SIGN = 2,
-        RESUME = 3
-    };
     SpeedpostObj();
     SpeedpostObj(const SpeedpostObj& orig);
     virtual ~SpeedpostObj();
@@ -31,6 +25,12 @@ public:
     void initTrItems(float* tpos);
     void deleteTrItems();
     void save(QTextStream* out);
+    QString getSpeedpostType();
+    float getSpeed();
+    float getNumber();
+    void setSpeed(float val);
+    void setNumber(float val);
+    void flip(bool flipShape);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     int speedPostId = -1;
@@ -48,7 +48,6 @@ private:
     void renderTritems(GLUU* gluu, int selectionColor);
     float* drawPositions = NULL;
     int selectionValue = 0;
-    //SType sType = 0;
 };
 
 #endif	/* SPEEDPOSTOBJ_H */

@@ -63,6 +63,88 @@ void SpeedpostObj::deleteTrItems(){
     }
 }
 
+QString SpeedpostObj::getSpeedpostType(){
+    if(this->trItemId.size() < 2){
+        qDebug() << "speedpost: fail trItemId";
+        return "";
+    }
+    TRitem* item = Game::trackDB->trackItems[this->trItemId[1]];
+    if(item == NULL) return "";
+    TRitem::SType val = item->getSpeedpostType();
+    if((val) == TRitem::MILEPOST)
+        return QString("milepost");
+    if((val) == TRitem::WARNING)
+        return QString("warning");
+    if((val) == TRitem::SIGN)
+        return QString("speedsign");
+    if((val) == TRitem::RESUME)
+        return QString("resume");
+    return "";
+}
+
+float SpeedpostObj::getSpeed(){
+    if(this->trItemId.size() < 2){
+        qDebug() << "speedpost: fail trItemId";
+        return 0;
+    }
+    TRitem* item = Game::trackDB->trackItems[this->trItemId[1]];
+    if(item == NULL) return 0;
+    return item->speedpostTrItemData[1];
+}
+
+float SpeedpostObj::getNumber(){
+    if(this->trItemId.size() < 2){
+        qDebug() << "speedpost: fail trItemId";
+        return 0;
+    }
+    TRitem* item = Game::trackDB->trackItems[this->trItemId[1]];
+    if(item == NULL) return 0;
+    return item->speedpostTrItemData[1];
+}
+
+void SpeedpostObj::setSpeed(float val){
+    if(this->trItemId.size() < 2){
+        qDebug() << "speedpost: fail trItemId";
+        return;
+    }
+    TDB* tdb = Game::trackDB;
+    for(int j = 0; j < this->trItemId.size()/2; j++){
+        if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
+            continue;
+        tdb->trackItems[this->trItemId[j*2+1]]->setSpeedpostSpeed(val);
+    }
+}
+
+void SpeedpostObj::setNumber(float val){
+    if(this->trItemId.size() < 2){
+        qDebug() << "speedpost: fail trItemId";
+        return;
+    }
+    TDB* tdb = Game::trackDB;
+    for(int j = 0; j < this->trItemId.size()/2; j++){
+        if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
+            continue;
+        tdb->trackItems[this->trItemId[j*2+1]]->setSpeedpostNum(val);
+    }
+}
+
+void SpeedpostObj::flip(bool flipShape){
+    if(flipShape){
+        Quat::rotateY(this->qDirection, this->qDirection, M_PI);
+        this->setMartix();
+    }
+
+    TDB* tdb = Game::trackDB;
+    for(int j = 0; j < this->trItemId.size()/2; j++){
+        if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
+            continue;
+        tdb->trackItems[this->trItemId[j*2+1]]->flipSpeedpost();
+    }
+    this->modified = true; 
+    delete[] drawPositions;
+    drawPositions = NULL;
+}
+
 void SpeedpostObj::initTrItems(float* tpos){
     if(tpos == NULL)
         return;
@@ -121,8 +203,8 @@ void SpeedpostObj::set(QString sh, int val){
         
         speedDigitTex = speedPost->speedDigitTex;
         speedTextSize[0] = speedPost->speedTextSize[0];
-        speedTextSize[1] = speedPost->speedTextSize[0];
-        speedTextSize[2] = speedPost->speedTextSize[0];
+        speedTextSize[1] = speedPost->speedTextSize[1];
+        speedTextSize[2] = speedPost->speedTextSize[2];
         return;
     }
     WorldObj::set(sh, val);
