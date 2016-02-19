@@ -46,7 +46,7 @@ void SignalShape::set(QString sh, FileBuffer* data) {
                             continue;
                         }
                         if(sflags == "DEFAULT"){
-                            subObj[idx].optional = false;
+                            subObj[idx].defaultt = true;
                             continue;
                         }
                         if(sflags == "OPTIONAL"){

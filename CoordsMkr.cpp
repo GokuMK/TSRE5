@@ -86,7 +86,7 @@ void CoordsMkr::render(GLUU* gluu, float * playerT, float* playerW) {
         punkty[ptr++] = 0;
         punkty[ptr++] = 0;
         punkty[ptr++] = 0;
-        punkty[ptr++] = 600;
+        punkty[ptr++] = 50;
         punkty[ptr++] = 0;
 
         simpleMarkerObj->setMaterial(1.0, 0.0, 1.0);
@@ -101,7 +101,8 @@ void CoordsMkr::render(GLUU* gluu, float * playerT, float* playerW) {
 
         gluu->mvPushMatrix();
         //if(pos == NULL) return;
-        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, markerList[i].x + 2048 * (markerList[i].tileX - playerT[0]), 0, markerList[i].z + 2048 * (-markerList[i].tileZ - playerT[1]));
+        float h = TerrainLib::getHeight(markerList[i].tileX, -markerList[i].tileZ, markerList[i].x, markerList[i].z);
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, markerList[i].x + 2048 * (markerList[i].tileX - playerT[0]), h, markerList[i].z + 2048 * (-markerList[i].tileZ - playerT[1]));
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));

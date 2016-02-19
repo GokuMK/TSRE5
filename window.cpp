@@ -101,7 +101,7 @@ Window::Window() {
     objTools->show();
     
     this->setCentralWidget(main);
-    setWindowTitle(tr("TSRE5 v0.607"));
+    setWindowTitle(tr("TSRE5 v0.610"));
     
     // MENUBAR
     // Route

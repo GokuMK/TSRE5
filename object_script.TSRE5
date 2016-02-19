@@ -23,6 +23,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/LoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/NaviBox.o
 ./build/Release/MinGW_QT_static-Windows/NaviWindow.o
+./build/Release/MinGW_QT_static-Windows/NewRouteWindow.o
 ./build/Release/MinGW_QT_static-Windows/ObjTools.o
 ./build/Release/MinGW_QT_static-Windows/OglObj.o
 ./build/Release/MinGW_QT_static-Windows/PaintTexLib.o
@@ -101,6 +102,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_NaviBox.o
 ./build/Release/MinGW_QT_static-Windows/moc_NaviWindow.o
+./build/Release/MinGW_QT_static-Windows/moc_NewRouteWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_ObjTools.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesAbstract.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesCarspawner.o

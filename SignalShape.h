@@ -16,6 +16,7 @@ public:
         QString sigSubSType;
         bool isJnLink = false;
         bool optional = false;
+        bool defaultt = false;
         bool backFacing = false;
     };
     int listId;

@@ -518,8 +518,8 @@ void Route::createNew() {
     QDir().mkdir(path + "/tiles");
     QDir().mkdir(path + "/world");
 
-    int x = -5000;
-    int z = 15000;
+    int x = Game::newRouteX;
+    int z = Game::newRouteZ;
     saveTrk();
     TDB::saveEmpty(false);
     TDB::saveEmpty(true);
@@ -532,7 +532,13 @@ void Route::createNew() {
     QFile::copy(res + "sigcfg.dat", path + "sigcfg.dat");
     QFile::copy(res + "ttype.dat", path + "ttype.dat");
     QFile::copy(res + "template.ref", path + Game::route + ".ref");
-    QFile::copy(res + "ttype.dat", path + "ttype.dat");
+    QFile::copy(res + "carspawn.dat", path + "carspawn.dat");
+    QFile::copy(res + "deer.haz", path + "deer.haz");
+    QFile::copy(res + "forests.dat", path + "forests.dat");
+    QFile::copy(res + "speedpost.dat", path + "speedpost.dat");
+    QFile::copy(res + "spotter.haz", path + "spotter.haz");
+    QFile::copy(res + "ssource.dat", path + "ssource.dat");
+    QFile::copy(res + "telepole.dat", path + "telepole.dat");
 
     FileFunctions::copyFiles(res + "envfiles", path + "envfiles");
     FileFunctions::copyFiles(res + "envfiles/textures", path + "envfiles/textures");
@@ -603,7 +609,7 @@ void Route::saveTrk() {
     out << "		WinterSnow ( snow.env )" << "\n";
     out << "	)" << "\n";
     out << "	TerrainErrorScale ( 1 )" << "\n";
-    out << "	RouteStart ( -5000 15000 0 0 )" << "\n";
+    out << "	RouteStart ( "<<Game::newRouteX<<" "<<Game::newRouteZ<<" 0 0 )" << "\n";
     out << "	DefaultCrossingSMS ( crossing.sms )" << "\n";
     out << "	DefaultSignalSMS ( signal.sms )" << "\n";
     out << "	DefaultWaterTowerSMS ( wtower.sms )" << "\n";

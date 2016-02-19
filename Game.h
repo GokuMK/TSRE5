@@ -56,6 +56,8 @@ public:
     static bool viewPointer3d;
     static bool leaveTrackShapeAfterDelete;
     static bool renderTrItems;
+    static int newRouteX;
+    static int newRouteZ;
 
 private:
     static Window* window;

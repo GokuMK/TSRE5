@@ -3,6 +3,10 @@
 
 #include <QtWidgets>
 
+class PreciseTileCoordinate;
+class IghCoordinate;
+class LatitudeLongitudeCoordinate;
+
 class LoadWindow : public QWidget {
     Q_OBJECT
 
@@ -22,10 +26,14 @@ private:
     QListWidget routeList;
     QPushButton *browse;
     QPushButton *load;
+    QPushButton *neww;
     QPushButton *exit;
     QLineEdit *nowaTrasa;
     QWidget* nowa;
     bool newRoute = false;
+    IghCoordinate* igh = NULL;
+    LatitudeLongitudeCoordinate* latlon = NULL;
+    PreciseTileCoordinate* aCoords = NULL;
 };
 
 #endif	/* LOADWINDOW_H */

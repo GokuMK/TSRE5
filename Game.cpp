@@ -43,6 +43,8 @@ bool Game::viewMarkers = false;
 bool Game::warningBox = false;
 bool Game::leaveTrackShapeAfterDelete = false;
 bool Game::renderTrItems = false;
+int Game::newRouteX = -5000;
+int Game::newRouteZ = 15000;
 
 Window* Game::window = NULL;
 LoadWindow* Game::loadWindow = NULL;

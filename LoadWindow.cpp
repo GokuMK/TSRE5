@@ -2,10 +2,12 @@
 #include <QtWidgets>
 #include "Game.h"
 #include <QDebug>
+#include "NewRouteWindow.h"
+#include "IghCoords.h"
 
 LoadWindow::LoadWindow() {
     this->setWindowFlags( Qt::CustomizeWindowHint );
-    this->setFixedSize(600, 500);
+    this->setFixedSize(600, 700);
     QImage* myImage = new QImage();
     myImage->load("resources/load.png");
 
@@ -23,6 +25,9 @@ LoadWindow::LoadWindow() {
     load = new QPushButton("Load");
     load->setStyleSheet("background-color: #008800");
     connect(load, SIGNAL (released()), this, SLOT (routeLoad()));
+    neww = new QPushButton("New");
+    neww->setStyleSheet("background-color: #888800");
+    connect(neww, SIGNAL (released()), this, SLOT (setNewRoute()));
     exit = new QPushButton("Exit");
     exit->setStyleSheet("background-color: #880000");
 
@@ -39,17 +44,18 @@ LoadWindow::LoadWindow() {
     mainLayout->addWidget(browse);
     mainLayout->addWidget(&routeList);
     
-    nowa = new QWidget();
+    /*nowa = new QWidget();
     QHBoxLayout *vbox1 = new QHBoxLayout;
     vbox1->addWidget(myLabel3);
     vbox1->addWidget(nowaTrasa);
     vbox1->setContentsMargins(0,0,0,0);
     nowa->setLayout(vbox1);
-    mainLayout->addWidget(nowa);
+    mainLayout->addWidget(nowa);*/
     
     QWidget* box = new QWidget();
     QHBoxLayout *vbox = new QHBoxLayout;
     vbox->addWidget(load);
+    vbox->addWidget(neww);
     vbox->addWidget(exit);
     vbox->setContentsMargins(0,0,0,0);
     box->setLayout(vbox);
@@ -60,7 +66,7 @@ LoadWindow::LoadWindow() {
     mainLayout->setAlignment(browse, Qt::AlignTop);
     mainLayout->setAlignment(load, Qt::AlignTop);
     mainLayout->setAlignment(box, Qt::AlignBottom);
-    mainLayout->setAlignment(nowa, Qt::AlignBottom);
+    //mainLayout->setAlignment(nowa, Qt::AlignBottom);
     mainLayout->setContentsMargins(1,1,1,1);
     //mainLayout->addWidget(naviBox);
     this->setLayout(mainLayout);
@@ -71,12 +77,14 @@ LoadWindow::LoadWindow() {
     QObject::connect(exit, SIGNAL (released()), this, SLOT (close()));
     QObject::connect(&routeList, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(setLoadRoute()));
-    QObject::connect(nowaTrasa, SIGNAL(textChanged(QString)),
-                      this, SLOT(setNewRoute()));
+    //QObject::connect(nowaTrasa, SIGNAL(textChanged(QString)),
+    //                  this, SLOT(setNewRoute()));
     
     if(Game::checkRoot(Game::root)){
         qDebug()<<"ok";
         load->show();
+        neww->show();
+        neww->setFixedWidth(100);
         exit->setFixedWidth(100);
         browse->setText(Game::root);
         browse->setStyleSheet("color: #00AA00");
@@ -84,7 +92,8 @@ LoadWindow::LoadWindow() {
     } else {
         exit->setFixedWidth(600);
         load->hide();
-        nowa->hide();
+        //nowa->hide();
+        neww->hide();
     }
 }
 
@@ -107,13 +116,15 @@ void LoadWindow::handleBrowseButton(){
     browse->setText(directory);
     browse->setStyleSheet("color: #AA0000");
     load->hide();
-    nowa->hide();
+    //nowa->hide();
+    neww->hide();
     exit->setFixedWidth(600);
     routeList.clear();
     if(Game::checkRoot(directory)){
         qDebug()<<"ok";
         load->show();
-        nowa->show();
+        neww->show();
+        neww->setFixedWidth(100);
         exit->setFixedWidth(100);
         browse->setStyleSheet("color: #00AA00");
         Game::root = directory;
@@ -124,8 +135,6 @@ void LoadWindow::handleBrowseButton(){
 void LoadWindow::routeLoad(){
     if(this->newRoute){
         if(!Game::checkRoot(Game::root)) return;
-        if(nowaTrasa->text().length() < 2) return;
-        Game::route = nowaTrasa->text();
         Game::routeName = Game::route;
         Game::trkName = Game::route;
         Game::writeEnabled = true;
@@ -162,8 +171,27 @@ void LoadWindow::setLoadRoute(){
 
 void LoadWindow::setNewRoute(){
     //qDebug() << "new";
-    this->load->setText("New");
-    this->newRoute = true;
+    //this->load->setText("New");
+    NewRouteWindow newWindow;
+    newWindow.setWindowTitle("New route");
+    newWindow.name.setText("");
+    newWindow.lat.setText("50.0");
+    newWindow.lon.setText("20.0");
+    newWindow.exec();
+    if(newWindow.changed){
+        if(newWindow.name.text().length() < 2) return;
+        Game::route = newWindow.name.text();
+        double lat = newWindow.lat.text().toDouble();
+        double lon = newWindow.lon.text().toDouble();
+        igh = MstsCoordinates::ConvertToIgh(lat, lon, igh);
+        aCoords = MstsCoordinates::ConvertToTile(igh, aCoords);
+        aCoords->setWxyz();
+        Game::newRouteX = aCoords->TileX;
+        Game::newRouteZ = aCoords->TileZ;
+        qDebug() << Game::newRouteX << " " << Game::newRouteZ;
+        this->newRoute = true;
+        routeLoad();
+    }
 }
 
 void LoadWindow::exitNow(){
