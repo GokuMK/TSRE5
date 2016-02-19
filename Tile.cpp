@@ -229,12 +229,12 @@ void Tile::loadWS() {
     path = Game::root + "/routes/" + Game::route + "/world/w" + getNameXY(x) + "" + getNameXY(-z) + ".ws";
     path.replace("//", "/");
     
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly)){
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly)){
         //qDebug() << "ws file not exist    " << path;
         return;
     }
-    FileBuffer* data = ReadFile::read(file);
+    FileBuffer* data = ReadFile::read(&file);
     //qDebug() << "Date:" << data->length;
     //data->off = 0;
     //for(int i = 0; i < 64; i++){
@@ -453,19 +453,21 @@ void Tile::save() {
 void Tile::saveWS() {
     QString path;
     
-    int countWS = 0;
-    for(int i = 0; i < this->jestObiektow; i++){
-        if(this->obiekty[i]->isSoundItem()) countWS++;
-    }
-    if(countWS == 0){
-        //delete ws file if exist
-        return;
-    }
-    
     path = Game::root + "/routes/" + Game::route + "/world/w" + getNameXY(x) + "" + getNameXY(-z) + ".ws";
     path.replace("//", "/");
     qDebug() << path;
     QFile file(path);
+    
+    int countWS = 0;
+    for(int i = 0; i < this->jestObiektow; i++){
+        if(this->obiekty[i]->isSoundItem() && this->obiekty[i]->loaded) countWS++;
+    }
+    qDebug() << countWS;
+    if(countWS == 0){
+        qDebug() << "delete ws file if exist";
+        file.remove();
+        return;
+    }
     
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&file);
