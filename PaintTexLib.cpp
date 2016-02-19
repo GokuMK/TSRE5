@@ -31,12 +31,18 @@ void PaintTexLib::run() {
     
     QImage img(texture->imageData, w, h, QImage::Format_RGBA8888);
     
-    QString val = texture->pathid.split(".").first();
+    QStringList data = texture->pathid.split(".");
+    QString val = data.first();
+    QColor color;
+    for(int i = 1; i < data.length()-1; i++){
+        if(data[i].split(":").first() == "color")
+            color.setNamedColor(data[i].split(":").last());
+    }
     
     QPainter p;
     p.begin(&img);
     p.setRenderHint(QPainter::RenderHint::Antialiasing, false);
-    QPen niebieski(QColor(50,50,255));
+    QPen niebieski(color);
     p.setPen(niebieski); 
     p.setFont(QFont("Arial", 25));
     p.drawText(QRect(0,0,w,h), Qt::AlignCenter, val);

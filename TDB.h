@@ -34,7 +34,6 @@ public:
     //TRnode *trackNodes;
     std::unordered_map<int, TRitem*> trackItems;
     std::unordered_map<int, TRnode*> trackNodes;
-    std::unordered_map<int, TextObj*> endIdObj;
     //std::vector<TRnode> trackNodes;
     int iTRnodes;
     int iTRitems;
@@ -122,6 +121,9 @@ private:
     float *collisionLineBuffer = NULL;
     int collisionLineLength = 0;
     int collisionLineHash = 0;
+    
+    std::unordered_map<int, TextObj*> endIdObj;
+    std::unordered_map<int, TextObj*> junctIdObj;
 };
 
 #endif	/* TDB_H */

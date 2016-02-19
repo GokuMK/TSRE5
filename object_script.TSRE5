@@ -58,6 +58,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/SignalShape.o
 ./build/Release/MinGW_QT_static-Windows/SignalType.o
 ./build/Release/MinGW_QT_static-Windows/SignalWindow.o
+./build/Release/MinGW_QT_static-Windows/SignalWindowLink.o
 ./build/Release/MinGW_QT_static-Windows/SoundList.o
 ./build/Release/MinGW_QT_static-Windows/SoundRegionObj.o
 ./build/Release/MinGW_QT_static-Windows/SoundSourceObj.o
@@ -115,6 +116,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesTransfer.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesUndefined.o
 ./build/Release/MinGW_QT_static-Windows/moc_SignalWindow.o
+./build/Release/MinGW_QT_static-Windows/moc_SignalWindowLink.o
 ./build/Release/MinGW_QT_static-Windows/moc_TerrainTools.o
 ./build/Release/MinGW_QT_static-Windows/moc_TerrainWaterWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_glwidget.o

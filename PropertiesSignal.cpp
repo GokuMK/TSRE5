@@ -118,7 +118,7 @@ void PropertiesSignal::flipSignal(){
 }
 
 void PropertiesSignal::showSubObjList(){
-    this->signalWindow->show();
+    this->signalWindow->exec();
 }
 
 bool PropertiesSignal::support(WorldObj* obj){

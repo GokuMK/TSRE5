@@ -1,10 +1,5 @@
-/* 
- * File:   TextObj.h
- * Author: Goku
- *
- * Created on 14 maja 2015, 21:43
- */
 #include "OglObj.h"
+#include <QPainter>
 
 #ifndef TEXTOBJ_H
 #define	TEXTOBJ_H
@@ -19,9 +14,12 @@ public:
     virtual ~TextObj();
     void render();
     void render(float rot);
+    void setColor(int r, int g, int b);
 private:
     QString text;
     void init();
+    QColor color;
+    bool isInit = false;
 };
 
 #endif	/* TEXTOBJ_H */

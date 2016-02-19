@@ -194,6 +194,14 @@ bool SignalObj::isJunctionAvailable(int i){
     return false;
 }
 
+void SignalObj::linkSignal(int subsigId, int from, int to){
+    if(subsigId > this->signalUnits) return;
+    TDB* tdb = Game::trackDB;
+    if(tdb->trackItems[this->trItemId[subsigId*2+1]] == NULL)
+        return;
+    tdb->trackItems[this->trItemId[subsigId*2+1]]->linkSignal(from, to);
+}
+
 bool SignalObj::isSubObjEnabled(int i){
     return ((this->signalSubObj >> i) & 1) == 1;
 }

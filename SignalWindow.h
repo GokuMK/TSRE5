@@ -5,7 +5,7 @@
 
 class SignalObj;
 
-class SignalWindow : public QWidget {
+class SignalWindow : public QDialog {
     Q_OBJECT
 
 public:
@@ -16,6 +16,7 @@ public:
 public slots:
     void exitNow();
     void chSubEnabled(int i);
+    void bLinkEnabled(int i);
     
 private:
     static const int maxSubObj = 30;
@@ -27,6 +28,7 @@ private:
     QGridLayout vSub[maxSubObj];
     QWidget wSub[maxSubObj];
     QSignalMapper signalsChSect;
+    QSignalMapper signalsLinkButton;
     SignalObj* sobj;
 };
 

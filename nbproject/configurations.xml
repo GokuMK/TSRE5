@@ -30,6 +30,7 @@
           <itemPath>PropertiesTransfer.h</itemPath>
           <itemPath>PropertiesUndefined.h</itemPath>
           <itemPath>SignalWindow.h</itemPath>
+          <itemPath>SignalWindowLink.h</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
         <itemPath>GuiFunct.h</itemPath>
@@ -157,6 +158,7 @@
           <itemPath>PropertiesTransfer.cpp</itemPath>
           <itemPath>PropertiesUndefined.cpp</itemPath>
           <itemPath>SignalWindow.cpp</itemPath>
+          <itemPath>SignalWindowLink.cpp</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>GuiFunct.cpp</itemPath>
@@ -510,6 +512,10 @@
       <item path="SignalWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SignalWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalWindowLink.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalWindowLink.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SoundList.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -915,6 +921,10 @@
       <item path="SignalWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SignalWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalWindowLink.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalWindowLink.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SoundList.cpp" ex="false" tool="1" flavor2="0">
       </item>

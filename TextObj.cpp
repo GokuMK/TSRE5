@@ -11,12 +11,14 @@
 
 TextObj::TextObj(int val) : OglObj() {
     this->text.setNum(val, 10);
-    this->init();
 }
 
 TextObj::TextObj() : OglObj() {
     this->text = " ";
-    this->init();
+}
+
+void TextObj::setColor(int r, int g, int b){
+    color.setRgb(r, g, b);
 }
 
 void TextObj::init(){
@@ -77,10 +79,10 @@ void TextObj::init(){
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 1.0;
-
-    this->setMaterial(new QString(text+".:paintTex"));
+    this->setMaterial(new QString(text+".color:"+color.name()+".:paintTex"));
     OglObj::init(punkty, ptr, this->VNT, GL_TRIANGLES);
     delete[] punkty;
+    isInit = true;
 }
 
 TextObj::TextObj(const TextObj& orig) {
@@ -94,6 +96,8 @@ void TextObj::render() {
 }
 
 void TextObj::render(float rot) {
+    if(!isInit)
+        init();
 
     GLUU* gluu = GLUU::get();
     gluu->mvPushMatrix();

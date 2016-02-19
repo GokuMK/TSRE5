@@ -5,10 +5,11 @@
 #include "TDB.h"
 #include "SigCfg.h"
 #include "SignalShape.h"
+#include "SignalWindowLink.h"
 
 SignalWindow::SignalWindow() 
-    : QWidget() {
-    this->setWindowFlags(Qt::WindowStaysOnTopHint);
+    : QDialog() {
+    //this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->setFixedWidth(400);
     
     
@@ -30,9 +31,14 @@ SignalWindow::SignalWindow()
 
         signalsChSect.setMapping(&chSub[i], i);
         connect(&chSub[i], SIGNAL(clicked()), &signalsChSect, SLOT(map()));
+        
+        signalsLinkButton.setMapping(&bSub[i], i);
+        connect(&bSub[i], SIGNAL(clicked()), &signalsLinkButton, SLOT(map()));
+        
     }
 
     connect(&signalsChSect, SIGNAL(mapped(int)), this, SLOT(chSubEnabled(int)));
+    connect(&signalsLinkButton, SIGNAL(mapped(int)), this, SLOT(bLinkEnabled(int)));
     QPushButton* browse = new QPushButton("Close");
     connect(browse, SIGNAL (released()), this, SLOT (close()));
     vbox->addWidget(browse);
@@ -51,8 +57,26 @@ void SignalWindow::chSubEnabled(int i){
     else
         sobj->disableSubObj(i);
     
-    //showObj(sobj);
+    showObj(sobj);
 }
+
+void SignalWindow::bLinkEnabled(int i){
+    if(sobj == NULL)
+        return;
+    
+    SignalWindowLink window;
+    window.setWindowTitle("Water Level");
+    window.exec();
+    if(window.changed){
+        int from = window.from.text().toInt();
+        int to = window.to.text().toInt();
+        qDebug() << "link val: " << from << " "<< to;
+        sobj->linkSignal(i, from, to);
+        showObj(sobj);
+    }
+    
+}
+
 void SignalWindow::showObj(SignalObj* obj){
     this->sobj = obj;
     for (int i = 0; i < maxSubObj; i++) {
@@ -84,29 +108,31 @@ void SignalWindow::showObj(SignalObj* obj){
             this->bSub[i].show();
             this->bSub[i].setStyleSheet("color: gray"); 
             this->bSub[i].setText("Link");
-            linkPtr = signalShape->subObj[i].sigSubJnLinkIf[0];
-            if(this->chSub[linkPtr].isChecked()){
-                int linkId = sobj->getLinkedJunctionValue(i);
-                if(linkId == -1){
-                    this->bSub[i].setEnabled(false);
-                    this->bSub[i].setStyleSheet("color: red"); 
-                    this->bSub[i].setText("NULL");
-                } else if(linkId == 0){
-                    this->bSub[i].setStyleSheet(""); 
-                    if(sobj->isJunctionAvailable(i)){
-                        this->bSub[i].setText("Link");
-                        this->bSub[i].setEnabled(true);
-                    } else {
-                        this->bSub[i].setText("No Junction");
+            this->bSub[i].setEnabled(false);
+            for(int j = 0; j< signalShape->subObj[i].iLink; j++){
+                linkPtr = signalShape->subObj[i].sigSubJnLinkIf[j];
+                if(this->chSub[linkPtr].isChecked()){
+                    int linkId = sobj->getLinkedJunctionValue(i);
+                    if(linkId == -1){
                         this->bSub[i].setEnabled(false);
+                        this->bSub[i].setStyleSheet("color: red"); 
+                        this->bSub[i].setText("NULL");
+                    } else if(linkId == 0){
+                        this->bSub[i].setStyleSheet(""); 
+                        if(sobj->isJunctionAvailable(i)){
+                            this->bSub[i].setText("Link");
+                            this->bSub[i].setEnabled(true);
+                        } else {
+                            this->bSub[i].setText("No Junction");
+                            this->bSub[i].setEnabled(false);
+                        }
+                    } else {
+                        this->bSub[i].setEnabled(true);
+                        this->bSub[i].setStyleSheet("color: green"); 
+                        this->bSub[i].setText("Linked: "+QString::number(linkId, 10));
                     }
-                } else {
-                    this->bSub[i].setEnabled(true);
-                    this->bSub[i].setStyleSheet("color: green"); 
-                    this->bSub[i].setText("Linked: "+QString::number(linkId, 10));
+                    break;
                 }
-            } else {
-                this->bSub[i].setEnabled(false);
             }
         }
     }
@@ -117,5 +143,5 @@ SignalWindow::~SignalWindow() {
 }
 
 void SignalWindow::exitNow(){
-    this->hide();
+    this->close();
 }

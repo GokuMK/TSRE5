@@ -1568,6 +1568,10 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
             TextObj* obj = (TextObj*) it->second;
             obj->inUse = false;
         }
+        for (auto it = junctIdObj.begin(); it != junctIdObj.end(); ++it) {
+            TextObj* obj = (TextObj*) it->second;
+            obj->inUse = false;
+        }
         
         for (int i = 1; i <= iTRnodes; i++) {
             n = trackNodes[i];
@@ -1627,6 +1631,7 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
                 if(!road){
                     if(endIdObj[i] == NULL){
                         endIdObj[i] = new TextObj(i);
+                        endIdObj[i]->setColor(50,50,255);
                     }    
                     endIdObj[i]->inUse = true;
                     endIdObj[i]->pos[0] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
@@ -1641,6 +1646,20 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
                 punkty[pPtr++] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
                 punkty[pPtr++] = (n->UiD[7] + wysokoscSieci);
                 punkty[pPtr++] = ((-n->UiD[5] - playerT[1])*2048 - n->UiD[8]);
+                
+                if(fabs(n->UiD[4] - playerT[0]) > 1) continue;
+                if(fabs(-n->UiD[5] - playerT[1]) > 1) continue;
+                
+                if(!road){
+                    if(junctIdObj[i] == NULL){
+                        junctIdObj[i] = new TextObj(i);
+                        junctIdObj[i]->setColor(255,50,50);
+                    }    
+                    junctIdObj[i]->inUse = true;
+                    junctIdObj[i]->pos[0] = ((n->UiD[4] - playerT[0])*2048 + n->UiD[6]);
+                    junctIdObj[i]->pos[1] = n->UiD[7] + wysokoscSieci;
+                    junctIdObj[i]->pos[2] = ((-n->UiD[5] - playerT[1])*2048 - n->UiD[8]);
+                }
             }
         }
         linieSieci.setMaterial(0.5, 0.5, 0.5);
@@ -1664,12 +1683,16 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
     konceSieci.render();
     punktySieci.render();
     
-    if(!road)
+    if(!road){
         for (auto it = endIdObj.begin(); it != endIdObj.end(); ++it) {
-            //console.log(obj.type);
             TextObj* obj = (TextObj*) it->second;
             if(obj->inUse) obj->render(playerRot);
         }
+        for (auto it = junctIdObj.begin(); it != junctIdObj.end(); ++it) {
+            TextObj* obj = (TextObj*) it->second;
+            if(obj->inUse) obj->render(playerRot);
+        }
+    }
 }
 
 void TDB::getLines(float * &lineBuffer, int &length, float* playerT){
