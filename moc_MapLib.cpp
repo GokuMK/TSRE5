@@ -1,42 +1,42 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'AceLib.h'
+** Meta object code from reading C++ file 'MapLib.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "AceLib.h"
+#include "MapLib.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'AceLib.h' doesn't include <QObject>."
+#error "The header file 'MapLib.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.5.1. It"
+#error "This file was generated using the moc from 5.4.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_AceLib_t {
+struct qt_meta_stringdata_MapLib_t {
     QByteArrayData data[1];
-    char stringdata0[7];
+    char stringdata[7];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_AceLib_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_MapLib_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_AceLib_t qt_meta_stringdata_AceLib = {
+static const qt_meta_stringdata_MapLib_t qt_meta_stringdata_MapLib = {
     {
-QT_MOC_LITERAL(0, 0, 6) // "AceLib"
+QT_MOC_LITERAL(0, 0, 6) // "MapLib"
 
     },
-    "AceLib"
+    "MapLib"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_AceLib[] = {
+static const uint qt_meta_data_MapLib[] = {
 
  // content:
        7,       // revision
@@ -52,7 +52,7 @@ static const uint qt_meta_data_AceLib[] = {
        0        // eod
 };
 
-void AceLib::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void MapLib::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -60,26 +60,26 @@ void AceLib::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
     Q_UNUSED(_a);
 }
 
-const QMetaObject AceLib::staticMetaObject = {
-    { &QThread::staticMetaObject, qt_meta_stringdata_AceLib.data,
-      qt_meta_data_AceLib,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+const QMetaObject MapLib::staticMetaObject = {
+    { &QThread::staticMetaObject, qt_meta_stringdata_MapLib.data,
+      qt_meta_data_MapLib,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
-const QMetaObject *AceLib::metaObject() const
+const QMetaObject *MapLib::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *AceLib::qt_metacast(const char *_clname)
+void *MapLib::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_AceLib.stringdata0))
-        return static_cast<void*>(const_cast< AceLib*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_MapLib.stringdata))
+        return static_cast<void*>(const_cast< MapLib*>(this));
     return QThread::qt_metacast(_clname);
 }
 
-int AceLib::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int MapLib::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QThread::qt_metacall(_c, _id, _a);
     if (_id < 0)

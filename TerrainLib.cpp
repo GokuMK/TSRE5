@@ -305,6 +305,19 @@ void TerrainLib::setWaterDraw(int x, int z, float* p){
     terr->setWaterDraw(x, z, posx, posz);
 }
 
+void TerrainLib::setTileBlob(int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->setTileBlob();
+}
+
 void TerrainLib::setWaterLevelGui(int x, int z, float* p){
     float posx = p[0];
     float posz = p[2];

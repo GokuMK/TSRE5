@@ -6,6 +6,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/CoordsMkr.o
 ./build/Release/MinGW_QT_static-Windows/DynTrackObj.o
 ./build/Release/MinGW_QT_static-Windows/Eng.o
+./build/Release/MinGW_QT_static-Windows/Features.o
 ./build/Release/MinGW_QT_static-Windows/FileBuffer.o
 ./build/Release/MinGW_QT_static-Windows/FileFunctions.o
 ./build/Release/MinGW_QT_static-Windows/Flex.o
@@ -21,9 +22,12 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/Intersections.o
 ./build/Release/MinGW_QT_static-Windows/LevelCrObj.o
 ./build/Release/MinGW_QT_static-Windows/LoadWindow.o
+./build/Release/MinGW_QT_static-Windows/MapLib.o
+./build/Release/MinGW_QT_static-Windows/MapWindow.o
 ./build/Release/MinGW_QT_static-Windows/NaviBox.o
 ./build/Release/MinGW_QT_static-Windows/NaviWindow.o
 ./build/Release/MinGW_QT_static-Windows/NewRouteWindow.o
+./build/Release/MinGW_QT_static-Windows/OSM.o
 ./build/Release/MinGW_QT_static-Windows/ObjTools.o
 ./build/Release/MinGW_QT_static-Windows/OglObj.o
 ./build/Release/MinGW_QT_static-Windows/PaintTexLib.o
@@ -100,6 +104,8 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_AceLib.o
 ./build/Release/MinGW_QT_static-Windows/moc_ImageLib.o
 ./build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o
+./build/Release/MinGW_QT_static-Windows/moc_MapLib.o
+./build/Release/MinGW_QT_static-Windows/moc_MapWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_NaviBox.o
 ./build/Release/MinGW_QT_static-Windows/moc_NaviWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_NewRouteWindow.o

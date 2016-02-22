@@ -2,6 +2,7 @@
 #include "AceLib.h"
 #include "ImageLib.h"
 #include "PaintTexLib.h"
+#include "MapLib.h"
 #include "Texture.h"
 #include <QDebug>
 
@@ -76,6 +77,10 @@ int TexLib::addTex(QString pathid) {
         t->texture = newFile;
         //t->start();
         t->run();
+    } else if(tType == ":maptex"){
+        MapLib* t = new MapLib();
+        t->texture = newFile;
+        t->start();
     }
     //AceLib::LoadACE(newFile);
     //tConcurrent::run();

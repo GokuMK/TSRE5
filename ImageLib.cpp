@@ -23,7 +23,7 @@ void ImageLib::run(){
         img = img.convertToFormat(QImage::Format_RGB888);
     }
     texture->width = img.width();
-    texture->height = img.height();    
+    texture->height = img.height();
     
     texture->imageData = new unsigned char[texture->width*texture->height*texture->bytesPerPixel];//img.bits();
     int lineWidth = (texture->width*texture->bytesPerPixel);

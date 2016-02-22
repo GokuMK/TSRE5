@@ -46,7 +46,7 @@ void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
     VBO.bind();
     VBO.allocate(punkty, ptr * sizeof (GLfloat));
-
+    
     if (v == V) {
         f->glEnableVertexAttribArray(0);
         f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof (GLfloat), 0);
@@ -61,7 +61,7 @@ void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
         f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), 0);
         f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
     }
-
+    
     VBO.release();
     length = ptr / v;
     loaded = true;

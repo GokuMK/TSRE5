@@ -18,6 +18,7 @@
 #include "TerrainLib.h"
 #include "Brush.h"
 #include "IghCoords.h"
+#include "MapWindow.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -66,13 +67,13 @@ void GLWidget::timerEvent(QTimerEvent * event) {
 }
 
 void GLWidget::initializeGL() {
-    
+    //qDebug() << "GLUU::get();";
     gluu = GLUU::get();
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
-
+    //qDebug() << "initializeOpenGLFunctions();";
     initializeOpenGLFunctions();
     glClearColor(0, 0, 0, 1);
-
+    //qDebug() << "gluu->initShader();";
     gluu->initShader();
 
     glEnable(GL_DEPTH_TEST);
@@ -87,6 +88,7 @@ void GLWidget::initializeGL() {
     //eng = new Eng("F:/Train Simulator/trains/trainset/PKP-ST44-992/","PKP-ST44-992.eng",0);
     //sFile->Load("f:/train simulator/routes/cmk/shapes/cottage3.s");
     //tile = new Tile(-5303,-14963);
+    //qDebug() << "route = new Route();";
     route = new Route();
     if(!route->loaded) return;
     
@@ -116,6 +118,7 @@ void GLWidget::initializeGL() {
     //selectedObj = NULL;
     setSelectedObj(NULL);
     defaultPaintBrush = new Brush();
+    mapWindow = new MapWindow();
     
     emit routeLoaded(route);
     emit mkrList(route->getMkrList());
@@ -568,6 +571,19 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if(toolEnabled == "fixedTileTool"){
             TerrainLib::setFixedTileHeight(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
+        if(toolEnabled == "mapTileShowTool"){
+            TerrainLib::setTileBlob((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
+        if(toolEnabled == "mapTileLoadTool"){
+            int x = (int)camera->pozT[0];
+            int z = (int)camera->pozT[1];
+            float posx = aktPointerPos[0];
+            float posz = aktPointerPos[2];
+            Game::check_coords(x, z, posx, posz);
+            mapWindow->tileX = x;
+            mapWindow->tileZ = z;
+            mapWindow->show();
         }
         if(toolEnabled == ""){
             camera->MouseDown(event);

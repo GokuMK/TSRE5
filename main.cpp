@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "window.h"
 #include "LoadWindow.h"
+#include "MapWindow.h"
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg){
     const char symbols[] = { 'I', 'E', '!', 'X' };
@@ -76,5 +77,7 @@ int main(int argc, char *argv[]){
     }
     // Run route editor
     Game::checkSettings();
+    //MapWindow aaa;
+    //aaa.show();
     return app.exec();
  }

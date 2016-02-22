@@ -61,6 +61,10 @@
         <itemPath>TextObj.h</itemPath>
         <itemPath>TrackItemObj.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f2" displayName="OSM" projectFiles="true">
+        <itemPath>MapWindow.h</itemPath>
+        <itemPath>OSM.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
           <itemPath>SFile.h</itemPath>
@@ -88,6 +92,7 @@
         <itemPath>AceLib.h</itemPath>
         <itemPath>Brush.h</itemPath>
         <itemPath>ImageLib.h</itemPath>
+        <itemPath>MapLib.h</itemPath>
         <itemPath>PaintTexLib.h</itemPath>
         <itemPath>TexLib.h</itemPath>
         <itemPath>Texture.h</itemPath>
@@ -190,6 +195,12 @@
         <itemPath>TextObj.cpp</itemPath>
         <itemPath>TrackItemObj.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f11" displayName="OSM" projectFiles="true">
+        <itemPath>Features.cpp</itemPath>
+        <itemPath>Features.h</itemPath>
+        <itemPath>MapWindow.cpp</itemPath>
+        <itemPath>OSM.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
           <itemPath>SFile.cpp</itemPath>
@@ -217,6 +228,7 @@
         <itemPath>AceLib.cpp</itemPath>
         <itemPath>Brush.cpp</itemPath>
         <itemPath>ImageLib.cpp</itemPath>
+        <itemPath>MapLib.cpp</itemPath>
         <itemPath>PaintTexLib.cpp</itemPath>
         <itemPath>TexLib.cpp</itemPath>
         <itemPath>Texture.cpp</itemPath>
@@ -272,7 +284,7 @@
       </toolsSet>
       <qt>
         <target>TSRE5</target>
-        <modules>core gui widgets opengl</modules>
+        <modules>core gui widgets network opengl</modules>
       </qt>
       <compileType>
         <ccTool>
@@ -306,6 +318,10 @@
       <item path="Eng.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Features.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Features.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -367,6 +383,14 @@
       </item>
       <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MapLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="NaviBox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NaviBox.h" ex="false" tool="3" flavor2="0">
@@ -378,6 +402,10 @@
       <item path="NewRouteWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NewRouteWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OSM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OSM.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -672,7 +700,7 @@
         <target>TSRE5</target>
         <version>0.60</version>
         <buildMode>1</buildMode>
-        <modules>core gui widgets opengl</modules>
+        <modules>core gui widgets network opengl</modules>
         <defs>
           <Elem>CONFIG += console</Elem>
         </defs>
@@ -719,6 +747,10 @@
       <item path="Eng.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Features.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Features.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -780,6 +812,14 @@
       </item>
       <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MapLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="NaviBox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NaviBox.h" ex="false" tool="3" flavor2="0">
@@ -791,6 +831,10 @@
       <item path="NewRouteWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="NewRouteWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OSM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OSM.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
       </item>

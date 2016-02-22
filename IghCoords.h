@@ -84,12 +84,16 @@ struct PreciseTileCoordinate {
 struct IghCoordinate {
     double Line;
     double Sample;
-
+    
+    IghCoordinate() {
+        Line = 0;
+        Sample = 0;
+    }
     IghCoordinate(double line, double sample) {
         Line = line;
         Sample = sample;
     }
-   void set(double line, double sample) {
+    void set(double line, double sample) {
         Line = line;
         Sample = sample;
     }

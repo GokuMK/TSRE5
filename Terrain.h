@@ -13,6 +13,7 @@ public:
     int loaded;
     float **terrainData;
     bool inUse = true;
+    bool showBlob = false;
     Terrain(float x, float y);
     Terrain(const Terrain& orig);
     virtual ~Terrain();
@@ -28,6 +29,7 @@ public:
     void setWaterLevelGui();
     void setDraw(int x, int z, float posx, float posz);
     void setErrorBias(int x, int z, float val);
+    void setTileBlob();
     int getTexture(int x, int z, float posx, float posz);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov);
 
@@ -53,6 +55,9 @@ private:
     OglObj slines;
     OglObj ulines;
     OglObj water[256];
+    
+    
+    OglObj terrainBlob;
     //QOpenGLBuffer wVBO[256];
     //QOpenGLVertexArrayObject wVAO[256];
     //bool jestW[256];
@@ -65,6 +70,7 @@ private:
     void vertexInit();
     void normalInit();
     void oglInit();
+    void initBlob();
     void rotateTex(int idx);
     void convertTexToDefaultCoords(int idx);
     void paintTextureOnTile(Brush* brush, int y, int u, float x, float z);

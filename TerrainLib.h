@@ -29,6 +29,7 @@ public:
     static void setWaterLevelGui(int x, int z, float* p);
     static void setFixedTileHeight(Brush* brush, int x, int z, float* p);
     static void setDraw(int x, int z, float* p);
+    static void setTileBlob(int x, int z, float* p);
     static void setTerrainToTrackObj(Brush* brush, float* punkty, int length, int x, int z, float* matrix);
     static int getTexture(int x, int z, float* p);
     static bool load(int x, int z);

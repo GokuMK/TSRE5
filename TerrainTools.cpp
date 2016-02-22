@@ -26,6 +26,8 @@ TerrainTools::TerrainTools(QString name)
     QPushButton *gapsTerrTool = new QPushButton("Gaps", this);
     QPushButton *waterTileTool = new QPushButton("Water level", this);
     QPushButton *fixedTileTool = new QPushButton("Fixed Height", this);
+    QPushButton *mapTileShowTool = new QPushButton("Show/H Map", this);
+    QPushButton *mapTileLoadTool = new QPushButton("Load Map", this);
     //QPushButton *fixedTerrTool = new QPushButton("Fixed Height", this);
     
     
@@ -44,6 +46,9 @@ TerrainTools::TerrainTools(QString name)
     vlist4->addWidget(waterTerrTool,row,0);
     vlist4->addWidget(drawTerrTool,row,1);
     vlist4->addWidget(gapsTerrTool,row++,2);
+    vlist4->addWidget(mapTileShowTool,row,0);
+    vlist4->addWidget(mapTileLoadTool,row,1);
+    vlist4->addWidget(mapTileLoadTool,row++,2);
     
     QGridLayout *vlist0 = new QGridLayout;
     vlist0->setSpacing(2);
@@ -220,8 +225,14 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(waterTileTool, SIGNAL(released()),
                       this, SLOT(waterHeightTileToolEnabled()));
     
-     QObject::connect(fixedTileTool, SIGNAL(released()),
+    QObject::connect(fixedTileTool, SIGNAL(released()),
                       this, SLOT(fixedTileToolEnabled()));
+    
+    QObject::connect(mapTileShowTool, SIGNAL(released()),
+                      this, SLOT(mapTileShowToolEnabled()));
+    
+    QObject::connect(mapTileLoadTool, SIGNAL(released()),
+                      this, SLOT(mapTileLoadToolEnabled()));
     
     QObject::connect(drawTerrTool, SIGNAL(released()),
                       this, SLOT(drawTerrToolEnabled()));
@@ -321,6 +332,14 @@ void TerrainTools::pickTexToolEnabled(){
 
 void TerrainTools::waterTerrToolEnabled(){
     emit enableTool("waterTerrTool");
+}
+
+void TerrainTools::mapTileShowToolEnabled(){
+    emit enableTool("mapTileShowTool");
+}
+
+void TerrainTools::mapTileLoadToolEnabled(){
+    emit enableTool("mapTileLoadTool");
 }
 
 void TerrainTools::drawTerrToolEnabled(){

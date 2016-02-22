@@ -8,6 +8,7 @@
 #include "GLMatrix.h"
 #include "Brush.h"
 #include "TerrainWaterWindow.h"
+#include "MapWindow.h"
 
 Terrain::Terrain(float x, float y) {
     loaded = false;
@@ -243,6 +244,19 @@ void Terrain::rotateTex(int idx) {
     this->refresh();
 }
 
+void Terrain::setTileBlob(){
+    if(this->showBlob){
+        this->showBlob = false;
+        return;
+    } 
+    int hash = (int)(this->mojex)*10000+(int)(this->mojez);
+    qDebug() << hash;
+    if(MapWindow::mapTileImages[hash] != NULL)
+        this->showBlob = true;
+    else
+        qDebug() << "load map first!";
+}
+
 void Terrain::setWaterDraw(int x, int z, float posx, float posz) {
 
     int u = (posx + 1024) / 128;
@@ -432,76 +446,82 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     }
 
     gluu->enableTextures();  
-    int off = 0;
-    float lod = 0;
-    float size = 512;
     
-    QOpenGLVertexArrayObject::Binder vaoBinder(VAO[0]);
+    if(this->showBlob){
+            terrainBlob.render();
+    } else {
+        int off = 0;
+        float lod = 0;
+        float size = 512;
 
-    for (int uu = 0; uu < 16; uu++) {
-        for (int yy = 0; yy < 16; yy++) {
-            if (hidden[yy * 16 + uu]) continue;
-            if ((tfile->flags[yy * 16 + uu] & 1) != 0) continue;
-            float lodxx = lodx + uu * 128 - 1024;
-            float lodzz = lodz + yy * 128 - 1024;
-            lod = sqrt(lodxx * lodxx + lodzz * lodzz);
-            //System.out.println("-- "+lodxx+" "+lodzz);
-            if (lod > Game::objectLod) continue;
+        QOpenGLVertexArrayObject::Binder vaoBinder(VAO[0]);
 
-            if ((lod > size)) {
-                float v1[2];
-                v1[0] = playerW[0] - (target[0]);
-                v1[1] = playerW[2] - (target[2]);
-                float v2[2];
-                v2[0] = lodxx;
-                v2[1] = lodzz;
-                float iloczyn = v1[0] * v2[0] + v1[1] * v2[1];
-                float d1 = sqrt(v1[0] * v1[0] + v1[1] * v1[1]);
-                float d2 = sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
-                float zz = iloczyn / (d1 * d2);
-                if (zz > 0) continue;
+        for (int uu = 0; uu < 16; uu++) {
+            for (int yy = 0; yy < 16; yy++) {
+                if (hidden[yy * 16 + uu]) continue;
+                if ((tfile->flags[yy * 16 + uu] & 1) != 0) continue;
+                float lodxx = lodx + uu * 128 - 1024;
+                float lodzz = lodz + yy * 128 - 1024;
+                lod = sqrt(lodxx * lodxx + lodzz * lodzz);
+                //System.out.println("-- "+lodxx+" "+lodzz);
+                if (lod > Game::objectLod) continue;
 
-                float ccos = cos(fov) + zz;
-                float xxx = sqrt(2 * d2 * d2 * (1 - ccos));
-                if ((ccos > 0) && (xxx > size)) continue;
-            }
+                if ((lod > size)) {
+                    float v1[2];
+                    v1[0] = playerW[0] - (target[0]);
+                    v1[1] = playerW[2] - (target[2]);
+                    float v2[2];
+                    v2[0] = lodxx;
+                    v2[1] = lodzz;
+                    float iloczyn = v1[0] * v2[0] + v1[1] * v2[1];
+                    float d1 = sqrt(v1[0] * v1[0] + v1[1] * v1[1]);
+                    float d2 = sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
+                    float zz = iloczyn / (d1 * d2);
+                    if (zz > 0) continue;
 
-            if (texid[yy * 16 + uu] == -2) {
-                //gl.glColor3f(0.5f, 0.5f, 0f);
-                //gl.glDisable(GL2.GL_TEXTURE_2D);
-            } else {
-                if (texid[yy * 16 + uu] == -1) {
-                    //texid[uu*16+yy] = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
-                    //qDebug() << texturepath << " "<<tfile->tdata[(yy * 16 + uu)*7+0] <<" "<< tfile->materials[(int)tfile->tdata[(yy * 16 + uu)*7+0]].tex[0];
-                    texid[yy * 16 + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].tex[0]);
-                    //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
-                    //texid = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
-                    //    gl.glDisable(GL2.GL_TEXTURE_2D);
+                    float ccos = cos(fov) + zz;
+                    float xxx = sqrt(2 * d2 * d2 * (1 - ccos));
+                    if ((ccos > 0) && (xxx > size)) continue;
                 }
-                if (TexLib::mtex[texid[yy * 16 + uu]]->loaded) {
-                    if (!TexLib::mtex[texid[yy * 16 + uu]]->glLoaded)
-                        TexLib::mtex[texid[yy * 16 + uu]]->GLTextures();
-                    f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
-                    //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
-                    //  gl.glEnable(GL2.GL_TEXTURE_2D);
-                    //gl.glDisable(GL2.GL_ALPHA_TEST);
-                    //gl.glDisable(GL2.GL_BLEND);
+
+                if (texid[yy * 16 + uu] == -2) {
+                    //gl.glColor3f(0.5f, 0.5f, 0f);
+                    //gl.glDisable(GL2.GL_TEXTURE_2D);
                 } else {
-                    // gl.glDisable(GL2.GL_TEXTURE_2D);
+                    if (texid[yy * 16 + uu] == -1) {
+                        //texid[uu*16+yy] = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
+                        //qDebug() << texturepath << " "<<tfile->tdata[(yy * 16 + uu)*7+0] <<" "<< tfile->materials[(int)tfile->tdata[(yy * 16 + uu)*7+0]].tex[0];
+                        texid[yy * 16 + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].tex[0]);
+                        //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
+                        //texid = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
+                        //    gl.glDisable(GL2.GL_TEXTURE_2D);
+                    }
+                    if (TexLib::mtex[texid[yy * 16 + uu]]->loaded) {
+                        if (!TexLib::mtex[texid[yy * 16 + uu]]->glLoaded)
+                            TexLib::mtex[texid[yy * 16 + uu]]->GLTextures();
+                        f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
+                        //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
+                        //  gl.glEnable(GL2.GL_TEXTURE_2D);
+                        //gl.glDisable(GL2.GL_ALPHA_TEST);
+                        //gl.glDisable(GL2.GL_BLEND);
+                    } else {
+                        // gl.glDisable(GL2.GL_TEXTURE_2D);
+                    }
                 }
+
+                //QOpenGLVertexArrayObject::Binder vaoBinder(VAO[uu * 16 + yy]);
+
+
+                f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
             }
-
-            //QOpenGLVertexArrayObject::Binder vaoBinder(VAO[uu * 16 + yy]);
-            
-
-            f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
         }
+        renderWater(lodx, lodz, playerT, playerW, target, fov);
     }
-    renderWater(lodx, lodz, playerT, playerW, target, fov);
 }
 
 void Terrain::renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov) {
     float lod;
+    
     for (int uu = 0; uu < 16; uu++) {
         for (int yy = 0; yy < 16; yy++) {
             if (hidden[yy * 16 + uu]) continue;
@@ -866,12 +886,60 @@ void Terrain::oglInit() {
 
     VBO[0]->release();
     delete[] punkty;
+
+    initBlob();
     //for (int i = 0; i < 257; i++)
     //    delete normalData[i];
     //delete normalData;
     for (int i = 0; i < 257; i++)
         delete[] vertexData[i];
     delete[] vertexData;
+}
+
+void Terrain::initBlob(){
+    float *punkty = new float[65536 * 30];
+    int ptr = 0;
+    float step = 1.0/256;
+    for (int jj = 0; jj < 256; jj++) {
+        for (int ii = 0; ii < 256; ii++) {
+            punkty[ptr++] = vertexData[jj][ii].x;
+            punkty[ptr++] = vertexData[jj][ii].y+0.02;
+            punkty[ptr++] = vertexData[jj][ii].z;
+            punkty[ptr++] = (jj)*step;
+            punkty[ptr++] = (ii)*step;
+            punkty[ptr++] = vertexData[jj][ii+1].x;
+            punkty[ptr++] = vertexData[jj][ii+1].y+0.02;
+            punkty[ptr++] = vertexData[jj][ii+1].z;
+            punkty[ptr++] = (jj)*step;
+            punkty[ptr++] = (ii+1)*step;
+            punkty[ptr++] = vertexData[jj+1][ii+1].x;
+            punkty[ptr++] = vertexData[jj+1][ii+1].y+0.02;
+            punkty[ptr++] = vertexData[jj+1][ii+1].z;
+            punkty[ptr++] = (jj+1)*step;
+            punkty[ptr++] = (ii+1)*step;
+            punkty[ptr++] = vertexData[jj][ii].x;
+            punkty[ptr++] = vertexData[jj][ii].y+0.02;
+            punkty[ptr++] = vertexData[jj][ii].z;
+            punkty[ptr++] = (jj)*step;
+            punkty[ptr++] = (ii)*step;
+            punkty[ptr++] = vertexData[jj+1][ii+1].x;
+            punkty[ptr++] = vertexData[jj+1][ii+1].y+0.02;
+            punkty[ptr++] = vertexData[jj+1][ii+1].z;
+            punkty[ptr++] = (jj+1)*step;
+            punkty[ptr++] = (ii+1)*step;
+            punkty[ptr++] = vertexData[jj+1][ii].x;
+            punkty[ptr++] = vertexData[jj+1][ii].y+0.02;
+            punkty[ptr++] = vertexData[jj+1][ii].z;
+            punkty[ptr++] = (jj+1)*step;
+            punkty[ptr++] = (ii)*step;
+        }
+    }
+    QString* path = new QString;
+    *path += QString::number((int)(this->mojex)*10000+(int)(this->mojez))+".:maptex";
+    qDebug() << *path;
+    terrainBlob.setMaterial(path);
+    terrainBlob.init(punkty, ptr, terrainBlob.VT, GL_TRIANGLES);
+    delete[] punkty;
 }
 
 bool Terrain::readRAW(QString fSfile) {

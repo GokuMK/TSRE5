@@ -43,6 +43,8 @@ public slots:
     void drawTerrToolEnabled();
     void waterHeightTileToolEnabled();
     void fixedTileToolEnabled();
+    void mapTileShowToolEnabled();
+    void mapTileLoadToolEnabled();
     
 signals:
     void enableTool(QString name);

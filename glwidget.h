@@ -21,6 +21,7 @@ class Route;
 class Brush;
 class PreciseTileCoordinate;
 class CoordsMkr;
+class MapWindow;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -114,6 +115,7 @@ private:
     float lastNewObjPosT[2];
     
     Brush* defaultPaintBrush;
+    MapWindow* mapWindow;
 };
 
 #endif
