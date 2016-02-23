@@ -23,6 +23,7 @@ class PreciseTileCoordinate;
 class CoordsMkr;
 class MapWindow;
 
+
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
@@ -116,6 +117,7 @@ private:
     
     Brush* defaultPaintBrush;
     MapWindow* mapWindow;
+
 };
 
 #endif

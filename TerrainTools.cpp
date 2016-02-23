@@ -28,6 +28,7 @@ TerrainTools::TerrainTools(QString name)
     QPushButton *fixedTileTool = new QPushButton("Fixed Height", this);
     QPushButton *mapTileShowTool = new QPushButton("Show/H Map", this);
     QPushButton *mapTileLoadTool = new QPushButton("Load Map", this);
+    QPushButton *heightTileLoadTool = new QPushButton("Load Height", this);
     //QPushButton *fixedTerrTool = new QPushButton("Fixed Height", this);
     
     
@@ -37,7 +38,10 @@ TerrainTools::TerrainTools(QString name)
     row = 0;
     vlist3->addWidget(heightTool,row,0);
     vlist3->addWidget(waterTileTool,row,1);
-    vlist3->addWidget(fixedTileTool,row,2);
+    vlist3->addWidget(fixedTileTool,row++,2);
+    vlist3->addWidget(mapTileShowTool,row,0);
+    vlist3->addWidget(mapTileLoadTool,row,1);
+    vlist3->addWidget(heightTileLoadTool,row++,2);
     
     QGridLayout *vlist4 = new QGridLayout;
     vlist4->setSpacing(2);
@@ -46,9 +50,6 @@ TerrainTools::TerrainTools(QString name)
     vlist4->addWidget(waterTerrTool,row,0);
     vlist4->addWidget(drawTerrTool,row,1);
     vlist4->addWidget(gapsTerrTool,row++,2);
-    vlist4->addWidget(mapTileShowTool,row,0);
-    vlist4->addWidget(mapTileLoadTool,row,1);
-    vlist4->addWidget(mapTileLoadTool,row++,2);
     
     QGridLayout *vlist0 = new QGridLayout;
     vlist0->setSpacing(2);
@@ -234,6 +235,9 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(mapTileLoadTool, SIGNAL(released()),
                       this, SLOT(mapTileLoadToolEnabled()));
     
+    QObject::connect(heightTileLoadTool, SIGNAL(released()),
+                      this, SLOT(heightTileLoadToolEnabled()));
+    
     QObject::connect(drawTerrTool, SIGNAL(released()),
                       this, SLOT(drawTerrToolEnabled()));
     
@@ -340,6 +344,10 @@ void TerrainTools::mapTileShowToolEnabled(){
 
 void TerrainTools::mapTileLoadToolEnabled(){
     emit enableTool("mapTileLoadTool");
+}
+
+void TerrainTools::heightTileLoadToolEnabled(){
+    emit enableTool("heightTileLoadTool");
 }
 
 void TerrainTools::drawTerrToolEnabled(){

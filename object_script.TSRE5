@@ -16,7 +16,9 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/GLUU.o
 ./build/Release/MinGW_QT_static-Windows/Game.o
 ./build/Release/MinGW_QT_static-Windows/GuiFunct.o
+./build/Release/MinGW_QT_static-Windows/HGTfile.o
 ./build/Release/MinGW_QT_static-Windows/HazardObj.o
+./build/Release/MinGW_QT_static-Windows/HeightWindow.o
 ./build/Release/MinGW_QT_static-Windows/IghCoords.o
 ./build/Release/MinGW_QT_static-Windows/ImageLib.o
 ./build/Release/MinGW_QT_static-Windows/Intersections.o
@@ -102,6 +104,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/tsre5_plugin_import.o
 ./build/Release/MinGW_QT_static-Windows/moc_AboutWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_AceLib.o
+./build/Release/MinGW_QT_static-Windows/moc_HeightWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_ImageLib.o
 ./build/Release/MinGW_QT_static-Windows/moc_LoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_MapLib.o

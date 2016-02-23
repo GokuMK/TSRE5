@@ -41,6 +41,12 @@ unsigned short int FileBuffer::getShort() {
     return *((unsigned short int*) & this->data[this->off - 2]);
 }
 
+short int FileBuffer::getSignedShort() {
+    this->off += 2;
+    //return this->data[this->off - 2]*256 + 0;
+    return *((short int*) & this->data[this->off - 2]);
+}
+
 float FileBuffer::getFloat() {
     this->off += 4;
     return *(float*) & this->data[this->off - 4];

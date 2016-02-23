@@ -7,6 +7,7 @@
 
 class Terrain;
 class Brush;
+class HeightWindow;
 
 class TerrainLib {
 public:
@@ -21,6 +22,7 @@ public:
     static void setHeight(float x, float z, float posx, float posz, float h);
     static int setHeight256(int x, int z, int posx, int posz, float h);
     static int setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE);
+    static void setHeightFromGeoGui(int x, int z, float* p);
     static bool isLoaded(int x, int z);
     static void paintHeightMap(Brush* brush, int x, int z, float* p);
     static void paintTexture(Brush* brush, int x, int z, float* p);
@@ -38,7 +40,7 @@ public:
     static bool reload(int x, int z);
     static void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
 private:
-
+    static HeightWindow* heightWindow;
 };
 
 #endif	/* TERRAINLIB_H */

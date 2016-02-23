@@ -119,7 +119,7 @@ void GLWidget::initializeGL() {
     setSelectedObj(NULL);
     defaultPaintBrush = new Brush();
     mapWindow = new MapWindow();
-    
+
     emit routeLoaded(route);
     emit mkrList(route->getMkrList());
 }
@@ -584,6 +584,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             mapWindow->tileX = x;
             mapWindow->tileZ = z;
             mapWindow->show();
+        }
+        if(toolEnabled == "heightTileLoadTool"){
+            TerrainLib::setHeightFromGeoGui((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == ""){
             camera->MouseDown(event);

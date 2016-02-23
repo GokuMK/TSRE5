@@ -12,6 +12,7 @@ public:
     
     int getInt();
     unsigned short int getShort();
+    short int getSignedShort();
     unsigned int getUint();
     float getFloat();
     QString* getString(int start, int end);

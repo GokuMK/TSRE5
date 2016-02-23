@@ -6,7 +6,9 @@
 #include <math.h>
 #include "Game.h"
 #include "Brush.h"
+#include "HeightWindow.h"
 
+HeightWindow* TerrainLib::heightWindow = NULL;
 std::unordered_map<int, Terrain*> TerrainLib::terrain;
 
 TerrainLib::TerrainLib() {
@@ -166,6 +168,37 @@ float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR)
     ///    return -1;
     //}
     //return -1;
+}
+
+void TerrainLib::setHeightFromGeoGui(int x, int z, float* p){
+    if(heightWindow == NULL)
+        heightWindow = new HeightWindow();
+    
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+
+    heightWindow->tileX = x;
+    heightWindow->tileZ = -z;
+    heightWindow->ok = false;
+    heightWindow->terrainResolution = 256;
+    heightWindow->exec();
+    if(heightWindow->ok){
+        qDebug() << "ok";
+        for (int i = 0; i < 256; i++) {
+            for (int j = 0; j < 256; j++) {
+                terr->terrainData[i][j] = heightWindow->terrainData[j][i];
+            }
+        }
+        terr->setModified(true);
+        terr->refresh();
+    }
 }
 
 void TerrainLib::setTerrainToTrackObj(Brush* brush, float* punkty, int length, int tx, int tz, float* matrix){

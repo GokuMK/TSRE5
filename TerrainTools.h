@@ -45,6 +45,7 @@ public slots:
     void fixedTileToolEnabled();
     void mapTileShowToolEnabled();
     void mapTileLoadToolEnabled();
+    void heightTileLoadToolEnabled();
     
 signals:
     void enableTool(QString name);
