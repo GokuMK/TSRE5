@@ -140,6 +140,7 @@ QString Terrain::getTileName(int x, int y) {
 }
 
 void Terrain::refresh() {
+    if (!loaded) return;
     isOgl = false;
     reloadLines();
 }

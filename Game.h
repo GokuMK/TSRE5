@@ -58,6 +58,7 @@ public:
     static bool renderTrItems;
     static int newRouteX;
     static int newRouteZ;
+    static QString geoPath;
 
 private:
     static Window* window;

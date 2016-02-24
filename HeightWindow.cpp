@@ -33,6 +33,11 @@ HeightWindow::HeightWindow() : QDialog() {
                       this, SLOT(load()));
 }
 
+int HeightWindow::exec() {
+    this->setWindowTitle("Tile: " + QString::number(this->tileX) + " " + QString::number(-this->tileZ));
+    return QDialog::exec();
+} 
+
 void HeightWindow::load(){
 if(aCoords == NULL) aCoords = new PreciseTileCoordinate();
     aCoords->TileX = this->tileX;
@@ -49,18 +54,19 @@ if(aCoords == NULL) aCoords = new PreciseTileCoordinate();
             aCoords->setWxyz(i, 0, j);
             igh = MstsCoordinates::ConvertToIgh(aCoords);
             mLatlon = MstsCoordinates::ConvertToLatLon(igh);
-            fileLat[(int)mLatlon->Latitude] = true;
-            fileLon[(int)mLatlon->Longitude] = true;
+            fileLat[(int)floor(mLatlon->Latitude)] = true;
+            fileLon[(int)floor(mLatlon->Longitude)] = true;
         }
     
     QImage* image = NULL;
+    bool fail;
     for (auto itlat = fileLat.begin(); itlat != fileLat.end(); ++itlat ){
         for (auto itlon = fileLon.begin(); itlon != fileLon.end(); ++itlon ){
             qDebug() << "lat " << itlat->first << " lon " << itlon->first;
             if(this->hqtFiles[itlat->first*1000+itlon->first] == NULL){
                 this->hqtFiles[itlat->first*1000+itlon->first] = new HGTfile();
-                this->hqtFiles[itlat->first*1000+itlon->first]->load(itlat->first, itlon->first);
-                
+                fail = this->hqtFiles[itlat->first*1000+itlon->first]->load(itlat->first, itlon->first);
+                if(!fail) return;
             }
             //this->hqtFiles[itlat->first*1000+itlon->first]->draw(image);
         }
@@ -87,11 +93,11 @@ void HeightWindow::drawTile(QImage* &image){
             aCoords->setWxyz(-1024 + i*step, 0, -1024 + j*step);
             igh = MstsCoordinates::ConvertToIgh(aCoords);
             mLatlon = MstsCoordinates::ConvertToLatLon(igh);
-            if(hqtFiles[(int)mLatlon->Latitude*1000+(int)mLatlon->Longitude] == NULL){
+            if(hqtFiles[(int)floor(mLatlon->Latitude)*1000+(int)floor(mLatlon->Longitude)] == NULL){
                 qDebug() << "fail";
                 continue;
             }
-            terrainData[i][j] = hqtFiles[(int)mLatlon->Latitude*1000+(int)mLatlon->Longitude]->getHeight(mLatlon->Latitude, mLatlon->Longitude);
+            terrainData[i][j] = hqtFiles[(int)floor(mLatlon->Latitude)*1000+(int)floor(mLatlon->Longitude)]->getHeight(mLatlon->Latitude, mLatlon->Longitude);
             if(terrainData[i][j] < minVal)
                 minVal = terrainData[i][j];
             if(terrainData[i][j] > maxVal)

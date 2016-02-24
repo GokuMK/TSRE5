@@ -583,7 +583,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             Game::check_coords(x, z, posx, posz);
             mapWindow->tileX = x;
             mapWindow->tileZ = z;
-            mapWindow->show();
+            mapWindow->exec();
         }
         if(toolEnabled == "heightTileLoadTool"){
             TerrainLib::setHeightFromGeoGui((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);

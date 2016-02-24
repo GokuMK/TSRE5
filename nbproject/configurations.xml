@@ -62,6 +62,7 @@
         <itemPath>TrackItemObj.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="OSM" projectFiles="true">
+        <itemPath>Features.h</itemPath>
         <itemPath>MapWindow.h</itemPath>
         <itemPath>OSM.h</itemPath>
       </logicalFolder>
@@ -203,7 +204,6 @@
       </logicalFolder>
       <logicalFolder name="f11" displayName="OSM" projectFiles="true">
         <itemPath>Features.cpp</itemPath>
-        <itemPath>Features.h</itemPath>
         <itemPath>MapWindow.cpp</itemPath>
         <itemPath>OSM.cpp</itemPath>
       </logicalFolder>

@@ -17,15 +17,30 @@
 
 std::unordered_map<int, QImage*> MapWindow::mapTileImages;
 
-MapWindow::MapWindow() {
-    QPushButton *loadButton = new QPushButton("Load", this);
+MapWindow::MapWindow() : QDialog() {
+    loadButton = new QPushButton("Load", this);
     QImage myImage(800, 800, QImage::Format_RGB888);
     //myImage->load("F:/2.png");
     imageLabel = new QLabel("");
     imageLabel->setContentsMargins(0,0,0,0);
     imageLabel->setPixmap(QPixmap::fromImage(myImage));
+    
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(loadButton);
+    //mainLayout->addWidget(loadButton);
+    QLabel *colorLabel = new QLabel("Color: ");
+    colorLabel->setMaximumWidth(50);
+    QComboBox *colorCombo = new QComboBox();
+    colorCombo->setMaximumWidth(100);
+    colorCombo->setStyleSheet("combobox-popup: 0;");
+    colorCombo->addItem("standard", 0);
+    colorCombo->addItem("invert", 1);
+    QGridLayout *vlist3 = new QGridLayout;
+    vlist3->setSpacing(2);
+    vlist3->setContentsMargins(3,0,1,0);    
+    vlist3->addWidget(loadButton,0,0);
+    vlist3->addWidget(colorLabel,0,1);
+    vlist3->addWidget(colorCombo,0,2);
+    mainLayout->addItem(vlist3);
     mainLayout->addWidget(imageLabel);
     mainLayout->setContentsMargins(1,1,1,1);
     this->setLayout(mainLayout);
@@ -42,6 +57,24 @@ MapWindow::MapWindow() {
     
     QObject::connect(loadButton, SIGNAL(released()),
                       this, SLOT(loadOSM()));
+    
+    //
+        
+    QObject::connect(colorCombo, SIGNAL(activated(QString)),
+                      this, SLOT(colorComboActivated(QString)));
+}
+
+int MapWindow::exec() {
+    this->setWindowTitle("Tile: " + QString::number(this->tileX) + " " + QString::number(-this->tileZ));
+    return QDialog::exec();
+} 
+
+void MapWindow::colorComboActivated(QString val){
+    if(val == "standard")
+        this->invert = false;
+    if(val == "invert")
+        this->invert = true;
+    reload();
 }
 
 void MapWindow::loadOSM(){
@@ -82,24 +115,34 @@ void MapWindow::get(){
     +","
     +QString::number(maxLatlon->Latitude)
     ) ) );
+    loadButton->setText("Wait ...");
     mgr->get(req);
 }
 
 void MapWindow::isData(QNetworkReply* r){
     QByteArray data = r->readAll();
     qDebug() << "data " << data.length();    
+    loadButton->setText("Load");
     load(&data);
+    reload();
+}
+
+void MapWindow::reload(){
+    if(dane.nodes.size() == 0) return;
+    if(dane.tileX != this->tileX) return;
+    if(dane.tileZ != -this->tileZ) return;
     QImage* myImage = new QImage(4096, 4096, QImage::Format_RGB888);
-    dane.minlon = this->minLatlon->Longitude;
-    dane.minlat = this->minLatlon->Latitude;
-    dane.maxlon = this->maxLatlon->Longitude;
-    dane.maxlat = this->maxLatlon->Latitude;
-    dane.tileX = this->tileX;
-    dane.tileZ = -this->tileZ;
     dane.draw(myImage);
+    //myImage->save(QString::number(dane.tileX)+"_"+QString::number(dane.tileZ)+"_d.png");
+    if(this->invert)
+        myImage->invertPixels(QImage::InvertRgba); 
+    //myImage->save(QString::number(dane.tileX)+"_"+QString::number(dane.tileZ)+"_i.png");
+    
     imageLabel->setPixmap(QPixmap::fromImage(*myImage).scaled(800,800,Qt::KeepAspectRatio,Qt::SmoothTransformation));
     int hash = (int)(this->tileX)*10000+(int)(this->tileZ);
-    MapWindow::mapTileImages[hash] = myImage;
+    if(MapWindow::mapTileImages[hash] != NULL)
+        delete MapWindow::mapTileImages[hash];
+    MapWindow::mapTileImages[hash] = myImage;    
 }
 
 void MapWindow::load(QByteArray* data){
@@ -204,7 +247,10 @@ void MapWindow::load(QByteArray* data){
                         if (node) tnode->type = (short) Features::LIST[fname.toStdString()];
                         iii++; //System.out.println(fname);
                     } else {
-                        //System.out.println("fail: "+fname);
+                        //if(!fname.startsWith("source", Qt::CaseInsensitive)
+                        //    && !fname.startsWith("created", Qt::CaseInsensitive)
+                        //    )
+                        //    qDebug() << "fail: " << fname;
                     }
                 }
             } else if (name.toUpper() == ("BOUNDS")) {
@@ -243,9 +289,12 @@ void MapWindow::load(QByteArray* data){
         reader.readNext();
     }
     qDebug() << "node/way: " << inode << "/" << iway;
-
-
-    
+    dane.tileX = this->tileX;
+    dane.tileZ = -this->tileZ;
+    dane.minlon = this->minLatlon->Longitude;
+    dane.minlat = this->minLatlon->Latitude;
+    dane.maxlon = this->maxLatlon->Longitude;
+    dane.maxlat = this->maxLatlon->Latitude;
 }
 
 MapWindow::~MapWindow() {

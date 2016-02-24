@@ -23,6 +23,7 @@ public:
     float** terrainData = NULL;
     
     static std::unordered_map<int, HGTfile*> hqtFiles;
+    int exec();
     
 public slots:
     void load();

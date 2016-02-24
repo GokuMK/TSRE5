@@ -198,6 +198,14 @@ void TerrainLib::setHeightFromGeoGui(int x, int z, float* p){
         }
         terr->setModified(true);
         terr->refresh();
+        terr = terrain[(x * 10000 + z + 1)];
+        if (terr != NULL) terr->refresh();
+        terr = terrain[(x * 10000 + z - 1)];
+        if (terr != NULL) terr->refresh();
+        terr = terrain[((x+1) * 10000 + z)];
+        if (terr != NULL) terr->refresh();
+        terr = terrain[((x-1) * 10000 + z)];
+        if (terr != NULL) terr->refresh();
     }
 }
 

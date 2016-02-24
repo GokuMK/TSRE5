@@ -6,8 +6,7 @@
 #include "ReadFile.h"
 #include <QImage>
 #include <QPainter>
-
-QString HGTfile::filePath = "F:/hgst/";
+#include "Game.h"
 
 HGTfile::HGTfile() {
 }
@@ -15,9 +14,18 @@ HGTfile::HGTfile() {
 HGTfile::~HGTfile() {
 }
 
-void HGTfile::load(int lat, int lon){
+bool HGTfile::load(int lat, int lon){
     QString plat = "N";
-    QString plon = "E";
+    if(lat < 0){
+        plat = "S";
+        lat = -lat;
+    }
+    QString plon = "E";    
+    if(lon < 0){
+        plon = "W";
+        lon = -lon;
+    }
+
     QString slat = QString::number(lat);
     QString slon = QString::number(lon);
     while(slat.length() < 2)
@@ -25,14 +33,14 @@ void HGTfile::load(int lat, int lon){
     while(slon.length() < 3)
         slon = "0"+slon;
     
-    QString fSfile = HGTfile::filePath + plat + slat + plon + slon + ".hgt";
+    QString fSfile = Game::geoPath + "/" + plat + slat + plon + slon + ".hgt";
     fSfile.replace("//", "/");
     qDebug() << fSfile;
     //qDebug() << "Wczytam teren RAW: " << fSfile;
     QFile *file = new QFile(fSfile);
     if (!file->open(QIODevice::ReadOnly)){
         qDebug() <<"not found: "<< fSfile;
-        return;
+        return false;
     }
     FileBuffer* data = ReadFile::readRAW(file);
     this->rowSize = sqrt(data->length/2);
@@ -51,6 +59,7 @@ void HGTfile::load(int lat, int lon){
     }
     qDebug() << avg / (rowSize*rowSize);
     delete data;
+    return true;
 }
 
 void HGTfile::draw(QImage* &image){
@@ -68,8 +77,8 @@ void HGTfile::draw(QImage* &image){
 }
 
 float HGTfile::getHeight(float lat, float lon){
-    float latO = lat - (int)lat;
-    float lonO = lon - (int)lon;
+    float latO = lat - floor(lat);
+    float lonO = lon - floor(lon);
     int latI = rowSize*latO;
     int lonI = rowSize*lonO;
     //if(latI == 0 || lonI == 0){

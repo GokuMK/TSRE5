@@ -45,6 +45,7 @@ bool Game::leaveTrackShapeAfterDelete = false;
 bool Game::renderTrItems = false;
 int Game::newRouteX = -5000;
 int Game::newRouteZ = 15000;
+QString Game::geoPath = "hgst";
 
 Window* Game::window = NULL;
 LoadWindow* Game::loadWindow = NULL;
@@ -133,7 +134,8 @@ void Game::load() {
         if(val == "renderTrItems")
             if(args[1].trimmed().toLower() == "true")
                 renderTrItems = true;
-        
+        if(val == "geoPath")
+            geoPath = args[1].trimmed();
     }
 }
 

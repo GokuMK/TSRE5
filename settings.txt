@@ -29,12 +29,15 @@ writeTDB = true
 #deleteTrWatermarks = true
 #deleteViewDbSpheres = true
 
+# geo data
+geoPath = F:/hgst
+
 # misc
 #systemTheme = true
 #toolsHidden = true
 usenNumPad = true
 tileLod = 2
-objectLod = 2500
+objectLod = 4000
 maxObjLag = 10
 allowObjLag = 1000
 #cameraFov = 20.0

@@ -16230,7 +16230,8 @@ build/Release/MinGW_QT_static-Windows/HGTfile.o: HGTfile.cpp HGTfile.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qbrush.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qfontinfo.h \
 		C:/Qt/Static/5.4.1/include/QtGui/qfont.h \
-		C:/Qt/Static/5.4.1/include/QtGui/qfontmetrics.h
+		C:/Qt/Static/5.4.1/include/QtGui/qfontmetrics.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/HGTfile.o HGTfile.cpp
 
 build/Release/MinGW_QT_static-Windows/HazardObj.o: HazardObj.cpp HazardObj.h \
