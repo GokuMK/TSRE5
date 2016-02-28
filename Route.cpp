@@ -514,6 +514,7 @@ void Route::createNew() {
     QDir().mkdir(path + "/textures");
     QDir().mkdir(path + "/terrtex");
     QDir().mkdir(path + "/tiles");
+    QDir().mkdir(path + "/td");
     QDir().mkdir(path + "/world");
 
     int x = Game::newRouteX;
@@ -521,13 +522,15 @@ void Route::createNew() {
     saveTrk();
     TDB::saveEmpty(false);
     TDB::saveEmpty(true);
+    TerrainLib::createNewRouteTerrain(x, z);
     Tile::saveEmpty(x, z);
-    Terrain::saveEmpty(x, z);
+    //Terrain::saveEmpty(x, z);
 
     QString res = "resources/templateRoute/";
     path += "/";
 
     QFile::copy(res + "sigcfg.dat", path + "sigcfg.dat");
+    QFile::copy(res + "sigscr.dat", path + "sigscr.dat");
     QFile::copy(res + "ttype.dat", path + "ttype.dat");
     QFile::copy(res + "template.ref", path + Game::route + ".ref");
     QFile::copy(res + "carspawn.dat", path + "carspawn.dat");
@@ -554,7 +557,8 @@ void Route::reloadTile(int x, int z) {
 void Route::newTile(int x, int z) {
     if (!Game::writeEnabled) return;
     Tile::saveEmpty(x, -z);
-    Terrain::saveEmpty(x, -z);
+    //Terrain::saveEmpty(x, -z);
+    TerrainLib::saveEmpty(x, -z);
     TerrainLib::reload(x, z);
     reloadTile(x, z);
 }

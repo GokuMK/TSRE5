@@ -15,6 +15,12 @@ TFile::TFile(const TFile& orig) {
 TFile::~TFile() {
 }
 
+void TFile::setBufferNames(QString name){
+    this->sampleEbuffer = new QString(name + "_e.raw");
+    this->sampleNbuffer = new QString(name + "_n.raw");
+    this->sampleYbuffer = new QString(name + "_y.raw");
+}
+
 bool TFile::readT(QString fSfile) {
         fSfile.replace("//","/");
         //qDebug() << fSfile;

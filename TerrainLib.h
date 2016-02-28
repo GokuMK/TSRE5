@@ -40,6 +40,8 @@ public:
     static void refresh(int x, int z);
     static bool reload(int x, int z);
     static void loadQuadTree();
+    static void createNewRouteTerrain(int x, int z);
+    static void saveEmpty(int x, int z);
     static void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
 private:
     static HeightWindow* heightWindow;

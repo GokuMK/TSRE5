@@ -47,7 +47,7 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
     sh = "TrackDB";
     ParserX::szukajsekcji1(sh, bufor);
     qDebug() << "znaleziono sekcje na " << bufor->off;
-    
+    iTRnodes = 0;
     while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
         qDebug() << "sh " << sh;
         if(sh == "tracknodes"){
@@ -2607,8 +2607,6 @@ void TDB::saveEmpty(bool road) {
     out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
     out << "TrackDB (\n";
     out << "	Serial ( 0 )\n";
-    out << "	TrackNodes ( 0 \n";
-    out << "	)\n";
     out << ")";
     file.close();
 }
@@ -2638,6 +2636,7 @@ void TDB::save() {
     out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
     out << "TrackDB (\n";
     out << "	Serial ( " << this->serial << " )\n";
+    if(this->iTRnodes > 0){
     out << "	TrackNodes ( " << (this->iTRnodes) << "\n";
 
     for (int i = 1; i <= this->iTRnodes; i++) {
@@ -2701,6 +2700,7 @@ void TDB::save() {
         out << "		)\n";
     }
     out << "	)\n";
+    }
     
     if(this->iTRitems > 0){
         out << "	TrItemTable ( " << (this->iTRitems) << "\n";

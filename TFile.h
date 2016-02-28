@@ -54,6 +54,7 @@ public:
     void save(QString name);
     int cloneMat(int id);
     int getMatByTexture(QString tname);
+    void setBufferNames(QString name);
     
 private:
     void get139(FileBuffer* data, int length);

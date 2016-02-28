@@ -102,6 +102,10 @@ void Terrain::saveEmpty(int x, int y) {
     file.setFileName(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
     if (!file.exists())
         QFile::copy("resources/templateRoute/tiles/template.t", Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
+    TFile *tfile = new TFile();
+    tfile->readT(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
+    tfile->setBufferNames(name);
+    tfile->save(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
 }
 
 QString Terrain::getTileName(int x, int y) {

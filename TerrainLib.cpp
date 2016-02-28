@@ -11,7 +11,7 @@
 
 HeightWindow* TerrainLib::heightWindow = NULL;
 std::unordered_map<int, Terrain*> TerrainLib::terrain;
-QuadTree* TerrainLib::quadTree;
+QuadTree* TerrainLib::quadTree = NULL;
 
 TerrainLib::TerrainLib() {
 }
@@ -25,6 +25,17 @@ TerrainLib::~TerrainLib() {
 void TerrainLib::loadQuadTree(){
     quadTree = new QuadTree();
     quadTree->load();
+}
+
+void TerrainLib::createNewRouteTerrain(int x, int z){
+    Terrain::saveEmpty(x, z);
+    quadTree = new QuadTree();
+    quadTree->createNew(x, z);
+}
+
+void TerrainLib::saveEmpty(int x, int z){
+    Terrain::saveEmpty(x, z);
+    quadTree->addTile(x, z);
 }
 
 bool TerrainLib::isLoaded(int x, int z) {
