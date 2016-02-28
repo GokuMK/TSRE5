@@ -111,12 +111,23 @@ Window::Window() {
     QObject::connect(createPathsAction, SIGNAL(triggered()), this, SLOT(createPaths()));
     exitAction = new QAction(tr("&Exit"), this);
     QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
+    terrainTreeEditr = new QAction(tr("&Terrain Tree Editor"), this);
+    QObject::connect(terrainTreeEditr, SIGNAL(triggered()), this, SLOT(showTerrainTreeEditr()));
     routeMenu = menuBar()->addMenu(tr("&Route"));
     routeMenu->addAction(saveAction);
     routeMenu->addAction(createPathsAction);
+    routeMenu->addAction(terrainTreeEditr);
     routeMenu->addAction(exitAction);
     // Edit
     editMenu = menuBar()->addMenu(tr("&Edit"));
+    copyAction = new QAction(tr("&Copy"), this); 
+    copyAction->setShortcut(QKeySequence("Ctrl+C"));
+    QObject::connect(copyAction, SIGNAL(triggered()), glWidget, SLOT(editCopy()));
+    editMenu->addAction(copyAction);
+    pasteAction = new QAction(tr("&Paste"), this); 
+    pasteAction->setShortcut(QKeySequence("Ctrl+V"));
+    QObject::connect(pasteAction, SIGNAL(triggered()), glWidget, SLOT(editPaste()));
+    editMenu->addAction(pasteAction);
     // View
     viewMenu = menuBar()->addMenu(tr("&View"));
     //toolsAction = GuiFunct::newMenuCheckAction(tr("&Tools"), this); 
@@ -269,6 +280,10 @@ void Window::createPaths(){
 
 void Window::about(){
     aboutWindow->show();
+}
+
+void Window::showTerrainTreeEditr(){
+    emit sendMsg(QString("showTerrainTreeEditr"));
 }
 
 void Window::showToolsObject(bool show){

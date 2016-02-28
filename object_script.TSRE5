@@ -52,6 +52,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/PropertiesStatic.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesTransfer.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesUndefined.o
+./build/Release/MinGW_QT_static-Windows/QuadTree.o
 ./build/Release/MinGW_QT_static-Windows/ReadFile.o
 ./build/Release/MinGW_QT_static-Windows/Ref.o
 ./build/Release/MinGW_QT_static-Windows/Route.o
@@ -83,6 +84,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/Terrain.o
 ./build/Release/MinGW_QT_static-Windows/TerrainLib.o
 ./build/Release/MinGW_QT_static-Windows/TerrainTools.o
+./build/Release/MinGW_QT_static-Windows/TerrainTreeWindow.o
 ./build/Release/MinGW_QT_static-Windows/TerrainWaterWindow.o
 ./build/Release/MinGW_QT_static-Windows/TexLib.o
 ./build/Release/MinGW_QT_static-Windows/TextObj.o
@@ -129,6 +131,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_SignalWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_SignalWindowLink.o
 ./build/Release/MinGW_QT_static-Windows/moc_TerrainTools.o
+./build/Release/MinGW_QT_static-Windows/moc_TerrainTreeWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_TerrainWaterWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_glwidget.o
 ./build/Release/MinGW_QT_static-Windows/moc_window.o

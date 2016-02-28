@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ObjTools_t {
-    QByteArrayData data[26];
-    char stringdata[301];
+    QByteArrayData data[27];
+    char stringdata[328];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -54,7 +54,8 @@ QT_MOC_LITERAL(21, 246, 12), // "itemSelected"
 QT_MOC_LITERAL(22, 259, 13), // "Ref::RefItem*"
 QT_MOC_LITERAL(23, 273, 17), // "stickToTDBEnabled"
 QT_MOC_LITERAL(24, 291, 5), // "state"
-QT_MOC_LITERAL(25, 297, 3) // "msg"
+QT_MOC_LITERAL(25, 297, 26), // "resetRotationButtonEnabled"
+QT_MOC_LITERAL(26, 324, 3) // "msg"
 
     },
     "ObjTools\0enableTool\0\0name\0sendMsg\0val\0"
@@ -65,7 +66,7 @@ QT_MOC_LITERAL(25, 297, 3) // "msg"
     "lastItemsListSelected\0selectToolEnabled\0"
     "placeToolEnabled\0itemSelected\0"
     "Ref::RefItem*\0stickToTDBEnabled\0state\0"
-    "msg"
+    "resetRotationButtonEnabled\0msg"
 };
 #undef QT_MOC_LITERAL
 
@@ -75,7 +76,7 @@ static const uint qt_meta_data_ObjTools[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      23,   14, // methods
+      24,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -83,31 +84,32 @@ static const uint qt_meta_data_ObjTools[] = {
        6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  129,    2, 0x06 /* Public */,
-       4,    1,  132,    2, 0x06 /* Public */,
-       4,    2,  135,    2, 0x06 /* Public */,
+       1,    1,  134,    2, 0x06 /* Public */,
+       4,    1,  137,    2, 0x06 /* Public */,
        4,    2,  140,    2, 0x06 /* Public */,
        4,    2,  145,    2, 0x06 /* Public */,
        4,    2,  150,    2, 0x06 /* Public */,
+       4,    2,  155,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    1,  155,    2, 0x0a /* Public */,
-       9,    1,  158,    2, 0x0a /* Public */,
-      11,    1,  161,    2, 0x0a /* Public */,
-      12,    1,  164,    2, 0x0a /* Public */,
-      13,    1,  167,    2, 0x0a /* Public */,
-      16,    1,  170,    2, 0x0a /* Public */,
-      17,    1,  173,    2, 0x0a /* Public */,
-      18,    1,  176,    2, 0x0a /* Public */,
-      19,    0,  179,    2, 0x0a /* Public */,
-      20,    0,  180,    2, 0x0a /* Public */,
-      21,    1,  181,    2, 0x0a /* Public */,
-      23,    1,  184,    2, 0x0a /* Public */,
-      25,    1,  187,    2, 0x0a /* Public */,
-      25,    2,  190,    2, 0x0a /* Public */,
-      25,    2,  195,    2, 0x0a /* Public */,
-      25,    2,  200,    2, 0x0a /* Public */,
-      25,    2,  205,    2, 0x0a /* Public */,
+       6,    1,  160,    2, 0x0a /* Public */,
+       9,    1,  163,    2, 0x0a /* Public */,
+      11,    1,  166,    2, 0x0a /* Public */,
+      12,    1,  169,    2, 0x0a /* Public */,
+      13,    1,  172,    2, 0x0a /* Public */,
+      16,    1,  175,    2, 0x0a /* Public */,
+      17,    1,  178,    2, 0x0a /* Public */,
+      18,    1,  181,    2, 0x0a /* Public */,
+      19,    0,  184,    2, 0x0a /* Public */,
+      20,    0,  185,    2, 0x0a /* Public */,
+      21,    1,  186,    2, 0x0a /* Public */,
+      23,    1,  189,    2, 0x0a /* Public */,
+      25,    0,  192,    2, 0x0a /* Public */,
+      26,    1,  193,    2, 0x0a /* Public */,
+      26,    2,  196,    2, 0x0a /* Public */,
+      26,    2,  201,    2, 0x0a /* Public */,
+      26,    2,  206,    2, 0x0a /* Public */,
+      26,    2,  211,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -130,6 +132,7 @@ static const uint qt_meta_data_ObjTools[] = {
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 22,   15,
     QMetaType::Void, QMetaType::Int,   24,
+    QMetaType::Void,
     QMetaType::Void, QMetaType::QString,    3,
     QMetaType::Void, QMetaType::QString, QMetaType::Bool,    3,    5,
     QMetaType::Void, QMetaType::QString, QMetaType::Int,    3,    5,
@@ -162,11 +165,12 @@ void ObjTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 15: _t->placeToolEnabled(); break;
         case 16: _t->itemSelected((*reinterpret_cast< Ref::RefItem*(*)>(_a[1]))); break;
         case 17: _t->stickToTDBEnabled((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 18: _t->msg((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 19: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 20: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 21: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
-        case 22: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 18: _t->resetRotationButtonEnabled(); break;
+        case 19: _t->msg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 20: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 21: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 22: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
+        case 23: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -236,13 +240,13 @@ int ObjTools::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 23)
+        if (_id < 24)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 23;
+        _id -= 24;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 23)
+        if (_id < 24)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 23;
+        _id -= 24;
     }
     return _id;
 }

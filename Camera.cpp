@@ -307,7 +307,7 @@ void Camera::keyDown(QKeyEvent * e) {
             //case 17:
             //    jestcontrol = 1;
             //     break;
-        case Qt::Key_Q: // Q
+        //case Qt::Key_Q: // Q
         case Qt::Key_Space:
             jestcontrol = 1;
             break;
@@ -331,7 +331,7 @@ void Camera::keyDown(QKeyEvent * e) {
         case Qt::Key_S: // D
             moveB = true;
             break;
-        case Qt::Key_E: // E
+        //case Qt::Key_E: // E
         case Qt::Key_Shift:
             przesx = przesz = 40;
             break;

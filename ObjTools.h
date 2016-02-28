@@ -26,6 +26,7 @@ public slots:
     void placeToolEnabled();
     void itemSelected(Ref::RefItem* item);
     void stickToTDBEnabled(int state);
+    void resetRotationButtonEnabled();
     
     void msg(QString name);
     void msg(QString name, bool val);

@@ -45,6 +45,7 @@ public slots:
     void viewMarkers(bool show);
     void showToolsObject(bool show);
     void showToolsTerrain(bool show);
+    void showTerrainTreeEditr();
 signals:
     void exitNow();
     void sendMsg(QString text);
@@ -75,12 +76,15 @@ private:
     QAction *saveAction;
     QAction *createPathsAction;
     QAction *exitAction;
+    QAction *copyAction;
+    QAction *pasteAction;
     QAction *aboutAction;
     QAction *propertiesAction;
     QAction *naviAction;
     QAction *toolsAction;
     QAction *objectsAction;
     QAction *terrainAction;
+    QAction *terrainTreeEditr;
     
     AboutWindow* aboutWindow;
     NaviWindow* naviWindow;

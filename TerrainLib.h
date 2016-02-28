@@ -8,6 +8,7 @@
 class Terrain;
 class Brush;
 class HeightWindow;
+class QuadTree;
 
 class TerrainLib {
 public:
@@ -38,9 +39,11 @@ public:
     static void save();
     static void refresh(int x, int z);
     static bool reload(int x, int z);
+    static void loadQuadTree();
     static void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
 private:
     static HeightWindow* heightWindow;
+    static QuadTree* quadTree;
 };
 
 #endif	/* TERRAINLIB_H */

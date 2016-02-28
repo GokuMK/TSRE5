@@ -16,7 +16,8 @@ ObjTools::ObjTools(QString name)
     //QRadioButton *radio3 = new QRadioButton(tr("Ra&dio button 3"));
 
     QPushButton *selectTool = new QPushButton("Select", this);
-    QPushButton *placeTool = new QPushButton("Place new", this);
+    QPushButton *placeTool = new QPushButton("Place New", this);
+    QPushButton *resetRotationButton = new QPushButton("Reset Place Rot", this);
     //radio1->setChecked(true);
     
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -41,6 +42,7 @@ ObjTools::ObjTools(QString name)
     otherList.hide();
     vbox->addWidget(selectTool);
     vbox->addWidget(placeTool);
+    vbox->addWidget(resetRotationButton);
     stickToTDB.setText("Stick To TrackDB");
     stickToTDB.setChecked(false);
     vbox->addWidget(&stickToTDB);
@@ -100,6 +102,9 @@ ObjTools::ObjTools(QString name)
     
     QObject::connect(placeTool, SIGNAL(released()),
                       this, SLOT(placeToolEnabled()));
+    
+    QObject::connect(resetRotationButton, SIGNAL(released()),
+                      this, SLOT(resetRotationButtonEnabled()));
     
     QObject::connect(&stickToTDB, SIGNAL(stateChanged(int)),
                       this, SLOT(stickToTDBEnabled(int)));
@@ -340,6 +345,10 @@ void ObjTools::selectToolEnabled(){
 
 void ObjTools::placeToolEnabled(){
     emit enableTool("placeTool");
+}
+
+void ObjTools::resetRotationButtonEnabled(){
+    emit sendMsg("resetPlaceRotation");
 }
 
 void ObjTools::itemSelected(Ref::RefItem* item){

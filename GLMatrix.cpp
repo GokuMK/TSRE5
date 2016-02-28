@@ -805,6 +805,15 @@ float* Quat::create() {
     out[1] = 1;
     return out; 
 };
+
+float* Quat::copy(float* out, float* a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    return out; 
+};
+
 float* Quat::fill(float* out) {
     out[0] = 0;
     out[1] = 0;
@@ -812,6 +821,7 @@ float* Quat::fill(float* out) {
     out[3] = 1;
     return out; 
 };
+
 /**
  * Creates a quaternion from the given 3x3 rotation matrix.
  *

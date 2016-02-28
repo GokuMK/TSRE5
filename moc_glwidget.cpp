@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GLWidget_t {
-    QByteArrayData data[38];
-    char stringdata[336];
+    QByteArrayData data[40];
+    char stringdata[355];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -66,7 +66,9 @@ QT_MOC_LITERAL(33, 307, 6), // "Brush*"
 QT_MOC_LITERAL(34, 314, 5), // "brush"
 QT_MOC_LITERAL(35, 320, 6), // "jumpTo"
 QT_MOC_LITERAL(36, 327, 3), // "msg"
-QT_MOC_LITERAL(37, 331, 4) // "text"
+QT_MOC_LITERAL(37, 331, 4), // "text"
+QT_MOC_LITERAL(38, 336, 8), // "editCopy"
+QT_MOC_LITERAL(39, 345, 9) // "editPaste"
 
     },
     "GLWidget\0routeLoaded\0\0Route*\0a\0"
@@ -78,7 +80,7 @@ QT_MOC_LITERAL(37, 331, 4) // "text"
     "mkrList\0std::unordered_map<std::string,CoordsMkr*>\0"
     "list\0sendMsg\0cleanup\0enableTool\0"
     "setPaintBrush\0Brush*\0brush\0jumpTo\0msg\0"
-    "text"
+    "text\0editCopy\0editPaste"
 };
 #undef QT_MOC_LITERAL
 
@@ -88,7 +90,7 @@ static const uint qt_meta_data_GLWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      23,   14, // methods
+      25,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -96,31 +98,33 @@ static const uint qt_meta_data_GLWidget[] = {
       14,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  129,    2, 0x06 /* Public */,
-       5,    1,  132,    2, 0x06 /* Public */,
-       8,    2,  135,    2, 0x06 /* Public */,
-      11,    1,  140,    2, 0x06 /* Public */,
-      14,    1,  143,    2, 0x06 /* Public */,
-      16,    1,  146,    2, 0x06 /* Public */,
-      18,    1,  149,    2, 0x06 /* Public */,
-      21,    3,  152,    2, 0x06 /* Public */,
-      26,    1,  159,    2, 0x06 /* Public */,
-      29,    1,  162,    2, 0x06 /* Public */,
-      29,    2,  165,    2, 0x06 /* Public */,
-      29,    2,  170,    2, 0x06 /* Public */,
+       1,    1,  139,    2, 0x06 /* Public */,
+       5,    1,  142,    2, 0x06 /* Public */,
+       8,    2,  145,    2, 0x06 /* Public */,
+      11,    1,  150,    2, 0x06 /* Public */,
+      14,    1,  153,    2, 0x06 /* Public */,
+      16,    1,  156,    2, 0x06 /* Public */,
+      18,    1,  159,    2, 0x06 /* Public */,
+      21,    3,  162,    2, 0x06 /* Public */,
+      26,    1,  169,    2, 0x06 /* Public */,
+      29,    1,  172,    2, 0x06 /* Public */,
       29,    2,  175,    2, 0x06 /* Public */,
       29,    2,  180,    2, 0x06 /* Public */,
+      29,    2,  185,    2, 0x06 /* Public */,
+      29,    2,  190,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      30,    0,  185,    2, 0x0a /* Public */,
-      31,    1,  186,    2, 0x0a /* Public */,
-      32,    1,  189,    2, 0x0a /* Public */,
-      35,    1,  192,    2, 0x0a /* Public */,
-      36,    1,  195,    2, 0x0a /* Public */,
-      36,    2,  198,    2, 0x0a /* Public */,
-      36,    2,  203,    2, 0x0a /* Public */,
+      30,    0,  195,    2, 0x0a /* Public */,
+      31,    1,  196,    2, 0x0a /* Public */,
+      32,    1,  199,    2, 0x0a /* Public */,
+      35,    1,  202,    2, 0x0a /* Public */,
+      36,    1,  205,    2, 0x0a /* Public */,
       36,    2,  208,    2, 0x0a /* Public */,
       36,    2,  213,    2, 0x0a /* Public */,
+      36,    2,  218,    2, 0x0a /* Public */,
+      36,    2,  223,    2, 0x0a /* Public */,
+      38,    0,  228,    2, 0x0a /* Public */,
+      39,    0,  229,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -148,6 +152,8 @@ static const uint qt_meta_data_GLWidget[] = {
     QMetaType::Void, QMetaType::QString, QMetaType::Int,   15,   17,
     QMetaType::Void, QMetaType::QString, QMetaType::Float,   15,   17,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,   15,   17,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -180,6 +186,8 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 20: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 21: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
         case 22: _t->msg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 23: _t->editCopy(); break;
+        case 24: _t->editPaste(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -299,13 +307,13 @@ int GLWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 23)
+        if (_id < 25)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 23;
+        _id -= 25;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 23)
+        if (_id < 25)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 23;
+        _id -= 25;
     }
     return _id;
 }

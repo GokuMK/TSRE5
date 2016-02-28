@@ -1261,6 +1261,7 @@ bool TDB::findPosition(int x, int z, float* p, float* q, float* endp, int sectio
     bool b;
     
     if(sectionIdx < 0){
+        Quat::fill(q);
         Quat::rotateY(q, q, -qe[1]);
         return true;
     }

@@ -86,6 +86,7 @@ class Quat {
 public:
     static float* create();
     static float* fill(float *out);
+    static float* copy(float* out, float* a);
     static float* fromMat3(float *out, float *m);
     static float* fromRotationXYZ(float *out, float *a);
     static float* rotateX(float *out, float *a, float rad);

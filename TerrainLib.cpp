@@ -7,9 +7,11 @@
 #include "Game.h"
 #include "Brush.h"
 #include "HeightWindow.h"
+#include "QuadTree.h"
 
 HeightWindow* TerrainLib::heightWindow = NULL;
 std::unordered_map<int, Terrain*> TerrainLib::terrain;
+QuadTree* TerrainLib::quadTree;
 
 TerrainLib::TerrainLib() {
 }
@@ -18,6 +20,11 @@ TerrainLib::TerrainLib(const TerrainLib& orig) {
 }
 
 TerrainLib::~TerrainLib() {
+}
+
+void TerrainLib::loadQuadTree(){
+    quadTree = new QuadTree();
+    quadTree->load();
 }
 
 bool TerrainLib::isLoaded(int x, int z) {

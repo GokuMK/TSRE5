@@ -19,6 +19,7 @@
 #include "Brush.h"
 #include "IghCoords.h"
 #include "MapWindow.h"
+#include "TerrainTreeWindow.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -119,7 +120,8 @@ void GLWidget::initializeGL() {
     setSelectedObj(NULL);
     defaultPaintBrush = new Brush();
     mapWindow = new MapWindow();
-
+    Quat::fill((float*)&this->placeRot);
+    
     emit routeLoaded(route);
     emit mkrList(route->getMkrList());
 }
@@ -172,11 +174,13 @@ void GLWidget::paintGL() {
     if (!selection)
         TerrainLib::render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
     
-    //if (!selection) drawPointer();
+    if(stickPointerToTerrain)
+        if (!selection) drawPointer();
     
     route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
     
-    if (!selection) drawPointer();
+    if(!stickPointerToTerrain)
+        if (!selection) drawPointer();
 
     if (selection) {
         int x = mousex;
@@ -291,8 +295,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             // selection = !selection;
             break;
         case Qt::Key_N:
-            if(selectedObj != NULL)
-                route->deleteTDBTree(selectedObj);
+            //if(selectedObj != NULL)
+            //    route->deleteTDBTree(selectedObj);
             /*if(this->selectedObj != NULL){
                 this->selectedObj->unselect();
                 this->selectedObj = NULL;
@@ -317,6 +321,15 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             //toolEnabled = "";
             //emit setToolbox("terrainTools");    
         //    break;
+        case Qt::Key_E:
+            toolEnabled = "selectTool";
+            resizeTool = false;
+            translateTool = false;
+            rotateTool = false;
+            break;
+        case Qt::Key_Q:
+            stickPointerToTerrain = !stickPointerToTerrain;
+            break;
         default:
             break;
     }
@@ -464,6 +477,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 }
             case Qt::Key_P:
                 if(selectedObj != NULL){
+                    Quat::copy((float*) &this->placeRot, selectedObj->qDirection);
                     route->ref->selected = selectedObj->getRefInfo();
                     emit itemSelected(route->ref->selected);
                 }
@@ -521,7 +535,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             lastNewObjPos[0] = aktPointerPos[0];
             lastNewObjPos[1] = aktPointerPos[1];
             lastNewObjPos[2] = aktPointerPos[2];
-            setSelectedObj(route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos));
+            float *q = Quat::create();
+            Quat::copy(q, (float*)&this->placeRot);
+            setSelectedObj(route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, q));
             if(selectedObj != NULL)
                 selectedObj->select();
             //if(route->ref->selected != NULL){
@@ -530,13 +546,19 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             //camera->MouseDown(event);
         }
         if(toolEnabled == "selectTool"){
-            selection = true;
+            if(!translateTool && !rotateTool && !resizeTool)
+                selection = true;
             mousePressed = false;
             if(selectedObj != NULL){
                 mousePressed = true;
+                if(translateTool){
+                    selectedObj->setPosition(aktPointerPos);
+                    selectedObj->setMartix();
+                }
                 lastPointerPos[0] = aktPointerPos[0];
                 lastPointerPos[1] = aktPointerPos[1];
                 lastPointerPos[2] = aktPointerPos[2];
+                
             } //else {
                 //camera->MouseDown(event);
             //}
@@ -628,13 +650,20 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
             }
         }
         if(toolEnabled == "selectTool"){
-            /*if(selectedObj != NULL && mousePressed){
-                //selectedObj->translate(aktPointerPos[0] - lastPointerPos[0], aktPointerPos[1] - lastPointerPos[1], aktPointerPos[2] - lastPointerPos[2]);
-                selectedObj->translate(0, aktPointerPos[1] - lastPointerPos[1], 0);
+            if(selectedObj != NULL && mousePressed){
+                if(translateTool){
+                    selectedObj->setPosition(aktPointerPos);
+                    selectedObj->setMartix();
+                }
+                if(rotateTool){
+                    float val = mousex - m_lastPos.x();
+                    selectedObj->rotate(0,val*moveStep*0.1,0);
+                 }
                 lastPointerPos[0] = aktPointerPos[0];
                 lastPointerPos[1] = aktPointerPos[1];
                 lastPointerPos[2] = aktPointerPos[2];
-            }*/ //else {
+                
+            } //else {
             //    camera->MouseMove(event);
             //}
         }
@@ -651,6 +680,11 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
 void GLWidget::enableTool(QString name){
     qDebug() << name;
     toolEnabled = name;
+    if(toolEnabled == "placeTool" || toolEnabled == "selectTool"){
+        resizeTool = false;
+        translateTool = false;
+        rotateTool = false;
+    }
 }
 
 void GLWidget::jumpTo(PreciseTileCoordinate* c){
@@ -672,6 +706,33 @@ void GLWidget::setSelectedObj(WorldObj* o){
     emit showProperties(selectedObj);
 }
 
+void GLWidget::editCopy(){
+    if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
+        if(selectedObj != NULL){
+            copyPasteObj = selectedObj;
+        }
+    }
+}
+
+void GLWidget::editPaste(){
+    if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
+        if(copyPasteObj != NULL){
+            if(selectedObj != NULL)
+                selectedObj->unselect();
+            lastNewObjPosT[0] = camera->pozT[0];
+            lastNewObjPosT[1] = camera->pozT[1];
+            lastNewObjPos[0] = aktPointerPos[0];
+            lastNewObjPos[1] = aktPointerPos[1];
+            lastNewObjPos[2] = aktPointerPos[2];
+            float *q = Quat::create();
+            Quat::copy(q, copyPasteObj->qDirection);
+            setSelectedObj(route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, q, copyPasteObj->getRefInfo()));
+            if(selectedObj != NULL)
+                selectedObj->select();
+        }
+    }
+}
+
 void GLWidget::msg(QString text){
     qDebug() << text;
     if(text == "save"){
@@ -680,6 +741,15 @@ void GLWidget::msg(QString text){
     }
     if(text == "createPaths"){
         route->createNewPaths();
+        return;
+    }
+    if(text == "resetPlaceRotation"){
+        Quat::fill(this->placeRot);
+        return;
+    }
+    if(text == "showTerrainTreeEditr"){
+        TerrainTreeWindow ttWindow;
+        ttWindow.exec();
         return;
     }
 }

@@ -48,6 +48,9 @@ public slots:
     void msg(QString name, int val);
     void msg(QString name, float val);
     void msg(QString name, QString val);
+    
+    void editCopy();
+    void editPaste();
 
 signals:
     void routeLoaded(Route * a);
@@ -101,6 +104,7 @@ private:
     int mousex, mousey;
     WorldObj* selectedObj = NULL;
     WorldObj* lastSelectedObj = NULL;
+    WorldObj* copyPasteObj = NULL;
     Pointer3d* pointer3d;
     float lastPointerPos[3];
     float aktPointerPos[3];
@@ -112,8 +116,10 @@ private:
     bool resizeTool = false;
     bool rotateTool = false;
     bool translateTool = false;
+    bool stickPointerToTerrain = true;
     float lastNewObjPos[3];
     float lastNewObjPosT[2];
+    float placeRot[4];
     
     Brush* defaultPaintBrush;
     MapWindow* mapWindow;

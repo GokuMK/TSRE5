@@ -61,6 +61,7 @@ Route::Route() {
     soundList->loadSoundRegions(Game::root + "/routes/" + Game::route + "/ttype.dat");
     Game::soundList = soundList;
     
+    TerrainLib::loadQuadTree();
     ForestObj::loadForestList();
     
     Game::trackDB = this->trackDB;
@@ -226,15 +227,12 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
 
 WorldObj* Route::placeObject(int x, int z, float* p) {
     float q[4];
-    q[0] = 0;
-    q[1] = 0;
-    q[2] = 0;
-    q[3] = 1;
+    Quat::fill((float*)&q);
     placeObject(x, z, p, (float*) &q, ref->selected);
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p, float* q) {
-    placeObject(x, z, p, (float*) &q, ref->selected);
+    placeObject(x, z, p, q, ref->selected);
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) {
