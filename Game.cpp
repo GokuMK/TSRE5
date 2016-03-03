@@ -5,6 +5,7 @@
 #include "window.h"
 #include "LoadWindow.h"
 #include "SoundList.h"
+#include "ConEditorWindow.h"
 
 TDB *Game::trackDB = NULL;
 TDB *Game::roadDB = NULL;    
@@ -139,7 +140,7 @@ void Game::load() {
     }
 }
 
-bool Game::checkSettings(){
+bool Game::loadRouteEditor(){
     if(Game::warningBox){
         QMessageBox msgBox;
         msgBox.setText("This is experimental version.\nUsing it may seriously damage your routes."
@@ -162,6 +163,19 @@ bool Game::checkSettings(){
         Game::window->show();
     else
         Game::loadWindow->show();
+}
+
+bool Game::loadConEditor(){
+    if(Game::warningBox){
+        QMessageBox msgBox;
+        msgBox.setText("This is experimental version.\nUsing it may seriously damage your consists."
+                       "\nMake backup first!\n\nTo disable this window, set 'warningBox = false' in settings.txt.");
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+    }
+    ConEditorWindow* cwindow = new ConEditorWindow();
+    cwindow->resize(1280, 720);
+    cwindow->show();
 }
 
 bool Game::checkRoot(QString dir){

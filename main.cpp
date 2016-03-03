@@ -68,15 +68,20 @@ int main(int argc, char *argv[]){
     
     if(app.arguments().count() > 1){
         qDebug() << "arg1 " << app.arguments().at(1);    
-        if(app.arguments().at(1) == "-aceconv"){
+        if(app.arguments().at(1) == "--aceconv"){
             // Run ace converter
             qDebug() << "Run ace converter";
-            Game::checkSettings();
+            return app.exec();
+        }
+        if(app.arguments().at(1) == "--conedit"){
+            // Run ace converter
+            qDebug() << "Run con editor";
+            Game::loadConEditor();
             return app.exec();
         }
     }
     // Run route editor
-    Game::checkSettings();
+    Game::loadRouteEditor();
     //MapWindow aaa;
     //aaa.show();
     return app.exec();

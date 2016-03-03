@@ -4,20 +4,35 @@
 
 class Eng {
 public:
-    QString path;
+    struct Coupling {
+        QString type;
+	float r0[2];
+	float velocity;
+    };
+    std::vector<Coupling> coupling;
     QString name;
+    QString path;
+    QString pathid;
     int sfile[2];
+    QString sNames[2];
+    QString engName;
+    QString engType;
+    QString typeHash;
+    QString type;
+    float mass;
     float sizex;
     float sizey;
     float sizez;
     int flip = flip;
     int loaded = -1;
     bool kierunek = false;
+    int ref = 0;
     Eng();
-    Eng(const Eng& orig);
     virtual ~Eng();
-    Eng(QString src, QString n, int f);
+    Eng(QString p, QString n);
+    Eng(QString src, QString p, QString n);
     void load();
+    float getFullWidth();
     void render();
     void render(int aktwx, int aktwz);
 private:

@@ -407,6 +407,12 @@ float ParserX::parsujr(FileBuffer* bufor){
             }
         }
     }
+    if(b == 'c'){
+        b = bufor->get();
+        bufor->off++;
+        if(b == 'm')
+            x = x/100.0;
+    }
     bufor->off -= 2;
     return x;
 }

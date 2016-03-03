@@ -27,7 +27,8 @@ public:
     static int allowObjLag;
     static int maxObjLag;
     static void load();
-    static bool checkSettings();
+    static bool loadRouteEditor();
+    static bool loadConEditor();
     static bool checkRoot(QString dir);
     static bool checkRoute(QString dir);
     template<class T>

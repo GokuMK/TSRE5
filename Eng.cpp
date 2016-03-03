@@ -9,72 +9,159 @@
 Eng::Eng() {
 }
 
-Eng::Eng(const Eng& orig) {
-}
-
 Eng::~Eng() {
 }
 
-Eng::Eng(QString src, QString n, int f) {
-    path = src;
+Eng::Eng(QString p, QString n) {
+    pathid = p + "/" + n;
+    pathid.replace("//", "/");
+    path = p;
     name = n;
     sfile[0] = -1; sfile[1] = -1;
     sizex = 0;
     sizey = 0;
     sizez = 0;
-    flip = f;
+    flip = 0;
     loaded = -1;
     kierunek = false;
+    load();
+}
 
-    load();//(src + "/" + name, this);
+Eng::Eng(QString src, QString p, QString n) {
+    pathid = src;
+    path = p;
+    name = n;
+    sfile[0] = -1; sfile[1] = -1;
+    sizex = 0;
+    sizey = 0;
+    sizez = 0;
+    flip = 0;
+    loaded = -1;
+    kierunek = false;
+    load();
 }
 
 void Eng::load(){
     int i;
     QString sh;
-    QString pathid = (path+"/"+name);
     pathid.replace("//","/");
-    qDebug() << pathid;
+    //qDebug() << pathid;
     QFile *file = new QFile(pathid);
-    if (!file->open(QIODevice::ReadOnly))
+    if (!file->open(QIODevice::ReadOnly)){
+        qDebug() << pathid << "not exist";
         return;
+    }
+
     FileBuffer* data = ReadFile::read(file);
     data->off = 0;
     sh = "Wagon";
     ParserX::szukajsekcji1(sh, data);
+    //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
+    engName = ParserX::odczytajtc(data).trimmed();
     
-    qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
-    sh = "WagonShape";
-    ParserX::szukajsekcji1(sh, data);
-    QString tname = ParserX::odczytajtc(data);
-    qDebug() << "=====znaleziono s " << path << tname;
-    sfile[0] = ShapeLib::addShape(path, tname, path);//new Sfile(this.path, tname);
-
-    ParserX::pominsekcjec(data);
-
-    for(int j = 0; j<2; j++){
-        i = ParserX::szukajsekcji2("freightanim", "size", data);
-        //console.log(i);
-        if (i == 1){
-            qDebug() << "======znaleziono sekcje " << "FreightAnim" << " na ";
-            tname = ParserX::odczytajtc(data);
-            qDebug() << "==========znaleziono s " << path << tname;
-
-            sfile[1] = ShapeLib::addShape(path, tname, path);//new Sfile(this.path, tname);
-            ParserX::pominsekcjec(data);
+    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+        //qDebug() << sh;
+        if (sh == ("freightanim")) {
+            sNames[1] = ParserX::odczytajtc(data);
+            sfile[1] = -2;
+            //qDebug() << "=====znaleziono s2 " << path << sNames[1];
+            ParserX::pominsekcje(data);
+            continue;
         }
-        if (i == 2){
-            qDebug() << "jest size na ";
-            //Parse.pominsekcjec(bufor);
+        if (sh == ("size")) {
             sizex = ParserX::parsujr(data);
             sizey = ParserX::parsujr(data);
             sizez = ParserX::parsujr(data);
-            qDebug() << "wymiary taboru: " << sizex << " " << sizey << " " << sizez;
+            //qDebug() << "wymiary taboru: " << sizex << " " << sizey << " " << sizez;
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("wagonshape")) {
+            sNames[0] = ParserX::odczytajtc(data);
+            sfile[0] = -2;
+            //qDebug() << "=====znaleziono s1 " << path << sNames[0];
+            //sfile[0] = ShapeLib::addShape(path, tname, path);//new Sfile(this.path, tname);
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("mass")) {
+            mass = ParserX::parsujr(data);
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("coupling")) {
+            coupling.push_back(Coupling());
+            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                if (sh == ("type")) {
+                    coupling.back().type = ParserX::odczytajtc(data);
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                if (sh == ("velocity")) {
+                    coupling.back().velocity = ParserX::parsujr(data);
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                if (sh == ("spring")) {
+                    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                        if (sh == ("r0")) {
+                            coupling.back().r0[0] = ParserX::parsujr(data);
+                            coupling.back().r0[1] = ParserX::parsujr(data);
+                            //qDebug() <<"r0 " << coupling.back().r0[0] << coupling.back().r0[1];
+                            ParserX::pominsekcje(data);
+                            continue;
+                        }
+                        ParserX::pominsekcje(data);
+                    }
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+
+                ParserX::pominsekcje(data);
+            }
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("type")) {
+            type = ParserX::odczytajtc(data);
+            //qDebug() << "type "<< type;
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        
+        ParserX::pominsekcje(data);
+    }
+    typeHash = type;
+    if(type.toLower() == "engine"){
+        sh = "Engine";
+        ParserX::szukajsekcji1(sh, data);
+        //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
+        ParserX::odczytajtc(data);
+        while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            //qDebug() << sh;
+            if (sh == ("type")) {
+                engType = ParserX::odczytajtc(data);
+                typeHash+="-"+engType;
+                //qDebug() << engType;
+                ParserX::pominsekcje(data);
+                break;
+                //continue;
+            }
+            ParserX::pominsekcje(data);
         }
     }
-
+    //qDebug() << typeHash;
+    delete data;
     loaded = 1;
+    //qDebug() << loaded;
     return;
+}
+
+float Eng::getFullWidth(){
+    if(this->coupling.size() > 0)
+        return this->coupling[0].r0[0] + this->sizez;
+    else
+        return this->sizez + 0.0;
 }
 
 void Eng::render() {
@@ -83,7 +170,15 @@ void Eng::render() {
 
 void Eng::render(int aktwx, int aktwz) {
     //gl.glTranslatef(0, 0.2f, 0);
+    //qDebug() << loaded;
     if (loaded != 1) return;
+
+    if(sfile[0] == -2){
+        sfile[0] = ShapeLib::addShape(path, sNames[0], path);
+    }
+    if(sfile[1] == -2){
+        sfile[1] = ShapeLib::addShape(path, sNames[1], path);
+    }
 
     //ruchy[0].renderCon(gl, aktwx, aktwz);
     //ruchy[1].renderCon(gl, aktwx, aktwz);

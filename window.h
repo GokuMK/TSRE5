@@ -4,10 +4,6 @@
 #include <QWidget>
 #include <QMainWindow>
 
-//QT_BEGIN_NAMESPACE
-
-//QT_END_NAMESPACE
-//! [0]
 class QSlider;
 class GLWidget;
 class ObjTools;

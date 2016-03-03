@@ -7,6 +7,11 @@
       <logicalFolder name="f5" displayName="camera" projectFiles="true">
         <itemPath>Camera.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f12" displayName="conEditor" projectFiles="true">
+        <itemPath>ConEditorWindow.h</itemPath>
+        <itemPath>ConListWidget.h</itemPath>
+        <itemPath>EngListWidget.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="fileFunctions" projectFiles="true">
         <itemPath>FileBuffer.h</itemPath>
         <itemPath>FileFunctions.h</itemPath>
@@ -75,6 +80,9 @@
         </logicalFolder>
         <itemPath>ShapeLib.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f13" displayName="shapeViewer" projectFiles="true">
+        <itemPath>glShapeWidget.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f8" displayName="TDB" projectFiles="true">
         <itemPath>Path.h</itemPath>
         <itemPath>Ruch.h</itemPath>
@@ -100,7 +108,10 @@
         <itemPath>Texture.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="trains" projectFiles="true">
+        <itemPath>ConLib.h</itemPath>
+        <itemPath>Consist.h</itemPath>
         <itemPath>Eng.h</itemPath>
+        <itemPath>EngLib.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="world" projectFiles="true">
         <logicalFolder name="f1" displayName="objects" projectFiles="true">
@@ -121,6 +132,7 @@
           <itemPath>WorldObj.h</itemPath>
         </logicalFolder>
         <itemPath>CoordsMkr.h</itemPath>
+        <itemPath>QuadTree.h</itemPath>
         <itemPath>Ref.h</itemPath>
         <itemPath>Route.h</itemPath>
         <itemPath>SoundList.h</itemPath>
@@ -142,6 +154,11 @@
                    projectFiles="true">
       <logicalFolder name="f4" displayName="camera" projectFiles="true">
         <itemPath>Camera.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f13" displayName="conEditor" projectFiles="true">
+        <itemPath>ConEditorWindow.cpp</itemPath>
+        <itemPath>ConListWidget.cpp</itemPath>
+        <itemPath>EngListWidget.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="fileFunctions" projectFiles="true">
         <itemPath>FileBuffer.cpp</itemPath>
@@ -217,6 +234,9 @@
         </logicalFolder>
         <itemPath>ShapeLib.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f14" displayName="shapeViewer" projectFiles="true">
+        <itemPath>glShapeWidget.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f7" displayName="TDB" projectFiles="true">
         <itemPath>Path.cpp</itemPath>
         <itemPath>Ruch.cpp</itemPath>
@@ -242,7 +262,10 @@
         <itemPath>Texture.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="trains" projectFiles="true">
+        <itemPath>ConLib.cpp</itemPath>
+        <itemPath>Consist.cpp</itemPath>
         <itemPath>Eng.cpp</itemPath>
+        <itemPath>EngLib.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="world" projectFiles="true">
         <logicalFolder name="f1" displayName="objects" projectFiles="true">
@@ -264,7 +287,6 @@
         </logicalFolder>
         <itemPath>CoordsMkr.cpp</itemPath>
         <itemPath>QuadTree.cpp</itemPath>
-        <itemPath>QuadTree.h</itemPath>
         <itemPath>Ref.cpp</itemPath>
         <itemPath>Route.cpp</itemPath>
         <itemPath>SoundList.cpp</itemPath>
@@ -317,6 +339,22 @@
       </item>
       <item path="Camera.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConListWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConListWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Consist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Consist.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="CoordsMkr.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CoordsMkr.h" ex="false" tool="3" flavor2="0">
@@ -328,6 +366,14 @@
       <item path="Eng.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EngLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngListWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EngListWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Features.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -704,6 +750,10 @@
       <item path="WorldObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="glShapeWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="glShapeWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="glwidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -762,6 +812,22 @@
       </item>
       <item path="Camera.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConListWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConListWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Consist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Consist.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="CoordsMkr.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CoordsMkr.h" ex="false" tool="3" flavor2="0">
@@ -773,6 +839,14 @@
       <item path="Eng.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EngLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngListWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EngListWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Features.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1149,6 +1223,10 @@
       <item path="WorldObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="glShapeWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="glShapeWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="glwidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
