@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GlShapeWidget_t {
-    QByteArrayData data[6];
-    char stringdata[42];
+    QByteArrayData data[8];
+    char stringdata[52];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,13 +32,15 @@ static const qt_meta_stringdata_GlShapeWidget_t qt_meta_stringdata_GlShapeWidget
 QT_MOC_LITERAL(0, 0, 13), // "GlShapeWidget"
 QT_MOC_LITERAL(1, 14, 7), // "showEng"
 QT_MOC_LITERAL(2, 22, 0), // ""
-QT_MOC_LITERAL(3, 23, 2), // "id"
-QT_MOC_LITERAL(4, 26, 7), // "showCon"
-QT_MOC_LITERAL(5, 34, 7) // "cleanup"
+QT_MOC_LITERAL(3, 23, 4), // "path"
+QT_MOC_LITERAL(4, 28, 4), // "name"
+QT_MOC_LITERAL(5, 33, 7), // "showCon"
+QT_MOC_LITERAL(6, 41, 2), // "id"
+QT_MOC_LITERAL(7, 44, 7) // "cleanup"
 
     },
-    "GlShapeWidget\0showEng\0\0id\0showCon\0"
-    "cleanup"
+    "GlShapeWidget\0showEng\0\0path\0name\0"
+    "showCon\0id\0cleanup"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,13 +58,13 @@ static const uint qt_meta_data_GlShapeWidget[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   29,    2, 0x0a /* Public */,
-       4,    1,   32,    2, 0x0a /* Public */,
-       5,    0,   35,    2, 0x0a /* Public */,
+       1,    2,   29,    2, 0x0a /* Public */,
+       5,    1,   34,    2, 0x0a /* Public */,
+       7,    0,   37,    2, 0x0a /* Public */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int,    3,
-    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,    3,    4,
+    QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void,
 
        0        // eod
@@ -73,7 +75,7 @@ void GlShapeWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     if (_c == QMetaObject::InvokeMetaMethod) {
         GlShapeWidget *_t = static_cast<GlShapeWidget *>(_o);
         switch (_id) {
-        case 0: _t->showEng((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 0: _t->showEng((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 1: _t->showCon((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->cleanup(); break;
         default: ;

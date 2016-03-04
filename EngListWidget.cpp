@@ -1,6 +1,7 @@
 #include "EngListWidget.h"
 #include "EngLib.h"
 #include "Eng.h"
+#include "Game.h"
 
 EngListWidget::EngListWidget() : QWidget(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -32,8 +33,8 @@ void EngListWidget::fillEngList(){
     items.clear();
 
     Eng * e;
-    for (int i = 0; i < EngLib::jesteng; i++){
-        e = EngLib::eng[i];
+    for (int i = 0; i < englib->jesteng; i++){
+        e = englib->eng[i];
         if(e == NULL) continue;
         if(e->loaded !=1) continue;
         new QListWidgetItem ( e->engName, &items, i);

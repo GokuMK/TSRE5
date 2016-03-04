@@ -4,8 +4,8 @@
 #include <QFile>
 #include <QDir>
 
-int EngLib::jesteng = 0;
-std::unordered_map<int, Eng*> EngLib::eng;
+//int EngLib::jesteng = 0;
+//std::unordered_map<int, Eng*> EngLib::eng;
     
 EngLib::EngLib() {
 }
@@ -47,7 +47,7 @@ int EngLib::loadAll(QString gameRoot){
         //qDebug() << dirFile;
         trainDir.setPath(path+dirFile);
         foreach(QString engfile, trainDir.entryList()){
-            EngLib::addEng(path+dirFile,engfile);
+            addEng(path+dirFile,engfile);
         }
     }
     qDebug() << "loaded";

@@ -6,6 +6,8 @@
 #include "SFile.h"
 #include <QDebug>
 #include <QFile>
+#include "Game.h"
+
 Eng::Eng() {
 }
 
@@ -58,9 +60,14 @@ void Eng::load(){
     ParserX::szukajsekcji1(sh, data);
     //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
     engName = ParserX::odczytajtc(data).trimmed();
-    
+    displayName = engName;
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
         //qDebug() << sh;
+        if (sh == ("name")) {
+            displayName = ParserX::odczytajtc(data);
+            ParserX::pominsekcje(data);
+            continue;
+        }
         if (sh == ("freightanim")) {
             sNames[1] = ParserX::odczytajtc(data);
             sfile[1] = -2;
@@ -144,8 +151,17 @@ void Eng::load(){
                 typeHash+="-"+engType;
                 //qDebug() << engType;
                 ParserX::pominsekcje(data);
-                break;
-                //continue;
+                continue;
+            }
+            if (sh == ("name")) {
+                displayName = ParserX::odczytajtc(data);
+                ParserX::pominsekcje(data);
+                continue;
+            }
+            if (sh == ("maxvelocity")) {
+                maxSpeed = ParserX::parsujr(data);
+                ParserX::pominsekcje(data);
+                continue;
             }
             ParserX::pominsekcje(data);
         }
@@ -174,10 +190,10 @@ void Eng::render(int aktwx, int aktwz) {
     if (loaded != 1) return;
 
     if(sfile[0] == -2){
-        sfile[0] = ShapeLib::addShape(path, sNames[0], path);
+        sfile[0] = Game::currentShapeLib->addShape(path, sNames[0], path);
     }
     if(sfile[1] == -2){
-        sfile[1] = ShapeLib::addShape(path, sNames[1], path);
+        sfile[1] = Game::currentShapeLib->addShape(path, sNames[1], path);
     }
 
     //ruchy[0].renderCon(gl, aktwx, aktwz);
@@ -201,8 +217,8 @@ void Eng::render(int aktwx, int aktwz) {
      
      gl.glColor3f(1.0f, 1.0f, 1.0f);  */
      //gluu.mvPushMatrix();
-     if(sfile[0] != -1) ShapeLib::shape[sfile[0]]->render();
-     if(sfile[1] != -1) ShapeLib::shape[sfile[1]]->render();
+     if(sfile[0] != -1) Game::currentShapeLib->shape[sfile[0]]->render();
+     if(sfile[1] != -1) Game::currentShapeLib->shape[sfile[1]]->render();
      //gluu.mvPopMatrix();
      //
 }

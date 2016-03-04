@@ -8,12 +8,12 @@ class Eng;
 
 class EngLib {
 public:
-    static int jesteng;
-    static std::unordered_map<int, Eng*> eng;
+    int jesteng = 0;
+    std::unordered_map<int, Eng*> eng;
     EngLib();
     virtual ~EngLib();
-    static int addEng(QString path, QString name);
-    static int loadAll(QString gameRoot);
+    int addEng(QString path, QString name);
+    int loadAll(QString gameRoot);
 private:
 
 };

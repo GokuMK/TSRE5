@@ -62,6 +62,11 @@ void Consist::load(){
     QString ename;
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
         //qDebug() << sh;
+        if (sh == ("name")) {
+            displayName = ParserX::odczytajtc(data).trimmed();
+            ParserX::pominsekcje(data);
+            continue;
+        }
         if (sh == ("serial")) {
             serial = ParserX::parsujr(data);
             ParserX::pominsekcje(data);
@@ -100,7 +105,7 @@ void Consist::load(){
                 if (sh == ("enginedata")) {
                     ename = ParserX::odczytajtc(data);
                     epath = ParserX::odczytajtc(data);
-                    engItems.back().eng = EngLib::addEng(Game::root + "/TRAINS/TRAINSET/" + epath, ename + ".eng");
+                    engItems.back().eng = Game::currentEngLib->addEng(Game::root + "/TRAINS/TRAINSET/" + epath, ename + ".eng");
                     ParserX::pominsekcje(data);
                     continue;
                 }
@@ -125,7 +130,7 @@ void Consist::load(){
                 if (sh == ("wagondata")) {
                     ename = ParserX::odczytajtc(data);
                     epath = ParserX::odczytajtc(data);
-                    engItems.back().eng = EngLib::addEng(Game::root + "/TRAINS/TRAINSET/" + epath, ename + ".wag");
+                    engItems.back().eng = Game::currentEngLib->addEng(Game::root + "/TRAINS/TRAINSET/" + epath, ename + ".wag");
                     ParserX::pominsekcje(data);
                     continue;
                 }
@@ -145,15 +150,22 @@ void Consist::load(){
 
 void Consist::initPos(){
     float length = 0;
+    conLength = 0;
+    mass = 0;
     if(engItems.size() == 0) return;
     //length += EngLib::eng[engItems[0].eng]->sizez / 2.0;
-    float size;
+    float size = 0;
     for(int i = 0; i < engItems.size(); i++){
-        size = EngLib::eng[engItems[i].eng]->getFullWidth();
+        engItems[i].conLength = conLength;
+        if(engItems[i].eng < 0) continue;
+        size = Game::currentEngLib->eng[engItems[i].eng]->getFullWidth();
         length += size / 2.0;
         engItems[i].pos = length;
         length += size / 2.0;
+        conLength += size;
+        mass += Game::currentEngLib->eng[engItems[i].eng]->mass;
     }
+    
     posInit = true;
 }
 
@@ -173,7 +185,7 @@ void Consist::render(int aktwx, int aktwz) {
         if(!engItems[i].flip)
             Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI, 0, 1, 0);
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-        EngLib::eng[engItems[i].eng]->render(aktwx, aktwz);
+        Game::currentEngLib->eng[engItems[i].eng]->render(aktwx, aktwz);
         gluu->mvPopMatrix();
         //qDebug() << engItems[i].eng;
         //qDebug() << EngLib::eng[engItems[i].eng]->engName;

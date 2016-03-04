@@ -8,16 +8,16 @@ class SFile;
 
 class ShapeLib {
 public:
-    static int jestshape;
-    static std::unordered_map<int, SFile*> shape;
+    int jestshape = 0;
+    std::unordered_map<int, SFile*> shape;
     ShapeLib();
     ShapeLib(const ShapeLib& orig);
     virtual ~ShapeLib();
-    static void reset();
-    static void delRef(int texx);
-    static void addRef(int texx);
-    static int addShape(QString path, QString name);
-    static int addShape(QString path, QString name, QString texPath);
+    void reset();
+    void delRef(int texx);
+    void addRef(int texx);
+    int addShape(QString path, QString name);
+    int addShape(QString path, QString name, QString texPath);
 private:
 
 };

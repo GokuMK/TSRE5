@@ -1,5 +1,6 @@
 #ifndef CAMERA_H
 #define	CAMERA_H
+
 #include "Vector2i.h"
 #include "Vector2f.h"
 #include "Vector3f.h"
@@ -11,47 +12,38 @@ class PreciseTileCoordinate;
 
 class Camera {
 public:
-    Camera(float* pt);
+    Camera(float* pt = 0);
     Camera(const Camera& orig);
     virtual ~Camera();
-    float* getTarget();
-    /*Vector2i getTilePos();
-    void setTilePos(Vector2i s);
-    void setPlayerPos(float x, float y, float z);
-    void setPlayerRot(float x, float y);
-    Vector3f getEye();
-    Vector3f getTarget0();*/
-    float* getMatrix();
-    /*void setRelativePos(Vector3f p);
-    void setRelativeRot(Vector2f p);
-    void scalPosRot();*/
-    float* getPos();
-    void setPos(float* pos);
-    void setPos(float x, float y, float z);
-    float getRotX();
-    float getRotY();
-    void setPozT(int x, int y);
-    //Vector3f getUp();
-    void moveForward(float fps);
-    void moveBackward(float fps);
-    void moveLeft(float fps);
-    void moveRight(float fps);
-    void moveUp();
-    void moveDown();
-    void patrzX(float f);
-    void patrzY(float f);
-    void check_coords();
-    void MouseMove(QMouseEvent* e);
-    void MouseDown(QMouseEvent* e);
-    void MouseUp(QMouseEvent* e);
-    void keyDown(QKeyEvent * e);
-    void keyUp(QKeyEvent * e);
-    void update(float fps);
-    PreciseTileCoordinate* getCurrentPos();
+    virtual float* getTarget();
+    virtual float* getMatrix();
+    virtual float* getPos();
+    virtual void setPos(float* pos);
+    virtual void setPos(float x, float y, float z);
+    virtual void setPlayerRot(float x, float y);
+    virtual float getRotX();
+    virtual float getRotY();
+    virtual void setPozT(int x, int y);
+    virtual void moveForward(float fps);
+    virtual void moveBackward(float fps);
+    virtual void moveLeft(float fps);
+    virtual void moveRight(float fps);
+    virtual void moveUp();
+    virtual void moveDown();
+    virtual void patrzX(float f);
+    virtual void patrzY(float f);
+    virtual void check_coords();
+    virtual void MouseMove(QMouseEvent* e);
+    virtual void MouseDown(QMouseEvent* e);
+    virtual void MouseUp(QMouseEvent* e);
+    virtual void keyDown(QKeyEvent * e);
+    virtual void keyUp(QKeyEvent * e);
+    virtual void update(float fps);
+    virtual PreciseTileCoordinate* getCurrentPos();
     float * pozT;
     int starex, starey;
-private:
-    //int aktwx = 0, aktwz = 0;
+    float fov;
+protected:
     float pos[3];
     float target[3];
     float up[3];
@@ -63,7 +55,8 @@ private:
     int jestcontrol;
     int lpm = 0;
     bool moveF, moveR, moveB, moveL;
-    PreciseTileCoordinate* currentPos = NULL;
+    PreciseTileCoordinate* currentPos = 0;
+
 };
 
 #endif	/* CAMERA_H */

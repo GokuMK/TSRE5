@@ -20,6 +20,7 @@
 #include "IghCoords.h"
 #include "MapWindow.h"
 #include "TerrainTreeWindow.h"
+#include "ShapeLib.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -68,6 +69,8 @@ void GLWidget::timerEvent(QTimerEvent * event) {
 }
 
 void GLWidget::initializeGL() {
+    currentShapeLib = new ShapeLib();
+    Game::currentShapeLib = currentShapeLib;
     //qDebug() << "GLUU::get();";
     gluu = GLUU::get();
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
@@ -94,7 +97,7 @@ void GLWidget::initializeGL() {
     if(!route->loaded) return;
     
     float * aaa = new float[2]{0,0};
-    camera = new Camera(aaa);
+    camera = new CameraFree(aaa);
     float spos[3];
     if(Game::start == 2){
         camera->setPozT(Game::startTileX, -Game::startTileY);
@@ -127,6 +130,7 @@ void GLWidget::initializeGL() {
 }
 
 void GLWidget::paintGL() {
+    Game::currentShapeLib = currentShapeLib;
     if(!route->loaded) return;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //if (!selection)

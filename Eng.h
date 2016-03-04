@@ -16,6 +16,7 @@ public:
     int sfile[2];
     QString sNames[2];
     QString engName;
+    QString displayName;
     QString engType;
     QString typeHash;
     QString type;
@@ -23,6 +24,7 @@ public:
     float sizex;
     float sizey;
     float sizez;
+    float maxSpeed = 0;
     int flip = flip;
     int loaded = -1;
     bool kierunek = false;

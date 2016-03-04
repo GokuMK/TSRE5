@@ -3,8 +3,8 @@
 #include <QDebug>
 #include "SFile.h"
 
-int ShapeLib::jestshape;
-std::unordered_map<int, SFile*> ShapeLib::shape;
+//int ShapeLib::jestshape;
+//std::unordered_map<int, SFile*> ShapeLib::shape;
 
 ShapeLib::ShapeLib() {
 }
@@ -52,7 +52,7 @@ int ShapeLib::addShape(QString path, QString name, QString texPath) {
                 return (int)it->first;
             }
     }
-    //qDebug() << "Nowy " << jestshape << " shape: " << pathid;
+    qDebug() << "Nowy " << jestshape << " shape: " << pathid;
 
     shape[jestshape] = new SFile(pathid, name, texPath);
     shape[jestshape]->pathid = pathid;

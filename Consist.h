@@ -12,6 +12,7 @@ public:
         int uid = 0;
         int eng = -1;
         float pos = 0;
+        float conLength = 0;
     };
     Consist();
     virtual ~Consist();
@@ -19,10 +20,13 @@ public:
     QString path;
     QString pathid;
     QString conName;
+    QString displayName;
     unsigned int serial = 0;
     float maxVelocity[2];
     int nextWagonUID = 0;
     float durability = 0;
+    float conLength = 0;
+    float mass = 0;
     int loaded = -1;
     bool kierunek = false;
     int ref = 0;

@@ -13,6 +13,8 @@ class Eng;
 class Consist;
 class GLUU;
 class Camera;
+class ShapeLib;
+class EngLib;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -27,8 +29,11 @@ public:
     int heightForWidth(int w) const {
         return w/10;
     }
+    void setCamera(Camera* cam);
+    ShapeLib *currentShapeLib = NULL;
+    EngLib *currentEngLib = NULL;
 public slots:
-    void showEng(int id);
+    void showEng(QString path, QString name);
     void showCon(int id);
     void cleanup();
 signals:
@@ -61,7 +66,7 @@ private:
     SFile* sFile = NULL;
     Eng* eng = NULL;
     Consist* con = NULL;
-    Camera* camera;
+    Camera* camera = NULL;
     int renderItem = 0;
 };
 

@@ -8,7 +8,7 @@
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
 #include <QBasicTimer>
-#include "Camera.h"
+#include "CameraFree.h"
 #include "WorldObj.h"
 #include "Pointer3d.h"
 #include "Ref.h"
@@ -22,7 +22,7 @@ class Brush;
 class PreciseTileCoordinate;
 class CoordsMkr;
 class MapWindow;
-
+class ShapeLib;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -123,7 +123,7 @@ private:
     
     Brush* defaultPaintBrush;
     MapWindow* mapWindow;
-
+    ShapeLib *currentShapeLib = NULL;
 };
 
 #endif

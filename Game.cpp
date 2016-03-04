@@ -6,6 +6,8 @@
 #include "LoadWindow.h"
 #include "SoundList.h"
 #include "ConEditorWindow.h"
+#include "ShapeLib.h"
+#include "EngLib.h"
 
 TDB *Game::trackDB = NULL;
 TDB *Game::roadDB = NULL;    
@@ -50,6 +52,8 @@ QString Game::geoPath = "hgst";
 
 Window* Game::window = NULL;
 LoadWindow* Game::loadWindow = NULL;
+ShapeLib *Game::currentShapeLib = NULL;
+EngLib *Game::currentEngLib = NULL;
 
 void Game::load() {
     

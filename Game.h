@@ -11,6 +11,8 @@ class Window;
 class LoadWindow;
 class TDB;
 class SoundList;
+class ShapeLib;
+class EngLib;
 
 class Game {
 public:
@@ -60,7 +62,8 @@ public:
     static int newRouteX;
     static int newRouteZ;
     static QString geoPath;
-
+    static ShapeLib *currentShapeLib;
+    static EngLib *currentEngLib;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

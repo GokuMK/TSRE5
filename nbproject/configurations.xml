@@ -6,6 +6,9 @@
                    projectFiles="true">
       <logicalFolder name="f5" displayName="camera" projectFiles="true">
         <itemPath>Camera.h</itemPath>
+        <itemPath>CameraConsist.h</itemPath>
+        <itemPath>CameraFree.h</itemPath>
+        <itemPath>CameraRot.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f12" displayName="conEditor" projectFiles="true">
         <itemPath>ConEditorWindow.h</itemPath>
@@ -154,6 +157,9 @@
                    projectFiles="true">
       <logicalFolder name="f4" displayName="camera" projectFiles="true">
         <itemPath>Camera.cpp</itemPath>
+        <itemPath>CameraConsist.cpp</itemPath>
+        <itemPath>CameraFree.cpp</itemPath>
+        <itemPath>CameraRot.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f13" displayName="conEditor" projectFiles="true">
         <itemPath>ConEditorWindow.cpp</itemPath>
@@ -338,6 +344,18 @@
       <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CameraConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraFree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CameraFree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraRot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -811,6 +829,18 @@
       <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CameraConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraFree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CameraFree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraRot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>

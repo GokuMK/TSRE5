@@ -10,11 +10,15 @@
 #include "EngLib.h"
 #include "Game.h"
 #include "GLH.h"
-#include "Camera.h"
+#include "CameraFree.h"
+#include "CameraConsist.h"
 #include "GLMatrix.h"
 #include "EngLib.h"
 #include "ConLib.h"
 #include "Consist.h" 
+#include "ShapeLib.h"
+#include "EngLib.h"
+
 GlShapeWidget::GlShapeWidget(QWidget *parent)
 : QOpenGLWidget(parent),
 m_xRot(0),
@@ -61,9 +65,20 @@ void GlShapeWidget::timerEvent(QTimerEvent * event) {
     
 }
 
+void GlShapeWidget::setCamera(Camera* cam){
+    camera = cam;
+}
+
 void GlShapeWidget::initializeGL() {
+    currentShapeLib = new ShapeLib();
+    Game::currentShapeLib = currentShapeLib;
+    if(currentEngLib == NULL){
+         currentEngLib = new EngLib();
+         Game::currentEngLib = currentEngLib;
+    }
     //qDebug() << "GLUU::get();";
     gluu = GLUU::get();
+    //context()->set
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GlShapeWidget::cleanup);
     //qDebug() << "initializeOpenGLFunctions();";
     initializeOpenGLFunctions();
@@ -88,10 +103,12 @@ void GlShapeWidget::initializeGL() {
     //qDebug() << "route = new Route();";
     
     float * aaa = new float[2]{0,0};
-    camera = new Camera(aaa);
-    float spos[3];
-    spos[0] = 0; spos[1] = 0; spos[2] = 0;
-    camera->setPos((float*)&spos);
+    if(camera == NULL){
+        camera = new CameraFree(aaa);
+        float spos[3];
+        spos[0] = 0; spos[1] = 0; spos[2] = 0;
+        camera->setPos((float*)&spos);
+    }
     
     lastTime = QDateTime::currentMSecsSinceEpoch();
     timer.start(15, this);
@@ -100,13 +117,15 @@ void GlShapeWidget::initializeGL() {
 }
 
 void GlShapeWidget::paintGL() {
+    Game::currentShapeLib = currentShapeLib;
+    Game::currentEngLib = currentEngLib;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //if (!selection)
     glClearColor(0, 0, 0, 1.0);
     //else
     //    glClearColor(0, 0, 0, 1.0);
     
-    Mat4::perspective(gluu->pMatrix, Game::cameraFov*0.5*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
+    Mat4::perspective(gluu->pMatrix, camera->fov*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
     float* lookAt = camera->getMatrix();
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, lookAt);
     Mat4::identity(gluu->mvMatrix);
@@ -181,9 +200,10 @@ void GlShapeWidget::mouseMoveEvent(QMouseEvent *event) {
     camera->MouseMove(event);
 }
 
-void GlShapeWidget::showEng(int id){
-    qDebug() << "eng id "<< id;
-    eng = EngLib::eng[id];
+void GlShapeWidget::showEng(QString path, QString name){
+    qDebug() << "eng id "<< -5;
+    int idx = currentEngLib->addEng(path, name);
+    eng = currentEngLib->eng[idx];
     renderItem = 2;
 }
 

@@ -3,6 +3,9 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/AceLib.o
 ./build/Release/MinGW_QT_static-Windows/Brush.o
 ./build/Release/MinGW_QT_static-Windows/Camera.o
+./build/Release/MinGW_QT_static-Windows/CameraConsist.o
+./build/Release/MinGW_QT_static-Windows/CameraFree.o
+./build/Release/MinGW_QT_static-Windows/CameraRot.o
 ./build/Release/MinGW_QT_static-Windows/ConEditorWindow.o
 ./build/Release/MinGW_QT_static-Windows/ConLib.o
 ./build/Release/MinGW_QT_static-Windows/ConListWidget.o

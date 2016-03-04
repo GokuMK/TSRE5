@@ -6,6 +6,7 @@
 #include "ParserX.h"
 #include "TS.h"
 #include <QDebug>
+#include "Game.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -28,7 +29,7 @@ TrackObj::~TrackObj() {
 }
 
 void TrackObj::load(int x, int y) {
-    this->shape = ShapeLib::addShape(resPath, fileName);
+    this->shape = Game::currentShapeLib->addShape(resPath, fileName);
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
@@ -254,8 +255,8 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
             if ((ccos > 0) && (xxx > size) && (skipLevel == 1)) return;
         }
     } else {
-        if (ShapeLib::shape[shape]->loaded)
-            size = ShapeLib::shape[shape]->size;
+        if (Game::currentShapeLib->shape[shape]->loaded)
+            size = Game::currentShapeLib->shape[shape]->size;
     }
 
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
@@ -270,7 +271,7 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         gluu->enableTextures();
     }
         
-    ShapeLib::shape[shape]->render();
+    Game::currentShapeLib->shape[shape]->render();
     
     if(selected){
         drawBox();
@@ -279,9 +280,9 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
 
 bool TrackObj::getBorder(float* border){
     if (shape < 0) return false;
-    if (!ShapeLib::shape[shape]->loaded)
+    if (!Game::currentShapeLib->shape[shape]->loaded)
         return false;
-    float* bound = ShapeLib::shape[shape]->bound;
+    float* bound = Game::currentShapeLib->shape[shape]->bound;
     border[0] = bound[0];
     border[1] = bound[1];
     border[2] = bound[2];
