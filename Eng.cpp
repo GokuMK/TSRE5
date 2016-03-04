@@ -132,6 +132,14 @@ void Eng::load(){
         if (sh == ("type")) {
             type = ParserX::odczytajtc(data);
             //qDebug() << "type "<< type;
+            if(type.toLower() == "engine")
+                wagonTypeId = 4;
+            if(type.toLower() == "carriage")
+                wagonTypeId = 1;
+            if(type.toLower() == "freight")
+                wagonTypeId = 2;
+            if(type.toLower() == "tender")
+                wagonTypeId = 3;
             ParserX::pominsekcje(data);
             continue;
         }
@@ -150,6 +158,12 @@ void Eng::load(){
                 engType = ParserX::odczytajtc(data);
                 typeHash+="-"+engType;
                 //qDebug() << engType;
+                if(engType.toLower() == "electric")
+                    wagonTypeId += 0;
+                if(engType.toLower() == "diesel")
+                    wagonTypeId += 1;
+                if(engType.toLower() == "steam")
+                    wagonTypeId += 2;
                 ParserX::pominsekcje(data);
                 continue;
             }

@@ -10,6 +10,7 @@
 #include "glShapeWidget.h"
 #include "CameraFree.h"
 #include "CameraConsist.h"
+#include "CameraRot.h"
 #include "GuiFunct.h"
 #include "ConUnitsWidget.h"
 #include "AboutWindow.h"
@@ -28,8 +29,13 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     conCamera = new CameraConsist();
     conCamera->setPos(-100,2.5,42);
     conCamera->setPlayerRot(M_PI/2.0,0);
+    engCamera = new CameraRot();
+    engCamera->setPos(0,2.5,0);
+    engCamera->setPlayerRot(M_PI/2.0,0);
     
     glConWidget->setCamera(conCamera);
+    glShapeWidget->setCamera(engCamera);
+    glShapeWidget->setMode("rot");
     //qDebug()<<"aaa";
     eng1 = new EngListWidget();
     eng1->englib = englib;
@@ -48,7 +54,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     conSlider->setMinimum(0);
     
     QWidget* main = new QWidget();
-
+    
     QVBoxLayout *mbox = new QVBoxLayout;
     mbox->setSpacing(2);
     mbox->setContentsMargins(1,1,1,1);
@@ -62,6 +68,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     engInfo = new QWidget(this);
     QVBoxLayout *engInfoLayout = new QVBoxLayout;
     engInfoLayout->addWidget(glShapeWidget);
+    glShapeWidget->setMinimumSize(100, 100);
     QGridLayout *engInfoForm = new QGridLayout;
     engInfoForm->setSpacing(2);
     engInfoForm->setContentsMargins(1,1,1,1);    
@@ -204,12 +211,15 @@ void ConEditorWindow::viewConView(bool show){
     else conInfo->hide();
     if(show) conSlider->show();
     else conSlider->hide();
-    
 }
     
 void ConEditorWindow::engListSelected(int id){
     currentEng = englib->eng[id];
     qDebug() << currentEng->engName;
+    float pos = -currentEng->sizez-1;
+    if(pos > -15) pos = -15;
+    engCamera->setPos(pos,2.5,0);
+    engCamera->setPlayerRot(M_PI/2.0,0);
     eName.setText(currentEng->displayName);
     QString ttype = currentEng->type;
     if(currentEng->engType.length() > 1)

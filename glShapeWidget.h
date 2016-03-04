@@ -32,6 +32,7 @@ public:
     void setCamera(Camera* cam);
     ShapeLib *currentShapeLib = NULL;
     EngLib *currentEngLib = NULL;
+    void setMode(QString n);
 public slots:
     void showEng(QString path, QString name);
     void showCon(int id);
@@ -63,11 +64,16 @@ private:
     GLUU* gluu;
     int mousex, mousey;
     bool mousePressed = false;
+    bool mouseRPressed = false;
+    bool mouseLPressed = false;
     SFile* sFile = NULL;
     Eng* eng = NULL;
     Consist* con = NULL;
     Camera* camera = NULL;
     int renderItem = 0;
+    QString mode = "";
+    float rotY = 0;
+    float rotZ = 0;
 };
 
 #endif	/* GLSHAPEWIDGET_H */

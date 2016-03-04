@@ -66,6 +66,7 @@ private:
     Consist *currentCon = NULL;
     Eng *currentEng = NULL;
     Camera *conCamera;
+    Camera *engCamera;
     EngLib* englib;
     //EngLib* conEngLib;
     

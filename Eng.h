@@ -20,6 +20,7 @@ public:
     QString engType;
     QString typeHash;
     QString type;
+    int wagonTypeId = 0;
     float mass;
     float sizex;
     float sizey;

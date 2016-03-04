@@ -9,12 +9,33 @@
 #include "GLMatrix.h"
 #include "GLUU.h"
 
-TextObj::TextObj(int val) : OglObj() {
+TextObj::TextObj(int val, float s, float sc) : OglObj() {
     this->text.setNum(val, 10);
+    if(s > 0)
+        size = s;
+    if(sc > 0)
+        scale = sc;
+    pos[0] = 0;
+    pos[1] = 0;
+    pos[2] = 0;
+}
+
+TextObj::TextObj(QString val, float s, float sc) : OglObj() {
+    this->text = val;
+    if(s > 0)
+        size = s;
+    if(sc > 0)
+        scale = sc;
+    pos[0] = 0;
+    pos[1] = 0;
+    pos[2] = 0;
 }
 
 TextObj::TextObj() : OglObj() {
     this->text = " ";
+    pos[0] = 0;
+    pos[1] = 0;
+    pos[2] = 0;
 }
 
 void TextObj::setColor(int r, int g, int b){
@@ -26,8 +47,8 @@ void TextObj::init(){
     int ptr = 0;
     int i = 0;
 
-    punkty[ptr++] = -2;
-    punkty[ptr++] = 1;
+    punkty[ptr++] = (-size / 2)*scale;
+    punkty[ptr++] = 1*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 0.0;
@@ -35,7 +56,7 @@ void TextObj::init(){
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 0.0;
 
-    punkty[ptr++] = -2;
+    punkty[ptr++] = (-size / 2)*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
@@ -44,7 +65,7 @@ void TextObj::init(){
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 1.00;
 
-    punkty[ptr++] = 2;
+    punkty[ptr++] = (size / 2)*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
@@ -53,8 +74,8 @@ void TextObj::init(){
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 1.0;
 
-    punkty[ptr++] = 2;
-    punkty[ptr++] = 1;
+    punkty[ptr++] = (size / 2)*scale;
+    punkty[ptr++] = 1*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 0.0;
@@ -62,8 +83,8 @@ void TextObj::init(){
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 0.0;
 
-    punkty[ptr++] = -2;
-    punkty[ptr++] = 1;
+    punkty[ptr++] = (-size / 2)*scale;
+    punkty[ptr++] = 1*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 0.0;
@@ -71,7 +92,7 @@ void TextObj::init(){
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 0.0;
 
-    punkty[ptr++] = 2;
+    punkty[ptr++] = (size / 2)*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
@@ -79,7 +100,7 @@ void TextObj::init(){
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 1.0;
-    this->setMaterial(new QString(text+".color:"+color.name()+".:paintTex"));
+    this->setMaterial(new QString(text+".size:"+QString::number((int)size)+".color:"+color.name()+".:paintTex"));
     OglObj::init(punkty, ptr, this->VNT, GL_TRIANGLES);
     delete[] punkty;
     isInit = true;

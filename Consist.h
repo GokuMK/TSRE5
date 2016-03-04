@@ -2,17 +2,27 @@
 #define	CONSIST_H
 
 #include <QString>
+#include <unordered_map>
 
 class Eng;
+class TextObj;
 
 class Consist {
 public:
+    static std::unordered_map<int, TextObj*> txtNumbers;
+    static TextObj * txtEngineE;
+    static TextObj * txtEngineD;
+    static TextObj * txtEngineS;
+    static TextObj * txtEngineF;
+    static TextObj * txtEngineW;
+    static TextObj * txtEngineT;
     struct EngItem{
         bool flip = false;
         int uid = 0;
         int eng = -1;
         float pos = 0;
         float conLength = 0;
+        TextObj * txt = NULL;
     };
     Consist();
     virtual ~Consist();

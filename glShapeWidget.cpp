@@ -124,8 +124,8 @@ void GlShapeWidget::paintGL() {
     glClearColor(0, 0, 0, 1.0);
     //else
     //    glClearColor(0, 0, 0, 1.0);
-    
-    Mat4::perspective(gluu->pMatrix, camera->fov*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
+    float aspect = float(this->width()) / float(this->height());
+    Mat4::perspective(gluu->pMatrix, camera->fov*M_PI/180*(1/aspect), aspect, 0.2f, Game::objectLod);
     float* lookAt = camera->getMatrix();
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, lookAt);
     Mat4::identity(gluu->mvMatrix);
@@ -158,6 +158,12 @@ void GlShapeWidget::paintGL() {
     gluu->m_program->bind();
     gluu->setMatrixUniforms();
     //sFile->render();
+    if(mode == "rot"){
+        Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, rotY, 0,1,0);
+        Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, rotZ, 0,0,1);
+    }
+    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+
     if(renderItem == 2 && eng != NULL){
         eng->render();
     }
@@ -183,7 +189,10 @@ void GlShapeWidget::keyReleaseEvent(QKeyEvent * event) {
 void GlShapeWidget::mousePressEvent(QMouseEvent *event) {
     m_lastPos = event->pos();
     mousePressed = true;
-    
+    if(event->button() == Qt::RightButton)
+        mouseRPressed = true;
+    if(event->button() == Qt::LeftButton)
+        mouseLPressed = true;
     camera->MouseDown(event);
     setFocus();
 }
@@ -191,13 +200,29 @@ void GlShapeWidget::mousePressEvent(QMouseEvent *event) {
 void GlShapeWidget::mouseReleaseEvent(QMouseEvent* event) {
     camera->MouseUp(event);
     mousePressed = false;
+    mouseRPressed = false;
+    mouseLPressed = false;
 }
 
 void GlShapeWidget::mouseMoveEvent(QMouseEvent *event) {
     mousex = event->x();
     mousey = event->y();
+    
+    if(mode == "rot"){
+        if (mousePressed) {
+            if(mouseRPressed)
+                rotZ += (float) (m_lastPos.y() - event->y()) / 60*(camera->fov/45.0);
+            if(mouseLPressed)
+                rotY += (float) (m_lastPos.x() - event->x()) / 60*(camera->fov/45.0);
+            if (rotZ > 1.57)
+                rotZ = (float) 1.57;
+            if (rotZ < -1.57)
+                rotZ = (float) - 1.57;
+        }
+    } else {
+        camera->MouseMove(event);
+    }
     m_lastPos = event->pos();
-    camera->MouseMove(event);
 }
 
 void GlShapeWidget::showEng(QString path, QString name){
@@ -211,4 +236,8 @@ void GlShapeWidget::showCon(int id){
     qDebug() << "con id "<< id;
     con = ConLib::con[id];
     renderItem = 3;
+}
+
+void GlShapeWidget::setMode(QString n){
+    mode = n;
 }

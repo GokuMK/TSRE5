@@ -11,7 +11,15 @@
 #include <QDebug>
 #include <QFile>
 #include "GLMatrix.h"
+#include "TextObj.h"
 
+std::unordered_map<int, TextObj*> Consist::txtNumbers;
+TextObj * Consist::txtEngineE = NULL;
+TextObj * Consist::txtEngineD = NULL;
+TextObj * Consist::txtEngineS = NULL;
+TextObj * Consist::txtEngineF = NULL;
+TextObj * Consist::txtEngineW = NULL;
+TextObj * Consist::txtEngineT = NULL;
 Consist::Consist() {
 }
 
@@ -187,8 +195,77 @@ void Consist::render(int aktwx, int aktwz) {
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         Game::currentEngLib->eng[engItems[i].eng]->render(aktwx, aktwz);
         gluu->mvPopMatrix();
-        //qDebug() << engItems[i].eng;
-        //qDebug() << EngLib::eng[engItems[i].eng]->engName;
+        
+        gluu->mvPushMatrix();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, -1, engItems[i].pos);
+        Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI/2, 0, 1, 0);
+        Mat4::identity(gluu->objStrMatrix);
+        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
+        if(engItems[i].txt == NULL){
+            engItems[i].txt = new TextObj(Game::currentEngLib->eng[engItems[i].eng]->displayName, 16, 1.0);
+            engItems[i].txt->setColor(255,255,0);
+        }        
+        engItems[i].txt->render();
+        gluu->mvPopMatrix();
+        
+        gluu->mvPushMatrix();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 5, engItems[i].pos);
+        //Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI/2, 0, 1, 0);
+        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        if(txtNumbers[i] == NULL){
+            txtNumbers[i] = new TextObj(i+1);
+            txtNumbers[i]->setColor(255,255,0);
+        }
+        txtNumbers[i]->render(M_PI/2);
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0, -1);
+        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        int wt = Game::currentEngLib->eng[engItems[i].eng]->wagonTypeId;
+        if(wt == 1){
+            if(txtEngineW == NULL){
+                txtEngineW = new TextObj("C");
+                txtEngineW->setColor(255,255,0);
+            }
+            txtEngineW->render(M_PI/2);
+        }
+        if(wt == 2){
+            if(txtEngineF == NULL){
+                txtEngineF = new TextObj("F");
+                txtEngineF->setColor(255,255,0);
+            }
+            txtEngineF->render(M_PI/2);
+        }
+        if(wt == 3){
+            if(txtEngineT == NULL){
+                txtEngineT = new TextObj("T");
+                txtEngineT->setColor(255,255,0);
+            }
+            txtEngineT->render(M_PI/2);
+        }
+        if(wt == 4){
+            if(txtEngineE == NULL){
+                txtEngineE = new TextObj("E");
+                txtEngineE->setColor(255,0,0);
+            }
+            txtEngineE->render(M_PI/2);
+        }
+        if(wt == 5){
+            if(txtEngineD == NULL){
+                txtEngineD = new TextObj("D");
+                txtEngineD->setColor(255,0,0);
+            }
+            txtEngineD->render(M_PI/2);
+        }
+        if(wt == 6){
+            if(txtEngineS == NULL){
+                txtEngineS = new TextObj("S");
+                txtEngineS->setColor(255,0,0);
+            }
+            txtEngineS->render(M_PI/2);
+        }
+        
+        gluu->mvPopMatrix();
+
     }
     //loaded = -1;
     //ruchy[0].renderCon(gl, aktwx, aktwz);

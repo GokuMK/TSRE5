@@ -16126,7 +16126,103 @@ build/Release/MinGW_QT_static-Windows/CameraFree.o: CameraFree.cpp CameraFree.h 
 		IghCoords.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/CameraFree.o CameraFree.cpp
 
-build/Release/MinGW_QT_static-Windows/CameraRot.o: CameraRot.cpp CameraRot.h
+build/Release/MinGW_QT_static-Windows/CameraRot.o: CameraRot.cpp CameraRot.h \
+		Camera.h \
+		Vector2i.h \
+		Vector2f.h \
+		Vector3f.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QMatrix4x4 \
+		C:/Qt/Static/5.4.1/include/QtGui/qmatrix4x4.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector3d.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qpoint.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnamespace.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qglobal.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qconfig.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qfeatures.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsystemdetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qprocessordetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtypeinfo.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtypetraits.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsysinfo.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlogging.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qflags.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbasicatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qgenericatomic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv7.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv6.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_armv5.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_ia64.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_mips.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_x86.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_gcc.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qatomic_unix.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qglobalstatic.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmutex.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qnumeric.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmetatype.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbytearray.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qrefcount.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qarraydata.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstring.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qchar.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringbuilder.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qalgorithms.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qisenum.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector4d.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qquaternion.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qgenericmatrix.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qdebug.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qhash.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qiterator.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qbytearraylist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qpair.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmap.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qtextstream.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qiodevice.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcoreevent.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qscopedpointer.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qobject_impl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qlocale.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvariant.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringlist.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qdatastream.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qregexp.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qstringmatcher.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qshareddata.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qvector.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qset.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qrect.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qmargins.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qsize.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QVector3D \
+		C:/Qt/Static/5.4.1/include/QtGui/QMouseEvent \
+		C:/Qt/Static/5.4.1/include/QtGui/qevent.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qwindowdefs.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qregion.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qkeysequence.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qurl.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qurlquery.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qfile.h \
+		C:/Qt/Static/5.4.1/include/QtCore/qfiledevice.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qvector2d.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qtouchdevice.h \
+		GLMatrix.h \
+		Game.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QString \
+		IghCoords.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/CameraRot.o CameraRot.cpp
 
 build/Release/MinGW_QT_static-Windows/ConEditorWindow.o: ConEditorWindow.cpp ConEditorWindow.h \
@@ -16603,6 +16699,7 @@ build/Release/MinGW_QT_static-Windows/ConEditorWindow.o: ConEditorWindow.cpp Con
 		Vector3f.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QMouseEvent \
 		CameraConsist.h \
+		CameraRot.h \
 		GuiFunct.h \
 		ConUnitsWidget.h \
 		AboutWindow.h
@@ -17849,7 +17946,13 @@ build/Release/MinGW_QT_static-Windows/Consist.o: Consist.cpp Consist.h \
 		Vector3f.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
 		C:/Qt/Static/5.4.1/include/QtCore/QFile \
-		GLMatrix.h
+		GLMatrix.h \
+		TextObj.h \
+		OglObj.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QPainter \
+		C:/Qt/Static/5.4.1/include/QtGui/qpainter.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qtextoption.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpen.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Consist.o Consist.cpp
 
 build/Release/MinGW_QT_static-Windows/CoordsMkr.o: CoordsMkr.cpp CoordsMkr.h \

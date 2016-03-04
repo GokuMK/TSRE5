@@ -30,7 +30,7 @@ CameraConsist::CameraConsist(float* pt) {
     relativePos[2] = 0;
     
     moveF = moveR = moveB = moveL = false;
-    fov = 5;
+    fov = 49;
 }
 
 CameraConsist::CameraConsist(const CameraConsist& orig) {

@@ -11,9 +11,21 @@
 #include <QPainter>
 
 void PaintTexLib::run() {
-
-    int w = 128;
+    
+    int size = 4;
+    
+    QStringList data = texture->pathid.split(".");
+    QString val = data.first();
+    QColor color;
+    for(int i = 1; i < data.length()-1; i++){
+        if(data[i].split(":").first() == "color")
+            color.setNamedColor(data[i].split(":").last());
+        if(data[i].split(":").first() == "size")
+            size = data[i].split(":").last().toInt();
+    }
+    
     int h = 32;
+    int w = size*h;
     
     texture->width = w;
     texture->height = h;
@@ -26,18 +38,9 @@ void PaintTexLib::run() {
     texture->imageData = new unsigned char[texture->imageSize];
     std::fill(texture->imageData, texture->imageData+texture->imageSize, 0);
     texture->type = GL_RGBA;
-        
-    
+
     
     QImage img(texture->imageData, w, h, QImage::Format_RGBA8888);
-    
-    QStringList data = texture->pathid.split(".");
-    QString val = data.first();
-    QColor color;
-    for(int i = 1; i < data.length()-1; i++){
-        if(data[i].split(":").first() == "color")
-            color.setNamedColor(data[i].split(":").last());
-    }
     
     QPainter p;
     p.begin(&img);
