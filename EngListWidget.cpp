@@ -18,7 +18,7 @@ EngListWidget::EngListWidget() : QWidget(){
     this->setLayout(vbox);
     engType.setStyleSheet("combobox-popup: 0;");
     engType.addItem("ALL");
-    this->setFixedWidth(250);
+    this->setMinimumWidth(250);
     couplingType.setStyleSheet("combobox-popup: 0;");
     couplingType.addItem("ALL");
     

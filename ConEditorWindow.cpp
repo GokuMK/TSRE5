@@ -10,8 +10,12 @@
 #include "glShapeWidget.h"
 #include "CameraFree.h"
 #include "CameraConsist.h"
+#include "GuiFunct.h"
+#include "ConUnitsWidget.h"
+#include "AboutWindow.h"
 
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
+    aboutWindow = new AboutWindow();
     englib = new EngLib();
     //conEngLib = new EngLib();
     englib->loadAll(Game::root);
@@ -30,6 +34,12 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     eng1 = new EngListWidget();
     eng1->englib = englib;
     eng1->fillEngList();
+    eng2 = new EngListWidget();
+    eng2->englib = englib;
+    eng2->fillEngList();
+    units = new ConUnitsWidget();
+    units->englib = englib;
+    
     con1 = new ConListWidget();
     con1->fillConList();
     //qDebug()<<"aaa";
@@ -42,11 +52,14 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QVBoxLayout *mbox = new QVBoxLayout;
     mbox->setSpacing(2);
     mbox->setContentsMargins(1,1,1,1);
-    QHBoxLayout *vbox = new QHBoxLayout;
+    QGridLayout *vbox = new QGridLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
-    vbox->addWidget(con1);
-    vbox->addWidget(eng1);
+    vbox->addWidget(con1,0,0);
+    vbox->addWidget(units,0,1);
+    vbox->addWidget(eng1,0,2);
+    vbox->addWidget(eng2,0,3);
+    engInfo = new QWidget(this);
     QVBoxLayout *engInfoLayout = new QVBoxLayout;
     engInfoLayout->addWidget(glShapeWidget);
     QGridLayout *engInfoForm = new QGridLayout;
@@ -71,9 +84,11 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     engInfoLayout->addItem(engInfoForm);
     engInfoLayout->setSpacing(0);
     engInfoLayout->setContentsMargins(0,0,0,0);
-    vbox->addItem(engInfoLayout);
-    vbox->addStretch(1);
+    engInfo->setLayout(engInfoLayout);
+    vbox->addWidget(engInfo,0,4);
+    //vbox->addStretch(1);
     mbox->addItem(vbox);
+    conInfo = new QWidget(this);
     QGridLayout *conInfoForm = new QGridLayout;
     conInfoForm->setSpacing(2);
     conInfoForm->setContentsMargins(1,1,1,1);    
@@ -93,7 +108,8 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     cLength.setFixedWidth(100);
     cUnits.setFixedWidth(100);
     cDurability.setFixedWidth(100);
-    mbox->addItem(conInfoForm);
+    conInfo->setLayout(conInfoForm);
+    mbox->addWidget(conInfo);
     mbox->addWidget(glConWidget);
     mbox->addWidget(conSlider);
     //glConWidget->setFixedHeight(150);
@@ -108,9 +124,34 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     setWindowTitle(tr("TSRE5 v0.612 Consist Editor"));
     fileMenu = menuBar()->addMenu(tr("&File"));
     menuBar()->addMenu(tr("&Edit"));
-    menuBar()->addMenu(tr("&Help"));
+    viewMenu = menuBar()->addMenu(tr("&View"));
+    vConList = GuiFunct::newMenuCheckAction(tr("&Consist List"), this); 
+    viewMenu->addAction(vConList);
+    QObject::connect(vConList, SIGNAL(triggered(bool)), this, SLOT(viewConList(bool)));
+    vEngList1 = GuiFunct::newMenuCheckAction(tr("&Eng List 1"), this); 
+    viewMenu->addAction(vEngList1);
+    QObject::connect(vEngList1, SIGNAL(triggered(bool)), this, SLOT(viewEngList1(bool)));
+    vEngList2 = GuiFunct::newMenuCheckAction(tr("&Eng List 2"), this); 
+    viewMenu->addAction(vEngList2);
+    QObject::connect(vEngList2, SIGNAL(triggered(bool)), this, SLOT(viewEngList2(bool)));
+    vConUnits = GuiFunct::newMenuCheckAction(tr("&Consist Units"), this); 
+    viewMenu->addAction(vConUnits);
+    QObject::connect(vConUnits, SIGNAL(triggered(bool)), this, SLOT(viewConUnits(bool)));
+    vEngView = GuiFunct::newMenuCheckAction(tr("&Eng View"), this); 
+    viewMenu->addAction(vEngView);
+    QObject::connect(vEngView, SIGNAL(triggered(bool)), this, SLOT(viewEngView(bool)));
+    vConView = GuiFunct::newMenuCheckAction(tr("&Con View"), this); 
+    viewMenu->addAction(vConView);
+    QObject::connect(vConView, SIGNAL(triggered(bool)), this, SLOT(viewConView(bool)));
+    helpMenu = menuBar()->addMenu(tr("&Help"));
+    aboutAction = new QAction(tr("&About"), this);
+    QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
+    helpMenu->addAction(aboutAction);
     
     QObject::connect(eng1, SIGNAL(engListSelected(int)),
+                      this, SLOT(engListSelected(int)));
+    
+    QObject::connect(eng2, SIGNAL(engListSelected(int)),
                       this, SLOT(engListSelected(int)));
     
     QObject::connect(con1, SIGNAL(conListSelected(int)),
@@ -124,11 +165,48 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     
     QObject::connect(conSlider, SIGNAL(valueChanged(int)),
                       this, SLOT(conSliderValueChanged(int))); 
+    
+    vEngList2->trigger();
+    vConUnits->trigger();
 }
 
 ConEditorWindow::~ConEditorWindow() {
 }
 
+void ConEditorWindow::about(){
+    aboutWindow->show();
+}
+
+void ConEditorWindow::viewConList(bool show){
+    if(show) con1->show();
+    else con1->hide();
+}
+void ConEditorWindow::viewEngList1(bool show){
+    if(show) eng1->show();
+    else eng1->hide();
+}
+void ConEditorWindow::viewEngList2(bool show){
+    if(show) eng2->show();
+    else eng2->hide();
+}
+void ConEditorWindow::viewConUnits(bool show){
+    if(show) units->show();
+    else units->hide();
+}
+void ConEditorWindow::viewEngView(bool show){
+    if(show) engInfo->show();
+    else engInfo->hide();
+}
+void ConEditorWindow::viewConView(bool show){
+    if(show) glConWidget->show();
+    else glConWidget->hide();
+    if(show) conInfo->show();
+    else conInfo->hide();
+    if(show) conSlider->show();
+    else conSlider->hide();
+    
+}
+    
 void ConEditorWindow::engListSelected(int id){
     currentEng = englib->eng[id];
     qDebug() << currentEng->engName;
@@ -150,6 +228,7 @@ void ConEditorWindow::engListSelected(int id){
 void ConEditorWindow::conListSelected(int id){
     currentCon = ConLib::con[id];
     qDebug() << currentCon->conName;
+    units->setCon(currentCon);
     conSlider->setMinimum(0);
     conSlider->setMaximum(currentCon->engItems.size());
     cFileName.setText(currentCon->conName);

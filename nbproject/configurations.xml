@@ -13,6 +13,7 @@
       <logicalFolder name="f12" displayName="conEditor" projectFiles="true">
         <itemPath>ConEditorWindow.h</itemPath>
         <itemPath>ConListWidget.h</itemPath>
+        <itemPath>ConUnitsWidget.h</itemPath>
         <itemPath>EngListWidget.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="fileFunctions" projectFiles="true">
@@ -164,6 +165,7 @@
       <logicalFolder name="f13" displayName="conEditor" projectFiles="true">
         <itemPath>ConEditorWindow.cpp</itemPath>
         <itemPath>ConListWidget.cpp</itemPath>
+        <itemPath>ConUnitsWidget.cpp</itemPath>
         <itemPath>EngListWidget.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="fileFunctions" projectFiles="true">
@@ -368,6 +370,10 @@
       <item path="ConListWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ConListWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConUnitsWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConUnitsWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Consist.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -853,6 +859,10 @@
       <item path="ConListWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ConListWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConUnitsWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConUnitsWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Consist.cpp" ex="false" tool="1" flavor2="0">
       </item>

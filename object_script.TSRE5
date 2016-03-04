@@ -9,6 +9,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/ConEditorWindow.o
 ./build/Release/MinGW_QT_static-Windows/ConLib.o
 ./build/Release/MinGW_QT_static-Windows/ConListWidget.o
+./build/Release/MinGW_QT_static-Windows/ConUnitsWidget.o
 ./build/Release/MinGW_QT_static-Windows/Consist.o
 ./build/Release/MinGW_QT_static-Windows/CoordsMkr.o
 ./build/Release/MinGW_QT_static-Windows/DynTrackObj.o
@@ -118,6 +119,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_AceLib.o
 ./build/Release/MinGW_QT_static-Windows/moc_ConEditorWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_ConListWidget.o
+./build/Release/MinGW_QT_static-Windows/moc_ConUnitsWidget.o
 ./build/Release/MinGW_QT_static-Windows/moc_EngListWidget.o
 ./build/Release/MinGW_QT_static-Windows/moc_HeightWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_ImageLib.o

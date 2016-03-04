@@ -6,13 +6,13 @@
 class QLabel;
 class QLineEdit;
 class QAction;
-class Window;
+class QMainWindow;
 
 class GuiFunct {
 public:
     static QLabel* newQLabel(QString text, int width);
     static QLineEdit* newQLineEdit(int width, int length);
-    static QAction* newMenuCheckAction(QString desc, Window* window, bool checked = true);
+    static QAction* newMenuCheckAction(QString desc, QMainWindow* window, bool checked = true);
 private:
 
 };
