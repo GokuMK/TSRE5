@@ -191,7 +191,7 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
             roadDB->renderLines(gluu, playerT, playerRot);
         
         if(Game::viewMarkers)
-            this->mkr->render(gluu, playerT, playerW);
+            this->mkr->render(gluu, playerT, playerW, playerRot);
     }
     //trackDB->renderItems(gluu, playerT, playerRot);
     /*

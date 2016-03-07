@@ -15,6 +15,7 @@
 #include "ReadFile.h"
 #include "IghCoords.h"
 #include "OglObj.h"
+#include "TextObj.h"
 
 CoordsMkr::CoordsMkr(QString path) {
     path.replace("//", "/");
@@ -71,7 +72,7 @@ CoordsMkr::CoordsMkr(QString path) {
 CoordsMkr::~CoordsMkr() {
 }
 
-void CoordsMkr::render(GLUU* gluu, float * playerT, float* playerW) {
+void CoordsMkr::render(GLUU* gluu, float * playerT, float* playerW, float playerRot) {
     if (!loaded) return;
     Mat4::identity(gluu->objStrMatrix);
     gluu->setMatrixUniforms();
@@ -86,14 +87,15 @@ void CoordsMkr::render(GLUU* gluu, float * playerT, float* playerW) {
         punkty[ptr++] = 0;
         punkty[ptr++] = 0;
         punkty[ptr++] = 0;
-        punkty[ptr++] = 50;
+        punkty[ptr++] = 30;
         punkty[ptr++] = 0;
 
         simpleMarkerObj->setMaterial(1.0, 0.0, 1.0);
         simpleMarkerObj->init(punkty, ptr, simpleMarkerObj->V, GL_LINES);
         delete[] punkty;
     }
-
+    
+    TextObj* txt;
     for (int i = 0; i < markerList.size(); i++) {
         if (fabs(markerList[i].tileX - playerT[0]) + fabs(-markerList[i].tileZ - playerT[1]) > 2) {
             continue;
@@ -107,6 +109,15 @@ void CoordsMkr::render(GLUU* gluu, float * playerT, float* playerW) {
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         simpleMarkerObj->render();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 30, 0);
+        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        TextObj* txt = nameGl[markerList[i].name.toStdString()];
+        if(txt == NULL){
+            txt = new TextObj(markerList[i].name, 16, 1.0);
+            txt->setColor(0,0,0);
+            nameGl[markerList[i].name.toStdString()] = txt;
+        } 
+        txt->render(playerRot);
         gluu->mvPopMatrix();
     }
 };

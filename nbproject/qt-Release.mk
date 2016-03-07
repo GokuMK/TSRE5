@@ -18182,7 +18182,29 @@ build/Release/MinGW_QT_static-Windows/CoordsMkr.o: CoordsMkr.cpp CoordsMkr.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qxmlstream.h \
 		C:/Qt/Static/5.4.1/include/QtCore/qtcoreversion.h \
 		IghCoords.h \
-		OglObj.h
+		OglObj.h \
+		TextObj.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QPainter \
+		C:/Qt/Static/5.4.1/include/QtGui/qpainter.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpixmap.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpaintdevice.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qwindowdefs.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qcolor.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qrgb.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qimage.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qtransform.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qmatrix.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpolygon.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qregion.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpainterpath.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpixelformat.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qtextoption.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qpen.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qbrush.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qfontinfo.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qfont.h \
+		C:/Qt/Static/5.4.1/include/QtGui/qfontmetrics.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/CoordsMkr.o CoordsMkr.cpp
 
 build/Release/MinGW_QT_static-Windows/DynTrackObj.o: DynTrackObj.cpp DynTrackObj.h \

@@ -2,9 +2,11 @@
 #define	COORDSMKR_H
 
 #include <QString>
+#include <unordered_map>
 
 class OglObj;
 class GLUU;
+class TextObj;
 
 class CoordsMkr {
 public:
@@ -20,11 +22,13 @@ public:
         int z;
     };
     std::vector<Marker> markerList;
+    std::unordered_map<std::string, TextObj*> nameGl;
+    
     bool loaded = false;
     
     CoordsMkr(QString path);
     virtual ~CoordsMkr();
-    void render(GLUU* gluu, float * playerT, float* playerW);
+    void render(GLUU* gluu, float * playerT, float* playerW, float playerRot);
 private:
     OglObj* simpleMarkerObj = NULL;
 };
