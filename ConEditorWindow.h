@@ -34,11 +34,15 @@ public slots:
     void viewEngView(bool show);
     void viewConView(bool show);
     void about();
+    void conUnitSelected(int uid);
+    void saveCurrentConsist();
 signals:
     void showEng(QString path, QString name);
     void showCon(int id);
 
 private:
+    void setCurrentEng(int id);
+    
     EngListWidget *eng1;
     EngListWidget *eng2;
     ConListWidget *con1;
@@ -53,6 +57,8 @@ private:
     QMenu *viewMenu;
     QMenu *editMenu;
     QMenu *helpMenu;
+    QMenu *consistMenu;
+    QAction *fSave;
     QAction *vConList;
     QAction *vEngList1;
     QAction *vEngList2;
@@ -84,7 +90,7 @@ private:
     QLineEdit cMass;
     QLineEdit cLength;
     QLineEdit cUnits;
-    QLineEdit cDurability;
+    QDoubleSpinBox cDurability;
 };
 
 #endif	/* CONEDITORWINDOW_H */

@@ -18563,7 +18563,11 @@ build/Release/MinGW_QT_static-Windows/Eng.o: Eng.cpp Eng.h \
 		C:/Qt/Static/5.4.1/include/QtGui/QMatrix4x4 \
 		C:/Qt/Static/5.4.1/include/QtCore/QDebug \
 		C:/Qt/Static/5.4.1/include/QtCore/QFile \
-		Game.h
+		Game.h \
+		GLUU.h \
+		Vector4f.h \
+		Vector3f.h \
+		OglObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Eng.o Eng.cpp
 
 build/Release/MinGW_QT_static-Windows/EngLib.o: EngLib.cpp EngLib.h \

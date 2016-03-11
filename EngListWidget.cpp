@@ -37,7 +37,7 @@ void EngListWidget::fillEngList(){
         e = englib->eng[i];
         if(e == NULL) continue;
         if(e->loaded !=1) continue;
-        new QListWidgetItem ( e->engName, &items, i);
+        new QListWidgetItem ( e->displayName, &items, i);
     }
     items.sortItems(Qt::AscendingOrder);
 }

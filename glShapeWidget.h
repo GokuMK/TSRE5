@@ -38,7 +38,7 @@ public slots:
     void showCon(int id);
     void cleanup();
 signals:
-
+    void selected(int id);
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;
@@ -74,6 +74,7 @@ private:
     QString mode = "";
     float rotY = 0;
     float rotZ = 0;
+    bool selection = false;
 };
 
 #endif	/* GLSHAPEWIDGET_H */

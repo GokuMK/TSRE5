@@ -64,19 +64,25 @@ void Consist::load(){
     ParserX::szukajsekcji1(sh, data);
     //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
     conName = ParserX::odczytajtc(data).trimmed();
+    showName = conName;
     //qDebug() << conName;
     EngItem* eit;
-    QString epath;
-    QString ename;
+
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
         //qDebug() << sh;
         if (sh == ("name")) {
             displayName = ParserX::odczytajtc(data).trimmed();
+            showName = displayName;
             ParserX::pominsekcje(data);
             continue;
         }
         if (sh == ("serial")) {
             serial = ParserX::parsujr(data);
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("default")) {
+            defaultValue = true;
             ParserX::pominsekcje(data);
             continue;
         }
@@ -99,6 +105,7 @@ void Consist::load(){
         }
         if (sh == ("engine")) {
             engItems.push_back(EngItem());
+            engItems.back().type = 1;
             while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
                 if (sh == ("flip")) {
                     engItems.back().flip = true;
@@ -106,14 +113,14 @@ void Consist::load(){
                     continue;
                 }
                 if (sh == ("uid")) {
-                    engItems.back().uid = true;
+                    engItems.back().uid = ParserX::parsujr(data);
                     ParserX::pominsekcje(data);
                     continue;
                 }
                 if (sh == ("enginedata")) {
-                    ename = ParserX::odczytajtc(data);
-                    epath = ParserX::odczytajtc(data);
-                    engItems.back().eng = Game::currentEngLib->addEng(Game::root + "/TRAINS/TRAINSET/" + epath, ename + ".eng");
+                    engItems.back().ename = ParserX::odczytajtc(data);
+                    engItems.back().epath = ParserX::odczytajtc(data);
+                    engItems.back().eng = Game::currentEngLib->addEng(Game::root + "/TRAINS/TRAINSET/" + engItems.back().epath, engItems.back().ename + ".eng");
                     ParserX::pominsekcje(data);
                     continue;
                 }
@@ -124,6 +131,7 @@ void Consist::load(){
         }
         if (sh == ("wagon")) {
             engItems.push_back(EngItem());
+            engItems.back().type = 0;
             while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
                 if (sh == ("flip")) {
                     engItems.back().flip = true;
@@ -131,14 +139,14 @@ void Consist::load(){
                     continue;
                 }
                 if (sh == ("uid")) {
-                    engItems.back().uid = true;
+                    engItems.back().uid = ParserX::parsujr(data);
                     ParserX::pominsekcje(data);
                     continue;
                 }
                 if (sh == ("wagondata")) {
-                    ename = ParserX::odczytajtc(data);
-                    epath = ParserX::odczytajtc(data);
-                    engItems.back().eng = Game::currentEngLib->addEng(Game::root + "/TRAINS/TRAINSET/" + epath, ename + ".wag");
+                    engItems.back().ename = ParserX::odczytajtc(data);
+                    engItems.back().epath = ParserX::odczytajtc(data);
+                    engItems.back().eng = Game::currentEngLib->addEng(Game::root + "/TRAINS/TRAINSET/" + engItems.back().epath, engItems.back().ename + ".wag");
                     ParserX::pominsekcje(data);
                     continue;
                 }
@@ -177,25 +185,36 @@ void Consist::initPos(){
     posInit = true;
 }
 
-void Consist::render() {
-    render(0, 0);
+void Consist::select(int idx){
+    selectedIdx = idx;
 }
 
-void Consist::render(int aktwx, int aktwz) {
+void Consist::render(int selectionColor) {
+    render(0, 0, selectionColor);
+}
+
+void Consist::render(int aktwx, int aktwz, int selectionColor) {
     //gl.glTranslatef(0, 0.2f, 0);
     //qDebug() << loaded;
     if (loaded != 1) return;
 
     GLUU *gluu = GLUU::get();
+    int scolor = 0;
     for(int i = 0; i < engItems.size(); i++){
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0, engItems[i].pos);
         if(!engItems[i].flip)
             Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI, 0, 1, 0);
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-        Game::currentEngLib->eng[engItems[i].eng]->render(aktwx, aktwz);
+        if(selectionColor != 0)
+            scolor = selectionColor + i;
+        if(selectedIdx == i)
+            Game::currentEngLib->eng[engItems[i].eng]->drawBorder();
+        Game::currentEngLib->eng[engItems[i].eng]->render(aktwx, aktwz, scolor);
         gluu->mvPopMatrix();
         
+        if(selectionColor != 0)
+            continue;
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, -1, engItems[i].pos);
         Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI/2, 0, 1, 0);
@@ -205,6 +224,8 @@ void Consist::render(int aktwx, int aktwz) {
         if(engItems[i].txt == NULL){
             engItems[i].txt = new TextObj(Game::currentEngLib->eng[engItems[i].eng]->displayName, 16, 1.0);
             engItems[i].txt->setColor(255,255,0);
+            if(Game::systemTheme)
+                engItems[i].txt->setColor(0,0,0);
         }        
         engItems[i].txt->render();
         gluu->mvPopMatrix();
@@ -216,6 +237,8 @@ void Consist::render(int aktwx, int aktwz) {
         if(txtNumbers[i] == NULL){
             txtNumbers[i] = new TextObj(i+1);
             txtNumbers[i]->setColor(255,255,0);
+            if(Game::systemTheme)
+                txtNumbers[i]->setColor(0,0,0);
         }
         txtNumbers[i]->render(M_PI/2);
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0, -1);
@@ -225,6 +248,8 @@ void Consist::render(int aktwx, int aktwz) {
             if(txtEngineW == NULL){
                 txtEngineW = new TextObj("C");
                 txtEngineW->setColor(255,255,0);
+                if(Game::systemTheme)
+                    txtEngineW->setColor(0,0,0);
             }
             txtEngineW->render(M_PI/2);
         }
@@ -232,6 +257,8 @@ void Consist::render(int aktwx, int aktwz) {
             if(txtEngineF == NULL){
                 txtEngineF = new TextObj("F");
                 txtEngineF->setColor(255,255,0);
+                if(Game::systemTheme)
+                    txtEngineF->setColor(0,0,0);
             }
             txtEngineF->render(M_PI/2);
         }
@@ -239,6 +266,8 @@ void Consist::render(int aktwx, int aktwz) {
             if(txtEngineT == NULL){
                 txtEngineT = new TextObj("T");
                 txtEngineT->setColor(255,255,0);
+                if(Game::systemTheme)
+                    txtEngineT->setColor(0,0,0);
             }
             txtEngineT->render(M_PI/2);
         }
@@ -293,4 +322,56 @@ void Consist::render(int aktwx, int aktwz) {
      //if(sfile[1] != -1) ShapeLib::shape[sfile[1]]->render();
      //gluu.mvPopMatrix();
      //
+}
+
+void Consist::save(){
+    QString sh;
+    QString spath;
+    spath = path + "/" + name + "2";
+    spath.replace("//", "/");
+    qDebug() << spath;
+    QFile file(spath);
+    
+    
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+
+    out << "SIMISA@@@@@@@@@@JINX0D0t______\n";
+    out << "\n";
+    out << "Train (\n";
+    out << "	TrainCfg ( \""<<conName<<"\"\n";
+    if(displayName.length() > 0)
+    out << "		Name ( \"" << displayName << "\" )\n";
+    if(serial > 0 )
+    out << "		Serial ( "<<serial<<" )\n";
+    if(defaultValue)
+    out << "		Default ( )\n";
+    out << "		MaxVelocity ( " << maxVelocity[0] << " " << maxVelocity[1] << " )\n";
+    out << "		NextWagonUID ( " << nextWagonUID << " )\n";
+    out << "		Durability ( " << durability << " )\n";
+
+    for(int i = 0; i < this->engItems.size(); i++){
+        if(this->engItems[i].type == 1){
+            out << "		Engine (\n";
+            if(this->engItems[i].flip)
+            out << "			Flip ( )\n";
+            out << "			UiD ( " << engItems[i].uid << " )\n";
+            out << "			EngineData ( " << engItems[i].ename << " " << engItems[i].epath << " )\n";
+            out << "		)\n";
+        } 
+        if(this->engItems[i].type == 0){
+            out << "		Wagon (\n";
+            out << "			WagonData ( " << engItems[i].ename << " " << engItems[i].epath << " )\n";
+            if(this->engItems[i].flip)
+            out << "			Flip ( )\n";
+            out << "			UiD ( " << engItems[i].uid << " )\n";
+            out << "		)\n";
+        }
+    }
+    out << "	)\n";
+    out << ")\n";
+    
+    file.close(); 
 }

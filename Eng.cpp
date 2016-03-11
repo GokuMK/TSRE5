@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QFile>
 #include "Game.h"
+#include "GLUU.h"
+#include "OglObj.h"
 
 Eng::Eng() {
 }
@@ -143,6 +145,11 @@ void Eng::load(){
             ParserX::pominsekcje(data);
             continue;
         }
+        if (sh == ("brakesystemtype")) {
+            brakeSystemType = ParserX::odczytajtc(data);
+            ParserX::pominsekcje(data);
+            continue;
+        }
         
         ParserX::pominsekcje(data);
     }
@@ -187,6 +194,15 @@ void Eng::load(){
     return;
 }
 
+QString Eng::getCouplingsName(){
+    QString name;
+    for(int i = 0; i < coupling.size(); i++){
+       if(i != 0) name += " , ";
+       name += coupling[i].type; 
+    }
+    return name;
+}
+
 float Eng::getFullWidth(){
     if(this->coupling.size() > 0)
         return this->coupling[0].r0[0] + this->sizez;
@@ -194,15 +210,81 @@ float Eng::getFullWidth(){
         return this->sizez + 0.0;
 }
 
-void Eng::render() {
-    render(0, 0);
+void Eng::select(){
+    selected = true;
 }
 
-void Eng::render(int aktwx, int aktwz) {
+void Eng::unselect(){
+    selected = false;
+}
+
+bool Eng::isSelected(){
+    return selected;
+}
+
+void Eng::drawBorder(){
+
+    if (borderObj == NULL) {
+        borderObj = new OglObj();
+        
+        float width = this->getFullWidth() / 2;
+        
+        float* punkty = new float[24];
+        float* ptr = punkty;
+        
+        *ptr++ = 0;
+        *ptr++ = 0;
+        *ptr++ = -width;
+        *ptr++ = 0;
+        *ptr++ = 0;
+        *ptr++ = width;
+        *ptr++ = 0;
+        *ptr++ = 6;
+        *ptr++ = -width;
+        *ptr++ = 0;
+        *ptr++ = 6;
+        *ptr++ = width;
+        
+        *ptr++ = 0;
+        *ptr++ = 0;
+        *ptr++ = -width;
+        *ptr++ = 0;
+        *ptr++ = 6;
+        *ptr++ = -width;
+        *ptr++ = 0;
+        *ptr++ = 0;
+        *ptr++ = width;
+        *ptr++ = 0;
+        *ptr++ = 6;
+        *ptr++ = width;
+        borderObj->setMaterial(1.0, 0.0, 0.0);
+        borderObj->init(punkty, ptr-punkty, borderObj->V, GL_LINES);
+        delete[] punkty;
+    }
+
+    borderObj->render();
+};
+
+void Eng::render(int selectionColor) {
+    render(0, 0, selectionColor);
+}
+
+void Eng::render(int aktwx, int aktwz, int selectionColor) {
     //gl.glTranslatef(0, 0.2f, 0);
     //qDebug() << loaded;
     if (loaded != 1) return;
 
+    GLUU *gluu = GLUU::get();
+    
+     if(selectionColor != 0){
+        int wColor = (int)(selectionColor/65536);
+        int sColor = (int)(selectionColor - wColor*65536)/256;
+        int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
+        gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
+    } else {
+        gluu->enableTextures();
+    }
+    
     if(sfile[0] == -2){
         sfile[0] = Game::currentShapeLib->addShape(path, sNames[0], path);
     }

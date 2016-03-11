@@ -83,6 +83,8 @@ void GlShapeWidget::initializeGL() {
     //qDebug() << "initializeOpenGLFunctions();";
     initializeOpenGLFunctions();
     glClearColor(0, 0, 0, 1);
+    if(Game::systemTheme)
+        glClearColor(1, 1, 1, 1);
     gluu->initShader();
 
     glEnable(GL_DEPTH_TEST);
@@ -120,39 +122,17 @@ void GlShapeWidget::paintGL() {
     Game::currentShapeLib = currentShapeLib;
     Game::currentEngLib = currentEngLib;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //if (!selection)
-    glClearColor(0, 0, 0, 1.0);
-    //else
-    //    glClearColor(0, 0, 0, 1.0);
+
+    glClearColor(0, 0, 0, 1);
+    if(Game::systemTheme)
+        glClearColor(1, 1, 1, 1);
+
     float aspect = float(this->width()) / float(this->height());
     Mat4::perspective(gluu->pMatrix, camera->fov*M_PI/180*(1/aspect), aspect, 0.2f, Game::objectLod);
     float* lookAt = camera->getMatrix();
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, lookAt);
     Mat4::identity(gluu->mvMatrix);
 
-    //mat4.translate(gluu.mvMatrix, gluu.mvMatrix, [0.0, -2.0, -15.0]);
-    //mat4.rotate(gluu.mvMatrix, gluu.mvMatrix, gluu.degToRad(yRot), [0,1,0]);
-    //mat4.translate(gluu.mvMatrix, gluu.mvMatrix, [0.0, 0.0, -30.0]);
-    //mat4.rotate(gluu.mvMatrix, gluu.mvMatrix, gluu.degToRad(yRot), [0,1,0]);
-    //Mat4::identity(gluu->objStrMatrix);
-    //gluu->objStrMatrix = Mat4::create();
-    //gluu->m_proj.setToIdentity();
-    //gluu->m_proj.perspective(45.0f, GLfloat(this->width()) / this->height(), 0.1f, 6000.0f);
-
-    //gluu->m_world.setToIdentity();
-    //gluu->m_world.translate(0.0, 0.0, -20.0);
-    //gluu->m_world.rotate(m_yRot / 16.0f, 0, 1, 0);
-    //gluu->m_world.rotate(m_zRot / 16.0f, 0, 0, 1);
-
-    //gluu->m_program->bind();
-    //gluu->m_program->setUniformValue(gluu->m_projMatrixLoc, gluu->m_proj);
-    //gluu->m_program->setUniformValue(gluu->m_mvMatrixLoc, gluu->m_camera * gluu->m_world);
-    //QMatrix3x3 normalMatrix = gluu->m_world.normalMatrix();
-    //gluu->m_program->setUniformValue(gluu->m_normalMatrixLoc, normalMatrix);
-
-    //Mat4::identity(gluu->pMatrix);
-    //Mat4::identity(gluu->mvMatrix);
-    //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0.0, 0.0, -20.0);
     Mat4::identity(gluu->objStrMatrix);
     
     gluu->m_program->bind();
@@ -165,12 +145,42 @@ void GlShapeWidget::paintGL() {
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
 
     if(renderItem == 2 && eng != NULL){
-        eng->render();
+        eng->render((int)selection*65536);
     }
     if(renderItem == 3 && con != NULL){
-        con->render();
+        con->render((int)selection*65536);
     }
 
+    if (selection) {
+        int x = mousex;
+        int y = mousey;
+
+        float winZ[4];
+
+        int* viewport = new int[4];
+        float* mvmatrix = new float[16];
+        float* projmatrix = new float[16];
+        float* wcoord = new float[4];
+
+        glGetIntegerv(GL_VIEWPORT, viewport);
+        glGetFloatv(GL_MODELVIEW_MATRIX, mvmatrix);
+        glGetFloatv(GL_PROJECTION_MATRIX, projmatrix);
+        int realy = viewport[3] - (int) y - 1;
+        glReadPixels(x, realy, 1, 1, GL_RGBA, GL_FLOAT, &winZ);
+        
+        qDebug() << winZ[0] << " " << winZ[1] << " " << winZ[2] << " " << winZ[3];
+        //int colorHash = (int)(winZ[0]*255)*256*256 + (int)(winZ[1]*255)*256 + (int)(winZ[2]*255);
+        //qDebug() << colorHash;
+        int isSelection = (int)(winZ[0]*255);
+        if(isSelection == 1 && renderItem == 3 && con != NULL){
+            con->select((int)(winZ[1]*255)*256 + (int)(winZ[2]*255));
+            emit selected((int)(winZ[1]*255)*256 + (int)(winZ[2]*255));
+        }
+        
+        selection = !selection;
+        paintGL();
+    }
+    
     gluu->m_program->release();
 
 }
@@ -189,6 +199,7 @@ void GlShapeWidget::keyReleaseEvent(QKeyEvent * event) {
 void GlShapeWidget::mousePressEvent(QMouseEvent *event) {
     m_lastPos = event->pos();
     mousePressed = true;
+    selection = true;
     if(event->button() == Qt::RightButton)
         mouseRPressed = true;
     if(event->button() == Qt::LeftButton)

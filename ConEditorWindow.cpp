@@ -33,6 +33,11 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     engCamera->setPos(0,2.5,0);
     engCamera->setPlayerRot(M_PI/2.0,0);
     
+    cDurability.setDecimals(2);
+    cDurability.setMinimum(0);
+    cDurability.setMaximum(1);
+    cDurability.setSingleStep(0.05);
+    
     glConWidget->setCamera(conCamera);
     glShapeWidget->setCamera(engCamera);
     glShapeWidget->setMode("rot");
@@ -130,6 +135,10 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     
     setWindowTitle(tr("TSRE5 v0.612 Consist Editor"));
     fileMenu = menuBar()->addMenu(tr("&File"));
+    fSave = new QAction(tr("&Save"), this); 
+    fileMenu->addAction(fSave);
+    QObject::connect(fSave, SIGNAL(triggered(bool)), this, SLOT(saveCurrentConsist()));
+    consistMenu = menuBar()->addMenu(tr("&Consist"));
     menuBar()->addMenu(tr("&Edit"));
     viewMenu = menuBar()->addMenu(tr("&View"));
     vConList = GuiFunct::newMenuCheckAction(tr("&Consist List"), this); 
@@ -173,6 +182,12 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QObject::connect(conSlider, SIGNAL(valueChanged(int)),
                       this, SLOT(conSliderValueChanged(int))); 
     
+    QObject::connect(units, SIGNAL(selected(int)),
+                      this, SLOT(conUnitSelected(int))); 
+    
+    QObject::connect(glConWidget, SIGNAL(selected(int)),
+                      this, SLOT(conUnitSelected(int))); 
+    
     vEngList2->trigger();
     vConUnits->trigger();
 }
@@ -180,8 +195,19 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
 ConEditorWindow::~ConEditorWindow() {
 }
 
+void ConEditorWindow::saveCurrentConsist(){
+    if(currentCon == NULL) return;
+    currentCon->save();
+}
+
 void ConEditorWindow::about(){
     aboutWindow->show();
+}
+
+void ConEditorWindow::conUnitSelected(int uid){
+    if(currentCon == NULL) return;
+    currentCon->select(uid);
+    setCurrentEng(currentCon->engItems[uid].eng);
 }
 
 void ConEditorWindow::viewConList(bool show){
@@ -212,27 +238,40 @@ void ConEditorWindow::viewConView(bool show){
     if(show) conSlider->show();
     else conSlider->hide();
 }
-    
-void ConEditorWindow::engListSelected(int id){
+
+void ConEditorWindow::setCurrentEng(int id){
     currentEng = englib->eng[id];
     qDebug() << currentEng->engName;
     float pos = -currentEng->sizez-1;
     if(pos > -15) pos = -15;
     engCamera->setPos(pos,2.5,0);
     engCamera->setPlayerRot(M_PI/2.0,0);
+    emit showEng(englib->eng[id]->path, englib->eng[id]->name);
+}
+
+void ConEditorWindow::engListSelected(int id){
+    setCurrentEng(id);
+    //currentEng = englib->eng[id];
+    qDebug() << currentEng->engName;
+    //float pos = -currentEng->sizez-1;
+    //if(pos > -15) pos = -15;
+    //engCamera->setPos(pos,2.5,0);
+    //engCamera->setPlayerRot(M_PI/2.0,0);
     eName.setText(currentEng->displayName);
     QString ttype = currentEng->type;
     if(currentEng->engType.length() > 1)
-        ttype += "( "+currentEng->engType+" )";
+        ttype += " ( "+currentEng->engType+" )";
     eType.setText(ttype);
     //eBrakes;
     //eCouplings;
-    eMass.setText(QString::number(currentEng->mass));
-    eMaxSpeed.setText(QString::number(currentEng->maxSpeed));
+    eMass.setText(QString::number(currentEng->mass) + " t");
+    eMaxSpeed.setText(QString::number((int)currentEng->maxSpeed) + " km/h");
     eShape.setText(currentEng->sNames[0]);
     eSize.setText(QString::number(currentEng->sizex)+" "+QString::number(currentEng->sizey)+" "+QString::number(currentEng->sizez)+" ");
-    
-    emit showEng(englib->eng[id]->path, englib->eng[id]->name);
+    eCouplings.setText(currentEng->getCouplingsName());
+    eBrakes.setText(currentEng->brakeSystemType);
+    //emit showEng(englib->eng[id]->path, englib->eng[id]->name);
+
 }
 
 void ConEditorWindow::conListSelected(int id){
@@ -243,10 +282,10 @@ void ConEditorWindow::conListSelected(int id){
     conSlider->setMaximum(currentCon->engItems.size());
     cFileName.setText(currentCon->conName);
     cDisplayName.setText(currentCon->displayName);
-    cMass.setText(QString::number(currentCon->mass));
-    cLength.setText(QString::number(currentCon->conLength));
+    cMass.setText(QString::number(currentCon->mass) + " t");
+    cLength.setText(QString::number(currentCon->conLength) + " m");
     cUnits.setText(QString::number(currentCon->engItems.size()));
-    cDurability.setText(QString::number(currentCon->durability));
+    cDurability.setValue(currentCon->durability);
 
     emit showCon(id);
 

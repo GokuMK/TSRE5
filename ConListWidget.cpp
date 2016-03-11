@@ -32,7 +32,7 @@ void ConListWidget::fillConList(){
         e = ConLib::con[i];
         if(e == NULL) continue;
         if(e->loaded !=1) continue;
-        new QListWidgetItem ( e->conName, &items, i);
+        new QListWidgetItem ( e->showName, &items, i);
     }
     items.sortItems(Qt::AscendingOrder);
 }

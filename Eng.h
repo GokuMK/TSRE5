@@ -2,6 +2,8 @@
 #define	ENG_H
 #include <QString>
 
+class OglObj;
+
 class Eng {
 public:
     struct Coupling {
@@ -20,6 +22,7 @@ public:
     QString engType;
     QString typeHash;
     QString type;
+    QString brakeSystemType;
     int wagonTypeId = 0;
     float mass;
     float sizex;
@@ -36,10 +39,16 @@ public:
     Eng(QString src, QString p, QString n);
     void load();
     float getFullWidth();
-    void render();
-    void render(int aktwx, int aktwz);
+    QString getCouplingsName();
+    void select();
+    void unselect();
+    bool isSelected();
+    void drawBorder();
+    void render(int selectionColor = 0);
+    void render(int aktwx, int aktwz, int selectionColor);
 private:
-
+    bool selected = false;
+    OglObj *borderObj = NULL;
 };
 
 #endif	/* ENG_H */

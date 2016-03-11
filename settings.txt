@@ -44,3 +44,4 @@ allowObjLag = 1000
 warningBox = false
 leaveTrackShapeAfterDelete = false
 renderTrItems = true
+useImperial = false
