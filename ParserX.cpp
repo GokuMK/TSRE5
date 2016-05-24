@@ -1,6 +1,13 @@
 #include "ParserX.h"
 #include "SFile.h"
 #include <QDebug>
+
+QString ParserX::addComIfReq(QString n){
+    if(n.contains(" ")){
+        return "\""+n+"\"";
+    }
+    return n;
+}
 //-----------------------------------
 //Next line
 //-----------------------------------

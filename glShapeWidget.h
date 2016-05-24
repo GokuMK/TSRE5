@@ -39,6 +39,8 @@ public slots:
     void cleanup();
 signals:
     void selected(int id);
+    void refreshItem();
+    
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;

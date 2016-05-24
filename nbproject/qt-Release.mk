@@ -17693,7 +17693,8 @@ build/Release/MinGW_QT_static-Windows/ConUnitsWidget.o: ConUnitsWidget.cpp ConUn
 		Consist.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QString \
 		Eng.h \
-		EngLib.h
+		EngLib.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/ConUnitsWidget.o ConUnitsWidget.cpp
 
 build/Release/MinGW_QT_static-Windows/Consist.o: Consist.cpp Consist.h \

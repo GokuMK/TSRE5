@@ -17,9 +17,14 @@ public:
 
 public slots:
     void itemsSelected(QListWidgetItem* it);
+    void bDelReleased();
+    void bUpReleased();
+    void bDownReleased();
+    void bFlipReleased();
     
 signals:
     void selected(int id);
+    void refreshItem();
         
 private:
     QListWidget items;

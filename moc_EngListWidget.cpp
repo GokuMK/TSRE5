@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_EngListWidget_t {
-    QByteArrayData data[5];
-    char stringdata[48];
+    QByteArrayData data[14];
+    char stringdata[136];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,11 +33,22 @@ QT_MOC_LITERAL(0, 0, 13), // "EngListWidget"
 QT_MOC_LITERAL(1, 14, 15), // "engListSelected"
 QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 2), // "id"
-QT_MOC_LITERAL(4, 34, 13) // "itemsSelected"
+QT_MOC_LITERAL(4, 34, 16), // "addToConSelected"
+QT_MOC_LITERAL(5, 51, 5), // "count"
+QT_MOC_LITERAL(6, 57, 13), // "itemsSelected"
+QT_MOC_LITERAL(7, 71, 17), // "addButtonSelected"
+QT_MOC_LITERAL(8, 89, 14), // "filterSelected"
+QT_MOC_LITERAL(9, 104, 1), // "n"
+QT_MOC_LITERAL(10, 106, 11), // "eventFilter"
+QT_MOC_LITERAL(11, 118, 3), // "obj"
+QT_MOC_LITERAL(12, 122, 7), // "QEvent*"
+QT_MOC_LITERAL(13, 130, 5) // "event"
 
     },
     "EngListWidget\0engListSelected\0\0id\0"
-    "itemsSelected"
+    "addToConSelected\0count\0itemsSelected\0"
+    "addButtonSelected\0filterSelected\0n\0"
+    "eventFilter\0obj\0QEvent*\0event"
 };
 #undef QT_MOC_LITERAL
 
@@ -47,24 +58,34 @@ static const uint qt_meta_data_EngListWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   24,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
+       4,    2,   52,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   27,    2, 0x0a /* Public */,
+       6,    0,   57,    2, 0x0a /* Public */,
+       7,    0,   58,    2, 0x0a /* Public */,
+       7,    1,   59,    2, 0x0a /* Public */,
+       8,    1,   62,    2, 0x0a /* Public */,
+      10,    2,   65,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    3,    5,
 
  // slots: parameters
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void, QMetaType::QString,    9,
+    QMetaType::Bool, QMetaType::QObjectStar, 0x80000000 | 12,   11,   13,
 
        0        // eod
 };
@@ -75,7 +96,13 @@ void EngListWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         EngListWidget *_t = static_cast<EngListWidget *>(_o);
         switch (_id) {
         case 0: _t->engListSelected((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->itemsSelected(); break;
+        case 1: _t->addToConSelected((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 2: _t->itemsSelected(); break;
+        case 3: _t->addButtonSelected(); break;
+        case 4: _t->addButtonSelected((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->filterSelected((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 6: { bool _r = _t->eventFilter((*reinterpret_cast< QObject*(*)>(_a[1])),(*reinterpret_cast< QEvent*(*)>(_a[2])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -85,6 +112,12 @@ void EngListWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
             typedef void (EngListWidget::*_t)(int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&EngListWidget::engListSelected)) {
                 *result = 0;
+            }
+        }
+        {
+            typedef void (EngListWidget::*_t)(int , int );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&EngListWidget::addToConSelected)) {
+                *result = 1;
             }
         }
     }
@@ -115,13 +148,13 @@ int EngListWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 2;
+        _id -= 7;
     }
     return _id;
 }
@@ -131,5 +164,12 @@ void EngListWidget::engListSelected(int _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void EngListWidget::addToConSelected(int _t1, int _t2)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

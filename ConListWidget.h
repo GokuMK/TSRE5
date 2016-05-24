@@ -10,6 +10,7 @@ public:
     ConListWidget();
     virtual ~ConListWidget();
     void fillConList();
+    void newConsist();
     
 public slots:
     void itemsSelected(QListWidgetItem* it);

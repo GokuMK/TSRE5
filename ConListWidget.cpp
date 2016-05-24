@@ -24,6 +24,15 @@ ConListWidget::ConListWidget() : QWidget(){
 ConListWidget::~ConListWidget() {
 }
 
+void ConListWidget::newConsist(){
+    ConLib::con[ConLib::jestcon] = new Consist();
+    ConLib::con[ConLib::jestcon]->setNewConsistFlag();
+    ConLib::con[ConLib::jestcon]->showName = "new";
+    new QListWidgetItem ( ConLib::con[ConLib::jestcon]->showName, &items, ConLib::jestcon);
+    emit conListSelected(ConLib::jestcon);
+    ConLib::jestcon++;
+}
+
 void ConListWidget::fillConList(){
     items.clear();
 

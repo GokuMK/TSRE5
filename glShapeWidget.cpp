@@ -190,6 +190,28 @@ void GlShapeWidget::resizeGL(int w, int h) {
 
 void GlShapeWidget::keyPressEvent(QKeyEvent * event) {
     camera->keyDown(event);
+    Game::currentShapeLib = currentShapeLib;
+    Game::currentEngLib = currentEngLib;
+    if(renderItem == 3 && con != NULL){
+        switch (event->key()) {
+            case Qt::Key_Delete:
+                con->deteleSelected();
+                break;
+            case Qt::Key_F:
+                con->flipSelected();
+                break;
+            case Qt::Key_Right:
+                con->moveRightSelected();
+                break;
+            case Qt::Key_Left:
+                con->moveLeftSelected();
+                break;
+        }
+        
+        emit refreshItem();
+    }
+
+
 }
 
 void GlShapeWidget::keyReleaseEvent(QKeyEvent * event) {

@@ -135,10 +135,19 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     
     setWindowTitle(tr("TSRE5 v0.612 Consist Editor"));
     fileMenu = menuBar()->addMenu(tr("&File"));
+    fNew = new QAction(tr("&New"), this); 
+    fileMenu->addAction(fNew);
+    QObject::connect(fNew, SIGNAL(triggered(bool)), this, SLOT(newConsist()));
     fSave = new QAction(tr("&Save"), this); 
     fileMenu->addAction(fSave);
     QObject::connect(fSave, SIGNAL(triggered(bool)), this, SLOT(saveCurrentConsist()));
+    fExit = new QAction(tr("&Exit"), this); 
+    fileMenu->addAction(fExit);
+    QObject::connect(fExit, SIGNAL(triggered(bool)), this, SLOT(close()));
     consistMenu = menuBar()->addMenu(tr("&Consist"));
+    cReverse = new QAction(tr("&Reverse"), this); 
+    consistMenu->addAction(cReverse);
+    QObject::connect(cReverse, SIGNAL(triggered(bool)), this, SLOT(cReverseSelected()));
     menuBar()->addMenu(tr("&Edit"));
     viewMenu = menuBar()->addMenu(tr("&View"));
     vConList = GuiFunct::newMenuCheckAction(tr("&Consist List"), this); 
@@ -166,9 +175,14 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     
     QObject::connect(eng1, SIGNAL(engListSelected(int)),
                       this, SLOT(engListSelected(int)));
-    
     QObject::connect(eng2, SIGNAL(engListSelected(int)),
                       this, SLOT(engListSelected(int)));
+    
+    QObject::connect(eng1, SIGNAL(addToConSelected(int, int)),
+                      this, SLOT(addToConSelected(int, int)));
+    QObject::connect(eng2, SIGNAL(addToConSelected(int, int)),
+                      this, SLOT(addToConSelected(int, int)));
+    
     
     QObject::connect(con1, SIGNAL(conListSelected(int)),
                       this, SLOT(conListSelected(int)));
@@ -188,6 +202,21 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QObject::connect(glConWidget, SIGNAL(selected(int)),
                       this, SLOT(conUnitSelected(int))); 
     
+    QObject::connect(glConWidget, SIGNAL(refreshItem()),
+                      this, SLOT(refreshCurrentCon())); 
+    
+    QObject::connect(units, SIGNAL(refreshItem()),
+                      this, SLOT(refreshCurrentCon())); 
+    
+    QObject::connect(&cFileName, SIGNAL(textEdited(QString)),
+                      this, SLOT(cFileNameSelected(QString))); 
+    
+    QObject::connect(&cDisplayName, SIGNAL(textEdited(QString)),
+                      this, SLOT(cDisplayNameSelected(QString))); 
+    
+    QObject::connect(&cDurability, SIGNAL(valueChanged(double)),
+                      this, SLOT(cDurabilitySelected(double))); 
+
     vEngList2->trigger();
     vConUnits->trigger();
 }
@@ -197,11 +226,44 @@ ConEditorWindow::~ConEditorWindow() {
 
 void ConEditorWindow::saveCurrentConsist(){
     if(currentCon == NULL) return;
+    Game::currentEngLib = englib;
     currentCon->save();
+}
+
+void ConEditorWindow::newConsist(){
+    Game::currentEngLib = englib;
+    con1->newConsist();
 }
 
 void ConEditorWindow::about(){
     aboutWindow->show();
+}
+
+void ConEditorWindow::cDurabilitySelected(double val){
+    if(currentCon == NULL) return;
+    currentCon->setDurability(val);
+}
+
+void ConEditorWindow::cFileNameSelected(QString n){
+    if(currentCon == NULL) return;
+    if(!currentCon->isNewConsist()){
+        cFileName.setText(currentCon->conName);
+        return;
+    }
+    currentCon->conName = n;
+    currentCon->name = n+".con";
+}
+
+void ConEditorWindow::cDisplayNameSelected(QString n){
+    if(currentCon == NULL) return;
+    currentCon->displayName = n;
+}
+
+void ConEditorWindow::cReverseSelected(){
+    if(currentCon == NULL) return;
+    Game::currentEngLib = englib;
+    currentCon->reverse();
+    refreshCurrentCon();
 }
 
 void ConEditorWindow::conUnitSelected(int uid){
@@ -247,16 +309,7 @@ void ConEditorWindow::setCurrentEng(int id){
     engCamera->setPos(pos,2.5,0);
     engCamera->setPlayerRot(M_PI/2.0,0);
     emit showEng(englib->eng[id]->path, englib->eng[id]->name);
-}
-
-void ConEditorWindow::engListSelected(int id){
-    setCurrentEng(id);
-    //currentEng = englib->eng[id];
-    qDebug() << currentEng->engName;
-    //float pos = -currentEng->sizez-1;
-    //if(pos > -15) pos = -15;
-    //engCamera->setPos(pos,2.5,0);
-    //engCamera->setPlayerRot(M_PI/2.0,0);
+    
     eName.setText(currentEng->displayName);
     QString ttype = currentEng->type;
     if(currentEng->engType.length() > 1)
@@ -270,13 +323,37 @@ void ConEditorWindow::engListSelected(int id){
     eSize.setText(QString::number(currentEng->sizex)+" "+QString::number(currentEng->sizey)+" "+QString::number(currentEng->sizez)+" ");
     eCouplings.setText(currentEng->getCouplingsName());
     eBrakes.setText(currentEng->brakeSystemType);
+}
+
+void ConEditorWindow::engListSelected(int id){
+    setCurrentEng(id);
+    //currentEng = englib->eng[id];
+    qDebug() << currentEng->engName;
+    //float pos = -currentEng->sizez-1;
+    //if(pos > -15) pos = -15;
+    //engCamera->setPos(pos,2.5,0);
+    //engCamera->setPlayerRot(M_PI/2.0,0);
+
     //emit showEng(englib->eng[id]->path, englib->eng[id]->name);
 
+}
+
+void ConEditorWindow::addToConSelected(int id, int count){
+    if(currentCon == NULL) return;
+    Game::currentEngLib = englib;
+    for(int i = 0; i < count; i++)
+        currentCon->appendEngItem(id);
+    refreshCurrentCon();
 }
 
 void ConEditorWindow::conListSelected(int id){
     currentCon = ConLib::con[id];
     qDebug() << currentCon->conName;
+    refreshCurrentCon();
+    emit showCon(id);
+}
+
+void ConEditorWindow::refreshCurrentCon(){
     units->setCon(currentCon);
     conSlider->setMinimum(0);
     conSlider->setMaximum(currentCon->engItems.size());
@@ -286,9 +363,6 @@ void ConEditorWindow::conListSelected(int id){
     cLength.setText(QString::number(currentCon->conLength) + " m");
     cUnits.setText(QString::number(currentCon->engItems.size()));
     cDurability.setValue(currentCon->durability);
-
-    emit showCon(id);
-
 }
 
 void ConEditorWindow::conSliderValueChanged(int val){

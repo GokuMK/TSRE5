@@ -51,10 +51,22 @@ public:
     void load();
     void save();
     void select(int idx);
+    void appendEngItem(int id);
+    void deteleSelected();
+    void flipSelected();
+    void moveLeftSelected();
+    void moveRightSelected();
+    bool isNewConsist();
+    void setNewConsistFlag();
+    void setFileName(QString n);
+    void setDisplayName(QString n);
+    void reverse();
+    void setDurability(float val);
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);
 private:
     void initPos();
+    bool newConsist = false;
     int selectedIdx = -1;
     bool defaultValue = false;
 };

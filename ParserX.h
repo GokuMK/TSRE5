@@ -24,6 +24,7 @@ public:
     static unsigned int parsuj16(FileBuffer* bufor);
     static int pominsekcje(FileBuffer* bufor);
     static int sekcjap(FileBuffer* bufor);
+    static QString addComIfReq(QString n);
 
 private:
 

@@ -103,6 +103,7 @@ void Eng::load(){
             while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
                 if (sh == ("type")) {
                     coupling.back().type = ParserX::odczytajtc(data);
+                    //qDebug() << "c: "<< coupling.back().type;
                     ParserX::pominsekcje(data);
                     continue;
                 }
@@ -192,6 +193,37 @@ void Eng::load(){
     loaded = 1;
     //qDebug() << loaded;
     return;
+}
+
+bool Eng::engFilter(QString q){
+    if(q == "") return true;
+    if(q == "electric" && wagonTypeId == 4)
+        return true;
+    if(q == "diesel" && wagonTypeId == 5)
+        return true;
+    if(q == "steam" && wagonTypeId == 6)
+        return true;    
+    if(q == "carriage" && wagonTypeId == 1)
+        return true;
+    if(q == "freight" && wagonTypeId == 2)
+        return true;
+    if(q == "tender" && wagonTypeId == 3)
+        return true;   
+    return false;
+}
+
+bool Eng::couplingFilter(QString q){
+    if(q == "") return true;
+    for(int i = 0; i < coupling.size(); i++){
+       if(q.toLower() == coupling[i].type.toLower()) return true; 
+    }
+    return false;
+}
+bool Eng::searchFilter(QString q){
+    if(q == "") return true;
+    if(this->displayName.contains(q, Qt::CaseInsensitive)) return true;
+    if(this->engName.contains(q, Qt::CaseInsensitive)) return true;
+    return false;
 }
 
 QString Eng::getCouplingsName(){

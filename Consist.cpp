@@ -20,7 +20,13 @@ TextObj * Consist::txtEngineS = NULL;
 TextObj * Consist::txtEngineF = NULL;
 TextObj * Consist::txtEngineW = NULL;
 TextObj * Consist::txtEngineT = NULL;
+
 Consist::Consist() {
+    path = Game::root + "/trains/consists/";
+    loaded = 1;
+    serial = 1;
+    durability = 1;
+    initPos();
 }
 
 Consist::~Consist() {
@@ -49,7 +55,7 @@ void Consist::load(){
     int i;
     QString sh;
     pathid.replace("//","/");
-    //qDebug() << pathid;
+    qDebug() << pathid;
     QFile *file = new QFile(pathid);
     if (!file->open(QIODevice::ReadOnly)){
         qDebug() << pathid << "not exist";
@@ -60,12 +66,14 @@ void Consist::load(){
     data->off = 0;
     sh = "Train";
     ParserX::szukajsekcji1(sh, data);
+
     sh = "TrainCfg";
-    ParserX::szukajsekcji1(sh, data);
+    int ok = ParserX::szukajsekcji1(sh, data);
+    if(ok == 0) return;
     //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
     conName = ParserX::odczytajtc(data).trimmed();
     showName = conName;
-    //qDebug() << conName;
+    qDebug() << conName;
     EngItem* eit;
 
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
@@ -168,9 +176,14 @@ void Consist::initPos(){
     float length = 0;
     conLength = 0;
     mass = 0;
-    if(engItems.size() == 0) return;
+    if(engItems.size() == 0) {
+        posInit = true;
+        return;
+    }
     //length += EngLib::eng[engItems[0].eng]->sizez / 2.0;
     float size = 0;
+    float tmaxspeed = 0;
+    float tengmass = 0;
     for(int i = 0; i < engItems.size(); i++){
         engItems[i].conLength = conLength;
         if(engItems[i].eng < 0) continue;
@@ -180,13 +193,96 @@ void Consist::initPos(){
         length += size / 2.0;
         conLength += size;
         mass += Game::currentEngLib->eng[engItems[i].eng]->mass;
+        if(Game::currentEngLib->eng[engItems[i].eng]->wagonTypeId == 4){
+            if(Game::currentEngLib->eng[engItems[i].eng]->maxSpeed > tmaxspeed)
+                tmaxspeed = Game::currentEngLib->eng[engItems[i].eng]->maxSpeed;
+            tengmass += Game::currentEngLib->eng[engItems[i].eng]->mass;
+        }
     }
+
+    this->maxVelocity[0] = tmaxspeed / 3.6;
+    this->maxVelocity[1] = tengmass / mass;
     
     posInit = true;
 }
 
 void Consist::select(int idx){
     selectedIdx = idx;
+}
+
+void Consist::deteleSelected(){
+    if(selectedIdx < 0)
+        return;
+    if(selectedIdx >= engItems.size())
+        return;
+    engItems.erase(engItems.begin() + selectedIdx);
+    initPos();
+}
+
+void Consist::appendEngItem(int id){
+    Eng * eng = Game::currentEngLib->eng[id];
+    if(eng == NULL) return;
+    engItems.push_back(EngItem());
+    engItems.back().type = eng->wagonTypeId / 4;
+    engItems.back().eng = id;
+    engItems.back().ename = eng->name.split(".")[0];
+    engItems.back().epath = eng->path.split("/").last();
+    engItems.back().uid = this->nextWagonUID++;
+    engItems.back().flip = false;
+
+    initPos();
+}
+
+void Consist::flipSelected(){
+    if(selectedIdx < 0)
+        return;
+    if(selectedIdx >= engItems.size())
+        return;
+    engItems[selectedIdx].flip = !engItems[selectedIdx].flip;
+}
+
+void Consist::reverse(){
+    for(int i = 0; i < engItems.size() / 2; i++){
+        engItems[i].flip = !engItems[i].flip;
+        engItems[engItems.size()-1-i].flip = !engItems[engItems.size()-1-i].flip;
+        std::swap(engItems[i],engItems[engItems.size()-1-i]);
+    }
+    for(int i = 0; i < engItems.size(); i++){
+        engItems[i].uid = i;
+    }
+    initPos();
+}
+
+void Consist::moveLeftSelected(){
+    if(selectedIdx < 1)
+        return;
+    if(selectedIdx >= engItems.size())
+        return;
+    engItems[selectedIdx-1].uid++;
+    engItems[selectedIdx].uid--;
+    std::swap(engItems[selectedIdx-1],engItems[selectedIdx]);
+    selectedIdx--;
+    initPos();
+}
+
+void Consist::moveRightSelected(){
+    if(selectedIdx < 0)
+        return;
+    if(selectedIdx + 2 > engItems.size())
+        return;
+    engItems[selectedIdx].uid++;
+    engItems[selectedIdx+1].uid--;
+    std::swap(engItems[selectedIdx],engItems[selectedIdx+1]);
+    selectedIdx++;
+    initPos();
+}
+
+void  Consist::setFileName(QString n){
+    this->conName = n;
+    this->name = n;
+}
+void  Consist::setDisplayName(QString n){
+    this->displayName = n;
 }
 
 void Consist::render(int selectionColor) {
@@ -324,16 +420,33 @@ void Consist::render(int aktwx, int aktwz, int selectionColor) {
      //
 }
 
+bool Consist::isNewConsist(){
+    return newConsist;
+}
+void Consist::setNewConsistFlag(){
+    newConsist = true;
+}
+
+void Consist::setDurability(float val){
+    if(val < 0) val = 0;
+    if(val > 1) val = 1;
+    this->durability = val;
+}
+
 void Consist::save(){
     QString sh;
     QString spath;
-    spath = path + "/" + name + "2";
+    spath = path + "/" + name;
     spath.replace("//", "/");
     qDebug() << spath;
     QFile file(spath);
     
     
     file.open(QIODevice::WriteOnly | QIODevice::Text);
+    if(!file.isOpen()) {
+        qDebug() << "con file write error. file not open " << spath;
+        return;
+    }
     QTextStream out(&file);
     out.setCodec("UTF-16");
     out.setGenerateByteOrderMark(true);
@@ -358,12 +471,12 @@ void Consist::save(){
             if(this->engItems[i].flip)
             out << "			Flip ( )\n";
             out << "			UiD ( " << engItems[i].uid << " )\n";
-            out << "			EngineData ( " << engItems[i].ename << " " << engItems[i].epath << " )\n";
+            out << "			EngineData ( " << ParserX::addComIfReq(engItems[i].ename) << " " << ParserX::addComIfReq(engItems[i].epath) << " )\n";
             out << "		)\n";
         } 
         if(this->engItems[i].type == 0){
             out << "		Wagon (\n";
-            out << "			WagonData ( " << engItems[i].ename << " " << engItems[i].epath << " )\n";
+            out << "			WagonData ( " << ParserX::addComIfReq(engItems[i].ename) << " " << ParserX::addComIfReq(engItems[i].epath) << " )\n";
             if(this->engItems[i].flip)
             out << "			Flip ( )\n";
             out << "			UiD ( " << engItems[i].uid << " )\n";
@@ -374,4 +487,5 @@ void Consist::save(){
     out << ")\n";
     
     file.close(); 
+    newConsist = false;
 }

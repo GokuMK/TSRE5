@@ -36,6 +36,14 @@ public slots:
     void about();
     void conUnitSelected(int uid);
     void saveCurrentConsist();
+    void refreshCurrentCon();
+    void addToConSelected(int id, int count);
+    void newConsist();
+    void cFileNameSelected(QString n); 
+    void cDisplayNameSelected(QString n); 
+    void cReverseSelected();
+    void cDurabilitySelected(double val);
+    
 signals:
     void showEng(QString path, QString name);
     void showCon(int id);
@@ -58,7 +66,10 @@ private:
     QMenu *editMenu;
     QMenu *helpMenu;
     QMenu *consistMenu;
+    QAction *cReverse;
     QAction *fSave;
+    QAction *fNew;
+    QAction *fExit;
     QAction *vConList;
     QAction *vEngList1;
     QAction *vEngList2;

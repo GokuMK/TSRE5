@@ -44,6 +44,9 @@ public:
     void unselect();
     bool isSelected();
     void drawBorder();
+    bool engFilter(QString q);
+    bool couplingFilter(QString q);
+    bool searchFilter(QString q);
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);
 private:

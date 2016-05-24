@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ConUnitsWidget_t {
-    QByteArrayData data[7];
-    char stringdata[62];
+    QByteArrayData data[12];
+    char stringdata[127];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,13 +33,20 @@ QT_MOC_LITERAL(0, 0, 14), // "ConUnitsWidget"
 QT_MOC_LITERAL(1, 15, 8), // "selected"
 QT_MOC_LITERAL(2, 24, 0), // ""
 QT_MOC_LITERAL(3, 25, 2), // "id"
-QT_MOC_LITERAL(4, 28, 13), // "itemsSelected"
-QT_MOC_LITERAL(5, 42, 16), // "QListWidgetItem*"
-QT_MOC_LITERAL(6, 59, 2) // "it"
+QT_MOC_LITERAL(4, 28, 11), // "refreshItem"
+QT_MOC_LITERAL(5, 40, 13), // "itemsSelected"
+QT_MOC_LITERAL(6, 54, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(7, 71, 2), // "it"
+QT_MOC_LITERAL(8, 74, 12), // "bDelReleased"
+QT_MOC_LITERAL(9, 87, 11), // "bUpReleased"
+QT_MOC_LITERAL(10, 99, 13), // "bDownReleased"
+QT_MOC_LITERAL(11, 113, 13) // "bFlipReleased"
 
     },
-    "ConUnitsWidget\0selected\0\0id\0itemsSelected\0"
-    "QListWidgetItem*\0it"
+    "ConUnitsWidget\0selected\0\0id\0refreshItem\0"
+    "itemsSelected\0QListWidgetItem*\0it\0"
+    "bDelReleased\0bUpReleased\0bDownReleased\0"
+    "bFlipReleased"
 };
 #undef QT_MOC_LITERAL
 
@@ -49,24 +56,34 @@ static const uint qt_meta_data_ConUnitsWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   24,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
+       4,    0,   52,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   27,    2, 0x0a /* Public */,
+       5,    1,   53,    2, 0x0a /* Public */,
+       8,    0,   56,    2, 0x0a /* Public */,
+       9,    0,   57,    2, 0x0a /* Public */,
+      10,    0,   58,    2, 0x0a /* Public */,
+      11,    0,   59,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 5,    6,
+    QMetaType::Void, 0x80000000 | 6,    7,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -77,7 +94,12 @@ void ConUnitsWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         ConUnitsWidget *_t = static_cast<ConUnitsWidget *>(_o);
         switch (_id) {
         case 0: _t->selected((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->itemsSelected((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 1: _t->refreshItem(); break;
+        case 2: _t->itemsSelected((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 3: _t->bDelReleased(); break;
+        case 4: _t->bUpReleased(); break;
+        case 5: _t->bDownReleased(); break;
+        case 6: _t->bFlipReleased(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -87,6 +109,12 @@ void ConUnitsWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
             typedef void (ConUnitsWidget::*_t)(int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ConUnitsWidget::selected)) {
                 *result = 0;
+            }
+        }
+        {
+            typedef void (ConUnitsWidget::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ConUnitsWidget::refreshItem)) {
+                *result = 1;
             }
         }
     }
@@ -117,13 +145,13 @@ int ConUnitsWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 2;
+        _id -= 7;
     }
     return _id;
 }
@@ -133,5 +161,11 @@ void ConUnitsWidget::selected(int _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void ConUnitsWidget::refreshItem()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
 }
 QT_END_MOC_NAMESPACE
