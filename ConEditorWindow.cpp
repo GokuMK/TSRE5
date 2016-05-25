@@ -50,8 +50,8 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     eng2->fillEngList();
     units = new ConUnitsWidget();
     units->englib = englib;
-    
     con1 = new ConListWidget();
+    con1->englib = englib;
     con1->fillConList();
     //qDebug()<<"aaa";
     conSlider = new QScrollBar(Qt::Horizontal);
@@ -106,17 +106,23 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     conInfoForm->setContentsMargins(1,1,1,1);    
     conInfoForm->addWidget(new QLabel("File Name:"),0,0);
     conInfoForm->addWidget(new QLabel("Display Name:"),1,0);
-    conInfoForm->addWidget(new QLabel("Mass:"),0,2);
+    conInfoForm->addWidget(new QLabel("Total Mass:"),0,2);
     conInfoForm->addWidget(new QLabel("Length:"),1,2);
-    conInfoForm->addWidget(new QLabel("Units:"),0,4);
-    conInfoForm->addWidget(new QLabel("Durability:"),1,4);
+    conInfoForm->addWidget(new QLabel("Eng Mass:"),0,4);
+    conInfoForm->addWidget(new QLabel("Wag Mass:"),1,4);
+    conInfoForm->addWidget(new QLabel("Units:"),0,6);
+    conInfoForm->addWidget(new QLabel("Durability:"),1,6);
     conInfoForm->addWidget(&cFileName,0,1);
     conInfoForm->addWidget(&cDisplayName,1,1);
     conInfoForm->addWidget(&cMass,0,3);
     conInfoForm->addWidget(&cLength,1,3);
-    conInfoForm->addWidget(&cUnits,0,5);
-    conInfoForm->addWidget(&cDurability,1,5);
+    conInfoForm->addWidget(&cEmass,0,5);
+    conInfoForm->addWidget(&cWmass,1,5);
+    conInfoForm->addWidget(&cUnits,0,7);
+    conInfoForm->addWidget(&cDurability,1,7);
     cMass.setFixedWidth(100);
+    cEmass.setFixedWidth(100);
+    cWmass.setFixedWidth(100);
     cLength.setFixedWidth(100);
     cUnits.setFixedWidth(100);
     cDurability.setFixedWidth(100);
@@ -360,6 +366,8 @@ void ConEditorWindow::refreshCurrentCon(){
     cFileName.setText(currentCon->conName);
     cDisplayName.setText(currentCon->displayName);
     cMass.setText(QString::number(currentCon->mass) + " t");
+    cEmass.setText(QString::number(currentCon->emass) + " t");
+    cWmass.setText(QString::number(currentCon->mass - currentCon->emass) + " t");
     cLength.setText(QString::number(currentCon->conLength) + " m");
     cUnits.setText(QString::number(currentCon->engItems.size()));
     cDurability.setValue(currentCon->durability);

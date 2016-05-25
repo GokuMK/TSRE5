@@ -99,6 +99,8 @@ private:
     QLineEdit cFileName;
     QLineEdit cDisplayName;
     QLineEdit cMass;
+    QLineEdit cEmass;
+    QLineEdit cWmass;
     QLineEdit cLength;
     QLineEdit cUnits;
     QDoubleSpinBox cDurability;

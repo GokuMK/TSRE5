@@ -176,6 +176,7 @@ void Consist::initPos(){
     float length = 0;
     conLength = 0;
     mass = 0;
+    emass = 0;
     if(engItems.size() == 0) {
         posInit = true;
         return;
@@ -183,7 +184,7 @@ void Consist::initPos(){
     //length += EngLib::eng[engItems[0].eng]->sizez / 2.0;
     float size = 0;
     float tmaxspeed = 0;
-    float tengmass = 0;
+    //float tengmass = 0;
     for(int i = 0; i < engItems.size(); i++){
         engItems[i].conLength = conLength;
         if(engItems[i].eng < 0) continue;
@@ -193,17 +194,31 @@ void Consist::initPos(){
         length += size / 2.0;
         conLength += size;
         mass += Game::currentEngLib->eng[engItems[i].eng]->mass;
-        if(Game::currentEngLib->eng[engItems[i].eng]->wagonTypeId == 4){
+        if(Game::currentEngLib->eng[engItems[i].eng]->wagonTypeId > 4){
             if(Game::currentEngLib->eng[engItems[i].eng]->maxSpeed > tmaxspeed)
                 tmaxspeed = Game::currentEngLib->eng[engItems[i].eng]->maxSpeed;
-            tengmass += Game::currentEngLib->eng[engItems[i].eng]->mass;
+            emass += Game::currentEngLib->eng[engItems[i].eng]->mass;
         }
     }
 
     this->maxVelocity[0] = tmaxspeed / 3.6;
-    this->maxVelocity[1] = tengmass / mass;
+    this->maxVelocity[1] = emass / mass;
     
     posInit = true;
+}
+
+bool Consist::isBroken(){
+    for(int i = 0; i < engItems.size(); i++){
+        if(engItems[i].eng < 0) continue;
+        if(Game::currentEngLib->eng[engItems[i].eng] == NULL) continue;
+        if(Game::currentEngLib->eng[engItems[i].eng]->loaded != 1) return true;
+    }
+    return false;
+}
+
+bool Consist::isUnSaved(){
+    if(isNewConsist()) return true;
+    return modified;
 }
 
 void Consist::select(int idx){
@@ -217,6 +232,7 @@ void Consist::deteleSelected(){
         return;
     engItems.erase(engItems.begin() + selectedIdx);
     initPos();
+    modified = true;
 }
 
 void Consist::appendEngItem(int id){
@@ -231,6 +247,7 @@ void Consist::appendEngItem(int id){
     engItems.back().flip = false;
 
     initPos();
+    modified = true;
 }
 
 void Consist::flipSelected(){
@@ -239,6 +256,7 @@ void Consist::flipSelected(){
     if(selectedIdx >= engItems.size())
         return;
     engItems[selectedIdx].flip = !engItems[selectedIdx].flip;
+    modified = true;
 }
 
 void Consist::reverse(){
@@ -251,6 +269,7 @@ void Consist::reverse(){
         engItems[i].uid = i;
     }
     initPos();
+    modified = true;
 }
 
 void Consist::moveLeftSelected(){
@@ -263,6 +282,7 @@ void Consist::moveLeftSelected(){
     std::swap(engItems[selectedIdx-1],engItems[selectedIdx]);
     selectedIdx--;
     initPos();
+    modified = true;
 }
 
 void Consist::moveRightSelected(){
@@ -275,14 +295,17 @@ void Consist::moveRightSelected(){
     std::swap(engItems[selectedIdx],engItems[selectedIdx+1]);
     selectedIdx++;
     initPos();
+    modified = true;
 }
 
 void  Consist::setFileName(QString n){
     this->conName = n;
     this->name = n;
+    modified = true;
 }
 void  Consist::setDisplayName(QString n){
     this->displayName = n;
+    modified = true;
 }
 
 void Consist::render(int selectionColor) {
@@ -431,6 +454,7 @@ void Consist::setDurability(float val){
     if(val < 0) val = 0;
     if(val > 1) val = 1;
     this->durability = val;
+    modified = true;
 }
 
 void Consist::save(){
@@ -488,4 +512,5 @@ void Consist::save(){
     
     file.close(); 
     newConsist = false;
+    modified = false;
 }

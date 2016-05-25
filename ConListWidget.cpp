@@ -1,6 +1,7 @@
 #include "ConListWidget.h"
 #include "ConLib.h"
 #include "Consist.h"
+#include "Game.h"
 
 ConListWidget::ConListWidget() : QWidget(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -16,9 +17,14 @@ ConListWidget::ConListWidget() : QWidget(){
     this->setLayout(vbox);
     conType.setStyleSheet("combobox-popup: 0;");
     conType.addItem("ALL");
+    conType.addItem("Broken");
+    conType.addItem("Unsaved");
     this->setMinimumWidth(250);
     QObject::connect(&items, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(itemsSelected(QListWidgetItem*)));
+    
+    QObject::connect(&conType, SIGNAL(activated(QString)),
+                      this, SLOT(filterSelected(QString)));
 }
 
 ConListWidget::~ConListWidget() {
@@ -33,14 +39,34 @@ void ConListWidget::newConsist(){
     ConLib::jestcon++;
 }
 
+void ConListWidget::filterSelected(QString n){
+    if(conType.currentIndex() == 0)
+        n = "";
+    fillConList(n);
+}
 void ConListWidget::fillConList(){
-    items.clear();
+    fillConList("");
+}
 
+void ConListWidget::fillConList(QString n){
+    items.clear();
+    Game::currentEngLib = englib;
     Consist * e;
+    bool brokenf = false;
+    bool unsavedf = false;
+    if(n.toLower() == "broken")
+        brokenf = true;
+    if(n.toLower() == "unsaved")
+        unsavedf = true;      
+    
     for (int i = 0; i < ConLib::jestcon; i++){
         e = ConLib::con[i];
         if(e == NULL) continue;
         if(e->loaded !=1) continue;
+        if(brokenf)
+            if(!e->isBroken()) continue;
+        if(unsavedf)
+            if(!e->isUnSaved()) continue;
         new QListWidgetItem ( e->showName, &items, i);
     }
     items.sortItems(Qt::AscendingOrder);

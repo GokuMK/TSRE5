@@ -41,6 +41,7 @@ public:
     float durability = 0;
     float conLength = 0;
     float mass = 0;
+    float emass = 0;
     int loaded = -1;
     bool kierunek = false;
     int ref = 0;
@@ -57,6 +58,8 @@ public:
     void moveLeftSelected();
     void moveRightSelected();
     bool isNewConsist();
+    bool isBroken();
+    bool isUnSaved();
     void setNewConsistFlag();
     void setFileName(QString n);
     void setDisplayName(QString n);
@@ -68,6 +71,7 @@ private:
     void initPos();
     bool newConsist = false;
     int selectedIdx = -1;
+    bool modified = false;
     bool defaultValue = false;
 };
 

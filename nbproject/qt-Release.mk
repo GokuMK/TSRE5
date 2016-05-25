@@ -17236,7 +17236,8 @@ build/Release/MinGW_QT_static-Windows/ConListWidget.o: ConListWidget.cpp ConList
 		C:/Qt/Static/5.4.1/include/QtWidgets/qtwidgetsversion.h \
 		ConLib.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QString \
-		Consist.h
+		Consist.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/ConListWidget.o ConListWidget.cpp
 
 build/Release/MinGW_QT_static-Windows/ConUnitsWidget.o: ConUnitsWidget.cpp ConUnitsWidget.h \
