@@ -24,7 +24,7 @@ ConListWidget::ConListWidget() : QWidget(){
                       this, SLOT(itemsSelected(QListWidgetItem*)));
     
     QObject::connect(&conType, SIGNAL(activated(QString)),
-                      this, SLOT(filterSelected(QString)));
+                      this, SLOT(conFChan(QString)));
 }
 
 ConListWidget::~ConListWidget() {
@@ -39,11 +39,12 @@ void ConListWidget::newConsist(){
     ConLib::jestcon++;
 }
 
-void ConListWidget::filterSelected(QString n){
+void ConListWidget::conFChan(QString n){
     if(conType.currentIndex() == 0)
         n = "";
     fillConList(n);
 }
+
 void ConListWidget::fillConList(){
     fillConList("");
 }

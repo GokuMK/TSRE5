@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ConListWidget_t {
     QByteArrayData data[9];
-    char stringdata[85];
+    char stringdata[79];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,13 +36,13 @@ QT_MOC_LITERAL(3, 31, 2), // "id"
 QT_MOC_LITERAL(4, 34, 13), // "itemsSelected"
 QT_MOC_LITERAL(5, 48, 16), // "QListWidgetItem*"
 QT_MOC_LITERAL(6, 65, 2), // "it"
-QT_MOC_LITERAL(7, 68, 14), // "filterSelected"
-QT_MOC_LITERAL(8, 83, 1) // "n"
+QT_MOC_LITERAL(7, 68, 8), // "conFChan"
+QT_MOC_LITERAL(8, 77, 1) // "n"
 
     },
     "ConListWidget\0conListSelected\0\0id\0"
     "itemsSelected\0QListWidgetItem*\0it\0"
-    "filterSelected\0n"
+    "conFChan\0n"
 };
 #undef QT_MOC_LITERAL
 
@@ -83,7 +83,7 @@ void ConListWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         switch (_id) {
         case 0: _t->conListSelected((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->itemsSelected((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
-        case 2: _t->filterSelected((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: _t->conFChan((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

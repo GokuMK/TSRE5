@@ -18,7 +18,7 @@ public:
     
 public slots:
     void itemsSelected(QListWidgetItem* it);
-    void filterSelected(QString n);
+    void conFChan(QString n);
         
 signals:
     void conListSelected(int id);

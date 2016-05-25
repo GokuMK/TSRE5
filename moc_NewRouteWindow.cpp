@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'NewRouteWindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'NewRouteWindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.5.1. It"
+#error "This file was generated using the moc from 5.4.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,11 +20,11 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NewRouteWindow_t {
     QByteArrayData data[4];
-    char stringdata0[26];
+    char stringdata[26];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_NewRouteWindow_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_NewRouteWindow_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
 static const qt_meta_stringdata_NewRouteWindow_t qt_meta_stringdata_NewRouteWindow = {
@@ -67,7 +67,6 @@ void NewRouteWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         NewRouteWindow *_t = static_cast<NewRouteWindow *>(_o);
-        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->cancel(); break;
         case 1: _t->ok(); break;
@@ -91,7 +90,7 @@ const QMetaObject *NewRouteWindow::metaObject() const
 void *NewRouteWindow::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_NewRouteWindow.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_NewRouteWindow.stringdata))
         return static_cast<void*>(const_cast< NewRouteWindow*>(this));
     return QDialog::qt_metacast(_clname);
 }
