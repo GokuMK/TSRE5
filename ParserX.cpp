@@ -153,8 +153,8 @@ QString ParserX::nazwasekcji_inside(FileBuffer* bufor){
                 i = 0;
 
                 for (;;) {
-                    //if(bufor->length <= bufor->off + 2)
-                    //    return "";
+                    if(bufor->length <= bufor->off + 2)
+                        return "";
                     b = bufor->get();
                     bufor->off++;
                     if (b == 40) {

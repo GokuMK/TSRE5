@@ -20,6 +20,7 @@ public:
     void findToken(int id);
     int getToken();
     void setTokenOffset(int val);
+    void insertFile(QString incPath);
     
     int off = 0;
     int length = 0;

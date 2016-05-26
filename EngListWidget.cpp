@@ -106,6 +106,7 @@ void EngListWidget::addButtonSelected(){
 
 void EngListWidget::addButtonSelected(int count){
     QListWidgetItem * item = items.currentItem();
+    if(item == NULL) return;
     emit addToConSelected(item->type(), count);
 }
 

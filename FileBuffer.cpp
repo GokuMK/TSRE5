@@ -1,4 +1,8 @@
 #include "FileBuffer.h"
+#include "ReadFile.h"
+#include <QFile>
+#include <QDebug>
+#include <string> 
 
 FileBuffer::FileBuffer() {
     this->off = 0;
@@ -77,4 +81,27 @@ void FileBuffer::findToken(int id) {
         off += s;
     }
     return;
+}
+
+void FileBuffer::insertFile(QString incPath){
+    int i;
+    QString sh;
+    incPath.replace("\\","/");
+    incPath.replace("//","/");
+    //qDebug() << pathid;
+    QFile *file = new QFile(incPath);
+    if (!file->open(QIODevice::ReadOnly)){
+        qDebug() << incPath << "not exist";
+        return;
+    }
+    qDebug() << incPath;
+    FileBuffer* incData = ReadFile::readRAW(file);
+    int remaining = length-off;
+    unsigned char * newData = new unsigned char[incData->length + remaining ];
+    memcpy(newData, incData->data, incData->length);
+    memcpy(newData+incData->length, data+off, remaining);
+    delete[] data;
+    data = newData;
+    length = incData->length + remaining;
+    off = 0;
 }

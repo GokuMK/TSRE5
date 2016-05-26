@@ -46,7 +46,6 @@ Eng::Eng(QString src, QString p, QString n) {
 }
 
 void Eng::load(){
-    int i;
     QString sh;
     pathid.replace("//","/");
     //qDebug() << pathid;
@@ -57,92 +56,159 @@ void Eng::load(){
     }
 
     FileBuffer* data = ReadFile::read(file);
-    data->off = 0;
-    sh = "Wagon";
-    ParserX::szukajsekcji1(sh, data);
-    //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
-    engName = ParserX::odczytajtc(data).trimmed();
-    displayName = engName;
+    data->off = 48;
+    
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
         //qDebug() << sh;
-        if (sh == ("name")) {
-            displayName = ParserX::odczytajtc(data);
+        if (sh == ("include")) {
+            QString incPath = ParserX::odczytajtcInside(data);
             ParserX::pominsekcje(data);
+            data->insertFile(path + "/" + incPath);
             continue;
         }
-        if (sh == ("freightanim")) {
-            sNames[1] = ParserX::odczytajtc(data);
-            sfile[1] = -2;
-            //qDebug() << "=====znaleziono s2 " << path << sNames[1];
-            ParserX::pominsekcje(data);
-            continue;
-        }
-        if (sh == ("size")) {
-            sizex = ParserX::parsujrInside(data);
-            sizey = ParserX::parsujrInside(data);
-            sizez = ParserX::parsujrInside(data);
-            //qDebug() << "wymiary taboru: " << sizex << " " << sizey << " " << sizez;
-            ParserX::pominsekcje(data);
-            continue;
-        }
-        if (sh == ("wagonshape")) {
-            sNames[0] = ParserX::odczytajtc(data);
-            sfile[0] = -2;
-            //qDebug() << "=====znaleziono s1 " << path << sNames[0];
-            //sfile[0] = ShapeLib::addShape(path, tname, path);//new Sfile(this.path, tname);
-            ParserX::pominsekcje(data);
-            continue;
-        }
-        if (sh == ("mass")) {
-            mass = ParserX::parsujrInside(data);
-            ParserX::pominsekcje(data);
-            continue;
-        }
-        if (sh == ("coupling")) {
-            coupling.push_back(Coupling());
+        if (sh == ("wagon")) {
+            engName = ParserX::odczytajtc(data).trimmed();
+            displayName = engName;
             while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
-                if (sh == ("type")) {
-                    coupling.back().type = ParserX::odczytajtc(data);
-                    //qDebug() << "c: "<< coupling.back().type;
+                //qDebug() << sh;
+                if (sh == ("include")) {
+                    QString incPath = ParserX::odczytajtcInside(data);
+                    ParserX::pominsekcje(data);
+                    data->insertFile(path + "/" + incPath);
+                    continue;
+                }
+                if (sh == ("name")) {
+                    displayName = ParserX::odczytajtc(data);
                     ParserX::pominsekcje(data);
                     continue;
                 }
-                if (sh == ("velocity")) {
-                    coupling.back().velocity = ParserX::parsujr(data);
+                if (sh == ("freightanim")) {
+                    sNames[1] = ParserX::odczytajtc(data);
+                    sfile[1] = -2;
+                    //qDebug() << "=====znaleziono s2 " << path << sNames[1];
                     ParserX::pominsekcje(data);
                     continue;
                 }
-                if (sh == ("spring")) {
+                if (sh == ("size")) {
+                    sizex = ParserX::parsujrInside(data);
+                    sizey = ParserX::parsujrInside(data);
+                    sizez = ParserX::parsujrInside(data);
+                    //qDebug() << "wymiary taboru: " << sizex << " " << sizey << " " << sizez;
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                if (sh == ("wagonshape")) {
+                    sNames[0] = ParserX::odczytajtc(data);
+                    sfile[0] = -2;
+                    //qDebug() << "=====znaleziono s1 " << path << sNames[0];
+                    //sfile[0] = ShapeLib::addShape(path, tname, path);//new Sfile(this.path, tname);
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                if (sh == ("mass")) {
+                    mass = ParserX::parsujrInside(data);
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                if (sh == ("coupling")) {
+                    coupling.push_back(Coupling());
                     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
-                        if (sh == ("r0")) {
-                            coupling.back().r0[0] = ParserX::parsujrInside(data);
-                            coupling.back().r0[1] = ParserX::parsujrInside(data);
-                            //qDebug() <<"r0 " << coupling.back().r0[0] << coupling.back().r0[1];
+                        if (sh == ("type")) {
+                            coupling.back().type = ParserX::odczytajtc(data);
+                            //qDebug() << "c: "<< coupling.back().type;
                             ParserX::pominsekcje(data);
                             continue;
                         }
+                        if (sh == ("velocity")) {
+                            coupling.back().velocity = ParserX::parsujr(data);
+                            ParserX::pominsekcje(data);
+                            continue;
+                        }
+                        if (sh == ("spring")) {
+                            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                                if (sh == ("r0")) {
+                                    coupling.back().r0[0] = ParserX::parsujrInside(data);
+                                    coupling.back().r0[1] = ParserX::parsujrInside(data);
+                                    //qDebug() <<"r0 " << coupling.back().r0[0] << coupling.back().r0[1];
+                                    ParserX::pominsekcje(data);
+                                    continue;
+                                }
+                                ParserX::pominsekcje(data);
+                            }
+                            ParserX::pominsekcje(data);
+                            continue;
+                        }
+
                         ParserX::pominsekcje(data);
                     }
                     ParserX::pominsekcje(data);
                     continue;
                 }
-
+                if (sh == ("type")) {
+                    type = ParserX::odczytajtc(data);
+                    //qDebug() << "type "<< type;
+                    if(type.toLower() == "engine")
+                        wagonTypeId = 4;
+                    if(type.toLower() == "carriage")
+                        wagonTypeId = 1;
+                    if(type.toLower() == "freight")
+                        wagonTypeId = 2;
+                    if(type.toLower() == "tender")
+                        wagonTypeId = 3;
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                if (sh == ("brakesystemtype")) {
+                    brakeSystemType = ParserX::odczytajtc(data);
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                ParserX::pominsekcje(data);
+            }
+            typeHash = type;
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if(sh == "engine"){
+            ParserX::odczytajtc(data);
+            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                //qDebug() << sh;
+                if (sh == ("include")) {
+                    QString incPath = ParserX::odczytajtcInside(data);
+                    ParserX::pominsekcje(data);
+                    data->insertFile(path + "/" + incPath);
+                    continue;
+                }
+                if (sh == ("type")) {
+                    engType = ParserX::odczytajtc(data);
+                    typeHash+="-"+engType;
+                    //qDebug() << engType;
+                    if(engType.toLower() == "electric")
+                        wagonTypeId += 0;
+                    if(engType.toLower() == "diesel")
+                        wagonTypeId += 1;
+                    if(engType.toLower() == "steam")
+                        wagonTypeId += 2;
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                if (sh == ("name")) {
+                    displayName = ParserX::odczytajtc(data);
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                if (sh == ("maxvelocity")) {
+                    maxSpeed = ParserX::parsujrInside(data);
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
                 ParserX::pominsekcje(data);
             }
             ParserX::pominsekcje(data);
             continue;
         }
-        if (sh == ("type")) {
-            type = ParserX::odczytajtc(data);
-            //qDebug() << "type "<< type;
-            if(type.toLower() == "engine")
-                wagonTypeId = 4;
-            if(type.toLower() == "carriage")
-                wagonTypeId = 1;
-            if(type.toLower() == "freight")
-                wagonTypeId = 2;
-            if(type.toLower() == "tender")
-                wagonTypeId = 3;
+        if (sh == ("name")) {
+            displayName = ParserX::odczytajtc(data);
             ParserX::pominsekcje(data);
             continue;
         }
@@ -151,42 +217,8 @@ void Eng::load(){
             ParserX::pominsekcje(data);
             continue;
         }
-        
         ParserX::pominsekcje(data);
-    }
-    typeHash = type;
-    if(type.toLower() == "engine"){
-        sh = "Engine";
-        ParserX::szukajsekcji1(sh, data);
-        //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
-        ParserX::odczytajtc(data);
-        while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
-            //qDebug() << sh;
-            if (sh == ("type")) {
-                engType = ParserX::odczytajtc(data);
-                typeHash+="-"+engType;
-                //qDebug() << engType;
-                if(engType.toLower() == "electric")
-                    wagonTypeId += 0;
-                if(engType.toLower() == "diesel")
-                    wagonTypeId += 1;
-                if(engType.toLower() == "steam")
-                    wagonTypeId += 2;
-                ParserX::pominsekcje(data);
-                continue;
-            }
-            if (sh == ("name")) {
-                displayName = ParserX::odczytajtc(data);
-                ParserX::pominsekcje(data);
-                continue;
-            }
-            if (sh == ("maxvelocity")) {
-                maxSpeed = ParserX::parsujrInside(data);
-                ParserX::pominsekcje(data);
-                continue;
-            }
-            ParserX::pominsekcje(data);
-        }
+        continue;
     }
     //qDebug() << typeHash;
     delete data;

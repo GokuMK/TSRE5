@@ -88,6 +88,8 @@ private:
     //EngLib* conEngLib;
     
     QLineEdit eName;
+    QLineEdit eFileName;
+    QLineEdit eDirName;
     QLineEdit eType;
     QLineEdit eBrakes;
     QLineEdit eCouplings;
