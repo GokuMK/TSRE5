@@ -4,8 +4,8 @@
 #include <QDebug>
 #include "window.h"
 #include "LoadWindow.h"
+#include "CELoadWindow.h"
 #include "SoundList.h"
-#include "ConEditorWindow.h"
 #include "ShapeLib.h"
 #include "EngLib.h"
 
@@ -177,9 +177,11 @@ bool Game::loadConEditor(){
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
     }
-    ConEditorWindow* cwindow = new ConEditorWindow();
-    cwindow->resize(1280, 720);
-    cwindow->show();
+    CELoadWindow* ceLoadWindow = new CELoadWindow();
+    ceLoadWindow->show();
+    //ConEditorWindow* cwindow = new ConEditorWindow();
+    //cwindow->resize(1280, 720);
+    //cwindow->show();
 }
 
 bool Game::checkRoot(QString dir){
@@ -188,6 +190,17 @@ bool Game::checkRoot(QString dir){
     file.setFileName(dir + "/global");
     if (!file.exists()) return false;
     file.setFileName(dir + "/global/tsection.dat");
+    if (!file.exists()) return false;
+    
+    return true;
+}
+
+bool Game::checkCERoot(QString dir){
+    QFile file(dir + "/trains");
+    if (!file.exists()) return false;
+    file.setFileName(dir + "/trains/trainset");
+    if (!file.exists()) return false;
+    file.setFileName(dir + "/trains/consists");
     if (!file.exists()) return false;
     
     return true;

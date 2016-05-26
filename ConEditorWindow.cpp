@@ -178,6 +178,9 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     vConView = GuiFunct::newMenuCheckAction(tr("&Con View"), this); 
     viewMenu->addAction(vConView);
     QObject::connect(vConView, SIGNAL(triggered(bool)), this, SLOT(viewConView(bool)));
+    vResetShapeView = new QAction(tr("&Reset Shape View"), this); 
+    viewMenu->addAction(vResetShapeView);
+    QObject::connect(vResetShapeView, SIGNAL(triggered()), this, SLOT(vResetShapeViewSelected()));
     helpMenu = menuBar()->addMenu(tr("&Help"));
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -232,6 +235,15 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
 }
 
 ConEditorWindow::~ConEditorWindow() {
+}
+
+void ConEditorWindow::vResetShapeViewSelected(){
+    if(currentEng == NULL) return;
+    float pos = -currentEng->sizez-1;
+    if(pos > -15) pos = -15;
+    engCamera->setPos(pos,2.5,0);
+    engCamera->setPlayerRot(M_PI/2.0,0);
+    glShapeWidget->resetRot();
 }
 
 void ConEditorWindow::saveCurrentConsist(){

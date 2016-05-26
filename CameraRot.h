@@ -13,6 +13,7 @@ public:
     float* getPos();
     void setPos(float* pos);
     void setPos(float x, float y, float z);
+    void setPlayerRot(float x, float y);
     float getRotX();
     float getRotY();
     void setPozT(int x, int y);

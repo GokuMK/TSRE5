@@ -71,6 +71,11 @@ void CameraRot::setPozT(int x, int y){
     pozT[1] = y;
 }
 
+void CameraRot::setPlayerRot(float x, float y){
+    playerRot[0] = x;
+    playerRot[1] = y;
+}
+
 float* CameraRot::getPos() {
     pos[0] = relativePos[0] + (playerPos[0] * (float) cos(-relativeRot[0]) - playerPos[2] * (float) sin(-relativeRot[0]));
     pos[1] = relativePos[1] + playerPos[1];

@@ -43,6 +43,7 @@ public slots:
     void cDisplayNameSelected(QString n); 
     void cReverseSelected();
     void cDurabilitySelected(double val);
+    void vResetShapeViewSelected();
     
 signals:
     void showEng(QString path, QString name);
@@ -76,6 +77,7 @@ private:
     QAction *vConUnits;
     QAction *vEngView;
     QAction *vConView;
+    QAction *vResetShapeView;
     QAction *aboutAction;
     
     QWidget *conInfo;

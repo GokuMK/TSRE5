@@ -11,6 +11,7 @@
         <itemPath>CameraRot.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f12" displayName="conEditor" projectFiles="true">
+        <itemPath>CELoadWindow.h</itemPath>
         <itemPath>ConEditorWindow.h</itemPath>
         <itemPath>ConListWidget.h</itemPath>
         <itemPath>ConUnitsWidget.h</itemPath>
@@ -163,6 +164,7 @@
         <itemPath>CameraRot.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f13" displayName="conEditor" projectFiles="true">
+        <itemPath>CELoadWindow.cpp</itemPath>
         <itemPath>ConEditorWindow.cpp</itemPath>
         <itemPath>ConListWidget.cpp</itemPath>
         <itemPath>ConUnitsWidget.cpp</itemPath>
@@ -357,6 +359,10 @@
       <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -846,6 +852,10 @@
       <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
       </item>

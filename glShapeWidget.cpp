@@ -82,7 +82,7 @@ void GlShapeWidget::initializeGL() {
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GlShapeWidget::cleanup);
     //qDebug() << "initializeOpenGLFunctions();";
     initializeOpenGLFunctions();
-    glClearColor(0, 0, 0, 1);
+    glClearColor(25.0/255, 25.0/255, 25.0/255, 1);
     if(Game::systemTheme)
         glClearColor(1, 1, 1, 1);
     gluu->initShader();
@@ -123,7 +123,7 @@ void GlShapeWidget::paintGL() {
     Game::currentEngLib = currentEngLib;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glClearColor(0, 0, 0, 1);
+    glClearColor(25.0/255, 25.0/255, 25.0/255, 1);
     if(Game::systemTheme)
         glClearColor(1, 1, 1, 1);
 
@@ -256,6 +256,11 @@ void GlShapeWidget::mouseMoveEvent(QMouseEvent *event) {
         camera->MouseMove(event);
     }
     m_lastPos = event->pos();
+}
+
+void GlShapeWidget::resetRot(){
+    rotY = 0;
+    rotZ = 0;
 }
 
 void GlShapeWidget::showEng(QString path, QString name){

@@ -2,6 +2,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/AboutWindow.o
 ./build/Release/MinGW_QT_static-Windows/AceLib.o
 ./build/Release/MinGW_QT_static-Windows/Brush.o
+./build/Release/MinGW_QT_static-Windows/CELoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/Camera.o
 ./build/Release/MinGW_QT_static-Windows/CameraConsist.o
 ./build/Release/MinGW_QT_static-Windows/CameraFree.o
@@ -117,6 +118,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/tsre5_plugin_import.o
 ./build/Release/MinGW_QT_static-Windows/moc_AboutWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_AceLib.o
+./build/Release/MinGW_QT_static-Windows/moc_CELoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_ConEditorWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_ConListWidget.o
 ./build/Release/MinGW_QT_static-Windows/moc_ConUnitsWidget.o

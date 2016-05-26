@@ -33,6 +33,7 @@ public:
     ShapeLib *currentShapeLib = NULL;
     EngLib *currentEngLib = NULL;
     void setMode(QString n);
+    void resetRot();
 public slots:
     void showEng(QString path, QString name);
     void showCon(int id);

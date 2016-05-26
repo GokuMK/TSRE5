@@ -32,6 +32,7 @@ public:
     static bool loadRouteEditor();
     static bool loadConEditor();
     static bool checkRoot(QString dir);
+    static bool checkCERoot(QString dir);
     static bool checkRoute(QString dir);
     template<class T>
     static void check_coords(T&& x, T&& z, float* p);
