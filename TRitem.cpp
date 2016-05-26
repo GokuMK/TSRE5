@@ -279,7 +279,7 @@ void TRitem::set(QString sh, FileBuffer* data) {
         speedpostTrItemData = new float[4];
         bool ok = false;
         speedpostTrItemDataLength = 0;
-        speedpostTrItemData[0] = ParserX::parsujrInside(data, ok);
+        speedpostTrItemData[0] = ParserX::parsujrInside(data, &ok);
         /*
         10 - speed or dot
         9 - mph
@@ -297,13 +297,13 @@ void TRitem::set(QString sh, FileBuffer* data) {
         //if(speedpostTrItemData[0] !=384)qDebug() << ":sp " << speedpostTrItemData[0];
         if (!ok) return;
         speedpostTrItemDataLength++;
-        speedpostTrItemData[1] = ParserX::parsujrInside(data, ok);
+        speedpostTrItemData[1] = ParserX::parsujrInside(data, &ok);
         if (!ok) return;
         speedpostTrItemDataLength++;
-        speedpostTrItemData[2] = ParserX::parsujrInside(data, ok);
+        speedpostTrItemData[2] = ParserX::parsujrInside(data, &ok);
         if (!ok) return;
         speedpostTrItemDataLength++;
-        speedpostTrItemData[3] = ParserX::parsujrInside(data, ok);
+        speedpostTrItemData[3] = ParserX::parsujrInside(data, &ok);
         if (!ok) return;
         speedpostTrItemDataLength++;
         return;

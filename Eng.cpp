@@ -78,9 +78,9 @@ void Eng::load(){
             continue;
         }
         if (sh == ("size")) {
-            sizex = ParserX::parsujr(data);
-            sizey = ParserX::parsujr(data);
-            sizez = ParserX::parsujr(data);
+            sizex = ParserX::parsujrInside(data);
+            sizey = ParserX::parsujrInside(data);
+            sizez = ParserX::parsujrInside(data);
             //qDebug() << "wymiary taboru: " << sizex << " " << sizey << " " << sizez;
             ParserX::pominsekcje(data);
             continue;
@@ -94,7 +94,7 @@ void Eng::load(){
             continue;
         }
         if (sh == ("mass")) {
-            mass = ParserX::parsujr(data);
+            mass = ParserX::parsujrInside(data);
             ParserX::pominsekcje(data);
             continue;
         }
@@ -115,8 +115,8 @@ void Eng::load(){
                 if (sh == ("spring")) {
                     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
                         if (sh == ("r0")) {
-                            coupling.back().r0[0] = ParserX::parsujr(data);
-                            coupling.back().r0[1] = ParserX::parsujr(data);
+                            coupling.back().r0[0] = ParserX::parsujrInside(data);
+                            coupling.back().r0[1] = ParserX::parsujrInside(data);
                             //qDebug() <<"r0 " << coupling.back().r0[0] << coupling.back().r0[1];
                             ParserX::pominsekcje(data);
                             continue;
@@ -181,7 +181,7 @@ void Eng::load(){
                 continue;
             }
             if (sh == ("maxvelocity")) {
-                maxSpeed = ParserX::parsujr(data);
+                maxSpeed = ParserX::parsujrInside(data);
                 ParserX::pominsekcje(data);
                 continue;
             }

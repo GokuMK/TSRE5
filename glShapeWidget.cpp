@@ -97,9 +97,9 @@ void GlShapeWidget::initializeGL() {
     //sFile = new SFile("F:/TrainSim/trains/trainset/pkp_sp47/pkp_sp47-001.s", "F:/TrainSim/trains/trainset/pkp_sp47");
     //sFile = new SFile("f:/train simulator/routes/cmk/shapes/cottage3.s", "cottage3.s", "f:/train simulator/routes/cmk/textures");
 
-    eng = new Eng("F:/Train Simulator/trains/trainset/PKP-ST44-992/","PKP-ST44-992.eng");
+    //eng = new Eng("F:/Train Simulator/trains/trainset/PKP-ST44-992/","PKP-ST44-992.eng");
 
-    qDebug() << eng->loaded;
+    //qDebug() << eng->loaded;
     //sFile->Load("f:/train simulator/routes/cmk/shapes/cottage3.s");
     //tile = new Tile(-5303,-14963);
     //qDebug() << "route = new Route();";

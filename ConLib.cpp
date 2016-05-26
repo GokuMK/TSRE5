@@ -42,7 +42,9 @@ int ConLib::loadAll(QString gameRoot){
     dir.setFilter(QDir::Files);
     dir.setNameFilters(QStringList()<<"*.con");
     qDebug() << path;
-
+    if(!dir.exists())
+        qDebug() << "not exist";
+    qDebug() << dir.count() <<" con files";
     foreach(QString engfile, dir.entryList())
         ConLib::addCon(path,engfile);
     qDebug() << "loaded";

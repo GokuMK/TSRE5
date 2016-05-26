@@ -36,7 +36,7 @@ int ParserX::szukajsekcji1(QString sh, FileBuffer* bufor){
         b = bufor->get();
         //qDebug() << b;
         bufor->off++;
-        if (b == 40) {
+        if (b == 40 && czytam == 0) {
             poziom++;
         }
         if (b == 41) {
@@ -55,8 +55,10 @@ int ParserX::szukajsekcji1(QString sh, FileBuffer* bufor){
                 if (sekcja.toLower() == sh.toLower()) {
                     //if (b == '(') ibufor--;
                     for (;;) {
-                        //if(bufor->length <= bufor->off + 2)
-                        //    return 0;
+                        if(bufor->length <= bufor->off + 2)
+                            return 0;
+                        //qDebug() << "fail ";
+                        //qDebug() << b;
                         b = bufor->get();
                         bufor->off++;
                         if (b == 40) {
@@ -297,7 +299,7 @@ int ParserX::pominsekcjec(FileBuffer* bufor){
 QString ParserX::odczytajtc(FileBuffer* bufor){
     QString sciezka = "";
     char b = 0;
-    while ((b < 46) && (b != 34)) {
+    while ((b < 46) && (b != 34) && (b!=33)&&(b!=35)&&(b!=36)&&(b!=37)&&(b!=38)) {
         b = bufor->get();
         bufor->off++;
     }
@@ -326,7 +328,7 @@ QString ParserX::odczytajtc(FileBuffer* bufor){
 QString ParserX::odczytajtcInside(FileBuffer* bufor){
     QString sciezka = "";
     char b = 0;
-    while ((b < 46) && (b != 34)) {
+    while ((b < 46) && (b != 34) && (b!=33)&&(b!=35)&&(b!=36)&&(b!=37)&&(b!=38)) {
         b = bufor->get();
         bufor->off++;
         if (b == 41)
@@ -436,7 +438,7 @@ float ParserX::parsujr(FileBuffer* bufor){
 //-----------------------------------
 //Parsowanie liczby rzeczywistej
 //-----------------------------------
-float ParserX::parsujrInside(FileBuffer* bufor, bool &ok){
+float ParserX::parsujrInside(FileBuffer* bufor, bool *ok){
     char b = 0;
     int j;
     float x, t;
@@ -446,7 +448,7 @@ float ParserX::parsujrInside(FileBuffer* bufor, bool &ok){
         bufor->off++;
         if (b == 41){
             bufor->off = bufor->off - 2;
-            ok = false;
+            if(ok != NULL) *ok = false;
             return 0;
         }
     }
@@ -498,9 +500,25 @@ float ParserX::parsujrInside(FileBuffer* bufor, bool &ok){
                 x = x * 10.0;
             }
         }
+    }    
+    if(b == 'c'){
+        b = bufor->get();
+        bufor->off++;
+        if(b == 'm')
+            x = x/100.0;
+    } else if(b == 'm'){
+        b = bufor->get();
+        bufor->off++;
+        if(b == 'p'){
+            b = bufor->get();
+            bufor->off++;
+            if(b == 'h')
+                x = x*1.609344;
+        }
     }
+    
     bufor->off -= 2;
-    ok = true;
+    if(ok != NULL) *ok = true;
     return x;
 }
 //-----------------------------------

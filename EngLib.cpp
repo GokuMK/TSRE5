@@ -42,11 +42,15 @@ int EngLib::loadAll(QString gameRoot){
     trainDir.setFilter(QDir::Files);
     trainDir.setNameFilters(QStringList()<<"*.eng"<<"*.wag");
     qDebug() << path;
+    if(!dir.exists())
+        qDebug() << "not exist";
     dir.setFilter(QDir::Dirs);
+    qDebug() << dir.count() <<" dirs";
     foreach(QString dirFile, dir.entryList()){
         //qDebug() << dirFile;
         trainDir.setPath(path+dirFile);
         foreach(QString engfile, trainDir.entryList()){
+            qDebug() << path << dirFile <<"/"<< engfile;
             addEng(path+dirFile,engfile);
         }
     }

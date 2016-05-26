@@ -66,14 +66,14 @@ void Consist::load(){
     data->off = 0;
     sh = "Train";
     ParserX::szukajsekcji1(sh, data);
-
+    //qDebug() << data->off << " " << data->length;
     sh = "TrainCfg";
     int ok = ParserX::szukajsekcji1(sh, data);
     if(ok == 0) return;
     //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
     conName = ParserX::odczytajtc(data).trimmed();
     showName = conName;
-    qDebug() << conName;
+    //qDebug() << conName;
     EngItem* eit;
 
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {

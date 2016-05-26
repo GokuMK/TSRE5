@@ -31,7 +31,7 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
     if (sh == ("speed_resume_sign_shape")) {
         this->speedResumeSignShapeName = ParserX::odczytajtc(data);
         bool ok = false;
-        this->speedResumeSignShapeCount = ParserX::parsujrInside(data, ok);
+        this->speedResumeSignShapeCount = ParserX::parsujrInside(data, &ok);
         if(!ok){
             this->speedResumeSignShape = 0;
             return;
@@ -49,7 +49,7 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
     if (sh == ("speed_warning_sign_shape")) {
         this->speedWarningSignShapeName = ParserX::odczytajtc(data);
         bool ok = false;
-        this->speedWarningSignShapeCount = ParserX::parsujrInside(data, ok);
+        this->speedWarningSignShapeCount = ParserX::parsujrInside(data, &ok);
         if(!ok){
             this->speedWarningSignShape = 0;
             return;
@@ -67,7 +67,7 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
     if (sh == ("speed_sign_shape")) {
         this->speedSignShapeName = ParserX::odczytajtc(data);
         bool ok = false;
-        this->speedSignShapeCount = ParserX::parsujrInside(data, ok);
+        this->speedSignShapeCount = ParserX::parsujrInside(data, &ok);
         if(!ok){
             this->speedSignShape = 0;
             return;
@@ -84,7 +84,7 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
     if (sh == ("milepost_shape")) {
         this->milepostShapeName = ParserX::odczytajtc(data);
         bool ok = false;
-        this->milepostShapeCount = ParserX::parsujrInside(data, ok);
+        this->milepostShapeCount = ParserX::parsujrInside(data, &ok);
         if(!ok){
             this->milepostShapeCount = 0;
             return;

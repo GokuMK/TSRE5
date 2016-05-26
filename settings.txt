@@ -2,6 +2,7 @@
 
 gameRoot = F:/train simulator
 #gameRoot = C:/ts
+#gameRoot = F:/tst
 
 # nazwa trasy (folderu) do wczytania
 
