@@ -1,5 +1,5 @@
-#ifndef TERRAINWATERWINDOW_H
-#define	TERRAINWATERWINDOW_H
+#ifndef OVERWRITEDIALOG_H
+#define	OVERWRITEDIALOG_H
 
 #include <QtWidgets>
 
@@ -21,5 +21,5 @@ private:
 
 };
 
-#endif	/* TERRAINWATERWINDOW_H */
+#endif	/* OVERWRITEDIALOG_H */
 

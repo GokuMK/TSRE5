@@ -42,13 +42,16 @@ public slots:
     void cFileNameSelected(QString n); 
     void cDisplayNameSelected(QString n); 
     void cReverseSelected();
-    void cDurabilitySelected(double val);
+    void cDurabilitySelected();
     void vResetShapeViewSelected();
     
 signals:
     void showEng(QString path, QString name);
     void showCon(int id);
 
+protected:
+    virtual void closeEvent ( QCloseEvent * event );
+    
 private:
     void setCurrentEng(int id);
     

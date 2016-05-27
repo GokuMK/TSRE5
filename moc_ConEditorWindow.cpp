@@ -112,8 +112,8 @@ static const uint qt_meta_data_ConEditorWindow[] = {
       26,    1,  171,    2, 0x0a /* Public */,
       28,    1,  174,    2, 0x0a /* Public */,
       29,    0,  177,    2, 0x0a /* Public */,
-      30,    1,  178,    2, 0x0a /* Public */,
-      31,    0,  181,    2, 0x0a /* Public */,
+      30,    0,  178,    2, 0x0a /* Public */,
+      31,    0,  179,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    3,    4,
@@ -138,7 +138,7 @@ static const uint qt_meta_data_ConEditorWindow[] = {
     QMetaType::Void, QMetaType::QString,   27,
     QMetaType::Void, QMetaType::QString,   27,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Double,   10,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -169,7 +169,7 @@ void ConEditorWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 17: _t->cFileNameSelected((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 18: _t->cDisplayNameSelected((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 19: _t->cReverseSelected(); break;
-        case 20: _t->cDurabilitySelected((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 20: _t->cDurabilitySelected(); break;
         case 21: _t->vResetShapeViewSelected(); break;
         default: ;
         }

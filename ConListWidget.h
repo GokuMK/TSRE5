@@ -14,6 +14,7 @@ public:
     void fillConList();
     void fillConList(QString n);
     void newConsist();
+    void getUnsaed(std::vector<int> &unsavedConIds);
     EngLib* englib;
     
 public slots:

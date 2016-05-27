@@ -107,6 +107,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/TrackObj.o
 ./build/Release/MinGW_QT_static-Windows/TrackShape.o
 ./build/Release/MinGW_QT_static-Windows/TransferObj.o
+./build/Release/MinGW_QT_static-Windows/UnsavedDialog.o
 ./build/Release/MinGW_QT_static-Windows/Vector2f.o
 ./build/Release/MinGW_QT_static-Windows/Vector2i.o
 ./build/Release/MinGW_QT_static-Windows/Vector3f.o
@@ -152,6 +153,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_TerrainTools.o
 ./build/Release/MinGW_QT_static-Windows/moc_TerrainTreeWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_TerrainWaterWindow.o
+./build/Release/MinGW_QT_static-Windows/moc_UnsavedDialog.o
 ./build/Release/MinGW_QT_static-Windows/moc_glShapeWidget.o
 ./build/Release/MinGW_QT_static-Windows/moc_glwidget.o
 ./build/Release/MinGW_QT_static-Windows/moc_window.o

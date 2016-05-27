@@ -73,6 +73,20 @@ void ConListWidget::fillConList(QString n){
     items.sortItems(Qt::AscendingOrder);
 }
 
+void ConListWidget::getUnsaed(std::vector<int> &unsavedConIds){
+    unsavedConIds.clear();
+    Game::currentEngLib = englib;
+    Consist * e;
+    for (int i = 0; i < ConLib::jestcon; i++){
+        e = ConLib::con[i];
+        if(e == NULL) continue;
+        if(e->loaded !=1) continue;
+        if(e->isUnSaved()){
+            unsavedConIds.push_back(i);
+        }
+    }
+}
+
 void ConListWidget::itemsSelected(QListWidgetItem * item){
     
     //qDebug() << item->type() << " " << item->text();

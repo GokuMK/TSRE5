@@ -15,6 +15,7 @@
 #include "ConUnitsWidget.h"
 #include "AboutWindow.h"
 #include "OverwriteDialog.h"
+#include "UnsavedDialog.h"
 
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
     aboutWindow = new AboutWindow();
@@ -228,8 +229,8 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QObject::connect(&cDisplayName, SIGNAL(textEdited(QString)),
                       this, SLOT(cDisplayNameSelected(QString))); 
     
-    QObject::connect(&cDurability, SIGNAL(valueChanged(double)),
-                      this, SLOT(cDurabilitySelected(double))); 
+    QObject::connect(&cDurability, SIGNAL(editingFinished()),
+                      this, SLOT(cDurabilitySelected())); 
 
     vEngList2->trigger();
     vConUnits->trigger();
@@ -251,8 +252,8 @@ void ConEditorWindow::saveCurrentConsist(){
     if(currentCon == NULL) return;
     if(currentCon->isNewConsist()){
         OverwriteDialog owerwriteDialog;
-        owerwriteDialog.setWindowTitle("Overwrite?");
-        owerwriteDialog.name.setText(currentCon->conName);
+        owerwriteDialog.setWindowTitle("Overwrite \""+currentCon->conName+"\" ?");
+        //owerwriteDialog.name.setText(currentCon->conName);
         QString spath;
         do {
             spath = currentCon->path + "/" + currentCon->name;
@@ -284,9 +285,9 @@ void ConEditorWindow::about(){
     aboutWindow->show();
 }
 
-void ConEditorWindow::cDurabilitySelected(double val){
+void ConEditorWindow::cDurabilitySelected(){
     if(currentCon == NULL) return;
-    currentCon->setDurability(val);
+    currentCon->setDurability(cDurability.value());
 }
 
 void ConEditorWindow::cFileNameSelected(QString n){
@@ -301,7 +302,7 @@ void ConEditorWindow::cFileNameSelected(QString n){
 
 void ConEditorWindow::cDisplayNameSelected(QString n){
     if(currentCon == NULL) return;
-    currentCon->displayName = n;
+    currentCon->setDisplayName(n);
 }
 
 void ConEditorWindow::cReverseSelected(){
@@ -421,4 +422,41 @@ void ConEditorWindow::conSliderValueChanged(int val){
         val = currentCon->engItems.size() - 1;
     float len = currentCon->engItems[val].conLength;
     conCamera->setPos(-100,2.5,42 + len);
+}
+
+void ConEditorWindow::closeEvent( QCloseEvent *event )
+{
+    std::vector<int> unsavedConIds;
+    con1->getUnsaed(unsavedConIds);
+    if(unsavedConIds.size() == 0){
+        qDebug() << "nic do zapisania";
+        event->accept();
+        return;
+    }
+    
+    UnsavedDialog unsavedDialog;
+    unsavedDialog.setWindowTitle("Save changes?");
+    for(int i = 0; i < unsavedConIds.size(); i++){
+        if(ConLib::con[unsavedConIds[i]] == NULL) continue;
+        unsavedDialog.items.addItem(ConLib::con[unsavedConIds[i]]->showName);
+    }
+    unsavedDialog.exec();
+    if(unsavedDialog.changed == 0){
+        event->ignore();
+        return;
+    }
+    if(unsavedDialog.changed == 2){
+        event->accept();
+        return;
+    }
+    
+    for(int i = 0; i < unsavedConIds.size(); i++){
+        currentCon = ConLib::con[unsavedConIds[i]];
+        if(currentCon == NULL) continue;
+        if(currentCon->isUnSaved())
+            this->saveCurrentConsist();
+    }
+
+    //qDebug() << "aaa2";
+    event->accept();
 }
