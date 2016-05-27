@@ -15,6 +15,7 @@ public:
     void fillConList(QString n);
     void newConsist();
     void getUnsaed(std::vector<int> &unsavedConIds);
+    void findConsistsByEng(int id);
     EngLib* englib;
     
 public slots:
@@ -25,6 +26,8 @@ signals:
     void conListSelected(int id);
         
 private:
+    void fillConListLastQuery();
+    QListWidget query;
     QListWidget items;
     QComboBox conType;
 };

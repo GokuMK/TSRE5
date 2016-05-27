@@ -19,6 +19,7 @@ ConListWidget::ConListWidget() : QWidget(){
     conType.addItem("ALL");
     conType.addItem("Broken");
     conType.addItem("Unsaved");
+    conType.addItem("Last Query");
     this->setMinimumWidth(250);
     QObject::connect(&items, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(itemsSelected(QListWidgetItem*)));
@@ -42,11 +43,26 @@ void ConListWidget::newConsist(){
 void ConListWidget::conFChan(QString n){
     if(conType.currentIndex() == 0)
         n = "";
+    if(n.toLower() == "last query"){
+        fillConListLastQuery();
+        return;
+    }
     fillConList(n);
 }
 
 void ConListWidget::fillConList(){
     fillConList("");
+}
+
+void ConListWidget::fillConListLastQuery(){
+    items.clear();
+    Game::currentEngLib = englib;
+    Consist * e;
+    
+    for (int i = 0; i < query.count(); i++){
+        new QListWidgetItem ( query.item(i)->text(), &items, query.item(i)->type());
+    }
+    items.sortItems(Qt::AscendingOrder);
 }
 
 void ConListWidget::fillConList(QString n){
@@ -55,10 +71,11 @@ void ConListWidget::fillConList(QString n){
     Consist * e;
     bool brokenf = false;
     bool unsavedf = false;
+
     if(n.toLower() == "broken")
         brokenf = true;
     if(n.toLower() == "unsaved")
-        unsavedf = true;      
+        unsavedf = true;
     
     for (int i = 0; i < ConLib::jestcon; i++){
         e = ConLib::con[i];
@@ -85,6 +102,27 @@ void ConListWidget::getUnsaed(std::vector<int> &unsavedConIds){
             unsavedConIds.push_back(i);
         }
     }
+}
+
+void ConListWidget::findConsistsByEng(int id){
+    query.clear();
+    Game::currentEngLib = englib;
+    Consist * e;
+
+    for (int i = 0; i < ConLib::jestcon; i++){
+        e = ConLib::con[i];
+        if(e == NULL) continue;
+        if(e->loaded !=1) continue;
+        for (int j = 0; j < e->engItems.size(); j++){
+            if(e->engItems[j].eng == id){
+                new QListWidgetItem ( e->showName, &query, i);
+                break;
+            }
+        }
+    }
+    query.sortItems(Qt::AscendingOrder);
+    conType.setCurrentText("Last Query");
+    fillConListLastQuery();
 }
 
 void ConListWidget::itemsSelected(QListWidgetItem * item){

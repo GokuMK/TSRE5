@@ -79,26 +79,35 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QGridLayout *engInfoForm = new QGridLayout;
     engInfoForm->setSpacing(2);
     engInfoForm->setContentsMargins(1,1,1,1);    
-    engInfoForm->addWidget(new QLabel("File Name:"),0,0);
-    engInfoForm->addWidget(new QLabel("Dir Nam:"),0,2);
-    engInfoForm->addWidget(new QLabel("Name:"),1,0);
-    engInfoForm->addWidget(new QLabel("Type:"),1,2);
-    engInfoForm->addWidget(new QLabel("Mass:"),2,0);
-    engInfoForm->addWidget(new QLabel("Max. Speed:"),2,2);
-    engInfoForm->addWidget(new QLabel("Brakes:"),3,0);
-    engInfoForm->addWidget(new QLabel("Couplings:"),4,0);
-    engInfoForm->addWidget(new QLabel("Shape:"),3,2);
-    engInfoForm->addWidget(new QLabel("Size:"),4,2);
-    engInfoForm->addWidget(&eFileName,0,1);
-    engInfoForm->addWidget(&eDirName,0,3);
-    engInfoForm->addWidget(&eName,1,1);
-    engInfoForm->addWidget(&eType,1,3);
-    engInfoForm->addWidget(&eMass,2,1);
-    engInfoForm->addWidget(&eMaxSpeed,2,3);
-    engInfoForm->addWidget(&eBrakes,3,1);
-    engInfoForm->addWidget(&eCouplings,4,1);
-    engInfoForm->addWidget(&eShape,3,3);
-    engInfoForm->addWidget(&eSize,4,3);
+    engInfoForm->addWidget(new QLabel("Name:"),0,0);
+    engInfoForm->addWidget(new QLabel("File Name:"),1,0);
+    engInfoForm->addWidget(new QLabel("Dir Nam:"),2,0);
+    engInfoForm->addWidget(new QLabel("Shape:"),3,0);
+    engInfoForm->addWidget(new QLabel("Type:"),0,2);
+    engInfoForm->addWidget(new QLabel("Brakes:"),1,2);
+    engInfoForm->addWidget(new QLabel("Couplings:"),2,2);
+    engInfoForm->addWidget(new QLabel("Size:"),3,2);
+    engInfoForm->addWidget(new QLabel("Mass:"),0,4);
+    engInfoForm->addWidget(new QLabel("Max. Speed:"),1,4);
+    engInfoForm->addWidget(new QLabel("Max. Force:"),2,4);
+    engInfoForm->addWidget(new QLabel("Max. Power:"),3,4);    
+    
+    engInfoForm->addWidget(&eName,0,1);
+    engInfoForm->addWidget(&eFileName,1,1);
+    engInfoForm->addWidget(&eDirName,2,1);
+    engInfoForm->addWidget(&eShape,3,1);
+    engInfoForm->addWidget(&eType,0,3);
+    engInfoForm->addWidget(&eBrakes,1,3);
+    engInfoForm->addWidget(&eCouplings,2,3);
+    engInfoForm->addWidget(&eSize,3,3);
+    engInfoForm->addWidget(&eMass,0,5);
+    engInfoForm->addWidget(&eMaxSpeed,1,5);
+    engInfoForm->addWidget(&eMaxForce,2,5);
+    engInfoForm->addWidget(&eMaxPower,3,5);
+    eMass.setMaximumWidth(70);
+    eMaxSpeed.setMaximumWidth(70);
+    eMaxForce.setMaximumWidth(70);
+    eMaxPower.setMaximumWidth(70);
     engInfoLayout->addItem(engInfoForm);
     engInfoLayout->setSpacing(0);
     engInfoLayout->setContentsMargins(0,0,0,0);
@@ -160,7 +169,10 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     cReverse = new QAction(tr("&Reverse"), this); 
     consistMenu->addAction(cReverse);
     QObject::connect(cReverse, SIGNAL(triggered(bool)), this, SLOT(cReverseSelected()));
-    menuBar()->addMenu(tr("&Edit"));
+    engMenu = menuBar()->addMenu(tr("&Eng"));
+    eFindCons = new QAction(tr("&Find Consists"), this); 
+    engMenu->addAction(eFindCons);
+    QObject::connect(eFindCons, SIGNAL(triggered(bool)), this, SLOT(eFindConsistsByEng()));
     viewMenu = menuBar()->addMenu(tr("&View"));
     vConList = GuiFunct::newMenuCheckAction(tr("&Consist List"), this); 
     viewMenu->addAction(vConList);
@@ -237,6 +249,13 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
 }
 
 ConEditorWindow::~ConEditorWindow() {
+}
+
+void ConEditorWindow::eFindConsistsByEng(){
+    if(currentEng == NULL) return;
+    int eid = englib->getEngByPathid(currentEng->pathid);
+    if(eid < 0) return;
+    con1->findConsistsByEng(eid);
 }
 
 void ConEditorWindow::vResetShapeViewSelected(){
@@ -366,7 +385,15 @@ void ConEditorWindow::setCurrentEng(int id){
     //eBrakes;
     //eCouplings;
     eMass.setText(QString::number(currentEng->mass) + " t");
-    eMaxSpeed.setText(QString::number((int)currentEng->maxSpeed) + " km/h");
+    if(currentEng->wagonTypeId >= 4){
+        eMaxSpeed.setText(QString::number((int)currentEng->maxSpeed) + " km/h");
+        eMaxForce.setText(QString::number((int)currentEng->maxForce / 1000.0) + " kN");
+        eMaxPower.setText(QString::number((int)currentEng->maxPower ) + " kW");
+    } else {
+        eMaxSpeed.setText("--");
+        eMaxForce.setText("--");
+        eMaxPower.setText("--");
+    }
     eShape.setText(currentEng->sNames[0]);
     eSize.setText(QString::number(currentEng->sizex)+" "+QString::number(currentEng->sizey)+" "+QString::number(currentEng->sizez)+" ");
     eCouplings.setText(currentEng->getCouplingsName());

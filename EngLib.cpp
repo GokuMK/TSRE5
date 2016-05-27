@@ -34,6 +34,18 @@ int EngLib::addEng(QString path, QString name) {
     return jesteng++;
 }
 
+
+int EngLib::getEngByPathid(QString pathid) {
+    for ( auto it = eng.begin(); it != eng.end(); ++it ){
+        if(it->second == NULL) continue;
+        if (((Eng*) it->second)->pathid.length() == pathid.length())
+            if (((Eng*) it->second)->pathid == pathid) {
+                return (int)it->first;
+            }
+    }
+    return -1;
+}
+
 int EngLib::loadAll(QString gameRoot){
     QString path;
     path = gameRoot + "/trains/trainset/";

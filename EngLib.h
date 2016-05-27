@@ -13,6 +13,7 @@ public:
     EngLib();
     virtual ~EngLib();
     int addEng(QString path, QString name);
+    int getEngByPathid(QString pathid);
     int loadAll(QString gameRoot);
 private:
 

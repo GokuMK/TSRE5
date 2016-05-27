@@ -44,6 +44,7 @@ public slots:
     void cReverseSelected();
     void cDurabilitySelected();
     void vResetShapeViewSelected();
+    void eFindConsistsByEng();
     
 signals:
     void showEng(QString path, QString name);
@@ -67,13 +68,14 @@ private:
     
     QMenu *fileMenu;
     QMenu *viewMenu;
-    QMenu *editMenu;
+    QMenu *engMenu;
     QMenu *helpMenu;
     QMenu *consistMenu;
     QAction *cReverse;
     QAction *fSave;
     QAction *fNew;
     QAction *fExit;
+    QAction *eFindCons;
     QAction *vConList;
     QAction *vEngList1;
     QAction *vEngList2;
@@ -100,6 +102,8 @@ private:
     QLineEdit eCouplings;
     QLineEdit eMass;
     QLineEdit eMaxSpeed;
+    QLineEdit eMaxForce;
+    QLineEdit eMaxPower;
     QLineEdit eShape;
     QLineEdit eSize;
             
