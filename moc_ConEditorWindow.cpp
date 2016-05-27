@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ConEditorWindow_t {
-    QByteArrayData data[33];
-    char stringdata[402];
+    QByteArrayData data[34];
+    char stringdata[406];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -53,15 +53,16 @@ QT_MOC_LITERAL(20, 206, 3), // "uid"
 QT_MOC_LITERAL(21, 210, 18), // "saveCurrentConsist"
 QT_MOC_LITERAL(22, 229, 17), // "refreshCurrentCon"
 QT_MOC_LITERAL(23, 247, 16), // "addToConSelected"
-QT_MOC_LITERAL(24, 264, 5), // "count"
-QT_MOC_LITERAL(25, 270, 10), // "newConsist"
-QT_MOC_LITERAL(26, 281, 17), // "cFileNameSelected"
-QT_MOC_LITERAL(27, 299, 1), // "n"
-QT_MOC_LITERAL(28, 301, 20), // "cDisplayNameSelected"
-QT_MOC_LITERAL(29, 322, 16), // "cReverseSelected"
-QT_MOC_LITERAL(30, 339, 19), // "cDurabilitySelected"
-QT_MOC_LITERAL(31, 359, 23), // "vResetShapeViewSelected"
-QT_MOC_LITERAL(32, 383, 18) // "eFindConsistsByEng"
+QT_MOC_LITERAL(24, 264, 3), // "pos"
+QT_MOC_LITERAL(25, 268, 5), // "count"
+QT_MOC_LITERAL(26, 274, 10), // "newConsist"
+QT_MOC_LITERAL(27, 285, 17), // "cFileNameSelected"
+QT_MOC_LITERAL(28, 303, 1), // "n"
+QT_MOC_LITERAL(29, 305, 20), // "cDisplayNameSelected"
+QT_MOC_LITERAL(30, 326, 16), // "cReverseSelected"
+QT_MOC_LITERAL(31, 343, 19), // "cDurabilitySelected"
+QT_MOC_LITERAL(32, 363, 23), // "vResetShapeViewSelected"
+QT_MOC_LITERAL(33, 387, 18) // "eFindConsistsByEng"
 
     },
     "ConEditorWindow\0showEng\0\0path\0name\0"
@@ -71,8 +72,8 @@ QT_MOC_LITERAL(32, 383, 18) // "eFindConsistsByEng"
     "viewConUnits\0viewEngView\0viewConView\0"
     "about\0conUnitSelected\0uid\0saveCurrentConsist\0"
     "refreshCurrentCon\0addToConSelected\0"
-    "count\0newConsist\0cFileNameSelected\0n\0"
-    "cDisplayNameSelected\0cReverseSelected\0"
+    "pos\0count\0newConsist\0cFileNameSelected\0"
+    "n\0cDisplayNameSelected\0cReverseSelected\0"
     "cDurabilitySelected\0vResetShapeViewSelected\0"
     "eFindConsistsByEng"
 };
@@ -109,14 +110,14 @@ static const uint qt_meta_data_ConEditorWindow[] = {
       19,    1,  165,    2, 0x0a /* Public */,
       21,    0,  168,    2, 0x0a /* Public */,
       22,    0,  169,    2, 0x0a /* Public */,
-      23,    2,  170,    2, 0x0a /* Public */,
-      25,    0,  175,    2, 0x0a /* Public */,
-      26,    1,  176,    2, 0x0a /* Public */,
-      28,    1,  179,    2, 0x0a /* Public */,
-      29,    0,  182,    2, 0x0a /* Public */,
-      30,    0,  183,    2, 0x0a /* Public */,
-      31,    0,  184,    2, 0x0a /* Public */,
-      32,    0,  185,    2, 0x0a /* Public */,
+      23,    3,  170,    2, 0x0a /* Public */,
+      26,    0,  177,    2, 0x0a /* Public */,
+      27,    1,  178,    2, 0x0a /* Public */,
+      29,    1,  181,    2, 0x0a /* Public */,
+      30,    0,  184,    2, 0x0a /* Public */,
+      31,    0,  185,    2, 0x0a /* Public */,
+      32,    0,  186,    2, 0x0a /* Public */,
+      33,    0,  187,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    3,    4,
@@ -136,10 +137,10 @@ static const uint qt_meta_data_ConEditorWindow[] = {
     QMetaType::Void, QMetaType::Int,   20,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,    6,   24,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,    6,   24,   25,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   27,
-    QMetaType::Void, QMetaType::QString,   27,
+    QMetaType::Void, QMetaType::QString,   28,
+    QMetaType::Void, QMetaType::QString,   28,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -168,7 +169,7 @@ void ConEditorWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 12: _t->conUnitSelected((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 13: _t->saveCurrentConsist(); break;
         case 14: _t->refreshCurrentCon(); break;
-        case 15: _t->addToConSelected((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 15: _t->addToConSelected((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 16: _t->newConsist(); break;
         case 17: _t->cFileNameSelected((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 18: _t->cDisplayNameSelected((*reinterpret_cast< QString(*)>(_a[1]))); break;

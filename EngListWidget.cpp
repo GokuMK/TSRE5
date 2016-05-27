@@ -4,7 +4,10 @@
 #include "Game.h"
 
 EngListWidget::EngListWidget() : QWidget(){
-    addButton.setText("Add");
+    addBegButton.setText("Add Beg");
+    addCurButton.setText("Add Cur");
+    addEndButton.setText("Add End");
+    addRandButton.setText("Add Rand");
     addNum.setText("1");
     
     engType.addItem("ALL");
@@ -26,12 +29,19 @@ EngListWidget::EngListWidget() : QWidget(){
     QFormLayout *vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("Total:", &totalVal);
     vlist->addRow("Type:", &engType);
     vlist->addRow("Coupling:", &couplingType);
     vlist->addRow("Search", &searchBox);
-    vlist->addRow(&addButton, &addNum);
+    vlist->addRow("Num to add", &addNum);
     vbox->addItem(vlist);
+    QHBoxLayout *addbuttons = new QHBoxLayout;
+    addbuttons->addWidget(&addBegButton);
+    addbuttons->addWidget(&addCurButton);
+    addbuttons->addWidget(&addEndButton);
+    addbuttons->addWidget(&addRandButton);
     //vbox->addWidget();
+    vbox->addItem(addbuttons);
     vbox->addWidget(&items);
     //vbox->addStretch(1);
     this->setLayout(vbox);
@@ -40,25 +50,33 @@ EngListWidget::EngListWidget() : QWidget(){
     couplingType.setStyleSheet("combobox-popup: 0;");
     
     QObject::connect(&engType, SIGNAL(activated(QString)),
-                      this, SLOT(filterSelected(QString)));
+                      this, SLOT(fs(QString)));
     QObject::connect(&couplingType, SIGNAL(activated(QString)),
-                      this, SLOT(filterSelected(QString)));
+                      this, SLOT(fs(QString)));
     QObject::connect(&searchBox, SIGNAL(textEdited(QString)),
-                      this, SLOT(filterSelected(QString)));
+                      this, SLOT(fs(QString)));
     
     QObject::connect(&items, SIGNAL(itemSelectionChanged()),
                       this, SLOT(itemsSelected()));
     
-    QObject::connect(&addButton, SIGNAL(released()),
-                      this, SLOT(addButtonSelected()));
+    QObject::connect(&addBegButton, SIGNAL(released()),
+                      this, SLOT(addBegButtonSelected()));
+    QObject::connect(&addCurButton, SIGNAL(released()),
+                      this, SLOT(addCurButtonSelected()));
+    QObject::connect(&addEndButton, SIGNAL(released()),
+                      this, SLOT(addEndButtonSelected()));
+    QObject::connect(&addRandButton, SIGNAL(released()),
+                      this, SLOT(addRndButtonSelected()));
     
     items.viewport()->installEventFilter(this);
+    items.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    totalVal.setEnabled(false);
 }
 
 EngListWidget::~EngListWidget() {
 }
 
-void EngListWidget::filterSelected(QString n){
+void EngListWidget::fs(QString n){
     QString ef = engType.currentText();
     if(engType.currentIndex() == 0)
         ef = "";
@@ -78,6 +96,8 @@ void EngListWidget::fillEngList(QString engFilter, QString couplingFilter, QStri
     items.clear();
 
     Eng * e;
+    totalVal.setText(QString::number(englib->jesteng));
+    
     for (int i = 0; i < englib->jesteng; i++){
         e = englib->eng[i];
         if(e == NULL) continue;
@@ -97,24 +117,54 @@ void EngListWidget::itemsSelected(){
     emit engListSelected(item->type());
 }
 
-void EngListWidget::addButtonSelected(){
+void EngListWidget::addBegButtonSelected(){
     bool ok = false;
     int count = addNum.text().toInt(&ok);
     if(!ok) count = 1;
-    addButtonSelected(count);
+    addBegButtonSelected(count);
 }
 
-void EngListWidget::addButtonSelected(int count){
+void EngListWidget::addBegButtonSelected(int count){
     QListWidgetItem * item = items.currentItem();
     if(item == NULL) return;
-    emit addToConSelected(item->type(), count);
+    emit addToConSelected(item->type(), 0, count);
+}
+
+void EngListWidget::addCurButtonSelected(){
+    bool ok = false;
+    int count = addNum.text().toInt(&ok);
+    if(!ok) count = 1;
+    addCurButtonSelected(count);
+}
+
+void EngListWidget::addCurButtonSelected(int count){
+    QListWidgetItem * item = items.currentItem();
+    if(item == NULL) return;
+    emit addToConSelected(item->type(), 1, count);
+}
+
+void EngListWidget::addEndButtonSelected(){
+    bool ok = false;
+    int count = addNum.text().toInt(&ok);
+    if(!ok) count = 1;
+    addEndButtonSelected(count);
+}
+
+void EngListWidget::addEndButtonSelected(int count){
+    QListWidgetItem * item = items.currentItem();
+    if(item == NULL) return;
+    emit addToConSelected(item->type(), 2, count);
+}
+
+void EngListWidget::addRndButtonSelected(){
+
 }
 
 bool EngListWidget::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::MouseButtonDblClick) {
         QMouseEvent * mouseEvent = static_cast <QMouseEvent *> (event);
         if (mouseEvent->button() == Qt::LeftButton) {
-            addButtonSelected(1);
+            addEndButtonSelected(1);
         }
     }
     return QWidget::eventFilter(obj, event);

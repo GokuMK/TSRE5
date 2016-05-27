@@ -243,16 +243,38 @@ void Consist::deteleSelected(){
     modified = true;
 }
 
-void Consist::appendEngItem(int id){
+void Consist::appendEngItem(int id, int pos){
     Eng * eng = Game::currentEngLib->eng[id];
     if(eng == NULL) return;
-    engItems.push_back(EngItem());
-    engItems.back().type = eng->wagonTypeId / 4;
-    engItems.back().eng = id;
-    engItems.back().ename = eng->name.split(".")[0];
-    engItems.back().epath = eng->path.split("/").last();
-    engItems.back().uid = this->nextWagonUID++;
-    engItems.back().flip = false;
+    std::vector<int>::iterator it;
+    EngItem* newE;
+    if(pos == 0){
+        engItems.emplace(engItems.begin());
+        newE = &engItems[0];
+        selectedIdx++;
+    } else if(pos == 2){
+        engItems.emplace_back();
+        newE = &engItems[engItems.size()-1];
+    } else if(pos == 1){
+        if(selectedIdx > engItems.size() - 1 )
+            selectedIdx = engItems.size() - 1;
+        if(engItems.size() == 0 )
+            selectedIdx = -1;
+        if(selectedIdx < -1 )
+            selectedIdx = -1;
+        qDebug() << "selectedIdx "<< selectedIdx;
+        engItems.emplace(engItems.begin()+selectedIdx+1);
+        newE = &engItems[selectedIdx+1];
+    } else {
+        return;
+    }
+
+    newE->type = eng->wagonTypeId / 4;
+    newE->eng = id;
+    newE->ename = eng->name.split(".")[0];
+    newE->epath = eng->path.split("/").last();
+    newE->uid = this->nextWagonUID++;
+    newE->flip = false;
 
     initPos();
     modified = true;

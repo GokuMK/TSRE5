@@ -185,23 +185,55 @@ bool Game::loadConEditor(){
 }
 
 bool Game::checkRoot(QString dir){
-    QFile file(dir + "/routes");
-    if (!file.exists()) return false;
-    file.setFileName(dir + "/global");
-    if (!file.exists()) return false;
-    file.setFileName(dir + "/global/tsection.dat");
-    if (!file.exists()) return false;
+    QString path;
+    path = dir + "/routes";
+    path.replace("//", "/");
+    QFile file(path);
+    if (!file.exists()) {
+        qDebug () << "/routes not exist: "<< file.fileName();
+        return false;
+    }
+    path = dir + "/global";
+    path.replace("//", "/");
+    file.setFileName(path);
+    if (!file.exists()) {
+        qDebug () << "/global not exist: "<< file.fileName();
+        return false;
+    }
+    path = dir + "/global/tsection.dat";
+    path.replace("//", "/");
+    file.setFileName(path);
+    if (!file.exists()) {
+        qDebug () << "/global/tsection.dat not exist: "<< file.fileName();
+        return false;
+    }
     
     return true;
 }
 
 bool Game::checkCERoot(QString dir){
-    QFile file(dir + "/trains");
-    if (!file.exists()) return false;
-    file.setFileName(dir + "/trains/trainset");
-    if (!file.exists()) return false;
-    file.setFileName(dir + "/trains/consists");
-    if (!file.exists()) return false;
+    QString path;
+    path = dir + "/trains";
+    path.replace("//", "/");
+    QFile file(path);
+    if (!file.exists()) {
+        qDebug () << "/trains not exist: "<< file.fileName();
+        return false;
+    }
+    path = dir + "/trains/trainset";
+    path.replace("//", "/");
+    file.setFileName(path);
+    if (!file.exists()) {
+        qDebug () << "/trains/trainset not exist: " << file.fileName();
+        return false;
+    }
+    path = dir + "/trains/consists";
+    path.replace("//", "/");
+    file.setFileName(path);
+    if (!file.exists()) {
+        qDebug () << "/trains/consists not exist: " << file.fileName();
+        return false;
+    }
     
     return true;
 }

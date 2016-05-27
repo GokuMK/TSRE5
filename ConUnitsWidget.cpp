@@ -39,6 +39,7 @@ ConUnitsWidget::ConUnitsWidget() {
                       this, SLOT(bDownReleased()));
     QObject::connect(bFlip, SIGNAL(released()),
                       this, SLOT(bFlipReleased()));
+    items.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 ConUnitsWidget::~ConUnitsWidget() {

@@ -53,6 +53,7 @@ public:
     void save();
     void select(int idx);
     void appendEngItem(int id);
+    void appendEngItem(int id, int pos = 2);
     void deteleSelected();
     void flipSelected();
     void moveLeftSelected();

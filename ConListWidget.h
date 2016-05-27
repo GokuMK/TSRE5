@@ -28,6 +28,7 @@ signals:
 private:
     void fillConListLastQuery();
     QListWidget query;
+    QLineEdit totalVal;
     QListWidget items;
     QComboBox conType;
 };

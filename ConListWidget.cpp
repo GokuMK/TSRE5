@@ -10,6 +10,7 @@ ConListWidget::ConListWidget() : QWidget(){
     QFormLayout *vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("Total:",&totalVal);
     vlist->addRow("Show:",&conType);
     vbox->addItem(vlist);
     vbox->addWidget(&items);
@@ -26,6 +27,8 @@ ConListWidget::ConListWidget() : QWidget(){
     
     QObject::connect(&conType, SIGNAL(activated(QString)),
                       this, SLOT(conFChan(QString)));
+    items.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    totalVal.setEnabled(false);
 }
 
 ConListWidget::~ConListWidget() {
@@ -66,6 +69,7 @@ void ConListWidget::fillConListLastQuery(){
 }
 
 void ConListWidget::fillConList(QString n){
+    totalVal.setText(QString::number(ConLib::jestcon));
     items.clear();
     Game::currentEngLib = englib;
     Consist * e;
@@ -108,7 +112,7 @@ void ConListWidget::findConsistsByEng(int id){
     query.clear();
     Game::currentEngLib = englib;
     Consist * e;
-
+    
     for (int i = 0; i < ConLib::jestcon; i++){
         e = ConLib::con[i];
         if(e == NULL) continue;
@@ -123,6 +127,7 @@ void ConListWidget::findConsistsByEng(int id){
     query.sortItems(Qt::AscendingOrder);
     conType.setCurrentText("Last Query");
     fillConListLastQuery();
+    
 }
 
 void ConListWidget::itemsSelected(QListWidgetItem * item){

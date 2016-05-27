@@ -37,7 +37,7 @@ public slots:
     void conUnitSelected(int uid);
     void saveCurrentConsist();
     void refreshCurrentCon();
-    void addToConSelected(int id, int count);
+    void addToConSelected(int id, int pos, int count);
     void newConsist();
     void cFileNameSelected(QString n); 
     void cDisplayNameSelected(QString n); 

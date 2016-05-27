@@ -205,10 +205,10 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QObject::connect(eng2, SIGNAL(engListSelected(int)),
                       this, SLOT(engListSelected(int)));
     
-    QObject::connect(eng1, SIGNAL(addToConSelected(int, int)),
-                      this, SLOT(addToConSelected(int, int)));
-    QObject::connect(eng2, SIGNAL(addToConSelected(int, int)),
-                      this, SLOT(addToConSelected(int, int)));
+    QObject::connect(eng1, SIGNAL(addToConSelected(int, int, int)),
+                      this, SLOT(addToConSelected(int, int, int)));
+    QObject::connect(eng2, SIGNAL(addToConSelected(int, int, int)),
+                      this, SLOT(addToConSelected(int, int, int)));
     
     
     QObject::connect(con1, SIGNAL(conListSelected(int)),
@@ -413,11 +413,11 @@ void ConEditorWindow::engListSelected(int id){
 
 }
 
-void ConEditorWindow::addToConSelected(int id, int count){
+void ConEditorWindow::addToConSelected(int id, int pos, int count){
     if(currentCon == NULL) return;
     Game::currentEngLib = englib;
     for(int i = 0; i < count; i++)
-        currentCon->appendEngItem(id);
+        currentCon->appendEngItem(id, pos);
     refreshCurrentCon();
 }
 
