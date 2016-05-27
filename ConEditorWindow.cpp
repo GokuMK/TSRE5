@@ -16,9 +16,11 @@
 #include "AboutWindow.h"
 #include "OverwriteDialog.h"
 #include "UnsavedDialog.h"
+#include "RandomConsist.h"
 
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
     aboutWindow = new AboutWindow();
+    randomConsist = new RandomConsist();
     englib = new EngLib();
     //conEngLib = new EngLib();
     englib->loadAll(Game::root);
@@ -210,6 +212,13 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QObject::connect(eng2, SIGNAL(addToConSelected(int, int, int)),
                       this, SLOT(addToConSelected(int, int, int)));
     
+    QObject::connect(randomConsist, SIGNAL(addToConSelected(int, int, int)),
+                      this, SLOT(addToConSelected(int, int, int)));
+    
+    QObject::connect(eng1, SIGNAL(addToRandomConsist(int)),
+                      this, SLOT(addToRandomConsist(int)));
+    QObject::connect(eng2, SIGNAL(addToRandomConsist(int)),
+                      this, SLOT(addToRandomConsist(int)));
     
     QObject::connect(con1, SIGNAL(conListSelected(int)),
                       this, SLOT(conListSelected(int)));
@@ -449,6 +458,12 @@ void ConEditorWindow::conSliderValueChanged(int val){
         val = currentCon->engItems.size() - 1;
     float len = currentCon->engItems[val].conLength;
     conCamera->setPos(-100,2.5,42 + len);
+}
+
+void ConEditorWindow::addToRandomConsist(int id){
+    if(englib->eng[id] == NULL) return;
+    randomConsist->show();
+    new QListWidgetItem ( englib->eng[id]->displayName, &randomConsist->items, id);
 }
 
 void ConEditorWindow::closeEvent( QCloseEvent *event )

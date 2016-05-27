@@ -15,6 +15,7 @@ class Consist;
 class EngLib;
 class Eng;
 class AboutWindow;
+class RandomConsist;
 
 class ConEditorWindow : public QMainWindow {
     Q_OBJECT
@@ -45,6 +46,7 @@ public slots:
     void cDurabilitySelected();
     void vResetShapeViewSelected();
     void eFindConsistsByEng();
+    void addToRandomConsist(int id);
     
 signals:
     void showEng(QString path, QString name);
@@ -65,6 +67,7 @@ private:
     QScrollBar *conSlider;
     
     AboutWindow* aboutWindow;
+    RandomConsist* randomConsist;
     
     QMenu *fileMenu;
     QMenu *viewMenu;

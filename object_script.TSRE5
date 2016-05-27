@@ -65,6 +65,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/PropertiesTransfer.o
 ./build/Release/MinGW_QT_static-Windows/PropertiesUndefined.o
 ./build/Release/MinGW_QT_static-Windows/QuadTree.o
+./build/Release/MinGW_QT_static-Windows/RandomConsist.o
 ./build/Release/MinGW_QT_static-Windows/ReadFile.o
 ./build/Release/MinGW_QT_static-Windows/Ref.o
 ./build/Release/MinGW_QT_static-Windows/Route.o
@@ -148,6 +149,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesStatic.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesTransfer.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesUndefined.o
+./build/Release/MinGW_QT_static-Windows/moc_RandomConsist.o
 ./build/Release/MinGW_QT_static-Windows/moc_SignalWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_SignalWindowLink.o
 ./build/Release/MinGW_QT_static-Windows/moc_TerrainTools.o
