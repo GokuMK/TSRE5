@@ -14,6 +14,7 @@
 #include "GuiFunct.h"
 #include "ConUnitsWidget.h"
 #include "AboutWindow.h"
+#include "OverwriteDialog.h"
 
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
     aboutWindow = new AboutWindow();
@@ -248,6 +249,28 @@ void ConEditorWindow::vResetShapeViewSelected(){
 
 void ConEditorWindow::saveCurrentConsist(){
     if(currentCon == NULL) return;
+    if(currentCon->isNewConsist()){
+        OverwriteDialog owerwriteDialog;
+        owerwriteDialog.setWindowTitle("Overwrite?");
+        owerwriteDialog.name.setText(currentCon->conName);
+        QString spath;
+        do {
+            spath = currentCon->path + "/" + currentCon->name;
+            spath.replace("//", "/");
+            qDebug() << spath;
+            QFile file(spath);
+            if(!file.exists())
+                break;
+            owerwriteDialog.exec();
+            if(owerwriteDialog.changed == 0)
+                return;
+            if(owerwriteDialog.changed == 1)
+                break;
+            //currentCon->conName = owerwriteDialog.name.text();
+            //currentCon->name = currentCon->conName + ".con";
+            //cFileName.setText(currentCon->conName);
+        } while(owerwriteDialog.changed == 2);
+    }
     Game::currentEngLib = englib;
     currentCon->save();
 }

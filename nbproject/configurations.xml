@@ -16,6 +16,7 @@
         <itemPath>ConListWidget.h</itemPath>
         <itemPath>ConUnitsWidget.h</itemPath>
         <itemPath>EngListWidget.h</itemPath>
+        <itemPath>OverwriteDialog.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="fileFunctions" projectFiles="true">
         <itemPath>FileBuffer.h</itemPath>
@@ -169,6 +170,7 @@
         <itemPath>ConListWidget.cpp</itemPath>
         <itemPath>ConUnitsWidget.cpp</itemPath>
         <itemPath>EngListWidget.cpp</itemPath>
+        <itemPath>OverwriteDialog.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="fileFunctions" projectFiles="true">
         <itemPath>FileBuffer.cpp</itemPath>
@@ -523,6 +525,10 @@
       <item path="OglObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OverwriteDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OverwriteDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PaintTexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1016,6 +1022,10 @@
       <item path="OglObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OverwriteDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OverwriteDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PaintTexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>

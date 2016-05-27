@@ -202,6 +202,24 @@ void Eng::load(){
                     ParserX::pominsekcje(data);
                     continue;
                 }
+                if (sh == ("maxpower")) {
+                    maxPower = ParserX::parsujrInside(data);
+                    //qDebug() << "maxPower "<<maxPower;
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                if (sh == ("maxcurrent")) {
+                    maxCurrent = ParserX::parsujrInside(data);
+                    //qDebug() << "maxCurrent "<<maxCurrent;
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
+                if (sh == ("maxforce")) {
+                    maxForce = ParserX::parsujrInside(data);
+                    //qDebug() << "maxForce "<<maxForce / 1000;
+                    ParserX::pominsekcje(data);
+                    continue;
+                }
                 ParserX::pominsekcje(data);
             }
             ParserX::pominsekcje(data);

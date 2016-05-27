@@ -29,6 +29,9 @@ public:
     float sizey;
     float sizez;
     float maxSpeed = 0;
+    float maxForce = 0;
+    float maxPower = 0;
+    float maxCurrent = 0;
     int flip = flip;
     int loaded = -1;
     bool kierunek = false;

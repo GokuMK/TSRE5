@@ -416,21 +416,7 @@ float ParserX::parsujr(FileBuffer* bufor){
             }
         }
     }
-    if(b == 'c'){
-        b = bufor->get();
-        bufor->off++;
-        if(b == 'm')
-            x = x/100.0;
-    } else if(b == 'm'){
-        b = bufor->get();
-        bufor->off++;
-        if(b == 'p'){
-            b = bufor->get();
-            bufor->off++;
-            if(b == 'h')
-                x = x*1.609344;
-        }
-    }
+    x = numberUnit(x, b, bufor);
     
     bufor->off -= 2;
     return x;
@@ -501,24 +487,43 @@ float ParserX::parsujrInside(FileBuffer* bufor, bool *ok){
             }
         }
     }    
-    if(b == 'c'){
-        b = bufor->get();
-        bufor->off++;
-        if(b == 'm')
-            x = x/100.0;
-    } else if(b == 'm'){
-        b = bufor->get();
-        bufor->off++;
-        if(b == 'p'){
-            b = bufor->get();
-            bufor->off++;
-            if(b == 'h')
-                x = x*1.609344;
-        }
-    }
-    
+    x = numberUnit(x, b, bufor);
     bufor->off -= 2;
     if(ok != NULL) *ok = true;
+    return x;
+}
+
+float ParserX::numberUnit(float x, char b, FileBuffer* bufor){
+        if(b == 'c' || b == 'C'){
+        b = bufor->get();
+        bufor->off++;
+        if(b == 'm' || b == 'M')
+            x = x/100.0;
+    } else if(b == 'm' || b == 'M'){
+        b = bufor->get();
+        bufor->off++;
+        if(b == 'p' || b == 'P'){
+            b = bufor->get();
+            bufor->off++;
+            if(b == 'h' || b == 'H')
+                x = x*1.609344;
+        }
+    } else if(b == 'l' || b == 'L'){
+        b = bufor->get();
+        bufor->off++;
+        if(b == 'b' || b == 'B'){
+            b = bufor->get();
+            bufor->off++;
+            if(b == 'f' || b == 'F')
+                x = x*4.448221615;
+        }
+    } else if(b == 'k' || b == 'K'){
+        b = bufor->get();
+        bufor->off++;
+        if(b == 'n' || b == 'N'){
+            x = x*1000;
+        }
+    }
     return x;
 }
 //-----------------------------------

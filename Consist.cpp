@@ -185,6 +185,7 @@ void Consist::initPos(){
     float size = 0;
     float tmaxspeed = 0;
     //float tengmass = 0;
+    float maxForce = 0;
     for(int i = 0; i < engItems.size(); i++){
         engItems[i].conLength = conLength;
         if(engItems[i].eng < 0) continue;
@@ -194,16 +195,23 @@ void Consist::initPos(){
         length += size / 2.0;
         conLength += size;
         mass += Game::currentEngLib->eng[engItems[i].eng]->mass;
-        if(Game::currentEngLib->eng[engItems[i].eng]->wagonTypeId > 4){
+        if(Game::currentEngLib->eng[engItems[i].eng]->wagonTypeId >= 4){
             if(Game::currentEngLib->eng[engItems[i].eng]->maxSpeed > tmaxspeed)
                 tmaxspeed = Game::currentEngLib->eng[engItems[i].eng]->maxSpeed;
             emass += Game::currentEngLib->eng[engItems[i].eng]->mass;
+            maxForce += Game::currentEngLib->eng[engItems[i].eng]->maxForce;
         }
     }
 
+
+    //qDebug() << "mv "<< this->maxVelocity[0] <<" "<< this->maxVelocity[1];
     this->maxVelocity[0] = tmaxspeed / 3.6;
-    this->maxVelocity[1] = emass / mass;
-    
+    //this->maxVelocity[1] = emass / mass;
+    //qDebug() << maxForce*0.001 << " "<< mass;
+    this->maxVelocity[1] = 0.8*maxForce*0.001 / mass;
+    if(this->maxVelocity[1] > 1) this->maxVelocity[1] = 1;
+    if(this->maxVelocity[1] < 0.001) this->maxVelocity[1] = 0.001;
+    //qDebug() << "mv "<< this->maxVelocity[0] <<" "<< this->maxVelocity[1];
     posInit = true;
 }
 
@@ -300,7 +308,7 @@ void Consist::moveRightSelected(){
 
 void  Consist::setFileName(QString n){
     this->conName = n;
-    this->name = n;
+    this->name = n+".con";
     modified = true;
 }
 void  Consist::setDisplayName(QString n){

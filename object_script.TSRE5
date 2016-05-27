@@ -43,6 +43,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/OSM.o
 ./build/Release/MinGW_QT_static-Windows/ObjTools.o
 ./build/Release/MinGW_QT_static-Windows/OglObj.o
+./build/Release/MinGW_QT_static-Windows/OverwriteDialog.o
 ./build/Release/MinGW_QT_static-Windows/PaintTexLib.o
 ./build/Release/MinGW_QT_static-Windows/ParserX.o
 ./build/Release/MinGW_QT_static-Windows/Path.o
@@ -132,6 +133,7 @@ INPUT(
 ./build/Release/MinGW_QT_static-Windows/moc_NaviWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_NewRouteWindow.o
 ./build/Release/MinGW_QT_static-Windows/moc_ObjTools.o
+./build/Release/MinGW_QT_static-Windows/moc_OverwriteDialog.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesAbstract.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesCarspawner.o
 ./build/Release/MinGW_QT_static-Windows/moc_PropertiesDyntrack.o
