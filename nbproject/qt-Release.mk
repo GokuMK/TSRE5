@@ -23065,7 +23065,8 @@ build/Release/MinGW_QT_static-Windows/Game.o: Game.cpp Game.h \
 		CELoadWindow.h \
 		SoundList.h \
 		ShapeLib.h \
-		EngLib.h
+		EngLib.h \
+		C:/Qt/Static/5.4.1/include/QtGui/QColor
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/Game.o Game.cpp
 
 build/Release/MinGW_QT_static-Windows/GuiFunct.o: GuiFunct.cpp GuiFunct.h \

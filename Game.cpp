@@ -8,6 +8,7 @@
 #include "SoundList.h"
 #include "ShapeLib.h"
 #include "EngLib.h"
+#include <QColor>
 
 TDB *Game::trackDB = NULL;
 TDB *Game::roadDB = NULL;    
@@ -54,7 +55,8 @@ Window* Game::window = NULL;
 LoadWindow* Game::loadWindow = NULL;
 ShapeLib *Game::currentShapeLib = NULL;
 EngLib *Game::currentEngLib = NULL;
-
+QColor *Game::colorConView = NULL;
+QColor *Game::colorShapeView = NULL;
 void Game::load() {
     
     QString sh;
@@ -141,6 +143,10 @@ void Game::load() {
                 renderTrItems = true;
         if(val == "geoPath")
             geoPath = args[1].trimmed();
+        if(val == "colorConView")
+            colorConView = new QColor(args[1].trimmed());
+        if(val == "colorShapeView")
+            colorShapeView = new QColor(args[1].trimmed());
     }
 }
 

@@ -20,7 +20,7 @@ public:
     static QString odczytajtcInside(FileBuffer* bufor);
     static float parsujr(FileBuffer* bufor);
     static float parsujrInside(FileBuffer* bufor, bool *ok = NULL);
-    static float numberUnit(float x, char b, FileBuffer* bufor);
+    static float numberUnit(float x, char &b, FileBuffer* bufor);
     static unsigned int parsujUint(FileBuffer* bufor);
     static unsigned int parsuj16(FileBuffer* bufor);
     static int pominsekcje(FileBuffer* bufor);

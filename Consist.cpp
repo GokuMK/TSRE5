@@ -14,6 +14,7 @@
 #include "TextObj.h"
 
 std::unordered_map<int, TextObj*> Consist::txtNumbers;
+int Consist::lastTxtNumbersColor = 0;
 TextObj * Consist::txtEngineE = NULL;
 TextObj * Consist::txtEngineD = NULL;
 TextObj * Consist::txtEngineS = NULL;
@@ -342,6 +343,45 @@ void Consist::render(int selectionColor) {
     render(0, 0, selectionColor);
 }
 
+void Consist::setTextColor(float* bgColor) {
+    //qDebug() << "new color";
+    if(bgColor[0]< 30.0/255.0 && bgColor[1] < 30.0/255.0 && bgColor[2] < 30.0/255.0){
+        textColor[0] = 255;
+        textColor[1] = 255;
+        textColor[2] = 0;
+    } else {
+        textColor[0] = fabs(bgColor[0] - 1.0)*255.0;
+        textColor[1] = fabs(bgColor[1] - 1.0)*255.0;
+        textColor[2] = fabs(bgColor[2] - 1.0)*255.0;
+    }
+    int colorHash = textColor[0]*255 + textColor[1]*255 + textColor[2]*255;
+    
+    if(colorHash != lastTxtColor){
+        lastTxtColor = colorHash;
+        for(int i = 0; i < engItems.size(); i++){
+            if(engItems[i].txt != NULL) 
+                delete engItems[i].txt;
+            engItems[i].txt = NULL;
+        }
+    }
+    
+    if(colorHash != lastTxtNumbersColor){
+        //qDebug() << "new global color";
+        if(txtEngineT != NULL) delete txtEngineT;
+        if(txtEngineF != NULL) delete txtEngineF;
+        if(txtEngineW != NULL) delete txtEngineW;
+        txtEngineT = NULL;
+        txtEngineF = NULL;
+        txtEngineW = NULL;
+        lastTxtNumbersColor = colorHash;
+        for(int i = 0; i < txtNumbers.size(); i++){
+            if(txtNumbers[i] != NULL) 
+                delete txtNumbers[i];
+            txtNumbers[i] = NULL;
+        }
+    }
+}
+
 void Consist::render(int aktwx, int aktwz, int selectionColor) {
     //gl.glTranslatef(0, 0.2f, 0);
     //qDebug() << loaded;
@@ -372,9 +412,10 @@ void Consist::render(int aktwx, int aktwz, int selectionColor) {
         gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
         if(engItems[i].txt == NULL){
             engItems[i].txt = new TextObj(Game::currentEngLib->eng[engItems[i].eng]->displayName, 16, 1.0);
-            engItems[i].txt->setColor(255,255,0);
-            if(Game::systemTheme)
-                engItems[i].txt->setColor(0,0,0);
+            //engItems[i].txt->setColor(255,255,0);
+            //if(Game::systemTheme)
+            //    engItems[i].txt->setColor(0,0,0);
+            engItems[i].txt->setColor(textColor[0],textColor[1],textColor[2]);
         }        
         engItems[i].txt->render();
         gluu->mvPopMatrix();
@@ -385,9 +426,7 @@ void Consist::render(int aktwx, int aktwz, int selectionColor) {
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         if(txtNumbers[i] == NULL){
             txtNumbers[i] = new TextObj(i+1);
-            txtNumbers[i]->setColor(255,255,0);
-            if(Game::systemTheme)
-                txtNumbers[i]->setColor(0,0,0);
+            txtNumbers[i]->setColor(textColor[0],textColor[1],textColor[2]);
         }
         txtNumbers[i]->render(M_PI/2);
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0, -1);
@@ -396,27 +435,21 @@ void Consist::render(int aktwx, int aktwz, int selectionColor) {
         if(wt == 1){
             if(txtEngineW == NULL){
                 txtEngineW = new TextObj("C");
-                txtEngineW->setColor(255,255,0);
-                if(Game::systemTheme)
-                    txtEngineW->setColor(0,0,0);
+                txtEngineW->setColor(textColor[0],textColor[1],textColor[2]);
             }
             txtEngineW->render(M_PI/2);
         }
         if(wt == 2){
             if(txtEngineF == NULL){
                 txtEngineF = new TextObj("F");
-                txtEngineF->setColor(255,255,0);
-                if(Game::systemTheme)
-                    txtEngineF->setColor(0,0,0);
+                txtEngineF->setColor(textColor[0],textColor[1],textColor[2]);
             }
             txtEngineF->render(M_PI/2);
         }
         if(wt == 3){
             if(txtEngineT == NULL){
                 txtEngineT = new TextObj("T");
-                txtEngineT->setColor(255,255,0);
-                if(Game::systemTheme)
-                    txtEngineT->setColor(0,0,0);
+                txtEngineT->setColor(textColor[0],textColor[1],textColor[2]);
             }
             txtEngineT->render(M_PI/2);
         }

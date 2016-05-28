@@ -159,7 +159,7 @@ void EngListWidget::addEndButtonSelected(int count){
 void EngListWidget::addRndButtonSelected(){
     QListWidgetItem * item = items.currentItem();
     if(item == NULL) return;
-    emit addToRandomConsist(item->type());
+    emit f0(item->type());
 }
 
 bool EngListWidget::eventFilter(QObject *obj, QEvent *event) {

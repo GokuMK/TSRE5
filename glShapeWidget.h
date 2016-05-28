@@ -15,6 +15,7 @@ class GLUU;
 class Camera;
 class ShapeLib;
 class EngLib;
+class QImage;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -32,8 +33,11 @@ public:
     void setCamera(Camera* cam);
     ShapeLib *currentShapeLib = NULL;
     EngLib *currentEngLib = NULL;
+    QImage *screenShot = NULL;
     void setMode(QString n);
     void resetRot();
+    void getImg();
+    void setBackgroundGlColor(float r, float g, float b);
 public slots:
     void showEng(QString path, QString name);
     void showCon(int id);
@@ -78,6 +82,8 @@ private:
     float rotY = 0;
     float rotZ = 0;
     bool selection = false;
+    bool getImage = false;
+    float backgroundGlColor[3];
 };
 
 #endif	/* GLSHAPEWIDGET_H */

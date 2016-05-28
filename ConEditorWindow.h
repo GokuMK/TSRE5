@@ -42,11 +42,17 @@ public slots:
     void newConsist();
     void cFileNameSelected(QString n); 
     void cDisplayNameSelected(QString n); 
-    void cReverseSelected();
-    void cDurabilitySelected();
-    void vResetShapeViewSelected();
-    void eFindConsistsByEng();
-    void addToRandomConsist(int id);
+    // microsoft security essentials hangs if these functions have full names
+    // on my windows 7 ...
+    void f7();//cReverseSelected();
+    void f8();//cDurabilitySelected();
+    void f4(); //eFindConsistsByEng(); 
+    void f0(int id); //addToRandomConsist
+    void f1(); //vResetShapeView
+    void f2(); //vGetImgShapeView
+    void f3(); //vCopyImgShapeView
+    void f5(); //vSetColorShapeView
+    void f6(); //vSetColorConView
     
 signals:
     void showEng(QString path, QString name);
@@ -71,6 +77,7 @@ private:
     
     QMenu *fileMenu;
     QMenu *viewMenu;
+    QMenu *view3dMenu;
     QMenu *engMenu;
     QMenu *helpMenu;
     QMenu *consistMenu;
@@ -86,6 +93,9 @@ private:
     QAction *vEngView;
     QAction *vConView;
     QAction *vResetShapeView;
+    QAction *vGetImgShapeView;
+    QAction *vSetColorShapeView;
+    QAction *vSetColorConView;
     QAction *aboutAction;
     
     QWidget *conInfo;

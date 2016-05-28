@@ -13,6 +13,7 @@ class TDB;
 class SoundList;
 class ShapeLib;
 class EngLib;
+class QColor;
 
 class Game {
 public:
@@ -65,6 +66,8 @@ public:
     static QString geoPath;
     static ShapeLib *currentShapeLib;
     static EngLib *currentEngLib;
+    static QColor *colorConView;
+    static QColor *colorShapeView;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

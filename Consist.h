@@ -10,6 +10,8 @@ class TextObj;
 class Consist {
 public:
     static std::unordered_map<int, TextObj*> txtNumbers;
+    static int lastTxtNumbersColor;
+    int lastTxtColor;
     static TextObj * txtEngineE;
     static TextObj * txtEngineD;
     static TextObj * txtEngineS;
@@ -46,6 +48,8 @@ public:
     bool kierunek = false;
     int ref = 0;
     int posInit = false;
+    int selectedIdx = -1;
+    float textColor[3];
     std::vector<EngItem> engItems;
     Consist(QString p, QString n);
     Consist(QString src, QString p, QString n);
@@ -65,13 +69,13 @@ public:
     void setFileName(QString n);
     void setDisplayName(QString n);
     void reverse();
+    void setTextColor(float *bgColor);
     void setDurability(float val);
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);
 private:
     void initPos();
     bool newConsist = false;
-    int selectedIdx = -1;
     bool modified = false;
     bool defaultValue = false;
 };

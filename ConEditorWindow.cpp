@@ -27,8 +27,12 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     Game::currentEngLib = englib;
     ConLib::loadAll(Game::root);
     glShapeWidget = new GlShapeWidget(this);
+    if(Game::colorShapeView != NULL)
+        glShapeWidget->setBackgroundGlColor(Game::colorShapeView->redF(), Game::colorShapeView->greenF(), Game::colorShapeView->blueF());
     //glShapeWidget->currentEngLib = englib;
     glConWidget = new GlShapeWidget(this);
+    if(Game::colorConView != NULL)
+        glConWidget->setBackgroundGlColor(Game::colorConView->redF(), Game::colorConView->greenF(), Game::colorConView->blueF());
     glConWidget->currentEngLib = englib;
     conCamera = new CameraConsist();
     conCamera->setPos(-100,2.5,42);
@@ -170,11 +174,11 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     consistMenu = menuBar()->addMenu(tr("&Consist"));
     cReverse = new QAction(tr("&Reverse"), this); 
     consistMenu->addAction(cReverse);
-    QObject::connect(cReverse, SIGNAL(triggered(bool)), this, SLOT(cReverseSelected()));
+    QObject::connect(cReverse, SIGNAL(triggered(bool)), this, SLOT(f7()));
     engMenu = menuBar()->addMenu(tr("&Eng"));
     eFindCons = new QAction(tr("&Find Consists"), this); 
     engMenu->addAction(eFindCons);
-    QObject::connect(eFindCons, SIGNAL(triggered(bool)), this, SLOT(eFindConsistsByEng()));
+    QObject::connect(eFindCons, SIGNAL(triggered(bool)), this, SLOT(f4()));
     viewMenu = menuBar()->addMenu(tr("&View"));
     vConList = GuiFunct::newMenuCheckAction(tr("&Consist List"), this); 
     viewMenu->addAction(vConList);
@@ -194,9 +198,19 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     vConView = GuiFunct::newMenuCheckAction(tr("&Con View"), this); 
     viewMenu->addAction(vConView);
     QObject::connect(vConView, SIGNAL(triggered(bool)), this, SLOT(viewConView(bool)));
-    vResetShapeView = new QAction(tr("&Reset Shape View"), this); 
-    viewMenu->addAction(vResetShapeView);
-    QObject::connect(vResetShapeView, SIGNAL(triggered()), this, SLOT(vResetShapeViewSelected()));
+    view3dMenu = menuBar()->addMenu(tr("&3D View"));
+    vResetShapeView = new QAction(tr("&Shape View: Reset"), this); 
+    view3dMenu->addAction(vResetShapeView);
+    QObject::connect(vResetShapeView, SIGNAL(triggered()), this, SLOT(f1()));
+    vGetImgShapeView = new QAction(tr("&Shape View: Copy Image"), this); 
+    view3dMenu->addAction(vGetImgShapeView);
+    QObject::connect(vGetImgShapeView, SIGNAL(triggered()), this, SLOT(f2()));
+    vSetColorShapeView = new QAction(tr("&Shape View: Set Color"), this); 
+    view3dMenu->addAction(vSetColorShapeView);
+    QObject::connect(vSetColorShapeView, SIGNAL(triggered()), this, SLOT(f5()));
+    vSetColorConView = new QAction(tr("&Con View: Set Color"), this); 
+    view3dMenu->addAction(vSetColorConView);
+    QObject::connect(vSetColorConView, SIGNAL(triggered()), this, SLOT(f6()));
     helpMenu = menuBar()->addMenu(tr("&Help"));
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -215,10 +229,10 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QObject::connect(randomConsist, SIGNAL(addToConSelected(int, int, int)),
                       this, SLOT(addToConSelected(int, int, int)));
     
-    QObject::connect(eng1, SIGNAL(addToRandomConsist(int)),
-                      this, SLOT(addToRandomConsist(int)));
-    QObject::connect(eng2, SIGNAL(addToRandomConsist(int)),
-                      this, SLOT(addToRandomConsist(int)));
+    QObject::connect(eng1, SIGNAL(f0(int)),
+                      this, SLOT(f0(int)));
+    QObject::connect(eng2, SIGNAL(f0(int)),
+                      this, SLOT(f0(int)));
     
     QObject::connect(con1, SIGNAL(conListSelected(int)),
                       this, SLOT(conListSelected(int)));
@@ -251,7 +265,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
                       this, SLOT(cDisplayNameSelected(QString))); 
     
     QObject::connect(&cDurability, SIGNAL(editingFinished()),
-                      this, SLOT(cDurabilitySelected())); 
+                      this, SLOT(f8())); 
 
     vEngList2->trigger();
     vConUnits->trigger();
@@ -260,14 +274,35 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
 ConEditorWindow::~ConEditorWindow() {
 }
 
-void ConEditorWindow::eFindConsistsByEng(){
+void ConEditorWindow::f6(){
+    QColor color = QColorDialog::getColor(Qt::black, this, "Shape View Color",  QColorDialog::DontUseNativeDialog);
+    glConWidget->setBackgroundGlColor((float)color.redF(), (float)color.greenF(), (float)color.blueF());
+}
+
+void ConEditorWindow::f5(){
+    QColor color = QColorDialog::getColor(Qt::black, this, "Shape View Color",  QColorDialog::DontUseNativeDialog);
+    glShapeWidget->setBackgroundGlColor((float)color.redF(), (float)color.greenF(), (float)color.blueF());
+}
+
+void ConEditorWindow::f4(){
     if(currentEng == NULL) return;
     int eid = englib->getEngByPathid(currentEng->pathid);
     if(eid < 0) return;
     con1->findConsistsByEng(eid);
 }
 
-void ConEditorWindow::vResetShapeViewSelected(){
+void ConEditorWindow::f3(){
+    if(glShapeWidget->screenShot != NULL)
+        QApplication::clipboard()->setImage((glShapeWidget->screenShot->mirrored(false, true)), QClipboard::Clipboard);
+}
+
+void ConEditorWindow::f2(){
+    if(currentEng == NULL) return;
+    glShapeWidget->getImg();
+    QTimer::singleShot(500, this, SLOT(f3()));
+}/**/
+
+void ConEditorWindow::f1(){
     if(currentEng == NULL) return;
     float pos = -currentEng->sizez-1;
     if(pos > -15) pos = -15;
@@ -313,7 +348,7 @@ void ConEditorWindow::about(){
     aboutWindow->show();
 }
 
-void ConEditorWindow::cDurabilitySelected(){
+void ConEditorWindow::f8(){
     if(currentCon == NULL) return;
     currentCon->setDurability(cDurability.value());
 }
@@ -333,7 +368,7 @@ void ConEditorWindow::cDisplayNameSelected(QString n){
     currentCon->setDisplayName(n);
 }
 
-void ConEditorWindow::cReverseSelected(){
+void ConEditorWindow::f7(){
     if(currentCon == NULL) return;
     Game::currentEngLib = englib;
     currentCon->reverse();
@@ -428,12 +463,19 @@ void ConEditorWindow::addToConSelected(int id, int pos, int count){
     for(int i = 0; i < count; i++)
         currentCon->appendEngItem(id, pos);
     refreshCurrentCon();
+    if(pos == 0)
+        conSlider->setValue(0);
+    if(pos == 2)
+        conSlider->setValue(currentCon->engItems.size()-2);
+    if(pos == 1)
+        conSlider->setValue(currentCon->selectedIdx);
 }
 
 void ConEditorWindow::conListSelected(int id){
     currentCon = ConLib::con[id];
     qDebug() << currentCon->conName;
     refreshCurrentCon();
+    conSlider->setValue(0);
     emit showCon(id);
 }
 
@@ -441,6 +483,8 @@ void ConEditorWindow::refreshCurrentCon(){
     units->setCon(currentCon);
     conSlider->setMinimum(0);
     conSlider->setMaximum(currentCon->engItems.size());
+    if(conSlider->value() > conSlider->maximum())
+        conSlider->setValue(conSlider->maximum());
     cFileName.setText(currentCon->conName);
     cDisplayName.setText(currentCon->displayName);
     cMass.setText(QString::number(currentCon->mass) + " t");
@@ -459,8 +503,8 @@ void ConEditorWindow::conSliderValueChanged(int val){
     float len = currentCon->engItems[val].conLength;
     conCamera->setPos(-100,2.5,42 + len);
 }
-
-void ConEditorWindow::addToRandomConsist(int id){
+//addToRandomConsist
+void ConEditorWindow::f0(int id){
     if(englib->eng[id] == NULL) return;
     randomConsist->show();
     new QListWidgetItem ( englib->eng[id]->displayName, &randomConsist->items, id);

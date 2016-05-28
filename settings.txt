@@ -35,6 +35,8 @@ geoPath = F:/hgst
 
 # misc
 #systemTheme = true
+#colorConView = #FF0000
+#colorShapeView = #00FF00
 #toolsHidden = true
 usenNumPad = true
 tileLod = 2

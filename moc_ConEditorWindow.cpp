@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ConEditorWindow_t {
-    QByteArrayData data[35];
-    char stringdata[425];
+    QByteArrayData data[39];
+    char stringdata[353];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -59,11 +59,15 @@ QT_MOC_LITERAL(26, 274, 10), // "newConsist"
 QT_MOC_LITERAL(27, 285, 17), // "cFileNameSelected"
 QT_MOC_LITERAL(28, 303, 1), // "n"
 QT_MOC_LITERAL(29, 305, 20), // "cDisplayNameSelected"
-QT_MOC_LITERAL(30, 326, 16), // "cReverseSelected"
-QT_MOC_LITERAL(31, 343, 19), // "cDurabilitySelected"
-QT_MOC_LITERAL(32, 363, 23), // "vResetShapeViewSelected"
-QT_MOC_LITERAL(33, 387, 18), // "eFindConsistsByEng"
-QT_MOC_LITERAL(34, 406, 18) // "addToRandomConsist"
+QT_MOC_LITERAL(30, 326, 2), // "f7"
+QT_MOC_LITERAL(31, 329, 2), // "f8"
+QT_MOC_LITERAL(32, 332, 2), // "f4"
+QT_MOC_LITERAL(33, 335, 2), // "f0"
+QT_MOC_LITERAL(34, 338, 2), // "f1"
+QT_MOC_LITERAL(35, 341, 2), // "f2"
+QT_MOC_LITERAL(36, 344, 2), // "f3"
+QT_MOC_LITERAL(37, 347, 2), // "f5"
+QT_MOC_LITERAL(38, 350, 2) // "f6"
 
     },
     "ConEditorWindow\0showEng\0\0path\0name\0"
@@ -74,9 +78,8 @@ QT_MOC_LITERAL(34, 406, 18) // "addToRandomConsist"
     "about\0conUnitSelected\0uid\0saveCurrentConsist\0"
     "refreshCurrentCon\0addToConSelected\0"
     "pos\0count\0newConsist\0cFileNameSelected\0"
-    "n\0cDisplayNameSelected\0cReverseSelected\0"
-    "cDurabilitySelected\0vResetShapeViewSelected\0"
-    "eFindConsistsByEng\0addToRandomConsist"
+    "n\0cDisplayNameSelected\0f7\0f8\0f4\0f0\0"
+    "f1\0f2\0f3\0f5\0f6"
 };
 #undef QT_MOC_LITERAL
 
@@ -86,7 +89,7 @@ static const uint qt_meta_data_ConEditorWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      24,   14, // methods
+      28,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -94,32 +97,36 @@ static const uint qt_meta_data_ConEditorWindow[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,  134,    2, 0x06 /* Public */,
-       5,    1,  139,    2, 0x06 /* Public */,
+       1,    2,  154,    2, 0x06 /* Public */,
+       5,    1,  159,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    1,  142,    2, 0x0a /* Public */,
-       8,    1,  145,    2, 0x0a /* Public */,
-       9,    1,  148,    2, 0x0a /* Public */,
-      11,    1,  151,    2, 0x0a /* Public */,
-      13,    1,  154,    2, 0x0a /* Public */,
-      14,    1,  157,    2, 0x0a /* Public */,
-      15,    1,  160,    2, 0x0a /* Public */,
-      16,    1,  163,    2, 0x0a /* Public */,
-      17,    1,  166,    2, 0x0a /* Public */,
-      18,    0,  169,    2, 0x0a /* Public */,
-      19,    1,  170,    2, 0x0a /* Public */,
-      21,    0,  173,    2, 0x0a /* Public */,
-      22,    0,  174,    2, 0x0a /* Public */,
-      23,    3,  175,    2, 0x0a /* Public */,
-      26,    0,  182,    2, 0x0a /* Public */,
-      27,    1,  183,    2, 0x0a /* Public */,
-      29,    1,  186,    2, 0x0a /* Public */,
-      30,    0,  189,    2, 0x0a /* Public */,
-      31,    0,  190,    2, 0x0a /* Public */,
-      32,    0,  191,    2, 0x0a /* Public */,
-      33,    0,  192,    2, 0x0a /* Public */,
-      34,    1,  193,    2, 0x0a /* Public */,
+       7,    1,  162,    2, 0x0a /* Public */,
+       8,    1,  165,    2, 0x0a /* Public */,
+       9,    1,  168,    2, 0x0a /* Public */,
+      11,    1,  171,    2, 0x0a /* Public */,
+      13,    1,  174,    2, 0x0a /* Public */,
+      14,    1,  177,    2, 0x0a /* Public */,
+      15,    1,  180,    2, 0x0a /* Public */,
+      16,    1,  183,    2, 0x0a /* Public */,
+      17,    1,  186,    2, 0x0a /* Public */,
+      18,    0,  189,    2, 0x0a /* Public */,
+      19,    1,  190,    2, 0x0a /* Public */,
+      21,    0,  193,    2, 0x0a /* Public */,
+      22,    0,  194,    2, 0x0a /* Public */,
+      23,    3,  195,    2, 0x0a /* Public */,
+      26,    0,  202,    2, 0x0a /* Public */,
+      27,    1,  203,    2, 0x0a /* Public */,
+      29,    1,  206,    2, 0x0a /* Public */,
+      30,    0,  209,    2, 0x0a /* Public */,
+      31,    0,  210,    2, 0x0a /* Public */,
+      32,    0,  211,    2, 0x0a /* Public */,
+      33,    1,  212,    2, 0x0a /* Public */,
+      34,    0,  215,    2, 0x0a /* Public */,
+      35,    0,  216,    2, 0x0a /* Public */,
+      36,    0,  217,    2, 0x0a /* Public */,
+      37,    0,  218,    2, 0x0a /* Public */,
+      38,    0,  219,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    3,    4,
@@ -146,8 +153,12 @@ static const uint qt_meta_data_ConEditorWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
     QMetaType::Void, QMetaType::Int,    6,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -176,11 +187,15 @@ void ConEditorWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 16: _t->newConsist(); break;
         case 17: _t->cFileNameSelected((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 18: _t->cDisplayNameSelected((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 19: _t->cReverseSelected(); break;
-        case 20: _t->cDurabilitySelected(); break;
-        case 21: _t->vResetShapeViewSelected(); break;
-        case 22: _t->eFindConsistsByEng(); break;
-        case 23: _t->addToRandomConsist((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 19: _t->f7(); break;
+        case 20: _t->f8(); break;
+        case 21: _t->f4(); break;
+        case 22: _t->f0((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 23: _t->f1(); break;
+        case 24: _t->f2(); break;
+        case 25: _t->f3(); break;
+        case 26: _t->f5(); break;
+        case 27: _t->f6(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -226,13 +241,13 @@ int ConEditorWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 24)
+        if (_id < 28)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 24;
+        _id -= 28;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 24)
+        if (_id < 28)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 24;
+        _id -= 28;
     }
     return _id;
 }

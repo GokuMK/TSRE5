@@ -24,7 +24,7 @@ GlShapeWidget::GlShapeWidget(QWidget *parent)
 m_xRot(0),
 m_yRot(0),
 m_zRot(0) {
-
+    backgroundGlColor[0] = -2;
 }
 
 GlShapeWidget::~GlShapeWidget() {
@@ -82,9 +82,18 @@ void GlShapeWidget::initializeGL() {
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GlShapeWidget::cleanup);
     //qDebug() << "initializeOpenGLFunctions();";
     initializeOpenGLFunctions();
-    glClearColor(25.0/255, 25.0/255, 25.0/255, 1);
-    if(Game::systemTheme)
-        glClearColor(1, 1, 1, 1);
+    if(backgroundGlColor[0] == -2){
+        backgroundGlColor[0] = 25.0/255;
+        backgroundGlColor[1] = 25.0/255;
+        backgroundGlColor[2] = 25.0/255;
+        if(Game::systemTheme){
+            backgroundGlColor[0] = 1;
+            backgroundGlColor[1] = 1;
+            backgroundGlColor[2] = 1;
+        }
+    }
+    glClearColor(backgroundGlColor[0], backgroundGlColor[1], backgroundGlColor[2], 1);
+
     gluu->initShader();
 
     glEnable(GL_DEPTH_TEST);
@@ -118,14 +127,21 @@ void GlShapeWidget::initializeGL() {
     setMouseTracking(true);
 }
 
+void GlShapeWidget::setBackgroundGlColor(float r, float g, float b){
+    backgroundGlColor[0] = r;
+    backgroundGlColor[1] = g;
+    backgroundGlColor[2] = b;
+    if(renderItem == 3 && con != NULL){
+        con->setTextColor(backgroundGlColor);
+    }
+}
+
 void GlShapeWidget::paintGL() {
     Game::currentShapeLib = currentShapeLib;
     Game::currentEngLib = currentEngLib;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glClearColor(25.0/255, 25.0/255, 25.0/255, 1);
-    if(Game::systemTheme)
-        glClearColor(1, 1, 1, 1);
+    glClearColor(backgroundGlColor[0], backgroundGlColor[1], backgroundGlColor[2], 1);
 
     float aspect = float(this->width()) / float(this->height());
     Mat4::perspective(gluu->pMatrix, camera->fov*M_PI/180*(1/aspect), aspect, 0.2f, Game::objectLod);
@@ -181,8 +197,28 @@ void GlShapeWidget::paintGL() {
         paintGL();
     }
     
+    if(getImage){
+        qDebug() << "get image";
+        if(screenShot != NULL)
+            delete screenShot;
+        qDebug() << "new image";
+        screenShot = NULL;
+        getImage = false;
+        int* viewport = new int[4];
+        glGetIntegerv(GL_VIEWPORT, viewport);
+        unsigned char* winZ = new unsigned char[viewport[2]*viewport[3]*4];
+        glReadPixels(0, 0, viewport[2], viewport[3], GL_RGBA, GL_UNSIGNED_BYTE, winZ);
+        screenShot = new QImage(winZ, viewport[2], viewport[3], QImage::Format_RGBA8888 );
+        
+    }
+    
     gluu->m_program->release();
 
+}
+
+void GlShapeWidget::getImg() {
+    getImage = true;
+    return;
 }
 
 void GlShapeWidget::resizeGL(int w, int h) {
@@ -273,6 +309,7 @@ void GlShapeWidget::showEng(QString path, QString name){
 void GlShapeWidget::showCon(int id){
     qDebug() << "con id "<< id;
     con = ConLib::con[id];
+    con->setTextColor(backgroundGlColor);
     renderItem = 3;
 }
 
