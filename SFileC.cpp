@@ -252,7 +252,7 @@
         int i, w, n, p, txt;
         int v_ilosc;
 
-        fvertex* vert = new fvertex[50000];
+        fvertex* vert = new fvertex[120000];
 
         bufor->off += 9; // pominiecie ilosci lodcontrols;
 

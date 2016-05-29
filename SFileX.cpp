@@ -202,7 +202,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
     int n, p, txt, nul;
     int v_ilosc;
 
-    fvertex* vert = new fvertex[50000];
+    fvertex* vert = new fvertex[120000];
 
     i = 0; // odczytujemy jeden lodcontrol=0;
     sh = "lod_control";

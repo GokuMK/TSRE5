@@ -27,6 +27,8 @@
         <itemPath>ReadFile.h</itemPath>
         <itemPath>TS.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f14" displayName="GEO" projectFiles="true">
+      </logicalFolder>
       <logicalFolder name="f11" displayName="gui" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
           <itemPath>PropertiesAbstract.h</itemPath>
@@ -59,6 +61,8 @@
       <logicalFolder name="f6" displayName="math3d" projectFiles="true">
         <itemPath>Flex.h</itemPath>
         <itemPath>GLMatrix.h</itemPath>
+        <itemPath>HGTfile.h</itemPath>
+        <itemPath>HeightWindow.h</itemPath>
         <itemPath>IghCoords.h</itemPath>
         <itemPath>Intersections.h</itemPath>
         <itemPath>Vector2f.h</itemPath>
@@ -116,6 +120,8 @@
         <itemPath>Texture.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="trains" projectFiles="true">
+        <itemPath>ActLib.h</itemPath>
+        <itemPath>Activity.h</itemPath>
         <itemPath>ConLib.h</itemPath>
         <itemPath>Consist.h</itemPath>
         <itemPath>Eng.h</itemPath>
@@ -185,9 +191,7 @@
       </logicalFolder>
       <logicalFolder name="f12" displayName="GEO" projectFiles="true">
         <itemPath>HGTfile.cpp</itemPath>
-        <itemPath>HGTfile.h</itemPath>
         <itemPath>HeightWindow.cpp</itemPath>
-        <itemPath>HeightWindow.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="gui" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
@@ -278,6 +282,8 @@
         <itemPath>Texture.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="trains" projectFiles="true">
+        <itemPath>ActLib.cpp</itemPath>
+        <itemPath>Activity.cpp</itemPath>
         <itemPath>ConLib.cpp</itemPath>
         <itemPath>Consist.cpp</itemPath>
         <itemPath>Eng.cpp</itemPath>
@@ -361,6 +367,14 @@
       <item path="AceLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="AceLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Activity.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -866,6 +880,14 @@
       <item path="AceLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="AceLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Activity.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
       </item>
