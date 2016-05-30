@@ -10,6 +10,7 @@ class ActLib {
 public:
     static int jestact;
     static std::unordered_map<int, Activity*> act;
+    static std::unordered_map<std::string, std::vector<int>> route;
     ActLib();
     virtual ~ActLib();
     static int addAct(QString path, QString name);

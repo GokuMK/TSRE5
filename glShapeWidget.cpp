@@ -18,6 +18,8 @@
 #include "Consist.h" 
 #include "ShapeLib.h"
 #include "EngLib.h"
+#include "ActLib.h"
+#include "Activity.h"
 
 GlShapeWidget::GlShapeWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -309,6 +311,13 @@ void GlShapeWidget::showEng(QString path, QString name){
 void GlShapeWidget::showCon(int id){
     qDebug() << "con id "<< id;
     con = ConLib::con[id];
+    con->setTextColor(backgroundGlColor);
+    renderItem = 3;
+}
+
+void GlShapeWidget::showCon(int aid, int id){
+    qDebug() << "con aid "<< aid<< " con id "<< id;
+    con = ActLib::act[aid]->activityObjects[id].con;
     con->setTextColor(backgroundGlColor);
     renderItem = 3;
 }

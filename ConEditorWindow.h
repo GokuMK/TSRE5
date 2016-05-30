@@ -27,6 +27,7 @@ public:
 public slots:
     void engListSelected(int id);
     void conListSelected(int id);
+    void conListSelected(int aid, int id);
     void conSliderValueChanged(int val);
     void viewConList(bool show);
     void viewEngList1(bool show);
@@ -57,7 +58,8 @@ public slots:
 signals:
     void showEng(QString path, QString name);
     void showCon(int id);
-
+    void showCon(int aid, int id);
+    
 protected:
     virtual void closeEvent ( QCloseEvent * event );
     

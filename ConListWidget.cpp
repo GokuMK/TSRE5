@@ -2,6 +2,8 @@
 #include "ConLib.h"
 #include "Consist.h"
 #include "Game.h"
+#include "ActLib.h"
+#include "Activity.h"
 
 ConListWidget::ConListWidget() : QWidget(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -11,22 +13,53 @@ ConListWidget::ConListWidget() : QWidget(){
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
     vlist->addRow("Total:",&totalVal);
-    vlist->addRow("Show:",&conType);
+    vlist->addRow("Show:",&conShow);
     vbox->addItem(vlist);
+    vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("Filter:",&conType);
+    conTypeList.setLayout(vlist);
+    vbox->addWidget(&conTypeList);
+    vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("Route:",&routeShow);
+    vlist->addRow("Activity",&actShow);
+    actTypeList.setLayout(vlist);
+    vbox->addWidget(&actTypeList);
     vbox->addWidget(&items);
     //vbox->addStretch(1);
     this->setLayout(vbox);
+    
+    routeShow.setStyleSheet("combobox-popup: 0;");
+    actShow.setStyleSheet("combobox-popup: 0;");
+    conShow.setStyleSheet("combobox-popup: 0;");
+    conShow.addItem("Consists");
+    conShow.addItem("Activity Consists");
+    
     conType.setStyleSheet("combobox-popup: 0;");
     conType.addItem("ALL");
     conType.addItem("Broken");
     conType.addItem("Unsaved");
     conType.addItem("Last Query");
     this->setMinimumWidth(250);
+    
+    
+    actTypeList.hide();
+
     QObject::connect(&items, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(itemsSelected(QListWidgetItem*)));
     
     QObject::connect(&conType, SIGNAL(activated(QString)),
                       this, SLOT(conFChan(QString)));
+    QObject::connect(&conShow, SIGNAL(activated(QString)),
+                      this, SLOT(conTChan(QString)));
+    QObject::connect(&routeShow, SIGNAL(activated(QString)),
+                      this, SLOT(routeTChan(QString)));
+    QObject::connect(&actShow, SIGNAL(activated(QString)),
+                      this, SLOT(actTChan(QString)));
+    
     items.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     totalVal.setEnabled(false);
 }
@@ -43,6 +76,44 @@ void ConListWidget::newConsist(){
     ConLib::jestcon++;
 }
 
+void ConListWidget::conTChan(QString n){
+    if(conShow.currentIndex() == 0){
+        conTypeList.show();
+        actTypeList.hide();
+        conFChan("");
+        currentConType = 0;
+    } else {
+        conTypeList.hide();
+        actTypeList.show();
+        routeFill();
+        currentConType = 1;
+    }
+}
+
+void ConListWidget::routeFill(){
+    routeShow.clear();
+    //foreach(int id, ActLib::route){
+    //    routeShow.addItem(ActLib::act[id]->hname);
+    //}
+    for ( auto it = ActLib::route.begin(); it != ActLib::route.end(); ++it ){
+        routeShow.addItem(QString::fromStdString(it->first));
+    }
+}
+
+void ConListWidget::routeTChan(QString n){
+    actShow.clear();
+    foreach(int id, ActLib::route[n.toStdString()]){
+        actShow.addItem(ActLib::act[id]->hname, QVariant(id));
+    }
+}
+
+void ConListWidget::actTChan(QString n){
+    //actShow.clear();
+    //foreach(int id, ActLib::route[n.toStdString()]){
+    //    actShow.addItem(ActLib::act[id]->hname);
+    //}
+    fillConListAct();
+}
 void ConListWidget::conFChan(QString n){
     if(conType.currentIndex() == 0)
         n = "";
@@ -66,6 +137,22 @@ void ConListWidget::fillConListLastQuery(){
         new QListWidgetItem ( query.item(i)->text(), &items, query.item(i)->type());
     }
     items.sortItems(Qt::AscendingOrder);
+}
+
+void ConListWidget::fillConListAct(){
+    //std::string rname = this->routeShow.currentText();
+    //std::string aname = this->actShow.currentText();
+    int id = actShow.currentData().toInt();
+    items.clear();
+    Game::currentEngLib = englib;
+    Consist * e;
+    
+    
+    for (int i = 0; i < ActLib::act[id]->activityObjects.size(); i++){
+        e = ActLib::act[id]->activityObjects[i].con;
+        if(e == NULL) continue;
+        new QListWidgetItem ( e->showName, &items, i);
+    }
 }
 
 void ConListWidget::fillConList(QString n){
@@ -133,5 +220,8 @@ void ConListWidget::findConsistsByEng(int id){
 void ConListWidget::itemsSelected(QListWidgetItem * item){
     
     //qDebug() << item->type() << " " << item->text();
-    emit conListSelected(item->type());
+    if(currentConType == 0)
+        emit conListSelected(item->type());
+    if(currentConType == 1)
+        emit conListSelected(actShow.currentData().toInt(), item->type());
 }

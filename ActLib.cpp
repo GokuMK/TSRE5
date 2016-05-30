@@ -7,7 +7,8 @@
 
 int ActLib::jestact = 0;
 std::unordered_map<int, Activity*> ActLib::act;
-
+std::unordered_map<std::string, std::vector<int>> ActLib::route;
+ 
 ActLib::ActLib() {
 }
 
@@ -30,7 +31,7 @@ int ActLib::addAct(QString path, QString name) {
     }
     //qDebug() << "Nowy " << jestcon << " con: " << pathid;
     act[jestact] = new Activity(pathid, path, name);
-
+    route[act[jestact]->hrouteid.toStdString()].push_back(jestact);
     return jestact++;
 }
 

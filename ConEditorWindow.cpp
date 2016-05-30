@@ -18,6 +18,7 @@
 #include "UnsavedDialog.h"
 #include "RandomConsist.h"
 #include "ActLib.h"
+#include "Activity.h"
 
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
     aboutWindow = new AboutWindow();
@@ -238,11 +239,16 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QObject::connect(con1, SIGNAL(conListSelected(int)),
                       this, SLOT(conListSelected(int)));
     
+    QObject::connect(con1, SIGNAL(conListSelected(int,int)),
+                      this, SLOT(conListSelected(int,int)));
+    
     QObject::connect(this, SIGNAL(showEng(QString, QString)),
                       glShapeWidget, SLOT(showEng(QString, QString))); 
     
     QObject::connect(this, SIGNAL(showCon(int)),
                       glConWidget, SLOT(showCon(int))); 
+    QObject::connect(this, SIGNAL(showCon(int, int)),
+                      glConWidget, SLOT(showCon(int, int))); 
     
     QObject::connect(conSlider, SIGNAL(valueChanged(int)),
                       this, SLOT(conSliderValueChanged(int))); 
@@ -478,6 +484,14 @@ void ConEditorWindow::conListSelected(int id){
     refreshCurrentCon();
     conSlider->setValue(0);
     emit showCon(id);
+}
+
+void ConEditorWindow::conListSelected(int aid, int id){
+    currentCon = ActLib::act[aid]->activityObjects[id].con;
+    qDebug() << currentCon->showName;
+    refreshCurrentCon();
+    conSlider->setValue(0);
+    emit showCon(aid, id);
 }
 
 void ConEditorWindow::refreshCurrentCon(){

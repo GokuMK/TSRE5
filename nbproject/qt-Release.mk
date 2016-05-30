@@ -19284,7 +19284,8 @@ build/Release/MinGW_QT_static-Windows/ConEditorWindow.o: ConEditorWindow.cpp Con
 		OverwriteDialog.h \
 		UnsavedDialog.h \
 		RandomConsist.h \
-		ActLib.h
+		ActLib.h \
+		Activity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/ConEditorWindow.o ConEditorWindow.cpp
 
 build/Release/MinGW_QT_static-Windows/ConLib.o: ConLib.cpp ConLib.h \
@@ -19819,7 +19820,9 @@ build/Release/MinGW_QT_static-Windows/ConListWidget.o: ConListWidget.cpp ConList
 		ConLib.h \
 		C:/Qt/Static/5.4.1/include/QtCore/QString \
 		Consist.h \
-		Game.h
+		Game.h \
+		ActLib.h \
+		Activity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/ConListWidget.o ConListWidget.cpp
 
 build/Release/MinGW_QT_static-Windows/ConUnitsWidget.o: ConUnitsWidget.cpp ConUnitsWidget.h \
@@ -45677,7 +45680,9 @@ build/Release/MinGW_QT_static-Windows/glShapeWidget.o: glShapeWidget.cpp glShape
 		GLMatrix.h \
 		ConLib.h \
 		Consist.h \
-		ShapeLib.h
+		ShapeLib.h \
+		ActLib.h \
+		Activity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/glShapeWidget.o glShapeWidget.cpp
 
 build/Release/MinGW_QT_static-Windows/glwidget.o: glwidget.cpp glwidget.h \

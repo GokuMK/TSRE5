@@ -41,6 +41,7 @@ public:
 public slots:
     void showEng(QString path, QString name);
     void showCon(int id);
+    void showCon(int aid, int id);
     void cleanup();
 signals:
     void selected(int id);
