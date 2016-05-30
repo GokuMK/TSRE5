@@ -28,6 +28,8 @@
         <itemPath>TS.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f14" displayName="GEO" projectFiles="true">
+        <itemPath>HGTfile.h</itemPath>
+        <itemPath>HeightWindow.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="gui" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
@@ -61,8 +63,6 @@
       <logicalFolder name="f6" displayName="math3d" projectFiles="true">
         <itemPath>Flex.h</itemPath>
         <itemPath>GLMatrix.h</itemPath>
-        <itemPath>HGTfile.h</itemPath>
-        <itemPath>HeightWindow.h</itemPath>
         <itemPath>IghCoords.h</itemPath>
         <itemPath>Intersections.h</itemPath>
         <itemPath>Vector2f.h</itemPath>

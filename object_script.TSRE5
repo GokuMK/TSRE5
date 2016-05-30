@@ -1,6 +1,8 @@
 INPUT(
 ./build/Release/MinGW_QT_static-Windows/AboutWindow.o
 ./build/Release/MinGW_QT_static-Windows/AceLib.o
+./build/Release/MinGW_QT_static-Windows/ActLib.o
+./build/Release/MinGW_QT_static-Windows/Activity.o
 ./build/Release/MinGW_QT_static-Windows/Brush.o
 ./build/Release/MinGW_QT_static-Windows/CELoadWindow.o
 ./build/Release/MinGW_QT_static-Windows/Camera.o

@@ -1,18 +1,19 @@
-/* 
- * File:   ActLib.h
- * Author: Goku
- *
- * Created on 29 maja 2016, 15:06
- */
-
 #ifndef ACTLIB_H
 #define	ACTLIB_H
 
+#include <unordered_map>
+#include <QString>
+
+class Activity;
+
 class ActLib {
 public:
+    static int jestact;
+    static std::unordered_map<int, Activity*> act;
     ActLib();
-    ActLib(const ActLib& orig);
     virtual ~ActLib();
+    static int addAct(QString path, QString name);
+    static int loadAll(QString gameRoot);
 private:
 
 };

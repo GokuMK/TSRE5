@@ -68,9 +68,21 @@ void Consist::load(){
     sh = "Train";
     ParserX::szukajsekcji1(sh, data);
     //qDebug() << data->off << " " << data->length;
+    if(!load(data)){
+        delete data;
+        return;
+    }
+    delete data;
+    loaded = 1;
+    initPos();
+    return;
+}
+
+bool Consist::load(FileBuffer* data){
+    QString sh;
     sh = "TrainCfg";
     int ok = ParserX::szukajsekcji1(sh, data);
-    if(ok == 0) return;
+    if(ok == 0) return false;
     //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
     conName = ParserX::odczytajtc(data).trimmed();
     showName = conName;
@@ -166,11 +178,7 @@ void Consist::load(){
         }
         ParserX::pominsekcje(data);
     }
-
-    delete data;
-    loaded = 1;
-    initPos();
-    return;
+    return true;
 }
 
 void Consist::initPos(){

@@ -17,15 +17,16 @@
 #include "OverwriteDialog.h"
 #include "UnsavedDialog.h"
 #include "RandomConsist.h"
+#include "ActLib.h"
 
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
     aboutWindow = new AboutWindow();
     randomConsist = new RandomConsist();
     englib = new EngLib();
-    //conEngLib = new EngLib();
     englib->loadAll(Game::root);
     Game::currentEngLib = englib;
-    ConLib::loadAll(Game::root);
+    //ConLib::loadAll(Game::root);
+    ActLib::loadAll(Game::root);
     glShapeWidget = new GlShapeWidget(this);
     if(Game::colorShapeView != NULL)
         glShapeWidget->setBackgroundGlColor(Game::colorShapeView->redF(), Game::colorShapeView->greenF(), Game::colorShapeView->blueF());

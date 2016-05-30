@@ -6,6 +6,7 @@
 
 class Eng;
 class TextObj;
+class FileBuffer;
 
 class Consist {
 public:
@@ -54,6 +55,7 @@ public:
     Consist(QString p, QString n);
     Consist(QString src, QString p, QString n);
     void load();
+    bool load(FileBuffer* data);
     void save();
     void select(int idx);
     void appendEngItem(int id);
@@ -73,8 +75,8 @@ public:
     void setDurability(float val);
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);
-private:
     void initPos();
+private:
     bool newConsist = false;
     bool modified = false;
     bool defaultValue = false;

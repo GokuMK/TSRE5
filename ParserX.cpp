@@ -340,19 +340,28 @@ QString ParserX::odczytajtcInside(FileBuffer* bufor){
             //bufor->off++;
             sciezka += QChar(b, bufor->get());
         }
+        bufor->off++;
+        b = bufor->get();
+        bufor->off++;
+        if(b == '+'){
+            sciezka += ParserX::odczytajtcInside(bufor);
+        } else {
+            bufor->off-=2;
+        }
+        return sciezka;
     } else {
         bufor->off -= 2;
         while (((b = bufor->get()) != 32) && (b != 10) && (b != 41)) {
             //bufor->off++;
             sciezka += QChar(b, bufor->get());
         }
+        if(b == 41)
+            bufor->off-=2;
+        bufor->off++;
+        //qDebug() << sciezka;
+        return sciezka;
     }
-    
-    if(b == 41)
-        bufor->off-=2;
-    bufor->off++;
-    //qDebug() << sciezka;
-    return sciezka;
+    return "";
 }
 //-----------------------------------
 //Parsowanie liczby rzeczywistej
