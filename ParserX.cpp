@@ -305,8 +305,14 @@ QString ParserX::odczytajtc(FileBuffer* bufor){
     }
     //bufor.position(bufor.position()-2); 
     if (b == 34) {
-        while ((b = bufor->get()) != 34) {
+        bool specialChar = false;
+        while ((b = bufor->get()) != 34 || specialChar) {
             //bufor->off++;
+            if(!specialChar){
+                if(b == '\\') specialChar = true;
+            } else {
+                specialChar = false;
+            }
             sciezka += QChar(b, bufor->get());
         }
     } else {
@@ -336,8 +342,14 @@ QString ParserX::odczytajtcInside(FileBuffer* bufor){
     }
     //bufor.position(bufor.position()-2); 
     if (b == 34) {
-        while ((b = bufor->get()) != 34) {
+        bool specialChar = false;
+        while ((b = bufor->get()) != 34 || specialChar) {
             //bufor->off++;
+            if(!specialChar){
+                if(b == '\\') specialChar = true;
+            } else {
+                specialChar = false;
+            }
             sciezka += QChar(b, bufor->get());
         }
         bufor->off++;
