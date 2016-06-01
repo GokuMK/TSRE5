@@ -15,7 +15,10 @@ public:
     void fillConList(QString n);
     void newConsist();
     void getUnsaed(std::vector<int> &unsavedConIds);
+    void getUnsaedAct(std::vector<int> &unsavedActIds);
     void findConsistsByEng(int id);
+    bool isActivity();
+    int getCurrentActivityId();
     EngLib* englib;
     
 public slots:

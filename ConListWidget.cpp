@@ -13,25 +13,31 @@ ConListWidget::ConListWidget() : QWidget(){
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
     vlist->addRow("Total:",&totalVal);
-    vlist->addRow("Show:",&conShow);
+    QLabel *lshow = new QLabel("Show:");
+    lshow->setMinimumWidth(50);
+    QLabel *lroute = new QLabel("Route:");
+    lroute->setMinimumWidth(50);
+    QLabel *lfilter = new QLabel("Filter:");
+    lfilter->setMinimumWidth(50);
+    vlist->addRow(lshow,&conShow);
     vbox->addItem(vlist);
     vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
-    vlist->addRow("Filter:",&conType);
+    vlist->addRow(lfilter,&conType);
     conTypeList.setLayout(vlist);
     vbox->addWidget(&conTypeList);
     vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
-    vlist->addRow("Route:",&routeShow);
-    vlist->addRow("Activity",&actShow);
+    vlist->addRow(lroute,&routeShow);
+    vlist->addRow("Activity:",&actShow);
     actTypeList.setLayout(vlist);
     vbox->addWidget(&actTypeList);
     vbox->addWidget(&items);
     //vbox->addStretch(1);
     this->setLayout(vbox);
-    
+
     routeShow.setStyleSheet("combobox-popup: 0;");
     actShow.setStyleSheet("combobox-popup: 0;");
     conShow.setStyleSheet("combobox-popup: 0;");
@@ -44,7 +50,6 @@ ConListWidget::ConListWidget() : QWidget(){
     conType.addItem("Unsaved");
     conType.addItem("Last Query");
     this->setMinimumWidth(250);
-    
     
     actTypeList.hide();
 
@@ -65,6 +70,16 @@ ConListWidget::ConListWidget() : QWidget(){
 }
 
 ConListWidget::~ConListWidget() {
+}
+
+bool ConListWidget::isActivity(){
+    if(conShow.currentIndex() == 0)
+        return false;
+    return true;
+}
+
+int ConListWidget::getCurrentActivityId(){
+    return actShow.currentData().toInt();
 }
 
 void ConListWidget::newConsist(){
@@ -92,6 +107,7 @@ void ConListWidget::conTChan(QString n){
 
 void ConListWidget::routeFill(){
     routeShow.clear();
+    items.clear();
     //foreach(int id, ActLib::route){
     //    routeShow.addItem(ActLib::act[id]->hname);
     //}
@@ -102,6 +118,7 @@ void ConListWidget::routeFill(){
 
 void ConListWidget::routeTChan(QString n){
     actShow.clear();
+    items.clear();
     foreach(int id, ActLib::route[n.toStdString()]){
         actShow.addItem(ActLib::act[id]->header->name, QVariant(id));
     }
@@ -194,6 +211,21 @@ void ConListWidget::getUnsaed(std::vector<int> &unsavedConIds){
         }
     }
 }
+
+void ConListWidget::getUnsaedAct(std::vector<int>& unsavedActIds){
+    unsavedActIds.clear();
+    Game::currentEngLib = englib;
+    Activity * e;
+    for (int i = 0; i < ActLib::jestact; i++){
+        e = ActLib::act[i];
+        if(e == NULL) continue;
+        if(e->loaded != 1) continue;
+        if(e->isUnSaved()){
+            unsavedActIds.push_back(i);
+        }
+    }
+}
+
 
 void ConListWidget::findConsistsByEng(int id){
     query.clear();

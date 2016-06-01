@@ -46637,7 +46637,9 @@ build/Release/MinGW_QT_static-Windows/main.o: main.cpp C:/Qt/Static/5.4.1/includ
 		C:/Qt/Static/5.4.1/include/QtWidgets/qtoolbutton.h \
 		C:/Qt/Static/5.4.1/include/QtWidgets/qtwidgetsversion.h \
 		MapWindow.h \
-		OSM.h
+		OSM.h \
+		C:/Qt/Static/5.4.1/include/QtCore/QFile \
+		C:/Qt/Static/5.4.1/include/QtCore/QTextStream
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_static-Windows/main.o main.cpp
 
 build/Release/MinGW_QT_static-Windows/window.o: window.cpp C:/Qt/Static/5.4.1/include/QtWidgets/QtWidgets \

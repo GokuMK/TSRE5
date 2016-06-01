@@ -68,6 +68,7 @@ public:
     static EngLib *currentEngLib;
     static QColor *colorConView;
     static QColor *colorShapeView;
+    static bool consoleOutput;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

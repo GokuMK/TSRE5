@@ -49,6 +49,8 @@ bool Game::leaveTrackShapeAfterDelete = false;
 bool Game::renderTrItems = false;
 int Game::newRouteX = -5000;
 int Game::newRouteZ = 15000;
+bool Game::consoleOutput = true;
+
 QString Game::geoPath = "hgst";
 
 Window* Game::window = NULL;
@@ -79,7 +81,12 @@ void Game::load() {
         if(args.count() < 2) continue;
         val = args[0].trimmed();
         //qDebug() << args[0].trimmed() << " "<< args[1].trimmed();
-        
+        if(val == "consoleOutput")
+            if(args[1].trimmed().toLower() == "true")
+                Game::consoleOutput = true;
+            else
+                Game::consoleOutput = false;
+
         if(val == "gameRoot")
             root = args[1].trimmed();
         if(val == "routeName")

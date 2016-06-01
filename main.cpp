@@ -7,15 +7,28 @@
 #include "window.h"
 #include "LoadWindow.h"
 #include "MapWindow.h"
+#include <QFile>
+#include <QTextStream>
+QFile logFile;
+QTextStream logFileOut;
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg){
     const char symbols[] = { 'I', 'E', '!', 'X' };
     QString output = QString("[%1] %2").arg( symbols[type] ).arg( msg );
-    std::cout << output.toStdString() << std::endl;
+    if(Game::consoleOutput)
+        std::cout << output.toStdString() << std::endl;
+    logFileOut << output << "\n";
+    logFileOut.flush();
+    logFile.flush();
+    
     if( type == QtFatalMsg ) abort(); 
 }
 
 int main(int argc, char *argv[]){
+    logFile.setFileName("log.txt");
+    logFile.open(QIODevice::WriteOnly);
+    logFileOut.setDevice(&logFile);
+
     qInstallMessageHandler( myMessageOutput );
     QLocale lepsze(QLocale::English);
     //loc.setNumberOptions(lepsze.numberOptions());

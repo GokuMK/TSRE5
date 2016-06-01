@@ -37,7 +37,7 @@ public slots:
     void viewConView(bool show);
     void about();
     void conUnitSelected(int uid);
-    void saveCurrentConsist();
+    void save();
     void refreshCurrentCon();
     void addToConSelected(int id, int pos, int count);
     void newConsist();
@@ -65,7 +65,8 @@ protected:
     
 private:
     void setCurrentEng(int id);
-    
+    void saveCurrentConsist();
+    void saveCurrentActivity();
     EngListWidget *eng1;
     EngListWidget *eng2;
     ConListWidget *con1;

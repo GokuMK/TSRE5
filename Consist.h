@@ -69,6 +69,7 @@ public:
     bool isNewConsist();
     bool isBroken();
     bool isUnSaved();
+    void setModified(bool val);
     void setNewConsistFlag();
     void setFileName(QString n);
     void setDisplayName(QString n);

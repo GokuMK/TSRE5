@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ConEditorWindow_t {
     QByteArrayData data[40];
-    char stringdata[357];
+    char stringdata[343];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -51,24 +51,24 @@ QT_MOC_LITERAL(18, 176, 11), // "viewConView"
 QT_MOC_LITERAL(19, 188, 5), // "about"
 QT_MOC_LITERAL(20, 194, 15), // "conUnitSelected"
 QT_MOC_LITERAL(21, 210, 3), // "uid"
-QT_MOC_LITERAL(22, 214, 18), // "saveCurrentConsist"
-QT_MOC_LITERAL(23, 233, 17), // "refreshCurrentCon"
-QT_MOC_LITERAL(24, 251, 16), // "addToConSelected"
-QT_MOC_LITERAL(25, 268, 3), // "pos"
-QT_MOC_LITERAL(26, 272, 5), // "count"
-QT_MOC_LITERAL(27, 278, 10), // "newConsist"
-QT_MOC_LITERAL(28, 289, 17), // "cFileNameSelected"
-QT_MOC_LITERAL(29, 307, 1), // "n"
-QT_MOC_LITERAL(30, 309, 20), // "cDisplayNameSelected"
-QT_MOC_LITERAL(31, 330, 2), // "f7"
-QT_MOC_LITERAL(32, 333, 2), // "f8"
-QT_MOC_LITERAL(33, 336, 2), // "f4"
-QT_MOC_LITERAL(34, 339, 2), // "f0"
-QT_MOC_LITERAL(35, 342, 2), // "f1"
-QT_MOC_LITERAL(36, 345, 2), // "f2"
-QT_MOC_LITERAL(37, 348, 2), // "f3"
-QT_MOC_LITERAL(38, 351, 2), // "f5"
-QT_MOC_LITERAL(39, 354, 2) // "f6"
+QT_MOC_LITERAL(22, 214, 4), // "save"
+QT_MOC_LITERAL(23, 219, 17), // "refreshCurrentCon"
+QT_MOC_LITERAL(24, 237, 16), // "addToConSelected"
+QT_MOC_LITERAL(25, 254, 3), // "pos"
+QT_MOC_LITERAL(26, 258, 5), // "count"
+QT_MOC_LITERAL(27, 264, 10), // "newConsist"
+QT_MOC_LITERAL(28, 275, 17), // "cFileNameSelected"
+QT_MOC_LITERAL(29, 293, 1), // "n"
+QT_MOC_LITERAL(30, 295, 20), // "cDisplayNameSelected"
+QT_MOC_LITERAL(31, 316, 2), // "f7"
+QT_MOC_LITERAL(32, 319, 2), // "f8"
+QT_MOC_LITERAL(33, 322, 2), // "f4"
+QT_MOC_LITERAL(34, 325, 2), // "f0"
+QT_MOC_LITERAL(35, 328, 2), // "f1"
+QT_MOC_LITERAL(36, 331, 2), // "f2"
+QT_MOC_LITERAL(37, 334, 2), // "f3"
+QT_MOC_LITERAL(38, 337, 2), // "f5"
+QT_MOC_LITERAL(39, 340, 2) // "f6"
 
     },
     "ConEditorWindow\0showEng\0\0path\0name\0"
@@ -77,10 +77,10 @@ QT_MOC_LITERAL(39, 354, 2) // "f6"
     "val\0viewConList\0show\0viewEngList1\0"
     "viewEngList2\0viewConUnits\0viewEngView\0"
     "viewConView\0about\0conUnitSelected\0uid\0"
-    "saveCurrentConsist\0refreshCurrentCon\0"
-    "addToConSelected\0pos\0count\0newConsist\0"
-    "cFileNameSelected\0n\0cDisplayNameSelected\0"
-    "f7\0f8\0f4\0f0\0f1\0f2\0f3\0f5\0f6"
+    "save\0refreshCurrentCon\0addToConSelected\0"
+    "pos\0count\0newConsist\0cFileNameSelected\0"
+    "n\0cDisplayNameSelected\0f7\0f8\0f4\0f0\0"
+    "f1\0f2\0f3\0f5\0f6"
 };
 #undef QT_MOC_LITERAL
 
@@ -188,7 +188,7 @@ void ConEditorWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 12: _t->viewConView((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 13: _t->about(); break;
         case 14: _t->conUnitSelected((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 15: _t->saveCurrentConsist(); break;
+        case 15: _t->save(); break;
         case 16: _t->refreshCurrentCon(); break;
         case 17: _t->addToConSelected((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 18: _t->newConsist(); break;

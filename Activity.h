@@ -128,7 +128,7 @@ public:
         int fuelWater = -1;
         int fuelCoal = -1;
         int fuelDiesel = -1;
-        int voltage = -1;
+        int* voltage = NULL;
         void load(FileBuffer* data);
         void save(QTextStream* out);
     };
@@ -150,11 +150,11 @@ public:
     std::vector<int> activityFailedSignal;
     std::vector<Event> event;
     int serial = -1;
-    
+    bool isUnSaved();
     void load();
     void save();
 private:
-
+    bool modified = false;
 };
 
 #endif	/* ACTIVITY_H */

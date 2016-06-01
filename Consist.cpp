@@ -240,6 +240,10 @@ bool Consist::isUnSaved(){
     return modified;
 }
 
+void Consist::setModified(bool val){
+    modified = val;
+}
+
 void Consist::select(int idx){
     selectedIdx = idx;
 }

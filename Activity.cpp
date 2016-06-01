@@ -222,14 +222,14 @@ void Activity::load() {
     delete data;
     loaded = 1;
 
-    save();
+    //save();
     return;
 }
 
 void Activity::save() {
     QString sh;
     QString path;
-    path = pathid + "2";
+    path = pathid;
     path.replace("//", "/");
     qDebug() << path;
     QFile file(path);
@@ -302,6 +302,17 @@ void Activity::save() {
     out << ")";
 
     file.close();
+    modified = false;
+    for(int i = 0; i < activityObjects.size(); i++){
+        if(activityObjects[i].con != NULL)
+            activityObjects[i].con->setModified(false);
+    }
+    
+    path = pathid.remove(pathid.length()-4, 4);
+    path += ".asv";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile::remove(path);
 }
 
 void Activity::TrafficDefinition::load(FileBuffer* data) {
@@ -760,7 +771,7 @@ void Activity::ServiceDefinition::save(QTextStream* out) {
 void Activity::ActivityHeader::load(FileBuffer* data) {
     QString sh;
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
-        //qDebug() << "--"<< sh;
+
         if (sh == ("routeid")) {
             routeid = ParserX::odczytajtcInside(data);
             ParserX::pominsekcje(data);
@@ -860,7 +871,9 @@ void Activity::ActivityHeader::load(FileBuffer* data) {
             continue;
         }
         if (sh == ("voltage")) {
-            voltage = ParserX::parsujr(data);
+            voltage = new int[2];
+            voltage[0] = ParserX::parsujr(data);
+            voltage[1] = ParserX::parsujr(data);
             ParserX::pominsekcje(data);
             continue;
         }
@@ -877,12 +890,12 @@ void Activity::ActivityHeader::save(QTextStream* out) {
     if (name.length() > 0)
     *out << "		Name ( " << ParserX::addComIfReq(name) << " )\n";
     if (description.length() > 0){
-    *out << "		Description ( ";// << ParserX::addComIfReq(description);
+    *out << "		Description ( ";
     *out << ParserX::splitToMultiline(description, "			 ");
     *out << " )\n";
     }
     if (briefing.length() > 0){
-    *out << "		Briefing ( ";// << ParserX::addComIfReq(description);
+    *out << "		Briefing ( ";
     *out << ParserX::splitToMultiline(briefing, "			 ");
     *out << " )\n";
     }
@@ -907,14 +920,14 @@ void Activity::ActivityHeader::save(QTextStream* out) {
         *out << "		Animals ( " << animals << " )\n";
     if (workers != -1)
         *out << "		Workers ( " << workers << " )\n";
+    if (voltage != NULL)
+        *out << "		Voltage ( " << voltage[0] << " "<< voltage[1] <<" )\n";
     if (fuelWater != -1)
         *out << "		FuelWater ( " << fuelWater << " )\n";
     if (fuelCoal != -1)
         *out << "		FuelCoal ( " << fuelCoal << " )\n";
     if (fuelDiesel != -1)
         *out << "		FuelDiesel ( " << fuelDiesel << " )\n";
-    if (voltage != -1)
-        *out << "		Voltage ( " << voltage << " )\n";
     *out << "	)\n";
 }
 
@@ -974,4 +987,13 @@ void Activity::ActivityObject::save(QTextStream* out) {
     *out << "				ID ( "<<id<<" )\n";
     *out << "				Tile ( "<<tile[0]<<" "<<tile[1]<<" "<<tile[2]<<" "<<tile[3]<<" )\n";
     *out << "			)\n";
+}
+
+bool Activity::isUnSaved(){
+    for(int i = 0; i < activityObjects.size(); i++){
+        if(activityObjects[i].con != NULL)
+            if(activityObjects[i].con->isUnSaved())
+                return true;
+    }
+    return modified;
 }

@@ -26,7 +26,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     englib = new EngLib();
     englib->loadAll(Game::root);
     Game::currentEngLib = englib;
-    //ConLib::loadAll(Game::root);
+    ConLib::loadAll(Game::root);
     ActLib::loadAll(Game::root);
     glShapeWidget = new GlShapeWidget(this);
     if(Game::colorShapeView != NULL)
@@ -162,14 +162,14 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     main->setLayout(mbox);
     this->setCentralWidget(main);
     
-    setWindowTitle(tr("TSRE5 v0.612 Consist Editor"));
+    setWindowTitle(tr("TSRE5 v0.613 Consist Editor"));
     fileMenu = menuBar()->addMenu(tr("&File"));
     fNew = new QAction(tr("&New"), this); 
     fileMenu->addAction(fNew);
     QObject::connect(fNew, SIGNAL(triggered(bool)), this, SLOT(newConsist()));
     fSave = new QAction(tr("&Save"), this); 
     fileMenu->addAction(fSave);
-    QObject::connect(fSave, SIGNAL(triggered(bool)), this, SLOT(saveCurrentConsist()));
+    QObject::connect(fSave, SIGNAL(triggered(bool)), this, SLOT(save()));
     fExit = new QAction(tr("&Exit"), this); 
     fileMenu->addAction(fExit);
     QObject::connect(fExit, SIGNAL(triggered(bool)), this, SLOT(close()));
@@ -316,6 +316,20 @@ void ConEditorWindow::f1(){
     engCamera->setPos(pos,2.5,0);
     engCamera->setPlayerRot(M_PI/2.0,0);
     glShapeWidget->resetRot();
+}
+
+void ConEditorWindow::save(){
+    if(con1->isActivity())
+        saveCurrentActivity();
+    else
+        saveCurrentConsist();
+}
+
+void ConEditorWindow::saveCurrentActivity(){
+    int id = con1->getCurrentActivityId();
+    if(ActLib::act[id] == NULL)
+        return;
+    ActLib::act[id]->save();
 }
 
 void ConEditorWindow::saveCurrentConsist(){
@@ -528,8 +542,10 @@ void ConEditorWindow::f0(int id){
 void ConEditorWindow::closeEvent( QCloseEvent *event )
 {
     std::vector<int> unsavedConIds;
+    std::vector<int> unsavedActIds;
     con1->getUnsaed(unsavedConIds);
-    if(unsavedConIds.size() == 0){
+    con1->getUnsaedAct(unsavedActIds);
+    if(unsavedConIds.size()+unsavedActIds.size() == 0){
         qDebug() << "nic do zapisania";
         event->accept();
         return;
@@ -539,7 +555,11 @@ void ConEditorWindow::closeEvent( QCloseEvent *event )
     unsavedDialog.setWindowTitle("Save changes?");
     for(int i = 0; i < unsavedConIds.size(); i++){
         if(ConLib::con[unsavedConIds[i]] == NULL) continue;
-        unsavedDialog.items.addItem(ConLib::con[unsavedConIds[i]]->showName);
+        unsavedDialog.items.addItem("[C] "+ConLib::con[unsavedConIds[i]]->showName);
+    }
+    for(int i = 0; i < unsavedActIds.size(); i++){
+        if(ActLib::act[unsavedActIds[i]] == NULL) continue;
+        unsavedDialog.items.addItem("[A] "+ActLib::act[unsavedActIds[i]]->header->name);
     }
     unsavedDialog.exec();
     if(unsavedDialog.changed == 0){
@@ -557,7 +577,11 @@ void ConEditorWindow::closeEvent( QCloseEvent *event )
         if(currentCon->isUnSaved())
             this->saveCurrentConsist();
     }
-
+    for(int i = 0; i < unsavedActIds.size(); i++){
+        if(ActLib::act[unsavedActIds[i]] == NULL) continue;
+        if(ActLib::act[unsavedActIds[i]]->isUnSaved())
+            ActLib::act[unsavedActIds[i]]->save();
+    }
     //qDebug() << "aaa2";
     event->accept();
 }
