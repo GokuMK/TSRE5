@@ -7,6 +7,7 @@
 class Eng;
 class TextObj;
 class FileBuffer;
+class QTextStream;
 
 class Consist {
 public:
@@ -57,6 +58,7 @@ public:
     void load();
     bool load(FileBuffer* data);
     void save();
+    void save(QString woff, QTextStream *out);
     void select(int idx);
     void appendEngItem(int id);
     void appendEngItem(int id, int pos = 2);
@@ -76,10 +78,13 @@ public:
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);
     void initPos();
+    void setMaxVelocityFixed(bool val);
+    bool isMaxVelocityFixed();
 private:
     bool newConsist = false;
     bool modified = false;
     bool defaultValue = false;
+    bool maxVelocityFixed = false;
 };
 
 #endif	/* CONSIST_H */

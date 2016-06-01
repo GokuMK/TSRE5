@@ -42,6 +42,7 @@ void Activity::load() {
     }
 
     FileBuffer* data = ReadFile::read(file);
+    file->close();
     data->off = 48;
 
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
@@ -67,7 +68,8 @@ void Activity::load() {
                     continue;
                 }
                 if (sh == ("tr_activity_header")) {
-                    loadActivityHeader(data);
+                    header = new ActivityHeader();
+                    header->load(data);
                     ParserX::pominsekcje(data);
                     continue;
                 }
@@ -77,19 +79,8 @@ void Activity::load() {
 
                         if (sh == ("player_service_definition")) {
                             playerServiceDefinition = new ServiceDefinition();
-                            playerServiceDefinition->name = ParserX::odczytajtcInside(data);
-                            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
-
-                                if (sh == ("player_traffic_definition")) {
-                                    playerServiceDefinition->trafficDefinition = new TrafficDefinition();
-                                    playerServiceDefinition->trafficDefinition->load(data);
-                                    ParserX::pominsekcje(data);
-                                    continue;
-                                }
-                                playerServiceDefinition->load(sh, data);
-                                ParserX::pominsekcje(data);
-                                continue;
-                            }
+                            playerServiceDefinition->player = true;
+                            playerServiceDefinition->load(data);
                             ParserX::pominsekcje(data);
                             continue;
                         }
@@ -110,17 +101,10 @@ void Activity::load() {
 
                                 if (sh == ("service_definition")) {
                                     traffic->service.emplace_back();
-                                    traffic->service.back().name = ParserX::odczytajtcInside(data);
-                                    traffic->service.back().path = ParserX::parsujr(data);
-                                    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
-                                        traffic->service.back().load(sh, data);
-                                        ParserX::pominsekcje(data);
-                                        continue;
-                                    }
+                                    traffic->service.back().load(data);
                                     ParserX::pominsekcje(data);
                                     continue;
                                 }
-                                playerServiceDefinition->load(sh, data);
                                 ParserX::pominsekcje(data);
                                 continue;
                             }
@@ -176,7 +160,8 @@ void Activity::load() {
                             while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
 
                                 if (sh == ("activityobject")) {
-                                    loadActivityObject(data);
+                                    activityObjects.emplace_back();
+                                    activityObjects.back().load(data);
                                     ParserX::pominsekcje(data);
                                     continue;
                                 }
@@ -237,11 +222,91 @@ void Activity::load() {
     delete data;
     loaded = 1;
 
+    save();
     return;
+}
+
+void Activity::save() {
+    QString sh;
+    QString path;
+    path = pathid + "2";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile file(path);
+
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+    out << "SIMISA@@@@@@@@@@JINX0a0t______\n";
+    out << "\n";
+    out << "Tr_Activity (\n";
+    if (serial >= 0) {
+        out << "	Serial ( " << serial << " )\n";
+    }
+
+    if (header != NULL) {
+        header->save(&out);
+    }
+
+    out << "	Tr_Activity_File (\n";
+    if (playerServiceDefinition != NULL) {
+        playerServiceDefinition->save(&out);
+    }
+    if (nextServiceUID != -1)
+        out << "		NextServiceUID ( " << nextServiceUID << " )\n";
+    if (nextActivityObjectUID != -1)
+        out << "		NextActivityObjectUID ( " << nextActivityObjectUID << " )\n";
+    if (traffic != NULL){
+        out << "		Traffic_Definition ( " << ParserX::addComIfReq(traffic->name) <<"\n";
+        for(int i = 0; i<traffic->service.size(); i++)
+            traffic->service[i].save(&out);
+        out << "		)\n";
+    }
+
+    if (event.size() > 0 ){
+        out << "		Events (\n";
+        for(int i = 0; i<event.size(); i++)
+            event[i].save(&out);
+        out << "		)\n";
+    }
+
+    if (activityObjects.size() > 0 ){
+        out << "		ActivityObjects (\n";
+        for(int i = 0; i<activityObjects.size(); i++)
+            activityObjects[i].save(&out);
+        out << "		)\n";
+    }
+
+    if (restrictedSpeedZone.size() > 0 ){
+        out << "		ActivityRestrictedSpeedZones (\n";
+        for(int i = 0; i<restrictedSpeedZone.size(); i++)
+            restrictedSpeedZone[i].save(&out);
+        out << "		)\n";
+    }
+    if (activityFailedSignal.size() > 0 ){
+        out << "		ActivityFailedSignals (\n";
+        for(int i = 0; i<activityFailedSignal.size(); i++)
+            out << "			ActivityFailedSignal ( " << activityFailedSignal[i] << " )\n";
+        out << "		)\n";
+    }
+    if (platformNumPassengersWaiting.size() > 0 ){
+        out << "		PlatformNumPassengersWaiting (\n";
+        for(int i = 0; i<platformNumPassengersWaiting.size(); i++)
+            out << "			PlatformData ( " << platformNumPassengersWaiting[i].second << " " << platformNumPassengersWaiting[i].first << " )\n";
+        out << "		)\n";
+    }
+    out << "	)\n";
+    
+
+    out << ")";
+
+    file.close();
 }
 
 void Activity::TrafficDefinition::load(FileBuffer* data) {
     QString sh;
+    id = ParserX::parsujr(data);
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
 
         if (sh == ("arrivaltime")) {
@@ -273,6 +338,20 @@ void Activity::TrafficDefinition::load(FileBuffer* data) {
         ParserX::pominsekcje(data);
         continue;
     }
+}
+
+void Activity::TrafficDefinition::save(QTextStream* out) {
+
+    *out << "			Player_Traffic_Definition ( "<< id <<"\n";
+
+    for(int i = 0; i<arrivalTime.size(); i++){
+        *out << "				ArrivalTime ( "<<arrivalTime[i]<<" )\n";
+        *out << "				DepartTime ( "<<departTime[i]<<" )\n";
+        *out << "				SkipCount ( "<<skipCount[i]<<" )\n";
+        *out << "				DistanceDownPath ( "<<distanceDownPath[i]<<" )\n";
+        *out << "				PlatformStartID ( "<<platformStartID[i]<<" )\n";
+    }
+    *out << "			)\n";
 }
 
 void Activity::Event::load(FileBuffer* data) {
@@ -342,7 +421,8 @@ void Activity::Event::load(FileBuffer* data) {
             outcome = new Outcome();
             while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
                 if (sh == ("activitysuccess")) {
-                    outcome->activitysuccess = true;
+                    outcome->activitysuccess = new QString();
+                    *outcome->activitysuccess = ParserX::odczytajtcInside(data);
                     ParserX::pominsekcje(data);
                     continue;
                 }
@@ -352,27 +432,29 @@ void Activity::Event::load(FileBuffer* data) {
                     continue;
                 }
                 if (sh == ("incactlevel")) {
-                    outcome->incactlevel = ParserX::parsujr(data);
+                    outcome->incactlevel.push_back(ParserX::parsujr(data));
                     ParserX::pominsekcje(data);
                     continue;
                 }
                 if (sh == ("decactlevel")) {
-                    outcome->decactlevel = ParserX::parsujr(data);
+                    outcome->decactlevel.push_back(ParserX::parsujr(data));
                     ParserX::pominsekcje(data);
                     continue;
                 }
                 if (sh == ("activateevent")) {
-                    outcome->activateevent = ParserX::parsujr(data);
+                    outcome->activateevent.push_back(ParserX::parsujr(data));
                     ParserX::pominsekcje(data);
                     continue;
                 }
                 if (sh == ("activityfail")) {
-                    outcome->activityfail = true;
+                    outcome->activityfail = new QString();
+                    *outcome->activityfail = ParserX::odczytajtcInside(data);
                     ParserX::pominsekcje(data);
                     continue;
                 }
                 if (sh == ("startignoringspeedlimits")) {
-                    outcome->startignoringspeedlimits = true;
+                    outcome->startignoringspeedlimits = new QString();
+                    *outcome->startignoringspeedlimits = ParserX::odczytajtcInside(data);
                     ParserX::pominsekcje(data);
                     continue;
                 }
@@ -394,12 +476,12 @@ void Activity::Event::load(FileBuffer* data) {
             continue;
         }
         if (sh == ("location")) {
-            loaction = new float[5];
-            loaction[0] = ParserX::parsujr(data);
-            loaction[1] = ParserX::parsujr(data);
-            loaction[2] = ParserX::parsujr(data);
-            loaction[3] = ParserX::parsujr(data);
-            loaction[4] = ParserX::parsujr(data);
+            location = new float[5];
+            location[0] = ParserX::parsujr(data);
+            location[1] = ParserX::parsujr(data);
+            location[2] = ParserX::parsujr(data);
+            location[3] = ParserX::parsujr(data);
+            location[4] = ParserX::parsujr(data);
             ParserX::pominsekcje(data);
             continue;
         }
@@ -426,12 +508,12 @@ void Activity::Event::load(FileBuffer* data) {
         if (sh == ("wagon_list")) {
             while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
                 if (sh == ("uid")) {
-                    wagonListId.emplace_back(ParserX::parsujr(data));
+                    wagonListId.emplace_back(ParserX::parsujUint(data));
                     ParserX::pominsekcje(data);
                     continue;
                 }
                 if (sh == ("sidingitem")) {
-                    wagonListSidingItem.emplace_back(ParserX::parsujr(data));
+                    wagonListSidingItem.emplace_back(ParserX::parsujUint(data));
                     ParserX::pominsekcje(data);
                     continue;
                 }
@@ -463,6 +545,119 @@ void Activity::Event::load(FileBuffer* data) {
     }
 }
 
+void Activity::Event::save(QTextStream* out) {
+    if(category == 0)
+        *out << "			EventCategoryAction (\n";
+    else if(category == 1)
+        *out << "			EventCategoryLocation (\n";
+    else if(category == 2)
+        *out << "			EventCategoryTime (\n";
+    else 
+        return;
+
+    if(eventType == Event::EventTypeTime)
+        *out << "				EventTypeTime ( )\n";
+    if(eventType == Event::EventTypeLocation)
+        *out << "				EventTypeLocation ( )\n";
+    if(eventType == Event::EventTypeAllstops)
+        *out << "				EventTypeAllStops ( )\n";
+    if(eventType == Event::EventTypePickupWagons)
+        *out << "				EventTypePickUpWagons ( )\n";
+    if(eventType == Event::EventTypeAssembleTrain)
+        *out << "				EventTypeAssembleTrain ( )\n";
+    if(eventType == Event::EventTypeAssembleTrainAtLocation)
+        *out << "				EventTypeAssembleTrainAtLocation ( )\n";
+    if(eventType == Event::EventTypeDropoffWagonsAtLocation)
+        *out << "				EventTypeDropOffWagonsAtLocation ( )\n";
+    if(eventType == Event::EventTypePickupPassengers)
+        *out << "				EventTypePickUpPassengers ( )\n";
+    if(eventType == Event::EventTypeReachSpeed)
+        *out << "				EventTypeReachSpeed ( )\n";
+
+    if(id != -99999)
+        *out << "				ID ( "<<id<<" )\n";
+    if(activationLevel != -99999)
+        *out << "				Activation_Level ( "<<activationLevel<<" )\n";
+
+    if(outcome != NULL){
+        *out << "				Outcomes (\n";
+            if(outcome->activitysuccess != NULL)
+                if(outcome->activitysuccess->length() == 0)
+                    *out << "					ActivitySuccess ( )\n";
+                else
+                    *out << "					ActivitySuccess ( "<<ParserX::splitToMultiline(*outcome->activitysuccess)<<" )\n";
+            if(outcome->activityfail != NULL)
+                if(outcome->activityfail->length() == 0)
+                    *out << "					ActivityFail ( )\n";
+                else
+                    *out << "					ActivityFail ( "<<ParserX::splitToMultiline(*outcome->activityfail)<<" )\n";
+            if(outcome->activateevent.size() > 0)
+                for(int i = 0; i < outcome->activateevent.size(); i++)
+                    *out << "					ActivateEvent ( "<<outcome->activateevent[i]<<" )\n";
+            if (outcome->displayMessage.length() > 0){
+                *out << "					DisplayMessage ( ";
+                *out << ParserX::splitToMultiline(outcome->displayMessage, "						 ");
+                *out << " )\n";
+            }
+            if(outcome->startignoringspeedlimits != NULL)
+                if(outcome->startignoringspeedlimits->length() == 0)
+                    *out << "					StartIgnoringSpeedLimits ( )\n";
+                else
+                    *out << "					StartIgnoringSpeedLimits ( "<<ParserX::splitToMultiline(*outcome->startignoringspeedlimits)<<" )\n";
+            if(outcome->decactlevel.size() > 0)
+                for(int i = 0; i < outcome->decactlevel.size(); i++)
+                    *out << "					DecActLevel ( "<<outcome->decactlevel[i]<<" )\n";
+            if(outcome->incactlevel.size() > 0)
+                for(int i = 0; i < outcome->incactlevel.size(); i++)
+                    *out << "					IncActLevel ( "<<outcome->incactlevel[i]<<" )\n";
+
+        *out << "				)\n";
+    }
+
+    if(reversableEvent)
+        *out << "				Reversable_Event ( )\n";
+    
+    if (textToDisplayOnCompletionIfTriggered.length() > 0){
+        *out << "				TextToDisplayOnCompletionIfTriggered ( ";
+        *out << ParserX::splitToMultiline(textToDisplayOnCompletionIfTriggered, "					 ");
+        *out << " )\n";
+    }
+    if (textToDisplayOnCompletionIfNotTriggered.length() > 0){
+        *out << "				TextToDisplayOnCompletionIfNotTriggered ( ";
+        *out << ParserX::splitToMultiline(textToDisplayOnCompletionIfNotTriggered, "					 ");
+        *out << " )\n";
+    }
+    
+    if(name.length() > 0)
+        *out << "				Name ( "<<ParserX::addComIfReq(name)<<" )\n";
+    if(location != NULL)
+        *out << "				Location ( "<<location[0]<<" "<<location[1]<<" "<<location[2]<<" "<<location[3]<<" "<<location[4]<<" )\n";
+    if(time != -99999)
+        *out << "				Time ( "<<time<<" )\n";
+    if(triggerOnStop != -99999)
+        *out << "				TriggerOnStop ( "<<triggerOnStop<<" )\n";
+    if(speed != -99999)
+        *out << "				Speed ( "<<speed<<" )\n";
+    if(stationStop != -99999)
+        *out << "				StationStop ( "<<stationStop<<" )\n";
+
+    if(wagonListId.size() > 0){
+        *out << "				Wagon_List (\n";
+        for(int i=0; i < wagonListId.size(); i++){
+            *out << "					UiD ( "<<wagonListId[i]<<" )\n";
+            if(i < wagonListSidingItem.size())
+            *out << "					SidingItem ( "<<wagonListSidingItem[i]<<" )\n";
+            if(i < wagonListDescription.size())
+            *out << "					Description ( "<<ParserX::addComIfReq(QString::fromStdString(wagonListDescription[i]))<<" )\n";
+        }
+        *out << "				)\n";
+    }
+    if(sidingItem != -99999)
+        *out << "				SidingItem ( "<<sidingItem<<" )\n";
+
+    *out << "			)\n";
+}
+
 void Activity::RestrictedSpeedZone::load(FileBuffer* data) {
     QString sh;
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
@@ -488,52 +683,101 @@ void Activity::RestrictedSpeedZone::load(FileBuffer* data) {
     }
 }
 
-void Activity::ServiceDefinition::load(QString sh, FileBuffer* data) {
-    if (sh == ("uid")) {
-        this->uid = ParserX::parsujr(data);
-        return;
-    }
-    if (sh == ("efficiency")) {
-        this->efficiency.emplace_back(ParserX::parsujr(data));
-        return;
-    }
-    if (sh == ("skipcount")) {
-        this->skipCount.emplace_back(ParserX::parsujr(data));
-        return;
-    }
-    if (sh == ("distancedownpath")) {
-        this->distanceDownPath.emplace_back(ParserX::parsujr(data));
-        return;
-    }
-    if (sh == ("platformstartid")) {
-        this->platformStartId.emplace_back(ParserX::parsujr(data));
-        return;
-    }
-    qDebug() << "#serviceDefinition - undefined token: " << sh;
-    return;
+void Activity::RestrictedSpeedZone::save(QTextStream* out) {
+    *out << "			ActivityRestrictedSpeedZone (\n";
+    *out << "				StartPosition ( "<<startPosition[0]<<" "<<startPosition[1]<<" "<<startPosition[2]<<" "<<startPosition[3]<<" )\n";
+    *out << "				EndPosition ( "<<endPosition[0]<<" "<<endPosition[1]<<" "<<endPosition[2]<<" "<<endPosition[3]<<" )\n";
+    *out << "			)\n";
 }
 
-void Activity::loadActivityHeader(FileBuffer* data) {
+void Activity::ServiceDefinition::load(FileBuffer* data) {
+    QString sh;
+    name = ParserX::odczytajtcInside(data);
+    if(!player)
+        path = ParserX::parsujr(data);
+    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+        if (sh == ("player_traffic_definition")) {
+            trafficDefinition = new TrafficDefinition();
+            trafficDefinition->load(data);
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("uid")) {
+            this->uid = ParserX::parsujr(data);
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("efficiency")) {
+            this->efficiency.emplace_back(ParserX::parsujr(data));
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("skipcount")) {
+            this->skipCount.emplace_back(ParserX::parsujr(data));
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("distancedownpath")) {
+            this->distanceDownPath.emplace_back(ParserX::parsujr(data));
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        if (sh == ("platformstartid")) {
+            this->platformStartId.emplace_back(ParserX::parsujr(data));
+            ParserX::pominsekcje(data);
+            continue;
+        }
+        qDebug() << "#serviceDefinition - undefined token: " << sh;
+        ParserX::pominsekcje(data);
+        continue;
+    }
+}
+
+void Activity::ServiceDefinition::save(QTextStream* out) {
+    QString woff;
+    
+    if (player){
+        woff = "";
+        *out << "		Player_Service_Definition ( "<< ParserX::addComIfReq(name) <<"\n";
+    } else {
+        woff = "	";
+        *out << woff << "		Service_Definition ( "<< ParserX::addComIfReq(name) <<" "<<path<<"\n";
+    }
+    if(trafficDefinition != NULL)
+        trafficDefinition->save(out);
+    
+    if(uid != -1)
+        *out << woff << "			UiD ( "<<uid<<" )\n";
+    for(int i = 0; i<efficiency.size(); i++){
+        *out << woff << "			Efficiency ( "<<efficiency[i]<<" )\n";
+        *out << woff << "			SkipCount ( "<<skipCount[i]<<" )\n";
+        *out << woff << "			DistanceDownPath ( "<<distanceDownPath[i]<<" )\n";
+        *out << woff << "			PlatformStartID ( "<<platformStartId[i]<<" )\n";
+    }
+    *out << woff << "		)\n";
+}
+
+void Activity::ActivityHeader::load(FileBuffer* data) {
     QString sh;
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
         //qDebug() << "--"<< sh;
         if (sh == ("routeid")) {
-            this->hrouteid = ParserX::odczytajtcInside(data);
+            routeid = ParserX::odczytajtcInside(data);
             ParserX::pominsekcje(data);
             continue;
         }
         if (sh == ("name")) {
-            this->hname = ParserX::odczytajtcInside(data);
+            name = ParserX::odczytajtcInside(data);
             ParserX::pominsekcje(data);
             continue;
         }
         if (sh == ("description")) {
-            this->hdescription = ParserX::odczytajtcInside(data);
+            description = ParserX::odczytajtcInside(data);
             ParserX::pominsekcje(data);
             continue;
         }
         if (sh == ("briefing")) {
-            this->hbriefing = ParserX::odczytajtcInside(data);
+            briefing = ParserX::odczytajtcInside(data);
             ParserX::pominsekcje(data);
             continue;
         }
@@ -570,7 +814,7 @@ void Activity::loadActivityHeader(FileBuffer* data) {
             continue;
         }
         if (sh == ("pathid")) {
-            this->hpathid = ParserX::odczytajtcInside(data);
+            this->pathid = ParserX::odczytajtcInside(data);
             ParserX::pominsekcje(data);
             continue;
         }
@@ -582,7 +826,6 @@ void Activity::loadActivityHeader(FileBuffer* data) {
         if (sh == ("duration")) {
             duration[0] = ParserX::parsujr(data);
             duration[1] = ParserX::parsujr(data);
-            duration[2] = ParserX::parsujr(data);
             ParserX::pominsekcje(data);
             continue;
         }
@@ -627,41 +870,89 @@ void Activity::loadActivityHeader(FileBuffer* data) {
     }
 }
 
-void Activity::loadActivityObject(FileBuffer* data) {
+void Activity::ActivityHeader::save(QTextStream* out) {
+    *out << "	Tr_Activity_Header (\n";
+    if (routeid.length() > 0)
+    *out << "		RouteID ( " << ParserX::addComIfReq(routeid) << " )\n";
+    if (name.length() > 0)
+    *out << "		Name ( " << ParserX::addComIfReq(name) << " )\n";
+    if (description.length() > 0){
+    *out << "		Description ( ";// << ParserX::addComIfReq(description);
+    *out << ParserX::splitToMultiline(description, "			 ");
+    *out << " )\n";
+    }
+    if (briefing.length() > 0){
+    *out << "		Briefing ( ";// << ParserX::addComIfReq(description);
+    *out << ParserX::splitToMultiline(briefing, "			 ");
+    *out << " )\n";
+    }
+    *out << "		CompleteActivity ( " << completeActivity << " )\n";
+    if (type != -1)
+        *out << "		Type ( " << type << " )\n";
+    if (mode != -1)
+        *out << "		Mode ( " << mode << " )\n";
+    *out << "		StartTime ( " << startTime[0] << " " << startTime[1] << " " << startTime[2] << " )\n";
+    if (season != -1)
+        *out << "		Season ( " << season << " )\n";
+    if (weather != -1)
+        *out << "		Weather ( " << weather << " )\n";
+    if (pathid.length() > 0)
+    *out << "		PathID ( " << ParserX::addComIfReq(pathid) << " )\n";
+    if (startingSpeed != -1)
+        *out << "		StartingSpeed ( " << startingSpeed << " )\n";
+    *out << "		Duration ( " << duration[0] << " " << duration[1] << " )\n";
+    if (difficulty != -1)
+        *out << "		Difficulty ( " << difficulty << " )\n";
+    if (animals != -1)
+        *out << "		Animals ( " << animals << " )\n";
+    if (workers != -1)
+        *out << "		Workers ( " << workers << " )\n";
+    if (fuelWater != -1)
+        *out << "		FuelWater ( " << fuelWater << " )\n";
+    if (fuelCoal != -1)
+        *out << "		FuelCoal ( " << fuelCoal << " )\n";
+    if (fuelDiesel != -1)
+        *out << "		FuelDiesel ( " << fuelDiesel << " )\n";
+    if (voltage != -1)
+        *out << "		Voltage ( " << voltage << " )\n";
+    *out << "	)\n";
+}
+
+void Activity::ActivityObject::load(FileBuffer* data) {
     QString sh;
-    activityObjects.emplace_back();
     while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
 
         if (sh == ("objecttype")) {
-            activityObjects.back().objectType = ParserX::odczytajtcInside(data);
+            objectType = ParserX::odczytajtcInside(data);
             ParserX::pominsekcje(data);
             continue;
         }
         if (sh == ("train_config")) {
-            activityObjects.back().con = new Consist();
-            if (activityObjects.back().con->load(data)) {
-                activityObjects.back().con->loaded = 1;
-                activityObjects.back().con->initPos();
+            con = new Consist();
+            if (con->load(data)) {
+                con->loaded = 1;
+                con->setMaxVelocityFixed(true);
+                con->initPos();
             }
             ParserX::pominsekcje(data);
             ParserX::pominsekcje(data);
             continue;
         }
         if (sh == ("direction")) {
-            activityObjects.back().direction = ParserX::parsujr(data);
+            direction = ParserX::parsujr(data);
             ParserX::pominsekcje(data);
             continue;
         }
         if (sh == ("id")) {
-            activityObjects.back().id = ParserX::parsujr(data);
+            id = ParserX::parsujr(data);
             ParserX::pominsekcje(data);
             continue;
         }
         if (sh == ("tile")) {
-            activityObjects.back().tile[0] = ParserX::parsujr(data);
-            activityObjects.back().tile[1] = ParserX::parsujr(data);
-            activityObjects.back().tile[2] = ParserX::parsujr(data);
-            activityObjects.back().tile[3] = ParserX::parsujr(data);
+            tile[0] = ParserX::parsujr(data);
+            tile[1] = ParserX::parsujr(data);
+            tile[2] = ParserX::parsujr(data);
+            tile[3] = ParserX::parsujr(data);
             ParserX::pominsekcje(data);
             continue;
         }
@@ -669,4 +960,18 @@ void Activity::loadActivityObject(FileBuffer* data) {
         ParserX::pominsekcje(data);
         continue;
     }
+}
+
+void Activity::ActivityObject::save(QTextStream* out) {
+    *out << "			ActivityObject (\n";
+    *out << "				ObjectType ( "<<ParserX::addComIfReq(objectType)<<" )\n";
+    if(con != NULL){
+        *out << "				Train_Config (\n";
+        con->save("				", out);
+        *out << "				)\n";
+    }
+    *out << "				Direction ( "<<direction<<" )\n";
+    *out << "				ID ( "<<id<<" )\n";
+    *out << "				Tile ( "<<tile[0]<<" "<<tile[1]<<" "<<tile[2]<<" "<<tile[3]<<" )\n";
+    *out << "			)\n";
 }

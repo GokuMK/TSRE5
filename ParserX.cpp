@@ -3,8 +3,40 @@
 #include <QDebug>
 
 QString ParserX::addComIfReq(QString n){
-    if(n.contains(" ")){
+    if(n.length() == 0)
         return "\""+n+"\"";
+    if(n.contains(" "))
+        return "\""+n+"\"";
+    return n;
+}
+
+QString ParserX::splitToMultiline(QString n, QString woff){
+    if(n.length() == 0)
+        return "\""+n+"\"";
+    if(!n.contains(" ") && !n.contains("\\"))
+        return n;
+    if(n.contains(" ") && !n.contains("\\"))
+        return "\""+n+"\"";
+    
+    QStringList list = n.split("\\n");
+    n = "";
+    int lastIndex = 0;
+    for(int i = 0; i < list.length(); i++){
+        if(i > 0 && list[i].length() == 0){
+            list[lastIndex] += "\\n";
+            list.removeAt(i);
+            i--;
+            continue;
+        } 
+        if(i < list.length()-1) 
+            list[i] += "\\n";
+        lastIndex = i;
+    }
+    for(int i = 0; i < list.length(); i++){
+        if(i > 0) n += woff;
+        n += "\""+list[i]+"\"";
+        if(i < list.length()-1) 
+            n += "+\n";
     }
     return n;
 }
@@ -317,7 +349,7 @@ QString ParserX::odczytajtc(FileBuffer* bufor){
         }
     } else {
         bufor->off -= 2;
-        while (((b = bufor->get()) != 32) && (b != 10) && (b != 41)) {
+        while (((b = bufor->get()) > 32) && (b != 41)) {
             //bufor->off++;
             sciezka += QChar(b, bufor->get());
         }
@@ -337,8 +369,10 @@ QString ParserX::odczytajtcInside(FileBuffer* bufor){
     while ((b < 46) && (b != 34) && (b!=33)&&(b!=35)&&(b!=36)&&(b!=37)&&(b!=38)) {
         b = bufor->get();
         bufor->off++;
-        if (b == 41)
+        if (b == 41){
+            bufor->off -= 2;
             return "";
+        }
     }
     //bufor.position(bufor.position()-2); 
     if (b == 34) {
@@ -363,7 +397,7 @@ QString ParserX::odczytajtcInside(FileBuffer* bufor){
         return sciezka;
     } else {
         bufor->off -= 2;
-        while (((b = bufor->get()) != 32) && (b != 10) && (b != 41)) {
+        while (((b = bufor->get()) > 32) && (b != 41)) {
             //bufor->off++;
             sciezka += QChar(b, bufor->get());
         }

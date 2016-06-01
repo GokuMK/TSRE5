@@ -60,7 +60,7 @@ void SignalShape::set(QString sh, FileBuffer* data) {
                         qDebug() << "signalFlags" << sflags;
                         //subObj[idx].signalFlags = sflags;
                     }
-                    //ParserX::pominsekcje(data);
+                    ParserX::pominsekcje(data);
                     continue;
                 }
                 if (sh == "sigsubstype") {

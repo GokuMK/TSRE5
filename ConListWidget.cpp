@@ -103,7 +103,7 @@ void ConListWidget::routeFill(){
 void ConListWidget::routeTChan(QString n){
     actShow.clear();
     foreach(int id, ActLib::route[n.toStdString()]){
-        actShow.addItem(ActLib::act[id]->hname, QVariant(id));
+        actShow.addItem(ActLib::act[id]->header->name, QVariant(id));
     }
 }
 

@@ -213,13 +213,15 @@ void Consist::initPos(){
     }
 
 
-    //qDebug() << "mv "<< this->maxVelocity[0] <<" "<< this->maxVelocity[1];
-    this->maxVelocity[0] = tmaxspeed / 3.6;
-    //this->maxVelocity[1] = emass / mass;
-    //qDebug() << maxForce*0.001 << " "<< mass;
-    this->maxVelocity[1] = 0.8*maxForce*0.001 / mass;
-    if(this->maxVelocity[1] > 1) this->maxVelocity[1] = 1;
-    if(this->maxVelocity[1] < 0.001) this->maxVelocity[1] = 0.001;
+    if(!maxVelocityFixed){
+        //qDebug() << "mv "<< this->maxVelocity[0] <<" "<< this->maxVelocity[1];
+        this->maxVelocity[0] = tmaxspeed / 3.6;
+        //this->maxVelocity[1] = emass / mass;
+        //qDebug() << maxForce*0.001 << " "<< mass;
+        this->maxVelocity[1] = 0.8*maxForce*0.001 / mass;
+        if(this->maxVelocity[1] > 1) this->maxVelocity[1] = 1;
+        if(this->maxVelocity[1] < 0.001) this->maxVelocity[1] = 0.001;
+    }
     //qDebug() << "mv "<< this->maxVelocity[0] <<" "<< this->maxVelocity[1];
     posInit = true;
 }
@@ -520,6 +522,13 @@ bool Consist::isNewConsist(){
 void Consist::setNewConsistFlag(){
     newConsist = true;
 }
+void Consist::setMaxVelocityFixed(bool val){
+    maxVelocityFixed = val;
+}
+
+bool Consist::isMaxVelocityFixed(){
+    return maxVelocityFixed;
+}
 
 void Consist::setDurability(float val){
     if(val < 0) val = 0;
@@ -549,39 +558,43 @@ void Consist::save(){
     out << "SIMISA@@@@@@@@@@JINX0D0t______\n";
     out << "\n";
     out << "Train (\n";
-    out << "	TrainCfg ( \""<<conName<<"\"\n";
-    if(displayName.length() > 0)
-    out << "		Name ( \"" << displayName << "\" )\n";
-    if(serial > 0 )
-    out << "		Serial ( "<<serial<<" )\n";
-    if(defaultValue)
-    out << "		Default ( )\n";
-    out << "		MaxVelocity ( " << maxVelocity[0] << " " << maxVelocity[1] << " )\n";
-    out << "		NextWagonUID ( " << nextWagonUID << " )\n";
-    out << "		Durability ( " << durability << " )\n";
-
-    for(int i = 0; i < this->engItems.size(); i++){
-        if(this->engItems[i].type == 1){
-            out << "		Engine (\n";
-            if(this->engItems[i].flip)
-            out << "			Flip ( )\n";
-            out << "			UiD ( " << engItems[i].uid << " )\n";
-            out << "			EngineData ( " << ParserX::addComIfReq(engItems[i].ename) << " " << ParserX::addComIfReq(engItems[i].epath) << " )\n";
-            out << "		)\n";
-        } 
-        if(this->engItems[i].type == 0){
-            out << "		Wagon (\n";
-            out << "			WagonData ( " << ParserX::addComIfReq(engItems[i].ename) << " " << ParserX::addComIfReq(engItems[i].epath) << " )\n";
-            if(this->engItems[i].flip)
-            out << "			Flip ( )\n";
-            out << "			UiD ( " << engItems[i].uid << " )\n";
-            out << "		)\n";
-        }
-    }
-    out << "	)\n";
+    save("", &out);
     out << ")\n";
     
     file.close(); 
     newConsist = false;
     modified = false;
+}
+
+void Consist::save(QString woff, QTextStream* out){
+    *out << woff <<"	TrainCfg ( \""<<conName<<"\"\n";
+    if(displayName.length() > 0)
+    *out << woff <<"		Name ( \"" << displayName << "\" )\n";
+    if(serial > 0 )
+    *out << woff <<"		Serial ( "<<serial<<" )\n";
+    if(defaultValue)
+    *out << woff <<"		Default ( )\n";
+    *out << woff <<"		MaxVelocity ( " << QString::number(maxVelocity[0], 'f', 5) << " " << QString::number(maxVelocity[1], 'f', 5) << " )\n";
+    *out << woff <<"		NextWagonUID ( " << nextWagonUID << " )\n";
+    *out << woff <<"		Durability ( " << QString::number(durability, 'f', 5) << " )\n";
+
+    for(int i = 0; i < this->engItems.size(); i++){
+        if(this->engItems[i].type == 1){
+            *out << woff <<"		Engine (\n";
+            if(this->engItems[i].flip)
+            *out << woff <<"			Flip ( )\n";
+            *out << woff <<"			UiD ( " << engItems[i].uid << " )\n";
+            *out << woff <<"			EngineData ( " << ParserX::addComIfReq(engItems[i].ename) << " " << ParserX::addComIfReq(engItems[i].epath) << " )\n";
+            *out << woff <<"		)\n";
+        } 
+        if(this->engItems[i].type == 0){
+            *out << woff <<"		Wagon (\n";
+            *out << woff <<"			WagonData ( " << ParserX::addComIfReq(engItems[i].ename) << " " << ParserX::addComIfReq(engItems[i].epath) << " )\n";
+            if(this->engItems[i].flip)
+            *out << woff <<"			Flip ( )\n";
+            *out << woff <<"			UiD ( " << engItems[i].uid << " )\n";
+            *out << woff <<"		)\n";
+        }
+    }
+    *out << woff <<"	)\n";
 }

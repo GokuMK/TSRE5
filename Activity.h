@@ -6,6 +6,7 @@
 
 class FileBuffer;
 class Consist;
+class QTextStream;
 
 class Activity {
 public:
@@ -14,33 +15,39 @@ public:
     Activity(QString p, QString n);
     Activity(QString src, QString p, QString n);
     
-    struct ActivityObject{
+    struct ActivityObject {
         Consist* con = NULL;
         QString objectType;
         float direction = 0;
         int id = 0;
         float tile[4];
+        void load(FileBuffer* data);
+        void save(QTextStream* out);
     };
     
     struct TrafficDefinition {
+        int id = 0;
         std::vector<int> arrivalTime;
         std::vector<int> departTime;
         std::vector<int> skipCount;
         std::vector<float> distanceDownPath;
         std::vector<int> platformStartID;
         void load(FileBuffer* data);
+        void save(QTextStream* out);
     };
     
     struct ServiceDefinition {
         QString name;
         int path = -1;
         int uid = -1;
-        std::vector<int> efficiency;
+        bool player = false;
+        std::vector<float> efficiency;
         std::vector<int> skipCount;
         std::vector<float> distanceDownPath;
         std::vector<int> platformStartId;
         TrafficDefinition *trafficDefinition = NULL;
-        void load(QString sh, FileBuffer* data);
+        void load(FileBuffer* data);
+        void save(QTextStream* out);
     };
     
     struct Traffic {
@@ -52,16 +59,17 @@ public:
         float startPosition[4];
         float endPosition[4];
         void load(FileBuffer* data);
+        void save(QTextStream* out);
     };
     
     struct Outcome {
         QString displayMessage;
-        bool activitysuccess = false;
-        int incactlevel = -1;
-        int decactlevel = -1;
-        int activateevent = -1;
-        bool activityfail = false;
-        bool startignoringspeedlimits = false;
+        QString *activitysuccess = NULL;
+        std::vector<int> incactlevel;
+        std::vector<int> decactlevel;
+        std::vector<int> activateevent;
+        QString *activityfail = NULL;
+        QString *startignoringspeedlimits = NULL;
     };
     
     struct Event {
@@ -77,74 +85,76 @@ public:
             EventTypePickupPassengers = 8,
             EventTypeReachSpeed = 9
         };
-        int category = -1;
+        int category = -99999;
         EventType eventType = Event::EventTypeNone;
-        std::vector<int> wagonListId;
-        std::vector<int> wagonListSidingItem;
+        std::vector<unsigned int> wagonListId;
+        std::vector<unsigned int> wagonListSidingItem;
         std::vector<std::string> wagonListDescription;
         
-        int id = -1;
+        int id = -99999;
         bool reversableEvent = false;
-        int activationLevel = -1;
+        int activationLevel = -99999;
         QString name;
-        int time = -1;
-        int stationStop = -1;
-        float* loaction = NULL;
-        int sidingItem = -1;
-        float speed = -1;
-        int triggerOnStop = -1;
+        int time = -99999;
+        int stationStop = -99999;
+        float* location = NULL;
+        int sidingItem = -99999;
+        float speed = -99999;
+        int triggerOnStop = -99999;
         QString textToDisplayOnCompletionIfTriggered;
         QString textToDisplayOnCompletionIfNotTriggered;
         Outcome* outcome = NULL;
         void load(FileBuffer* data);
+        void save(QTextStream* out);
     };
     
-    ServiceDefinition *playerServiceDefinition = NULL;
-    Traffic *traffic = NULL;
-    int nextServiceUID = -1;
-    int nextActivityObjectUID = -1;
+    struct ActivityHeader {
+        QString routeid;
+        QString name;
+        QString description;
+        QString briefing;
+        QString pathid;
+        int completeActivity = 0;
+        int type = -1;
+        int mode = -1;
+        int startTime[3];
+        int season = -1;
+        int weather = -1;
+        int startingSpeed = -1;
+        int duration[2];
+        int difficulty = -1;
+        int animals = -1;
+        int workers = -1;
+        int fuelWater = -1;
+        int fuelCoal = -1;
+        int fuelDiesel = -1;
+        int voltage = -1;
+        void load(FileBuffer* data);
+        void save(QTextStream* out);
+    };
     
-    std::vector<ActivityObject> activityObjects;
-    std::vector<std::pair<int, int>> platformNumPassengersWaiting;
-    std::vector<RestrictedSpeedZone> restrictedSpeedZone;
-    std::vector<int> activityFailedSignal;
-    std::vector<Event> event;
-
     QString name;
     QString path;
     QString pathid;  
     int loaded = -1;
     int ref = 0;
     
-    int serial = 0;
-    // header;
-    QString hrouteid;
-    QString hname;
-    QString hdescription;
-    QString hbriefing;
-    QString hpathid;
-    int completeActivity = 0;
-    int type;
-    int mode;
-    int startTime[3];
-    int season;
-    int weather;
-    int startingSpeed;
-    int duration[2];
-    int difficulty;
-    int animals;
-    int workers;
-    int fuelWater;
-    int fuelCoal;
-    int fuelDiesel;
-    int voltage;
-
-
+    ServiceDefinition *playerServiceDefinition = NULL;
+    ActivityHeader *header = NULL;
+    Traffic *traffic = NULL;
+    int nextServiceUID = -1;
+    int nextActivityObjectUID = -1;
+    std::vector<ActivityObject> activityObjects;
+    std::vector<std::pair<int, int>> platformNumPassengersWaiting;
+    std::vector<RestrictedSpeedZone> restrictedSpeedZone;
+    std::vector<int> activityFailedSignal;
+    std::vector<Event> event;
+    int serial = -1;
     
     void load();
+    void save();
 private:
-    void loadActivityObject(FileBuffer* data);
-    void loadActivityHeader(FileBuffer* data);
+
 };
 
 #endif	/* ACTIVITY_H */

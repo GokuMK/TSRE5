@@ -3,6 +3,7 @@
 
 #include "FileBuffer.h"
 #include <QString>
+
 class ParserX {
 public:
     ParserX();
@@ -26,6 +27,7 @@ public:
     static int pominsekcje(FileBuffer* bufor);
     static int sekcjap(FileBuffer* bufor);
     static QString addComIfReq(QString n);
+    static QString splitToMultiline(QString n, QString woff = "");
 
 private:
 
