@@ -4,7 +4,6 @@
 [I] ok
 [I] "cerecent.txt"
 [I] ok
-[I] ok
 [I] "f:/train simulator/trains/trainset/"
 [I] 215  dirs
 [I] "f:/train simulator/trains/trainset/" "30000" / "30000.eng"
@@ -1020,14 +1019,99 @@
 [I] "f:/train simulator/routes/usa2/activities/yard_one.act"
 [I] "f:/train simulator/routes/usa2/activities/yard_two.act"
 [I] loaded
-[I] "Loose Consist"
-[I] con aid  130  con id  0
-[I] Nowy  0  shape:  "f:/train simulator/trains/trainset/hhp/acelahhl.s"
-[I] Nowy  1  shape:  "f:/train simulator/trains/trainset/hhp/metrocarriage.s"
-[I] Nowy  2  shape:  "f:/train simulator/trains/trainset/pp-pkp-0708-s/pp-pkp-0708-s.s"
-[I] 0.00392157   0   0.0196078   1
-[I] "AcelaHHLCar"
+[I] "310GrCar1"
 [I] eng id  -5
-[I] Nowy  0  shape:  "f:/train simulator/trains/trainset/hhp/metrocarriage.s"
-[I] "f:/train simulator/routes/usa1/activities/tnrescue.act"
-[I] "f:/train simulator/routes/usa1/activities/tnrescue.asv"
+[I] "310GrCar1"
+[I] Nowy  0  shape:  "f:/train simulator/trains/trainset/310/oe310grcar.s"
+[I] "380Car1"
+[I] eng id  -5
+[I] "380Car1"
+[I] Nowy  1  shape:  "f:/train simulator/trains/trainset/380/oe380tender.s"
+[I] "Class50"
+[I] eng id  -5
+[I] "Class50"
+[I] Nowy  2  shape:  "f:/train simulator/trains/trainset/class50/class50.s"
+[I] "2 x class 50, 8 carriages"
+[I] con id  10
+[I] Nowy  0  shape:  "f:/train simulator/trains/trainset/class50/class50.s"
+[I] Nowy  1  shape:  "f:/train simulator/trains/trainset/mk1carriages/uksecond.s"
+[I] Nowy  2  shape:  "f:/train simulator/trains/trainset/mk1carriages/ukrestaurant.s"
+[I] Nowy  3  shape:  "f:/train simulator/trains/trainset/mk1carriages/ukfirst.s"
+[I] Nowy  4  shape:  "f:/train simulator/trains/trainset/mk1carriages/ukbrake.s"
+[I] "2xEN57-013"
+[I] con id  18
+[I] Nowy  5  shape:  "f:/train simulator/trains/trainset/pkp_en57-013/en57-013ra.s"
+[I] Nowy  6  shape:  "f:/train simulator/trains/trainset/pkp_en57-013/en57-013s.s"
+[I] Nowy  7  shape:  "f:/train simulator/trains/trainset/pkp_en57-013/en57-013rb.s"
+[I] "4xK140s"
+[I] con id  26
+[I] Nowy  8  shape:  "f:/train simulator/trains/trainset/kiha140/jp2kiha140.s"
+[I] "Yard_Two_Consist5"
+[I] con id  172
+[I] Nowy  9  shape:  "f:/train simulator/trains/trainset/us2fcarrf2/us2fcarrf2.s"
+[I] Nowy  10  shape:  "f:/train simulator/trains/trainset/us2chemicar/us2chemicar.s"
+[I] Nowy  11  shape:  "f:/train simulator/trains/trainset/us2freight6/us2freight6.s"
+[I] Nowy  12  shape:  "f:/train simulator/trains/trainset/us2freight7/us2freight7.s"
+[I] Nowy  13  shape:  "f:/train simulator/trains/trainset/us2bnsfcar/us2bnsfcar.s"
+[I] Nowy  14  shape:  "f:/train simulator/trains/trainset/us2fcaryf2/us2fcaryf2.s"
+[I] "000c"
+[I] con id  4
+[I] Nowy  15  shape:  "f:/train simulator/trains/trainset/pp-pkp-1918-adu/pp-pkp-1918-adu.s"
+[I] "D9r"
+[I] con id  49
+[I] Nowy  16  shape:  "f:/train simulator/trains/trainset/dash9/dash9.s"
+[I] "Dash 9, 2 x SD40-2, 35 grain"
+[I] con id  55
+[I] Nowy  17  shape:  "f:/train simulator/trains/trainset/sd402/sd402.s"
+[I] Nowy  18  shape:  "f:/train simulator/trains/trainset/us2graincar/us2graincar.s"
+[I] "Dash 9 with 23 chemicars1"
+[I] con id  53
+[I] "D9rev"
+[I] con id  50
+[I] "D9r"
+[I] con id  49
+[I] "D9rev"
+[I] con id  50
+[I] "Dash 9 - 40 cars (mixed goods)"
+[I] con id  51
+[I] Nowy  19  shape:  "f:/train simulator/trains/trainset/us2woodchipper/us2woodchipper.s"
+[I] Nowy  20  shape:  "f:/train simulator/trains/trainset/us2freightcar3/us2freightcar3.s"
+[I] Nowy  21  shape:  "f:/train simulator/trains/trainset/us2fullloggercar/us2fullloggercar.s"
+[I] "ET22-615+oso1"
+[I] con id  66
+[I] Nowy  22  shape:  "f:/train simulator/trains/trainset/pkp et22/pkpet22-619.s"
+[I] Nowy  23  shape:  "f:/train simulator/trains/trainset/pkp et22/pantografy2.s"
+[I] Nowy  24  shape:  "f:/train simulator/trains/trainset/pp-pkp-bdnu/pp-pkp-2070-486-bdnu.s"
+[I] Nowy  25  shape:  "f:/train simulator/trains/trainset/pp-pkp-bdu/pp-pkp-2000-416-bdu.s"
+[I] Nowy  26  shape:  "f:/train simulator/trains/trainset/pp-pkp-bdnu/pp-pkp-2078-612-bdnu.s"
+[I] Nowy  27  shape:  "f:/train simulator/trains/trainset/pp-pkp-adnu/pp-pkp-1970-117-adnu.s"
+[I] Nowy  28  shape:  "f:/train simulator/trains/trainset/pp-pkp-ds/pp-pkp-9508-ds.s"
+[I] 0.00392157   0   0.0235294   1
+[I] "PP-PKP-9508-Ds"
+[I] eng id  -5
+[I] Nowy  3  shape:  "f:/train simulator/trains/trainset/pp-pkp-ds/pp-pkp-9508-ds.s"
+[I] 0.00392157   0   0.00392157   1
+[I] "PP-PKP-2070-486-Bdnu"
+[I] eng id  -5
+[I] Nowy  4  shape:  "f:/train simulator/trains/trainset/pp-pkp-bdnu/pp-pkp-2070-486-bdnu.s"
+[I] 0.00392157   0   0.00784314   1
+[I] "PP-PKP-2000-416-Bdu"
+[I] eng id  -5
+[I] Nowy  5  shape:  "f:/train simulator/trains/trainset/pp-pkp-bdu/pp-pkp-2000-416-bdu.s"
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] 0.00392157   0   0   1
+[I] nic do zapisania

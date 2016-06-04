@@ -283,33 +283,33 @@ void SpeedpostObj::set(int sh, FileBuffer* data) {
 
 void SpeedpostObj::set(QString sh, FileBuffer* data) {
     if (sh == ("filename")) {
-        fileName = ParserX::odczytajtc(data);
+        fileName = ParserX::GetString(data);
         return;
     }
     if (sh == ("speed_digit_tex")) {
-        speedDigitTex = ParserX::odczytajtc(data);
+        speedDigitTex = ParserX::GetString(data);
         return;
     }
     if (sh == ("speed_sign_shape")) {
-        int len = ParserX::parsujr(data);
+        int len = ParserX::GetNumber(data);
         speedSignShape = new float[len*4+1];
         speedSignShape[0] = len;
         for(int i = 0; i<speedSignShape[0]*4; i++)
-            speedSignShape[i+1] = ParserX::parsujr(data);
+            speedSignShape[i+1] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("speed_text_size")) {
-        speedTextSize[0] = ParserX::parsujr(data);
-        speedTextSize[1] = ParserX::parsujr(data);
-        speedTextSize[2] = ParserX::parsujr(data);
+        speedTextSize[0] = ParserX::GetNumber(data);
+        speedTextSize[1] = ParserX::GetNumber(data);
+        speedTextSize[2] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("tritemid")) {
         //this->trItemId = new int[2];
-        //his->trItemId[0] = ParserX::parsujUint(data);
-        //this->trItemId[1] = ParserX::parsujUint(data);
-        trItemId.push_back(ParserX::parsujUint(data));
-        trItemId.push_back(ParserX::parsujUint(data));
+        //his->trItemId[0] = ParserX::GetUInt(data);
+        //this->trItemId[1] = ParserX::GetUInt(data);
+        trItemId.push_back(ParserX::GetUInt(data));
+        trItemId.push_back(ParserX::GetUInt(data));
         return;
     }
     WorldObj::set(sh, data);

@@ -88,28 +88,28 @@ void Route::loadTrk() {
     if (!file->open(QIODevice::ReadOnly))
         return;
     FileBuffer* data = ReadFile::read(file);
-    ParserX::nextLine(data);
+    ParserX::NextLine(data);
 
     QString sh = "Tr_RouteFile";
     ParserX::szukajsekcji1(sh, data);
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         //qDebug() << sh;
         if (sh == ("routestart")) {
-            startTileX = ParserX::parsujr(data);
-            startTileY = ParserX::parsujr(data);
+            startTileX = ParserX::GetNumber(data);
+            startTileY = ParserX::GetNumber(data);
             //qDebug() << startTileX << startTileY;
             //break;
-            startpX = ParserX::parsujr(data);
-            startpZ = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            startpX = ParserX::GetNumber(data);
+            startpZ = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("filename")) {
-            Game::routeName = ParserX::odczytajtc(data);
-            ParserX::pominsekcje(data);
+            Game::routeName = ParserX::GetString(data);
+            ParserX::SkipToken(data);
             continue;
         }
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
     }
 }
 

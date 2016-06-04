@@ -144,33 +144,33 @@ void PickupObj::set(int sh, FileBuffer* data) {
 
 void PickupObj::set(QString sh, FileBuffer* data) {
     if (sh == ("speedrange")) {
-        speedRange[0] = ParserX::parsujr(data);
-        speedRange[1] = ParserX::parsujr(data);
+        speedRange[0] = ParserX::GetNumber(data);
+        speedRange[1] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("pickuptype")) {
-        pickupType[0] = ParserX::parsujr(data);
-        pickupType[1] = ParserX::parsujr(data);
+        pickupType[0] = ParserX::GetNumber(data);
+        pickupType[1] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("pickupanimdata")) {
-        pickupAnimData1 = ParserX::parsujr(data);
-        pickupAnimData2 = ParserX::parsujr(data);
+        pickupAnimData1 = ParserX::GetNumber(data);
+        pickupAnimData2 = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("pickupcapacity")) {
-        pickupCapacity1 = ParserX::parsujr(data);
-        pickupCapacity2 = ParserX::parsujr(data);
+        pickupCapacity1 = ParserX::GetNumber(data);
+        pickupCapacity2 = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("tritemid")) {
         trItemId = new int[2];
-        trItemId[trItemIdCount++] = ParserX::parsujr(data);
-        trItemId[trItemIdCount++] = ParserX::parsujr(data);
+        trItemId[trItemIdCount++] = ParserX::GetNumber(data);
+        trItemId[trItemIdCount++] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("filename")) {
-        fileName = ParserX::odczytajtc(data);
+        fileName = ParserX::GetString(data);
         return;
     }
     WorldObj::set(sh, data);

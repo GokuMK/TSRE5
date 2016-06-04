@@ -148,20 +148,20 @@ void SignalObj::set(int sh, FileBuffer* data) {
 
 void SignalObj::set(QString sh, FileBuffer* data) {
     if (sh == ("filename")) {
-        fileName = ParserX::odczytajtc(data);
+        fileName = ParserX::GetString(data);
         return;
     }
     if (sh == ("signalsubobj")) {
-        signalSubObj = ParserX::parsuj16(data);
+        signalSubObj = ParserX::GetHex(data);
         return;
     }
     if (sh == ("signalunits")) {
-        signalUnits = ParserX::parsujr(data);
+        signalUnits = ParserX::GetNumber(data);
         trItemId = new int[signalUnits*2];
         for(int i=0; i<signalUnits; i++){
-            ParserX::parsujr(data);
-            trItemId[i*2+0] = ParserX::parsujr(data);
-            trItemId[i*2+1] = ParserX::parsujr(data);
+            ParserX::GetNumber(data);
+            trItemId[i*2+0] = ParserX::GetNumber(data);
+            trItemId[i*2+1] = ParserX::GetNumber(data);
         }
         return;
     }

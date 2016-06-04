@@ -79,15 +79,15 @@ void TransferObj::set(int sh, FileBuffer* data) {
 
 void TransferObj::set(QString sh, FileBuffer* data) {
     if (sh == ("filename")) {
-        texture = ParserX::odczytajtc(data);
+        texture = ParserX::GetString(data);
         return;
     }
     if (sh == ("width")) {
-        width = ParserX::parsujr(data);
+        width = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("height")) {
-        height = ParserX::parsujr(data);
+        height = ParserX::GetNumber(data);
         return;
     }
     WorldObj::set(sh, data);

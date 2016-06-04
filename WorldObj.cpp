@@ -329,40 +329,40 @@ void WorldObj::set(int sh, FileBuffer* data) {
 
 void WorldObj::set(QString sh, FileBuffer* data) {
     if (sh == ("uid")) {
-        UiD = ParserX::parsujUint(data);
+        UiD = ParserX::GetUInt(data);
         return;
     }
     if (sh == ("staticflags")) {
-        staticFlags = ParserX::parsuj16(data);
+        staticFlags = ParserX::GetHex(data);
         return;
     }
     if (sh == ("position")) {
-        position[0] = ParserX::parsujr(data);
-        position[1] = ParserX::parsujr(data);
-        position[2] = ParserX::parsujr(data);
+        position[0] = ParserX::GetNumber(data);
+        position[1] = ParserX::GetNumber(data);
+        position[2] = ParserX::GetNumber(data);
         jestPQ++;
         return;
     }
     if (sh == ("qdirection")) {
-        qDirection[0] = ParserX::parsujr(data);
-        qDirection[1] = ParserX::parsujr(data);
-        qDirection[2] = ParserX::parsujr(data);
-        qDirection[3] = ParserX::parsujr(data);
+        qDirection[0] = ParserX::GetNumber(data);
+        qDirection[1] = ParserX::GetNumber(data);
+        qDirection[2] = ParserX::GetNumber(data);
+        qDirection[3] = ParserX::GetNumber(data);
         if(fabs(qDirection[0]) + fabs(qDirection[1]) + fabs(qDirection[2]) + fabs(qDirection[3]) < 3)
             jestPQ++;
         return;
     }
     if (sh == ("matrix3x3")) {
         matrix3x3 = new float[9];
-        matrix3x3[0] = ParserX::parsujr(data);
-        matrix3x3[1] = ParserX::parsujr(data);
-        matrix3x3[2] = ParserX::parsujr(data);
-        matrix3x3[3] = ParserX::parsujr(data);
-        matrix3x3[4] = ParserX::parsujr(data);
-        matrix3x3[5] = ParserX::parsujr(data);
-        matrix3x3[6] = ParserX::parsujr(data);
-        matrix3x3[7] = ParserX::parsujr(data);
-        matrix3x3[8] = ParserX::parsujr(data);
+        matrix3x3[0] = ParserX::GetNumber(data);
+        matrix3x3[1] = ParserX::GetNumber(data);
+        matrix3x3[2] = ParserX::GetNumber(data);
+        matrix3x3[3] = ParserX::GetNumber(data);
+        matrix3x3[4] = ParserX::GetNumber(data);
+        matrix3x3[5] = ParserX::GetNumber(data);
+        matrix3x3[6] = ParserX::GetNumber(data);
+        matrix3x3[7] = ParserX::GetNumber(data);
+        matrix3x3[8] = ParserX::GetNumber(data);
         Quat::fromMat3((float*)&qDirection, matrix3x3);
         Vec4::normalize((float*)&qDirection,(float*)&qDirection);
         //Vec4::normalize((float*)&qDirection,(float*)&qDirection);
@@ -370,16 +370,16 @@ void WorldObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("vdbid")) {
-        //qDebug()<< ParserX::parsujr(data);
-        vDbId = ParserX::parsujUint(data);
+        //qDebug()<< ParserX::GetNumber(data);
+        vDbId = ParserX::GetUInt(data);
         return;
     }
     if (sh == ("staticdetaillevel")) {
-        staticDetailLevel = ParserX::parsujr(data);
+        staticDetailLevel = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("collideflags")) {
-        collideFlags = ParserX::parsujr(data);
+        collideFlags = ParserX::GetNumber(data);
         return;
     }
     qDebug() << "worldObj "<<this->type<<" unknown: " << sh;

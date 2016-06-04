@@ -58,94 +58,94 @@ void Eng::load(){
     FileBuffer* data = ReadFile::read(file);
     data->off = 48;
     
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         //qDebug() << sh;
         if (sh == ("include")) {
-            QString incPath = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            QString incPath = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             data->insertFile(path + "/" + incPath);
             continue;
         }
         if (sh == ("wagon")) {
-            engName = ParserX::odczytajtc(data).trimmed();
+            engName = ParserX::GetString(data).trimmed();
             displayName = engName;
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 //qDebug() << sh;
                 if (sh == ("include")) {
-                    QString incPath = ParserX::odczytajtcInside(data);
-                    ParserX::pominsekcje(data);
+                    QString incPath = ParserX::GetStringInside(data);
+                    ParserX::SkipToken(data);
                     data->insertFile(path + "/" + incPath);
                     continue;
                 }
                 if (sh == ("name")) {
-                    displayName = ParserX::odczytajtc(data);
-                    ParserX::pominsekcje(data);
+                    displayName = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("freightanim")) {
-                    sNames[1] = ParserX::odczytajtc(data);
+                    sNames[1] = ParserX::GetString(data);
                     sfile[1] = -2;
                     //qDebug() << "=====znaleziono s2 " << path << sNames[1];
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("size")) {
-                    sizex = ParserX::parsujrInside(data);
-                    sizey = ParserX::parsujrInside(data);
-                    sizez = ParserX::parsujrInside(data);
+                    sizex = ParserX::GetNumberInside(data);
+                    sizey = ParserX::GetNumberInside(data);
+                    sizez = ParserX::GetNumberInside(data);
                     //qDebug() << "wymiary taboru: " << sizex << " " << sizey << " " << sizez;
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("wagonshape")) {
-                    sNames[0] = ParserX::odczytajtc(data);
+                    sNames[0] = ParserX::GetString(data);
                     sfile[0] = -2;
                     //qDebug() << "=====znaleziono s1 " << path << sNames[0];
                     //sfile[0] = ShapeLib::addShape(path, tname, path);//new Sfile(this.path, tname);
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("mass")) {
-                    mass = ParserX::parsujrInside(data);
-                    ParserX::pominsekcje(data);
+                    mass = ParserX::GetNumberInside(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("coupling")) {
                     coupling.push_back(Coupling());
-                    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                         if (sh == ("type")) {
-                            coupling.back().type = ParserX::odczytajtc(data);
+                            coupling.back().type = ParserX::GetString(data);
                             //qDebug() << "c: "<< coupling.back().type;
-                            ParserX::pominsekcje(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("velocity")) {
-                            coupling.back().velocity = ParserX::parsujr(data);
-                            ParserX::pominsekcje(data);
+                            coupling.back().velocity = ParserX::GetNumber(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("spring")) {
-                            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("r0")) {
-                                    coupling.back().r0[0] = ParserX::parsujrInside(data);
-                                    coupling.back().r0[1] = ParserX::parsujrInside(data);
+                                    coupling.back().r0[0] = ParserX::GetNumberInside(data);
+                                    coupling.back().r0[1] = ParserX::GetNumberInside(data);
                                     //qDebug() <<"r0 " << coupling.back().r0[0] << coupling.back().r0[1];
-                                    ParserX::pominsekcje(data);
+                                    ParserX::SkipToken(data);
                                     continue;
                                 }
-                                ParserX::pominsekcje(data);
+                                ParserX::SkipToken(data);
                             }
-                            ParserX::pominsekcje(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
 
-                        ParserX::pominsekcje(data);
+                        ParserX::SkipToken(data);
                     }
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("type")) {
-                    type = ParserX::odczytajtc(data);
+                    type = ParserX::GetString(data);
                     //qDebug() << "type "<< type;
                     if(type.toLower() == "engine")
                         wagonTypeId = 4;
@@ -155,32 +155,32 @@ void Eng::load(){
                         wagonTypeId = 2;
                     if(type.toLower() == "tender")
                         wagonTypeId = 3;
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("brakesystemtype")) {
-                    brakeSystemType = ParserX::odczytajtc(data);
-                    ParserX::pominsekcje(data);
+                    brakeSystemType = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
             }
             typeHash = type;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if(sh == "engine"){
-            ParserX::odczytajtc(data);
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            ParserX::GetString(data);
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 //qDebug() << sh;
                 if (sh == ("include")) {
-                    QString incPath = ParserX::odczytajtcInside(data);
-                    ParserX::pominsekcje(data);
+                    QString incPath = ParserX::GetStringInside(data);
+                    ParserX::SkipToken(data);
                     data->insertFile(path + "/" + incPath);
                     continue;
                 }
                 if (sh == ("type")) {
-                    engType = ParserX::odczytajtc(data);
+                    engType = ParserX::GetString(data);
                     typeHash+="-"+engType;
                     //qDebug() << engType;
                     if(engType.toLower() == "electric")
@@ -189,53 +189,53 @@ void Eng::load(){
                         wagonTypeId += 1;
                     if(engType.toLower() == "steam")
                         wagonTypeId += 2;
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("name")) {
-                    displayName = ParserX::odczytajtc(data);
-                    ParserX::pominsekcje(data);
+                    displayName = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("maxvelocity")) {
-                    maxSpeed = ParserX::parsujrInside(data);
-                    ParserX::pominsekcje(data);
+                    maxSpeed = ParserX::GetNumberInside(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("maxpower")) {
-                    maxPower = ParserX::parsujrInside(data);
+                    maxPower = ParserX::GetNumberInside(data);
                     //qDebug() << "maxPower "<<maxPower;
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("maxcurrent")) {
-                    maxCurrent = ParserX::parsujrInside(data);
+                    maxCurrent = ParserX::GetNumberInside(data);
                     //qDebug() << "maxCurrent "<<maxCurrent;
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("maxforce")) {
-                    maxForce = ParserX::parsujrInside(data);
+                    maxForce = ParserX::GetNumberInside(data);
                     //qDebug() << "maxForce "<<maxForce / 1000;
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
             }
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("name")) {
-            displayName = ParserX::odczytajtc(data);
-            ParserX::pominsekcje(data);
+            displayName = ParserX::GetString(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("brakesystemtype")) {
-            brakeSystemType = ParserX::odczytajtc(data);
-            ParserX::pominsekcje(data);
+            brakeSystemType = ParserX::GetString(data);
+            ParserX::SkipToken(data);
             continue;
         }
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
         continue;
     }
     //qDebug() << typeHash;

@@ -45,178 +45,178 @@ void Activity::load() {
     file->close();
     data->off = 48;
 
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
         if (sh == ("include")) {
-            QString incPath = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            QString incPath = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             data->insertFile(path + "/" + incPath);
             continue;
         }
         if (sh == ("tr_activity")) {
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                 if (sh == ("include")) {
-                    QString incPath = ParserX::odczytajtcInside(data);
-                    ParserX::pominsekcje(data);
+                    QString incPath = ParserX::GetStringInside(data);
+                    ParserX::SkipToken(data);
                     data->insertFile(path + "/" + incPath);
                     continue;
                 }
                 if (sh == ("serial")) {
-                    serial = ParserX::parsujr(data);
-                    ParserX::pominsekcje(data);
+                    serial = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("tr_activity_header")) {
                     header = new ActivityHeader();
                     header->load(data);
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("tr_activity_file")) {
 
-                    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                         if (sh == ("player_service_definition")) {
                             playerServiceDefinition = new ServiceDefinition();
                             playerServiceDefinition->player = true;
                             playerServiceDefinition->load(data);
-                            ParserX::pominsekcje(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("nextserviceuid")) {
-                            nextServiceUID = ParserX::parsujr(data);
-                            ParserX::pominsekcje(data);
+                            nextServiceUID = ParserX::GetNumber(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("nextactivityobjectuid")) {
-                            nextActivityObjectUID = ParserX::parsujr(data);
-                            ParserX::pominsekcje(data);
+                            nextActivityObjectUID = ParserX::GetNumber(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("traffic_definition")) {
                             traffic = new Traffic();
-                            traffic->name = ParserX::odczytajtcInside(data);
-                            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                            traffic->name = ParserX::GetStringInside(data);
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                                 if (sh == ("service_definition")) {
                                     traffic->service.emplace_back();
                                     traffic->service.back().load(data);
-                                    ParserX::pominsekcje(data);
+                                    ParserX::SkipToken(data);
                                     continue;
                                 }
-                                ParserX::pominsekcje(data);
+                                ParserX::SkipToken(data);
                                 continue;
                             }
-                            ParserX::pominsekcje(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("events")) {
-                            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                                 if (sh == ("eventcategoryaction")) {
                                     event.emplace_back();
                                     event.back().category = 0;
                                     event.back().load(data);
-                                    ParserX::pominsekcje(data);
+                                    ParserX::SkipToken(data);
                                     continue;
                                 }
                                 if (sh == ("eventcategorylocation")) {
                                     event.emplace_back();
                                     event.back().category = 1;
                                     event.back().load(data);
-                                    ParserX::pominsekcje(data);
+                                    ParserX::SkipToken(data);
                                     continue;
                                 }
                                 if (sh == ("eventcategorytime")) {
                                     event.emplace_back();
                                     event.back().category = 2;
                                     event.back().load(data);
-                                    ParserX::pominsekcje(data);
+                                    ParserX::SkipToken(data);
                                     continue;
                                 }
                                 qDebug() << "#events - undefined token: " << sh;
-                                ParserX::pominsekcje(data);
+                                ParserX::SkipToken(data);
                                 continue;
                             }
-                            ParserX::pominsekcje(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("platformnumpassengerswaiting")) {
-                            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("platformdata")) {
-                                    platformNumPassengersWaiting.emplace_back(std::make_pair(ParserX::parsujr(data), ParserX::parsujr(data)));
-                                    ParserX::pominsekcje(data);
+                                    platformNumPassengersWaiting.emplace_back(std::make_pair(ParserX::GetNumber(data), ParserX::GetNumber(data)));
+                                    ParserX::SkipToken(data);
                                     continue;
                                 }
                                 qDebug() << "#platformnumpassengerswaiting - undefined token: " << sh;
-                                ParserX::pominsekcje(data);
+                                ParserX::SkipToken(data);
                                 continue;
                             }
-                            ParserX::pominsekcje(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("activityobjects")) {
-                            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                                 if (sh == ("activityobject")) {
                                     activityObjects.emplace_back();
                                     activityObjects.back().load(data);
-                                    ParserX::pominsekcje(data);
+                                    ParserX::SkipToken(data);
                                     continue;
                                 }
                                 qDebug() << "#activityobjects - undefined token: " << sh;
-                                ParserX::pominsekcje(data);
+                                ParserX::SkipToken(data);
                                 continue;
                             }
-                            ParserX::pominsekcje(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("activityrestrictedspeedzones")) {
-                            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("activityrestrictedspeedzone")) {
                                     restrictedSpeedZone.emplace_back();
                                     restrictedSpeedZone.back().load(data);
-                                    ParserX::pominsekcje(data);
+                                    ParserX::SkipToken(data);
                                     continue;
                                 }
                                 qDebug() << "#activityrestrictedspeedzones - undefined token: " << sh;
-                                ParserX::pominsekcje(data);
+                                ParserX::SkipToken(data);
                                 continue;
                             }
-                            ParserX::pominsekcje(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("activityfailedsignals")) {
-                            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("activityfailedsignal")) {
-                                    activityFailedSignal.emplace_back(ParserX::parsujr(data));
-                                    ParserX::pominsekcje(data);
+                                    activityFailedSignal.emplace_back(ParserX::GetNumber(data));
+                                    ParserX::SkipToken(data);
                                     continue;
                                 }
                                 qDebug() << "#activityfailedsignals - undefined token: " << sh;
-                                ParserX::pominsekcje(data);
+                                ParserX::SkipToken(data);
                                 continue;
                             }
-                            ParserX::pominsekcje(data);
+                            ParserX::SkipToken(data);
                             continue;
                         }
                         qDebug() << "#tr_activity_file - undefined token: " << sh;
-                        ParserX::pominsekcje(data);
+                        ParserX::SkipToken(data);
                         continue;
                     }
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 qDebug() << "#tr_activity - undefined token: " << sh;
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
                 continue;
             }
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         qDebug() << "#ACT - undefined token: " << sh;
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
         continue;
     }
     delete data;
@@ -258,7 +258,7 @@ void Activity::save() {
     if (nextActivityObjectUID != -1)
         out << "		NextActivityObjectUID ( " << nextActivityObjectUID << " )\n";
     if (traffic != NULL){
-        out << "		Traffic_Definition ( " << ParserX::addComIfReq(traffic->name) <<"\n";
+        out << "		Traffic_Definition ( " << ParserX::AddComIfReq(traffic->name) <<"\n";
         for(int i = 0; i<traffic->service.size(); i++)
             traffic->service[i].save(&out);
         out << "		)\n";
@@ -317,36 +317,36 @@ void Activity::save() {
 
 void Activity::TrafficDefinition::load(FileBuffer* data) {
     QString sh;
-    id = ParserX::parsujr(data);
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    id = ParserX::GetNumber(data);
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
         if (sh == ("arrivaltime")) {
-            arrivalTime.emplace_back(ParserX::parsujr(data));
-            ParserX::pominsekcje(data);
+            arrivalTime.emplace_back(ParserX::GetNumber(data));
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("departtime")) {
-            departTime.emplace_back(ParserX::parsujr(data));
-            ParserX::pominsekcje(data);
+            departTime.emplace_back(ParserX::GetNumber(data));
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("skipcount")) {
-            skipCount.emplace_back(ParserX::parsujr(data));
-            ParserX::pominsekcje(data);
+            skipCount.emplace_back(ParserX::GetNumber(data));
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("distancedownpath")) {
-            distanceDownPath.emplace_back(ParserX::parsujr(data));
-            ParserX::pominsekcje(data);
+            distanceDownPath.emplace_back(ParserX::GetNumber(data));
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("platformstartid")) {
-            platformStartID.emplace_back(ParserX::parsujr(data));
-            ParserX::pominsekcje(data);
+            platformStartID.emplace_back(ParserX::GetNumber(data));
+            ParserX::SkipToken(data);
             continue;
         }
         qDebug() << "#trafficDefinition - undefined token: " << sh;
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
         continue;
     }
 }
@@ -367,191 +367,191 @@ void Activity::TrafficDefinition::save(QTextStream* out) {
 
 void Activity::Event::load(FileBuffer* data) {
     QString sh;
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         if (sh == ("eventtypetime")) {
             eventType = Event::EventTypeTime;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("eventtypelocation")) {
             eventType = Event::EventTypeLocation;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("eventtypeallstops")) {
             eventType = Event::EventTypeAllstops;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("eventtypepickupwagons")) {
             eventType = Event::EventTypePickupWagons;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("eventtypeassembletrain")) {
             eventType = Event::EventTypeAssembleTrain;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("eventtypeassembletrainatlocation")) {
             eventType = Event::EventTypeAssembleTrainAtLocation;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("eventtypedropoffwagonsatlocation")) {
             eventType = Event::EventTypeDropoffWagonsAtLocation;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("eventtypepickuppassengers")) {
             eventType = Event::EventTypePickupPassengers;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("eventtypereachspeed")) {
             eventType = Event::EventTypeReachSpeed;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("reversable_event")) {
             reversableEvent = true;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("id")) {
-            id = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            id = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("activation_level")) {
-            activationLevel = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            activationLevel = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("outcomes")) {
             outcome = new Outcome();
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 if (sh == ("activitysuccess")) {
                     outcome->activitysuccess = new QString();
-                    *outcome->activitysuccess = ParserX::odczytajtcInside(data);
-                    ParserX::pominsekcje(data);
+                    *outcome->activitysuccess = ParserX::GetStringInside(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("displaymessage")) {
-                    outcome->displayMessage = ParserX::odczytajtcInside(data);
-                    ParserX::pominsekcje(data);
+                    outcome->displayMessage = ParserX::GetStringInside(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("incactlevel")) {
-                    outcome->incactlevel.push_back(ParserX::parsujr(data));
-                    ParserX::pominsekcje(data);
+                    outcome->incactlevel.push_back(ParserX::GetNumber(data));
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("decactlevel")) {
-                    outcome->decactlevel.push_back(ParserX::parsujr(data));
-                    ParserX::pominsekcje(data);
+                    outcome->decactlevel.push_back(ParserX::GetNumber(data));
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("activateevent")) {
-                    outcome->activateevent.push_back(ParserX::parsujr(data));
-                    ParserX::pominsekcje(data);
+                    outcome->activateevent.push_back(ParserX::GetNumber(data));
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("activityfail")) {
                     outcome->activityfail = new QString();
-                    *outcome->activityfail = ParserX::odczytajtcInside(data);
-                    ParserX::pominsekcje(data);
+                    *outcome->activityfail = ParserX::GetStringInside(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("startignoringspeedlimits")) {
                     outcome->startignoringspeedlimits = new QString();
-                    *outcome->startignoringspeedlimits = ParserX::odczytajtcInside(data);
-                    ParserX::pominsekcje(data);
+                    *outcome->startignoringspeedlimits = ParserX::GetStringInside(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 qDebug() << "#event outcomes - undefined token: " << sh;
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
                 continue;
             }
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("name")) {
-            name = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            name = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("time")) {
-            time = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            time = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("location")) {
             location = new float[5];
-            location[0] = ParserX::parsujr(data);
-            location[1] = ParserX::parsujr(data);
-            location[2] = ParserX::parsujr(data);
-            location[3] = ParserX::parsujr(data);
-            location[4] = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            location[0] = ParserX::GetNumber(data);
+            location[1] = ParserX::GetNumber(data);
+            location[2] = ParserX::GetNumber(data);
+            location[3] = ParserX::GetNumber(data);
+            location[4] = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("triggeronstop")) {
-            triggerOnStop = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            triggerOnStop = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("sidingitem")) {
-            sidingItem = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            sidingItem = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("speed")) {
-            speed = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            speed = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("stationstop")) {
-            stationStop = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            stationStop = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("wagon_list")) {
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 if (sh == ("uid")) {
-                    wagonListId.emplace_back(ParserX::parsujUint(data));
-                    ParserX::pominsekcje(data);
+                    wagonListId.emplace_back(ParserX::GetUInt(data));
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("sidingitem")) {
-                    wagonListSidingItem.emplace_back(ParserX::parsujUint(data));
-                    ParserX::pominsekcje(data);
+                    wagonListSidingItem.emplace_back(ParserX::GetUInt(data));
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("description")) {
-                    wagonListDescription.emplace_back(ParserX::odczytajtcInside(data).toStdString());
-                    ParserX::pominsekcje(data);
+                    wagonListDescription.emplace_back(ParserX::GetStringInside(data).toStdString());
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 qDebug() << "#event wagonlist - undefined token: " << sh;
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
                 continue;
             }
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("texttodisplayoncompletioniftriggered")) {
-            textToDisplayOnCompletionIfTriggered = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            textToDisplayOnCompletionIfTriggered = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("texttodisplayoncompletionifnottriggered")) {
-            textToDisplayOnCompletionIfNotTriggered = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            textToDisplayOnCompletionIfNotTriggered = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             continue;
         }
         qDebug() << "#event - undefined token: " << sh;
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
         continue;
     }
 }
@@ -596,25 +596,25 @@ void Activity::Event::save(QTextStream* out) {
                 if(outcome->activitysuccess->length() == 0)
                     *out << "					ActivitySuccess ( )\n";
                 else
-                    *out << "					ActivitySuccess ( "<<ParserX::splitToMultiline(*outcome->activitysuccess)<<" )\n";
+                    *out << "					ActivitySuccess ( "<<ParserX::SplitToMultiline(*outcome->activitysuccess)<<" )\n";
             if(outcome->activityfail != NULL)
                 if(outcome->activityfail->length() == 0)
                     *out << "					ActivityFail ( )\n";
                 else
-                    *out << "					ActivityFail ( "<<ParserX::splitToMultiline(*outcome->activityfail)<<" )\n";
+                    *out << "					ActivityFail ( "<<ParserX::SplitToMultiline(*outcome->activityfail)<<" )\n";
             if(outcome->activateevent.size() > 0)
                 for(int i = 0; i < outcome->activateevent.size(); i++)
                     *out << "					ActivateEvent ( "<<outcome->activateevent[i]<<" )\n";
             if (outcome->displayMessage.length() > 0){
                 *out << "					DisplayMessage ( ";
-                *out << ParserX::splitToMultiline(outcome->displayMessage, "						 ");
+                *out << ParserX::SplitToMultiline(outcome->displayMessage, "						 ");
                 *out << " )\n";
             }
             if(outcome->startignoringspeedlimits != NULL)
                 if(outcome->startignoringspeedlimits->length() == 0)
                     *out << "					StartIgnoringSpeedLimits ( )\n";
                 else
-                    *out << "					StartIgnoringSpeedLimits ( "<<ParserX::splitToMultiline(*outcome->startignoringspeedlimits)<<" )\n";
+                    *out << "					StartIgnoringSpeedLimits ( "<<ParserX::SplitToMultiline(*outcome->startignoringspeedlimits)<<" )\n";
             if(outcome->decactlevel.size() > 0)
                 for(int i = 0; i < outcome->decactlevel.size(); i++)
                     *out << "					DecActLevel ( "<<outcome->decactlevel[i]<<" )\n";
@@ -630,17 +630,17 @@ void Activity::Event::save(QTextStream* out) {
     
     if (textToDisplayOnCompletionIfTriggered.length() > 0){
         *out << "				TextToDisplayOnCompletionIfTriggered ( ";
-        *out << ParserX::splitToMultiline(textToDisplayOnCompletionIfTriggered, "					 ");
+        *out << ParserX::SplitToMultiline(textToDisplayOnCompletionIfTriggered, "					 ");
         *out << " )\n";
     }
     if (textToDisplayOnCompletionIfNotTriggered.length() > 0){
         *out << "				TextToDisplayOnCompletionIfNotTriggered ( ";
-        *out << ParserX::splitToMultiline(textToDisplayOnCompletionIfNotTriggered, "					 ");
+        *out << ParserX::SplitToMultiline(textToDisplayOnCompletionIfNotTriggered, "					 ");
         *out << " )\n";
     }
     
     if(name.length() > 0)
-        *out << "				Name ( "<<ParserX::addComIfReq(name)<<" )\n";
+        *out << "				Name ( "<<ParserX::AddComIfReq(name)<<" )\n";
     if(location != NULL)
         *out << "				Location ( "<<location[0]<<" "<<location[1]<<" "<<location[2]<<" "<<location[3]<<" "<<location[4]<<" )\n";
     if(time != -99999)
@@ -659,7 +659,7 @@ void Activity::Event::save(QTextStream* out) {
             if(i < wagonListSidingItem.size())
             *out << "					SidingItem ( "<<wagonListSidingItem[i]<<" )\n";
             if(i < wagonListDescription.size())
-            *out << "					Description ( "<<ParserX::addComIfReq(QString::fromStdString(wagonListDescription[i]))<<" )\n";
+            *out << "					Description ( "<<ParserX::AddComIfReq(QString::fromStdString(wagonListDescription[i]))<<" )\n";
         }
         *out << "				)\n";
     }
@@ -671,25 +671,25 @@ void Activity::Event::save(QTextStream* out) {
 
 void Activity::RestrictedSpeedZone::load(FileBuffer* data) {
     QString sh;
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         if (sh == ("startposition")) {
-            startPosition[0] = ParserX::parsujr(data);
-            startPosition[1] = ParserX::parsujr(data);
-            startPosition[2] = ParserX::parsujr(data);
-            startPosition[3] = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            startPosition[0] = ParserX::GetNumber(data);
+            startPosition[1] = ParserX::GetNumber(data);
+            startPosition[2] = ParserX::GetNumber(data);
+            startPosition[3] = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("endposition")) {
-            endPosition[0] = ParserX::parsujr(data);
-            endPosition[1] = ParserX::parsujr(data);
-            endPosition[2] = ParserX::parsujr(data);
-            endPosition[3] = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            endPosition[0] = ParserX::GetNumber(data);
+            endPosition[1] = ParserX::GetNumber(data);
+            endPosition[2] = ParserX::GetNumber(data);
+            endPosition[3] = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         qDebug() << "#restrictedSpeedZone - undefined token: " << sh;
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
         continue;
     }
 }
@@ -703,43 +703,43 @@ void Activity::RestrictedSpeedZone::save(QTextStream* out) {
 
 void Activity::ServiceDefinition::load(FileBuffer* data) {
     QString sh;
-    name = ParserX::odczytajtcInside(data);
+    name = ParserX::GetStringInside(data);
     if(!player)
-        path = ParserX::parsujr(data);
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+        path = ParserX::GetNumber(data);
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         if (sh == ("player_traffic_definition")) {
             trafficDefinition = new TrafficDefinition();
             trafficDefinition->load(data);
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("uid")) {
-            this->uid = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            this->uid = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("efficiency")) {
-            this->efficiency.emplace_back(ParserX::parsujr(data));
-            ParserX::pominsekcje(data);
+            this->efficiency.emplace_back(ParserX::GetNumber(data));
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("skipcount")) {
-            this->skipCount.emplace_back(ParserX::parsujr(data));
-            ParserX::pominsekcje(data);
+            this->skipCount.emplace_back(ParserX::GetNumber(data));
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("distancedownpath")) {
-            this->distanceDownPath.emplace_back(ParserX::parsujr(data));
-            ParserX::pominsekcje(data);
+            this->distanceDownPath.emplace_back(ParserX::GetNumber(data));
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("platformstartid")) {
-            this->platformStartId.emplace_back(ParserX::parsujr(data));
-            ParserX::pominsekcje(data);
+            this->platformStartId.emplace_back(ParserX::GetNumber(data));
+            ParserX::SkipToken(data);
             continue;
         }
         qDebug() << "#serviceDefinition - undefined token: " << sh;
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
         continue;
     }
 }
@@ -749,10 +749,10 @@ void Activity::ServiceDefinition::save(QTextStream* out) {
     
     if (player){
         woff = "";
-        *out << "		Player_Service_Definition ( "<< ParserX::addComIfReq(name) <<"\n";
+        *out << "		Player_Service_Definition ( "<< ParserX::AddComIfReq(name) <<"\n";
     } else {
         woff = "	";
-        *out << woff << "		Service_Definition ( "<< ParserX::addComIfReq(name) <<" "<<path<<"\n";
+        *out << woff << "		Service_Definition ( "<< ParserX::AddComIfReq(name) <<" "<<path<<"\n";
     }
     if(trafficDefinition != NULL)
         trafficDefinition->save(out);
@@ -770,115 +770,115 @@ void Activity::ServiceDefinition::save(QTextStream* out) {
 
 void Activity::ActivityHeader::load(FileBuffer* data) {
     QString sh;
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
         if (sh == ("routeid")) {
-            routeid = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            routeid = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("name")) {
-            name = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            name = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("description")) {
-            description = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            description = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("briefing")) {
-            briefing = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            briefing = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("completeactivity")) {
-            completeActivity = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            completeActivity = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("type")) {
-            type = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            type = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("mode")) {
-            mode = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            mode = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("starttime")) {
-            startTime[0] = ParserX::parsujr(data);
-            startTime[1] = ParserX::parsujr(data);
-            startTime[2] = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            startTime[0] = ParserX::GetNumber(data);
+            startTime[1] = ParserX::GetNumber(data);
+            startTime[2] = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("season")) {
-            season = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            season = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("weather")) {
-            weather = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            weather = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("pathid")) {
-            this->pathid = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            this->pathid = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("startingspeed")) {
-            startingSpeed = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            startingSpeed = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("duration")) {
-            duration[0] = ParserX::parsujr(data);
-            duration[1] = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            duration[0] = ParserX::GetNumber(data);
+            duration[1] = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("difficulty")) {
-            difficulty = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            difficulty = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("animals")) {
-            animals = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            animals = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("workers")) {
-            workers = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            workers = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("fuelwater")) {
-            fuelWater = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            fuelWater = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("fuelcoal")) {
-            fuelCoal = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            fuelCoal = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("fueldiesel")) {
-            fuelDiesel = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            fuelDiesel = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("voltage")) {
             voltage = new int[2];
-            voltage[0] = ParserX::parsujr(data);
-            voltage[1] = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            voltage[0] = ParserX::GetNumber(data);
+            voltage[1] = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         qDebug() << "#activityHeader - undefined token: " << sh;
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
         continue;
     }
 }
@@ -886,17 +886,17 @@ void Activity::ActivityHeader::load(FileBuffer* data) {
 void Activity::ActivityHeader::save(QTextStream* out) {
     *out << "	Tr_Activity_Header (\n";
     if (routeid.length() > 0)
-    *out << "		RouteID ( " << ParserX::addComIfReq(routeid) << " )\n";
+    *out << "		RouteID ( " << ParserX::AddComIfReq(routeid) << " )\n";
     if (name.length() > 0)
-    *out << "		Name ( " << ParserX::addComIfReq(name) << " )\n";
+    *out << "		Name ( " << ParserX::AddComIfReq(name) << " )\n";
     if (description.length() > 0){
     *out << "		Description ( ";
-    *out << ParserX::splitToMultiline(description, "			 ");
+    *out << ParserX::SplitToMultiline(description, "			 ");
     *out << " )\n";
     }
     if (briefing.length() > 0){
     *out << "		Briefing ( ";
-    *out << ParserX::splitToMultiline(briefing, "			 ");
+    *out << ParserX::SplitToMultiline(briefing, "			 ");
     *out << " )\n";
     }
     *out << "		CompleteActivity ( " << completeActivity << " )\n";
@@ -910,7 +910,7 @@ void Activity::ActivityHeader::save(QTextStream* out) {
     if (weather != -1)
         *out << "		Weather ( " << weather << " )\n";
     if (pathid.length() > 0)
-    *out << "		PathID ( " << ParserX::addComIfReq(pathid) << " )\n";
+    *out << "		PathID ( " << ParserX::AddComIfReq(pathid) << " )\n";
     if (startingSpeed != -1)
         *out << "		StartingSpeed ( " << startingSpeed << " )\n";
     *out << "		Duration ( " << duration[0] << " " << duration[1] << " )\n";
@@ -933,11 +933,11 @@ void Activity::ActivityHeader::save(QTextStream* out) {
 
 void Activity::ActivityObject::load(FileBuffer* data) {
     QString sh;
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
         if (sh == ("objecttype")) {
-            objectType = ParserX::odczytajtcInside(data);
-            ParserX::pominsekcje(data);
+            objectType = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("train_config")) {
@@ -947,37 +947,37 @@ void Activity::ActivityObject::load(FileBuffer* data) {
                 con->setMaxVelocityFixed(true);
                 con->initPos();
             }
-            ParserX::pominsekcje(data);
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("direction")) {
-            direction = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            direction = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("id")) {
-            id = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            id = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("tile")) {
-            tile[0] = ParserX::parsujr(data);
-            tile[1] = ParserX::parsujr(data);
-            tile[2] = ParserX::parsujr(data);
-            tile[3] = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            tile[0] = ParserX::GetNumber(data);
+            tile[1] = ParserX::GetNumber(data);
+            tile[2] = ParserX::GetNumber(data);
+            tile[3] = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         qDebug() << "#activityObject - undefined token: " << sh;
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
         continue;
     }
 }
 
 void Activity::ActivityObject::save(QTextStream* out) {
     *out << "			ActivityObject (\n";
-    *out << "				ObjectType ( "<<ParserX::addComIfReq(objectType)<<" )\n";
+    *out << "				ObjectType ( "<<ParserX::AddComIfReq(objectType)<<" )\n";
     if(con != NULL){
         *out << "				Train_Config (\n";
         con->save("				", out);

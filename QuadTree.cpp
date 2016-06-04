@@ -32,30 +32,30 @@ void QuadTree::load() {
     data->off = 16;
     sh = "terrain_desc";
     ParserX::szukajsekcji1(sh, data);
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         qDebug() << sh;
         if (sh == "terrain_desc_size") {
-            terrainDescSize = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            terrainDescSize = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         } else if (sh == "depth") {
-            depth = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            depth = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         } else if (sh == "terrain_desc_tiles") {
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 if (sh == "tdfile") {
-                    int x = ParserX::parsujr(data);
-                    int y = ParserX::parsujr(data);
+                    int x = ParserX::GetNumber(data);
+                    int y = ParserX::GetNumber(data);
                     qDebug() << sh << " "<<x<<" "<<y;
                     loadTD(x, y);
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                 }
             }
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
     }
 }
 

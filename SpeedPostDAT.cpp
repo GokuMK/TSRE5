@@ -18,35 +18,35 @@ SpeedPostDAT::SpeedPostDAT() {
     bufor->off += 46;
 
     qDebug() << "speedpost!";
-    while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
         if (sh == "speed_warning_sign_shape") {
-            this->speed_Warning_Sign_Shape = ParserX::odczytajtc(bufor);
-            ParserX::pominsekcje(bufor);
+            this->speed_Warning_Sign_Shape = ParserX::GetString(bufor);
+            ParserX::SkipToken(bufor);
             continue;
         }
         if (sh == "restricted_shape") {
-            this->restricted_Shape = ParserX::odczytajtc(bufor);
-            ParserX::pominsekcje(bufor);
+            this->restricted_Shape = ParserX::GetString(bufor);
+            ParserX::SkipToken(bufor);
             continue;
         }
         if (sh == "end_restricted_shape") {
-            this->end_Restricted_Shape = ParserX::odczytajtc(bufor);
-            ParserX::pominsekcje(bufor);
+            this->end_Restricted_Shape = ParserX::GetString(bufor);
+            ParserX::SkipToken(bufor);
             continue;
         }
         if (sh == "speedpost_set") {
             SpeedPost* spost = new SpeedPost();
             this->speedPost.push_back(spost);
-            while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
                 spost->set(sh, bufor);
-                ParserX::pominsekcje(bufor);
+                ParserX::SkipToken(bufor);
                 continue;
             }
-            ParserX::pominsekcje(bufor);
+            ParserX::SkipToken(bufor);
             continue;
         }
         qDebug() << sh;
-        ParserX::pominsekcje(bufor);
+        ParserX::SkipToken(bufor);
         continue;
     }
     return;

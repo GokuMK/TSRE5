@@ -19,7 +19,7 @@ SigCfg::SigCfg() {
     bufor->off += 46;
     //szukanie trackdb
 
-    //int iiTRitems = (int) ParserX::parsujr(bufor); //odczytanie ilosci sciezek
+    //int iiTRitems = (int) ParserX::GetNumber(bufor); //odczytanie ilosci sciezek
 
     //TRitem* nowy; // = new TRitem();
     //nowy = new TRitem();
@@ -27,50 +27,50 @@ SigCfg::SigCfg() {
     qDebug() << "sigcfg!";
     int iSignalType = 0;
     int iSignalShape = 0;
-    while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
         if (sh == "") {
             break;
         }
         if (sh == "signaltypes") {
             SignalType* nowySt;
-            while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
                 //qDebug() << "- " << sh;
                 if (sh == "") {
                     break;
                 }
                 if (sh == "signaltype") {
                     nowySt = new SignalType();
-                    nowySt->type = ParserX::odczytajtc(bufor);
+                    nowySt->type = ParserX::GetString(bufor);
 
-                    while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
                         nowySt->set(sh, bufor);
-                        ParserX::pominsekcje(bufor);
+                        ParserX::SkipToken(bufor);
                     }
                     //this->signalType[iSignalType++] = nowySt;
                     iSignalType++;
                     this->signalType[nowySt->type.toStdString()] = nowySt;
                 }
-                ParserX::pominsekcje(bufor);
+                ParserX::SkipToken(bufor);
                 continue;
             }
-            ParserX::pominsekcje(bufor);
+            ParserX::SkipToken(bufor);
             continue;
         }
         if (sh == "signalshapes") {
             SignalShape* nowySs;
-            while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
                 //qDebug() << "- " << sh;
                 if (sh == "") {
                     break;
                 }
                 if (sh == "signalshape") {
                     nowySs = new SignalShape();
-                    nowySs->name = ParserX::odczytajtc(bufor);
-                    nowySs->desc = ParserX::odczytajtc(bufor);
+                    nowySs->name = ParserX::GetString(bufor);
+                    nowySs->desc = ParserX::GetString(bufor);
 
-                    while (!((sh = ParserX::nazwasekcji_inside(bufor).toLower()) == "")) {
+                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
                         nowySs->set(sh, bufor);
-                        ParserX::pominsekcje(bufor);
+                        ParserX::SkipToken(bufor);
                     }
                     //this->signalShape[iSignalShape++] = nowySs;
                     //for(int i = 0; i < nowySs->iSubObj; i++){
@@ -84,14 +84,14 @@ SigCfg::SigCfg() {
                     iSignalShape++;
                 }
                 
-                ParserX::pominsekcje(bufor);
+                ParserX::SkipToken(bufor);
                 continue;
             }
-            ParserX::pominsekcje(bufor);
+            ParserX::SkipToken(bufor);
             continue;
         }
         qDebug() << sh;
-        ParserX::pominsekcje(bufor);
+        ParserX::SkipToken(bufor);
         continue;
     }
 

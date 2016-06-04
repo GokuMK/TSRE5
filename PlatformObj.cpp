@@ -80,20 +80,20 @@ void PlatformObj::set(int sh, FileBuffer* data) {
 
 void PlatformObj::set(QString sh, FileBuffer* data) {
     if (sh == ("sidingdata") || sh == ("platformdata")) {
-        platformData = ParserX::parsuj16(data);
+        platformData = ParserX::GetHex(data);
         return;
     }
     if (sh == ("carfrequency")) {
-        carFrequency = ParserX::parsujr(data);
+        carFrequency = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("caravspeed")) {
-        carAvSpeed = ParserX::parsujr(data);
+        carAvSpeed = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("tritemid")) {
-        trItemId[trItemIdCount++] = ParserX::parsujr(data);
-        trItemId[trItemIdCount++] = ParserX::parsujr(data);
+        trItemId[trItemIdCount++] = ParserX::GetNumber(data);
+        trItemId[trItemIdCount++] = ParserX::GetNumber(data);
         return;
     }
     WorldObj::set(sh, data);

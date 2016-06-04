@@ -199,28 +199,28 @@ void TrackObj::set(int sh, FileBuffer* data) {
 
 void TrackObj::set(QString sh, FileBuffer* data) {
     if (sh == ("filename")) {
-        fileName = ParserX::odczytajtc(data);
+        fileName = ParserX::GetString(data);
         return;
     }
     if (sh == ("sectionidx")) {
-        sectionIdx = ParserX::parsujr(data);
+        sectionIdx = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("elevation")) {
-        elevation = ParserX::parsujr(data);
+        elevation = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("jnodeposn")) {
         jNodePosn = new float[5];
-        jNodePosn[0] = ParserX::parsujr(data);
-        jNodePosn[1] = ParserX::parsujr(data);
-        jNodePosn[2] = ParserX::parsujr(data);
-        jNodePosn[3] = ParserX::parsujr(data);
-        jNodePosn[4] = ParserX::parsujr(data);
+        jNodePosn[0] = ParserX::GetNumber(data);
+        jNodePosn[1] = ParserX::GetNumber(data);
+        jNodePosn[2] = ParserX::GetNumber(data);
+        jNodePosn[3] = ParserX::GetNumber(data);
+        jNodePosn[4] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("collidefunction")) {
-        collideFunction = ParserX::parsujr(data);
+        collideFunction = ParserX::GetNumber(data);
         return;
     }
     

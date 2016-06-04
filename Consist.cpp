@@ -84,99 +84,99 @@ bool Consist::load(FileBuffer* data){
     int ok = ParserX::szukajsekcji1(sh, data);
     if(ok == 0) return false;
     //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
-    conName = ParserX::odczytajtc(data).trimmed();
+    conName = ParserX::GetString(data).trimmed();
     showName = conName;
     //qDebug() << conName;
     EngItem* eit;
 
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         //qDebug() << sh;
         if (sh == ("name")) {
-            displayName = ParserX::odczytajtc(data).trimmed();
+            displayName = ParserX::GetString(data).trimmed();
             showName = displayName;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("serial")) {
-            serial = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            serial = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("default")) {
             defaultValue = true;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("maxvelocity")) {
-            maxVelocity[0] = ParserX::parsujr(data);
-            maxVelocity[1] = ParserX::parsujr(data);
+            maxVelocity[0] = ParserX::GetNumber(data);
+            maxVelocity[1] = ParserX::GetNumber(data);
             //qDebug() << "wymiary taboru: " << sizex << " " << sizey << " " << sizez;
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("nextwagonuid")) {
-            nextWagonUID = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            nextWagonUID = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("durability")) {
-            durability = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            durability = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("engine")) {
             engItems.push_back(EngItem());
             engItems.back().type = 1;
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 if (sh == ("flip")) {
                     engItems.back().flip = true;
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("uid")) {
-                    engItems.back().uid = ParserX::parsujr(data);
-                    ParserX::pominsekcje(data);
+                    engItems.back().uid = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("enginedata")) {
-                    engItems.back().ename = ParserX::odczytajtc(data);
-                    engItems.back().epath = ParserX::odczytajtc(data);
+                    engItems.back().ename = ParserX::GetString(data);
+                    engItems.back().epath = ParserX::GetString(data);
                     engItems.back().eng = Game::currentEngLib->addEng(Game::root + "/TRAINS/TRAINSET/" + engItems.back().epath, engItems.back().ename + ".eng");
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
             }
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("wagon")) {
             engItems.push_back(EngItem());
             engItems.back().type = 0;
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 if (sh == ("flip")) {
                     engItems.back().flip = true;
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("uid")) {
-                    engItems.back().uid = ParserX::parsujr(data);
-                    ParserX::pominsekcje(data);
+                    engItems.back().uid = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("wagondata")) {
-                    engItems.back().ename = ParserX::odczytajtc(data);
-                    engItems.back().epath = ParserX::odczytajtc(data);
+                    engItems.back().ename = ParserX::GetString(data);
+                    engItems.back().epath = ParserX::GetString(data);
                     engItems.back().eng = Game::currentEngLib->addEng(Game::root + "/TRAINS/TRAINSET/" + engItems.back().epath, engItems.back().ename + ".wag");
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
             }
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
     }
     return true;
 }
@@ -588,12 +588,12 @@ void Consist::save(QString woff, QTextStream* out){
             if(this->engItems[i].flip)
             *out << woff <<"			Flip ( )\n";
             *out << woff <<"			UiD ( " << engItems[i].uid << " )\n";
-            *out << woff <<"			EngineData ( " << ParserX::addComIfReq(engItems[i].ename) << " " << ParserX::addComIfReq(engItems[i].epath) << " )\n";
+            *out << woff <<"			EngineData ( " << ParserX::AddComIfReq(engItems[i].ename) << " " << ParserX::AddComIfReq(engItems[i].epath) << " )\n";
             *out << woff <<"		)\n";
         } 
         if(this->engItems[i].type == 0){
             *out << woff <<"		Wagon (\n";
-            *out << woff <<"			WagonData ( " << ParserX::addComIfReq(engItems[i].ename) << " " << ParserX::addComIfReq(engItems[i].epath) << " )\n";
+            *out << woff <<"			WagonData ( " << ParserX::AddComIfReq(engItems[i].ename) << " " << ParserX::AddComIfReq(engItems[i].epath) << " )\n";
             if(this->engItems[i].flip)
             *out << woff <<"			Flip ( )\n";
             *out << woff <<"			UiD ( " << engItems[i].uid << " )\n";

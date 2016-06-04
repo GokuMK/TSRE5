@@ -111,23 +111,23 @@ void SoundRegionObj::set(int sh, FileBuffer* data) {
 
 void SoundRegionObj::set(QString sh, FileBuffer* data) {
     if (sh == ("filename")) {
-        fileName = ParserX::odczytajtc(data);
+        fileName = ParserX::GetString(data);
         return;
     }
     if (sh == ("soundregionroty")) {
-        soundregionRoty = ParserX::parsujr(data);
+        soundregionRoty = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("soundregiontracktype")) {
-        soundregionTrackType = ParserX::parsujr(data);
+        soundregionTrackType = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("tritemid")) {
         //this->trItemId = new int[2];
-        //his->trItemId[0] = ParserX::parsujUint(data);
-        //this->trItemId[1] = ParserX::parsujUint(data);
-        trItemId.push_back(ParserX::parsujUint(data));
-        trItemId.push_back(ParserX::parsujUint(data));
+        //his->trItemId[0] = ParserX::GetUInt(data);
+        //this->trItemId[1] = ParserX::GetUInt(data);
+        trItemId.push_back(ParserX::GetUInt(data));
+        trItemId.push_back(ParserX::GetUInt(data));
         return;
     }
     WorldObj::set(sh, data);

@@ -121,58 +121,58 @@ void Tile::load() {
                 loadWS();
                 return;
             } else if (sh == "tr_watermark") {
-                nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::parsujr(data)));
+                nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::GetNumber(data)));
                 obiekty[jestObiektow++] = nowy;
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
                 continue;
             } else if (sh == "vdbidcount") {
-                vDbIdCount = ParserX::parsujr(data);
+                vDbIdCount = ParserX::GetNumber(data);
                 viewDbSphere = new ViewDbSphere[vDbIdCount];
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
                 continue;
             } else if (sh == "viewdbsphere") {
                 //qDebug() <<sh;
                 /*int j = 0;
                 do {
                     for(int i = 0; i< 3; i++){
-                        sh = ParserX::nazwasekcji_inside(data).toLower();
+                        sh = ParserX::NextTokenInside(data).toLower();
                         //qDebug() <<sh;
                         if(sh == ("vdbid")) {
-                            viewDbSphere[j].vDbId = ParserX::parsujr(data);
+                            viewDbSphere[j].vDbId = ParserX::GetNumber(data);
                         }
                         if(sh == ("position")) {
-                            viewDbSphere[j].position[0] = ParserX::parsujr(data);
-                            viewDbSphere[j].position[1] = ParserX::parsujr(data);
-                            viewDbSphere[j].position[2] = ParserX::parsujr(data);
+                            viewDbSphere[j].position[0] = ParserX::GetNumber(data);
+                            viewDbSphere[j].position[1] = ParserX::GetNumber(data);
+                            viewDbSphere[j].position[2] = ParserX::GetNumber(data);
                         }
                         if(sh == ("radius")) {
-                            viewDbSphere[j].radius = ParserX::parsujr(data);
+                            viewDbSphere[j].radius = ParserX::GetNumber(data);
                         }
-                        ParserX::pominsekcje(data);
+                        ParserX::SkipToken(data);
                     }
 
-                    if(j > 0) ParserX::pominsekcje(data);
+                    if(j > 0) ParserX::SkipToken(data);
                     j++;
-                } while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == ""));
+                } while (!((sh = ParserX::NextTokenInside(data).toLower()) == ""));
                 */
                 int start = data->off;
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
                 int end = data->off;
                 viewDbSphereRaw = (data->getString(start, end));
                 continue;
             } 
             if ((nowy = WorldObj::createObj(sh)) == NULL) {
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
                 continue;
             }
             //qDebug() << nowy->type;
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 nowy->set(sh, data);
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
             }
             obiekty[jestObiektow++] = nowy;
 
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
     } else {
@@ -260,20 +260,20 @@ void Tile::loadWS() {
                 return;
             }
             if ((nowy = WorldObj::createObj(sh)) == NULL) {
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
                 continue;
             }
             //qDebug() << nowy->type;
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 nowy->set(sh, data);
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
             }
             nowy->load(x, z);
             if(nowy->UiD < 1000000)
                 if(nowy->UiD > maxUiDWS) maxUiDWS = nowy->UiD;
             obiekty[jestObiektow++] = nowy;
 
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
     } else {

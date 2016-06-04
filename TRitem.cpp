@@ -207,70 +207,70 @@ bool TRitem::init(QString sh) {
 void TRitem::set(QString sh, FileBuffer* data) {
     //qDebug() << "---"<< sh;
     if (sh == ("tritemid")) {
-        trItemId = ParserX::parsujUint(data);
+        trItemId = ParserX::GetUInt(data);
         return;
     }
     if (sh == ("tritemsdata")) {
-        trItemSData1 = ParserX::parsujr(data);
-        trItemSData2 = ParserX::parsuj16(data);
+        trItemSData1 = ParserX::GetNumber(data);
+        trItemSData2 = ParserX::GetHex(data);
         return;
     }
     if (sh == ("tritempdata")) {
         trItemPData = new float[4];
-        trItemPData[0] = ParserX::parsujr(data);
-        trItemPData[1] = ParserX::parsujr(data);
-        trItemPData[2] = ParserX::parsujr(data);
-        trItemPData[3] = ParserX::parsujr(data);
+        trItemPData[0] = ParserX::GetNumber(data);
+        trItemPData[1] = ParserX::GetNumber(data);
+        trItemPData[2] = ParserX::GetNumber(data);
+        trItemPData[3] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("tritemrdata")) {
         trItemRData = new float[5];
-        trItemRData[0] = ParserX::parsujr(data);
-        trItemRData[1] = ParserX::parsujr(data);
-        trItemRData[2] = ParserX::parsujr(data);
-        trItemRData[3] = ParserX::parsujr(data);
-        trItemRData[4] = ParserX::parsujr(data);
+        trItemRData[0] = ParserX::GetNumber(data);
+        trItemRData[1] = ParserX::GetNumber(data);
+        trItemRData[2] = ParserX::GetNumber(data);
+        trItemRData[3] = ParserX::GetNumber(data);
+        trItemRData[4] = ParserX::GetNumber(data);
         return;
     }
 
     // crossover
     if (sh == ("crossovertritemdata")) {
         crossoverTrItemData = new int[2];
-        crossoverTrItemData[0] = (int) ParserX::parsujr(data);
-        crossoverTrItemData[1] = (int) ParserX::parsujr(data);
+        crossoverTrItemData[0] = (int) ParserX::GetNumber(data);
+        crossoverTrItemData[1] = (int) ParserX::GetNumber(data);
         return;
     }
 
     // platform / siding
     if (sh == ("platformtritemdata") || sh == ("sidingtritemdata")) {
         platformTrItemData = new unsigned int[2];
-        platformTrItemData[0] = ParserX::parsuj16(data);
-        platformTrItemData[1] = ParserX::parsujr(data);
+        platformTrItemData[0] = ParserX::GetHex(data);
+        platformTrItemData[1] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("platformname") || sh == ("sidingname")) {
-        platformName = ParserX::odczytajtc(data);
+        platformName = ParserX::GetString(data);
         return;
     }
     if (sh == ("station")) {
-        stationName = ParserX::odczytajtc(data);
+        stationName = ParserX::GetString(data);
         return;
     }
     if (sh == ("platformminwaitingtime")) {
-        platformMinWaitingTime = ParserX::parsujr(data);
+        platformMinWaitingTime = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("platformnumpassengerswaiting")) {
-        platformNumPassengersWaiting = ParserX::parsujr(data);
+        platformNumPassengersWaiting = ParserX::GetNumber(data);
         return;
     }
 
     // soundregion
     if (sh == ("tritemsrdata")) {
         trItemSRData = new float[3];
-        trItemSRData[0] = ParserX::parsujr(data);
-        trItemSRData[1] = ParserX::parsujr(data);
-        trItemSRData[2] = ParserX::parsujr(data);
+        trItemSRData[0] = ParserX::GetNumber(data);
+        trItemSRData[1] = ParserX::GetNumber(data);
+        trItemSRData[2] = ParserX::GetNumber(data);
         return;
     }
 
@@ -279,7 +279,7 @@ void TRitem::set(QString sh, FileBuffer* data) {
         speedpostTrItemData = new float[4];
         bool ok = false;
         speedpostTrItemDataLength = 0;
-        speedpostTrItemData[0] = ParserX::parsujrInside(data, &ok);
+        speedpostTrItemData[0] = ParserX::GetNumberInside(data, &ok);
         /*
         10 - speed or dot
         9 - mph
@@ -297,13 +297,13 @@ void TRitem::set(QString sh, FileBuffer* data) {
         //if(speedpostTrItemData[0] !=384)qDebug() << ":sp " << speedpostTrItemData[0];
         if (!ok) return;
         speedpostTrItemDataLength++;
-        speedpostTrItemData[1] = ParserX::parsujrInside(data, &ok);
+        speedpostTrItemData[1] = ParserX::GetNumberInside(data, &ok);
         if (!ok) return;
         speedpostTrItemDataLength++;
-        speedpostTrItemData[2] = ParserX::parsujrInside(data, &ok);
+        speedpostTrItemData[2] = ParserX::GetNumberInside(data, &ok);
         if (!ok) return;
         speedpostTrItemDataLength++;
-        speedpostTrItemData[3] = ParserX::parsujrInside(data, &ok);
+        speedpostTrItemData[3] = ParserX::GetNumberInside(data, &ok);
         if (!ok) return;
         speedpostTrItemDataLength++;
         return;
@@ -311,44 +311,44 @@ void TRitem::set(QString sh, FileBuffer* data) {
 
     // signal
     if (sh == ("trsignaltype")) {
-        trSignalType1 = ParserX::parsuj16(data);
+        trSignalType1 = ParserX::GetHex(data);
         //if((trSignalType1 & 6) != 0)
         //    qDebug() << "tst "<< this->trItemId << " "<<trSignalType1;
-        trSignalType2 = ParserX::parsujr(data);
-        trSignalType3 = ParserX::parsujr(data);
-        trSignalType4 = ParserX::odczytajtc(data);
+        trSignalType2 = ParserX::GetNumber(data);
+        trSignalType3 = ParserX::GetNumber(data);
+        trSignalType4 = ParserX::GetString(data);
         return;
     }
 
     if (sh == ("trsignaldirs")) {
-        trSignalDirs = ParserX::parsujr(data);
+        trSignalDirs = ParserX::GetNumber(data);
         if (!titLoading) {
             trSignalDir = new int[trSignalDirs * 4];
             for (int i = 0; i < trSignalDirs * 4; i += 4) {
-                trSignalDir[i + 0] = ParserX::parsujr(data);
-                trSignalDir[i + 1] = ParserX::parsujr(data);
-                trSignalDir[i + 2] = ParserX::parsujr(data);
-                trSignalDir[i + 3] = ParserX::parsujr(data);
+                trSignalDir[i + 0] = ParserX::GetNumber(data);
+                trSignalDir[i + 1] = ParserX::GetNumber(data);
+                trSignalDir[i + 2] = ParserX::GetNumber(data);
+                trSignalDir[i + 3] = ParserX::GetNumber(data);
             }
         } else {
             trSignalRDir = new float[trSignalDirs * 6];
             for (int i = 0; i < trSignalDirs * 6; i += 6) {
-                trSignalRDir[i + 0] = ParserX::parsujr(data);
-                trSignalRDir[i + 1] = ParserX::parsujr(data);
-                trSignalRDir[i + 2] = ParserX::parsujr(data);
-                trSignalRDir[i + 3] = ParserX::parsujr(data);
-                trSignalRDir[i + 4] = ParserX::parsujr(data);
-                trSignalRDir[i + 5] = ParserX::parsujr(data);
+                trSignalRDir[i + 0] = ParserX::GetNumber(data);
+                trSignalRDir[i + 1] = ParserX::GetNumber(data);
+                trSignalRDir[i + 2] = ParserX::GetNumber(data);
+                trSignalRDir[i + 3] = ParserX::GetNumber(data);
+                trSignalRDir[i + 4] = ParserX::GetNumber(data);
+                trSignalRDir[i + 5] = ParserX::GetNumber(data);
             }
         }
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
         return;
     }
 
     // pickup
     if (sh == ("pickuptritemdata")) {
-        pickupTrItemData1 = ParserX::parsujr(data);
-        pickupTrItemData2 = ParserX::parsuj16(data);
+        pickupTrItemData1 = ParserX::GetNumber(data);
+        pickupTrItemData2 = ParserX::GetHex(data);
         return;
     }
 

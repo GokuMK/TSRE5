@@ -9,7 +9,7 @@
 #include "ParserX.h"
 
 void SFileX::odczytajshaders(FileBuffer* bufor, SFile* pliks) {
-    pliks->ishaders = ParserX::parsujr(bufor);
+    pliks->ishaders = ParserX::GetNumber(bufor);
 
     pliks->shader = new SFile::fshader[pliks->ishaders];
     for (int i = 0; i < pliks->ishaders; i++) {
@@ -18,7 +18,7 @@ void SFileX::odczytajshaders(FileBuffer* bufor, SFile* pliks) {
         }
         bufor->off++;
         bufor->off += 2;
-        pliks->shader[i].name = ParserX::odczytajtc(bufor).toLower();
+        pliks->shader[i].name = ParserX::GetString(bufor).toLower();
         //qDebug() << pliks->shaderName[i];
         //console.log(pliks->image[i].name);
     }
@@ -29,13 +29,13 @@ void SFileX::odczytajshaders(FileBuffer* bufor, SFile* pliks) {
 //-----------------------------------
 
 void SFileX::odczytajpunkty(FileBuffer* bufor, SFile* pliks) {
-    pliks->tpoints.ipoints = ParserX::parsujr(bufor);
+    pliks->tpoints.ipoints = ParserX::GetNumber(bufor);
     //qDebug() << ilosc;
     pliks->tpoints.points = new SFile::fpoint[pliks->tpoints.ipoints + 1];
     for (int i = 0; i < pliks->tpoints.ipoints; i++) {
-        pliks->tpoints.points[i].x = ParserX::parsujr(bufor);
-        pliks->tpoints.points[i].y = ParserX::parsujr(bufor);
-        pliks->tpoints.points[i].z = ParserX::parsujr(bufor);
+        pliks->tpoints.points[i].x = ParserX::GetNumber(bufor);
+        pliks->tpoints.points[i].y = ParserX::GetNumber(bufor);
+        pliks->tpoints.points[i].z = ParserX::GetNumber(bufor);
     }
     return;
 };
@@ -44,11 +44,11 @@ void SFileX::odczytajpunkty(FileBuffer* bufor, SFile* pliks) {
 //-----------------------------------
 
 void SFileX::odczytajuvpunkty(FileBuffer* bufor, SFile* pliks) {
-    int ilosc = ParserX::parsujr(bufor);
+    int ilosc = ParserX::GetNumber(bufor);
     pliks->tpoints.uv_points = new SFile::fpoint[ ilosc + 1];
     for (int i = 0; i < ilosc; i++) {
-        pliks->tpoints.uv_points[i].x = ParserX::parsujr(bufor);
-        pliks->tpoints.uv_points[i].y = ParserX::parsujr(bufor);
+        pliks->tpoints.uv_points[i].x = ParserX::GetNumber(bufor);
+        pliks->tpoints.uv_points[i].y = ParserX::GetNumber(bufor);
     }
     return;
 };
@@ -57,12 +57,12 @@ void SFileX::odczytajuvpunkty(FileBuffer* bufor, SFile* pliks) {
 //-----------------------------------
 
 void SFileX::odczytajnormalne(FileBuffer* bufor, SFile* pliks) {
-    int ilosc = ParserX::parsujr(bufor);
+    int ilosc = ParserX::GetNumber(bufor);
     pliks->tpoints.normals = new SFile::fpoint[ilosc + 1];
     for (int i = 0; i < ilosc; i++) {
-        pliks->tpoints.normals[i].x = ParserX::parsujr(bufor);
-        pliks->tpoints.normals[i].y = ParserX::parsujr(bufor);
-        pliks->tpoints.normals[i].z = ParserX::parsujr(bufor);
+        pliks->tpoints.normals[i].x = ParserX::GetNumber(bufor);
+        pliks->tpoints.normals[i].y = ParserX::GetNumber(bufor);
+        pliks->tpoints.normals[i].z = ParserX::GetNumber(bufor);
     }
     return;
 };
@@ -71,7 +71,7 @@ void SFileX::odczytajnormalne(FileBuffer* bufor, SFile* pliks) {
 //-----------------------------------
 
 void SFileX::odczytajmatrices(FileBuffer* bufor, SFile* pliks) {
-    pliks->iloscm = ParserX::parsujr(bufor);
+    pliks->iloscm = ParserX::GetNumber(bufor);
     pliks->macierz = new SFile::matrt[pliks->iloscm + 1];
 
     //System.out.println("iloscm: "+pliks->iloscm);
@@ -90,7 +90,7 @@ void SFileX::odczytajmatrices(FileBuffer* bufor, SFile* pliks) {
                 pliks->macierz[i].param[j] = 1;
                 continue;
             }
-            pliks->macierz[i].param[j] = ParserX::parsujr(bufor);
+            pliks->macierz[i].param[j] = ParserX::GetNumber(bufor);
         }
     }
     return;
@@ -100,7 +100,7 @@ void SFileX::odczytajmatrices(FileBuffer* bufor, SFile* pliks) {
 //-----------------------------------
 
 void SFileX::odczytajimages(FileBuffer* bufor, SFile* pliks) {
-    pliks->ilosci = ParserX::parsujr(bufor);
+    pliks->ilosci = ParserX::GetNumber(bufor);
     pliks->image = new SFile::imgs[pliks->ilosci + 1];
     for (int i = 0; i < pliks->ilosci; i++) {
         while (bufor->get() != 40) {
@@ -109,7 +109,7 @@ void SFileX::odczytajimages(FileBuffer* bufor, SFile* pliks) {
         bufor->off++;
         bufor->off += 2;
         int j = 0;
-        pliks->image[i].name = ParserX::odczytajtc(bufor);
+        pliks->image[i].name = ParserX::GetString(bufor);
         pliks->image[i].tex = -1;
         //console.log(pliks->image[i].name);
     }
@@ -120,7 +120,7 @@ void SFileX::odczytajimages(FileBuffer* bufor, SFile* pliks) {
 //-----------------------------------
 
 void SFileX::odczytajtextures(FileBuffer* bufor, SFile* pliks) {
-    pliks->ilosct = ParserX::parsujr(bufor);
+    pliks->ilosct = ParserX::GetNumber(bufor);
     pliks->texture = new SFile::text[pliks->ilosct];
     for (int i = 0; i < pliks->ilosct; i++) {
         while (bufor->get() != 40) {
@@ -128,10 +128,10 @@ void SFileX::odczytajtextures(FileBuffer* bufor, SFile* pliks) {
         }
         bufor->off++;
         //pliks->texture[i] = new pliks->Texture();
-        pliks->texture[i].image = ParserX::parsujr(bufor);
-        pliks->texture[i].arg1 = ParserX::parsujr(bufor);
-        pliks->texture[i].arg2 = ParserX::parsujr(bufor);
-        pliks->texture[i].arg3 = ParserX::parsujr(bufor);
+        pliks->texture[i].image = ParserX::GetNumber(bufor);
+        pliks->texture[i].arg1 = ParserX::GetNumber(bufor);
+        pliks->texture[i].arg2 = ParserX::GetNumber(bufor);
+        pliks->texture[i].arg3 = ParserX::GetNumber(bufor);
     }
     return;
 };
@@ -140,7 +140,7 @@ void SFileX::odczytajtextures(FileBuffer* bufor, SFile* pliks) {
 //-----------------------------------
 
 void SFileX::odczytajvtx_states(FileBuffer* bufor, SFile* pliks) {
-    pliks->iloscv = ParserX::parsujr(bufor);
+    pliks->iloscv = ParserX::GetNumber(bufor);
     pliks->vtxstate = new SFile::vtxs[pliks->iloscv];
     for (int i = 0; i < pliks->iloscv; i++) {
         while (bufor->get() != 40) {
@@ -148,10 +148,10 @@ void SFileX::odczytajvtx_states(FileBuffer* bufor, SFile* pliks) {
         }
         bufor->off++;
         //pliks->vtxstate[i] = new pliks->Vtxs();
-        pliks->vtxstate[i].arg1 = ParserX::parsuj16(bufor);
-        pliks->vtxstate[i].matrix = ParserX::parsujr(bufor);
-        pliks->vtxstate[i].arg2 = ParserX::parsujr(bufor);
-        pliks->vtxstate[i].arg3 = ParserX::parsujr(bufor);
+        pliks->vtxstate[i].arg1 = ParserX::GetHex(bufor);
+        pliks->vtxstate[i].matrix = ParserX::GetNumber(bufor);
+        pliks->vtxstate[i].arg2 = ParserX::GetNumber(bufor);
+        pliks->vtxstate[i].arg3 = ParserX::GetNumber(bufor);
 
         while (bufor->get() != 41) {
             bufor->off++;
@@ -166,7 +166,7 @@ void SFileX::odczytajvtx_states(FileBuffer* bufor, SFile* pliks) {
 //-----------------------------------
 
 void SFileX::odczytajprim_states(FileBuffer* bufor, SFile* pliks) {
-    pliks->iloscps = ParserX::parsujr(bufor);
+    pliks->iloscps = ParserX::GetNumber(bufor);
     pliks->primstate = new SFile::primst[pliks->iloscps];
     for (int i = 0; i < pliks->iloscps; i++) {
         while (bufor->get() != 40) {
@@ -174,19 +174,19 @@ void SFileX::odczytajprim_states(FileBuffer* bufor, SFile* pliks) {
         }
         bufor->off++;
         //pliks->primstate[i] = new pliks->Primst();
-        pliks->primstate[i].arg1 = ParserX::parsuj16(bufor);
-        pliks->primstate[i].arg2 = ParserX::parsujr(bufor);
-        pliks->primstate[i].arg3 = ParserX::parsujr(bufor);
+        pliks->primstate[i].arg1 = ParserX::GetHex(bufor);
+        pliks->primstate[i].arg2 = ParserX::GetNumber(bufor);
+        pliks->primstate[i].arg3 = ParserX::GetNumber(bufor);
         pliks->primstate[i].arg4 = -1;
         for (int j = 0; j < pliks->primstate[i].arg3; j++) {
-            if (j == 0) pliks->primstate[i].arg4 = ParserX::parsujr(bufor);
-            else ParserX::parsujr(bufor);
+            if (j == 0) pliks->primstate[i].arg4 = ParserX::GetNumber(bufor);
+            else ParserX::GetNumber(bufor);
         }
-        pliks->primstate[i].arg5 = ParserX::parsujr(bufor);
-        pliks->primstate[i].vtx_state = ParserX::parsujr(bufor);
-        pliks->primstate[i].arg6 = ParserX::parsujr(bufor);
-        pliks->primstate[i].arg7 = ParserX::parsujr(bufor);
-        pliks->primstate[i].arg8 = ParserX::parsujr(bufor);
+        pliks->primstate[i].arg5 = ParserX::GetNumber(bufor);
+        pliks->primstate[i].vtx_state = ParserX::GetNumber(bufor);
+        pliks->primstate[i].arg6 = ParserX::GetNumber(bufor);
+        pliks->primstate[i].arg7 = ParserX::GetNumber(bufor);
+        pliks->primstate[i].arg8 = ParserX::GetNumber(bufor);
     }
     return;
 };
@@ -213,7 +213,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
     ParserX::szukajsekcji1(sh, bufor);
     //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
     // wczytujemy ilosc distancelevels
-    pliks->iloscd = ParserX::parsujr(bufor);
+    pliks->iloscd = ParserX::GetNumber(bufor);
     pliks->distancelevel = new SFile::dist[pliks->iloscd];
 
     // wczytujemy distancelevls
@@ -226,11 +226,11 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
         //wczytanie hierarchii
         sh = "distance_level_header";
         ParserX::szukajsekcji1(sh, bufor);
-        nul = ParserX::parsujr(bufor); //dlevel_selection//
-        pliks->distancelevel[j].ilosch = ParserX::parsujr(bufor);
+        nul = ParserX::GetNumber(bufor); //dlevel_selection//
+        pliks->distancelevel[j].ilosch = ParserX::GetNumber(bufor);
         pliks->distancelevel[j].hierarchia = new int[pliks->distancelevel[j].ilosch + 1];
         for (ii = 0; ii < pliks->distancelevel[j].ilosch; ii++) {
-            pliks->distancelevel[j].hierarchia[ii] = ParserX::parsujr(bufor);
+            pliks->distancelevel[j].hierarchia[ii] = ParserX::GetNumber(bufor);
         }
 
         //szukamy subobjektow
@@ -238,7 +238,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
         ParserX::szukajsekcji1(sh, bufor);
         //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
         //ilosc subobjektow
-        pliks->distancelevel[j].iloscs = ParserX::parsujr(bufor);
+        pliks->distancelevel[j].iloscs = ParserX::GetNumber(bufor);
         // przydzielenie im pamieci
         pliks->distancelevel[j].subobiekty = new SFile::sub[pliks->distancelevel[j].iloscs + 1];
 
@@ -255,7 +255,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
             ParserX::szukajsekcji1(sh, bufor);
             //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
             //ilosc wierzcholkow
-            v_ilosc = ParserX::parsujr(bufor);
+            v_ilosc = ParserX::GetNumber(bufor);
             //wczytanie wierzholkow
             //System.out.println(v_ilosc); 
 
@@ -263,21 +263,21 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
             //console.log("iloscv "+v_ilosc);
             for (jj = 0; jj < iloscv; jj++) {
                 //vert[jj].arg1 = 
-                vert[jj].arg1 = (short) ParserX::parsuj16(bufor);
-                vert[jj].point = (short) ParserX::parsujr(bufor);
-                vert[jj].normal = (short) ParserX::parsujr(bufor);
-                vert[jj].arg2 = (short) ParserX::parsuj16(bufor);
-                vert[jj].arg3 = (short) ParserX::parsuj16(bufor);
+                vert[jj].arg1 = (short) ParserX::GetHex(bufor);
+                vert[jj].point = (short) ParserX::GetNumber(bufor);
+                vert[jj].normal = (short) ParserX::GetNumber(bufor);
+                vert[jj].arg2 = (short) ParserX::GetHex(bufor);
+                vert[jj].arg3 = (short) ParserX::GetHex(bufor);
 
                 //if (jj < 20) Console.WriteLine("tu jest :" + bufor[ibufor]);
                 //if (jj < 20) Console.WriteLine("tu jest :" + bufor[ibufor]);
                 //vert[jj].arg2 = 
                 //if (jj < 20) Console.WriteLine("tu jest :" + bufor[ibufor]);
                 //vert[jj].arg3 = 
-                vert[jj].material = (short) ParserX::parsujr(bufor);
+                vert[jj].material = (short) ParserX::GetNumber(bufor);
 
                 for (int jjjj = 0; jjjj < vert[jj].material; jjjj++) {
-                    if (jjjj == 0) vert[jj].uvpoint = (short) ParserX::parsujr(bufor);
+                    if (jjjj == 0) vert[jj].uvpoint = (short) ParserX::GetNumber(bufor);
                 }
 
                 //if (jj < 100) 
@@ -294,7 +294,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
             sh = "primitives";
             ParserX::szukajsekcji1(sh, bufor);
             //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
-            pliks->distancelevel[j].subobiekty[ii].iloscc = ParserX::parsujr(bufor);
+            pliks->distancelevel[j].subobiekty[ii].iloscc = ParserX::GetNumber(bufor);
             //console.log("wczytam p " + iloscc);
             // przydzielenie im pamieci
             pliks->distancelevel[j].subobiekty[ii].czesci = new SFile::czes[pliks->distancelevel[j].subobiekty[ii].iloscc + 1];
@@ -316,7 +316,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
                     sh = "vertex_idxs";
                     ParserX::szukajsekcji1(sh, bufor);
                     //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
-                    pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv = ParserX::parsujr(bufor);
+                    pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv = ParserX::GetNumber(bufor);
 
                     //pliks->distancelevel[j].subobiekty[ii][czilosc].pwierzcholki = new Float32Array(pliks->distancelevel[j].subobiekty[ii][czilosc].iloscv*8);
                     //float *wierzcholki = new float[pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv * 8];
@@ -328,8 +328,8 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
                     for (int iii = pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv - 1; iii >= 0; iii--) {
                         //pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].wierzcholki[iii] = new Sfile.wie();
                         //qDebug() << "cc " << pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv;
-                        //w = ParserX::parsujr(bufor);
-                        pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].idx[iii] = ParserX::parsujr(bufor);
+                        //w = ParserX::GetNumber(bufor);
+                        pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].idx[iii] = ParserX::GetNumber(bufor);
                         /*n = vert[w].normal;
                         txt = vert[w].uvpoint;
                         p = vert[w].point;

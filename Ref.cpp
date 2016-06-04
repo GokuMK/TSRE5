@@ -20,40 +20,40 @@ Ref::Ref(QString path) {
         return;
     FileBuffer* data = ReadFile::read(file);
 
-    ParserX::nextLine(data);
+    ParserX::NextLine(data);
 
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         //qDebug() << sh;
         RefItem item;
         item.type = sh;
-        while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
             //qDebug() << sh;
             if(sh == ("class")) {
-                item.clas = ParserX::odczytajtc(data);
-                ParserX::pominsekcje(data);
+                item.clas = ParserX::GetString(data);
+                ParserX::SkipToken(data);
                 continue;
             }
             if(sh == ("filename")) {
-                item.filename = ParserX::odczytajtc(data);
-                ParserX::pominsekcje(data);
+                item.filename = ParserX::GetString(data);
+                ParserX::SkipToken(data);
                 continue;
             }
             if(sh == ("align")) {
-                item.align = ParserX::odczytajtc(data);
-                ParserX::pominsekcje(data);
+                item.align = ParserX::GetString(data);
+                ParserX::SkipToken(data);
                 continue;
             }
             if(sh == ("description")) {
-                item.description = ParserX::odczytajtc(data);
-                ParserX::pominsekcje(data);
+                item.description = ParserX::GetString(data);
+                ParserX::SkipToken(data);
                 continue;
             }
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
         }
         if(item.clas != ""){
             refItems[item.clas.trimmed().toStdString()].push_back(item);
         }
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
     }
 
     //for ( auto it = refItems.begin(); it != refItems.end(); ++it ){

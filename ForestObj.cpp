@@ -37,25 +37,25 @@ void ForestObj::loadForestList(){
     if (!file->open(QIODevice::ReadOnly))
         return;
     FileBuffer* data = ReadFile::read(file);
-    ParserX::nextLine(data);
+    ParserX::NextLine(data);
 
     QString sh = "";
     //ParserX::szukajsekcji1(sh, data);
-    //ParserX::parsujr(data);
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    //ParserX::GetNumber(data);
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         qDebug() << sh;
         if (sh == ("forest")) {
             ForestObj::forestList.emplace_back();
-            ForestObj::forestList.back().name = ParserX::odczytajtc(data);
-            ForestObj::forestList.back().texture = ParserX::odczytajtc(data);
-            ForestObj::forestList.back().treeSizeX = ParserX::parsujr(data);
-            ForestObj::forestList.back().treeSizeZ = ParserX::parsujr(data);
-            ForestObj::forestList.back().scaleRangeX = ParserX::parsujr(data);
-            ForestObj::forestList.back().scaleRangeZ = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            ForestObj::forestList.back().name = ParserX::GetString(data);
+            ForestObj::forestList.back().texture = ParserX::GetString(data);
+            ForestObj::forestList.back().treeSizeX = ParserX::GetNumber(data);
+            ForestObj::forestList.back().treeSizeZ = ParserX::GetNumber(data);
+            ForestObj::forestList.back().scaleRangeX = ParserX::GetNumber(data);
+            ForestObj::forestList.back().scaleRangeZ = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
             continue;
         }
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
     }
 }
 
@@ -125,26 +125,26 @@ void ForestObj::set(int sh, FileBuffer* data) {
 
 void ForestObj::set(QString sh, FileBuffer* data) {
     if (sh == ("treetexture")) {
-        treeTexture = ParserX::odczytajtc(data);
+        treeTexture = ParserX::GetString(data);
         return;
     }
     if (sh == ("scalerange")) {
-        scaleRangeX = ParserX::parsujr(data);
-        scaleRangeZ = ParserX::parsujr(data);
+        scaleRangeX = ParserX::GetNumber(data);
+        scaleRangeZ = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("area")) {
-        areaX = ParserX::parsujr(data);
-        areaZ = ParserX::parsujr(data);
+        areaX = ParserX::GetNumber(data);
+        areaZ = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("treesize")) {
-        treeSizeX = ParserX::parsujr(data);
-        treeSizeZ = ParserX::parsujr(data);
+        treeSizeX = ParserX::GetNumber(data);
+        treeSizeZ = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("population")) {
-        population = ParserX::parsujr(data);
+        population = ParserX::GetNumber(data);
         return;
     }
     WorldObj::set(sh, data);

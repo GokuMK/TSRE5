@@ -11,34 +11,34 @@ SignalShape::~SignalShape() {
 
 void SignalShape::set(QString sh, FileBuffer* data) {
     //if (sh == ("tritemid")) {
-    //    trItemId = ParserX::parsujUint(data);
+    //    trItemId = ParserX::GetUInt(data);
     //    return;
     //}
     if (sh == "signalsubobjs") {
-        iSubObj = ParserX::parsujr(data);
+        iSubObj = ParserX::GetNumber(data);
         //qDebug() << iSubObj;
         subObj = new SubObj[iSubObj];
         int idx;
         for(int i = 0; i < iSubObj; i++){
-            idx = ParserX::parsujr(data);
+            idx = ParserX::GetNumber(data);
             subObj[idx].iLink = 0;
-            subObj[idx].type = ParserX::odczytajtc(data);
-            subObj[idx].desc = ParserX::odczytajtc(data);
+            subObj[idx].type = ParserX::GetString(data);
+            subObj[idx].desc = ParserX::GetString(data);
             //qDebug() <<subObj[idx].type;
             //qDebug() <<subObj[idx].desc;
-            while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 //qDebug() << sh;
                 if (sh == "") {
                     break;
                 }
                 if (sh == "sigsubtype") {
-                    subObj[idx].sigSubType = ParserX::odczytajtc(data);
-                    ParserX::pominsekcje(data);
+                    subObj[idx].sigSubType = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == "signalflags") {
                     QString sflags;
-                    while((sflags = ParserX::odczytajtcInside(data)) != "" ){
+                    while((sflags = ParserX::GetStringInside(data)) != "" ){
                         if(sflags == "JN_LINK"){
                             //qDebug() << "JN_LINK";
                             this->isJnLink = true;
@@ -60,27 +60,27 @@ void SignalShape::set(QString sh, FileBuffer* data) {
                         qDebug() << "signalFlags" << sflags;
                         //subObj[idx].signalFlags = sflags;
                     }
-                    ParserX::pominsekcje(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == "sigsubstype") {
-                    subObj[idx].sigSubSType = ParserX::odczytajtc(data);
-                    ParserX::pominsekcje(data);
+                    subObj[idx].sigSubSType = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == "sigsubjnlinkif") {
-                    subObj[idx].iLink = ParserX::parsujr(data);
+                    subObj[idx].iLink = ParserX::GetNumber(data);
                     subObj[idx].sigSubJnLinkIf = new int[subObj[idx].iLink];
                     for(int j = 0; j < subObj[idx].iLink; j++)
-                        subObj[idx].sigSubJnLinkIf[j] = ParserX::parsujr(data);
-                    ParserX::pominsekcje(data);
+                        subObj[idx].sigSubJnLinkIf[j] = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
                     continue;
                 }
                 qDebug() << "--- " << sh;
-                ParserX::pominsekcje(data);
+                ParserX::SkipToken(data);
                 continue;
             }
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
         }
         return;
     }

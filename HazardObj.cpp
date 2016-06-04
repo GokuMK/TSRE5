@@ -104,14 +104,14 @@ void HazardObj::set(int sh, FileBuffer* data) {
 
 void HazardObj::set(QString sh, FileBuffer* data) {
     if (sh == ("filename")) {
-        fileName = ParserX::odczytajtc(data);
+        fileName = ParserX::GetString(data);
         return;
     }
     if (sh == ("tritemid")) {
         this->trItemIdCount = 2;
         trItemId = new int[2];
-        trItemId[0] = ParserX::parsujr(data);
-        trItemId[1] = ParserX::parsujr(data);
+        trItemId[0] = ParserX::GetNumber(data);
+        trItemId[1] = ParserX::GetNumber(data);
         return;
     }
     WorldObj::set(sh, data);

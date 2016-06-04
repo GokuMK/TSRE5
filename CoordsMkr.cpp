@@ -24,23 +24,23 @@ CoordsMkr::CoordsMkr(QString path) {
     if (!file->open(QIODevice::ReadOnly))
         return;
     FileBuffer* data = ReadFile::read(file);
-    ParserX::nextLine(data);
+    ParserX::NextLine(data);
 
     QString sh = "";
     //ParserX::szukajsekcji1(sh, data);
-    //ParserX::parsujr(data);
+    //ParserX::GetNumber(data);
 
     IghCoordinate* igh;
     PreciseTileCoordinate* ppp;
 
-    while (!((sh = ParserX::nazwasekcji_inside(data).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         //qDebug() << sh;
         if (sh == ("marker")) {
             markerList.emplace_back();
-            markerList.back().lon = ParserX::parsujr(data);
-            markerList.back().lat = ParserX::parsujr(data);
-            markerList.back().name = ParserX::odczytajtc(data);
-            markerList.back().type = ParserX::parsujr(data);
+            markerList.back().lon = ParserX::GetNumber(data);
+            markerList.back().lat = ParserX::GetNumber(data);
+            markerList.back().name = ParserX::GetString(data);
+            markerList.back().type = ParserX::GetNumber(data);
 
             //IghCoordinate* igh = MstsCoordinates::ConvertToIgh(x, -z, 0, 0);
             //qDebug() << igh->Line << " === " << igh->Sample;
@@ -59,10 +59,10 @@ CoordsMkr::CoordsMkr(QString path) {
             markerList.back().x = ppp->X*2048-1024;
             markerList.back().z = ppp->Z*2048-1024;
 
-            ParserX::pominsekcje(data);
+            ParserX::SkipToken(data);
             continue;
         }
-        ParserX::pominsekcje(data);
+        ParserX::SkipToken(data);
     }
 
     if (markerList.size() > 0)

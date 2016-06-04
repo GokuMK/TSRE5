@@ -68,7 +68,7 @@ void StaticObj::set(int sh, FileBuffer* data) {
 
 void StaticObj::set(QString sh, FileBuffer* data) {
     if (sh == ("filename")) {
-        fileName = ParserX::odczytajtc(data);
+        fileName = ParserX::GetString(data);
         return;
     }
     WorldObj::set(sh, data);

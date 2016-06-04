@@ -165,32 +165,32 @@ void DynTrackObj::set(int sh, FileBuffer* data) {
 
 void DynTrackObj::set(QString sh, FileBuffer* data) {
     if (sh == ("sectionidx")) {
-        //qDebug() << ParserX::parsujr(data);
-        sectionIdx = ParserX::parsujr(data);
+        //qDebug() << ParserX::GetNumber(data);
+        sectionIdx = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("elevation")) {
-        elevation = ParserX::parsujr(data);
+        elevation = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("tracksections")) {
         if(sections == NULL) sections = new Section[5];
         for (int iii = 0; iii < 5; iii++) {
-            sections[iii].type = ParserX::parsujr(data);
-            sections[iii].sectIdx = ParserX::parsujUint(data);
-            sections[iii].a = ParserX::parsujr(data);
-            sections[iii].r = ParserX::parsujr(data);
-            ParserX::pominsekcje(data);
+            sections[iii].type = ParserX::GetNumber(data);
+            sections[iii].sectIdx = ParserX::GetUInt(data);
+            sections[iii].a = ParserX::GetNumber(data);
+            sections[iii].r = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
         }
         return;
     }
     if (sh == ("jnodeposn")) {
         jNodePosn = new float[5];
-        jNodePosn[0] = ParserX::parsujr(data);
-        jNodePosn[1] = ParserX::parsujr(data);
-        jNodePosn[2] = ParserX::parsujr(data);
-        jNodePosn[3] = ParserX::parsujr(data);
-        jNodePosn[4] = ParserX::parsujr(data);
+        jNodePosn[0] = ParserX::GetNumber(data);
+        jNodePosn[1] = ParserX::GetNumber(data);
+        jNodePosn[2] = ParserX::GetNumber(data);
+        jNodePosn[3] = ParserX::GetNumber(data);
+        jNodePosn[4] = ParserX::GetNumber(data);
         return;
     }    
     //qDebug() <<"A";

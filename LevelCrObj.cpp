@@ -177,34 +177,34 @@ void LevelCrObj::set(int sh, FileBuffer* data) {
 
 void LevelCrObj::set(QString sh, FileBuffer* data) {
     if (sh == ("levelcrparameters")) {
-        levelCrParameters[0] = ParserX::parsujr(data);
-        levelCrParameters[1] = ParserX::parsujr(data);
+        levelCrParameters[0] = ParserX::GetNumber(data);
+        levelCrParameters[1] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("crashprobability")) {
-        crashProbability = ParserX::parsujr(data);
+        crashProbability = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("levelcrdata")) {
-        levelCrData[0] = ParserX::parsuj16(data);
-        levelCrData[1] = ParserX::parsujr(data);
+        levelCrData[0] = ParserX::GetHex(data);
+        levelCrData[1] = ParserX::GetNumber(data);
         trItemId = new int[levelCrData[1]*4];
         return;
     }
     if (sh == ("levelcrtiming")) {
-        levelCrTiming[0] = ParserX::parsujr(data);
-        levelCrTiming[1] = ParserX::parsujr(data);
-        levelCrTiming[2] = ParserX::parsujr(data);
+        levelCrTiming[0] = ParserX::GetNumber(data);
+        levelCrTiming[1] = ParserX::GetNumber(data);
+        levelCrTiming[2] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("tritemid")) {
-        trItemId[trItemIdCount++] = ParserX::parsujr(data);
-        trItemId[trItemIdCount++] = ParserX::parsujr(data);
+        trItemId[trItemIdCount++] = ParserX::GetNumber(data);
+        trItemId[trItemIdCount++] = ParserX::GetNumber(data);
         qDebug() <<"levelcr "<<trItemId[trItemIdCount-2] <<" "<<trItemId[trItemIdCount-1];
         return;
     }
     if (sh == ("filename")) {
-        fileName = ParserX::odczytajtc(data);
+        fileName = ParserX::GetString(data);
         return;
     }
     WorldObj::set(sh, data);
