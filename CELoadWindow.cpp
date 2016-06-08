@@ -5,7 +5,7 @@
 #include "ConEditorWindow.h"
 
 CELoadWindow::CELoadWindow() {
-    this->setWindowFlags( Qt::CustomizeWindowHint );
+    //this->setWindowFlags( Qt::CustomizeWindowHint );
     this->setFixedSize(600, 600);
     QImage* myImage = new QImage();
     myImage->load("resources/load.png");

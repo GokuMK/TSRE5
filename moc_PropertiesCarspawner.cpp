@@ -68,7 +68,6 @@ static const uint qt_meta_data_PropertiesCarspawner[] = {
 void PropertiesCarspawner::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         PropertiesCarspawner *_t = static_cast<PropertiesCarspawner *>(_o);
         Q_UNUSED(_t)
         switch (_id) {

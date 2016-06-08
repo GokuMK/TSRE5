@@ -139,7 +139,6 @@ static const uint qt_meta_data_Window[] = {
 void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         Window *_t = static_cast<Window *>(_o);
         Q_UNUSED(_t)
         switch (_id) {

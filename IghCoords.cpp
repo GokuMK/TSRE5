@@ -1,5 +1,5 @@
 #include "IghCoords.h"
-#include <qDebug>
+#include <QDebug>
 
 constexpr double MstsCoordinates::IghLongitudeCenter[12];
 

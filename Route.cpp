@@ -105,7 +105,7 @@ void Route::loadTrk() {
             continue;
         }
         if (sh == ("filename")) {
-            Game::routeName = ParserX::GetString(data);
+            Game::routeName = ParserX::GetString(data).toLower();
             ParserX::SkipToken(data);
             continue;
         }

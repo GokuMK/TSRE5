@@ -1,5 +1,5 @@
 #include "GLUU.h"
-#include "zconf.h"
+//#include "zconf.h"
 #include "GLMatrix.h"
 #include "ReadFile.h"
 #include "Game.h"

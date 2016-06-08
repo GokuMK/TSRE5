@@ -79,7 +79,6 @@ static const uint qt_meta_data_NaviBox[] = {
 void NaviBox::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         NaviBox *_t = static_cast<NaviBox *>(_o);
         Q_UNUSED(_t)
         switch (_id) {

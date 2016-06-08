@@ -106,7 +106,6 @@ static const uint qt_meta_data_EngListWidget[] = {
 void EngListWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         EngListWidget *_t = static_cast<EngListWidget *>(_o);
         Q_UNUSED(_t)
         switch (_id) {

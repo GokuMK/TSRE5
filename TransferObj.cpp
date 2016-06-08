@@ -276,7 +276,7 @@ void TransferObj::drawShape(){
                 }
             }
 
-        texturePath = new QString(resPath+"/"+texture);
+        texturePath = new QString(resPath.toLower()+"/"+texture.toLower());
         shape.setMaterial(texturePath);
         shape.init(punkty, ptr, shape.VNT, GL_TRIANGLES);
         delete[] punkty;

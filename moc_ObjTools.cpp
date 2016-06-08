@@ -145,7 +145,6 @@ static const uint qt_meta_data_ObjTools[] = {
 void ObjTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         ObjTools *_t = static_cast<ObjTools *>(_o);
         Q_UNUSED(_t)
         switch (_id) {

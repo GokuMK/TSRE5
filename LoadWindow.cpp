@@ -6,7 +6,7 @@
 #include "IghCoords.h"
 
 LoadWindow::LoadWindow() {
-    this->setWindowFlags( Qt::CustomizeWindowHint );
+    //this->setWindowFlags( Qt::CustomizeWindowHint );
     this->setFixedSize(600, 700);
     QImage* myImage = new QImage();
     myImage->load("resources/load.png");

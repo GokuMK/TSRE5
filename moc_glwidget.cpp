@@ -161,7 +161,6 @@ static const uint qt_meta_data_GLWidget[] = {
 void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         GLWidget *_t = static_cast<GLWidget *>(_o);
         Q_UNUSED(_t)
         switch (_id) {

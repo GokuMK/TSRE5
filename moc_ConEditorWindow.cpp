@@ -171,7 +171,6 @@ static const uint qt_meta_data_ConEditorWindow[] = {
 void ConEditorWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         ConEditorWindow *_t = static_cast<ConEditorWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {

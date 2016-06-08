@@ -351,6 +351,7 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
     int useSC;
     int w = 1;
     //w = this->signalUnits;
+
     for(int i = 0; i < w; i++){
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][0] + 0 * (drawPositions[i][4] - this->x), drawPositions[i][1] + i + 1, -drawPositions[i][2] + 0 * (-drawPositions[i][5] - this->y));

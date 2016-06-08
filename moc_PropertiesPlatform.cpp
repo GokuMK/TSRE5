@@ -90,7 +90,6 @@ static const uint qt_meta_data_PropertiesPlatform[] = {
 void PropertiesPlatform::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         PropertiesPlatform *_t = static_cast<PropertiesPlatform *>(_o);
         Q_UNUSED(_t)
         switch (_id) {

@@ -152,6 +152,7 @@ void SFile::Load(QString path) {
         if(shader[i].name == "texdiff") shader[i].alpha = 1;
         else shader[i].alpha = 0;
     }
+    file->close();
     return;
 }
 

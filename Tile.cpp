@@ -119,6 +119,8 @@ void Tile::load() {
                 loaded = 0;
                 wczytajObiekty();
                 loadWS();
+                file->close();
+                delete data;
                 return;
             } else if (sh == "tr_watermark") {
                 nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::GetNumber(data)));
@@ -220,6 +222,8 @@ void Tile::load() {
        wczytajObiekty();
        loadWS();
     }
+    file->close();
+    delete data;
 }
 
 void Tile::loadWS() {
