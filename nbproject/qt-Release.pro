@@ -1,7 +1,7 @@
 # This file is generated automatically. Do not edit.
 # Use project properties -> Build -> Qt -> Expert -> Custom Definitions.
 TEMPLATE = app
-DESTDIR = dist/Release/MinGW_QT_static-Windows
+DESTDIR = dist/Release/MinGW_QT_5.7.0_Static-Windows
 TARGET = TSRE5
 VERSION = 0.613
 CONFIG -= debug_and_release app_bundle lib_bundle
@@ -13,7 +13,7 @@ HEADERS += AboutWindow.h AceLib.h ActLib.h Activity.h Brush.h CELoadWindow.h Cam
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=
-OBJECTS_DIR = build/Release/MinGW_QT_static-Windows
+OBJECTS_DIR = build/Release/MinGW_QT_5.7.0_Static-Windows
 MOC_DIR = 
 RCC_DIR = 
 UI_DIR = 
@@ -28,4 +28,4 @@ QMAKE_CXXFLAGS += -std=c++11
 equals(QT_MAJOR_VERSION, 5) {
 CONFIG += c++11
 }
-CONFIG += console
+"CONFIG += console"

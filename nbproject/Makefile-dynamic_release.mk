@@ -22,9 +22,9 @@ AS=as
 QMAKE=qmake
 
 # Macros
-CND_PLATFORM=MinGW_QT_5.7.0_Static-Windows
+CND_PLATFORM=MinGW_QT_5.7.0-Windows
 CND_DLIB_EXT=dll
-CND_CONF=Release
+CND_CONF=dynamic_release
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 
@@ -52,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-lopengl32
 
 nbproject/qt-${CND_CONF}.mk: nbproject/qt-${CND_CONF}.pro FORCE
 	${QMAKE} VPATH=. -spec win32-g++ -o qttmp-${CND_CONF}.mk nbproject/qt-${CND_CONF}.pro
@@ -64,9 +64,9 @@ FORCE:
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS} nbproject/qt-${CND_CONF}.mk
-	"${MAKE}" -f nbproject/qt-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/TSRE5.exe
+	"${MAKE}" -f nbproject/qt-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/HelloQtWorld_1.exe
 
-${CND_BUILDDIR}/Release/%.o: nbproject/qt-${CND_CONF}.mk
+${CND_BUILDDIR}/dynamic_release/%.o: nbproject/qt-${CND_CONF}.mk
 	${MAKE} -f nbproject/qt-${CND_CONF}.mk "$@"
 
 # Subprojects

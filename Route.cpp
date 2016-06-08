@@ -142,6 +142,7 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     
     int mintile = -Game::tileLod;
     int maxtile = Game::tileLod;
+
     if(selection){
         mintile = -1;
         maxtile = 1;
@@ -159,13 +160,13 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
             //try {
-            tTile = tile[(playerT[0] + i)*10000 + playerT[1] + j];
+            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
             //    if (tTile->loaded == -2) continue;
             //} catch (const std::out_of_range& oor) {
-            if (tTile == NULL)
-                tile[(playerT[0] + i)*10000 + playerT[1] + j] = new Tile(playerT[0] + i, playerT[1] + j);
-            //}
-            tTile = tile[(playerT[0] + i)*10000 + playerT[1] + j];
+            if (tTile == NULL){
+                tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Tile((int)playerT[0] + i, (int)playerT[1] + j);
+            }
+            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
             //tTile->inUse = true;
             if (tTile->loaded == 1) {
                 gluu->mvPushMatrix();
@@ -206,7 +207,6 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
            this.tile[key].inUse = false;
        }
     }*/
-
 }
 
 void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MapWindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'MapWindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.4.1. It"
+#error "This file was generated using the moc from 5.7.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,11 +20,11 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MapWindow_t {
     QByteArrayData data[8];
-    char stringdata[67];
+    char stringdata0[67];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_MapWindow_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_MapWindow_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
 static const qt_meta_stringdata_MapWindow_t qt_meta_stringdata_MapWindow = {
@@ -73,7 +73,9 @@ static const uint qt_meta_data_MapWindow[] = {
 void MapWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
         MapWindow *_t = static_cast<MapWindow *>(_o);
+        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->isData((*reinterpret_cast< QNetworkReply*(*)>(_a[1]))); break;
         case 1: _t->loadOSM(); break;
@@ -97,7 +99,7 @@ const QMetaObject *MapWindow::metaObject() const
 void *MapWindow::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_MapWindow.stringdata))
+    if (!strcmp(_clname, qt_meta_stringdata_MapWindow.stringdata0))
         return static_cast<void*>(const_cast< MapWindow*>(this));
     return QDialog::qt_metacast(_clname);
 }

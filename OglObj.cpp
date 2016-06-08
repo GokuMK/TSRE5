@@ -16,7 +16,14 @@ OglObj::~OglObj() {
 
 void OglObj::setMaterial(float r, float g, float b) {
     materialType = COLOR;
-    color = new Vector4f(r, g, b, 1.0);
+    if(color == NULL) {
+        color = new Vector4f(r, g, b, 1.0);
+    } else {
+        color->x = r;
+        color->y = g;
+        color->z = b;
+        color->c = 1.0;
+    }
 }
 
 void OglObj::setMaterial(QString* path) {

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'PropertiesPickup.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'PropertiesPickup.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.4.1. It"
+#error "This file was generated using the moc from 5.7.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,11 +20,11 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_PropertiesPickup_t {
     QByteArrayData data[1];
-    char stringdata[17];
+    char stringdata0[17];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_PropertiesPickup_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_PropertiesPickup_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
 static const qt_meta_stringdata_PropertiesPickup_t qt_meta_stringdata_PropertiesPickup = {
@@ -74,7 +74,7 @@ const QMetaObject *PropertiesPickup::metaObject() const
 void *PropertiesPickup::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_PropertiesPickup.stringdata))
+    if (!strcmp(_clname, qt_meta_stringdata_PropertiesPickup.stringdata0))
         return static_cast<void*>(const_cast< PropertiesPickup*>(this));
     return PropertiesAbstract::qt_metacast(_clname);
 }

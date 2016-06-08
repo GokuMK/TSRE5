@@ -59,10 +59,12 @@ FileBuffer* ReadFile::read(QFile* file) {
         delete[] in;
         //delete[] out;
     } else {
-        data = in + 16;// new unsigned char[fileData.length() - 16];
+        //data = in + 16;// new unsigned char[fileData.length() - 16];
         nLength = size - 16;
+        data = new unsigned char[nLength];
+        std::copy(in + 16, in + size, data);
         //std::copy(in + 16, in + nLength + 16, data);
-        //delete[] in;
+        delete[] in;
     }
     //delete[] in;
     return new FileBuffer(data,nLength);
@@ -77,6 +79,6 @@ FileBuffer* ReadFile::readRAW(QFile* file) {
     unsigned char* data = new unsigned char[nLength+1];
     data[nLength] = 0;
     std::copy(in, in + nLength, data);
-    delete[] in;
+    //delete[] in;
     return new FileBuffer(data,nLength);
 }

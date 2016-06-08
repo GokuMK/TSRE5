@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'OverwriteDialog.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'OverwriteDialog.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.4.1. It"
+#error "This file was generated using the moc from 5.7.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,11 +20,11 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_OverwriteDialog_t {
     QByteArrayData data[4];
-    char stringdata[27];
+    char stringdata0[27];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_OverwriteDialog_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_OverwriteDialog_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
 static const qt_meta_stringdata_OverwriteDialog_t qt_meta_stringdata_OverwriteDialog = {
@@ -66,7 +66,9 @@ static const uint qt_meta_data_OverwriteDialog[] = {
 void OverwriteDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
         OverwriteDialog *_t = static_cast<OverwriteDialog *>(_o);
+        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->cancel(); break;
         case 1: _t->ok(); break;
@@ -90,7 +92,7 @@ const QMetaObject *OverwriteDialog::metaObject() const
 void *OverwriteDialog::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_OverwriteDialog.stringdata))
+    if (!strcmp(_clname, qt_meta_stringdata_OverwriteDialog.stringdata0))
         return static_cast<void*>(const_cast< OverwriteDialog*>(this));
     return QDialog::qt_metacast(_clname);
 }

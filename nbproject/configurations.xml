@@ -347,7 +347,7 @@
   <confs>
     <conf name="Debug" type="4">
       <toolsSet>
-        <compilerSet>MinGW_QT_static|MinGW</compilerSet>
+        <compilerSet>MinGW_QT_5.7.0_Static|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -848,7 +848,7 @@
     </conf>
     <conf name="Release" type="4">
       <toolsSet>
-        <compilerSet>MinGW_QT_static|MinGW</compilerSet>
+        <compilerSet>MinGW_QT_5.7.0_Static|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -858,7 +858,7 @@
         <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>
-          <Elem>CONFIG += console</Elem>
+          <Elem>"CONFIG += console"</Elem>
         </defs>
       </qt>
       <compileType>
@@ -1355,6 +1355,1526 @@
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="window.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="window.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="dynamic_release" type="4">
+      <toolsSet>
+        <compilerSet>MinGW_QT_5.7.0|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <buildMode>1</buildMode>
+        <modules>core gui widgets network opengl</modules>
+        <defs>
+          <Elem>"CONFIG += console"</Elem>
+        </defs>
+      </qt>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+        </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-lopengl32 </linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="AboutWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="AboutWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="AceLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="AceLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Activity.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Activity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Brush.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CameraConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraFree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CameraFree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraRot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConListWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConListWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConUnitsWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConUnitsWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Consist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Consist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsMkr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsMkr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DynTrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="DynTrackObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eng.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EngLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngListWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EngListWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Features.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Features.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="FileFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Flex.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Flex.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ForestObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ForestObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLH.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GLH.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLMatrix.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GLMatrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLUU.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GLUU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HGTfile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="HGTfile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HazardObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="HazardObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HeightWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="HeightWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IghCoords.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="IghCoords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ImageLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ImageLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Intersections.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Intersections.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="LevelCrObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LoadWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NaviBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NaviBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NaviWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NaviWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NewRouteWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NewRouteWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OSM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OSM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ObjTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OglObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OglObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OverwriteDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OverwriteDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PaintTexLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PaintTexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ParserX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ParserX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Path.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Path.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PickupObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PickupObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PlatformObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PlatformObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PoleObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PoleObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesDyntrack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesForest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesForest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesPickup.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesPickup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesPlatform.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesPlatform.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSiding.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSiding.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSignal.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSignal.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSoundSource.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSoundSource.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSpeedpost.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSpeedpost.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTransfer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesUndefined.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesUndefined.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="QuadTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="QuadTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RandomConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RandomConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ReadFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ref.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Ref.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Route.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Route.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ruch.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Ruch.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFileC.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFileC.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFileX.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFileX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SigCfg.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SigCfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalShape.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalWindowLink.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SignalWindowLink.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundRegionObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundRegionObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundSourceObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundSourceObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedPost.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SpeedPost.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedPostDAT.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SpeedPostDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedpostObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SpeedpostObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StaticObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="StaticObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TDB.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TDB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TRitem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TRitem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TRnode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TRnode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TS.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TSection.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TSection.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TSectionDAT.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TSectionDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Terrain.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Terrain.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainTreeWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainTreeWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TextObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TextObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Texture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Texture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrWatermarkObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrWatermarkObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackItemObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrackItemObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrackObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackShape.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrackShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UnsavedDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector2f.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vector2f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector2i.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vector2i.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector3f.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vector3f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector4f.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Vector4f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="WorldObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="glShapeWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="glShapeWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="glwidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="glwidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="window.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="window.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release_x64" type="4">
+      <toolsSet>
+        <compilerSet>MinGW_QT_5.7.0_Static_x64|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <target>TSRE5</target>
+        <version>0.613</version>
+        <buildMode>1</buildMode>
+        <modules>core gui widgets network opengl</modules>
+        <defs>
+          <Elem>"CONFIG += console"</Elem>
+        </defs>
+      </qt>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="AboutWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="AboutWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="AceLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="AceLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ActLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Activity.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Activity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Brush.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Brush.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Camera.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraConsist.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CameraConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraFree.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CameraFree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraRot.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ConLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConListWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ConListWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConUnitsWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ConUnitsWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Consist.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Consist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsMkr.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CoordsMkr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DynTrackObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="DynTrackObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eng.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="EngLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngListWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="EngListWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Features.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Features.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileFunctions.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="FileFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Flex.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Flex.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ForestObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ForestObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLH.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GLH.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLMatrix.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GLMatrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLUU.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GLUU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Game.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HGTfile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="HGTfile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HazardObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="HazardObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HeightWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="HeightWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IghCoords.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="IghCoords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ImageLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ImageLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Intersections.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Intersections.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="LevelCrObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LoadWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="MapLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="MapWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NaviBox.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="NaviBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NaviWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="NaviWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NewRouteWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="NewRouteWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OSM.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="OSM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ObjTools.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ObjTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OglObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="OglObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OverwriteDialog.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="OverwriteDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PaintTexLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PaintTexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ParserX.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ParserX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Path.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Path.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PickupObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PickupObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PlatformObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PlatformObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PoleObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PoleObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesDyntrack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesForest.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesForest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesPickup.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesPickup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesPlatform.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesPlatform.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSiding.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesSiding.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSignal.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesSignal.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSoundSource.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesSoundSource.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSpeedpost.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesSpeedpost.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesTransfer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesUndefined.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesUndefined.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="QuadTree.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="QuadTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RandomConsist.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="RandomConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ReadFile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ref.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Ref.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Route.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Route.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ruch.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Ruch.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFileC.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SFileC.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFileX.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SFileX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SigCfg.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SigCfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SignalObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalShape.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SignalShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalType.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SignalType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SignalWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalWindowLink.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SignalWindowLink.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundList.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SoundList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundRegionObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SoundRegionObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundSourceObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SoundSourceObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedPost.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SpeedPost.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedPostDAT.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SpeedPostDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedpostObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SpeedpostObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StaticObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="StaticObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TDB.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TDB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TRitem.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TRitem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TRnode.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TRnode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TS.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TSection.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TSection.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TSectionDAT.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TSectionDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Terrain.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Terrain.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TerrainTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainTreeWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TerrainTreeWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TerrainWaterWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TexLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TextObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TextObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Texture.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Texture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrWatermarkObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TrWatermarkObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackItemObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TrackItemObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TrackObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackShape.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TrackShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TransferObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="UnsavedDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector2f.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Vector2f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector2i.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Vector2i.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector3f.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Vector3f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector4f.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Vector4f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="WorldObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="glShapeWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="glShapeWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="glwidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="glwidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="window.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="window.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Debug_x64" type="4">
+      <toolsSet>
+        <compilerSet>MinGW_QT_5.7.0_Static_x64|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <target>TSRE5</target>
+        <modules>core gui widgets network opengl</modules>
+        <defs>
+          <Elem>"CONFIG += console"</Elem>
+        </defs>
+      </qt>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+        </ccTool>
+      </compileType>
+      <item path="AboutWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="AboutWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="AceLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="AceLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ActLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Activity.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Activity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Brush.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Brush.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Camera.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraConsist.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CameraConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraFree.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CameraFree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CameraRot.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ConLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConListWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ConListWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConUnitsWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ConUnitsWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Consist.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Consist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsMkr.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="CoordsMkr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DynTrackObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="DynTrackObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eng.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="EngLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngListWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="EngListWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Features.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Features.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FileFunctions.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="FileFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Flex.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Flex.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ForestObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ForestObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLH.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GLH.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLMatrix.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GLMatrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GLUU.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GLUU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Game.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HGTfile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="HGTfile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HazardObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="HazardObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="HeightWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="HeightWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="IghCoords.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="IghCoords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ImageLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ImageLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Intersections.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Intersections.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="LevelCrObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LoadWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="MapLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="MapWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NaviBox.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="NaviBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NaviWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="NaviWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NewRouteWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="NewRouteWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OSM.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="OSM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ObjTools.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ObjTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OglObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="OglObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OverwriteDialog.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="OverwriteDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PaintTexLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PaintTexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ParserX.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ParserX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Path.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Path.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PickupObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PickupObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PlatformObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PlatformObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PoleObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PoleObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesDyntrack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesForest.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesForest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesPickup.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesPickup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesPlatform.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesPlatform.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSiding.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesSiding.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSignal.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesSignal.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSoundSource.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesSoundSource.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSpeedpost.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesSpeedpost.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesTransfer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesUndefined.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="PropertiesUndefined.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="QuadTree.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="QuadTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RandomConsist.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="RandomConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ReadFile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ReadFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ref.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Ref.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Route.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Route.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ruch.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Ruch.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFileC.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SFileC.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFileX.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SFileX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SigCfg.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SigCfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SignalObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalShape.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SignalShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalType.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SignalType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SignalWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SignalWindowLink.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SignalWindowLink.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundList.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SoundList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundRegionObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SoundRegionObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundSourceObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SoundSourceObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedPost.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SpeedPost.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedPostDAT.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SpeedPostDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpeedpostObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SpeedpostObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StaticObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="StaticObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TDB.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TDB.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TRitem.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TRitem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TRnode.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TRnode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TS.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TS.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TSection.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TSection.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TSectionDAT.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TSectionDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Terrain.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Terrain.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TerrainTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainTreeWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TerrainTreeWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TerrainWaterWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TexLib.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TextObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TextObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Texture.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Texture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrWatermarkObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TrWatermarkObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackItemObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TrackItemObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TrackObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrackShape.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TrackShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TransferObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="UnsavedDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector2f.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Vector2f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector2i.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Vector2i.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector3f.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Vector3f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Vector4f.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Vector4f.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="WorldObj.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="glShapeWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="glShapeWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="glwidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="glwidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="window.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="window.h" ex="false" tool="3" flavor2="0">
       </item>

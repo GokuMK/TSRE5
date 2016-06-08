@@ -18,9 +18,9 @@ public:
     TerrainLib(const TerrainLib& orig);
     virtual ~TerrainLib();
     static void fillRAW(float** terrainData, int mojex, int mojez);
-    static float getHeight(float x, float z, float posx, float posz);
-    static float getHeight(float x, float z, float posx, float posz, bool addR);
-    static void setHeight(float x, float z, float posx, float posz, float h);
+    static float getHeight(int x, int z, float posx, float posz);
+    static float getHeight(int x, int z, float posx, float posz, bool addR);
+    static void setHeight(int x, int z, float posx, float posz, float h);
     static int setHeight256(int x, int z, int posx, int posz, float h);
     static int setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE);
     static void setHeightFromGeoGui(int x, int z, float* p);

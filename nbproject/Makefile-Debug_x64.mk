@@ -22,9 +22,9 @@ AS=as
 QMAKE=qmake
 
 # Macros
-CND_PLATFORM=MinGW_QT_5.7.0_Static-Windows
+CND_PLATFORM=MinGW_QT_5.7.0_Static_x64-Windows
 CND_DLIB_EXT=dll
-CND_CONF=Release
+CND_CONF=Debug_x64
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 
@@ -66,7 +66,7 @@ FORCE:
 .build-conf: ${BUILD_SUBPROJECTS} nbproject/qt-${CND_CONF}.mk
 	"${MAKE}" -f nbproject/qt-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/TSRE5.exe
 
-${CND_BUILDDIR}/Release/%.o: nbproject/qt-${CND_CONF}.mk
+${CND_BUILDDIR}/Debug_x64/%.o: nbproject/qt-${CND_CONF}.mk
 	${MAKE} -f nbproject/qt-${CND_CONF}.mk "$@"
 
 # Subprojects

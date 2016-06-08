@@ -73,7 +73,7 @@ CELoadWindow::CELoadWindow() {
     mainLayout->setContentsMargins(1,1,1,1);
     //mainLayout->addWidget(naviBox);
     this->setLayout(mainLayout);
-    
+
     
     //nowaTrasa->hide();
 

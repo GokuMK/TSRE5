@@ -1,11 +1,11 @@
 # This file is generated automatically. Do not edit.
 # Use project properties -> Build -> Qt -> Expert -> Custom Definitions.
 TEMPLATE = app
-DESTDIR = dist/Debug/MinGW_QT_5.7.0_Static-Windows
-TARGET = TSRE5
+DESTDIR = dist/dynamic_release/MinGW_QT_5.7.0-Windows
+TARGET = HelloQtWorld_1
 VERSION = 1.0.0
 CONFIG -= debug_and_release app_bundle lib_bundle
-CONFIG += debug 
+CONFIG += release 
 PKGCONFIG +=
 QT = core gui widgets network opengl
 SOURCES += AboutWindow.cpp AceLib.cpp ActLib.cpp Activity.cpp Brush.cpp CELoadWindow.cpp Camera.cpp CameraConsist.cpp CameraFree.cpp CameraRot.cpp ConEditorWindow.cpp ConLib.cpp ConListWidget.cpp ConUnitsWidget.cpp Consist.cpp CoordsMkr.cpp DynTrackObj.cpp Eng.cpp EngLib.cpp EngListWidget.cpp Features.cpp FileBuffer.cpp FileFunctions.cpp Flex.cpp ForestObj.cpp GLH.cpp GLMatrix.cpp GLUU.cpp Game.cpp GuiFunct.cpp HGTfile.cpp HazardObj.cpp HeightWindow.cpp IghCoords.cpp ImageLib.cpp Intersections.cpp LevelCrObj.cpp LoadWindow.cpp MapLib.cpp MapWindow.cpp NaviBox.cpp NaviWindow.cpp NewRouteWindow.cpp OSM.cpp ObjTools.cpp OglObj.cpp OverwriteDialog.cpp PaintTexLib.cpp ParserX.cpp Path.cpp PickupObj.cpp PlatformObj.cpp Pointer3d.cpp PoleObj.cpp PropertiesAbstract.cpp PropertiesCarspawner.cpp PropertiesDyntrack.cpp PropertiesForest.cpp PropertiesPickup.cpp PropertiesPlatform.cpp PropertiesSiding.cpp PropertiesSignal.cpp PropertiesSoundSource.cpp PropertiesSpeedpost.cpp PropertiesStatic.cpp PropertiesTransfer.cpp PropertiesUndefined.cpp QuadTree.cpp RandomConsist.cpp ReadFile.cpp Ref.cpp Route.cpp Ruch.cpp SFile.cpp SFileC.cpp SFileX.cpp ShapeLib.cpp SigCfg.cpp SignalObj.cpp SignalShape.cpp SignalType.cpp SignalWindow.cpp SignalWindowLink.cpp SoundList.cpp SoundRegionObj.cpp SoundSourceObj.cpp SpeedPost.cpp SpeedPostDAT.cpp SpeedpostObj.cpp StaticObj.cpp TDB.cpp TFile.cpp TRitem.cpp TRnode.cpp TS.cpp TSection.cpp TSectionDAT.cpp Terrain.cpp TerrainLib.cpp TerrainTools.cpp TerrainTreeWindow.cpp TerrainWaterWindow.cpp TexLib.cpp TextObj.cpp Texture.cpp Tile.cpp TrWatermarkObj.cpp TrackItemObj.cpp TrackObj.cpp TrackShape.cpp TransferObj.cpp UnsavedDialog.cpp Vector2f.cpp Vector2i.cpp Vector3f.cpp Vector4f.cpp WorldObj.cpp glShapeWidget.cpp glwidget.cpp main.cpp window.cpp
@@ -13,7 +13,7 @@ HEADERS += AboutWindow.h AceLib.h ActLib.h Activity.h Brush.h CELoadWindow.h Cam
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=
-OBJECTS_DIR = build/Debug/MinGW_QT_5.7.0_Static-Windows
+OBJECTS_DIR = build/dynamic_release/MinGW_QT_5.7.0-Windows
 MOC_DIR = 
 RCC_DIR = 
 UI_DIR = 
@@ -21,7 +21,7 @@ QMAKE_CC = gcc
 QMAKE_CXX = g++
 DEFINES += 
 INCLUDEPATH += 
-LIBS += 
+LIBS += -lopengl32   
 equals(QT_MAJOR_VERSION, 4) {
 QMAKE_CXXFLAGS += -std=c++11
 }

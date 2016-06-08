@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ObjTools.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'ObjTools.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.4.1. It"
+#error "This file was generated using the moc from 5.7.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,11 +20,11 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ObjTools_t {
     QByteArrayData data[27];
-    char stringdata[328];
+    char stringdata0[328];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_ObjTools_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_ObjTools_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
 static const qt_meta_stringdata_ObjTools_t qt_meta_stringdata_ObjTools = {
@@ -145,7 +145,9 @@ static const uint qt_meta_data_ObjTools[] = {
 void ObjTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
         ObjTools *_t = static_cast<ObjTools *>(_o);
+        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->enableTool((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 1: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
@@ -180,36 +182,42 @@ void ObjTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             typedef void (ObjTools::*_t)(QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjTools::enableTool)) {
                 *result = 0;
+                return;
             }
         }
         {
             typedef void (ObjTools::*_t)(QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjTools::sendMsg)) {
                 *result = 1;
+                return;
             }
         }
         {
             typedef void (ObjTools::*_t)(QString , bool );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjTools::sendMsg)) {
                 *result = 2;
+                return;
             }
         }
         {
             typedef void (ObjTools::*_t)(QString , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjTools::sendMsg)) {
                 *result = 3;
+                return;
             }
         }
         {
             typedef void (ObjTools::*_t)(QString , float );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjTools::sendMsg)) {
                 *result = 4;
+                return;
             }
         }
         {
             typedef void (ObjTools::*_t)(QString , QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjTools::sendMsg)) {
                 *result = 5;
+                return;
             }
         }
     }
@@ -229,7 +237,7 @@ const QMetaObject *ObjTools::metaObject() const
 void *ObjTools::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_ObjTools.stringdata))
+    if (!strcmp(_clname, qt_meta_stringdata_ObjTools.stringdata0))
         return static_cast<void*>(const_cast< ObjTools*>(this));
     return QWidget::qt_metacast(_clname);
 }

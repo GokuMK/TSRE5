@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'glwidget.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'glwidget.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.4.1. It"
+#error "This file was generated using the moc from 5.7.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,11 +20,11 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GLWidget_t {
     QByteArrayData data[40];
-    char stringdata[355];
+    char stringdata0[355];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_GLWidget_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_GLWidget_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
 static const qt_meta_stringdata_GLWidget_t qt_meta_stringdata_GLWidget = {
@@ -161,7 +161,9 @@ static const uint qt_meta_data_GLWidget[] = {
 void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
         GLWidget *_t = static_cast<GLWidget *>(_o);
+        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->routeLoaded((*reinterpret_cast< Route*(*)>(_a[1]))); break;
         case 1: _t->itemSelected((*reinterpret_cast< Ref::RefItem*(*)>(_a[1]))); break;
@@ -197,84 +199,98 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             typedef void (GLWidget::*_t)(Route * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::routeLoaded)) {
                 *result = 0;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(Ref::RefItem * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::itemSelected)) {
                 *result = 1;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(int , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::naviInfo)) {
                 *result = 2;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(PreciseTileCoordinate * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::posInfo)) {
                 *result = 3;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::setToolbox)) {
                 *result = 4;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::setBrushTextureId)) {
                 *result = 5;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(WorldObj * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::showProperties)) {
                 *result = 6;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(int , int , float * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::flexData)) {
                 *result = 7;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(std::unordered_map<std::string,CoordsMkr*> );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::mkrList)) {
                 *result = 8;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
                 *result = 9;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(QString , bool );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
                 *result = 10;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(QString , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
                 *result = 11;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(QString , float );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
                 *result = 12;
+                return;
             }
         }
         {
             typedef void (GLWidget::*_t)(QString , QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::sendMsg)) {
                 *result = 13;
+                return;
             }
         }
     }
@@ -294,7 +310,7 @@ const QMetaObject *GLWidget::metaObject() const
 void *GLWidget::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_GLWidget.stringdata))
+    if (!strcmp(_clname, qt_meta_stringdata_GLWidget.stringdata0))
         return static_cast<void*>(const_cast< GLWidget*>(this));
     if (!strcmp(_clname, "QOpenGLFunctions"))
         return static_cast< QOpenGLFunctions*>(const_cast< GLWidget*>(this));

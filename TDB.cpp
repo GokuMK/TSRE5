@@ -1393,7 +1393,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     //int junctionCount = 0;
     
     for (int i = 0; i < shp->numpaths; i++) {
-        int posIdx = shp->path[i].pos[0]*10000 + shp->path[i].pos[1]*100 + shp->path[i].pos[2];
+        int posIdx = (int)shp->path[i].pos[0]*10000 + (int)shp->path[i].pos[1]*100 + (int)shp->path[i].pos[2];
         std::unordered_map<int, int>::iterator iter = endsIds.find(posIdx);
         if(iter == endsIds.end()){
             endsNumbres[i*2] = nextNumber++;
@@ -1557,7 +1557,7 @@ void TDB::refresh() {
 void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
 
     if (!loaded) return;
-    int hash = playerT[0] * 10000 + playerT[1];
+    int hash = (int)playerT[0] * 10000 + (int)playerT[1];
     if (!isInitLines || lineHash != hash) {
         TRnode *n;
         int lLen = 0, kLen = 0, pLen = 0;
@@ -1698,7 +1698,7 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
 
 void TDB::getLines(float * &lineBuffer, int &length, float* playerT){
     if (!loaded) return;
-    int hash = playerT[0] * 10000 + playerT[1];
+    int hash = (int)playerT[0] * 10000 + (int)playerT[1];
     if (collisionLineHash == hash && this->collisionLineBuffer != NULL){
         length = this->collisionLineLength;
         lineBuffer = this->collisionLineBuffer;
@@ -1790,7 +1790,7 @@ void TDB::getVectorSectionLine(float * &buffer, int &len, int x, int y, int uid,
 void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
 
     if (!loaded) return;
-    int hash = playerT[0] * 10000 + playerT[1];
+    int hash = (int)playerT[0] * 10000 + (int)playerT[1];
     if (!sectionLines.loaded || sectionHash != hash || !isInitSectLines) {
         Vector3f p;
         Vector3f o;

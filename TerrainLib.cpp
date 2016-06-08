@@ -94,7 +94,7 @@ bool TerrainLib::reload(int x, int z) {
     return false;
 }
 
-float TerrainLib::getHeight(float x, float z, float posx, float posz) {
+float TerrainLib::getHeight(int x, int z, float posx, float posz) {
     return TerrainLib::getHeight(x, z, posx, posz, false);
 }
 
@@ -107,7 +107,7 @@ void TerrainLib::refresh(int x, int z) {
     terr->refresh();
 }
 
-void TerrainLib::setHeight(float x, float z, float posx, float posz, float h) {
+void TerrainLib::setHeight(int x, int z, float posx, float posz, float h) {
     Game::check_coords(x, z, posx, posz);
     Terrain *terr;
     terr = terrain[(x * 10000 + z)];
@@ -150,7 +150,7 @@ int TerrainLib::setHeight256(int x, int z, int posx, int posz, float h, float di
     return x * 10000 + z;
 }
 
-float TerrainLib::getHeight(float x, float z, float posx, float posz, bool addR) {
+float TerrainLib::getHeight(int x, int z, float posx, float posz, bool addR) {
     Game::check_coords(x, z, posx, posz);
 
     Terrain *terr;
@@ -622,15 +622,15 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
     Terrain *tTile;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
-            tTile = terrain[((playerT[0] + i)*10000 + playerT[1] + j)];
+            tTile = terrain[(((int)playerT[0] + i)*10000 + (int)playerT[1] + j)];
             
             if (tTile == NULL) {
-                terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
+                terrain[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Terrain((int)playerT[0] + i, (int)playerT[1] + j);
             }
             //} catch (const std::out_of_range& oor) {
             //    terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
             //}
-            tTile = terrain[(playerT[0] + i)*10000 + playerT[1] + j];
+            tTile = terrain[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
             tTile->inUse = true;
             if (tTile->loaded == false) continue;
             //tTile->inUse = true;
@@ -650,7 +650,7 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
     maxtile = 3;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
-            tTile = terrain[((playerT[0] + i)*10000 + playerT[1] + j)];
+            tTile = terrain[(((int)playerT[0] + i)*10000 + (int)playerT[1] + j)];
             if (tTile != NULL)
                 tTile->inUse = true;
         }

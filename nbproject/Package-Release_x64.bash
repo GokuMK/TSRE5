@@ -6,8 +6,8 @@
 
 # Macros
 TOP=`pwd`
-CND_PLATFORM=MinGW_QT_5.7.0_Static-Windows
-CND_CONF=Release
+CND_PLATFORM=MinGW_QT_5.7.0_Static_x64-Windows
+CND_CONF=Release_x64
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 CND_DLIB_EXT=dll

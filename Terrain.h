@@ -47,8 +47,8 @@ private:
     bool uniqueTex[256];
     int texid[256];
     bool texModified[256];
-    QOpenGLBuffer *VBO[256];
-    QOpenGLVertexArrayObject *VAO[256];
+    QOpenGLBuffer *VBO = NULL;
+    QOpenGLVertexArrayObject *VAO = NULL;
 
     OglObj lines;
     OglObj mlines;

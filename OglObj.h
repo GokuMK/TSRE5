@@ -29,7 +29,7 @@ private:
     int texId;
     int materialType;
     QString *res;
-    Vector4f *color;
+    Vector4f *color = NULL;
 };
 
 #endif	/* OGLOBJ_H */

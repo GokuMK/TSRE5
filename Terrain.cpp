@@ -20,9 +20,9 @@ Terrain::Terrain(float x, float y) {
         hidden[i] = false;
         texModified[i] = false;
         uniqueTex[i] = false;
-        VBO[i] = new QOpenGLBuffer();
-        VAO[i] = new QOpenGLVertexArrayObject();
     }
+    VBO = new QOpenGLBuffer();
+    VAO = new QOpenGLVertexArrayObject();
     mojex = x;
     mojez = y;
     texturepath = Game::root + "/routes/" + Game::route + "/terrtex/";
@@ -80,10 +80,12 @@ Terrain::~Terrain() {
         //    //GC::VBO.push_back(VBO[i]);
         //    //GC::VAO.push_back(VAO[i]);
         //}
-        delete VBO[0];
-        delete VAO[0];
-        delete[] VBO;
-        delete[] VAO;
+        if(VBO != NULL)
+            delete VBO;
+        if(VAO != NULL)
+            delete VAO;
+        //delete[] VBO;
+        //delete[] VAO;
 
         delete[] terrainData;
         if (this->jestF)
@@ -459,7 +461,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
         float lod = 0;
         float size = 512;
 
-        QOpenGLVertexArrayObject::Binder vaoBinder(VAO[0]);
+        QOpenGLVertexArrayObject::Binder vaoBinder(VAO);
 
         for (int uu = 0; uu < 16; uu++) {
             for (int yy = 0; yy < 16; yy++) {
@@ -788,13 +790,13 @@ void Terrain::normalInit() {
 };
 
 void Terrain::oglInit() {
-    if(!VAO[0]->isCreated()){
-       VAO[0]->create();
-       VBO[0]->create();
+    if(!VAO->isCreated()){
+       VAO->create();
+       VBO->create();
     }
-    QOpenGLVertexArrayObject::Binder vaoBinder(VAO[0]);
-    VBO[0]->bind();
-    VBO[0]->allocate(256 * 16 * 16 * 6 * 5 * sizeof (GLfloat));
+    QOpenGLVertexArrayObject::Binder vaoBinder(VAO);
+    VBO->bind();
+    VBO->allocate(256 * 16 * 16 * 6 * 5 * sizeof (GLfloat));
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glEnableVertexAttribArray(0);
     f->glEnableVertexAttribArray(1);
@@ -879,7 +881,7 @@ void Terrain::oglInit() {
             
             //VBO[0]->bind();
             //VBO[0]->
-            VBO[0]->write((uu * 16 + yy) * 16 * 16 * 6 * 5 * sizeof (GLfloat), punkty, 16 * 16 * 6 * 5 * sizeof (GLfloat));
+            VBO->write((uu * 16 + yy) * 16 * 16 * 6 * 5 * sizeof (GLfloat), punkty, 16 * 16 * 6 * 5 * sizeof (GLfloat));
             //VBO[0]->allocate(punkty, 16 * 16 * 6 * 5 * sizeof (GLfloat));
             //f->glEnableVertexAttribArray(0);
             //f->glEnableVertexAttribArray(1);
@@ -889,7 +891,7 @@ void Terrain::oglInit() {
         }
     }
 
-    VBO[0]->release();
+    VBO->release();
     delete[] punkty;
 
     initBlob();

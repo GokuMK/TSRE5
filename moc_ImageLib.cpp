@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ImageLib.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'ImageLib.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.4.1. It"
+#error "This file was generated using the moc from 5.7.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,11 +20,11 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ImageLib_t {
     QByteArrayData data[1];
-    char stringdata[9];
+    char stringdata0[9];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_ImageLib_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_ImageLib_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
 static const qt_meta_stringdata_ImageLib_t qt_meta_stringdata_ImageLib = {
@@ -74,7 +74,7 @@ const QMetaObject *ImageLib::metaObject() const
 void *ImageLib::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_ImageLib.stringdata))
+    if (!strcmp(_clname, qt_meta_stringdata_ImageLib.stringdata0))
         return static_cast<void*>(const_cast< ImageLib*>(this));
     return QThread::qt_metacast(_clname);
 }
