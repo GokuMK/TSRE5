@@ -2,7 +2,7 @@
 # Use project properties -> Build -> Qt -> Expert -> Custom Definitions.
 TEMPLATE = app
 DESTDIR = dist/dynamic_release/MinGW_QT_5.7.0-Windows
-TARGET = HelloQtWorld_1
+TARGET = TSRE5
 VERSION = 1.0.0
 CONFIG -= debug_and_release app_bundle lib_bundle
 CONFIG += release 

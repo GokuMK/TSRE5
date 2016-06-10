@@ -31,7 +31,31 @@
         <itemPath>HGTfile.h</itemPath>
         <itemPath>HeightWindow.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f11" displayName="gui" projectFiles="true">
+      <logicalFolder name="f6" displayName="math3d" projectFiles="true">
+        <itemPath>Flex.h</itemPath>
+        <itemPath>GLMatrix.h</itemPath>
+        <itemPath>IghCoords.h</itemPath>
+        <itemPath>Intersections.h</itemPath>
+        <itemPath>Vector2f.h</itemPath>
+        <itemPath>Vector2i.h</itemPath>
+        <itemPath>Vector3f.h</itemPath>
+        <itemPath>Vector4f.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="ogl" projectFiles="true">
+        <itemPath>GLH.h</itemPath>
+        <itemPath>GLUU.h</itemPath>
+        <itemPath>OglObj.h</itemPath>
+        <itemPath>Pointer3d.h</itemPath>
+        <itemPath>PoleObj.h</itemPath>
+        <itemPath>TextObj.h</itemPath>
+        <itemPath>TrackItemObj.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="OSM" projectFiles="true">
+        <itemPath>Features.h</itemPath>
+        <itemPath>MapWindow.h</itemPath>
+        <itemPath>OSM.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f11" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
           <itemPath>PropertiesAbstract.h</itemPath>
           <itemPath>PropertiesCarspawner.h</itemPath>
@@ -59,30 +83,6 @@
         <itemPath>TerrainTools.h</itemPath>
         <itemPath>TerrainTreeWindow.h</itemPath>
         <itemPath>TerrainWaterWindow.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f6" displayName="math3d" projectFiles="true">
-        <itemPath>Flex.h</itemPath>
-        <itemPath>GLMatrix.h</itemPath>
-        <itemPath>IghCoords.h</itemPath>
-        <itemPath>Intersections.h</itemPath>
-        <itemPath>Vector2f.h</itemPath>
-        <itemPath>Vector2i.h</itemPath>
-        <itemPath>Vector3f.h</itemPath>
-        <itemPath>Vector4f.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f10" displayName="ogl" projectFiles="true">
-        <itemPath>GLH.h</itemPath>
-        <itemPath>GLUU.h</itemPath>
-        <itemPath>OglObj.h</itemPath>
-        <itemPath>Pointer3d.h</itemPath>
-        <itemPath>PoleObj.h</itemPath>
-        <itemPath>TextObj.h</itemPath>
-        <itemPath>TrackItemObj.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="OSM" projectFiles="true">
-        <itemPath>Features.h</itemPath>
-        <itemPath>MapWindow.h</itemPath>
-        <itemPath>OSM.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
@@ -193,7 +193,31 @@
         <itemPath>HGTfile.cpp</itemPath>
         <itemPath>HeightWindow.cpp</itemPath>
       </logicalFolder>
-      <logicalFolder name="f10" displayName="gui" projectFiles="true">
+      <logicalFolder name="f5" displayName="math3d" projectFiles="true">
+        <itemPath>Flex.cpp</itemPath>
+        <itemPath>GLMatrix.cpp</itemPath>
+        <itemPath>IghCoords.cpp</itemPath>
+        <itemPath>Intersections.cpp</itemPath>
+        <itemPath>Vector2f.cpp</itemPath>
+        <itemPath>Vector2i.cpp</itemPath>
+        <itemPath>Vector3f.cpp</itemPath>
+        <itemPath>Vector4f.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f9" displayName="ogl" projectFiles="true">
+        <itemPath>GLH.cpp</itemPath>
+        <itemPath>GLUU.cpp</itemPath>
+        <itemPath>OglObj.cpp</itemPath>
+        <itemPath>Pointer3d.cpp</itemPath>
+        <itemPath>PoleObj.cpp</itemPath>
+        <itemPath>TextObj.cpp</itemPath>
+        <itemPath>TrackItemObj.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f11" displayName="OSM" projectFiles="true">
+        <itemPath>Features.cpp</itemPath>
+        <itemPath>MapWindow.cpp</itemPath>
+        <itemPath>OSM.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f10" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
           <itemPath>PropertiesAbstract.cpp</itemPath>
           <itemPath>PropertiesCarspawner.cpp</itemPath>
@@ -221,30 +245,6 @@
         <itemPath>TerrainTools.cpp</itemPath>
         <itemPath>TerrainTreeWindow.cpp</itemPath>
         <itemPath>TerrainWaterWindow.cpp</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f5" displayName="math3d" projectFiles="true">
-        <itemPath>Flex.cpp</itemPath>
-        <itemPath>GLMatrix.cpp</itemPath>
-        <itemPath>IghCoords.cpp</itemPath>
-        <itemPath>Intersections.cpp</itemPath>
-        <itemPath>Vector2f.cpp</itemPath>
-        <itemPath>Vector2i.cpp</itemPath>
-        <itemPath>Vector3f.cpp</itemPath>
-        <itemPath>Vector4f.cpp</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f9" displayName="ogl" projectFiles="true">
-        <itemPath>GLH.cpp</itemPath>
-        <itemPath>GLUU.cpp</itemPath>
-        <itemPath>OglObj.cpp</itemPath>
-        <itemPath>Pointer3d.cpp</itemPath>
-        <itemPath>PoleObj.cpp</itemPath>
-        <itemPath>TextObj.cpp</itemPath>
-        <itemPath>TrackItemObj.cpp</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f11" displayName="OSM" projectFiles="true">
-        <itemPath>Features.cpp</itemPath>
-        <itemPath>MapWindow.cpp</itemPath>
-        <itemPath>OSM.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
