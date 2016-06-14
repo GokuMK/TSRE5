@@ -2,7 +2,9 @@
 #include "IghCoords.h"
 #include <QtWidgets>
 #include <QDebug>
+#include "Coords.h"
 #include "CoordsMkr.h"
+#include "CoordsKml.h"
 
 NaviWindow::NaviWindow(){
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
@@ -154,7 +156,7 @@ void NaviWindow::posInfo(PreciseTileCoordinate* coords){
     }
 }
 
-void NaviWindow::mkrList(std::unordered_map<std::string, CoordsMkr*> list){
+void NaviWindow::mkrList(std::unordered_map<std::string, Coords*> list){
     mkrFiles = list;
     for (auto it = list.begin(); it != list.end(); ++it ){
         markerFiles.addItem(QString::fromStdString(it->first));
@@ -162,7 +164,7 @@ void NaviWindow::mkrList(std::unordered_map<std::string, CoordsMkr*> list){
 }
 
 void NaviWindow::mkrFilesSelected(QString item){
-    CoordsMkr* c = mkrFiles[item.toStdString()];
+    Coords* c = mkrFiles[item.toStdString()];
     if(c == NULL) return;
     this->sendMsg("mkrFile", item);
     this->mkrPlaces.clear();

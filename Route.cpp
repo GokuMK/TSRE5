@@ -16,7 +16,9 @@
 #include "DynTrackObj.h"
 #include "Flex.h"
 #include "ForestObj.h"
+#include "Coords.h"
 #include "CoordsMkr.h"
+#include "CoordsKml.h"
 #include "SoundList.h"
 
 Route::Route() {
@@ -43,18 +45,7 @@ Route::Route() {
     this->roadDB = new TDB(tsection, true, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".rdb"));
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
     
-    
-    //this->mkr = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + Game::routeName +".mkr");
-    QDir dir(Game::root + "/routes/" + Game::route);
-    dir.setFilter(QDir::Files);
-    foreach(QString dirFile, dir.entryList()){
-        if(!dirFile.endsWith(".mkr", Qt::CaseInsensitive)) continue;   
-        mkrList[(dirFile).toStdString()] = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + dirFile);
-    }
-    if(mkrList[(Game::routeName+".mkr").toStdString()] != NULL)
-        this->mkr = mkrList[(Game::routeName+".mkr").toStdString()];
-    else
-        this->mkr = mkrList.begin()->second;
+    loadMkrList();
     
     soundList = new SoundList();
     soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
@@ -73,6 +64,22 @@ Route::Route(const Route& orig) {
 }
 
 Route::~Route() {
+}
+
+void Route::loadMkrList(){
+    //this->mkr = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + Game::routeName +".mkr");
+    QDir dir(Game::root + "/routes/" + Game::route);
+    dir.setFilter(QDir::Files);
+    foreach(QString dirFile, dir.entryList()){
+        if(dirFile.endsWith(".mkr", Qt::CaseInsensitive))
+            mkrList[(dirFile).toStdString()] = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + dirFile);
+        if(dirFile.endsWith(".kml", Qt::CaseInsensitive))
+            mkrList[(dirFile).toStdString()] = new CoordsKml(Game::root + "/routes/" + Game::route + "/" + dirFile);
+    }
+    if(mkrList[(Game::routeName+".mkr").toStdString()] != NULL)
+        this->mkr = mkrList[(Game::routeName+".mkr").toStdString()];
+    else
+        this->mkr = mkrList.begin()->second;
 }
 
 void Route::setMkrFile(QString name){
@@ -192,7 +199,8 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
             roadDB->renderLines(gluu, playerT, playerRot);
         
         if(Game::viewMarkers)
-            this->mkr->render(gluu, playerT, playerW, playerRot);
+            if(this->mkr != NULL)
+                this->mkr->render(gluu, playerT, playerW, playerRot);
     }
     //trackDB->renderItems(gluu, playerT, playerRot);
     /*
@@ -486,7 +494,7 @@ void Route::createNewPaths() {
     Path::CreatePaths(this->trackDB);
 }
 
-std::unordered_map<std::string, CoordsMkr*> Route::getMkrList(){
+std::unordered_map<std::string, Coords*> Route::getMkrList(){
     return this->mkrList;
 }
 

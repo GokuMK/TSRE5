@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GLWidget_t {
     QByteArrayData data[40];
-    char stringdata0[355];
+    char stringdata0[352];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -56,19 +56,19 @@ QT_MOC_LITERAL(23, 199, 1), // "z"
 QT_MOC_LITERAL(24, 201, 6), // "float*"
 QT_MOC_LITERAL(25, 208, 1), // "p"
 QT_MOC_LITERAL(26, 210, 7), // "mkrList"
-QT_MOC_LITERAL(27, 218, 42), // "std::unordered_map<std::strin..."
-QT_MOC_LITERAL(28, 261, 4), // "list"
-QT_MOC_LITERAL(29, 266, 7), // "sendMsg"
-QT_MOC_LITERAL(30, 274, 7), // "cleanup"
-QT_MOC_LITERAL(31, 282, 10), // "enableTool"
-QT_MOC_LITERAL(32, 293, 13), // "setPaintBrush"
-QT_MOC_LITERAL(33, 307, 6), // "Brush*"
-QT_MOC_LITERAL(34, 314, 5), // "brush"
-QT_MOC_LITERAL(35, 320, 6), // "jumpTo"
-QT_MOC_LITERAL(36, 327, 3), // "msg"
-QT_MOC_LITERAL(37, 331, 4), // "text"
-QT_MOC_LITERAL(38, 336, 8), // "editCopy"
-QT_MOC_LITERAL(39, 345, 9) // "editPaste"
+QT_MOC_LITERAL(27, 218, 39), // "std::unordered_map<std::strin..."
+QT_MOC_LITERAL(28, 258, 4), // "list"
+QT_MOC_LITERAL(29, 263, 7), // "sendMsg"
+QT_MOC_LITERAL(30, 271, 7), // "cleanup"
+QT_MOC_LITERAL(31, 279, 10), // "enableTool"
+QT_MOC_LITERAL(32, 290, 13), // "setPaintBrush"
+QT_MOC_LITERAL(33, 304, 6), // "Brush*"
+QT_MOC_LITERAL(34, 311, 5), // "brush"
+QT_MOC_LITERAL(35, 317, 6), // "jumpTo"
+QT_MOC_LITERAL(36, 324, 3), // "msg"
+QT_MOC_LITERAL(37, 328, 4), // "text"
+QT_MOC_LITERAL(38, 333, 8), // "editCopy"
+QT_MOC_LITERAL(39, 342, 9) // "editPaste"
 
     },
     "GLWidget\0routeLoaded\0\0Route*\0a\0"
@@ -77,7 +77,7 @@ QT_MOC_LITERAL(39, 345, 9) // "editPaste"
     "PreciseTileCoordinate*\0pos\0setToolbox\0"
     "name\0setBrushTextureId\0val\0showProperties\0"
     "WorldObj*\0obj\0flexData\0x\0z\0float*\0p\0"
-    "mkrList\0std::unordered_map<std::string,CoordsMkr*>\0"
+    "mkrList\0std::unordered_map<std::string,Coords*>\0"
     "list\0sendMsg\0cleanup\0enableTool\0"
     "setPaintBrush\0Brush*\0brush\0jumpTo\0msg\0"
     "text\0editCopy\0editPaste"
@@ -161,6 +161,7 @@ static const uint qt_meta_data_GLWidget[] = {
 void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
         GLWidget *_t = static_cast<GLWidget *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
@@ -172,7 +173,7 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 5: _t->setBrushTextureId((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 6: _t->showProperties((*reinterpret_cast< WorldObj*(*)>(_a[1]))); break;
         case 7: _t->flexData((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< float*(*)>(_a[3]))); break;
-        case 8: _t->mkrList((*reinterpret_cast< std::unordered_map<std::string,CoordsMkr*>(*)>(_a[1]))); break;
+        case 8: _t->mkrList((*reinterpret_cast< std::unordered_map<std::string,Coords*>(*)>(_a[1]))); break;
         case 9: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 10: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 11: _t->sendMsg((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
@@ -251,7 +252,7 @@ void GLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             }
         }
         {
-            typedef void (GLWidget::*_t)(std::unordered_map<std::string,CoordsMkr*> );
+            typedef void (GLWidget::*_t)(std::unordered_map<std::string,Coords*> );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GLWidget::mkrList)) {
                 *result = 8;
                 return;
@@ -390,7 +391,7 @@ void GLWidget::flexData(int _t1, int _t2, float * _t3)
 }
 
 // SIGNAL 8
-void GLWidget::mkrList(std::unordered_map<std::string,CoordsMkr*> _t1)
+void GLWidget::mkrList(std::unordered_map<std::string,Coords*> _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 8, _a);

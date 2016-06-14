@@ -20,7 +20,7 @@ class GLUU;
 class Route;
 class Brush;
 class PreciseTileCoordinate;
-class CoordsMkr;
+class Coords;
 class MapWindow;
 class ShapeLib;
 
@@ -61,7 +61,7 @@ signals:
     void setBrushTextureId(int val);
     void showProperties(WorldObj* obj);
     void flexData(int x, int z, float* p);
-    void mkrList(std::unordered_map<std::string, CoordsMkr*> list);
+    void mkrList(std::unordered_map<std::string, Coords*> list);
     
     void sendMsg(QString name);
     void sendMsg(QString name, bool val);

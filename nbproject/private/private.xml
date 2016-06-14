@@ -9,41 +9,6 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ConEditorWindow.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ActLib.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ConEditorWindow.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ConListWidget.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Activity.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TRitem.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Consist.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Consist.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ParserX.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Eng.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ConListWidget.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ConLib.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/main.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/window.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Game.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Activity.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SFile.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/SFile.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TDB.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/CELoadWindow.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/CELoadWindow.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/FileBuffer.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ReadFile.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Terrain.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Terrain.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/FileBuffer.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Route.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Tile.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TerrainLib.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/ParserX.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/QuadTree.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/TerrainLib.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/Game.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/HelloQtWorld_1/OglObj.cpp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

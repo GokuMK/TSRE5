@@ -2,446 +2,125 @@
 [E] libpng warning: iCCP: known incorrect sRGB profile
 [E] libpng warning: iCCP: known incorrect sRGB profile
 [I] ok
-[I] "F:/Train Simulator"
-[I] ok
-[I] "tczew"
-[I] "F:/Train Simulator/routes/tczew/tczew.trk"
-[I] "tczew"
-[I] "F:/Train Simulator/global/tsection.dat"
+[I] "aaa"
+[I] "C:/ts/routes/aaa/aaa.trk"
+[I] "aaa"
+[I] "C:/ts/global/tsection.dat"
 [I] TsectionDAT:  40000   40000
-[I] "F:/Train Simulator/routes/tczew/tsection.dat"
-[I] Wczytywanie pliku tdb:  "F:/Train Simulator/routes/tczew/tczew.tdb"
-[I] "F:/Train Simulator/routes/tczew/tczew.tdb"
+[I] "C:/ts/routes/aaa/tsection.dat"
+[I] Wczytywanie pliku tdb:  "C:/ts/routes/aaa/aaa.tdb"
+[I] "C:/ts/routes/aaa/aaa.tdb"
 [I] znaleziono sekcje na  72
 [I] sh  "serial"
 [I] sh  "tracknodes"
-[I] N 0
-[I] "F:/Train Simulator/routes/tczew/tczew.tit"
+[I] N 51
+[I] "C:/ts/routes/aaa/aaa.tit"
 [I] znaleziono sekcje TrItemTable na  54
 [I] tritemtable Fail
-[I] "F:/Train Simulator/routes/tczew/speedpost.dat"
+[I] "C:/ts/routes/aaa/speedpost.dat"
 [I] speedpost!
 [I] speedpost value unknown:  "restricted_shape"
 [I] speedpost value unknown:  "end_restricted_shape"
-[I] "F:/Train Simulator/routes/tczew/sigcfg.dat"
+[I] "C:/ts/routes/aaa/sigcfg.dat"
 [I] sigcfg!
 [I] "lighttextures"
 [I] "lightstab"
 [I] "scriptfiles"
-[I] Wczytywanie pliku tdb:  "F:/Train Simulator/routes/tczew/tczew.rdb"
-[I] "F:/Train Simulator/routes/tczew/tczew.rdb"
+[I] Wczytywanie pliku tdb:  "C:/ts/routes/aaa/aaa.rdb"
+[I] "C:/ts/routes/aaa/aaa.rdb"
 [I] znaleziono sekcje na  72
 [I] sh  "serial"
-[I] sh  "tracknodes"
-[I] N 0
-[I] Wczytywanie pliku ref:  "F:/Train Simulator/routes/tczew/tczew.ref"
-[I] "F:/Train Simulator/routes/tczew/tczew.ref"
-[I] "F:/Train Simulator/routes/tczew/ssource.dat"
-[I] "F:/Train Simulator/routes/tczew/ttype.dat"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/td/td_idx.dat"
-[I] "F:/Train Simulator/routes/tczew/forests.dat"
+[I] Wczytywanie pliku ref:  "C:/ts/routes/aaa/aaa.ref"
+[I] "C:/ts/routes/aaa/aaa.ref"
+[I] "C:/ts/routes/aaa/ssource.dat"
+[I] "C:/ts/routes/aaa/ttype.dat"
+[I] "terrain_desc_size"
+[I] "depth"
+[I] "terrain_desc_tiles"
+[I] "tdfile"   -11   30
+[I] p   "----" -5387   15371
+[I] 0   "----" -5388   15370
+[I] p   "----" -5385   15370
+[I] p   "----" -5386   15370
+[I] 0   "----" -5386   15370
+[I] p   "----" -5386   15369
+[I] p   "----" -5385   15369
+[I] p   "----" -5385   15368
+[I] 0   "----" -5386   15368
+[I] p   "----" -5387   15368
+[I] 0   "----" -5388   15368
+[I] p   "----" -5383   15371
+[I] p   "----" -5384   15370
+[I] 0   "----" -5384   15370
+[I] p   "----" -5384   15369
+[I] p   "----" -5383   15368
+[I] 0   "----" -5384   15368
+[I] "C:/ts/routes/aaa/forests.dat"
 [I] "forest"
-[I] "-53785057.:maptex"
-[I] "-53775055.:maptex"
-[I] "-53775056.:maptex"
-[I] "-53775057.:maptex"
-[I] "-53765055.:maptex"
-[I] "-53765056.:maptex"
-[I] "-53765057.:maptex"
-[I] "-53755055.:maptex"
-[I] "-53745055.:maptex"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005377+015053.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005377+015054.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005377+015055.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005377+015056.w"
-[I] w file uncompressed  "F:/Train Simulator/routes/tczew/world/w-005377+015057.w"
-[I] 0
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005376+015053.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005376+015054.w"
-[I] w file uncompressed  "F:/Train Simulator/routes/tczew/world/w-005376+015055.w"
-[I] 0
-[I] w file uncompressed  "F:/Train Simulator/routes/tczew/world/w-005376+015056.w"
-[I] 0
-[I] w file uncompressed  "F:/Train Simulator/routes/tczew/world/w-005376+015057.w"
-[I] 0
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005375+015053.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005375+015054.w"
-[I] w file uncompressed  "F:/Train Simulator/routes/tczew/world/w-005375+015055.w"
-[I] 0
-[I] w file uncompressed  "F:/Train Simulator/routes/tczew/world/w-005375+015056.w"
-[I] 0
-[I] w file uncompressed  "F:/Train Simulator/routes/tczew/world/w-005375+015057.w"
-[I] 0
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005374+015053.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005374+015054.w"
-[I] w file uncompressed  "F:/Train Simulator/routes/tczew/world/w-005374+015055.w"
-[I] 0
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005374+015056.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005374+015057.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005373+015053.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005373+015054.w"
-[I] w file uncompressed  "F:/Train Simulator/routes/tczew/world/w-005373+015055.w"
-[I] 0
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005373+015056.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005373+015057.w"
-[E] setGeometry: Unable to set geometry 1280x720+8+30 on QWidgetWindow/'WindowClassWindow'. Resulting geometry:  1276x720+8+30 (frame: 8, 30, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 456x660, maximum size: 16777215x16777215).
-[I] "heightTool"
-[I] -5375   -15055   627.088   206.338
-[I] "-53765055.:maptex"
-[I] -5375   -15055   606.453   224.218
-[I] "-53765055.:maptex"
-[I] -5375   -15055   592.925   240.649
-[I] -5375   -15055   592.925   240.649
-[I] "-53765055.:maptex"
-[I] -5375   -15055   578.001   261.652
-[I] "-53765055.:maptex"
-[I] -5375   -15055   576.356   276.747
-[I] "-53765055.:maptex"
-[I] -5375   -15055   586.101   299.254
-[I] "-53765055.:maptex"
-[I] -5375   -15055   588.327   311.941
-[I] "-53765055.:maptex"
-[I] -5375   -15055   603.862   332.872
-[I] "-53765055.:maptex"
-[I] -5375   -15055   605.976   360.153
-[I] "-53765055.:maptex"
-[I] -5375   -15055   597.701   379.149
-[I] "-53765055.:maptex"
-[I] -5375   -15055   589.901   397.257
-[I] "-53765055.:maptex"
-[I] -5375   -15055   581.776   417.659
-[I] "-53765055.:maptex"
-[I] -5375   -15055   573.489   430.037
-[I] "-53765055.:maptex"
-[I] -5375   -15055   573.158   448.969
-[I] "-53765055.:maptex"
-[I] -5375   -15055   564.547   458.903
-[I] "-53765055.:maptex"
-[I] -5375   -15055   567.908   478.732
-[I] "-53765055.:maptex"
-[I] -5375   -15055   558.163   491.553
-[I] "-53765055.:maptex"
-[I] -5375   -15055   547.523   501.725
-[I] "-53765055.:maptex"
-[I] -5375   -15055   537.022   515.423
-[I] "-53765055.:maptex"
-[I] -5375   -15055   525.905   522.791
-[I] -5375   -15055   525.905   522.791
-[I] "-53765055.:maptex"
-[I] -5375   -15055   504.934   533.837
-[I] "-53765055.:maptex"
-[I] -5375   -15055   494.88   538.277
-[I] -5375   -15055   494.88   538.277
-[I] "-53765055.:maptex"
-[I] -5375   -15055   475.073   545.834
-[I] "-53765055.:maptex"
-[I] -5375   -15055   464.567   549.081
-[I] -5375   -15055   464.567   549.081
-[I] "-53765055.:maptex"
-[I] -5375   -15055   446.791   554.69
-[I] "-53765055.:maptex"
-[I] -5375   -15055   437.308   557.63
-[I] -5375   -15055   437.308   557.63
-[I] "-53765055.:maptex"
-[I] -5375   -15055   418.149   562.604
-[I] -5375   -15055   418.149   562.604
-[I] "-53765055.:maptex"
-[I] -5375   -15055   398.987   565.047
-[I] "-53765055.:maptex"
-[I] -5375   -15055   390.831   565.597
-[I] "-53765055.:maptex"
-[I] -5375   -15055   381.085   565.87
-[I] -5375   -15055   381.085   565.87
-[I] "-53765055.:maptex"
-[I] -5375   -15055   364.286   564.383
-[I] "-53765055.:maptex"
-[I] -5375   -15055   357.648   563.438
-[I] -5375   -15055   357.648   563.438
-[I] "-53765055.:maptex"
-[I] -5375   -15055   343.816   560.336
-[I] "-53765055.:maptex"
-[I] -5375   -15055   337.787   555.488
-[I] -5375   -15055   337.787   555.488
-[I] "-53765055.:maptex"
-[I] -5375   -15055   328.5   544.571
-[I] "-53765055.:maptex"
-[I] -5375   -15055   324.587   540.11
-[I] -5375   -15055   324.587   540.11
-[I] "-53765055.:maptex"
-[I] -5375   -15055   438.795   453.678
-[I] "-53765055.:maptex"
-[I] -5375   -15055   429.702   441.987
-[I] -5375   -15055   429.702   441.987
-[I] "-53765055.:maptex"
-[I] -5375   -15055   414.59   432.324
-[I] "-53765055.:maptex"
-[I] -5375   -15055   417.712   420.193
-[I] -5375   -15055   417.712   420.193
-[I] "-53765055.:maptex"
-[I] -5375   -15055   404.31   416.498
-[I] "-53765055.:maptex"
-[I] -5375   -15055   395.961   420.5
-[I] -5375   -15055   395.961   420.5
-[I] "-53765055.:maptex"
-[I] -5375   -15055   386.283   425.489
-[I] "-53765055.:maptex"
-[I] -5375   -15055   381.61   428.816
-[I] -5375   -15055   381.61   428.816
-[I] "-53765055.:maptex"
-[I] -5375   -15055   374.281   435.253
-[I] "-53765055.:maptex"
-[I] -5375   -15055   371.198   439.153
-[I] -5375   -15055   371.198   439.153
-[I] "-53765055.:maptex"
-[I] -5375   -15055   371.23   447.523
-[I] "-53765055.:maptex"
-[I] -5375   -15055   377.369   453.46
-[I] -5375   -15055   377.369   453.46
-[I] "-53765055.:maptex"
-[I] -5375   -15055   395.743   462.566
-[I] "-53765055.:maptex"
-[I] -5375   -15055   572.604   362.719
-[I] -5375   -15055   572.604   362.719
-[I] "-53765055.:maptex"
-[I] -5375   -15055   556.539   411.033
-[I] "-53765055.:maptex"
-[I] -5375   -15055   549.537   429.738
-[I] -5375   -15055   549.537   429.738
-[I] "-53765055.:maptex"
-[I] -5375   -15055   528.516   466.283
-[I] "-53765055.:maptex"
-[I] -5375   -15055   512.424   484.083
-[I] -5375   -15055   512.424   484.083
-[I] "-53765055.:maptex"
-[I] -5375   -15055   365.592   552.926
-[I] "-53765055.:maptex"
-[I] -5375   -15055   348.2   561.218
-[I] -5375   -15055   348.2   561.218
-[I] "-53765055.:maptex"
-[I] -5375   -15055   335.801   568.645
-[I] "-53765055.:maptex"
-[I] -5375   -15055   330.621   570.615
-[I] -5375   -15055   330.621   570.615
-[I] "-53765055.:maptex"
-[I] -5375   -15055   321.964   573.969
-[I] "-53765055.:maptex"
-[I] -5375   -15055   318.173   575.379
-[I] -5375   -15055   318.173   575.379
-[I] "-53765055.:maptex"
-[I] -5375   -15055   309.866   576.349
-[I] "-53765055.:maptex"
-[I] -5375   -15055   305.094   575.689
-[I] "-53765055.:maptex"
-[I] -5375   -15055   301.276   575.037
-[I] -5375   -15055   301.276   575.037
-[I] "-53765055.:maptex"
-[I] -5375   -15055   292.311   569.237
-[I] "-53765055.:maptex"
-[I] -5375   -15055   288.465   567.134
-[I] -5375   -15055   288.465   567.134
-[I] "-53765055.:maptex"
-[I] -5375   -15055   283.384   558.298
-[I] "-53765055.:maptex"
-[I] -5375   -15055   282.071   553.305
-[I] "-53765055.:maptex"
-[I] -5375   -15055   281.62   549.699
-[I] "-53765055.:maptex"
-[I] -5375   -15055   278.094   551.514
-[I] -5375   -15055   278.094   551.514
-[I] "-53765055.:maptex"
-[I] -5375   -15055   272.66   555.514
-[I] "-53765055.:maptex"
-[I] -5375   -15055   270.101   558.82
-[I] -5375   -15055   270.101   558.82
-[I] "-53765055.:maptex"
-[I] -5375   -15055   267.476   567.358
-[I] -5375   -15055   267.476   567.358
-[I] "-53765055.:maptex"
-[I] -5375   -15055   267.718   577.347
-[I] "-53765055.:maptex"
-[I] -5375   -15055   267.841   581.594
-[I] "-53765055.:maptex"
-[I] -5375   -15055   270.117   587.554
-[I] -5375   -15055   270.117   587.554
-[I] "-53765055.:maptex"
-[I] -5375   -15055   268.97   593.711
-[I] "-53765055.:maptex"
-[I] -5375   -15055   267.84   596.514
-[I] -5375   -15055   267.84   596.514
-[I] "-53765055.:maptex"
-[I] -5375   -15055   261.597   599.704
-[I] "-53765055.:maptex"
-[I] -5375   -15055   258.675   600.787
-[I] -5375   -15055   258.675   600.787
-[I] "-53765055.:maptex"
-[I] -5375   -15055   250.531   601.198
-[I] "-53765055.:maptex"
-[I] -5375   -15055   245.564   600.301
-[I] -5375   -15055   245.564   600.301
-[I] "-53765055.:maptex"
-[I] -5375   -15055   236.516   596.031
-[I] "-53765055.:maptex"
-[I] -5375   -15055   232.39   593.734
-[I] -5375   -15055   232.39   593.734
-[I] "-53765055.:maptex"
-[I] -5375   -15055   225.143   585.742
-[I] "-53765055.:maptex"
-[I] -5375   -15055   222.491   579.461
-[I] -5375   -15055   222.491   579.461
-[I] "-53765055.:maptex"
-[I] -5375   -15055   219.899   568.861
-[I] "-53765055.:maptex"
-[I] -5375   -15055   218.69   565.602
-[I] -5375   -15055   218.69   565.602
-[I] "-53765055.:maptex"
-[I] -5375   -15055   215.74   561.254
-[I] "-53765055.:maptex"
-[I] -5375   -15055   212.879   563.261
-[I] -5375   -15055   212.879   563.261
-[I] "-53765055.:maptex"
-[I] -5375   -15055   207.518   567
-[I] "-53765055.:maptex"
-[I] -5375   -15055   205.357   568.977
-[I] -5375   -15055   205.357   568.977
-[I] "-53765055.:maptex"
-[I] -5375   -15055   201.057   572.007
-[I] "-53765055.:maptex"
-[I] -5375   -15055   199.098   573.414
-[I] -5375   -15055   199.098   573.414
-[I] "-53765055.:maptex"
-[I] -5375   -15055   195.209   575.538
-[I] "-53765055.:maptex"
-[I] -5375   -15055   193.307   576.675
-[I] -5375   -15055   193.307   576.675
-[I] "-53765055.:maptex"
-[I] -5375   -15055   189.416   579.267
-[I] "-53765055.:maptex"
-[I] -5375   -15055   187.584   580.561
-[I] "-53765055.:maptex"
-[I] -5375   -15055   684.462   145.798
-[I] -5375   -15055   684.462   145.798
-[I] "-53765055.:maptex"
-[I] -5375   -15055   654.691   121.865
-[I] "-53765055.:maptex"
-[I] -5375   -15055   642.952   112.254
-[I] -5375   -15055   642.952   112.254
-[I] "-53765055.:maptex"
-[I] -5375   -15055   627.195   98.541
-[I] "-53765055.:maptex"
-[I] -5375   -15055   618.906   92.712
-[I] -5375   -15055   618.906   92.712
-[I] "-53765055.:maptex"
-[I] -5375   -15055   602.984   81.6513
-[I] "-53765055.:maptex"
-[I] -5375   -15055   594.883   75.9326
-[I] -5375   -15055   594.883   75.9326
-[I] "-53765055.:maptex"
-[I] -5375   -15055   579.192   64.7695
-[I] "-53765055.:maptex"
-[I] -5375   -15055   571.013   59.0078
-[I] -5375   -15055   571.013   59.0078
-[I] "-53765055.:maptex"
-[I] -5375   -15055   552.611   49.4517
-[I] "-53765055.:maptex"
-[I] -5375   -15055   542.107   45.5941
-[I] "-53765055.:maptex"
-[I] -5375   -15055   531.929   42.9772
-[I] -5375   -15055   531.929   42.9772
-[I] "-53765055.:maptex"
-[I] -5375   -15055   511.522   37.4615
-[I] "-53765055.:maptex"
-[I] -5375   -15055   499.982   33.4065
-[I] "-53765055.:maptex"
-[I] -5375   -15055   489.121   32.1579
-[I] "-53765055.:maptex"
-[I] -5375   -15055   480.359   30.0821
-[I] -5375   -15055   480.359   30.0821
-[I] "-53765055.:maptex"
-[I] -5375   -15055   465.518   24.2177
-[I] "-53765055.:maptex"
-[I] -5375   -15055   459.869   19.8351
-[I] -5375   -15055   459.869   19.8351
-[I] "-53765055.:maptex"
-[I] -5375   -15055   446.78   16.2025
-[I] "-53765055.:maptex"
-[I] -5375   -15055   440.553   13.407
-[I] -5375   -15055   440.553   13.407
-[I] "-53765055.:maptex"
-[I] -5375   -15055   428.569   11.3601
-[I] "-53765055.:maptex"
-[I] -5375   -15055   420.09   64.2303
-[I] -5375   -15055   420.09   64.2303
-[I] "-53765055.:maptex"
-[I] -5375   -15055   402.151   49.1901
-[I] "-53765055.:maptex"
-[I] -5375   -15055   394.665   46.6435
-[I] -5375   -15055   394.665   46.6435
-[I] "-53765055.:maptex"
-[I] -5375   -15055   380.687   42.1859
-[I] "-53765055.:maptex"
-[I] -5375   -15055   373.282   40.5269
-[I] -5375   -15055   373.282   40.5269
-[I] "-53765055.:maptex"
-[I] -5375   -15055   357.44   41.4833
-[I] "-53765055.:maptex"
-[I] -5375   -15055   350.606   38.7535
-[I] -5375   -15055   350.606   38.7535
-[I] "-53765055.:maptex"
-[I] -5375   -15055   335.187   38.0129
-[I] "-53765055.:maptex"
-[I] -5375   -15055   327.744   37.6609
-[I] -5375   -15055   327.744   37.6609
-[I] "-53765055.:maptex"
-[I] -5375   -15055   313.94   36.5627
-[I] "-53765055.:maptex"
-[I] -5375   -15055   307.689   37.0498
-[I] -5375   -15055   307.689   37.0498
-[I] "-53765055.:maptex"
-[I] -5375   -15055   295.378   42.6918
-[I] "-53765055.:maptex"
-[I] -5375   -15055   288.759   44.726
-[I] -5375   -15055   288.759   44.726
-[I] "-53765055.:maptex"
-[I] -5375   -15055   277.262   49.431
-[I] "-53765055.:maptex"
-[I] -5375   -15055   271.127   51.7294
-[I] -5375   -15055   271.127   51.7294
-[I] "-53765055.:maptex"
-[I] -5375   -15055   258.519   62.3695
-[I] "-53765055.:maptex"
-[I] -5375   -15055   251.534   62.989
-[I] -5375   -15055   251.534   62.989
-[I] "-53765055.:maptex"
-[I] -5375   -15055   237.38   64.8644
-[I] "-53765055.:maptex"
-[I] -5375   -15055   230.225   65.8108
-[I] -5375   -15055   230.225   65.8108
-[I] "-53765055.:maptex"
-[I] -5375   -15055   220.006   55.936
-[I] "-53765055.:maptex"
-[I] -5375   -15055   216.514   51.7816
-[I] "-53765055.:maptex"
-[I] "heightTileLoadTool"
-[I] -5375   -15055   199.194   38.5891
-[I] -5375   15055
-[I] lat  54  lon  18
-[I] "F:/hgst/N54E018.hgt"
-[I] 3601
-[I] 60
-[I] draw tile
-[I] minmax -1.89224   37
-[I] ok
-[I] "-53775055.:maptex"
-[I] "-53765055.:maptex"
-[I] "-53765056.:maptex"
-[I] "-53755055.:maptex"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005372+015053.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005372+015054.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005372+015055.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005372+015056.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005372+015057.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005376+015058.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005375+015058.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005374+015058.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005373+015058.w"
-[I] w file not exist     "F:/Train Simulator/routes/tczew/world/w-005372+015058.w"
+[I] "-53885368.:maptex"
+[I] "-53885371.:maptex"
+[I] "-53875369.:maptex"
+[I] "-53875370.:maptex"
+[I] "-53865368.:maptex"
+[I] "-53865369.:maptex"
+[I] "-53865370.:maptex"
+[I] "-53855369.:maptex"
+[I] "-53855370.:maptex"
+[I] "-53845368.:maptex"
+[I] "-53845371.:maptex"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005387+015367.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005387+015368.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005387+015369.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005387+015370.w"
+[I] w file uncompressed  "C:/ts/routes/aaa/world/w-005387+015371.w"
+[I] 1
+[I] Nowy  0  shape:  "c:/ts/global/shapes/a1t50mstrt.s"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005386+015367.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005386+015368.w"
+[I] w file uncompressed  "C:/ts/routes/aaa/world/w-005386+015369.w"
+[I] 8
+[I] Nowy  1  shape:  "c:/ts/routes/aaa/shapes/wkladki.s"
+[I] Nowy  2  shape:  "c:/ts/routes/aaa/shapes/tree1.s"
+[I] Nowy  3  shape:  "c:/ts/global/shapes/a2t1500r10d.s"
+[I] w file uncompressed  "C:/ts/routes/aaa/world/w-005386+015370.w"
+[I] 2
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005386+015371.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005385+015367.w"
+[I] w file uncompressed  "C:/ts/routes/aaa/world/w-005385+015368.w"
+[I] 30
+[I] Nowy  4  shape:  "c:/ts/global/shapes/a1t20mstrt.s"
+[I] Nowy  5  shape:  "c:/ts/global/shapes/a1tpnt10dlft.s"
+[I] Nowy  6  shape:  "c:/ts/global/shapes/a2t500r20d.s"
+[I] w file uncompressed  "C:/ts/routes/aaa/world/w-005385+015369.w"
+[I] 95
+[I] Nowy  7  shape:  "c:/ts/global/shapes/a1t100mstrt.s"
+[I] Nowy  8  shape:  "c:/ts/global/shapes/a2t2000r5d.s"
+[I] Nowy  9  shape:  "c:/ts/global/shapes/a1t75mstrt.s"
+[I] Nowy  10  shape:  "c:/ts/global/shapes/a1t120r20d.s"
+[I] Nowy  11  shape:  "c:/ts/global/shapes/a1tpnt10drgt.s"
+[I] Nowy  12  shape:  "c:/ts/global/shapes/a1t90r10d.s"
+[I] Nowy  13  shape:  "c:/ts/global/shapes/a1t1500r20d.s"
+[I] Nowy  14  shape:  "c:/ts/global/shapes/a1t5mstrt.s"
+[I] Nowy  15  shape:  "c:/ts/global/shapes/a2t1000r20d.s"
+[I] w file uncompressed  "C:/ts/routes/aaa/world/w-005385+015369.ws"
+[I] WS size:  96
+[I] w file uncompressed  "C:/ts/routes/aaa/world/w-005385+015370.w"
+[I] 169
+[I] Nowy  16  shape:  "c:/ts/global/shapes/a1t1000r5d.s"
+[I] Nowy  17  shape:  "c:/ts/global/shapes/a1t100mstrttun.s"
+[I] Nowy  18  shape:  "c:/ts/global/shapes/a2t100mstrt.s"
+[I] Nowy  19  shape:  "c:/ts/global/shapes/a2t250r10d.s"
+[I] Nowy  20  shape:  "c:/ts/global/shapes/a2t250mstrt.s"
+[I] Nowy  21  shape:  "c:/ts/global/shapes/a2t250r20d.s"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005385+015371.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005384+015367.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005384+015368.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005384+015369.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005384+015370.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005384+015371.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005383+015367.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005383+015368.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005383+015369.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005383+015370.w"
+[I] w file not exist     "C:/ts/routes/aaa/world/w-005383+015371.w"
+[I] new second 1465919398008

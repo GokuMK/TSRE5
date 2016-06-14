@@ -20,6 +20,11 @@
         <itemPath>RandomConsist.h</itemPath>
         <itemPath>UnsavedDialog.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f15" displayName="coords" projectFiles="true">
+        <itemPath>Coords.h</itemPath>
+        <itemPath>CoordsKml.h</itemPath>
+        <itemPath>CoordsMkr.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="fileFunctions" projectFiles="true">
         <itemPath>FileBuffer.h</itemPath>
         <itemPath>FileFunctions.h</itemPath>
@@ -68,6 +73,7 @@
           <itemPath>PropertiesSoundSource.h</itemPath>
           <itemPath>PropertiesSpeedpost.h</itemPath>
           <itemPath>PropertiesStatic.h</itemPath>
+          <itemPath>PropertiesTrackObj.h</itemPath>
           <itemPath>PropertiesTransfer.h</itemPath>
           <itemPath>PropertiesUndefined.h</itemPath>
           <itemPath>SignalWindow.h</itemPath>
@@ -145,7 +151,6 @@
           <itemPath>TransferObj.h</itemPath>
           <itemPath>WorldObj.h</itemPath>
         </logicalFolder>
-        <itemPath>CoordsMkr.h</itemPath>
         <itemPath>QuadTree.h</itemPath>
         <itemPath>Ref.h</itemPath>
         <itemPath>Route.h</itemPath>
@@ -181,6 +186,11 @@
         <itemPath>OverwriteDialog.cpp</itemPath>
         <itemPath>RandomConsist.cpp</itemPath>
         <itemPath>UnsavedDialog.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f15" displayName="coords" projectFiles="true">
+        <itemPath>Coords.cpp</itemPath>
+        <itemPath>CoordsKml.cpp</itemPath>
+        <itemPath>CoordsMkr.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="fileFunctions" projectFiles="true">
         <itemPath>FileBuffer.cpp</itemPath>
@@ -230,6 +240,7 @@
           <itemPath>PropertiesSoundSource.cpp</itemPath>
           <itemPath>PropertiesSpeedpost.cpp</itemPath>
           <itemPath>PropertiesStatic.cpp</itemPath>
+          <itemPath>PropertiesTrackObj.cpp</itemPath>
           <itemPath>PropertiesTransfer.cpp</itemPath>
           <itemPath>PropertiesUndefined.cpp</itemPath>
           <itemPath>SignalWindow.cpp</itemPath>
@@ -307,7 +318,6 @@
           <itemPath>TransferObj.cpp</itemPath>
           <itemPath>WorldObj.cpp</itemPath>
         </logicalFolder>
-        <itemPath>CoordsMkr.cpp</itemPath>
         <itemPath>QuadTree.cpp</itemPath>
         <itemPath>Ref.cpp</itemPath>
         <itemPath>Route.cpp</itemPath>
@@ -422,6 +432,14 @@
       <item path="Consist.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Consist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Coords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsKml.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsKml.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="CoordsMkr.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -622,6 +640,10 @@
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTrackObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -936,6 +958,14 @@
       </item>
       <item path="Consist.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Coords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsKml.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsKml.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="CoordsMkr.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CoordsMkr.h" ex="false" tool="3" flavor2="0">
@@ -1135,6 +1165,10 @@
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTrackObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1442,6 +1476,14 @@
       </item>
       <item path="Consist.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Coords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsKml.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsKml.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="CoordsMkr.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CoordsMkr.h" ex="false" tool="3" flavor2="0">
@@ -1641,6 +1683,10 @@
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTrackObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1955,6 +2001,14 @@
       </item>
       <item path="Consist.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Coords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsKml.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsKml.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="CoordsMkr.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="CoordsMkr.h" ex="false" tool="3" flavor2="0">
@@ -2154,6 +2208,10 @@
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTrackObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -2456,6 +2514,14 @@
       </item>
       <item path="Consist.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Coords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsKml.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsKml.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="CoordsMkr.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="CoordsMkr.h" ex="false" tool="3" flavor2="0">
@@ -2655,6 +2721,10 @@
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTrackObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesTransfer.cpp" ex="false" tool="1" flavor2="8">
       </item>

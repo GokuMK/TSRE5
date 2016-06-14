@@ -9,7 +9,7 @@
 
 class Tile;
 class Brush;
-class CoordsMkr;
+class Coords;
 class SoundList;
 
 class Route {
@@ -32,6 +32,7 @@ public:
     void saveTrk();
     void createNewPaths();
     void createNew();
+    void loadMkrList();
     void newTile(int x, int z);
     void reloadTile(int x, int z);
     void deleteObj(WorldObj* obj);
@@ -40,7 +41,7 @@ public:
     void setTerrainToTrackObj(WorldObj* obj, Brush* brush);
     int getTileObjCount(int x, int z);
     int getTileHiddenObjCount(int x, int z);
-    std::unordered_map<std::string, CoordsMkr*> getMkrList();
+    std::unordered_map<std::string, Coords*> getMkrList();
     void setMkrFile(QString name);
     WorldObj* makeFlexTrack(int x, int z, float* pos);
     WorldObj* placeObject(int x, int z, float* p);
@@ -55,8 +56,8 @@ private:
     void loadTrk();
     TDB *trackDB;
     TDB *roadDB; 
-    std::unordered_map<std::string, CoordsMkr*> mkrList;
-    CoordsMkr * mkr;
+    std::unordered_map<std::string, Coords*> mkrList;
+    Coords * mkr = NULL;
 };
 
 #endif	/* ROUTE_H */

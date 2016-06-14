@@ -7,7 +7,7 @@
 class PreciseTileCoordinate;
 class IghCoordinate;
 class LatitudeLongitudeCoordinate;
-class CoordsMkr;
+class Coords;
 
 class NaviWindow : public QWidget {
     Q_OBJECT
@@ -21,7 +21,7 @@ public slots:
     void posInfo(PreciseTileCoordinate* coords);
     void latLonChanged(QString val);
     void xyChanged(QString val);
-    void mkrList(std::unordered_map<std::string, CoordsMkr*> list);
+    void mkrList(std::unordered_map<std::string, Coords*> list);
     void mkrFilesSelected(QString item);
     void mkrListSelected(QString item);
 
@@ -57,7 +57,7 @@ private:
     IghCoordinate* igh = NULL;
     LatitudeLongitudeCoordinate* latlon = NULL;
     PreciseTileCoordinate* aCoords = NULL;
-    std::unordered_map<std::string, CoordsMkr*> mkrFiles;
+    std::unordered_map<std::string, Coords*> mkrFiles;
     std::unordered_map<std::string, LatitudeLongitudeCoordinate*> mkrPlaces;
     QString jumpType = "";
 };

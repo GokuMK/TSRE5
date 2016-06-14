@@ -57,15 +57,20 @@ void GLWidget::timerEvent(QTimerEvent * event) {
     else
         fps = 1000.0 / (timeNow - lastTime);
     if (fps < 10) fps = 10;
+    
+    if (timeNow % 1000 < lastTime % 1000){
+        qDebug() << "new second" << timeNow;
+        if(selectedObj != NULL)
+            emit showProperties(selectedObj);
+    }
+    
     lastTime = timeNow;
-
 
     if (Game::allowObjLag < Game::maxObjLag)
         Game::allowObjLag += 2;
-
+    
     camera->update(fps);
     update();
-    
 }
 
 void GLWidget::initializeGL() {

@@ -22,6 +22,7 @@
 #include "PropertiesForest.h"
 #include "PropertiesSoundSource.h"
 #include "PropertiesSpeedpost.h"
+#include "PropertiesTrackObj.h"
 #include "NaviWindow.h"
 
 Window::Window() {
@@ -45,6 +46,7 @@ Window::Window() {
     objProperties.push_back(new PropertiesForest);
     objProperties.push_back(new PropertiesSpeedpost);
     objProperties.push_back(new PropertiesSoundSource);
+    objProperties.push_back(new PropertiesTrackObj);
     // last 
     objProperties.push_back(new PropertiesUndefined);
     
@@ -215,8 +217,8 @@ Window::Window() {
     QObject::connect(glWidget, SIGNAL(posInfo(PreciseTileCoordinate*)),
                       naviWindow, SLOT(posInfo(PreciseTileCoordinate*)));
     
-    QObject::connect(glWidget, SIGNAL(mkrList(std::unordered_map<std::string, CoordsMkr*>)),
-                      naviWindow, SLOT(mkrList(std::unordered_map<std::string, CoordsMkr*>)));
+    QObject::connect(glWidget, SIGNAL(mkrList(std::unordered_map<std::string, Coords*>)),
+                      naviWindow, SLOT(mkrList(std::unordered_map<std::string, Coords*>)));
     
     QObject::connect(glWidget, SIGNAL(routeLoaded(Route*)),
                       objTools, SLOT(routeLoaded(Route*)));
@@ -330,6 +332,7 @@ void Window::showProperties(WorldObj* obj){
         if(*it == NULL) continue;
         (*it)->hide();
     }
+    if(obj == NULL) return;
     // show 
     for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
         if(*it == NULL) continue;

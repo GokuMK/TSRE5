@@ -27,7 +27,7 @@ public slots:
 signals:
     void engListSelected(int id);
     void addToConSelected(int id, int pos, int count);
-    void f0(int id);
+    void addToRandomConsist(int id);
     
 private:
     void addBegButtonSelected(int count);

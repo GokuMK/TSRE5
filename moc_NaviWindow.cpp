@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NaviWindow_t {
     QByteArrayData data[21];
-    char stringdata0[229];
+    char stringdata0[226];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,18 +45,18 @@ QT_MOC_LITERAL(12, 104, 6), // "coords"
 QT_MOC_LITERAL(13, 111, 13), // "latLonChanged"
 QT_MOC_LITERAL(14, 125, 9), // "xyChanged"
 QT_MOC_LITERAL(15, 135, 7), // "mkrList"
-QT_MOC_LITERAL(16, 143, 42), // "std::unordered_map<std::strin..."
-QT_MOC_LITERAL(17, 186, 4), // "list"
-QT_MOC_LITERAL(18, 191, 16), // "mkrFilesSelected"
-QT_MOC_LITERAL(19, 208, 4), // "item"
-QT_MOC_LITERAL(20, 213, 15) // "mkrListSelected"
+QT_MOC_LITERAL(16, 143, 39), // "std::unordered_map<std::strin..."
+QT_MOC_LITERAL(17, 183, 4), // "list"
+QT_MOC_LITERAL(18, 188, 16), // "mkrFilesSelected"
+QT_MOC_LITERAL(19, 205, 4), // "item"
+QT_MOC_LITERAL(20, 210, 15) // "mkrListSelected"
 
     },
     "NaviWindow\0jumpTo\0\0PreciseTileCoordinate*\0"
     "sendMsg\0name\0val\0jumpTileSelected\0"
     "naviInfo\0all\0hidden\0posInfo\0coords\0"
     "latLonChanged\0xyChanged\0mkrList\0"
-    "std::unordered_map<std::string,CoordsMkr*>\0"
+    "std::unordered_map<std::string,Coords*>\0"
     "list\0mkrFilesSelected\0item\0mkrListSelected"
 };
 #undef QT_MOC_LITERAL
@@ -116,6 +116,7 @@ static const uint qt_meta_data_NaviWindow[] = {
 void NaviWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
         NaviWindow *_t = static_cast<NaviWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
@@ -130,7 +131,7 @@ void NaviWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 8: _t->posInfo((*reinterpret_cast< PreciseTileCoordinate*(*)>(_a[1]))); break;
         case 9: _t->latLonChanged((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 10: _t->xyChanged((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 11: _t->mkrList((*reinterpret_cast< std::unordered_map<std::string,CoordsMkr*>(*)>(_a[1]))); break;
+        case 11: _t->mkrList((*reinterpret_cast< std::unordered_map<std::string,Coords*>(*)>(_a[1]))); break;
         case 12: _t->mkrFilesSelected((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 13: _t->mkrListSelected((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
