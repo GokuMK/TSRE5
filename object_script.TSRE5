@@ -3,6 +3,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/AceLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Activity.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Brush.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CELoadWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Camera.o
@@ -126,6 +127,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/tsre5_plugin_import.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AboutWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AceLib.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_CELoadWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ConEditorWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ConListWidget.o

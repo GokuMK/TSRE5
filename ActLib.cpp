@@ -29,7 +29,7 @@ int ActLib::addAct(QString path, QString name) {
                 return (int)it->first;
             }
     }
-    //qDebug() << "Nowy " << jestcon << " con: " << pathid;
+    qDebug() << "Nowy " << jestact << " act: " << pathid;
     act[jestact] = new Activity(pathid, path, name);
     route[act[jestact]->header->routeid.toStdString()].push_back(jestact);
     return jestact++;

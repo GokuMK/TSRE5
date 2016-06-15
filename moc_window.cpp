@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Window_t {
-    QByteArrayData data[27];
-    char stringdata0[324];
+    QByteArrayData data[28];
+    char stringdata0[342];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -55,7 +55,8 @@ QT_MOC_LITERAL(22, 244, 13), // "viewPointer3d"
 QT_MOC_LITERAL(23, 258, 11), // "viewMarkers"
 QT_MOC_LITERAL(24, 270, 15), // "showToolsObject"
 QT_MOC_LITERAL(25, 286, 16), // "showToolsTerrain"
-QT_MOC_LITERAL(26, 303, 20) // "showTerrainTreeEditr"
+QT_MOC_LITERAL(26, 303, 17), // "showToolsActivity"
+QT_MOC_LITERAL(27, 321, 20) // "showTerrainTreeEditr"
 
     },
     "Window\0exitNow\0\0sendMsg\0text\0save\0"
@@ -66,7 +67,8 @@ QT_MOC_LITERAL(26, 303, 20) // "showTerrainTreeEditr"
     "viewTileGrid\0viewInteractives\0"
     "viewTrackDbLines\0viewTsectionLines\0"
     "viewPointer3d\0viewMarkers\0showToolsObject\0"
-    "showToolsTerrain\0showTerrainTreeEditr"
+    "showToolsTerrain\0showToolsActivity\0"
+    "showTerrainTreeEditr"
 };
 #undef QT_MOC_LITERAL
 
@@ -76,7 +78,7 @@ static const uint qt_meta_data_Window[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      21,   14, // methods
+      22,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -84,29 +86,30 @@ static const uint qt_meta_data_Window[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  119,    2, 0x06 /* Public */,
-       3,    1,  120,    2, 0x06 /* Public */,
+       1,    0,  124,    2, 0x06 /* Public */,
+       3,    1,  125,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,  123,    2, 0x0a /* Public */,
-       6,    0,  124,    2, 0x0a /* Public */,
-       7,    0,  125,    2, 0x0a /* Public */,
-       8,    0,  126,    2, 0x0a /* Public */,
-       9,    1,  127,    2, 0x0a /* Public */,
-      11,    1,  130,    2, 0x0a /* Public */,
-      14,    1,  133,    2, 0x0a /* Public */,
-      15,    1,  136,    2, 0x0a /* Public */,
-      16,    1,  139,    2, 0x0a /* Public */,
-      17,    1,  142,    2, 0x0a /* Public */,
-      18,    1,  145,    2, 0x0a /* Public */,
-      19,    1,  148,    2, 0x0a /* Public */,
-      20,    1,  151,    2, 0x0a /* Public */,
-      21,    1,  154,    2, 0x0a /* Public */,
-      22,    1,  157,    2, 0x0a /* Public */,
-      23,    1,  160,    2, 0x0a /* Public */,
-      24,    1,  163,    2, 0x0a /* Public */,
-      25,    1,  166,    2, 0x0a /* Public */,
-      26,    0,  169,    2, 0x0a /* Public */,
+       5,    0,  128,    2, 0x0a /* Public */,
+       6,    0,  129,    2, 0x0a /* Public */,
+       7,    0,  130,    2, 0x0a /* Public */,
+       8,    0,  131,    2, 0x0a /* Public */,
+       9,    1,  132,    2, 0x0a /* Public */,
+      11,    1,  135,    2, 0x0a /* Public */,
+      14,    1,  138,    2, 0x0a /* Public */,
+      15,    1,  141,    2, 0x0a /* Public */,
+      16,    1,  144,    2, 0x0a /* Public */,
+      17,    1,  147,    2, 0x0a /* Public */,
+      18,    1,  150,    2, 0x0a /* Public */,
+      19,    1,  153,    2, 0x0a /* Public */,
+      20,    1,  156,    2, 0x0a /* Public */,
+      21,    1,  159,    2, 0x0a /* Public */,
+      22,    1,  162,    2, 0x0a /* Public */,
+      23,    1,  165,    2, 0x0a /* Public */,
+      24,    1,  168,    2, 0x0a /* Public */,
+      25,    1,  171,    2, 0x0a /* Public */,
+      26,    1,  174,    2, 0x0a /* Public */,
+      27,    0,  177,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -131,6 +134,7 @@ static const uint qt_meta_data_Window[] = {
     QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    6,
+    QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void,
 
        0        // eod
@@ -139,6 +143,7 @@ static const uint qt_meta_data_Window[] = {
 void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
         Window *_t = static_cast<Window *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
@@ -162,7 +167,8 @@ void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 17: _t->viewMarkers((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 18: _t->showToolsObject((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 19: _t->showToolsTerrain((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 20: _t->showTerrainTreeEditr(); break;
+        case 20: _t->showToolsActivity((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 21: _t->showTerrainTreeEditr(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -210,13 +216,13 @@ int Window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 21)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 21;
+        _id -= 22;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 21)
+        if (_id < 22)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 21;
+        _id -= 22;
     }
     return _id;
 }

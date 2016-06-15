@@ -7,6 +7,7 @@
 #include "GuiFunct.h"
 #include "ObjTools.h"
 #include "TerrainTools.h"
+#include "ActivityTools.h"
 #include "NaviBox.h"
 #include "AboutWindow.h"
 #include "PropertiesAbstract.h"
@@ -29,6 +30,7 @@ Window::Window() {
     
     objTools = new ObjTools("ObjTools");
     terrainTools = new TerrainTools("TerrainTools");
+    activityTools = new ActivityTools("ActivityTools");
     //naviBox = new NaviBox();
     glWidget = new GLWidget;
     aboutWindow = new AboutWindow();
@@ -65,6 +67,7 @@ Window::Window() {
     mainLayout2->setContentsMargins(0,0,0,0);
     mainLayout2->addWidget(objTools);
     mainLayout2->addWidget(terrainTools);
+    mainLayout2->addWidget(activityTools);
     //mainLayout2->addWidget(naviBox);
     //mainLayout2->setAlignment(naviBox, Qt::AlignBottom);
     box->setLayout(mainLayout2);
@@ -98,9 +101,6 @@ Window::Window() {
     //mainLayout->addWidget(naviBox);
     main->setLayout(mainLayout);
     mainLayout->setContentsMargins(0,0,0,0);
-    
-    hideAllTools();
-    objTools->show();
     
     this->setCentralWidget(main);
     setWindowTitle(tr("TSRE5 v0.613"));
@@ -174,11 +174,19 @@ Window::Window() {
     terrainAction->setShortcut(QKeySequence("F2"));
     toolsMenu->addAction(terrainAction);
     QObject::connect(terrainAction, SIGNAL(triggered(bool)), this, SLOT(showToolsTerrain(bool)));
+    activityAction = GuiFunct::newMenuCheckAction(tr("&Activity"), this); 
+    activityAction->setChecked(false);    
+    activityAction->setShortcut(QKeySequence("F3"));
+    toolsMenu->addAction(activityAction);
+    QObject::connect(activityAction, SIGNAL(triggered(bool)), this, SLOT(showToolsActivity(bool)));
     // Help
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
     helpMenu = menuBar()->addMenu(tr("&Help"));
     helpMenu->addAction(aboutAction);
+    
+    hideAllTools();
+    objTools->show();
     
     if(Game::toolsHidden){
         box->hide();
@@ -222,6 +230,9 @@ Window::Window() {
     
     QObject::connect(glWidget, SIGNAL(routeLoaded(Route*)),
                       objTools, SLOT(routeLoaded(Route*)));
+    
+    QObject::connect(glWidget, SIGNAL(routeLoaded(Route*)),
+                      activityTools, SLOT(routeLoaded(Route*)));
     
     QObject::connect(objTools, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));
@@ -292,8 +303,6 @@ void Window::showToolsObject(bool show){
     if(show){
         hideShowToolWidget(true);
         setToolbox("objTools");
-        objectsAction->setChecked(true);
-        terrainAction->setChecked(false);
     } else {
         hideShowToolWidget(false);
     }
@@ -303,8 +312,15 @@ void Window::showToolsTerrain(bool show){
     if(show){
         hideShowToolWidget(true);
         setToolbox("terrainTools");
-        objectsAction->setChecked(false);
-        terrainAction->setChecked(true);        
+    } else {
+        hideShowToolWidget(false);
+    }
+}
+
+void Window::showToolsActivity(bool show){
+    if(show){
+        hideShowToolWidget(true);
+        setToolbox("activityTools");
     } else {
         hideShowToolWidget(false);
     }
@@ -314,16 +330,27 @@ void Window::setToolbox(QString name){
     if(name == "objTools"){
         hideAllTools();
         objTools->show();
+        objectsAction->setChecked(true);
     }
     if(name == "terrainTools"){
         hideAllTools();
         terrainTools->show();
+        terrainAction->setChecked(true);       
+    }
+    if(name == "activityTools"){
+        hideAllTools();
+        activityTools->show();
+        activityAction->setChecked(true);
     }
 }
 
 void Window::hideAllTools(){
     objTools->hide();
     terrainTools->hide();
+    activityTools->hide();
+    objectsAction->setChecked(false);
+    terrainAction->setChecked(false);     
+    activityAction->setChecked(false);
 }
 
 void Window::showProperties(WorldObj* obj){

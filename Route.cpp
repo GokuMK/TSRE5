@@ -20,6 +20,7 @@
 #include "CoordsMkr.h"
 #include "CoordsKml.h"
 #include "SoundList.h"
+#include "ActLib.h"
 
 Route::Route() {
 
@@ -46,6 +47,7 @@ Route::Route() {
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
     
     loadMkrList();
+    loadActivities();
     
     soundList = new SoundList();
     soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
@@ -118,6 +120,20 @@ void Route::loadTrk() {
         }
         ParserX::SkipToken(data);
     }
+}
+
+void Route::loadActivities(){
+    QDir dir(Game::root + "/routes/" + Game::route + "/activities");
+    if(!dir.exists()) 
+        return;
+    dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList()<<"*.act");
+    foreach(QString actfile, dir.entryList()){
+        activityId.push_back(ActLib::addAct(dir.path(), actfile));
+    }
+
+    qDebug() << "loaded";
+    return;
 }
 
 WorldObj* Route::getObj(int x, int z, int uid) {

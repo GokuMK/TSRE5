@@ -21,6 +21,7 @@
 #include "MapWindow.h"
 #include "TerrainTreeWindow.h"
 #include "ShapeLib.h"
+#include "EngLib.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -59,7 +60,7 @@ void GLWidget::timerEvent(QTimerEvent * event) {
     if (fps < 10) fps = 10;
     
     if (timeNow % 1000 < lastTime % 1000){
-        qDebug() << "new second" << timeNow;
+        //qDebug() << "new second" << timeNow;
         if(selectedObj != NULL)
             emit showProperties(selectedObj);
     }
@@ -98,8 +99,12 @@ void GLWidget::initializeGL() {
     //sFile->Load("f:/train simulator/routes/cmk/shapes/cottage3.s");
     //tile = new Tile(-5303,-14963);
     //qDebug() << "route = new Route();";
+    engLib = new EngLib();
+    Game::currentEngLib = engLib;
+    
     route = new Route();
     if(!route->loaded) return;
+
     
     float * aaa = new float[2]{0,0};
     camera = new CameraFree(aaa);

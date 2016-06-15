@@ -15,6 +15,7 @@ class SoundList;
 class Route {
 public:
     std::unordered_map<int, Tile*> tile;
+    std::vector<int> activityId;
     bool loaded = false;
     int startTileX;
     int startTileY;
@@ -33,6 +34,7 @@ public:
     void createNewPaths();
     void createNew();
     void loadMkrList();
+    void loadActivities();
     void newTile(int x, int z);
     void reloadTile(int x, int z);
     void deleteObj(WorldObj* obj);

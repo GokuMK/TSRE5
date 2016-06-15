@@ -23,6 +23,7 @@ class PreciseTileCoordinate;
 class Coords;
 class MapWindow;
 class ShapeLib;
+class EngLib;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -124,6 +125,7 @@ private:
     Brush* defaultPaintBrush;
     MapWindow* mapWindow;
     ShapeLib *currentShapeLib = NULL;
+    EngLib *engLib = NULL;
 };
 
 #endif

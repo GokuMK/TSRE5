@@ -8,6 +8,7 @@ class QSlider;
 class GLWidget;
 class ObjTools;
 class TerrainTools;
+class ActivityTools;
 class NaviBox;
 class AboutWindow;
 class NaviWindow;
@@ -41,6 +42,7 @@ public slots:
     void viewMarkers(bool show);
     void showToolsObject(bool show);
     void showToolsTerrain(bool show);
+    void showToolsActivity(bool show);
     void showTerrainTreeEditr();
 signals:
     void exitNow();
@@ -58,6 +60,7 @@ private:
     GLWidget *glWidget;
     ObjTools *objTools;
     TerrainTools *terrainTools;
+    ActivityTools *activityTools;
     //NaviBox *naviBox;
     
     std::vector<PropertiesAbstract*> objProperties;
@@ -81,6 +84,7 @@ private:
     QAction *objectsAction;
     QAction *terrainAction;
     QAction *terrainTreeEditr;
+    QAction *activityAction;
     
     AboutWindow* aboutWindow;
     NaviWindow* naviWindow;

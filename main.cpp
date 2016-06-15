@@ -19,7 +19,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
         std::cout << output.toStdString() << std::endl;
     logFileOut << output << "\n";
     logFileOut.flush();
-    logFile.flush();
+    logFile.flush(); 
     
     if( type == QtFatalMsg ) abort(); 
 }
