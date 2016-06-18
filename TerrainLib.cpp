@@ -157,7 +157,7 @@ float TerrainLib::getHeight(int x, int z, float posx, float posz, bool addR) {
     terr = terrain[(x * 10000 + z)];
     if (terr == NULL) return -1;
     if (terr->loaded == false) return -1;
-    qDebug() << posx <<" "<< posz;
+
     if ((posx + 1024) / 8 + 1 > 256 || (posz + 1024) / 8 + 1 > 256)
         return terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
 

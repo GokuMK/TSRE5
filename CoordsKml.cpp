@@ -71,11 +71,11 @@ CoordsKml::CoordsKml(QString path) {
             }
         } else if (reader.isCharacters()) {
             if(nametext){
-                qDebug() << reader.text();
+                //qDebug() << reader.text();
                 markerList.back().name = reader.text().toString();
             }
             if(coordinates){
-                qDebug() << reader.text();
+                //qDebug() << reader.text();
                 QStringList cl = reader.text().toString().split(" ");
                 QStringList c = cl[0].split(",");
                 if(c.length() > 1){

@@ -19,6 +19,7 @@
 #include "Coords.h"
 #include "CoordsMkr.h"
 #include "CoordsKml.h"
+#include "CoordsGpx.h"
 #include "SoundList.h"
 #include "ActLib.h"
 
@@ -77,6 +78,8 @@ void Route::loadMkrList(){
             mkrList[(dirFile).toStdString()] = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + dirFile);
         if(dirFile.endsWith(".kml", Qt::CaseInsensitive))
             mkrList[(dirFile).toStdString()] = new CoordsKml(Game::root + "/routes/" + Game::route + "/" + dirFile);
+        if(dirFile.endsWith(".gpx", Qt::CaseInsensitive))
+            mkrList[(dirFile).toStdString()] = new CoordsGpx(Game::root + "/routes/" + Game::route + "/" + dirFile);
     }
     if(mkrList[(Game::routeName+".mkr").toStdString()] != NULL)
         this->mkr = mkrList[(Game::routeName+".mkr").toStdString()];

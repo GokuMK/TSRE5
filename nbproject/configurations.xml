@@ -22,6 +22,7 @@
       </logicalFolder>
       <logicalFolder name="f15" displayName="coords" projectFiles="true">
         <itemPath>Coords.h</itemPath>
+        <itemPath>CoordsGpx.h</itemPath>
         <itemPath>CoordsKml.h</itemPath>
         <itemPath>CoordsMkr.h</itemPath>
       </logicalFolder>
@@ -190,6 +191,7 @@
       </logicalFolder>
       <logicalFolder name="f15" displayName="coords" projectFiles="true">
         <itemPath>Coords.cpp</itemPath>
+        <itemPath>CoordsGpx.cpp</itemPath>
         <itemPath>CoordsKml.cpp</itemPath>
         <itemPath>CoordsMkr.cpp</itemPath>
       </logicalFolder>
@@ -442,6 +444,10 @@
       <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Coords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsGpx.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsGpx.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="CoordsKml.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -972,6 +978,10 @@
       </item>
       <item path="Coords.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="CoordsGpx.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsGpx.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="CoordsKml.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CoordsKml.h" ex="false" tool="3" flavor2="0">
@@ -1493,6 +1503,10 @@
       <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Coords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsGpx.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsGpx.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="CoordsKml.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2023,6 +2037,10 @@
       </item>
       <item path="Coords.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="CoordsGpx.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsGpx.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="CoordsKml.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CoordsKml.h" ex="false" tool="3" flavor2="0">
@@ -2539,6 +2557,10 @@
       <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Coords.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CoordsGpx.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CoordsGpx.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="CoordsKml.cpp" ex="false" tool="1" flavor2="0">
       </item>

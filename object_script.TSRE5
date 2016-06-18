@@ -16,6 +16,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConUnitsWidget.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Consist.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Coords.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CoordsGpx.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CoordsKml.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CoordsMkr.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/DynTrackObj.o
