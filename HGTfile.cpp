@@ -33,13 +33,13 @@ bool HGTfile::load(int lat, int lon){
     while(slon.length() < 3)
         slon = "0"+slon;
     
-    QString fSfile = Game::geoPath + "/" + plat + slat + plon + slon + ".hgt";
-    fSfile.replace("//", "/");
-    qDebug() << fSfile;
+    this->pathid = Game::geoPath + "/" + plat + slat + plon + slon + ".hgt";
+    this->pathid.replace("//", "/");
+    qDebug() << this->pathid;
     //qDebug() << "Wczytam teren RAW: " << fSfile;
-    QFile *file = new QFile(fSfile);
+    QFile *file = new QFile(this->pathid);
     if (!file->open(QIODevice::ReadOnly)){
-        qDebug() <<"not found: "<< fSfile;
+        qDebug() <<"HGT not found: "<< this->pathid;
         return false;
     }
     FileBuffer* data = ReadFile::readRAW(file);

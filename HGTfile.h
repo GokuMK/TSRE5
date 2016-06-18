@@ -13,6 +13,7 @@ public:
     void draw(QImage* &image);
     bool isLoaded();
     float getHeight(float lat, float lon);
+    QString pathid;
 private:
     short int** terrainData;
     int rowSize;

@@ -66,11 +66,15 @@ if(aCoords == NULL) aCoords = new PreciseTileCoordinate();
             if(this->hqtFiles[itlat->first*1000+itlon->first] == NULL){
                 this->hqtFiles[itlat->first*1000+itlon->first] = new HGTfile();
                 fail = this->hqtFiles[itlat->first*1000+itlon->first]->load(itlat->first, itlon->first);
-                if(!fail) return;
             }
             if(!this->hqtFiles[itlat->first*1000+itlon->first]->isLoaded())
+                fail = false;
+            if(!fail) {
+                QMessageBox msgBox;
+                msgBox.setText("Failed to load "+this->hqtFiles[itlat->first*1000+itlon->first]->pathid);
+                msgBox.exec();
                 return;
-            //this->hqtFiles[itlat->first*1000+itlon->first]->draw(image);
+            }
         }
     }
     drawTile(image);
