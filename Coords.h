@@ -10,19 +10,25 @@ class TextObj;
 
 class Coords {
 public:
-    struct Marker{
+    struct Marker {
         QString name;
         float lat;
         float lon;
         int type;
-        int tileX;
-        int tileZ;
-        int x;
-        int y;
-        int z;
+        OglObj* oglObj = NULL;
+        std::vector<int> tileX;
+        std::vector<int> tileZ;
+        std::vector<int> x;
+        std::vector<int> y;
+        std::vector<int> z;
     };
+    //struct Line {
+//
+    //};
+    
     std::vector<Marker> markerList;
     std::unordered_map<std::string, TextObj*> nameGl;
+    //std::vector<Line> lineList;
     
     bool loaded = false;
     

@@ -50,10 +50,10 @@ CoordsMkr::CoordsMkr(QString path) {
             //qDebug() << igh->Line << " === " << igh->Sample;
             //latlon = MstsCoordinates::ConvertToLatLon(igh);
             //qDebug() << latlon->Latitude << " === " << latlon->Longitude;
-            markerList.back().tileX = ppp->TileX;
-            markerList.back().tileZ = ppp->TileZ;
-            markerList.back().x = ppp->X*2048-1024;
-            markerList.back().z = ppp->Z*2048-1024;
+            markerList.back().tileX.push_back(ppp->TileX);
+            markerList.back().tileZ.push_back(ppp->TileZ);
+            markerList.back().x.push_back(ppp->X*2048-1024);
+            markerList.back().z.push_back(ppp->Z*2048-1024);
 
             ParserX::SkipToken(data);
             continue;

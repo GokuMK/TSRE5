@@ -59,7 +59,12 @@ bool HGTfile::load(int lat, int lon){
     }
     qDebug() << avg / (rowSize*rowSize);
     delete data;
+    loaded = true;
     return true;
+}
+
+bool HGTfile::isLoaded(){
+    return loaded;
 }
 
 void HGTfile::draw(QImage* &image){
@@ -81,6 +86,7 @@ float HGTfile::getHeight(float lat, float lon){
     float lonO = lon - floor(lon);
     int latI = rowSize*latO;
     int lonI = rowSize*lonO;
+
     //if(latI == 0 || lonI == 0){
     //qDebug() << latI << ":" << lonI;
     //    return this->terrainData[rowSize-latI][lonI];
@@ -88,6 +94,16 @@ float HGTfile::getHeight(float lat, float lon){
     //} else {
         float tx = (float)rowSize*latO - latI;
         float tz = (float)(rowSize)*lonO - lonI;
+        
+        if(latI > rowSize - 1)
+            latI = rowSize - 1;
+        if(lonI > rowSize - 2)
+            lonI = rowSize - 2;
+        if(latI < 1)
+            latI = 1;
+        if(lonI < 0)
+            lonI = 0;
+        
         return 
             this->terrainData[rowSize-latI][lonI+1]*(1.0 - tx)*(tz) +
             this->terrainData[rowSize-latI-1][lonI]*(tx)*(1.0 - tz) +

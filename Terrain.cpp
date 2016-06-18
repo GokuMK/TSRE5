@@ -97,7 +97,7 @@ Terrain::~Terrain() {
 
 void Terrain::saveEmpty(int x, int y) {
     QString name = getTileName(x, y);
-    qDebug() << "Aa";
+    qDebug() << "New terrain tile";
     QFile file(Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw");
     if (!file.exists())
         QFile::copy("resources/templateRoute/tiles/template_y.raw", Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw");
@@ -657,7 +657,7 @@ void Terrain::reloadLines() {
 
     lines.setMaterial(1.0, 0.0, 0.0);
     lines.init(punkty, ptr, lines.V, GL_LINES);
-    delete punkty;
+    delete[] punkty;
     //s tile lines
     punkty = new float[256 * 32 * 6];
     ptr = 0;
@@ -684,7 +684,7 @@ void Terrain::reloadLines() {
     }
     slines.setMaterial(0.5, 0.5, 0.5);
     slines.init(punkty, ptr, lines.V, GL_LINES);
-    delete punkty;
+    delete[] punkty;
     
     //////////////////////
     
@@ -737,7 +737,7 @@ void Terrain::reloadLines() {
     
     ulines.setMaterial(0.8, 0.8, 0.8);
     ulines.init(punkty, ptr, lines.V, GL_LINES);
-    delete punkty;
+    delete[] punkty;
     
 }
 

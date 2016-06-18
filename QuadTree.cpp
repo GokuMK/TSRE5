@@ -73,7 +73,7 @@ void QuadTree::createNew(int tileX, int tileY){
     ttd->qt->x = tx;
     ttd->qt->y = ty;
     ttd->qt->addTile(tileX, tileY);
-    
+    ttd->modified = true;
     save();
 }
 void QuadTree::addTile(int tileX, int tileY){
@@ -229,6 +229,7 @@ void QuadTree::save(){
     file.close(); 
     
     for(auto it = this->td.begin(); it != this->td.end(); ++it){
+        //qDebug() << it->second->modified;
         if(it->second->modified)
             saveTD((float)it->second->x/512.0, (float)it->second->y/512.0);
     }
@@ -270,8 +271,10 @@ void QuadTree::saveTD(int x, int y){
     path.replace("//", "/");
     QFile *file = new QFile(path);
     qDebug() << "zapis .td "<<path;
-    if (!file->open(QIODevice::WriteOnly))
+    if (!file->open(QIODevice::WriteOnly)){
+        qDebug() << "td write fail";
         return;
+    }
     QDataStream write(file);
     write.setByteOrder(QDataStream::LittleEndian);
     write.setFloatingPointPrecision(QDataStream::SinglePrecision);

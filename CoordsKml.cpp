@@ -26,6 +26,7 @@ CoordsKml::CoordsKml(QString path) {
     QByteArray data = file.readAll();
     
     bool placemark = false;
+    bool line = false;
     bool coordinates = false;
     bool nametext = false;
     int iii = 0, uuu = 0;
@@ -42,6 +43,9 @@ CoordsKml::CoordsKml(QString path) {
             attr = reader.attributes();
             
             if (name.toUpper() == ("PLACEMARK")) {
+                placemark = true;
+                markerList.emplace_back();
+            } else if (name.toUpper() == ("PLACEMARK")) {
                 placemark = true;
                 markerList.emplace_back();
             } else if (name.toUpper() == ("COORDINATES")) {
@@ -72,17 +76,31 @@ CoordsKml::CoordsKml(QString path) {
             }
             if(coordinates){
                 qDebug() << reader.text();
-                QStringList c = reader.text().toString().split(",");
-                if(c.length() < 2) return;
-                markerList.back().lat = c[1].toFloat();
-                markerList.back().lon = c[0].toFloat();
-                markerList.back().type = 0;
-                igh = MstsCoordinates::ConvertToIgh(markerList.back().lat, markerList.back().lon);
-                ppp = MstsCoordinates::ConvertToTile(igh);
-                markerList.back().tileX = ppp->TileX;
-                markerList.back().tileZ = ppp->TileZ;
-                markerList.back().x = ppp->X*2048-1024;
-                markerList.back().z = ppp->Z*2048-1024;
+                QStringList cl = reader.text().toString().split(" ");
+                QStringList c = cl[0].split(",");
+                if(c.length() > 1){
+                    markerList.back().lat = c[1].toFloat();
+                    markerList.back().lon = c[0].toFloat();
+                    markerList.back().type = 0;
+                    float lat;
+                    float lon;
+                        for(int i = 0; i < cl.length(); i++){
+                            c = cl[i].split(",");
+                            if(c.length() < 2) continue;
+                            lat = c[1].toFloat();
+                            lon = c[0].toFloat();
+                            igh = MstsCoordinates::ConvertToIgh(lat, lon);
+                            ppp = MstsCoordinates::ConvertToTile(igh);
+                            markerList.back().tileX.push_back(ppp->TileX);
+                            markerList.back().tileZ.push_back(ppp->TileZ);
+                            markerList.back().x.push_back(ppp->X*2048-1024);
+                            markerList.back().y.push_back(0);
+                            markerList.back().z.push_back(ppp->Z*2048-1024);
+                            //markerList.back().pointsX.push_back((ppp->X*2048-1024) - 2048*(markerList.back().tileX - ppp->TileX));
+                            //markerList.back().pointsZ.push_back((ppp->Z*2048-1024) + 2048*(markerList.back().tileZ - ppp->TileZ));
+                            //markerList.back().pointsY.push_back(0);
+                        }
+                }
             }
         }
         

@@ -68,6 +68,8 @@ if(aCoords == NULL) aCoords = new PreciseTileCoordinate();
                 fail = this->hqtFiles[itlat->first*1000+itlon->first]->load(itlat->first, itlon->first);
                 if(!fail) return;
             }
+            if(!this->hqtFiles[itlat->first*1000+itlon->first]->isLoaded())
+                return;
             //this->hqtFiles[itlat->first*1000+itlon->first]->draw(image);
         }
     }

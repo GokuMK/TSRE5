@@ -53,28 +53,56 @@ void Coords::render(GLUU* gluu, float * playerT, float* playerW, float playerRot
     }
     
     TextObj* txt;
-    for (int i = 0; i < markerList.size(); i++) {
-        if (fabs(markerList[i].tileX - playerT[0]) + fabs(-markerList[i].tileZ - playerT[1]) > 2) {
-            continue;
+    for (int i = 0; i < markerList.size(); i++ ) {
+        for(int j = 0; j < markerList[i].tileX.size(); j++ ){
+            if (fabs(markerList[i].tileX[j] - playerT[0]) + fabs(-markerList[i].tileZ[j] - playerT[1]) > 2) {
+                continue;
+            }
+            gluu->mvPushMatrix();
+            //if(pos == NULL) return;
+            float h = TerrainLib::getHeight(markerList[i].tileX[j], -markerList[i].tileZ[j], markerList[i].x[j], markerList[i].z[j]);
+            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, markerList[i].x[j] + 2048 * (markerList[i].tileX[j] - playerT[0]), h, markerList[i].z[j] + 2048 * (-markerList[i].tileZ[j] - playerT[1]));
+            //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
+            //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
+            gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+            simpleMarkerObj->render();
+            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 30, 0);
+            gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+            txt = nameGl[markerList[i].name.toStdString()];
+            if(txt == NULL){
+                txt = new TextObj(markerList[i].name, 16, 1.0);
+                txt->setColor(0,0,0);
+                nameGl[markerList[i].name.toStdString()] = txt;
+            } 
+            txt->render(playerRot);
+            gluu->mvPopMatrix();
         }
+        
+        /*if (markerList[i].tileX.size() == 1) continue;
+        
+        if (markerList[i].oglObj == NULL){
+            markerList[i].oglObj = new OglObj();
+            float *punkty = new float[markerList[i].pointsX.size()*3*2];
+            int ptr = 0;
+            int j = 0;
+            for (j = 0; j < markerList[i].pointsX.size() - 1; j++) {
+                punkty[ptr++] = markerList[i].pointsX[j];
+                punkty[ptr++] = TerrainLib::getHeight(markerList[i].tileX, -markerList[i].tileZ, markerList[i].pointsX[j], markerList[i].pointsZ[j]);
+                punkty[ptr++] = markerList[i].pointsZ[j];
+                punkty[ptr++] = markerList[i].pointsX[j+1];
+                punkty[ptr++] = TerrainLib::getHeight(markerList[i].tileX, -markerList[i].tileZ, markerList[i].pointsX[j], markerList[i].pointsZ[j]);
+                punkty[ptr++] = markerList[i].pointsZ[j+1];
+            }
 
+            markerList[i].oglObj->setMaterial(1.0, 0.0, 1.0);
+            markerList[i].oglObj->init(punkty, ptr, markerList[i].oglObj->V, GL_LINES);
+            delete[] punkty;
+        }
+        
         gluu->mvPushMatrix();
-        //if(pos == NULL) return;
-        float h = TerrainLib::getHeight(markerList[i].tileX, -markerList[i].tileZ, markerList[i].x, markerList[i].z);
-        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, markerList[i].x + 2048 * (markerList[i].tileX - playerT[0]), h, markerList[i].z + 2048 * (-markerList[i].tileZ - playerT[1]));
-        //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
-        //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * (markerList[i].tileX - playerT[0]), 0, 2048 * (-markerList[i].tileZ - playerT[1]));
         gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-        simpleMarkerObj->render();
-        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 30, 0);
-        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-        txt = nameGl[markerList[i].name.toStdString()];
-        if(txt == NULL){
-            txt = new TextObj(markerList[i].name, 16, 1.0);
-            txt->setColor(0,0,0);
-            nameGl[markerList[i].name.toStdString()] = txt;
-        } 
-        txt->render(playerRot);
-        gluu->mvPopMatrix();
+        markerList[i].oglObj->render();
+        gluu->mvPopMatrix();*/
     }
 };
