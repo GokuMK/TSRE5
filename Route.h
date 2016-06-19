@@ -10,6 +10,7 @@
 class Tile;
 class Brush;
 class Coords;
+class Trk;
 class SoundList;
 
 class Route {
@@ -17,10 +18,6 @@ public:
     std::unordered_map<int, Tile*> tile;
     std::vector<int> activityId;
     bool loaded = false;
-    int startTileX;
-    int startTileY;
-    float startpX;
-    float startpZ;
     TSectionDAT *tsection; 
     SoundList* soundList;
     Ref *ref;
@@ -43,8 +40,14 @@ public:
     void setTerrainToTrackObj(WorldObj* obj, Brush* brush);
     int getTileObjCount(int x, int z);
     int getTileHiddenObjCount(int x, int z);
+    int getStartTileX();
+    int getStartTileZ();
+    float getStartpX();
+    float getStartpZ();
+    Trk *getTrk();
     std::unordered_map<std::string, Coords*> getMkrList();
     void setMkrFile(QString name);
+    void getUnsavedInfo(std::vector<QString> &items);
     WorldObj* makeFlexTrack(int x, int z, float* pos);
     WorldObj* placeObject(int x, int z, float* p);
     WorldObj* placeObject(int x, int z, float* p, float* q);
@@ -60,6 +63,7 @@ private:
     TDB *roadDB; 
     std::unordered_map<std::string, Coords*> mkrList;
     Coords * mkr = NULL;
+    Trk * trk = NULL;
 };
 
 #endif	/* ROUTE_H */

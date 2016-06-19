@@ -30,6 +30,7 @@ public slots:
     void about();
     void setToolbox(QString name);
     void showProperties(WorldObj* obj);
+    void updateProperties(WorldObj* obj);
     void hideShowToolWidget(bool show);
     void hideShowPropertiesWidget(bool show);
     void hideShowNaviWidget(bool);
@@ -44,15 +45,16 @@ public slots:
     void showToolsTerrain(bool show);
     void showToolsActivity(bool show);
     void showTerrainTreeEditr();
+
 signals:
     void exitNow();
     void sendMsg(QString text);
 
 protected:
     void keyPressEvent(QKeyEvent *event);
-    void closeEvent(QCloseEvent * event );
+    virtual void closeEvent(QCloseEvent * event );
     void hideAllTools();
-    
+
 private:
     QWidget* box;
     QWidget* box2;
@@ -84,6 +86,7 @@ private:
     QAction *objectsAction;
     QAction *terrainAction;
     QAction *terrainTreeEditr;
+    QAction *trkEditr;
     QAction *activityAction;
     
     AboutWindow* aboutWindow;

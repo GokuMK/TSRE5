@@ -587,17 +587,8 @@ void PlatformObj::makelineShape(){
 void PlatformObj::save(QTextStream* out) {
     if (!loaded) return;
     int l;
-    QString flags;
-    flags = QString::number(this->staticFlags, 16);
-    l = flags.length();
-    for (int i = 0; i < 8 - l; i++)
-        flags = "0" + flags;
-
-    QString flags2;
-    flags2 = QString::number(this->platformData, 16);
-    l = flags2.length();
-    for (int i = 0; i < 8 - l; i++)
-        flags2 = "0" + flags2;
+    QString flags = ParserX::MakeFlagsString(this->staticFlags);
+    QString flags2 = ParserX::MakeFlagsString(this->platformData);
 
     if (type == "siding")
         *(out) << "	Siding (\n";

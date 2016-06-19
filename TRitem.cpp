@@ -555,20 +555,14 @@ void TRitem::save(QTextStream* out, bool tit) {
 
     QString flags;
     if (type == "platformitem" || type == "sidingitem") {
-        flags = QString::number(this->platformTrItemData[0], 16);
-        l = flags.length();
-        for (int i = 0; i < 8 - l; i++) flags = "0" + flags;
+        flags = ParserX::MakeFlagsString(this->platformTrItemData[0]);
     }
     if (type == "signalitem") {
-        flags = QString::number(this->trSignalType1, 16);
-        l = flags.length();
-        for (int i = 0; i < 8 - l; i++) flags = "0" + flags;
+        flags = ParserX::MakeFlagsString(this->trSignalType1);
     }
 
     if (type == "pickupitem") {
-        flags = QString::number(this->pickupTrItemData2, 16);
-        l = flags.length();
-        for (int i = 0; i < 8 - l; i++) flags = "0" + flags;
+        flags = ParserX::MakeFlagsString(this->pickupTrItemData2);
     }
 
     if (type == "crossoveritem")

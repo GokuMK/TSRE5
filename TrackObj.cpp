@@ -303,12 +303,6 @@ Ref::RefItem* TrackObj::getRefInfo(){
 void TrackObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;
-    int l;
-    QString flags;
-    flags = QString::number(this->staticFlags, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
     
 *(out) << "	TrackObj (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
@@ -318,7 +312,7 @@ if(this->jNodePosn!=NULL)
 *(out) << "		JNodePosn ( "<<this->jNodePosn[0]<<" "<<this->jNodePosn[1]<<" "<<this->jNodePosn[2]<<" "<<this->jNodePosn[3]<<" "<<this->jNodePosn[4]<<" )\n";
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
-*(out) << "		StaticFlags ( "<<flags<<" )\n";
+*(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 if(this->matrix3x3!=NULL)
 *(out) << "		Matrix3x3 ( "<<this->matrix3x3[0]<<" "<<this->matrix3x3[1]<<" "<<this->matrix3x3[2]<<" "<<this->matrix3x3[3]<<" "<<this->matrix3x3[4]<<" "<<this->matrix3x3[5]<<" "<<this->matrix3x3[6]<<" "<<this->matrix3x3[7]<<" "<<this->matrix3x3[8]<<" )\n";

@@ -22,6 +22,7 @@
 #include "TerrainTreeWindow.h"
 #include "ShapeLib.h"
 #include "EngLib.h"
+#include "TrkWindow.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -59,10 +60,10 @@ void GLWidget::timerEvent(QTimerEvent * event) {
         fps = 1000.0 / (timeNow - lastTime);
     if (fps < 10) fps = 10;
     
-    if (timeNow % 1000 < lastTime % 1000){
+    if (timeNow % 200 < lastTime % 200){
         //qDebug() << "new second" << timeNow;
         if(selectedObj != NULL)
-            emit showProperties(selectedObj);
+            emit updateProperties(selectedObj);
     }
     
     lastTime = timeNow;
@@ -112,12 +113,12 @@ void GLWidget::initializeGL() {
     if(Game::start == 2){
         camera->setPozT(Game::startTileX, -Game::startTileY);
     } else {
-        camera->setPozT(route->startTileX, -route->startTileY);
-        spos[0] = route->startpX;
-        spos[2] = -route->startpZ;
+        camera->setPozT(route->getStartTileX(), -route->getStartTileZ());
+        spos[0] = route->getStartpX();
+        spos[2] = -route->getStartpZ();
     }
-    if(TerrainLib::load(route->startTileX, -route->startTileY)){
-        spos[1] = 20 + TerrainLib::getHeight(route->startTileX, -route->startTileY, route->startpX, -route->startpZ);
+    if(TerrainLib::load(route->getStartTileX(), -route->getStartTileZ())){
+        spos[1] = 20 + TerrainLib::getHeight(route->getStartTileX(), -route->getStartTileZ(), route->getStartpX(), -route->getStartpZ());
     } else {
         spos[1] = 0;
     }
@@ -223,10 +224,16 @@ void GLWidget::paintGL() {
         int cdata = (int) (ww1 / 8);
         int ww  = (ww1 - cdata*8);
         qDebug() << "selected " <<ww1 <<" "<<ww;
-        int wx = (int) (ww / 4);
-        int wz = (int) (ww - (wx)*4);
-        wx = camera->pozT[0] + (wx - 1);
-        wz = camera->pozT[1] + (wz - 1);
+        int wx = 0;//(int) (ww / 4);
+        int wz = 0;//(int) (ww - (wx)*4);
+        if(ww == 0 || ww == 1 || ww == 2) wx = camera->pozT[0] - 1;
+        if(ww == 3 || ww == 4 || ww == 5) wx = camera->pozT[0];
+        if(ww == 6 || ww == 7 || ww == 8) wx = camera->pozT[0] + 1;
+        if(ww == 0 || ww == 3 || ww == 6) wz = camera->pozT[1] - 1;
+        if(ww == 1 || ww == 4 || ww == 7) wz = camera->pozT[1];
+        if(ww == 2 || ww == 5 || ww == 8) wz = camera->pozT[1] + 1;
+        //wx = camera->pozT[0] + (wx - 1);
+        //wz = camera->pozT[1] + (wz - 1);
         qDebug() << "color data: " << cdata;
 
         //int UiD = (int) (winZ[1]*255)*256 + (int) (winZ[2]*255);
@@ -747,6 +754,18 @@ void GLWidget::editPaste(){
     }
 }
 
+void GLWidget::showTrkEditr(){
+    TrkWindow trkWindow;
+    trkWindow.trk = route->getTrk();
+    trkWindow.exec();
+}
+
+void GLWidget::getUnsavedInfo(std::vector<QString> &items){
+    if(this->route == NULL)
+        return;
+    route->getUnsavedInfo(items);
+}
+
 void GLWidget::msg(QString text){
     qDebug() << text;
     if(text == "save"){
@@ -775,7 +794,6 @@ void GLWidget::msg(QString text, bool val){
         return;
     }
 }
-
 
 void GLWidget::msg(QString text, int val){
 }

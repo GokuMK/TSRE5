@@ -10,6 +10,7 @@ public:
     virtual ~PropertiesTrackObj();
     bool support(WorldObj* obj);
     void showObj(WorldObj* obj);
+    void updateObj(WorldObj* obj);
 public slots:
     void copyFEnabled();
         

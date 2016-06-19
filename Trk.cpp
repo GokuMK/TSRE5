@@ -1,0 +1,283 @@
+#include "Trk.h"
+#include "Game.h"
+#include <QFile>
+#include <QDir>
+#include <QTextStream>
+#include "ParserX.h"
+#include "ReadFile.h"
+#include "FileBuffer.h"
+
+Trk::Trk() {
+    graphic = "graphic.ace";
+    loadingScreen = "load.ace";
+    electrified = 0;
+    mountains = 0;
+    overheadWireHeight = 0;
+    passengerRuleSet = 0;
+    freightRuleSet = 0;
+    signalSet = 0;
+    gantrySet = 0;
+    trackGauge = 0;
+    era = 0;
+    speedLimit = 100;
+    terrainErrorScale = 1.0;
+    startTileX = 0;
+    startTileZ = 0;
+    startpX = 0;
+    startpZ = 0;
+    milepostUnitsKilometers = true;
+    maxLineVoltage = 0;
+    defaultSignalSMS = "signal.sms";
+    defaultCrossingSMS = "crossing.sms";
+    defaultWaterTowerSMS = "wtower.sms";
+    defaultCoalTowerSMS = "ctower.sms";
+    defaultDieselTowerSMS = "dtower.sms";
+    tempRestrictedSpeed = 10;
+    gravityScale = -1;
+    environment.clear();
+    environment["SpringClear"] = "sun.env";
+    environment["SpringRain"] = "rain.env";
+    environment["SpringSnow"] = "snow.env";
+    environment["SummerClear"] = "sun.env";
+    environment["SummerRain"] = "rain.env";
+    environment["SummerSnow"] = "snow.env";
+    environment["AutumnClear"] = "sun.env";
+    environment["AutumnRain"] = "rain.env";
+    environment["AutumnSnow"] = "snow.env";
+    environment["WinterClear"] = "sun.env";
+    environment["WinterRain"] = "rain.env";
+    environment["WinterSnow"] = "snow.env";
+    modified = true;
+}
+
+Trk::~Trk() {
+}
+
+void Trk::load(){
+    QString path = Game::root + "/routes/" + Game::route + "/" + Game::trkName + ".trk";
+    path.replace("//", "/");
+    qDebug() << path;
+    load(path);
+}
+
+void Trk::load(QString path){
+    QFile *file = new QFile(path);
+    if (!file->open(QIODevice::ReadOnly))
+        return;
+    FileBuffer* data = ReadFile::read(file);
+    ParserX::NextLine(data);
+
+    QString sh = "Tr_RouteFile";
+    ParserX::szukajsekcji1(sh, data);
+    this->milepostUnitsKilometers = false;
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        if (sh == ("routeid")) {
+            this->idName = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("name")) {
+            this->displayName = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("description")) {
+            this->description = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("graphic")) {
+            this->graphic = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("loadingscreen")) {
+            this->loadingScreen = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("filename")) {
+            this->routeName = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("electrified")) {
+            this->electrified = ParserX::GetHex(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("mountains")) {
+            this->mountains = ParserX::GetHex(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("overheadwireheight")) {
+            this->overheadWireHeight = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("passengerruleset")) {
+            this->passengerRuleSet = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("freightruleset")) {
+            this->freightRuleSet = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("signalset")) {
+            this->signalSet = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("gantryset")) {
+            this->gantrySet = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("trackgauge")) {
+            this->trackGauge = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("era")) {
+            this->era = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("speedlimit")) {
+            this->speedLimit = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("terrainerrorscale")) {
+            this->terrainErrorScale = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("routestart")) {
+            startTileX = ParserX::GetNumber(data);
+            startTileZ = ParserX::GetNumber(data);
+            //qDebug() << startTileX << startTileY;
+            //break;
+            startpX = ParserX::GetNumber(data);
+            startpZ = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("milepostunitskilometers")) {
+            this->milepostUnitsKilometers = true;
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("maxlinevoltage")) {
+            this->maxLineVoltage = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("defaultsignalsms")) {
+            this->defaultSignalSMS = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("defaultcrossingsms")) {
+            this->defaultCrossingSMS = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("defaultwatertowersms")) {
+            this->defaultWaterTowerSMS = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("defaultcoaltowersms")) {
+            this->defaultCoalTowerSMS = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("defaultdieseltowersms")) {
+            this->defaultDieselTowerSMS = ParserX::GetString(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("temprestrictedspeed")) {
+            this->tempRestrictedSpeed = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("gravityscale")) {
+            this->gravityScale = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("environment")) {
+            this->environment.clear();
+            while (!((sh = ParserX::NextTokenInside(data)) == "")) {
+                this->environment[sh.toStdString()] = ParserX::GetString(data);
+                ParserX::SkipToken(data);
+            }
+            ParserX::SkipToken(data);
+            continue;
+        }
+        qDebug() << sh;
+        ParserX::SkipToken(data);
+    }
+    modified = false;
+}
+
+void Trk::save() {
+    if (!Game::writeEnabled) return;
+    if (!modified) return;
+    QFile file;
+    QTextStream out;
+    QString filepath;
+
+    filepath = Game::root + "/routes/" + Game::route + "/" + Game::trkName + ".trk";
+    file.setFileName(filepath);
+    //qDebug() << filepath;
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    out.setDevice(&file);
+    out.setRealNumberPrecision(8);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+
+    out << "SIMISA@@@@@@@@@@JINX0r1t______" << "\n\n";
+    out << "Tr_RouteFile (" << "\n";
+    out << "	RouteID ( " << ParserX::AddComIfReq(this->idName) << " )" << "\n";
+    out << "	Name ( " << ParserX::AddComIfReq(this->displayName) << " )" << "\n";
+    out << "	Description ( " << ParserX::SplitToMultiline(this->description, "		") <<" )" << "\n";
+    out << "	Graphic ( " << ParserX::AddComIfReq(this->graphic) << " )" << "\n";
+    out << "	LoadingScreen ( " << ParserX::AddComIfReq(this->loadingScreen) << " )" << "\n";
+    out << "	FileName ( " << ParserX::AddComIfReq(this->routeName) << " )" << "\n";
+    out << "	Electrified ( " << ParserX::MakeFlagsString(this->electrified) << " )" << "\n";
+    out << "	Mountains ( " << ParserX::MakeFlagsString(this->electrified) << " )" << "\n";
+    out << "	OverheadWireHeight ( " << this->overheadWireHeight << " )" << "\n";
+    out << "	PassengerRuleSet ( " << this->passengerRuleSet << " )" << "\n";
+    out << "	FreightRuleSet ( " << this->freightRuleSet << " )" << "\n";
+    out << "	SignalSet ( " << this->signalSet << " )" << "\n";
+    out << "	GantrySet ( " << this->gantrySet << " )" << "\n";
+    out << "	TrackGauge ( " << this->trackGauge << " )" << "\n";
+    out << "	Era ( " << this->era << " )" << "\n";
+    out << "	SpeedLimit ( " << this->speedLimit << " )" << "\n";
+    out << "	Environment (" << "\n";
+    for (auto it = this->environment.begin(); it != this->environment.end(); ++it)
+        out << "		" << QString::fromStdString(it->first) << " ( " << it->second << " )" << "\n";
+    out << "	)" << "\n";
+    out << "	TerrainErrorScale ( " << this->terrainErrorScale << " )" << "\n";
+    out << "	RouteStart ( "<< this->startTileX <<" "<< this->startTileZ <<" " << this->startpX << " " << this->startpZ << " )" << "\n";
+    if(this->milepostUnitsKilometers)
+        out << "	MilepostUnitsKilometers ( )" << "\n";
+    out << "	DefaultCrossingSMS ( " << ParserX::AddComIfReq(this->defaultCrossingSMS) << " )" << "\n";
+    out << "	DefaultSignalSMS ( " << ParserX::AddComIfReq(this->defaultSignalSMS) << " )" << "\n";
+    out << "	DefaultWaterTowerSMS ( " << ParserX::AddComIfReq(this->defaultWaterTowerSMS) << " )" << "\n";
+    out << "	DefaultCoalTowerSMS ( " << ParserX::AddComIfReq(this->defaultCoalTowerSMS) << " )" << "\n";
+    out << "	DefaultDieselTowerSMS ( " << ParserX::AddComIfReq(this->defaultDieselTowerSMS) << " )" << "\n";
+    out << "	TempRestrictedSpeed ( " << this->tempRestrictedSpeed << " )" << "\n";
+    if(this->gravityScale >= 0)
+        out << "	GravityScale ( " << this->gravityScale << " )" << "\n";
+    out << ")" << "\n";
+
+    out.flush();
+    file.close();
+}

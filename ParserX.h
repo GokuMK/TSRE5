@@ -26,6 +26,7 @@ public:
     static int SkipToken(FileBuffer* bufor);
     static int sekcjap(FileBuffer* bufor);
     static QString AddComIfReq(QString n);
+    static QString MakeFlagsString(unsigned int val);
     static QString SplitToMultiline(QString n, QString woff = "");
 
 private:

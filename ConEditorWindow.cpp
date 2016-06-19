@@ -552,6 +552,7 @@ void ConEditorWindow::closeEvent( QCloseEvent *event )
     }
     
     UnsavedDialog unsavedDialog;
+    unsavedDialog.setMsg("Save changes in consists?");
     unsavedDialog.setWindowTitle("Save changes?");
     for(int i = 0; i < unsavedConIds.size(); i++){
         if(ConLib::con[unsavedConIds[i]] == NULL) continue;

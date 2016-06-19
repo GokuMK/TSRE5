@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Window_t {
-    QByteArrayData data[28];
-    char stringdata0[342];
+    QByteArrayData data[29];
+    char stringdata0[359];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,28 +43,29 @@ QT_MOC_LITERAL(10, 68, 4), // "name"
 QT_MOC_LITERAL(11, 73, 14), // "showProperties"
 QT_MOC_LITERAL(12, 88, 9), // "WorldObj*"
 QT_MOC_LITERAL(13, 98, 3), // "obj"
-QT_MOC_LITERAL(14, 102, 18), // "hideShowToolWidget"
-QT_MOC_LITERAL(15, 121, 24), // "hideShowPropertiesWidget"
-QT_MOC_LITERAL(16, 146, 18), // "hideShowNaviWidget"
-QT_MOC_LITERAL(17, 165, 13), // "viewWorldGrid"
-QT_MOC_LITERAL(18, 179, 12), // "viewTileGrid"
-QT_MOC_LITERAL(19, 192, 16), // "viewInteractives"
-QT_MOC_LITERAL(20, 209, 16), // "viewTrackDbLines"
-QT_MOC_LITERAL(21, 226, 17), // "viewTsectionLines"
-QT_MOC_LITERAL(22, 244, 13), // "viewPointer3d"
-QT_MOC_LITERAL(23, 258, 11), // "viewMarkers"
-QT_MOC_LITERAL(24, 270, 15), // "showToolsObject"
-QT_MOC_LITERAL(25, 286, 16), // "showToolsTerrain"
-QT_MOC_LITERAL(26, 303, 17), // "showToolsActivity"
-QT_MOC_LITERAL(27, 321, 20) // "showTerrainTreeEditr"
+QT_MOC_LITERAL(14, 102, 16), // "updateProperties"
+QT_MOC_LITERAL(15, 119, 18), // "hideShowToolWidget"
+QT_MOC_LITERAL(16, 138, 24), // "hideShowPropertiesWidget"
+QT_MOC_LITERAL(17, 163, 18), // "hideShowNaviWidget"
+QT_MOC_LITERAL(18, 182, 13), // "viewWorldGrid"
+QT_MOC_LITERAL(19, 196, 12), // "viewTileGrid"
+QT_MOC_LITERAL(20, 209, 16), // "viewInteractives"
+QT_MOC_LITERAL(21, 226, 16), // "viewTrackDbLines"
+QT_MOC_LITERAL(22, 243, 17), // "viewTsectionLines"
+QT_MOC_LITERAL(23, 261, 13), // "viewPointer3d"
+QT_MOC_LITERAL(24, 275, 11), // "viewMarkers"
+QT_MOC_LITERAL(25, 287, 15), // "showToolsObject"
+QT_MOC_LITERAL(26, 303, 16), // "showToolsTerrain"
+QT_MOC_LITERAL(27, 320, 17), // "showToolsActivity"
+QT_MOC_LITERAL(28, 338, 20) // "showTerrainTreeEditr"
 
     },
     "Window\0exitNow\0\0sendMsg\0text\0save\0"
     "show\0createPaths\0about\0setToolbox\0"
     "name\0showProperties\0WorldObj*\0obj\0"
-    "hideShowToolWidget\0hideShowPropertiesWidget\0"
-    "hideShowNaviWidget\0viewWorldGrid\0"
-    "viewTileGrid\0viewInteractives\0"
+    "updateProperties\0hideShowToolWidget\0"
+    "hideShowPropertiesWidget\0hideShowNaviWidget\0"
+    "viewWorldGrid\0viewTileGrid\0viewInteractives\0"
     "viewTrackDbLines\0viewTsectionLines\0"
     "viewPointer3d\0viewMarkers\0showToolsObject\0"
     "showToolsTerrain\0showToolsActivity\0"
@@ -78,7 +79,7 @@ static const uint qt_meta_data_Window[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      22,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -86,30 +87,31 @@ static const uint qt_meta_data_Window[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  124,    2, 0x06 /* Public */,
-       3,    1,  125,    2, 0x06 /* Public */,
+       1,    0,  129,    2, 0x06 /* Public */,
+       3,    1,  130,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,  128,    2, 0x0a /* Public */,
-       6,    0,  129,    2, 0x0a /* Public */,
-       7,    0,  130,    2, 0x0a /* Public */,
-       8,    0,  131,    2, 0x0a /* Public */,
-       9,    1,  132,    2, 0x0a /* Public */,
-      11,    1,  135,    2, 0x0a /* Public */,
-      14,    1,  138,    2, 0x0a /* Public */,
-      15,    1,  141,    2, 0x0a /* Public */,
-      16,    1,  144,    2, 0x0a /* Public */,
-      17,    1,  147,    2, 0x0a /* Public */,
-      18,    1,  150,    2, 0x0a /* Public */,
-      19,    1,  153,    2, 0x0a /* Public */,
-      20,    1,  156,    2, 0x0a /* Public */,
-      21,    1,  159,    2, 0x0a /* Public */,
-      22,    1,  162,    2, 0x0a /* Public */,
-      23,    1,  165,    2, 0x0a /* Public */,
-      24,    1,  168,    2, 0x0a /* Public */,
-      25,    1,  171,    2, 0x0a /* Public */,
-      26,    1,  174,    2, 0x0a /* Public */,
-      27,    0,  177,    2, 0x0a /* Public */,
+       5,    0,  133,    2, 0x0a /* Public */,
+       6,    0,  134,    2, 0x0a /* Public */,
+       7,    0,  135,    2, 0x0a /* Public */,
+       8,    0,  136,    2, 0x0a /* Public */,
+       9,    1,  137,    2, 0x0a /* Public */,
+      11,    1,  140,    2, 0x0a /* Public */,
+      14,    1,  143,    2, 0x0a /* Public */,
+      15,    1,  146,    2, 0x0a /* Public */,
+      16,    1,  149,    2, 0x0a /* Public */,
+      17,    1,  152,    2, 0x0a /* Public */,
+      18,    1,  155,    2, 0x0a /* Public */,
+      19,    1,  158,    2, 0x0a /* Public */,
+      20,    1,  161,    2, 0x0a /* Public */,
+      21,    1,  164,    2, 0x0a /* Public */,
+      22,    1,  167,    2, 0x0a /* Public */,
+      23,    1,  170,    2, 0x0a /* Public */,
+      24,    1,  173,    2, 0x0a /* Public */,
+      25,    1,  176,    2, 0x0a /* Public */,
+      26,    1,  179,    2, 0x0a /* Public */,
+      27,    1,  182,    2, 0x0a /* Public */,
+      28,    0,  185,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -121,6 +123,7 @@ static const uint qt_meta_data_Window[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   10,
+    QMetaType::Void, 0x80000000 | 12,   13,
     QMetaType::Void, 0x80000000 | 12,   13,
     QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    6,
@@ -155,20 +158,21 @@ void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 5: _t->about(); break;
         case 6: _t->setToolbox((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 7: _t->showProperties((*reinterpret_cast< WorldObj*(*)>(_a[1]))); break;
-        case 8: _t->hideShowToolWidget((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 9: _t->hideShowPropertiesWidget((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 10: _t->hideShowNaviWidget((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 11: _t->viewWorldGrid((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 12: _t->viewTileGrid((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 13: _t->viewInteractives((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 14: _t->viewTrackDbLines((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 15: _t->viewTsectionLines((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 16: _t->viewPointer3d((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 17: _t->viewMarkers((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 18: _t->showToolsObject((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 19: _t->showToolsTerrain((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 20: _t->showToolsActivity((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 21: _t->showTerrainTreeEditr(); break;
+        case 8: _t->updateProperties((*reinterpret_cast< WorldObj*(*)>(_a[1]))); break;
+        case 9: _t->hideShowToolWidget((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 10: _t->hideShowPropertiesWidget((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 11: _t->hideShowNaviWidget((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 12: _t->viewWorldGrid((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 13: _t->viewTileGrid((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 14: _t->viewInteractives((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 15: _t->viewTrackDbLines((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 16: _t->viewTsectionLines((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 17: _t->viewPointer3d((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 18: _t->viewMarkers((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 19: _t->showToolsObject((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 20: _t->showToolsTerrain((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 21: _t->showToolsActivity((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 22: _t->showTerrainTreeEditr(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -216,13 +220,13 @@ int Window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 22)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 22;
+        _id -= 23;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 22)
+        if (_id < 23)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 22;
+        _id -= 23;
     }
     return _id;
 }

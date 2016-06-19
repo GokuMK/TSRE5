@@ -58,6 +58,9 @@ CoordsGpx::CoordsGpx(QString path) {
                         lon = attr[1].value().toFloat();
                     igh = MstsCoordinates::ConvertToIgh(lat, lon);
                     ppp = MstsCoordinates::ConvertToTile(igh);
+                    markerList.back().lat = lat;
+                    markerList.back().lon = lon;
+                    markerList.back().type = 0;
                     markerList.back().tileX.push_back(ppp->TileX);
                     markerList.back().tileZ.push_back(ppp->TileZ);
                     markerList.back().x.push_back(ppp->X*2048-1024);
@@ -81,6 +84,11 @@ CoordsGpx::CoordsGpx(QString path) {
                         lon = attr[1].value().toFloat();
                     igh = MstsCoordinates::ConvertToIgh(lat, lon);
                     ppp = MstsCoordinates::ConvertToTile(igh);
+                    if(markerList.back().tileX.size() == 0){
+                        markerList.back().lat = lat;
+                        markerList.back().lon = lon;
+                        markerList.back().type = 0;
+                    }
                     markerList.back().tileX.push_back(ppp->TileX);
                     markerList.back().tileZ.push_back(ppp->TileZ);
                     markerList.back().x.push_back(ppp->X*2048-1024);

@@ -37,7 +37,8 @@ public:
     virtual ~Coords();
     virtual void render(GLUU* gluu, float * playerT, float* playerW, float playerRot);
 protected:
-    OglObj* simpleMarkerObj = NULL;
+    OglObj* simpleMarkerObjP = NULL;
+    OglObj* simpleMarkerObjL = NULL;
 private:
 
 };

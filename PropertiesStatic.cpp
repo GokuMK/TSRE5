@@ -1,5 +1,6 @@
 #include "PropertiesStatic.h"
 #include "WorldObj.h"
+#include "ParserX.h"
 
 PropertiesStatic::PropertiesStatic(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -107,13 +108,7 @@ void PropertiesStatic::showObj(WorldObj* obj){
             );
     
     
-    int l;
-    QString flags;
-    flags = QString::number(obj->staticFlags, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
-    this->flags.setText(flags);
+    this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
 }
 
 bool PropertiesStatic::support(WorldObj* obj){

@@ -25,6 +25,7 @@
 #include "PropertiesSpeedpost.h"
 #include "PropertiesTrackObj.h"
 #include "NaviWindow.h"
+#include "UnsavedDialog.h"
 
 Window::Window() {
     
@@ -113,12 +114,12 @@ Window::Window() {
     QObject::connect(createPathsAction, SIGNAL(triggered()), this, SLOT(createPaths()));
     exitAction = new QAction(tr("&Exit"), this);
     QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
-    terrainTreeEditr = new QAction(tr("&Terrain Tree Editor"), this);
-    QObject::connect(terrainTreeEditr, SIGNAL(triggered()), this, SLOT(showTerrainTreeEditr()));
+    trkEditr = new QAction(tr("&Edit route settings"), this);
+    QObject::connect(trkEditr, SIGNAL(triggered()), glWidget, SLOT(showTrkEditr()));
     routeMenu = menuBar()->addMenu(tr("&Route"));
     routeMenu->addAction(saveAction);
     routeMenu->addAction(createPathsAction);
-    routeMenu->addAction(terrainTreeEditr);
+    routeMenu->addAction(trkEditr);
     routeMenu->addAction(exitAction);
     // Edit
     editMenu = menuBar()->addMenu(tr("&Edit"));
@@ -261,6 +262,9 @@ Window::Window() {
     QObject::connect(glWidget, SIGNAL(showProperties(WorldObj*)),
                       this, SLOT(showProperties(WorldObj*)));
     
+    QObject::connect(glWidget, SIGNAL(updateProperties(WorldObj*)),
+                      this, SLOT(updateProperties(WorldObj*)));
+    
     QObject::connect(this, SIGNAL(exitNow()),
                       aboutWindow, SLOT(exitNow())); 
     
@@ -277,9 +281,38 @@ void Window::keyPressEvent(QKeyEvent *e) {
 }
 
 void Window::closeEvent(QCloseEvent * event ){
-    //qDebug() << "Aaaa";
+    std::vector<QString> unsavedItems;
+    glWidget->getUnsavedInfo(unsavedItems);
+    if(unsavedItems.size() == 0){
+        qDebug() << "nic do zapisania";
+        emit exitNow();
+        event->accept();
+        qApp->quit();
+        return;
+    }
+    
+    UnsavedDialog unsavedDialog;
+    unsavedDialog.setWindowTitle("Save changes?");
+    unsavedDialog.setMsg("Save changes in route?");
+    for(int i = 0; i < unsavedItems.size(); i++){
+        unsavedDialog.items.addItem(unsavedItems[i]);
+    }
+    unsavedDialog.exec();
+    if(unsavedDialog.changed == 0){
+        event->ignore();
+        return;
+    }
+    if(unsavedDialog.changed == 2){
+        emit exitNow();
+        event->accept();
+        qApp->quit();
+        return;
+    }
+    
+    emit save();
+
     emit exitNow();
-    QWidget::closeEvent(event);
+    event->accept();
     qApp->quit();
 }
 
@@ -367,6 +400,18 @@ void Window::showProperties(WorldObj* obj){
         (*it)->show();
         (*it)->showObj(obj);
         return;
+    }
+}
+
+void Window::updateProperties(WorldObj* obj){
+    if(obj == NULL) return;
+    // show 
+    for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
+        if(*it == NULL) continue;
+        if((*it)->isVisible() && (*it)->support(obj)){
+            (*it)->updateObj(obj);
+            return;
+        }
     }
 }
 

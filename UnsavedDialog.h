@@ -9,6 +9,7 @@ public:
     UnsavedDialog();
     virtual ~UnsavedDialog();
     QListWidget items;
+    void setMsg(QString msg);
     int changed = 0;
     
 public slots:
@@ -17,7 +18,7 @@ public slots:
     void exit();
     
 private:
-
+    QLabel infoLabel;
 };
 
 #endif	/* UNSAVEDDIALOG_H */

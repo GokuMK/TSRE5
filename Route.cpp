@@ -22,6 +22,8 @@
 #include "CoordsGpx.h"
 #include "SoundList.h"
 #include "ActLib.h"
+#include "Trk.h"
+#include "AboutWindow.h"
 
 Route::Route() {
 
@@ -39,7 +41,9 @@ Route::Route() {
         }
     }
 
-    this->loadTrk();
+    trk = new Trk();
+    trk->load();
+    Game::routeName = trk->routeName.toLower();
     qDebug() << Game::routeName;
     
     this->tsection = new TSectionDAT();
@@ -69,6 +73,26 @@ Route::Route(const Route& orig) {
 Route::~Route() {
 }
 
+Trk *Route::getTrk(){
+    return this->trk;
+}
+
+int Route::getStartTileX(){
+    return this->trk->startTileX;
+}
+
+int Route::getStartTileZ(){
+    return this->trk->startTileZ;
+}
+
+float Route::getStartpX(){
+    return this->trk->startpX;
+}
+
+float Route::getStartpZ(){
+    return this->trk->startpZ;
+}
+
 void Route::loadMkrList(){
     //this->mkr = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + Game::routeName +".mkr");
     QDir dir(Game::root + "/routes/" + Game::route);
@@ -90,39 +114,6 @@ void Route::loadMkrList(){
 void Route::setMkrFile(QString name){
     if(mkrList[name.toStdString()] != NULL)
         this->mkr = mkrList[name.toStdString()];
-}
-
-void Route::loadTrk() {
-    QString path = Game::root + "/routes/" + Game::route + "/" + Game::trkName + ".trk";
-    path.replace("//", "/");
-    qDebug() << path;
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
-        return;
-    FileBuffer* data = ReadFile::read(file);
-    ParserX::NextLine(data);
-
-    QString sh = "Tr_RouteFile";
-    ParserX::szukajsekcji1(sh, data);
-    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-        //qDebug() << sh;
-        if (sh == ("routestart")) {
-            startTileX = ParserX::GetNumber(data);
-            startTileY = ParserX::GetNumber(data);
-            //qDebug() << startTileX << startTileY;
-            //break;
-            startpX = ParserX::GetNumber(data);
-            startpZ = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("filename")) {
-            Game::routeName = ParserX::GetString(data).toLower();
-            ParserX::SkipToken(data);
-            continue;
-        }
-        ParserX::SkipToken(data);
-    }
 }
 
 void Route::loadActivities(){
@@ -491,6 +482,21 @@ int Route::getTileHiddenObjCount(int x, int z) {
     return tTile->jestHiddenObj;
 }
 
+void Route::getUnsavedInfo(std::vector<QString> &items){
+    if (!Game::writeEnabled) return;
+    for (auto it = tile.begin(); it != tile.end(); ++it) {
+        Tile* tTile = (Tile*) it->second;
+        if (tTile == NULL) continue;
+        if (tTile->loaded == 1 && tTile->isModified()) {
+            items.push_back("[W] "+QString::number(tTile->x)+" "+QString::number(-tTile->z));
+        }
+    }
+    TerrainLib::getUnsavedInfo(items);
+    //this->trackDB->save();
+    //this->roadDB->save();
+}
+
+
 void Route::save() {
     if (!Game::writeEnabled) return;
     qDebug() << "save";
@@ -546,7 +552,15 @@ void Route::createNew() {
 
     int x = Game::newRouteX;
     int z = Game::newRouteZ;
-    saveTrk();
+    
+    Trk * newTrk = new Trk();
+    newTrk->idName = Game::route;
+    newTrk->routeName = Game::route;
+    newTrk->displayName = Game::route;
+    newTrk->startTileX = Game::newRouteX;
+    newTrk->startTileZ = Game::newRouteZ;
+    newTrk->save();
+    
     TDB::saveEmpty(false);
     TDB::saveEmpty(true);
     TerrainLib::createNewRouteTerrain(x, z);
@@ -588,66 +602,4 @@ void Route::newTile(int x, int z) {
     TerrainLib::saveEmpty(x, -z);
     TerrainLib::reload(x, z);
     reloadTile(x, z);
-}
-
-void Route::saveTrk() {
-    if (!Game::writeEnabled) return;
-    QFile file;
-    QTextStream out;
-    QString filepath;
-
-    filepath = Game::root + "/routes/" + Game::route + "/" + Game::route + ".trk";
-    file.setFileName(filepath);
-    //qDebug() << filepath;
-    file.open(QIODevice::WriteOnly | QIODevice::Text);
-    out.setDevice(&file);
-    out.setRealNumberPrecision(8);
-    out.setCodec("UTF-16");
-    out.setGenerateByteOrderMark(true);
-
-    out << "SIMISA@@@@@@@@@@JINX0r1t______" << "\n\n";
-    out << "Tr_RouteFile (" << "\n";
-    out << "	RouteID ( \"" << Game::route << "\" )" << "\n";
-    out << "	Name ( \"" << Game::route << "\" )" << "\n";
-    out << "	Description ( \"\" )" << "\n";
-    out << "	Graphic ( \"" << Game::route << ".ace\" )" << "\n";
-    out << "	LoadingScreen ( Load.ace )" << "\n";
-    out << "	FileName ( \"" << Game::route << "\" )" << "\n";
-    out << "	Electrified ( 00000000 )" << "\n";
-    out << "	Mountains ( 00000000 )" << "\n";
-    out << "	OverheadWireHeight ( 7.23 )" << "\n";
-    out << "	PassengerRuleSet ( 0 )" << "\n";
-    out << "	FreightRuleSet ( 0 )" << "\n";
-    out << "	SignalSet ( 0 )" << "\n";
-    out << "	GantrySet ( 0 )" << "\n";
-    out << "	TrackGauge ( 0 )" << "\n";
-    out << "	Era ( 0 )" << "\n";
-    out << "	SpeedLimit ( 35.7632 )" << "\n";
-    out << "	Environment (" << "\n";
-    out << "		SpringClear ( sun.env )" << "\n";
-    out << "		SpringRain ( rain.env )" << "\n";
-    out << "		SpringSnow ( snow.env )" << "\n";
-    out << "		SummerClear ( sun.env )" << "\n";
-    out << "		SummerRain ( rain.env )" << "\n";
-    out << "		SummerSnow ( snow.env )" << "\n";
-    out << "		AutumnClear ( sun.env )" << "\n";
-    out << "		AutumnRain ( rain.env )" << "\n";
-    out << "		AutumnSnow ( snow.env )" << "\n";
-    out << "		WinterClear ( sun.env )" << "\n";
-    out << "		WinterRain ( rain.env )" << "\n";
-    out << "		WinterSnow ( snow.env )" << "\n";
-    out << "	)" << "\n";
-    out << "	TerrainErrorScale ( 1 )" << "\n";
-    out << "	RouteStart ( "<<Game::newRouteX<<" "<<Game::newRouteZ<<" 0 0 )" << "\n";
-    out << "	DefaultCrossingSMS ( crossing.sms )" << "\n";
-    out << "	DefaultSignalSMS ( signal.sms )" << "\n";
-    out << "	DefaultWaterTowerSMS ( wtower.sms )" << "\n";
-    out << "	DefaultCoalTowerSMS ( ctower.sms )" << "\n";
-    out << "	DefaultDieselTowerSMS ( dtower.sms )" << "\n";
-    out << "	TempRestrictedSpeed ( 6.7056 )" << "\n";
-
-    out << ")" << "\n";
-
-    out.flush();
-    file.close();
 }

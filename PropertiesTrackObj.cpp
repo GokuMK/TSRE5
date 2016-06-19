@@ -3,6 +3,7 @@
 #include "TrackObj.h"
 #include <math.h>
 #include "GLMatrix.h"
+#include "ParserX.h"
 
 PropertiesTrackObj::PropertiesTrackObj(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -115,13 +116,7 @@ void PropertiesTrackObj::showObj(WorldObj* obj){
             QString::number(obj->qDirection[3], 'G', 4)
             );
     
-    int l;
-    QString flags;
-    flags = QString::number(obj->staticFlags, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
-    this->flags.setText(flags);
+    this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
     
     ///////////
     TrackObj* track = (TrackObj*)obj;
@@ -149,6 +144,26 @@ void PropertiesTrackObj::showObj(WorldObj* obj){
     //qe[1] = pitch;
     //qe[2] = 0;
     
+}
+
+void PropertiesTrackObj::updateObj(WorldObj* obj){
+    if(obj == NULL){
+        return;
+    }
+    TrackObj* track = (TrackObj*)obj;
+    float * q = track->qDirection;
+    float vect[3];
+    vect[0] = 0; vect[1] = 0; vect [2] = 1000;
+    Vec3::transformQuat(vect, vect, q);
+    vect[1] = -vect[1];
+    
+    float oneInXm = 0;
+
+    oneInXm = 1000.0/vect[1];
+    if(!this->elevProm.hasFocus())    
+        this->elevProm.setText(QString::number(vect[1]));
+    if(!this->elev1inXm.hasFocus())
+        this->elev1inXm.setText(QString::number(oneInXm));
 }
 
 bool PropertiesTrackObj::support(WorldObj* obj){

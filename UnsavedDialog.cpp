@@ -5,7 +5,7 @@ UnsavedDialog::UnsavedDialog() : QDialog(){
     items.setFixedWidth(300);
     //this->setFixedSize(300,300);
 
-    QLabel *label = new QLabel("Save changes in consists?");
+    //QLabel *label = new QLabel("Save changes in consists?");
     QPushButton* ok = new QPushButton("Save and Quit");
     QPushButton* exit = new QPushButton("Discard and Quit");
     QPushButton* cancel = new QPushButton("Cancel");
@@ -15,7 +15,7 @@ UnsavedDialog::UnsavedDialog() : QDialog(){
     
     QGridLayout *vlist = new QGridLayout;
     vlist->setSpacing(2);
-    vlist->addWidget(label, 0, 0, 1, 3, Qt::AlignCenter);
+    vlist->addWidget(&infoLabel, 0, 0, 1, 3, Qt::AlignCenter);
     //vlist->addWidget(new QLabel("New FileName:"), 1, 0, Qt::AlignLeft);
     //vlist->addWidget(&name, 1, 1, 1, 1, Qt::AlignLeft);
     //QHBoxLayout *vlist1 = new QHBoxLayout;
@@ -29,6 +29,10 @@ UnsavedDialog::UnsavedDialog() : QDialog(){
     this->setLayout(vlist);
     this->layout()->setSizeConstraint( QLayout::SetFixedSize );
     //this->setFixedSize(this->width(),this->height());
+}
+
+void UnsavedDialog::setMsg(QString msg){
+    infoLabel.setText(msg);
 }
 
 void UnsavedDialog::cancel(){

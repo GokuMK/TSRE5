@@ -10,6 +10,15 @@ QString ParserX::AddComIfReq(QString n){
     return n;
 }
 
+QString ParserX::MakeFlagsString(unsigned int val){
+    QString flags;
+    flags = QString::number(val, 16);
+    int l = flags.length();
+    for(int i=0; i<8-l; i++)
+        flags = "0"+flags;
+    return flags;
+}
+
 QString ParserX::SplitToMultiline(QString n, QString woff){
     if(n.length() == 0)
         return "\""+n+"\"";

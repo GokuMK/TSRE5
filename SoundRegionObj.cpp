@@ -248,14 +248,6 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
 void SoundRegionObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;
-int l;
-QString flags;
-if(this->staticFlags != 0){
-    flags = QString::number(this->staticFlags, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
-}
     
 *(out) << "	Soundregion (\n";
     
@@ -266,7 +258,8 @@ for(int i = 0; i < this->trItemId.size(); i+=2){
 }
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
-*(out) << "		StaticFlags ( "<<flags<<" )\n";
+if(this->staticFlags != 0)
+*(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";

@@ -36,6 +36,7 @@ public:
     static void setTerrainToTrackObj(Brush* brush, float* punkty, int length, int x, int z, float* matrix);
     static int getTexture(int x, int z, float* p);
     static bool load(int x, int z);
+    static void getUnsavedInfo(std::vector<QString> &items);
     static void save();
     static void refresh(int x, int z);
     static bool reload(int x, int z);

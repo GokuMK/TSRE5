@@ -66,6 +66,18 @@ bool TerrainLib::load(int x, int z) {
     return false;
 }
 
+void TerrainLib::getUnsavedInfo(std::vector<QString> &items){
+    if (!Game::writeEnabled) return;
+    for (auto it = terrain.begin(); it != terrain.end(); ++it) {
+        //console.log(obj.type);
+        Terrain* tTile = (Terrain*) it->second;
+        if (tTile == NULL) continue;
+        if (tTile->loaded && tTile->isModified()) {
+            items.push_back("[T] "+QString::number(tTile->mojex)+" "+QString::number(-tTile->mojez));
+        }
+    }
+}
+
 void TerrainLib::save(){
     if (!Game::writeEnabled) return;
     qDebug() << "save terrain";

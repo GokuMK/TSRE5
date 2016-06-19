@@ -535,7 +535,18 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, boo
                 gluu->mvPushMatrix();
                 //obiekty[i]->render(gluu, lod, x-playerT[0]*2048, z-playerT[1]*2048);
                 if (selection) {
-                    int sxx = (x - playerT[0] + 1)*4 + (z - playerT[1] + 1);
+                    int sxx = 0;
+                         if(x < playerT[0] && z < playerT[1]) sxx = 0;
+                    else if(x < playerT[0] && z == playerT[1]) sxx = 1;
+                    else if(x < playerT[0] && z > playerT[1]) sxx = 2;
+                    else if(x == playerT[0] && z < playerT[1]) sxx = 3;
+                    else if(x == playerT[0] && z == playerT[1]) sxx = 4;
+                    else if(x == playerT[0] && z > playerT[1]) sxx = 5;
+                    else if(x > playerT[0] && z < playerT[1]) sxx = 6;
+                    else if(x > playerT[0] && z == playerT[1]) sxx = 7;
+                    // only 3 bits for tile number but this requires 4 .. 
+                    //else if(x > playerT[0] && z > playerT[1]) sxx = 8;
+                    //int sxx = (x - playerT[0] + 1)*4 + (z - playerT[1] + 1);
                     //qDebug() << sxx;
                     selectionColor = obiekty[i]->UiD + sxx * 131072;
                 }

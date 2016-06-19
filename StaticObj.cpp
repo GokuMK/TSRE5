@@ -142,14 +142,6 @@ bool StaticObj::getBorder(float* border){
 void StaticObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;
-int l;
-QString flags;
-if(this->staticFlags != 0){
-    flags = QString::number(this->staticFlags, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
-}
     
 if(type == "static")
 *(out) << "	Static (\n";
@@ -163,7 +155,7 @@ if(type == "collideobject")
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
 if(this->staticFlags != 0)
-*(out) << "		StaticFlags ( "<<flags<<" )\n";
+*(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";

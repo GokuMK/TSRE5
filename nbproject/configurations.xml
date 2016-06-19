@@ -18,7 +18,6 @@
         <itemPath>EngListWidget.h</itemPath>
         <itemPath>OverwriteDialog.h</itemPath>
         <itemPath>RandomConsist.h</itemPath>
-        <itemPath>UnsavedDialog.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f15" displayName="coords" projectFiles="true">
         <itemPath>Coords.h</itemPath>
@@ -36,6 +35,10 @@
       <logicalFolder name="f14" displayName="GEO" projectFiles="true">
         <itemPath>HGTfile.h</itemPath>
         <itemPath>HeightWindow.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f16" displayName="GUI" projectFiles="true">
+        <itemPath>GuiFunct.h</itemPath>
+        <itemPath>UnsavedDialog.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="math3d" projectFiles="true">
         <itemPath>Flex.h</itemPath>
@@ -82,7 +85,6 @@
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
-        <itemPath>GuiFunct.h</itemPath>
         <itemPath>LoadWindow.h</itemPath>
         <itemPath>NaviBox.h</itemPath>
         <itemPath>NaviWindow.h</itemPath>
@@ -91,6 +93,7 @@
         <itemPath>TerrainTools.h</itemPath>
         <itemPath>TerrainTreeWindow.h</itemPath>
         <itemPath>TerrainWaterWindow.h</itemPath>
+        <itemPath>TrkWindow.h</itemPath>
         <itemPath>glwidget.h</itemPath>
         <itemPath>window.h</itemPath>
       </logicalFolder>
@@ -163,6 +166,7 @@
         <itemPath>Terrain.h</itemPath>
         <itemPath>TerrainLib.h</itemPath>
         <itemPath>Tile.h</itemPath>
+        <itemPath>Trk.h</itemPath>
       </logicalFolder>
       <itemPath>Game.h</itemPath>
     </logicalFolder>
@@ -187,7 +191,6 @@
         <itemPath>EngListWidget.cpp</itemPath>
         <itemPath>OverwriteDialog.cpp</itemPath>
         <itemPath>RandomConsist.cpp</itemPath>
-        <itemPath>UnsavedDialog.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f15" displayName="coords" projectFiles="true">
         <itemPath>Coords.cpp</itemPath>
@@ -205,6 +208,10 @@
       <logicalFolder name="f12" displayName="GEO" projectFiles="true">
         <itemPath>HGTfile.cpp</itemPath>
         <itemPath>HeightWindow.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f16" displayName="GUI" projectFiles="true">
+        <itemPath>GuiFunct.cpp</itemPath>
+        <itemPath>UnsavedDialog.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="math3d" projectFiles="true">
         <itemPath>Flex.cpp</itemPath>
@@ -251,7 +258,6 @@
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
-        <itemPath>GuiFunct.cpp</itemPath>
         <itemPath>LoadWindow.cpp</itemPath>
         <itemPath>NaviBox.cpp</itemPath>
         <itemPath>NaviWindow.cpp</itemPath>
@@ -260,6 +266,7 @@
         <itemPath>TerrainTools.cpp</itemPath>
         <itemPath>TerrainTreeWindow.cpp</itemPath>
         <itemPath>TerrainWaterWindow.cpp</itemPath>
+        <itemPath>TrkWindow.cpp</itemPath>
         <itemPath>glwidget.cpp</itemPath>
         <itemPath>window.cpp</itemPath>
       </logicalFolder>
@@ -332,6 +339,7 @@
         <itemPath>Terrain.cpp</itemPath>
         <itemPath>TerrainLib.cpp</itemPath>
         <itemPath>Tile.cpp</itemPath>
+        <itemPath>Trk.cpp</itemPath>
       </logicalFolder>
       <itemPath>Game.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -840,6 +848,14 @@
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Trk.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Trk.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrkWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrkWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1374,6 +1390,14 @@
       </item>
       <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Trk.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Trk.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrkWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrkWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="UnsavedDialog.h" ex="false" tool="3" flavor2="0">
@@ -1899,6 +1923,14 @@
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Trk.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Trk.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrkWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrkWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2433,6 +2465,14 @@
       </item>
       <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Trk.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Trk.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrkWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrkWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="UnsavedDialog.h" ex="false" tool="3" flavor2="0">
@@ -2953,6 +2993,14 @@
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Trk.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Trk.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrkWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrkWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="8">
       </item>

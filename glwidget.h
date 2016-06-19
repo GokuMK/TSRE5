@@ -37,6 +37,8 @@ public:
 
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
     QSize sizeHint() const Q_DECL_OVERRIDE;
+    
+    void getUnsavedInfo(std::vector<QString> &items);
 
 public slots:
     void cleanup();
@@ -52,7 +54,8 @@ public slots:
     
     void editCopy();
     void editPaste();
-
+    void showTrkEditr();
+    
 signals:
     void routeLoaded(Route * a);
     void itemSelected(Ref::RefItem* pointer);
@@ -61,6 +64,7 @@ signals:
     void setToolbox(QString name);
     void setBrushTextureId(int val);
     void showProperties(WorldObj* obj);
+    void updateProperties(WorldObj* obj);
     void flexData(int x, int z, float* p);
     void mkrList(std::unordered_map<std::string, Coords*> list);
     

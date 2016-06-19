@@ -954,12 +954,6 @@ bool DynTrackObj::getBorder(float* border){
 
 void DynTrackObj::save(QTextStream* out){
     if (!loaded) return;
-    int l;
-    QString flags;
-    flags = QString::number(this->staticFlags, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
     
 *(out) << "	Dyntrack (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
@@ -975,7 +969,7 @@ for(int i = 0; i < 5; i++){
 if(this->jNodePosn!=NULL)
 *(out) << "		JNodePosn ( "<<this->jNodePosn[0]<<" "<<this->jNodePosn[1]<<" "<<this->jNodePosn[2]<<" "<<this->jNodePosn[3]<<" "<<this->jNodePosn[4]<<" )\n";
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
-*(out) << "		StaticFlags ( "<<flags<<" )\n";
+*(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";

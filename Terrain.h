@@ -14,6 +14,8 @@ public:
     float **terrainData;
     bool inUse = true;
     bool showBlob = false;
+    float mojex;
+    float mojez;
     Terrain(float x, float y);
     Terrain(const Terrain& orig);
     virtual ~Terrain();
@@ -38,8 +40,6 @@ private:
     bool jestF;
     bool isOgl;
     bool modified;
-    float mojex;
-    float mojez;
     QString texturepath;
     Vector3f **vertexData;//[257][257];
     Vector3f **normalData;//[257][257];

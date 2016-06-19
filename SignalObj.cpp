@@ -389,12 +389,6 @@ bool SignalObj::getBorder(float* border){
 
 void SignalObj::save(QTextStream* out){
     if (!loaded) return;
-int l;
-QString flags;
-    flags = QString::number(this->signalSubObj, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
     
 *(out) << "	Signal (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
@@ -404,7 +398,7 @@ QString flags;
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";
 if(this->staticDetailLevel > -1)
 *(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
-*(out) << "		SignalSubObj ( "<<flags<<" )\n";
+*(out) << "		SignalSubObj ( "<<ParserX::MakeFlagsString(this->signalSubObj)<<" )\n";
 if(signalUnits > 0){
 *(out) << "		SignalUnits ( "<<this->signalUnits<<"\n";
 for(int i=0; i<signalUnits; i++){

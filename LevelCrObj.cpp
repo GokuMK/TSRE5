@@ -339,20 +339,13 @@ bool LevelCrObj::getBorder(float* border){
 
 void LevelCrObj::save(QTextStream* out){
     if (!loaded) return;
-    int l;
-    
-    QString flags2;
-    flags2 = QString::number(this->levelCrData[0], 16);
-    l = flags2.length();
-    for(int i=0; i<8-l; i++)
-        flags2 = "0"+flags2; 
-    
+
 *(out) << "	LevelCr (\n";
     
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		LevelCrParameters ( "<<this->levelCrParameters[0]<<" "<<this->levelCrParameters[1]<<" )\n";
 *(out) << "		CrashProbability ( "<<this->crashProbability<<" )\n";
-*(out) << "		LevelCrData ( "<<flags2<<" "<<this->levelCrData[1]<<" )\n";
+*(out) << "		LevelCrData ( "<< ParserX::MakeFlagsString(this->levelCrData[0]) <<" "<<this->levelCrData[1]<<" )\n";
 *(out) << "		LevelCrTiming ( "<<this->levelCrTiming[0]<<" "<<this->levelCrTiming[1]<<" "<<this->levelCrTiming[2]<<" )\n";
 for(int i = 0; i < trItemIdCount; i+=2){
 *(out) << "		TrItemId ( "<<this->trItemId[i]<<" "<<this->trItemId[i+1]<<" )\n";

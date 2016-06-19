@@ -315,12 +315,6 @@ void ForestObj::drawShape(){
 
 void ForestObj::save(QTextStream* out){
     if (!loaded) return;
-    int l;
-    QString flags;
-    flags = QString::number(this->staticFlags, 16);
-    l = flags.length();
-    for(int i=0; i<8-l; i++)
-        flags = "0"+flags;
     
 *(out) << "	Forest (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
@@ -330,7 +324,7 @@ if(this->treeTexture != "")
 *(out) << "		Area ( "<<this->areaX<<" "<<this->areaZ<<" )\n";
 *(out) << "		Population ( "<<this->population<<" )\n";
 *(out) << "		TreeSize ( "<<this->treeSizeX<<" "<<this->treeSizeZ<<" )\n";
-*(out) << "		StaticFlags ( "<<flags<<" )\n";
+*(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";

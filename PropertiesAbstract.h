@@ -12,7 +12,8 @@ public:
     virtual ~PropertiesAbstract();
     virtual bool support(WorldObj* obj);
     virtual void showObj(WorldObj* obj);
-    
+    virtual void updateObj(WorldObj* obj);
+
 protected:
     QLabel *infoLabel;    
     QLineEdit flags;
