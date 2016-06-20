@@ -3,1784 +3,377 @@
 [E] libpng warning: iCCP: known incorrect sRGB profile
 [E] libpng warning: iCCP: known incorrect sRGB profile
 [I] ok
-[I] "tczew"
-[I] "F:/train simulator/routes/tczew/tczew.trk"
-[I] "tczew"
+[I] "EUROPE1"
+[I] "F:/train simulator/routes/EUROPE1/EUROPE1.trk"
+[I] "milepostunitsmiles"
+[I] "derailscale"
+[I] "timetabletollerance"
+[I] "settleca"
 [I] "F:/train simulator/global/tsection.dat"
 [I] TsectionDAT:  40000   40000
-[I] "F:/train simulator/routes/tczew/tsection.dat"
-[I] Wczytywanie pliku tdb:  "F:/train simulator/routes/tczew/tczew.tdb"
-[I] "F:/train simulator/routes/tczew/tczew.tdb"
+[I] "F:/train simulator/routes/EUROPE1/tsection.dat"
+[I] Wczytywanie pliku tdb:  "F:/train simulator/routes/EUROPE1/settleca.tdb"
+[I] "F:/train simulator/routes/EUROPE1/settleca.tdb"
 [I] znaleziono sekcje na  72
 [I] sh  "serial"
-[I] "F:/train simulator/routes/tczew/tczew.tit"
-[I] znaleziono sekcje TrItemTable na  54
-[I] tritemtable Fail
-[I] "F:/train simulator/routes/tczew/speedpost.dat"
+[I] sh  "tracknodes"
+[I] N 388
+[I] sh  "tritemtable"
+[I] "F:/train simulator/routes/EUROPE1/settleca.tit"
+[I] znaleziono sekcje TrItemTable na  80
+[I] "F:/train simulator/routes/EUROPE1/speedpost.dat"
 [I] speedpost!
-[I] speedpost value unknown:  "restricted_shape"
-[I] speedpost value unknown:  "end_restricted_shape"
-[I] "F:/train simulator/routes/tczew/sigcfg.dat"
+[I] "F:/train simulator/routes/EUROPE1/sigcfg.dat"
 [I] sigcfg!
 [I] "lighttextures"
 [I] "lightstab"
 [I] "scriptfiles"
-[I] Wczytywanie pliku tdb:  "F:/train simulator/routes/tczew/tczew.rdb"
-[I] "F:/train simulator/routes/tczew/tczew.rdb"
+[I] Wczytywanie pliku tdb:  "F:/train simulator/routes/EUROPE1/settleca.rdb"
+[I] "F:/train simulator/routes/EUROPE1/settleca.rdb"
 [I] znaleziono sekcje na  72
 [I] sh  "serial"
-[I] Wczytywanie pliku ref:  "F:/train simulator/routes/tczew/tczew.ref"
-[I] "F:/train simulator/routes/tczew/tczew.ref"
-[I] kml!
-[I] file
-[I] gpx!
-[I] file
-[I] kml!
-[I] file
-[I] gpx!
-[I] file
-[I] kml!
-[I] file
-[I] "F:/train simulator/routes/tczew/ssource.dat"
-[I] "F:/train simulator/routes/tczew/ttype.dat"
-[I] w file not exist     "F:/train simulator/routes/tczew/td/td_idx.dat"
-[I] "F:/train simulator/routes/tczew/forests.dat"
+[I] sh  "tracknodes"
+[I] N 426
+[I] sh  "tritemtable"
+[I] Wczytywanie pliku ref:  "F:/train simulator/routes/EUROPE1/settleca.ref"
+[I] "F:/train simulator/routes/EUROPE1/settleca.ref"
+[I] "F:/train simulator/routes/EUROPE1/SettleCa.mkr"
+[I] Nowy  0  act:  "f:/train simulator/routes/europe1/activities/aftstorm.act"
+[I] "f:/train simulator/routes/europe1/activities/aftstorm.act"
+[I] Nowy  1  act:  "f:/train simulator/routes/europe1/activities/homestre.act"
+[I] "f:/train simulator/routes/europe1/activities/homestre.act"
+[I] Nowy  2  act:  "f:/train simulator/routes/europe1/activities/itr_e1_s1_w1_t1.act"
+[I] "f:/train simulator/routes/europe1/activities/itr_e1_s1_w1_t1.act"
+[I] Nowy  3  act:  "f:/train simulator/routes/europe1/activities/lclsrvce.act"
+[I] "f:/train simulator/routes/europe1/activities/lclsrvce.act"
+[I] Nowy  4  act:  "f:/train simulator/routes/europe1/activities/lowwater.act"
+[I] "f:/train simulator/routes/europe1/activities/lowwater.act"
+[I] Nowy  5  act:  "f:/train simulator/routes/europe1/activities/medemerg.act"
+[I] "f:/train simulator/routes/europe1/activities/medemerg.act"
+[I] Nowy  6  act:  "f:/train simulator/routes/europe1/activities/rsrescue.act"
+[I] "f:/train simulator/routes/europe1/activities/rsrescue.act"
+[I] Nowy  7  act:  "f:/train simulator/routes/europe1/activities/sctutorial.act"
+[I] "f:/train simulator/routes/europe1/activities/sctutorial.act"
+[I] Nowy  8  act:  "f:/train simulator/routes/europe1/activities/shrtpass.act"
+[I] "f:/train simulator/routes/europe1/activities/shrtpass.act"
+[I] Nowy  9  act:  "f:/train simulator/routes/europe1/activities/winterun.act"
+[I] "f:/train simulator/routes/europe1/activities/winterun.act"
+[I] loaded
+[I] "F:/train simulator/routes/EUROPE1/ssource.dat"
+[I] "F:/train simulator/routes/EUROPE1/ttype.dat"
+[I] "terrain_desc_size"
+[I] "depth"
+[I] "terrain_desc_tiles"
+[I] "tdfile"   -12   29
+[I] p   "----" -6119   15095
+[I] p   "----" -6119   15094
+[I] p   "----" -6120   15094
+[I] 0   "----" -6120   15094
+[I] p   "----" -6118   15095
+[I] p   "----" -6118   15094
+[I] 0   "----" -6118   15094
+[I] p   "----" -6118   15093
+[I] p   "----" -6117   15092
+[I] p   "----" -6118   15092
+[I] 0   "----" -6118   15092
+[I] p   "----" -6120   15093
+[I] p   "----" -6119   15093
+[I] p   "----" -6119   15092
+[I] 0   "----" -6120   15092
+[I] p   "----" -6116   15091
+[I] p   "----" -6116   15090
+[I] 0   "----" -6116   15090
+[I] p   "----" -6116   15089
+[I] p   "----" -6116   15088
+[I] 0   "----" -6116   15088
+[I] p   "----" -6118   15091
+[I] p   "----" -6117   15091
+[I] p   "----" -6117   15090
+[I] p   "----" -6118   15090
+[I] 0   "----" -6118   15090
+[I] p   "----" -6118   15089
+[I] p   "----" -6117   15089
+[I] p   "----" -6117   15088
+[I] p   "----" -6118   15088
+[I] 0   "----" -6118   15088
+[I] p   "----" -6121   15094
+[I] p   "----" -6122   15094
+[I] 0   "----" -6122   15094
+[I] p   "----" -6122   15093
+[I] p   "----" -6121   15093
+[I] 0   "----" -6122   15092
+[I] p   "----" -6117   15087
+[I] p   "----" -6117   15086
+[I] 0   "----" -6118   15086
+[I] p   "----" -6116   15087
+[I] p   "----" -6115   15087
+[I] p   "----" -6115   15086
+[I] p   "----" -6116   15086
+[I] 0   "----" -6116   15086
+[I] p   "----" -6116   15085
+[I] p   "----" -6115   15085
+[I] p   "----" -6115   15084
+[I] p   "----" -6116   15084
+[I] 0   "----" -6116   15084
+[I] p   "----" -6116   15083
+[I] p   "----" -6115   15083
+[I] p   "----" -6115   15082
+[I] 0   "----" -6116   15082
+[I] p   "----" -6114   15083
+[I] p   "----" -6113   15083
+[I] p   "----" -6113   15082
+[I] p   "----" -6114   15082
+[I] 0   "----" -6114   15082
+[I] p   "----" -6114   15081
+[I] p   "----" -6113   15081
+[I] 0   "----" -6114   15080
+[I] p   "----" -6112   15082
+[I] 0   "----" -6112   15082
+[I] p   "----" -6112   15081
+[I] p   "----" -6111   15081
+[I] p   "----" -6111   15080
+[I] p   "----" -6112   15080
+[I] 0   "----" -6112   15080
+[I] p   "----" -6112   15079
+[I] p   "----" -6111   15079
+[I] p   "----" -6111   15078
+[I] p   "----" -6112   15078
+[I] 0   "----" -6112   15078
+[I] p   "----" -6112   15077
+[I] p   "----" -6111   15077
+[I] p   "----" -6111   15076
+[I] p   "----" -6112   15076
+[I] 0   "----" -6112   15076
+[I] p   "----" -6112   15075
+[I] p   "----" -6111   15075
+[I] p   "----" -6111   15074
+[I] p   "----" -6112   15074
+[I] 0   "----" -6112   15074
+[I] p   "----" -6110   15073
+[I] p   "----" -6109   15073
+[I] p   "----" -6109   15072
+[I] p   "----" -6110   15072
+[I] 0   "----" -6110   15072
+[I] p   "----" -6112   15073
+[I] p   "----" -6111   15073
+[I] p   "----" -6111   15072
+[I] p   "----" -6112   15072
+[I] 0   "----" -6112   15072
+[I] p   "----" -6110   15071
+[I] p   "----" -6109   15071
+[I] p   "----" -6109   15070
+[I] p   "----" -6110   15070
+[I] 0   "----" -6110   15070
+[I] p   "----" -6110   15069
+[I] p   "----" -6109   15069
+[I] p   "----" -6110   15068
+[I] 0   "----" -6110   15068
+[I] p   "----" -6111   15069
+[I] p   "----" -6111   15068
+[I] 0   "----" -6112   15068
+[I] p   "----" -6111   15067
+[I] p   "----" -6111   15066
+[I] p   "----" -6112   15066
+[I] 0   "----" -6112   15066
+[I] p   "----" -6110   15067
+[I] p   "----" -6110   15066
+[I] 0   "----" -6110   15066
+[I] p   "----" -6110   15065
+[I] 0   "----" -6110   15064
+[I] p   "----" -6112   15065
+[I] p   "----" -6111   15065
+[I] p   "----" -6112   15064
+[I] 0   "----" -6112   15064
+[I] p   "----" -6112   15063
+[I] p   "----" -6112   15062
+[I] 0   "----" -6112   15062
+[I] p   "----" -6112   15059
+[I] p   "----" -6112   15058
+[I] 0   "----" -6112   15058
+[I] p   "----" -6112   15057
+[I] p   "----" -6112   15056
+[I] 0   "----" -6112   15056
+[I] p   "----" -6112   15055
+[I] p   "----" -6112   15054
+[I] 0   "----" -6112   15054
+[I] p   "----" -6113   15065
+[I] p   "----" -6113   15064
+[I] 0   "----" -6114   15064
+[I] p   "1111" -6116   15062
+[I] p   "1111" -6116   15060
+[I] p   "----" -6115   15062
+[I] 0   "----" -6116   15062
+[I] p   "----" -6113   15063
+[I] p   "----" -6113   15062
+[I] p   "----" -6114   15062
+[I] 0   "----" -6114   15062
+[I] p   "----" -6114   15061
+[I] p   "----" -6113   15061
+[I] p   "----" -6113   15060
+[I] p   "----" -6114   15060
+[I] 0   "----" -6114   15060
+[I] p   "----" -6115   15061
+[I] p   "----" -6115   15060
+[I] 0   "----" -6116   15060
+[I] p   "----" -6114   15059
+[I] p   "----" -6113   15059
+[I] p   "----" -6113   15058
+[I] p   "----" -6114   15058
+[I] 0   "----" -6114   15058
+[I] p   "----" -6113   15057
+[I] p   "----" -6113   15056
+[I] 0   "----" -6114   15056
+[I] p   "----" -6113   15055
+[I] p   "----" -6113   15054
+[I] 0   "----" -6114   15054
+[I] p   "----" -6113   15053
+[I] 0   "----" -6114   15052
+[I] "F:/train simulator/routes/EUROPE1/forests.dat"
 [I] "forest"
-[I] "-53785057.:maptex"
-[I] "-53775055.:maptex"
-[I] "-53775056.:maptex"
-[I] "-53775057.:maptex"
-[I] "-53765055.:maptex"
-[I] "-53765056.:maptex"
-[I] "-53765057.:maptex"
-[I] "-53755055.:maptex"
-[I] "-53745055.:maptex"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005377+015053.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005377+015054.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005377+015055.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005377+015056.w"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005377+015057.w"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] TFile - unknown token:  282
+[I] TFile - unknown token:  282
+[I] "-61155053.:maptex"
+[I] "-61155054.:maptex"
+[I] "-61145053.:maptex"
+[I] TFile - unknown token:  282
+[I] "-61145054.:maptex"
+[I] TFile - unknown token:  282
+[I] TFile - unknown token:  282
+[I] "-61145055.:maptex"
+[I] TFile - unknown token:  282
+[I] "-61145056.:maptex"
+[I] "-61135054.:maptex"
+[I] "-61135055.:maptex"
+[I] "-61135056.:maptex"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006115+015052.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006115+015053.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006115+015054.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006115+015055.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006115+015056.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006114+015052.w"
+[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006114+015053.w"
 [I] 0
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005376+015053.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005376+015054.w"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005376+015055.w"
+[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006114+015054.w"
 [I] 0
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005376+015056.w"
+[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006114+015055.w"
 [I] 0
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005376+015057.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006114+015056.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006113+015052.w"
+[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006113+015053.w"
+[I] 336
+[I] Nowy  0  shape:  "f:/train simulator/routes/europe1/shapes/tree7.s"
+[I] Nowy  1  shape:  "f:/train simulator/routes/europe1/shapes/barfence50m.s"
+[I] Nowy  2  shape:  "f:/train simulator/routes/europe1/shapes/drystonewall50m.s"
+[I] Nowy  3  shape:  "f:/train simulator/routes/europe1/shapes/postbox.s"
+[I] Nowy  4  shape:  "f:/train simulator/routes/europe1/shapes/tree12.s"
+[I] Nowy  5  shape:  "f:/train simulator/routes/europe1/shapes/shop_postoffice.s"
+[I] Nowy  6  shape:  "f:/train simulator/routes/europe1/shapes/house4_terraced.s"
+[I] Nowy  7  shape:  "f:/train simulator/routes/europe1/shapes/housesemi_four.s"
+[I] Nowy  8  shape:  "f:/train simulator/routes/europe1/shapes/tree2.s"
+[I] Nowy  9  shape:  "f:/train simulator/routes/europe1/shapes/tree1.s"
+[I] Nowy  10  shape:  "f:/train simulator/routes/europe1/shapes/cottage4.s"
+[I] Nowy  11  shape:  "f:/train simulator/routes/europe1/shapes/farmhouse1_.s"
+[I] Nowy  12  shape:  "f:/train simulator/routes/europe1/shapes/barn1.s"
+[I] Nowy  13  shape:  "f:/train simulator/global/shapes/road2lanet.s"
+[I] Nowy  14  shape:  "f:/train simulator/routes/europe1/shapes/mgcar.s"
+[I] Nowy  15  shape:  "f:/train simulator/global/shapes/road2lstrt100m.s"
+[I] Nowy  16  shape:  "f:/train simulator/global/shapes/road2l45deg.s"
+[I] Nowy  17  shape:  "f:/train simulator/global/shapes/road2lstrt50m.s"
+[I] Nowy  18  shape:  "f:/train simulator/global/shapes/road2lstrt10m.s"
+[I] Nowy  19  shape:  "f:/train simulator/routes/europe1/shapes/uktreeline.s"
+[I] Nowy  20  shape:  "f:/train simulator/routes/europe1/shapes/watercolumn.s"
+[I] Nowy  21  shape:  "f:/train simulator/global/shapes/a1tbuffer.s"
+[I] Nowy  22  shape:  "f:/train simulator/routes/europe1/shapes/uksemaphore2.s"
+[I] Nowy  23  shape:  "f:/train simulator/routes/europe1/shapes/station1.s"
+[I] Nowy  24  shape:  "f:/train simulator/global/shapes/a2t50mstrt.s"
+[I] Nowy  25  shape:  "f:/train simulator/global/shapes/a2t100mstrt.s"
+[I] Nowy  26  shape:  "f:/train simulator/routes/europe1/shapes/settlechurch.s"
+[I] Nowy  27  shape:  "f:/train simulator/routes/europe1/shapes/cottage1.s"
+[I] Nowy  28  shape:  "f:/train simulator/routes/europe1/shapes/storageshed.s"
+[I] Nowy  29  shape:  "f:/train simulator/routes/europe1/shapes/pub_1500.s"
+[I] Nowy  30  shape:  "f:/train simulator/global/shapes/road2l22deg.s"
+[I] w file uncompressed  "F:/train simulator/routes/EUROPE1/world/w-006113+015053.ws"
+[I] WS size:  341
+[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006113+015054.w"
+[I] 1206
+[I] Nowy  31  shape:  "f:/train simulator/routes/europe1/shapes/cow.s"
+[I] Nowy  32  shape:  "f:/train simulator/routes/europe1/shapes/us2gravestones.s"
+[I] Nowy  33  shape:  "f:/train simulator/routes/europe1/shapes/hut2.s"
+[I] Nowy  34  shape:  "f:/train simulator/routes/europe1/shapes/drystonewall10m.s"
+[I] Nowy  35  shape:  "f:/train simulator/routes/europe1/shapes/jp2cslab10m.s"
+[I] Nowy  36  shape:  "f:/train simulator/routes/europe1/shapes/woodfence50m.s"
+[I] Nowy  37  shape:  "f:/train simulator/routes/europe1/shapes/church1.s"
+[I] Nowy  38  shape:  "f:/train simulator/routes/europe1/shapes/marshfield_r.s"
+[I] Nowy  39  shape:  "f:/train simulator/routes/europe1/shapes/kirkgate_r.s"
+[I] Nowy  40  shape:  "f:/train simulator/routes/europe1/shapes/church2.s"
+[I] Nowy  41  shape:  "f:/train simulator/routes/europe1/shapes/curvebridge.s"
+[I] Nowy  42  shape:  "f:/train simulator/routes/europe1/shapes/uksemaphore1.s"
+[I] Nowy  43  shape:  "f:/train simulator/routes/europe1/shapes/marshfield.s"
+[I] Nowy  44  shape:  "f:/train simulator/routes/europe1/shapes/kirkgate.s"
+[I] Nowy  45  shape:  "f:/train simulator/global/shapes/a2t500r5d.s"
+[I] Nowy  46  shape:  "f:/train simulator/routes/europe1/shapes/ukmilepost.s"
+[I] Nowy  47  shape:  "f:/train simulator/global/shapes/a2t250r5d.s"
+[I] Nowy  48  shape:  "f:/train simulator/routes/europe1/shapes/deer.haz"
+[I] Nowy  49  shape:  "f:/train simulator/routes/europe1/shapes/spotter.haz"
+[I] Nowy  50  shape:  "f:/train simulator/global/shapes/a2t250mstrt.s"
+[I] Nowy  51  shape:  "f:/train simulator/routes/europe1/shapes/ukstonebridge.s"
+[I] Nowy  52  shape:  "f:/train simulator/global/shapes/a2t500r20d.s"
+[I] Nowy  53  shape:  "f:/train simulator/global/shapes/a2t10mstrt.s"
+[I] Nowy  54  shape:  "f:/train simulator/routes/europe1/shapes/pipeline.s"
+[I] Nowy  55  shape:  "f:/train simulator/routes/europe1/shapes/hut1.s"
+[I] Nowy  56  shape:  "f:/train simulator/routes/europe1/shapes/hut4.s"
+[I] w file uncompressed  "F:/train simulator/routes/EUROPE1/world/w-006113+015054.ws"
+[I] WS size:  1235
+[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006113+015055.w"
+[I] 889
+[I] Nowy  57  shape:  "f:/train simulator/routes/europe1/shapes/cottage3.s"
+[I] Nowy  58  shape:  "f:/train simulator/routes/europe1/shapes/ukhouse1.s"
+[I] Nowy  59  shape:  "f:/train simulator/routes/europe1/shapes/housesemi_single.s"
+[I] Nowy  60  shape:  "f:/train simulator/routes/europe1/shapes/uksingletunnel.s"
+[I] Nowy  61  shape:  "f:/train simulator/global/shapes/a2t1000r20d.s"
+[I] Nowy  62  shape:  "f:/train simulator/global/shapes/a2t500r5dtun.s"
+[I] Nowy  63  shape:  "f:/train simulator/global/shapes/a2t500mstrt.s"
+[I] Nowy  64  shape:  "f:/train simulator/routes/europe1/shapes/hut3.s"
+[I] Nowy  65  shape:  "f:/train simulator/routes/europe1/shapes/housesemi_twin.s"
+[I] w file uncompressed  "F:/train simulator/routes/EUROPE1/world/w-006113+015055.ws"
+[I] WS size:  913
+[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006113+015056.w"
+[I] 702
+[I] Nowy  66  shape:  "f:/train simulator/routes/europe1/shapes/barfence10m.s"
+[I] Nowy  67  shape:  "f:/train simulator/routes/europe1/shapes/sheriffbrow.s"
+[I] Nowy  68  shape:  "f:/train simulator/global/shapes/a2t1000r10d.s"
+[I] Nowy  69  shape:  "f:/train simulator/global/shapes/a2t2000r10d.s"
+[I] Nowy  70  shape:  "f:/train simulator/global/shapes/a2t500r10d.s"
+[I] Nowy  71  shape:  "f:/train simulator/routes/europe1/shapes/sheriffbrow_r.s"
+[I] w file uncompressed  "F:/train simulator/routes/EUROPE1/world/w-006113+015056.ws"
+[I] WS size:  741
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006112+015052.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006112+015053.w"
+[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006112+015054.w"
 [I] 0
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005375+015053.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005375+015054.w"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005375+015055.w"
-[I] 5
-[I] Nowy  0  shape:  "f:/train simulator/routes/tczew/shapes/tree1.s"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005375+015056.w"
-[I] 0
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005375+015057.w"
-[I] 0
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005374+015053.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005374+015054.w"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005374+015055.w"
-[I] 0
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005374+015056.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005374+015057.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005373+015053.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005373+015054.w"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005373+015055.w"
-[I] 0
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005373+015056.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005373+015057.w"
-[I] 33262   "A1t1000r1d.s"
-[I] "placeTool"
-[I] "trackobj"   "A1t1000r1d.s" 6
-[I] Nowy  1  shape:  "f:/train simulator/global/shapes/a1t1000r1d.s"
-[I] 1:  -5375   -15055   330.465   3.27498   26.2655
-[I] "A1t1000r1d.s"
-[I] defaultEnd 0
-[I] ccc
-[I] 0   0
-[I] 2:  -5375   -15055   330.465   3.27498   26.2655
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] rot
-[I] 0   0   0
-[I] 0   0   0
-[I] "A1t1000r1d.s"
-[I] 2
-[I] 36170
-[I] 17.4533
-[I] "placeTool"
-[I] "trackobj"   "A1t1000r1d.s" 7
-[I] 1:  -5375   -15055   325.336   3.0271   11.1553
-[I] "A1t1000r1d.s"
-[I] defaultEnd 0
-[I] ccc
-[I] 0   0
-[I] 2:  -5375   -15055   325.336   3.0271   11.1553
-[I] usune Track  -5375   15055   7
-[I] usune Track  -5375   15055   7
-[I] "trackobj"   "A1t1000r1d.s" 8
-[I] 1:  -5375   -15055   330.528   4.33401   8.99391
-[I] "A1t1000r1d.s"
-[I] defaultEnd 0
-[I] ccc
-[I] 0   0
-[I] 2:  -5375   -15055   330.313   4.14761   8.83492
-[I] "A1t1000r1d.s"
-[I] 5
-[I] 36170
-[I] 17.4533
-[I] polacze  4   3
-[I] 2   0
-[I] 5   1
-[I] switch
-[I] ok
-[I] d:  17.4533
-[I] "trackobj"   "A1t1000r1d.s" 9
-[I] 1:  -5375   -15055   330.597   4.4641   -8.39483
-[I] "A1t1000r1d.s"
-[I] defaultEnd 0
-[I] ccc
-[I] 0   0
-[I] 2:  -5375   -15055   329.856   4.14761   -8.61217
-[I] "A1t1000r1d.s"
-[I] 8
-[I] 36170
-[I] 17.4533
-[I] polacze  7   6
-[I] 2   0
-[I] 8   1
-[I] switch
-[I] ok
-[I] d:  34.9066
-[I] "trackobj"   "A1t1000r1d.s" 10
-[I] 1:  -5375   -15055   328.731   4.33821   -25.9458
-[I] "A1t1000r1d.s"
-[I] defaultEnd 0
-[I] ccc
-[I] 0   0
-[I] 2:  -5375   -15055   329.094   4.14761   -26.0486
-[I] "A1t1000r1d.s"
-[I] 11
-[I] 36170
-[I] 17.4533
-[I] polacze  10   9
-[I] 2   0
-[I] 11   1
-[I] switch
-[I] ok
-[I] d:  52.3599
-[I] "selectTool"
-[I] 0.0313726   0   0.0235294   1
-[I] selected  4   4
-[I] color data:  0
-[I] -5375   -15055   6
-[I] mam
-[I] l  15
-[I] 330.465   3.27498   26.2655
-[I] 330.337   4.07495   10.2862
-[I] 320.465   3.77478   16.278
-[I] -0.127991   0.79997   -15.9793
-[I] -10   0.499795   -9.9875
-[I] -0.00333214   158.515   7.93573
-[I] 330.465   3.27498   26.2655   3.27498 
-[I] 330.457   3.47498   22.2705   3.47498 
-[I] 330.433   3.67498   18.2756   3.67498 
-[I] 330.393   3.87497   14.2808   3.87497 
-[I] 330.337   4.07495   10.2862   4.07495 
-[I] "-53765055.:maptex"
-[I] 0.0313726   0   0.0313726   1
-[I] selected  4   4
-[I] color data:  0
-[I] -5375   -15055   8
-[I] mam
-[I] l  15
-[I] 330.313   4.14761   8.83492
-[I] 329.905   4.14761   -7.15972
-[I] 320.14   4.14761   -0.989031
-[I] -0.407196   0   -15.9946
-[I] -10.173   0   -9.82395
-[I] 0   158.713   0
-[I] 330.313   4.14761   8.83492   4.14761 
-[I] 330.235   4.14761   4.83568   4.14761 
-[I] 330.141   4.14761   0.836786   4.14761 
-[I] 330.031   4.14761   -3.1617   4.14761 
-[I] 329.905   4.14761   -7.15972   4.14761 
-[I] "-53765055.:maptex"
-[I] 0.0313726   0   0.0352941   1
-[I] selected  4   4
-[I] color data:  0
-[I] -5375   -15055   9
-[I] mam
-[I] l  15
-[I] 329.856   4.14761   -8.61217
-[I] 329.169   4.14761   -24.5973
-[I] 319.513   4.14761   -18.2571
-[I] -0.686279   0   -15.9851
-[I] -10.3429   0   -9.64491
-[I] 0   158.713   0
-[I] 329.856   4.14761   -8.61217   4.14761 
-[I] 329.708   4.14761   -12.6094   4.14761 
-[I] 329.545   4.14761   -16.6061   4.14761 
-[I] 329.365   4.14761   -20.6021   4.14761 
-[I] 329.169   4.14761   -24.5973   4.14761 
-[I] "-53765055.:maptex"
-[I] 0.0313726   0   0.0392157   1
-[I] selected  4   4
-[I] color data:  0
-[I] -5375   -15055   10
-[I] mam
-[I] l  15
-[I] 329.094   4.14761   -26.0486
-[I] 328.129   4.14761   -42.0193
-[I] 318.585   4.14761   -35.5116
-[I] -0.965118   0   -15.9707
-[I] -10.5096   0   -9.46294
-[I] 0   158.713   0
-[I] 329.094   4.14761   -26.0486   4.14761 
-[I] 328.877   4.14761   -30.0427   4.14761 
-[I] 328.644   4.14761   -34.0359   4.14761 
-[I] 328.395   4.14761   -38.0281   4.14761 
-[I] 328.129   4.14761   -42.0193   4.14761 
-[I] "-53765055.:maptex"
-[I] 0.901961   0.972549   1   1
-[I] selected  115   3
-[I] color data:  14
-[I] -5375   -15056   63743
-[I] brak obiektu
-[I] "selectTool"
-[I] 0.0313726   0   0.0235294   1
-[I] selected  4   4
-[I] color data:  0
-[I] -5375   -15055   6
-[I] mam
-[I] l  15
-[I] 330.465   3.27498   26.2655
-[I] 330.337   4.07495   10.2862
-[I] 320.465   3.77478   16.278
-[I] -0.127991   0.79997   -15.9793
-[I] -10   0.499795   -9.9875
-[I] -0.00333214   158.515   7.93573
-[I] 330.465   3.27498   26.2655   3.27498 
-[I] 330.457   3.47498   22.2705   3.47498 
-[I] 330.433   3.67498   18.2756   3.67498 
-[I] 330.393   3.87497   14.2808   3.87497 
-[I] 330.337   4.07495   10.2862   4.07495 
-[I] "-53765055.:maptex"
-[I] 0.901961   0.972549   1   1
-[I] selected  115   3
-[I] color data:  14
-[I] -5375   -15056   63743
-[I] brak obiektu
-[I] "heightTool"
-[I] -5375   -15055   329.617   0.0187482
-[I] "-53765055.:maptex"
-[I] -5375   -15055   332.669   -0.291409
-[I] "-53765055.:maptex"
+[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006112+015055.w"
+[I] 105
+[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006112+015056.w"
+[I] 21
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006111+015052.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006111+015053.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006111+015054.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006111+015055.w"
+[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006111+015056.w"
+[I] nic do zapisania

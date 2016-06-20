@@ -47725,7 +47725,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrkWindow.o: TrkWindow.cpp T
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QGraphicsScene \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QGraphicsView \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QGraphicsPixmapItem \
-		Trk.h
+		Trk.h \
+		GuiFunct.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrkWindow.o TrkWindow.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/UnsavedDialog.o: UnsavedDialog.cpp UnsavedDialog.h \

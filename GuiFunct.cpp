@@ -9,6 +9,15 @@ QLabel* GuiFunct::newQLabel(QString text, int width){
     return label;
 }
 
+QLabel* GuiFunct::newTQLabel(QString text, int width){
+    QLabel *l = new QLabel(text);
+    l->setContentsMargins(3,0,0,0);
+    l->setStyleSheet("QLabel { color : #999999; }");
+    if(width >=0)
+        l->setMinimumWidth(width);
+    return l;
+}
+
 QLineEdit* GuiFunct::newQLineEdit(int width, int length){
     QLineEdit* edit = new QLineEdit;
     edit->setFixedWidth(width);

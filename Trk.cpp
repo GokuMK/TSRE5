@@ -82,7 +82,7 @@ void Trk::load(QString path){
             continue;
         }
         if (sh == ("description")) {
-            this->description = ParserX::GetString(data);
+            this->description = ParserX::GetStringInside(data);
             ParserX::SkipToken(data);
             continue;
         }
