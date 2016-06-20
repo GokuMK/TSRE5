@@ -32,6 +32,7 @@ public:
         QString ename;
     };
     Consist();
+    Consist(Consist * con);
     virtual ~Consist();
     QString name;
     QString path;

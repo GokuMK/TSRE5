@@ -5,6 +5,7 @@
 #include <QtWidgets>
 
 class EngLib;
+class Consist;
 
 class ConListWidget : public QWidget {
     Q_OBJECT
@@ -14,6 +15,7 @@ public:
     void fillConList();
     void fillConList(QString n);
     void newConsist();
+    void newConsist(Consist * con);
     void getUnsaed(std::vector<int> &unsavedConIds);
     void getUnsaedAct(std::vector<int> &unsavedActIds);
     void findConsistsByEng(int id);

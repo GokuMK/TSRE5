@@ -30,6 +30,25 @@ Consist::Consist() {
     initPos();
 }
 
+Consist::Consist(Consist * con) {
+    path = con->path;
+    loaded = 1;
+    serial = 1;
+    durability = 1;
+    displayName = con->displayName;
+    showName = displayName;
+    for(int i = 0; i < con->engItems.size(); i++){
+        engItems.push_back(EngItem());
+        engItems.back().type = con->engItems[i].type;
+        engItems.back().ename = con->engItems[i].ename;
+        engItems.back().epath = con->engItems[i].epath;
+        engItems.back().eng = con->engItems[i].eng;
+        engItems.back().flip = con->engItems[i].flip;
+    }
+    
+    initPos();
+}
+
 Consist::~Consist() {
 }
 

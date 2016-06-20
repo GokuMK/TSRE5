@@ -86,7 +86,17 @@ void ConListWidget::newConsist(){
     ConLib::con[ConLib::jestcon] = new Consist();
     ConLib::con[ConLib::jestcon]->setNewConsistFlag();
     ConLib::con[ConLib::jestcon]->showName = "new";
-    new QListWidgetItem ( ConLib::con[ConLib::jestcon]->showName, &items, ConLib::jestcon);
+    items.setCurrentItem(new QListWidgetItem ( ConLib::con[ConLib::jestcon]->showName, &items, ConLib::jestcon));
+    emit conListSelected(ConLib::jestcon);
+    ConLib::jestcon++;
+}
+
+void ConListWidget::newConsist(Consist * con){
+    ConLib::con[ConLib::jestcon] = new Consist(con);
+    ConLib::con[ConLib::jestcon]->setNewConsistFlag();
+    if(ConLib::con[ConLib::jestcon]->showName.length() < 1)
+        ConLib::con[ConLib::jestcon]->showName = "new";
+    items.setCurrentItem(new QListWidgetItem ( ConLib::con[ConLib::jestcon]->showName, &items, ConLib::jestcon));
     emit conListSelected(ConLib::jestcon);
     ConLib::jestcon++;
 }

@@ -177,6 +177,9 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     cReverse = new QAction(tr("&Reverse"), this); 
     consistMenu->addAction(cReverse);
     QObject::connect(cReverse, SIGNAL(triggered(bool)), this, SLOT(cReverseSelected()));
+    cClone = new QAction(tr("&Clone"), this); 
+    consistMenu->addAction(cClone);
+    QObject::connect(cClone, SIGNAL(triggered(bool)), this, SLOT(cCloneSelected()));
     engMenu = menuBar()->addMenu(tr("&Eng"));
     eFindCons = new QAction(tr("&Find Consists"), this); 
     engMenu->addAction(eFindCons);
@@ -363,6 +366,12 @@ void ConEditorWindow::saveCurrentConsist(){
 void ConEditorWindow::newConsist(){
     Game::currentEngLib = englib;
     con1->newConsist();
+}
+
+void ConEditorWindow::cCloneSelected(){
+    Game::currentEngLib = englib;
+    if(currentCon == NULL) return;
+    con1->newConsist(currentCon);
 }
 
 void ConEditorWindow::about(){

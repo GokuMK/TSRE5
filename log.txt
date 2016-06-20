@@ -1,379 +1,1233 @@
 [I] "settings.txt"
-[E] QObject::connect: No such slot ActivityTools::itemsSelected(QListWidgetItem*)
-[E] libpng warning: iCCP: known incorrect sRGB profile
+[I] arg1  "--conedit"
+[I] Run con editor
 [E] libpng warning: iCCP: known incorrect sRGB profile
 [I] ok
-[I] "EUROPE1"
-[I] "F:/train simulator/routes/EUROPE1/EUROPE1.trk"
-[I] "milepostunitsmiles"
-[I] "derailscale"
-[I] "timetabletollerance"
-[I] "settleca"
-[I] "F:/train simulator/global/tsection.dat"
-[I] TsectionDAT:  40000   40000
-[I] "F:/train simulator/routes/EUROPE1/tsection.dat"
-[I] Wczytywanie pliku tdb:  "F:/train simulator/routes/EUROPE1/settleca.tdb"
-[I] "F:/train simulator/routes/EUROPE1/settleca.tdb"
-[I] znaleziono sekcje na  72
-[I] sh  "serial"
-[I] sh  "tracknodes"
-[I] N 388
-[I] sh  "tritemtable"
-[I] "F:/train simulator/routes/EUROPE1/settleca.tit"
-[I] znaleziono sekcje TrItemTable na  80
-[I] "F:/train simulator/routes/EUROPE1/speedpost.dat"
-[I] speedpost!
-[I] "F:/train simulator/routes/EUROPE1/sigcfg.dat"
-[I] sigcfg!
-[I] "lighttextures"
-[I] "lightstab"
-[I] "scriptfiles"
-[I] Wczytywanie pliku tdb:  "F:/train simulator/routes/EUROPE1/settleca.rdb"
-[I] "F:/train simulator/routes/EUROPE1/settleca.rdb"
-[I] znaleziono sekcje na  72
-[I] sh  "serial"
-[I] sh  "tracknodes"
-[I] N 426
-[I] sh  "tritemtable"
-[I] Wczytywanie pliku ref:  "F:/train simulator/routes/EUROPE1/settleca.ref"
-[I] "F:/train simulator/routes/EUROPE1/settleca.ref"
-[I] "F:/train simulator/routes/EUROPE1/SettleCa.mkr"
-[I] Nowy  0  act:  "f:/train simulator/routes/europe1/activities/aftstorm.act"
-[I] "f:/train simulator/routes/europe1/activities/aftstorm.act"
-[I] Nowy  1  act:  "f:/train simulator/routes/europe1/activities/homestre.act"
-[I] "f:/train simulator/routes/europe1/activities/homestre.act"
-[I] Nowy  2  act:  "f:/train simulator/routes/europe1/activities/itr_e1_s1_w1_t1.act"
-[I] "f:/train simulator/routes/europe1/activities/itr_e1_s1_w1_t1.act"
-[I] Nowy  3  act:  "f:/train simulator/routes/europe1/activities/lclsrvce.act"
-[I] "f:/train simulator/routes/europe1/activities/lclsrvce.act"
-[I] Nowy  4  act:  "f:/train simulator/routes/europe1/activities/lowwater.act"
-[I] "f:/train simulator/routes/europe1/activities/lowwater.act"
-[I] Nowy  5  act:  "f:/train simulator/routes/europe1/activities/medemerg.act"
-[I] "f:/train simulator/routes/europe1/activities/medemerg.act"
-[I] Nowy  6  act:  "f:/train simulator/routes/europe1/activities/rsrescue.act"
-[I] "f:/train simulator/routes/europe1/activities/rsrescue.act"
-[I] Nowy  7  act:  "f:/train simulator/routes/europe1/activities/sctutorial.act"
-[I] "f:/train simulator/routes/europe1/activities/sctutorial.act"
-[I] Nowy  8  act:  "f:/train simulator/routes/europe1/activities/shrtpass.act"
-[I] "f:/train simulator/routes/europe1/activities/shrtpass.act"
-[I] Nowy  9  act:  "f:/train simulator/routes/europe1/activities/winterun.act"
-[I] "f:/train simulator/routes/europe1/activities/winterun.act"
+[I] "cerecent.txt"
+[I] ok
+[E] libpng warning: iCCP: known incorrect sRGB profile
+[I] "f:/train simulator/trains/trainset/"
+[I] 215  dirs
+[I] "f:/train simulator/trains/trainset/" "30000" / "30000.eng"
+[I] "f:/train simulator/trains/trainset/" "30000" / "30000car.wag"
+[I] "f:/train simulator/trains/trainset/" "310" / "310.eng"
+[I] "f:/train simulator/trains/trainset/" "310" / "310car1.wag"
+[I] "f:/train simulator/trains/trainset/" "310" / "310car2.wag"
+[I] "f:/train simulator/trains/trainset/" "310" / "310grcar1.wag"
+[I] "f:/train simulator/trains/trainset/" "310" / "310tender.wag"
+[I] "f:/train simulator/trains/trainset/" "310" / "310wdcar1.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "380.eng"
+[I] "f:/train simulator/trains/trainset/" "380" / "380car1.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "380tender.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oe380cardin1.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oe380cardin2.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oe380cardin3.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oebarcar.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oeservcar1.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oeservcar2.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar1.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar10.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar11.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar2.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar3.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar4.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar5.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar6.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar7.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar8.wag"
+[I] "f:/train simulator/trains/trainset/" "380" / "oesleepcar9.wag"
+[I] "f:/train simulator/trains/trainset/" "acela" / "acela.eng"
+[I] "f:/train simulator/trains/trainset/" "acela" / "acelabistrocar.wag"
+[I] "f:/train simulator/trains/trainset/" "acela" / "acelacar.wag"
+[I] "f:/train simulator/trains/trainset/" "acela" / "acelaendcar.wag"
+[I] "f:/train simulator/trains/trainset/" "acela" / "acelafirstclass.wag"
+[I] "f:/train simulator/trains/trainset/" "class50" / "class50.eng"
+[I] "f:/train simulator/trains/trainset/" "CTL-ST44-R009" / "CTL-ST44-R009.eng"
+[I] "f:/train simulator/trains/trainset/" "CTLR4C-001" / "CTLR4C-001.eng"
+[I] "f:/train simulator/trains/trainset/" "dash9" / "dash9.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120agfa.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120azubi.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120bkk.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120dfb.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120dfv.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120din.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120merian.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120milka.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120pelikan.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120scream.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120starlight.eng"
+[I] "f:/train simulator/trains/trainset/" "DB-BR120" / "tserdb120thw.eng"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 1" / "dec.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 2" / "dec_1.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 2" / "dec_2.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 3" / "Dec_3.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 4" / "dec_4.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 5" / "dec_5.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 6" / "dec_6a.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 6" / "dec_6b.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 6" / "dec_6c.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 6" / "dec_6d.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 6" / "dec_6e.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 7" / "Dec_7a.wag"
+[I] "f:/train simulator/trains/trainset/" "Dec wag 7" / "Dec_7b.wag"
+[I] "f:/train simulator/trains/trainset/" "default" / "default.wag"
+[I] "f:/train simulator/trains/trainset/" "eams_drewno" / "eams_drewno.wag"
+[I] "f:/train simulator/trains/trainset/" "eams_pusty" / "eams_pusty.wag"
+[I] "f:/train simulator/trains/trainset/" "eams_wegiel" / "eams_wegiel.wag"
+[I] "f:/train simulator/trains/trainset/" "eanos" / "eanos.wag"
+[I] "f:/train simulator/trains/trainset/" "eanos" / "eanosf.wag"
+[I] "f:/train simulator/trains/trainset/" "eaos_pusty" / "eaos_pusty.wag"
+[I] "f:/train simulator/trains/trainset/" "eaos_wegiel" / "eaos_wegiel.wag"
+[I] "f:/train simulator/trains/trainset/" "ep07-229" / "ep07-229.eng"
+[I] "f:/train simulator/trains/trainset/" "EP08" / "ep08.eng"
+[I] "f:/train simulator/trains/trainset/" "ep08-007" / "ep08-007.eng"
+[I] "f:/train simulator/trains/trainset/" "EP09" / "ep09-014.eng"
+[I] "f:/train simulator/trains/trainset/" "EP09" / "ep09-036.eng"
+[I] "f:/train simulator/trains/trainset/" "ET21-331" / "PKP_ET21-331.eng"
+[I] "f:/train simulator/trains/trainset/" "ET22" / "ET22.eng"
+[I] "f:/train simulator/trains/trainset/" "ET40" / "ET40.eng"
+[I] "f:/train simulator/trains/trainset/" "ET40_B" / "ET40_B.eng"
+[I] "f:/train simulator/trains/trainset/" "EU07" / "eu07.eng"
+[I] "f:/train simulator/trains/trainset/" "eu07-pavellz" / "PKP_ep07-342.eng"
+[I] "f:/train simulator/trains/trainset/" "eu07-pavellz" / "PKP_ep07-522.eng"
+[I] "f:/train simulator/trains/trainset/" "eu07-pavellz" / "PKP_EU07-493.eng"
+[I] "f:/train simulator/trains/trainset/" "eu07-pavellz" / "PKP_EU07-503.eng"
+[I] "f:/train simulator/trains/trainset/" "EU07_007" / "eu07_007.eng"
+[I] "f:/train simulator/trains/trainset/" "EU_lalek" / "PKP_EP07-242.eng"
+[I] "f:/train simulator/trains/trainset/" "EU_lalek" / "PKP_EP07-338.eng"
+[I] "f:/train simulator/trains/trainset/" "genesis" / "genesis.eng"
+[I] "f:/train simulator/trains/trainset/" "genesis" / "superliner.wag"
+[I] "f:/train simulator/trains/trainset/" "glas" / "glas.wag"
+[I] "f:/train simulator/trains/trainset/" "gp38" / "gp38.eng"
+[I] "f:/train simulator/trains/trainset/" "hhp" / "acelahhl.eng"
+[I] "f:/train simulator/trains/trainset/" "hhp" / "acelahhlbc.wag"
+[I] "f:/train simulator/trains/trainset/" "hhp" / "acelahhlcafe.wag"
+[I] "f:/train simulator/trains/trainset/" "hhp" / "acelahhlcar.wag"
+[I] "f:/train simulator/trains/trainset/" "hhp" / "acelahhlco.wag"
+[I] "f:/train simulator/trains/trainset/" "id-129" / "PKP_EU06-01.eng"
+[I] "f:/train simulator/trains/trainset/" "kiha140" / "kiha140.eng"
+[I] "f:/train simulator/trains/trainset/" "kiha31" / "kiha31.eng"
+[I] "f:/train simulator/trains/trainset/" "kiha31" / "kiha31a.eng"
+[I] "f:/train simulator/trains/trainset/" "Laaes556_ATG" / "laaes556A1.wag"
+[I] "f:/train simulator/trains/trainset/" "Laaes556_ATG" / "laaes556A2.wag"
+[I] "f:/train simulator/trains/trainset/" "Laaes556_ATG" / "laaes556B1.wag"
+[I] "f:/train simulator/trains/trainset/" "Laaes556_ATG" / "laaes556B2.wag"
+[I] "f:/train simulator/trains/trainset/" "Laaes556_ATG" / "laaes556C1.wag"
+[I] "f:/train simulator/trains/trainset/" "Laaes556_ATG" / "laaes556C2.wag"
+[I] "f:/train simulator/trains/trainset/" "M62-1186" / "M62-1186.eng"
+[I] "f:/train simulator/trains/trainset/" "M62-1663" / "M62-1663.eng"
+[I] "f:/train simulator/trains/trainset/" "M62-1726" / "M62-1726.eng"
+[I] "f:/train simulator/trains/trainset/" "M62-2984" / "M62-2984.eng"
+[I] "f:/train simulator/trains/trainset/" "M62-2987" / "M62-2987.eng"
+[I] "f:/train simulator/trains/trainset/" "MAV_6342" / "MAV_desiro_1kl.eng"
+[I] "f:/train simulator/trains/trainset/" "MAV_6342" / "MAV_desiro_1kl_2.eng"
+[I] "f:/train simulator/trains/trainset/" "MAV_6342" / "MAV_desiro_2kl.eng"
+[I] "f:/train simulator/trains/trainset/" "MAV_6342" / "MAV_desiro_2kl_2.eng"
+[I] "f:/train simulator/trains/trainset/" "metroliner" / "metrocarriage.wag"
+[I] "f:/train simulator/trains/trainset/" "metroliner" / "metroliner.eng"
+[I] "f:/train simulator/trains/trainset/" "mk1carriages" / "ukbrake.wag"
+[I] "f:/train simulator/trains/trainset/" "mk1carriages" / "ukfirst.wag"
+[I] "f:/train simulator/trains/trainset/" "mk1carriages" / "ukrestaurant.wag"
+[I] "f:/train simulator/trains/trainset/" "mk1carriages" / "uksecond.wag"
+[I] "f:/train simulator/trains/trainset/" "OrlenTanker" / "Orlentanker.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17252.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17252mr.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17252rv.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17253.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17253mr.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17253rv.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17261.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17261mr.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17261rv.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17267.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17267mr.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_17267rv.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_18600.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_18600mr.wag"
+[I] "f:/train simulator/trains/trainset/" "Pakiet_Bh-x" / "PKP_Bh-x_18600rv.wag"
+[I] "f:/train simulator/trains/trainset/" "PAVELLZ_EP08" / "PKP_EP08-001.eng"
+[I] "f:/train simulator/trains/trainset/" "pendennis" / "gwrfirst.wag"
+[I] "f:/train simulator/trains/trainset/" "pendennis" / "gwrluggcar.wag"
+[I] "f:/train simulator/trains/trainset/" "pendennis" / "gwrmailcar.wag"
+[I] "f:/train simulator/trains/trainset/" "pendennis" / "gwrrest.wag"
+[I] "f:/train simulator/trains/trainset/" "pendennis" / "gwrthird.wag"
+[I] "f:/train simulator/trains/trainset/" "pendennis" / "pendennis.eng"
+[I] "f:/train simulator/trains/trainset/" "pendennis" / "pendennistender.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP 111a 2kl" / "PKP-111a.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Adun" / "PKPAdun.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP As" / "PKPAs.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bc" / "PKPBc.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP BDHpumn" / "pkpbdhpumn.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP BDs" / "PKPBDs.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bdun" / "PKPBdun.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bhp Poland3" / "PKPBhpp31.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bhp Poland3" / "PKPBhpp32.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bhp Poland3" / "PKPBhpp33.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bhp Poland3" / "PKPBhpp3II1.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bhp Poland3" / "PKPBhpp3II2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bhp Poland3" / "PKPBhpp3II3.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bhp Poland3" / "PKPBhpp3III1.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bhp Poland3" / "PKPBhpp3III2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Bhp Poland3" / "PKPBhpp3III3.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP EM10-001" / "em10.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP07" / "pkpep07-342.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP07" / "pkpep07-342PV.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP07" / "pkpep07-370.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP07" / "pkpep07-370PV.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP07" / "pkpep07-521.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP07" / "pkpep07-521PV.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP07" / "pkpep07-547.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP07" / "pkpep07-547PV.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP07" / "pkpeu07-308.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP07" / "pkpeu07-308PV.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP08" / "ep08-001.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP08" / "ep08-001PV.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP08" / "ep08-002.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP08" / "ep08-002PV.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP08" / "ep08-003.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP08" / "ep08-003PV.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP08" / "ep08-004.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EP08" / "ep08-004PV.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-015-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-015-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-0152P-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-0152P-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-102-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-102-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-1022P-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-1022P-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-2000-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-2000-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-20002P-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-20002P-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-425-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-425-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-4252P-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-4252P-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-619-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-619-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-6192P-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-6192P-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-811-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-811-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-8112P-pas.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22" / "PKPET22-8112P-tow.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP ET22-554" / "ET22-554.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EU06" / "PKP_EU06-12.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EU07 089" / "pkpeu07-089.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EU07 089" / "pkpeu07-089PV.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP EU07-153" / "PKP_EU07-153.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals10.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals11.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals12.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals3.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals4.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals5.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals6.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals7.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals8.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Fals" / "PKP_Fals9.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC" / "A9emnouz_19-70_214.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC" / "Adu_19-70_569.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC" / "Bcdu_59-70_064.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPAdhmnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPAdhmnutraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPAmpz.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPAmpztraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPAmz.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPAmztraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPBdhmnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPBdhmnutraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPBmpz.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPBmpztraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPBmz.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1" / "PKPBmztraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-adhmnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-adhmnuic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-adhmnuictraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-adhmnutraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-admnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-admnuic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-admnuictraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-admnutraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdhmnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdhmnug.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdhmnugic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdhmnugictraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdhmnugtraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdhmnuic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdhmnuictraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdhmnutraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdmnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdmnug.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdmnugic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdmnugictraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdmnugtraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdmnuic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdmnuictraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z1 1990" / "pkp-bdmnutraffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPAdhmnu2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPAdhmnu2traffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPAdmnu2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPAdmnu2traffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPAmpz2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPAmpz2traffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPBdhmnu2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPBdhmnu2traffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPBdmnu2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPBdmnu2traffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPBmpz2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP IC Z10" / "PKPBmpz2traffic.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP P" / "PKPP.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP PR" / "Bh_21-18_045.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP PR" / "Bmnopux_26-08_158.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Bosman.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Brok.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Carlsberg.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Dojlidy.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_EB.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Lech.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Okocim.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Okocim2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Ostrow.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Piast.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Pilsner.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Tyskie.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_VanPur.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Warka.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Zywiec1.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP Rils" / "Rils_Zywiec2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP SM03-241" / "SM03-241.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP SM42" / "PKP_SM42-1134.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP SU45-113" / "PKP_SU45-113.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP UGPS" / "pkpugps_1.WAG"
+[I] "f:/train simulator/trains/trainset/" "PKP UGPS" / "pkpugps_2.WAG"
+[I] "f:/train simulator/trains/trainset/" "PKP UGPS" / "pkpugps_3.WAG"
+[I] "f:/train simulator/trains/trainset/" "PKP UGPS" / "pkpugps_4.WAG"
+[I] "f:/train simulator/trains/trainset/" "PKP WLAB" / "PKPWLAB.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP wrecked" / "wrecked.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP WRme" / "PKPWRme.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP-111a" / "PKP-111a.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP-Bcdmnu" / "pkp-bcdmnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP-Bcdmnu" / "pkp-bcdmnu2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP-Bhixt-14629-43A" / "43A.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP-EP05" / "EP05.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-EP05" / "pkp-ep05-01.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-EP05" / "pkp-ep05-16.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-EP05" / "pkp-eu05-22.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-EP08-006" / "EP08-006.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-EP08-008" / "EP08-008.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-ET22-340" / "ET22-340.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-ET22-498" / "ET22-498.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-EU07-155" / "EU07-155.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-EU07-165" / "EU07-165.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-ST44-1102" / "PKP-ST44-1102.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-ST44-1104" / "PKP-ST44-1104.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-ST44-358" / "PKP-ST44-358.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-ST44-758" / "PKP-ST44-758.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-ST44-992" / "PKP-ST44-992.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU45-010" / "SU45-010.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU45-089" / "SU45-089.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-008" / "PKP_SU46-008.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-008" / "PKP_SU46-008b.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-009" / "PKP_SU46-009.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-009" / "PKP_SU46-009b.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-011-CARGO" / "PKP_SU46-011.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-011-CARGO" / "PKP_SU46-011b.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-032-CARGO" / "PKP_SU46-032.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-032-CARGO" / "PKP_SU46-032b.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-033" / "PKP_SU46-033.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-033" / "PKP_SU46-033b.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-037" / "PKP_SU46-037.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-037" / "PKP_SU46-037b.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-048-CARGO" / "PKP_SU46-048.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-SU46-048-CARGO" / "PKP_SU46-048b.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP-WLABd" / "pkp-wlabd-2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP-WLABd" / "pkp-wlabd.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_101A" / "ryflak.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_101A2" / "ryflak2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_4L" / "PKP_4L_IIIa.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_4L" / "PKP_4L_IIIa_k.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_4L" / "PKP_4L_IIIb.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_4L" / "PKP_4L_IIIb_k.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_4L" / "PKP_4L_IVa.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_4L" / "PKP_4L_IVa_k.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_bipa" / "PKP_Bipa_1.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_bipa" / "PKP_Bipa_2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_bipa" / "PKP_Bipa_3.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-013" / "PKP_EN57-013ra.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-013" / "PKP_EN57-013rb.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-013" / "PKP_EN57-013s.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-019" / "PKP_EN57-019ra.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-019" / "PKP_EN57-019rb.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-019" / "PKP_EN57-019s.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-1080" / "PKP_EN57-1080ra.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-1080" / "PKP_EN57-1080rb.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-1080" / "PKP_EN57-1080s.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-203" / "PKP_EN57-203ra.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-203" / "PKP_EN57-203rb.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-203" / "PKP_EN57-203s.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-810" / "PKP_EN57-810ra.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-810" / "PKP_EN57-810rb.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EN57-810" / "PKP_EN57-810s.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_EP09" / "PKP_EP09-019.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_EP09" / "PKP_EP09-047.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_ET41-038" / "PKP_ET41-038A.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_ET41-038" / "PKP_ET41-038B.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_Gags" / "PKP_Gags.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_SM31" / "PKP_SM31-034.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SM31-113" / "SM31-113.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SM42" / "PKP_SM42.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SM48" / "SM48.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SM48- 112" / "SM48-112.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SP32" / "PKP_SP32-120-R.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SP32" / "PKP_SP32-120.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SP45" / "SP45.eng"
+[I] "f:/train simulator/trains/trainset/" "pkp_sp47" / "pkp_sp47-001.eng"
+[I] "f:/train simulator/trains/trainset/" "pkp_sp47" / "pkp_sp47-001o.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_ST43-238" / "ST43-238.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SU42" / "pkp-su42-502.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SU42" / "pkp-su42-504.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SU42" / "pkp-su42-508.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SU42" / "pkp-su42-512.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SU42" / "pkp-su42-535.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SU42" / "pkp-su42-537.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SU42" / "PKP_SU42.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_SU45" / "PKP_SU45-174.eng"
+[I] "f:/train simulator/trains/trainset/" "PKP_Zans-DEC" / "Zans.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_Zans-DEC1" / "Zans1.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_Zans-DEC2" / "Zans2.wag"
+[I] "f:/train simulator/trains/trainset/" "PKP_Zans-DEC3" / "Zans3.wag"
+[I] "f:/train simulator/trains/trainset/" "PKPEaosTSO" / "PKPEaosTSO-E-E.wag"
+[I] "f:/train simulator/trains/trainset/" "PKPEaosTSO" / "PKPEaosTSO-E.wag"
+[I] "f:/train simulator/trains/trainset/" "PKPEaosTSO" / "PKPEaosTSO-F-E.wag"
+[I] "f:/train simulator/trains/trainset/" "PKPEaosTSO" / "PKPEaosTSO-F.wag"
+[I] "f:/train simulator/trains/trainset/" "PKPkalk" / "pkpkalk.wag"
+[I] "f:/train simulator/trains/trainset/" "PKPST44-001" / "PKPST44-001.eng"
+[I] "f:/train simulator/trains/trainset/" "PKPST44-001" / "PKPST44-002.eng"
+[I] "f:/train simulator/trains/trainset/" "PKPST44-001" / "PKPST44-003.eng"
+[I] "f:/train simulator/trains/trainset/" "PKPST44-001" / "PKPST44-004.eng"
+[I] "f:/train simulator/trains/trainset/" "PKPST44-001" / "PKPST44-005.eng"
+[I] "f:/train simulator/trains/trainset/" "PKPST44-001" / "PKPST44-006.eng"
+[I] "f:/train simulator/trains/trainset/" "PKPST44-001" / "PKPST44-007.eng"
+[I] "f:/train simulator/trains/trainset/" "PKPST44-001" / "PKPST44-008.eng"
+[I] "f:/train simulator/trains/trainset/" "PKPST44-001" / "PKPST44-009.eng"
+[I] "f:/train simulator/trains/trainset/" "PKPST44-001" / "PKPST44-010.eng"
+[I] "f:/train simulator/trains/trainset/" "pkpSu46" / "pkpSU46.eng"
+[I] "f:/train simulator/trains/trainset/" "PKPWrrmz" / "PKPICWrrmz.wag"
+[I] "f:/train simulator/trains/trainset/" "PKPWrrmz" / "PKPWrdnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PKPWrrmz" / "pkpwrdnuic.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-0708-S" / "PP-PKP-0708-S.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-1918-Adu" / "PP-PKP-1918-Adu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-2018-Bdu" / "PKP-2018-Bdu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-5918-Bcd" / "PP-PKP-5918-Bcd.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-8518-BRd" / "PP-PKP-8518-BRd.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-AB" / "PP-PKP-1900-481-A.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-AB" / "PP-PKP-2000-324-B.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Adnu" / "PP-PKP-1900-296-Adnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Adnu" / "PP-PKP-1970-117-Adnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Adnu" / "PP-PKP-1978-212-Adnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Adnu" / "PP-PKP-1978-359-Adnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Adu" / "PP-PKP-1900-121-Adu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Adu" / "PP-PKP-1900-139-Adu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Adu" / "PP-PKP-1908-322-Adu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Adu" / "PP-PKP-1908-514-Adu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Azdnu" / "PP-PKP-1908-184-Azdnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Azdnu" / "PP-PKP-1908-252-Azdnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bcdu" / "PP-PKP-5900-Bcd.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bcdu" / "PP-PKP-5908-Bcdu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bcdu" / "PP-PKP-5910-Bcdu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bcdu" / "PP-PKP-5970-Bcdu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bdnu" / "PP-PKP-2008-299-Bdnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bdnu" / "PP-PKP-2070-486-Bdnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bdnu" / "PP-PKP-2078-582-Bdnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bdnu" / "PP-PKP-2078-612-Bdnu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-BDs" / "PP-PKP-8200-BDs.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-BDs" / "PP-PKP-8208-BDs.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bdu" / "PP-PKP-2000-108-Bdu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bdu" / "PP-PKP-2000-416-Bdu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bdu" / "PP-PKP-2008-117-Bdu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Bdu" / "PP-PKP-2018-051-Bdu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Ds" / "PP-PKP-9500-Ds.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Ds" / "PP-PKP-9508-Ds.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Ds-IV" / "PP-PKP-8218-BDs.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-Ds-IV" / "PP-PKP-9518-Ds.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-IC" / "PP-PKP-IC-5970-Bcdu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-IC" / "PP-PKP-IC-5978-Bcdu.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-WRd" / "PP-PKP-8800-WRd.wag"
+[I] "f:/train simulator/trains/trainset/" "PP-PKP-WRd" / "PP-PKP-8810-WRbd.wag"
+[I] "f:/train simulator/trains/trainset/" "royalscotsclass" / "royalscotsclass.eng"
+[I] "f:/train simulator/trains/trainset/" "royalscotsclass" / "royalscottender.wag"
+[I] "f:/train simulator/trains/trainset/" "royalscotsclass" / "scotsfirstclass.wag"
+[I] "f:/train simulator/trains/trainset/" "royalscotsclass" / "scotsthirdclass.wag"
+[I] "f:/train simulator/trains/trainset/" "scotsman" / "scotscar1.wag"
+[I] "f:/train simulator/trains/trainset/" "scotsman" / "scotscar3.wag"
+[I] "f:/train simulator/trains/trainset/" "scotsman" / "scotsmailcar.wag"
+[I] "f:/train simulator/trains/trainset/" "scotsman" / "scotsman.eng"
+[I] "f:/train simulator/trains/trainset/" "scotsman" / "scotstender.wag"
+[I] "f:/train simulator/trains/trainset/" "sd40" / "sd40.eng"
+[I] "f:/train simulator/trains/trainset/" "sd402" / "sd402.eng"
+[I] "f:/train simulator/trains/trainset/" "series2000" / "2000.eng"
+[I] "f:/train simulator/trains/trainset/" "series2000" / "2000acarriage.wag"
+[I] "f:/train simulator/trains/trainset/" "series2000" / "2000bcarriage.wag"
+[I] "f:/train simulator/trains/trainset/" "series2000" / "2000reareng.eng"
+[I] "f:/train simulator/trains/trainset/" "series7000" / "series7000.eng"
+[I] "f:/train simulator/trains/trainset/" "series7000" / "series7000cara.wag"
+[I] "f:/train simulator/trains/trainset/" "series7000" / "series7000carb.wag"
+[I] "f:/train simulator/trains/trainset/" "series7000" / "series7000carc.wag"
+[I] "f:/train simulator/trains/trainset/" "series7000" / "series7000card.wag"
+[I] "f:/train simulator/trains/trainset/" "series7000" / "series7000carg.wag"
+[I] "f:/train simulator/trains/trainset/" "series7000" / "series7000carh.wag"
+[I] "f:/train simulator/trains/trainset/" "series7000" / "series7000cari.wag"
+[I] "f:/train simulator/trains/trainset/" "series7000" / "series7000engr.eng"
+[I] "f:/train simulator/trains/trainset/" "slps" / "slps.wag"
+[I] "f:/train simulator/trains/trainset/" "slps" / "slps20_3.wag"
+[I] "f:/train simulator/trains/trainset/" "slps" / "slps30_2.wag"
+[I] "f:/train simulator/trains/trainset/" "slps" / "slps40.wag"
+[I] "f:/train simulator/trains/trainset/" "SM31" / "SM31.eng"
+[I] "f:/train simulator/trains/trainset/" "SM41" / "SM41.eng"
+[I] "f:/train simulator/trains/trainset/" "SM42 PKP" / "sm42.eng"
+[I] "f:/train simulator/trains/trainset/" "sm48-2" / "sm48-2a.eng"
+[I] "f:/train simulator/trains/trainset/" "sm48-2" / "sm48-2ch.eng"
+[I] "f:/train simulator/trains/trainset/" "sn61-001" / "sn61.eng"
+[I] "f:/train simulator/trains/trainset/" "sp32" / "sp32.eng"
+[I] "f:/train simulator/trains/trainset/" "st44" / "st44.eng"
+[I] "f:/train simulator/trains/trainset/" "Su45" / "Su45.eng"
+[I] "f:/train simulator/trains/trainset/" "SU45-006" / "PKP_SU45-006.eng"
+[I] "f:/train simulator/trains/trainset/" "SU45-071" / "PKP_SU45-071.eng"
+[I] "f:/train simulator/trains/trainset/" "Tir_1" / "ultra-end.wag"
+[I] "f:/train simulator/trains/trainset/" "Tir_1" / "ultra-middle.wag"
+[I] "f:/train simulator/trains/trainset/" "Tir_1" / "ultra-middle1.wag"
+[I] "f:/train simulator/trains/trainset/" "Tir_1" / "ultra-middle2.wag"
+[I] "f:/train simulator/trains/trainset/" "Tir_1" / "ultra-middle3.wag"
+[I] "f:/train simulator/trains/trainset/" "Tir_1" / "ultra-start.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-1.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-10.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-11.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-12.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-13.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-14.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-15.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-2.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-3.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-4.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-5.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-6.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-7.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-8.wag"
+[I] "f:/train simulator/trains/trainset/" "TS-Eastrail-PKP-Bhp" / "tser-pkpbhp-9.wag"
+[I] "f:/train simulator/trains/trainset/" "ugpps" / "ugpps.wag"
+[I] "f:/train simulator/trains/trainset/" "ugpps" / "ugpps2.wag"
+[I] "f:/train simulator/trains/trainset/" "us2bnsfcar" / "us2bnsfcar.wag"
+[I] "f:/train simulator/trains/trainset/" "us2caboose" / "us2caboose.wag"
+[I] "f:/train simulator/trains/trainset/" "us2chemicar" / "us2chemicar.wag"
+[I] "f:/train simulator/trains/trainset/" "us2dblehgtfrghtbl" / "us2dblehgtfrghtbl.wag"
+[I] "f:/train simulator/trains/trainset/" "us2dblehgtfrghtrd" / "us2dblehgtfrghtrd.wag"
+[I] "f:/train simulator/trains/trainset/" "us2emploggercar" / "us2emploggercar.wag"
+[I] "f:/train simulator/trains/trainset/" "us2fcarre2" / "us2fcarre2.wag"
+[I] "f:/train simulator/trains/trainset/" "us2fcarrf2" / "us2fcarrf2.wag"
+[I] "f:/train simulator/trains/trainset/" "us2fcarye2" / "us2fcarye2.wag"
+[I] "f:/train simulator/trains/trainset/" "us2fcaryf2" / "us2fcaryf2.wag"
+[I] "f:/train simulator/trains/trainset/" "us2freight6" / "us2freight6.wag"
+[I] "f:/train simulator/trains/trainset/" "us2freight7" / "us2freight7.wag"
+[I] "f:/train simulator/trains/trainset/" "us2freight8" / "us2freight8.wag"
+[I] "f:/train simulator/trains/trainset/" "us2freightcar1" / "us2freightcar1.wag"
+[I] "f:/train simulator/trains/trainset/" "us2freightcar3" / "us2freightcar3.wag"
+[I] "f:/train simulator/trains/trainset/" "us2freightcar4" / "us2freightcar4.wag"
+[I] "f:/train simulator/trains/trainset/" "us2freightcar5" / "us2freightcar5.wag"
+[I] "f:/train simulator/trains/trainset/" "us2freightcaryel1" / "us2freightcaryel1.wag"
+[I] "f:/train simulator/trains/trainset/" "us2freightcement" / "us2freightcement.wag"
+[I] "f:/train simulator/trains/trainset/" "us2freightrefrige" / "us2freightrefrige.wag"
+[I] "f:/train simulator/trains/trainset/" "us2fullloggercar" / "us2fullloggercar.wag"
+[I] "f:/train simulator/trains/trainset/" "us2graincar" / "us2graincar.wag"
+[I] "f:/train simulator/trains/trainset/" "us2hoppercar" / "us2hoppercar.wag"
+[I] "f:/train simulator/trains/trainset/" "us2woodchipper" / "us2woodchipper.wag"
+[I] "f:/train simulator/trains/trainset/" "wagony olsztyn" / "B-Adun.wag"
+[I] "f:/train simulator/trains/trainset/" "wagony olsztyn" / "B-Bdun.wag"
+[I] "f:/train simulator/trains/trainset/" "WreckedE4wagon" / "WreckedE4.wag"
+[I] "f:/train simulator/trains/trainset/" "zaes_cza" / "zaes_cza.wag"
+[I] "f:/train simulator/trains/trainset/" "zaes_rud" / "zaes_rud.wag"
 [I] loaded
-[I] "F:/train simulator/routes/EUROPE1/ssource.dat"
-[I] "F:/train simulator/routes/EUROPE1/ttype.dat"
-[I] "terrain_desc_size"
-[I] "depth"
-[I] "terrain_desc_tiles"
-[I] "tdfile"   -12   29
-[I] p   "----" -6119   15095
-[I] p   "----" -6119   15094
-[I] p   "----" -6120   15094
-[I] 0   "----" -6120   15094
-[I] p   "----" -6118   15095
-[I] p   "----" -6118   15094
-[I] 0   "----" -6118   15094
-[I] p   "----" -6118   15093
-[I] p   "----" -6117   15092
-[I] p   "----" -6118   15092
-[I] 0   "----" -6118   15092
-[I] p   "----" -6120   15093
-[I] p   "----" -6119   15093
-[I] p   "----" -6119   15092
-[I] 0   "----" -6120   15092
-[I] p   "----" -6116   15091
-[I] p   "----" -6116   15090
-[I] 0   "----" -6116   15090
-[I] p   "----" -6116   15089
-[I] p   "----" -6116   15088
-[I] 0   "----" -6116   15088
-[I] p   "----" -6118   15091
-[I] p   "----" -6117   15091
-[I] p   "----" -6117   15090
-[I] p   "----" -6118   15090
-[I] 0   "----" -6118   15090
-[I] p   "----" -6118   15089
-[I] p   "----" -6117   15089
-[I] p   "----" -6117   15088
-[I] p   "----" -6118   15088
-[I] 0   "----" -6118   15088
-[I] p   "----" -6121   15094
-[I] p   "----" -6122   15094
-[I] 0   "----" -6122   15094
-[I] p   "----" -6122   15093
-[I] p   "----" -6121   15093
-[I] 0   "----" -6122   15092
-[I] p   "----" -6117   15087
-[I] p   "----" -6117   15086
-[I] 0   "----" -6118   15086
-[I] p   "----" -6116   15087
-[I] p   "----" -6115   15087
-[I] p   "----" -6115   15086
-[I] p   "----" -6116   15086
-[I] 0   "----" -6116   15086
-[I] p   "----" -6116   15085
-[I] p   "----" -6115   15085
-[I] p   "----" -6115   15084
-[I] p   "----" -6116   15084
-[I] 0   "----" -6116   15084
-[I] p   "----" -6116   15083
-[I] p   "----" -6115   15083
-[I] p   "----" -6115   15082
-[I] 0   "----" -6116   15082
-[I] p   "----" -6114   15083
-[I] p   "----" -6113   15083
-[I] p   "----" -6113   15082
-[I] p   "----" -6114   15082
-[I] 0   "----" -6114   15082
-[I] p   "----" -6114   15081
-[I] p   "----" -6113   15081
-[I] 0   "----" -6114   15080
-[I] p   "----" -6112   15082
-[I] 0   "----" -6112   15082
-[I] p   "----" -6112   15081
-[I] p   "----" -6111   15081
-[I] p   "----" -6111   15080
-[I] p   "----" -6112   15080
-[I] 0   "----" -6112   15080
-[I] p   "----" -6112   15079
-[I] p   "----" -6111   15079
-[I] p   "----" -6111   15078
-[I] p   "----" -6112   15078
-[I] 0   "----" -6112   15078
-[I] p   "----" -6112   15077
-[I] p   "----" -6111   15077
-[I] p   "----" -6111   15076
-[I] p   "----" -6112   15076
-[I] 0   "----" -6112   15076
-[I] p   "----" -6112   15075
-[I] p   "----" -6111   15075
-[I] p   "----" -6111   15074
-[I] p   "----" -6112   15074
-[I] 0   "----" -6112   15074
-[I] p   "----" -6110   15073
-[I] p   "----" -6109   15073
-[I] p   "----" -6109   15072
-[I] p   "----" -6110   15072
-[I] 0   "----" -6110   15072
-[I] p   "----" -6112   15073
-[I] p   "----" -6111   15073
-[I] p   "----" -6111   15072
-[I] p   "----" -6112   15072
-[I] 0   "----" -6112   15072
-[I] p   "----" -6110   15071
-[I] p   "----" -6109   15071
-[I] p   "----" -6109   15070
-[I] p   "----" -6110   15070
-[I] 0   "----" -6110   15070
-[I] p   "----" -6110   15069
-[I] p   "----" -6109   15069
-[I] p   "----" -6110   15068
-[I] 0   "----" -6110   15068
-[I] p   "----" -6111   15069
-[I] p   "----" -6111   15068
-[I] 0   "----" -6112   15068
-[I] p   "----" -6111   15067
-[I] p   "----" -6111   15066
-[I] p   "----" -6112   15066
-[I] 0   "----" -6112   15066
-[I] p   "----" -6110   15067
-[I] p   "----" -6110   15066
-[I] 0   "----" -6110   15066
-[I] p   "----" -6110   15065
-[I] 0   "----" -6110   15064
-[I] p   "----" -6112   15065
-[I] p   "----" -6111   15065
-[I] p   "----" -6112   15064
-[I] 0   "----" -6112   15064
-[I] p   "----" -6112   15063
-[I] p   "----" -6112   15062
-[I] 0   "----" -6112   15062
-[I] p   "----" -6112   15059
-[I] p   "----" -6112   15058
-[I] 0   "----" -6112   15058
-[I] p   "----" -6112   15057
-[I] p   "----" -6112   15056
-[I] 0   "----" -6112   15056
-[I] p   "----" -6112   15055
-[I] p   "----" -6112   15054
-[I] 0   "----" -6112   15054
-[I] p   "----" -6113   15065
-[I] p   "----" -6113   15064
-[I] 0   "----" -6114   15064
-[I] p   "1111" -6116   15062
-[I] p   "1111" -6116   15060
-[I] p   "----" -6115   15062
-[I] 0   "----" -6116   15062
-[I] p   "----" -6113   15063
-[I] p   "----" -6113   15062
-[I] p   "----" -6114   15062
-[I] 0   "----" -6114   15062
-[I] p   "----" -6114   15061
-[I] p   "----" -6113   15061
-[I] p   "----" -6113   15060
-[I] p   "----" -6114   15060
-[I] 0   "----" -6114   15060
-[I] p   "----" -6115   15061
-[I] p   "----" -6115   15060
-[I] 0   "----" -6116   15060
-[I] p   "----" -6114   15059
-[I] p   "----" -6113   15059
-[I] p   "----" -6113   15058
-[I] p   "----" -6114   15058
-[I] 0   "----" -6114   15058
-[I] p   "----" -6113   15057
-[I] p   "----" -6113   15056
-[I] 0   "----" -6114   15056
-[I] p   "----" -6113   15055
-[I] p   "----" -6113   15054
-[I] 0   "----" -6114   15054
-[I] p   "----" -6113   15053
-[I] 0   "----" -6114   15052
-[I] "F:/train simulator/routes/EUROPE1/forests.dat"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] "forest"
-[I] TFile - unknown token:  282
-[I] TFile - unknown token:  282
-[I] "-61155053.:maptex"
-[I] "-61155054.:maptex"
-[I] "-61145053.:maptex"
-[I] TFile - unknown token:  282
-[I] "-61145054.:maptex"
-[I] TFile - unknown token:  282
-[I] TFile - unknown token:  282
-[I] "-61145055.:maptex"
-[I] TFile - unknown token:  282
-[I] "-61145056.:maptex"
-[I] "-61135054.:maptex"
-[I] "-61135055.:maptex"
-[I] "-61135056.:maptex"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006115+015052.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006115+015053.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006115+015054.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006115+015055.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006115+015056.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006114+015052.w"
-[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006114+015053.w"
-[I] 0
-[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006114+015054.w"
-[I] 0
-[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006114+015055.w"
-[I] 0
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006114+015056.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006113+015052.w"
-[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006113+015053.w"
-[I] 336
-[I] Nowy  0  shape:  "f:/train simulator/routes/europe1/shapes/tree7.s"
-[I] Nowy  1  shape:  "f:/train simulator/routes/europe1/shapes/barfence50m.s"
-[I] Nowy  2  shape:  "f:/train simulator/routes/europe1/shapes/drystonewall50m.s"
-[I] Nowy  3  shape:  "f:/train simulator/routes/europe1/shapes/postbox.s"
-[I] Nowy  4  shape:  "f:/train simulator/routes/europe1/shapes/tree12.s"
-[I] Nowy  5  shape:  "f:/train simulator/routes/europe1/shapes/shop_postoffice.s"
-[I] Nowy  6  shape:  "f:/train simulator/routes/europe1/shapes/house4_terraced.s"
-[I] Nowy  7  shape:  "f:/train simulator/routes/europe1/shapes/housesemi_four.s"
-[I] Nowy  8  shape:  "f:/train simulator/routes/europe1/shapes/tree2.s"
-[I] Nowy  9  shape:  "f:/train simulator/routes/europe1/shapes/tree1.s"
-[I] Nowy  10  shape:  "f:/train simulator/routes/europe1/shapes/cottage4.s"
-[I] Nowy  11  shape:  "f:/train simulator/routes/europe1/shapes/farmhouse1_.s"
-[I] Nowy  12  shape:  "f:/train simulator/routes/europe1/shapes/barn1.s"
-[I] Nowy  13  shape:  "f:/train simulator/global/shapes/road2lanet.s"
-[I] Nowy  14  shape:  "f:/train simulator/routes/europe1/shapes/mgcar.s"
-[I] Nowy  15  shape:  "f:/train simulator/global/shapes/road2lstrt100m.s"
-[I] Nowy  16  shape:  "f:/train simulator/global/shapes/road2l45deg.s"
-[I] Nowy  17  shape:  "f:/train simulator/global/shapes/road2lstrt50m.s"
-[I] Nowy  18  shape:  "f:/train simulator/global/shapes/road2lstrt10m.s"
-[I] Nowy  19  shape:  "f:/train simulator/routes/europe1/shapes/uktreeline.s"
-[I] Nowy  20  shape:  "f:/train simulator/routes/europe1/shapes/watercolumn.s"
-[I] Nowy  21  shape:  "f:/train simulator/global/shapes/a1tbuffer.s"
-[I] Nowy  22  shape:  "f:/train simulator/routes/europe1/shapes/uksemaphore2.s"
-[I] Nowy  23  shape:  "f:/train simulator/routes/europe1/shapes/station1.s"
-[I] Nowy  24  shape:  "f:/train simulator/global/shapes/a2t50mstrt.s"
-[I] Nowy  25  shape:  "f:/train simulator/global/shapes/a2t100mstrt.s"
-[I] Nowy  26  shape:  "f:/train simulator/routes/europe1/shapes/settlechurch.s"
-[I] Nowy  27  shape:  "f:/train simulator/routes/europe1/shapes/cottage1.s"
-[I] Nowy  28  shape:  "f:/train simulator/routes/europe1/shapes/storageshed.s"
-[I] Nowy  29  shape:  "f:/train simulator/routes/europe1/shapes/pub_1500.s"
-[I] Nowy  30  shape:  "f:/train simulator/global/shapes/road2l22deg.s"
-[I] w file uncompressed  "F:/train simulator/routes/EUROPE1/world/w-006113+015053.ws"
-[I] WS size:  341
-[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006113+015054.w"
-[I] 1206
-[I] Nowy  31  shape:  "f:/train simulator/routes/europe1/shapes/cow.s"
-[I] Nowy  32  shape:  "f:/train simulator/routes/europe1/shapes/us2gravestones.s"
-[I] Nowy  33  shape:  "f:/train simulator/routes/europe1/shapes/hut2.s"
-[I] Nowy  34  shape:  "f:/train simulator/routes/europe1/shapes/drystonewall10m.s"
-[I] Nowy  35  shape:  "f:/train simulator/routes/europe1/shapes/jp2cslab10m.s"
-[I] Nowy  36  shape:  "f:/train simulator/routes/europe1/shapes/woodfence50m.s"
-[I] Nowy  37  shape:  "f:/train simulator/routes/europe1/shapes/church1.s"
-[I] Nowy  38  shape:  "f:/train simulator/routes/europe1/shapes/marshfield_r.s"
-[I] Nowy  39  shape:  "f:/train simulator/routes/europe1/shapes/kirkgate_r.s"
-[I] Nowy  40  shape:  "f:/train simulator/routes/europe1/shapes/church2.s"
-[I] Nowy  41  shape:  "f:/train simulator/routes/europe1/shapes/curvebridge.s"
-[I] Nowy  42  shape:  "f:/train simulator/routes/europe1/shapes/uksemaphore1.s"
-[I] Nowy  43  shape:  "f:/train simulator/routes/europe1/shapes/marshfield.s"
-[I] Nowy  44  shape:  "f:/train simulator/routes/europe1/shapes/kirkgate.s"
-[I] Nowy  45  shape:  "f:/train simulator/global/shapes/a2t500r5d.s"
-[I] Nowy  46  shape:  "f:/train simulator/routes/europe1/shapes/ukmilepost.s"
-[I] Nowy  47  shape:  "f:/train simulator/global/shapes/a2t250r5d.s"
-[I] Nowy  48  shape:  "f:/train simulator/routes/europe1/shapes/deer.haz"
-[I] Nowy  49  shape:  "f:/train simulator/routes/europe1/shapes/spotter.haz"
-[I] Nowy  50  shape:  "f:/train simulator/global/shapes/a2t250mstrt.s"
-[I] Nowy  51  shape:  "f:/train simulator/routes/europe1/shapes/ukstonebridge.s"
-[I] Nowy  52  shape:  "f:/train simulator/global/shapes/a2t500r20d.s"
-[I] Nowy  53  shape:  "f:/train simulator/global/shapes/a2t10mstrt.s"
-[I] Nowy  54  shape:  "f:/train simulator/routes/europe1/shapes/pipeline.s"
-[I] Nowy  55  shape:  "f:/train simulator/routes/europe1/shapes/hut1.s"
-[I] Nowy  56  shape:  "f:/train simulator/routes/europe1/shapes/hut4.s"
-[I] w file uncompressed  "F:/train simulator/routes/EUROPE1/world/w-006113+015054.ws"
-[I] WS size:  1235
-[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006113+015055.w"
-[I] 889
-[I] Nowy  57  shape:  "f:/train simulator/routes/europe1/shapes/cottage3.s"
-[I] Nowy  58  shape:  "f:/train simulator/routes/europe1/shapes/ukhouse1.s"
-[I] Nowy  59  shape:  "f:/train simulator/routes/europe1/shapes/housesemi_single.s"
-[I] Nowy  60  shape:  "f:/train simulator/routes/europe1/shapes/uksingletunnel.s"
-[I] Nowy  61  shape:  "f:/train simulator/global/shapes/a2t1000r20d.s"
-[I] Nowy  62  shape:  "f:/train simulator/global/shapes/a2t500r5dtun.s"
-[I] Nowy  63  shape:  "f:/train simulator/global/shapes/a2t500mstrt.s"
-[I] Nowy  64  shape:  "f:/train simulator/routes/europe1/shapes/hut3.s"
-[I] Nowy  65  shape:  "f:/train simulator/routes/europe1/shapes/housesemi_twin.s"
-[I] w file uncompressed  "F:/train simulator/routes/EUROPE1/world/w-006113+015055.ws"
-[I] WS size:  913
-[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006113+015056.w"
-[I] 702
-[I] Nowy  66  shape:  "f:/train simulator/routes/europe1/shapes/barfence10m.s"
-[I] Nowy  67  shape:  "f:/train simulator/routes/europe1/shapes/sheriffbrow.s"
-[I] Nowy  68  shape:  "f:/train simulator/global/shapes/a2t1000r10d.s"
-[I] Nowy  69  shape:  "f:/train simulator/global/shapes/a2t2000r10d.s"
-[I] Nowy  70  shape:  "f:/train simulator/global/shapes/a2t500r10d.s"
-[I] Nowy  71  shape:  "f:/train simulator/routes/europe1/shapes/sheriffbrow_r.s"
-[I] w file uncompressed  "F:/train simulator/routes/EUROPE1/world/w-006113+015056.ws"
-[I] WS size:  741
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006112+015052.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006112+015053.w"
-[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006112+015054.w"
-[I] 0
-[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006112+015055.w"
-[I] 105
-[I] w file compressed    "F:/train simulator/routes/EUROPE1/world/w-006112+015056.w"
-[I] 21
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006111+015052.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006111+015053.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006111+015054.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006111+015055.w"
-[I] w file not exist     "F:/train simulator/routes/EUROPE1/world/w-006111+015056.w"
-[I] nic do zapisania
+[I] "f:/train simulator/trains/consists/"
+[I] 179  con files
+[I] "f:/train simulator/trains/consists/000000.con"
+[I] "f:/train simulator/trains/consists/000001.con"
+[I] "f:/train simulator/trains/consists/0000c.con"
+[I] "f:/train simulator/trains/consists/0000da.con"
+[I] "f:/train simulator/trains/consists/000123.con"
+[I] "f:/train simulator/trains/consists/000c.con"
+[I] "f:/train simulator/trains/consists/0a1.con"
+[I] "f:/train simulator/trains/consists/0a2.con"
+[I] "f:/train simulator/trains/consists/1101.con"
+[I] "f:/train simulator/trains/consists/1111.con"
+[I] "f:/train simulator/trains/consists/1xboxcar.con"
+[I] "f:/train simulator/trains/consists/1xus2carre2.con"
+[I] "f:/train simulator/trains/consists/2 x class 50, 12 carriages.con"
+[I] "f:/train simulator/trains/consists/2 x class 50, 8 carriages.con"
+[I] "f:/train simulator/trains/consists/2 x dash 9, 20 intermodal.con"
+[I] "f:/train simulator/trains/consists/2 x gp38-2.con"
+[I] "f:/train simulator/trains/consists/2 x kiha 31.con"
+[I] "f:/train simulator/trains/consists/2000std.con"
+[I] "f:/train simulator/trains/consists/2d937oil.con"
+[I] "f:/train simulator/trains/consists/2d950chm.con"
+[I] "f:/train simulator/trains/consists/2xctl-st44-r009+t20.con"
+[I] "f:/train simulator/trains/consists/2xen57-013.con"
+[I] "f:/train simulator/trains/consists/2zm62-1726+tow1+sm42-863.con"
+[I] "f:/train simulator/trains/consists/3 x sd40-2, 50 mixed.con"
+[I] "f:/train simulator/trains/consists/30000exe.con"
+[I] "f:/train simulator/trains/consists/310.con"
+[I] "f:/train simulator/trains/consists/380.con"
+[I] "f:/train simulator/trains/consists/380eng+tender.con"
+[I] "f:/train simulator/trains/consists/4 grain, 3 hopper.con"
+[I] "f:/train simulator/trains/consists/4xk140s.con"
+[I] "f:/train simulator/trains/consists/5 refrigerator.con"
+[I] "f:/train simulator/trains/consists/6 cement.con"
+[I] "f:/train simulator/trains/consists/acela.con"
+[I] "f:/train simulator/trains/consists/acelahhp-8stndrd.con"
+[I] "f:/train simulator/trains/consists/acelastd.con"
+[I] "f:/train simulator/trains/consists/ai310.con"
+[I] "f:/train simulator/trains/consists/aihservice2.con"
+[I] "f:/train simulator/trains/consists/airoscot.con"
+[I] "f:/train simulator/trains/consists/aisecape.con"
+[I] "f:/train simulator/trains/consists/autocar.con"
+[I] "f:/train simulator/trains/consists/barcarch.con"
+[I] "f:/train simulator/trains/consists/barcarso.con"
+[I] "f:/train simulator/trains/consists/caboose.con"
+[I] "f:/train simulator/trains/consists/class 50, 8 carriages.con"
+[I] "f:/train simulator/trains/consists/class50.con"
+[I] "f:/train simulator/trains/consists/d9.con"
+[I] "f:/train simulator/trains/consists/d930gran.con"
+[I] "f:/train simulator/trains/consists/d937oil.con"
+[I] "f:/train simulator/trains/consists/d950chem.con"
+[I] "f:/train simulator/trains/consists/d9gds.con"
+[I] "f:/train simulator/trains/consists/d9imod.con"
+[I] "f:/train simulator/trains/consists/d9oil.con"
+[I] "f:/train simulator/trains/consists/d9r.con"
+[I] "f:/train simulator/trains/consists/d9rev.con"
+[I] "f:/train simulator/trains/consists/dash 9 - 40 cars (mixed goods).con"
+[I] "f:/train simulator/trains/consists/dash 9 - 50 cars (mixed goods).con"
+[I] "f:/train simulator/trains/consists/dash 9 with 23 chemicars1.con"
+[I] "f:/train simulator/trains/consists/dash 9 with 50 chemicars.con"
+[I] "f:/train simulator/trains/consists/dash 9, 2 x sd40-2, 35 grain.con"
+[I] "f:/train simulator/trains/consists/dash9 x2 with 20 autocar.con"
+[I] "f:/train simulator/trains/consists/dash9.con"
+[I] "f:/train simulator/trains/consists/dash921gran.con"
+[I] "f:/train simulator/trains/consists/dash9_single.con"
+[I] "f:/train simulator/trains/consists/dlesson1.con"
+[I] "f:/train simulator/trains/consists/en57-019x2.con"
+[I] "f:/train simulator/trains/consists/ep09-019+ep09-047+os1.con"
+[I] "f:/train simulator/trains/consists/et22-015+001.con"
+[I] "f:/train simulator/trains/consists/et22-340+tow1.con"
+[I] "f:/train simulator/trains/consists/et22-554+osobowy1.con"
+[I] "f:/train simulator/trains/consists/et22-615+oso1.con"
+[I] "f:/train simulator/trains/consists/et40+tow1.con"
+[I] "f:/train simulator/trains/consists/eu06-12.con"
+[I] "f:/train simulator/trains/consists/eu07-503+oso1.con"
+[I] "f:/train simulator/trains/consists/flying scotsman8.con"
+[I] "f:/train simulator/trains/consists/fsloco.con"
+[I] "f:/train simulator/trains/consists/gags1.con"
+[I] "f:/train simulator/trains/consists/genesis.con"
+[I] "f:/train simulator/trains/consists/gp38-2 lumber.con"
+[I] "f:/train simulator/trains/consists/gp38-2, 3 boxcars.con"
+[I] "f:/train simulator/trains/consists/gp38-2, 5 hopper cars 1 box.con"
+[I] "f:/train simulator/trains/consists/gp38.con"
+[I] "f:/train simulator/trains/consists/gp8-2, 17 cars.con"
+[I] "f:/train simulator/trains/consists/hhl lone.con"
+[I] "f:/train simulator/trains/consists/hhploco.con"
+[I] "f:/train simulator/trains/consists/hotbox.con"
+[I] "f:/train simulator/trains/consists/innsa2.con"
+[I] "f:/train simulator/trains/consists/innsasu.con"
+[I] "f:/train simulator/trains/consists/isaburo .con"
+[I] "f:/train simulator/trains/consists/itrdash9.con"
+[I] "f:/train simulator/trains/consists/kalwhtfshloc1.con"
+[I] "f:/train simulator/trains/consists/kalwhtfshloc2.con"
+[I] "f:/train simulator/trains/consists/kalwhtfshloc3.con"
+[I] "f:/train simulator/trains/consists/kiha 31x4.con"
+[I] "f:/train simulator/trains/consists/kiha140.con"
+[I] "f:/train simulator/trains/consists/kiha31.con"
+[I] "f:/train simulator/trains/consists/kiha31a.con"
+[I] "f:/train simulator/trains/consists/local_one.con"
+[I] "f:/train simulator/trains/consists/local_one_consist1.con"
+[I] "f:/train simulator/trains/consists/local_one_logconsist.con"
+[I] "f:/train simulator/trains/consists/local_one_oilconsist.con"
+[I] "f:/train simulator/trains/consists/local_one_playerconsist.con"
+[I] "f:/train simulator/trains/consists/local_one_singlecar.con"
+[I] "f:/train simulator/trains/consists/local_one_traffic_consist.con"
+[I] "f:/train simulator/trains/consists/local_one_trafficconsist1.con"
+[I] "f:/train simulator/trains/consists/local_two_consist1.con"
+[I] "f:/train simulator/trains/consists/local_two_consist2.con"
+[I] "f:/train simulator/trains/consists/longwest.con"
+[I] "f:/train simulator/trains/consists/metroliner.con"
+[I] "f:/train simulator/trains/consists/mxdgoods.con"
+[I] "f:/train simulator/trains/consists/nnmxdgds.con"
+[I] "f:/train simulator/trains/consists/oeloco.con"
+[I] "f:/train simulator/trains/consists/oenoloco.con"
+[I] "f:/train simulator/trains/consists/oeroyal.con"
+[I] "f:/train simulator/trains/consists/oestrd.con"
+[I] "f:/train simulator/trains/consists/pendennis.con"
+[I] "f:/train simulator/trains/consists/pkp_sm31-034.con"
+[I] "f:/train simulator/trains/consists/pkp_sp47-001.con"
+[I] "f:/train simulator/trains/consists/pkp_sp47-001o.con"
+[I] "f:/train simulator/trains/consists/playtest_forpickup.con"
+[I] "f:/train simulator/trains/consists/playtest_mixed.con"
+[I] "f:/train simulator/trains/consists/pndnpass.con"
+[I] "f:/train simulator/trains/consists/royalscottsclass.con"
+[I] "f:/train simulator/trains/consists/royalsct.con"
+[I] "f:/train simulator/trains/consists/ryflaki1.con"
+[I] "f:/train simulator/trains/consists/sainnwn.con"
+[I] "f:/train simulator/trains/consists/sainnwn2.con"
+[I] "f:/train simulator/trains/consists/scotsman.con"
+[I] "f:/train simulator/trains/consists/scotsmandurable.con"
+[I] "f:/train simulator/trains/consists/scotsmanspeedrec.con"
+[I] "f:/train simulator/trains/consists/sd40-2, 2 gon, 1 cab .con"
+[I] "f:/train simulator/trains/consists/sd40-2, dash 9, 25 mixed.con"
+[I] "f:/train simulator/trains/consists/sd40-2, dash 9, 30 mixed.con"
+[I] "f:/train simulator/trains/consists/sd40-2.con"
+[I] "f:/train simulator/trains/consists/sd40.con"
+[I] "f:/train simulator/trains/consists/series7000.con"
+[I] "f:/train simulator/trains/consists/sp47-bohuny.con"
+[I] "f:/train simulator/trains/consists/sprbowl.con"
+[I] "f:/train simulator/trains/consists/st44-1104.con"
+[I] "f:/train simulator/trains/consists/st44-992+ryflaki2.con"
+[I] "f:/train simulator/trains/consists/st44-992+st44-1104+ryflaki1.con"
+[I] "f:/train simulator/trains/consists/st44-992+su45-071+1.con"
+[I] "f:/train simulator/trains/consists/st44-x005.con"
+[I] "f:/train simulator/trains/consists/su42-512+oso1.con"
+[I] "f:/train simulator/trains/consists/su45-071+oso1.con"
+[I] "f:/train simulator/trains/consists/su46-008+oso1.con"
+[I] "f:/train simulator/trains/consists/su46-008+su46-033+oso1.con"
+[I] "f:/train simulator/trains/consists/su46-008+su46-033.con"
+[I] "f:/train simulator/trains/consists/sy45-037.con"
+[I] "f:/train simulator/trains/consists/wagony1.con"
+[I] "f:/train simulator/trains/consists/whtfshydswcars1.con"
+[I] "f:/train simulator/trains/consists/whtfshydswcars11.con"
+[I] "f:/train simulator/trains/consists/whtfshydswcars2.con"
+[I] "f:/train simulator/trains/consists/whtfshydswcars5.con"
+[I] "f:/train simulator/trains/consists/whtfshydswcars6.con"
+[I] "f:/train simulator/trains/consists/whtfshydswcars7.con"
+[I] "f:/train simulator/trains/consists/yard_one_aiconsist1.con"
+[I] "f:/train simulator/trains/consists/yard_one_chemcars.con"
+[I] "f:/train simulator/trains/consists/yard_one_consist1.con"
+[I] "f:/train simulator/trains/consists/yard_one_consist2.con"
+[I] "f:/train simulator/trains/consists/yard_one_consist3.con"
+[I] "f:/train simulator/trains/consists/yard_one_consist4.con"
+[I] "f:/train simulator/trains/consists/yard_one_consist5.con"
+[I] "f:/train simulator/trains/consists/yard_one_consist6.con"
+[I] "f:/train simulator/trains/consists/yard_one_eloggingcars.con"
+[I] "f:/train simulator/trains/consists/yard_one_loggingcars.con"
+[I] "f:/train simulator/trains/consists/yard_one_player_consist.con"
+[I] "f:/train simulator/trains/consists/yard_one_siding5_consist.con"
+[I] "f:/train simulator/trains/consists/yard_one_siding7_consist.con"
+[I] "f:/train simulator/trains/consists/yard_one_singlecar.con"
+[I] "f:/train simulator/trains/consists/yard_one_traffic1.con"
+[I] "f:/train simulator/trains/consists/yard_one_traffic2.con"
+[I] "f:/train simulator/trains/consists/yard_one_trafficconsist.con"
+[I] "f:/train simulator/trains/consists/yard_two_consist1.con"
+[I] "f:/train simulator/trains/consists/yard_two_consist2.con"
+[I] "f:/train simulator/trains/consists/yard_two_consist3.con"
+[I] "f:/train simulator/trains/consists/yard_two_consist4.con"
+[I] "f:/train simulator/trains/consists/yard_two_consist5.con"
+[I] "f:/train simulator/trains/consists/yard_two_consist6.con"
+[I] "f:/train simulator/trains/consists/yard_two_consist7.con"
+[I] loaded
+[I] "f:/train simulator/routes"
+[I] Nowy  0  act:  "f:/train simulator/routes/alfold_6/activities/a3-2015-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a3-2015-acthu.act"
+[I] Nowy  1  act:  "f:/train simulator/routes/alfold_6/activities/a3-2211-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a3-2211-acthu.act"
+[I] Nowy  2  act:  "f:/train simulator/routes/alfold_6/activities/a4-37411-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a4-37411-acthu.act"
+[I] Nowy  3  act:  "f:/train simulator/routes/alfold_6/activities/a4-7853-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a4-7853-acthu.act"
+[I] Nowy  4  act:  "f:/train simulator/routes/alfold_6/activities/a4-7954-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a4-7954-acthu.act"
+[I] Nowy  5  act:  "f:/train simulator/routes/alfold_6/activities/a5-13600-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-13600-acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_bdt_b.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_bhv_b.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_villany/acthu_v43-2377.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_villany/acthu_v43-1189_regi.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_habis11_full.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_eams1_594_szen.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_villany/acthu_v63-025_fg.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_habis11_empty.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_habis21_empty.wag" not exist
+[I] Nowy  6  act:  "f:/train simulator/routes/alfold_6/activities/a5-13683-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-13683-acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_villany/acthu_v43-1156.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_eams1_594_empty.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_eams1_594_homok.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_eams1_594_ko3.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_eams1_594_soder.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_habis21_full.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_fals.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_hbills.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_tagps_2.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_tcs.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_res11_brick.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_res11_lumber.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_res11_stone1.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_uacs11_empty.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_uacs11_full.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_zaes_798.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_zaes_798_empty.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_zas_785.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_zas_785_empty.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_lgs2_kontener1.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_lgs2_kontener10.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_lgs2_kontener8.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_lgs2_kontener9.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_res11_stone2.wag" not exist
+[I] Nowy  7  act:  "f:/train simulator/routes/alfold_6/activities/a5-16703-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-16703-acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_ao.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_b.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_bp.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_dizel/acthu_m44-033.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_bdh.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_bhv2.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_a.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_b.wag" not exist
+[I] Nowy  8  act:  "f:/train simulator/routes/alfold_6/activities/a5-17605-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-17605-acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_villany/acthu_1047-001.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/mav_51_55_89-10_009-5_bsc.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_end_paul.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_actros2.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_actros1.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_daf.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_actros3.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_defru.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_man2.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_man3.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_scania.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_steyr.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_steyr2.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_saadkms_start.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_villany/acthu_v43-1018.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_bzmot-237.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_6341-009a.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_6341-009b.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_bzx_523.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_gosa_bmz.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_wrro.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_gosa_abmz.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_dizel/acthu_m41-2210uf.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_bhv1.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_mav_mdmot-3030.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_mav_bx.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_mav_btx-027.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_bdh2.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_apmz.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_wrbumz.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_bpmz.wag" not exist
+[I] Nowy  9  act:  "f:/train simulator/routes/alfold_6/activities/a5-37233.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-37233.act"
+[I] Nowy  10  act:  "f:/train simulator/routes/alfold_6/activities/a5-377acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-377acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_villany/acthu_1047-006.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_apmz.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_wrbumz.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_bpmz.wag" not exist
+[I] Nowy  11  act:  "f:/train simulator/routes/alfold_6/activities/a5-46855-2-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-46855-2-acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_bdvmot-014.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_bmx.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_bmxt.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_dizel/acthu_m62-319.eng" not exist
+[I] Nowy  12  act:  "f:/train simulator/routes/alfold_6/activities/a5-566-1-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-566-1-acthu.act"
+[I] Nowy  13  act:  "f:/train simulator/routes/alfold_6/activities/a5-6007-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-6007-acthu.act"
+[I] Nowy  14  act:  "f:/train simulator/routes/alfold_6/activities/a5-6016.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-6016.act"
+[I] Nowy  15  act:  "f:/train simulator/routes/alfold_6/activities/a5-6106-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-6106-acthu.act"
+[I] Nowy  16  act:  "f:/train simulator/routes/alfold_6/activities/a5-6111.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-6111.act"
+[I] Nowy  17  act:  "f:/train simulator/routes/alfold_6/activities/a5-612-acthu-ködös.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-612-acthu-ködös.act"
+[I] "f:/train simulator/trains/trainset/acthu_dizel/acthu_m62-109.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_villany/acthu_v46-047.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_villany/acthu_v43-3187.eng" not exist
+[I] Nowy  18  act:  "f:/train simulator/routes/alfold_6/activities/a5-612-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-612-acthu.act"
+[I] Nowy  19  act:  "f:/train simulator/routes/alfold_6/activities/a5-6423-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-6423-acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_lgs2.wag" not exist
+[I] Nowy  20  act:  "f:/train simulator/routes/alfold_6/activities/a5-6430-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-6430-acthu.act"
+[I] Nowy  21  act:  "f:/train simulator/routes/alfold_6/activities/a5-7206.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-7206.act"
+[I] Nowy  22  act:  "f:/train simulator/routes/alfold_6/activities/a5-7226.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-7226.act"
+[I] Nowy  23  act:  "f:/train simulator/routes/alfold_6/activities/a5-7235.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-7235.act"
+[I] Nowy  24  act:  "f:/train simulator/routes/alfold_6/activities/a5-7247.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-7247.act"
+[I] Nowy  25  act:  "f:/train simulator/routes/alfold_6/activities/a5-7273.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-7273.act"
+[I] Nowy  26  act:  "f:/train simulator/routes/alfold_6/activities/a5-7309acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-7309acthu.act"
+[I] Nowy  27  act:  "f:/train simulator/routes/alfold_6/activities/a5-7712_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-7712_acthu.act"
+[I] Nowy  28  act:  "f:/train simulator/routes/alfold_6/activities/a5-7723_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a5-7723_acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_apic.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_bpic.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_ab.wag" not exist
+[I] Nowy  29  act:  "f:/train simulator/routes/alfold_6/activities/a6-2959_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a6-2959_acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_esb.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_dizel/acthu_m62-224.eng" not exist
+[I] Nowy  30  act:  "f:/train simulator/routes/alfold_6/activities/a6-2963-2966_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a6-2963-2966_acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_dizel/acthu_m41-2109.eng" not exist
+[I] Nowy  31  act:  "f:/train simulator/routes/alfold_6/activities/a6-37116_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a6-37116_acthu.act"
+[I] Nowy  32  act:  "f:/train simulator/routes/alfold_6/activities/a6-37227-37212_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a6-37227-37212_acthu.act"
+[I] Nowy  33  act:  "f:/train simulator/routes/alfold_6/activities/a6-37612-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a6-37612-acthu.act"
+[I] "f:/train simulator/trains/trainset/mav_v43_vmw/v43-1106.eng" not exist
+[I] "f:/train simulator/trains/trainset/h-start_bombardier_zaza/h-start_50_55_20-05_742-1.wag" not exist
+[I] "f:/train simulator/trains/trainset/h-start_bombardier_zaza/h-start_50_55_20-05_773-6.wag" not exist
+[I] "f:/train simulator/trains/trainset/h-start_bombardier_zaza/h-start_50_55_20-05_817-1.wag" not exist
+[I] "f:/train simulator/trains/trainset/h-start_bombardier_zaza/h-start_50_55_20-05_857-7.wag" not exist
+[I] "f:/train simulator/trains/trainset/h-mavtr_v63/h-mavtr_v63-023_2010.eng" not exist
+[I] "f:/train simulator/trains/trainset/h-start_szemelyvonat_pack/h-start_50_55_20-07_562-1.wag" not exist
+[I] "f:/train simulator/trains/trainset/h-start_szemelyvonat_pack/h-start_50_55_20-07_696-7.wag" not exist
+[I] "f:/train simulator/trains/trainset/h-start_szemelyvonat_pack/h-start_50_55_20-07_692-6.wag" not exist
+[I] "f:/train simulator/trains/trainset/h-start_szemelyvonat_pack/h-start_50_55_81-27_040-0.wag" not exist
+[I] Nowy  34  act:  "f:/train simulator/routes/alfold_6/activities/a6-37629-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a6-37629-acthu.act"
+[I] Nowy  35  act:  "f:/train simulator/routes/alfold_6/activities/a61_47617_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a61_47617_acthu.act"
+[I] Nowy  36  act:  "f:/train simulator/routes/alfold_6/activities/a61_6106_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a61_6106_acthu.act"
+[I] Nowy  37  act:  "f:/train simulator/routes/alfold_6/activities/a61_6114_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a61_6114_acthu.act"
+[I] Nowy  38  act:  "f:/train simulator/routes/alfold_6/activities/a61_6121_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a61_6121_acthu.act"
+[I] Nowy  39  act:  "f:/train simulator/routes/alfold_6/activities/a61_623_bereg_ic_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a61_623_bereg_ic_acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_dizel/acthu_m61-010.eng" not exist
+[I] Nowy  40  act:  "f:/train simulator/routes/alfold_6/activities/a61_74651_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a61_74651_acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_res11_empty.wag" not exist
+[I] Nowy  41  act:  "f:/train simulator/routes/alfold_6/activities/a63-3710-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a63-3710-acthu.act"
+[I] Nowy  42  act:  "f:/train simulator/routes/alfold_6/activities/a63-3737-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a63-3737-acthu.act"
+[I] Nowy  43  act:  "f:/train simulator/routes/alfold_6/activities/a63-792-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a63-792-acthu.act"
+[I] Nowy  44  act:  "f:/train simulator/routes/alfold_6/activities/a63-793-acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a63-793-acthu.act"
+[I] Nowy  45  act:  "f:/train simulator/routes/alfold_6/activities/a63_40608-1_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a63_40608-1_acthu.act"
+[I] Nowy  46  act:  "f:/train simulator/routes/alfold_6/activities/a63_42024_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a63_42024_acthu.act"
+[I] Nowy  47  act:  "f:/train simulator/routes/alfold_6/activities/a63_45665-2_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a63_45665-2_acthu.act"
+[I] Nowy  48  act:  "f:/train simulator/routes/alfold_6/activities/a64_48484_ah.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a64_48484_ah.act"
+[I] Nowy  49  act:  "f:/train simulator/routes/alfold_6/activities/a64_5110_ah.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a64_5110_ah.act"
+[I] "f:/train simulator/trains/trainset/acthu_dizel/acthu_m43-1017.eng" not exist
+[I] Nowy  50  act:  "f:/train simulator/routes/alfold_6/activities/a64_5129_ah.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a64_5129_ah.act"
+[I] Nowy  51  act:  "f:/train simulator/routes/alfold_6/activities/a64_55652_ah.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a64_55652_ah.act"
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_ks_ko1.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_mav_ks_ko2.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_teher/acthu_res11_bauxite.wag" not exist
+[I] Nowy  52  act:  "f:/train simulator/routes/alfold_6/activities/a64_567_ah.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a64_567_ah.act"
+[I] Nowy  53  act:  "f:/train simulator/routes/alfold_6/activities/a64_568_ah.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a64_568_ah.act"
+[I] Nowy  54  act:  "f:/train simulator/routes/alfold_6/activities/a64_65559_ah.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a64_65559_ah.act"
+[I] Nowy  55  act:  "f:/train simulator/routes/alfold_6/activities/a65_20438-20328_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_20438-20328_acthu.act"
+[I] Nowy  56  act:  "f:/train simulator/routes/alfold_6/activities/a65_21250-21521_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_21250-21521_acthu.act"
+[I] Nowy  57  act:  "f:/train simulator/routes/alfold_6/activities/a65_21671_ah.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_21671_ah.act"
+[I] Nowy  58  act:  "f:/train simulator/routes/alfold_6/activities/a65_3040_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_3040_acthu.act"
+[I] Nowy  59  act:  "f:/train simulator/routes/alfold_6/activities/a65_3067_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_3067_acthu.act"
+[I] Nowy  60  act:  "f:/train simulator/routes/alfold_6/activities/a65_48201_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_48201_acthu.act"
+[I] Nowy  61  act:  "f:/train simulator/routes/alfold_6/activities/a65_5009_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_5009_acthu.act"
+[I] Nowy  62  act:  "f:/train simulator/routes/alfold_6/activities/a65_502_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_502_acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_apee.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_bpee.wag" not exist
+[I] Nowy  63  act:  "f:/train simulator/routes/alfold_6/activities/a65_513_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_513_acthu.act"
+[I] Nowy  64  act:  "f:/train simulator/routes/alfold_6/activities/a65_526_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_526_acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_bdbt_v43.eng" not exist
+[I] Nowy  65  act:  "f:/train simulator/routes/alfold_6/activities/a65_90219_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_90219_acthu.act"
+[I] Nowy  66  act:  "f:/train simulator/routes/alfold_6/activities/a65_90228_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_90228_acthu.act"
+[I] Nowy  67  act:  "f:/train simulator/routes/alfold_6/activities/a65_90551_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a65_90551_acthu.act"
+[I] Nowy  68  act:  "f:/train simulator/routes/alfold_6/activities/a6_ic760_acthu.act"
+[I] "f:/train simulator/routes/alfold_6/activities/a6_ic760_acthu.act"
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_bpic.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_apic.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_mav_bo.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_5342-1.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_5342-2.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_5342-3.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_5342-4.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_desiro_a.eng" not exist
+[I] "f:/train simulator/trains/trainset/acthu_motor/acthu_desiro_b.eng" not exist
+[I] Nowy  69  act:  "f:/train simulator/routes/alfold_6/activities/acthu_2822.act"
+[I] "f:/train simulator/routes/alfold_6/activities/acthu_2822.act"
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_wrric.wag" not exist
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_bdbt.eng" not exist
+[I] Nowy  70  act:  "f:/train simulator/routes/alfold_6/activities/acthu_ic565.act"
+[I] "f:/train simulator/routes/alfold_6/activities/acthu_ic565.act"
+[I] "f:/train simulator/trains/trainset/acthu_szemely/acthu_h-start_bdt.eng" not exist
+[I] Nowy  71  act:  "f:/train simulator/routes/bbb/activities/111.act"
+[I] "f:/train simulator/routes/bbb/activities/111.act"
+[I] Nowy  72  act:  "f:/train simulator/routes/europe1/activities/aftstorm.act"
+[I] "f:/train simulator/routes/europe1/activities/aftstorm.act"
+[I] Nowy  73  act:  "f:/train simulator/routes/europe1/activities/homestre.act"
+[I] "f:/train simulator/routes/europe1/activities/homestre.act"
+[I] Nowy  74  act:  "f:/train simulator/routes/europe1/activities/itr_e1_s1_w1_t1.act"
+[I] "f:/train simulator/routes/europe1/activities/itr_e1_s1_w1_t1.act"
+[I] Nowy  75  act:  "f:/train simulator/routes/europe1/activities/lclsrvce.act"
+[I] "f:/train simulator/routes/europe1/activities/lclsrvce.act"
+[I] Nowy  76  act:  "f:/train simulator/routes/europe1/activities/lowwater.act"
+[I] "f:/train simulator/routes/europe1/activities/lowwater.act"
+[I] Nowy  77  act:  "f:/train simulator/routes/europe1/activities/medemerg.act"
+[I] "f:/train simulator/routes/europe1/activities/medemerg.act"
+[I] Nowy  78  act:  "f:/train simulator/routes/europe1/activities/rsrescue.act"
+[I] "f:/train simulator/routes/europe1/activities/rsrescue.act"
+[I] Nowy  79  act:  "f:/train simulator/routes/europe1/activities/sctutorial.act"
+[I] "f:/train simulator/routes/europe1/activities/sctutorial.act"
+[I] Nowy  80  act:  "f:/train simulator/routes/europe1/activities/shrtpass.act"
+[I] "f:/train simulator/routes/europe1/activities/shrtpass.act"
+[I] Nowy  81  act:  "f:/train simulator/routes/europe1/activities/winterun.act"
+[I] "f:/train simulator/routes/europe1/activities/winterun.act"
+[I] Nowy  82  act:  "f:/train simulator/routes/europe2/activities/barcarso.act"
+[I] "f:/train simulator/routes/europe2/activities/barcarso.act"
+[I] Nowy  83  act:  "f:/train simulator/routes/europe2/activities/bridegrm.act"
+[I] "f:/train simulator/routes/europe2/activities/bridegrm.act"
+[I] Nowy  84  act:  "f:/train simulator/routes/europe2/activities/itr_e1_s1_w1_t1.act"
+[I] "f:/train simulator/routes/europe2/activities/itr_e1_s1_w1_t1.act"
+[I] Nowy  85  act:  "f:/train simulator/routes/europe2/activities/murder.act"
+[I] "f:/train simulator/routes/europe2/activities/murder.act"
+[I] Nowy  86  act:  "f:/train simulator/routes/europe2/activities/oetutorial.act"
+[I] "f:/train simulator/routes/europe2/activities/oetutorial.act"
+[I] Nowy  87  act:  "f:/train simulator/routes/europe2/activities/replloco.act"
+[I] "f:/train simulator/routes/europe2/activities/replloco.act"
+[I] Nowy  88  act:  "f:/train simulator/routes/europe2/activities/royalonb.act"
+[I] "f:/train simulator/routes/europe2/activities/royalonb.act"
+[I] Nowy  89  act:  "f:/train simulator/routes/europe2/activities/sainnwn.act"
+[I] "f:/train simulator/routes/europe2/activities/sainnwn.act"
+[I] Nowy  90  act:  "f:/train simulator/routes/europe2/activities/shrtpass.act"
+[I] "f:/train simulator/routes/europe2/activities/shrtpass.act"
+[I] Nowy  91  act:  "f:/train simulator/routes/ice-hb/activities/is ice877 berlin nach karlsruhe hbf.act"
+[I] "f:/train simulator/routes/ice-hb/activities/is ice877 berlin nach karlsruhe hbf.act"
+[I] Nowy  92  act:  "f:/train simulator/routes/japan1/activities/afterthestorm.act"
+[I] "f:/train simulator/routes/japan1/activities/afterthestorm.act"
+[I] Nowy  93  act:  "f:/train simulator/routes/japan1/activities/hvydelay.act"
+[I] "f:/train simulator/routes/japan1/activities/hvydelay.act"
+[I] Nowy  94  act:  "f:/train simulator/routes/japan1/activities/itr_e1_s1_w1_t1.act"
+[I] "f:/train simulator/routes/japan1/activities/itr_e1_s1_w1_t1.act"
+[I] Nowy  95  act:  "f:/train simulator/routes/japan1/activities/pubhol.act"
+[I] "f:/train simulator/routes/japan1/activities/pubhol.act"
+[I] Nowy  96  act:  "f:/train simulator/routes/japan1/activities/shinhakmachida.act"
+[I] "f:/train simulator/routes/japan1/activities/shinhakmachida.act"
+[I] Nowy  97  act:  "f:/train simulator/routes/japan1/activities/shnhaksu.act"
+[I] "f:/train simulator/routes/japan1/activities/shnhaksu.act"
+[I] Nowy  98  act:  "f:/train simulator/routes/japan1/activities/shrtpass.act"
+[I] "f:/train simulator/routes/japan1/activities/shrtpass.act"
+[I] Nowy  99  act:  "f:/train simulator/routes/japan1/activities/tokyohakonetutorial.act"
+[I] "f:/train simulator/routes/japan1/activities/tokyohakonetutorial.act"
+[I] Nowy  100  act:  "f:/train simulator/routes/japan2/activities/hisatsututorial.act"
+[I] "f:/train simulator/routes/japan2/activities/hisatsututorial.act"
+[I] Nowy  101  act:  "f:/train simulator/routes/japan2/activities/isaburo.act"
+[I] "f:/train simulator/routes/japan2/activities/isaburo.act"
+[I] Nowy  102  act:  "f:/train simulator/routes/japan2/activities/itr_e1_s1_w1_t1.act"
+[I] "f:/train simulator/routes/japan2/activities/itr_e1_s1_w1_t1.act"
+[I] Nowy  103  act:  "f:/train simulator/routes/japan2/activities/lowfuel.act"
+[I] "f:/train simulator/routes/japan2/activities/lowfuel.act"
+[I] Nowy  104  act:  "f:/train simulator/routes/japan2/activities/quaketrk.act"
+[I] "f:/train simulator/routes/japan2/activities/quaketrk.act"
+[I] Nowy  105  act:  "f:/train simulator/routes/japan2/activities/shinpei.act"
+[I] "f:/train simulator/routes/japan2/activities/shinpei.act"
+[I] Nowy  106  act:  "f:/train simulator/routes/japan2/activities/shrtpass.act"
+[I] "f:/train simulator/routes/japan2/activities/shrtpass.act"
+[I] Nowy  107  act:  "f:/train simulator/routes/japan2/activities/wst_rver.act"
+[I] "f:/train simulator/routes/japan2/activities/wst_rver.act"
+[I] Nowy  108  act:  "f:/train simulator/routes/jaszk-nagyb_3/activities/01 bemutato nb-pm-jk gyorsvonat.act"
+[I] "f:/train simulator/routes/jaszk-nagyb_3/activities/01 bemutato nb-pm-jk gyorsvonat.act"
+[I] Nowy  109  act:  "f:/train simulator/routes/jaszk-nagyb_3/activities/02 bemutato jk-bh-nb szemelyvonat.act"
+[I] "f:/train simulator/routes/jaszk-nagyb_3/activities/02 bemutato jk-bh-nb szemelyvonat.act"
+[I] Nowy  110  act:  "f:/train simulator/routes/kk_1961_1963/activities/916_917.act"
+[I] "f:/train simulator/routes/kk_1961_1963/activities/916_917.act"
+[I] Nowy  111  act:  "f:/train simulator/routes/kk_1961_1963/activities/krakow-kocmyrzow_914.act"
+[I] "f:/train simulator/routes/kk_1961_1963/activities/krakow-kocmyrzow_914.act"
+[I] "f:/train simulator/trains/trainset/pkp_9w/es_9w-pr.wag" not exist
+[I] "f:/train simulator/trains/trainset/pkp_gbs_exobb/gbs_exobba.wag" not exist
+[I] "f:/train simulator/trains/trainset/pkp sm41-100/m44-144.eng" not exist
+[I] "f:/train simulator/trains/trainset/pkp_9w/es_9w-wegiel.wag" not exist
+[I] "f:/train simulator/trains/trainset/pkp_gbs_exobb/gbs_exobb.wag" not exist
+[I] "f:/train simulator/trains/trainset/pkp_gkks/pkp_gkks.wag" not exist
+[I] "f:/train simulator/trains/trainset/pkp_8a_ze/8a-eiii-pierwszy.wag" not exist
+[I] "f:/train simulator/trains/trainset/pkp_8a_ze/8a-eiii-ostatni.wag" not exist
+[I] Nowy  112  act:  "f:/train simulator/routes/kk_1961_1963/activities/krakow-kocmyrzow_915.act"
+[I] "f:/train simulator/routes/kk_1961_1963/activities/krakow-kocmyrzow_915.act"
+[I] "f:/train simulator/trains/trainset/pkp_u/pkp_u-xkl-474_p.wag" not exist
+[I] "f:/train simulator/trains/trainset/pkp_u/pkp_u-xkch-482_p.wag" not exist
+[I] "f:/train simulator/trains/trainset/pkp_sn61/pkp_sn61-168.eng" not exist
+[I] Nowy  113  act:  "f:/train simulator/routes/poznan_tram/activities/activity1.act"
+[I] "f:/train simulator/routes/poznan_tram/activities/activity1.act"
+[I] "f:/train simulator/trains/trainset/combino siemens mpk poznan/comfront.eng" not exist
+[I] "f:/train simulator/trains/trainset/combino siemens mpk poznan/comfahrgast.eng" not exist
+[I] "f:/train simulator/trains/trainset/combino siemens mpk poznan/comtrieb.eng" not exist
+[I] "f:/train simulator/trains/trainset/combino siemens mpk poznan/comheck.eng" not exist
+[I] "f:/train simulator/trains/trainset/duwag gt8 mpk poznan/duwag_gt8_mpk_poznan.eng" not exist
+[I] "f:/train simulator/trains/trainset/duwag gt8 mpk poznan/duwagd_gt8_mpk_poznan.wag" not exist
+[I] "f:/train simulator/trains/trainset/duwag gt8 mpk poznan/duwagb_gt8_mpk_poznan.eng" not exist
+[I] "f:/train simulator/trains/trainset/duwag gt8 mpk poznan/duwagc_gt8_mpk_poznan.eng" not exist
+[I] Nowy  114  act:  "f:/train simulator/routes/poznan_tram/activities/activity2.act"
+[I] "f:/train simulator/routes/poznan_tram/activities/activity2.act"
+[I] Nowy  115  act:  "f:/train simulator/routes/poznan_tram/activities/activity3.act"
+[I] "f:/train simulator/routes/poznan_tram/activities/activity3.act"
+[I] Nowy  116  act:  "f:/train simulator/routes/poznan_tram/activities/activity4.act"
+[I] "f:/train simulator/routes/poznan_tram/activities/activity4.act"
+[I] "f:/train simulator/trains/trainset/mpk_rt6n1/mpk_404_a_12sta.eng" not exist
+[I] "f:/train simulator/trains/trainset/mpk_rt6n1/mpk_404_b.eng" not exist
+[I] "f:/train simulator/trains/trainset/mpk_rt6n1/mpk_404_c_12sta.eng" not exist
+[I] "f:/train simulator/trains/trainset/konstal 105na_300 mpk poznan/105_300poznan.eng" not exist
+[I] "f:/train simulator/trains/trainset/konstal 105na_300 mpk poznan/105_300tw3apoznan.eng" not exist
+[I] Nowy  117  act:  "f:/train simulator/routes/poznan_tram/activities/activity5.act"
+[I] "f:/train simulator/routes/poznan_tram/activities/activity5.act"
+[I] Nowy  118  act:  "f:/train simulator/routes/poznan_tram/activities/rataje.act"
+[I] "f:/train simulator/routes/poznan_tram/activities/rataje.act"
+[I] Nowy  119  act:  "f:/train simulator/routes/poznan_tram/activities/rataje22.act"
+[I] "f:/train simulator/routes/poznan_tram/activities/rataje22.act"
+[I] Nowy  120  act:  "f:/train simulator/routes/tutorial route/activities/dlesson1.act"
+[I] "f:/train simulator/routes/tutorial route/activities/dlesson1.act"
+[I] Nowy  121  act:  "f:/train simulator/routes/tutorial route/activities/elesson1.act"
+[I] "f:/train simulator/routes/tutorial route/activities/elesson1.act"
+[I] Nowy  122  act:  "f:/train simulator/routes/tutorial route/activities/slesson1.act"
+[I] "f:/train simulator/routes/tutorial route/activities/slesson1.act"
+[I] Nowy  123  act:  "f:/train simulator/routes/usa1/activities/aftstrm.act"
+[I] "f:/train simulator/routes/usa1/activities/aftstrm.act"
+[I] Nowy  124  act:  "f:/train simulator/routes/usa1/activities/brdgstrk.act"
+[I] "f:/train simulator/routes/usa1/activities/brdgstrk.act"
+[I] Nowy  125  act:  "f:/train simulator/routes/usa1/activities/itr_e1_s1_w1_t1.act"
+[I] "f:/train simulator/routes/usa1/activities/itr_e1_s1_w1_t1.act"
+[I] Nowy  126  act:  "f:/train simulator/routes/usa1/activities/morningmaryland.act"
+[I] "f:/train simulator/routes/usa1/activities/morningmaryland.act"
+[I] Nowy  127  act:  "f:/train simulator/routes/usa1/activities/necorridortutorial.act"
+[I] "f:/train simulator/routes/usa1/activities/necorridortutorial.act"
+[I] Nowy  128  act:  "f:/train simulator/routes/usa1/activities/rdngyllw.act"
+[I] "f:/train simulator/routes/usa1/activities/rdngyllw.act"
+[I] Nowy  129  act:  "f:/train simulator/routes/usa1/activities/shortpr.act"
+[I] "f:/train simulator/routes/usa1/activities/shortpr.act"
+[I] Nowy  130  act:  "f:/train simulator/routes/usa1/activities/smmrex.act"
+[I] "f:/train simulator/routes/usa1/activities/smmrex.act"
+[I] Nowy  131  act:  "f:/train simulator/routes/usa1/activities/tnrescue.act"
+[I] "f:/train simulator/routes/usa1/activities/tnrescue.act"
+[I] Nowy  132  act:  "f:/train simulator/routes/usa2/activities/autotrnsetout.act"
+[I] "f:/train simulator/routes/usa2/activities/autotrnsetout.act"
+[I] Nowy  133  act:  "f:/train simulator/routes/usa2/activities/dawnoil.act"
+[I] "f:/train simulator/routes/usa2/activities/dawnoil.act"
+[I] Nowy  134  act:  "f:/train simulator/routes/usa2/activities/evegrain.act"
+[I] "f:/train simulator/routes/usa2/activities/evegrain.act"
+[I] Nowy  135  act:  "f:/train simulator/routes/usa2/activities/freighttutorial.act"
+[I] "f:/train simulator/routes/usa2/activities/freighttutorial.act"
+[I] Nowy  136  act:  "f:/train simulator/routes/usa2/activities/hotbox.act"
+[I] "f:/train simulator/routes/usa2/activities/hotbox.act"
+[I] Nowy  137  act:  "f:/train simulator/routes/usa2/activities/itr_e1_s1_w1_t1.act"
+[I] "f:/train simulator/routes/usa2/activities/itr_e1_s1_w1_t1.act"
+[I] Nowy  138  act:  "f:/train simulator/routes/usa2/activities/local_cutbank.act"
+[I] "f:/train simulator/routes/usa2/activities/local_cutbank.act"
+[I] Nowy  139  act:  "f:/train simulator/routes/usa2/activities/local_one.act"
+[I] "f:/train simulator/routes/usa2/activities/local_one.act"
+[I] Nowy  140  act:  "f:/train simulator/routes/usa2/activities/local_two.act"
+[I] "f:/train simulator/routes/usa2/activities/local_two.act"
+[I] Nowy  141  act:  "f:/train simulator/routes/usa2/activities/mainduty.act"
+[I] "f:/train simulator/routes/usa2/activities/mainduty.act"
+[I] Nowy  142  act:  "f:/train simulator/routes/usa2/activities/mornimod.act"
+[I] "f:/train simulator/routes/usa2/activities/mornimod.act"
+[I] Nowy  143  act:  "f:/train simulator/routes/usa2/activities/nnmxdgds.act"
+[I] "f:/train simulator/routes/usa2/activities/nnmxdgds.act"
+[I] Nowy  144  act:  "f:/train simulator/routes/usa2/activities/whitpull.act"
+[I] "f:/train simulator/routes/usa2/activities/whitpull.act"
+[I] Nowy  145  act:  "f:/train simulator/routes/usa2/activities/yard_one.act"
+[I] "f:/train simulator/routes/usa2/activities/yard_one.act"
+[I] Nowy  146  act:  "f:/train simulator/routes/usa2/activities/yard_two.act"
+[I] "f:/train simulator/routes/usa2/activities/yard_two.act"
+[I] loaded
+[I] "000000"
+[I] con id  0
+[I] Nowy  0  shape:  "f:/train simulator/trains/trainset/pkp-et22-340/et22-340.s"
+[I] Nowy  1  shape:  "f:/train simulator/trains/trainset/pp-pkp-ds/pp-pkp-9500-ds.s"
+[I] Nowy  2  shape:  "f:/train simulator/trains/trainset/pp-pkp-bdnu/pp-pkp-2078-582-bdnu.s"
+[I] Nowy  3  shape:  "f:/train simulator/trains/trainset/pp-pkp-wrd/pp-pkp-8810-wrbd.s"
+[I] Nowy  4  shape:  "f:/train simulator/trains/trainset/pp-pkp-adu/pp-pkp-1908-322-adu.s"
+[I] Nowy  5  shape:  "f:/train simulator/trains/trainset/pp-pkp-adu/pp-pkp-1900-139-adu.s"
+[I] Nowy  6  shape:  "f:/train simulator/trains/trainset/pp-pkp-bcdu/pp-pkp-5910-bcdu.s"
+[I] ""
+[I] con id  179
+[I] "WhtfshYdSwCars7"
+[I] con id  154
+[I] Nowy  7  shape:  "f:/train simulator/trains/trainset/us2freightcar1/us2freightcar1.s"
+[I] ""
+[I] con id  180
+[I] "WhtfshYdSwCars7"
+[I] con id  154
+[I] ""
+[I] con id  180
+[I] "WhtfshYdSwCars7"
+[I] con id  154
+[I] ""
+[I] con id  180
+[I] ""
+[I] con id  179
+[I] "sadasasdasd"
+[I] con id  180
+[I] "WhtfshYdSwCars5"
+[I] con id  152
+[I] Nowy  8  shape:  "f:/train simulator/trains/trainset/us2hoppercar/us2hoppercar.s"
+[I] Nowy  9  shape:  "f:/train simulator/trains/trainset/us2fcarye2/us2fcarye2.s"
+[I] Nowy  10  shape:  "f:/train simulator/trains/trainset/us2chemicar/us2chemicar.s"
+[I] Nowy  11  shape:  "f:/train simulator/trains/trainset/us2dblehgtfrghtrd/us2dblehgtfrghtrd.s"
+[I] Nowy  12  shape:  "f:/train simulator/trains/trainset/us2dblehgtfrghtbl/us2dblehgtfrghtbl.s"
+[I] Nowy  13  shape:  "f:/train simulator/trains/trainset/us2freightcar3/us2freightcar3.s"
+[I] Nowy  14  shape:  "f:/train simulator/trains/trainset/us2emploggercar/us2emploggercar.s"
+[I] Nowy  15  shape:  "f:/train simulator/trains/trainset/us2fullloggercar/us2fullloggercar.s"
+[I] ""
+[I] con id  181
+[I] "Yard_two_consist3"
+[I] con id  174
+[I] ""
+[I] con id  181
+[I] ""
+[I] con id  182
+[I] "wagony1"
+[I] con id  148
+[I] Nowy  16  shape:  "f:/train simulator/trains/trainset/pp-pkp-adnu/pp-pkp-1970-117-adnu.s"
+[I] Nowy  17  shape:  "f:/train simulator/trains/trainset/pp-pkp-adnu/pp-pkp-1978-212-adnu.s"
+[I] ""
+[I] con id  183
+[I] "wagony1"
+[I] con id  148
+[I] ""
+[I] con id  182
+[I] ""
+[I] con id  183

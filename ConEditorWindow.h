@@ -44,6 +44,7 @@ public slots:
     void cFileNameSelected(QString n); 
     void cDisplayNameSelected(QString n); 
     void cReverseSelected();
+    void cCloneSelected();
     void cDurabilitySelected();
     void eFindConsistsByEng(); 
     void addToRandomConsist(int id); 
@@ -83,6 +84,7 @@ private:
     QMenu *helpMenu;
     QMenu *consistMenu;
     QAction *cReverse;
+    QAction *cClone;
     QAction *fSave;
     QAction *fNew;
     QAction *fExit;
