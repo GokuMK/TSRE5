@@ -26,6 +26,7 @@ public:
     bool isModified();
     void setModified(bool value);
     void paintTexture(Brush* brush, int x, int z, float posx, float posz);
+    void lockTexture(Brush* brush, int x, int z, float posx, float posz);
     void setTexture(Brush* brush, int x, int z, float posx, float posz);
     void setWaterDraw(int x, int z, float posx, float posz);
     void setWaterLevelGui();
@@ -47,6 +48,7 @@ private:
     bool uniqueTex[256];
     int texid[256];
     bool texModified[256];
+    bool texLocked[256];
     QOpenGLBuffer *VBO = NULL;
     QOpenGLVertexArrayObject *VAO = NULL;
 
@@ -54,6 +56,7 @@ private:
     OglObj mlines;
     OglObj slines;
     OglObj ulines;
+    OglObj lockedlines;
     OglObj water[256];
     
     

@@ -41,11 +41,12 @@ public slots:
     void setEradius(QString val);
     void waterTerrToolEnabled();
     void drawTerrToolEnabled();
+    void lockTexToolEnabled();
     void waterHeightTileToolEnabled();
     void fixedTileToolEnabled();
-    void mapTileShowToolEnabled();
-    void mapTileLoadToolEnabled();
-    void heightTileLoadToolEnabled();
+    //void mapTileShowToolEnabled();
+    //void mapTileLoadToolEnabled();
+    //void heightTileLoadToolEnabled();
     
 signals:
     void enableTool(QString name);

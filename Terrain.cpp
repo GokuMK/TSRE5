@@ -19,6 +19,7 @@ Terrain::Terrain(float x, float y) {
         texid[i] = -1;
         hidden[i] = false;
         texModified[i] = false;
+        texLocked[i] = false;
         uniqueTex[i] = false;
     }
     VBO = new QOpenGLBuffer();
@@ -395,10 +396,23 @@ void Terrain::paintTexture(Brush* brush, int x, int z, float posx, float posz) {
             qDebug() << tx << " " << tz;
             if ((tx < 0.0 - size) || (tx > 1.0 + size) || (tz < 0.0 - size) || (tz > 1.0 + size))
                 continue;
-
-            this->paintTextureOnTile(brush, j, i, tx, tz);
+            if(!texLocked[j * 16 + i])
+                this->paintTextureOnTile(brush, j, i, tx, tz);
         }
 
+}
+
+void Terrain::lockTexture(Brush* brush, int x, int z, float posx, float posz) {
+
+    int u = (posx + 1024) / 128;
+    int y = (posz + 1024) / 128;
+    //hidden[y*16 + u] = true;
+    float tx = posx + 1024 - u * 128;
+    float tz = posz + 1024 - y * 128;
+    //tx/= 128;
+    //tz/= 128;
+    texLocked[y * 16 + u] = !texLocked[y * 16 + u];
+    reloadLines();
 }
 
 void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
@@ -450,6 +464,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     if(Game::viewTileGrid){
         slines.render();
         ulines.render();
+        lockedlines.render();
     }
 
     gluu->enableTextures();  
@@ -738,7 +753,59 @@ void Terrain::reloadLines() {
     ulines.setMaterial(0.8, 0.8, 0.8);
     ulines.init(punkty, ptr, lines.V, GL_LINES);
     delete[] punkty;
+
+    //////////////////////
     
+    ui = 0;
+    for (int uu = 0; uu < 16; uu++)
+        for (int yy = 0; yy < 16; yy++)
+            if(this->texLocked[uu*16+yy]) ui++;
+    
+    punkty = new float[256 * 128 * 6];
+    ptr = 0;
+    i = 0;
+    
+    for (int uu = 0; uu < 16; uu++)
+        for (int yy = 0; yy < 16; yy++){
+            if(!this->texLocked[yy*16+uu]) continue;
+            
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+i][uu*16+0];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8;
+                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+ i + 1][uu*16+0];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+            }
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+0][uu*16+i];
+                 punkty[ptr++] = -1024 + yy*128;
+                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+0][uu*16+i + 1];
+                 punkty[ptr++] = -1024 + yy*128;
+            }
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+i][uu*16+16];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8;
+                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+ i + 1][uu*16+16];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+            }
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+16][uu*16+i];
+                 punkty[ptr++] = -1024 + yy*128+128;
+                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+16][uu*16+i + 1];
+                 punkty[ptr++] = -1024 + yy*128+128;
+            }
+        }
+    
+    lockedlines.setMaterial(0.1, 0.1, 0.1);
+    lockedlines.init(punkty, ptr, lines.V, GL_LINES);
+    delete[] punkty;
 }
 
 void Terrain::vertexInit() {

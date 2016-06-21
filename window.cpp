@@ -7,6 +7,7 @@
 #include "GuiFunct.h"
 #include "ObjTools.h"
 #include "TerrainTools.h"
+#include "GeoTools.h"
 #include "ActivityTools.h"
 #include "NaviBox.h"
 #include "AboutWindow.h"
@@ -31,6 +32,7 @@ Window::Window() {
     
     objTools = new ObjTools("ObjTools");
     terrainTools = new TerrainTools("TerrainTools");
+    geoTools = new GeoTools("GeoTools");
     activityTools = new ActivityTools("ActivityTools");
     //naviBox = new NaviBox();
     glWidget = new GLWidget;
@@ -68,6 +70,7 @@ Window::Window() {
     mainLayout2->setContentsMargins(0,0,0,0);
     mainLayout2->addWidget(objTools);
     mainLayout2->addWidget(terrainTools);
+    mainLayout2->addWidget(geoTools);
     mainLayout2->addWidget(activityTools);
     //mainLayout2->addWidget(naviBox);
     //mainLayout2->setAlignment(naviBox, Qt::AlignBottom);
@@ -175,9 +178,14 @@ Window::Window() {
     terrainAction->setShortcut(QKeySequence("F2"));
     toolsMenu->addAction(terrainAction);
     QObject::connect(terrainAction, SIGNAL(triggered(bool)), this, SLOT(showToolsTerrain(bool)));
+    geoAction = GuiFunct::newMenuCheckAction(tr("&Geo"), this); 
+    geoAction->setChecked(false);    
+    geoAction->setShortcut(QKeySequence("F3"));
+    toolsMenu->addAction(geoAction);
+    QObject::connect(geoAction, SIGNAL(triggered(bool)), this, SLOT(showToolsGeo(bool)));
     activityAction = GuiFunct::newMenuCheckAction(tr("&Activity"), this); 
     activityAction->setChecked(false);    
-    activityAction->setShortcut(QKeySequence("F3"));
+    activityAction->setShortcut(QKeySequence("F4"));
     toolsMenu->addAction(activityAction);
     QObject::connect(activityAction, SIGNAL(triggered(bool)), this, SLOT(showToolsActivity(bool)));
     // Help
@@ -239,6 +247,9 @@ Window::Window() {
                       glWidget, SLOT(enableTool(QString)));
     
     QObject::connect(terrainTools, SIGNAL(enableTool(QString)),
+                      glWidget, SLOT(enableTool(QString)));   
+    
+    QObject::connect(geoTools, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));   
     
     QObject::connect(propertiesDyntrack, SIGNAL(enableTool(QString)),
@@ -350,6 +361,15 @@ void Window::showToolsTerrain(bool show){
     }
 }
 
+void Window::showToolsGeo(bool show){
+    if(show){
+        hideShowToolWidget(true);
+        setToolbox("geoTools");
+    } else {
+        hideShowToolWidget(false);
+    }
+}
+
 void Window::showToolsActivity(bool show){
     if(show){
         hideShowToolWidget(true);
@@ -370,6 +390,11 @@ void Window::setToolbox(QString name){
         terrainTools->show();
         terrainAction->setChecked(true);       
     }
+    if(name == "geoTools"){
+        hideAllTools();
+        geoTools->show();
+        geoAction->setChecked(true);
+    }
     if(name == "activityTools"){
         hideAllTools();
         activityTools->show();
@@ -380,9 +405,11 @@ void Window::setToolbox(QString name){
 void Window::hideAllTools(){
     objTools->hide();
     terrainTools->hide();
+    geoTools->hide();
     activityTools->hide();
     objectsAction->setChecked(false);
     terrainAction->setChecked(false);     
+    geoAction->setChecked(false);
     activityAction->setChecked(false);
 }
 

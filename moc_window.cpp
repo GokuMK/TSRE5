@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Window_t {
-    QByteArrayData data[29];
-    char stringdata0[359];
+    QByteArrayData data[30];
+    char stringdata0[372];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -56,8 +56,9 @@ QT_MOC_LITERAL(23, 261, 13), // "viewPointer3d"
 QT_MOC_LITERAL(24, 275, 11), // "viewMarkers"
 QT_MOC_LITERAL(25, 287, 15), // "showToolsObject"
 QT_MOC_LITERAL(26, 303, 16), // "showToolsTerrain"
-QT_MOC_LITERAL(27, 320, 17), // "showToolsActivity"
-QT_MOC_LITERAL(28, 338, 20) // "showTerrainTreeEditr"
+QT_MOC_LITERAL(27, 320, 12), // "showToolsGeo"
+QT_MOC_LITERAL(28, 333, 17), // "showToolsActivity"
+QT_MOC_LITERAL(29, 351, 20) // "showTerrainTreeEditr"
 
     },
     "Window\0exitNow\0\0sendMsg\0text\0save\0"
@@ -68,8 +69,8 @@ QT_MOC_LITERAL(28, 338, 20) // "showTerrainTreeEditr"
     "viewWorldGrid\0viewTileGrid\0viewInteractives\0"
     "viewTrackDbLines\0viewTsectionLines\0"
     "viewPointer3d\0viewMarkers\0showToolsObject\0"
-    "showToolsTerrain\0showToolsActivity\0"
-    "showTerrainTreeEditr"
+    "showToolsTerrain\0showToolsGeo\0"
+    "showToolsActivity\0showTerrainTreeEditr"
 };
 #undef QT_MOC_LITERAL
 
@@ -79,7 +80,7 @@ static const uint qt_meta_data_Window[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      23,   14, // methods
+      24,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -87,31 +88,32 @@ static const uint qt_meta_data_Window[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  129,    2, 0x06 /* Public */,
-       3,    1,  130,    2, 0x06 /* Public */,
+       1,    0,  134,    2, 0x06 /* Public */,
+       3,    1,  135,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,  133,    2, 0x0a /* Public */,
-       6,    0,  134,    2, 0x0a /* Public */,
-       7,    0,  135,    2, 0x0a /* Public */,
-       8,    0,  136,    2, 0x0a /* Public */,
-       9,    1,  137,    2, 0x0a /* Public */,
-      11,    1,  140,    2, 0x0a /* Public */,
-      14,    1,  143,    2, 0x0a /* Public */,
-      15,    1,  146,    2, 0x0a /* Public */,
-      16,    1,  149,    2, 0x0a /* Public */,
-      17,    1,  152,    2, 0x0a /* Public */,
-      18,    1,  155,    2, 0x0a /* Public */,
-      19,    1,  158,    2, 0x0a /* Public */,
-      20,    1,  161,    2, 0x0a /* Public */,
-      21,    1,  164,    2, 0x0a /* Public */,
-      22,    1,  167,    2, 0x0a /* Public */,
-      23,    1,  170,    2, 0x0a /* Public */,
-      24,    1,  173,    2, 0x0a /* Public */,
-      25,    1,  176,    2, 0x0a /* Public */,
-      26,    1,  179,    2, 0x0a /* Public */,
-      27,    1,  182,    2, 0x0a /* Public */,
-      28,    0,  185,    2, 0x0a /* Public */,
+       5,    0,  138,    2, 0x0a /* Public */,
+       6,    0,  139,    2, 0x0a /* Public */,
+       7,    0,  140,    2, 0x0a /* Public */,
+       8,    0,  141,    2, 0x0a /* Public */,
+       9,    1,  142,    2, 0x0a /* Public */,
+      11,    1,  145,    2, 0x0a /* Public */,
+      14,    1,  148,    2, 0x0a /* Public */,
+      15,    1,  151,    2, 0x0a /* Public */,
+      16,    1,  154,    2, 0x0a /* Public */,
+      17,    1,  157,    2, 0x0a /* Public */,
+      18,    1,  160,    2, 0x0a /* Public */,
+      19,    1,  163,    2, 0x0a /* Public */,
+      20,    1,  166,    2, 0x0a /* Public */,
+      21,    1,  169,    2, 0x0a /* Public */,
+      22,    1,  172,    2, 0x0a /* Public */,
+      23,    1,  175,    2, 0x0a /* Public */,
+      24,    1,  178,    2, 0x0a /* Public */,
+      25,    1,  181,    2, 0x0a /* Public */,
+      26,    1,  184,    2, 0x0a /* Public */,
+      27,    1,  187,    2, 0x0a /* Public */,
+      28,    1,  190,    2, 0x0a /* Public */,
+      29,    0,  193,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -128,6 +130,7 @@ static const uint qt_meta_data_Window[] = {
     QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    2,
+    QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    6,
@@ -171,8 +174,9 @@ void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 18: _t->viewMarkers((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 19: _t->showToolsObject((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 20: _t->showToolsTerrain((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 21: _t->showToolsActivity((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 22: _t->showTerrainTreeEditr(); break;
+        case 21: _t->showToolsGeo((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 22: _t->showToolsActivity((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 23: _t->showTerrainTreeEditr(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -220,13 +224,13 @@ int Window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 23)
+        if (_id < 24)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 23;
+        _id -= 24;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 23)
+        if (_id < 24)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 23;
+        _id -= 24;
     }
     return _id;
 }

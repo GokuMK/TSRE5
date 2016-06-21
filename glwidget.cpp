@@ -630,6 +630,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         if(toolEnabled == "heightTileLoadTool"){
             TerrainLib::setHeightFromGeoGui((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
+        if(toolEnabled == "lockTexTool"){
+            TerrainLib::lockTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
         if(toolEnabled == ""){
             camera->MouseDown(event);
         }

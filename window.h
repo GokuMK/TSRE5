@@ -7,6 +7,7 @@
 class QSlider;
 class GLWidget;
 class ObjTools;
+class GeoTools;
 class TerrainTools;
 class ActivityTools;
 class NaviBox;
@@ -43,6 +44,7 @@ public slots:
     void viewMarkers(bool show);
     void showToolsObject(bool show);
     void showToolsTerrain(bool show);
+    void showToolsGeo(bool show);
     void showToolsActivity(bool show);
     void showTerrainTreeEditr();
 
@@ -61,6 +63,7 @@ private:
     
     GLWidget *glWidget;
     ObjTools *objTools;
+    GeoTools *geoTools;
     TerrainTools *terrainTools;
     ActivityTools *activityTools;
     //NaviBox *naviBox;
@@ -87,6 +90,7 @@ private:
     QAction *terrainAction;
     QAction *terrainTreeEditr;
     QAction *trkEditr;
+    QAction *geoAction;
     QAction *activityAction;
     
     AboutWindow* aboutWindow;

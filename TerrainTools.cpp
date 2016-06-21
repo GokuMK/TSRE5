@@ -26,9 +26,9 @@ TerrainTools::TerrainTools(QString name)
     QPushButton *gapsTerrTool = new QPushButton("Gaps", this);
     QPushButton *waterTileTool = new QPushButton("Water level", this);
     QPushButton *fixedTileTool = new QPushButton("Fixed Height", this);
-    QPushButton *mapTileShowTool = new QPushButton("Show/H Map", this);
-    QPushButton *mapTileLoadTool = new QPushButton("Load Map", this);
-    QPushButton *heightTileLoadTool = new QPushButton("Load Height", this);
+    //QPushButton *mapTileShowTool = new QPushButton("Show/H Map", this);
+    //QPushButton *mapTileLoadTool = new QPushButton("Load Map", this);
+    //QPushButton *heightTileLoadTool = new QPushButton("Load Height", this);
     //QPushButton *fixedTerrTool = new QPushButton("Fixed Height", this);
     
     
@@ -37,11 +37,11 @@ TerrainTools::TerrainTools(QString name)
     vlist3->setContentsMargins(3,0,1,0);    
     row = 0;
     vlist3->addWidget(heightTool,row,0);
-    vlist3->addWidget(waterTileTool,row,1);
-    vlist3->addWidget(fixedTileTool,row++,2);
-    vlist3->addWidget(mapTileShowTool,row,0);
-    vlist3->addWidget(mapTileLoadTool,row,1);
-    vlist3->addWidget(heightTileLoadTool,row++,2);
+    vlist3->addWidget(fixedTileTool,row,1);
+    vlist3->addWidget(waterTileTool,row,2);
+    //vlist3->addWidget(mapTileShowTool,row,0);
+    //vlist3->addWidget(mapTileLoadTool,row,1);
+    //vlist3->addWidget(heightTileLoadTool,row++,2);
     
     QGridLayout *vlist4 = new QGridLayout;
     vlist4->setSpacing(2);
@@ -206,13 +206,16 @@ TerrainTools::TerrainTools(QString name)
     
     // signals
     QObject::connect(heightTool, SIGNAL(released()),
-                      this, SLOT(heightToolEnabled()));
+                      this, SLOT(heightToolPEnabled()));
     
     QObject::connect(paintTool, SIGNAL(released()),
                       this, SLOT(paintColorToolEnabled()));
     
     QObject::connect(paintTool2, SIGNAL(released()),
                       this, SLOT(paintTexToolEnabled()));
+    
+    QObject::connect(lockTexTool, SIGNAL(released()),
+                      this, SLOT(lockTexToolEnabled()));
     
     QObject::connect(pickTexTool, SIGNAL(released()),
                       this, SLOT(pickTexToolEnabled()));
@@ -229,14 +232,14 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(fixedTileTool, SIGNAL(released()),
                       this, SLOT(fixedTileToolEnabled()));
     
-    QObject::connect(mapTileShowTool, SIGNAL(released()),
+    /*QObject::connect(mapTileShowTool, SIGNAL(released()),
                       this, SLOT(mapTileShowToolEnabled()));
     
     QObject::connect(mapTileLoadTool, SIGNAL(released()),
                       this, SLOT(mapTileLoadToolEnabled()));
     
     QObject::connect(heightTileLoadTool, SIGNAL(released()),
-                      this, SLOT(heightTileLoadToolEnabled()));
+                      this, SLOT(heightTileLoadToolEnabled()));*/
     
     QObject::connect(drawTerrTool, SIGNAL(released()),
                       this, SLOT(drawTerrToolEnabled()));
@@ -334,20 +337,12 @@ void TerrainTools::pickTexToolEnabled(){
     emit enableTool("pickTerrainTexTool");
 }
 
+void TerrainTools::lockTexToolEnabled(){
+    emit enableTool("lockTexTool");
+}
+
 void TerrainTools::waterTerrToolEnabled(){
     emit enableTool("waterTerrTool");
-}
-
-void TerrainTools::mapTileShowToolEnabled(){
-    emit enableTool("mapTileShowTool");
-}
-
-void TerrainTools::mapTileLoadToolEnabled(){
-    emit enableTool("mapTileLoadTool");
-}
-
-void TerrainTools::heightTileLoadToolEnabled(){
-    emit enableTool("heightTileLoadTool");
 }
 
 void TerrainTools::drawTerrToolEnabled(){

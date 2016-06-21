@@ -85,6 +85,7 @@
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
+        <itemPath>GeoTools.h</itemPath>
         <itemPath>LoadWindow.h</itemPath>
         <itemPath>NaviBox.h</itemPath>
         <itemPath>NaviWindow.h</itemPath>
@@ -258,6 +259,7 @@
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
+        <itemPath>GeoTools.cpp</itemPath>
         <itemPath>LoadWindow.cpp</itemPath>
         <itemPath>NaviBox.cpp</itemPath>
         <itemPath>NaviWindow.cpp</itemPath>
@@ -516,6 +518,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1058,6 +1064,10 @@
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
@@ -1591,6 +1601,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2133,6 +2147,10 @@
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
@@ -2661,6 +2679,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="8">
       </item>

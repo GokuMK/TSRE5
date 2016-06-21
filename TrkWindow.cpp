@@ -52,6 +52,7 @@ TrkWindow::TrkWindow() : QDialog(){
     settings->addWidget(new QLabel("Terrain Error Scale: "), row++, 0);
     settings->addWidget(GuiFunct::newTQLabel("Environment"), row++, 0);
     settings->addWidget(&envName, row++, 0);
+    envName.setStyleSheet("combobox-popup: 0;");
     settings->addWidget(GuiFunct::newTQLabel("Description"), row++, 0);
     row = 0;
     row++;
@@ -62,6 +63,7 @@ TrkWindow::TrkWindow() : QDialog(){
     settings->addWidget(&displayName, row++, 1);
     row++;
     settings->addWidget(&electrified, row++, 1);
+    electrified.setStyleSheet("combobox-popup: 0;");
     electrified.addItem("No", 0);
     electrified.addItem("Yes", 1);
     settings->addWidget(&overheadWireHeight, row++, 1);
@@ -83,6 +85,7 @@ TrkWindow::TrkWindow() : QDialog(){
     tempRestrictedSpeed.setRange(0, 1000);
     tempRestrictedSpeed.setSingleStep(5);
     settings->addWidget(&milepostUnitsKilometers, row++, 1);
+    milepostUnitsKilometers.setStyleSheet("combobox-popup: 0;");
     milepostUnitsKilometers.addItem("No", 0);
     milepostUnitsKilometers.addItem("Yes", 1);
     settings->addWidget(&terrainErrorScale, row++, 1);
@@ -94,8 +97,9 @@ TrkWindow::TrkWindow() : QDialog(){
     QVBoxLayout *tab2 = new QVBoxLayout;
     QHBoxLayout *ibuttons = new QHBoxLayout;
     ibuttons->addWidget(&iList);
+    iList.setStyleSheet("combobox-popup: 0;");
     iList.addItem("Load Image", 0);
-    iList.addItem("Details Image", 0);
+    iList.addItem("Details Image", 1);
     iList.setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     ibuttons->addWidget(&iCopy);
     iCopy.setText(" Copy ");
@@ -143,6 +147,12 @@ int TrkWindow::exec() {
         this->electrified.setCurrentText(0);
     }
     
+    if(trk->milepostUnitsKilometers){
+        this->milepostUnitsKilometers.setCurrentIndex(1);
+    }else{
+        this->milepostUnitsKilometers.setCurrentIndex(0);
+    }
+    
     this->startTileX.setText(QString::number(trk->startTileX));
     this->startTileZ.setText(QString::number(trk->startTileZ));
     this->startpX.setText(QString::number(trk->startpX));
@@ -165,7 +175,8 @@ int TrkWindow::exec() {
             if(tex1->bytesPerPixel == 3)
                 imageLoad.setPixmap(QPixmap::fromImage(QImage(out,640,450,QImage::Format_RGB888)));
             if(tex1->bytesPerPixel == 4)
-                imageLoad.setPixmap(QPixmap::fromImage(QImage(out,640,450,QImage::Format_RGBA8888)));    
+                imageLoad.setPixmap(QPixmap::fromImage(QImage(out,640,450,QImage::Format_RGBA8888)));   
+            delete[] out;
     }
     //int imageLoadId = TexLib::addTex(Game::root+"/routes/"+idName+"/"+imageLoad);
     

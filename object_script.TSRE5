@@ -32,6 +32,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GLMatrix.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GLUU.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Game.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GeoTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GuiFunct.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/HGTfile.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/HazardObj.o
@@ -136,6 +137,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ConListWidget.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ConUnitsWidget.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_EngListWidget.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_GeoTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_HeightWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ImageLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_LoadWindow.o

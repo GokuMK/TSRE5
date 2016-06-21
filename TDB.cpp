@@ -276,7 +276,7 @@ void TDB::fillDynTrack(DynTrackObj* track){
     }
     
     bool success;
-    for(int i = 40000; i< tsection->routeShapes; i++){
+    for(int i = tsection->tsectionShapes; i< tsection->routeShapes; i++){
         success = true;
         if(tsection->shape[i] == NULL) continue;
         
