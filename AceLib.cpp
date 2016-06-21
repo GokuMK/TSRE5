@@ -51,7 +51,7 @@ void AceLib::run() {
 
     //qDebug() << "--"<<texture->width<<":"<<texture->height<<" "<<texture->bpp;
 
-    if ((texture->width <= 0) || (texture->height <= 0) || ((texture->bpp != 24) && (texture->bpp != 32))) {
+    if ((texture->width <= 1) || (texture->height <= 1) || ((texture->bpp != 24) && (texture->bpp != 32))) {
         qDebug() << "!!!!!!!!!!!!! mega fail tex: " <<  texture->pathid
                 <<  " " <<  texture->width
                 <<  " " <<  texture->height
@@ -59,15 +59,23 @@ void AceLib::run() {
                 ;
         return;
     }
-    if (!(texture->width == 16 || texture->width == 32 || texture->width == 64 || texture->width == 128 ||
-            texture->width == 256 || texture->width == 512 || texture->width == 1024 || texture->width == 2048)) {
-        qDebug() << "!!!!!!!!!!!!! mega fail tex 22: " << texture->pathid
+    if (/*(texture->width % 2) != 0 || (texture->height % 2) != 0 ||*/ ((texture->width > 8192) && (texture->height > 8192))) {
+        qDebug() << "!!!!!!!!!!!!! mega fail tex: " <<  texture->pathid
+                <<  " " <<  texture->width
+                <<  " " <<  texture->height
+                <<  " " <<  texture->bpp
+                ;
+        return;
+    }
+    //if (!(texture->width == 16 || texture->width == 32 || texture->width == 64 || texture->width == 128 ||
+    //        texture->width == 256 || texture->width == 512 || texture->width == 1024 || texture->width == 2048)) {
+    /*    qDebug() << "!!!!!!!!!!!!! mega fail tex 22: " << texture->pathid
                 << " " << texture->width
                 << " " << texture->height
                 << " " << texture->bpp
                 ;
         return;
-    }
+    }*/
 
     texture->bytesPerPixel = (texture->bpp / 8);
     texture->imageSize = (texture->bytesPerPixel * texture->width * texture->height);

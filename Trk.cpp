@@ -6,6 +6,7 @@
 #include "ParserX.h"
 #include "ReadFile.h"
 #include "FileBuffer.h"
+#include "TexLib.h"
 
 Trk::Trk() {
     graphic = "graphic.ace";
@@ -34,6 +35,8 @@ Trk::Trk() {
     defaultDieselTowerSMS = "dtower.sms";
     tempRestrictedSpeed = 10;
     gravityScale = -1;
+    timetableTollerance = -1;
+    derailScale = -1;
     environment.clear();
     environment["SpringClear"] = "sun.env";
     environment["SpringRain"] = "rain.env";
@@ -171,6 +174,11 @@ void Trk::load(QString path){
             ParserX::SkipToken(data);
             continue;
         }
+        if (sh == ("milepostunitsmiles")) {
+            this->milepostUnitsKilometers = false;
+            ParserX::SkipToken(data);
+            continue;
+        }
         if (sh == ("maxlinevoltage")) {
             this->maxLineVoltage = ParserX::GetNumber(data);
             ParserX::SkipToken(data);
@@ -220,10 +228,30 @@ void Trk::load(QString path){
             ParserX::SkipToken(data);
             continue;
         }
-        qDebug() << sh;
+        if (sh == ("derailscale")) {
+            this->derailScale = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("timetabletollerance")) {
+            this->timetableTollerance = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        qDebug() << "TRK undefined: " << sh;
         ParserX::SkipToken(data);
     }
+    imageLoadId = TexLib::addTex(Game::root+"/routes/"+idName+"/load.ace");
+    imageDetailsId = TexLib::addTex(Game::root+"/routes/"+idName+"/details.ace");
     modified = false;
+}
+
+bool Trk::isModified(){
+    return modified;
+}
+
+void Trk::setModified(bool val){
+    modified = val;
 }
 
 void Trk::save() {
@@ -268,6 +296,8 @@ void Trk::save() {
     out << "	RouteStart ( "<< this->startTileX <<" "<< this->startTileZ <<" " << this->startpX << " " << this->startpZ << " )" << "\n";
     if(this->milepostUnitsKilometers)
         out << "	MilepostUnitsKilometers ( )" << "\n";
+    else
+        out << "	MilepostUnitsMiles ( )" << "\n";
     out << "	DefaultCrossingSMS ( " << ParserX::AddComIfReq(this->defaultCrossingSMS) << " )" << "\n";
     out << "	DefaultSignalSMS ( " << ParserX::AddComIfReq(this->defaultSignalSMS) << " )" << "\n";
     out << "	DefaultWaterTowerSMS ( " << ParserX::AddComIfReq(this->defaultWaterTowerSMS) << " )" << "\n";
@@ -276,8 +306,13 @@ void Trk::save() {
     out << "	TempRestrictedSpeed ( " << this->tempRestrictedSpeed << " )" << "\n";
     if(this->gravityScale >= 0)
         out << "	GravityScale ( " << this->gravityScale << " )" << "\n";
+    if(this->derailScale >= 0)
+    out << "	DerailScale ( " << this->derailScale << " )" << "\n";
+    if(this->timetableTollerance >= 0)
+    out << "	TimetableTollerance ( " << this->timetableTollerance << " )" << "\n";
     out << ")" << "\n";
 
     out.flush();
     file.close();
+    modified = false;
 }

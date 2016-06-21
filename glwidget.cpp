@@ -22,7 +22,6 @@
 #include "TerrainTreeWindow.h"
 #include "ShapeLib.h"
 #include "EngLib.h"
-#include "TrkWindow.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -755,9 +754,8 @@ void GLWidget::editPaste(){
 }
 
 void GLWidget::showTrkEditr(){
-    TrkWindow trkWindow;
-    trkWindow.trk = route->getTrk();
-    trkWindow.exec();
+    if(route != NULL)
+        route->showTrkEditr();
 }
 
 void GLWidget::getUnsavedInfo(std::vector<QString> &items){

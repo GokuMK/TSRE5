@@ -14,6 +14,12 @@ public:
     
     int exec();
     
+signals:    
+    
+public slots:
+    void bokEnabled();
+    void bcancelEnabled();
+    
 private:
     QLabel imageGraphic;
     QLabel imageLoad;
@@ -36,6 +42,9 @@ private:
     QDoubleSpinBox tempRestrictedSpeed;
     QComboBox envName;
     QLineEdit envValue;
+    QComboBox iList;
+    QPushButton iCopy;
+    QPushButton iPaste;
 };
 
 #endif	/* TRKWINDOW_H */

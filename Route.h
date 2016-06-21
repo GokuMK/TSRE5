@@ -48,6 +48,7 @@ public:
     std::unordered_map<std::string, Coords*> getMkrList();
     void setMkrFile(QString name);
     void getUnsavedInfo(std::vector<QString> &items);
+    void showTrkEditr(Trk * val = NULL);
     WorldObj* makeFlexTrack(int x, int z, float* pos);
     WorldObj* placeObject(int x, int z, float* p);
     WorldObj* placeObject(int x, int z, float* p, float* q);

@@ -37,7 +37,12 @@ public:
     QString defaultDieselTowerSMS;
     float tempRestrictedSpeed;
     float gravityScale;
-
+    float timetableTollerance;
+    float derailScale;
+    int imageLoadId;
+    int imageDetailsId;
+    bool isModified();
+    void setModified(bool val);
     Trk();
     void load();
     void load(QString path);

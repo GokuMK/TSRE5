@@ -39681,7 +39681,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Route.o: Route.cpp c:/OT/Sta
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbar.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbox.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
-		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h
+		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
+		TrkWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Route.o Route.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ruch.o: Ruch.cpp Ruch.h \
@@ -47277,7 +47278,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Trk.o: Trk.cpp Trk.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtimezone.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qversionnumber.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qxmlstream.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h \
+		TexLib.h \
+		Texture.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Trk.o Trk.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrkWindow.o: TrkWindow.cpp TrkWindow.h \
@@ -47726,7 +47729,10 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrkWindow.o: TrkWindow.cpp T
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QGraphicsView \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QGraphicsPixmapItem \
 		Trk.h \
-		GuiFunct.h
+		GuiFunct.h \
+		TexLib.h \
+		Texture.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrkWindow.o TrkWindow.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/UnsavedDialog.o: UnsavedDialog.cpp UnsavedDialog.h \
@@ -48971,8 +48977,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/glwidget.o: glwidget.cpp glw
 		OSM.h \
 		TerrainTreeWindow.h \
 		ShapeLib.h \
-		EngLib.h \
-		TrkWindow.h
+		EngLib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/glwidget.o glwidget.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/main.o: main.cpp c:/OT/Static/5.7.0_x64/include/QtWidgets/QApplication \

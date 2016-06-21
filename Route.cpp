@@ -24,6 +24,7 @@
 #include "ActLib.h"
 #include "Trk.h"
 #include "AboutWindow.h"
+#include "TrkWindow.h"
 
 Route::Route() {
 
@@ -492,6 +493,8 @@ void Route::getUnsavedInfo(std::vector<QString> &items){
         }
     }
     TerrainLib::getUnsavedInfo(items);
+    if(this->trk->isModified())
+        items.push_back("[S] Route Settings - TRK File");
     //this->trackDB->save();
     //this->roadDB->save();
 }
@@ -512,6 +515,7 @@ void Route::save() {
     TerrainLib::save();
     this->trackDB->save();
     this->roadDB->save();
+    this->trk->save();
 }
 
 void Route::createNewPaths() {
@@ -559,6 +563,7 @@ void Route::createNew() {
     newTrk->displayName = Game::route;
     newTrk->startTileX = Game::newRouteX;
     newTrk->startTileZ = Game::newRouteZ;
+    showTrkEditr(newTrk);
     newTrk->save();
     
     TDB::saveEmpty(false);
@@ -602,4 +607,12 @@ void Route::newTile(int x, int z) {
     TerrainLib::saveEmpty(x, -z);
     TerrainLib::reload(x, z);
     reloadTile(x, z);
+}
+
+void Route::showTrkEditr(Trk * val){
+    TrkWindow trkWindow;
+    if(val == NULL)
+        val = this->trk;
+    trkWindow.trk = val;
+    trkWindow.exec();
 }

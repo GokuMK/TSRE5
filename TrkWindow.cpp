@@ -6,13 +6,18 @@
 #include <QGraphicsPixmapItem>
 #include "Trk.h"
 #include "GuiFunct.h"
+#include "TexLib.h"
+#include "Texture.h"
+#include "Game.h"
+#include <QImage>
 
 TrkWindow::TrkWindow() : QDialog(){
+    setWindowFlags(Qt::WindowStaysOnTopHint);
     //QPushButton *loadButton = new QPushButton("Load", this);
     //QImage myImage(800, 800, QImage::Format_RGB888);
     //myImage->load("F:/2.png");
-    imageGraphic.setFixedSize(400,250);
-    imageLoad.setFixedSize(400,250);
+    imageGraphic.setFixedSize(640,450);
+    imageLoad.setFixedSize(640,450);
     //imageLabel->setContentsMargins(0,0,0,0);
     //imageLabel->setPixmap(QPixmap::fromImage(myImage));
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -41,8 +46,8 @@ TrkWindow::TrkWindow() : QDialog(){
     settings->addWidget(new QLabel("Position X: "), row++, 0);
     settings->addWidget(new QLabel("Position Z: "), row++, 0);
     settings->addWidget(GuiFunct::newTQLabel("Other"), row++, 0);
-    settings->addWidget(new QLabel("Speed Limit: "), row++, 0);
-    settings->addWidget(new QLabel("Restricted Speed: "), row++, 0);
+    settings->addWidget(new QLabel("Speed Limit (km/h): "), row++, 0);
+    settings->addWidget(new QLabel("Restricted Speed (km/h): "), row++, 0);
     settings->addWidget(new QLabel("Speed in Miles: "), row++, 0);
     settings->addWidget(new QLabel("Terrain Error Scale: "), row++, 0);
     settings->addWidget(GuiFunct::newTQLabel("Environment"), row++, 0);
@@ -51,12 +56,20 @@ TrkWindow::TrkWindow() : QDialog(){
     row = 0;
     row++;
     settings->addWidget(&idName, row++, 1);
+    idName.setEnabled(false);
     settings->addWidget(&routeName, row++, 1);
+    routeName.setEnabled(false);
     settings->addWidget(&displayName, row++, 1);
     row++;
     settings->addWidget(&electrified, row++, 1);
+    electrified.addItem("No", 0);
+    electrified.addItem("Yes", 1);
     settings->addWidget(&overheadWireHeight, row++, 1);
+    overheadWireHeight.setRange(0, 10000);
+    overheadWireHeight.setSingleStep(0.5);
     settings->addWidget(&maxLineVoltage, row++, 1);
+    maxLineVoltage.setRange(0, 100000);
+    maxLineVoltage.setSingleStep(100);
     row++;
     settings->addWidget(&startTileX, row++, 1);
     settings->addWidget(&startTileZ, row++, 1);
@@ -64,20 +77,47 @@ TrkWindow::TrkWindow() : QDialog(){
     settings->addWidget(&startpZ, row++, 1);
     row++;
     settings->addWidget(&speedLimit, row++, 1);
+    speedLimit.setRange(0, 1000);
+    speedLimit.setSingleStep(5);
     settings->addWidget(&tempRestrictedSpeed, row++, 1);
+    tempRestrictedSpeed.setRange(0, 1000);
+    tempRestrictedSpeed.setSingleStep(5);
     settings->addWidget(&milepostUnitsKilometers, row++, 1);
+    milepostUnitsKilometers.addItem("No", 0);
+    milepostUnitsKilometers.addItem("Yes", 1);
     settings->addWidget(&terrainErrorScale, row++, 1);
+    terrainErrorScale.setRange(0, 8);
+    terrainErrorScale.setSingleStep(0.1);
     row++;
     settings->addWidget(&envValue, row++, 1);
     tab1->addItem(settings);
     QVBoxLayout *tab2 = new QVBoxLayout;
-    tab2->addWidget(&imageGraphic);
+    QHBoxLayout *ibuttons = new QHBoxLayout;
+    ibuttons->addWidget(&iList);
+    iList.addItem("Load Image", 0);
+    iList.addItem("Details Image", 0);
+    iList.setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
+    ibuttons->addWidget(&iCopy);
+    iCopy.setText(" Copy ");
+    iPaste.setText(" Paste ");
+    ibuttons->addWidget(&iPaste);    
+    tab2->addItem(ibuttons);
     tab2->addWidget(&imageLoad);
+    //settings->addWidget(GuiFunct::newTQLabel("Details Image"), row++, 0);
+    //tab2->addWidget(&imageGraphic);
     main2Layout->addItem(tab1);
     main2Layout->addItem(tab2);
     description.setMinimumHeight(200);
     //mainLayout->addWidget(loadButton);
     //mainLayout->addWidget(imageLabel);
+    ibuttons = new QHBoxLayout;
+    QPushButton *bok = new QPushButton("OK");
+    QObject::connect(bok, SIGNAL(released()), this, SLOT(bokEnabled()));
+    QPushButton *bcancel = new QPushButton("Cancel");
+    QObject::connect(bcancel, SIGNAL(released()), this, SLOT(bcancelEnabled()));
+    ibuttons->addWidget(bok);
+    ibuttons->addWidget(bcancel);
+    mainLayout->addItem(ibuttons);
     mainLayout->setContentsMargins(1,1,1,1);
     this->setLayout(mainLayout);
     
@@ -94,17 +134,61 @@ int TrkWindow::exec() {
     this->routeName.setText(trk->routeName);
     this->displayName.setText(trk->displayName);
     this->maxLineVoltage.setValue(trk->maxLineVoltage);
-    this->speedLimit.setValue(trk->speedLimit);
+    this->speedLimit.setValue(trk->speedLimit*3.6);
+    this->tempRestrictedSpeed.setValue(trk->tempRestrictedSpeed*3.6);
     this->overheadWireHeight.setValue(trk->overheadWireHeight);
+    if(trk->electrified){
+        this->electrified.setCurrentIndex(1);
+    }else{
+        this->electrified.setCurrentText(0);
+    }
+    
+    this->startTileX.setText(QString::number(trk->startTileX));
+    this->startTileZ.setText(QString::number(trk->startTileZ));
+    this->startpX.setText(QString::number(trk->startpX));
+    this->startpZ.setText(QString::number(trk->startpZ));
+    
+    this->terrainErrorScale.setValue(trk->terrainErrorScale);
     
     QString txt = trk->description;
     txt.replace("\\n","\n");
     this->description.setPlainText(txt);
     for (auto it = trk->environment.begin(); it != trk->environment.end(); ++it)
         this->envName.addItem(QString::fromStdString((*it).first));
+    this->envValue.setText(trk->environment[this->envName.itemText(0).toStdString()]);
+    
+    Texture * tex1 = NULL;
+    if(TexLib::mtex[trk->imageLoadId] != NULL)
+        if(TexLib::mtex[trk->imageLoadId]->loaded){
+            tex1 = TexLib::mtex[trk->imageLoadId];
+            unsigned char * out = tex1->getImageData(640,450);
+            if(tex1->bytesPerPixel == 3)
+                imageLoad.setPixmap(QPixmap::fromImage(QImage(out,640,450,QImage::Format_RGB888)));
+            if(tex1->bytesPerPixel == 4)
+                imageLoad.setPixmap(QPixmap::fromImage(QImage(out,640,450,QImage::Format_RGBA8888)));    
+    }
+    //int imageLoadId = TexLib::addTex(Game::root+"/routes/"+idName+"/"+imageLoad);
+    
+    
     
     return QDialog::exec();
 } 
+
+void TrkWindow::bokEnabled(){
+    trk->setModified(true);
+    trk->displayName = displayName.text();
+    trk->startTileX = startTileX.text().toInt();
+    trk->startTileZ = startTileZ.text().toInt();
+    trk->startpX = startpX.text().toFloat();
+    trk->startpZ = startpZ.text().toFloat();
+    trk->description = description.toPlainText();
+    trk->description.replace("\n","\\n");
+    close();
+}
+
+void TrkWindow::bcancelEnabled(){
+    close();
+}
 
 TrkWindow::~TrkWindow() {
 }
