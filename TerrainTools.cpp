@@ -232,6 +232,9 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(fixedTileTool, SIGNAL(released()),
                       this, SLOT(fixedTileToolEnabled()));
     
+    QObject::connect(gapsTerrTool, SIGNAL(released()),
+                      this, SLOT(gapsTerrToolEnabled()));
+    
     /*QObject::connect(mapTileShowTool, SIGNAL(released()),
                       this, SLOT(mapTileShowToolEnabled()));
     
@@ -316,6 +319,10 @@ void TerrainTools::paintColorToolEnabled(){
     this->paintBrush->useTexture = false;
     emit setPaintBrush(this->paintBrush);
     emit enableTool("paintTool");
+}
+
+void TerrainTools::gapsTerrToolEnabled(){
+    emit enableTool("gapsTool");
 }
 
 void TerrainTools::paintTexToolEnabled(){

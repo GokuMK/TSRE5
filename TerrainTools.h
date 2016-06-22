@@ -42,6 +42,7 @@ public slots:
     void waterTerrToolEnabled();
     void drawTerrToolEnabled();
     void lockTexToolEnabled();
+    void gapsTerrToolEnabled();
     void waterHeightTileToolEnabled();
     void fixedTileToolEnabled();
     //void mapTileShowToolEnabled();

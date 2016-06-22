@@ -29,6 +29,7 @@ public:
     static void paintTexture(Brush* brush, int x, int z, float* p);
     static void lockTexture(Brush* brush, int x, int z, float* p);
     static void setTerrainTexture(Brush* brush, int x, int z, float* p);
+    static void toggleGaps(int x, int z, float* p);
     static void setWaterDraw(int x, int z, float* p);
     static void setWaterLevelGui(int x, int z, float* p);
     static void setFixedTileHeight(Brush* brush, int x, int z, float* p);

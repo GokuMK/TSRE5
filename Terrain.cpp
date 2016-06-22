@@ -41,6 +41,7 @@ Terrain::Terrain(float x, float y) {
         return;
     }
     jestF = readF(path + filename + "_f.raw");
+    modifiedF = false;
     //qDebug() << " ok";
     
     QString name = this->getTileName(mojex, -mojez);
@@ -150,6 +151,15 @@ void Terrain::refresh() {
     if (!loaded) return;
     isOgl = false;
     reloadLines();
+}
+
+void Terrain::toggleGaps(int x, int z, float posx, float posz){
+    if(!jestF)
+        newF();
+    fData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] ^= 0x04;
+    modifiedF = true;
+    modified = true;
+    refresh();
 }
 
 int Terrain::getTexture(int x, int z, float posx, float posz) {
@@ -291,7 +301,7 @@ void Terrain::setDraw(int x, int z, float posx, float posz) {
     tz /= 128;
     qDebug() << tx << " " << tz;
     qDebug() << tfile->flags[y * 16 + u];
-    //tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x1;
+    tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x1;
     this->setModified(true);
 }
 
@@ -855,7 +865,7 @@ void Terrain::normalInit() {
         }
     }
 };
-
+/*
 void Terrain::oglInit() {
     if(!VAO->isCreated()){
        VAO->create();
@@ -924,6 +934,146 @@ void Terrain::oglInit() {
                         punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                         punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                     }
+                }
+            }
+            VBO->write((uu * 16 + yy) * 16 * 16 * 6 * 5 * sizeof (GLfloat), punkty, 16 * 16 * 6 * 5 * sizeof (GLfloat));
+        }
+    }
+
+    VBO->release();
+    delete[] punkty;
+
+    initBlob();
+    //for (int i = 0; i < 257; i++)
+    //    delete normalData[i];
+    //delete normalData;
+    for (int i = 0; i < 257; i++)
+        delete[] vertexData[i];
+    delete[] vertexData;
+}*/
+
+void Terrain::oglInit() {
+    if(!VAO->isCreated()){
+       VAO->create();
+       VBO->create();
+    }
+    QOpenGLVertexArrayObject::Binder vaoBinder(VAO);
+    VBO->bind();
+    VBO->allocate(256 * 16 * 16 * 6 * 5 * sizeof (GLfloat));
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    f->glEnableVertexAttribArray(0);
+    f->glEnableVertexAttribArray(1);
+    f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), 0);
+    f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
+    
+    int ilosc = 16 * 16;
+    int suma;
+    float * punkty = new float[16 * 16 * 30];
+    //  var punkty = Terrain.punkty;
+    for (int uu = 0; uu < 16; uu++) {
+        for (int yy = 0; yy < 16; yy++) {
+            int ptr = 0;
+            bool fi0j0 = true, fi1j0 = true, fi0j1 = true, fi1j1 = true;
+
+            for (int ii = 0; ii < 16; ii++) {
+                for (int jj = 0; jj < 16; jj++) {
+                    if (jestF) {
+                        fi0j0 = !(((fData[yy * 16 + ii][uu * 16 + jj]) & 0x04) >> 2);
+                        fi0j1 = !(((fData[yy * 16 + ii][uu * 16 + jj + 1]) & 0x04) >> 2);
+                        fi1j1 = !(((fData[yy * 16 + ii + 1][uu * 16 + jj + 1]) &0x04) >> 2);
+                        fi1j0 = !(((fData[yy * 16 + ii + 1][uu * 16 + jj]) & 0x04) >> 2);
+                    }
+                    /*if (jestF) {
+                        suma = ((fData[yy * 16 + ii][uu * 16 + jj]) & 0x04);
+                        suma += ((fData[yy * 16 + ii][uu * 16 + jj + 1]) & 0x04);
+                        suma += ((fData[yy * 16 + ii + 1][uu * 16 + jj + 1]) & 0x04);
+                        suma += ((fData[yy * 16 + ii + 1][uu * 16 + jj]) & 0x04);
+                    }*/
+
+                    //if (!jestF || (suma < 4)) {
+                        if(((ii+jj) % 2 == 0)){
+                            if(fi0j0 && fi1j0 && fi1j1){
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
+                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            }
+                            ///////////////////////////////////////////////////////////
+                            if(fi0j0 && fi0j1 && fi1j1){
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
+                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            }
+                        }
+                        if(((ii+jj) % 2 == 1)){
+                            if(fi0j1 && fi1j1 && fi1j0){
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            }
+                            ///////////////////////////////////////////////////////////
+                            if(fi0j0 && fi0j1 && fi1j0){
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
+                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
+                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
+                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            }
+                        }
+                    //}
                 }
             }
             /*for(var jj = 0; jj<16; jj++){
@@ -1052,7 +1202,10 @@ void Terrain::save() {
     QString filename = getTileName((int) this->mojex, (int) - this->mojez);
     saveRAW(path + filename + "_y.raw");
     this->tfile->save(path + filename + ".t");
-
+    if(jestF && modifiedF){
+        saveF(path + filename + "_f.raw");
+    }
+    
     for (int u = 0; u < 16; u++)
         for (int y = 0; y < 16; y++) {
             if (this->texModified[y * 16 + u] == false) continue;
@@ -1102,6 +1255,19 @@ void Terrain::saveRAW(QString name) {
     return;
 }
 
+void Terrain::newF(){
+    fData = new unsigned char*[257];
+    for (int j = 0; j < 257; j++) {
+        fData[j] = new unsigned char[257];
+        for (int i = 0; i < 257; i++) {
+            fData[j][i] = 0;
+        }
+    }
+    jestF = true;
+    modifiedF = true;
+    modified = true;
+}
+
 bool Terrain::readF(QString fSfile) {
     fSfile.replace("//", "/");
     QFile *file = new QFile(fSfile);
@@ -1125,3 +1291,23 @@ bool Terrain::readF(QString fSfile) {
     delete data;
     return true;
 } 
+
+void Terrain::saveF(QString name) {
+    name.replace("//", "/");
+    QFile *file = new QFile(name);
+    qDebug() << "zapis " << name;
+    if (!file->open(QIODevice::WriteOnly))
+        return;
+    qDebug() << "w";
+    QDataStream write(file);
+    write.setByteOrder(QDataStream::LittleEndian);
+
+    for (int i = 0; i < 256; i++) {
+        for (int j = 0; j < 256; j++) {
+            write << fData[i][j];
+        }
+    }
+    modifiedF = false;
+    file->close();
+    return;
+}

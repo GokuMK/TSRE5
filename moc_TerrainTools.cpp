@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_TerrainTools_t {
-    QByteArrayData data[30];
-    char stringdata0[418];
+    QByteArrayData data[31];
+    char stringdata0[438];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -57,8 +57,9 @@ QT_MOC_LITERAL(24, 299, 10), // "setEradius"
 QT_MOC_LITERAL(25, 310, 20), // "waterTerrToolEnabled"
 QT_MOC_LITERAL(26, 331, 19), // "drawTerrToolEnabled"
 QT_MOC_LITERAL(27, 351, 18), // "lockTexToolEnabled"
-QT_MOC_LITERAL(28, 370, 26), // "waterHeightTileToolEnabled"
-QT_MOC_LITERAL(29, 397, 20) // "fixedTileToolEnabled"
+QT_MOC_LITERAL(28, 370, 19), // "gapsTerrToolEnabled"
+QT_MOC_LITERAL(29, 390, 26), // "waterHeightTileToolEnabled"
+QT_MOC_LITERAL(30, 417, 20) // "fixedTileToolEnabled"
 
     },
     "TerrainTools\0enableTool\0\0name\0"
@@ -71,7 +72,7 @@ QT_MOC_LITERAL(29, 397, 20) // "fixedTileToolEnabled"
     "setHtype\0setEsize\0setEemb\0setEcut\0"
     "setEradius\0waterTerrToolEnabled\0"
     "drawTerrToolEnabled\0lockTexToolEnabled\0"
-    "waterHeightTileToolEnabled\0"
+    "gapsTerrToolEnabled\0waterHeightTileToolEnabled\0"
     "fixedTileToolEnabled"
 };
 #undef QT_MOC_LITERAL
@@ -82,7 +83,7 @@ static const uint qt_meta_data_TerrainTools[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      30,   14, // methods
+      31,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -90,38 +91,39 @@ static const uint qt_meta_data_TerrainTools[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  164,    2, 0x06 /* Public */,
-       4,    1,  167,    2, 0x06 /* Public */,
+       1,    1,  169,    2, 0x06 /* Public */,
+       4,    1,  172,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,  170,    2, 0x0a /* Public */,
-       8,    0,  171,    2, 0x0a /* Public */,
-       9,    0,  172,    2, 0x0a /* Public */,
-      10,    0,  173,    2, 0x0a /* Public */,
-      11,    0,  174,    2, 0x0a /* Public */,
-      12,    0,  175,    2, 0x0a /* Public */,
-      13,    0,  176,    2, 0x0a /* Public */,
-      14,    0,  177,    2, 0x0a /* Public */,
-      15,    1,  178,    2, 0x0a /* Public */,
-      17,    1,  181,    2, 0x0a /* Public */,
-      17,    1,  184,    2, 0x0a /* Public */,
-      18,    1,  187,    2, 0x0a /* Public */,
-      18,    1,  190,    2, 0x0a /* Public */,
-      19,    1,  193,    2, 0x0a /* Public */,
-      20,    1,  196,    2, 0x0a /* Public */,
-      21,    1,  199,    2, 0x0a /* Public */,
-      21,    1,  202,    2, 0x0a /* Public */,
-      22,    1,  205,    2, 0x0a /* Public */,
-      22,    1,  208,    2, 0x0a /* Public */,
-      23,    1,  211,    2, 0x0a /* Public */,
-      23,    1,  214,    2, 0x0a /* Public */,
-      24,    1,  217,    2, 0x0a /* Public */,
-      24,    1,  220,    2, 0x0a /* Public */,
-      25,    0,  223,    2, 0x0a /* Public */,
-      26,    0,  224,    2, 0x0a /* Public */,
-      27,    0,  225,    2, 0x0a /* Public */,
-      28,    0,  226,    2, 0x0a /* Public */,
-      29,    0,  227,    2, 0x0a /* Public */,
+       7,    0,  175,    2, 0x0a /* Public */,
+       8,    0,  176,    2, 0x0a /* Public */,
+       9,    0,  177,    2, 0x0a /* Public */,
+      10,    0,  178,    2, 0x0a /* Public */,
+      11,    0,  179,    2, 0x0a /* Public */,
+      12,    0,  180,    2, 0x0a /* Public */,
+      13,    0,  181,    2, 0x0a /* Public */,
+      14,    0,  182,    2, 0x0a /* Public */,
+      15,    1,  183,    2, 0x0a /* Public */,
+      17,    1,  186,    2, 0x0a /* Public */,
+      17,    1,  189,    2, 0x0a /* Public */,
+      18,    1,  192,    2, 0x0a /* Public */,
+      18,    1,  195,    2, 0x0a /* Public */,
+      19,    1,  198,    2, 0x0a /* Public */,
+      20,    1,  201,    2, 0x0a /* Public */,
+      21,    1,  204,    2, 0x0a /* Public */,
+      21,    1,  207,    2, 0x0a /* Public */,
+      22,    1,  210,    2, 0x0a /* Public */,
+      22,    1,  213,    2, 0x0a /* Public */,
+      23,    1,  216,    2, 0x0a /* Public */,
+      23,    1,  219,    2, 0x0a /* Public */,
+      24,    1,  222,    2, 0x0a /* Public */,
+      24,    1,  225,    2, 0x0a /* Public */,
+      25,    0,  228,    2, 0x0a /* Public */,
+      26,    0,  229,    2, 0x0a /* Public */,
+      27,    0,  230,    2, 0x0a /* Public */,
+      28,    0,  231,    2, 0x0a /* Public */,
+      29,    0,  232,    2, 0x0a /* Public */,
+      30,    0,  233,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -151,6 +153,7 @@ static const uint qt_meta_data_TerrainTools[] = {
     QMetaType::Void, QMetaType::QString,   16,
     QMetaType::Void, QMetaType::Int,   16,
     QMetaType::Void, QMetaType::QString,   16,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -195,8 +198,9 @@ void TerrainTools::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 25: _t->waterTerrToolEnabled(); break;
         case 26: _t->drawTerrToolEnabled(); break;
         case 27: _t->lockTexToolEnabled(); break;
-        case 28: _t->waterHeightTileToolEnabled(); break;
-        case 29: _t->fixedTileToolEnabled(); break;
+        case 28: _t->gapsTerrToolEnabled(); break;
+        case 29: _t->waterHeightTileToolEnabled(); break;
+        case 30: _t->fixedTileToolEnabled(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -244,13 +248,13 @@ int TerrainTools::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 30)
+        if (_id < 31)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 30;
+        _id -= 31;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 30)
+        if (_id < 31)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 30;
+        _id -= 31;
     }
     return _id;
 }

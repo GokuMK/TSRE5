@@ -31,6 +31,7 @@ public:
     void setWaterDraw(int x, int z, float posx, float posz);
     void setWaterLevelGui();
     void setDraw(int x, int z, float posx, float posz);
+    void toggleGaps(int x, int z, float posx, float posz);
     void setErrorBias(int x, int z, float val);
     void setTileBlob();
     int getTexture(int x, int z, float posx, float posz);
@@ -39,6 +40,7 @@ public:
 private:
     unsigned char **fData;
     bool jestF;
+    bool modifiedF;
     bool isOgl;
     bool modified;
     QString texturepath;
@@ -70,6 +72,8 @@ private:
     void saveRAW(QString name);
     bool readRAW(QString fSfile);
     bool readF(QString fSfile);
+    void saveF(QString name);
+    void newF();
     void vertexInit();
     void normalInit();
     void oglInit();

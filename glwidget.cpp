@@ -185,9 +185,11 @@ void GLWidget::paintGL() {
     //sFile->render();
     //eng->render();
     //tile->render();
-    if (!selection)
+    if (!selection){
+        //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
         TerrainLib::render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
-    
+        //glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+    }
     if(stickPointerToTerrain)
         if (!selection) drawPointer();
     
@@ -632,6 +634,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if(toolEnabled == "lockTexTool"){
             TerrainLib::lockTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
+        if(toolEnabled == "gapsTool"){
+            TerrainLib::toggleGaps((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == ""){
             camera->MouseDown(event);

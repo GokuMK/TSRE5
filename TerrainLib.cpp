@@ -454,6 +454,19 @@ void TerrainLib::lockTexture(Brush* brush, int x, int z, float* p){
     terr->lockTexture(brush, x, z, posx, posz);
 }
 
+void TerrainLib::toggleGaps(int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->toggleGaps(x, z, posx, posz);
+}
+
 void TerrainLib::setFixedTileHeight(Brush* brush, int x, int z, float* p){
     float posx = p[0];
     float posz = p[2];
