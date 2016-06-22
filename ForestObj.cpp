@@ -167,6 +167,31 @@ void ForestObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
+void ForestObj::translate(float px, float py, float pz){
+    this->position[0]+=px;
+    //this->position[1]+=py;
+    this->position[2]+=pz;
+    this->modified = true;
+    deleteVBO();
+}
+
+void ForestObj::rotate(float x, float y, float z){
+    if(matrix3x3 != NULL) matrix3x3 = NULL;
+    if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x);
+    if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y);
+    if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z);
+    this->modified = true;
+    deleteVBO();
+}
+
+void ForestObj::resize(float x, float y, float z){
+    if(x == 0 && y == 0) return;
+    this->areaX += x;
+    this->areaZ += y;
+    this->modified = true;
+    deleteVBO();
+}
+
 void ForestObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     if (!loaded) return;
     //if (jestPQ < 2) return;
@@ -242,6 +267,9 @@ void ForestObj::drawShape(){
     }*/
 
     if (!init) {
+            if(Game::allowObjLag < 1)  return;
+            Game::allowObjLag-=2;
+            
             int iloscv = population*24;
             float* punkty = new float[iloscv*8];
             int ptr = 0;
@@ -320,17 +348,8 @@ void ForestObj::drawShape(){
 
         delete[] punkty;
         init = true;
-    } else {
-        
-        /*if(TexLib::mtex[tex]->loaded){
-            if(!TexLib::mtex[tex]->glLoaded) TexLib::mtex[tex]->GLTextures();
-            f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex]->tex[0]);
-        }
-        
-        QOpenGLVertexArrayObject::Binder vaoBinder1(&shape.VAO);
-        f->glDrawArrays(GL_TRIANGLES, 0, shape.iloscv);*/
-        shape.render();
     }
+    shape.render();
 }
 
 void ForestObj::save(QTextStream* out){

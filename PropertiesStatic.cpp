@@ -1,5 +1,6 @@
 #include "PropertiesStatic.h"
 #include "WorldObj.h"
+#include "StaticObj.h"
 #include "ParserX.h"
 
 PropertiesStatic::PropertiesStatic(){
@@ -53,9 +54,17 @@ PropertiesStatic::PropertiesStatic(){
     this->quat.setAlignment(Qt::AlignCenter);
     vbox->addWidget(&this->quat);
     QPushButton *copyQrot = new QPushButton("Copy Rotation", this);
+    QObject::connect(copyQrot, SIGNAL(released()),
+                      this, SLOT(copyREnabled()));
     QPushButton *pasteQrot = new QPushButton("Paste Rotation", this);
+    QObject::connect(pasteQrot, SIGNAL(released()),
+                      this, SLOT(pasteREnabled()));
     QPushButton *resetQrot = new QPushButton("Reset Rotation", this);
+    QObject::connect(resetQrot, SIGNAL(released()),
+                      this, SLOT(resetRotEnabled()));
     QPushButton *qRot90 = new QPushButton("Rotate Y 90°", this);
+    QObject::connect(qRot90, SIGNAL(released()),
+                      this, SLOT(rotYEnabled()));
     vbox->addWidget(copyQrot);
     vbox->addWidget(pasteQrot);
     vbox->addWidget(resetQrot);
@@ -90,7 +99,7 @@ void PropertiesStatic::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
-
+    staticObj = (StaticObj*) obj;
     this->infoLabel->setText("Object: "+obj->type);
     this->fileName.setText(obj->fileName);
     
@@ -125,4 +134,43 @@ void PropertiesStatic::copyFEnabled(){
     QClipboard *clipboard = QApplication::clipboard();
     //QString originalText = clipboard->text();
     clipboard->setText(this->fileName.text());
+}
+
+void PropertiesStatic::resetRotEnabled(){
+    if(staticObj == NULL)
+        return;
+    staticObj->setNewQdirection();
+    staticObj->modified = true;
+    staticObj->setMartix();
+}
+
+void PropertiesStatic::copyREnabled(){
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(this->quat.text());
+}
+
+void PropertiesStatic::rotYEnabled(){
+    if(staticObj == NULL)
+        return;
+    staticObj->rotate(0,M_PI/2,0);
+    staticObj->modified = true;
+    staticObj->setMartix();
+}
+
+void PropertiesStatic::pasteREnabled(){
+    if(staticObj == NULL)
+        return;
+    QClipboard *clipboard = QApplication::clipboard();
+    QStringList args = clipboard->text().split(" ");
+    if(args.length() != 4)
+        return;
+    float nq[4];
+    nq[0] = args[0].toFloat();
+    nq[1] = args[1].toFloat();
+    nq[2] = args[2].toFloat();
+    nq[3] = args[3].toFloat();
+    staticObj->setQdirection((float*)&nq);
+    staticObj->modified = true;
+    staticObj->setMartix();
+    quat.setText(clipboard->text());
 }

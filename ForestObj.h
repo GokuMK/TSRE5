@@ -40,6 +40,9 @@ public:
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     void deleteVBO();
+    void translate(float px, float py, float pz);
+    void rotate(float x, float y, float z);
+    void resize(float x, float y, float z);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     static void loadForestList();
     virtual ~ForestObj();

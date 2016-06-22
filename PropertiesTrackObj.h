@@ -3,6 +3,8 @@
 
 #include "PropertiesAbstract.h"
 
+class TrackObj;
+
 class PropertiesTrackObj : public PropertiesAbstract{
     Q_OBJECT
 public:
@@ -13,10 +15,15 @@ public:
     void updateObj(WorldObj* obj);
 public slots:
     void copyFEnabled();
-        
+    void copyREnabled();
+    void pasteREnabled();
+    void rotYEnabled();
+    void resetRotEnabled();
+    
 signals:
     
 private:
+    TrackObj* trackObj;
     QLineEdit elevProm;
     QLineEdit elev1inXm;
     

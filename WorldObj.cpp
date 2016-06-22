@@ -431,6 +431,7 @@ void WorldObj::setPosition(float* p){
     this->placedAtPosition[0] = this->position[0];
     this->placedAtPosition[1] = this->position[1];
     this->placedAtPosition[2] = this->position[2];
+    deleteVBO();
 }
 
 void WorldObj::setNewQdirection(){

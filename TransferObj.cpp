@@ -294,9 +294,9 @@ void TransferObj::drawShape(){
         shape.init(punkty, ptr, shape.VNT, GL_TRIANGLES);
         delete[] punkty;
         init = true;
-    } else {
-        shape.render();
     }
+    
+    shape.render();
 }
 
 int TransferObj::getTexId(){

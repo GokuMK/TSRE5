@@ -3,6 +3,8 @@
 
 #include "PropertiesAbstract.h"
 
+class StaticObj;
+
 class PropertiesStatic : public PropertiesAbstract{
     Q_OBJECT
 public:
@@ -13,10 +15,15 @@ public:
     
 public slots:
     void copyFEnabled();
+    void copyREnabled();
+    void pasteREnabled();
+    void rotYEnabled();
+    void resetRotEnabled();
         
 signals:
     
 private:
+    StaticObj *staticObj;
     QCheckBox checkboxAnim;
     QCheckBox checkboxTerrain;
 };

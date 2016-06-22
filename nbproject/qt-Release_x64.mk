@@ -37748,6 +37748,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesStatic.o: Properti
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		StaticObj.h \
 		ParserX.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesStatic.o PropertiesStatic.cpp
 
