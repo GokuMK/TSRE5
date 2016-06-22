@@ -86,6 +86,7 @@ public:
     void deleteTree(int d);
     int getEndpointType(int trid, int endp);
     bool isRoad();
+    void updateTrItemRData(TRitem* tr);
     void newPlatformObject(int* itemId, int trNodeId, float metry, int type);
     void newPickupObject(int* &itemId, int trNodeId, float metry, int type);
     void newSignalObject(QString filename, int* &itemId, int &signalUnits, int trNodeId, float metry, int type);

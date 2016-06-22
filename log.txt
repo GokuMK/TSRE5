@@ -1,99 +1,1420 @@
 [I] "settings.txt"
-[E] QObject::connect: No such slot TerrainTools::heightToolPEnabled()
 [E] QObject::connect: No such slot ActivityTools::itemsSelected(QListWidgetItem*)
 [E] libpng warning: iCCP: known incorrect sRGB profile
 [E] libpng warning: iCCP: known incorrect sRGB profile
 [I] ok
-[I] "tczew"
-[I] "F:/train simulator/routes/tczew/tczew.trk"
-[I] "tczew"
+[I] "bbb"
+[I] "F:/train simulator/routes/bbb/bbb.trk"
+[I] "bbb"
 [I] "F:/train simulator/global/tsection.dat"
 [I] TsectionDAT:  40000   40000
-[I] "F:/train simulator/routes/tczew/tsection.dat"
-[I] Wczytywanie pliku tdb:  "F:/train simulator/routes/tczew/tczew.tdb"
-[I] "F:/train simulator/routes/tczew/tczew.tdb"
+[I] "F:/train simulator/routes/bbb/tsection.dat"
+[I] Wczytywanie pliku tdb:  "F:/train simulator/routes/bbb/bbb.tdb"
+[I] "F:/train simulator/routes/bbb/bbb.tdb"
 [I] znaleziono sekcje na  72
 [I] sh  "serial"
-[I] "F:/train simulator/routes/tczew/tczew.tit"
-[I] znaleziono sekcje TrItemTable na  54
-[I] tritemtable Fail
-[I] "F:/train simulator/routes/tczew/speedpost.dat"
+[I] sh  "tracknodes"
+[I] N 206
+[I] sh  "tritemtable"
+[I] "F:/train simulator/routes/bbb/bbb.tit"
+[I] znaleziono sekcje TrItemTable na  80
+[I] "F:/train simulator/routes/bbb/speedpost.dat"
 [I] speedpost!
 [I] speedpost value unknown:  "restricted_shape"
 [I] speedpost value unknown:  "end_restricted_shape"
-[I] "F:/train simulator/routes/tczew/sigcfg.dat"
+[I] "F:/train simulator/routes/bbb/sigcfg.dat"
 [I] sigcfg!
+[I] "_info"
+[I] "_info"
+[I] "_info"
+[I] "_info"
+[I] "_info"
+[I] "_info"
+[I] "_info"
 [I] "lighttextures"
 [I] "lightstab"
+[I] "_info"
+[I] "_info"
 [I] "scriptfiles"
-[I] Wczytywanie pliku tdb:  "F:/train simulator/routes/tczew/tczew.rdb"
-[I] "F:/train simulator/routes/tczew/tczew.rdb"
+[I] Wczytywanie pliku tdb:  "F:/train simulator/routes/bbb/bbb.rdb"
+[I] "F:/train simulator/routes/bbb/bbb.rdb"
 [I] znaleziono sekcje na  72
 [I] sh  "serial"
-[I] Wczytywanie pliku ref:  "F:/train simulator/routes/tczew/tczew.ref"
-[I] "F:/train simulator/routes/tczew/tczew.ref"
-[I] kml!
-[I] file
-[I] gpx!
-[I] file
-[I] kml!
-[I] file
-[I] gpx!
-[I] file
-[I] kml!
-[I] file
-[I] "F:/train simulator/routes/tczew/ssource.dat"
-[I] "F:/train simulator/routes/tczew/ttype.dat"
-[I] w file not exist     "F:/train simulator/routes/tczew/td/td_idx.dat"
-[I] "F:/train simulator/routes/tczew/forests.dat"
+[I] sh  "tracknodes"
+[I] N 123
+[I] Wczytywanie pliku ref:  "F:/train simulator/routes/bbb/bbb.ref"
+[I] "F:/train simulator/routes/bbb/bbb.ref"
+[I] Nowy  0  act:  "f:/train simulator/routes/bbb/activities/111.act"
+[I] "f:/train simulator/routes/bbb/activities/111.act"
+[I] loaded
+[I] "F:/train simulator/routes/bbb/ssource.dat"
+[I] "F:/train simulator/routes/bbb/ttype.dat"
+[I] "terrain_desc_size"
+[I] "depth"
+[I] "terrain_desc_tiles"
+[I] "tdfile"   -11   29
+[I] 0   "----" -5310   14964
+[I] 0   "----" -5306   14964
+[I] 0   "----" -5308   14964
+[I] p   "----" -5308   14963
+[I] p   "----" -5307   14963
+[I] p   "----" -5308   14962
+[I] 0   "----" -5308   14962
+[I] p   "----" -5306   14963
+[I] p   "----" -5306   14962
+[I] 0   "----" -5306   14962
+[I] p   "----" -5306   14961
+[I] 0   "----" -5306   14960
+[I] p   "----" -5308   14961
+[I] p   "----" -5307   14961
+[I] 0   "----" -5308   14960
+[I] 0   "----" -5310   14962
+[I] 0   "----" -5310   14960
+[I] 0   "----" -5306   14958
+[I] 0   "----" -5306   14956
+[I] 0   "----" -5306   14954
+[I] 0   "----" -5306   14952
+[I] 0   "----" -5306   14950
+[I] 0   "----" -5306   14948
+[I] 0   "----" -5308   14946
+[I] 0   "----" -5306   14946
+[I] 0   "----" -5306   14944
+[I] 0   "----" -5308   14944
+[I] 0   "----" -5308   14942
+[I] 0   "----" -5306   14942
+[I] "F:/train simulator/routes/bbb/forests.dat"
 [I] "forest"
-[I] "-53785057.:maptex"
-[I] "-53775055.:maptex"
-[I] "-53775056.:maptex"
-[I] "-53775057.:maptex"
-[I] "-53765055.:maptex"
-[I] "-53765056.:maptex"
-[I] "-53765057.:maptex"
-[I] "-53755055.:maptex"
-[I] "-53745055.:maptex"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005377+015053.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005377+015054.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005377+015055.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005377+015056.w"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005377+015057.w"
-[I] 0
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005376+015053.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005376+015054.w"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005376+015055.w"
-[I] 0
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005376+015056.w"
-[I] 0
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005376+015057.w"
-[I] 0
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005375+015053.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005375+015054.w"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005375+015055.w"
-[I] 5
-[I] Nowy  0  shape:  "f:/train simulator/routes/tczew/shapes/tree1.s"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005375+015056.w"
-[I] 0
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005375+015057.w"
-[I] 0
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005374+015053.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005374+015054.w"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005374+015055.w"
-[I] 0
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005374+015056.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005374+015057.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005373+015053.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005373+015054.w"
-[I] w file uncompressed  "F:/train simulator/routes/tczew/world/w-005373+015055.w"
-[I] 0
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005373+015056.w"
-[I] w file not exist     "F:/train simulator/routes/tczew/world/w-005373+015057.w"
-[I] "mapTileShowTool"
-[I] -5375   -15055   -91.0259   72.7389
-[I] -53765055
-[I] load map first!
-[I] "mapTileLoadTool"
-[I] nic do zapisania
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "forest"
+[I] "-53094961.:maptex"
+[I] "-53094962.:maptex"
+[I] "-53094963.:maptex"
+[I] "-53084961.:maptex"
+[I] "-53084963.:maptex"
+[I] "-53074961.:maptex"
+[I] "-53074962.:maptex"
+[I] "-53074963.:maptex"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005308+014959.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005308+014960.w"
+[I] w file uncompressed  "F:/train simulator/routes/bbb/world/w-005308+014961.w"
+[I] 487
+[I] Nowy  0  shape:  "f:/train simulator/routes/bbb/shapes/usdecidclump4.s"
+[I] Nowy  1  shape:  "f:/train simulator/routes/bbb/shapes/msmountainscrubpine88a.s"
+[I] Nowy  2  shape:  "f:/train simulator/global/shapes/road2lstrt100m.s"
+[I] Nowy  3  shape:  "f:/train simulator/global/shapes/road2l22deg.s"
+[I] Nowy  4  shape:  "f:/train simulator/global/shapes/road2lstrt50m.s"
+[I] Nowy  5  shape:  "f:/train simulator/global/shapes/road2l10deg.s"
+[I] Nowy  6  shape:  "f:/train simulator/global/shapes/bab2l1ws050m.s"
+[I] Nowy  7  shape:  "f:/train simulator/global/shapes/bab2l1w0503r10d.s"
+[I] Nowy  8  shape:  "f:/train simulator/global/shapes/bab2l1w0497r10d.s"
+[I] Nowy  9  shape:  "f:/train simulator/global/shapes/bab2l1ws100m.s"
+[I] Nowy  10  shape:  "f:/train simulator/routes/bbb/shapes/sg_uithuizerweg3.s"
+[I] Nowy  11  shape:  "f:/train simulator/routes/bbb/shapes/dub07vrba04.s"
+[I] Nowy  12  shape:  "f:/train simulator/routes/bbb/shapes/mm_baum_tanne_2_sehr_klein.s"
+[I] Nowy  13  shape:  "f:/train simulator/routes/bbb/shapes/u79haus0017.s"
+[I] Nowy  14  shape:  "f:/train simulator/routes/bbb/shapes/pkpano8m.s"
+[I] Nowy  15  shape:  "f:/train simulator/routes/bbb/shapes/pipes_bridge.s"
+[I] Nowy  16  shape:  "f:/train simulator/routes/bbb/shapes/most_liben.s"
+[I] Nowy  17  shape:  "f:/train simulator/global/shapes/a1t10mtrconcrete.s"
+[I] Nowy  18  shape:  "f:/train simulator/global/shapes/a1t50mtrconcrete.s"
+[I] Nowy  19  shape:  "f:/train simulator/global/shapes/a1t500r1dconcrete.s"
+[I] Nowy  20  shape:  "f:/train simulator/global/shapes/a2t500r20dconcrete.s"
+[I] Nowy  21  shape:  "f:/train simulator/global/shapes/a1t20mstrtconcrete.s"
+[I] Nowy  22  shape:  "f:/train simulator/routes/bbb/shapes/srv_2trs150fttrussbridge.s"
+[I] Nowy  23  shape:  "f:/train simulator/global/shapes/a2t250mtrconcrete.s"
+[I] Nowy  24  shape:  "f:/train simulator/global/shapes/a1t100mtrconcrete.s"
+[I] Nowy  25  shape:  "f:/train simulator/global/shapes/a1t500r5dconcrete.s"
+[I] Nowy  26  shape:  "f:/train simulator/global/shapes/a2t100mtrconcrete.s"
+[I] Nowy  27  shape:  "f:/train simulator/global/shapes/a2t1500r5dconcrete.s"
+[I] Nowy  28  shape:  "f:/train simulator/global/shapes/a2t1000r10dconcrete.s"
+[I] Nowy  29  shape:  "f:/train simulator/global/shapes/a2t500r10dconcrete.s"
+[I] Nowy  30  shape:  "f:/train simulator/routes/bbb/shapes/fira_las_1.s"
+[I] Nowy  31  shape:  "f:/train simulator/routes/bbb/shapes/studzienka_cmk.s"
+[I] Nowy  32  shape:  "f:/train simulator/routes/bbb/shapes/cgtreeclump_16x64-auto.s"
+[I] Nowy  33  shape:  "f:/train simulator/routes/bbb/shapes/cppecspenztar.s"
+[I] Nowy  34  shape:  "f:/train simulator/routes/bbb/shapes/u79haus0095.s"
+[I] Nowy  35  shape:  "f:/train simulator/routes/bbb/shapes/cowparsley.s"
+[I] Nowy  36  shape:  "f:/train simulator/routes/bbb/shapes/7us2wareh4_clump.s"
+[I] Nowy  37  shape:  "f:/train simulator/routes/bbb/shapes/plot_betonowy_ozdobny3_40.s"
+[I] Nowy  38  shape:  "f:/train simulator/routes/bbb/shapes/grass_test.s"
+[I] Nowy  39  shape:  "f:/train simulator/routes/bbb/shapes/cgtreeclump_32x128.s"
+[I] Nowy  40  shape:  "f:/train simulator/routes/bbb/shapes/iza_strailut_7_2m.s"
+[I] Nowy  41  shape:  "f:/train simulator/routes/bbb/shapes/cgtreeclump_16x128-auto.s"
+[I] Nowy  42  shape:  "f:/train simulator/routes/bbb/shapes/sg_ndbrug.s"
+[I] w file uncompressed  "F:/train simulator/routes/bbb/world/w-005308+014962.w"
+[I] 428
+[I] Nowy  43  shape:  "f:/train simulator/routes/bbb/shapes/latarnia_peronowa_1str_metal.s"
+[I] Nowy  44  shape:  "f:/train simulator/global/shapes/a2t10mstrt.s"
+[I] Nowy  45  shape:  "f:/train simulator/global/shapes/a1tpnt7_5dlft.s"
+[I] Nowy  46  shape:  "f:/train simulator/routes/bbb/shapes/plot_betonowy2_100m.s"
+[I] Nowy  47  shape:  "f:/train simulator/routes/bbb/shapes/7fact11.s"
+[I] Nowy  48  shape:  "f:/train simulator/routes/bbb/shapes/dcontainerstapel.s"
+[I] Nowy  49  shape:  "f:/train simulator/global/shapes/a1t100mstrt.s"
+[I] Nowy  50  shape:  "f:/train simulator/global/shapes/a1t50mstrt.s"
+[I] Nowy  51  shape:  "f:/train simulator/global/shapes/a2tfrog7_5dlft.s"
+[I] Nowy  52  shape:  "f:/train simulator/global/shapes/a1tpnt7_5drgtslip.s"
+[I] Nowy  53  shape:  "f:/train simulator/global/shapes/a1tpnt7_5dlftslip.s"
+[I] Nowy  54  shape:  "f:/train simulator/global/shapes/a1tdblslip7_5d.s"
+[I] Nowy  55  shape:  "f:/train simulator/global/shapes/a1tfrog7_5dlft.s"
+[I] Nowy  56  shape:  "f:/train simulator/global/shapes/a1tpnt7_5drgt.s"
+[I] Nowy  57  shape:  "f:/train simulator/global/shapes/a2tfrog7_5drgt.s"
+[I] Nowy  58  shape:  "f:/train simulator/global/shapes/a1tfrog7_5dto2trgt.s"
+[I] Nowy  59  shape:  "f:/train simulator/global/shapes/a1tfrog7_5dto2tlft.s"
+[I] Nowy  60  shape:  "f:/train simulator/global/shapes/a2t100mstrt.s"
+[I] Nowy  61  shape:  "f:/train simulator/global/shapes/a1tfrog7_5drgt.s"
+[I] Nowy  62  shape:  "f:/train simulator/routes/bbb/shapes/iza_strailut_10_8m.s"
+[I] Nowy  63  shape:  "f:/train simulator/global/shapes/a2t50mtrconcrete.s"
+[I] Nowy  64  shape:  "f:/train simulator/routes/bbb/shapes/izh_tanya01.s"
+[I] Nowy  65  shape:  "f:/train simulator/routes/bbb/shapes/michalin.s"
+[I] Nowy  66  shape:  "f:/train simulator/global/shapes/a1t250r10d.s"
+[I] Nowy  67  shape:  "f:/train simulator/global/shapes/a1t500r10dconcrete.s"
+[I] Nowy  68  shape:  "f:/train simulator/routes/bbb/shapes/r_footbridge50m.s"
+[I] Nowy  69  shape:  "f:/train simulator/routes/bbb/shapes/sg_viaductmeppelt.s"
+[I] Nowy  70  shape:  "f:/train simulator/routes/bbb/shapes/nr_gras_100x10.s"
+[I] Nowy  71  shape:  "f:/train simulator/routes/bbb/shapes/nr_gras_200x5.s"
+[I] Nowy  72  shape:  "f:/train simulator/global/shapes/road2lanet.s"
+[I] Nowy  73  shape:  "f:/train simulator/routes/bbb/shapes/nr_gras02.s"
+[I] w file uncompressed  "F:/train simulator/routes/bbb/world/w-005308+014963.w"
+[I] 402
+[I] Nowy  74  shape:  "f:/train simulator/routes/bbb/shapes/nr_gras01.s"
+[I] Nowy  75  shape:  "f:/train simulator/routes/bbb/shapes/nr_gras+busch_100x10.s"
+[I] Nowy  76  shape:  "f:/train simulator/routes/bbb/shapes/cmk-ob2-3.s"
+[I] Nowy  77  shape:  "f:/train simulator/routes/bbb/shapes/most_moravicanyc.s"
+[I] Nowy  78  shape:  "f:/train simulator/routes/bbb/shapes/u79haus0082.s"
+[I] Nowy  79  shape:  "f:/train simulator/routes/bbb/shapes/imcrane.s"
+[I] Nowy  80  shape:  "f:/train simulator/routes/bbb/shapes/u79haus0083.s"
+[I] Nowy  81  shape:  "f:/train simulator/global/shapes/a1tbuffer.s"
+[I] Nowy  82  shape:  "f:/train simulator/global/shapes/a1t500r10d.s"
+[I] Nowy  83  shape:  "f:/train simulator/global/shapes/a2t10mtrconcrete.s"
+[I] Nowy  84  shape:  "f:/train simulator/global/shapes/a2t500r5dconcrete.s"
+[I] Nowy  85  shape:  "f:/train simulator/global/shapes/a1t250r20d.s"
+[I] Nowy  86  shape:  "f:/train simulator/global/shapes/a1t10mstrt.s"
+[I] Nowy  87  shape:  "f:/train simulator/global/shapes/a1t250r10dconcrete.s"
+[I] Nowy  88  shape:  "f:/train simulator/global/shapes/a1t500r5d.s"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005307+014959.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005307+014960.w"
+[I] w file uncompressed  "F:/train simulator/routes/bbb/world/w-005307+014961.w"
+[I] 381
+[I] Nowy  89  shape:  "f:/train simulator/routes/bbb/shapes/nr_gras_200x10.s"
+[I] Nowy  90  shape:  "f:/train simulator/global/shapes/road2lstrt150m.s"
+[I] Nowy  91  shape:  "f:/train simulator/routes/bbb/shapes/sna_blokc4-short.s"
+[I] Nowy  92  shape:  "f:/train simulator/routes/bbb/shapes/ps_3k_b1.s"
+[I] Nowy  93  shape:  "f:/train simulator/routes/bbb/shapes/ps_4k_b.s"
+[I] Nowy  94  shape:  "f:/train simulator/routes/bbb/shapes/latarnia_peronowa_1.s"
+[I] Nowy  95  shape:  "f:/train simulator/routes/bbb/shapes/mm-bahnhofslampe.s"
+[I] Nowy  96  shape:  "f:/train simulator/routes/bbb/shapes/plot_betonowy_100m.s"
+[I] Nowy  97  shape:  "f:/train simulator/global/shapes/a2tfrog7_5ddbl.s"
+[I] Nowy  98  shape:  "f:/train simulator/global/shapes/a2t250mstrt.s"
+[I] Nowy  99  shape:  "f:/train simulator/routes/bbb/shapes/g15_appelhuelsen.s"
+[I] Nowy  100  shape:  "f:/train simulator/global/shapes/a1t20mstrt.s"
+[I] Nowy  101  shape:  "f:/train simulator/global/shapes/a2t50mstrt.s"
+[I] Nowy  102  shape:  "f:/train simulator/global/shapes/a1t500r1d.s"
+[I] Nowy  103  shape:  "f:/train simulator/routes/bbb/shapes/esso_tankstelle.s"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005307+014962.w"
+[I] w file uncompressed  "F:/train simulator/routes/bbb/world/w-005307+014963.w"
+[I] 68
+[I] Nowy  104  shape:  "f:/train simulator/global/shapes/road2l05deg.s"
+[I] Nowy  105  shape:  "f:/train simulator/global/shapes/a2t100m7bridge1.s"
+[I] Nowy  106  shape:  "f:/train simulator/global/shapes/a2t1000r5dconcrete.s"
+[I] Nowy  107  shape:  "f:/train simulator/global/shapes/a1t100m7bridge1.s"
+[I] Nowy  108  shape:  "f:/train simulator/global/shapes/a1t1000r10d.s"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005306+014959.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005306+014960.w"
+[I] w file uncompressed  "F:/train simulator/routes/bbb/world/w-005306+014961.w"
+[I] 47
+[I] Nowy  109  shape:  "f:/train simulator/routes/bbb/shapes/u79haus0035.s"
+[I] Nowy  110  shape:  "f:/train simulator/routes/bbb/shapes/mstracklineveg49e.s"
+[I] Nowy  111  shape:  "f:/train simulator/routes/bbb/shapes/domki_01.s"
+[I] Nowy  112  shape:  "f:/train simulator/routes/bbb/shapes/dhaus24.s"
+[I] Nowy  113  shape:  "f:/train simulator/routes/bbb/shapes/dsiedlung3.s"
+[I] w file uncompressed  "F:/train simulator/routes/bbb/world/w-005306+014961.ws"
+[I] WS size:  48
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005306+014962.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005306+014963.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005305+014959.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005305+014960.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005305+014961.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005305+014962.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005305+014963.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005304+014959.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005304+014960.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005304+014961.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005304+014962.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005304+014963.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005309+014959.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005309+014960.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005309+014961.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005309+014962.w"
+[I] w file not exist     "F:/train simulator/routes/bbb/world/w-005309+014963.w"
+[I] 33257   "A1t120r10d.s"
+[I] "placeTool"
+[I] "trackobj"   "A1t120r10d.s" 384
+[I] Nowy  114  shape:  "f:/train simulator/global/shapes/a1t120r10d.s"
+[I] 1:  -5307   -14961   804.031   0.97799   8.25262
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.727   1   9.05174
+[I] "A1t120r10d.s"
+[I] 208
+[I] 36164
+[I] 20.944
+[I] polacze  207   4
+[I] 23   0
+[I] 208   1
+[I] switch
+[I] ok
+[I] d:  482.066
+[I] "trackobj"   "A1t120r10d.s" 385
+[I] 1:  -5307   -14961   806.516   0.975925   13.3972
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   385
+[I] usune Track  -5307   14961   385
+[I] "trackobj"   "A1t120r10d.s" 386
+[I] 1:  -5307   -14961   806.868   0.976011   13.8035
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   386
+[I] usune Track  -5307   14961   386
+[I] "trackobj"   "A1t120r10d.s" 387
+[I] 1:  -5307   -14961   807.493   0.975701   14.0275
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   387
+[I] usune Track  -5307   14961   387
+[I] "trackobj"   "A1t120r10d.s" 388
+[I] 1:  -5307   -14961   808.833   0.975701   14.0822
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   808.833   0.975701   14.0822
+[I] usune Track  -5307   14961   388
+[I] usune Track  -5307   14961   388
+[I] "trackobj"   "A1t120r10d.s" 389
+[I] 1:  -5307   -14961   807.812   0.975701   14.0405
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   807.812   0.975701   14.0405
+[I] usune Track  -5307   14961   389
+[I] usune Track  -5307   14961   389
+[I] "trackobj"   "A1t120r10d.s" 390
+[I] 1:  -5307   -14961   806.982   0.975701   14.0066
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   390
+[I] usune Track  -5307   14961   390
+[I] "trackobj"   "A1t120r10d.s" 391
+[I] 1:  -5307   -14961   803.826   0.978059   8.48645
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.826   0.978059   8.48645
+[I] usune Track  -5307   14961   391
+[I] usune Track  -5307   14961   391
+[I] "trackobj"   "A1t120r10d.s" 392
+[I] 1:  -5307   -14961   803.537   0.977216   10.1524
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   392
+[I] usune Track  -5307   14961   392
+[I] "trackobj"   "A1t120r10d.s" 393
+[I] 1:  -5307   -14961   803.584   0.977454   9.80983
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.584   0.977454   9.80983
+[I] usune Track  -5307   14961   393
+[I] usune Track  -5307   14961   393
+[I] "trackobj"   "A1t120r10d.s" 394
+[I] 1:  -5307   -14961   803.537   0.977216   10.1524
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   394
+[I] usune Track  -5307   14961   394
+[I] "trackobj"   "A1t120r10d.s" 395
+[I] 1:  -5307   -14961   802.275   0.977329   10.5376
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   802.275   0.977329   10.5376
+[I] usune Track  -5307   14961   395
+[I] usune Track  -5307   14961   395
+[I] "trackobj"   "A1t120r10d.s" 396
+[I] 1:  -5307   -14961   801.856   0.97659   11.6
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   801.856   0.97659   11.6
+[I] usune Track  -5307   14961   396
+[I] usune Track  -5307   14961   396
+[I] "trackobj"   "A1t120r10d.s" 397
+[I] 1:  -5307   -14961   801.702   0.97621   12.91
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   397
+[I] usune Track  -5307   14961   397
+[I] "trackobj"   "A1t120r10d.s" 398
+[I] 1:  -5307   -14961   801.919   0.976337   11.9724
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   398
+[I] usune Track  -5307   14961   398
+[I] "trackobj"   "A1t120r10d.s" 399
+[I] 1:  -5307   -14961   799.676   0.984479   10.9318
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   799.676   0.984479   10.9318
+[I] usune Track  -5307   14961   399
+[I] usune Track  -5307   14961   399
+[I] "trackobj"   "A1t120r10d.s" 400
+[I] 1:  -5307   -14961   799.051   0.983933   12.1091
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   799.051   0.983933   12.1091
+[I] usune Track  -5307   14961   400
+[I] usune Track  -5307   14961   400
+[I] "trackobj"   "A1t120r10d.s" 401
+[I] 1:  -5307   -14961   798.996   0.983321   13.328
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   798.996   0.983321   13.328
+[I] usune Track  -5307   14961   401
+[I] usune Track  -5307   14961   401
+[I] "trackobj"   "A1t120r10d.s" 402
+[I] 1:  -5307   -14961   801.062   0.983042   13.9512
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   402
+[I] usune Track  -5307   14961   402
+[I] "trackobj"   "A1t120r10d.s" 403
+[I] 1:  -5307   -14961   800.295   0.982957   14.126
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   403
+[I] usune Track  -5307   14961   403
+[I] "trackobj"   "A1t120r10d.s" 404
+[I] 1:  -5307   -14961   799.899   0.982957   14.1098
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   404
+[I] usune Track  -5307   14961   404
+[I] "trackobj"   "A1t120r10d.s" 405
+[I] 1:  -5307   -14961   799.547   0.982957   14.0954
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   799.547   0.982957   14.0954
+[I] usune Track  -5307   14961   405
+[I] usune Track  -5307   14961   405
+[I] "trackobj"   "A1t120r10d.s" 406
+[I] 1:  -5307   -14961   801.432   0.982396   15.3833
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   406
+[I] usune Track  -5307   14961   406
+[I] "trackobj"   "A1t120r10d.s" 407
+[I] 1:  -5307   -14961   803.603   0.980415   20.0622
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.603   0.980415   20.0622
+[I] usune Track  -5307   14961   407
+[I] usune Track  -5307   14961   407
+[I] "trackobj"   "A1t120r10d.s" 408
+[I] 1:  -5307   -14961   803.672   0.980916   19.1689
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.672   0.980916   19.1689
+[I] usune Track  -5307   14961   408
+[I] usune Track  -5307   14961   408
+[I] "trackobj"   "A1t120r10d.s" 409
+[I] 1:  -5307   -14961   803.686   0.98108   18.4786
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.686   0.98108   18.4786
+[I] usune Track  -5307   14961   409
+[I] usune Track  -5307   14961   409
+[I] "trackobj"   "A1t120r10d.s" 410
+[I] 1:  -5307   -14961   803.377   0.981625   17.308
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   410
+[I] usune Track  -5307   14961   410
+[I] "trackobj"   "A1t120r10d.s" 411
+[I] 1:  -5307   -14961   803.317   0.981395   17.7119
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   411
+[I] usune Track  -5307   14961   411
+[I] "trackobj"   "A1t120r10d.s" 412
+[I] 1:  -5307   -14961   803.203   0.981212   18.2894
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.203   0.981212   18.2894
+[I] usune Track  -5307   14961   412
+[I] usune Track  -5307   14961   412
+[I] "trackobj"   "A1t120r10d.s" 413
+[I] 1:  -5307   -14961   803.224   0.98155   17.6261
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   413
+[I] usune Track  -5307   14961   413
+[I] "trackobj"   "A1t120r10d.s" 414
+[I] 1:  -5307   -14961   803.057   0.981212   18.2835
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.057   0.981212   18.2835
+[I] usune Track  -5307   14961   414
+[I] usune Track  -5307   14961   414
+[I] "trackobj"   "A1t120r10d.s" 415
+[I] 1:  -5307   -14961   806.411   0.982955   14.3755
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   415
+[I] usune Track  -5307   14961   415
+[I] "trackobj"   "A1t120r10d.s" 416
+[I] 1:  -5307   -14961   807.247   0.982955   14.4096
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   807.247   0.982955   14.4096
+[I] usune Track  -5307   14961   416
+[I] usune Track  -5307   14961   416
+[I] "trackobj"   "A1t120r10d.s" 417
+[I] 1:  -5307   -14961   800.693   0.982783   14.5611
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   417
+[I] usune Track  -5307   14961   417
+[I] "trackobj"   "A1t120r10d.s" 418
+[I] 1:  -5307   -14961   800.204   0.982783   14.5411
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   418
+[I] usune Track  -5307   14961   418
+[I] "trackobj"   "A1t120r10d.s" 419
+[I] 1:  -5307   -14961   799.626   0.982783   14.5175
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   799.626   0.982783   14.5175
+[I] usune Track  -5307   14961   419
+[I] usune Track  -5307   14961   419
+[I] "trackobj"   "A1t120r10d.s" 420
+[I] 1:  -5307   -14961   806.335   0.983347   13.6938
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   420
+[I] usune Track  -5307   14961   420
+[I] "trackobj"   "A1t120r10d.s" 421
+[I] 1:  -5307   -14961   802.809   0.983511   13.1543
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   421
+[I] usune Track  -5307   14961   421
+[I] "trackobj"   "A1t120r10d.s" 422
+[I] 1:  -5307   -14961   806.428   0.982754   14.7247
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   422
+[I] usune Track  -5307   14961   422
+[I] "trackobj"   "A1t120r10d.s" 423
+[I] 1:  -5307   -14961   807.129   0.982869   14.6131
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   807.129   0.982869   14.6131
+[I] usune Track  -5307   14961   423
+[I] usune Track  -5307   14961   423
+[I] "trackobj"   "A1t120r10d.s" 424
+[I] 1:  -5307   -14961   806.594   0.982842   14.5216
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   424
+[I] usune Track  -5307   14961   424
+[I] "trackobj"   "A1t120r10d.s" 425
+[I] 1:  -5307   -14961   805.632   0.976675   14.5407
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   425
+[I] usune Track  -5307   14961   425
+[I] "trackobj"   "A1t120r10d.s" 426
+[I] 1:  -5307   -14961   806.775   0.976721   14.3976
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   426
+[I] usune Track  -5307   14961   426
+[I] "trackobj"   "A1t120r10d.s" 427
+[I] 1:  -5307   -14961   807.554   0.976588   14.3352
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   807.554   0.976588   14.3352
+[I] usune Track  -5307   14961   427
+[I] usune Track  -5307   14961   427
+[I] "trackobj"   "A1t120r10d.s" 428
+[I] 1:  -5307   -14961   806.592   0.976588   14.296
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] usune Track  -5307   14961   428
+[I] usune Track  -5307   14961   428
+[I] "trackobj"   "A1t120r10d.s" 429
+[I] 1:  -5307   -14961   826.988   0.980075   7.75674
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   429
+[I] usune Track  -5307   14961   429
+[I] "trackobj"   "A1t120r10d.s" 430
+[I] 1:  -5307   -14961   822.362   0.98105   5.31808
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   822.362   0.98105   5.31808
+[I] usune Track  -5307   14961   430
+[I] usune Track  -5307   14961   430
+[I] "trackobj"   "A1t120r10d.s" 431
+[I] 1:  -5307   -14961   823.045   0.980588   6.3762
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   431
+[I] usune Track  -5307   14961   431
+[I] "trackobj"   "A1t120r10d.s" 432
+[I] 1:  -5307   -14961   822.701   0.979714   8.65104
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   432
+[I] usune Track  -5307   14961   432
+[I] "trackobj"   "A1t120r10d.s" 433
+[I] 1:  -5307   -14961   822.013   0.979714   8.62297
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   433
+[I] usune Track  -5307   14961   433
+[I] "trackobj"   "A1t120r10d.s" 434
+[I] 1:  -5307   -14961   821.219   0.979714   8.59059
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   821.219   0.979714   8.59059
+[I] usune Track  -5307   14961   434
+[I] usune Track  -5307   14961   434
+[I] "trackobj"   "A1t120r10d.s" 435
+[I] 1:  -5307   -14961   823.447   0.978528   10.8993
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   823.447   0.978528   10.8993
+[I] usune Track  -5307   14961   435
+[I] usune Track  -5307   14961   435
+[I] "trackobj"   "A1t120r10d.s" 436
+[I] 1:  -5307   -14961   826.288   0.978691   10.935
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   826.288   0.978691   10.935
+[I] usune Track  -5307   14961   436
+[I] usune Track  -5307   14961   436
+[I] "trackobj"   "A1t120r10d.s" 437
+[I] 1:  -5307   -14961   824.692   0.977696   13.3024
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.692   0.977696   13.3024
+[I] usune Track  -5307   14961   437
+[I] usune Track  -5307   14961   437
+[I] "trackobj"   "A1t120r10d.s" 438
+[I] 1:  -5307   -14961   825.627   0.979468   9.28697
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   438
+[I] usune Track  -5307   14961   438
+[I] "trackobj"   "A1t120r10d.s" 439
+[I] 1:  -5307   -14961   821.938   0.979652   8.91361
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   439
+[I] usune Track  -5307   14961   439
+[I] "trackobj"   "A1t120r10d.s" 440
+[I] 1:  -5307   -14961   821.353   0.979652   8.88972
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   821.353   0.979652   8.88972
+[I] usune Track  -5307   14961   440
+[I] usune Track  -5307   14961   440
+[I] "trackobj"   "A1t120r10d.s" 441
+[I] 1:  -5307   -14961   825.764   0.980536   6.75239
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   441
+[I] usune Track  -5307   14961   441
+[I] "trackobj"   "A1t120r10d.s" 442
+[I] 1:  -5307   -14961   824.998   0.98147   4.56288
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   442
+[I] usune Track  -5307   14961   442
+[I] "trackobj"   "A1t120r10d.s" 443
+[I] 1:  -5307   -14961   825.026   0.981829   3.96868
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   825.026   0.981829   3.96868
+[I] usune Track  -5307   14961   443
+[I] usune Track  -5307   14961   443
+[I] "trackobj"   "A1t120r10d.s" 444
+[I] 1:  -5307   -14961   824.876   0.981447   4.679
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   444
+[I] usune Track  -5307   14961   444
+[I] "trackobj"   "A1t120r10d.s" 445
+[I] 1:  -5307   -14961   824.821   0.981651   4.25586
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   445
+[I] usune Track  -5307   14961   445
+[I] "trackobj"   "A1t120r10d.s" 446
+[I] 1:  -5307   -14961   824.754   0.981963   3.89889
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.754   0.981963   3.89889
+[I] usune Track  -5307   14961   446
+[I] usune Track  -5307   14961   446
+[I] "trackobj"   "A1t120r10d.s" 447
+[I] 1:  -5307   -14961   824.657   0.981424   4.79185
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   447
+[I] usune Track  -5307   14961   447
+[I] "trackobj"   "A1t120r10d.s" 448
+[I] 1:  -5307   -14961   824.786   0.981786   4.19491
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] usune Track  -5307   14961   448
+[I] usune Track  -5307   14961   448
+[I] "trackobj"   "A1t120r10d.s" 449
+[I] 1:  -5307   -14961   824.685   0.981984   3.77938
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.685   0.981984   3.77938
+[I] usune Track  -5307   14961   449
+[I] usune Track  -5307   14961   449
+[I] "trackobj"   "A1t120r10d.s" 450
+[I] 1:  -5307   -14961   824.428   0.981561   4.72144
+[I] "A1t120r10d.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   824.618   1   7.99351
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.8906   1.05824
+[I] "A1t120r10d.s"
+[I] 211
+[I] 36164
+[I] 20.944
+[I] polacze  212   209
+[I] 23   0
+[I] 211   0
+[I] rot2
+[I] d:  503.01
+[I] ok
+[I] przeniose  3  items z  23  do  211
+[I] d:  20.944
+[I] "trackobj"   "A1t120r10d.s" 451
+[I] 1:  -5307   -14961   845.289   0.981125   6.56999
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   451
+[I] usune Track  -5307   14961   451
+[I] "trackobj"   "A1t120r10d.s" 452
+[I] 1:  -5307   -14961   847.232   0.976174   5.89771
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   452
+[I] usune Track  -5307   14961   452
+[I] "trackobj"   "A1t120r10d.s" 453
+[I] 1:  -5307   -14961   849.422   0.976027   6.40629
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   851.245   0.976027   -14.4315
+[I] usune Track  -5307   14961   453
+[I] usune Track  -5307   14961   453
+[I] "trackobj"   "A1t120r10d.s" 454
+[I] 1:  -5307   -14961   847.478   0.975052   8.16011
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   454
+[I] usune Track  -5307   14961   454
+[I] "trackobj"   "A1t120r10d.s" 455
+[I] 1:  -5307   -14961   845.385   0.973656   11.0139
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   847.209   0.973656   -9.82389
+[I] usune Track  -5307   14961   455
+[I] usune Track  -5307   14961   455
+[I] "trackobj"   "A1t120r10d.s" 456
+[I] 1:  -5307   -14961   842.717   0.974132   9.35157
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   844.54   0.974132   -11.4862
+[I] usune Track  -5307   14961   456
+[I] usune Track  -5307   14961   456
+[I] "trackobj"   "A1t120r10d.s" 457
+[I] 1:  -5307   -14961   843.709   0.975265   6.94455
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   457
+[I] usune Track  -5307   14961   457
+[I] "trackobj"   "A1t120r10d.s" 458
+[I] 1:  -5307   -14961   843.674   0.976124   5.66955
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   458
+[I] usune Track  -5307   14961   458
+[I] "trackobj"   "A1t120r10d.s" 459
+[I] 1:  -5307   -14961   844.114   0.976841   4.31238
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   845.937   0.976841   -16.5254
+[I] usune Track  -5307   14961   459
+[I] usune Track  -5307   14961   459
+[I] "trackobj"   "A1t120r10d.s" 460
+[I] 1:  -5307   -14961   844.782   0.976175   5.79776
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   460
+[I] usune Track  -5307   14961   460
+[I] "trackobj"   "A1t120r10d.s" 461
+[I] 1:  -5307   -14961   847.611   0.9766   4.6928
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   849.434   0.9766   -16.145
+[I] usune Track  -5307   14961   461
+[I] usune Track  -5307   14961   461
+[I] "trackobj"   "A1t120r10d.s" 462
+[I] 1:  -5307   -14961   847.449   0.975873   6.0737
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   462
+[I] usune Track  -5307   14961   462
+[I] "trackobj"   "A1t120r10d.s" 463
+[I] 1:  -5307   -14961   845.288   0.975673   6.3225
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   463
+[I] usune Track  -5307   14961   463
+[I] "trackobj"   "A1t120r10d.s" 464
+[I] 1:  -5307   -14961   848.728   0.975826   6.71804
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   464
+[I] usune Track  -5307   14961   464
+[I] "trackobj"   "A1t120r10d.s" 465
+[I] 1:  -5307   -14961   850.665   0.975571   7.05497
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   852.488   0.975571   -13.7828
+[I] usune Track  -5307   14961   465
+[I] usune Track  -5307   14961   465
+[I] "trackobj"   "A1t120r10d.s" 466
+[I] 1:  -5307   -14961   847.338   0.975573   6.91923
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   466
+[I] usune Track  -5307   14961   466
+[I] "trackobj"   "A1t120r10d.s" 467
+[I] 1:  -5307   -14961   840.648   0.975524   6.56019
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   842.471   0.975524   -14.2776
+[I] usune Track  -5307   14961   467
+[I] usune Track  -5307   14961   467
+[I] "trackobj"   "A1t120r10d.s" 468
+[I] 1:  -5307   -14961   843.348   0.975625   6.8428
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   468
+[I] usune Track  -5307   14961   468
+[I] "trackobj"   "A1t120r10d.s" 469
+[I] 1:  -5307   -14961   845.841   0.973991   10.8335
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   847.664   0.973991   -10.0043
+[I] usune Track  -5307   14961   469
+[I] usune Track  -5307   14961   469
+[I] "trackobj"   "A1t120r10d.s" 470
+[I] 1:  -5307   -14961   846.163   0.972559   13.3217
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   847.986   0.972559   -7.51612
+[I] usune Track  -5307   14961   470
+[I] usune Track  -5307   14961   470
+[I] "trackobj"   "A1t120r10d.s" 471
+[I] 1:  -5307   -14961   845.961   0.975976   6.18078
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   471
+[I] usune Track  -5307   14961   471
+[I] "trackobj"   "A1t120r10d.s" 472
+[I] 1:  -5307   -14961   848.949   0.975723   6.55669
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   472
+[I] usune Track  -5307   14961   472
+[I] "trackobj"   "A1t120r10d.s" 473
+[I] 1:  -5307   -14961   845.994   0.974404   9.20268
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   473
+[I] usune Track  -5307   14961   473
+[I] "trackobj"   "A1t120r10d.s" 474
+[I] 1:  -5307   -14961   845.592   0.973656   11.0223
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   847.415   0.973656   -9.81548
+[I] usune Track  -5307   14961   474
+[I] usune Track  -5307   14961   474
+[I] "trackobj"   "A1t120r10d.s" 475
+[I] 1:  -5307   -14961   848.296   0.974948   8.01386
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   475
+[I] usune Track  -5307   14961   475
+[I] "trackobj"   "A1t120r10d.s" 476
+[I] 1:  -5307   -14961   849.283   0.975107   7.60962
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   851.106   0.975107   -13.2282
+[I] usune Track  -5307   14961   476
+[I] usune Track  -5307   14961   476
+[I] "trackobj"   "A1t120r10d.s" 477
+[I] 1:  -5307   -14961   845.803   0.9749   3.13426
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   847.626   0.9749   -17.7035
+[I] usune Track  -5307   14961   477
+[I] usune Track  -5307   14961   477
+[I] "trackobj"   "A1t120r10d.s" 478
+[I] 1:  -5307   -14961   845.227   0.974913   3.3534
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   478
+[I] usune Track  -5307   14961   478
+[I] "trackobj"   "A1t120r10d.s" 479
+[I] 1:  -5307   -14961   845.158   0.975208   3.18836
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 1.82307   20.8378
+[I] 2:  -5307   -14961   846.981   0.975208   -17.6494
+[I] rot
+[I] -1.82307   -1.30161   -1.82307
+[I] -20.8378   20.8768   20.8378
+[I] rot
+[I] -1.82307   -0.77934   -1.82307
+[I] -20.8378   20.9029   20.8378
+[I] rot
+[I] -1.82307   -0.25658   -1.82307
+[I] -20.8378   20.9158   20.8378
+[I] rot
+[I] -1.82307   0.266341   -1.82307
+[I] -20.8378   20.9157   20.8378
+[I] rot
+[I] -1.82307   0.789095   -1.82307
+[I] -20.8378   20.9025   20.8378
+[I] rot
+[I] -1.82307   1.31136   -1.82307
+[I] -20.8378   20.8762   20.8378
+[I] rot
+[I] -1.82307   1.8328   -1.82307
+[I] -20.8378   20.8369   20.8378
+[I] rot
+[I] -1.82307   2.35309   -1.82307
+[I] -20.8378   20.7846   20.8378
+[I] rot
+[I] -1.82307   2.87192   -1.82307
+[I] -20.8378   20.7193   20.8378
+[I] rot
+[I] -1.82307   3.38895   -1.82307
+[I] -20.8378   20.641   20.8378
+[I] rot
+[I] -1.82307   3.90386   -1.82307
+[I] -20.8378   20.5498   20.8378
+[I] rot
+[I] -1.82307   4.41633   -1.82307
+[I] -20.8378   20.4458   20.8378
+[I] rot
+[I] -1.82307   4.92605   -1.82307
+[I] -20.8378   20.3291   20.8378
+[I] rot
+[I] -1.82307   5.43268   -1.82307
+[I] -20.8378   20.1996   20.8378
+[I] rot
+[I] -1.82307   5.93592   -1.82307
+[I] -20.8378   20.0574   20.8378
+[I] rot
+[I] -1.82307   6.43545   -1.82307
+[I] -20.8378   19.9028   20.8378
+[I] rot
+[I] -1.82307   6.93095   -1.82307
+[I] -20.8378   19.7357   20.8378
+[I] rot
+[I] -1.82307   7.42213   -1.82307
+[I] -20.8378   19.5563   20.8378
+[I] rot
+[I] -1.82307   7.90867   -1.82307
+[I] -20.8378   19.3646   20.8378
+[I] rot
+[I] -1.82307   8.39026   -1.82307
+[I] -20.8378   19.1609   20.8378
+[I] rot
+[I] -1.82307   8.86661   -1.82307
+[I] -20.8378   18.9452   20.8378
+[I] rot
+[I] -1.82307   9.33742   -1.82307
+[I] -20.8378   18.7176   20.8378
+[I] rot
+[I] -1.82307   9.80239   -1.82307
+[I] -20.8378   18.4783   20.8378
+[I] rot
+[I] -1.82307   10.2612   -1.82307
+[I] -20.8378   18.2275   20.8378
+[I] rot
+[I] -1.82307   10.7137   -1.82307
+[I] -20.8378   17.9653   20.8378
+[I] rot
+[I] -1.82307   11.1594   -1.82307
+[I] -20.8378   17.6919   20.8378
+[I] rot
+[I] -1.82307   11.5982   -1.82307
+[I] -20.8378   17.4074   20.8378
+[I] rot
+[I] -1.82307   12.0297   -1.82307
+[I] -20.8378   17.112   20.8378
+[I] rot
+[I] -1.82307   12.4537   -1.82307
+[I] -20.8378   16.806   20.8378
+[I] rot
+[I] -1.82307   12.8699   -1.82307
+[I] -20.8378   16.4894   20.8378
+[I] rot
+[I] -1.82307   13.2781   -1.82307
+[I] -20.8378   16.1626   20.8378
+[I] rot
+[I] -1.82307   13.6779   -1.82307
+[I] -20.8378   15.8256   20.8378
+[I] rot
+[I] -1.82307   14.0693   -1.82307
+[I] -20.8378   15.4787   20.8378
+[I] rot
+[I] -1.82307   14.4518   -1.82307
+[I] -20.8378   15.1222   20.8378
+[I] rot
+[I] -1.82307   14.8253   -1.82307
+[I] -20.8378   14.7562   20.8378
+[I] rot
+[I] -1.82307   15.1895   -1.82307
+[I] -20.8378   14.381   20.8378
+[I] rot
+[I] -1.82307   15.5443   -1.82307
+[I] -20.8378   13.9968   20.8378
+[I] rot
+[I] -1.82307   15.8893   -1.82307
+[I] -20.8378   13.6039   20.8378
+[I] rot
+[I] -1.82307   16.2244   -1.82307
+[I] -20.8378   13.2024   20.8378
+[I] rot
+[I] -1.82307   16.5494   -1.82307
+[I] -20.8378   12.7927   20.8378
+[I] rot
+[I] -1.82307   16.864   -1.82307
+[I] -20.8378   12.3751   20.8378
+[I] rot
+[I] -1.82307   17.168   -1.82307
+[I] -20.8378   11.9496   20.8378
+[I] rot
+[I] -1.82307   17.4614   -1.82307
+[I] -20.8378   11.5167   20.8378
+[I] rot
+[I] -1.82307   17.7438   -1.82307
+[I] -20.8378   11.0767   20.8378
+[I] rot
+[I] -1.82307   18.0152   -1.82307
+[I] -20.8378   10.6296   20.8378
+[I] rot
+[I] -1.82307   18.2752   -1.82307
+[I] -20.8378   10.176   20.8378
+[I] rot
+[I] -1.82307   18.5239   -1.82307
+[I] -20.8378   9.71597   20.8378
+[I] rot
+[I] -1.82307   18.761   -1.82307
+[I] -20.8378   9.24989   20.8378
+[I] rot
+[I] -1.82307   18.9863   -1.82307
+[I] -20.8378   8.77802   20.8378
+[I] rot
+[I] -1.82307   19.1998   -1.82307
+[I] -20.8378   8.30067   20.8378
+[I] rot
+[I] -1.82307   19.4013   -1.82307
+[I] -20.8378   7.81813   20.8378
+[I] rot
+[I] -1.82307   19.5907   -1.82307
+[I] -20.8378   7.3307   20.8378
+[I] rot
+[I] -1.82307   19.7678   -1.82307
+[I] -20.8378   6.8387   20.8378
+[I] rot
+[I] -1.82307   19.9326   -1.82307
+[I] -20.8378   6.34241   20.8378
+[I] rot
+[I] -1.82307   20.0849   -1.82307
+[I] -20.8378   5.84217   20.8378
+[I] rot
+[I] -1.82307   20.2247   -1.82307
+[I] -20.8378   5.33827   20.8378
+[I] rot
+[I] -1.82307   20.3518   -1.82307
+[I] -20.8378   4.83104   20.8378
+[I] rot
+[I] -1.82307   20.4662   -1.82307
+[I] -20.8378   4.32079   20.8378
+[I] rot
+[I] -1.82307   20.5678   -1.82307
+[I] -20.8378   3.80784   20.8378
+[I] rot
+[I] -1.82307   20.6566   -1.82307
+[I] -20.8378   3.2925   20.8378
+[I] rot
+[I] -1.82307   20.7324   -1.82307
+[I] -20.8378   2.77512   20.8378
+[I] rot
+[I] -1.82307   20.7953   -1.82307
+[I] -20.8378   2.25599   20.8378
+[I] "A1t120r10d.s"
+[I] 214
+[I] 36164
+[I] 20.944
+[I] "placeTool"
+[I] "trackobj"   "A1t120r10d.s" 480
+[I] 1:  -5307   -14961   844.883   0.982958   3.35273
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.7953   -2.25622
+[I] 2:  -5307   -14961   865.953   0.975208   5.44481
+[I] usune Track  -5307   14961   480
+[I] usune Track  -5307   14961   480
+[I] "trackobj"   "A1t120r10d.s" 481
+[I] 1:  -5307   -14961   845.675   0.981421   6.90329
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   481
+[I] usune Track  -5307   14961   481
+[I] "trackobj"   "A1t120r10d.s" 482
+[I] 1:  -5307   -14961   845.825   0.982329   4.77028
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.7953   -2.25622
+[I] 2:  -5307   -14961   865.953   0.975208   5.44481
+[I] usune Track  -5307   14961   482
+[I] usune Track  -5307   14961   482
+[I] "trackobj"   "A1t120r10d.s" 483
+[I] 1:  -5307   -14961   845.768   0.982113   5.32463
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   483
+[I] usune Track  -5307   14961   483
+[I] "trackobj"   "A1t120r10d.s" 484
+[I] 1:  -5307   -14961   845.603   0.981175   7.33075
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] usune Track  -5307   14961   484
+[I] usune Track  -5307   14961   484
+[I] "trackobj"   "A1t120r10d.s" 485
+[I] 1:  -5307   -14961   845.252   0.982552   4.42003
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.7953   -2.25622
+[I] 2:  -5307   -14961   865.953   0.975208   5.44481
+[I] usune Track  -5307   14961   485
+[I] usune Track  -5307   14961   485
+[I] "trackobj"   "A1t120r10d.s" 486
+[I] 1:  -5307   -14961   845.652   0.981175   7.33276
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.757   -2.58545
+[I] 2:  -5307   -14961   866.265   1   9.52072
+[I] "A1t120r10d.s"
+[I] 217
+[I] 36164
+[I] 20.944
+[I] polacze  218   210
+[I] 211   1
+[I] 217   0
+[I] ok
+[I] przeniose  3  items z  211  do  217
+[I] d:  20.944
+[I] "trackobj"   "A1t120r10d.s" 487
+[I] 1:  -5307   -14961   844.78   0.98317   3.04348
+[I] "A1t120r10d.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 20.7953   -2.25622
+[I] 2:  -5307   -14961   865.953   0.975208   5.44481
+[I] "A1t120r10d.s"
+[I] 220
+[I] 36164
+[I] 20.944
+[I] polacze  221   215
+[I] 214   0
+[I] 220   0
+[I] rot2
+[I] d:  20.944
+[I] ok
+[I] d:  20.944

@@ -332,7 +332,19 @@ void Window::save(){
 }
 
 void Window::createPaths(){
-    emit sendMsg(QString("createPaths"));
+    QMessageBox msgBox;
+    msgBox.setText("This will delete all your existing paths and create new simple paths! Continue?");
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+    switch (msgBox.exec()) {
+      case QMessageBox::Yes:
+          emit sendMsg(QString("createPaths"));
+          break;
+      case QMessageBox::No:
+          break;
+      default:
+          break;
+    }
 }
 
 void Window::about(){

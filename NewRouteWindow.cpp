@@ -11,7 +11,7 @@ NewRouteWindow::NewRouteWindow() : QDialog(){
     QFormLayout *vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
-    vlist->addRow("Name:",&this->name);
+    vlist->addRow("Name ID:",&this->name);
     vlist->addRow("Lat:",&this->lat);
     vlist->addRow("Lon:",&this->lon);
     vlist->addRow(ok,cancel);

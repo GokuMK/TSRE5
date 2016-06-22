@@ -366,6 +366,9 @@ void TDB::fillDynTrack(DynTrackObj* track){
 }
 
 int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
+    int nearestID = -1;
+    float nearestD = 999;
+    float maxD = 4;
     for (int j = 1; j <= iTRnodes; j++) {
         TRnode* n = trackNodes[j];
         if(n == NULL) continue;
@@ -373,23 +376,28 @@ int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
             float lenx = ((n->UiD[4] - x)*2048 + n->UiD[6] - p[0]);
             float leny = (n->UiD[7]) - p[1];
             float lenz = ((-n->UiD[5] - z)*2048 - n->UiD[8] - p[2]);
-            if (fabs(lenx) < 2 && fabs(leny) < 2 && fabs(lenz) < 2) {
-                //qDebug() << ":"<<len;
-                x = n->UiD[4];
-                z = -n->UiD[5];
-                p[0] = n->UiD[6];
-                p[1] = n->UiD[7];
-                p[2] = -n->UiD[8];
-
-                q[0] = 0;//n->UiD[9]; //fix ??????????
-                q[1] = n->UiD[10];
-                q[2] = n->UiD[11];
-                //Quat::rotateY(q, q, n->UiD[10]);
-                return j;
+            float dist = fabs(lenx) + fabs(leny) + fabs(lenz);
+            if(dist < nearestD){
+                nearestID = j;
+                nearestD = dist;
             }
         }
     }
-    return -1;
+    if (nearestD < maxD) {
+        //qDebug() << ":"<<len;
+        x = trackNodes[nearestID]->UiD[4];
+        z = -trackNodes[nearestID]->UiD[5];
+        p[0] = trackNodes[nearestID]->UiD[6];
+        p[1] = trackNodes[nearestID]->UiD[7];
+        p[2] = -trackNodes[nearestID]->UiD[8];
+
+        q[0] = 0;//n->UiD[9]; //fix ??????????
+        q[1] = trackNodes[nearestID]->UiD[10];
+        q[2] = trackNodes[nearestID]->UiD[11];
+                //Quat::rotateY(q, q, n->UiD[10]);
+    }
+    
+    return nearestID;
 }
 
 int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
@@ -2293,6 +2301,16 @@ void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
             }
     }
     return;
+}
+
+void TDB::updateTrItemRData(TRitem* tr){
+    if(tr == NULL) 
+        return;
+    float trPosition[7];
+    int id = findTrItemNodeId(tr->trItemId);
+    if(id < 1) return;
+    getDrawPositionOnTrNode((float*)&trPosition, id, tr->trItemSData1);
+    tr->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
 }
 
 void TDB::newPickupObject(int* &itemId, int trNodeId, float metry, int type){

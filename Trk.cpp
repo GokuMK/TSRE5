@@ -20,7 +20,7 @@ Trk::Trk() {
     gantrySet = 0;
     trackGauge = 0;
     era = 0;
-    speedLimit = 100;
+    speedLimit = 44.44444;
     terrainErrorScale = 1.0;
     startTileX = 0;
     startTileZ = 0;
@@ -33,7 +33,7 @@ Trk::Trk() {
     defaultWaterTowerSMS = "wtower.sms";
     defaultCoalTowerSMS = "ctower.sms";
     defaultDieselTowerSMS = "dtower.sms";
-    tempRestrictedSpeed = 10;
+    tempRestrictedSpeed = 0;
     gravityScale = -1;
     timetableTollerance = -1;
     derailScale = -1;
@@ -289,8 +289,20 @@ void Trk::save() {
     out << "	Era ( " << this->era << " )" << "\n";
     out << "	SpeedLimit ( " << this->speedLimit << " )" << "\n";
     out << "	Environment (" << "\n";
-    for (auto it = this->environment.begin(); it != this->environment.end(); ++it)
-        out << "		" << QString::fromStdString(it->first) << " ( " << it->second << " )" << "\n";
+    //for (auto it = this->environment.begin(); it != this->environment.end(); ++it)
+    //    out << "		" << QString::fromStdString(it->first) << " ( " << it->second << " )" << "\n";
+    out << "		SpringClear ( " << this->environment["SpringClear"] << " )" << "\n";
+    out << "		SpringRain ( " << this->environment["SpringRain"] << " )" << "\n";
+    out << "		SpringSnow ( " << this->environment["SpringSnow"] << " )" << "\n";
+    out << "		SummerClear ( " << this->environment["SummerClear"] << " )" << "\n";
+    out << "		SummerRain ( " << this->environment["SummerRain"] << " )" << "\n";
+    out << "		SummerSnow ( " << this->environment["SummerSnow"] << " )" << "\n";
+    out << "		AutumnClear ( " << this->environment["AutumnClear"] << " )" << "\n";
+    out << "		AutumnRain ( " << this->environment["AutumnRain"] << " )" << "\n";
+    out << "		AutumnSnow ( " << this->environment["AutumnSnow"] << " )" << "\n";
+    out << "		WinterClear ( " << this->environment["WinterClear"] << " )" << "\n";
+    out << "		WinterRain ( " << this->environment["WinterRain"] << " )" << "\n";
+    out << "		WinterSnow ( " << this->environment["WinterSnow"] << " )" << "\n";
     out << "	)" << "\n";
     out << "	TerrainErrorScale ( " << this->terrainErrorScale << " )" << "\n";
     out << "	RouteStart ( "<< this->startTileX <<" "<< this->startTileZ <<" " << this->startpX << " " << this->startpZ << " )" << "\n";

@@ -206,7 +206,7 @@ TerrainTools::TerrainTools(QString name)
     
     // signals
     QObject::connect(heightTool, SIGNAL(released()),
-                      this, SLOT(heightToolPEnabled()));
+                      this, SLOT(heightToolEnabled()));
     
     QObject::connect(paintTool, SIGNAL(released()),
                       this, SLOT(paintColorToolEnabled()));

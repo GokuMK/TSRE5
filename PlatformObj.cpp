@@ -121,12 +121,12 @@ void PlatformObj::translate(float px, float py, float pz){
         trit->trItemSData1 -= 1;
         if(trit->trItemSData1 < 0)
             trit->trItemSData1 = 0;
-
+        tdb->updateTrItemRData(trit);
     } else if(pz > 0){
         trit->trItemSData1 += 1;
         if(trit->trItemSData1 > dlugosc)
             trit->trItemSData1 = dlugosc;
-
+        tdb->updateTrItemRData(trit);
     }
     if(this->selectionValue == 1){
         delete[] drawPositionB;

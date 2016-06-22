@@ -52,6 +52,7 @@ TrkWindow::TrkWindow() : QDialog(){
     settings->addWidget(new QLabel("Terrain Error Scale: "), row++, 0);
     settings->addWidget(GuiFunct::newTQLabel("Environment"), row++, 0);
     settings->addWidget(&envName, row++, 0);
+    QObject::connect(&envName, SIGNAL(activated(QString)), this, SLOT(envNameEnabled(QString)));
     envName.setStyleSheet("combobox-popup: 0;");
     settings->addWidget(GuiFunct::newTQLabel("Description"), row++, 0);
     row = 0;
@@ -148,9 +149,9 @@ int TrkWindow::exec() {
     }
     
     if(trk->milepostUnitsKilometers){
-        this->milepostUnitsKilometers.setCurrentIndex(1);
-    }else{
         this->milepostUnitsKilometers.setCurrentIndex(0);
+    }else{
+        this->milepostUnitsKilometers.setCurrentIndex(1);
     }
     
     this->startTileX.setText(QString::number(trk->startTileX));
@@ -185,6 +186,10 @@ int TrkWindow::exec() {
     return QDialog::exec();
 } 
 
+void TrkWindow::envNameEnabled(QString item){
+    this->envValue.setText(trk->environment[item.toStdString()]);
+}
+
 void TrkWindow::bokEnabled(){
     trk->setModified(true);
     trk->displayName = displayName.text();
@@ -194,6 +199,17 @@ void TrkWindow::bokEnabled(){
     trk->startpZ = startpZ.text().toFloat();
     trk->description = description.toPlainText();
     trk->description.replace("\n","\\n");
+    
+    trk->electrified = electrified.currentIndex();
+    trk->overheadWireHeight = overheadWireHeight.value();
+    trk->maxLineVoltage = maxLineVoltage.value();
+    if(milepostUnitsKilometers.currentIndex() == 1)
+        trk->milepostUnitsKilometers = false;
+    else
+        trk->milepostUnitsKilometers = true;
+    
+    trk->tempRestrictedSpeed = tempRestrictedSpeed.value()/3.6;
+    trk->speedLimit = speedLimit.value()/3.6;
     close();
 }
 

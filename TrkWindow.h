@@ -19,6 +19,7 @@ signals:
 public slots:
     void bokEnabled();
     void bcancelEnabled();
+    void envNameEnabled(QString item);
     
 private:
     QLabel imageGraphic;
