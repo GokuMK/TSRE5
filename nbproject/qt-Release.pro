@@ -3,7 +3,7 @@
 TEMPLATE = app
 DESTDIR = dist/Release/MinGW_QT_5.7.0_Static-Windows
 TARGET = TSRE5
-VERSION = 0.613
+VERSION = 0.614
 CONFIG -= debug_and_release app_bundle lib_bundle
 CONFIG += release 
 PKGCONFIG +=

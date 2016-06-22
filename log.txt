@@ -255,4 +255,394 @@
 [I] w file not exist     "F:/train simulator/routes/bbb/world/w-005309+014961.w"
 [I] w file not exist     "F:/train simulator/routes/bbb/world/w-005309+014962.w"
 [I] w file not exist     "F:/train simulator/routes/bbb/world/w-005309+014963.w"
-[I] nic do zapisania
+[I] "selectTool"
+[I] 0.0313726   0   0.105882   1
+[I] selected  4   4
+[I] color data:  0
+[I] -5307   -14961   27
+[I] "placeTool"
+[I] "trackobj"   "A1tPnt7_5dLft.s" 432
+[I] 1:  -5307   -14961   324.137   0.982859   41.5916
+[I] -1
+[I] 2:  -5307   -14961   324.137   0.982859   41.5916
+[I] usune Track  -5307   14961   432
+[I] usune Track  -5307   14961   432
+[I] "trackobj"   "A1tPnt7_5dLft.s" 433
+[I] 1:  -5307   -14961   803.883   0.967775   13.9793
+[I] 1
+[I] "A1tPnt7_5dLft.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 2:  -5307   -14961   803.544   1   14.0334
+[I] 1
+[I] "A1tPnt7_5dLft.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 24.8165   -2.5427
+[I] 1
+[I] "A1tPnt7_5dLft.s"
+[I] defaultEnd 2
+[I] ccc
+[I] 0   0
+[I] 1
+[I] "A1tPnt7_5dLft.s"
+[I] defaultEnd 3
+[I] ccc
+[I] 24.9832   -0.916134
+[I] usune Track  -5307   14961   433
+[I] usune Track  -5307   14961   433
+[I] "selectTool"
+[I] 0.0313726   0   0.184314   1
+[I] selected  4   4
+[I] color data:  0
+[I] -5307   -14961   47
+[I] "placeTool"
+[I] "trackobj"   "A1tFrog7_5dTo2tLft.s" 434
+[I] 1:  -5307   -14961   166.711   0.99342   24.8629
+[I] -1
+[I] 2:  -5307   -14961   166.711   0.99342   24.8629
+[I] usune Track  -5307   14961   434
+[I] usune Track  -5307   14961   434
+[I] "trackobj"   "A1tFrog7_5dTo2tLft.s" 435
+[I] 1:  -5307   -14961   382.285   0.967966   -85.5053
+[I] -1
+[I] 2:  -5307   -14961   382.285   0.967966   -85.5053
+[I] is Track?  -5307   14961   435
+[I] is Track?  -5307   14961   435
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] 208
+[I] 39069
+[I] 45
+[I] 211
+[I] 206
+[I] 6
+[I] 0
+[I] 0
+[I] "trackobj"   "A1tFrog7_5dTo2tLft.s" 436
+[I] 1:  -5307   -14961   338.416   0.987904   -92.9317
+[I] 209
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 3
+[I] ccc
+[I] -44.9537   4.99879
+[I] 2:  -5307   -14961   292.794   0.967966   -96.3807
+[I] 209
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 209
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 1
+[I] ccc
+[I] -44.3701   7.50308
+[I] is Track?  -5307   14961   436
+[I] is Track?  -5307   14961   436
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] 214
+[I] 39069
+[I] 45
+[I] polacze  215   209
+[I] 208   0
+[I] 214   0
+[I] rot2
+[I] d:  45
+[I] ok
+[I] d:  45
+[I] 217
+[I] 206
+[I] 6
+[I] 0
+[I] 0
+[I] "trackobj"   "A1tFrog7_5dTo2tLft.s" 437
+[I] 1:  -5307   -14961   338.384   0.987208   -98.0697
+[I] 218
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 44.3701   -7.50308
+[I] 2:  -5307   -14961   383.115   0.967966   -90.4168
+[I] is Track?  -5307   14961   437
+[I] is Track?  -5307   14961   437
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] 220
+[I] 39069
+[I] 45
+[I] polacze  221   218
+[I] 217   0
+[I] 220   0
+[I] rot2
+[I] d:  45.2699
+[I] ok
+[I] d:  45
+[I] 223
+[I] 206
+[I] 6
+[I] 0
+[I] 0
+[I] "trackobj"   "A1tFrog7_5dTo2tLft.s" 438
+[I] 1:  -5307   -14961   419.483   0.982308   -63.3867
+[I] -1
+[I] 2:  -5307   -14961   419.483   0.982308   -63.3867
+[I] usune Track  -5307   14961   438
+[I] usune Track  -5307   14961   438
+[I] "trackobj"   "A1tFrog7_5dTo2tLft.s" 439
+[I] 1:  -5307   -14961   804.295   0.985391   13.997
+[I] 1
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 44.9698   -1.64904
+[I] 2:  -5307   -14961   848.514   1   15.6824
+[I] 1
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 2
+[I] ccc
+[I] 0   0
+[I] 1
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 3
+[I] ccc
+[I] 45.2216   0.909992
+[I] 1
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 1
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 44.9698   -1.64904
+[I] 1
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 2
+[I] ccc
+[I] 0   0
+[I] 1
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 3
+[I] ccc
+[I] 45.2216   0.909992
+[I] 1
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] 1
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 1
+[I] ccc
+[I] 44.9698   -1.64904
+[I] is Track?  -5307   14961   439
+[I] is Track?  -5307   14961   439
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] 226
+[I] 39069
+[I] 45
+[I] polacze  227   1
+[I] 2   1
+[I] 226   0
+[I] ok
+[I] d:  45
+[I] 229
+[I] 206
+[I] 6
+[I] 0
+[I] 0
+[I] "trackobj"   "A1tFrog7_5dTo2tLft.s" 440
+[I] 1:  -5307   -14961   803.596   0.986921   19.574
+[I] 230
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 1
+[I] ccc
+[I] -44.9698   1.64906
+[I] 2:  -5307   -14961   758.392   1   17.3622
+[I] 230
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 2
+[I] ccc
+[I] 0   0
+[I] 230
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 3
+[I] ccc
+[I] -45.2216   -0.909969
+[I] 230
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] defaultEnd 0
+[I] ccc
+[I] 0   0
+[I] is Track?  -5307   14961   440
+[I] is Track?  -5307   14961   440
+[I] "A1tFrog7_5dTo2tLft.s"
+[I] 232
+[I] 39069
+[I] 45
+[I] polacze  231   230
+[I] 229   0
+[I] 232   1
+[I] switch
+[I] ok
+[I] d:  45.2699
+[I] 235
+[I] 206
+[I] 6
+[I] 0
+[I] 0
+[I] 38141   "A1t1000r5dConcrete.s"
+[I] "placeTool"
+[I] "trackobj"   "A1t1000r5dConcrete.s" 441
+[I] Nowy  118  shape:  "f:/train simulator/global/shapes/a1t1000r5dconcrete.s"
+[I] 1:  -5307   -14961   710.564   0.980239   -2.27783
+[I] -1
+[I] 2:  -5307   -14961   710.564   0.980239   -2.27783
+[I] "trackobj"   "A1t1000r5dConcrete.s" 442
+[I] 1:  -5307   -14961   674.757   0.937407   -46.0648
+[I] -1
+[I] 2:  -5307   -14961   674.757   0.937407   -46.0648
+[I] "resetPlaceRotation"
+[I] "trackobj"   "A1t1000r5dConcrete.s" 443
+[I] 1:  -5307   -14961   587.881   0.973314   -47.3841
+[I] -1
+[I] 2:  -5307   -14961   587.881   0.973314   -47.3841
+[I] "trackobj"   "A1t1000r5dConcrete.s" 444
+[I] 1:  -5307   -14961   585.027   0.977532   -35.5524
+[I] -1
+[I] 2:  -5307   -14961   585.027   0.977532   -35.5524
+[I] "trackobj"   "A1t1000r5dConcrete.s" 445
+[I] 1:  -5307   -14961   573.92   0.974096   -25.1849
+[I] -1
+[I] 2:  -5307   -14961   573.92   0.974096   -25.1849
+[I] "trackobj"   "A1t1000r5dConcrete.s" 446
+[I] 1:  -5307   -14961   564.858   0.968208   -25.8468
+[I] -1
+[I] 2:  -5307   -14961   564.858   0.968208   -25.8468
+[I] "trackobj"   "A1t1000r5dConcrete.s" 447
+[I] 1:  -5307   -14961   553.971   0.973455   -40.9951
+[I] -1
+[I] 2:  -5307   -14961   553.971   0.973455   -40.9951
+[I] "trackobj"   "A1t1000r5dConcrete.s" 448
+[I] 1:  -5307   -14961   601.248   0.975694   -51.8775
+[I] -1
+[I] 2:  -5307   -14961   601.248   0.975694   -51.8775
+[I] "trackobj"   "A1t1000r5dConcrete.s" 449
+[I] 1:  -5307   -14961   627.126   0.976992   -42.3636
+[I] -1
+[I] 2:  -5307   -14961   627.126   0.976992   -42.3636
+[I] "trackobj"   "A1t1000r5dConcrete.s" 450
+[I] 1:  -5307   -14961   635.546   0.968967   -22.7466
+[I] -1
+[I] 2:  -5307   -14961   635.546   0.968967   -22.7466
+[I] "trackobj"   "A1t1000r5dConcrete.s" 451
+[I] 1:  -5307   -14961   629.617   0.976098   -17.8951
+[I] -1
+[I] 2:  -5307   -14961   629.617   0.976098   -17.8951
+[I] "trackobj"   "A1t1000r5dConcrete.s" 452
+[I] 1:  -5307   -14961   599.971   0.974395   -8.86305
+[I] -1
+[I] 2:  -5307   -14961   599.971   0.974395   -8.86305
+[I] "trackobj"   "A1t1000r5dConcrete.s" 453
+[I] 1:  -5307   -14961   585.487   0.967976   -6.37086
+[I] -1
+[I] 2:  -5307   -14961   585.487   0.967976   -6.37086
+[I] "trackobj"   "A1t1000r5dConcrete.s" 454
+[I] 1:  -5307   -14961   551.211   0.976484   -32.8307
+[I] -1
+[I] 2:  -5307   -14961   551.211   0.976484   -32.8307
+[I] "selectTool"
+[I] 0.0313726   0.00392157   0.72549   1
+[I] selected  4   4
+[I] color data:  0
+[I] -5307   -14961   441
+[I] "placeTool"
+[I] "trackobj"   "A1t1000r5dConcrete.s" 455
+[I] 1:  -5307   -14961   666.993   0.972336   -20.7698
+[I] -1
+[I] 2:  -5307   -14961   666.993   0.972336   -20.7698
+[I] "trackobj"   "A1t1000r5dConcrete.s" 456
+[I] 1:  -5307   -14961   791.167   0.970138   -20.1255
+[I] -1
+[I] 2:  -5307   -14961   791.167   0.970138   -20.1255
+[I] is Track?  -5307   14961   456
+[I] is Track?  -5307   14961   456
+[I] "A1t1000r5dConcrete.s"
+[I] 238
+[I] 47
+[I] 87.2665
+[I] "trackobj"   "A1t1000r5dConcrete.s" 457
+[I] 1:  -5307   -14961   694.396   0.980476   -58.3885
+[I] -1
+[I] 2:  -5307   -14961   694.396   0.980476   -58.3885
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] rot
+[I] 0   0   0
+[I] 0   0   0
+[I] is Track?  -5307   14961   457
+[I] is Track?  -5307   14961   457
+[I] "A1t1000r5dConcrete.s"
+[I] 241
+[I] 47
+[I] 87.2665
+[I] "selectTool"
+[I] "placeTool"
+[I] "static"   "SG_Uithuizerweg20.s" 458
+[I] Nowy  119  shape:  "f:/train simulator/routes/bbb/shapes/sg_uithuizerweg20.s"
+[I] "resetPlaceRotation"
+[I] "static"   "SG_Uithuizerweg20.s" 459
+[I] "static"   "SG_Uithuizerweg20.s" 460
+[I] "static"   "SG_Uithuizerweg20.s" 461
+[I] "static"   "SG_Uithuizerweg20.s" 462
+[I] "static"   "SG_Uithuizerweg20.s" 463
+[I] "static"   "SG_Uithuizerweg20.s" 464

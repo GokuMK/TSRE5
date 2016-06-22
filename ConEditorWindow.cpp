@@ -162,7 +162,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     main->setLayout(mbox);
     this->setCentralWidget(main);
     
-    setWindowTitle(tr("TSRE5 v0.613 Consist Editor"));
+    setWindowTitle(Game::AppName+" "+Game::AppVersion+" Consist Editor");
     fileMenu = menuBar()->addMenu(tr("&File"));
     fNew = new QAction(tr("&New"), this); 
     fileMenu->addAction(fNew);

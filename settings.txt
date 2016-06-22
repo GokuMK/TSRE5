@@ -47,5 +47,5 @@ fpsLimit = 0
 #cameraFov = 20.0
 warningBox = false
 leaveTrackShapeAfterDelete = false
-renderTrItems = true
+#renderTrItems = true
 useImperial = false

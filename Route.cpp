@@ -245,9 +245,9 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p) {
-    float q[4];
-    Quat::fill((float*)&q);
-    placeObject(x, z, p, (float*) &q, ref->selected);
+    float* q = new float[4];
+    Quat::fill((float*)q);
+    placeObject(x, z, p, (float*) q, ref->selected);
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p, float* q) {
@@ -274,7 +274,8 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
         x = playerT[0];
         z = playerT[1];
-    } if(itemTrackType == 3){
+    } 
+    if(itemTrackType == 3){
         tpos = new float[2];
         float* playerT = Vec2::fromValues(x, z);
         this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);

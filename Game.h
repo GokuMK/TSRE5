@@ -21,6 +21,8 @@ public:
     static TDB *roadDB;
     static SoundList *soundList;
     
+    static QString AppVersion;
+    static QString AppName;
     static QString root;
     static QString route;
     static QString routeName;

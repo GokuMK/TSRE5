@@ -136,7 +136,7 @@ void GLWidget::initializeGL() {
     setSelectedObj(NULL);
     defaultPaintBrush = new Brush();
     mapWindow = new MapWindow();
-    Quat::fill((float*)&this->placeRot);
+    Quat::fill(this->placeRot);
     
     emit routeLoaded(route);
     emit mkrList(route->getMkrList());
@@ -500,12 +500,14 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                         selectedObj->select();
                     }
                 }
+                break;
             case Qt::Key_P:
                 if(selectedObj != NULL){
-                    Quat::copy((float*) &this->placeRot, selectedObj->qDirection);
+                    Quat::copy(this->placeRot, selectedObj->qDirection);
                     route->ref->selected = selectedObj->getRefInfo();
                     emit itemSelected(route->ref->selected);
                 }
+                break;
             case Qt::Key_L:
                 route->nextDefaultEnd();
                 break;
@@ -520,6 +522,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 setSelectedObj(NULL);
                 break;
             case Qt::Key_X:
+                if(selectedObj == NULL)
+                    return;
                 //route->refreshObj(selectedObj);
                 route->nextDefaultEnd();
                 route->newPositionTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&lastNewObjPos);                
@@ -562,7 +566,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             lastNewObjPos[1] = aktPointerPos[1];
             lastNewObjPos[2] = aktPointerPos[2];
             float *q = Quat::create();
-            Quat::copy(q, (float*)&this->placeRot);
+            Quat::copy(q, this->placeRot);
             setSelectedObj(route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, q));
             if(selectedObj != NULL)
                 selectedObj->select();

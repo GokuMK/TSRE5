@@ -910,7 +910,7 @@
       </toolsSet>
       <qt>
         <target>TSRE5</target>
-        <version>0.613</version>
+        <version>0.614</version>
         <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>
@@ -1993,7 +1993,7 @@
       </toolsSet>
       <qt>
         <target>TSRE5</target>
-        <version>0.613</version>
+        <version>0.614</version>
         <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>

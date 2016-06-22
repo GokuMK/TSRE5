@@ -377,7 +377,7 @@ int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
             float leny = (n->UiD[7]) - p[1];
             float lenz = ((-n->UiD[5] - z)*2048 - n->UiD[8] - p[2]);
             float dist = fabs(lenx) + fabs(leny) + fabs(lenz);
-            if(dist < nearestD){
+            if(dist < nearestD && dist < maxD){
                 nearestID = j;
                 nearestD = dist;
             }
@@ -1264,7 +1264,9 @@ bool TDB::findPosition(int x, int z, float* p, float* q, float* endp, int sectio
     qe[0] = 0;
     qe[1] = 0;
     qe[2] = 0;
-    findNearestNode(x, z, p, (float*) &qe);
+    int findValue = findNearestNode(x, z, p, (float*) &qe);
+    qDebug() << findValue;
+    if(findValue < 0) return false;
     
     bool b;
     
@@ -1336,6 +1338,7 @@ bool TDB::findPosition(int x, int z, float* p, float* q, float* endp, int sectio
     p[0] -= bb.x;
     p[2] += bb.z;
     
+    Quat::fill(q);
     Quat::rotateY(q, q, -qe[1] + shp->path[startEnd].rotDeg*M_PI/180);
     
     if(endend == 0)
