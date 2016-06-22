@@ -50,6 +50,7 @@ bool Game::renderTrItems = false;
 int Game::newRouteX = -5000;
 int Game::newRouteZ = 15000;
 bool Game::consoleOutput = true;
+int Game::fpsLimit = 0;
 
 QString Game::geoPath = "hgst";
 
@@ -135,6 +136,9 @@ void Game::load() {
         }
         if(val == "allowObjLag"){
             allowObjLag = args[1].trimmed().toInt();
+        }
+        if(val == "fpsLimit"){
+            fpsLimit = args[1].trimmed().toInt();
         }
         if(val == "cameraFov"){
             cameraFov = args[1].trimmed().toFloat();

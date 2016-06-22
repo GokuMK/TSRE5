@@ -47,6 +47,7 @@ public:
     void saveTit();
     void loadTit();
     static void saveEmpty(bool road);
+    bool ifTrackExist(int x, int y, int UiD);
     void removeTrackFromTDB(int x, int y, int UiD);
     int findNearestNode(int &x, int &z, float* p, float* q);
     int joinTracks(int iendp);

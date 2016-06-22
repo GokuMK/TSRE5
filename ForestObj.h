@@ -4,13 +4,15 @@
 #include "WorldObj.h"
 #include <QString>
 
+class OglObj;
+
 class ForestObj : public WorldObj{
 public:
-    struct Shape{
+    /*struct Shape{
         int iloscv;
         QOpenGLBuffer VBO;
         QOpenGLVertexArrayObject VAO;
-    };
+    };*/
     struct ForestList{
         QString name;
         QString texture;
@@ -20,7 +22,6 @@ public:
         float treeSizeZ = 0;
     };
     static std::vector<ForestList> forestList;
-    Shape shape;
     QString treeTexture = "";
     float scaleRangeX = 0;
     float scaleRangeZ = 0;
@@ -35,8 +36,10 @@ public:
     void load(int x, int y);
     void set(int sh, FileBuffer* data);
     void set(QString sh, int val);
+    void set(QString sh, float val);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
+    void deleteVBO();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     static void loadForestList();
     virtual ~ForestObj();
@@ -44,6 +47,8 @@ private:
     void drawShape();
     int tex;
     bool init;
+    OglObj shape;
+    QString * texturePath = NULL;
 };
 
 #endif	/* FORESTOBJ_H */

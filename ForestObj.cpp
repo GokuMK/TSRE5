@@ -83,10 +83,26 @@ void ForestObj::set(QString sh, int val) {
         population = 10;
         return;
     }
+    if (sh == ("population")) {
+        population = val;
+        return;
+    }
     WorldObj::set(sh, val);
     this->modified = true;
 }
 
+void ForestObj::set(QString sh, float val) {
+    if (sh == ("areaX")) {
+        areaX = val;
+        return;
+    }
+    if (sh == ("areaZ")) {
+        areaZ = val;
+        return;
+    }
+    WorldObj::set(sh, val);
+    this->modified = true;
+}
 
 void ForestObj::set(int sh, FileBuffer* data) {
     if (sh == TS::TreeTexture) {
@@ -205,9 +221,9 @@ void ForestObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
         int wColor = (int)(selectionColor/65536);
         int sColor = (int)(selectionColor - wColor*65536)/256;
         int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
-        gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
+        shape.setMaterial((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f);
     } else {
-        gluu->enableTextures();
+        shape.setMaterial(texturePath);
     }
     
     drawShape();
@@ -215,7 +231,7 @@ void ForestObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
 
 void ForestObj::drawShape(){
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    if (tex == -2) {
+    /*if (tex == -2) {
         f->glDisable(GL_TEXTURE_2D);
     } else {
         f->glEnable(GL_TEXTURE_2D);
@@ -223,11 +239,11 @@ void ForestObj::drawShape(){
             tex = TexLib::addTex(resPath, treeTexture);
             f->glDisable(GL_TEXTURE_2D);
         }
-    }
+    }*/
 
     if (!init) {
-            shape.iloscv = population*24;
-            float* punkty = new float[shape.iloscv*8];
+            int iloscv = population*24;
+            float* punkty = new float[iloscv*8];
             int ptr = 0;
 
             int seed = (int)(position[0] + position[1] + position[2]);
@@ -236,8 +252,8 @@ void ForestObj::drawShape(){
             float treeSizeXt = treeSizeX*0.7;
             for(int uu = 0; uu < population; uu++){
 
-                float tposx = ((float)((std::rand()%100))/100)*areaX-areaX/2.0;
-                float tposz = ((float)((std::rand()%100))/100)*areaZ-areaZ/2.0;
+                float tposx = ((float)((std::rand()%1000))/1000)*areaX-areaX/2.0;
+                float tposz = ((float)((std::rand()%1000))/1000)*areaZ-areaZ/2.0;
                 Vector2f uuu(tposx,tposz);
                 uuu.rotate(((qDirection[1]+0.00001f)/fabs(qDirection[1]+0.00001f))*(float)-acos(qDirection[3])*2.0, 0);
                 tposx = uuu.x;
@@ -286,7 +302,10 @@ void ForestObj::drawShape(){
                 }
             }
             
-        shape.VAO.create();
+        texturePath = new QString(resPath.toLower()+"/"+treeTexture.toLower());
+        shape.setMaterial(texturePath);
+        shape.init(punkty, ptr, shape.VNT, GL_TRIANGLES);
+        /*shape.VAO.create();
         QOpenGLVertexArrayObject::Binder vaoBinder(&shape.VAO);
 
         shape.VBO.create();
@@ -296,20 +315,21 @@ void ForestObj::drawShape(){
         f->glEnableVertexAttribArray(1);
         f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), 0);
         f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
-        shape.VBO.release();
+        shape.VBO.release();*/
         //shape.iloscv = ptr/8;
 
         delete[] punkty;
         init = true;
     } else {
         
-        if(TexLib::mtex[tex]->loaded){
+        /*if(TexLib::mtex[tex]->loaded){
             if(!TexLib::mtex[tex]->glLoaded) TexLib::mtex[tex]->GLTextures();
             f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex]->tex[0]);
         }
         
         QOpenGLVertexArrayObject::Binder vaoBinder1(&shape.VAO);
-        f->glDrawArrays(GL_TRIANGLES, 0, shape.iloscv);
+        f->glDrawArrays(GL_TRIANGLES, 0, shape.iloscv);*/
+        shape.render();
     }
 }
 
@@ -334,4 +354,9 @@ if(this->treeTexture != "")
 
 bool ForestObj::allowNew(){
     return true;
+}
+
+void ForestObj::deleteVBO(){
+    //this->shape.deleteVBO();
+    this->init = false;
 }

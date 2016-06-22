@@ -125,7 +125,10 @@ void GLWidget::initializeGL() {
     
     
     lastTime = QDateTime::currentMSecsSinceEpoch();
-    timer.start(15, this);
+    int timerStep = 15;
+    if(Game::fpsLimit > 0)
+        timerStep = 1000/Game::fpsLimit;
+    timer.start(timerStep, this);
     setFocus();
     setMouseTracking(true);
     pointer3d = new Pointer3d();
@@ -510,7 +513,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 //route->refreshObj(selectedObj);
                 //route->trackDB->setDefaultEnd(0);
                 //route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&selectedObj->position);
-                route->addToTDB(selectedObj);
+                
+                route->toggleToTDB(selectedObj);
                 if(selectedObj != NULL) selectedObj->unselect();
                 lastSelectedObj = selectedObj;
                 setSelectedObj(NULL);

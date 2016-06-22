@@ -43,8 +43,23 @@ PropertiesForest::PropertiesForest() {
     vlist0->setContentsMargins(3,0,3,0);
     vlist0->addRow("Width:",&this->sizeX);
     vlist0->addRow("Height:",&this->sizeY);
+    
+    sizeX.setValidator( new QDoubleValidator(0, 1000, 2, this) );
+    QObject::connect(&sizeX, SIGNAL(textEdited(QString)),
+                      this, SLOT(sizeEnabled(QString)));
+    sizeY.setValidator( new QDoubleValidator(0, 1000, 2, this) );
+    QObject::connect(&sizeY, SIGNAL(textEdited(QString)),
+                      this, SLOT(sizeEnabled(QString)));
+    
     vlist0->addRow("Population:",&this->population);
+    population.setValidator( new QIntValidator(0, 1000000, this) );
+    QObject::connect(&population, SIGNAL(textEdited(QString)),
+                      this, SLOT(populationEnabled(QString)));
+    
     vlist0->addRow("Density/KM:",&this->densitykm);
+    densitykm.setValidator( new QIntValidator(0, 1000000, this) );
+    QObject::connect(&densitykm, SIGNAL(textEdited(QString)),
+                      this, SLOT(densitykmEnabled(QString)));
     vbox->addItem(vlist0);
     
     QLabel * label2 = new QLabel("Position:");
@@ -91,7 +106,7 @@ void PropertiesForest::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
-
+    forestObj = (ForestObj*)obj;
     ForestObj* tobj = (ForestObj*)obj;
         
     this->infoLabel->setText("Object: "+obj->type);
@@ -112,6 +127,33 @@ void PropertiesForest::showObj(WorldObj* obj){
             QString::number(-obj->qDirection[2], 'G', 4) + " " +
             QString::number(obj->qDirection[3], 'G', 4)
             );
+}
+
+void PropertiesForest::sizeEnabled(QString val){
+    if(forestObj == NULL)
+        return;
+    forestObj->set("areaX", sizeX.text().toFloat());
+    forestObj->set("areaZ", sizeY.text().toFloat());
+    forestObj->modified = true;
+    forestObj->deleteVBO();
+}
+
+void PropertiesForest::populationEnabled(QString val){
+    if(forestObj == NULL)
+        return;
+    forestObj->set("population", population.text().toInt());
+    this->densitykm.setText(QString::number((int)(forestObj->population*(1000000.0/(forestObj->areaX*forestObj->areaZ))), 10));
+    forestObj->modified = true;
+    forestObj->deleteVBO();
+}
+
+void PropertiesForest::densitykmEnabled(QString val){
+    if(forestObj == NULL)
+        return;
+    this->population.setText(QString::number((int)(densitykm.text().toUInt()/(1000000.0/(forestObj->areaX*forestObj->areaZ))), 10));
+    forestObj->set("population", population.text().toInt());
+    forestObj->modified = true;
+    forestObj->deleteVBO();
 }
 
 bool PropertiesForest::support(WorldObj* obj){

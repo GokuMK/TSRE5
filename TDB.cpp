@@ -1556,6 +1556,28 @@ void TDB::removeTrackFromTDB(int x, int y, int UiD){
     TDB::refresh();
 }
 
+bool TDB::ifTrackExist(int x, int y, int UiD){
+    y = -y;
+    qDebug() << "is Track? " << x << " " << y << " " << UiD; 
+    
+    TRnode *n;
+    for (int i = 1; i <= iTRnodes; i++) {
+            n = trackNodes[i];
+            if (n == NULL) continue;
+            if (n ->typ == -1) continue;
+            if (n->typ == 1) {
+                for(int j = 0; j < n->iTrv; j++)
+                    if(n->trVectorSection[j].param[2] == x)
+                        if(n->trVectorSection[j].param[3] == y)
+                            if(n->trVectorSection[j].param[4] == UiD){
+                                qDebug() << "jest";
+                                return true;
+                    }
+            }
+        }
+    return false;
+}
+
 void TDB::refresh() {
     isInitSectLines = false;
     isInitLines = false;

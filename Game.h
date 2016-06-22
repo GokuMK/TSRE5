@@ -69,6 +69,7 @@ public:
     static QColor *colorConView;
     static QColor *colorShapeView;
     static bool consoleOutput;
+    static int fpsLimit;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

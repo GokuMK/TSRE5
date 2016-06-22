@@ -59,6 +59,13 @@ PropertiesTransfer::PropertiesTransfer() {
     vlist0->addRow("Height:",&this->sizeY);
     vbox->addItem(vlist0);
     
+    sizeX.setValidator( new QDoubleValidator(0, 1000, 2, this) );
+    QObject::connect(&sizeX, SIGNAL(textEdited(QString)),
+                      this, SLOT(sizeEnabled(QString)));
+    sizeY.setValidator( new QDoubleValidator(0, 1000, 2, this) );
+    QObject::connect(&sizeY, SIGNAL(textEdited(QString)),
+                      this, SLOT(sizeEnabled(QString)));
+    
     QLabel * label2 = new QLabel("Position:");
     label2->setStyleSheet("QLabel { color : #999999; }");
     label2->setContentsMargins(3,0,0,0);
@@ -103,6 +110,7 @@ void PropertiesTransfer::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
+    transferObj = (TransferObj*)obj;
 
     TransferObj* tobj = (TransferObj*)obj;
         
@@ -134,6 +142,15 @@ void PropertiesTransfer::showObj(WorldObj* obj){
         texPreviewLabel->setPixmap(QPixmap::fromImage(QImage(out,128,128,QImage::Format_RGB888)));
     if(tex->bytesPerPixel == 4)
         texPreviewLabel->setPixmap(QPixmap::fromImage(QImage(out,128,128,QImage::Format_RGBA8888)));
+}
+
+void PropertiesTransfer::sizeEnabled(QString val){
+    if(transferObj == NULL)
+        return;
+    transferObj->set("width", sizeX.text().toFloat());
+    transferObj->set("height", sizeY.text().toFloat());
+    transferObj->modified = true;
+    transferObj->deleteVBO();
 }
 
 bool PropertiesTransfer::support(WorldObj* obj){

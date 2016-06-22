@@ -55,6 +55,19 @@ void TransferObj::set(QString sh, QString val){
     return;
 }
 
+void TransferObj::set(QString sh, float val){
+    if (sh == ("width")) {
+        width = val;
+        return;
+    }
+    if (sh == ("height")) {
+        height = val;
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
+}
+
 void TransferObj::set(int sh, FileBuffer* data) {
     if (sh == TS::FileName) {
         data->off++;
