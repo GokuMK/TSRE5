@@ -1404,7 +1404,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     //int junctionCount = 0;
     
     for (int i = 0; i < shp->numpaths; i++) {
-        int posIdx = (int)shp->path[i].pos[0]*10000 + (int)shp->path[i].pos[1]*100 + (int)shp->path[i].pos[2];
+        int posIdx = (float)shp->path[i].pos[0]*100000 + (float)shp->path[i].pos[1]*1000 + (float)shp->path[i].pos[2]*10;
         std::unordered_map<int, int>::iterator iter = endsIds.find(posIdx);
         if(iter == endsIds.end()){
             endsNumbres[i*2] = nextNumber++;

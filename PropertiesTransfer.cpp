@@ -132,7 +132,6 @@ void PropertiesTransfer::showObj(WorldObj* obj){
             );
     
 
-    
     Texture* tex = TexLib::mtex[tobj->getTexId()];
     if(tex == NULL) 
         return;

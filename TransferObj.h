@@ -30,6 +30,7 @@ public:
     void save(QTextStream* out);
     void deleteVBO();
     int getTexId();
+    virtual Ref::RefItem* getRefInfo();
     void translate(float px, float py, float pz);
     void rotate(float x, float y, float z);
     void resize(float x, float y, float z);

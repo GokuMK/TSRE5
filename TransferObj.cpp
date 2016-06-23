@@ -11,6 +11,7 @@
 #include <QOpenGLShaderProgram>
 #include "Game.h"
 #include "TS.h"
+#include "Ref.h"
 
 TransferObj::TransferObj() {
     this->width = 10;
@@ -107,6 +108,12 @@ void TransferObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
+Ref::RefItem* TransferObj::getRefInfo(){
+    Ref::RefItem* r = new Ref::RefItem();
+    r->type = this->type;
+    r->filename = this->texture;
+    return r;
+}
 
 void TransferObj::deleteVBO(){
     //this->shape.deleteVBO();

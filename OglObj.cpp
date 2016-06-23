@@ -91,6 +91,7 @@ void OglObj::render(int selectionColor) {
         } else {
             if (texId == -1) {
                 texId = TexLib::addTex(*res);
+                //qDebug() << texId << " "<< *res;
             }
             if (TexLib::mtex[texId]->loaded) {
                 if (!TexLib::mtex[texId]->glLoaded)
