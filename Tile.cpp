@@ -91,7 +91,7 @@ void Tile::load() {
     
     QFile *file = new QFile(path);
     if (!file->open(QIODevice::ReadOnly)){
-        qDebug() << "w file not exist    " << path;
+        qDebug() << "W file: not exist " << path;
         return;
     }
     FileBuffer* data = ReadFile::read(file);

@@ -35,8 +35,10 @@ SFile::~SFile() {
 void SFile::Load(QString path) {
     
     QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
+    if (!file->open(QIODevice::ReadOnly)){
+        qDebug() << "S Shape: not exist "<<path;
         return;
+    }
     FileBuffer* bufor = ReadFile::read(file);
     //qDebug() << "--" << path << "--" << bufor->length;
     

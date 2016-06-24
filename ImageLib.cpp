@@ -9,8 +9,10 @@ ImageLib::ImageLib() {
 
 void ImageLib::run(){
     QImage img(texture->pathid);    
-    if(img.isNull()) 
+    if(img.isNull()) {
+        qDebug() << "IMG: not exist "<<texture->pathid;
         return;
+    }
     
     
     if(img.hasAlphaChannel()){

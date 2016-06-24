@@ -20,9 +20,11 @@ AceLib::~AceLib(){
 //bool AceLib::LoadACE(Texture* texture) {
 void AceLib::run() {
     QFile *file = new QFile(texture->pathid);
-    if (!file->open(QIODevice::ReadOnly))
+    if (!file->open(QIODevice::ReadOnly)){
+        qDebug() << "ACE: not exist "<<texture->pathid;
         //return false;
         return;
+    }
     FileBuffer* data = ReadFile::read(file);
     //qDebug() << "Date:" << data->length;
     unsigned char* bufor = data->data;
