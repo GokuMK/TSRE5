@@ -30,7 +30,7 @@ public:
     static QString SplitToMultiline(QString n, QString woff = "");
 
 private:
-    static float NumberUnit(float x, char &b, FileBuffer* bufor);
+    static float NumberUnit(float x, unsigned char &b, FileBuffer* bufor);
 };
 
 #endif	/* PARSERX_H */

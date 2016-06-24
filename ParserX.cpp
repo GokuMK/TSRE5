@@ -53,7 +53,7 @@ QString ParserX::SplitToMultiline(QString n, QString woff){
 //Next line
 //-----------------------------------
 int ParserX::NextLine(FileBuffer* bufor){
-    char b;
+    unsigned char b;
     while (bufor->length >= bufor->off + 2) {
         b = bufor->get();
         //qDebug() << b;
@@ -68,7 +68,7 @@ int ParserX::NextLine(FileBuffer* bufor){
 //Szukanie sekcji
 //-----------------------------------
 int ParserX::szukajsekcji1(QString sh, FileBuffer* bufor){
-    char b;
+    unsigned char b;
     int i = 0, czytam = 0;
     int poziom = 0;
     QString sekcja = "";
@@ -119,7 +119,7 @@ int ParserX::szukajsekcji1(QString sh, FileBuffer* bufor){
 //Szukanie sekcji
 //-----------------------------------
 QString ParserX::nazwasekcji(FileBuffer* bufor){
-    char b;
+    unsigned char b;
     int i = 0, czytam = 0;
     int poziom = 0;
     QString sekcja = "";
@@ -162,7 +162,7 @@ QString ParserX::nazwasekcji(FileBuffer* bufor){
 //Szukanie sekcji
 //-----------------------------------
 QString ParserX::NextTokenInside(FileBuffer* bufor){
-    char b;
+    unsigned char b;
     int i = 0, czytam = 0;
     int poziom = 0;
     //bool koniec = false;
@@ -214,7 +214,7 @@ QString ParserX::NextTokenInside(FileBuffer* bufor){
 //Szukanie 2 sekcji
 //-----------------------------------
 int ParserX::szukajsekcji2(QString sh1, QString sh2, FileBuffer* bufor){
-    char b;
+    unsigned char b;
     int i = 0, czytam = 0;
     int poziom = 0;
     QString sekcja = "";
@@ -315,7 +315,7 @@ int ParserX::szukajsekcjiN(QString sh, FileBuffer* bufor){
 //Pominiecie sekcji
 //-----------------------------------
 int ParserX::pominsekcjec(FileBuffer* bufor){
-    char b;
+    unsigned char b;
     int poziom = 0;
     while (bufor->length >= bufor->off + 2) {
         b = bufor->get();
@@ -339,7 +339,7 @@ int ParserX::pominsekcjec(FileBuffer* bufor){
 //-----------------------------------
 QString ParserX::GetString(FileBuffer* bufor){
     QString sciezka = "";
-    char b = 0;
+    unsigned char b = 0;
     while ((b < 46) && (b != 34) && (b!=33)&&(b!=35)&&(b!=36)&&(b!=37)&&(b!=38)) {
         b = bufor->get();
         bufor->off++;
@@ -374,7 +374,7 @@ QString ParserX::GetString(FileBuffer* bufor){
 //-----------------------------------
 QString ParserX::GetStringInside(FileBuffer* bufor){
     QString sciezka = "";
-    char b = 0;
+    unsigned char b = 0;
     while ((b < 46) && (b != 34) && (b!=33)&&(b!=35)&&(b!=36)&&(b!=37)&&(b!=38)) {
         b = bufor->get();
         bufor->off++;
@@ -422,7 +422,7 @@ QString ParserX::GetStringInside(FileBuffer* bufor){
 //Parsowanie liczby rzeczywistej
 //-----------------------------------
 float ParserX::GetNumber(FileBuffer* bufor){
-    char b = 0;
+    unsigned char b = 0;
     int j;
     float x, t;
     int liczba = 1, ujemna = 0;
@@ -493,7 +493,7 @@ float ParserX::GetNumber(FileBuffer* bufor){
 //Parsowanie liczby rzeczywistej
 //-----------------------------------
 float ParserX::GetNumberInside(FileBuffer* bufor, bool *ok){
-    char b = 0;
+    unsigned char b = 0;
     int j;
     float x, t;
     int liczba = 1, ujemna = 0;
@@ -566,7 +566,7 @@ float ParserX::GetNumberInside(FileBuffer* bufor, bool *ok){
     return x;
 }
 
-float ParserX::NumberUnit(float x, char &b, FileBuffer* bufor){
+float ParserX::NumberUnit(float x, unsigned char &b, FileBuffer* bufor){
     if(b == 'c' || b == 'C'){
         b = bufor->get();
         bufor->off++;
@@ -631,7 +631,7 @@ float ParserX::NumberUnit(float x, char &b, FileBuffer* bufor){
 //Parsowanie liczby uint
 //-----------------------------------
 unsigned int ParserX::GetUInt(FileBuffer* bufor){
-    char b = 0;
+    unsigned char b = 0;
     unsigned int x;
 
     while (b < 45 || (b > 45 && b < 48) || b > 57) {
@@ -651,7 +651,7 @@ unsigned int ParserX::GetUInt(FileBuffer* bufor){
 //Parsowanie liczby szesnastkowej
 //-----------------------------------
 unsigned int ParserX::GetHex(FileBuffer* bufor){
-    char b = 0, sb = 0;
+    unsigned char b = 0, sb = 0;
     unsigned int x;
 
     while (((b < 48) || (b > 57 && b < 65) || (b > 70 && b < 97) || (b > 102)) || sb != 32) {
@@ -676,7 +676,7 @@ unsigned int ParserX::GetHex(FileBuffer* bufor){
 //Pominiecie sekcji
 //-----------------------------------
 int ParserX::SkipToken(FileBuffer* bufor){
-    char b;
+    unsigned char b;
     int poziom = 0;
 
     for (int tt = 0; tt < 20000000; tt++){
@@ -701,7 +701,7 @@ int ParserX::SkipToken(FileBuffer* bufor){
 //Wybranie sekcji primitives
 //-----------------------------------
 int ParserX::sekcjap(FileBuffer* bufor){
-    char b;
+    unsigned char b;
     int i = 0, czytam = 0;
     int w;
     QString psi = "prim_state_idx";
