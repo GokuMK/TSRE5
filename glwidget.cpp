@@ -101,7 +101,7 @@ void GLWidget::initializeGL() {
     //qDebug() << "route = new Route();";
     engLib = new EngLib();
     Game::currentEngLib = engLib;
-    
+
     route = new Route();
     if(!route->loaded) return;
 
@@ -144,6 +144,7 @@ void GLWidget::initializeGL() {
 
 void GLWidget::paintGL() {
     Game::currentShapeLib = currentShapeLib;
+    if(route == NULL) return;
     if(!route->loaded) return;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //if (!selection)
@@ -552,11 +553,14 @@ void GLWidget::keyReleaseEvent(QKeyEvent * event) {
 void GLWidget::mousePressEvent(QMouseEvent *event) {
     if(!route->loaded) return;
     m_lastPos = event->pos();
-    mousePressed = true;
     
-    if(event->buttons() == Qt::RightButton){
+    if((event->button()) == Qt::RightButton){
+        mouseRPressed = true;
         camera->MouseDown(event);
-    } else {
+    }
+    if((event->button()) == Qt::LeftButton){
+        mouseLPressed = true;
+        lastMousePressTime = QDateTime::currentMSecsSinceEpoch();
         if(toolEnabled == "placeTool"){
             if(selectedObj != NULL)
                 selectedObj->unselect();
@@ -578,9 +582,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         if(toolEnabled == "selectTool"){
             if(!translateTool && !rotateTool && !resizeTool)
                 selection = true;
-            mousePressed = false;
+            //mousePressed = false;
             if(selectedObj != NULL){
-                mousePressed = true;
+                mouseLPressed = true;
                 if(translateTool){
                     selectedObj->setPosition(aktPointerPos);
                     selectedObj->setMartix();
@@ -653,10 +657,31 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
     setFocus();
 }
 
+void GLWidget::wheelEvent(QWheelEvent *event)
+{
+    float numDegrees = 0.01*event->delta();
+
+    if (event->orientation() == Qt::Vertical) {
+        if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
+            if(selectedObj != NULL){
+                this->selectedObj->translate(0,numDegrees*moveStep,0);
+            }
+        }
+    } else {
+
+    }
+    event->accept();
+}
+
 void GLWidget::mouseReleaseEvent(QMouseEvent* event) {
     if(!route->loaded) return;
     camera->MouseUp(event);
-    mousePressed = false;
+    if((event->button()) == Qt::RightButton){
+        mouseRPressed = false;
+    }
+    if((event->button()) == Qt::LeftButton){
+        mouseLPressed = false;
+    }
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event) {
@@ -671,22 +696,30 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     }*/
     mousex = event->x();
     mousey = event->y();
-    
-    if(event->buttons() == Qt::RightButton){
+
+    if((event->buttons() & 2) == Qt::RightButton){
         camera->MouseMove(event);
-    } else {
-        if(toolEnabled == "paintTool" && mousePressed == true){
+    }
+    if((event->buttons() & 1) == Qt::LeftButton){
+        if(toolEnabled == "paintTool" && mouseLPressed == true){
             if(mousex != m_lastPos.x() || mousey != m_lastPos.y()){
                 TerrainLib::paintTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
             }
         }
-        if(toolEnabled == "heightTool" && mousePressed == true){
+        if(toolEnabled == "heightTool" && mouseLPressed == true){
             if(mousex != m_lastPos.x() || mousey != m_lastPos.y()){
                 TerrainLib::paintHeightMap(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
             }
         }
         if(toolEnabled == "selectTool"){
-            if(selectedObj != NULL && mousePressed){
+            if(selectedObj != NULL && mouseLPressed){
+                if(!translateTool && !rotateTool && !resizeTool){
+                    long long int ntime = QDateTime::currentMSecsSinceEpoch();
+                    if(ntime - lastMousePressTime > 200){
+                        selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
+                        selectedObj->setMartix();
+                    }
+                }
                 if(translateTool){
                     selectedObj->setPosition(aktPointerPos);
                     selectedObj->setMartix();
@@ -704,7 +737,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
             //}
         }
         if(toolEnabled == "placeTool"){
-            camera->MouseMove(event);
+            if(selectedObj != NULL && mouseLPressed){
+                long long int ntime = QDateTime::currentMSecsSinceEpoch();
+                if(ntime - lastMousePressTime > 200){
+                    selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
+                    selectedObj->setMartix();
+                }
+            }
         }
         if(toolEnabled == ""){
             camera->MouseMove(event);

@@ -54,6 +54,7 @@ protected:
     int przesx = 3, przesy = 1, przesz = 3;
     int jestcontrol;
     int lpm = 0;
+    int rpm = 0;
     bool moveF, moveR, moveB, moveL;
     PreciseTileCoordinate* currentPos = 0;
 

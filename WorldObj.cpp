@@ -424,6 +424,16 @@ void WorldObj::resize(float x, float y, float z){
     
 }
 
+void WorldObj::setPosition(int x, int z, float* p){
+    this->position[0] = -2048*(this->x-x) + p[0];
+    this->position[1] = p[1];
+    this->position[2] = -2048*(this->y-z) + p[2];
+    this->placedAtPosition[0] = this->position[0];
+    this->placedAtPosition[1] = this->position[1];
+    this->placedAtPosition[2] = this->position[2];
+    deleteVBO();
+}
+
 void WorldObj::setPosition(float* p){
     this->position[0] = p[0];
     this->position[1] = p[1];

@@ -246,7 +246,7 @@ void CameraFree::check_coords() {
 }
 
 void CameraFree::MouseMove(QMouseEvent* e) {
-    if (lpm != 0) {
+    if (lpm != 0 || rpm != 0) {
         patrzX((float) (float) (starex - e->x()) / 30*(fov/45.0));
         patrzY((float) (float) (starey - e->y()) / 30*(fov/45.0));
     }
@@ -255,13 +255,23 @@ void CameraFree::MouseMove(QMouseEvent* e) {
 }
 
 void CameraFree::MouseDown(QMouseEvent* e) {
-    lpm = 1;
+    if((e->button()) == Qt::RightButton){
+        rpm = 1;
+    }
+    if((e->button()) == Qt::LeftButton){
+        lpm = 1;
+    }
     starex = e->x();
     starey = e->y();
 }
 
 void CameraFree::MouseUp(QMouseEvent* e) {
-    lpm = 0;
+    if((e->button()) == Qt::RightButton){
+        rpm = 0;
+    }
+    if((e->button()) == Qt::LeftButton){
+        lpm = 0;
+    }
     starex = e->x();
     starey = e->y();
 }

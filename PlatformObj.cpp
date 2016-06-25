@@ -341,7 +341,7 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
             tdb = Game::roadDB;
         int id = tdb->findTrItemNodeId(this->trItemId[1]);
         if (id < 1) {
-            qDebug() << "fail id "<<id;
+            qDebug() << "platform fail id "<<id;
             this->loaded = false;
             return;
         }
@@ -350,6 +350,7 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
         drawPositionB = new float[7];
         bool ok = tdb->getDrawPositionOnTrNode(drawPositionB, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
         if(!ok){
+            qDebug() << "platform fail tdb "<<id;
             this->loaded = false;
             return;
         }
@@ -362,13 +363,14 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
             tdb = Game::roadDB;
         int id = tdb->findTrItemNodeId(this->trItemId[3]);
         if (id < 1) {
-            qDebug() << "fail id";
+            qDebug() << "platform fail id";
             this->loaded = false;
             return;
         }
         drawPositionE = new float[7];
         bool ok = tdb->getDrawPositionOnTrNode(drawPositionE, id, tdb->trackItems[this->trItemId[3]]->trItemSData1);
         if(!ok){
+            qDebug() << "platform fail tdb "<<id;
             this->loaded = false;
             return;
         }

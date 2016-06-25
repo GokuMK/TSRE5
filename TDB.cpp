@@ -25,6 +25,7 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
     serial = 0;
     wysokoscSieci = 4;
     iTRitems = 0;
+    iTRnodes = 0;
     qDebug() << "Wczytywanie pliku tdb: " << path;
 
     if(tsection == NULL)
@@ -1705,9 +1706,9 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
         punktySieci.setMaterial(1.0, 0.0, 0.0);
         punktySieci.init(punkty, pPtr, punktySieci.V, GL_LINES);
 
-        delete linie;
-        delete konce;
-        delete punkty;
+        delete[] linie;
+        delete[] konce;
+        delete[] punkty;
     }
 
     Mat4::identity(gluu->objStrMatrix);

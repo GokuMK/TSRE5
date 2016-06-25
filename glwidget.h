@@ -82,6 +82,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void wheelEvent(QWheelEvent *event) Q_DECL_OVERRIDE;
     void keyPressEvent(QKeyEvent * event) Q_DECL_OVERRIDE;
     void keyReleaseEvent(QKeyEvent * event) Q_DECL_OVERRIDE;
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
@@ -101,7 +102,7 @@ private:
     SFile* sFile;
     Eng* eng;
     Tile* tile;
-    Route* route;
+    Route* route = NULL;
     GLUU* gluu;
     bool m_transparent;
     Camera* camera;
@@ -113,7 +114,8 @@ private:
     Pointer3d* pointer3d;
     float lastPointerPos[3];
     float aktPointerPos[3];
-    bool mousePressed = false;
+    bool mouseLPressed = false;
+    bool mouseRPressed = false;
     QString toolEnabled = "";
     float moveStep = 0.25;
     float moveMaxStep = 0.25;
@@ -125,6 +127,7 @@ private:
     float lastNewObjPos[3];
     float lastNewObjPosT[2];
     float placeRot[4];
+    long long int lastMousePressTime = 0;
     
     Brush* defaultPaintBrush;
     MapWindow* mapWindow;

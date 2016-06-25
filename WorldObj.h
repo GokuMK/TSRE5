@@ -74,6 +74,7 @@ public:
     virtual void set(QString sh, int val);
     virtual void save(QTextStream* out);
     void setPosition(float* p);
+    void setPosition(int x, int z, float* p);
     void initPQ(float* p, float* q);
     virtual void initTrItems(float *tpos);
     void setQdirection(float* q);

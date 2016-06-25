@@ -46,12 +46,12 @@ Route::Route() {
     trk->load();
     Game::routeName = trk->routeName.toLower();
     qDebug() << Game::routeName;
-    
+
     this->tsection = new TSectionDAT();
     this->trackDB = new TDB(tsection, false, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".tdb"));
     this->roadDB = new TDB(tsection, true, (Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".rdb"));
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
-    
+
     loadMkrList();
     loadActivities();
     

@@ -327,15 +327,18 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
         drawPositions = new float*[this->signalUnits];
         TDB* tdb = Game::trackDB;
         for(int i = 0; i < this->signalUnits; i++){
+            drawPositions[i] = NULL;
             int id = tdb->findTrItemNodeId(this->trItemId[i*2+1]);
             if (id < 0) {
-                qDebug() << "fail id";
+                qDebug() << "signal fail id";
+                this->loaded = false;
                 return;
             }
             //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
             drawPositions[i] = new float[8];
             bool ok = tdb->getDrawPositionOnTrNode(drawPositions[i], id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
             if(!ok){
+                qDebug() << "signal fail tdb";
                 this->loaded = false;
                 return;
             }
@@ -353,6 +356,7 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
     //w = this->signalUnits;
 
     for(int i = 0; i < w; i++){
+        if(drawPositions[i] == NULL) continue;
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][0] + 0 * (drawPositions[i][4] - this->x), drawPositions[i][1] + i + 1, -drawPositions[i][2] + 0 * (-drawPositions[i][5] - this->y));
         Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][3] + drawPositions[i][7]*M_PI);
