@@ -366,6 +366,7 @@
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>LICENSE.md</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -550,6 +551,8 @@
       <item path="Intersections.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Intersections.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LICENSE.md" ex="false" tool="3" flavor2="0">
       </item>
       <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1096,6 +1099,8 @@
       </item>
       <item path="Intersections.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LICENSE.md" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="LevelCrObj.h" ex="false" tool="3" flavor2="0">
@@ -1633,6 +1638,8 @@
       <item path="Intersections.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Intersections.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LICENSE.md" ex="false" tool="3" flavor2="0">
       </item>
       <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2179,6 +2186,8 @@
       </item>
       <item path="Intersections.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LICENSE.md" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="LevelCrObj.h" ex="false" tool="3" flavor2="0">
@@ -2711,6 +2720,8 @@
       <item path="Intersections.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Intersections.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LICENSE.md" ex="false" tool="3" flavor2="0">
       </item>
       <item path="LevelCrObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
