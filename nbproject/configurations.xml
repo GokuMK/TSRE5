@@ -367,6 +367,7 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
     <itemPath>LICENSE.md</itemPath>
+    <itemPath>README.md</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -685,6 +686,8 @@
       <item path="QuadTree.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="QuadTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="README.md" ex="false" tool="3" flavor2="0">
       </item>
       <item path="RandomConsist.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1233,6 +1236,8 @@
       </item>
       <item path="QuadTree.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="README.md" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RandomConsist.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RandomConsist.h" ex="false" tool="3" flavor2="0">
@@ -1772,6 +1777,8 @@
       <item path="QuadTree.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="QuadTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="README.md" ex="false" tool="3" flavor2="0">
       </item>
       <item path="RandomConsist.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2320,6 +2327,8 @@
       </item>
       <item path="QuadTree.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="README.md" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RandomConsist.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="RandomConsist.h" ex="false" tool="3" flavor2="0">
@@ -2854,6 +2863,8 @@
       <item path="QuadTree.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="QuadTree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="README.md" ex="false" tool="3" flavor2="0">
       </item>
       <item path="RandomConsist.cpp" ex="false" tool="1" flavor2="8">
       </item>
