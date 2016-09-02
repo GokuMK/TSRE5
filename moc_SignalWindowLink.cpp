@@ -66,6 +66,7 @@ static const uint qt_meta_data_SignalWindowLink[] = {
 void SignalWindowLink::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
         SignalWindowLink *_t = static_cast<SignalWindowLink *>(_o);
         Q_UNUSED(_t)
         switch (_id) {

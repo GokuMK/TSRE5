@@ -91,6 +91,7 @@ static const uint qt_meta_data_ConUnitsWidget[] = {
 void ConUnitsWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
         ConUnitsWidget *_t = static_cast<ConUnitsWidget *>(_o);
         Q_UNUSED(_t)
         switch (_id) {

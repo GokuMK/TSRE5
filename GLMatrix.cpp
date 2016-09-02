@@ -1,3 +1,17 @@
+/*  This file is part of TSRE5.
+ *
+ *  TSRE5 - train sim game engine and MSTS/OR Editors. 
+ *  Copyright (C) 2016 Piotr Gadecki <pgadecki@gmail.com>
+ *
+ *  This file is c++ conversion of glMatrix:
+ *  Javascript Matrix and Vector library for High Performance WebGL apps.
+ *  Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+ * 
+ *  Licensed under GNU General Public License 3.0 or later. 
+ *
+ *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
+ */
+
 #include "GLMatrix.h"
 #include <math.h>
 #include <iostream>
