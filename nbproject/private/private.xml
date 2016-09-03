@@ -9,39 +9,6 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TexLib.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Route.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiFunct.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Brush.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/glwidget.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TrkWindow.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Trk.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Terrain.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/NewRouteWindow.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainLib.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Tile.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/glwidget.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainTools.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Route.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Terrain.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TRitem.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainLib.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/WorldObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TSectionDAT.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiFunct.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TDB.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Trk.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MapWindow.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PlatformObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SignalObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ObjTools.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainTools.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/WorldObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TrkWindow.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/AceLib.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/LoadWindow.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/NaviBox.cpp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
