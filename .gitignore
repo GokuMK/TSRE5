@@ -3,4 +3,4 @@
 /Resources/templateRoute/
 /resources/
 moc_*.cpp
-log.txt
+/log.txt
