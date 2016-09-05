@@ -55,12 +55,16 @@ public slots:
     void cDisplayNameSelected(QString n); 
     void cReverseSelected();
     void cCloneSelected();
+    void cOpenInExternalEditor();
     void cDurabilitySelected();
     void eFindConsistsByEng(); 
+    void eOpenInExternalEditor(); 
     void addToRandomConsist(int id); 
     void vResetShapeViewSelected(); 
     void vGetImgShapeViewSelected(); 
+    void vSaveImgShapeViewSelected();
     void copyImgShapeView();
+    void saveImgShapeView();
     void vSetColorShapeViewSelected();
     void vSetColorConViewSelected(); 
     
@@ -95,10 +99,12 @@ private:
     QMenu *consistMenu;
     QAction *cReverse;
     QAction *cClone;
+    QAction *cOpenInExtEditor;
     QAction *fSave;
     QAction *fNew;
     QAction *fExit;
     QAction *eFindCons;
+    QAction *eOpenInExtEditor;
     QAction *vConList;
     QAction *vEngList1;
     QAction *vEngList2;
@@ -107,6 +113,7 @@ private:
     QAction *vConView;
     QAction *vResetShapeView;
     QAction *vGetImgShapeView;
+    QAction *vSaveImgShapeView;
     QAction *vSetColorShapeView;
     QAction *vSetColorConView;
     QAction *aboutAction;

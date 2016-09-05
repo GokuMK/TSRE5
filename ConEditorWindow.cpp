@@ -190,10 +190,16 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     cClone = new QAction(tr("&Clone"), this); 
     consistMenu->addAction(cClone);
     QObject::connect(cClone, SIGNAL(triggered(bool)), this, SLOT(cCloneSelected()));
+    cOpenInExtEditor = new QAction(tr("&Open in external editor"), this); 
+    consistMenu->addAction(cOpenInExtEditor);
+    QObject::connect(cOpenInExtEditor, SIGNAL(triggered(bool)), this, SLOT(cOpenInExternalEditor()));
     engMenu = menuBar()->addMenu(tr("&Eng"));
     eFindCons = new QAction(tr("&Find Consists"), this); 
     engMenu->addAction(eFindCons);
     QObject::connect(eFindCons, SIGNAL(triggered(bool)), this, SLOT(eFindConsistsByEng()));
+    eOpenInExtEditor = new QAction(tr("&Open in external editor"), this); 
+    engMenu->addAction(eOpenInExtEditor);
+    QObject::connect(eOpenInExtEditor, SIGNAL(triggered(bool)), this, SLOT(eOpenInExternalEditor()));
     viewMenu = menuBar()->addMenu(tr("&View"));
     vConList = GuiFunct::newMenuCheckAction(tr("&Consist List"), this); 
     viewMenu->addAction(vConList);
@@ -220,6 +226,9 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     vGetImgShapeView = new QAction(tr("&Shape View: Copy Image"), this); 
     view3dMenu->addAction(vGetImgShapeView);
     QObject::connect(vGetImgShapeView, SIGNAL(triggered()), this, SLOT(vGetImgShapeViewSelected()));
+    vSaveImgShapeView = new QAction(tr("&Shape View: Save Image"), this); 
+    view3dMenu->addAction(vSaveImgShapeView);
+    QObject::connect(vSaveImgShapeView, SIGNAL(triggered()), this, SLOT(vSaveImgShapeViewSelected()));    
     vSetColorShapeView = new QAction(tr("&Shape View: Set Color"), this); 
     view3dMenu->addAction(vSetColorShapeView);
     QObject::connect(vSetColorShapeView, SIGNAL(triggered()), this, SLOT(vSetColorShapeViewSelected()));
@@ -311,15 +320,48 @@ void ConEditorWindow::eFindConsistsByEng(){
     con1->findConsistsByEng(eid);
 }
 
+void ConEditorWindow::cOpenInExternalEditor(){
+    if(currentCon == NULL) return;
+    QFileInfo fileInfo(currentCon->pathid);
+    qDebug() << currentCon->pathid;
+    if(fileInfo.exists())
+        QDesktopServices::openUrl(QUrl::fromLocalFile(currentCon->pathid));
+}
+
+void ConEditorWindow::eOpenInExternalEditor(){
+    if(currentEng == NULL) return;
+    QFileInfo fileInfo(currentEng->pathid);
+    if(fileInfo.exists())
+        QDesktopServices::openUrl(QUrl(currentEng->pathid));
+}
+
 void ConEditorWindow::copyImgShapeView(){
     if(glShapeWidget->screenShot != NULL)
         QApplication::clipboard()->setImage((glShapeWidget->screenShot->mirrored(false, true)), QClipboard::Clipboard);
+}
+
+void ConEditorWindow::saveImgShapeView(){
+    if(glShapeWidget->screenShot != NULL){
+        QImage img = glShapeWidget->screenShot->mirrored(false, true);
+        QString path = QFileDialog::getSaveFileName(this, "Save File", "./", "Images (*.png *.jpg)");
+        qDebug() << path;
+        if(path.length() < 1) return;
+        QFile file(path);
+        file.open(QIODevice::WriteOnly);
+        img.save(&file);
+    }
 }
 
 void ConEditorWindow::vGetImgShapeViewSelected(){
     if(currentEng == NULL) return;
     glShapeWidget->getImg();
     QTimer::singleShot(500, this, SLOT(copyImgShapeView()));
+}/**/
+
+void ConEditorWindow::vSaveImgShapeViewSelected(){
+    if(currentEng == NULL) return;
+    glShapeWidget->getImg();
+    QTimer::singleShot(500, this, SLOT(saveImgShapeView()));
 }/**/
 
 void ConEditorWindow::vResetShapeViewSelected(){
