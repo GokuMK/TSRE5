@@ -1,3 +1,5 @@
+![TSRE](http://koniec.org/tsre5/1.png)
+
 # TSRE5
 Train Sim game engine and MSTS / OR editors and tools. 
 
