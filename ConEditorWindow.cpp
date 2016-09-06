@@ -201,6 +201,9 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     eOpenInExtEditor = new QAction(tr("&Open in external editor"), this); 
     engMenu->addAction(eOpenInExtEditor);
     QObject::connect(eOpenInExtEditor, SIGNAL(triggered(bool)), this, SLOT(eOpenInExternalEditor()));
+    eOpenLegacyInExtEditor = new QAction(tr("&Open legacy ENG in ext. editor"), this); 
+    engMenu->addAction(eOpenLegacyInExtEditor);
+    QObject::connect(eOpenLegacyInExtEditor, SIGNAL(triggered(bool)), this, SLOT(eOpenLegacyInExternalEditor()));
     viewMenu = menuBar()->addMenu(tr("&View"));
     vConList = GuiFunct::newMenuCheckAction(tr("&Consist List"), this); 
     viewMenu->addAction(vConList);
@@ -327,6 +330,13 @@ void ConEditorWindow::cOpenInExternalEditor(){
     qDebug() << currentCon->pathid;
     if(fileInfo.exists())
         QDesktopServices::openUrl(QUrl::fromLocalFile(currentCon->pathid));
+}
+
+void ConEditorWindow::eOpenLegacyInExternalEditor(){
+    if(currentEng == NULL) return;
+    QFileInfo fileInfo(currentEng->pathid);
+    if(fileInfo.exists())
+        QDesktopServices::openUrl(QUrl(currentEng->pathid));
 }
 
 void ConEditorWindow::eOpenInExternalEditor(){

@@ -90,7 +90,7 @@ private:
     Camera* camera = NULL;
     int renderItem = 0;
     QString mode = "";
-    float rotY = 0;
+    float rotY = M_PI;
     float rotZ = 0;
     bool selection = false;
     bool getImage = false;

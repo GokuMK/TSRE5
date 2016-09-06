@@ -307,7 +307,7 @@ void GlShapeWidget::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void GlShapeWidget::resetRot(){
-    rotY = 0;
+    rotY = M_PI;
     rotZ = 0;
 }
 

@@ -59,6 +59,7 @@ public slots:
     void cDurabilitySelected();
     void eFindConsistsByEng(); 
     void eOpenInExternalEditor(); 
+    void eOpenLegacyInExternalEditor(); 
     void addToRandomConsist(int id); 
     void vResetShapeViewSelected(); 
     void vGetImgShapeViewSelected(); 
@@ -105,6 +106,7 @@ private:
     QAction *fExit;
     QAction *eFindCons;
     QAction *eOpenInExtEditor;
+    QAction *eOpenLegacyInExtEditor;
     QAction *vConList;
     QAction *vEngList1;
     QAction *vEngList2;
