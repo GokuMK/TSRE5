@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.614";
+QString Game::AppVersion = "v0.615";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -63,6 +63,7 @@ int Game::newRouteX = -5000;
 int Game::newRouteZ = 15000;
 bool Game::consoleOutput = true;
 int Game::fpsLimit = 0;
+bool Game::ortsEngEnable = true;
 
 QString Game::geoPath = "hgst";
 
@@ -116,27 +117,43 @@ void Game::load() {
         if(val == "deleteTrWatermarks")
             if(args[1].trimmed().toLower() == "true")
                 deleteTrWatermarks = true;
+            else
+                deleteTrWatermarks = false;
         if(val == "deleteViewDbSpheres")
             if(args[1].trimmed().toLower() == "true")
                 deleteViewDbSpheres = true;
+            else
+                deleteViewDbSpheres = false;
         if(val == "createNewIfNotExist")
             if(args[1].trimmed().toLower() == "true")
                 createNewRoutes = true;
+            else
+                createNewRoutes = false;
         if(val == "writeEnabled")
             if(args[1].trimmed().toLower() == "true")
                 writeEnabled = true;
+            else
+                writeEnabled = false;
         if(val == "writeTDB")
             if(args[1].trimmed().toLower() == "true")
                 writeTDB = true;
+            else
+                writeTDB = false;
         if(val == "systemTheme")
             if(args[1].trimmed().toLower() == "true")
                 systemTheme = true;
+            else
+                systemTheme = false;
         if(val == "toolsHidden")
             if(args[1].trimmed().toLower() == "true")
                 toolsHidden = true;
+            else
+                toolsHidden = false;
         if(val == "usenNumPad")
             if(args[1].trimmed().toLower() == "true")
                 usenNumPad = true;
+            else
+                usenNumPad = false;
         if(val == "tileLod"){
             tileLod = args[1].trimmed().toInt();
         }
@@ -158,18 +175,30 @@ void Game::load() {
         if(val == "warningBox")
             if(args[1].trimmed().toLower() == "true")
                 warningBox = true;
+            else
+                warningBox = false;
         if(val == "leaveTrackShapeAfterDelete")
             if(args[1].trimmed().toLower() == "true")
                 leaveTrackShapeAfterDelete = true;
+            else
+                leaveTrackShapeAfterDelete = false;
         if(val == "renderTrItems")
             if(args[1].trimmed().toLower() == "true")
                 renderTrItems = true;
+            else
+                renderTrItems = false;
         if(val == "geoPath")
             geoPath = args[1].trimmed();
         if(val == "colorConView")
             colorConView = new QColor(args[1].trimmed());
         if(val == "colorShapeView")
             colorShapeView = new QColor(args[1].trimmed());
+        if(val == "ortsEngEnable")
+            if(args[1].trimmed().toLower() == "true")
+                ortsEngEnable = true;
+            else
+                ortsEngEnable = false;
+        
     }
 }
 

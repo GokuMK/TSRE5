@@ -10,6 +10,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CameraConsist.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CameraFree.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CameraRot.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ChooseFileDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConEditorWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConListWidget.o
@@ -133,6 +134,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AceLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_CELoadWindow.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ChooseFileDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ConEditorWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ConListWidget.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ConUnitsWidget.o

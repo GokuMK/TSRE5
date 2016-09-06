@@ -49,3 +49,4 @@ warningBox = false
 leaveTrackShapeAfterDelete = false
 #renderTrItems = true
 useImperial = false
+#ortsEngEnable = false

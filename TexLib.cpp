@@ -70,6 +70,7 @@ int TexLib::addTex(QString pathid) {
     //qDebug() << "Nowa " << jesttextur << " textura: " << pathid;
 
     QString tType = pathid.toLower().split(".").last();
+    
     // Openrails uses .dds textures instead of .ace
     if(tType == "ace"){
         QFile file(pathid);
@@ -78,13 +79,12 @@ int TexLib::addTex(QString pathid) {
             pathid = pathid.left(pathid.length() - 3)+"dds";
         }
     }
+    
     Texture* newFile = new Texture(pathid);
     newFile->ref++;
     mtex[jesttextur] = newFile;
     //qDebug() << pathid.toLower();
-
     //qDebug() << tType;
-
         
     if(tType == "ace"){
         AceLib* t = new AceLib();

@@ -82,6 +82,7 @@ public:
     static QColor *colorShapeView;
     static bool consoleOutput;
     static int fpsLimit;
+    static bool ortsEngEnable;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

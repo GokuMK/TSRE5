@@ -32,6 +32,14 @@ Eng::Eng(QString p, QString n) {
     pathid.replace("//", "/");
     path = p;
     name = n;
+    if(Game::ortsEngEnable){
+        orpathid = p.toLower()+"/openrails/"+n.toLower();
+        orpathid.replace("//","/");
+        orpath = path+"/openrails/";
+    } else {
+        orpathid = pathid;
+        orpath = path;
+    }
     shape.id = -1;
     sizex = 0;
     sizey = 0;
@@ -42,14 +50,25 @@ Eng::Eng(QString p, QString n) {
     load();
 }
 
+void Eng::addToFileList(QString val){
+    val.replace("\\","/");
+    val.replace("//","/");
+    filePaths.push_back(val);
+}
+
 Eng::Eng(QString src, QString p, QString n) {
     pathid = src;
     pathid.replace("//","/");
-    orpathid = p.toLower()+"/openrails/"+n.toLower();
-    orpathid.replace("//","/");
     path = p;
-    orpath = path+"/openrails/";
     name = n;
+    if(Game::ortsEngEnable){
+        orpathid = p.toLower()+"/openrails/"+n.toLower();
+        orpathid.replace("//","/");
+        orpath = path+"/openrails/";
+    } else {
+        orpathid = pathid;
+        orpath = path;
+    }
     shape.id = -1;
     sizex = 0;
     sizey = 0;
@@ -61,18 +80,23 @@ Eng::Eng(QString src, QString p, QString n) {
 }
 
 void Eng::load(){
+    filePaths.clear();
     QString incpath = orpath;
     QString sh;
-    qDebug() << orpathid;
     QFile *file = new QFile(orpathid);
     if (!file->open(QIODevice::ReadOnly)){
         incpath = path;
-        qDebug() << pathid;
         file = new QFile(pathid);
         if (!file->open(QIODevice::ReadOnly)){
             qDebug() << pathid << "not exist";
             return;
+        } else {
+            qDebug() << pathid;
+            addToFileList(pathid);
         }
+    } else {
+        qDebug() << orpathid;
+        addToFileList(orpathid);
     }
 
     FileBuffer* data = ReadFile::read(file);
@@ -89,6 +113,7 @@ void Eng::load(){
             QString incPath = ParserX::GetStringInside(data);
             ParserX::SkipToken(data);
             data->insertFile(incpath + "/" + incPath);
+            addToFileList(incpath + "/" + incPath);
             continue;
         }
         if (sh == ("wagon")) {
@@ -102,6 +127,7 @@ void Eng::load(){
                     QString incPath = ParserX::GetStringInside(data);
                     ParserX::SkipToken(data);
                     data->insertFile(incpath + "/" + incPath);
+                    addToFileList(incpath + "/" + incPath);
                     continue;
                 }
                 if (sh == ("name")) {
@@ -252,6 +278,7 @@ void Eng::load(){
                     QString incPath = ParserX::GetStringInside(data);
                     ParserX::SkipToken(data);
                     data->insertFile(incpath + "/" + incPath);
+                    addToFileList(incpath + "/" + incPath);
                     continue;
                 }
                 if (sh == ("type")) {

@@ -26,6 +26,7 @@
 #include "AboutWindow.h"
 #include "OverwriteDialog.h"
 #include "UnsavedDialog.h"
+#include "ChooseFileDialog.h"
 #include "RandomConsist.h"
 #include "ActLib.h"
 #include "Activity.h"
@@ -172,7 +173,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     main->setLayout(mbox);
     this->setCentralWidget(main);
     
-    setWindowTitle(Game::AppName+" "+Game::AppVersion+" Consist Editor");
+    setWindowTitle(Game::AppName+" "+Game::AppVersion+" Consist Editor"+"   [ "+Game::root+" ]");
     fileMenu = menuBar()->addMenu(tr("&File"));
     fNew = new QAction(tr("&New"), this); 
     fileMenu->addAction(fNew);
@@ -330,9 +331,24 @@ void ConEditorWindow::cOpenInExternalEditor(){
 
 void ConEditorWindow::eOpenInExternalEditor(){
     if(currentEng == NULL) return;
-    QFileInfo fileInfo(currentEng->pathid);
-    if(fileInfo.exists())
-        QDesktopServices::openUrl(QUrl(currentEng->pathid));
+    if(currentEng->filePaths.size() == 1){
+        QFileInfo fileInfo(currentEng->filePaths[0]);
+        if(fileInfo.exists())
+            QDesktopServices::openUrl(QUrl(currentEng->filePaths[0]));
+    } else {
+        ChooseFileDialog chooseFileDialog;
+        chooseFileDialog.setMsg("This ENG contains more than one file:");
+        chooseFileDialog.setWindowTitle("Choose file:");
+        for(int i = 0; i < currentEng->filePaths.size(); i++){
+            chooseFileDialog.items.addItem(""+currentEng->filePaths[i]);
+        }
+        chooseFileDialog.exec();
+        if(chooseFileDialog.changed == 1){
+            QFileInfo fileInfo(currentEng->filePaths[chooseFileDialog.items.currentRow()]);
+            if(fileInfo.exists())
+                QDesktopServices::openUrl(QUrl(currentEng->filePaths[chooseFileDialog.items.currentRow()]));
+        }
+    }
 }
 
 void ConEditorWindow::copyImgShapeView(){

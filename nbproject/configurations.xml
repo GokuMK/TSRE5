@@ -37,6 +37,7 @@
         <itemPath>HeightWindow.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
+        <itemPath>ChooseFileDialog.h</itemPath>
         <itemPath>GuiFunct.h</itemPath>
         <itemPath>UnsavedDialog.h</itemPath>
       </logicalFolder>
@@ -211,6 +212,7 @@
         <itemPath>HeightWindow.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
+        <itemPath>ChooseFileDialog.cpp</itemPath>
         <itemPath>GuiFunct.cpp</itemPath>
         <itemPath>UnsavedDialog.cpp</itemPath>
       </logicalFolder>
@@ -417,6 +419,10 @@
       <item path="CameraRot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ChooseFileDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ChooseFileDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -967,6 +973,10 @@
       </item>
       <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ChooseFileDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ChooseFileDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
@@ -1508,6 +1518,10 @@
       <item path="CameraRot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ChooseFileDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ChooseFileDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2058,6 +2072,10 @@
       </item>
       <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ChooseFileDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ChooseFileDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
@@ -2594,6 +2612,10 @@
       <item path="CameraRot.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ChooseFileDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ChooseFileDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>

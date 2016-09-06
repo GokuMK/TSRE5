@@ -11,6 +11,7 @@
 #ifndef ENG_H
 #define	ENG_H
 #include <QString>
+#include <QVector>
 
 class OglObj;
 
@@ -36,6 +37,7 @@ public:
     QString pathid;
     QString orpathid;
     QString orpath;
+    QVector<QString> filePaths;
     
     EngShape shape;
     std::vector<EngShape> freightanimShape;
@@ -78,6 +80,7 @@ public:
 private:
     bool selected = false;
     OglObj *borderObj = NULL;
+    void addToFileList(QString val);
 };
 
 #endif	/* ENG_H */
