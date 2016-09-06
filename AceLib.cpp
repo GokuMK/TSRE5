@@ -31,7 +31,7 @@ AceLib::~AceLib(){
 void AceLib::run() {
     QFile *file = new QFile(texture->pathid);
     if (!file->open(QIODevice::ReadOnly)){
-        qDebug() << "ACE: not exist "<<texture->pathid;
+        //qDebug() << "ACE: not exist "<<texture->pathid;
         //return false;
         return;
     }
