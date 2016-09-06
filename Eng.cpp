@@ -28,7 +28,7 @@ Eng::~Eng() {
 }
 
 Eng::Eng(QString p, QString n) {
-    pathid = p + "/" + n;
+    pathid = p.toLower() + "/" + n.toLower();
     pathid.replace("//", "/");
     path = p;
     name = n;
@@ -81,11 +81,11 @@ Eng::Eng(QString src, QString p, QString n) {
 
 void Eng::load(){
     filePaths.clear();
-    QString incpath = orpath;
+    QString incpath = orpath.toLower();
     QString sh;
     QFile *file = new QFile(orpathid);
     if (!file->open(QIODevice::ReadOnly)){
-        incpath = path;
+        incpath = path.toLower();
         file = new QFile(pathid);
         if (!file->open(QIODevice::ReadOnly)){
             qDebug() << pathid << "not exist";
@@ -110,7 +110,7 @@ void Eng::load(){
             continue;
         }
         if (sh == ("include")) {
-            QString incPath = ParserX::GetStringInside(data);
+            QString incPath = ParserX::GetStringInside(data).toLower();
             ParserX::SkipToken(data);
             data->insertFile(incpath + "/" + incPath);
             addToFileList(incpath + "/" + incPath);
@@ -124,7 +124,7 @@ void Eng::load(){
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 //qDebug() << sh;
                 if (sh == ("include")) {
-                    QString incPath = ParserX::GetStringInside(data);
+                    QString incPath = ParserX::GetStringInside(data).toLower();
                     ParserX::SkipToken(data);
                     data->insertFile(incpath + "/" + incPath);
                     addToFileList(incpath + "/" + incPath);
@@ -275,7 +275,7 @@ void Eng::load(){
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 //qDebug() << sh;
                 if (sh == ("include")) {
-                    QString incPath = ParserX::GetStringInside(data);
+                    QString incPath = ParserX::GetStringInside(data).toLower();
                     ParserX::SkipToken(data);
                     data->insertFile(incpath + "/" + incPath);
                     addToFileList(incpath + "/" + incPath);
