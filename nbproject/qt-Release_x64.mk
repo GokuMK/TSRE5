@@ -23734,7 +23734,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Eng.o: Eng.cpp Eng.h \
 		GLUU.h \
 		Vector4f.h \
 		Vector3f.h \
-		OglObj.h
+		OglObj.h \
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Eng.o Eng.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/EngLib.o: EngLib.cpp EngLib.h \
@@ -47052,7 +47053,10 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TexLib.o: TexLib.cpp TexLib.
 		c:/OT/Static/5.7.0_x64/include/QtCore/qset.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcontiguouscache.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer_impl.h
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QFile \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfile.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfiledevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TexLib.o TexLib.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TextObj.o: TextObj.cpp TextObj.h \

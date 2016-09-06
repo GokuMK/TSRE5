@@ -55,7 +55,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     
     cDurability.setDecimals(2);
     cDurability.setMinimum(0);
-    cDurability.setMaximum(1);
+    cDurability.setMaximum(2);
     cDurability.setSingleStep(0.05);
     
     glConWidget->setCamera(conCamera);
@@ -520,7 +520,7 @@ void ConEditorWindow::setCurrentEng(int id){
         eMaxForce.setText("--");
         eMaxPower.setText("--");
     }
-    eShape.setText(currentEng->sNames[0]);
+    eShape.setText(currentEng->shape.name);
     eSize.setText(QString::number(currentEng->sizex)+" "+QString::number(currentEng->sizey)+" "+QString::number(currentEng->sizez)+" ");
     eCouplings.setText(currentEng->getCouplingsName());
     eBrakes.setText(currentEng->brakeSystemType);

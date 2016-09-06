@@ -52,11 +52,11 @@ void SFile::Load(QString path) {
     FileBuffer* bufor = ReadFile::read(file);
     //qDebug() << "--" << path << "--" << bufor->length;
     
-    bufor->off = 16;
+    bufor->off = 32;
     //qDebug() << bufor->getInt() << " - ";
-    bufor->off = 16;
+    bufor->off = 32;
     if (bufor->getInt() == 71) {
-        bufor->off = 16;
+        bufor->off = 32;
         int val = bufor->getInt();
         //qDebug() << val << " plik binarny ";
         //wczytanie binarnego

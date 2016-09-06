@@ -31,6 +31,9 @@ public:
     int getToken();
     void setTokenOffset(int val);
     void insertFile(QString incPath);
+    bool isBOM();
+    void skipBOM();
+    void toUtf16();
     
     int off = 0;
     int length = 0;

@@ -21,12 +21,25 @@ public:
 	float r0[2];
 	float velocity;
     };
+    
+    struct EngShape {
+        QString name;
+        float x = 0;
+        float y = 0;
+        float z = 0;
+        int id = -2;
+    };
+    
     std::vector<Coupling> coupling;
     QString name;
     QString path;
     QString pathid;
-    int sfile[2];
-    QString sNames[2];
+    QString orpathid;
+    QString orpath;
+    
+    EngShape shape;
+    std::vector<EngShape> freightanimShape;
+
     QString engName;
     QString displayName;
     QString engType;

@@ -39,7 +39,7 @@ void QuadTree::load() {
     //    data->off = i;
     //    qDebug() << (char)data->get()<<"-"<<data->get();
     //}
-    data->off = 16;
+    data->off = 32;
     sh = "terrain_desc";
     ParserX::szukajsekcji1(sh, data);
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
@@ -262,7 +262,7 @@ void QuadTree::loadTD(int x, int y){
     ttd->y = y*512;
     td[ttd->x*100000+ttd->y] = ttd;
     
-    data->off = 38;
+    data->off = 38+16;
     
     int tx = x*512;
     int ty = y*512;

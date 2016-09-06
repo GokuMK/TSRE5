@@ -312,8 +312,8 @@ void GlShapeWidget::resetRot(){
 }
 
 void GlShapeWidget::showEng(QString path, QString name){
-    qDebug() << "eng id "<< -5;
     int idx = currentEngLib->addEng(path, name);
+    qDebug() << "eng id "<< idx;
     eng = currentEngLib->eng[idx];
     renderItem = 2;
 }

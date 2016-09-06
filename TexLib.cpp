@@ -15,6 +15,7 @@
 #include "MapLib.h"
 #include "Texture.h"
 #include <QDebug>
+#include <QFile>
 
 int TexLib::jesttextur = 0;
 std::unordered_map<int, Texture*> TexLib::mtex;
@@ -68,17 +69,28 @@ int TexLib::addTex(QString pathid) {
     }
     //qDebug() << "Nowa " << jesttextur << " textura: " << pathid;
 
+    QString tType = pathid.toLower().split(".").last();
+    // Openrails uses .dds textures instead of .ace
+    if(tType == "ace"){
+        QFile file(pathid);
+        if (!file.exists()){
+            tType = "dds";
+            pathid = pathid.left(pathid.length() - 3)+"dds";
+        }
+    }
     Texture* newFile = new Texture(pathid);
     newFile->ref++;
     mtex[jesttextur] = newFile;
     //qDebug() << pathid.toLower();
-    QString tType = pathid.toLower().split(".").last();
+
     //qDebug() << tType;
+
+        
     if(tType == "ace"){
         AceLib* t = new AceLib();
         t->texture = newFile;
         t->start();
-    } else if(tType == "png"||tType == "bmp"||tType == "jpg"){
+    } else if(tType == "png"||tType == "bmp"||tType == "jpg"||tType == "dds"){
         ImageLib* t = new ImageLib();
         t->texture = newFile;
         t->start();

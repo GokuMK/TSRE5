@@ -41,7 +41,7 @@ bool TFile::readT(QString fSfile) {
         }
         FileBuffer* data = ReadFile::read(file);
         //qDebug() << "Date:" << data->length;
-        data->off = 16;
+        data->off = 32;
         
         int pozycja, offset, akto;
         data->findToken(136);

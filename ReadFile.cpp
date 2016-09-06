@@ -63,18 +63,19 @@ FileBuffer* ReadFile::read(QFile* file) {
         in[14] = in[9];
         in[15] = in[8];
         QByteArray out = qUncompress(QByteArray::fromRawData((const char*)(in+12), size-12));
-        nLength = out.length();
+        nLength = out.length() + 16;
         data = new unsigned char[nLength];
-        std::copy(out.data(), out.data() + nLength, data);
+        std::copy(in, in + 16, data);
+        std::copy(out.data(), out.data() + nLength - 16, data + 16);
         delete[] in;
         //delete[] out;
     } else {
         //data = in + 16;// new unsigned char[fileData.length() - 16];
-        nLength = size - 16;
-        data = new unsigned char[nLength];
-        std::copy(in + 16, in + size, data);
+        nLength = size;
+        data = in;//new unsigned char[nLength];
+        //std::copy(in + 16, in + size, data);
         //std::copy(in + 16, in + nLength + 16, data);
-        delete[] in;
+        //delete[] in;
     }
     //delete[] in;
     return new FileBuffer(data,nLength);

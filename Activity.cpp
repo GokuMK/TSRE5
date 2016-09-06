@@ -53,7 +53,7 @@ void Activity::load() {
 
     FileBuffer* data = ReadFile::read(file);
     file->close();
-    data->off = 48;
+    data->off = 48+16;
 
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 

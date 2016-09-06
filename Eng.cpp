@@ -19,6 +19,7 @@
 #include "Game.h"
 #include "GLUU.h"
 #include "OglObj.h"
+#include "GLMatrix.h"
 
 Eng::Eng() {
 }
@@ -31,7 +32,7 @@ Eng::Eng(QString p, QString n) {
     pathid.replace("//", "/");
     path = p;
     name = n;
-    sfile[0] = -1; sfile[1] = -1;
+    shape.id = -1;
     sizex = 0;
     sizey = 0;
     sizez = 0;
@@ -43,9 +44,13 @@ Eng::Eng(QString p, QString n) {
 
 Eng::Eng(QString src, QString p, QString n) {
     pathid = src;
+    pathid.replace("//","/");
+    orpathid = p.toLower()+"/openrails/"+n.toLower();
+    orpathid.replace("//","/");
     path = p;
+    orpath = path+"/openrails/";
     name = n;
-    sfile[0] = -1; sfile[1] = -1;
+    shape.id = -1;
     sizex = 0;
     sizey = 0;
     sizez = 0;
@@ -56,35 +61,47 @@ Eng::Eng(QString src, QString p, QString n) {
 }
 
 void Eng::load(){
+    QString incpath = orpath;
     QString sh;
-    pathid.replace("//","/");
-    //qDebug() << pathid;
-    QFile *file = new QFile(pathid);
+    qDebug() << orpathid;
+    QFile *file = new QFile(orpathid);
     if (!file->open(QIODevice::ReadOnly)){
-        qDebug() << pathid << "not exist";
-        return;
+        incpath = path;
+        qDebug() << pathid;
+        file = new QFile(pathid);
+        if (!file->open(QIODevice::ReadOnly)){
+            qDebug() << pathid << "not exist";
+            return;
+        }
     }
 
     FileBuffer* data = ReadFile::read(file);
-    data->off = 48;
+    data->toUtf16();
+    data->skipBOM();
+    //ParserX::NextLine(data);
     
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         //qDebug() << sh;
+        if (sh == ("simisa@@@@@@@@@@jinx0d0t______")) {
+            continue;
+        }
         if (sh == ("include")) {
             QString incPath = ParserX::GetStringInside(data);
             ParserX::SkipToken(data);
-            data->insertFile(path + "/" + incPath);
+            data->insertFile(incpath + "/" + incPath);
             continue;
         }
         if (sh == ("wagon")) {
-            engName = ParserX::GetString(data).trimmed();
-            displayName = engName;
+            if(engName.length() == 0){
+                engName = ParserX::GetString(data).trimmed();
+                displayName = engName;
+            }
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 //qDebug() << sh;
                 if (sh == ("include")) {
                     QString incPath = ParserX::GetStringInside(data);
                     ParserX::SkipToken(data);
-                    data->insertFile(path + "/" + incPath);
+                    data->insertFile(incpath + "/" + incPath);
                     continue;
                 }
                 if (sh == ("name")) {
@@ -93,8 +110,9 @@ void Eng::load(){
                     continue;
                 }
                 if (sh == ("freightanim")) {
-                    sNames[1] = ParserX::GetString(data);
-                    sfile[1] = -2;
+                    freightanimShape.emplace_back();
+                    freightanimShape.back().name = ParserX::GetString(data);
+                    freightanimShape.back().id = -2;
                     //qDebug() << "=====znaleziono s2 " << path << sNames[1];
                     ParserX::SkipToken(data);
                     continue;
@@ -108,8 +126,8 @@ void Eng::load(){
                     continue;
                 }
                 if (sh == ("wagonshape")) {
-                    sNames[0] = ParserX::GetString(data);
-                    sfile[0] = -2;
+                    shape.name = ParserX::GetString(data);
+                    shape.id = -2;
                     //qDebug() << "=====znaleziono s1 " << path << sNames[0];
                     //sfile[0] = ShapeLib::addShape(path, tname, path);//new Sfile(this.path, tname);
                     ParserX::SkipToken(data);
@@ -154,6 +172,53 @@ void Eng::load(){
                     ParserX::SkipToken(data);
                     continue;
                 }
+                if (sh == ("ortsfreightanims")) {
+                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                        //qDebug() << "orts " << sh;
+                        if (sh == ("mstsfreightanimenabled")) {
+                            int val = ParserX::GetNumber(data);
+                            if(val == 0){
+                                freightanimShape.clear();
+                            }
+                            ParserX::SkipToken(data);
+                            continue;
+                        }
+                        if (sh == ("freightanimstatic")) {
+                            freightanimShape.emplace_back();
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                                //qDebug() << "orts " << sh;
+                                if (sh == ("subtype")) {
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if (sh == ("freightweight")) {
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if (sh == ("shape")) {
+                                    freightanimShape.back().name = ParserX::GetString(data);
+                                    //qDebug() << QString::fromStdString(freightanimShapeName.back();
+                                    freightanimShape.back().id = -2;
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if (sh == ("offset")) {
+                                    freightanimShape.back().x = ParserX::GetNumber(data);
+                                    freightanimShape.back().y = ParserX::GetNumber(data);
+                                    freightanimShape.back().z = ParserX::GetNumber(data);
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                ParserX::SkipToken(data);
+                            }
+                            ParserX::SkipToken(data);
+                            continue;
+                        }
+                        ParserX::SkipToken(data);
+                    }
+                    ParserX::SkipToken(data);
+                    continue;
+                }
                 if (sh == ("type")) {
                     type = ParserX::GetString(data);
                     //qDebug() << "type "<< type;
@@ -186,7 +251,7 @@ void Eng::load(){
                 if (sh == ("include")) {
                     QString incPath = ParserX::GetStringInside(data);
                     ParserX::SkipToken(data);
-                    data->insertFile(path + "/" + incPath);
+                    data->insertFile(incpath + "/" + incPath);
                     continue;
                 }
                 if (sh == ("type")) {
@@ -227,6 +292,11 @@ void Eng::load(){
                 if (sh == ("maxforce")) {
                     maxForce = ParserX::GetNumberInside(data);
                     //qDebug() << "maxForce "<<maxForce / 1000;
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("description")) {
+                    ParserX::GetStringInside(data);
                     ParserX::SkipToken(data);
                     continue;
                 }
@@ -377,11 +447,14 @@ void Eng::render(int aktwx, int aktwz, int selectionColor) {
         gluu->enableTextures();
     }
     
-    if(sfile[0] == -2){
-        sfile[0] = Game::currentShapeLib->addShape(path, sNames[0], path);
+    if(shape.id == -2){
+        shape.id = Game::currentShapeLib->addShape(path, shape.name, path);
     }
-    if(sfile[1] == -2){
-        sfile[1] = Game::currentShapeLib->addShape(path, sNames[1], path);
+    
+    for(int i = 0; i < freightanimShape.size(); i++){
+        if(freightanimShape[i].id == -2){
+            freightanimShape[i].id = Game::currentShapeLib->addShape(path, freightanimShape[i].name, path);
+        }
     }
 
     //ruchy[0].renderCon(gl, aktwx, aktwz);
@@ -405,8 +478,20 @@ void Eng::render(int aktwx, int aktwz, int selectionColor) {
      
      gl.glColor3f(1.0f, 1.0f, 1.0f);  */
      //gluu.mvPushMatrix();
-     if(sfile[0] != -1) Game::currentShapeLib->shape[sfile[0]]->render();
-     if(sfile[1] != -1) Game::currentShapeLib->shape[sfile[1]]->render();
+    if(shape.id != -1) 
+        Game::currentShapeLib->shape[shape.id]->render();
+
+    for(int i = 0; i < freightanimShape.size(); i++){
+        if(freightanimShape[i].id != -1) {
+            gluu->mvPushMatrix();
+            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, freightanimShape[i].x, freightanimShape[i].y, freightanimShape[i].z);
+            gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+            Game::currentShapeLib->shape[freightanimShape[i].id]->render();
+            gluu->mvPopMatrix();
+        }
+    }
+     
+
      //gluu.mvPopMatrix();
      //
 }

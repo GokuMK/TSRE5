@@ -194,7 +194,7 @@ QString ParserX::NextTokenInside(FileBuffer* bufor){
             return "";
         }
         //console.log("p "+String.fromCharCode(b)+" "+poziom);
-        if ((b > 64) || (b>47 && b<58 && czytam == 1)) {
+        if ((b > 63) || (b>47 && b<58 && czytam == 1) ) {
             czytam = 1;
             sekcja += b;
             i++;
@@ -208,6 +208,11 @@ QString ParserX::NextTokenInside(FileBuffer* bufor){
                         return "";
                     b = bufor->get();
                     bufor->off++;
+                    if (b > 63) {
+                        //qDebug() << "PARSER FAIL ===================== " << sekcja;
+                        bufor->off-=2;
+                        return sekcja;
+                    }
                     if (b == 40) {
                         //qDebug() << sekcja;
                         return sekcja;

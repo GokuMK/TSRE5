@@ -55,6 +55,22 @@ unsigned short int FileBuffer::getShort() {
     return *((unsigned short int*) & this->data[this->off - 2]);
 }
 
+void FileBuffer::skipBOM(){
+    if(this->getShort() == 65279)
+        return;
+    off -= 2;
+    return;
+}
+
+bool FileBuffer::isBOM(){
+    if(this->getShort() == 65279){
+        off -= 2;
+        return true;
+    }
+    off -= 2;
+    return false;
+}
+
 short int FileBuffer::getSignedShort() {
     this->off += 2;
     //return this->data[this->off - 2]*256 + 0;
@@ -93,6 +109,20 @@ void FileBuffer::findToken(int id) {
     return;
 }
 
+void FileBuffer::toUtf16(){
+    if(isBOM()) return;
+    qDebug() << "converting to UTF16";
+    // 
+    unsigned char * newData = new unsigned char[length * 2];
+    for(int i = 0; i < length; i++){
+        newData[i*2] = data[i];
+        newData[i*2+1] = 0;
+    }
+    length = length * 2;
+    delete[] data;
+    data = newData;
+}
+
 void FileBuffer::insertFile(QString incPath){
     int i;
     QString sh;
@@ -106,6 +136,7 @@ void FileBuffer::insertFile(QString incPath){
     }
     qDebug() << incPath;
     FileBuffer* incData = ReadFile::readRAW(file);
+    incData->toUtf16();
     int remaining = length-off;
     unsigned char * newData = new unsigned char[incData->length + remaining ];
     memcpy(newData, incData->data, incData->length);
@@ -114,4 +145,5 @@ void FileBuffer::insertFile(QString incPath){
     data = newData;
     length = incData->length + remaining;
     off = 0;
+    this->skipBOM();
 }

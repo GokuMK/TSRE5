@@ -25,7 +25,7 @@ SpeedPostDAT::SpeedPostDAT() {
     if (!file->open(QIODevice::ReadOnly))
         return;
     FileBuffer* bufor = ReadFile::read(file);
-    bufor->off += 46;
+    bufor->off += 46+16;
 
     qDebug() << "speedpost!";
     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {

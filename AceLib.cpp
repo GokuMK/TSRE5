@@ -31,14 +31,14 @@ AceLib::~AceLib(){
 void AceLib::run() {
     QFile *file = new QFile(texture->pathid);
     if (!file->open(QIODevice::ReadOnly)){
-        //qDebug() << "ACE: not exist "<<texture->pathid;
+        qDebug() << "ACE: not exist "<<texture->pathid;
         //return false;
         return;
     }
     FileBuffer* data = ReadFile::read(file);
     //qDebug() << "Date:" << data->length;
     unsigned char* bufor = data->data;
-    int offset = -16;
+    int offset = 0;//-16;
     int typ = 0, dane;
     unsigned char tempt;
 

@@ -112,7 +112,7 @@ void Tile::load() {
     //    qDebug() << (char)data->get()<<"-"<<data->get();
     //}
     data->setTokenOffset(261844);
-    data->off = 16;
+    data->off = 32;
     if (data->getToken() != 375){
         qDebug() << "w file uncompressed " << path;
         data->off = 0;
@@ -256,7 +256,7 @@ void Tile::loadWS() {
     //    qDebug() << (char)data->get()<<"-"<<data->get();
     //}
     data->setTokenOffset(261844);
-    data->off = 16;
+    data->off = 32;
     if (data->getToken() != 375){
         qDebug() << "w file uncompressed " << path;
         data->off = 0;
