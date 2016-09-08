@@ -14,6 +14,7 @@
 #include <QWidget>
 #include <QtWidgets>
 #include <QMainWindow>
+#include <QVector>
 
 class EngListWidget;
 class ConListWidget;
@@ -57,6 +58,7 @@ public slots:
     void cCloneSelected();
     void cOpenInExternalEditor();
     void cDurabilitySelected();
+    void cSaveAsEngSetSelected();
     void eFindConsistsByEng(); 
     void eOpenInExternalEditor(); 
     void eOpenLegacyInExternalEditor(); 
@@ -68,10 +70,17 @@ public slots:
     void saveImgShapeView();
     void vSetColorShapeViewSelected();
     void vSetColorConViewSelected(); 
-    
+    void sLoadEngSetsByDefaultSelected(bool show);
+    void engSetAddSelected();
+    void engSetFlipAndAddSelected();
+    void engSetShowSelected();
+    void engSetHideSelected();
+    void engSetShowSet(QString n);
+
 signals:
     void showEng(QString path, QString name);
-    void showEng(int id);
+    void showEngSet(int id);
+    void showEng(Eng *e);
     void showCon(int id);
     void showCon(int aid, int id);
     
@@ -79,7 +88,8 @@ protected:
     virtual void closeEvent ( QCloseEvent * event );
     
 private:
-    void setCurrentEng(int id);
+    void setCurrentEng(int id, int engSetId = -1);
+    void fillCurrentEng(int engSetId);
     void saveCurrentConsist();
     void saveCurrentActivity();
     EngListWidget *eng1;
@@ -97,11 +107,13 @@ private:
     QMenu *viewMenu;
     QMenu *view3dMenu;
     QMenu *engMenu;
+    QMenu *settingsMenu;
     QMenu *helpMenu;
     QMenu *consistMenu;
     QAction *cReverse;
     QAction *cClone;
     QAction *cOpenInExtEditor;
+    QAction *cSaveAsEngSet;
     QAction *fSave;
     QAction *fNew;
     QAction *fExit;
@@ -119,10 +131,15 @@ private:
     QAction *vSaveImgShapeView;
     QAction *vSetColorShapeView;
     QAction *vSetColorConView;
+    QAction *sLoadEngSetsByDefault;
     QAction *aboutAction;
     
     QWidget *conInfo;
     QWidget *engInfo;
+    QWidget *engSetsWidget;
+    QComboBox engSetsList;
+    QVector<int> engSets;
+    
     Consist *currentCon = NULL;
     Eng *currentEng = NULL;
     Camera *conCamera;
@@ -151,6 +168,8 @@ private:
     QLineEdit cLength;
     QLineEdit cUnits;
     QDoubleSpinBox cDurability;
+    
+    bool loadEngSetsByDefault = true;
 };
 
 #endif	/* CONEDITORWINDOW_H */

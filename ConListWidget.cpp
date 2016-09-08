@@ -14,6 +14,8 @@
 #include "Game.h"
 #include "ActLib.h"
 #include "Activity.h"
+#include "Eng.h"
+#include "EngLib.h"
 
 ConListWidget::ConListWidget() : QWidget(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -267,6 +269,25 @@ void ConListWidget::findConsistsByEng(int id){
     conType.setCurrentText("Last Query");
     fillConListLastQuery();
     
+}
+
+void ConListWidget::getEngSets(Eng *e, QVector<int>& sets){
+    Consist * c;
+    for (int i = 0; i < ConLib::jestcon; i++){
+        c = ConLib::con[i];
+        if(c == NULL) continue;
+        if(c->loaded !=1) continue;
+        //qDebug() << c->name.toLower() <<" "<< e->engName.toLower();
+        if(c->conName.split("#").first().toLower() == e->engName.toLower()){
+            for (int j = 0; j < c->engItems.size(); j++){
+                if(c->engItems[j].ename.toLower() == e->engName.toLower()){
+                    qDebug() << "set " << c->name;
+                    sets.push_back(i);
+                    break;
+                }
+            }
+        }
+    }
 }
 
 void ConListWidget::itemsSelected(QListWidgetItem * item){

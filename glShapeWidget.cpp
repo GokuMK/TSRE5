@@ -176,6 +176,11 @@ void GlShapeWidget::paintGL() {
         eng->render((int)selection*65536);
     }
     if(renderItem == 3 && con != NULL){
+        con->render((int)selection*65536, true);
+    }
+    if(renderItem == 2 && con != NULL){
+        Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI, 0,1,0);
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0, -con->conLength/2);
         con->render((int)selection*65536);
     }
 
@@ -312,8 +317,9 @@ void GlShapeWidget::resetRot(){
 }
 
 
-void GlShapeWidget::showEng(int id){
-    eng = Game::currentEngLib->eng[id];
+void GlShapeWidget::showEng(Eng *e){
+    eng = e;
+    con = NULL;
     renderItem = 2;
 }
 
@@ -321,6 +327,15 @@ void GlShapeWidget::showEng(QString path, QString name){
     int idx = Game::currentEngLib->addEng(path, name);
     qDebug() << "eng id "<< idx;
     eng = Game::currentEngLib->eng[idx];
+    con = NULL;
+    renderItem = 2;
+}
+
+void GlShapeWidget::showEngSet(int id){
+    qDebug() << "eng set id "<< id;
+    con = ConLib::con[id];
+    con->setTextColor(backgroundGlColor);
+    eng = NULL;
     renderItem = 2;
 }
 
@@ -328,6 +343,7 @@ void GlShapeWidget::showCon(int id){
     qDebug() << "con id "<< id;
     con = ConLib::con[id];
     con->setTextColor(backgroundGlColor);
+    eng = NULL;
     renderItem = 3;
 }
 

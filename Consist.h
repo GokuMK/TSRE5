@@ -87,11 +87,12 @@ public:
     void reverse();
     void setTextColor(float *bgColor);
     void setDurability(float val);
-    void render(int selectionColor = 0);
-    void render(int aktwx, int aktwz, int selectionColor);
+    void render(int selectionColor = 0, bool renderText = false);
+    void render(int aktwx, int aktwz, int selectionColor, bool renderText);
     void initPos();
     void setMaxVelocityFixed(bool val);
     bool isMaxVelocityFixed();
+    QString getFirstEngName();
 private:
     bool newConsist = false;
     bool modified = false;

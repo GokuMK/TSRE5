@@ -13,8 +13,10 @@
 
 #include <QWidget>
 #include <QtWidgets>
+#include <QVector>
 
 class EngLib;
+class Eng;
 class Consist;
 
 class ConListWidget : public QWidget {
@@ -31,6 +33,7 @@ public:
     void findConsistsByEng(int id);
     bool isActivity();
     int getCurrentActivityId();
+    void getEngSets(Eng *e, QVector<int>& sets);
     //EngLib* englib;
     
 public slots:

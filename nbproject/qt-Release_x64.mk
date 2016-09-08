@@ -3384,6 +3384,7 @@ moc_ConEditorWindow.cpp: c:/OT/Static/5.7.0_x64/include/QtWidgets/QWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QMainWindow \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
 		ConEditorWindow.h \
 		c:/OT/Static/5.7.0_x64/bin/moc.exe
 	'c:\OT\Static\5.7.0_x64\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -Ic:/OT/Static/5.7.0_x64/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -Ic:/OT/Static/5.7.0_x64/include -Ic:/OT/Static/5.7.0_x64/include/QtOpenGL -Ic:/OT/Static/5.7.0_x64/include/QtWidgets -Ic:/OT/Static/5.7.0_x64/include/QtGui -Ic:/OT/Static/5.7.0_x64/include/QtNetwork -Ic:/OT/Static/5.7.0_x64/include/QtCore -I. ConEditorWindow.h -o moc_ConEditorWindow.cpp
@@ -3827,6 +3828,7 @@ moc_ConListWidget.cpp: c:/OT/Static/5.7.0_x64/include/QtWidgets/QWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbox.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
 		ConListWidget.h \
 		c:/OT/Static/5.7.0_x64/bin/moc.exe
 	'c:\OT\Static\5.7.0_x64\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -Ic:/OT/Static/5.7.0_x64/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -Ic:/OT/Static/5.7.0_x64/include -Ic:/OT/Static/5.7.0_x64/include/QtOpenGL -Ic:/OT/Static/5.7.0_x64/include/QtWidgets -Ic:/OT/Static/5.7.0_x64/include/QtGui -Ic:/OT/Static/5.7.0_x64/include/QtNetwork -Ic:/OT/Static/5.7.0_x64/include/QtCore -I. ConListWidget.h -o moc_ConListWidget.cpp
@@ -20837,7 +20839,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CELoadWindow.o: CELoadWindow
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
 		ConEditorWindow.h \
-		c:/OT/Static/5.7.0_x64/include/QtWidgets/QMainWindow
+		c:/OT/Static/5.7.0_x64/include/QtWidgets/QMainWindow \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CELoadWindow.o CELoadWindow.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Camera.o: Camera.cpp Camera.h \
@@ -22102,12 +22105,12 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConEditorWindow.o: ConEditor
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QMainWindow \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
 		EngLib.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		ConLib.h \
 		Eng.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
 		Consist.h \
 		Game.h \
@@ -22651,12 +22654,16 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConListWidget.o: ConListWidg
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbox.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
 		ConLib.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		Consist.h \
 		Game.h \
 		ActLib.h \
-		Activity.h
+		Activity.h \
+		Eng.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
+		EngLib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConListWidget.o ConListWidget.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConUnitsWidget.o: ConUnitsWidget.cpp ConUnitsWidget.h \

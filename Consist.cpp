@@ -379,11 +379,12 @@ void  Consist::setFileName(QString n){
 }
 void  Consist::setDisplayName(QString n){
     this->displayName = n;
+    this->showName = n;
     modified = true;
 }
 
-void Consist::render(int selectionColor) {
-    render(0, 0, selectionColor);
+void Consist::render(int selectionColor, bool renderText) {
+    render(0, 0, selectionColor, renderText);
 }
 
 void Consist::setTextColor(float* bgColor) {
@@ -425,7 +426,17 @@ void Consist::setTextColor(float* bgColor) {
     }
 }
 
-void Consist::render(int aktwx, int aktwz, int selectionColor) {
+QString Consist::getFirstEngName(){
+    if(engItems.size() < 1)
+        return "";
+    for(int i = 0; i < engItems.size(); i++){
+        if(engItems[i].type == 1)
+            return engItems[i].ename.toLower();
+    }
+    return engItems[0].ename.toLower();
+}
+
+void Consist::render(int aktwx, int aktwz, int selectionColor, bool renderText) {
     //gl.glTranslatef(0, 0.2f, 0);
     //qDebug() << loaded;
     if (loaded != 1) return;
@@ -445,7 +456,7 @@ void Consist::render(int aktwx, int aktwz, int selectionColor) {
         Game::currentEngLib->eng[engItems[i].eng]->render(aktwx, aktwz, scolor);
         gluu->mvPopMatrix();
         
-        if(selectionColor != 0)
+        if(selectionColor != 0 || !renderText)
             continue;
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, -1, engItems[i].pos);

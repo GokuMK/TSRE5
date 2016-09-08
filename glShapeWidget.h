@@ -50,7 +50,8 @@ public:
     void setBackgroundGlColor(float r, float g, float b);
 public slots:
     void showEng(QString path, QString name);
-    void showEng(int id);
+    void showEng(Eng *e);
+    void showEngSet(int id);
     void showCon(int id);
     void showCon(int aid, int id);
     void cleanup();

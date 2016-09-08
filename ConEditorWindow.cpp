@@ -30,6 +30,7 @@
 #include "RandomConsist.h"
 #include "ActLib.h"
 #include "Activity.h"
+#include <QVector>
 
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
     aboutWindow = new AboutWindow();
@@ -128,6 +129,29 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     eMaxForce.setMaximumWidth(70);
     eMaxPower.setMaximumWidth(70);
     engInfoLayout->addItem(engInfoForm);
+    engSetsWidget = new QWidget(this);
+    QGridLayout *engSetsWidgetForm = new QGridLayout;
+    engSetsWidgetForm->setSpacing(0);
+    engSetsWidgetForm->setContentsMargins(0,0,0,0);    
+    engSetsWidget->setLayout(engSetsWidgetForm);
+    QLabel *engSetsLabel = GuiFunct::newTQLabel("Eng Sets Detected:");
+    QPushButton *engSetShowButton = new QPushButton("Show");
+    engSetShowButton->setFixedWidth(60);
+    QPushButton *engSetHideButton = new QPushButton("Hide");
+    engSetHideButton->setFixedWidth(60);
+    QPushButton *engSetAddButton = new QPushButton("Add to Consist");
+    engSetAddButton->setFixedWidth(120);
+    QPushButton *engSetAddFlipButton = new QPushButton("Flip and add to Consist");
+    engSetAddFlipButton->setFixedWidth(120);
+    engSetsList.setFixedWidth(250);
+    engSetsWidgetForm->addWidget(engSetsLabel,0,0);
+    engSetsWidgetForm->addWidget(&engSetsList,0,1);
+    engSetsList.setStyleSheet("combobox-popup: 0;");
+    engSetsWidgetForm->addWidget(engSetShowButton,0,2);
+    engSetsWidgetForm->addWidget(engSetHideButton,0,3);
+    engSetsWidgetForm->addWidget(engSetAddButton,0,4);
+    engSetsWidgetForm->addWidget(engSetAddFlipButton,0,5);
+    engInfoLayout->addWidget(engSetsWidget);
     engInfoLayout->setSpacing(0);
     engInfoLayout->setContentsMargins(0,0,0,0);
     engInfo->setLayout(engInfoLayout);
@@ -194,6 +218,9 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     cOpenInExtEditor = new QAction(tr("&Open in external editor"), this); 
     consistMenu->addAction(cOpenInExtEditor);
     QObject::connect(cOpenInExtEditor, SIGNAL(triggered(bool)), this, SLOT(cOpenInExternalEditor()));
+    cSaveAsEngSet = new QAction(tr("&Save as Eng Set"), this); 
+    consistMenu->addAction(cSaveAsEngSet);
+    QObject::connect(cSaveAsEngSet, SIGNAL(triggered()), this, SLOT(cSaveAsEngSetSelected()));
     engMenu = menuBar()->addMenu(tr("&Eng"));
     eFindCons = new QAction(tr("&Find Consists"), this); 
     engMenu->addAction(eFindCons);
@@ -239,6 +266,10 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     vSetColorConView = new QAction(tr("&Con View: Set Color"), this); 
     view3dMenu->addAction(vSetColorConView);
     QObject::connect(vSetColorConView, SIGNAL(triggered()), this, SLOT(vSetColorConViewSelected()));
+    settingsMenu = menuBar()->addMenu(tr("&Settings"));
+    sLoadEngSetsByDefault = GuiFunct::newMenuCheckAction(tr("&Auto load Eng Sets"), this);
+    QObject::connect(sLoadEngSetsByDefault, SIGNAL(triggered(bool)), this, SLOT(sLoadEngSetsByDefaultSelected(bool)));
+    settingsMenu->addAction(sLoadEngSetsByDefault);
     helpMenu = menuBar()->addMenu(tr("&Help"));
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -271,8 +302,11 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QObject::connect(this, SIGNAL(showEng(QString, QString)),
                       glShapeWidget, SLOT(showEng(QString, QString))); 
     
-    QObject::connect(this, SIGNAL(showEng(int)),
-                      glShapeWidget, SLOT(showEng(int))); 
+    QObject::connect(this, SIGNAL(showEng(Eng*)),
+                      glShapeWidget, SLOT(showEng(Eng*))); 
+    
+    QObject::connect(this, SIGNAL(showEngSet(int)),
+                      glShapeWidget, SLOT(showEngSet(int))); 
     
     QObject::connect(this, SIGNAL(showCon(int)),
                       glConWidget, SLOT(showCon(int))); 
@@ -303,6 +337,18 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QObject::connect(&cDurability, SIGNAL(editingFinished()),
                       this, SLOT(cDurabilitySelected())); 
 
+    QObject::connect(&engSetsList, SIGNAL(activated(QString)),
+                      this, SLOT(engSetShowSet(QString)));
+    
+    QObject::connect(engSetShowButton, SIGNAL(released()),
+        this, SLOT(engSetShowSelected()));
+    QObject::connect(engSetHideButton, SIGNAL(released()),
+        this, SLOT(engSetHideSelected()));
+    QObject::connect(engSetAddButton, SIGNAL(released()),
+        this, SLOT(engSetAddSelected()));
+    QObject::connect(engSetAddFlipButton, SIGNAL(released()),
+        this, SLOT(engSetFlipAndAddSelected()));
+    
     vEngList2->trigger();
     vConUnits->trigger();
 }
@@ -521,15 +567,44 @@ void ConEditorWindow::viewConView(bool show){
     else conSlider->hide();
 }
 
-void ConEditorWindow::setCurrentEng(int id){
+void ConEditorWindow::setCurrentEng(int id, int engSetId){
     currentEng = englib->eng[id];
     qDebug() << currentEng->engName;
-    float pos = -currentEng->sizez-1;
-    if(pos > -15) pos = -15;
+
+    engSets.clear();
+    con1->getEngSets(currentEng, engSets);
+    if(engSets.size() > 0){
+        this->engSetsWidget->show();
+        engSetsList.clear();
+        for(int i = 0; i < engSets.size(); i++){
+            engSetsList.addItem(ConLib::con[engSets[i]]->showName, i);
+        }
+    } else {
+        this->engSetsWidget->hide();
+        this->engSetsList.clear();
+        engSetId = -1;
+    }
+    
+    fillCurrentEng(engSetId);
+}
+
+void ConEditorWindow::fillCurrentEng(int engSetId){
+    if(currentEng == NULL)
+        return;
+    
+    float pos = 0;
+    
+    if(engSetId >= 0 ){
+        pos = -ConLib::con[engSets[engSetId]]->conLength - 1;
+        if(pos > -15) pos = -15;
+        emit showEngSet(engSets[engSetId]);
+    } else {
+        pos = -currentEng->sizez-1;
+        if(pos > -15) pos = -15;
+        emit showEng(currentEng);
+    }
     engCamera->setPos(pos,2.5,0);
     engCamera->setPlayerRot(M_PI/2.0,0);
-    
-    emit showEng(id);
     
     eName.setText(currentEng->displayName);
     eFileName.setText(currentEng->name);
@@ -556,8 +631,90 @@ void ConEditorWindow::setCurrentEng(int id){
     eBrakes.setText(currentEng->brakeSystemType);
 }
 
+void ConEditorWindow::engSetAddSelected(){
+    if(currentCon == NULL) return;
+    int cid = engSetsList.currentIndex();
+    if(cid > engSets.size()) return;
+    cid = engSets[cid];
+    
+    for(int i = 0; i < ConLib::con[cid]->engItems.size(); i++)
+        currentCon->appendEngItem(ConLib::con[cid]->engItems[i].eng, 2);
+    refreshCurrentCon();
+    conSlider->setValue(currentCon->engItems.size()-2);
+}
+
+void ConEditorWindow::engSetFlipAndAddSelected(){
+    if(currentCon == NULL) return;
+    int cid = engSetsList.currentIndex();
+    if(cid > engSets.size()) return;
+    cid = engSets[cid];
+    
+    for(int i = ConLib::con[cid]->engItems.size() - 1; i >= 0 ; i--){
+        currentCon->appendEngItem(ConLib::con[cid]->engItems[i].eng, 2);
+        currentCon->engItems[currentCon->engItems.size()-1].flip = !ConLib::con[cid]->engItems[i].flip;
+    }
+    refreshCurrentCon();
+    conSlider->setValue(currentCon->engItems.size()-2);
+}
+
+void ConEditorWindow::engSetHideSelected(){
+    this->fillCurrentEng(-1);
+}
+
+void ConEditorWindow::engSetShowSelected(){
+    this->fillCurrentEng(engSetsList.currentIndex());
+}
+
+void ConEditorWindow::engSetShowSet(QString n){
+    this->fillCurrentEng(engSetsList.currentIndex());
+}
+
+void ConEditorWindow::cSaveAsEngSetSelected(){
+    qDebug() << "new eng set";
+    if(currentCon == NULL) return;
+    if(!currentCon->isNewConsist()){
+        QMessageBox msgBox;
+        msgBox.setText("Consist must be new.");
+        msgBox.exec();
+        return;
+    }
+    QString fileName = currentCon->name.split("#").last();
+    QString engName = currentCon->getFirstEngName();
+    
+    if(fileName == "")
+        fileName = engName;
+    else
+        fileName = engName + "#" + fileName;
+    
+    currentCon->conName = fileName;
+    cFileName.setText(currentCon->conName);
+    currentCon->name = fileName+".con";
+    
+    OverwriteDialog owerwriteDialog;
+    owerwriteDialog.setWindowTitle("Overwrite \""+currentCon->conName+"\" ?");
+    
+    QString spath;
+    spath = currentCon->path + "/" + currentCon->name;
+    spath.replace("//", "/");
+    qDebug() << spath;
+    QFile file(spath);
+    if(file.exists()){
+        owerwriteDialog.exec();
+        if(owerwriteDialog.changed == 0)
+            return;
+    }
+    currentCon->save();
+}
+
+void ConEditorWindow::sLoadEngSetsByDefaultSelected(bool show){
+    loadEngSetsByDefault = show;
+}
+
 void ConEditorWindow::engListSelected(int id){
-    setCurrentEng(id);
+    if(loadEngSetsByDefault)
+        setCurrentEng(id, 0);
+    else
+        setCurrentEng(id, -1);
     //currentEng = englib->eng[id];
     qDebug() << currentEng->engName;
     //float pos = -currentEng->sizez-1;
