@@ -20385,6 +20385,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityTools.o: ActivityToo
 		ConLib.h \
 		Eng.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
 		Consist.h \
 		Activity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityTools.o ActivityTools.cpp
@@ -22107,6 +22108,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConEditorWindow.o: ConEditor
 		ConLib.h \
 		Eng.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
 		Consist.h \
 		Game.h \
 		EngListWidget.h \
@@ -23101,6 +23103,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConUnitsWidget.o: ConUnitsWi
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		Eng.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
 		EngLib.h \
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConUnitsWidget.o ConUnitsWidget.cpp
@@ -23149,6 +23152,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Consist.o: Consist.cpp Consi
 		c:/OT/Static/5.7.0_x64/include/QtCore/qregexp.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringmatcher.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
 		EngLib.h \
 		ParserX.h \
 		FileBuffer.h \
@@ -23174,7 +23179,6 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Consist.o: Consist.cpp Consi
 		c:/OT/Static/5.7.0_x64/include/QtCore/qvariant.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qlocale.h \
@@ -24429,6 +24433,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Eng.o: Eng.cpp Eng.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qregexp.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringmatcher.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
 		ParserX.h \
 		FileBuffer.h \
 		ReadFile.h \
@@ -24453,7 +24459,6 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Eng.o: Eng.cpp Eng.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qvariant.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qlocale.h \
@@ -24679,9 +24684,10 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/EngLib.o: EngLib.cpp EngLib.
 		c:/OT/Static/5.7.0_x64/include/QtCore/qregexp.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringmatcher.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
@@ -25153,6 +25159,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/EngListWidget.o: EngListWidg
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		Eng.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/EngListWidget.o EngListWidget.cpp
 
@@ -50314,6 +50321,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/glShapeWidget.o: glShapeWidg
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		Eng.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
 		EngLib.h \
 		Game.h \
 		GLH.h \
@@ -50593,6 +50601,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/glwidget.o: glwidget.cpp glw
 		GLMatrix.h \
 		Eng.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
 		Tile.h \
 		Game.h \
 		GLH.h \

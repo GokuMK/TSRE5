@@ -23,7 +23,7 @@ public:
     virtual ~ConUnitsWidget();
     void setCon(Consist * c);
     Consist* con;
-    EngLib* englib;
+    //EngLib* englib;
 
 public slots:
     void itemsSelected(QListWidgetItem* it);

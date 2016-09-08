@@ -12,6 +12,7 @@
 #define	ENG_H
 #include <QString>
 #include <QVector>
+#include <QHash>
 
 class OglObj;
 
@@ -28,7 +29,7 @@ public:
         float x = 0;
         float y = 0;
         float z = 0;
-        int id = -2;
+        QHash<long long int, int> id;// = -2;
     };
     
     std::vector<Coupling> coupling;

@@ -106,10 +106,10 @@ void EngListWidget::fillEngList(QString engFilter, QString couplingFilter, QStri
     items.clear();
 
     Eng * e;
-    totalVal.setText(QString::number(englib->jesteng));
+    totalVal.setText(QString::number(Game::currentEngLib->jesteng));
     
-    for (int i = 0; i < englib->jesteng; i++){
-        e = englib->eng[i];
+    for (int i = 0; i < Game::currentEngLib->jesteng; i++){
+        e = Game::currentEngLib->eng[i];
         if(e == NULL) continue;
         if(e->loaded !=1) continue;
         if(!e->engFilter(engFilter)) continue;

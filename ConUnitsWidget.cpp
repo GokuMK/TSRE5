@@ -63,7 +63,7 @@ void ConUnitsWidget::setCon(Consist* c){
     Eng * e;
     QString prefix;
     for (int i = 0; i < con->engItems.size(); i++){
-        e = englib->eng[con->engItems[i].eng];
+        e = Game::currentEngLib->eng[con->engItems[i].eng];
         if(e == NULL) continue;
         prefix = "";
         if(e->loaded !=1) {
@@ -82,25 +82,25 @@ void ConUnitsWidget::itemsSelected(QListWidgetItem * item){
 }
 
 void ConUnitsWidget::bDelReleased(){
-    Game::currentEngLib = englib;
+    //Game::currentEngLib = englib;
     con->deteleSelected();
     emit refreshItem();
 }
 
 void ConUnitsWidget::bUpReleased(){
-    Game::currentEngLib = englib;
+    //Game::currentEngLib = englib;
     con->moveLeftSelected();
     emit refreshItem();
 }
 
 void ConUnitsWidget::bDownReleased(){
-    Game::currentEngLib = englib;
+    //Game::currentEngLib = englib;
     con->moveRightSelected();
     emit refreshItem();
 }
 
 void ConUnitsWidget::bFlipReleased(){
-    Game::currentEngLib = englib;
+    //Game::currentEngLib = englib;
     con->flipSelected();
     emit refreshItem();
 }

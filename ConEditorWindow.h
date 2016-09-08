@@ -71,6 +71,7 @@ public slots:
     
 signals:
     void showEng(QString path, QString name);
+    void showEng(int id);
     void showCon(int id);
     void showCon(int aid, int id);
     

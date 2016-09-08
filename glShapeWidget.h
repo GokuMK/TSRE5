@@ -42,7 +42,7 @@ public:
     }
     void setCamera(Camera* cam);
     ShapeLib *currentShapeLib = NULL;
-    EngLib *currentEngLib = NULL;
+    //EngLib *currentEngLib = NULL;
     QImage *screenShot = NULL;
     void setMode(QString n);
     void resetRot();
@@ -50,6 +50,7 @@ public:
     void setBackgroundGlColor(float r, float g, float b);
 public slots:
     void showEng(QString path, QString name);
+    void showEng(int id);
     void showCon(int id);
     void showCon(int aid, int id);
     void cleanup();

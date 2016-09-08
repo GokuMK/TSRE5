@@ -46,7 +46,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     glConWidget = new GlShapeWidget(this);
     if(Game::colorConView != NULL)
         glConWidget->setBackgroundGlColor(Game::colorConView->redF(), Game::colorConView->greenF(), Game::colorConView->blueF());
-    glConWidget->currentEngLib = englib;
+
     conCamera = new CameraConsist();
     conCamera->setPos(-100,2.5,42);
     conCamera->setPlayerRot(M_PI/2.0,0);
@@ -64,15 +64,15 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     glShapeWidget->setMode("rot");
     //qDebug()<<"aaa";
     eng1 = new EngListWidget();
-    eng1->englib = englib;
+    //eng1->englib = englib;
     eng1->fillEngList();
     eng2 = new EngListWidget();
-    eng2->englib = englib;
+    //eng2->englib = englib;
     eng2->fillEngList();
     units = new ConUnitsWidget();
-    units->englib = englib;
+    //units->englib = englib;
     con1 = new ConListWidget();
-    con1->englib = englib;
+    //con1->englib = englib;
     con1->fillConList();
     //qDebug()<<"aaa";
     conSlider = new QScrollBar(Qt::Horizontal);
@@ -270,6 +270,9 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     
     QObject::connect(this, SIGNAL(showEng(QString, QString)),
                       glShapeWidget, SLOT(showEng(QString, QString))); 
+    
+    QObject::connect(this, SIGNAL(showEng(int)),
+                      glShapeWidget, SLOT(showEng(int))); 
     
     QObject::connect(this, SIGNAL(showCon(int)),
                       glConWidget, SLOT(showCon(int))); 
@@ -525,7 +528,8 @@ void ConEditorWindow::setCurrentEng(int id){
     if(pos > -15) pos = -15;
     engCamera->setPos(pos,2.5,0);
     engCamera->setPlayerRot(M_PI/2.0,0);
-    emit showEng(englib->eng[id]->path, englib->eng[id]->name);
+    
+    emit showEng(id);
     
     eName.setText(currentEng->displayName);
     eFileName.setText(currentEng->name);

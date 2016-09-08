@@ -31,7 +31,7 @@ public:
     void findConsistsByEng(int id);
     bool isActivity();
     int getCurrentActivityId();
-    EngLib* englib;
+    //EngLib* englib;
     
 public slots:
     void itemsSelected(QListWidgetItem* it);

@@ -23,7 +23,7 @@ public:
     virtual ~EngListWidget();
     void fillEngList();
     void fillEngList(QString engFilter, QString couplingFilter, QString searchFilter);
-    EngLib* englib;
+    //EngLib* englib;
     
 public slots:
     void itemsSelected();

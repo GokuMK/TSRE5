@@ -167,7 +167,7 @@ void ConListWidget::fillConList(){
 
 void ConListWidget::fillConListLastQuery(){
     items.clear();
-    Game::currentEngLib = englib;
+    //Game::currentEngLib = englib;
     Consist * e;
     
     for (int i = 0; i < query.count(); i++){
@@ -181,7 +181,7 @@ void ConListWidget::fillConListAct(){
     //std::string aname = this->actShow.currentText();
     int id = actShow.currentData().toInt();
     items.clear();
-    Game::currentEngLib = englib;
+    //Game::currentEngLib = englib;
     Consist * e;
     
     
@@ -195,7 +195,7 @@ void ConListWidget::fillConListAct(){
 void ConListWidget::fillConList(QString n){
     totalVal.setText(QString::number(ConLib::jestcon));
     items.clear();
-    Game::currentEngLib = englib;
+    //Game::currentEngLib = englib;
     Consist * e;
     bool brokenf = false;
     bool unsavedf = false;
@@ -220,7 +220,7 @@ void ConListWidget::fillConList(QString n){
 
 void ConListWidget::getUnsaed(std::vector<int> &unsavedConIds){
     unsavedConIds.clear();
-    Game::currentEngLib = englib;
+    //Game::currentEngLib = englib;
     Consist * e;
     for (int i = 0; i < ConLib::jestcon; i++){
         e = ConLib::con[i];
@@ -234,7 +234,7 @@ void ConListWidget::getUnsaed(std::vector<int> &unsavedConIds){
 
 void ConListWidget::getUnsaedAct(std::vector<int>& unsavedActIds){
     unsavedActIds.clear();
-    Game::currentEngLib = englib;
+    //Game::currentEngLib = englib;
     Activity * e;
     for (int i = 0; i < ActLib::jestact; i++){
         e = ActLib::act[i];
@@ -249,7 +249,7 @@ void ConListWidget::getUnsaedAct(std::vector<int>& unsavedActIds){
 
 void ConListWidget::findConsistsByEng(int id){
     query.clear();
-    Game::currentEngLib = englib;
+    //Game::currentEngLib = englib;
     Consist * e;
     
     for (int i = 0; i < ConLib::jestcon; i++){

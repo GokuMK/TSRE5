@@ -84,10 +84,10 @@ void GlShapeWidget::setCamera(Camera* cam){
 void GlShapeWidget::initializeGL() {
     currentShapeLib = new ShapeLib();
     Game::currentShapeLib = currentShapeLib;
-    if(currentEngLib == NULL){
+    /*if(currentEngLib == NULL){
          currentEngLib = new EngLib();
          Game::currentEngLib = currentEngLib;
-    }
+    }*/
     //qDebug() << "GLUU::get();";
     gluu = GLUU::get();
     //context()->set
@@ -150,7 +150,7 @@ void GlShapeWidget::setBackgroundGlColor(float r, float g, float b){
 
 void GlShapeWidget::paintGL() {
     Game::currentShapeLib = currentShapeLib;
-    Game::currentEngLib = currentEngLib;
+    //Game::currentEngLib = currentEngLib;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glClearColor(backgroundGlColor[0], backgroundGlColor[1], backgroundGlColor[2], 1);
@@ -239,7 +239,7 @@ void GlShapeWidget::resizeGL(int w, int h) {
 void GlShapeWidget::keyPressEvent(QKeyEvent * event) {
     camera->keyDown(event);
     Game::currentShapeLib = currentShapeLib;
-    Game::currentEngLib = currentEngLib;
+    //Game::currentEngLib = currentEngLib;
     if(renderItem == 3 && con != NULL){
         switch (event->key()) {
             case Qt::Key_Delete:
@@ -311,10 +311,16 @@ void GlShapeWidget::resetRot(){
     rotZ = 0;
 }
 
+
+void GlShapeWidget::showEng(int id){
+    eng = Game::currentEngLib->eng[id];
+    renderItem = 2;
+}
+
 void GlShapeWidget::showEng(QString path, QString name){
-    int idx = currentEngLib->addEng(path, name);
+    int idx = Game::currentEngLib->addEng(path, name);
     qDebug() << "eng id "<< idx;
-    eng = currentEngLib->eng[idx];
+    eng = Game::currentEngLib->eng[idx];
     renderItem = 2;
 }
 
