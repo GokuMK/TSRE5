@@ -340,6 +340,12 @@ void GlShapeWidget::showEngSet(int id){
 }
 
 void GlShapeWidget::showCon(int id){
+    if(id < 0){
+        con = NULL;
+        eng = NULL;
+        renderItem = 3;
+        return;
+    }
     qDebug() << "con id "<< id;
     con = ConLib::con[id];
     con->setTextColor(backgroundGlColor);

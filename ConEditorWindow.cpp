@@ -215,6 +215,9 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     cClone = new QAction(tr("&Clone"), this); 
     consistMenu->addAction(cClone);
     QObject::connect(cClone, SIGNAL(triggered(bool)), this, SLOT(cCloneSelected()));
+    cDelete = new QAction(tr("&Delete"), this); 
+    consistMenu->addAction(cDelete);
+    QObject::connect(cDelete, SIGNAL(triggered(bool)), this, SLOT(cDeleteSelected()));
     cOpenInExtEditor = new QAction(tr("&Open in external editor"), this); 
     consistMenu->addAction(cOpenInExtEditor);
     QObject::connect(cOpenInExtEditor, SIGNAL(triggered(bool)), this, SLOT(cOpenInExternalEditor()));
@@ -500,6 +503,14 @@ void ConEditorWindow::cCloneSelected(){
     if(currentCon == NULL) return;
     con1->newConsist(currentCon);
 }
+
+void ConEditorWindow::cDeleteSelected(){
+    Game::currentEngLib = englib;
+    if(currentCon == NULL) return;
+    con1->deleteCurrentCon();
+    showCon(-1);
+}
+
 
 void ConEditorWindow::about(){
     aboutWindow->show();

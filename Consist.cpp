@@ -94,6 +94,7 @@ void Consist::load(){
 
     FileBuffer* data = ReadFile::read(file);
     data->off = 0;
+    file->close();
     sh = "Train";
     ParserX::szukajsekcji1(sh, data);
     //qDebug() << data->off << " " << data->length;

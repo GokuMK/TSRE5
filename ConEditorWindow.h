@@ -56,6 +56,7 @@ public slots:
     void cDisplayNameSelected(QString n); 
     void cReverseSelected();
     void cCloneSelected();
+    void cDeleteSelected();
     void cOpenInExternalEditor();
     void cDurabilitySelected();
     void cSaveAsEngSetSelected();
@@ -112,6 +113,7 @@ private:
     QMenu *consistMenu;
     QAction *cReverse;
     QAction *cClone;
+    QAction *cDelete;
     QAction *cOpenInExtEditor;
     QAction *cSaveAsEngSet;
     QAction *fSave;

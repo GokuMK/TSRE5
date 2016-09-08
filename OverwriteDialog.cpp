@@ -11,9 +11,10 @@
 #include "OverwriteDialog.h"
 
 OverwriteDialog::OverwriteDialog() : QDialog(){
-    this->setFixedSize(300, 50);
+    this->setFixedWidth(200);
 
-    QLabel *label = new QLabel("Consist with this file name already exist. Overwrite?");
+    label = new QLabel("\nConsist with this file name already exist. Overwrite?\n");
+    label->setWordWrap(true);
     QPushButton* ok = new QPushButton("Yes");
     //QPushButton* trynew = new QPushButton("Try New FileName");
     QPushButton* cancel = new QPushButton("No");

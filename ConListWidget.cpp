@@ -16,6 +16,7 @@
 #include "Activity.h"
 #include "Eng.h"
 #include "EngLib.h"
+#include "OverwriteDialog.h"
 
 ConListWidget::ConListWidget() : QWidget(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -153,6 +154,7 @@ void ConListWidget::actTChan(QString n){
     //}
     fillConListAct();
 }
+
 void ConListWidget::conFChan(QString n){
     if(conType.currentIndex() == 0)
         n = "";
@@ -218,6 +220,37 @@ void ConListWidget::fillConList(QString n){
         new QListWidgetItem ( e->showName, &items, i);
     }
     items.sortItems(Qt::AscendingOrder);
+}
+
+void ConListWidget::deleteCurrentCon(){
+    if(conShow.currentIndex() > 0)
+        return;
+    
+    Consist * e;
+    int cid = items.currentItem()->type();
+    e = ConLib::con[cid];
+    if(e == NULL) return;
+    
+    items.takeItem(items.currentRow());
+    
+    if(e->isNewConsist()){
+        ConLib::con.erase(cid);
+        delete e;
+        return;
+    }
+    OverwriteDialog owerwriteDialog;
+    owerwriteDialog.setWindowTitle("Delete?");
+    owerwriteDialog.label->setText("Delete this consist from disk?\n\n"+
+        e->pathid+"\n");
+    owerwriteDialog.setFixedWidth(250);
+    owerwriteDialog.exec();
+
+    if(owerwriteDialog.changed == 1){
+        QFile file (e->pathid);
+        file.remove();
+    }
+    ConLib::con.erase(cid);
+    delete e;
 }
 
 void ConListWidget::getUnsaed(std::vector<int> &unsavedConIds){

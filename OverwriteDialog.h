@@ -20,7 +20,7 @@ public:
     OverwriteDialog();
     virtual ~OverwriteDialog();
     QLineEdit name;
-    
+    QLabel *label;
     
 public slots:
     //void trynew();

@@ -100,6 +100,7 @@ void Eng::load(){
     }
 
     FileBuffer* data = ReadFile::read(file);
+    file->close();
     data->toUtf16();
     data->skipBOM();
     //ParserX::NextLine(data);
