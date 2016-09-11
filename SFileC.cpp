@@ -320,8 +320,8 @@
                     bufor->off += 9;
                     //vert[jj] = new fvertex();
                     vert[jj].arg1 = (short) bufor->getInt();
-                    vert[jj].point = (short) bufor->getInt();
-                    vert[jj].normal = (short) bufor->getInt();
+                    vert[jj].point = (unsigned int) bufor->getInt();
+                    vert[jj].normal = (unsigned int) bufor->getInt();
                     vert[jj].arg2 = (short) bufor->getInt();
                     vert[jj].arg3 = (short) bufor->getInt();
 
@@ -329,7 +329,7 @@
                     vert[jj].material = (short) bufor->getInt();
                     
                     for(int jjjj = 0; jjjj<vert[jj].material; jjjj++){
-                        if(jjjj == 0) vert[jj].uvpoint = (short) bufor->getInt();
+                        if(jjjj == 0) vert[jj].uvpoint = (unsigned int) bufor->getInt();
                     }
                     
                 }

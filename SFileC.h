@@ -19,12 +19,12 @@ class SFileC {
 public:
     struct fvertex {
         unsigned short arg1;
-        unsigned short point;
-        unsigned short normal;
+        unsigned int point;
+        unsigned int normal;
         unsigned short arg2;
         unsigned short arg3;
         unsigned short material;
-        unsigned short uvpoint;
+        unsigned int uvpoint;
     };
     static void odczytajshaders(FileBuffer* bufor, SFile* pliks);
     //static void szukajsekcjic(int szukane, FileBuffer* bufor);

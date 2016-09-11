@@ -274,8 +274,8 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
             for (jj = 0; jj < iloscv; jj++) {
                 //vert[jj].arg1 = 
                 vert[jj].arg1 = (short) ParserX::GetHex(bufor);
-                vert[jj].point = (short) ParserX::GetNumber(bufor);
-                vert[jj].normal = (short) ParserX::GetNumber(bufor);
+                vert[jj].point = (unsigned int) ParserX::GetNumber(bufor);
+                vert[jj].normal = (unsigned int) ParserX::GetNumber(bufor);
                 vert[jj].arg2 = (short) ParserX::GetHex(bufor);
                 vert[jj].arg3 = (short) ParserX::GetHex(bufor);
 
@@ -287,7 +287,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
                 vert[jj].material = (short) ParserX::GetNumber(bufor);
 
                 for (int jjjj = 0; jjjj < vert[jj].material; jjjj++) {
-                    if (jjjj == 0) vert[jj].uvpoint = (short) ParserX::GetNumber(bufor);
+                    if (jjjj == 0) vert[jj].uvpoint = (unsigned int) ParserX::GetNumber(bufor);
                 }
 
                 //if (jj < 100) 
