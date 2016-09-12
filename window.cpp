@@ -155,6 +155,9 @@ Window::Window() {
     QAction* viewTileGrid = GuiFunct::newMenuCheckAction(tr("&Tile Grid"), this); 
     viewMenu->addAction(viewTileGrid);
     QObject::connect(viewTileGrid, SIGNAL(triggered(bool)), this, SLOT(viewTileGrid(bool)));    
+    QAction* viewTerrainGrid = GuiFunct::newMenuCheckAction(tr("&Terrain Grid"), this, false); 
+    viewMenu->addAction(viewTerrainGrid);
+    QObject::connect(viewTerrainGrid, SIGNAL(triggered(bool)), this, SLOT(viewTerrainGrid(bool)));    
     QAction* viewInteractives = GuiFunct::newMenuCheckAction(tr("&Interactives"), this); 
     viewMenu->addAction(viewInteractives);
     QObject::connect(viewInteractives, SIGNAL(triggered(bool)), this, SLOT(viewInteractives(bool)));
@@ -484,6 +487,9 @@ void Window::viewWorldGrid(bool show){
 }
 void Window::viewTileGrid(bool show){
     Game::viewTileGrid = show;
+}
+void Window::viewTerrainGrid(bool show){
+    Game::viewTerrainGrid = show;
 }
 void Window::viewInteractives(bool show){
     Game::viewInteractives = show;

@@ -555,8 +555,32 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
 
 
                 f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
+                
+
             }
         }
+        
+        if(Game::viewTerrainGrid){
+            gluu->disableTextures(0.7,0.7,0.7,1.0);
+            gluu->mvPushMatrix();
+            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0.1, 0);
+            gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+            glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+            for (int uu = 0; uu < 16; uu++) {
+                for (int yy = 0; yy < 16; yy++) {
+                    if (hidden[yy * 16 + uu]) continue;
+                    if ((tfile->flags[yy * 16 + uu] & 1) != 0) continue;
+                    float lodxx = lodx + uu * 128 - 1024;
+                    float lodzz = lodz + yy * 128 - 1024;
+                    lod = sqrt(lodxx * lodxx + lodzz * lodzz);
+                    if (lod > 300) continue;
+                    f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
+                }
+            }
+            gluu->mvPopMatrix();
+            glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+        }
+        
         renderWater(lodx, lodz, playerT, playerW, target, fov);
     }
 }

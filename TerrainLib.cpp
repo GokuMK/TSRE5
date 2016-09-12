@@ -499,8 +499,9 @@ void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
     
     std::set<int> uterr;
     
-    float posx = p[0];
-    float posz = p[2];
+    float posx = round(p[0]/8.0)*8.0;
+    float posz = round(p[2]/8.0)*8.0;
+    
     Game::check_coords(x, z, posx, posz);
     qDebug() << x << " " << z << " " << posx << " " << posz;
     

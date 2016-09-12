@@ -47,6 +47,7 @@ public slots:
     void hideShowNaviWidget(bool);
     void viewWorldGrid(bool show);
     void viewTileGrid(bool show);
+    void viewTerrainGrid(bool show);
     void viewInteractives(bool show);
     void viewTrackDbLines(bool show);
     void viewTsectionLines(bool show);

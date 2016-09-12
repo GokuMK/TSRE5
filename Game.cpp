@@ -51,6 +51,7 @@ float Game::cameraFov = 55.0f;
 
 bool Game::viewWorldGrid = true;
 bool Game::viewTileGrid = true;
+bool Game::viewTerrainGrid = false;
 bool Game::viewInteractives = true;
 bool Game::viewTrackDbLines = true;
 bool Game::viewTsectionLines = true;

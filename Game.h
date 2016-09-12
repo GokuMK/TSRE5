@@ -65,6 +65,7 @@ public:
     static float cameraFov;
     static bool viewWorldGrid;
     static bool viewTileGrid;
+    static bool viewTerrainGrid;
     static bool viewInteractives;
     static bool viewTrackDbLines;
     static bool viewTsectionLines;
