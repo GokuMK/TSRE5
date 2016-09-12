@@ -12,27 +12,17 @@
         <group>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/CoordsMkr.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/OverwriteDialog.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Ref.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConLib.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFileC.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Game.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Eng.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConListWidget.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ParserX.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SpeedPostDAT.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TFile.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GLUU.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConUnitsWidget.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SigCfg.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Consist.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngListWidget.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFile.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Terrain.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Activity.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/CELoadWindow.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Tile.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/FileBuffer.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ImageLib.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngLib.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ChooseFileDialog.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Game.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/OverwriteDialog.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/glShapeWidget.cpp</file>
@@ -40,21 +30,37 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ReadFile.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TSectionDAT.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/RandomConsist.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConEditorWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/QuadTree.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundList.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Eng.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ForestObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ChooseFileDialog.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/glShapeWidget.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TDB.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Trk.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngLib.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFileX.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFile.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConEditorWindow.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/AceLib.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFileC.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Ref.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConLib.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Eng.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TFile.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConUnitsWidget.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngListWidget.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Activity.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/CELoadWindow.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Tile.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/FileBuffer.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngLib.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFileX.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ChooseFileDialog.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConEditorWindow.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundList.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ForestObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ChooseFileDialog.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngListWidget.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UnsavedDialog.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngLib.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConEditorWindow.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Consist.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/AceLib.cpp</file>
         </group>
     </open-files>
 </project-private>

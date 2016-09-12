@@ -101,7 +101,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     engInfoForm->setContentsMargins(1,1,1,1);    
     engInfoForm->addWidget(new QLabel("Name:"),0,0);
     engInfoForm->addWidget(new QLabel("File Name:"),1,0);
-    engInfoForm->addWidget(new QLabel("Dir Nam:"),2,0);
+    engInfoForm->addWidget(new QLabel("Dir Name:"),2,0);
     engInfoForm->addWidget(new QLabel("Shape:"),3,0);
     engInfoForm->addWidget(new QLabel("Type:"),0,2);
     engInfoForm->addWidget(new QLabel("Brakes:"),1,2);
