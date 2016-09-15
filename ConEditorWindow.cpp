@@ -388,7 +388,7 @@ void ConEditorWindow::eOpenLegacyInExternalEditor(){
     if(currentEng == NULL) return;
     QFileInfo fileInfo(currentEng->pathid);
     if(fileInfo.exists())
-        QDesktopServices::openUrl(QUrl(currentEng->pathid));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(currentEng->pathid));
 }
 
 void ConEditorWindow::eOpenInExternalEditor(){
@@ -396,7 +396,7 @@ void ConEditorWindow::eOpenInExternalEditor(){
     if(currentEng->filePaths.size() == 1){
         QFileInfo fileInfo(currentEng->filePaths[0]);
         if(fileInfo.exists())
-            QDesktopServices::openUrl(QUrl(currentEng->filePaths[0]));
+            QDesktopServices::openUrl(QUrl::fromLocalFile(currentEng->filePaths[0]));
     } else {
         ChooseFileDialog chooseFileDialog;
         chooseFileDialog.setMsg("This ENG contains more than one file:");
@@ -408,7 +408,7 @@ void ConEditorWindow::eOpenInExternalEditor(){
         if(chooseFileDialog.changed == 1){
             QFileInfo fileInfo(currentEng->filePaths[chooseFileDialog.items.currentRow()]);
             if(fileInfo.exists())
-                QDesktopServices::openUrl(QUrl(currentEng->filePaths[chooseFileDialog.items.currentRow()]));
+                QDesktopServices::openUrl(QUrl::fromLocalFile(currentEng->filePaths[chooseFileDialog.items.currentRow()]));
         }
     }
 }
