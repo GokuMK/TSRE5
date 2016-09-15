@@ -92,6 +92,7 @@
         <itemPath>NaviWindow.h</itemPath>
         <itemPath>NewRouteWindow.h</itemPath>
         <itemPath>ObjTools.h</itemPath>
+        <itemPath>ShapeViewWindow.h</itemPath>
         <itemPath>TerrainTools.h</itemPath>
         <itemPath>TerrainTreeWindow.h</itemPath>
         <itemPath>TerrainWaterWindow.h</itemPath>
@@ -267,6 +268,7 @@
         <itemPath>NaviWindow.cpp</itemPath>
         <itemPath>NewRouteWindow.cpp</itemPath>
         <itemPath>ObjTools.cpp</itemPath>
+        <itemPath>ShapeViewWindow.cpp</itemPath>
         <itemPath>TerrainTools.cpp</itemPath>
         <itemPath>TerrainTreeWindow.cpp</itemPath>
         <itemPath>TerrainWaterWindow.cpp</itemPath>
@@ -715,6 +717,10 @@
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1269,6 +1275,10 @@
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SigCfg.h" ex="false" tool="3" flavor2="0">
@@ -1814,6 +1824,10 @@
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2368,6 +2382,10 @@
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="SigCfg.h" ex="false" tool="3" flavor2="0">
@@ -2908,6 +2926,10 @@
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="8">
       </item>

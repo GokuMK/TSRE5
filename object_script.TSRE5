@@ -83,6 +83,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileC.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileX.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ShapeLib.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ShapeViewWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SigCfg.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SignalObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SignalShape.o
@@ -165,6 +166,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesTransfer.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesUndefined.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_RandomConsist.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ShapeViewWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindowLink.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTools.o

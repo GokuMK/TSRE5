@@ -46,11 +46,11 @@ void ShapeLib::addRef(int texx) {
     //if(!mtex.containsKey(texx)) return;
     //mtex.get(texx).ref++;
 }
-int ShapeLib::addShape(QString path, QString name){
-    return addShape(path, name, Game::root+"/routes/"+Game::route+"/textures");
+int ShapeLib::addShape(QString path){
+    return addShape(path, Game::root+"/routes/"+Game::route+"/textures");
 }       
-int ShapeLib::addShape(QString path, QString name, QString texPath) {
-    QString pathid = (path + "/" + name).toLower();
+int ShapeLib::addShape(QString path, QString texPath) {
+    QString pathid = path;//(path + "/" + name).toLower();
     pathid.replace("\\", "/");
     pathid.replace("//", "/");
     //console.log(pathid);
@@ -64,7 +64,7 @@ int ShapeLib::addShape(QString path, QString name, QString texPath) {
     }
     qDebug() << "Nowy " << jestshape << " shape: " << pathid;
 
-    shape[jestshape] = new SFile(pathid, name, texPath);
+    shape[jestshape] = new SFile(pathid, path.split("/").last(), texPath);
     shape[jestshape]->pathid = pathid;
 
     return jestshape++;

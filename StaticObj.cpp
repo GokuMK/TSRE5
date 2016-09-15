@@ -35,7 +35,7 @@ StaticObj::~StaticObj() {
 }
 
 void StaticObj::load(int x, int y) {
-    this->shape = Game::currentShapeLib->addShape(resPath, fileName);
+    this->shape = Game::currentShapeLib->addShape(resPath +"/"+ fileName);
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
@@ -147,6 +147,12 @@ bool StaticObj::getBorder(float* border){
     border[4] = bound[4];
     border[5] = bound[5];
     return true;
+}
+
+QString StaticObj::getShapePath(){
+    if (!loaded) return "";
+    if (shape < 0) return "";
+    return Game::currentShapeLib->shape[shape]->pathid+"|"+Game::currentShapeLib->shape[shape]->texPath;
 }
 
 void StaticObj::save(QTextStream* out){

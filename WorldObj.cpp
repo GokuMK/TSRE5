@@ -568,3 +568,7 @@ void WorldObj::initTrItems(float *tpos){
 void WorldObj::deleteTrItems(){
     
 }
+
+QString WorldObj::getShapePath(){
+    return "";
+}

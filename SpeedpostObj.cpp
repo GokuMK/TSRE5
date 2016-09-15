@@ -47,7 +47,7 @@ SpeedpostObj::~SpeedpostObj() {
 }
 
 void SpeedpostObj::load(int x, int y) {
-    this->shape = Game::currentShapeLib->addShape(resPath, fileName);
+    this->shape = Game::currentShapeLib->addShape(resPath +"/"+ fileName);
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];

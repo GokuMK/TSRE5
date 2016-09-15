@@ -39,7 +39,7 @@ TrackObj::~TrackObj() {
 }
 
 void TrackObj::load(int x, int y) {
-    this->shape = Game::currentShapeLib->addShape(resPath, fileName);
+    this->shape = Game::currentShapeLib->addShape(resPath +"/"+ fileName);
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
@@ -236,6 +236,12 @@ void TrackObj::set(QString sh, FileBuffer* data) {
     
     WorldObj::set(sh, data);
     return;
+}
+
+QString TrackObj::getShapePath(){
+    if (!loaded) return "";
+    if (shape < 0) return "";
+    return Game::currentShapeLib->shape[shape]->pathid+"|"+Game::currentShapeLib->shape[shape]->texPath;
 }
 
 void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {

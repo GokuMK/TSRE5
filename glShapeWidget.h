@@ -54,6 +54,7 @@ public slots:
     void showEngSet(int id);
     void showCon(int id);
     void showCon(int aid, int id);
+    void showShape(QString path, QString texPath);
     void cleanup();
 signals:
     void selected(int id);
@@ -97,6 +98,7 @@ private:
     bool selection = false;
     bool getImage = false;
     float backgroundGlColor[3];
+    bool cameraInit = false;
 };
 
 #endif	/* GLSHAPEWIDGET_H */

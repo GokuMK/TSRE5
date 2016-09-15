@@ -20,6 +20,7 @@
 #include "GeoTools.h"
 #include "ActivityTools.h"
 #include "NaviBox.h"
+#include "ShapeViewWindow.h"
 #include "AboutWindow.h"
 #include "PropertiesAbstract.h"
 #include "PropertiesUndefined.h"
@@ -45,7 +46,8 @@ Window::Window() {
     geoTools = new GeoTools("GeoTools");
     activityTools = new ActivityTools("ActivityTools");
     //naviBox = new NaviBox();
-    glWidget = new GLWidget;
+    glWidget = new GLWidget(this);
+    shapeViewWindow = new ShapeViewWindow(this);
     aboutWindow = new AboutWindow();
     naviWindow = new NaviWindow();
     
@@ -181,6 +183,9 @@ Window::Window() {
     naviAction = GuiFunct::newMenuCheckAction(tr("&Navi Window"), this); 
     toolsMenu->addAction(naviAction);
     QObject::connect(naviAction, SIGNAL(triggered(bool)), this, SLOT(hideShowNaviWidget(bool)));
+    shapeViewAction = GuiFunct::newMenuCheckAction(tr("&Shape View Window"), this, false); 
+    toolsMenu->addAction(shapeViewAction);
+    QObject::connect(shapeViewAction, SIGNAL(triggered(bool)), this, SLOT(hideShowShapeViewWidget(bool)));
     toolsMenu->addSeparator();
     objectsAction = GuiFunct::newMenuCheckAction(tr("&Objects"), this); 
     objectsAction->setShortcut(QKeySequence("F1"));
@@ -240,6 +245,11 @@ Window::Window() {
     QObject::connect(naviWindow, SIGNAL(sendMsg(QString, float)), glWidget, SLOT(msg(QString, float)));
     QObject::connect(naviWindow, SIGNAL(sendMsg(QString, QString)), glWidget, SLOT(msg(QString, QString)));
     ///
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString)), shapeViewWindow, SLOT(msg(QString)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, bool)), shapeViewWindow, SLOT(msg(QString, bool)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, int)), shapeViewWindow, SLOT(msg(QString, int)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, float)), shapeViewWindow, SLOT(msg(QString, float)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), shapeViewWindow, SLOT(msg(QString, QString)));
     
     QObject::connect(glWidget, SIGNAL(naviInfo(int, int)),
                       naviWindow, SLOT(naviInfo(int, int)));
@@ -294,6 +304,7 @@ Window::Window() {
     
     QObject::connect(glWidget, SIGNAL(setToolbox(QString)),
                       this, SLOT(setToolbox(QString)));
+    
 }
 
 void Window::keyPressEvent(QKeyEvent *e) {
@@ -470,6 +481,11 @@ void Window::updateProperties(WorldObj* obj){
 void Window::hideShowPropertiesWidget(bool show){
     if(show) box2->show();
     else box2->hide();
+}
+
+void Window::hideShowShapeViewWidget(bool show){
+    if(show) shapeViewWindow->show();
+    else shapeViewWindow->hide();
 }
 
 void Window::hideShowNaviWidget(bool show){

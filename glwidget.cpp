@@ -789,6 +789,8 @@ void GLWidget::setPaintBrush(Brush* brush){
 void GLWidget::setSelectedObj(WorldObj* o){
     this->selectedObj = o;
     emit showProperties(selectedObj);
+    if(o != NULL)
+        emit sendMsg("showShape", o->getShapePath());
 }
 
 void GLWidget::editCopy(){

@@ -23,6 +23,7 @@ class ActivityTools;
 class NaviBox;
 class AboutWindow;
 class NaviWindow;
+class ShapeViewWindow;
 class PropertiesAbstract;
 class WorldObj;
 class PreciseTileCoordinate;
@@ -45,6 +46,7 @@ public slots:
     void hideShowToolWidget(bool show);
     void hideShowPropertiesWidget(bool show);
     void hideShowNaviWidget(bool);
+    void hideShowShapeViewWidget(bool);
     void viewWorldGrid(bool show);
     void viewTileGrid(bool show);
     void viewTerrainGrid(bool show);
@@ -96,6 +98,7 @@ private:
     QAction *aboutAction;
     QAction *propertiesAction;
     QAction *naviAction;
+    QAction *shapeViewAction;
     QAction *toolsAction;
     QAction *objectsAction;
     QAction *terrainAction;
@@ -106,6 +109,7 @@ private:
     
     AboutWindow* aboutWindow;
     NaviWindow* naviWindow;
+    ShapeViewWindow* shapeViewWindow;
 };
 //! [0]
 

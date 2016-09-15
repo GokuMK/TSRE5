@@ -41,6 +41,7 @@ public:
     void disableSubObj(int i);
     void flip(bool flipShape);
     void linkSignal(int subsigId, int from, int to);
+    QString getShapePath();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     unsigned int signalSubObj;

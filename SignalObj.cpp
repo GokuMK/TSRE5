@@ -43,7 +43,7 @@ SignalObj::~SignalObj() {
 }
 
 void SignalObj::load(int x, int y) {
-    this->shape = Game::currentShapeLib->addShape(resPath, fileName);
+    this->shape = Game::currentShapeLib->addShape(resPath +"/"+ fileName);
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
@@ -265,6 +265,12 @@ void SignalObj::flip(bool flipShape){
     this->modified = true; 
     delete[] drawPositions;
     drawPositions = NULL;
+}
+
+QString SignalObj::getShapePath(){
+    if (!loaded) return "";
+    if (shape < 0) return "";
+    return Game::currentShapeLib->shape[shape]->pathid+"|"+Game::currentShapeLib->shape[shape]->texPath;
 }
 
 void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {

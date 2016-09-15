@@ -478,7 +478,7 @@ void Eng::render(int aktwx, int aktwz, int selectionColor) {
     long long int shapeLibId = reinterpret_cast<long long int>(Game::currentShapeLib);
     if(!shape.id.keys().contains(shapeLibId)){
         if(shape.name.length() > 1)
-            shape.id[shapeLibId] = Game::currentShapeLib->addShape(path, shape.name, path);
+            shape.id[shapeLibId] = Game::currentShapeLib->addShape(path +"/"+ shape.name, path);
         else 
             shape.id[shapeLibId] = -1;
     }
@@ -486,7 +486,7 @@ void Eng::render(int aktwx, int aktwz, int selectionColor) {
     for(int i = 0; i < freightanimShape.size(); i++){
         if(!freightanimShape[i].id.keys().contains(shapeLibId)){
             if(freightanimShape[i].name.length() > 1)
-                freightanimShape[i].id[shapeLibId] = Game::currentShapeLib->addShape(path, freightanimShape[i].name, path);
+                freightanimShape[i].id[shapeLibId] = Game::currentShapeLib->addShape(path +"/"+ freightanimShape[i].name, path);
             else 
                 freightanimShape[i].id[shapeLibId] = -1;
         }

@@ -42,11 +42,11 @@ SFile::SFile(const SFile& orig) {
 SFile::~SFile() {
 }
 
-void SFile::Load(QString path) {
+void SFile::Load() {
     
-    QFile *file = new QFile(path);
+    QFile *file = new QFile(pathid);
     if (!file->open(QIODevice::ReadOnly)){
-        qDebug() << "S Shape: not exist "<<path;
+        qDebug() << "S Shape: not exist "<<pathid;
         return;
     }
     FileBuffer* bufor = ReadFile::read(file);
@@ -200,7 +200,7 @@ void SFile::render() {
         
         Game::allowObjLag-=2;
         loaded = 2;
-        Load(pathid);
+        Load();
         return;
     }
 

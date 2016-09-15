@@ -31,6 +31,7 @@ public:
     void rotate(float x, float y, float z);
     Ref::RefItem* getRefInfo();
     void save(QTextStream* out);
+    QString getShapePath();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     int sectionIdx;
 private:

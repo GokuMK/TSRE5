@@ -16,8 +16,8 @@ public:
     void reset();
     void delRef(int texx);
     void addRef(int texx);
-    int addShape(QString path, QString name);
-    int addShape(QString path, QString name, QString texPath);
+    int addShape(QString path);
+    int addShape(QString path, QString texPath);
 private:
 
 };

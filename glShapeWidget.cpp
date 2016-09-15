@@ -37,6 +37,7 @@ m_xRot(0),
 m_yRot(0),
 m_zRot(0) {
     backgroundGlColor[0] = -2;
+    currentShapeLib = new ShapeLib();
 }
 
 GlShapeWidget::~GlShapeWidget() {
@@ -82,7 +83,6 @@ void GlShapeWidget::setCamera(Camera* cam){
 }
 
 void GlShapeWidget::initializeGL() {
-    currentShapeLib = new ShapeLib();
     Game::currentShapeLib = currentShapeLib;
     /*if(currentEngLib == NULL){
          currentEngLib = new EngLib();
@@ -154,7 +154,7 @@ void GlShapeWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glClearColor(backgroundGlColor[0], backgroundGlColor[1], backgroundGlColor[2], 1);
-
+    
     float aspect = float(this->width()) / float(this->height());
     Mat4::perspective(gluu->pMatrix, camera->fov*M_PI/180*(1/aspect), aspect, 0.2f, Game::objectLod);
     float* lookAt = camera->getMatrix();
@@ -171,7 +171,8 @@ void GlShapeWidget::paintGL() {
         Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, rotZ, 0,0,1);
     }
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-
+    gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
+    
     if(renderItem == 2 && eng != NULL){
         eng->render((int)selection*65536);
     }
@@ -182,6 +183,25 @@ void GlShapeWidget::paintGL() {
         Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI, 0,1,0);
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0, -con->conLength/2);
         con->render((int)selection*65536);
+    }
+    if(renderItem == 4 && sFile != NULL){
+        GLUU *gluu = GLUU::get();
+        gluu->enableTextures();
+        sFile->render();
+        if(cameraInit){
+            cameraInit = false;
+            float max = 0;
+            if(fabs(sFile->bound[0]-sFile->bound[1]) > max)
+                max = fabs(sFile->bound[0]-sFile->bound[1]);
+            if(fabs(sFile->bound[2]-sFile->bound[3]) > max)
+                max = fabs(sFile->bound[2]-sFile->bound[3]);
+            if(fabs(sFile->bound[4]-sFile->bound[5]) > max)
+                max = fabs(sFile->bound[4]-sFile->bound[5]);
+            qDebug() << fabs(sFile->bound[0]-sFile->bound[1]);
+            qDebug() << fabs(sFile->bound[2]-sFile->bound[3]);
+            qDebug() << fabs(sFile->bound[4]-sFile->bound[5]);
+            camera->setPos(-max*1.5,fabs(sFile->bound[2]-sFile->bound[3])/2.0,0.0);
+        }
     }
 
     if (selection) {
@@ -343,6 +363,7 @@ void GlShapeWidget::showCon(int id){
     if(id < 0){
         con = NULL;
         eng = NULL;
+        sFile = NULL;
         renderItem = 3;
         return;
     }
@@ -358,6 +379,19 @@ void GlShapeWidget::showCon(int aid, int id){
     con = ActLib::act[aid]->activityObjects[id].con;
     con->setTextColor(backgroundGlColor);
     renderItem = 3;
+}
+
+void GlShapeWidget::showShape(QString path, QString texPath){
+    int shapeId = currentShapeLib->addShape(path, texPath);
+    if(shapeId < 0)
+        sFile = NULL;
+    else {
+        sFile = currentShapeLib->shape[shapeId];
+        cameraInit = true;
+    }
+    renderItem = 4;
+    con = NULL;
+    eng = NULL;
 }
 
 void GlShapeWidget::setMode(QString n){

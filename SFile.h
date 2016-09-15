@@ -123,7 +123,7 @@ public:
     float size;
     float bound[6];
     
-    void Load(QString path);
+    void Load();
     void render();
     float* getPmatrix(float* pmatrix, int matrix);
     void getSize();

@@ -83,7 +83,6 @@ signals:
     void sendMsg(QString name, int val);
     void sendMsg(QString name, float val);
     void sendMsg(QString name, QString val);
-    
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;

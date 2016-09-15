@@ -44,7 +44,6 @@ int main(int argc, char *argv[]){
     //loc.setNumberOptions(lepsze.numberOptions());
     QLocale::setDefault(lepsze);
     
-    QApplication app(argc, argv);
     QSurfaceFormat format;
     //format.setVersion(3, 2);
     //format.setProfile(QSurfaceFormat::CoreProfile);
@@ -54,6 +53,10 @@ int main(int argc, char *argv[]){
     //format.set
     format.setSwapInterval(0);
     QSurfaceFormat::setDefaultFormat(format);
+    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
+    
+    QApplication app(argc, argv);
+
     Game::load();
     
     if(!Game::systemTheme){
