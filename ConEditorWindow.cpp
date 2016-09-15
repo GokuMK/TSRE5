@@ -647,9 +647,11 @@ void ConEditorWindow::engSetAddSelected(){
     int cid = engSetsList.currentIndex();
     if(cid > engSets.size()) return;
     cid = engSets[cid];
+    if(currentCon == ConLib::con[cid])
+        return;
     
     for(int i = 0; i < ConLib::con[cid]->engItems.size(); i++)
-        currentCon->appendEngItem(ConLib::con[cid]->engItems[i].eng, 2);
+        currentCon->appendEngItem(ConLib::con[cid]->engItems[i].eng, 2, ConLib::con[cid]->engItems[i].flip);
     refreshCurrentCon();
     conSlider->setValue(currentCon->engItems.size()-2);
 }

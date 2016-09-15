@@ -288,7 +288,7 @@ void Consist::deteleSelected(){
     modified = true;
 }
 
-void Consist::appendEngItem(int id, int pos){
+void Consist::appendEngItem(int id, int pos, bool flip){
     Eng * eng = Game::currentEngLib->eng[id];
     if(eng == NULL) return;
     std::vector<int>::iterator it;
@@ -319,7 +319,7 @@ void Consist::appendEngItem(int id, int pos){
     newE->ename = eng->name.split(".")[0];
     newE->epath = eng->path.split("/").last();
     newE->uid = this->nextWagonUID++;
-    newE->flip = false;
+    newE->flip = flip;
 
     initPos();
     modified = true;
