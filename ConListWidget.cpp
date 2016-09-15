@@ -222,6 +222,17 @@ void ConListWidget::fillConList(QString n){
     items.sortItems(Qt::AscendingOrder);
 }
 
+void ConListWidget::updateCurrentCon(){
+    if(conShow.currentIndex() > 0)
+        return;
+    Consist * e;
+    int cid = items.currentItem()->type();
+    e = ConLib::con[cid];
+    if(e == NULL) return;
+    if(e->showName.length() > 0)
+        items.currentItem()->setText(e->showName);
+}
+
 void ConListWidget::deleteCurrentCon(){
     if(conShow.currentIndex() > 0)
         return;

@@ -35,6 +35,7 @@ public:
     int getCurrentActivityId();
     void getEngSets(Eng *e, QVector<int>& sets);
     void deleteCurrentCon();
+    void updateCurrentCon();
     //EngLib* englib;
     
 public slots:

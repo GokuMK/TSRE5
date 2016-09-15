@@ -142,7 +142,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QPushButton *engSetAddButton = new QPushButton("Add to Consist");
     engSetAddButton->setFixedWidth(120);
     QPushButton *engSetAddFlipButton = new QPushButton("Flip and add to Consist");
-    engSetAddFlipButton->setFixedWidth(120);
+    engSetAddFlipButton->setFixedWidth(130);
     engSetsList.setFixedWidth(250);
     engSetsWidgetForm->addWidget(engSetsLabel,0,0);
     engSetsWidgetForm->addWidget(&engSetsList,0,1);
@@ -528,12 +528,16 @@ void ConEditorWindow::cFileNameSelected(QString n){
         return;
     }
     currentCon->conName = n;
+    if(currentCon->displayName == "")
+        currentCon->showName = n;
     currentCon->name = n+".con";
+    con1->updateCurrentCon();
 }
 
 void ConEditorWindow::cDisplayNameSelected(QString n){
     if(currentCon == NULL) return;
     currentCon->setDisplayName(n);
+    con1->updateCurrentCon();
 }
 
 void ConEditorWindow::cReverseSelected(){
@@ -691,7 +695,7 @@ void ConEditorWindow::cSaveAsEngSetSelected(){
         msgBox.exec();
         return;
     }
-    QString fileName = currentCon->name.split("#").last();
+    QString fileName = currentCon->name.split("#").last().split(".con").first();
     QString engName = currentCon->getFirstEngName();
     
     if(fileName == "")
@@ -700,6 +704,7 @@ void ConEditorWindow::cSaveAsEngSetSelected(){
         fileName = engName + "#" + fileName;
     
     currentCon->conName = fileName;
+    currentCon->showName = fileName;
     cFileName.setText(currentCon->conName);
     currentCon->name = fileName+".con";
     
@@ -717,6 +722,7 @@ void ConEditorWindow::cSaveAsEngSetSelected(){
             return;
     }
     currentCon->save();
+    con1->updateCurrentCon();
 }
 
 void ConEditorWindow::sLoadEngSetsByDefaultSelected(bool show){
