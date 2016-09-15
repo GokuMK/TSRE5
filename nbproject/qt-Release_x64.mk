@@ -41491,7 +41491,35 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ref.o: Ref.cpp Ref.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtimezone.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qversionnumber.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qxmlstream.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h \
+		WorldObj.h \
+		GLUU.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLFunctions \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopengl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qt_windows.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopengles2ext.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglext.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglcontext.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QSurfaceFormat \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qsurfaceformat.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglversionfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLVertexArrayObject \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglvertexarrayobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLBuffer \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglbuffer.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QMatrix4x4 \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qmatrix4x4.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector3d.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector4d.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qquaternion.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qgenericmatrix.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLShaderProgram \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglshaderprogram.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector2d.h \
+		Vector4f.h \
+		Vector3f.h \
+		OglObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ref.o Ref.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Route.o: Route.cpp c:/OT/Static/5.7.0_x64/include/QtCore/QFile \

@@ -58,8 +58,10 @@ void ShapeViewWindow::msg(QString text, QString val){
         qDebug() << val;
         if(!this->isVisible()) return;
         QStringList values = val.split("|");
-        if(values.length() < 2) return;
-        glShapeWidget->showShape((QString)values[0], (QString)values[1]);
+        if(values.length() == 1)
+            glShapeWidget->showShape((QString)values[0], "");
+        if(values.length() == 2)
+            glShapeWidget->showShape((QString)values[0], (QString)values[1]);
         return;
     }
 }

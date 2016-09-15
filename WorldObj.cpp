@@ -218,6 +218,25 @@ WorldObj* WorldObj::createObj(QString sh) {
     return nowy;
 }
 
+QString WorldObj::getResPath(Ref::RefItem* sh) {
+    if (sh->type == "static") {
+        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->filename;
+    } else if (sh->type == "signal") {
+        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->filename;
+    } else if (sh->type == "speedpost") {
+        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->filename;
+    } else if (sh->type == "trackobj") {
+        return Game::root + "/global/shapes/"+sh->filename;
+    } else if (sh->type == "gantry") {
+        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->filename;
+    } else if (sh->type == "collideobject") {
+        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->filename;
+    } else {
+        return "";
+    }
+    return "";
+}
+
 WorldObj::WorldObj() {
     this->shape = -1;
     this->loaded = false;

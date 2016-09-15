@@ -850,6 +850,12 @@ void GLWidget::msg(QString text){
         ttWindow.exec();
         return;
     }
+    if(text == "engItemSelected"){
+        //QString pathid = ;
+        //QString name = pathid.split("/").last();
+        //QString texpath = pathid.left(pathid.length() - name.length());
+        emit sendMsg("showShape", route->ref->selected->getShapePath());
+    }
 }
 
 void GLWidget::msg(QString text, bool val){

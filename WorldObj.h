@@ -44,6 +44,7 @@ public:
     
     static WorldObj* createObj(int sh);
     static WorldObj* createObj(QString sh);
+    static QString getResPath(Ref::RefItem* sh);
     static int isTrackObj(QString sh);
     
     unsigned int UiD = 0;

@@ -13,6 +13,7 @@
 #include "Game.h"
 #include "ParserX.h"
 #include "ReadFile.h"
+#include "WorldObj.h"
 
 Ref::Ref(QString path) {
     loaded = false;
@@ -94,3 +95,6 @@ Ref::Ref() {
 Ref::~Ref() {
 }
 
+QString Ref::RefItem::getShapePath() {
+    return WorldObj::getResPath(this);
+}

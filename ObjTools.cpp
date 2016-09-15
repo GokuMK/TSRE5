@@ -294,6 +294,7 @@ void ObjTools::refListSelected(QListWidgetItem * item){
     //refList.addItem(
     try{
         route->ref->selected = &route->ref->refItems[refClass.currentText().toStdString()][refList.currentRow()];
+        emit sendMsg("engItemSelected");
         itemSelected((Ref::RefItem*)route->ref->selected);
     } catch(const std::out_of_range& oor){
         route->ref->selected = NULL;
@@ -315,6 +316,7 @@ void ObjTools::trackListSelected(QListWidgetItem * item){
     itemRef->value = item->type();
     try{
         route->ref->selected = itemRef;
+        emit sendMsg("engItemSelected");
         itemSelected((Ref::RefItem*)route->ref->selected);
     } catch(const std::out_of_range& oor){
         route->ref->selected = NULL;

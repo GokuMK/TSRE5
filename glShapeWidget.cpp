@@ -382,7 +382,11 @@ void GlShapeWidget::showCon(int aid, int id){
 }
 
 void GlShapeWidget::showShape(QString path, QString texPath){
-    int shapeId = currentShapeLib->addShape(path, texPath);
+    int shapeId;
+    if(texPath.length() > 0)
+        shapeId = currentShapeLib->addShape(path, texPath);
+    else
+        shapeId = currentShapeLib->addShape(path);
     if(shapeId < 0)
         sFile = NULL;
     else {
