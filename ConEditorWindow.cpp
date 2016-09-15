@@ -142,7 +142,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QPushButton *engSetAddButton = new QPushButton("Add to Consist");
     engSetAddButton->setFixedWidth(120);
     QPushButton *engSetAddFlipButton = new QPushButton("Flip and add to Consist");
-    engSetAddFlipButton->setFixedWidth(130);
+    engSetAddFlipButton->setFixedWidth(135);
     engSetsList.setFixedWidth(250);
     engSetsWidgetForm->addWidget(engSetsLabel,0,0);
     engSetsWidgetForm->addWidget(&engSetsList,0,1);
