@@ -56,7 +56,7 @@ void PaintTexLib::run() {
     p.setRenderHint(QPainter::RenderHint::Antialiasing, false);
     QPen niebieski(color);
     p.setPen(niebieski); 
-    p.setFont(QFont("Arial", 25));
+    p.setFont(QFont("Arial", 24));
     p.drawText(QRect(0,0,w,h), Qt::AlignCenter, val);
     p.end();
     texture->loaded = true;
