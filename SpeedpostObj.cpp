@@ -481,6 +481,10 @@ bool SpeedpostObj::getBorder(float* border){
     return true;
 }
 
+int SpeedpostObj::getDefaultDetailLevel(){
+    return -3;
+}
+
 void SpeedpostObj::save(QTextStream* out){
     if (!loaded) return;
 *(out) << "	Speedpost (\n";

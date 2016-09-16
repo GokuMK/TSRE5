@@ -320,6 +320,10 @@ int TransferObj::getTexId(){
     return this->shape.getTexId();
 }
 
+int TransferObj::getDefaultDetailLevel(){
+    return -1;
+}
+
 void TransferObj::save(QTextStream* out){
     if (!loaded) return;
 

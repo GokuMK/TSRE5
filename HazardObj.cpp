@@ -238,6 +238,10 @@ bool HazardObj::getBorder(float* border){
     return true;
 }
 
+int HazardObj::getDefaultDetailLevel(){
+    return -10;
+}
+
 void HazardObj::save(QTextStream* out){
     if (!loaded) return;
 

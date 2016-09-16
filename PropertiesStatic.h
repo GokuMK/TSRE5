@@ -36,6 +36,7 @@ private:
     StaticObj *staticObj;
     QCheckBox checkboxAnim;
     QCheckBox checkboxTerrain;
+    QCheckBox enableCustomDetailLevel;
 };
 
 #endif	/* PROPERTIESSTATIC_H */

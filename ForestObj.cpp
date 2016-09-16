@@ -362,6 +362,10 @@ void ForestObj::drawShape(){
     shape.render();
 }
 
+int ForestObj::getDefaultDetailLevel(){
+    return -11;
+}
+
 void ForestObj::save(QTextStream* out){
     if (!loaded) return;
     

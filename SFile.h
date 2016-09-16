@@ -21,19 +21,6 @@
 
 class SFile {
 public:
-    SFile();
-    SFile(QString pathid, QString name, QString texp );
-    SFile(const SFile& orig);
-    virtual ~SFile();
-    
-    QString pathid;
-    QString sciezka;
-    QString nazwa;
-    QString texPath;
-    int isinit = 0;
-    int loaded = 0;
-    int texloaded = 0;
-    int ref = 0;
 
     struct fshader {
         QString name;
@@ -102,6 +89,36 @@ public:
     struct VBO {
         int w[];
     };
+    
+    struct EsdBoundingBox {
+        float shape[6];
+        float rotation[3];
+        float translation[3];
+        
+        EsdBoundingBox(){
+            rotation[0] = 0;
+            rotation[1] = 0;
+            rotation[2] = 0;
+            translation[0] = 0;
+            translation[1] = 0;
+            translation[2] = 0;
+        }
+    };
+    
+    QString pathid;
+    QString sciezka;
+    QString nazwa;
+    QString texPath;
+    QString sdName;
+    int isinit = 0;
+    int loaded = 0;
+    bool loadedSd = false;
+    int texloaded = 0;
+    int ref = 0;
+    int esdDetailLevel = -1;
+    int esdAlternativeTexture = -1;
+    QVector<EsdBoundingBox> esdBoundingBox;
+    
     VBO vbo[];
     punlist tpoints;
     // zmienne
@@ -123,12 +140,16 @@ public:
     float size;
     float bound[6];
     
-    void Load();
+    SFile();
+    SFile(QString pathid, QString name, QString texp );
+    SFile(const SFile& orig);
+    virtual ~SFile();
+    void load();
     void render();
-    float* getPmatrix(float* pmatrix, int matrix);
     void getSize();
 private:
-
+    void loadSd();
+    float* getPmatrix(float* pmatrix, int matrix);
 };
 
 #endif	/* SFILE_H */

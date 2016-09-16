@@ -407,6 +407,10 @@ bool SignalObj::getBorder(float* border){
     return true;
 }
 
+int SignalObj::getDefaultDetailLevel(){
+    return -6;
+}
+
 void SignalObj::save(QTextStream* out){
     if (!loaded) return;
     

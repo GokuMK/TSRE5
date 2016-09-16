@@ -44,6 +44,7 @@ public:
     void translate(float px, float py, float pz);
     void rotate(float x, float y, float z);
     void resize(float x, float y, float z);
+    int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     void drawShape();

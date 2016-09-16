@@ -36,6 +36,7 @@ StaticObj::~StaticObj() {
 
 void StaticObj::load(int x, int y) {
     this->shape = Game::currentShapeLib->addShape(resPath +"/"+ fileName);
+    this->shapePointer = Game::currentShapeLib->shape[this->shape];
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
@@ -136,10 +137,10 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
 };
 
 bool StaticObj::getBorder(float* border){
-    if (shape < 0) return false;
-    if (!Game::currentShapeLib->shape[shape]->loaded)
+    if (shapePointer == 0) return false;
+    if (!shapePointer->loaded)
         return false;
-    float* bound = Game::currentShapeLib->shape[shape]->bound;
+    float* bound = shapePointer->bound;
     border[0] = bound[0];
     border[1] = bound[1];
     border[2] = bound[2];
@@ -151,8 +152,16 @@ bool StaticObj::getBorder(float* border){
 
 QString StaticObj::getShapePath(){
     if (!loaded) return "";
-    if (shape < 0) return "";
-    return Game::currentShapeLib->shape[shape]->pathid+"|"+Game::currentShapeLib->shape[shape]->texPath;
+    if (shapePointer == 0) return "";
+    return shapePointer->pathid+"|"+shapePointer->texPath;
+}
+
+int StaticObj::getDefaultDetailLevel(){
+    if (!loaded) return 0;
+    if (shapePointer == 0) return 0;
+    int esdDLevel = shapePointer->esdDetailLevel;
+    if(esdDLevel >= 0) return esdDLevel;
+    return 0;
 }
 
 void StaticObj::save(QTextStream* out){

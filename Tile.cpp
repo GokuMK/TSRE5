@@ -453,9 +453,33 @@ void Tile::save() {
         }
         out << "	)\n";
     }*/
-    for(int i = 0; i < this->jestObiektow; i++){
-        if(this->obiekty[i]->isSoundItem()) continue;
-            this->obiekty[i]->save(&out);
+    if(!Game::sortTileObjects){
+        for(int i = 0; i < this->jestObiektow; i++){
+            if(this->obiekty[i]->isSoundItem()) continue;
+                this->obiekty[i]->save(&out);
+        }
+    } else {
+        int count = 0;
+        for(int iLevel = -15; iLevel < 11; iLevel++){
+            // get current level count;
+            count = 0;
+            if( iLevel > 0 ){
+                for(int i = 0; i < this->jestObiektow; i++){
+                    if(this->obiekty[i]->isSoundItem()) continue;
+                    if(this->obiekty[i]->getCurrentDetailLevel() == iLevel)
+                        count++;
+                }
+                if( count > 0 ){
+                    out << "	Tr_Watermark ( "<<iLevel<<" )\n";
+                }
+            }
+            // save current level objects;
+            for(int i = 0; i < this->jestObiektow; i++){
+                if(this->obiekty[i]->isSoundItem()) continue;
+                if(this->obiekty[i]->getCurrentDetailLevel() == iLevel)
+                    this->obiekty[i]->save(&out);
+            }
+        }
     }
     out << ")";
  

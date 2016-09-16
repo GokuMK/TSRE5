@@ -111,6 +111,10 @@ void SoundSourceObj::render(GLUU* gluu, float lod, float posx, float posz, float
     pointer3d->render(selectionColor);
 };
 
+int SoundSourceObj::getDefaultDetailLevel(){
+    return -4;
+}
+
 void SoundSourceObj::save(QTextStream* out){
     if (!loaded) return;
     

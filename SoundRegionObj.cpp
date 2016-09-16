@@ -255,6 +255,10 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
     gluu->mvPopMatrix();
 };
 
+int SoundRegionObj::getDefaultDetailLevel(){
+    return -5;
+}
+
 void SoundRegionObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;

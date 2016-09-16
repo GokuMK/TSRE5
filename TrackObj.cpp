@@ -316,6 +316,10 @@ Ref::RefItem* TrackObj::getRefInfo(){
     return r;
 }
 
+int TrackObj::getDefaultDetailLevel(){
+    return -2;
+}
+
 void TrackObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;

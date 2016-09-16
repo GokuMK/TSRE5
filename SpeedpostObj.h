@@ -41,6 +41,7 @@ public:
     void setSpeed(float val);
     void setNumber(float val);
     void flip(bool flipShape);
+    int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     int speedPostId = -1;

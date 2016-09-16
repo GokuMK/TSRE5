@@ -52,6 +52,7 @@ public:
     void setCarNumber(int val);
     void setCarSpeed(int val);
     void deleteTrItems();
+    int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 
 private:

@@ -591,3 +591,30 @@ void WorldObj::deleteTrItems(){
 QString WorldObj::getShapePath(){
     return "";
 }
+
+int WorldObj::getDefaultDetailLevel(){
+    return 0;
+}
+
+int WorldObj::getCustomDetailLevel(){
+    return staticDetailLevel;
+}
+
+int WorldObj::getCurrentDetailLevel(){
+    if(staticDetailLevel >= 10)
+        return 10;
+    if(staticDetailLevel >= 0)
+        return staticDetailLevel;
+    else
+        return getDefaultDetailLevel();
+}
+
+void WorldObj::setCustomDetailLevel(int val){
+    staticDetailLevel = val;
+}
+
+bool WorldObj::customDetailLevelEnabled(){
+    if(staticDetailLevel >= 0) return true;
+    return false;
+}
+

@@ -962,6 +962,10 @@ bool DynTrackObj::getBorder(float* border){
     return true;
 }
 
+int DynTrackObj::getDefaultDetailLevel(){
+    return -12;
+}
+
 void DynTrackObj::save(QTextStream* out){
     if (!loaded) return;
     

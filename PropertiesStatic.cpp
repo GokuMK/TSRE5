@@ -79,7 +79,21 @@ PropertiesStatic::PropertiesStatic(){
     vbox->addWidget(pasteQrot);
     vbox->addWidget(resetQrot);
     vbox->addWidget(qRot90);
-    QLabel * label4 = new QLabel("Flags:");
+    
+    QLabel * label4 = new QLabel("Detail Level:");
+    label4->setStyleSheet("QLabel { color : #999999; }");
+    label4->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label4);
+    this->defaultDetailLevel.setDisabled(true);
+    this->defaultDetailLevel.setAlignment(Qt::AlignCenter);
+    vbox->addWidget(&this->defaultDetailLevel);
+    this->enableCustomDetailLevel.setText("Custom");
+    vbox->addWidget(&enableCustomDetailLevel);
+    this->customDetailLevel.setDisabled(true);
+    this->customDetailLevel.setAlignment(Qt::AlignCenter);
+    vbox->addWidget(&this->customDetailLevel);
+    
+    label4 = new QLabel("Flags:");
     label4->setStyleSheet("QLabel { color : #999999; }");
     label4->setContentsMargins(3,0,0,0);
     vbox->addWidget(label4);
@@ -126,6 +140,16 @@ void PropertiesStatic::showObj(WorldObj* obj){
             QString::number(obj->qDirection[3], 'G', 4)
             );
     
+    defaultDetailLevel.setText(QString::number(obj->getDefaultDetailLevel()));
+    if(obj->customDetailLevelEnabled()){
+        enableCustomDetailLevel.setChecked(true);
+        customDetailLevel.setText(QString::number(obj->getCustomDetailLevel()));
+        customDetailLevel.setEnabled(true);
+    } else {
+        enableCustomDetailLevel.setChecked(false);
+        customDetailLevel.setText("");
+        customDetailLevel.setEnabled(false);
+    }
     
     this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
 }

@@ -17,6 +17,8 @@
 #include "OglObj.h"
 #include "Ref.h"
 
+class SFile;
+
 class WorldObj {
 public:
     enum TypeID {
@@ -63,6 +65,7 @@ public:
     int x;
     int y;
     int shape = -1;
+    SFile* shapePointer = NULL;
     bool loaded;
     float size;
     int jestPQ = 0;
@@ -104,6 +107,11 @@ public:
     virtual bool isSelected();
     virtual bool getBorder(float* border);
     virtual void deleteTrItems();
+    virtual int getDefaultDetailLevel();
+    virtual int getCustomDetailLevel();
+    virtual int getCurrentDetailLevel();
+    virtual void setCustomDetailLevel(int val);
+    virtual bool customDetailLevelEnabled();
     virtual QString getShapePath();
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 protected:

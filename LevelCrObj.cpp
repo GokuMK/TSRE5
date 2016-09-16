@@ -347,6 +347,10 @@ bool LevelCrObj::getBorder(float* border){
     return true;
 }
 
+int LevelCrObj::getDefaultDetailLevel(){
+    return -9;
+}
+
 void LevelCrObj::save(QTextStream* out){
     if (!loaded) return;
 

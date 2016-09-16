@@ -57,6 +57,11 @@ void TrWatermarkObj::render(GLUU* gluu, float lod, float posx, float posz, float
     return;
 };
 
+int TrWatermarkObj::getDefaultDetailLevel(){
+    // object is deprecated when sorting is enabled
+    return -99;
+}
+
 void TrWatermarkObj::save(QTextStream* out){
     if (!loaded) return;
     if (Game::deleteTrWatermarks) return;

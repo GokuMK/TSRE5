@@ -84,6 +84,7 @@ public:
     static bool consoleOutput;
     static int fpsLimit;
     static bool ortsEngEnable;
+    static bool sortTileObjects;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

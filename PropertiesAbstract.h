@@ -35,6 +35,8 @@ protected:
     QLineEdit tX;
     QLineEdit tY;
     QLineEdit uid;
+    QLineEdit defaultDetailLevel;
+    QLineEdit customDetailLevel;
 private:
 
 };

@@ -65,6 +65,7 @@ int Game::newRouteZ = 15000;
 bool Game::consoleOutput = true;
 int Game::fpsLimit = 0;
 bool Game::ortsEngEnable = true;
+bool Game::sortTileObjects = true;
 
 QString Game::geoPath = "hgst";
 
@@ -199,6 +200,12 @@ void Game::load() {
                 ortsEngEnable = true;
             else
                 ortsEngEnable = false;
+        
+        if(val == "sortTileObjects")
+            if(args[1].trimmed().toLower() == "true")
+                sortTileObjects = true;
+            else
+                sortTileObjects = false;
         
     }
 }

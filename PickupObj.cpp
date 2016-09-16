@@ -308,6 +308,10 @@ float PickupObj::getPickupContent(){
     return 0;
 }
 
+int PickupObj::getDefaultDetailLevel(){
+    return -8;
+}
+
 void PickupObj::save(QTextStream* out){
     if (!loaded) return;
 

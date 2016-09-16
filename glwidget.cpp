@@ -61,7 +61,7 @@ void GLWidget::cleanup() {
 }
 
 void GLWidget::timerEvent(QTimerEvent * event) {
-
+    Game::currentShapeLib = currentShapeLib;
     timeNow = QDateTime::currentMSecsSinceEpoch();
     if (timeNow - lastTime < 1)
         fps = 1;
@@ -320,6 +320,7 @@ void GLWidget::resizeGL(int w, int h) {
 }
 
 void GLWidget::keyPressEvent(QKeyEvent * event) {
+    Game::currentShapeLib = currentShapeLib;
     if(!route->loaded) return;
     camera->keyDown(event);
     
@@ -546,6 +547,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
 }
 
 void GLWidget::keyReleaseEvent(QKeyEvent * event) {
+    Game::currentShapeLib = currentShapeLib;
     if(!route->loaded) return;
     camera->keyUp(event);
     if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
@@ -561,6 +563,7 @@ void GLWidget::keyReleaseEvent(QKeyEvent * event) {
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event) {
+    Game::currentShapeLib = currentShapeLib;
     if(!route->loaded) return;
     m_lastPos = event->pos();
     
@@ -684,6 +687,7 @@ void GLWidget::wheelEvent(QWheelEvent *event)
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent* event) {
+    Game::currentShapeLib = currentShapeLib;
     if(!route->loaded) return;
     camera->MouseUp(event);
     if((event->button()) == Qt::RightButton){
@@ -695,6 +699,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent* event) {
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event) {
+    Game::currentShapeLib = currentShapeLib;
     if(!route->loaded) return;
     /*int dx = event->x() - m_lastPos.x();
     int dy = event->y() - m_lastPos.y();

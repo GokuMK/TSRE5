@@ -42,7 +42,7 @@ SFile::SFile(const SFile& orig) {
 SFile::~SFile() {
 }
 
-void SFile::Load() {
+void SFile::load() {
     
     QFile *file = new QFile(pathid);
     if (!file->open(QIODevice::ReadOnly)){
@@ -165,7 +165,78 @@ void SFile::Load() {
         else shader[i].alpha = 0;
     }
     file->close();
+    loadSd();
     return;
+}
+
+void SFile::loadSd() {
+    QFile file(pathid+"d");
+    if (!file.open(QIODevice::ReadOnly)){
+        qDebug() << "Sd Shape: not exist "<<pathid+"d";
+        return;
+    }
+    FileBuffer* data = ReadFile::read(&file);
+    file.close();
+    data->toUtf16();
+    data->skipBOM();
+    QString sh;
+    
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        //qDebug() << sh;
+        if (sh == ("simisa@@@@@@@@@@jinx0t1t______")) {
+            continue;
+        }
+        if (sh == ("shape")) {
+            sdName = ParserX::GetString(data).trimmed();
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                if (sh == ("esd_detail_level")) {
+                    esdDetailLevel = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("esd_alternative_texture")) {
+                    esdAlternativeTexture = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("esd_bounding_box")) {
+                    esdBoundingBox << EsdBoundingBox();
+                    for(int i = 0; i < 6; i++){
+                        esdBoundingBox.back().shape[i] = ParserX::GetNumber(data);
+                    }
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("esd_complex")) {
+                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                        if (sh == ("esd_complex_box")) {
+                            esdBoundingBox << EsdBoundingBox();
+                            for(int i = 0; i < 3; i++){
+                                esdBoundingBox.back().rotation[i] = ParserX::GetNumber(data);
+                            }
+                            for(int i = 0; i < 3; i++){
+                                esdBoundingBox.back().translation[i] = ParserX::GetNumber(data);
+                            }
+                            for(int i = 0; i < 6; i++){
+                                esdBoundingBox.back().shape[i] = ParserX::GetNumber(data);
+                            }
+                            ParserX::SkipToken(data);
+                            continue;
+                        }
+                        ParserX::SkipToken(data);
+                    }
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                ParserX::SkipToken(data);
+            }
+            ParserX::SkipToken(data);
+            continue;
+        }
+    }
+    
+    loadedSd = true;
+    delete data;
 }
 
 void SFile::getSize() {
@@ -200,7 +271,7 @@ void SFile::render() {
         
         Game::allowObjLag-=2;
         loaded = 2;
-        Load();
+        load();
         return;
     }
 

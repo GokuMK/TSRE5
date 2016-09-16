@@ -596,6 +596,10 @@ void PlatformObj::makelineShape(){
         delete[] punkty;
 }
 
+int PlatformObj::getDefaultDetailLevel(){
+    return -7;
+}
+
 void PlatformObj::save(QTextStream* out) {
     if (!loaded) return;
     int l;
