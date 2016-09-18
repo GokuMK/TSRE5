@@ -29,7 +29,9 @@ public slots:
     void pasteREnabled();
     void rotYEnabled();
     void resetRotEnabled();
-        
+    void enableCustomDetailLevelEnabled(int val);
+    void customDetailLevelEdited(QString val);
+    
 signals:
     
 private:

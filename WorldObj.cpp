@@ -610,7 +610,10 @@ int WorldObj::getCurrentDetailLevel(){
 }
 
 void WorldObj::setCustomDetailLevel(int val){
+    if(val < 0) val = -1;
+    if(val > 10) val = 10;
     staticDetailLevel = val;
+    this->modified = true;
 }
 
 bool WorldObj::customDetailLevelEnabled(){

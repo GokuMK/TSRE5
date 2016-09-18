@@ -113,6 +113,13 @@ PropertiesStatic::PropertiesStatic(){
     
     QObject::connect(copyF, SIGNAL(released()),
                       this, SLOT(copyFEnabled()));
+    
+    QObject::connect(&enableCustomDetailLevel, SIGNAL(stateChanged(int)),
+                      this, SLOT(enableCustomDetailLevelEnabled(int)));
+    
+    QObject::connect(&customDetailLevel, SIGNAL(textEdited(QString)),
+                      this, SLOT(customDetailLevelEdited(QString)));
+    
 }
 
 PropertiesStatic::~PropertiesStatic() {
@@ -141,6 +148,7 @@ void PropertiesStatic::showObj(WorldObj* obj){
             );
     
     defaultDetailLevel.setText(QString::number(obj->getDefaultDetailLevel()));
+    enableCustomDetailLevel.blockSignals(true);
     if(obj->customDetailLevelEnabled()){
         enableCustomDetailLevel.setChecked(true);
         customDetailLevel.setText(QString::number(obj->getCustomDetailLevel()));
@@ -150,6 +158,7 @@ void PropertiesStatic::showObj(WorldObj* obj){
         customDetailLevel.setText("");
         customDetailLevel.setEnabled(false);
     }
+    enableCustomDetailLevel.blockSignals(false);
     
     this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
 }
@@ -207,4 +216,29 @@ void PropertiesStatic::pasteREnabled(){
     staticObj->modified = true;
     staticObj->setMartix();
     quat.setText(clipboard->text());
+}
+
+void PropertiesStatic::enableCustomDetailLevelEnabled(int val){
+    if(staticObj == NULL)
+        return;
+    if(val == 2){
+        customDetailLevel.setEnabled(true);
+        customDetailLevel.setText("0");
+        staticObj->setCustomDetailLevel(0);
+    } else {
+        customDetailLevel.setEnabled(false);
+        customDetailLevel.setText("");
+        staticObj->setCustomDetailLevel(-1);
+    }
+}
+
+void PropertiesStatic::customDetailLevelEdited(QString val){
+    if(staticObj == NULL)
+        return;
+    bool ok = false;
+    int level = val.toInt(&ok);
+    qDebug() << "aaaaaaaaaa";
+    if(ok){
+        staticObj->setCustomDetailLevel(level);
+    }
 }
