@@ -83,9 +83,15 @@ void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
     length = ptr / v;
     loaded = true;
 }
+
+void OglObj::setLineWidth(int val){
+    lineWidth = val;
+}
+
 void OglObj::render() {
     render(0);
 }
+
 void OglObj::render(int selectionColor) {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     GLUU *gluu = GLUU::get();
@@ -118,8 +124,12 @@ void OglObj::render(int selectionColor) {
         return;
     }
 
+    if(lineWidth !=1)
+        f->glLineWidth(lineWidth);
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
     f->glDrawArrays(shapeType, 0, length); /**/
+    if(lineWidth !=1)
+        f->glLineWidth(1);
 }
 
 int OglObj::getTexId(){

@@ -555,11 +555,11 @@ void WorldObj::drawBox(){
 
         box.setMaterial(0.0, 0.0, 1.0);
         box.init(punkty, ptr-punkty, box.V, GL_LINES);
+        //box.setLineWidth(3);
 
         delete[] punkty;
     }
     
-
     box.render();
 };
 

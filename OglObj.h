@@ -31,6 +31,7 @@ public:
     void setMaterial(float r, float g, float b);
     void setMaterial(QString* path);
     int getTexId();
+    void setLineWidth(int val);
 private:
     QOpenGLBuffer VBO;
     QOpenGLVertexArrayObject VAO;
@@ -38,6 +39,7 @@ private:
     int shapeType;
     int texId;
     int materialType;
+    int lineWidth = 1;
     QString *res;
     Vector4f *color = NULL;
 };
