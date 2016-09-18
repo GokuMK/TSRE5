@@ -24,6 +24,20 @@ public:
     virtual void showObj(WorldObj* obj);
     virtual void updateObj(WorldObj* obj);
 
+public slots:
+    void copyFileNameEnabled();
+    void copyREnabled();
+    void pasteREnabled();
+    void copyPEnabled();
+    void pastePEnabled();
+    void copyPREnabled();
+    void pastePREnabled();
+    void copyFEnabled();
+    void pasteFEnabled();
+    void rotYEnabled();
+    void transformEnabled();
+    void resetRotEnabled();
+    
 protected:
     QLabel *infoLabel;    
     QLineEdit flags;
@@ -37,6 +51,8 @@ protected:
     QLineEdit uid;
     QLineEdit defaultDetailLevel;
     QLineEdit customDetailLevel;
+    
+    WorldObj *worldObj;
 private:
 
 };

@@ -24,18 +24,12 @@ public:
     void showObj(WorldObj* obj);
     
 public slots:
-    void copyFEnabled();
-    void copyREnabled();
-    void pasteREnabled();
-    void rotYEnabled();
-    void resetRotEnabled();
     void enableCustomDetailLevelEnabled(int val);
     void customDetailLevelEdited(QString val);
     
 signals:
     
 private:
-    StaticObj *staticObj;
     QCheckBox checkboxAnim;
     QCheckBox checkboxTerrain;
     QCheckBox enableCustomDetailLevel;

@@ -118,6 +118,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackShape.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TransferObj.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TransformWorldObjDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Trk.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrkWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/UnsavedDialog.o
@@ -172,6 +173,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTreeWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainWaterWindow.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TransformWorldObjDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TrkWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_UnsavedDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_glShapeWidget.o

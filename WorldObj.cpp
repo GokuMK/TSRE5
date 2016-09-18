@@ -280,6 +280,10 @@ void WorldObj::set(QString sh, int val) {
         this->y = val;
         return;
     }
+    if (sh == ("staticflags")) {
+        staticFlags = val;
+        return;
+    }
 }
 
 void WorldObj::set(QString sh, float* val) {

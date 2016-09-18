@@ -83,6 +83,7 @@
           <itemPath>PropertiesUndefined.h</itemPath>
           <itemPath>SignalWindow.h</itemPath>
           <itemPath>SignalWindowLink.h</itemPath>
+          <itemPath>TransformWorldObjDialog.h</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
@@ -259,6 +260,7 @@
           <itemPath>PropertiesUndefined.cpp</itemPath>
           <itemPath>SignalWindow.cpp</itemPath>
           <itemPath>SignalWindowLink.cpp</itemPath>
+          <itemPath>TransformWorldObjDialog.cpp</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
@@ -858,6 +860,10 @@
       </item>
       <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TransformWorldObjDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TransformWorldObjDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Trk.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Trk.h" ex="false" tool="3" flavor2="0">
@@ -1415,6 +1421,10 @@
       </item>
       <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TransformWorldObjDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TransformWorldObjDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Trk.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Trk.h" ex="false" tool="3" flavor2="0">
@@ -1964,6 +1974,10 @@
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TransformWorldObjDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TransformWorldObjDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Trk.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2522,6 +2536,10 @@
       </item>
       <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TransformWorldObjDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TransformWorldObjDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Trk.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Trk.h" ex="false" tool="3" flavor2="0">
@@ -3066,6 +3084,10 @@
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TransferObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TransformWorldObjDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TransformWorldObjDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Trk.cpp" ex="false" tool="1" flavor2="0">
       </item>

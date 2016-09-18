@@ -72,8 +72,8 @@ Window::Window() {
     box2 = new QWidget();
     box->setMaximumWidth(250);
     box->setMinimumWidth(250);
-    box2->setMaximumWidth(150);
-    box2->setMinimumWidth(150);
+    box2->setMaximumWidth(160);
+    box2->setMinimumWidth(160);
     //box2->setMaximumWidth(250);
     //box2->setMinimumWidth(250);
     QVBoxLayout *mainLayout2 = new QVBoxLayout;
