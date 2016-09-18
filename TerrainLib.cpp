@@ -32,7 +32,7 @@ TerrainLib::TerrainLib(const TerrainLib& orig) {
 TerrainLib::~TerrainLib() {
 }
 
-void TerrainLib::loadQuadTree(){
+void TerrainLib::LoadQuadTree(){
     quadTree = new QuadTree();
     quadTree->load();
 }

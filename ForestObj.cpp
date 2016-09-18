@@ -39,7 +39,7 @@ ForestObj::ForestObj(const ForestObj& orig) {
 ForestObj::~ForestObj() {
 }
 
-void ForestObj::loadForestList(){
+void ForestObj::LoadForestList(){
     QString path = Game::root + "/routes/" + Game::route + "/forests.dat";
     path.replace("//", "/");
     qDebug() << path;

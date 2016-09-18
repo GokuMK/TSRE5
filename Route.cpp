@@ -24,6 +24,7 @@
 #include "ParserX.h"
 #include "ReadFile.h"
 #include "DynTrackObj.h"
+#include "PlatformObj.h"
 #include "Flex.h"
 #include "ForestObj.h"
 #include "Coords.h"
@@ -35,6 +36,7 @@
 #include "Trk.h"
 #include "AboutWindow.h"
 #include "TrkWindow.h"
+#include "PlatformObj.h"
 
 Route::Route() {
 
@@ -70,8 +72,9 @@ Route::Route() {
     soundList->loadSoundRegions(Game::root + "/routes/" + Game::route + "/ttype.dat");
     Game::soundList = soundList;
     
-    TerrainLib::loadQuadTree();
-    ForestObj::loadForestList();
+    TerrainLib::LoadQuadTree();
+    ForestObj::LoadForestList();
+    PlatformObj::LoadCarSpawnerList();
     
     Game::trackDB = this->trackDB;
     Game::roadDB = this->roadDB;

@@ -42,6 +42,9 @@ PropertiesCarspawner::PropertiesCarspawner() {
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vbox->addWidget(&this->carSpeed);
+    vbox->addWidget(&this->useCustomList);
+    vbox->addWidget(&this->carspawnList);
+    carspawnList.setStyleSheet("combobox-popup: 0;");
 
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -53,6 +56,10 @@ PropertiesCarspawner::PropertiesCarspawner() {
                       this, SLOT(carNumberEnabled(QString)));
     QObject::connect(&carSpeed, SIGNAL(textChanged(QString)),
                       this, SLOT(carSpeedEnabled(QString)));
+    QObject::connect(&useCustomList, SIGNAL(stateChanged(int)),
+                      this, SLOT(useCustomListEnabled(int)));
+    QObject::connect(&carspawnList, SIGNAL(activated(QString)),
+                      this, SLOT(carspawnListSelected(QString)));
 }
 
 PropertiesCarspawner::~PropertiesCarspawner() {
@@ -72,6 +79,22 @@ void PropertiesCarspawner::showObj(WorldObj* obj){
     this->lengthPlatform.setText(QString::number(cobj->getLength())+" m");
     this->carNumber.setText(QString::number(cobj->getCarNumber(),10));
     this->carSpeed.setText(QString::number(cobj->getCarSpeed(),10));
+    
+    carspawnList.clear();
+    carspawnList.setDisabled(true);
+    useCustomList.blockSignals(true);
+    useCustomList.setChecked(false);
+    QString clist = cobj->getCarListName();
+    if(clist.length() > 0){
+        useCustomList.setChecked(true);
+        carspawnList.setEnabled(true);
+        for(int i = 0; i < cobj->CarSpawnerList.length(); i++ ){
+            carspawnList.addItem(cobj->CarSpawnerList[i], i);
+            if(cobj->CarSpawnerList[i].toLower() == clist.toLower() )
+                carspawnList.setCurrentIndex(i);
+        }
+    }
+    useCustomList.blockSignals(false);
 }
 
 void PropertiesCarspawner::carNumberEnabled(QString val){
@@ -90,4 +113,28 @@ bool PropertiesCarspawner::support(WorldObj* obj){
     if(obj->type == "carspawner")
         return true;
     return false;
+}
+
+void PropertiesCarspawner::carspawnListSelected(QString val){
+    if(cobj == NULL)
+        return;
+    cobj->setCarListName(val);
+}
+
+void PropertiesCarspawner::useCustomListEnabled(int val){
+    if(cobj == NULL)
+        return;
+    if(val == 2){
+        if(cobj->CarSpawnerList.length() == 0)
+            return;
+        for(int i = 0; i < cobj->CarSpawnerList.length(); i++ ){
+            carspawnList.addItem(cobj->CarSpawnerList[i], i);
+        }
+        cobj->setCarListName(carspawnList.currentText());
+        carspawnList.setEnabled(true);
+    } else {
+        carspawnList.clear();
+        carspawnList.setDisabled(true);
+        cobj->setCarListName("");
+    }
 }

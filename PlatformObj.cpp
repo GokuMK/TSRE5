@@ -22,10 +22,50 @@
 #include "OglObj.h"
 #include "TS.h"
 #include <math.h>
+#include <QFile>
+#include "FileBuffer.h"
+#include "ReadFile.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+
+QVector<QString> PlatformObj::CarSpawnerList;
+
+void PlatformObj::LoadCarSpawnerList(){
+    QString path = Game::root + "/routes/" + Game::route + "/openrails/extcarspawn.dat";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile *file = new QFile(path);
+    if (!file->open(QIODevice::ReadOnly))
+        return;
+    FileBuffer* data = ReadFile::read(file);
+    file->close();
+    data->toUtf16();
+    ParserX::NextLine(data);
+
+    QString sh = "";
+    //ParserX::szukajsekcji1(sh, data);
+    //ParserX::GetNumber(data);
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == ("carspawnerlist")) {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                qDebug() << sh;
+                if (sh == ("listname")) {
+                    CarSpawnerList.push_back(ParserX::GetString(data));
+                    qDebug() << CarSpawnerList.back();
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                ParserX::SkipToken(data);
+            }
+            ParserX::SkipToken(data);
+            continue;
+        }
+        ParserX::SkipToken(data);
+    }
+}
 
 PlatformObj::PlatformObj() {
     this->shape = -1;
@@ -106,6 +146,11 @@ void PlatformObj::set(QString sh, FileBuffer* data) {
         trItemId[trItemIdCount++] = ParserX::GetNumber(data);
         return;
     }
+    if (sh == ("ortslistname")) {
+        this->carspawnerListName = ParserX::GetString(data);
+        return;
+    }
+     
     WorldObj::set(sh, data);
     return;
 }
@@ -600,6 +645,14 @@ int PlatformObj::getDefaultDetailLevel(){
     return -7;
 }
 
+QString PlatformObj::getCarListName(){
+    return carspawnerListName;
+}
+
+void PlatformObj::setCarListName(QString val){
+    carspawnerListName = val;
+}
+
 void PlatformObj::save(QTextStream* out) {
     if (!loaded) return;
     int l;
@@ -621,6 +674,8 @@ void PlatformObj::save(QTextStream* out) {
     if (type == "carspawner") {
         *(out) << "		CarFrequency ( " << this->carFrequency << " )\n";
         *(out) << "		CarAvSpeed ( " << this->carAvSpeed << " )\n";
+        if (this->carspawnerListName.length() > 0)
+            *(out) << "		ORTSListName ( " << ParserX::AddComIfReq(this->carspawnerListName) << " )\n";
     }
     *(out) << "		TrItemId ( " << this->trItemId[0] << " " << this->trItemId[1] << " )\n";
     *(out) << "		TrItemId ( " << this->trItemId[2] << " " << this->trItemId[3] << " )\n";

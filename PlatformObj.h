@@ -20,6 +20,9 @@ class OglObj;
 
 class PlatformObj : public WorldObj  {
 public:
+    static void LoadCarSpawnerList();
+    static QVector<QString> CarSpawnerList;
+    
     PlatformObj();
     PlatformObj(const PlatformObj& orig);
     virtual ~PlatformObj();
@@ -48,6 +51,8 @@ public:
     void setDisabled(bool val);
     int getCarNumber();
     int getCarSpeed();
+    QString getCarListName();
+    void setCarListName(QString val);
     float getLength();
     void setCarNumber(int val);
     void setCarSpeed(int val);
@@ -69,6 +74,7 @@ private:
     int rotB = 0;
     int rotE = 0;
     int selectionValue = 0;
+    QString carspawnerListName;
     void renderTritems(GLUU* gluu, int selectionColor);
     void makelineShape();
 };

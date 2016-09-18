@@ -55,7 +55,7 @@ public:
     void resize(float x, float y, float z);
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
-    static void loadForestList();
+    static void LoadForestList();
     virtual ~ForestObj();
 private:
     void drawShape();

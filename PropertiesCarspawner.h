@@ -26,7 +26,8 @@ public:
 public slots:
     void carNumberEnabled(QString val);
     void carSpeedEnabled(QString val);
-        
+    void useCustomListEnabled(int val);
+    void carspawnListSelected(QString val);
 signals:
     
 private:
@@ -34,6 +35,8 @@ private:
     QLineEdit carSpeed;
     PlatformObj* cobj;
     QLineEdit lengthPlatform;
+    QCheckBox useCustomList;
+    QComboBox carspawnList;
 };
 
 #endif	/* PROPERTIESCARSPAWNER_H */

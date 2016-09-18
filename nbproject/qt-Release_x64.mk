@@ -34351,7 +34351,117 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PlatformObj.o: PlatformObj.c
 		TRitem.h \
 		Pointer3d.h \
 		TrackItemObj.h \
-		TS.h
+		TS.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QFile \
+		ReadFile.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QtCore \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QtCoreDepends \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qabstractanimation.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qanimationgroup.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qparallelanimationgroup.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpauseanimation.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpropertyanimation.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvariantanimation.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qeasingcurve.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsequentialanimationgroup.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtextcodec.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qendian.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlibraryinfo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdatetime.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbuffer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdir.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfileinfo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdiriterator.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfileselector.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QStringList \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfilesystemwatcher.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlockfile.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qloggingcategory.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qprocess.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qresource.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsavefile.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsettings.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstandardpaths.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstorageinfo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtemporarydir.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtemporaryfile.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qabstractitemmodel.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qabstractproxymodel.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qidentityproxymodel.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qitemselectionmodel.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsortfilterproxymodel.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstringlistmodel.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qjsonarray.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qjsonvalue.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qjsondocument.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qjsonobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qabstracteventdispatcher.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qeventloop.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qabstractnativeeventfilter.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbasictimer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcoreapplication.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmath.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmetaobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmimedata.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectcleanuphandler.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpointer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedmemory.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsignalmapper.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsocketnotifier.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsystemsemaphore.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtimer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtranslator.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qwineventnotifier.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmimedatabase.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmimetype.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfactoryinterface.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlibrary.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qplugin.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpluginloader.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/quuid.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qabstractstate.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qabstracttransition.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qeventtransition.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfinalstate.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhistorystate.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsignaltransition.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstate.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstatemachine.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qexception.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfuture.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfutureinterface.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qrunnable.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qresultstore.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfuturesynchronizer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfuturewatcher.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qreadwritelock.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsemaphore.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qthread.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qthreadpool.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qthreadstorage.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qwaitcondition.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qarraydataops.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qarraydatapointer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbitarray.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbytearraymatcher.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcache.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcollator.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcommandlineoption.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcommandlineparser.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcryptographichash.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qelapsedtimer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlinkedlist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmessageauthenticationcode.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qqueue.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qregularexpression.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qscopedvaluerollback.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstack.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtextboundaryfinder.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtimeline.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtimezone.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qversionnumber.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qxmlstream.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PlatformObj.o PlatformObj.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Pointer3d.o: Pointer3d.cpp Pointer3d.h \
@@ -42239,6 +42349,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Route.o: Route.cpp c:/OT/Sta
 		c:/OT/Static/5.7.0_x64/include/QtCore/qxmlstream.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h \
 		DynTrackObj.h \
+		PlatformObj.h \
 		Flex.h \
 		ForestObj.h \
 		Coords.h \
