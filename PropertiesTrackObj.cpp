@@ -34,68 +34,121 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vlist->addRow("Tile Z:",&this->tY);
     vbox->addItem(vlist);
     
-    QLabel * label1 = new QLabel("FileName:");
-    label1->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label1);
+    QLabel * label = new QLabel("FileName:");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
     this->fileName.setDisabled(true);
     this->fileName.setAlignment(Qt::AlignCenter);
     vbox->addWidget(&this->fileName);
     QPushButton *copyF = new QPushButton("Copy FileName", this);
     vbox->addWidget(copyF);
     
-    QLabel * label2 = new QLabel("Position:");
-    label2->setStyleSheet("QLabel { color : #999999; }");
-    label2->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label2);
+    label = new QLabel("Position & Rotation:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
     vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
     vlist->addRow("X:",&this->posX);
     vlist->addRow("Y:",&this->posY);
     vlist->addRow("Z:",&this->posZ);
-    vbox->addItem(vlist);
-    QPushButton *copyPos = new QPushButton("Copy Position", this);
-    QPushButton *pastePos = new QPushButton("Paste Position", this);
-    vbox->addWidget(copyPos);
-    vbox->addWidget(pastePos);
-    QLabel * label3 = new QLabel("QDirection:");
-    label3->setStyleSheet("QLabel { color : #999999; }");
-    label3->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label3);
     this->quat.setDisabled(true);
     this->quat.setAlignment(Qt::AlignCenter);
-    vbox->addWidget(&this->quat);
-    QPushButton *copyQrot = new QPushButton("Copy Rotation", this);
+    vlist->addRow("Rot:",&this->quat);
+    vbox->addItem(vlist);
+    QGridLayout *posRotList = new QGridLayout;
+    posRotList->setSpacing(2);
+    posRotList->setContentsMargins(0,0,0,0);    
+
+    QPushButton *copyPos = new QPushButton("Copy Pos", this);
+    QObject::connect(copyPos, SIGNAL(released()),
+                      this, SLOT(copyPEnabled()));
+    QPushButton *pastePos = new QPushButton("Paste", this);
+    QObject::connect(pastePos, SIGNAL(released()),
+                      this, SLOT(pastePEnabled()));
+    QPushButton *copyQrot = new QPushButton("Copy Rot", this);
     QObject::connect(copyQrot, SIGNAL(released()),
                       this, SLOT(copyREnabled()));
-    QPushButton *pasteQrot = new QPushButton("Paste Rotation", this);
+    QPushButton *pasteQrot = new QPushButton("Paste", this);
     QObject::connect(pasteQrot, SIGNAL(released()),
                       this, SLOT(pasteREnabled()));
-    QPushButton *resetQrot = new QPushButton("Reset Rotation", this);
+    QPushButton *copyPosRot = new QPushButton("Copy Pos+Rot", this);
+    QObject::connect(copyPosRot, SIGNAL(released()),
+                      this, SLOT(copyPREnabled()));
+    QPushButton *pastePosRot = new QPushButton("Paste", this);
+    QObject::connect(pastePosRot, SIGNAL(released()),
+                      this, SLOT(pastePREnabled()));
+    QPushButton *resetQrot = new QPushButton("Reset Rot", this);
     QObject::connect(resetQrot, SIGNAL(released()),
                       this, SLOT(resetRotEnabled()));
-    QPushButton *qRot90 = new QPushButton("Rotate Y 90°", this);
+    QPushButton *qRot90 = new QPushButton("Rot Y 90°", this);
     QObject::connect(qRot90, SIGNAL(released()),
                       this, SLOT(rotYEnabled()));
-    vbox->addWidget(copyQrot);
-    vbox->addWidget(pasteQrot);
-    vbox->addWidget(resetQrot);
-    vbox->addWidget(qRot90);
-    QLabel * label4 = new QLabel("Flags:");
-    label4->setStyleSheet("QLabel { color : #999999; }");
-    label4->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label4);
+    QPushButton *transform = new QPushButton("Transform ...", this);
+    QObject::connect(transform, SIGNAL(released()),
+                      this, SLOT(transformEnabled()));
+    
+    posRotList->addWidget(copyPos, 0, 0);
+    posRotList->addWidget(pastePos, 0, 1);
+    posRotList->addWidget(copyQrot, 1, 0);
+    posRotList->addWidget(pasteQrot, 1, 1);
+    posRotList->addWidget(copyPosRot, 2, 0);
+    posRotList->addWidget(pastePosRot, 2, 1);
+    posRotList->addWidget(resetQrot, 3, 0);
+    posRotList->addWidget(qRot90, 3, 1);
+    posRotList->addWidget(transform, 4, 0, 1, 2);
+    vbox->addItem(posRotList);
+    
+    label = new QLabel("Detail Level:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    this->defaultDetailLevel.setDisabled(true);
+    this->defaultDetailLevel.setAlignment(Qt::AlignCenter);
+    this->enableCustomDetailLevel.setText("Custom");
+    QCheckBox* defaultDetailLevelLabel = new QCheckBox("Default", this);
+    defaultDetailLevelLabel->setDisabled(true);
+    defaultDetailLevelLabel->setChecked(true);
+    QObject::connect(&enableCustomDetailLevel, SIGNAL(stateChanged(int)),
+                      this, SLOT(enableCustomDetailLevelEnabled(int)));
+    this->customDetailLevel.setDisabled(true);
+    this->customDetailLevel.setAlignment(Qt::AlignCenter);
+    QObject::connect(&customDetailLevel, SIGNAL(textEdited(QString)),
+                      this, SLOT(customDetailLevelEdited(QString)));
+    QGridLayout *detailLevelView = new QGridLayout;
+    detailLevelView->setSpacing(2);
+    detailLevelView->setContentsMargins(0,0,0,0);    
+    detailLevelView->addWidget(defaultDetailLevelLabel, 0, 0);
+    detailLevelView->addWidget(&defaultDetailLevel, 0, 1);
+    detailLevelView->addWidget(&enableCustomDetailLevel, 1, 0);
+    detailLevelView->addWidget(&customDetailLevel, 1, 1);
+    vbox->addItem(detailLevelView);
+    
+    label = new QLabel("Flags:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
     this->flags.setDisabled(true);
     this->flags.setAlignment(Qt::AlignCenter);
     vbox->addWidget(&this->flags);
+    QGridLayout *flagslView = new QGridLayout;
+    flagslView->setSpacing(2);
+    flagslView->setContentsMargins(0,0,0,0);    
     QPushButton *copyFlags = new QPushButton("Copy Flags", this);
-    QPushButton *pasteFlags = new QPushButton("Paste Flags", this);
-    vbox->addWidget(copyFlags);
-    vbox->addWidget(pasteFlags);
-    label3 = new QLabel("Elevation:");
-    label3->setStyleSheet("QLabel { color : #999999; }");
-    label3->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label3);
+    QObject::connect(copyFlags, SIGNAL(released()),
+                      this, SLOT(copyFEnabled()));
+    QPushButton *pasteFlags = new QPushButton("Paste", this);
+    QObject::connect(pasteFlags, SIGNAL(released()),
+                      this, SLOT(pasteFEnabled()));
+    flagslView->addWidget(copyFlags,0,0);
+    flagslView->addWidget(pasteFlags,0,1);
+    vbox->addItem(flagslView);
+    
+    label = new QLabel("Elevation:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
     vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
@@ -106,7 +159,7 @@ PropertiesTrackObj::PropertiesTrackObj(){
     this->setLayout(vbox);
     
     QObject::connect(copyF, SIGNAL(released()),
-                      this, SLOT(copyFEnabled()));
+                      this, SLOT(copyFileNameEnabled()));
 }
 
 PropertiesTrackObj::~PropertiesTrackObj() {
@@ -117,7 +170,7 @@ void PropertiesTrackObj::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
-    
+    worldObj = obj;
     trackObj = (TrackObj*) obj;
     
     this->infoLabel->setText("Object: "+obj->type);
@@ -135,6 +188,19 @@ void PropertiesTrackObj::showObj(WorldObj* obj){
             QString::number(-obj->qDirection[2], 'G', 4) + " " +
             QString::number(obj->qDirection[3], 'G', 4)
             );
+    
+    defaultDetailLevel.setText(QString::number(obj->getDefaultDetailLevel()));
+    enableCustomDetailLevel.blockSignals(true);
+    if(obj->customDetailLevelEnabled()){
+        enableCustomDetailLevel.setChecked(true);
+        customDetailLevel.setText(QString::number(obj->getCustomDetailLevel()));
+        customDetailLevel.setEnabled(true);
+    } else {
+        enableCustomDetailLevel.setChecked(false);
+        customDetailLevel.setText("");
+        customDetailLevel.setEnabled(false);
+    }
+    enableCustomDetailLevel.blockSignals(false);
     
     this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
     
@@ -192,49 +258,4 @@ bool PropertiesTrackObj::support(WorldObj* obj){
     if(obj->type == "trackobj")
         return true;
     return false;
-}
-
-void PropertiesTrackObj::copyFEnabled(){
-    QClipboard *clipboard = QApplication::clipboard();
-    //QString originalText = clipboard->text();
-    clipboard->setText(this->fileName.text());
-}
-
-void PropertiesTrackObj::resetRotEnabled(){
-    if(trackObj == NULL)
-        return;
-    trackObj->setNewQdirection();
-    trackObj->modified = true;
-    trackObj->setMartix();
-}
-
-void PropertiesTrackObj::rotYEnabled(){
-    if(trackObj == NULL)
-        return;
-    trackObj->rotate(0,M_PI/2,0);
-    trackObj->modified = true;
-    trackObj->setMartix();
-}
-
-void PropertiesTrackObj::copyREnabled(){
-    QClipboard *clipboard = QApplication::clipboard();
-    clipboard->setText(this->quat.text());
-}
-
-void PropertiesTrackObj::pasteREnabled(){
-    if(trackObj == NULL)
-        return;
-    QClipboard *clipboard = QApplication::clipboard();
-    QStringList args = clipboard->text().split(" ");
-    if(args.length() != 4)
-        return;
-    float nq[4];
-    nq[0] = args[0].toFloat();
-    nq[1] = args[1].toFloat();
-    nq[2] = args[2].toFloat();
-    nq[3] = args[3].toFloat();
-    trackObj->setQdirection((float*)&nq);
-    trackObj->modified = true;
-    trackObj->setMartix();
-    quat.setText(clipboard->text());
 }

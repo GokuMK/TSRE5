@@ -23,12 +23,9 @@ public:
     bool support(WorldObj* obj);
     void showObj(WorldObj* obj);
     void updateObj(WorldObj* obj);
+    
 public slots:
-    void copyFEnabled();
-    void copyREnabled();
-    void pasteREnabled();
-    void rotYEnabled();
-    void resetRotEnabled();
+
     
 signals:
     

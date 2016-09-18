@@ -66,12 +66,12 @@ void TransformWorldObjDialog::ok(){
         this->isUseObjRot = true;
     else
         this->isUseObjRot = false;
-    this->x = this->posX.text().toInt();
-    this->y = this->posY.text().toInt();
-    this->z = this->posZ.text().toInt();
-    this->rx = this->rotX.text().toInt();
-    this->ry = this->rotY.text().toInt();
-    this->rz = this->rotZ.text().toInt();
+    this->x = this->posX.text().toFloat();
+    this->y = this->posY.text().toFloat();
+    this->z = this->posZ.text().toFloat();
+    this->rx = this->rotX.text().toFloat();
+    this->ry = this->rotY.text().toFloat();
+    this->rz = this->rotZ.text().toFloat();
 
     this->close();
 }

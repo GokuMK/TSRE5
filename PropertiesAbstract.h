@@ -51,7 +51,7 @@ protected:
     QLineEdit uid;
     QLineEdit defaultDetailLevel;
     QLineEdit customDetailLevel;
-    
+    QCheckBox enableCustomDetailLevel;
     WorldObj *worldObj;
 private:
 

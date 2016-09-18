@@ -43,6 +43,7 @@ PropertiesCarspawner::PropertiesCarspawner() {
     vbox->addWidget(label);
     vbox->addWidget(&this->carSpeed);
     vbox->addWidget(&this->useCustomList);
+    useCustomList.setText("Use custom car list.");
     vbox->addWidget(&this->carspawnList);
     carspawnList.setStyleSheet("combobox-popup: 0;");
 

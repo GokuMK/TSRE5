@@ -40,6 +40,7 @@ TrackObj::~TrackObj() {
 
 void TrackObj::load(int x, int y) {
     this->shape = Game::currentShapeLib->addShape(resPath +"/"+ fileName);
+    this->shapePointer = Game::currentShapeLib->shape[this->shape];
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
@@ -131,10 +132,7 @@ void TrackObj::rotate(float x, float y, float z){
     this->position[0] = this->placedAtPosition[0] + vect[0];
     this->position[1] = this->placedAtPosition[1] - vect[1];
     this->position[2] = this->placedAtPosition[2] + vect[2];
-    setMartix();
-    
 
-    
     //if(this->endp[3] == 1){
     //Mat4::translate(this->matrix, this->matrix, -this->endp[0], -this->endp[1], -this->endp[2]);
     //}
@@ -240,8 +238,8 @@ void TrackObj::set(QString sh, FileBuffer* data) {
 
 QString TrackObj::getShapePath(){
     if (!loaded) return "";
-    if (shape < 0) return "";
-    return Game::currentShapeLib->shape[shape]->pathid+"|"+Game::currentShapeLib->shape[shape]->texPath;
+    if (shapePointer == 0) return "";
+    return shapePointer->pathid+"|"+shapePointer->texPath;
 }
 
 void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
@@ -295,10 +293,10 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
 };
 
 bool TrackObj::getBorder(float* border){
-    if (shape < 0) return false;
-    if (!Game::currentShapeLib->shape[shape]->loaded)
+    if (shapePointer == 0) return false;
+    if (!shapePointer->loaded)
         return false;
-    float* bound = Game::currentShapeLib->shape[shape]->bound;
+    float* bound = shapePointer->bound;
     border[0] = bound[0];
     border[1] = bound[1];
     border[2] = bound[2];
@@ -317,6 +315,10 @@ Ref::RefItem* TrackObj::getRefInfo(){
 }
 
 int TrackObj::getDefaultDetailLevel(){
+    if (!loaded) return -2;
+    if (shapePointer == 0) return -2;
+    int esdDLevel = shapePointer->esdDetailLevel;
+    if(esdDLevel >= 0) return esdDLevel;
     return -2;
 }
 

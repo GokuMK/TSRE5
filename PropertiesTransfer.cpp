@@ -58,16 +58,16 @@ PropertiesTransfer::PropertiesTransfer() {
     vbox->addWidget(texPick);
     vbox->addWidget(texPut);
     
-    QLabel * label12 = new QLabel("Size:");
-    label12->setStyleSheet("QLabel { color : #999999; }");
-    label12->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label12);
-    QFormLayout *vlist0 = new QFormLayout;
-    vlist0->setSpacing(2);
-    vlist0->setContentsMargins(3,0,3,0);
-    vlist0->addRow("Width:",&this->sizeX);
-    vlist0->addRow("Height:",&this->sizeY);
-    vbox->addItem(vlist0);
+    QLabel * label = new QLabel("Size:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("Width:",&this->sizeX);
+    vlist->addRow("Height:",&this->sizeY);
+    vbox->addItem(vlist);
     
     sizeX.setValidator( new QDoubleValidator(0, 1000, 2, this) );
     QObject::connect(&sizeX, SIGNAL(textEdited(QString)),
@@ -76,38 +76,63 @@ PropertiesTransfer::PropertiesTransfer() {
     QObject::connect(&sizeY, SIGNAL(textEdited(QString)),
                       this, SLOT(sizeEnabled(QString)));
     
-    QLabel * label2 = new QLabel("Position:");
-    label2->setStyleSheet("QLabel { color : #999999; }");
-    label2->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label2);
-    QFormLayout *vlist = new QFormLayout;
+    label = new QLabel("Position & Rotation:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
     vlist->addRow("X:",&this->posX);
     vlist->addRow("Y:",&this->posY);
     vlist->addRow("Z:",&this->posZ);
-    vbox->addItem(vlist);
-    QPushButton *copyPos = new QPushButton("Copy Position", this);
-    QPushButton *pastePos = new QPushButton("Paste Position", this);
-    vbox->addWidget(copyPos);
-    vbox->addWidget(pastePos);
-    
-    QLabel * label3 = new QLabel("QDirection:");
-    label3->setStyleSheet("QLabel { color : #999999; }");
-    label3->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label3);
     this->quat.setDisabled(true);
     this->quat.setAlignment(Qt::AlignCenter);
-    vbox->addWidget(&this->quat);
-    QPushButton *copyQrot = new QPushButton("Copy Rotation", this);
-    QPushButton *pasteQrot = new QPushButton("Paste Rotation", this);
-    QPushButton *resetQrot = new QPushButton("Reset Rotation", this);
-    QPushButton *qRot90 = new QPushButton("Rotate Y 90°", this);
-    vbox->addWidget(copyQrot);
-    vbox->addWidget(pasteQrot);
-    vbox->addWidget(resetQrot);
-    vbox->addWidget(qRot90);
+    vlist->addRow("Rot:",&this->quat);
+    vbox->addItem(vlist);
+    QGridLayout *posRotList = new QGridLayout;
+    posRotList->setSpacing(2);
+    posRotList->setContentsMargins(0,0,0,0);    
+
+    QPushButton *copyPos = new QPushButton("Copy Pos", this);
+    QObject::connect(copyPos, SIGNAL(released()),
+                      this, SLOT(copyPEnabled()));
+    QPushButton *pastePos = new QPushButton("Paste", this);
+    QObject::connect(pastePos, SIGNAL(released()),
+                      this, SLOT(pastePEnabled()));
+    QPushButton *copyQrot = new QPushButton("Copy Rot", this);
+    QObject::connect(copyQrot, SIGNAL(released()),
+                      this, SLOT(copyREnabled()));
+    QPushButton *pasteQrot = new QPushButton("Paste", this);
+    QObject::connect(pasteQrot, SIGNAL(released()),
+                      this, SLOT(pasteREnabled()));
+    QPushButton *copyPosRot = new QPushButton("Copy Pos+Rot", this);
+    QObject::connect(copyPosRot, SIGNAL(released()),
+                      this, SLOT(copyPREnabled()));
+    QPushButton *pastePosRot = new QPushButton("Paste", this);
+    QObject::connect(pastePosRot, SIGNAL(released()),
+                      this, SLOT(pastePREnabled()));
+    QPushButton *resetQrot = new QPushButton("Reset Rot", this);
+    QObject::connect(resetQrot, SIGNAL(released()),
+                      this, SLOT(resetRotEnabled()));
+    QPushButton *qRot90 = new QPushButton("Rot Y 90°", this);
+    QObject::connect(qRot90, SIGNAL(released()),
+                      this, SLOT(rotYEnabled()));
+    QPushButton *transform = new QPushButton("Transform ...", this);
+    QObject::connect(transform, SIGNAL(released()),
+                      this, SLOT(transformEnabled()));
     
+    posRotList->addWidget(copyPos, 0, 0);
+    posRotList->addWidget(pastePos, 0, 1);
+    posRotList->addWidget(copyQrot, 1, 0);
+    posRotList->addWidget(pasteQrot, 1, 1);
+    posRotList->addWidget(copyPosRot, 2, 0);
+    posRotList->addWidget(pastePosRot, 2, 1);
+    posRotList->addWidget(resetQrot, 3, 0);
+    posRotList->addWidget(qRot90, 3, 1);
+    posRotList->addWidget(transform, 4, 0, 1, 2);
+    vbox->addItem(posRotList);
+        
     vbox->addStretch(1);
     this->setLayout(vbox);
 }
@@ -120,6 +145,7 @@ void PropertiesTransfer::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
+    worldObj = obj;
     transferObj = (TransferObj*)obj;
 
     TransferObj* tobj = (TransferObj*)obj;

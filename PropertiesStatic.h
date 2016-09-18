@@ -32,7 +32,6 @@ signals:
 private:
     QCheckBox checkboxAnim;
     QCheckBox checkboxTerrain;
-    QCheckBox enableCustomDetailLevel;
 };
 
 #endif	/* PROPERTIESSTATIC_H */
