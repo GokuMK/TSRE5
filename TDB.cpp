@@ -1305,9 +1305,10 @@ bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sect
     Vector3f* aa2;
     
     if(endend == 1){
-        float angle = 0;
+        float angle = -qe[1];
         float dlugosc = 0;
-        for (int i = 0; i < shp->path[startEnd].n; i++) {
+        for (int i = shp->path[startEnd].n - 1; i >= 0; i--) {
+        //for (int i = 0; i < shp->path[startEnd].n; i++) {
             dlugosc = this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDlugosc();
             //qDebug() << dlugosc;
             aa2 = this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(dlugosc);
@@ -1317,13 +1318,13 @@ bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sect
             aa.z+=aa2->z;
             angle += this->tsection->sekcja[shp->path[startEnd].sect[i]]->getAngle();
         }
-        endp[0] = -aa.x;
+        endp[0] = aa.x;
         endp[1] = 0;
-        endp[2] = -aa.z;
-        aa.rotateY(-qe[1], 0);
+        endp[2] = aa.z;
+        //aa.rotateY(-qe[1], 0);
         startPos[0] = aa.x;
         startPos[2] = aa.z;
-        qe[1] -= angle - M_PI;
+        qe[1] -= angle + qe[1] - M_PI;
         endp[4] = -qe[1] + shp->path[startEnd].rotDeg*M_PI/180;
     } else {
         endp[0] = aa.x;
@@ -1333,6 +1334,7 @@ bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sect
         startPos[0] = aa.x;
         startPos[2] = aa.z;
     }
+    //qDebug() << "sp " << startPos[0]  << " "<< startPos[2];
     
     bb.x = shp->path[0].pos[0];
     bb.z = shp->path[0].pos[2];
