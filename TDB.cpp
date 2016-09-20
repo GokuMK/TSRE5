@@ -1270,7 +1270,7 @@ void TDB::nextDefaultEnd(){
     this->defaultEnd++;
 }
 
-bool TDB::findPosition(int x, int z, float* p, float* q, float* endp, int sectionIdx, int uid){
+bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sectionIdx, int uid){
     float qe[3];
     qe[0] = 0;
     qe[1] = 0;

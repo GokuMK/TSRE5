@@ -331,12 +331,16 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
             if(nowy->endp == 0) nowy->endp = new float[5];
             //this->trackDB->placeTrack(x, z, p, q, r->value, nowy->UiD);
             qDebug() <<"1: "<< x <<" "<<z<<" "<<p[0]<<" "<<p[1]<<" "<<p[2]; 
+            int oldx = x;
+            int oldz = z;
             if(this->tsection->isRoadShape(r->value))
                 this->roadDB->findPosition(x, z, p, q, nowy->endp, r->value, nowy->UiD);
             else
                 this->trackDB->findPosition(x, z, p, q, nowy->endp, r->value, nowy->UiD);
             //findPosition
             qDebug() <<"2: "<< x <<" "<<z<<" "<<p[0]<<" "<<p[1]<<" "<<p[2]; 
+            p[0] -= (oldx-x)*2048;
+            p[2] -= (oldz-z)*2048;
             nowy->setPosition(p);
             nowy->setQdirection(q);
             nowy->setMartix();
