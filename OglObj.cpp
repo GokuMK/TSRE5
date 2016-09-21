@@ -11,6 +11,7 @@
 #include "OglObj.h"
 #include "TexLib.h"
 #include "Game.h"
+#include "GLMatrix.h"
 
 OglObj::OglObj() {
     loaded = false;
@@ -127,7 +128,8 @@ void OglObj::render(int selectionColor) {
 
     if(lineWidth > 0 && lineWidth != Game::oglDefaultLineWidth)
         f->glLineWidth(lineWidth);
-    
+    Mat4::identity(gluu->objStrMatrix);
+    //gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(gluu->objStrMatrix));
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
     f->glDrawArrays(shapeType, 0, length); /**/
     

@@ -29,7 +29,6 @@ public:
     void set(int sh, FileBuffer* val);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
-    bool getBorder(float* border);
     bool allowNew();
     bool isTrackItem();
     void initTrItems(float* tpos);
@@ -59,6 +58,8 @@ private:
     void renderTritems(GLUU* gluu, int selectionColor);
     float* drawPositions = NULL;
     int selectionValue = 0;
+    bool getSimpleBorder(float* border);
+    bool getBoxPoints(QVector<float> &points);
 };
 
 #endif	/* SPEEDPOSTOBJ_H */

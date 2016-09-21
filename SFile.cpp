@@ -201,9 +201,13 @@ void SFile::loadSd() {
                 }
                 if (sh == ("esd_bounding_box")) {
                     esdBoundingBox << EsdBoundingBox();
+                    bool ok = false;
                     for(int i = 0; i < 6; i++){
-                        esdBoundingBox.back().shape[i] = ParserX::GetNumber(data);
+                        esdBoundingBox.back().shape[i] = ParserX::GetNumberInside(data, &ok);
+                        if(!ok) break;
                     }
+                    if(ok == false)
+                        esdBoundingBox.pop_back();
                     ParserX::SkipToken(data);
                     continue;
                 }
@@ -261,6 +265,79 @@ void SFile::getSize() {
         size = sqrt(tx[0]*tx[0] + ty[0]*ty[0] + tz[0]*tz[0]);
         //console.log(this.size);
     }
+
+bool SFile::getBoxPoints(QVector<float>& points){
+    if(true){
+    //if(this->esdBoundingBox.size() == 0){
+        for(int i=0; i<2; i++)
+            for(int j=4; j<6; j++){
+                points.push_back(bound[i]);
+                points.push_back(bound[2]);
+                points.push_back(bound[j]);
+                points.push_back(bound[i]);
+                points.push_back(bound[3]);
+                points.push_back(bound[j]);
+            }
+        for(int i=0; i<2; i++)
+            for(int j=2; j<4; j++){
+                points.push_back(bound[i]);
+                points.push_back(bound[j]);
+                points.push_back(bound[4]);
+                points.push_back(bound[i]);
+                points.push_back(bound[j]);
+                points.push_back(bound[5]);
+            }
+        for(int i=4; i<6; i++)
+            for(int j=2; j<4; j++){
+                points.push_back(bound[0]);
+                points.push_back(bound[j]);
+                points.push_back(bound[i]);
+                points.push_back(bound[1]);
+                points.push_back(bound[j]);
+                points.push_back(bound[i]);
+            }
+    } else {
+        float tbound[6];
+        for(int u = 0; u < this->esdBoundingBox.size(); u++ ){
+            tbound[0] = this->esdBoundingBox[u].shape[0];
+            tbound[1] = this->esdBoundingBox[u].shape[3];
+            tbound[2] = this->esdBoundingBox[u].shape[1];
+            tbound[3] = this->esdBoundingBox[u].shape[4];
+            tbound[4] = this->esdBoundingBox[u].shape[2];
+            tbound[5] = this->esdBoundingBox[u].shape[5];
+            
+            ///////////
+            for(int i=0; i<2; i++)
+                for(int j=4; j<6; j++){
+                    points.push_back(tbound[i]);
+                    points.push_back(tbound[2]);
+                    points.push_back(tbound[j]);
+                    points.push_back(tbound[i]);
+                    points.push_back(tbound[3]);
+                    points.push_back(tbound[j]);
+                }
+            for(int i=0; i<2; i++)
+                for(int j=2; j<4; j++){
+                    points.push_back(tbound[i]);
+                    points.push_back(tbound[j]);
+                    points.push_back(tbound[4]);
+                    points.push_back(tbound[i]);
+                    points.push_back(tbound[j]);
+                    points.push_back(tbound[5]);
+                }
+            for(int i=4; i<6; i++)
+                for(int j=2; j<4; j++){
+                    points.push_back(tbound[0]);
+                    points.push_back(tbound[j]);
+                    points.push_back(tbound[i]);
+                    points.push_back(tbound[1]);
+                    points.push_back(tbound[j]);
+                    points.push_back(tbound[i]);
+                }
+        }
+    }
+    return true;
+}
 
 void SFile::render() {
     

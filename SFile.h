@@ -147,6 +147,7 @@ public:
     void load();
     void render();
     void getSize();
+    bool getBoxPoints(QVector<float> &points);
 private:
     void loadSd();
     float* getPmatrix(float* pmatrix, int matrix);

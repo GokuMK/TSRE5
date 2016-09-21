@@ -27,7 +27,6 @@ public:
     void set(int sh, FileBuffer* data);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
-    bool getBorder(float* border);
     bool allowNew();
     bool isTrackItem();
     void deleteTrItems();
@@ -46,6 +45,8 @@ private:
     std::vector<float*> drawPositions;
     float* drawPosition = NULL;
     void renderTritems(GLUU* gluu, int selectionColor);
+    bool getSimpleBorder(float* border);
+    bool getBoxPoints(QVector<float> &points);
 };
 
 #endif	/* LEVELCROBJ_H */

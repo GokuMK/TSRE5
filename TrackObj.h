@@ -27,7 +27,6 @@ public:
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     void set(QString sh, int val);
-    bool getBorder(float* border);
     void rotate(float x, float y, float z);
     Ref::RefItem* getRefInfo();
     void save(QTextStream* out);
@@ -40,6 +39,8 @@ public:
 private:
     float elevation;
     unsigned int collideFunction;
+    bool getSimpleBorder(float* border);
+    bool getBoxPoints(QVector<float> &points);
 };
 
 #endif	/* TRACKOBJ_H */

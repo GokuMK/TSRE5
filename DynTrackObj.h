@@ -39,10 +39,9 @@ public:
     void set(int sh, FileBuffer* val);
     void set(QString sh, FileBuffer* data);
     void set(QString sh, float* val);
-    bool getBorder(float* border);
     void save(QTextStream* out);
     void resize(float x, float y, float z);
-    virtual void deleteVBO();
+    void deleteVBO();
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
@@ -56,6 +55,8 @@ private:
     void drawShape();
     void genShape();
     void createVBO(Shape* shape, int ptr, float * data);
+    bool getSimpleBorder(float* border);
+    bool getBoxPoints(QVector<float> &points);
 };
 
 #endif	/* DYNTRACKOBJ_H */

@@ -136,7 +136,7 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     }
 };
 
-bool StaticObj::getBorder(float* border){
+bool StaticObj::getSimpleBorder(float* border){
     if (shapePointer == 0) return false;
     if (!shapePointer->loaded)
         return false;
@@ -148,6 +148,13 @@ bool StaticObj::getBorder(float* border){
     border[4] = bound[4];
     border[5] = bound[5];
     return true;
+}
+
+bool StaticObj::getBoxPoints(QVector<float>& points){
+    if (shapePointer == 0) return false;
+    if (!shapePointer->loaded)
+        return false;
+    return shapePointer->getBoxPoints(points);
 }
 
 QString StaticObj::getShapePath(){

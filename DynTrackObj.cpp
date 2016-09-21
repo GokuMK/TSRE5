@@ -952,7 +952,7 @@ void DynTrackObj::createVBO(Shape* shape, int ptr, float * data) {
     delete data;
 }
 
-bool DynTrackObj::getBorder(float* border){
+bool DynTrackObj::getSimpleBorder(float* border){
     border[0] = bound[0];
     border[1] = bound[1];
     border[2] = bound[2];
@@ -960,6 +960,40 @@ bool DynTrackObj::getBorder(float* border){
     border[4] = bound[4];
     border[5] = bound[5];
     return true;
+}
+
+bool DynTrackObj::getBoxPoints(QVector<float>& points){
+        float bound[6];
+        if (!getSimpleBorder((float*)&bound)) return false;
+        
+        for(int i=0; i<2; i++)
+            for(int j=4; j<6; j++){
+                points.push_back(bound[i]);
+                points.push_back(bound[2]);
+                points.push_back(bound[j]);
+                points.push_back(bound[i]);
+                points.push_back(bound[3]);
+                points.push_back(bound[j]);
+            }
+        for(int i=0; i<2; i++)
+            for(int j=2; j<4; j++){
+                points.push_back(bound[i]);
+                points.push_back(bound[j]);
+                points.push_back(bound[4]);
+                points.push_back(bound[i]);
+                points.push_back(bound[j]);
+                points.push_back(bound[5]);
+            }
+        for(int i=4; i<6; i++)
+            for(int j=2; j<4; j++){
+                points.push_back(bound[0]);
+                points.push_back(bound[j]);
+                points.push_back(bound[i]);
+                points.push_back(bound[1]);
+                points.push_back(bound[j]);
+                points.push_back(bound[i]);
+            }
+        return true;
 }
 
 int DynTrackObj::getDefaultDetailLevel(){

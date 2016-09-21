@@ -393,7 +393,7 @@ bool SignalObj::select(int value){
     this->selected = true;
 }
 
-bool SignalObj::getBorder(float* border){
+bool SignalObj::getSimpleBorder(float* border){
     if (shape < 0) return false;
     if (!Game::currentShapeLib->shape[shape]->loaded)
         return false;
@@ -405,6 +405,40 @@ bool SignalObj::getBorder(float* border){
     border[4] = bound[4];
     border[5] = bound[5];
     return true;
+}
+
+bool SignalObj::getBoxPoints(QVector<float>& points){
+        float bound[6];
+        if (!getSimpleBorder((float*)&bound)) return false;
+        
+        for(int i=0; i<2; i++)
+            for(int j=4; j<6; j++){
+                points.push_back(bound[i]);
+                points.push_back(bound[2]);
+                points.push_back(bound[j]);
+                points.push_back(bound[i]);
+                points.push_back(bound[3]);
+                points.push_back(bound[j]);
+            }
+        for(int i=0; i<2; i++)
+            for(int j=2; j<4; j++){
+                points.push_back(bound[i]);
+                points.push_back(bound[j]);
+                points.push_back(bound[4]);
+                points.push_back(bound[i]);
+                points.push_back(bound[j]);
+                points.push_back(bound[5]);
+            }
+        for(int i=4; i<6; i++)
+            for(int j=2; j<4; j++){
+                points.push_back(bound[0]);
+                points.push_back(bound[j]);
+                points.push_back(bound[i]);
+                points.push_back(bound[1]);
+                points.push_back(bound[j]);
+                points.push_back(bound[i]);
+            }
+        return true;
 }
 
 int SignalObj::getDefaultDetailLevel(){

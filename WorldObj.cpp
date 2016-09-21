@@ -516,56 +516,26 @@ Ref::RefItem* WorldObj::getRefInfo(){
     return r;
 }
 
-bool WorldObj::getBorder(float* border){
+bool WorldObj::getSimpleBorder(float* border){
     return false;
 }
 
 void WorldObj::drawBox(){
-
     if (!box.loaded) {
-        float bound[6];
-        if (!getBorder((float*)&bound)) return;
-        
-        float* punkty = new float[72];
-        float* ptr = punkty;
-        
-        for(int i=0; i<2; i++)
-            for(int j=4; j<6; j++){
-                *ptr++ = bound[i];
-                *ptr++ = bound[2];
-                *ptr++ = bound[j];
-                *ptr++ = bound[i];
-                *ptr++ = bound[3];
-                *ptr++ = bound[j];
-            }
-        for(int i=0; i<2; i++)
-            for(int j=2; j<4; j++){
-                *ptr++ = bound[i];
-                *ptr++ = bound[j];
-                *ptr++ = bound[4];
-                *ptr++ = bound[i];
-                *ptr++ = bound[j];
-                *ptr++ = bound[5];
-            }
-        for(int i=4; i<6; i++)
-            for(int j=2; j<4; j++){
-                *ptr++ = bound[0];
-                *ptr++ = bound[j];
-                *ptr++ = bound[i];
-                *ptr++ = bound[1];
-                *ptr++ = bound[j];
-                *ptr++ = bound[i];
-            }
+        QVector<float> punkty;
+        if (!this->getBoxPoints(punkty)) return;
 
         box.setMaterial(0.0, 0.0, 1.0);
-        box.init(punkty, ptr-punkty, box.V, GL_LINES);
+        box.init((float*)&punkty[0], punkty.size(), box.V, GL_LINES);
         //box.setLineWidth(3);
-
-        delete[] punkty;
     }
     
     box.render();
 };
+
+bool WorldObj::getBoxPoints(QVector<float>& points){
+    return false;
+}
 
 bool WorldObj::select(){
     this->selected = true;

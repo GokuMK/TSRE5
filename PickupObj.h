@@ -37,7 +37,6 @@ public:
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
-    bool getBorder(float* border);
     float getPickupContent();
     void setPickupContent(float val);
     int getDefaultDetailLevel();
@@ -49,6 +48,8 @@ private:
     TrackItemObj* pointer3d = NULL;
     float* drawPosition = NULL;
     void renderTritems(GLUU* gluu, int selectionColor);
+    bool getSimpleBorder(float* border);
+    bool getBoxPoints(QVector<float> &points);
 };
 
 #endif	/* PICKUPOBJ_H */

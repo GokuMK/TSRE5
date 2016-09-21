@@ -27,7 +27,6 @@ public:
     void set(int sh, FileBuffer* val);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
-    bool getBorder(float* border);
     void save(QTextStream* out);
     bool select(int value);
     int getLinkedJunctionValue(int i);
@@ -53,6 +52,8 @@ private:
     float** drawPositions = NULL;
     int selectionValue = 0;
     void renderTritems(GLUU* gluu, int selectionColor);
+    bool getSimpleBorder(float* border);
+    bool getBoxPoints(QVector<float> &points);
 };
 
 #endif	/* SIGNALOBJ_H */

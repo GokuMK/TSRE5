@@ -33120,7 +33120,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OglObj.o: OglObj.cpp OglObj.
 		Vector3f.h \
 		TexLib.h \
 		Texture.h \
-		Game.h
+		Game.h \
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OglObj.o OglObj.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OverwriteDialog.o: OverwriteDialog.cpp OverwriteDialog.h \

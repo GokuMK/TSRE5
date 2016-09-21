@@ -31,7 +31,6 @@ public:
     void set(int sh, FileBuffer* data);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
-    bool getBorder(float* border);
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 
@@ -41,6 +40,8 @@ private:
     TrackItemObj* pointer3d = NULL;
     float* drawPosition = NULL;
     void renderTritems(GLUU* gluu, int selectionColor);
+    bool getSimpleBorder(float* border);
+    bool getBoxPoints(QVector<float> &points);
 };
 
 #endif	/* HAZARDOBJ_H */

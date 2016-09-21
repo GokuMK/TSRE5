@@ -27,11 +27,11 @@ public:
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     QString getShapePath();
-    bool getBorder(float* border);
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
-
+    bool getSimpleBorder(float* border);
+    bool getBoxPoints(QVector<float> &points);
 };
 
 #endif	/* STATICOBJ_H */

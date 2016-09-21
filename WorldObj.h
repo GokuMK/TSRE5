@@ -105,7 +105,6 @@ public:
     virtual bool select(int value);
     virtual bool unselect();
     virtual bool isSelected();
-    virtual bool getBorder(float* border);
     virtual void deleteTrItems();
     virtual int getDefaultDetailLevel();
     virtual int getCustomDetailLevel();
@@ -115,6 +114,8 @@ public:
     virtual QString getShapePath();
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 protected:
+    virtual bool getSimpleBorder(float* border);
+    virtual bool getBoxPoints(QVector<float> &points);
     float* matrix3x3 = NULL;
     bool selected;
 };
