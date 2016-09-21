@@ -2114,12 +2114,13 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
     }
 }
 
-void TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpos){
+bool TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpos){
     float *lineBuffer;
     int length = 0;
     getLines(lineBuffer, length, posT);
     
     qDebug() << "lines length" << length;
+
     qDebug() << ": " << posT[0]<<" "<<posT[1]<<" "<<pos[0]<<" "<<pos[1]<<" "<<pos[2];
     float best[7];
     best[0] = 99999;
@@ -2146,7 +2147,8 @@ void TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tp
         }
     }
     qDebug() << "item pos: " << best[0] << " " << best[1] << " " << best[2] << " " << best[3];
-    
+    if(best[0] == 99999 )
+        return false;
     //TRnode* n = trackNodes[(int)best[1]];
     //posT[0] = n->trVectorSection[(int)best[2]].param[8];
     //posT[1] = -n->trVectorSection[(int)best[2]].param[9];
@@ -2167,9 +2169,11 @@ void TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tp
     q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
     Quat::rotateY(q, q, best[3]);
     Quat::rotateX(q, q, -best[4]);
+    
+    return true;
 }
 
-void TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos){
+bool TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos){
     float *lineBuffer;
     int length = 0;
     getLines(lineBuffer, length, posT);
@@ -2218,6 +2222,7 @@ void TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float
         }
     }
     qDebug() << "item pos: " << best[0] << " " << best[1] << " " << best[2] << " " << best[3];
+    if(best[0] == 99999) return false;
     
     //TRnode* n = trackNodes[(int)best[1]];
     //posT[0] = n->trVectorSection[(int)best[2]].param[8];
@@ -2237,9 +2242,10 @@ void TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float
     q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
     Quat::rotateY(q, q, best[3]);
     Quat::rotateX(q, q, -best[4]);
+    return true;
 }
 
-void TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint*> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos){
+bool TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint*> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos){
     float *lineBuffer;
     int length = 0;
     getLines(lineBuffer, length, posT);
@@ -2298,7 +2304,7 @@ void TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint
         }
     }
     std::sort(ipoints.begin(), ipoints.end());
-    return;
+    return true;
 }
 
 void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){

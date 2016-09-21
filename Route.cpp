@@ -277,28 +277,32 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     if(stickToTDB || itemTrackType == 1){
         tpos = new float[2];
         float* playerT = Vec2::fromValues(x, z);
-        this->trackDB->findNearestPositionOnTDB(playerT, p, q, tpos);
+        bool ok = this->trackDB->findNearestPositionOnTDB(playerT, p, q, tpos);
+        if(!ok) return NULL;
         x = playerT[0];
         z = playerT[1];
     }
     if(itemTrackType == 2){
         tpos = new float[2];
         float* playerT = Vec2::fromValues(x, z);
-        this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
+        bool ok = this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
+        if(!ok) return NULL;
         x = playerT[0];
         z = playerT[1];
     } 
     if(itemTrackType == 3){
         tpos = new float[2];
         float* playerT = Vec2::fromValues(x, z);
-        this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
+        bool ok = this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
+        if(!ok) return NULL;
         x = playerT[0];
         z = playerT[1];
         float* buffer;
         int len;
         this->roadDB->getVectorSectionLine(buffer, len, playerT[0], playerT[1], tpos[0], 0, 0);
         qDebug() << "len "<<len;
-        this->trackDB->getSegmentIntersectionPositionOnTDB(playerT, buffer, len, p, q, tpos);
+        ok = this->trackDB->getSegmentIntersectionPositionOnTDB(playerT, buffer, len, p, q, tpos);
+        if(!ok) return NULL;
         //return NULL;
     }
 
