@@ -1521,7 +1521,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
             if(jNodePosn != NULL){
                 jNodePosn->push_back(std::array<float,5>());
                 jNodePosn->back()[0] = x;
-                jNodePosn->back()[1] = z;
+                jNodePosn->back()[1] = -z;
                 jNodePosn->back()[2] = pp[0];
                 jNodePosn->back()[3] = pp[1];
                 jNodePosn->back()[4] = -pp[2];
