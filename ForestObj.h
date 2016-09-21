@@ -59,6 +59,7 @@ public:
     virtual ~ForestObj();
 private:
     void drawShape();
+    bool getBoxPoints(QVector<float>& points);
     int tex;
     bool init;
     OglObj shape;

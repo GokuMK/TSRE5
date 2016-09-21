@@ -52,6 +52,7 @@ private:
     bool init;
     float bound[6];
     QString *texturePath;
+    bool getBoxPoints(QVector<float> &points);
 };
 
 #endif	/* TRANSFEROBJ_H */

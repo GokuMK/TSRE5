@@ -360,6 +360,58 @@ void ForestObj::drawShape(){
         init = true;
     }
     shape.render();
+    if(selected){
+        drawBox();
+    }
+}
+
+bool ForestObj::getBoxPoints(QVector<float>& points){
+    if (!loaded) 
+        return false;
+    float scale = (float) sqrt(qDirection[0] * qDirection[0] + qDirection[1] * qDirection[1] + qDirection[2] * qDirection[2]);
+    float off = ((qDirection[1]+0.000001f)/fabs(scale+0.000001f))*(float)-acos(qDirection[3])*2;
+        
+            Vector2f x1y1(-areaX/2,-areaZ/2, off, 0);
+            Vector2f x1y2(-areaX/2,areaZ/2, off, 0);
+            Vector2f x2y1(areaX/2,-areaZ/2, off, 0);
+            Vector2f x1y12 = x1y2.subv(x1y1);
+            Vector2f x12y1 = x2y1.subv(x1y1);
+            float x1y12d = x1y12.getDlugosc();
+            float x12y1d = x12y1.getDlugosc();
+            float wysokosc = 0;
+            float step = 2;
+            
+            for(float i = 0; i <= x1y12d; i+=x1y12d){
+                for(float j = 0; j < x12y1d; j+=step){
+                    float jj = j+step;
+                    if(jj>x12y1d) jj = x12y1d;          
+
+                    wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]));
+                    points << x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x;
+                    points << wysokosc+0.5f;
+                    points << x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y;
+                    wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/jj).y + position[2]));
+                    points << x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/jj).x;
+                    points << wysokosc+0.5f;
+                    points << x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/jj).y;
+                }
+            }
+            for(float j = 0; j <= x12y1d; j+=x12y1d){
+                for(float i = 0; i < x1y12d; i+=step){
+                    float ii = i+step;
+                    if(ii>x1y12d) ii = x1y12d;          
+
+                    wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]));
+                    points << x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x;
+                    points << wysokosc+0.5f;
+                    points << x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y;
+                    wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/j).y + position[2]));
+                    points << x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/j).x;
+                    points << wysokosc+0.5f;
+                    points << x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/j).y;
+                }
+            }
+            return true;
 }
 
 int ForestObj::getDefaultDetailLevel(){
@@ -392,4 +444,5 @@ bool ForestObj::allowNew(){
 void ForestObj::deleteVBO(){
     //this->shape.deleteVBO();
     this->init = false;
+    this->box.deleteVBO();
 }
