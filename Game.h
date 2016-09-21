@@ -85,6 +85,7 @@ public:
     static int fpsLimit;
     static bool ortsEngEnable;
     static bool sortTileObjects;
+    static int oglDefaultLineWidth;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

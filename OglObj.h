@@ -39,7 +39,7 @@ private:
     int shapeType;
     int texId;
     int materialType;
-    int lineWidth = 1;
+    int lineWidth = 0;
     QString *res;
     Vector4f *color = NULL;
 };

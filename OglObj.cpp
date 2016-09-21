@@ -10,6 +10,7 @@
 
 #include "OglObj.h"
 #include "TexLib.h"
+#include "Game.h"
 
 OglObj::OglObj() {
     loaded = false;
@@ -124,12 +125,14 @@ void OglObj::render(int selectionColor) {
         return;
     }
 
-    if(lineWidth !=1)
+    if(lineWidth > 0 && lineWidth != Game::oglDefaultLineWidth)
         f->glLineWidth(lineWidth);
+    
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
     f->glDrawArrays(shapeType, 0, length); /**/
-    if(lineWidth !=1)
-        f->glLineWidth(1);
+    
+    if(lineWidth > 0 && lineWidth != Game::oglDefaultLineWidth)
+        f->glLineWidth(Game::oglDefaultLineWidth);
 }
 
 int OglObj::getTexId(){

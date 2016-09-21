@@ -50,3 +50,4 @@ leaveTrackShapeAfterDelete = false
 #renderTrItems = true
 useImperial = false
 #ortsEngEnable = false
+#oglDefaultLineWidth = 2
