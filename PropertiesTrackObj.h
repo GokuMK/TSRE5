@@ -25,7 +25,7 @@ public:
     void updateObj(WorldObj* obj);
     
 public slots:
-
+    void fixJNodePosnEnabled();
     
 signals:
     

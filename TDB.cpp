@@ -1365,11 +1365,39 @@ bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sect
     return true;
 }
 
-bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid) {
-    placeTrack(x, z, p, q, sectionIdx, uid, 0);
+bool TDB::fillJNodePosn(int x, int z, int uid, QVector<std::array<float, 5>> *jNodePosn){
+    if(jNodePosn == NULL)
+        return false;
+    jNodePosn->clear();
+    z = -z;
+    qDebug() << "fill jnodeposn " << x << " " << z << " " << uid; 
+    
+    TRnode *n;
+    int count = 0;
+    for (int i = 1; i <= iTRnodes; i++) {
+            n = trackNodes[i];
+            if (n == NULL) continue;
+            if (n ->typ == -1) continue;
+            if (n->typ == 2) {
+                if(n->UiD[0] == x)
+                    if(n->UiD[1] == z)
+                        if(n->UiD[2] == uid){
+                            qDebug() << "jest j";
+                            count++;
+                            jNodePosn->push_back(std::array<float,5>());
+                            jNodePosn->back()[0] = n->UiD[0];
+                            jNodePosn->back()[1] = n->UiD[1];
+                            jNodePosn->back()[2] = n->UiD[6];
+                            jNodePosn->back()[3] = n->UiD[7];
+                            jNodePosn->back()[4] = n->UiD[8];
+                }
+            }
+        }
+    if(count > 0) return true;
+    return false;
 }
 
-bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, float elevation) {
+bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, QVector<std::array<float, 5>> *jNodePosn) {
     float qe[4];
     float vect[3];
     vect[0] = 0; vect[1] = 0; vect [2] = 10;
@@ -1489,7 +1517,15 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
         
         if(isJunction[ends[0]] == 1){
             isJunction[ends[0]] = 0;
-            qDebug() << "rozjazd";
+            qDebug() << "rozjazd" << jNodePosn;
+            if(jNodePosn != NULL){
+                jNodePosn->push_back(std::array<float,5>());
+                jNodePosn->back()[0] = x;
+                jNodePosn->back()[1] = z;
+                jNodePosn->back()[2] = pp[0];
+                jNodePosn->back()[3] = pp[1];
+                jNodePosn->back()[4] = -pp[2];
+            }
             junctionId[ends[0]] = newJunction(x, z, pp, qee, sectionIdx, uid, ends[0]);
         }
 

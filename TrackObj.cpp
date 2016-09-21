@@ -17,6 +17,7 @@
 #include "TS.h"
 #include <QDebug>
 #include "Game.h"
+#include "TDB.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -192,12 +193,12 @@ void TrackObj::set(int sh, FileBuffer* data) {
     }
     if (sh == TS::JNodePosn) {
         data->off++;
-        jNodePosn = new float[5];
-        jNodePosn[0] = data->getFloat();
-        jNodePosn[1] = data->getFloat();
-        jNodePosn[2] = data->getFloat();
-        jNodePosn[3] = data->getFloat();
-        jNodePosn[4] = data->getFloat();
+        jNodePosn.push_back(std::array<float,5>());
+        jNodePosn.back()[0] = data->getFloat();
+        jNodePosn.back()[1] = data->getFloat();
+        jNodePosn.back()[2] = data->getFloat();
+        jNodePosn.back()[3] = data->getFloat();
+        jNodePosn.back()[4] = data->getFloat();
         return;
     }
     
@@ -219,12 +220,12 @@ void TrackObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("jnodeposn")) {
-        jNodePosn = new float[5];
-        jNodePosn[0] = ParserX::GetNumber(data);
-        jNodePosn[1] = ParserX::GetNumber(data);
-        jNodePosn[2] = ParserX::GetNumber(data);
-        jNodePosn[3] = ParserX::GetNumber(data);
-        jNodePosn[4] = ParserX::GetNumber(data);
+        jNodePosn.push_back(std::array<float,5>());
+        jNodePosn.back()[0] = ParserX::GetNumber(data);
+        jNodePosn.back()[1] = ParserX::GetNumber(data);
+        jNodePosn.back()[2] = ParserX::GetNumber(data);
+        jNodePosn.back()[3] = ParserX::GetNumber(data);
+        jNodePosn.back()[4] = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("collidefunction")) {
@@ -292,6 +293,11 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
     }
 };
 
+void TrackObj::fillJNodePosn(){
+    TDB* tdb = Game::trackDB;
+    this->modified = tdb->fillJNodePosn(this->x, this->y, this->UiD, &this->jNodePosn);
+}
+
 bool TrackObj::getBorder(float* border){
     if (shapePointer == 0) return false;
     if (!shapePointer->loaded)
@@ -330,8 +336,10 @@ void TrackObj::save(QTextStream* out){
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		SectionIdx ( "<<this->sectionIdx<<" )\n";
 *(out) << "		Elevation ( "<<this->elevation<<" )\n";
-if(this->jNodePosn!=NULL)
-*(out) << "		JNodePosn ( "<<this->jNodePosn[0]<<" "<<this->jNodePosn[1]<<" "<<this->jNodePosn[2]<<" "<<this->jNodePosn[3]<<" "<<this->jNodePosn[4]<<" )\n";
+if(this->jNodePosn.size() != 0)
+    for(int i = 0; i < this->jNodePosn.size(); i++ ){
+        *(out) << "		JNodePosn ( "<<this->jNodePosn[i][0]<<" "<<this->jNodePosn[i][1]<<" "<<this->jNodePosn[i][2]<<" "<<this->jNodePosn[i][3]<<" "<<this->jNodePosn[i][4]<<" )\n";
+    }
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
 *(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";

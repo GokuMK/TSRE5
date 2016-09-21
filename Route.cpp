@@ -413,10 +413,11 @@ void Route::addToTDB(WorldObj* obj) {
         if(this->tsection->isRoadShape(track->sectionIdx))
             this->roadDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
         else
-            this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD);
+            this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, track->sectionIdx, obj->UiD, &track->jNodePosn);
         //obj->setPosition(p);
         //obj->setQdirection(q);
         //obj->setMartix();
+        //track->setJNodePosN();
     } else if(obj->type == "dyntrack"){
         DynTrackObj* dynTrack = (DynTrackObj*) obj;
         if(dynTrack->sectionIdx == -1){

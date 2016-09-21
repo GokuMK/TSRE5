@@ -155,6 +155,16 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vlist->addRow("‰",&this->elevProm);
     vlist->addRow("1 in 'x' m",&this->elev1inXm);
     vbox->addItem(vlist);
+    
+    label = new QLabel("Advanced:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    QPushButton *fixJNodePosn = new QPushButton("Fix JNodePosn", this);
+    QObject::connect(fixJNodePosn, SIGNAL(released()),
+                      this, SLOT(fixJNodePosnEnabled()));
+    vbox->addWidget(label);
+    vbox->addWidget(fixJNodePosn);
+    
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -163,6 +173,13 @@ PropertiesTrackObj::PropertiesTrackObj(){
 }
 
 PropertiesTrackObj::~PropertiesTrackObj() {
+}
+
+void PropertiesTrackObj::fixJNodePosnEnabled(){
+    if(trackObj == NULL){
+        return;
+    }
+    trackObj->fillJNodePosn();
 }
 
 void PropertiesTrackObj::showObj(WorldObj* obj){

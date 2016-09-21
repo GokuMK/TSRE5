@@ -35,10 +35,11 @@ public:
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     int sectionIdx;
+    QVector<std::array<float, 5>> jNodePosn;
+    void fillJNodePosn();
 private:
     float elevation;
     unsigned int collideFunction;
-    float* jNodePosn = NULL;
 };
 
 #endif	/* TRACKOBJ_H */

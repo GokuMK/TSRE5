@@ -50300,7 +50300,13 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackObj.o: TrackObj.cpp Tra
 		ParserX.h \
 		TS.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
-		Game.h
+		Game.h \
+		TDB.h \
+		TextObj.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QPainter \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpainter.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qtextoption.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpen.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackObj.o TrackObj.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackShape.o: TrackShape.cpp TrackShape.h \
