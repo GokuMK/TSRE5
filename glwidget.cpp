@@ -599,7 +599,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             if(selectedObj != NULL){
                 mouseLPressed = true;
                 if(translateTool){
-                    selectedObj->setPosition(aktPointerPos);
+                    selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
                     selectedObj->setMartix();
                 }
                 lastPointerPos[0] = aktPointerPos[0];
