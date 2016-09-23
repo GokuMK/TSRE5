@@ -263,7 +263,7 @@ void PropertiesTrackObj::updateObj(WorldObj* obj){
     float oneInXm = 0;
 
     oneInXm = 1000.0/vect[1];
-    if(!this->elevProm.hasFocus())    
+    if(!this->elevProm.hasFocus())
         this->elevProm.setText(QString::number(vect[1]));
     if(!this->elev1inXm.hasFocus())
         this->elev1inXm.setText(QString::number(oneInXm));

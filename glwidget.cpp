@@ -144,6 +144,8 @@ void GLWidget::initializeGL() {
     pointer3d = new Pointer3d();
     //selectedObj = NULL;
     setSelectedObj(NULL);
+    groupObj = new GroupObj();
+    copyPasteGroupObj = new GroupObj();
     defaultPaintBrush = new Brush();
     mapWindow = new MapWindow();
     Quat::fill(this->placeRot);
@@ -254,23 +256,31 @@ void GLWidget::paintGL() {
         //int UiD = (int) (winZ[1]*255)*256 + (int) (winZ[2]*255);
 
         qDebug() << wx << " " << wz << " " << UiD;
-        if(selectedObj != NULL) selectedObj->unselect();
-        lastSelectedObj = selectedObj;
-        setSelectedObj(route->getObj(wx, wz, UiD));
-        if (!selectedObj->loaded){
-            qDebug() << "brak obiektu";
-            setSelectedObj(NULL);
+        
+        if(keyControlEnabled){
+            if(selectedObj == NULL) 
+                setSelectedObj(groupObj);
+            if(selectedObj->typeID != WorldObj::groupobject){
+                groupObj->addObject(selectedObj);
+                setSelectedObj(groupObj);
+            }
+            groupObj->addObject(route->getObj(wx, wz, UiD));
+            if (groupObj->count() == 0){
+                qDebug() << "brak obiektu";
+                groupObj->unselect();
+                setSelectedObj(NULL);
+            }
         } else {
-            selectedObj->select(cdata);
-            //selectedObj->translate(0,10,0);
+            if(selectedObj != NULL) selectedObj->unselect();
+            lastSelectedObj = selectedObj;
+            setSelectedObj(route->getObj(wx, wz, UiD));
+            if (selectedObj == NULL){
+                qDebug() << "brak obiektu";
+            } else {
+                selectedObj->select(cdata);
+            }
         }
-        //int objHash = trasa.getObjectHash(wx,wz,UiD);
-        //System.out.println( objHash + " ");
 
-        //selectedObj = trasa.getObj(wx,wz,objHash);
-
-        //selectedObj.select();
-        //System.out.println(selectedObj.selected); 
         selection = !selection;
         paintGL();
     }
@@ -385,6 +395,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
         switch (event->key()) {
             case Qt::Key_Control:
                 moveStep = moveMinStep;
+                keyControlEnabled = true;
                 break;
             case Qt::Key_Up:    
                 if(Game::usenNumPad) break;
@@ -555,6 +566,7 @@ void GLWidget::keyReleaseEvent(QKeyEvent * event) {
             //case Qt::Key_Alt:
             case Qt::Key_Control:
                 moveStep = moveMaxStep;
+                keyControlEnabled = false;
                 break;
             default:
                 break;
@@ -736,13 +748,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
                     }
                 }
                 if(translateTool){
-                    selectedObj->setPosition(aktPointerPos);
+                    selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
                     selectedObj->setMartix();
                 }
                 if(rotateTool){
                     float val = mousex - m_lastPos.x();
                     selectedObj->rotate(0,val*moveStep*0.1,0);
-                 }
+                }
                 lastPointerPos[0] = aktPointerPos[0];
                 lastPointerPos[1] = aktPointerPos[1];
                 lastPointerPos[2] = aktPointerPos[2];
@@ -801,7 +813,13 @@ void GLWidget::setSelectedObj(WorldObj* o){
 void GLWidget::editCopy(){
     if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
         if(selectedObj != NULL){
-            copyPasteObj = selectedObj;
+            if(selectedObj->typeID == WorldObj::groupobject){
+                delete copyPasteGroupObj;
+                copyPasteGroupObj = new GroupObj(groupObj);
+                copyPasteObj = copyPasteGroupObj;
+            } else {
+                copyPasteObj = selectedObj;
+            }
         }
     }
 }
@@ -816,11 +834,16 @@ void GLWidget::editPaste(){
             lastNewObjPos[0] = aktPointerPos[0];
             lastNewObjPos[1] = aktPointerPos[1];
             lastNewObjPos[2] = aktPointerPos[2];
-            float *q = Quat::create();
-            Quat::copy(q, copyPasteObj->qDirection);
-            setSelectedObj(route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, q, copyPasteObj->getRefInfo()));
-            if(selectedObj != NULL)
-                selectedObj->select();
+            if(copyPasteObj->typeID == WorldObj::groupobject){
+                groupObj->fromNewObjects((GroupObj*)copyPasteObj, route, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+                setSelectedObj(groupObj);
+            } else {
+                float *q = Quat::create();
+                Quat::copy(q, copyPasteObj->qDirection);
+                setSelectedObj(route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, q, copyPasteObj->getRefInfo()));
+                if(selectedObj != NULL)
+                    selectedObj->select();
+            }
         }
     }
 }

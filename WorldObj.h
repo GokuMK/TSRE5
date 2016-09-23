@@ -40,7 +40,8 @@ public:
         pickup = 15,
         hazard = 16,
         soundsource = 17,
-        soundregion = 18
+        soundregion = 18,
+        groupobject = 19
     };
     TypeID typeID = this->undefined;
     
@@ -85,13 +86,13 @@ public:
     virtual void set(QString sh, float* val);
     virtual void set(QString sh, int val);
     virtual void save(QTextStream* out);
-    void setPosition(float* p);
-    void setPosition(int x, int z, float* p);
-    void initPQ(float* p, float* q);
+    virtual void setPosition(float* p);
+    virtual void setPosition(int x, int z, float* p);
+    virtual void initPQ(float* p, float* q);
     virtual void initTrItems(float *tpos);
-    void setQdirection(float* q);
-    void setNewQdirection();
-    void setMartix();
+    virtual void setQdirection(float* q);
+    virtual void setNewQdirection();
+    virtual void setMartix();
     virtual bool allowNew();
     virtual void deleteVBO();
     virtual void translate(float px, float py, float pz);
@@ -100,7 +101,7 @@ public:
     virtual bool isTrackItem();
     virtual bool isSoundItem();
     virtual Ref::RefItem* getRefInfo();
-    void drawBox();
+    virtual void drawBox();
     virtual bool select();
     virtual bool select(int value);
     virtual bool unselect();

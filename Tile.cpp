@@ -329,7 +329,7 @@ WorldObj* Tile::getObj(int uid) {
             return obiekty[i];
         }
     }
-    return new WorldObj();
+    return NULL;
 }
 
 void Tile::transalteObj(float px, float py, float pz, int uid) {

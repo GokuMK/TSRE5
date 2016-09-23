@@ -149,7 +149,7 @@ WorldObj* Route::getObj(int x, int z, int uid) {
     //try {
     tTile = tile[((x)*10000 + z)];
     if (tTile == NULL)
-        return new WorldObj();
+        return NULL;
     return tTile->getObj(uid);
     //} catch (const std::out_of_range& oor) {
 

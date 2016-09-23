@@ -20,6 +20,7 @@
 #include <QBasicTimer>
 #include "CameraFree.h"
 #include "WorldObj.h"
+#include "GroupObj.h"
 #include "Pointer3d.h"
 #include "Ref.h"
 
@@ -120,6 +121,8 @@ private:
     WorldObj* selectedObj = NULL;
     WorldObj* lastSelectedObj = NULL;
     WorldObj* copyPasteObj = NULL;
+    GroupObj* groupObj = NULL;
+    GroupObj* copyPasteGroupObj = NULL;
     Pointer3d* pointer3d;
     float lastPointerPos[3];
     float aktPointerPos[3];
@@ -137,6 +140,7 @@ private:
     float lastNewObjPosT[2];
     float placeRot[4];
     long long int lastMousePressTime = 0;
+    bool keyControlEnabled = false;
     
     Brush* defaultPaintBrush;
     MapWindow* mapWindow;
