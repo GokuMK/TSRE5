@@ -37,6 +37,7 @@
 #include "AboutWindow.h"
 #include "TrkWindow.h"
 #include "PlatformObj.h"
+#include "GroupObj.h"
 
 Route::Route() {
 
@@ -431,11 +432,20 @@ void Route::addToTDB(WorldObj* obj) {
         obj->setPosition(p);
         obj->setQdirection(q);
         obj->setMartix();
-    }
+    } 
 }
 
 void Route::toggleToTDB(WorldObj* obj) {
     if(obj == NULL) return;
+    
+    if(obj->typeID == obj->groupobject) {
+        GroupObj *gobj = (GroupObj*)obj;
+        for(int i = 0; i < gobj->objects.size(); i++ ){
+            toggleToTDB(gobj->objects[i]);
+        }
+        return;
+    }
+    
     if (obj->type != "trackobj" && obj->type != "dyntrack") {
             return;
     }
@@ -481,6 +491,14 @@ void Route::deleteTDBTree(WorldObj* obj){
 }
 
 void Route::deleteObj(WorldObj* obj) {
+    if(obj->typeID == obj->groupobject) {
+        GroupObj *gobj = (GroupObj*)obj;
+        for(int i = 0; i < gobj->objects.size(); i++ ){
+            deleteObj(gobj->objects[i]);
+        }
+        return;
+    }
+    
     if (obj->type == "trackobj" || obj->type == "dyntrack") {
         removeTrackFromTDB(obj);
         if(Game::leaveTrackShapeAfterDelete)

@@ -42714,7 +42714,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Route.o: Route.cpp c:/OT/Sta
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbox.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
-		TrkWindow.h
+		TrkWindow.h \
+		GroupObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Route.o Route.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ruch.o: Ruch.cpp Ruch.h \

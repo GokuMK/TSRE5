@@ -23,6 +23,7 @@ public:
         float position[3];
         float qDirection[4];
     };
+    QVector<WorldObj*> objects;
     
     GroupObj();
     GroupObj(const GroupObj* orig);
@@ -44,7 +45,6 @@ public:
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     virtual ~GroupObj();
 private:
-    QVector<WorldObj*> objects;
     Pivot pivot;
 };
 

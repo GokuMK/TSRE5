@@ -99,6 +99,8 @@ public:
     static float* copy(float* out, float* a);
     static float* fromMat3(float *out, float *m);
     static float* fromRotationXYZ(float *out, float *a);
+    static float* multiply(float *out, float *a, float *b);
+    static float* invert(float* out, float* a);
     static float* rotateX(float *out, float *a, float rad);
     static float* rotateY(float *out, float *a, float rad);
     static float* rotateZ(float *out, float *a, float rad);
