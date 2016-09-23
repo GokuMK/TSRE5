@@ -30,7 +30,6 @@ public:
     
     Section* sections;
     Shape shape[2];
-    int sectionIdx;
     DynTrackObj();
     DynTrackObj(const DynTrackObj& orig);
     virtual ~DynTrackObj();

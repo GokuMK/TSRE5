@@ -75,6 +75,7 @@ public:
     OglObj box;
     float tRotation[2];
     float *endp = 0;
+    int sectionIdx;
     
     WorldObj();
     WorldObj(const WorldObj& orig);

@@ -243,12 +243,12 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
 
 void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
     if(obj == NULL) return;
-    if(obj->type != "trackobj") return;
-    TrackObj* tobj = (TrackObj*)obj;
+    if(obj->type != "trackobj" && obj->type != "dyntrack" ) return;
+    //TrackObj* tobj = (TrackObj*)obj;
     //TrackObj* track = (TrackObj*)obj;
     float* punkty = new float[10000];
     float* ptr = punkty;
-    if(this->tsection->isRoadShape(tobj->sectionIdx))
+    if(this->tsection->isRoadShape(obj->sectionIdx))
         this->roadDB->getVectorSectionPoints(obj->x, obj->y, obj->UiD, ptr);
     else
         this->trackDB->getVectorSectionPoints(obj->x, obj->y, obj->UiD, ptr);
