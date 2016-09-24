@@ -244,6 +244,15 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
 
 void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
     if(obj == NULL) return;
+    
+    if(obj->typeID == obj->groupobject) {
+        GroupObj *gobj = (GroupObj*)obj;
+        for(int i = 0; i < gobj->objects.size(); i++ ){
+            setTerrainToTrackObj(gobj->objects[i], brush);
+        }
+        return;
+    }
+    
     if(obj->type != "trackobj" && obj->type != "dyntrack" ) return;
     //TrackObj* tobj = (TrackObj*)obj;
     //TrackObj* track = (TrackObj*)obj;

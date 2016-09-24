@@ -157,7 +157,7 @@ void GroupObj::rotate(float x, float y, float z){
     }  
     float* q = Quat::create();
     for(int i = 0; i < this->objects.size(); i++){
-        this->objects[i]->rotate(x, y, z);
+        this->objects[i]->rotate(-x, y, z);
         Vec3::sub(tpos, tp, objects[i]->position);
         Quat::fill(q);
         Quat::rotateY(q, q, y);
