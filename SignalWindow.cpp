@@ -75,7 +75,7 @@ void SignalWindow::bLinkEnabled(int i){
         return;
     
     SignalWindowLink window;
-    window.setWindowTitle("Water Level");
+    window.setWindowTitle("Link Signal");
     window.exec();
     if(window.changed){
         int from = window.from.text().toInt();

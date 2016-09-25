@@ -160,6 +160,9 @@ Window::Window() {
     QAction* viewTerrainGrid = GuiFunct::newMenuCheckAction(tr("&Terrain Grid"), this, false); 
     viewMenu->addAction(viewTerrainGrid);
     QObject::connect(viewTerrainGrid, SIGNAL(triggered(bool)), this, SLOT(viewTerrainGrid(bool)));    
+    QAction* showWorldObjPivotPoints = GuiFunct::newMenuCheckAction(tr("&WorldObj Markers"), this, false); 
+    viewMenu->addAction(showWorldObjPivotPoints);
+    QObject::connect(showWorldObjPivotPoints, SIGNAL(triggered(bool)), this, SLOT(showWorldObjPivotPointsEnabled(bool)));
     QAction* viewInteractives = GuiFunct::newMenuCheckAction(tr("&Interactives"), this); 
     viewMenu->addAction(viewInteractives);
     QObject::connect(viewInteractives, SIGNAL(triggered(bool)), this, SLOT(viewInteractives(bool)));
@@ -506,6 +509,9 @@ void Window::viewTileGrid(bool show){
 }
 void Window::viewTerrainGrid(bool show){
     Game::viewTerrainGrid = show;
+}
+void Window::showWorldObjPivotPointsEnabled(bool show){
+    Game::showWorldObjPivotPoints = show;
 }
 void Window::viewInteractives(bool show){
     Game::viewInteractives = show;

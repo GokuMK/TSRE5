@@ -18,6 +18,7 @@
 #include "Ref.h"
 
 class SFile;
+class TrackItemObj;
 
 class WorldObj {
 public:
@@ -49,6 +50,7 @@ public:
     static WorldObj* createObj(QString sh);
     static QString getResPath(Ref::RefItem* sh);
     static int isTrackObj(QString sh);
+    static TrackItemObj* pointer3d;
     
     unsigned int UiD = 0;
     QString fileName;
@@ -76,7 +78,7 @@ public:
     float tRotation[2];
     float *endp = 0;
     int sectionIdx;
-    
+        
     WorldObj();
     WorldObj(const WorldObj& orig);
     virtual ~WorldObj();

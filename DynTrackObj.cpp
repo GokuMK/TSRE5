@@ -18,6 +18,8 @@
 #include <QOpenGLShaderProgram>
 #include "GLUU.h"
 #include "TS.h"
+#include "TrackItemObj.h"
+#include "Game.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -244,6 +246,13 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
     gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->m_program->setUniformValue(gluu->shaderAlpha, 0.0f);
     
+    if(Game::showWorldObjPivotPoints){
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0.9,0.9,0.7);
+        }
+        pointer3d->render(selectionColor);
+    }
     
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);

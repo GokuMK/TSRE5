@@ -86,6 +86,7 @@ public:
     static bool ortsEngEnable;
     static bool sortTileObjects;
     static int oglDefaultLineWidth;
+    static bool showWorldObjPivotPoints;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

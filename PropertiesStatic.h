@@ -22,10 +22,12 @@ public:
     virtual ~PropertiesStatic();
     bool support(WorldObj* obj);
     void showObj(WorldObj* obj);
+    void updateObj(WorldObj* obj);
     
 public slots:
     void enableCustomDetailLevelEnabled(int val);
     void customDetailLevelEdited(QString val);
+    void editPositionEnabled(QString val);
     
 signals:
     

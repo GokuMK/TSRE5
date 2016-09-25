@@ -18,6 +18,7 @@
 #include <QDebug>
 #include "Game.h"
 #include "TDB.h"
+#include "TrackItemObj.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -63,6 +64,16 @@ void TrackObj::load(int x, int y) {
 
 bool TrackObj::allowNew(){
     return true;
+}
+
+void TrackObj::setElevation(float prom){
+    float * q = qDirection;
+    float vect[3];
+    vect[0] = 0; vect[1] = 0; vect [2] = 1000;
+    Vec3::transformQuat(vect, vect, q);
+    vect[1] = -vect[1];
+    //qDebug() << vect[1] << "=" << prom;
+    rotate(asin((-vect[1]+prom)/1000.0),0,0);
 }
 
 void TrackObj::rotate(float x, float y, float z){
@@ -276,6 +287,14 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
 
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
     gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    
+    if(Game::showWorldObjPivotPoints){
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0.9,0.9,0.7);
+        }
+        pointer3d->render(selectionColor);
+    }
     
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);

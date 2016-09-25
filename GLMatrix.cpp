@@ -899,73 +899,85 @@ float* Quat::fromRotationXYZ(float *out, float *a){
     return out;
 }
 /**
-
  * Calculates the inverse of a quat
-
  *
-
  * @param {quat} out the receiving quaternion
-
  * @param {quat} a quat to calculate inverse of
-
  * @returns {quat} out
-
  */
-
 float* Quat::invert(float *out, float *a){
-
     float a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
-
         dot = a0*a0 + a1*a1 + a2*a2 + a3*a3,
-
         invDot = dot ? 1.0/dot : 0;
-
-    
-
     // TODO: Would be faster to return [0,0,0,0] immediately if dot == 0
-
     out[0] = -a0*invDot;
-
     out[1] = -a1*invDot;
-
     out[2] = -a2*invDot;
-
     out[3] = a3*invDot;
-
     return out;
-
 };
 /**
-
- * Multiplies two quat's
-
+ * Sets a quat from the given angle and rotation axis,
+ * then returns it.
  *
-
  * @param {quat} out the receiving quaternion
-
- * @param {quat} a the first operand
-
- * @param {quat} b the second operand
-
+ * @param {vec3} axis the axis around which to rotate
+ * @param {Number} rad the angle in radians
  * @returns {quat} out
-
+ **/
+float* Quat::setAxisAngle(float *out, float *axis, float rad) {
+    rad = rad * 0.5;
+    float s = sin(rad);
+    out[0] = s * axis[0];
+    out[1] = s * axis[1];
+    out[2] = s * axis[2];
+    out[3] = cos(rad);
+    return out;
+};
+/**
+ * Gets the rotation axis and angle for a given
+ *  quaternion. If a quaternion is created with
+ *  setAxisAngle, this method will return the same
+ *  values as providied in the original parameter list
+ *  OR functionally equivalent values.
+ * Example: The quaternion formed by axis [0, 0, 1] and
+ *  angle -90 is the same as the quaternion formed by
+ *  [0, 0, 1] and 270. This method favors the latter.
+ * @param  {vec3} out_axis  Vector receiving the axis of rotation
+ * @param  {quat} q     Quaternion to be decomposed
+ * @return {Number}     Angle, in radians, of the rotation
+ */
+float Quat::getAxisAngle(float *out_axis, float *q) {
+    float rad = acos(q[3]) * 2.0;
+    float s = sin(rad / 2.0);
+    if (s != 0.0) {
+        out_axis[0] = q[0] / s;
+        out_axis[1] = q[1] / s;
+        out_axis[2] = q[2] / s;
+    } else {
+        // If s is zero, return any axis (no rotation - axis does not matter)
+        out_axis[0] = 1;
+        out_axis[1] = 0;
+        out_axis[2] = 0;
+    }
+    return rad;
+};
+/**
+ * Multiplies two quat's
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a the first operand
+ * @param {quat} b the second operand
+ * @returns {quat} out
  */
 float* Quat::multiply(float *out, float *a, float *b){
-
     float ax = a[0], ay = a[1], az = a[2], aw = a[3],
-
         bx = b[0], by = b[1], bz = b[2], bw = b[3];
-
     out[0] = ax * bw + aw * bx + ay * bz - az * by;
-
     out[1] = ay * bw + aw * by + az * bx - ax * bz;
-
     out[2] = az * bw + aw * bz + ax * by - ay * bx;
-
     out[3] = aw * bw - ax * bx - ay * by - az * bz;
-
     return out;
-
 };
 /**
  * Rotates a quaternion by the given angle about the X axis

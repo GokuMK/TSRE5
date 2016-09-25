@@ -60,6 +60,7 @@ public slots:
     void showToolsGeo(bool show);
     void showToolsActivity(bool show);
     void showTerrainTreeEditr();
+    void showWorldObjPivotPointsEnabled(bool show);
 
 signals:
     void exitNow();

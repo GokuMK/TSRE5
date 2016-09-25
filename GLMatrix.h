@@ -101,6 +101,8 @@ public:
     static float* fromRotationXYZ(float *out, float *a);
     static float* multiply(float *out, float *a, float *b);
     static float* invert(float* out, float* a);
+    static float* setAxisAngle(float *out, float *axis, float rad);
+    static float getAxisAngle(float *out_axis, float *q);
     static float* rotateX(float *out, float *a, float rad);
     static float* rotateY(float *out, float *a, float rad);
     static float* rotateZ(float *out, float *a, float rad);

@@ -152,8 +152,16 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-10000, 10000, 6, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    QDoubleValidator* doubleValidator1 = new QDoubleValidator(-1000, 1000, 6, this); 
+    doubleValidator1->setNotation(QDoubleValidator::StandardNotation);
     vlist->addRow("‰",&this->elevProm);
+    this->elevProm.setValidator(doubleValidator1);
+    QObject::connect(&this->elevProm, SIGNAL(textEdited(QString)), this, SLOT(elevPromEnabled(QString)));
     vlist->addRow("1 in 'x' m",&this->elev1inXm);
+    this->elev1inXm.setValidator(doubleValidator);
+    QObject::connect(&this->elev1inXm, SIGNAL(textEdited(QString)), this, SLOT(elev1inXmEnabled(QString)));
     vbox->addItem(vlist);
     
     label = new QLabel("Advanced:");
@@ -263,10 +271,45 @@ void PropertiesTrackObj::updateObj(WorldObj* obj){
     float oneInXm = 0;
 
     oneInXm = 1000.0/vect[1];
-    if(!this->elevProm.hasFocus())
+    if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
+        this->posX.setText(QString::number(obj->position[0], 'G', 4));
+        this->posY.setText(QString::number(obj->position[1], 'G', 4));
+        this->posZ.setText(QString::number(-obj->position[2], 'G', 4));
+        this->quat.setText(
+                QString::number(obj->qDirection[0], 'G', 4) + " " +
+                QString::number(obj->qDirection[1], 'G', 4) + " " +
+                QString::number(-obj->qDirection[2], 'G', 4) + " " +
+                QString::number(obj->qDirection[3], 'G', 4)
+                );
+    }
+    if(!this->elevProm.hasFocus() && !this->elev1inXm.hasFocus()){
         this->elevProm.setText(QString::number(vect[1]));
-    if(!this->elev1inXm.hasFocus())
         this->elev1inXm.setText(QString::number(oneInXm));
+    }
+}
+
+void PropertiesTrackObj::elevPromEnabled(QString val){
+    if(trackObj == NULL){
+        return;
+    }
+    bool ok = false;
+    float prom = val.toFloat(&ok);
+    if(!ok) return;
+    float oneInXm = 1000.0/prom;
+    this->elev1inXm.setText(QString::number(oneInXm));
+    trackObj->setElevation(prom);
+}
+
+void PropertiesTrackObj::elev1inXmEnabled(QString val){
+    if(trackObj == NULL){
+        return;
+    }
+    bool ok = false;
+    float oneInXm = val.toFloat(&ok);
+    if(!ok) return;
+    float prom = 1000.0/oneInXm;
+    this->elevProm.setText(QString::number(prom));
+    trackObj->setElevation(prom);
 }
 
 bool PropertiesTrackObj::support(WorldObj* obj){

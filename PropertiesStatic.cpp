@@ -51,8 +51,16 @@ PropertiesStatic::PropertiesStatic(){
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
     vlist->addRow("X:",&this->posX);
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-1500, 1500, 6, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    this->posX.setValidator(doubleValidator);
+    QObject::connect(&this->posX, SIGNAL(textEdited(QString)), this, SLOT(editPositionEnabled(QString)));
     vlist->addRow("Y:",&this->posY);
+    this->posY.setValidator(doubleValidator);
+    QObject::connect(&this->posY, SIGNAL(textEdited(QString)), this, SLOT(editPositionEnabled(QString)));
     vlist->addRow("Z:",&this->posZ);
+    this->posZ.setValidator(doubleValidator);
+    QObject::connect(&this->posZ, SIGNAL(textEdited(QString)), this, SLOT(editPositionEnabled(QString)));
     this->quat.setDisabled(true);
     this->quat.setAlignment(Qt::AlignCenter);
     vlist->addRow("Rot:",&this->quat);
@@ -197,6 +205,24 @@ void PropertiesStatic::showObj(WorldObj* obj){
     this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
 }
 
+void PropertiesStatic::updateObj(WorldObj* obj){
+    if(obj == NULL){
+        return;
+    }
+
+    if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
+        this->posX.setText(QString::number(obj->position[0], 'G', 4));
+        this->posY.setText(QString::number(obj->position[1], 'G', 4));
+        this->posZ.setText(QString::number(-obj->position[2], 'G', 4));
+        this->quat.setText(
+                QString::number(obj->qDirection[0], 'G', 4) + " " +
+                QString::number(obj->qDirection[1], 'G', 4) + " " +
+                QString::number(-obj->qDirection[2], 'G', 4) + " " +
+                QString::number(obj->qDirection[3], 'G', 4)
+                );
+    }
+}
+
 bool PropertiesStatic::support(WorldObj* obj){
     if(obj == NULL)
         return false;
@@ -205,6 +231,23 @@ bool PropertiesStatic::support(WorldObj* obj){
     if(obj->type == "gantry")
         return true;
     return false;
+}
+
+void PropertiesStatic::editPositionEnabled(QString val){
+    if(worldObj == NULL)
+        return;
+    StaticObj* staticObj = (StaticObj*) worldObj;
+    float pos[3];
+    bool ok = false;
+    pos[0] = this->posX.text().toFloat(&ok);
+    if(!ok) return;
+    pos[1] = this->posY.text().toFloat(&ok);
+    if(!ok) return;
+    pos[2] = -this->posZ.text().toFloat(&ok);
+    if(!ok) return;
+    staticObj->setPosition((float*)pos);
+    staticObj->modified = true;
+    staticObj->setMartix();
 }
 
 void PropertiesStatic::enableCustomDetailLevelEnabled(int val){
@@ -228,7 +271,7 @@ void PropertiesStatic::customDetailLevelEdited(QString val){
     StaticObj* staticObj = (StaticObj*) worldObj;
     bool ok = false;
     int level = val.toInt(&ok);
-    qDebug() << "aaaaaaaaaa";
+    //qDebug() << "aaaaaaaaaa";
     if(ok){
         staticObj->setCustomDetailLevel(level);
     }

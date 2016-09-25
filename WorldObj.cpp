@@ -36,6 +36,8 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+TrackItemObj* WorldObj::pointer3d = NULL;
+
 int WorldObj::isTrackObj(QString sh) {
     if (sh == "signal") {
         return 1;
