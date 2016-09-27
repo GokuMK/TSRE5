@@ -45,6 +45,13 @@ public:
         groupobject = 19
     };
     TypeID typeID = this->undefined;
+    enum ShadowType {
+        ShadowNone = 0,
+        ShadowRound = 1,
+        ShadowRect = 2,
+        ShadowTreeline = 3,
+        ShadowDynamic = 4
+    };
     
     static WorldObj* createObj(int sh);
     static WorldObj* createObj(QString sh);
@@ -116,6 +123,12 @@ public:
     virtual void setCustomDetailLevel(int val);
     virtual bool customDetailLevelEnabled();
     virtual QString getShapePath();
+    virtual bool isAnimated();
+    virtual bool isTerrainObj();
+    virtual ShadowType getShadowType();
+    virtual void setAnimated(bool val);
+    virtual void setTerrainObj(bool val);
+    virtual void setShadowType(ShadowType val);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 protected:
     virtual bool getSimpleBorder(float* border);

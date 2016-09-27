@@ -332,6 +332,11 @@ bool TrackObj::getSimpleBorder(float* border){
 }
 
 bool TrackObj::getBoxPoints(QVector<float>& points){
+    if (shapePointer == 0) return false;
+    if (!shapePointer->loaded)
+        return false;
+    return shapePointer->getBoxPoints(points);
+    /*
         float bound[6];
         if (!getSimpleBorder((float*)&bound)) return false;
         
@@ -362,7 +367,7 @@ bool TrackObj::getBoxPoints(QVector<float>& points){
                 points.push_back(bound[j]);
                 points.push_back(bound[i]);
             }
-        return true;
+        return true;*/
 }
 
 Ref::RefItem* TrackObj::getRefInfo(){

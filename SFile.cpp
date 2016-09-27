@@ -267,32 +267,31 @@ void SFile::getSize() {
     }
 
 bool SFile::getBoxPoints(QVector<float>& points){
-    if(true){
-    //if(this->esdBoundingBox.size() == 0){
+    if(this->esdBoundingBox.size() == 0){
         for(int i=0; i<2; i++)
             for(int j=4; j<6; j++){
-                points.push_back(bound[i]);
+                points.push_back(-bound[i]);
                 points.push_back(bound[2]);
                 points.push_back(bound[j]);
-                points.push_back(bound[i]);
+                points.push_back(-bound[i]);
                 points.push_back(bound[3]);
                 points.push_back(bound[j]);
             }
         for(int i=0; i<2; i++)
             for(int j=2; j<4; j++){
-                points.push_back(bound[i]);
+                points.push_back(-bound[i]);
                 points.push_back(bound[j]);
                 points.push_back(bound[4]);
-                points.push_back(bound[i]);
+                points.push_back(-bound[i]);
                 points.push_back(bound[j]);
                 points.push_back(bound[5]);
             }
         for(int i=4; i<6; i++)
             for(int j=2; j<4; j++){
-                points.push_back(bound[0]);
+                points.push_back(-bound[0]);
                 points.push_back(bound[j]);
                 points.push_back(bound[i]);
-                points.push_back(bound[1]);
+                points.push_back(-bound[1]);
                 points.push_back(bound[j]);
                 points.push_back(bound[i]);
             }
@@ -309,28 +308,28 @@ bool SFile::getBoxPoints(QVector<float>& points){
             ///////////
             for(int i=0; i<2; i++)
                 for(int j=4; j<6; j++){
-                    points.push_back(tbound[i]);
+                    points.push_back(-tbound[i]);
                     points.push_back(tbound[2]);
                     points.push_back(tbound[j]);
-                    points.push_back(tbound[i]);
+                    points.push_back(-tbound[i]);
                     points.push_back(tbound[3]);
                     points.push_back(tbound[j]);
                 }
             for(int i=0; i<2; i++)
                 for(int j=2; j<4; j++){
-                    points.push_back(tbound[i]);
+                    points.push_back(-tbound[i]);
                     points.push_back(tbound[j]);
                     points.push_back(tbound[4]);
-                    points.push_back(tbound[i]);
+                    points.push_back(-tbound[i]);
                     points.push_back(tbound[j]);
                     points.push_back(tbound[5]);
                 }
             for(int i=4; i<6; i++)
                 for(int j=2; j<4; j++){
-                    points.push_back(tbound[0]);
+                    points.push_back(-tbound[0]);
                     points.push_back(tbound[j]);
                     points.push_back(tbound[i]);
-                    points.push_back(tbound[1]);
+                    points.push_back(-tbound[1]);
                     points.push_back(tbound[j]);
                     points.push_back(tbound[i]);
                 }

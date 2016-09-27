@@ -28,12 +28,16 @@ public slots:
     void enableCustomDetailLevelEnabled(int val);
     void customDetailLevelEdited(QString val);
     void editPositionEnabled(QString val);
+    void checkboxAnimEdited(int val);
+    void checkboxTerrainEdited(int val);
+    void cShadowTypeEdited(int val);
     
 signals:
     
 private:
     QCheckBox checkboxAnim;
     QCheckBox checkboxTerrain;
+    QComboBox cShadowType;
 };
 
 #endif	/* PROPERTIESSTATIC_H */

@@ -597,3 +597,59 @@ bool WorldObj::customDetailLevelEnabled(){
     return false;
 }
 
+bool WorldObj::isAnimated(){
+    if((staticFlags & 0x80000) == 0x80000)
+        return true;
+    return false;
+}
+
+bool WorldObj::isTerrainObj(){
+    if((staticFlags & 0x40000) == 0x40000)
+        return true;
+    return false;
+}
+
+WorldObj::ShadowType WorldObj::getShadowType(){
+    if((staticFlags & 0xFF000) == 0x0)
+        return WorldObj::ShadowNone;
+    if((staticFlags & 0x2000) == 0x2000)
+        return WorldObj::ShadowRound;
+    if((staticFlags & 0x4000) == 0x4000)
+        return WorldObj::ShadowRect;
+    if((staticFlags & 0x8000) == 0x8000)
+        return WorldObj::ShadowTreeline;
+    if((staticFlags & 0x10000) == 0x10000)
+        return WorldObj::ShadowDynamic;
+    return WorldObj::ShadowNone;
+}
+
+void WorldObj::setAnimated(bool val){
+    if(val == true)
+        staticFlags = staticFlags | 0x80000;
+    else
+        staticFlags = staticFlags & (~0x80000);
+    this->modified = true;
+}
+
+void WorldObj::setTerrainObj(bool val){
+    if(val == true)
+        staticFlags = staticFlags | 0x40000;
+    else
+        staticFlags = staticFlags & (~0x40000);
+    this->modified = true;
+}
+
+void WorldObj::setShadowType(WorldObj::ShadowType val){
+    staticFlags = staticFlags & (~0x1E000);
+    if(val == WorldObj::ShadowNone)
+        return;
+    else if(val == WorldObj::ShadowRound)
+        staticFlags = staticFlags | 0x2000;
+    else if(val == WorldObj::ShadowRect)
+        staticFlags = staticFlags | 0x4000;
+    else if(val == WorldObj::ShadowTreeline)
+        staticFlags = staticFlags | 0x8000;
+    else if(val == WorldObj::ShadowDynamic)
+        staticFlags = staticFlags | 0x10000;
+    this->modified = true;
+}

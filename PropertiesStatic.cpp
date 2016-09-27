@@ -152,14 +152,26 @@ PropertiesStatic::PropertiesStatic(){
     flagslView->addWidget(copyFlags,0,0);
     flagslView->addWidget(pasteFlags,0,1);
     vbox->addItem(flagslView);
-    checkboxAnim.setText("Animations");
+    checkboxAnim.setText("Animate Object");
     checkboxTerrain.setText("Terrain Object");
     vbox->addWidget(&checkboxAnim);
+    QObject::connect(&checkboxAnim, SIGNAL(stateChanged(int)),
+                      this, SLOT(checkboxAnimEdited(int)));
     vbox->addWidget(&checkboxTerrain);
+    QObject::connect(&checkboxTerrain, SIGNAL(stateChanged(int)),
+                      this, SLOT(checkboxTerrainEdited(int)));
+    cShadowType.addItem("No Shadow");
+    cShadowType.addItem("Round Shadow");
+    cShadowType.addItem("Rect. Shadow");
+    cShadowType.addItem("Treeline Shadow");
+    cShadowType.addItem("Dynamic Shadow");
+    cShadowType.setStyleSheet("combobox-popup: 0;");
+    vbox->addWidget(&cShadowType);
+    QObject::connect(&cShadowType, SIGNAL(currentIndexChanged(int)),
+                      this, SLOT(cShadowTypeEdited(int)));
+
     vbox->addStretch(1);
     this->setLayout(vbox);
-
-
     
 }
 
@@ -203,6 +215,16 @@ void PropertiesStatic::showObj(WorldObj* obj){
     enableCustomDetailLevel.blockSignals(false);
     
     this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
+    this->checkboxAnim.blockSignals(true);
+    this->checkboxTerrain.blockSignals(true);
+    this->cShadowType.blockSignals(true);
+    this->checkboxAnim.setChecked(obj->isAnimated());
+    this->checkboxTerrain.setChecked(obj->isTerrainObj());
+    this->cShadowType.setCurrentIndex((int)obj->getShadowType());
+    this->checkboxAnim.blockSignals(false);
+    this->checkboxTerrain.blockSignals(false);
+    this->cShadowType.blockSignals(false);
+    
 }
 
 void PropertiesStatic::updateObj(WorldObj* obj){
@@ -275,4 +297,33 @@ void PropertiesStatic::customDetailLevelEdited(QString val){
     if(ok){
         staticObj->setCustomDetailLevel(level);
     }
+}
+
+void PropertiesStatic::checkboxAnimEdited(int val){
+    if(worldObj == NULL)
+        return;
+    if(val == 2){
+        worldObj->setAnimated(true);
+    } else {
+        worldObj->setAnimated(false);
+    }
+    this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
+}
+
+void PropertiesStatic::checkboxTerrainEdited(int val){
+    if(worldObj == NULL)
+        return;
+    if(val == 2){
+        worldObj->setTerrainObj(true);
+    } else {
+        worldObj->setTerrainObj(false);
+    }
+    this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
+}
+
+void PropertiesStatic::cShadowTypeEdited(int val){
+    if(worldObj == NULL)
+        return;
+    worldObj->setShadowType((WorldObj::ShadowType)val);
+    this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
 }
