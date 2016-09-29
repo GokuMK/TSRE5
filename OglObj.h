@@ -17,7 +17,7 @@
 
 class OglObj {
 public:
-    enum VertexAttr {V = 3, VT = 5, VNT = 8};
+    enum VertexAttr {NO_ATTR = 0, V = 3, VT = 5, VNT = 8};
     enum MaterialType {NONE, TEXTURE, COLOR};
     bool loaded;
     
@@ -42,6 +42,7 @@ private:
     int lineWidth = 0;
     QString *res;
     Vector4f *color = NULL;
+    VertexAttr vAttribures = NO_ATTR;
 };
 
 #endif	/* OGLOBJ_H */

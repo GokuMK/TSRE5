@@ -53,18 +53,12 @@ void TextObj::init(){
     punkty[ptr++] = (-size / 2)*scale;
     punkty[ptr++] = 1*scale;
     punkty[ptr++] = 0;
-    punkty[ptr++] = 1.0;
-    punkty[ptr++] = 0.0;
-    punkty[ptr++] = 0.0;
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 0.0;
 
     punkty[ptr++] = (-size / 2)*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 0;
-    punkty[ptr++] = 1.0;
-    punkty[ptr++] = 0.0;
-    punkty[ptr++] = 0.0;
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 1.00;
 
@@ -72,26 +66,17 @@ void TextObj::init(){
     punkty[ptr++] = 0;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
-    punkty[ptr++] = 0.0;
-    punkty[ptr++] = 0.0;
-    punkty[ptr++] = 1.0;
     punkty[ptr++] = 1.0;
 
     punkty[ptr++] = (size / 2)*scale;
     punkty[ptr++] = 1*scale;
     punkty[ptr++] = 0;
-    punkty[ptr++] = 1.0;
-    punkty[ptr++] = 0.0;
-    punkty[ptr++] = 0.0;
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 0.0;
 
     punkty[ptr++] = (-size / 2)*scale;
     punkty[ptr++] = 1*scale;
     punkty[ptr++] = 0;
-    punkty[ptr++] = 1.0;
-    punkty[ptr++] = 0.0;
-    punkty[ptr++] = 0.0;
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 0.0;
 
@@ -99,12 +84,9 @@ void TextObj::init(){
     punkty[ptr++] = 0;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
-    punkty[ptr++] = 0.0;
-    punkty[ptr++] = 0.0;
-    punkty[ptr++] = 1.0;
     punkty[ptr++] = 1.0;
     this->setMaterial(new QString(text+".size:"+QString::number((int)size)+".color:"+color.name()+".:paintTex"));
-    OglObj::init(punkty, ptr, this->VNT, GL_TRIANGLES);
+    OglObj::init(punkty, ptr, this->VT, GL_TRIANGLES);
     delete[] punkty;
     isInit = true;
 }

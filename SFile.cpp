@@ -378,7 +378,11 @@ void SFile::render() {
                 gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(&macierz[matrix].fixed));
             }
             
-            //qDebug() << "2";
+            if( vtxstate[vtx_state].arg2 < -7 )
+                gluu->disableNormals();
+            else
+                gluu->enableNormals();
+            
             if(primstate[prim_state].arg2 < this->ishaders)
                 gluu->alpha = shader[primstate[prim_state].arg2].alpha;
             else 

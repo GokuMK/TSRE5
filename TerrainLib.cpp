@@ -667,6 +667,7 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
     }*/
     
     gluu->m_program->setUniformValue(gluu->shaderAlpha, 0.0f);
+    gluu->enableNormals();
 
     Terrain *tTile;
     for (int i = mintile; i <= maxtile; i++) {

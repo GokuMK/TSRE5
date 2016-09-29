@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.631";
+QString Game::AppVersion = "v0.632";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -332,7 +332,7 @@ bool Game::checkRoute(QString dir){
 
 template<class T>
 void Game::check_coords(T&& x, T&& z, float* p) {
-    if (p[0] > 1024) {
+    if (p[0] >= 1024) {
         p[0] -= 2048;
         x++;
     }
@@ -340,7 +340,7 @@ void Game::check_coords(T&& x, T&& z, float* p) {
         p[0] += 2048;
         x--;
     }
-    if (p[2] > 1024) {
+    if (p[2] >= 1024) {
         p[2] -= 2048;
         z++;
     }
@@ -354,7 +354,7 @@ template void Game::check_coords(float& x, float& z, float* p);
 
 template<class T, class K>
 void Game::check_coords(T&& x, T&& z, K&& px, K&& pz) {
-    if (px > 1024) {
+    if (px >= 1024) {
         px -= 2048;
         x++;
     }
@@ -362,7 +362,7 @@ void Game::check_coords(T&& x, T&& z, K&& px, K&& pz) {
         px += 2048;
         x--;
     }
-    if (pz > 1024) {
+    if (pz >= 1024) {
         pz -= 2048;
         z++;
     }

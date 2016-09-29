@@ -76,6 +76,7 @@ void GLUU::initShader() {
     shaderAlphaTest = m_program->uniformLocation("alphaTest");
     shaderTextureEnabled = m_program->uniformLocation("textureEnabled");
     shaderShapeColor = m_program->uniformLocation("shapeColor");
+    shaderEnableNormals = m_program->uniformLocation("enableNormals");
     //m_normalMatrixLoc = m_program->uniformLocation("normalMatrix");
     //m_lightPosLoc = m_program->uniformLocation("lightPos");
     // Light position is fixed.
@@ -107,7 +108,9 @@ void GLUU::setMatrixUniforms() {
     m_program->setUniformValue(shaderAlpha, alpha);
     m_program->setUniformValue(shaderAlphaTest, alphaTest);
     textureEnabled = true;
+    normalsEnabled = true;
     m_program->setUniformValue(shaderTextureEnabled, 1.0f);
+    m_program->setUniformValue(shaderEnableNormals, 1.0f);
 };
 
 float GLUU::degToRad(float degrees) {
@@ -141,3 +144,14 @@ void GLUU::enableTextures(){
     m_program->setUniformValue(shaderTextureEnabled, 1.0f);
 }
 
+void GLUU::disableNormals(){
+    if(!this->normalsEnabled) return;
+    this->normalsEnabled = false;
+    m_program->setUniformValue(shaderEnableNormals, 0.0f);
+}
+
+void GLUU::enableNormals(){
+    if(this->normalsEnabled) return;
+    this->normalsEnabled = true;
+    m_program->setUniformValue(shaderEnableNormals, 1.0f);
+}

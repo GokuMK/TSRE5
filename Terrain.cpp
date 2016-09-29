@@ -488,7 +488,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     }
 
     gluu->enableTextures();  
-    
+    gluu->enableNormals();
     if(this->showBlob){
             terrainBlob.render();
     } else {

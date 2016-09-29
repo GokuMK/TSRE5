@@ -58,6 +58,7 @@ void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
     //}
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     shapeType = type;
+    vAttribures = v;
     if(!loaded){
         VAO.create();
         VBO.create();
@@ -99,6 +100,17 @@ void OglObj::render() {
 void OglObj::render(int selectionColor) {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     GLUU *gluu = GLUU::get();
+    
+    if(vAttribures == NO_ATTR){
+        return;
+    } else if(vAttribures == V){
+        gluu->disableNormals();
+    } else if(vAttribures == VT){
+        gluu->disableNormals();
+    } else if(vAttribures == VNT){
+        gluu->enableNormals();
+    }  
+    
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
         int sColor = (int)(selectionColor - wColor*65536)/256;

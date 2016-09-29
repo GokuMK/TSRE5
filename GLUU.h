@@ -40,6 +40,7 @@ public:
     unsigned int shaderAlphaTest;
     unsigned int shaderTextureEnabled;
     unsigned int shaderShapeColor;
+    unsigned int shaderEnableNormals;
     
     float alpha;
     float alphaTest;
@@ -72,9 +73,12 @@ public:
     void disableTextures(Vector3f* color);
     void disableTextures(float x, float y, float z, float a);
     void enableTextures();
+    void disableNormals();
+    void enableNormals();
 private:
     const char* getShader(QString shaderScript, QString type);
     bool textureEnabled;
+    bool normalsEnabled;
     Vector4f shapeColor;
 };
 
