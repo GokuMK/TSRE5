@@ -43,6 +43,10 @@ void Vector3f::setFromAdd(Vector3f v1, Vector3f v2) {
     this->x = v1.x + v2.x; this->y = v1.y + v2.y; this->z = v1.z + v2.z;
 }
 
+void Vector3f::add(Vector3f v) {
+    this->x += v.x; this->y += v.y; this->z += v.z;
+}
+
 void Vector3f::setFromSub(Vector3f v1, Vector3f v2) {
     this->x = v1.x - v2.x; this->y = v1.y - v2.y; this->z = v1.z - v2.z;
 }

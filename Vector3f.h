@@ -25,6 +25,7 @@ public:
     void rotateX(float a, float r);
     void rotate(Vector3f o);
     void setFromAdd(Vector3f v1, Vector3f v2);
+    void add(Vector3f v);
     void setFromSub(Vector3f v1, Vector3f v2);
     void setFromCross(Vector3f v1, Vector3f v2) ;
     void div(float d);

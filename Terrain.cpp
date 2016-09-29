@@ -895,32 +895,22 @@ void Terrain::normalInit() {
         for (int ii = 0; ii < 256; ii++) {
             U.setFromSub( vertexData[jj][ii], vertexData[jj + 1][ii]);
             V.setFromSub( vertexData[jj][ii], vertexData[jj][ii + 1]);
-            O.setFromCross(U, V);
-            normalData[jj][ii].setFromAdd( normalData[jj][ii], O);
-            normalData[jj + 1][ii].setFromAdd( normalData[jj + 1][ii], O);
-            normalData[jj][ii + 1].setFromAdd( normalData[jj][ii + 1], O);
-
+            O.setFromCross(V, U);
+            normalData[jj][ii].add( O );
+            normalData[jj + 1][ii].add( O );
+            normalData[jj][ii + 1].add( O );
             U.setFromSub( vertexData[jj + 1][ii + 1], vertexData[jj + 1][ii]);
             V.setFromSub( vertexData[jj + 1][ii + 1], vertexData[jj][ii + 1]);
-            O.setFromCross(V, U);
-            normalData[jj + 1][ii + 1].setFromAdd( normalData[jj + 1][ii + 1], O);
-            normalData[jj + 1][ii].setFromAdd( normalData[jj + 1][ii], O);
-            normalData[jj][ii + 1].setFromAdd( normalData[jj][ii + 1], O);
+            O.setFromCross(U, V);
+            normalData[jj + 1][ii + 1].add( O );
+            normalData[jj + 1][ii].add( O );
+            normalData[jj][ii + 1].add( O );
         }
     }
 
     for (int jj = 0; jj < 257; jj++) {
         for (int ii = 0; ii < 257; ii++) {
-            normalData[jj][ii].div(-1);
             normalData[jj][ii].normalize();
-            //normalData[jj][ii].y = 1;
-            //normalData[jj][ii].x = 0;
-            //normalData[jj][ii].z = 0;
-            //if(normalData[jj][ii].x + normalData[jj][ii].y + normalData[jj][ii].z != 0)
-            //if(jj == 10)
-            //    qDebug() << normalData[jj][ii].x << normalData[jj][ii].y << normalData[jj][ii].z;
-            //System.out.print(normal.x+" "+normal.y+" "+normal.z+";");
-            //normalData[jj][ii] = normal;
         }
     }
 };
