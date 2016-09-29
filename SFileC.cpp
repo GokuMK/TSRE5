@@ -430,7 +430,9 @@
                 pliks->distancelevel[j].subobiekty[ii].VBO.allocate(iloscv * 8 * sizeof(GLfloat));
                 f->glEnableVertexAttribArray(0);
                 f->glEnableVertexAttribArray(1);
+                f->glEnableVertexAttribArray(2);
                 f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
+                f->glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<void *>(3 * sizeof(GLfloat)));
                 f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<void *>(6 * sizeof(GLfloat)));
 
                 for (int jj = 0; jj < pliks->distancelevel[j].subobiekty[ii].iloscc; jj++) {

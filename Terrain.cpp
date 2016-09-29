@@ -466,7 +466,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     if (!isOgl) {
         TerrainLib::fillRAW(terrainData, (int) mojex, (int) mojez);
         vertexInit();
-        //normalInit();
+        normalInit();
         oglInit();
         isOgl = true;
     }
@@ -628,18 +628,27 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = x2;
                     punkty[ptr++] = x2z2;
                     punkty[ptr++] = z2;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
                     punkty[ptr++] = 4;
                     punkty[ptr++] = 4;
 
                     punkty[ptr++] = x2;
                     punkty[ptr++] = x2z1;
                     punkty[ptr++] = z1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
                     punkty[ptr++] = 4;
                     punkty[ptr++] = 0;
 
                     punkty[ptr++] = x1;
                     punkty[ptr++] = x1z1;
                     punkty[ptr++] = z1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
 
@@ -647,11 +656,17 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = x1z2;
                     punkty[ptr++] = z2;
                     punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 0;
                     punkty[ptr++] = 4;
 
                     punkty[ptr++] = x2;
                     punkty[ptr++] = x2z2;
                     punkty[ptr++] = z2;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
                     punkty[ptr++] = 4;
                     punkty[ptr++] = 4;
 
@@ -659,11 +674,14 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = x1z1;
                     punkty[ptr++] = z1;
                     punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
 
                     QString *texturePath = new QString("resources/woda.ace");
                     water[uu * 16 + yy].setMaterial(texturePath);
-                    water[uu * 16 + yy].init(punkty, ptr, water[uu * 16 + yy].VT, GL_TRIANGLES);
+                    water[uu * 16 + yy].init(punkty, ptr, water[uu * 16 + yy].VNT, GL_TRIANGLES);
                     delete punkty;
                 }
                 water[uu * 16 + yy].render();
@@ -875,18 +893,19 @@ void Terrain::normalInit() {
     Vector3f U, V, O;
     for (int jj = 0; jj < 256; jj++) {
         for (int ii = 0; ii < 256; ii++) {
+            U.setFromSub( vertexData[jj][ii], vertexData[jj + 1][ii]);
+            V.setFromSub( vertexData[jj][ii], vertexData[jj][ii + 1]);
+            O.setFromCross(U, V);
+            normalData[jj][ii].setFromAdd( normalData[jj][ii], O);
+            normalData[jj + 1][ii].setFromAdd( normalData[jj + 1][ii], O);
+            normalData[jj][ii + 1].setFromAdd( normalData[jj][ii + 1], O);
 
-            Vector3f::sub(U, vertexData[jj][ii], vertexData[jj + 1][ii]);
-            Vector3f::sub(V, vertexData[jj][ii], vertexData[jj][ii + 1]);
-            Vector3f::add(normalData[jj][ii], normalData[jj][ii], Vector3f::cross(O, U, V));
-            Vector3f::add(normalData[jj + 1][ii], normalData[jj + 1][ii], Vector3f::cross(O, U, V));
-            Vector3f::add(normalData[jj][ii + 1], normalData[jj][ii + 1], Vector3f::cross(O, U, V));
-
-            Vector3f::sub(U, vertexData[jj + 1][ii + 1], vertexData[jj + 1][ii]);
-            Vector3f::sub(V, vertexData[jj + 1][ii + 1], vertexData[jj][ii + 1]);
-            Vector3f::add(normalData[jj + 1][ii + 1], normalData[jj + 1][ii + 1], Vector3f::cross(O, V, U));
-            Vector3f::add(normalData[jj + 1][ii], normalData[jj + 1][ii], Vector3f::cross(O, V, U));
-            Vector3f::add(normalData[jj][ii + 1], normalData[jj][ii + 1], Vector3f::cross(O, V, U));
+            U.setFromSub( vertexData[jj + 1][ii + 1], vertexData[jj + 1][ii]);
+            V.setFromSub( vertexData[jj + 1][ii + 1], vertexData[jj][ii + 1]);
+            O.setFromCross(V, U);
+            normalData[jj + 1][ii + 1].setFromAdd( normalData[jj + 1][ii + 1], O);
+            normalData[jj + 1][ii].setFromAdd( normalData[jj + 1][ii], O);
+            normalData[jj][ii + 1].setFromAdd( normalData[jj][ii + 1], O);
         }
     }
 
@@ -894,6 +913,12 @@ void Terrain::normalInit() {
         for (int ii = 0; ii < 257; ii++) {
             normalData[jj][ii].div(-1);
             normalData[jj][ii].normalize();
+            //normalData[jj][ii].y = 1;
+            //normalData[jj][ii].x = 0;
+            //normalData[jj][ii].z = 0;
+            //if(normalData[jj][ii].x + normalData[jj][ii].y + normalData[jj][ii].z != 0)
+            //if(jj == 10)
+            //    qDebug() << normalData[jj][ii].x << normalData[jj][ii].y << normalData[jj][ii].z;
             //System.out.print(normal.x+" "+normal.y+" "+normal.z+";");
             //normalData[jj][ii] = normal;
         }
@@ -993,16 +1018,18 @@ void Terrain::oglInit() {
     }
     QOpenGLVertexArrayObject::Binder vaoBinder(VAO);
     VBO->bind();
-    VBO->allocate(256 * 16 * 16 * 6 * 5 * sizeof (GLfloat));
+    VBO->allocate(256 * 16 * 16 * 6 * 8 * sizeof (GLfloat));
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glEnableVertexAttribArray(0);
     f->glEnableVertexAttribArray(1);
-    f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), 0);
-    f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
+    f->glEnableVertexAttribArray(2);
+    f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), 0);
+    f->glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
+    f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
     
     int ilosc = 16 * 16;
     int suma;
-    float * punkty = new float[16 * 16 * 30];
+    float * punkty = new float[16 * 16 * 48];
     //  var punkty = Terrain.punkty;
     for (int uu = 0; uu < 16; uu++) {
         for (int yy = 0; yy < 16; yy++) {
@@ -1030,18 +1057,27 @@ void Terrain::oglInit() {
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].z;
                             punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
 
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
                             punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
 
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                             }
@@ -1050,18 +1086,27 @@ void Terrain::oglInit() {
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].z;
                             punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
 
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
 
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                             }
@@ -1071,18 +1116,27 @@ void Terrain::oglInit() {
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
                             punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                             
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
 
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                             }
@@ -1091,18 +1145,27 @@ void Terrain::oglInit() {
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].z;
                             punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
 
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
                             punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
 
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
                             punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
+                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
                             punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
                             }
@@ -1132,7 +1195,7 @@ void Terrain::oglInit() {
             
             //VBO[0]->bind();
             //VBO[0]->
-            VBO->write((uu * 16 + yy) * 16 * 16 * 6 * 5 * sizeof (GLfloat), punkty, 16 * 16 * 6 * 5 * sizeof (GLfloat));
+            VBO->write((uu * 16 + yy) * 16 * 16 * 6 * 8 * sizeof (GLfloat), punkty, 16 * 16 * 6 * 8 * sizeof (GLfloat));
             //VBO[0]->allocate(punkty, 16 * 16 * 6 * 5 * sizeof (GLfloat));
             //f->glEnableVertexAttribArray(0);
             //f->glEnableVertexAttribArray(1);
@@ -1149,9 +1212,12 @@ void Terrain::oglInit() {
     //for (int i = 0; i < 257; i++)
     //    delete normalData[i];
     //delete normalData;
-    for (int i = 0; i < 257; i++)
+    for (int i = 0; i < 257; i++){
         delete[] vertexData[i];
+        delete[] normalData[i];
+    }
     delete[] vertexData;
+    delete[] normalData;
 }
 
 void Terrain::initBlob(){

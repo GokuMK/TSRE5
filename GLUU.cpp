@@ -60,6 +60,7 @@ void GLUU::initShader() {
     m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, getShader("fragmentShaderSource", "fs"));
     m_program->bindAttributeLocation("vertex", 0);
     m_program->bindAttributeLocation("aTextureCoord", 1);
+    m_program->bindAttributeLocation("normal", 2);
     m_program->link();
 
     m_program->bind();

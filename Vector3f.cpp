@@ -39,22 +39,21 @@ void Vector3f::set(float x, float y, float z) {
 /*float* Vector3f::toFloat() {
     return { this->x, this->y, this->z };
 }*/
-
-Vector3f Vector3f::add(Vector3f out, Vector3f v1, Vector3f v2) {
-    out.x = v1.x + v2.x; out.y = v1.y + v2.y; out.z = v1.z + v2.z;
-    return out;
+void Vector3f::setFromAdd(Vector3f v1, Vector3f v2) {
+    this->x = v1.x + v2.x; this->y = v1.y + v2.y; this->z = v1.z + v2.z;
 }
 
-Vector3f Vector3f::sub(Vector3f out, Vector3f v1, Vector3f v2) {
-    out.x = v1.x - v2.x; out.y = v1.y - v2.y; out.z = v1.z - v2.z;
-    return out;
+void Vector3f::setFromSub(Vector3f v1, Vector3f v2) {
+    this->x = v1.x - v2.x; this->y = v1.y - v2.y; this->z = v1.z - v2.z;
 }
 
-Vector3f Vector3f::cross(Vector3f out, Vector3f v1, Vector3f v2) {
-    out.x = v1.y * v2.z - v1.z * v2.y;
-    out.y = v1.z * v2.x - v1.x * v2.z;
-    out.z = v1.x * v2.y - v1.y * v2.x;
-    return out;
+void Vector3f::setFromCross(Vector3f v1, Vector3f v2) {
+    float tx = v1.y * v2.z - v1.z * v2.y;
+    float ty = v1.z * v2.x - v1.x * v2.z;
+    float tz = v1.x * v2.y - v1.y * v2.x;
+    this->x = tx;
+    this->y = ty;
+    this->z = tz;
 }
 
 void Vector3f::normalize() {

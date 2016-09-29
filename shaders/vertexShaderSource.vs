@@ -1,4 +1,5 @@
 attribute vec4 vertex;
+attribute vec3 normal;
 attribute vec2 aTextureCoord;
 
 uniform float lod;
@@ -12,6 +13,7 @@ varying vec2 vTextureCoord;
 varying float aaa;
 varying vec4 color;
 varying vec4 sLight;
+varying vec3 vnormal;
 
 void main() {
     //vTextureCoord = aTextureCoord;
@@ -25,6 +27,15 @@ void main() {
     float slight = sun;
     slight = slight*(1.0 - brightness) + brightness;
     sLight = vec4(slight,slight,slight,1.0);
-    color = vec4(1.0,1.0,1.0,1.0);
 
+    color = vec4(1.0,1.0,1.0,1.0);
+    vnormal = normal;
+    /*vec3 lights = vec3(0.707,0.707,0.0);
+    normal = mat3(uMVMatrix) * mat3(uMSMatrix) * normal;
+    normal = normalize(normal);
+    lights = normalize(lights);
+    float cosTheta = dot( normal, lights );
+    cosTheta = clamp(cosTheta, 0, 1);
+    color *= cosTheta;
+    color.a = 1.0;*/
 }

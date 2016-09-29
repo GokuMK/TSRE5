@@ -24,9 +24,9 @@ public:
     void rotateY(float a, float r);
     void rotateX(float a, float r);
     void rotate(Vector3f o);
-    static Vector3f add(Vector3f out, Vector3f v1, Vector3f v2);
-    static Vector3f sub(Vector3f out, Vector3f v1, Vector3f v2);
-    static Vector3f cross(Vector3f out, Vector3f v1, Vector3f v2) ;
+    void setFromAdd(Vector3f v1, Vector3f v2);
+    void setFromSub(Vector3f v1, Vector3f v2);
+    void setFromCross(Vector3f v1, Vector3f v2) ;
     void div(float d);
     void normalize();
     //Vector3f add(Vector3f p);
