@@ -130,7 +130,7 @@ void OglObj::render(int selectionColor) {
                     TexLib::mtex[texId]->GLTextures();
                 f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texId]->tex[0]);
                 gluu->alpha = 0;
-                gluu->m_program->setUniformValue(gluu->shaderAlpha, gluu->alpha);
+                gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, gluu->alpha);
             } else {
             }
         }
@@ -143,7 +143,7 @@ void OglObj::render(int selectionColor) {
     if(lineWidth > 0 && lineWidth != Game::oglDefaultLineWidth)
         f->glLineWidth(lineWidth);
     Mat4::identity(gluu->objStrMatrix);
-    gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(gluu->objStrMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(gluu->objStrMatrix));
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
     f->glDrawArrays(shapeType, 0, length); /**/
     

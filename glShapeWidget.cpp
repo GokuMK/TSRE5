@@ -163,15 +163,15 @@ void GlShapeWidget::paintGL() {
 
     Mat4::identity(gluu->objStrMatrix);
     
-    gluu->m_program->bind();
+    gluu->currentShader->bind();
     gluu->setMatrixUniforms();
     //sFile->render();
     if(mode == "rot"){
         Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, rotY, 0,1,0);
         Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, rotZ, 0,0,1);
     }
-    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     
     if(renderItem == 2 && eng != NULL){
         eng->render((int)selection*65536);
@@ -249,7 +249,7 @@ void GlShapeWidget::paintGL() {
         
     }
     
-    gluu->m_program->release();
+    gluu->currentShader->release();
 
 }
 

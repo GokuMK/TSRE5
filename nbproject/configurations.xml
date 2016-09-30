@@ -57,6 +57,7 @@
         <itemPath>OglObj.h</itemPath>
         <itemPath>Pointer3d.h</itemPath>
         <itemPath>PoleObj.h</itemPath>
+        <itemPath>Shader.h</itemPath>
         <itemPath>TextObj.h</itemPath>
         <itemPath>TrackItemObj.h</itemPath>
       </logicalFolder>
@@ -235,6 +236,7 @@
         <itemPath>OglObj.cpp</itemPath>
         <itemPath>Pointer3d.cpp</itemPath>
         <itemPath>PoleObj.cpp</itemPath>
+        <itemPath>Shader.cpp</itemPath>
         <itemPath>TextObj.cpp</itemPath>
         <itemPath>TrackItemObj.cpp</itemPath>
       </logicalFolder>
@@ -721,6 +723,10 @@
       <item path="SFileX.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SFileX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Shader.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1287,6 +1293,10 @@
       </item>
       <item path="SFileX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Shader.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
@@ -1844,6 +1854,10 @@
       <item path="SFileX.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SFileX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Shader.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2410,6 +2424,10 @@
       </item>
       <item path="SFileX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Shader.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
@@ -2962,6 +2980,10 @@
       <item path="SFileX.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="SFileX.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Shader.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="8">
       </item>

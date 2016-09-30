@@ -375,7 +375,7 @@ void SFile::render() {
                     memcpy(macierz[matrix].fixed, getPmatrix(m, matrix), sizeof (float) * 16);
                     macierz[matrix].isFixed = true;
                 }
-                gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(&macierz[matrix].fixed));
+                gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(&macierz[matrix].fixed));
             }
             
             if( vtxstate[vtx_state].arg2 < -7 )
@@ -387,12 +387,12 @@ void SFile::render() {
                 gluu->alpha = shader[primstate[prim_state].arg2].alpha;
             else 
                 gluu->alpha = 0;
-            gluu->m_program->setUniformValue(gluu->shaderAlpha, gluu->alpha);
+            gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, gluu->alpha);
             
             if(primstate[prim_state].arg6 == 1)
-                gluu->m_program->setUniformValue(gluu->shaderAlphaTest, 0.51f);
+                gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, 0.51f);
             else 
-                gluu->m_program->setUniformValue(gluu->shaderAlphaTest, gluu->alphaTest);
+                gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
             
             if(primstate[prim_state].arg4 == -1){
                 //glDisable(GL_TEXTURE_2D);
@@ -425,7 +425,7 @@ void SFile::render() {
             f->glDrawArrays(GL_TRIANGLES, distancelevel[0].subobiekty[i].czesci[j].offset, distancelevel[0].subobiekty[i].czesci[j].iloscv);/**/
         }
     }
-    gluu->m_program->setUniformValue(gluu->shaderAlphaTest, gluu->alphaTest);
+    gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
 }
 
 /*======================================================

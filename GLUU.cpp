@@ -39,15 +39,6 @@ GLUU::~GLUU() {
 }
 
 const char* GLUU::getShader(QString shaderScript, QString type) {
-    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    unsigned int shader;
-    if (type == "fs") {
-        shader = f->glCreateShader(GL_FRAGMENT_SHADER);
-    } else if (type == "vs") {
-        shader = f->glCreateShader(GL_VERTEX_SHADER);
-    } else {
-        return "";
-    }
     QFile* shaderData = new QFile("shaders/"+shaderScript+"."+type);
     if (!shaderData->open(QIODevice::ReadOnly))
         return "";
@@ -55,34 +46,34 @@ const char* GLUU::getShader(QString shaderScript, QString type) {
 }
 
 void GLUU::initShader() {
-    m_program = new QOpenGLShaderProgram;
-    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, getShader("vertexShaderSource", "vs"));
-    m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, getShader("fragmentShaderSource", "fs"));
-    m_program->bindAttributeLocation("vertex", 0);
-    m_program->bindAttributeLocation("aTextureCoord", 1);
-    m_program->bindAttributeLocation("normal", 2);
-    m_program->link();
+    currentShader = new Shader();
+    currentShader->addShaderFromSourceCode(QOpenGLShader::Vertex, getShader("vertexShaderSource", "vs"));
+    currentShader->addShaderFromSourceCode(QOpenGLShader::Fragment, getShader("fragmentShaderSource", "fs"));
+    currentShader->bindAttributeLocation("vertex", 0);
+    currentShader->bindAttributeLocation("aTextureCoord", 1);
+    currentShader->bindAttributeLocation("normal", 2);
+    currentShader->link();
 
-    m_program->bind();
-    pMatrixUniform = m_program->uniformLocation("uPMatrix");
-    mvMatrixUniform = m_program->uniformLocation("uMVMatrix");
-    msMatrixUniform = m_program->uniformLocation("uMSMatrix");
-    lod = m_program->uniformLocation("lod");
-    sun = m_program->uniformLocation("sun");
-    brightness = m_program->uniformLocation("brightness");
-    skyColor = m_program->uniformLocation("skyColor");
-    skyLight = m_program->uniformLocation("sky");
-    shaderAlpha = m_program->uniformLocation("isAlpha");
-    shaderAlphaTest = m_program->uniformLocation("alphaTest");
-    shaderTextureEnabled = m_program->uniformLocation("textureEnabled");
-    shaderShapeColor = m_program->uniformLocation("shapeColor");
-    shaderEnableNormals = m_program->uniformLocation("enableNormals");
+    currentShader->bind();
+    currentShader->pMatrixUniform = currentShader->uniformLocation("uPMatrix");
+    currentShader->mvMatrixUniform = currentShader->uniformLocation("uMVMatrix");
+    currentShader->msMatrixUniform = currentShader->uniformLocation("uMSMatrix");
+    currentShader->lod = currentShader->uniformLocation("lod");
+    currentShader->sun = currentShader->uniformLocation("sun");
+    currentShader->brightness = currentShader->uniformLocation("brightness");
+    currentShader->skyColor = currentShader->uniformLocation("skyColor");
+    currentShader->skyLight = currentShader->uniformLocation("sky");
+    currentShader->shaderAlpha = currentShader->uniformLocation("isAlpha");
+    currentShader->shaderAlphaTest = currentShader->uniformLocation("alphaTest");
+    currentShader->shaderTextureEnabled = currentShader->uniformLocation("textureEnabled");
+    currentShader->shaderShapeColor = currentShader->uniformLocation("shapeColor");
+    currentShader->shaderEnableNormals = currentShader->uniformLocation("enableNormals");
     //m_normalMatrixLoc = m_program->uniformLocation("normalMatrix");
     //m_lightPosLoc = m_program->uniformLocation("lightPos");
     // Light position is fixed.
     //m_program->setUniformValue(m_lightPosLoc, QVector3D(0, 0, 70));
 
-    m_program->release();
+    currentShader->release();
 }
 
 void GLUU::mvPushMatrix() {
@@ -96,21 +87,21 @@ void GLUU::mvPopMatrix() {
 }
 
 void GLUU::setMatrixUniforms() {
-    m_program->setUniformValue(pMatrixUniform, *reinterpret_cast<float(*)[4][4]> (pMatrix));
-    m_program->setUniformValue(mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (mvMatrix));
-    m_program->setUniformValue(msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (objStrMatrix));
+    currentShader->setUniformValue(currentShader->pMatrixUniform, *reinterpret_cast<float(*)[4][4]> (pMatrix));
+    currentShader->setUniformValue(currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (mvMatrix));
+    currentShader->setUniformValue(currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (objStrMatrix));
     
-    m_program->setUniformValue(lod, Game::objectLod);
-    m_program->setUniformValue(sun, 1.0f);
-    m_program->setUniformValue(brightness, 1.0f);
-    m_program->setUniformValue(skyColor, skyc[0],skyc[1],skyc[2],skyc[3]);
-    m_program->setUniformValue(skyLight, sky[0],sky[1],sky[2],sky[3]);
-    m_program->setUniformValue(shaderAlpha, alpha);
-    m_program->setUniformValue(shaderAlphaTest, alphaTest);
+    currentShader->setUniformValue(currentShader->lod, Game::objectLod);
+    currentShader->setUniformValue(currentShader->sun, 1.0f);
+    currentShader->setUniformValue(currentShader->brightness, 1.0f);
+    currentShader->setUniformValue(currentShader->skyColor, skyc[0],skyc[1],skyc[2],skyc[3]);
+    currentShader->setUniformValue(currentShader->skyLight, sky[0],sky[1],sky[2],sky[3]);
+    currentShader->setUniformValue(currentShader->shaderAlpha, alpha);
+    currentShader->setUniformValue(currentShader->shaderAlphaTest, alphaTest);
     textureEnabled = true;
     normalsEnabled = true;
-    m_program->setUniformValue(shaderTextureEnabled, 1.0f);
-    m_program->setUniformValue(shaderEnableNormals, 1.0f);
+    currentShader->setUniformValue(currentShader->shaderTextureEnabled, 1.0f);
+    currentShader->setUniformValue(currentShader->shaderEnableNormals, 1.0f);
 };
 
 float GLUU::degToRad(float degrees) {
@@ -118,40 +109,40 @@ float GLUU::degToRad(float degrees) {
 }
 
 void GLUU::disableTextures(Vector4f* color){
-    m_program->setUniformValue(shaderShapeColor, color->x, color->y, color->z, color->c);
+    currentShader->setUniformValue(currentShader->shaderShapeColor, color->x, color->y, color->z, color->c);
     if(!this->textureEnabled) return;
     this->textureEnabled = false;
-    m_program->setUniformValue(shaderTextureEnabled, 0.0f);
+    currentShader->setUniformValue(currentShader->shaderTextureEnabled, 0.0f);
 }
 
 void GLUU::disableTextures(Vector3f* color){
-    m_program->setUniformValue(shaderShapeColor, color->x, color->y, color->z, 1.0);
+    currentShader->setUniformValue(currentShader->shaderShapeColor, color->x, color->y, color->z, 1.0);
     if(!this->textureEnabled) return;
     this->textureEnabled = false;
-    m_program->setUniformValue(shaderTextureEnabled, 0.0f);
+    currentShader->setUniformValue(currentShader->shaderTextureEnabled, 0.0f);
 }
 
 void GLUU::disableTextures(float x, float y, float z, float a){
-    m_program->setUniformValue(shaderShapeColor, x, y, z, a);
+    currentShader->setUniformValue(currentShader->shaderShapeColor, x, y, z, a);
     if(!this->textureEnabled) return;
     this->textureEnabled = false;
-    m_program->setUniformValue(shaderTextureEnabled, 0.0f);
+    currentShader->setUniformValue(currentShader->shaderTextureEnabled, 0.0f);
 }
 
 void GLUU::enableTextures(){
     if(this->textureEnabled) return;
     this->textureEnabled = true;
-    m_program->setUniformValue(shaderTextureEnabled, 1.0f);
+    currentShader->setUniformValue(currentShader->shaderTextureEnabled, 1.0f);
 }
 
 void GLUU::disableNormals(){
     if(!this->normalsEnabled) return;
     this->normalsEnabled = false;
-    m_program->setUniformValue(shaderEnableNormals, 0.0f);
+    currentShader->setUniformValue(currentShader->shaderEnableNormals, 0.0f);
 }
 
 void GLUU::enableNormals(){
     if(this->normalsEnabled) return;
     this->normalsEnabled = true;
-    m_program->setUniformValue(shaderEnableNormals, 1.0f);
+    currentShader->setUniformValue(currentShader->shaderEnableNormals, 1.0f);
 }

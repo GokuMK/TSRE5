@@ -666,7 +666,7 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
         obj->inUse = false;
     }*/
     
-    gluu->m_program->setUniformValue(gluu->shaderAlpha, 0.0f);
+    gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, 0.0f);
     gluu->enableNormals();
 
     Terrain *tTile;
@@ -689,7 +689,7 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
                 float lodz = 2048 * j - playerW[2];
                 gluu->mvPushMatrix();
                 Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * i, 0, 2048 * j);
-                gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+                gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
                 tTile->render(lodx, lodz, playerT, playerW, target, fov);
                 gluu->mvPopMatrix();
             }

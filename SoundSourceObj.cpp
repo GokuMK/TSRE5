@@ -93,8 +93,8 @@ void SoundSourceObj::render(GLUU* gluu, float lod, float posx, float posz, float
     if (!loaded) return;
     Mat4::identity(gluu->objStrMatrix);
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
-    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);

@@ -152,6 +152,22 @@ void GLWidget::initializeGL() {
     
     emit routeLoaded(route);
     emit mkrList(route->getMkrList());
+    /*
+    GLuint FramebufferName = 0;
+    glGenFramebuffers(1, &FramebufferName);
+    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+    // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
+    GLuint depthTexture;
+    glGenTextures(1, &depthTexture);
+    glBindTexture(GL_TEXTURE_2D, depthTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+    glDrawBuffer(GL_NONE); // No color buffer is drawn to.
+    */
 }
 
 void GLWidget::paintGL() {
@@ -196,7 +212,7 @@ void GLWidget::paintGL() {
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0.0, 0.0, -20.0);
     Mat4::identity(gluu->objStrMatrix);
     
-    gluu->m_program->bind();
+    gluu->currentShader->bind();
     gluu->setMatrixUniforms();
     //sFile->render();
     //eng->render();
@@ -289,7 +305,7 @@ void GLWidget::paintGL() {
         emit this->naviInfo(route->getTileObjCount((int)camera->pozT[0], (int)camera->pozT[1]), route->getTileHiddenObjCount((int)camera->pozT[0], (int)camera->pozT[1]));
         emit this->posInfo(camera->getCurrentPos());
     }
-    gluu->m_program->release();
+    gluu->currentShader->release();
 
 }
 

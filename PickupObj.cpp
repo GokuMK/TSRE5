@@ -218,7 +218,7 @@ void PickupObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     
     gluu->mvPushMatrix();
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
-    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
@@ -280,7 +280,7 @@ void PickupObj::renderTritems(GLUU* gluu, int selectionColor){
     Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3]);
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
-    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
     pointer3d->render(selectionColor + (1)*131072*8*useSC);
     gluu->mvPopMatrix();

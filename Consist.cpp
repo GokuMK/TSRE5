@@ -449,7 +449,7 @@ void Consist::render(int aktwx, int aktwz, int selectionColor, bool renderText) 
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0, engItems[i].pos);
         if(!engItems[i].flip)
             Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI, 0, 1, 0);
-        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         if(selectionColor != 0)
             scolor = selectionColor + i;
         if(selectedIdx == i)
@@ -463,8 +463,8 @@ void Consist::render(int aktwx, int aktwz, int selectionColor, bool renderText) 
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, -1, engItems[i].pos);
         Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI/2, 0, 1, 0);
         Mat4::identity(gluu->objStrMatrix);
-        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-        gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
         if(engItems[i].txt == NULL){
             engItems[i].txt = new TextObj(Game::currentEngLib->eng[engItems[i].eng]->displayName, 16, 1.0);
             //engItems[i].txt->setColor(255,255,0);
@@ -478,14 +478,14 @@ void Consist::render(int aktwx, int aktwz, int selectionColor, bool renderText) 
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 5, engItems[i].pos);
         //Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI/2, 0, 1, 0);
-        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         if(txtNumbers[i] == NULL){
             txtNumbers[i] = new TextObj(i+1);
             txtNumbers[i]->setColor(textColor[0],textColor[1],textColor[2]);
         }
         txtNumbers[i]->render(M_PI/2);
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0, -1);
-        gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         int wt = Game::currentEngLib->eng[engItems[i].eng]->wagonTypeId;
         if(wt == 1){
             if(txtEngineW == NULL){

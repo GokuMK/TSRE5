@@ -286,7 +286,7 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
     }
 
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
-    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     
     if(Game::showWorldObjPivotPoints){
         if(pointer3d == NULL){

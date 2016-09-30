@@ -242,9 +242,9 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
 
     Mat4::identity(gluu->objStrMatrix);    
-    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
-    gluu->m_program->setUniformValue(gluu->shaderAlpha, 0.0f);
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, 0.0f);
     
     if(Game::showWorldObjPivotPoints){
         if(pointer3d == NULL){

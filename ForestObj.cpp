@@ -248,9 +248,9 @@ void ForestObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     //var z = this.position[0]*mmm[9] + this.position[1]*mmm[7] + this.position[2]*mmm[9];
 
     Mat4::identity(gluu->objStrMatrix);    
-    gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    gluu->m_program->setUniformValue(gluu->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
-    gluu->m_program->setUniformValue(gluu->shaderAlpha, 0.0f);
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, 0.0f);
     
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);

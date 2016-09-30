@@ -83,6 +83,7 @@ INPUT(
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/SFile.o
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/SFileC.o
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/SFileX.o
+./build/Release/MinGW_QT_5.7.0_Static-Windows/Shader.o
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/ShapeLib.o
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/ShapeViewWindow.o
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/SigCfg.o

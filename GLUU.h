@@ -18,29 +18,13 @@
 #include <QOpenGLShaderProgram>
 #include "Vector4f.h"
 #include "Vector3f.h"
+#include "Shader.h"
 //QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
+
 
 class GLUU {
 public:
-    QOpenGLShaderProgram *m_program;
-    unsigned int shaderProgram;
-    
-    unsigned int vertexPositionAttribute;
-    unsigned int textureCoordAttribute;
-    unsigned int pMatrixUniform;
-    unsigned int mvMatrixUniform;
-    unsigned int msMatrixUniform;
-    unsigned int samplerUniform;
-    unsigned int lod;
-    unsigned int sun;
-    unsigned int brightness;
-    unsigned int skyColor;
-    unsigned int skyLight;
-    unsigned int shaderAlpha;
-    unsigned int shaderAlphaTest;
-    unsigned int shaderTextureEnabled;
-    unsigned int shaderShapeColor;
-    unsigned int shaderEnableNormals;
+    Shader *currentShader;
     
     float alpha;
     float alphaTest;
