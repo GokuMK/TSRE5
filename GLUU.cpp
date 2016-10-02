@@ -46,9 +46,16 @@ const char* GLUU::getShader(QString shaderScript, QString type) {
 }
 
 void GLUU::initShader() {
-    currentShader = new Shader();
-    currentShader->addShaderFromSourceCode(QOpenGLShader::Vertex, getShader("vertexShaderSource", "vs"));
-    currentShader->addShaderFromSourceCode(QOpenGLShader::Fragment, getShader("fragmentShaderSource", "fs"));
+    shaders["StandardBloom"] = new Shader();
+    shaders["StandardBloom"]->addShaderFromSourceCode(QOpenGLShader::Vertex, getShader("StandardBloom", "vs"));
+    shaders["StandardBloom"]->addShaderFromSourceCode(QOpenGLShader::Fragment, getShader("StandardBloom", "fs"));
+    shaders["StandardFog"] = new Shader();
+    shaders["StandardFog"]->addShaderFromSourceCode(QOpenGLShader::Vertex, getShader("StandardFog", "vs"));
+    shaders["StandardFog"]->addShaderFromSourceCode(QOpenGLShader::Fragment, getShader("StandardFog", "fs"));
+    
+    currentShader = shaders["StandardFog"];
+    //currentShader = shaders["StandardBloom"];
+    
     currentShader->bindAttributeLocation("vertex", 0);
     currentShader->bindAttributeLocation("aTextureCoord", 1);
     currentShader->bindAttributeLocation("normal", 2);
@@ -60,14 +67,18 @@ void GLUU::initShader() {
     currentShader->msMatrixUniform = currentShader->uniformLocation("uMSMatrix");
     currentShader->lod = currentShader->uniformLocation("lod");
     currentShader->sun = currentShader->uniformLocation("sun");
-    currentShader->brightness = currentShader->uniformLocation("brightness");
+
     currentShader->skyColor = currentShader->uniformLocation("skyColor");
-    currentShader->skyLight = currentShader->uniformLocation("sky");
+
     currentShader->shaderAlpha = currentShader->uniformLocation("isAlpha");
     currentShader->shaderAlphaTest = currentShader->uniformLocation("alphaTest");
     currentShader->shaderTextureEnabled = currentShader->uniformLocation("textureEnabled");
     currentShader->shaderShapeColor = currentShader->uniformLocation("shapeColor");
     currentShader->shaderEnableNormals = currentShader->uniformLocation("enableNormals");
+    currentShader->shaderDiffuseColor = currentShader->uniformLocation("diffuseColor");
+    currentShader->shaderAmbientColor = currentShader->uniformLocation("ambientColor");
+    currentShader->shaderSpecularColor = currentShader->uniformLocation("specularColor");
+    currentShader->shaderLightDirection = currentShader->uniformLocation("lightDirection");
     //m_normalMatrixLoc = m_program->uniformLocation("normalMatrix");
     //m_lightPosLoc = m_program->uniformLocation("lightPos");
     // Light position is fixed.
@@ -92,10 +103,11 @@ void GLUU::setMatrixUniforms() {
     currentShader->setUniformValue(currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (objStrMatrix));
     
     currentShader->setUniformValue(currentShader->lod, Game::objectLod);
-    currentShader->setUniformValue(currentShader->sun, 1.0f);
-    currentShader->setUniformValue(currentShader->brightness, 1.0f);
     currentShader->setUniformValue(currentShader->skyColor, skyc[0],skyc[1],skyc[2],skyc[3]);
-    currentShader->setUniformValue(currentShader->skyLight, sky[0],sky[1],sky[2],sky[3]);
+    currentShader->setUniformValue(currentShader->shaderDiffuseColor, 0.6,0.6,0.6,0.6);
+    currentShader->setUniformValue(currentShader->shaderAmbientColor, 0.4,0.4,0.4,0.4);
+    currentShader->setUniformValue(currentShader->shaderSpecularColor, 1.0,1.0,1.0,1.0);
+    currentShader->setUniformValue(currentShader->shaderLightDirection, -1.0,2.0,1.0);
     currentShader->setUniformValue(currentShader->shaderAlpha, alpha);
     currentShader->setUniformValue(currentShader->shaderAlphaTest, alphaTest);
     textureEnabled = true;

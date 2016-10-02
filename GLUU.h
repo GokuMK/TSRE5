@@ -25,6 +25,7 @@
 class GLUU {
 public:
     Shader *currentShader;
+    QHash<QString, Shader*> shaders;
     
     float alpha;
     float alphaTest;
