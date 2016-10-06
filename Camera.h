@@ -61,6 +61,7 @@ protected:
     float playerRot[2];
     float relativePos[3];
     float relativeRot[2];
+    float lookAt[16];
     int przesx = 3, przesy = 1, przesz = 3;
     int jestcontrol;
     int lpm = 0;

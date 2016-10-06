@@ -56,6 +56,7 @@ public:
     static void createNewRouteTerrain(int x, int z);
     static void saveEmpty(int x, int z);
     static void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
+    static void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
 private:
     static HeightWindow* heightWindow;
     static QuadTree* quadTree;

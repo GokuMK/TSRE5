@@ -27,6 +27,7 @@ Terrain::Terrain(float x, float y) {
     wTexid = -1;
     for (int i = 0; i < 256; i++) {
         texid[i] = -1;
+        texid2[i] = -1;
         hidden[i] = false;
         texModified[i] = false;
         texLocked[i] = false;
@@ -492,6 +493,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     if(this->showBlob){
             terrainBlob.render();
     } else {
+        //gluu->currentShader->setUniformValue(gluu->currentShader->shaderSecondTexEnabled, 1.0f);
         int off = 0;
         float lod = 0;
         float size = 512;
@@ -550,9 +552,29 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                         // gl.glDisable(GL2.GL_TEXTURE_2D);
                     }
                 }
-
+                if (texid2[yy * 16 + uu] == -2) {
+                } else if (tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].count153 < 2){
+                        texid2[yy * 16 + uu] = -2;
+                } else {
+                    if (texid2[yy * 16 + uu] == -1) {
+                        texid2[yy * 16 + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].tex[1]);
+                    }
+                    if (TexLib::mtex[texid2[yy * 16 + uu]]->loaded) {
+                        if (!TexLib::mtex[texid2[yy * 16 + uu]]->glLoaded)
+                            TexLib::mtex[texid2[yy * 16 + uu]]->GLTextures();
+                        //f->glActiveTexture(GL_TEXTURE1);
+                        //f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid2[yy * 16 + uu]]->tex[0]);
+                        //f->glActiveTexture(GL_TEXTURE0);
+                        //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
+                        //  gl.glEnable(GL2.GL_TEXTURE_2D);
+                        //gl.glDisable(GL2.GL_ALPHA_TEST);
+                        //gl.glDisable(GL2.GL_BLEND);
+                    } else {
+                        // gl.glDisable(GL2.GL_TEXTURE_2D);
+                    }
+                }
                 //QOpenGLVertexArrayObject::Binder vaoBinder(VAO[uu * 16 + yy]);
-
+                
 
                 f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
                 
@@ -580,7 +602,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
             gluu->mvPopMatrix();
             glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
         }
-        
+        gluu->currentShader->setUniformValue(gluu->currentShader->shaderSecondTexEnabled, 0.0f);
         renderWater(lodx, lodz, playerT, playerW, target, fov);
     }
 }

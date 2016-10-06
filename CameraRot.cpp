@@ -52,7 +52,6 @@ PreciseTileCoordinate* CameraRot::getCurrentPos(){
 }
 
 float* CameraRot::getMatrix() {
-    float* lookAt = Mat4::create();
     Mat4::lookAt(lookAt, playerPos, getTarget(), up);
     return lookAt;
 };

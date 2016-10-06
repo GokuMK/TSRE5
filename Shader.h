@@ -20,6 +20,7 @@ public:
     unsigned int shaderProgram;
     unsigned int vertexPositionAttribute;
     unsigned int textureCoordAttribute;
+    unsigned int pShadowMatrixUniform;
     unsigned int pMatrixUniform;
     unsigned int mvMatrixUniform;
     unsigned int msMatrixUniform;
@@ -38,6 +39,7 @@ public:
     unsigned int shaderAmbientColor;
     unsigned int shaderSpecularColor;
     unsigned int shaderLightDirection;
+    unsigned int shaderSecondTexEnabled;
 private:
 
 };

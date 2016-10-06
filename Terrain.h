@@ -59,6 +59,7 @@ private:
     bool hidden[256];
     bool uniqueTex[256];
     int texid[256];
+    int texid2[256];
     bool texModified[256];
     bool texLocked[256];
     QOpenGLBuffer *VBO = NULL;

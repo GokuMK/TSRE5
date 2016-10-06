@@ -242,6 +242,34 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     }*/
 }
 
+void Route::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, bool selection) {
+    if(!loaded) return;
+    
+    int mintile = -1;
+    int maxtile = 1;
+
+    Tile *tTile;
+    for (int i = mintile; i <= maxtile; i++) {
+        for (int j = maxtile; j >= mintile; j--) {
+            //try {
+            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
+            //    if (tTile->loaded == -2) continue;
+            //} catch (const std::out_of_range& oor) {
+            if (tTile == NULL){
+                tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Tile((int)playerT[0] + i, (int)playerT[1] + j);
+            }
+            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
+            //tTile->inUse = true;
+            if (tTile->loaded == 1) {
+                gluu->mvPushMatrix();
+                Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * i, 0, 2048 * j);
+                tTile->render(playerT, playerW, target, fov, selection);
+                gluu->mvPopMatrix();
+            }
+        }
+    }
+}
+
 void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
     if(obj == NULL) return;
     

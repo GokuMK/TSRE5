@@ -69,6 +69,7 @@ public:
     void newPositionTDB(WorldObj* obj, float* post, float* pos);
     void transalteObj(int x, int z, float px, float py, float pz, int uid);
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, bool selection);
+    void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, bool selection);
 private:
     void loadTrk();
     TDB *trackDB;

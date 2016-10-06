@@ -137,7 +137,7 @@ void PropertiesAbstract::pastePREnabled(){
     nq[2] = -args[2].toFloat();
     rq[0] = args[3].toFloat();
     rq[1] = args[4].toFloat();
-    rq[2] = args[5].toFloat();
+    rq[2] = -args[5].toFloat();
     rq[3] = args[6].toFloat();
     worldObj->setPosition((float*)&nq);
     worldObj->setQdirection((float*)&rq);

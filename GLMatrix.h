@@ -123,6 +123,7 @@ public:
     static float* rotateY(float* out, float* a, float rad);
     static float* translate(float* out, float* a, float* v);
     static float* translate(float* out, float* a,float x,float y,float z);
+    static float* ortho(float *out, float left, float right, float bottom, float top, float near, float far);
 private:
 
 };

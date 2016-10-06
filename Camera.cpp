@@ -32,6 +32,8 @@ Camera::Camera(float* pt) {
     relativePos[1] = 0;
     relativePos[2] = 0;
     
+    Mat4::identity(lookAt);
+    
     moveF = moveR = moveB = moveL = false;
     fov = Game::cameraFov;
 }
@@ -49,7 +51,6 @@ PreciseTileCoordinate* Camera::getCurrentPos(){
 }
 
 float* Camera::getMatrix() {
-    float* lookAt = Mat4::create();
     return lookAt;
 };
 

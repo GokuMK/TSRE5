@@ -75,7 +75,6 @@ void Camera::setPlayerRot(float x, float y) {
 }*/
 
 float* CameraFree::getMatrix() {
-    float* lookAt = Mat4::create();
     Mat4::lookAt(lookAt, playerPos, getTarget(), up);
     return lookAt;
 };

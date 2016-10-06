@@ -32,6 +32,7 @@
 #include "TerrainTreeWindow.h"
 #include "ShapeLib.h"
 #include "EngLib.h"
+#include "QOpenGLFunctions_3_3_Core"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -92,6 +93,13 @@ void GLWidget::initializeGL() {
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
     //qDebug() << "initializeOpenGLFunctions();";
     initializeOpenGLFunctions();
+    //QOpenGLFunctions_3_3_Core* funcs = 0;
+    //funcs = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
+    //if (!funcs) {
+    //    qWarning() << "Could not obtain required OpenGL context version";
+    //    exit(1);
+    //}
+    //funcs->initializeOpenGLFunctions();
     glClearColor(0, 0, 0, 1);
     //qDebug() << "gluu->initShader();";
     gluu->initShader();
@@ -152,22 +160,33 @@ void GLWidget::initializeGL() {
     
     emit routeLoaded(route);
     emit mkrList(route->getMkrList());
-    /*
-    GLuint FramebufferName = 0;
+    
+    
     glGenFramebuffers(1, &FramebufferName);
     glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
     // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
-    GLuint depthTexture;
+    
+    glActiveTexture(GL_TEXTURE2);
     glGenTextures(1, &depthTexture);
     glBindTexture(GL_TEXTURE_2D, depthTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0,GL_DEPTH_COMPONENT16, 1024, 1024, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 4096, 4096, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
     glDrawBuffer(GL_NONE); // No color buffer is drawn to.
-    */
+
+    //GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
+    //funcs->glDrawBuffers(1, DrawBuffers);
+    //glDrawBuffer(GL_COLOR_ATTACHMENT0); 
+
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        qDebug() << "shadowbuffer fail";
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glActiveTexture(GL_TEXTURE0);
 }
 
 void GLWidget::paintGL() {
@@ -179,44 +198,67 @@ void GLWidget::paintGL() {
     glClearColor(gluu->skyc[0], gluu->skyc[1], gluu->skyc[2], 1.0);
     //else
     //    glClearColor(0, 0, 0, 1.0);
-
     
-    
-    Mat4::perspective(gluu->pMatrix, Game::cameraFov*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
-    float* lookAt = camera->getMatrix();
-    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, lookAt);
+    // Render Shadows
+    float* lookAt = Mat4::create();
+    float* out1 = Vec3::create();    
+    Vec3::set(out1, 0,1,0);
+    float *ld = Vec3::create();
+    Vec3::set(ld, -1.0,2.0,1.0);
+    float *aaa = camera->getPos();
+    //float *lt = camera->getTarget();
+    //Vec3::sub(lt, lt, aaa);
+    //lt[0] = lt[0]*100;
+    //lt[1] = 0;
+    //lt[2] = lt[2]*100;
+    //Vec3::add(aaa, aaa, lt);
+    //aaa[2] = -aaa[2];
+    //aaa[0] = -aaa[0];
+    Vec3::add(ld, ld, aaa);
+    Mat4::ortho(gluu->pShadowMatrix, -300, 300, -300, 300, -150, 150);
+    Mat4::lookAt(lookAt, ld, aaa, out1);
+    Mat4::multiply(gluu->pShadowMatrix, gluu->pShadowMatrix, lookAt);
     Mat4::identity(gluu->mvMatrix);
-
-    //mat4.translate(gluu.mvMatrix, gluu.mvMatrix, [0.0, -2.0, -15.0]);
-    //mat4.rotate(gluu.mvMatrix, gluu.mvMatrix, gluu.degToRad(yRot), [0,1,0]);
-    //mat4.translate(gluu.mvMatrix, gluu.mvMatrix, [0.0, 0.0, -30.0]);
-    //mat4.rotate(gluu.mvMatrix, gluu.mvMatrix, gluu.degToRad(yRot), [0,1,0]);
-    //Mat4::identity(gluu->objStrMatrix);
-    //gluu->objStrMatrix = Mat4::create();
-    //gluu->m_proj.setToIdentity();
-    //gluu->m_proj.perspective(45.0f, GLfloat(this->width()) / this->height(), 0.1f, 6000.0f);
-
-    //gluu->m_world.setToIdentity();
-    //gluu->m_world.translate(0.0, 0.0, -20.0);
-    //gluu->m_world.rotate(m_yRot / 16.0f, 0, 1, 0);
-    //gluu->m_world.rotate(m_zRot / 16.0f, 0, 0, 1);
-
-    //gluu->m_program->bind();
-    //gluu->m_program->setUniformValue(gluu->m_projMatrixLoc, gluu->m_proj);
-    //gluu->m_program->setUniformValue(gluu->m_mvMatrixLoc, gluu->m_camera * gluu->m_world);
-    //QMatrix3x3 normalMatrix = gluu->m_world.normalMatrix();
-    //gluu->m_program->setUniformValue(gluu->m_normalMatrixLoc, normalMatrix);
-
-    //Mat4::identity(gluu->pMatrix);
-    //Mat4::identity(gluu->mvMatrix);
-    //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0.0, 0.0, -20.0);
     Mat4::identity(gluu->objStrMatrix);
     
+    gluu->currentShader = gluu->shaders["Shadows"];
     gluu->currentShader->bind();
     gluu->setMatrixUniforms();
-    //sFile->render();
-    //eng->render();
-    //tile->render();
+    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+    glActiveTexture(GL_TEXTURE0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0,0,4096,4096);
+    int tempLod = Game::objectLod;
+    Game::objectLod = 500;
+    //TerrainLib::renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
+    route->renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
+    //return;
+    Game::objectLod = tempLod;
+    gluu->currentShader->release();
+    gluu->currentShader = gluu->shaders["StandardBloom"];
+    gluu->currentShader->bind();
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, depthTexture);
+    glActiveTexture(GL_TEXTURE0);
+    
+    glViewport(0,0,this->width(),this->height());
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
+    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
+    Mat4::identity(gluu->mvMatrix);
+    Mat4::identity(gluu->objStrMatrix);
+    
+    /*float biasMatrix[16]{
+        0.5, 0.0, 0.0, 0.5,
+        0.0, 0.5, 0.0, 0.5,
+        0.0, 0.0, 0.5, 0.5,
+        0.0, 0.0, 0.0, 1.0
+    };
+    Mat4::multiply(gluu->pShadowMatrix, gluu->pShadowMatrix, biasMatrix);*/
+    gluu->setMatrixUniforms();
+
     if (!selection){
         //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
         TerrainLib::render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);

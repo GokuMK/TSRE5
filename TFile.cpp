@@ -248,7 +248,7 @@ void TFile::get153(FileBuffer* data, TFile::Mat* m) {
             data->off += slen;
             
             
-            //qDebug() << j << " "<< m->tex[j];
+            //qDebug() << j << " "<< *m->tex[j];
             //data->off -= 3;
             m->atex[j][0] = data->getInt();
             m->atex[j][1] = data->getInt();
@@ -274,7 +274,7 @@ void TFile::get156(FileBuffer* data, TFile::Mat* m) {
             m->itex[j][1] = data->getInt();//&0xff;
             m->itex[j][2] = data->getInt();//&0xff;
             m->itex[j][3] = data->getInt();//&0xff;
-            //qDebug() << m->itex[j][0] << " " << m->itex[j][1] << " " << m->itex[j][2] << " " << m->itex[j][3];
+            //qDebug() << j <<":" <<m->itex[j][0] << " " << m->itex[j][1] << " " << m->itex[j][2] << " " << m->itex[j][3];
 
             data->off = akto + offset;
         }

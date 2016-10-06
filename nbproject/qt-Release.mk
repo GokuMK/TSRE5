@@ -53074,7 +53074,10 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/glwidget.o: glwidget.cpp glwidget.h 
 		OSM.h \
 		TerrainTreeWindow.h \
 		ShapeLib.h \
-		EngLib.h
+		EngLib.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions_3_3_Core \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions_3_3_core.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVersionFunctions
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/glwidget.o glwidget.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/main.o: main.cpp C:/QT/Static/5.7.0/include/QtWidgets/QApplication \
