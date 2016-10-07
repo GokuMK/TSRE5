@@ -7,6 +7,7 @@ varying vec4 shadowPos;
 varying vec4 shadow2Pos;
 
 uniform float textureEnabled;
+uniform int shadowsEnabled;
 uniform vec4 shapeColor;
 uniform float isAlpha;
 uniform float alphaTest;
@@ -83,7 +84,7 @@ void main() {
             float t = insideBox(shadowPos2.xy, vec2(0, 0), vec2(1, 1));
             float t2 = insideBox(shadow2Pos2.xy, vec2(0, 0), vec2(1, 1));
             float visibility = 1.0;
-            for (int i=0;i<4;i++){
+            for (int i=0; i<shadowsEnabled; i++){
 		int index = i;
 		visibility -= t*0.15*(1.0-texture( shadow1, vec3(shadowPos2.xy + poissonDisk[index]/2000.0, (shadowPos2.z-bias)) ));
                 visibility -= (1.0-t)*t2*0.15*(1.0-texture( shadow2, vec3(shadow2Pos2.xy + poissonDisk[index]/4000.0, (shadow2Pos2.z-0.002)) ));

@@ -141,7 +141,6 @@ void GLWidget::initializeGL() {
     }
     camera->setPos((float*)&spos);
     
-    
     lastTime = QDateTime::currentMSecsSinceEpoch();
     int timerStep = 15;
     if(Game::fpsLimit > 0)
@@ -161,39 +160,8 @@ void GLWidget::initializeGL() {
     emit routeLoaded(route);
     emit mkrList(route->getMkrList());
     
-    
-    glGenFramebuffers(1, &FramebufferName1);
-    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName1);
-    glActiveTexture(GL_TEXTURE2);
-    glGenTextures(1, &depthTexture1);
-    glBindTexture(GL_TEXTURE_2D, depthTexture1);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, Game::shadowMapSize, Game::shadowMapSize, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture1, 0);
-    glDrawBuffer(GL_NONE); 
-    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        qDebug() << "shadowbuffer1 fail";
-    
-    glGenFramebuffers(1, &FramebufferName2);
-    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName2);
-    glActiveTexture(GL_TEXTURE3);
-    glGenTextures(1, &depthTexture2);
-    glBindTexture(GL_TEXTURE_2D, depthTexture2);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture2, 0);
-    glDrawBuffer(GL_NONE); 
-    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        qDebug() << "shadowbuffer2 fail";
-    
+    gluu->makeShadowFramebuffer(FramebufferName1, depthTexture1, Game::shadowMapSize, GL_TEXTURE2);
+    gluu->makeShadowFramebuffer(FramebufferName2, depthTexture2, 1024, GL_TEXTURE3);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE0);
 }
@@ -202,13 +170,52 @@ void GLWidget::paintGL() {
     Game::currentShapeLib = currentShapeLib;
     if(route == NULL) return;
     if(!route->loaded) return;
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //if (!selection)
-    glClearColor(gluu->skyc[0], gluu->skyc[1], gluu->skyc[2], 1.0);
-    //else
-    //    glClearColor(0, 0, 0, 1.0);
-    
+
     // Render Shadows
+    if(Game::shadowsEnabled > 0)
+        renderShadowMaps();
+
+    // Render Scene
+    gluu->currentShader = gluu->shaders["StandardBloom"];
+    gluu->currentShader->bind();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glActiveTexture(GL_TEXTURE0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(gluu->skyc[0], gluu->skyc[1], gluu->skyc[2], 1.0);
+    
+    glViewport(0,0,this->width(),this->height());
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
+    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
+    Mat4::identity(gluu->mvMatrix);
+    Mat4::identity(gluu->objStrMatrix);
+    gluu->setMatrixUniforms();
+
+    if (!selection){
+        //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+        TerrainLib::render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
+        //glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+    }
+    if(stickPointerToTerrain)
+        if (!selection) drawPointer();
+    
+    route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
+    
+    if(!stickPointerToTerrain)
+        if (!selection) drawPointer();
+
+    gluu->currentShader->release();
+    
+    // Handle Selection
+    handleSelection();
+
+    // Set Info
+    if(this->isActiveWindow()){
+        emit this->naviInfo(route->getTileObjCount((int)camera->pozT[0], (int)camera->pozT[1]), route->getTileHiddenObjCount((int)camera->pozT[0], (int)camera->pozT[1]));
+        emit this->posInfo(camera->getCurrentPos());
+    }
+}
+
+void GLWidget::renderShadowMaps(){
     float* lookAt = Mat4::create();
     float* out1 = Vec3::create();    
     Vec3::set(out1, 0,1,0);
@@ -224,10 +231,8 @@ void GLWidget::paintGL() {
     //aaa[2] = -aaa[2];
     //aaa[0] = -aaa[0];
     Vec3::add(ld, ld, aaa);
-    //Mat4::ortho(gluu->pShadowMatrix, -150, 150, -150, 150, -150, 150);
     Mat4::ortho(gluu->pShadowMatrix, -150, 150, -150, 150, -200, 200);
     Mat4::ortho(gluu->pShadowMatrix2, -700, 700, -700, 700, -700, 700);
-    //Mat4::ortho(gluu->pShadowMatrix, -700, 700, -700, 700, -700, 700);
     Mat4::lookAt(lookAt, ld, aaa, out1);
     Mat4::multiply(gluu->pShadowMatrix, gluu->pShadowMatrix, lookAt);
     Mat4::multiply(gluu->pShadowMatrix2, gluu->pShadowMatrix2, lookAt);
@@ -237,7 +242,6 @@ void GLWidget::paintGL() {
     Mat4::identity(gluu->mvMatrix);
     Mat4::identity(gluu->objStrMatrix);
     gluu->setMatrixUniforms();
-    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName1);
     glActiveTexture(GL_TEXTURE0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -258,45 +262,11 @@ void GLWidget::paintGL() {
     route->renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
     gluu->pShadowMatrix2 = gluu->pShadowMatrix;
     gluu->pShadowMatrix = tmatrix;
-    //return;
     Game::objectLod = tempLod;
     gluu->currentShader->release();
-    gluu->currentShader = gluu->shaders["StandardBloom"];
-    gluu->currentShader->bind();
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, depthTexture1);
-    glActiveTexture(GL_TEXTURE0);
-    
-    glViewport(0,0,this->width(),this->height());
-    Mat4::perspective(gluu->pMatrix, Game::cameraFov*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
-    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
-    Mat4::identity(gluu->mvMatrix);
-    Mat4::identity(gluu->objStrMatrix);
-    
-    /*float biasMatrix[16]{
-        0.5, 0.0, 0.0, 0.5,
-        0.0, 0.5, 0.0, 0.5,
-        0.0, 0.0, 0.5, 0.5,
-        0.0, 0.0, 0.0, 1.0
-    };
-    Mat4::multiply(gluu->pShadowMatrix, gluu->pShadowMatrix, biasMatrix);*/
-    gluu->setMatrixUniforms();
+}
 
-    if (!selection){
-        //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-        TerrainLib::render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
-        //glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-    }
-    if(stickPointerToTerrain)
-        if (!selection) drawPointer();
-    
-    route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
-    
-    if(!stickPointerToTerrain)
-        if (!selection) drawPointer();
-
+void GLWidget::handleSelection(){
     if (selection) {
         int x = mousex;
         int y = mousey;
@@ -367,13 +337,6 @@ void GLWidget::paintGL() {
         selection = !selection;
         paintGL();
     }
-
-    if(this->isActiveWindow()){
-        emit this->naviInfo(route->getTileObjCount((int)camera->pozT[0], (int)camera->pozT[1]), route->getTileHiddenObjCount((int)camera->pozT[0], (int)camera->pozT[1]));
-        emit this->posInfo(camera->getCurrentPos());
-    }
-    gluu->currentShader->release();
-
 }
 
 void GLWidget::drawPointer(){

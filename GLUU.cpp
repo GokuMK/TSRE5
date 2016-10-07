@@ -16,6 +16,7 @@
 #include "Vector4f.h"
 #include <QDebug>
 #include <QFile>
+#include <GL/gl.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -84,6 +85,8 @@ void GLUU::initShader() {
         currentShader->shaderSpecularColor = currentShader->uniformLocation("specularColor");
         currentShader->shaderLightDirection = currentShader->uniformLocation("lightDirection");
         currentShader->shaderSecondTexEnabled = currentShader->uniformLocation("secondTexEnabled");
+        currentShader->shaderShadowsEnabled = currentShader->uniformLocation("shadowsEnabled");
+        
         unsigned int tex1 = currentShader->uniformLocation("uSampler");
         currentShader->setUniformValue(tex1, 0);
         unsigned int tex2 = currentShader->uniformLocation("uSampler2");
@@ -128,6 +131,7 @@ void GLUU::setMatrixUniforms() {
     currentShader->setUniformValue(currentShader->shaderTextureEnabled, 1.0f);
     currentShader->setUniformValue(currentShader->shaderEnableNormals, 1.0f);
     currentShader->setUniformValue(currentShader->shaderSecondTexEnabled, 0.0f);
+    currentShader->setUniformValue(currentShader->shaderShadowsEnabled, Game::shadowsEnabled);
 };
 
 float GLUU::degToRad(float degrees) {
@@ -171,4 +175,23 @@ void GLUU::enableNormals(){
     if(this->normalsEnabled) return;
     this->normalsEnabled = true;
     currentShader->setUniformValue(currentShader->shaderEnableNormals, 1.0f);
+}
+
+void GLUU::makeShadowFramebuffer(unsigned int& frameBuffer, unsigned int& texture, int texSize, GLenum ATEX){
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    f->glGenFramebuffers(1, &frameBuffer);
+    f->glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    f->glActiveTexture(ATEX);
+    f->glGenTextures(1, &texture);
+    f->glBindTexture(GL_TEXTURE_2D, texture);
+    f->glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, texSize, texSize, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+    f->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, texture, 0);
+    glDrawBuffer(GL_NONE); 
+    if(f->glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        qDebug() << "shadowbuffer1 fail";
 }

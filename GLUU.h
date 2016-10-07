@@ -62,6 +62,7 @@ public:
     void enableTextures();
     void disableNormals();
     void enableNormals();
+    void makeShadowFramebuffer(unsigned int &frameBuffer, unsigned int &texture, int texSize, GLenum ATEX );
 private:
     const char* getShader(QString shaderScript, QString type);
     bool textureEnabled;

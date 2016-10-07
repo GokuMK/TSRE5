@@ -41,6 +41,7 @@ public:
     unsigned int shaderSpecularColor;
     unsigned int shaderLightDirection;
     unsigned int shaderSecondTexEnabled;
+    unsigned int shaderShadowsEnabled;
 private:
 
 };

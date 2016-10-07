@@ -33,6 +33,7 @@
 #include <QVector>
 
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
+    Game::shadowsEnabled = 0;
     aboutWindow = new AboutWindow();
     randomConsist = new RandomConsist();
     englib = new EngLib();

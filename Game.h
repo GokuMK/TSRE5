@@ -88,6 +88,7 @@ public:
     static int oglDefaultLineWidth;
     static bool showWorldObjPivotPoints;
     static int shadowMapSize;
+    static int shadowsEnabled;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

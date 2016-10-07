@@ -69,6 +69,7 @@ bool Game::sortTileObjects = true;
 int Game::oglDefaultLineWidth = 1;
 bool Game::showWorldObjPivotPoints = false;
 int Game::shadowMapSize = 2048;
+int Game::shadowsEnabled = 4;
 
 QString Game::geoPath = "hgst";
 
