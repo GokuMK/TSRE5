@@ -45,6 +45,7 @@ public:
     //QMatrix4x4 m_world;
     float* pMatrix;
     float* pShadowMatrix;
+    float* pShadowMatrix2;
     float* mvMatrix;
     float* objStrMatrix;
     static GLUU *get();

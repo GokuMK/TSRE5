@@ -21,6 +21,7 @@ public:
     unsigned int vertexPositionAttribute;
     unsigned int textureCoordAttribute;
     unsigned int pShadowMatrixUniform;
+    unsigned int pShadow2MatrixUniform;
     unsigned int pMatrixUniform;
     unsigned int mvMatrixUniform;
     unsigned int msMatrixUniform;

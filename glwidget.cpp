@@ -162,28 +162,37 @@ void GLWidget::initializeGL() {
     emit mkrList(route->getMkrList());
     
     
-    glGenFramebuffers(1, &FramebufferName);
-    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
-    // Depth texture. Slower than a depth buffer, but you can sample it later in your shader
-    
+    glGenFramebuffers(1, &FramebufferName1);
+    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName1);
     glActiveTexture(GL_TEXTURE2);
-    glGenTextures(1, &depthTexture);
-    glBindTexture(GL_TEXTURE_2D, depthTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 4096, 4096, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    glGenTextures(1, &depthTexture1);
+    glBindTexture(GL_TEXTURE_2D, depthTexture1);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, Game::shadowMapSize, Game::shadowMapSize, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
-    glDrawBuffer(GL_NONE); // No color buffer is drawn to.
-
-    //GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
-    //funcs->glDrawBuffers(1, DrawBuffers);
-    //glDrawBuffer(GL_COLOR_ATTACHMENT0); 
-
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture1, 0);
+    glDrawBuffer(GL_NONE); 
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        qDebug() << "shadowbuffer fail";
+        qDebug() << "shadowbuffer1 fail";
+    
+    glGenFramebuffers(1, &FramebufferName2);
+    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName2);
+    glActiveTexture(GL_TEXTURE3);
+    glGenTextures(1, &depthTexture2);
+    glBindTexture(GL_TEXTURE_2D, depthTexture2);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture2, 0);
+    glDrawBuffer(GL_NONE); 
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        qDebug() << "shadowbuffer2 fail";
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE0);
@@ -215,24 +224,40 @@ void GLWidget::paintGL() {
     //aaa[2] = -aaa[2];
     //aaa[0] = -aaa[0];
     Vec3::add(ld, ld, aaa);
-    Mat4::ortho(gluu->pShadowMatrix, -300, 300, -300, 300, -150, 150);
+    //Mat4::ortho(gluu->pShadowMatrix, -150, 150, -150, 150, -150, 150);
+    Mat4::ortho(gluu->pShadowMatrix, -150, 150, -150, 150, -200, 200);
+    Mat4::ortho(gluu->pShadowMatrix2, -700, 700, -700, 700, -700, 700);
+    //Mat4::ortho(gluu->pShadowMatrix, -700, 700, -700, 700, -700, 700);
     Mat4::lookAt(lookAt, ld, aaa, out1);
     Mat4::multiply(gluu->pShadowMatrix, gluu->pShadowMatrix, lookAt);
-    Mat4::identity(gluu->mvMatrix);
-    Mat4::identity(gluu->objStrMatrix);
+    Mat4::multiply(gluu->pShadowMatrix2, gluu->pShadowMatrix2, lookAt);
     
     gluu->currentShader = gluu->shaders["Shadows"];
     gluu->currentShader->bind();
+    Mat4::identity(gluu->mvMatrix);
+    Mat4::identity(gluu->objStrMatrix);
     gluu->setMatrixUniforms();
     //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName);
+    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName1);
     glActiveTexture(GL_TEXTURE0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glViewport(0,0,4096,4096);
+    glViewport(0,0,Game::shadowMapSize,Game::shadowMapSize);
     int tempLod = Game::objectLod;
-    Game::objectLod = 500;
-    //TerrainLib::renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
+    Game::objectLod = 1000;
     route->renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
+    
+    Mat4::identity(gluu->mvMatrix);
+    Mat4::identity(gluu->objStrMatrix);
+    float *tmatrix = gluu->pShadowMatrix;
+    gluu->pShadowMatrix = gluu->pShadowMatrix2;
+    gluu->setMatrixUniforms();
+    glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName2);
+    glActiveTexture(GL_TEXTURE0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0,0,1024,1024);
+    route->renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
+    gluu->pShadowMatrix2 = gluu->pShadowMatrix;
+    gluu->pShadowMatrix = tmatrix;
     //return;
     Game::objectLod = tempLod;
     gluu->currentShader->release();
@@ -241,7 +266,7 @@ void GLWidget::paintGL() {
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, depthTexture);
+    glBindTexture(GL_TEXTURE_2D, depthTexture1);
     glActiveTexture(GL_TEXTURE0);
     
     glViewport(0,0,this->width(),this->height());

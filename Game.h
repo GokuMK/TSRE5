@@ -87,6 +87,7 @@ public:
     static bool sortTileObjects;
     static int oglDefaultLineWidth;
     static bool showWorldObjPivotPoints;
+    static int shadowMapSize;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

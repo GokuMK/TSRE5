@@ -141,9 +141,10 @@ private:
     float placeRot[4];
     long long int lastMousePressTime = 0;
     bool keyControlEnabled = false;
-    GLuint FramebufferName = 0;
-    GLuint depthTexture = 0;
-    
+    GLuint FramebufferName1 = 0;
+    GLuint depthTexture1 = 0;
+    GLuint FramebufferName2 = 0;
+    GLuint depthTexture2 = 0;
     Brush* defaultPaintBrush;
     MapWindow* mapWindow;
     ShapeLib *currentShapeLib = NULL;

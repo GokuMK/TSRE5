@@ -4,6 +4,7 @@ varying vec2 vTextureCoord;
 varying float fogFactor;
 varying vec3 vNormal;
 varying vec4 shadowPos;
+varying vec4 shadow2Pos;
 
 uniform float textureEnabled;
 uniform vec4 shapeColor;
@@ -17,6 +18,7 @@ uniform vec3 lightDirection;
 uniform sampler2D uSampler;
 uniform sampler2D uSampler2;
 uniform sampler2DShadow shadow1;
+uniform sampler2DShadow shadow2;
 uniform float secondTexEnabled;
 uniform mat4 uMVMatrix;
 uniform mat4 uMSMatrix;
@@ -47,6 +49,11 @@ float random(vec3 seed, int i){
 	return fract(sin(dot_product) * 43758.5453);
 }
 
+float insideBox(vec2 v, vec2 bottomLeft, vec2 topRight) {
+    vec2 s = step(bottomLeft, v) - step(topRight, v);
+    return s.x * s.y;   
+}
+
 void main() {
         //gl_FragColor  =vec4(1.0,0.0,0.0,1.0);
         if(textureEnabled == 0) {
@@ -58,54 +65,36 @@ void main() {
             if(gl_FragColor.a < alphaTest)
                 discard;    
                 
-            float bias = 0.005;
+            float bias = 0.0025;
             if(enableNormals > 0.0){
                 vec3 normal = normalize(mat3(uMVMatrix) * mat3(uMSMatrix) * vNormal);
                 vec3 lights = normalize(lightDirection);
                 float cosTheta = dot( normal, lights );
                 cosTheta = clamp(cosTheta, 0, 1);
                 vec4 color = diffuseColor;
-                color *= cosTheta;
+                color.xyz *= cosTheta;
                 color += ambientColor;
-                color.a = 1.0;
                 gl_FragColor *= color;
-                bias = 0.01*tan(acos(cosTheta));
-                bias = clamp(bias, 0, 0.01);
+                bias = bias*tan(acos(cosTheta));
+                bias = clamp(bias, 0, 0.005);
             }
             vec4 shadowPos2 = shadowPos*0.5+0.5;
-            float visibility2 = shadowPos2.z;
-            //float visibility1 = texture( shadow1, vec2(shadowPos2.x, shadowPos2.y) ).z;
-            //float visibility1 = texture( shadow1, vec3(shadowPos2.x, shadowPos2.y, shadowPos2.z - 0.01) );
-            //gl_FragColor.g = 0.0;
-            //if(visibility2 > 0.5 && visibility2 < 0.7 )
-            //    gl_FragColor.g = 1.0;
-            //gl_FragColor.r = 0.0;
-            //if(visibility1 > 0.0)
-            //    gl_FragColor.r = 1.0;
-            //if(visibility1 > 0.5 && visibility1 < 0.7 )
-            //    gl_FragColor.r = 1.0;
-            //gl_FragColor.b = 0.0;
+            vec4 shadow2Pos2 = shadow2Pos*0.5+0.5;
+            float t = insideBox(shadowPos2.xy, vec2(0, 0), vec2(1, 1));
+            float t2 = insideBox(shadow2Pos2.xy, vec2(0, 0), vec2(1, 1));
             float visibility = 1.0;
-            //float bias = 0.01;
-            if(shadowPos2.x > 0.0 && shadowPos2.x < 1.0 && shadowPos2.y > 0.0 && shadowPos2.y < 1.0)
             for (int i=0;i<4;i++){
 		int index = i;
-		visibility -= 0.17*(1.0-texture( shadow1, vec3(shadowPos2.xy + poissonDisk[index]/3000.0, (shadowPos2.z-bias)) ));
+		visibility -= t*0.15*(1.0-texture( shadow1, vec3(shadowPos2.xy + poissonDisk[index]/2000.0, (shadowPos2.z-bias)) ));
+                visibility -= (1.0-t)*t2*0.15*(1.0-texture( shadow2, vec3(shadow2Pos2.xy + poissonDisk[index]/4000.0, (shadow2Pos2.z-0.002)) ));
             }
-            //if (visibility1 < visibility2 - 0.01)
-            //if (visibility1 > 0.5)
-                //gl_FragColor.b = 1.0;
-            //    visibility = visibility1;
             gl_FragColor.xyz *= visibility;
                 
             vec4 FragColor2 = gl_FragColor + fogFactor*skyColor;
-
             if(FragColor2.r > skyColor.x ) 
                 FragColor2.r = max(skyColor.x, gl_FragColor.r);
-
             if(FragColor2.g > skyColor.y ) 
                 FragColor2.g = max(skyColor.y, gl_FragColor.g);
-
             if(FragColor2.b > skyColor.z ) 
                 FragColor2.b = max(skyColor.z, gl_FragColor.b);
 
