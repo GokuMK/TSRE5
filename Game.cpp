@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.633";
+QString Game::AppVersion = "v0.634"; 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -213,7 +213,9 @@ void Game::load() {
         if(val == "oglDefaultLineWidth"){
             oglDefaultLineWidth = args[1].trimmed().toInt();
         }
-
+        if(val == "shadowsEnabled"){
+            shadowsEnabled = args[1].trimmed().toInt();
+        }
     }
 }
 

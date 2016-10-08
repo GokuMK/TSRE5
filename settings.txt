@@ -51,3 +51,4 @@ leaveTrackShapeAfterDelete = false
 useImperial = false
 #ortsEngEnable = false
 #oglDefaultLineWidth = 2
+shadowsEnabled = 1

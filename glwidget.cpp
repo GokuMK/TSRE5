@@ -171,7 +171,6 @@ void GLWidget::paintGL() {
     if(route == NULL) return;
     if(!route->loaded) return;
 
-    //Game::shadowsEnabled = 0;
     // Render Shadows
     if(Game::shadowsEnabled > 0)
         renderShadowMaps();
