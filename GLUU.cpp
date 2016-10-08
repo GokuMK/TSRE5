@@ -119,7 +119,7 @@ void GLUU::setMatrixUniforms() {
     currentShader->setUniformValue(currentShader->pShadow2MatrixUniform, *reinterpret_cast<float(*)[4][4]> (pShadowMatrix2));
     currentShader->setUniformValue(currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (mvMatrix));
     currentShader->setUniformValue(currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (objStrMatrix));
-    currentMsMatrinxHash = getMatrixHash(objStrMatrix);
+    currentMsMatrinxHash = 0;
     
     currentShader->setUniformValue(currentShader->lod, Game::objectLod);
     currentShader->setUniformValue(currentShader->skyColor, skyc[0],skyc[1],skyc[2],skyc[3]);
