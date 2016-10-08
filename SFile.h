@@ -54,6 +54,7 @@ public:
         float param[16];
         float fixed[16];
         bool isFixed = false;
+        long long int hash = 0;
     };
 
     struct primst {

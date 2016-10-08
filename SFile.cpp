@@ -372,8 +372,12 @@ void SFile::render() {
                     Mat4::identity(m);
                     memcpy(macierz[matrix].fixed, getPmatrix(m, matrix), sizeof (float) * 16);
                     macierz[matrix].isFixed = true;
+                    macierz[matrix].hash = gluu->getMatrixHash(macierz[matrix].fixed);
                 }
-                gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(&macierz[matrix].fixed));
+                if(macierz[matrix].hash != gluu->currentMsMatrinxHash){
+                    gluu->currentMsMatrinxHash = macierz[matrix].hash;
+                    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(&macierz[matrix].fixed));
+                }
             }
             
             if( vtxstate[vtx_state].arg2 < -7 )

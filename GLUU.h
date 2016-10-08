@@ -36,6 +36,7 @@ public:
     float alpha;
     float alphaTest;
     float currentAlphaTest;
+    long long int currentMsMatrinxHash = 0;
     
     float skyc[4]{230.0/255.0,248.0/255,255.0/255.0, 1.0};
     //float skyc[4]{200.0/255.0,218.0/255,225.0/255.0, 1.0};
@@ -69,6 +70,7 @@ public:
     void enableTextures();
     void disableNormals();
     void enableNormals();
+    long long int getMatrixHash(float *matrix);
     void makeShadowFramebuffer(unsigned int &frameBuffer, unsigned int &texture, int texSize, GLenum ATEX );
 private:
     const char* getShader(QString shaderScript, QString type);

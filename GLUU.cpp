@@ -119,6 +119,7 @@ void GLUU::setMatrixUniforms() {
     currentShader->setUniformValue(currentShader->pShadow2MatrixUniform, *reinterpret_cast<float(*)[4][4]> (pShadowMatrix2));
     currentShader->setUniformValue(currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (mvMatrix));
     currentShader->setUniformValue(currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (objStrMatrix));
+    currentMsMatrinxHash = getMatrixHash(objStrMatrix);
     
     currentShader->setUniformValue(currentShader->lod, Game::objectLod);
     currentShader->setUniformValue(currentShader->skyColor, skyc[0],skyc[1],skyc[2],skyc[3]);
@@ -177,6 +178,15 @@ void GLUU::enableNormals(){
     if(this->normalsEnabled) return;
     this->normalsEnabled = true;
     currentShader->setUniformValue(currentShader->shaderEnableNormals, 1.0f);
+}
+
+long long int GLUU::getMatrixHash(float* matrix){
+    long long int out = 0;
+    for(int i = 0; i < 16; i++){
+        out *= 10;
+        out += matrix[i]*1000.0;
+    }
+    return out;
 }
 
 void GLUU::makeShadowFramebuffer(unsigned int& frameBuffer, unsigned int& texture, int texSize, GLenum ATEX){

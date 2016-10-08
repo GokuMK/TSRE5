@@ -1766,7 +1766,6 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
         delete[] punkty;
     }
 
-    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     linieSieci.render();
     konceSieci.render();
@@ -1951,7 +1950,6 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
         delete[] punkty;
     }
 
-    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     sectionLines.render();
 }

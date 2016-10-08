@@ -145,6 +145,7 @@ void OglObj::render(int selectionColor) {
     if(lineWidth > 0 && lineWidth != Game::oglDefaultLineWidth)
         f->glLineWidth(lineWidth);
     gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(gluu->objStrMatrix));
+    gluu->currentMsMatrinxHash = gluu->getMatrixHash(gluu->objStrMatrix);
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
     f->glDrawArrays(shapeType, 0, length); /**/
     

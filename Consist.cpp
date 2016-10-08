@@ -465,6 +465,7 @@ void Consist::render(int aktwx, int aktwz, int selectionColor, bool renderText) 
 
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
+        gluu->currentMsMatrinxHash = gluu->getMatrixHash(gluu->objStrMatrix);
         if(engItems[i].txt == NULL){
             engItems[i].txt = new TextObj(Game::currentEngLib->eng[engItems[i].eng]->displayName, 16, 1.0);
             //engItems[i].txt->setColor(255,255,0);

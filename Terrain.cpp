@@ -479,6 +479,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     }
 
     gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
+    gluu->currentMsMatrinxHash = gluu->getMatrixHash(gluu->objStrMatrix);
     if(Game::viewWorldGrid)
         lines.render();
     if(Game::viewTileGrid){
