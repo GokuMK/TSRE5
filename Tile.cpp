@@ -551,7 +551,7 @@ void Tile::render() {
     //render(0, 0);
 }
 
-void Tile::render(float * playerT, float* playerW, float* target, float fov, bool selection) {
+void Tile::render(float * playerT, float* playerW, float* target, float fov, int renderMode) {
     if (loaded != 1) return;
     GLUU* gluu = GLUU::get();
     //gl.activeTexture(gl.TEXTURE0);
@@ -560,7 +560,7 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, boo
     int selectionColor = 0;
     float lodx, lodz, lod;
     for (int i = 0; i < jestObiektow; i++) {
-        if (obiekty[i]->loaded) {//
+        if (obiekty[i]->loaded) {
             lodx = (x - playerT[0])*2048 + obiekty[i]->position[0] - playerW[0];
             lodz = (z - playerT[1])*2048 + obiekty[i]->position[2] - playerW[2];
             //console.log(this.x);
@@ -568,7 +568,7 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, boo
             if (lod < Game::objectLod) {
                 gluu->mvPushMatrix();
                 //obiekty[i]->render(gluu, lod, x-playerT[0]*2048, z-playerT[1]*2048);
-                if (selection) {
+                if (renderMode == gluu->RENDER_SELECTION) {
                     int sxx = 0;
                          if(x < playerT[0] && z < playerT[1]) sxx = 0;
                     else if(x < playerT[0] && z == playerT[1]) sxx = 1;
@@ -584,7 +584,7 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, boo
                     //qDebug() << sxx;
                     selectionColor = obiekty[i]->UiD + sxx * 131072;
                 }
-                obiekty[i]->render(gluu, lod, lodx, lodz, playerW, target, fov, selectionColor);
+                obiekty[i]->render(gluu, lod, lodx, lodz, playerW, target, fov, selectionColor, renderMode);
                 //obiekty[i]->render(gluu);
                 gluu->mvPopMatrix();
             }

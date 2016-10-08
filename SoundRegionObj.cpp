@@ -144,10 +144,10 @@ void SoundRegionObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
-void SoundRegionObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
+void SoundRegionObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     if (!loaded) return;
 
-    if(Game::viewInteractives) 
+    if(Game::viewInteractives && renderMode != gluu->RENDER_SHADOWMAP) 
         this->renderTritems(gluu, selectionColor);
 };
 
@@ -233,8 +233,7 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
     
     //int aaa = drawPosition[0];
     //if(pos == NULL) return;
-    Mat4::identity(gluu->objStrMatrix);
-    gluu->setMatrixUniforms();
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     int useSC;
     
     drawLine->render();

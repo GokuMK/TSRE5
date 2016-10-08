@@ -169,13 +169,13 @@ void Route::transalteObj(int x, int z, float px, float py, float pz, int uid) {
     //}
 }
 
-void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, bool selection) {
+void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, int renderMode) {
     if(!loaded) return;
     
     int mintile = -Game::tileLod;
     int maxtile = Game::tileLod;
 
-    if(selection){
+    if(renderMode == gluu->RENDER_SELECTION){
         mintile = -1;
         maxtile = 1;
     }
@@ -203,12 +203,12 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
             if (tTile->loaded == 1) {
                 gluu->mvPushMatrix();
                 Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * i, 0, 2048 * j);
-                tTile->render(playerT, playerW, target, fov, selection);
+                tTile->render(playerT, playerW, target, fov, renderMode);
                 gluu->mvPopMatrix();
             }
         }
     }
-    if (!selection) {
+    if (renderMode == gluu->RENDER_DEFAULT) {
         if(Game::viewTrackDbLines){
             if(Game::renderTrItems){
                 trackDB->renderItems(gluu, playerT, playerRot);
@@ -247,23 +247,18 @@ void Route::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, float* 
     
     int mintile = -1;
     int maxtile = 1;
-
     Tile *tTile;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
-            //try {
             tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
-            //    if (tTile->loaded == -2) continue;
-            //} catch (const std::out_of_range& oor) {
             if (tTile == NULL){
                 tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Tile((int)playerT[0] + i, (int)playerT[1] + j);
             }
             tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
-            //tTile->inUse = true;
             if (tTile->loaded == 1) {
                 gluu->mvPushMatrix();
                 Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * i, 0, 2048 * j);
-                tTile->render(playerT, playerW, target, fov, selection);
+                tTile->render(playerT, playerW, target, fov, GLUU::RENDER_SHADOWMAP);
                 gluu->mvPopMatrix();
             }
         }

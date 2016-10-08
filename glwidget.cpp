@@ -171,6 +171,7 @@ void GLWidget::paintGL() {
     if(route == NULL) return;
     if(!route->loaded) return;
 
+    //Game::shadowsEnabled = 0;
     // Render Shadows
     if(Game::shadowsEnabled > 0)
         renderShadowMaps();
@@ -187,18 +188,18 @@ void GLWidget::paintGL() {
     Mat4::perspective(gluu->pMatrix, Game::cameraFov*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
     Mat4::identity(gluu->mvMatrix);
-    Mat4::identity(gluu->objStrMatrix);
     gluu->setMatrixUniforms();
 
     if (!selection){
-        //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
         TerrainLib::render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
-        //glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
     }
     if(stickPointerToTerrain)
         if (!selection) drawPointer();
     
-    route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
+    int renderMode = GLUU::RENDER_DEFAULT;
+    if(selection)
+        renderMode = GLUU::RENDER_SELECTION;
+    route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, renderMode);
     
     if(!stickPointerToTerrain)
         if (!selection) drawPointer();
@@ -247,7 +248,7 @@ void GLWidget::renderShadowMaps(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0,0,Game::shadowMapSize,Game::shadowMapSize);
     int tempLod = Game::objectLod;
-    Game::objectLod = 1000;
+    Game::objectLod = 600;
     route->renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
     
     Mat4::identity(gluu->mvMatrix);
@@ -259,6 +260,7 @@ void GLWidget::renderShadowMaps(){
     glActiveTexture(GL_TEXTURE0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0,0,1024,1024);
+    Game::objectLod = 1000;
     route->renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
     gluu->pShadowMatrix2 = gluu->pShadowMatrix;
     gluu->pShadowMatrix = tmatrix;

@@ -30,6 +30,7 @@ GLUU* GLUU::get() {
 GLUU::GLUU() {
     imvMatrixStack = 0;
     alphaTest = 0.3;
+    currentAlphaTest = 0.3;
     pMatrix = new float[16];
     pShadowMatrix = new float[16];
     pShadowMatrix2 = new float[16];
@@ -62,6 +63,7 @@ void GLUU::initShader() {
         currentShader->bindAttributeLocation("vertex", 0);
         currentShader->bindAttributeLocation("aTextureCoord", 1);
         currentShader->bindAttributeLocation("normal", 2);
+        currentShader->bindAttributeLocation("alpha", 3);
         currentShader->link();
 
         currentShader->bind();

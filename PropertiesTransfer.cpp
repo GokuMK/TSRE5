@@ -68,11 +68,12 @@ PropertiesTransfer::PropertiesTransfer() {
     vlist->addRow("Width:",&this->sizeX);
     vlist->addRow("Height:",&this->sizeY);
     vbox->addItem(vlist);
-    
-    sizeX.setValidator( new QDoubleValidator(0, 1000, 2, this) );
+    QDoubleValidator* doubleValidator = new QDoubleValidator(0, 999, 2, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    sizeX.setValidator(doubleValidator);
     QObject::connect(&sizeX, SIGNAL(textEdited(QString)),
                       this, SLOT(sizeEnabled(QString)));
-    sizeY.setValidator( new QDoubleValidator(0, 1000, 2, this) );
+    sizeY.setValidator(doubleValidator);
     QObject::connect(&sizeY, SIGNAL(textEdited(QString)),
                       this, SLOT(sizeEnabled(QString)));
     

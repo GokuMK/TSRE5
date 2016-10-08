@@ -247,11 +247,8 @@ void ForestObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     //
     //var z = this.position[0]*mmm[9] + this.position[1]*mmm[7] + this.position[2]*mmm[9];
 
-    Mat4::identity(gluu->objStrMatrix);    
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
-    gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, 0.0f);
-    
+   
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
         int sColor = (int)(selectionColor - wColor*65536)/256;
@@ -281,8 +278,11 @@ void ForestObj::drawShape(){
             Game::allowObjLag-=2;
             
             int iloscv = population*24;
-            float* punkty = new float[iloscv*8];
+            float* punkty = new float[iloscv*9];
             int ptr = 0;
+            
+            GLUU* gluu = GLUU::get();
+            float alpha = -gluu->alphaTest;
 
             int seed = (int)(position[0] + position[1] + position[2]);
             //Random random = new Random(seed);
@@ -306,36 +306,42 @@ void ForestObj::drawShape(){
                             punkty[ptr++] = -treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 0; punkty[ptr++] = 0;
+                            punkty[ptr++] = alpha;
                             
                             punkty[ptr++] = treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc+treeSizeZ;
                             punkty[ptr++] = treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 1; punkty[ptr++] = 0;
+                            punkty[ptr++] = alpha;
                             
                             punkty[ptr++] = treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc;
                             punkty[ptr++] = treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 1; punkty[ptr++] = 1;
+                            punkty[ptr++] = alpha;
                             
                             punkty[ptr++] = -treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc;
                             punkty[ptr++] = -treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 0; punkty[ptr++] = 1;
+                            punkty[ptr++] = alpha;
                             
                             punkty[ptr++] = -treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc+treeSizeZ;
                             punkty[ptr++] = -treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 0; punkty[ptr++] = 0;
+                            punkty[ptr++] = alpha;
                             
                             punkty[ptr++] = treeSizeXt*i*j/2.0 + tposx;
                             punkty[ptr++] = wysokosc;
                             punkty[ptr++] = treeSizeXt*i/2.0 + tposz;
                             punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                             punkty[ptr++] = 1; punkty[ptr++] = 1;
+                            punkty[ptr++] = alpha;
                     }
                 }
             }

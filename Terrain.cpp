@@ -478,7 +478,6 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
         reloadLines();
     }
 
-    Mat4::identity(gluu->objStrMatrix);
     gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     if(Game::viewWorldGrid)
         lines.render();
@@ -610,6 +609,9 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
 void Terrain::renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov) {
     float lod;
     
+    GLUU *gluu = GLUU::get();
+    float alpha = -gluu->alphaTest;
+    
     for (int uu = 0; uu < 16; uu++) {
         for (int yy = 0; yy < 16; yy++) {
             if (hidden[yy * 16 + uu]) continue;
@@ -644,7 +646,7 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                             (((1024 - x2)*(1024 - z2)) / (2048 * 2048)) * tfile->WNW +
                             (((x2 + 1024)*(1024 - z2)) / (2048 * 2048)) * tfile->WNE;
 
-                    float *punkty = new float[48];
+                    float *punkty = new float[54];
                     int ptr = 0;
 
                     punkty[ptr++] = x2;
@@ -655,6 +657,7 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 4;
                     punkty[ptr++] = 4;
+                    punkty[ptr++] = alpha;
 
                     punkty[ptr++] = x2;
                     punkty[ptr++] = x2z1;
@@ -664,6 +667,7 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 4;
                     punkty[ptr++] = 0;
+                    punkty[ptr++] = alpha;
 
                     punkty[ptr++] = x1;
                     punkty[ptr++] = x1z1;
@@ -673,6 +677,7 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
+                    punkty[ptr++] = alpha;
 
                     punkty[ptr++] = x1;
                     punkty[ptr++] = x1z2;
@@ -682,6 +687,7 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 4;
+                    punkty[ptr++] = alpha;
 
                     punkty[ptr++] = x2;
                     punkty[ptr++] = x2z2;
@@ -691,6 +697,7 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 4;
                     punkty[ptr++] = 4;
+                    punkty[ptr++] = alpha;
 
                     punkty[ptr++] = x1;
                     punkty[ptr++] = x1z1;
@@ -700,6 +707,7 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
+                    punkty[ptr++] = alpha;
 
                     QString *texturePath = new QString("resources/woda.ace");
                     water[uu * 16 + yy].setMaterial(texturePath);
@@ -1233,7 +1241,11 @@ void Terrain::oglInit() {
 }
 
 void Terrain::initBlob(){
-    float *punkty = new float[65536 * 30];
+    
+    GLUU* gluu = GLUU::get();
+    float alpha = -gluu->alphaTest;    
+    
+    float *punkty = new float[65536 * 36];
     int ptr = 0;
     float step = 1.0/256;
     for (int jj = 0; jj < 256; jj++) {
@@ -1243,31 +1255,37 @@ void Terrain::initBlob(){
             punkty[ptr++] = vertexData[jj][ii].z;
             punkty[ptr++] = (jj)*step;
             punkty[ptr++] = (ii)*step;
+            punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj][ii+1].x;
             punkty[ptr++] = vertexData[jj][ii+1].y+0.02;
             punkty[ptr++] = vertexData[jj][ii+1].z;
             punkty[ptr++] = (jj)*step;
             punkty[ptr++] = (ii+1)*step;
+            punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj+1][ii+1].x;
             punkty[ptr++] = vertexData[jj+1][ii+1].y+0.02;
             punkty[ptr++] = vertexData[jj+1][ii+1].z;
             punkty[ptr++] = (jj+1)*step;
             punkty[ptr++] = (ii+1)*step;
+            punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj][ii].x;
             punkty[ptr++] = vertexData[jj][ii].y+0.02;
             punkty[ptr++] = vertexData[jj][ii].z;
             punkty[ptr++] = (jj)*step;
             punkty[ptr++] = (ii)*step;
+            punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj+1][ii+1].x;
             punkty[ptr++] = vertexData[jj+1][ii+1].y+0.02;
             punkty[ptr++] = vertexData[jj+1][ii+1].z;
             punkty[ptr++] = (jj+1)*step;
             punkty[ptr++] = (ii+1)*step;
+            punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj+1][ii].x;
             punkty[ptr++] = vertexData[jj+1][ii].y+0.02;
             punkty[ptr++] = vertexData[jj+1][ii].z;
             punkty[ptr++] = (jj+1)*step;
             punkty[ptr++] = (ii)*step;
+            punkty[ptr++] = alpha;
         }
     }
     QString* path = new QString;

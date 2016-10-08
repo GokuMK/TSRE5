@@ -221,7 +221,7 @@ void LevelCrObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
-void LevelCrObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
+void LevelCrObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     if (!loaded) return;
     if (shape < 0) return;
     if (jestPQ < 2) return;
@@ -272,7 +272,7 @@ void LevelCrObj::render(GLUU* gluu, float lod, float posx, float posz, float* po
     }
     gluu->mvPopMatrix();
     
-    if(Game::viewInteractives) 
+    if(Game::viewInteractives && renderMode != gluu->RENDER_SHADOWMAP) 
         this->renderTritems(gluu, selectionColor);
 };
 
@@ -314,8 +314,6 @@ void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
     }
 
     //if(pos == NULL) return;
-    Mat4::identity(gluu->objStrMatrix);
-    gluu->setMatrixUniforms();
     int useSC;
 
     for(int i = 0; i < drawPositions.size(); i++){

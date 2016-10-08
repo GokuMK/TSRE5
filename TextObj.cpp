@@ -46,45 +46,54 @@ void TextObj::setColor(int r, int g, int b){
 }
 
 void TextObj::init(){
-    float *punkty = new float[48];
+    GLUU* gluu = GLUU::get();
+    float *punkty = new float[54];
     int ptr = 0;
     int i = 0;
 
+    float alpha = -gluu->alphaTest;
+    
     punkty[ptr++] = (-size / 2)*scale;
     punkty[ptr++] = 1*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 0.0;
+    punkty[ptr++] = alpha;
 
     punkty[ptr++] = (-size / 2)*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 0;
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 1.00;
+    punkty[ptr++] = alpha;
 
     punkty[ptr++] = (size / 2)*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 1.0;
+    punkty[ptr++] = alpha;
 
     punkty[ptr++] = (size / 2)*scale;
     punkty[ptr++] = 1*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 0.0;
+    punkty[ptr++] = alpha;
 
     punkty[ptr++] = (-size / 2)*scale;
     punkty[ptr++] = 1*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 0.0;
     punkty[ptr++] = 0.0;
+    punkty[ptr++] = alpha;
 
     punkty[ptr++] = (size / 2)*scale;
     punkty[ptr++] = 0;
     punkty[ptr++] = 0;
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 1.0;
+    punkty[ptr++] = alpha;
     this->setMaterial(new QString(text+".size:"+QString::number((int)size)+".color:"+color.name()+".:paintTex"));
     OglObj::init(punkty, ptr, this->VT, GL_TRIANGLES);
     delete[] punkty;

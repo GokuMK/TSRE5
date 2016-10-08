@@ -89,12 +89,13 @@ void SoundSourceObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
-void SoundSourceObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
+void SoundSourceObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     if (!loaded) return;
-    Mat4::identity(gluu->objStrMatrix);
+    if(!Game::viewInteractives || renderMode == gluu->RENDER_SHADOWMAP) 
+        return;
+        
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);

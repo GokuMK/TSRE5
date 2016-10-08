@@ -13,6 +13,7 @@
 
 #include "WorldObj.h"
 #include <QString>
+#include "OglObj.h"
 
 class DynTrackObj : public WorldObj{
 public:
@@ -22,14 +23,9 @@ public:
         float a;
         float r;
     };
-    struct Shape{
-        int iloscv;
-        QOpenGLBuffer VBO;
-        QOpenGLVertexArrayObject VAO;
-    };
     
     Section* sections;
-    Shape shape[2];
+    OglObj shape[2];
     DynTrackObj();
     DynTrackObj(const DynTrackObj& orig);
     virtual ~DynTrackObj();
@@ -51,9 +47,8 @@ private:
     float* jNodePosn = NULL;
     float bound[6];
     int sidxSelected = 0;
-    void drawShape();
+    void drawShape(int selectionColor);
     void genShape();
-    void createVBO(Shape* shape, int ptr, float * data);
     bool getSimpleBorder(float* border);
     bool getBoxPoints(QVector<float> &points);
 };

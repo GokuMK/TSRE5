@@ -43272,7 +43272,11 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileC.o: SFileC.cpp SFileC.
 		c:/OT/Static/5.7.0_x64/include/QtGui/qquaternion.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qgenericmatrix.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/QMatrix4x4 \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug
+		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
+		GLUU.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileC.o SFileC.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileX.o: SFileX.cpp SFileX.h \
@@ -43511,7 +43515,11 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileX.o: SFileX.cpp SFileX.
 		c:/OT/Static/5.7.0_x64/include/QtCore/qversionnumber.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qxmlstream.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h \
-		ParserX.h
+		ParserX.h \
+		GLUU.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileX.o SFileX.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Shader.o: Shader.cpp Shader.h \

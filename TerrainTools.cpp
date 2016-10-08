@@ -137,7 +137,9 @@ TerrainTools::TerrainTools(QString name)
     hType->addItem("Flatten");
     hType->setCurrentIndex(paintBrush->hType);
     fheight = new QLineEdit();
-    fheight->setValidator(new QDoubleValidator(-5000, 5000, 2, this));
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-5000, 5000, 2, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    fheight->setValidator(doubleValidator);
     
     QGridLayout *vlist = new QGridLayout;
     vlist->setSpacing(2);

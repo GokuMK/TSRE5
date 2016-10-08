@@ -380,11 +380,11 @@ void PlatformObj::setCarSpeed(int val){
 }
 
 
-void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
+void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
     if(!this->loaded) 
         return;
-    if(Game::viewInteractives) 
+    if(Game::viewInteractives && renderMode != gluu->RENDER_SHADOWMAP) 
         this->renderTritems(gluu, selectionColor);
 };
 
@@ -456,9 +456,7 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
         }
     }
     //if(pos == NULL) return;
-    Mat4::identity(gluu->objStrMatrix);
-    gluu->setMatrixUniforms();
-    
+    //gluu->setMatrixUniforms();
     //float dlugosc = (float) sqrt(pow(drawPositionB[2]-drawPositionE[2], 2) + pow(drawPositionB[0]-drawPositionE[0], 2));
     float aa = (drawPositionE[2]-drawPositionB[2]);
     if(aa != 0) aa = (aa/fabs(aa));

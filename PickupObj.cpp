@@ -270,9 +270,6 @@ void PickupObj::renderTritems(GLUU* gluu, int selectionColor){
         }
     }
 
-    //if(pos == NULL) return;
-    Mat4::identity(gluu->objStrMatrix);
-    gluu->setMatrixUniforms();
     int useSC;
 
     gluu->mvPushMatrix();

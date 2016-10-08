@@ -41,7 +41,7 @@ Coords::~Coords() {
 
 void Coords::render(GLUU* gluu, float * playerT, float* playerW, float playerRot) {
     if (!loaded) return;
-    Mat4::identity(gluu->objStrMatrix);
+
     gluu->setMatrixUniforms();
 
     if (simpleMarkerObjP == NULL) {

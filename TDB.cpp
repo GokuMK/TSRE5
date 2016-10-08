@@ -1766,7 +1766,6 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
         delete[] punkty;
     }
 
-    Mat4::identity(gluu->objStrMatrix);
     gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     linieSieci.render();
@@ -1951,7 +1950,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
         sectionLines.init(punkty, ptr - punkty, sectionLines.V, GL_LINES);
         delete[] punkty;
     }
-    Mat4::identity(gluu->objStrMatrix);
+
     gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     sectionLines.render();
@@ -2041,7 +2040,7 @@ int TDB::getEndpointType(int trid, int endp){
 }
 
 void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot) {
-    Mat4::identity(gluu->objStrMatrix);
+
     gluu->setMatrixUniforms();
     
     for (auto it = this->trackItems.begin(); it != this->trackItems.end(); ++it) {

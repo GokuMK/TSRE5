@@ -43,10 +43,8 @@ bool DynTrackObj::allowNew(){
 void DynTrackObj::deleteVBO(){
     //this->shape.deleteVBO();
     this->init = false;
-    shape[0].VAO.destroy();
-    shape[0].VBO.destroy();
-    shape[1].VAO.destroy();
-    shape[1].VBO.destroy();
+    shape[0].deleteVBO();
+    shape[1].deleteVBO();
 }
 
 void DynTrackObj::load(int x, int y) {
@@ -241,10 +239,7 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
 
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
 
-    Mat4::identity(gluu->objStrMatrix);    
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
-    gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, 0.0f);
     
     if(Game::showWorldObjPivotPoints){
         if(pointer3d == NULL){
@@ -253,63 +248,27 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
         }
         pointer3d->render(selectionColor);
     }
-    
-    if(selectionColor != 0){
-        int wColor = (int)(selectionColor/65536);
-        int sColor = (int)(selectionColor - wColor*65536)/256;
-        int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
-        gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
-    } else {
-        gluu->enableTextures();
-    }
-    
-    drawShape();
+
+    drawShape(selectionColor);
     
     if(selected){
         drawBox();
     }    
 };
 
-void DynTrackObj::drawShape() {
-    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    if (tex1 == -2) {
-        f->glDisable(GL_TEXTURE_2D);
-    } else {
-        f->glEnable(GL_TEXTURE_2D);
-        if (tex1 == -1) {
-            //tex1 = 0;
-            tex1 = TexLib::addTex(resPath, "ACleanTrack1.ace");
-            tex2 = TexLib::addTex(resPath, "ACleanTrack2.ace");
-            f->glDisable(GL_TEXTURE_2D);
-        }
-    }
-
+void DynTrackObj::drawShape(int selectionColor) {
     if (!init) {
         genShape();
         init = true;
     } else {
-        
-        if(TexLib::mtex[tex1]->loaded){
-            if(!TexLib::mtex[tex1]->glLoaded) TexLib::mtex[tex1]->GLTextures();
-            f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex1]->tex[0]);
-        }
-        
-        QOpenGLVertexArrayObject::Binder vaoBinder1(&shape[0].VAO);
-        f->glDrawArrays(GL_TRIANGLES, 0, shape[0].iloscv);
-        
-        if(TexLib::mtex[tex2]->loaded){
-            if(!TexLib::mtex[tex2]->glLoaded) TexLib::mtex[tex2]->GLTextures();
-            f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[tex2]->tex[0]);
-        }
-        
-        QOpenGLVertexArrayObject::Binder vaoBinder2(&shape[1].VAO);
-        f->glDrawArrays(GL_TRIANGLES, 0, shape[1].iloscv);
+        shape[0].render(selectionColor);
+        shape[1].render(selectionColor);
     }
 }
 
 void DynTrackObj::genShape() {
-    float* pd = new float[50000];
-    float* sk = new float[50000];
+    float* pd = new float[55000];
+    float* sk = new float[55000];
 
     int ptr = 0;
     int str = 0;
@@ -324,7 +283,9 @@ void DynTrackObj::genShape() {
     Vector2f dl;
     
     float offrot = 0;
-            
+    GLUU *gluu = GLUU::get();
+    float alpha = -gluu->alphaTest;
+    
     for (int i = 0; i < 5; i++) {
         if (sections[i].sectIdx > 100000000) continue;
         //prosta
@@ -344,6 +305,7 @@ void DynTrackObj::genShape() {
             pd[ptr++] = 0.0;
             pd[ptr++] = -0.139000;
             pd[ptr++] = -1.0;
+            pd[ptr++] = alpha;
 
             pd[ptr++] = offpos.x - b.x;
             pd[ptr++] = 0.2;
@@ -353,6 +315,7 @@ void DynTrackObj::genShape() {
             pd[ptr++] = 0.0;
             pd[ptr++] = 0.862000;
             pd[ptr++] = -1.0;
+            pd[ptr++] = alpha;
 
             pd[ptr++] = offpos.x - b.x + a1.x;
             pd[ptr++] = 0.2;
@@ -362,6 +325,7 @@ void DynTrackObj::genShape() {
             pd[ptr++] = 0.0;
             pd[ptr++] = 0.862000;
             pd[ptr++] = -1.0 + 0.2 * sections[i].a;
+            pd[ptr++] = alpha;
 
             pd[ptr++] = offpos.x + b.x + a1.x;
             pd[ptr++] = 0.2;
@@ -371,6 +335,7 @@ void DynTrackObj::genShape() {
             pd[ptr++] = 0.0;
             pd[ptr++] = -0.139000;
             pd[ptr++] = -1.0 + 0.2 * sections[i].a;
+            pd[ptr++] = alpha;
 
             pd[ptr++] = offpos.x + b.x;
             pd[ptr++] = 0.2;
@@ -380,6 +345,7 @@ void DynTrackObj::genShape() {
             pd[ptr++] = 0.0;
             pd[ptr++] = -0.139000;
             pd[ptr++] = -1.0;
+            pd[ptr++] = alpha;
 
             pd[ptr++] = offpos.x - b.x + a1.x;
             pd[ptr++] = 0.2;
@@ -389,6 +355,7 @@ void DynTrackObj::genShape() {
             pd[ptr++] = 0.0;
             pd[ptr++] = 0.862000;
             pd[ptr++] = -1.0 + 0.2 * sections[i].a;
+            pd[ptr++] = alpha;
             //szyny
 
             tx.set(-0.717500, 0.0);
@@ -407,6 +374,7 @@ void DynTrackObj::genShape() {
                 sk[str++] = 0.0;
                 sk[str++] = 0.0;
                 sk[str++] = 0.2270;
+                sk[str++] = alpha;
 
                 sk[str++] = offpos.x + ty.x;
                 sk[str++] = 0.325000;
@@ -416,6 +384,7 @@ void DynTrackObj::genShape() {
                 sk[str++] = 0.0;
                 sk[str++] = 0.0;
                 sk[str++] = 0.1330;
+                sk[str++] = alpha;
 
                 sk[str++] = offpos.x + ty.x + a1.x;
                 sk[str++] = 0.325000;
@@ -425,6 +394,7 @@ void DynTrackObj::genShape() {
                 sk[str++] = 0.0;
                 sk[str++] = 0.2;
                 sk[str++] = 0.1330;
+                sk[str++] = alpha;
 
                 sk[str++] = offpos.x + tx.x + a1.x;
                 sk[str++] = 0.325000;
@@ -434,6 +404,7 @@ void DynTrackObj::genShape() {
                 sk[str++] = 0.0;
                 sk[str++] = 0.2;
                 sk[str++] = 0.2270;
+                sk[str++] = alpha;
 
                 sk[str++] = offpos.x + tx.x;
                 sk[str++] = 0.325000;
@@ -443,6 +414,7 @@ void DynTrackObj::genShape() {
                 sk[str++] = 0.0;
                 sk[str++] = 0.0;
                 sk[str++] = 0.2270;
+                sk[str++] = alpha;
 
                 sk[str++] = offpos.x + ty.x + a1.x;
                 sk[str++] = 0.325000;
@@ -452,6 +424,7 @@ void DynTrackObj::genShape() {
                 sk[str++] = 0.0;
                 sk[str++] = 0.2;
                 sk[str++] = 0.1330;
+                sk[str++] = alpha;
                 
                 tx.set(0.867500, 0.0);
                 ty.set(0.717500, 0.0);
@@ -468,6 +441,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x;
             sk[str++] = 0.2;
@@ -477,6 +451,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.2;
@@ -486,6 +461,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.325;
@@ -495,6 +471,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x;
             sk[str++] = 0.325;
@@ -504,6 +481,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.2;
@@ -513,6 +491,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
             
             tx.set(-0.717500, 0.0);
             tx.rotate(offrot, 0);
@@ -525,6 +504,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x;
             sk[str++] = 0.325;
@@ -534,6 +514,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.325;
@@ -543,6 +524,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.2;
@@ -552,6 +534,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x;
             sk[str++] = 0.2;
@@ -561,6 +544,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.325;
@@ -570,6 +554,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
             
             tx.set(-0.867500, 0.0);
             tx.rotate(offrot, 0);
@@ -582,6 +567,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x;
             sk[str++] = 0.2;
@@ -591,6 +577,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.2;
@@ -600,6 +587,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.325;
@@ -609,6 +597,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x;
             sk[str++] = 0.325;
@@ -618,6 +607,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.2;
@@ -627,6 +617,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             tx.set(0.867500, 0.0);
             tx.rotate(offrot, 0);
@@ -639,6 +630,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x;
             sk[str++] = 0.325;
@@ -648,6 +640,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.325;
@@ -657,6 +650,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.2;
@@ -666,6 +660,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x;
             sk[str++] = 0.2;
@@ -675,6 +670,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.0;
             sk[str++] = 0.07;
+            sk[str++] = alpha;
 
             sk[str++] = offpos.x + tx.x + a1.x;
             sk[str++] = 0.325;
@@ -684,6 +680,7 @@ void DynTrackObj::genShape() {
             sk[str++] = 0.0;
             sk[str++] = 0.069;
             sk[str++] = 0.002;
+            sk[str++] = alpha;
             
             offpos.x += a1.x;
             offpos.y += a1.y;
@@ -722,26 +719,32 @@ void DynTrackObj::genShape() {
                 pd[ptr++] = offpos.x+a1.x;  pd[ptr++] = 0.2; pd[ptr++] = offpos.y+a1.y;
                 pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
                 pd[ptr++] = -0.139000;      pd[ptr++] = -1.0;
+                pd[ptr++] = alpha;
                     
                 pd[ptr++] = offpos.x+b1.x;  pd[ptr++] = 0.2; pd[ptr++] = offpos.y+b1.y;
                 pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
                 pd[ptr++] = 0.862000;       pd[ptr++] = -1.0;
+                pd[ptr++] = alpha;
                     
                 pd[ptr++] = offpos.x+a.x;   pd[ptr++] = 0.2; pd[ptr++] = offpos.y+a.y;
                 pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
                 pd[ptr++] = 0.862000;       pd[ptr++] = -1.0 + 0.2*dlugosc;
+                pd[ptr++] = alpha;
                   
                 pd[ptr++] = offpos.x+b.x;   pd[ptr++] = 0.2; pd[ptr++] = offpos.y+b.y;
                 pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
                 pd[ptr++] = -0.139000;      pd[ptr++] = -1.0 + 0.2*dlugosc;
+                pd[ptr++] = alpha;
 
                 pd[ptr++] = offpos.x+a1.x;  pd[ptr++] = 0.2; pd[ptr++] = offpos.y+a1.y;
                 pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
                 pd[ptr++] = -0.139000;      pd[ptr++] = -1.0;
+                pd[ptr++] = alpha;
                     
                 pd[ptr++] = offpos.x+a.x;   pd[ptr++] = 0.2; pd[ptr++] = offpos.y+a.y;
                 pd[ptr++] = 0.0;            pd[ptr++] = 1.0; pd[ptr++] = 0.0;
                 pd[ptr++] = 0.862000;       pd[ptr++] = -1.0 + 0.2*dlugosc;
+                pd[ptr++] = alpha;
                 
                 //szyny
                    
@@ -762,26 +765,32 @@ void DynTrackObj::genShape() {
                         sk[str++] = offpos.x+tx.x; sk[str++] = 0.325000; sk[str++] = offpos.y+tx.y;
                         sk[str++] = 0.0; sk[str++] = 1.0; sk[str++] = 0.0;
                         sk[str++] = 0.0; sk[str++] = 0.2270;
+                        sk[str++] = alpha;
                         
                         sk[str++] = offpos.x+ty.x; sk[str++] = 0.325000; sk[str++] = offpos.y+ty.y;
                         sk[str++] = 0.0; sk[str++] = 1.0; sk[str++] = 0.0;
                         sk[str++] = 0.0; sk[str++] = 0.1330;
+                        sk[str++] = alpha;
                         
                         sk[str++] = offpos.x+b.x; sk[str++] = 0.325000; sk[str++] = offpos.y+b.y;
                         sk[str++] = 0.0; sk[str++] = 1.0; sk[str++] = 0.0;
                         sk[str++] = 0.2; sk[str++] = 0.1330;
+                        sk[str++] = alpha;
                         
                         sk[str++] = offpos.x+a.x; sk[str++] =  0.325000; sk[str++] =  offpos.y+a.y;
                         sk[str++] = 0.0; sk[str++] =  1.0; sk[str++] = 0.0;
                         sk[str++] = 0.2; sk[str++] =  0.2270;
+                        sk[str++] = alpha;
 
                         sk[str++] = offpos.x+tx.x; sk[str++] = 0.325000; sk[str++] = offpos.y+tx.y;
                         sk[str++] = 0.0; sk[str++] = 1.0; sk[str++] = 0.0;
                         sk[str++] = 0.0; sk[str++] = 0.2270;
+                        sk[str++] = alpha;
                         
                         sk[str++] = offpos.x+b.x; sk[str++] = 0.325000; sk[str++] = offpos.y+b.y;
                         sk[str++] = 0.0; sk[str++] = 1.0; sk[str++] = 0.0;
                         sk[str++] = 0.2; sk[str++] = 0.1330;
+                        sk[str++] = alpha;
                     ty.set(0.717500, 0.0);
                     tx.set(0.867500, 0.0);
                 }
@@ -795,26 +804,32 @@ void DynTrackObj::genShape() {
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.002;
+                    sk[str++] = alpha;
 
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.07;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.07;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.002;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.002;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.07;
+                    sk[str++] = alpha;
                 tx.set(-0.717500, 0.0);
                 a.set(tx.x, 0.0);
                 tx.rotate(angle, sections[i].r*kierunek);
@@ -824,26 +839,32 @@ void DynTrackObj::genShape() {
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.07;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.002;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.002;
+                    sk[str++] = alpha;
 
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.07;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.07;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.002;
+                    sk[str++] = alpha;
 
                 tx.set(-0.867500, 0.0);
                 a.set(tx.x, 0.0);
@@ -855,26 +876,32 @@ void DynTrackObj::genShape() {
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.002;
+                    sk[str++] = alpha;
 
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.07;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;                
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.07;
+                    sk[str++] = alpha;
 
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.002;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.002;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;                
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.07;
+                    sk[str++] = alpha;
 
                 tx.set(0.867500, 0.0);
                 a.set(tx.x, 0.0);
@@ -886,26 +913,32 @@ void DynTrackObj::genShape() {
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.07;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.325; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.002;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.002;
+                    sk[str++] = alpha;
 
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.2; sk[str++] = offpos.y+a.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.07;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+tx.x; sk[str++] = 0.2; sk[str++] = offpos.y+tx.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.0; sk[str++] = 0.07;
+                    sk[str++] = alpha;
                     
                     sk[str++] = offpos.x+a.x; sk[str++] = 0.325; sk[str++] = offpos.y+a.y;
                     sk[str++] = 1.0; sk[str++] = 0.0; sk[str++] = 0.0;
                     sk[str++] = 0.069; sk[str++] = 0.002;
+                    sk[str++] = alpha;
             }
             a.set(0.0, 0.0);
             a.rotate(sections[i].a, sections[i].r*kierunek);
@@ -938,29 +971,16 @@ void DynTrackObj::genShape() {
             if(sk[i+1] > bound[2]) bound[2] = sk[i+1];
             if(sk[i+2] > bound[4]) bound[4] = sk[i+2];
         }
-    
-    createVBO(&shape[0], ptr, pd);
-    createVBO(&shape[1], str, sk);
-}
 
-void DynTrackObj::createVBO(Shape* shape, int ptr, float * data) {
-    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    shape->VAO.create();
-    QOpenGLVertexArrayObject::Binder vaoBinder(&shape->VAO);
-
-    shape->VBO.create();
-    shape->VBO.bind();
-    shape->VBO.allocate(data, ptr * sizeof (GLfloat));
-    f->glEnableVertexAttribArray(0);
-    f->glEnableVertexAttribArray(1);
-    f->glEnableVertexAttribArray(2);
-    f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), 0);
-    f->glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
-    f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
-    shape->VBO.release();
-    shape->iloscv = ptr/8;
+    QString* texturePath = new QString(resPath.toLower()+"/acleantrack1.ace");
+    shape[0].setMaterial(texturePath);
+    texturePath = new QString(resPath.toLower()+"/acleantrack2.ace");
+    shape[1].setMaterial(texturePath);
+    shape[0].init(pd, ptr, OglObj::VNT, GL_TRIANGLES );
+    shape[1].init(sk, str, OglObj::VNT, GL_TRIANGLES );
+    delete[] pd;
+    delete[] sk;
     
-    delete data;
 }
 
 bool DynTrackObj::getSimpleBorder(float* border){

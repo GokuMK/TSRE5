@@ -160,10 +160,6 @@ void SFile::load() {
     }
     delete bufor;
 
-    for (int i = 0; i < ishaders; i++) {
-        if(shader[i].name == "texdiff") shader[i].alpha = 1;
-        else shader[i].alpha = 0;
-    }
     file->close();
     loadSd();
     return;
@@ -359,9 +355,11 @@ void SFile::render() {
     GLUU *gluu = GLUU::get();
     //gluu->enableTextures();
     //for(int iii = 0; iii < 200; iii++)
+    //float talpha = gluu->alpha;
+    //float talphatest = gluu->alphaTest;
     for (int i = 0; i < distancelevel[0].iloscs; i++) {
         QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].VAO);
-        
+
         for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {
 
             int prim_state = distancelevel[0].subobiekty[i].czesci[j].prim_state_idx;
@@ -383,17 +381,17 @@ void SFile::render() {
             else
                 gluu->enableNormals();
             
-            if(primstate[prim_state].arg2 < this->ishaders)
+            /*if(primstate[prim_state].arg2 < this->ishaders)
                 gluu->alpha = shader[primstate[prim_state].arg2].alpha;
             else 
                 gluu->alpha = 0;
             gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, gluu->alpha);
-            
+
             if(primstate[prim_state].arg6 == 1)
                 gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, 0.51f);
             else 
                 gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
-            
+            */
             if(primstate[prim_state].arg4 == -1){
                 //glDisable(GL_TEXTURE_2D);
             } else if (image[texture[primstate[prim_state].arg4].image].texAddr > 0) {
@@ -425,7 +423,7 @@ void SFile::render() {
             f->glDrawArrays(GL_TRIANGLES, distancelevel[0].subobiekty[i].czesci[j].offset, distancelevel[0].subobiekty[i].czesci[j].iloscv);/**/
         }
     }
-    gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
+    //gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
 }
 
 /*======================================================

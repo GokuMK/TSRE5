@@ -42,7 +42,7 @@ public:
     void linkSignal(int subsigId, int from, int to);
     QString getShapePath();
     int getDefaultDetailLevel();
-    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
+    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
     unsigned int signalSubObj;
     int signalUnits = 0;

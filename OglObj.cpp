@@ -73,15 +73,19 @@ void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
     } else if (v == VT) {
         f->glEnableVertexAttribArray(0);
         f->glEnableVertexAttribArray(1);
-        f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), 0);
-        f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
+        f->glEnableVertexAttribArray(3);
+        f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof (GLfloat), 0);
+        f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 6 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
+        f->glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, 6 * sizeof (GLfloat), reinterpret_cast<void *> (5 * sizeof (GLfloat)));
     } else if (v == VNT) {
         f->glEnableVertexAttribArray(0);
         f->glEnableVertexAttribArray(1);
         f->glEnableVertexAttribArray(2);
-        f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), 0);
-        f->glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
-        f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
+        f->glEnableVertexAttribArray(3);
+        f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof (GLfloat), 0);
+        f->glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
+        f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 9 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
+        f->glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, 9 * sizeof (GLfloat), reinterpret_cast<void *> (8 * sizeof (GLfloat)));
     }
     
     VBO.release();
@@ -129,8 +133,6 @@ void OglObj::render(int selectionColor) {
                 if (!TexLib::mtex[texId]->glLoaded)
                     TexLib::mtex[texId]->GLTextures();
                 f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texId]->tex[0]);
-                gluu->alpha = 0;
-                gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, gluu->alpha);
             } else {
             }
         }
@@ -142,7 +144,6 @@ void OglObj::render(int selectionColor) {
 
     if(lineWidth > 0 && lineWidth != Game::oglDefaultLineWidth)
         f->glLineWidth(lineWidth);
-    Mat4::identity(gluu->objStrMatrix);
     gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(gluu->objStrMatrix));
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
     f->glDrawArrays(shapeType, 0, length); /**/

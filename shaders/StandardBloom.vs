@@ -3,6 +3,7 @@
 attribute vec4 vertex;
 attribute vec3 normal;
 attribute vec2 aTextureCoord;
+attribute float alpha;
 
 uniform float lod;
 uniform mat4 uShadowPMatrix;
@@ -16,6 +17,7 @@ varying float fogFactor;
 varying vec3 vNormal;
 varying vec4 shadowPos;
 varying vec4 shadow2Pos;
+varying float vAlpha;
 
 void main() {
     shadowPos = uShadowPMatrix * uMVMatrix * uMSMatrix * vertex;
@@ -28,5 +30,6 @@ void main() {
     if(fogFactor>1.0) fogFactor = 1.0;
 
     vNormal = normal;
+    vAlpha = alpha;
 
 }

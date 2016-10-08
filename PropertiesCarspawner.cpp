@@ -49,9 +49,10 @@ PropertiesCarspawner::PropertiesCarspawner() {
 
     vbox->addStretch(1);
     this->setLayout(vbox);
-    
-    carNumber.setValidator( new QDoubleValidator(0, 100, 1, this) );
-    carSpeed.setValidator( new QDoubleValidator(0, 100, 1, this) );
+    QDoubleValidator* doubleValidator = new QDoubleValidator(0, 100, 1, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    carNumber.setValidator(doubleValidator);
+    carSpeed.setValidator(doubleValidator);
     
     QObject::connect(&carNumber, SIGNAL(textChanged(QString)),
                       this, SLOT(carNumberEnabled(QString)));

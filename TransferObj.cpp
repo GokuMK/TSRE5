@@ -202,10 +202,8 @@ void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
     //
     //var z = this.position[0]*mmm[9] + this.position[1]*mmm[7] + this.position[2]*mmm[9];
 
-    Mat4::identity(gluu->objStrMatrix);    
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
-    
+   
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
         int sColor = (int)(selectionColor - wColor*65536)/256;
@@ -229,6 +227,9 @@ void TransferObj::drawShape(){
             if(Game::allowObjLag < 1)  return;
             Game::allowObjLag-=2;
         
+            GLUU* gluu = GLUU::get();
+            float alpha = -gluu->alphaTest;
+            
             float scale = (float) sqrt(qDirection[0] * qDirection[0] + qDirection[1] * qDirection[1] + qDirection[2] * qDirection[2]);
             float off = ((qDirection[1]+0.000001f)/fabs(scale+0.000001f))*(float)-acos(qDirection[3])*2;
         
@@ -248,7 +249,7 @@ void TransferObj::drawShape(){
             }
                 
             int iloscv = (int)((x12y1d/step)+1)*(int)((x1y12d/step)+1);
-            float* punkty = new float[iloscv*48];
+            float* punkty = new float[iloscv*54];
             
             int ptr = 0;
             float wysokosc = 0;
@@ -267,6 +268,7 @@ void TransferObj::drawShape(){
                         punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                         punkty[ptr++] = j/x12y1d;
                         punkty[ptr++] = i/x1y12d;
+                        punkty[ptr++] = alpha;
 
                         wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/j).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/j).x;
@@ -275,6 +277,7 @@ void TransferObj::drawShape(){
                         punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                         punkty[ptr++] = j/x12y1d;
                         punkty[ptr++] = ii/x1y12d;
+                        punkty[ptr++] = alpha;
                         
                         wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/jj).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/jj).x;
@@ -283,6 +286,7 @@ void TransferObj::drawShape(){
                         punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                         punkty[ptr++] = jj/x12y1d;
                         punkty[ptr++] = ii/x1y12d;
+                        punkty[ptr++] = alpha;
 
                         wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x;
@@ -291,6 +295,7 @@ void TransferObj::drawShape(){
                         punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                         punkty[ptr++] = j/x12y1d;
                         punkty[ptr++] = i/x1y12d;
+                        punkty[ptr++] = alpha;
 
                         wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/jj).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/jj).x;
@@ -299,6 +304,7 @@ void TransferObj::drawShape(){
                         punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                         punkty[ptr++] = jj/x12y1d;
                         punkty[ptr++] = ii/x1y12d;
+                        punkty[ptr++] = alpha;
                         
                         wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/jj).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/jj).x;
@@ -307,6 +313,7 @@ void TransferObj::drawShape(){
                         punkty[ptr++] = 0; punkty[ptr++] = 1; punkty[ptr++] = 0;
                         punkty[ptr++] = jj/x12y1d;
                         punkty[ptr++] = i/x1y12d;
+                        punkty[ptr++] = alpha;
                 }
             }
 

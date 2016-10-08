@@ -273,7 +273,7 @@ QString SignalObj::getShapePath(){
     return Game::currentShapeLib->shape[shape]->pathid+"|"+Game::currentShapeLib->shape[shape]->texPath;
 }
 
-void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
+void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     if (!loaded) return;
     if (shape < 0) return;
     if (jestPQ < 2) return;
@@ -324,7 +324,7 @@ void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     }
     gluu->mvPopMatrix();
     
-    if(Game::viewInteractives) 
+    if(Game::viewInteractives && renderMode != gluu->RENDER_SHADOWMAP) 
         this->renderTritems(gluu, selectionColor);
 };
 
@@ -365,8 +365,7 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
     }
 
     //if(pos == NULL) return;
-    Mat4::identity(gluu->objStrMatrix);
-    gluu->setMatrixUniforms();
+    //gluu->setMatrixUniforms();
     int useSC;
     int w = 1;
     //w = this->signalUnits;

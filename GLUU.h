@@ -24,11 +24,18 @@
 
 class GLUU {
 public:
+    enum RenderMode {
+        RENDER_DEFAULT = 0,
+        RENDER_SELECTION = 1,
+        RENDER_SHADOWMAP = 2
+    };
+    
     Shader *currentShader;
     QHash<QString, Shader*> shaders;
     
     float alpha;
     float alphaTest;
+    float currentAlphaTest;
     
     float skyc[4]{230.0/255.0,248.0/255,255.0/255.0, 1.0};
     //float skyc[4]{200.0/255.0,218.0/255,225.0/255.0, 1.0};
