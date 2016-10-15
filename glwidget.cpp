@@ -703,6 +703,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if(toolEnabled == "putTerrainTexTool"){
             TerrainLib::setTerrainTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            lastPointerPos[0] = aktPointerPos[0];
+            lastPointerPos[1] = aktPointerPos[1];
+            lastPointerPos[2] = aktPointerPos[2];
         }
         if(toolEnabled == "waterTerrTool"){
             TerrainLib::setWaterDraw((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
@@ -799,6 +802,14 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
         if(toolEnabled == "heightTool" && mouseLPressed == true){
             if(mousex != m_lastPos.x() || mousey != m_lastPos.y()){
                 TerrainLib::paintHeightMap(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            }
+        }
+        if(toolEnabled == "putTerrainTexTool" && mouseLPressed == true){
+            if(fabs(lastPointerPos[0] - aktPointerPos[0]) > 32 || fabs(lastPointerPos[2] - aktPointerPos[2]) > 32 ){
+                TerrainLib::setTerrainTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+                lastPointerPos[0] = aktPointerPos[0];
+                lastPointerPos[1] = aktPointerPos[1];
+                lastPointerPos[2] = aktPointerPos[2];
             }
         }
         if(toolEnabled == "selectTool"){
