@@ -22,6 +22,8 @@ public:
         int set = -1;
         float position[3];
         float qDirection[4];
+        int x;
+        int z;
     };
     QVector<WorldObj*> objects;
     
@@ -36,6 +38,8 @@ public:
     void setQdirection(float* q);
     void setNewQdirection();
     void setMartix();
+    void adjustPositionToTerrain();
+    void adjustRotationToTerrain();
     void addObject(WorldObj* obj);
     bool select();
     bool select(int val);

@@ -23,6 +23,8 @@ GroupObj::GroupObj(const GroupObj* orig) {
     this->objects.append(orig->objects);
     this->selected = true;
     this->pivot.set = orig->pivot.set;
+    this->pivot.x = orig->pivot.x;
+    this->pivot.z = orig->pivot.z;
     Vec3::copy(this->pivot.position, (float*)orig->pivot.position);
     Vec3::copy(this->pivot.qDirection, (float*)orig->pivot.qDirection);
 }
@@ -39,7 +41,11 @@ void GroupObj::fromNewObjects(GroupObj* objList, Route* route, int x, int z, flo
     pivot.set = objList->pivot.set;
     Vec3::copy(pivot.position, (float*)objList->pivot.position);
     Vec3::copy(pivot.qDirection, (float*)objList->pivot.qDirection);
+    pivot.x = objList->pivot.x;
+    pivot.z = objList->pivot.z;
     float tp[3];
+    int tpx;
+    int tpz;
     float tpos[3];
     int pid = -1;
     float oldQrot[4];
@@ -48,12 +54,16 @@ void GroupObj::fromNewObjects(GroupObj* objList, Route* route, int x, int z, flo
         Vec3::copy(tp, pivot.position);
         Quat::copy(oldQrot, pivot.qDirection);
         Quat::copy(newQrot, pivot.qDirection);
+        tpx = pivot.x;
+        tpz = pivot.z;
     } else {
         pid = pivot.set;
         if(pid < 0 ||pid >= objList->objects.size())
             pid = 0;
         Vec3::copy(tp, objList->objects[pid]->position);
         Quat::copy(oldQrot, objList->objects[pid]->qDirection);
+        tpx = objList->objects[pid]->x;
+        tpz = objList->objects[pid]->y;
         if(objList->objects[pid] != NULL){
             //Vec3::sub(tpos, tp, objList->objects[pid]->position);
             //Vec3::sub(tpos, p, tpos);
@@ -79,6 +89,8 @@ void GroupObj::fromNewObjects(GroupObj* objList, Route* route, int x, int z, flo
             Vec3::sub(tpos, tp, objList->objects[i]->position);
             Vec3::transformQuat(tpos, tpos, tQrot);
             Vec3::sub(tpos, p, tpos);
+            tpos[0] -= (tpx - objList->objects[i]->x)*2048;
+            tpos[2] -= (tpz - objList->objects[i]->y)*2048;
             q = Quat::create();
             Quat::copy(q, objList->objects[i]->qDirection);
             Quat::multiply(q, q, tQrot);
@@ -109,6 +121,8 @@ void GroupObj::addObject(WorldObj* obj){
         Vec3::copy((float*)pivot.position,(float*)obj->position);
         Vec3::copy((float*)pivot.qDirection,(float*)obj->qDirection);
         pivot.set = this->objects.size()-1;
+        pivot.x = obj->x;
+        pivot.z = obj->y;
     }
     this->objects.push_back(obj);
     obj->select();
@@ -240,4 +254,16 @@ void GroupObj::setMartix(){
 
 void GroupObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
     
+}
+
+void GroupObj::adjustPositionToTerrain(){
+    for(int i = 0; i < this->objects.size(); i++){
+        this->objects[i]->adjustPositionToTerrain();
+    }
+}
+
+void GroupObj::adjustRotationToTerrain(){
+    for(int i = 0; i < this->objects.size(); i++){
+        this->objects[i]->adjustRotationToTerrain();
+    }
 }

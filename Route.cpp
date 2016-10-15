@@ -303,7 +303,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q) {
 WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) {
     if(r == NULL) return NULL;
     Game::check_coords(x, z, p);
-    
+
     // pozycja wzgledem TDB:
     int itemTrackType = WorldObj::isTrackObj(r->type);
     float* tpos = NULL;
@@ -340,12 +340,10 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     }
 
     Tile *tTile;
-    //try {
     tTile = tile[((x)*10000 + z)];
-    //} catch (const std::out_of_range& oor) {
     if (tTile == NULL)
         tile[(x)*10000 + z] = new Tile(x, z);
-    //}
+    tTile = tile[((x)*10000 + z)];
     if (tTile->loaded == -2) {
         if (TerrainLib::isLoaded(x, z)) {
             tTile->initNew();
