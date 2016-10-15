@@ -267,3 +267,69 @@ void GroupObj::adjustRotationToTerrain(){
         this->objects[i]->adjustRotationToTerrain();
     }
 }
+
+int GroupObj::getDefaultDetailLevel(){
+    if(this->objects.size() > 0)
+        return this->objects[0]->getDefaultDetailLevel();
+    return 0;
+}
+
+int GroupObj::getCustomDetailLevel(){
+    if(this->objects.size() > 0)
+        return this->objects[0]->getCustomDetailLevel();
+    return 0;
+}
+
+int GroupObj::getCurrentDetailLevel(){
+    if(this->objects.size() > 0)
+        return this->objects[0]->getCurrentDetailLevel();
+    return 0;
+}
+
+void GroupObj::setCustomDetailLevel(int val){
+    for(int i = 0; i < this->objects.size(); i++){
+        this->objects[i]->setCustomDetailLevel(val);
+    }
+}
+
+bool GroupObj::customDetailLevelEnabled(){
+    if(this->objects.size() > 0)
+        return this->objects[0]->customDetailLevelEnabled();
+    return false;
+}
+
+bool GroupObj::isAnimated(){
+    if(this->objects.size() > 0)
+        return this->objects[0]->isAnimated();
+    return false;
+}
+
+bool GroupObj::isTerrainObj(){
+    if(this->objects.size() > 0)
+        return this->objects[0]->isTerrainObj();
+    return false;
+}
+
+WorldObj::ShadowType GroupObj::getShadowType(){
+    if(this->objects.size() > 0)
+        return this->objects[0]->getShadowType();
+    return WorldObj::ShadowNone;
+}
+
+void GroupObj::setAnimated(bool val){
+    for(int i = 0; i < this->objects.size(); i++){
+        this->objects[i]->setAnimated(val);
+    }
+}
+
+void GroupObj::setTerrainObj(bool val){
+    for(int i = 0; i < this->objects.size(); i++){
+        this->objects[i]->setTerrainObj(val);
+    }
+}
+
+void GroupObj::setShadowType(WorldObj::ShadowType val){
+    for(int i = 0; i < this->objects.size(); i++){
+        this->objects[i]->setShadowType(val);
+    }
+}

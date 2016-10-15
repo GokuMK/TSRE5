@@ -65,6 +65,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesCarspawner.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesDyntrack.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesForest.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesGroup.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesPickup.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesPlatform.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSiding.o
@@ -160,6 +161,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesCarspawner.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesDyntrack.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesForest.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesGroup.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesPickup.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesPlatform.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSiding.o

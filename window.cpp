@@ -36,6 +36,7 @@
 #include "PropertiesSoundSource.h"
 #include "PropertiesSpeedpost.h"
 #include "PropertiesTrackObj.h"
+#include "PropertiesGroup.h"
 #include "NaviWindow.h"
 #include "UnsavedDialog.h"
 
@@ -64,6 +65,7 @@ Window::Window() {
     objProperties.push_back(new PropertiesSpeedpost);
     objProperties.push_back(new PropertiesSoundSource);
     objProperties.push_back(new PropertiesTrackObj);
+    objProperties.push_back(new PropertiesGroup);
     // last 
     objProperties.push_back(new PropertiesUndefined);
     

@@ -38,6 +38,17 @@ public:
     void setQdirection(float* q);
     void setNewQdirection();
     void setMartix();
+    int getDefaultDetailLevel();
+    int getCustomDetailLevel();
+    int getCurrentDetailLevel();
+    void setCustomDetailLevel(int val);
+    bool customDetailLevelEnabled();
+    bool isAnimated();
+    bool isTerrainObj();
+    ShadowType getShadowType();
+    void setAnimated(bool val);
+    void setTerrainObj(bool val);
+    void setShadowType(ShadowType val);
     void adjustPositionToTerrain();
     void adjustRotationToTerrain();
     void addObject(WorldObj* obj);
