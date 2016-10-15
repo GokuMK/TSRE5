@@ -30,6 +30,7 @@ public:
     static void fillRAW(float** terrainData, int mojex, int mojez);
     static float getHeight(int x, int z, float posx, float posz);
     static float getHeight(int x, int z, float posx, float posz, bool addR);
+    static void getRotation(float *rot, int x, int z, float posx, float posz);
     static void setHeight(int x, int z, float posx, float posz, float h);
     static int setHeight256(int x, int z, int posx, int posz, float h);
     static int setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE);
@@ -56,6 +57,7 @@ public:
     static void createNewRouteTerrain(int x, int z);
     static void saveEmpty(int x, int z);
     static void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
+    static void renderEmpty(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
     static void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
 private:
     static HeightWindow* heightWindow;

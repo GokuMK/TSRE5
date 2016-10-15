@@ -210,6 +210,25 @@ float TerrainLib::getHeight(int x, int z, float posx, float posz, bool addR) {
     //return -1;
 }
 
+void TerrainLib::getRotation(float* rot, int x, int z, float posx, float posz){
+    Game::check_coords(x, z, posx, posz);
+    rot[0] = 0;
+    rot[1] = 0;
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    
+    float tx = terr->terrainData[(int) (posz + 1024) / 8 + 1][(int) (posx + 1024) / 8]
+        - terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
+    float tz = terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8 + 1]
+        - terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
+    
+    rot[0] = atan(tx/8.0);
+    rot[1] = atan(tz/8.0);
+    return;
+}
+
 void TerrainLib::setHeightFromGeoGui(int x, int z, float* p){
     if(heightWindow == NULL)
         heightWindow = new HeightWindow();
@@ -753,4 +772,18 @@ void TerrainLib::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, fl
             }
         }
     }
+}
+
+void TerrainLib::renderEmpty(GLUU *gluu, float * playerT, float* playerW, float* target, float fov) {
+    int mintile = -1;
+    int maxtile = 1;
+
+    Terrain *tTile;
+    for (int i = mintile; i <= maxtile; i++)
+        for (int j = maxtile; j >= mintile; j--) {
+            tTile = terrain[(((int)playerT[0] + i)*10000 + (int)playerT[1] + j)];
+            if (tTile == NULL) {
+                terrain[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Terrain((int)playerT[0] + i, (int)playerT[1] + j);
+            }
+     }
 }

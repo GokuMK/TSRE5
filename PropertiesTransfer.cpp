@@ -183,6 +183,11 @@ void PropertiesTransfer::showObj(WorldObj* obj){
 void PropertiesTransfer::sizeEnabled(QString val){
     if(transferObj == NULL)
         return;
+    bool ok;
+    sizeX.text().toFloat(&ok);
+    if(!ok) return;
+    sizeY.text().toFloat(&ok);
+    if(!ok) return;
     transferObj->set("width", sizeX.text().toFloat());
     transferObj->set("height", sizeY.text().toFloat());
     transferObj->modified = true;

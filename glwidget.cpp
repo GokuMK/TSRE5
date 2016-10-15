@@ -248,6 +248,7 @@ void GLWidget::renderShadowMaps(){
     glViewport(0,0,Game::shadowMapSize,Game::shadowMapSize);
     int tempLod = Game::objectLod;
     Game::objectLod = 600;
+    TerrainLib::renderEmpty(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
     route->renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
     
     Mat4::identity(gluu->mvMatrix);
@@ -382,13 +383,13 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
     camera->keyDown(event);
     
     switch (event->key()) {
-        case 'M':
-            route->save();
+        //case 'M':
+            //route->save();
             //selection = true; //!selection;
             // paintGL();
             // selection = !selection;
-            break;
-        case Qt::Key_N:
+        //    break;
+        //case Qt::Key_N:
             //if(selectedObj != NULL)
             //    route->deleteTDBTree(selectedObj);
             /*if(this->selectedObj != NULL){
@@ -404,9 +405,16 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 lastNewObjPos[1] = this->selectedObj->position[1];
                 lastNewObjPos[2] = this->selectedObj->position[2];
             }*/
+        //    break;
+        case Qt::Key_B: {
+            QMessageBox msgBox;
+            msgBox.setText("Create new Tile here?");
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::Yes);
+            if(msgBox.exec() == QMessageBox::Yes)
+                route->newTile((int)camera->pozT[0], (int)camera->pozT[1]);
+            }
             break;
-        case Qt::Key_B:
-            route->newTile((int)camera->pozT[0], (int)camera->pozT[1]);
         //case Qt::Key_F1:
             //toolEnabled = "";
             //emit setToolbox("objTools");
@@ -553,6 +561,14 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     route->setTerrainToTrackObj(selectedObj, defaultPaintBrush);
                 else
                     route->setTerrainToTrackObj(lastSelectedObj, defaultPaintBrush);
+                break;
+            case Qt::Key_H:
+                if(selectedObj != NULL)
+                    selectedObj->adjustPositionToTerrain();
+                break;
+            case Qt::Key_N:
+                if(selectedObj != NULL)
+                    selectedObj->adjustRotationToTerrain();
                 break;
             case Qt::Key_Delete:
                 if(selectedObj != NULL){

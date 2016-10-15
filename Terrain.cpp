@@ -1246,7 +1246,7 @@ void Terrain::initBlob(){
     GLUU* gluu = GLUU::get();
     float alpha = -gluu->alphaTest;    
     
-    float *punkty = new float[65536 * 36];
+    float *punkty = new float[65536 * 54];
     int ptr = 0;
     float step = 1.0/256;
     for (int jj = 0; jj < 256; jj++) {
@@ -1254,36 +1254,54 @@ void Terrain::initBlob(){
             punkty[ptr++] = vertexData[jj][ii].x;
             punkty[ptr++] = vertexData[jj][ii].y+0.02;
             punkty[ptr++] = vertexData[jj][ii].z;
+            punkty[ptr++] = normalData[jj][ii].x;
+            punkty[ptr++] = normalData[jj][ii].y;
+            punkty[ptr++] = normalData[jj][ii].z;
             punkty[ptr++] = (jj)*step;
             punkty[ptr++] = (ii)*step;
             punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj][ii+1].x;
             punkty[ptr++] = vertexData[jj][ii+1].y+0.02;
             punkty[ptr++] = vertexData[jj][ii+1].z;
+            punkty[ptr++] = normalData[jj][ii+1].x;
+            punkty[ptr++] = normalData[jj][ii+1].y;
+            punkty[ptr++] = normalData[jj][ii+1].z;
             punkty[ptr++] = (jj)*step;
             punkty[ptr++] = (ii+1)*step;
             punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj+1][ii+1].x;
             punkty[ptr++] = vertexData[jj+1][ii+1].y+0.02;
             punkty[ptr++] = vertexData[jj+1][ii+1].z;
+            punkty[ptr++] = normalData[jj+1][ii+1].x;
+            punkty[ptr++] = normalData[jj+1][ii+1].y;
+            punkty[ptr++] = normalData[jj+1][ii+1].z;
             punkty[ptr++] = (jj+1)*step;
             punkty[ptr++] = (ii+1)*step;
             punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj][ii].x;
             punkty[ptr++] = vertexData[jj][ii].y+0.02;
             punkty[ptr++] = vertexData[jj][ii].z;
+            punkty[ptr++] = normalData[jj][ii].x;
+            punkty[ptr++] = normalData[jj][ii].y;
+            punkty[ptr++] = normalData[jj][ii].z;
             punkty[ptr++] = (jj)*step;
             punkty[ptr++] = (ii)*step;
             punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj+1][ii+1].x;
             punkty[ptr++] = vertexData[jj+1][ii+1].y+0.02;
             punkty[ptr++] = vertexData[jj+1][ii+1].z;
+            punkty[ptr++] = normalData[jj+1][ii+1].x;
+            punkty[ptr++] = normalData[jj+1][ii+1].y;
+            punkty[ptr++] = normalData[jj+1][ii+1].z;
             punkty[ptr++] = (jj+1)*step;
             punkty[ptr++] = (ii+1)*step;
             punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj+1][ii].x;
             punkty[ptr++] = vertexData[jj+1][ii].y+0.02;
             punkty[ptr++] = vertexData[jj+1][ii].z;
+            punkty[ptr++] = normalData[jj+1][ii].x;
+            punkty[ptr++] = normalData[jj+1][ii].y;
+            punkty[ptr++] = normalData[jj+1][ii].z;
             punkty[ptr++] = (jj+1)*step;
             punkty[ptr++] = (ii)*step;
             punkty[ptr++] = alpha;
@@ -1293,7 +1311,7 @@ void Terrain::initBlob(){
     *path += QString::number((int)(this->mojex)*10000+(int)(this->mojez))+".:maptex";
     qDebug() << *path;
     terrainBlob.setMaterial(path);
-    terrainBlob.init(punkty, ptr, terrainBlob.VT, GL_TRIANGLES);
+    terrainBlob.init(punkty, ptr, terrainBlob.VNT, GL_TRIANGLES);
     delete[] punkty;
 }
 

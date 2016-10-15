@@ -815,8 +815,8 @@ float* Quat::create() {
     float * out = new float[4];
     out[0] = 0;
     out[1] = 0;
-    out[0] = 0;
-    out[1] = 1;
+    out[2] = 0;
+    out[3] = 1;
     return out; 
 };
 

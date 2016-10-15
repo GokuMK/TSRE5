@@ -52438,7 +52438,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/WorldObj.o: WorldObj.cpp Wor
 		SoundRegionObj.h \
 		SoundSourceObj.h \
 		Game.h \
-		TS.h
+		TS.h \
+		TerrainLib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/WorldObj.o WorldObj.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/glShapeWidget.o: glShapeWidget.cpp glShapeWidget.h \

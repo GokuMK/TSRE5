@@ -31,6 +31,7 @@
 #include "SoundSourceObj.h"
 #include "Game.h"
 #include "TS.h"
+#include "TerrainLib.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -656,4 +657,36 @@ void WorldObj::setShadowType(WorldObj::ShadowType val){
     else if(val == WorldObj::ShadowDynamic)
         staticFlags = staticFlags | 0x10000;
     this->modified = true;
+}
+
+void WorldObj::adjustPositionToTerrain(){
+    position[1] = TerrainLib::getHeight(x, y, position[0], position[2]);
+    this->modified = true;
+    setMartix();
+}
+
+void WorldObj::adjustRotationToTerrain(){
+    float rot[2];
+    TerrainLib::getRotation((float*)&rot, x, y, position[0], position[2]);
+    this->tRotation[0] += rot[0];
+    this->tRotation[1] += rot[1];
+    if(matrix3x3 != NULL) matrix3x3 = NULL;
+    float *q = Quat::create();
+    
+    float vect[3];
+    vect[0] = 0; vect[1] = 0; vect [2] = 1;
+    Vec3::transformQuat(vect, vect, qDirection);
+    if(vect[2] < 0)
+        vect[0] = -vect[0];
+    if(rot[0]!=0) Quat::rotateX(q, q, -rot[0]);
+    if(rot[1]!=0) Quat::rotateZ(q, q, rot[1]);
+    Quat::rotateY(q, q, asin((vect[0])));
+    if(vect[2] < 0)
+        Quat::rotateY(q, q, M_PI);
+    this->qDirection[0] = q[0];
+    this->qDirection[1] = q[1];
+    this->qDirection[2] = q[2];
+    this->qDirection[3] = q[3];
+    this->modified = true;
+    setMartix();
 }

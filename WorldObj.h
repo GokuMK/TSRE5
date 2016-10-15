@@ -129,6 +129,8 @@ public:
     virtual void setAnimated(bool val);
     virtual void setTerrainObj(bool val);
     virtual void setShadowType(ShadowType val);
+    virtual void adjustPositionToTerrain();
+    virtual void adjustRotationToTerrain();
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 protected:

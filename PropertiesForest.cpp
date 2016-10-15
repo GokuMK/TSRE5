@@ -214,6 +214,11 @@ void PropertiesForest::showObj(WorldObj* obj){
 void PropertiesForest::sizeEnabled(QString val){
     if(forestObj == NULL)
         return;
+    bool ok;
+    sizeX.text().toFloat(&ok);
+    if(!ok) return;
+    sizeY.text().toFloat(&ok);
+    if(!ok) return;
     forestObj->set("areaX", sizeX.text().toFloat());
     forestObj->set("areaZ", sizeY.text().toFloat());
     forestObj->modified = true;
