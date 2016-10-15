@@ -31,6 +31,7 @@ public slots:
     void checkboxAnimEdited(int val);
     void checkboxTerrainEdited(int val);
     void cShadowTypeEdited(int val);
+    void editFileNameEnabled();
     
 signals:
     

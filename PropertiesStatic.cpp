@@ -12,6 +12,7 @@
 #include "WorldObj.h"
 #include "StaticObj.h"
 #include "ParserX.h"
+#include "EditFileNameDialog.h"
 
 PropertiesStatic::PropertiesStatic(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -33,15 +34,24 @@ PropertiesStatic::PropertiesStatic(){
     vbox->addItem(vlist);
     QLabel * label;
     label = new QLabel("FileName:");
+    label->setStyleSheet("QLabel { color : #999999; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->fileName.setDisabled(true);
     this->fileName.setAlignment(Qt::AlignCenter);
     vbox->addWidget(&this->fileName);
-    QPushButton *copyF = new QPushButton("Copy FileName", this);
-    vbox->addWidget(copyF);
+    QGridLayout *filenameList = new QGridLayout;
+    filenameList->setSpacing(2);
+    filenameList->setContentsMargins(0,0,0,0);    
+    QPushButton *copyF = new QPushButton("Copy", this);
     QObject::connect(copyF, SIGNAL(released()),
                       this, SLOT(copyFileNameEnabled()));
+    QPushButton *editF = new QPushButton("Edit", this);
+    QObject::connect(editF, SIGNAL(released()),
+                      this, SLOT(editFileNameEnabled()));
+    filenameList->addWidget(copyF, 0, 0);
+    filenameList->addWidget(editF, 0, 1);
+    vbox->addItem(filenameList);
     
     label = new QLabel("Position & Rotation:");
     label->setStyleSheet("QLabel { color : #999999; }");
@@ -326,4 +336,19 @@ void PropertiesStatic::cShadowTypeEdited(int val){
         return;
     worldObj->setShadowType((WorldObj::ShadowType)val);
     this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
+}
+
+void PropertiesStatic::editFileNameEnabled(){
+    if(worldObj == NULL)
+        return;
+    EditFileNameDialog eWindow;
+    eWindow.name.setText(worldObj->fileName);
+    eWindow.exec();
+    //qDebug() << waterWindow->changed;
+    if(eWindow.isOk){
+        worldObj->fileName = eWindow.name.text();
+        worldObj->position[2] = -worldObj->position[2];
+        worldObj->qDirection[2] = -worldObj->qDirection[2];
+        worldObj->load(worldObj->x, worldObj->y);
+    }
 }
