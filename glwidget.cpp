@@ -326,7 +326,11 @@ void GLWidget::handleSelection(){
                 setSelectedObj(NULL);
             }
         } else {
-            if(selectedObj != NULL) selectedObj->unselect();
+            if(selectedObj != NULL) {
+                selectedObj->unselect();
+                if(autoAddToTDB)
+                    route->addToTDBIfNotExist(selectedObj);
+            }
             lastSelectedObj = selectedObj;
             setSelectedObj(route->getObj(wx, wz, UiD));
             if (selectedObj == NULL){
@@ -430,7 +434,10 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             rotateTool = false;
             break;
         case Qt::Key_Q:
-            stickPointerToTerrain = !stickPointerToTerrain;
+            if(keyControlEnabled)
+                autoAddToTDB = !autoAddToTDB;
+            else
+                stickPointerToTerrain = !stickPointerToTerrain;
             break;
         default:
             break;
@@ -650,8 +657,11 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         mouseLPressed = true;
         lastMousePressTime = QDateTime::currentMSecsSinceEpoch();
         if(toolEnabled == "placeTool"){
-            if(selectedObj != NULL)
+            if(selectedObj != NULL){
                 selectedObj->unselect();
+                if(autoAddToTDB)
+                    route->addToTDBIfNotExist(selectedObj);
+            }
             lastNewObjPosT[0] = camera->pozT[0];
             lastNewObjPosT[1] = camera->pozT[1];
             lastNewObjPos[0] = aktPointerPos[0];

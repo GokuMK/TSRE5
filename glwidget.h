@@ -138,6 +138,7 @@ private:
     bool rotateTool = false;
     bool translateTool = false;
     bool stickPointerToTerrain = true;
+    bool autoAddToTDB = true;
     float lastNewObjPos[3];
     float lastNewObjPosT[2];
     float placeRot[4];

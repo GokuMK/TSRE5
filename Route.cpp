@@ -486,6 +486,26 @@ void Route::toggleToTDB(WorldObj* obj) {
     addToTDB(obj);
 }
 
+void Route::addToTDBIfNotExist(WorldObj* obj) {
+    if(obj == NULL) return;
+    
+    if(obj->typeID == obj->groupobject) {
+        GroupObj *gobj = (GroupObj*)obj;
+        for(int i = 0; i < gobj->objects.size(); i++ ){
+            addToTDBIfNotExist(gobj->objects[i]);
+        }
+        return;
+    }
+    
+    if (obj->type != "trackobj" && obj->type != "dyntrack") {
+            return;
+    }
+    if(roadDB->ifTrackExist(obj->x, obj->y, obj->UiD) || trackDB->ifTrackExist(obj->x, obj->y, obj->UiD)){
+        return;
+    }
+    addToTDB(obj);
+}
+
 void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
     int x = post[0];
     int z = post[1];
