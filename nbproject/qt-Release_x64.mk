@@ -40288,7 +40288,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSignal.o: Properti
 		TextObj.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/QPainter \
 		SigCfg.h \
-		SignalShape.h
+		SignalShape.h \
+		ParserX.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSignal.o PropertiesSignal.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSoundSource.o: PropertiesSoundSource.cpp PropertiesSoundSource.h \
@@ -42124,7 +42125,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTrackObj.o: Proper
 		Ref.h \
 		TrackObj.h \
 		GLMatrix.h \
-		ParserX.h
+		ParserX.h \
+		EditFileNameDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTrackObj.o PropertiesTrackObj.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTransfer.o: PropertiesTransfer.cpp PropertiesTransfer.h \

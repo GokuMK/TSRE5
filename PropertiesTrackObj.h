@@ -28,6 +28,7 @@ public slots:
     void fixJNodePosnEnabled();
     void elevPromEnabled(QString val);
     void elev1inXmEnabled(QString val);
+    void editFileNameEnabled();
         
 signals:
     

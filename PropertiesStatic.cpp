@@ -350,5 +350,6 @@ void PropertiesStatic::editFileNameEnabled(){
         worldObj->position[2] = -worldObj->position[2];
         worldObj->qDirection[2] = -worldObj->qDirection[2];
         worldObj->load(worldObj->x, worldObj->y);
+        worldObj->modified = true;
     }
 }

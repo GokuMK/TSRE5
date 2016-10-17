@@ -15,6 +15,7 @@
 #include "TDB.h"
 #include "SigCfg.h"
 #include "SignalShape.h"
+#include "ParserX.h"
 
 PropertiesSignal::PropertiesSignal() {
     signalWindow = new SignalWindow();
@@ -58,6 +59,43 @@ PropertiesSignal::PropertiesSignal() {
     button = new QPushButton("Show list", this);
     vbox->addWidget(button);
     connect(button, SIGNAL(released()), this, SLOT(showSubObjList()));
+    
+    label = new QLabel("Flags:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    this->flags.setDisabled(true);
+    this->flags.setAlignment(Qt::AlignCenter);
+    vbox->addWidget(&this->flags);
+    QGridLayout *flagslView = new QGridLayout;
+    flagslView->setSpacing(2);
+    flagslView->setContentsMargins(0,0,0,0);    
+    QPushButton *copyFlags = new QPushButton("Copy Flags", this);
+    QObject::connect(copyFlags, SIGNAL(released()),
+                      this, SLOT(copyFEnabled()));
+    QPushButton *pasteFlags = new QPushButton("Paste", this);
+    QObject::connect(pasteFlags, SIGNAL(released()),
+                      this, SLOT(pasteFEnabled()));
+    flagslView->addWidget(copyFlags,0,0);
+    flagslView->addWidget(pasteFlags,0,1);
+    vbox->addItem(flagslView);
+    checkboxAnim.setText("Animate Object");
+    checkboxTerrain.setText("Terrain Object");
+    vbox->addWidget(&checkboxAnim);
+    QObject::connect(&checkboxAnim, SIGNAL(stateChanged(int)),
+                      this, SLOT(checkboxAnimEdited(int)));
+    vbox->addWidget(&checkboxTerrain);
+    QObject::connect(&checkboxTerrain, SIGNAL(stateChanged(int)),
+                      this, SLOT(checkboxTerrainEdited(int)));
+    cShadowType.addItem("No Shadow");
+    cShadowType.addItem("Round Shadow");
+    cShadowType.addItem("Rect. Shadow");
+    cShadowType.addItem("Treeline Shadow");
+    cShadowType.addItem("Dynamic Shadow");
+    cShadowType.setStyleSheet("combobox-popup: 0;");
+    vbox->addWidget(&cShadowType);
+    QObject::connect(&cShadowType, SIGNAL(currentIndexChanged(int)),
+                      this, SLOT(cShadowTypeEdited(int)));
     /*for(int i = 0; i < maxSubObj; i++){
         this->chSub[i].setText("");
         vSub[i].setSpacing(2);
@@ -91,7 +129,7 @@ void PropertiesSignal::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
-    
+    worldObj = obj;
     sobj = (SignalObj*)obj;
     this->infoLabel->setText("Object: "+obj->type);
     this->uid.setText(QString::number(obj->UiD, 10));
@@ -119,6 +157,17 @@ void PropertiesSignal::showObj(WorldObj* obj){
     
     QRect rec = QApplication::desktop()->screenGeometry();
     signalWindow->move(rec.width()/2-signalWindow->width()/2 ,rec.height()/2-signalWindow->height()/2);
+    
+    this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
+    this->checkboxAnim.blockSignals(true);
+    this->checkboxTerrain.blockSignals(true);
+    this->cShadowType.blockSignals(true);
+    this->checkboxAnim.setChecked(obj->isAnimated());
+    this->checkboxTerrain.setChecked(obj->isTerrainObj());
+    this->cShadowType.setCurrentIndex((int)obj->getShadowType());
+    this->checkboxAnim.blockSignals(false);
+    this->checkboxTerrain.blockSignals(false);
+    this->cShadowType.blockSignals(false);
 }
 
 void PropertiesSignal::flipSignal(){
@@ -137,4 +186,33 @@ bool PropertiesSignal::support(WorldObj* obj){
     if(obj->type == "signal")
         return true;
     return false;
+}
+
+void PropertiesSignal::checkboxAnimEdited(int val){
+    if(worldObj == NULL)
+        return;
+    if(val == 2){
+        worldObj->setAnimated(true);
+    } else {
+        worldObj->setAnimated(false);
+    }
+    this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
+}
+
+void PropertiesSignal::checkboxTerrainEdited(int val){
+    if(worldObj == NULL)
+        return;
+    if(val == 2){
+        worldObj->setTerrainObj(true);
+    } else {
+        worldObj->setTerrainObj(false);
+    }
+    this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
+}
+
+void PropertiesSignal::cShadowTypeEdited(int val){
+    if(worldObj == NULL)
+        return;
+    worldObj->setShadowType((WorldObj::ShadowType)val);
+    this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
 }

@@ -14,6 +14,7 @@
 #include <math.h>
 #include "GLMatrix.h"
 #include "ParserX.h"
+#include "EditFileNameDialog.h"
 
 PropertiesTrackObj::PropertiesTrackObj(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -40,8 +41,18 @@ PropertiesTrackObj::PropertiesTrackObj(){
     this->fileName.setDisabled(true);
     this->fileName.setAlignment(Qt::AlignCenter);
     vbox->addWidget(&this->fileName);
-    QPushButton *copyF = new QPushButton("Copy FileName", this);
-    vbox->addWidget(copyF);
+    QGridLayout *filenameList = new QGridLayout;
+    filenameList->setSpacing(2);
+    filenameList->setContentsMargins(0,0,0,0);    
+    QPushButton *copyF = new QPushButton("Copy", this);
+    QObject::connect(copyF, SIGNAL(released()),
+                      this, SLOT(copyFileNameEnabled()));
+    QPushButton *editF = new QPushButton("Edit", this);
+    QObject::connect(editF, SIGNAL(released()),
+                      this, SLOT(editFileNameEnabled()));
+    filenameList->addWidget(copyF, 0, 0);
+    filenameList->addWidget(editF, 0, 1);
+    vbox->addItem(filenameList);
     
     label = new QLabel("Position & Rotation:");
     label->setStyleSheet("QLabel { color : #999999; }");
@@ -318,4 +329,20 @@ bool PropertiesTrackObj::support(WorldObj* obj){
     if(obj->type == "trackobj")
         return true;
     return false;
+}
+
+void PropertiesTrackObj::editFileNameEnabled(){
+    if(worldObj == NULL)
+        return;
+    EditFileNameDialog eWindow;
+    eWindow.name.setText(worldObj->fileName);
+    eWindow.exec();
+    //qDebug() << waterWindow->changed;
+    if(eWindow.isOk){
+        worldObj->fileName = eWindow.name.text();
+        worldObj->position[2] = -worldObj->position[2];
+        worldObj->qDirection[2] = -worldObj->qDirection[2];
+        worldObj->load(worldObj->x, worldObj->y);
+        worldObj->modified = true;
+    }
 }

@@ -28,6 +28,9 @@ public:
 public slots:
     void flipSignal();
     void showSubObjList();
+    void checkboxAnimEdited(int val);
+    void checkboxTerrainEdited(int val);
+    void cShadowTypeEdited(int val);
     
 signals:
     
@@ -37,6 +40,10 @@ private:
     QCheckBox chFlipShape;
     SignalObj* sobj;
     SignalWindow* signalWindow;
+    
+    QCheckBox checkboxAnim;
+    QCheckBox checkboxTerrain;
+    QComboBox cShadowType;
 };
 
 #endif	/* PROPERTIESSIGNAL_H */
