@@ -24,7 +24,7 @@ public:
     bool allowNew();
     bool isSoundItem();
     void load(int x, int y);
-    void set(QString sh, int val);
+    void set(QString sh, long long int val);
     void set(int sh, FileBuffer* val);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);

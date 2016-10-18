@@ -81,7 +81,7 @@ void ForestObj::load(int x, int y) {
     this->modified = false;
 }
 
-void ForestObj::set(QString sh, int val) {
+void ForestObj::set(QString sh, long long int val) {
     if (sh == ("ref_value")) {
         treeTexture = ForestObj::forestList[val].texture;
         scaleRangeX = ForestObj::forestList[val].scaleRangeX;

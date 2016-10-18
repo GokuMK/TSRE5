@@ -94,7 +94,7 @@ public:
     virtual void set(QString sh, FileBuffer* data);
     virtual void set(QString sh, QString val);
     virtual void set(QString sh, float* val);
-    virtual void set(QString sh, int val);
+    virtual void set(QString sh, long long int val);
     virtual void save(QTextStream* out);
     virtual void setPosition(float* p);
     virtual void setPosition(int x, int z, float* p);

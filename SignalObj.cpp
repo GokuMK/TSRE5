@@ -98,7 +98,7 @@ void SignalObj::initTrItems(float* tpos){
     this->drawPositions = NULL;
 }
 
-void SignalObj::set(QString sh, int val) {
+void SignalObj::set(QString sh, long long int val) {
     if (sh == ("ref_value")) {
         SignalShape * signal = Game::trackDB->sigCfg->signalShapeById[val];
         fileName = signal->name;

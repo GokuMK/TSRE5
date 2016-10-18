@@ -26,7 +26,7 @@ public:
     void set(int sh, FileBuffer* val);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
-    void set(QString sh, int val);
+    void set(QString sh, long long int val);
     void rotate(float x, float y, float z);
     Ref::RefItem* getRefInfo();
     void save(QTextStream* out);

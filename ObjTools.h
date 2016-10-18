@@ -28,6 +28,7 @@ public slots:
     void refClassSelected(const QString & text);
     void refTrackSelected(const QString & text);
     void refOtherSelected(const QString & text);
+    void refSearchSelected(const QString & text);
     void refListSelected(QListWidgetItem * item);
     void trackListSelected(QListWidgetItem * item);
     void otherListSelected(QListWidgetItem * item);
@@ -55,8 +56,6 @@ signals:
 private:
     Route* route;
     QListWidget refList;
-    QListWidget trackList;
-    QListWidget otherList;
     QListWidget lastItems;
     QComboBox refClass;
     QComboBox refTrack;
@@ -64,9 +63,9 @@ private:
     QComboBox refOther;
     Ref::RefItem itemRef;
     std::deque<Ref::RefItem*> lastItemsPtr;
+    QVector<Ref::RefItem*> currentItemList;
     QCheckBox stickToTDB;
     QCheckBox stickToRDB;
-    void hideAllLists();
 };
 
 #endif	/* TOOLBOX_H */

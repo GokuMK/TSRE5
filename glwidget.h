@@ -23,6 +23,7 @@
 #include "GroupObj.h"
 #include "Pointer3d.h"
 #include "Ref.h"
+#include <unordered_map>
 
 class Tile;
 class SFile;

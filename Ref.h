@@ -12,7 +12,7 @@
 #define	REF_H
 
 #include <QString>
-#include <unordered_map>
+#include <QMap>
 
 class Ref {
 public:
@@ -22,11 +22,11 @@ public:
         QString filename;
         QString align;
         QString description;
-        int value = 0;
+        long long int value = 0;
         QString getShapePath();
     };
 
-    std::unordered_map<std::string, std::vector<RefItem>> refItems;
+    QMap<QString, QVector<RefItem>> refItems;
     
     Ref();
     Ref(QString path);

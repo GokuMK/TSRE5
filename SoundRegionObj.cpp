@@ -80,7 +80,7 @@ void SoundRegionObj::initTrItems(float* tpos){
     this->drawPositionB = NULL;
 }
 
-void SoundRegionObj::set(QString sh, int val){
+void SoundRegionObj::set(QString sh, long long int val){
     if (sh == ("ref_value")) {
         this->fileName = "";
         for (auto it = Game::soundList->regions.begin(); it != Game::soundList->sources.end(); ++it ){

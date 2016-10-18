@@ -76,7 +76,7 @@ Ref::Ref(QString path) {
             ParserX::SkipToken(data);
         }
         if (item.clas != "") {
-            refItems[item.clas.trimmed().toStdString()].push_back(item);
+            refItems[item.clas.trimmed()].push_back(item);
         }
         ParserX::SkipToken(data);
     }

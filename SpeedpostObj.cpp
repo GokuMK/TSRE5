@@ -178,7 +178,7 @@ void SpeedpostObj::initTrItems(float* tpos){
     this->drawPositions = NULL;
 }
 
-void SpeedpostObj::set(QString sh, int val){
+void SpeedpostObj::set(QString sh, long long int val){
     if (sh == ("ref_value")) {
         speedPostId = val/1000;
         speedPostType = val - speedPostId*1000;

@@ -66,6 +66,19 @@ void TransferObj::set(QString sh, QString val){
     return;
 }
 
+void TransferObj::set(QString sh, long long int val){
+    if (sh == ("ref_value")) {
+        long long int val1 = (val & 0xFFFFFFFF00000000) >> 32;
+        long long int val2 = (val & 0x00000000FFFFFFFF);
+        width = (float)val1/1000;
+        height = (float)val2/1000;
+        //TexLib::addTex(resPath+"/"+texture);
+        return;
+    }    
+    WorldObj::set(sh, val);
+    return;
+}
+
 void TransferObj::set(QString sh, float val){
     if (sh == ("width")) {
         width = val;
@@ -122,6 +135,10 @@ Ref::RefItem* TransferObj::getRefInfo(){
     Ref::RefItem* r = new Ref::RefItem();
     r->type = this->type;
     r->filename = this->texture;
+    
+    long long int val1 = this->width*1000;
+    long long int val2 = this->height*1000;
+    r->value = val1 << 32 | val2;
     return r;
 }
 

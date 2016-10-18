@@ -5651,6 +5651,7 @@ moc_GeoTools.cpp: c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgets \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		GeoTools.h \
 		c:/OT/Static/5.7.0_x64/bin/moc.exe
 	'c:\OT\Static\5.7.0_x64\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -Ic:/OT/Static/5.7.0_x64/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -Ic:/OT/Static/5.7.0_x64/include -Ic:/OT/Static/5.7.0_x64/include/QtOpenGL -Ic:/OT/Static/5.7.0_x64/include/QtWidgets -Ic:/OT/Static/5.7.0_x64/include/QtGui -Ic:/OT/Static/5.7.0_x64/include/QtNetwork -Ic:/OT/Static/5.7.0_x64/include/QtCore -I. GeoTools.h -o moc_GeoTools.cpp
@@ -8880,6 +8881,7 @@ moc_ObjTools.cpp: c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgets \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		ObjTools.h \
 		c:/OT/Static/5.7.0_x64/bin/moc.exe
 	'c:\OT\Static\5.7.0_x64\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -Ic:/OT/Static/5.7.0_x64/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -Ic:/OT/Static/5.7.0_x64/include -Ic:/OT/Static/5.7.0_x64/include/QtOpenGL -Ic:/OT/Static/5.7.0_x64/include/QtWidgets -Ic:/OT/Static/5.7.0_x64/include/QtGui -Ic:/OT/Static/5.7.0_x64/include/QtNetwork -Ic:/OT/Static/5.7.0_x64/include/QtCore -I. ObjTools.h -o moc_ObjTools.cpp
@@ -18214,6 +18216,7 @@ moc_TerrainTools.cpp: c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgets \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TerrainTools.h \
 		c:/OT/Static/5.7.0_x64/bin/moc.exe
 	'c:\OT\Static\5.7.0_x64\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -Ic:/OT/Static/5.7.0_x64/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -Ic:/OT/Static/5.7.0_x64/include -Ic:/OT/Static/5.7.0_x64/include/QtOpenGL -Ic:/OT/Static/5.7.0_x64/include/QtWidgets -Ic:/OT/Static/5.7.0_x64/include/QtGui -Ic:/OT/Static/5.7.0_x64/include/QtNetwork -Ic:/OT/Static/5.7.0_x64/include/QtCore -I. TerrainTools.h -o moc_TerrainTools.cpp
@@ -20700,6 +20703,7 @@ moc_glwidget.cpp: c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		GroupObj.h \
 		Pointer3d.h \
 		glwidget.h \
@@ -22193,6 +22197,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityTools.o: ActivityToo
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		Game.h \
 		ActLib.h \
 		EngLib.h \
@@ -26207,6 +26212,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/DynTrackObj.o: DynTrackObj.c
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		ParserX.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
 		GLMatrix.h \
@@ -28259,6 +28265,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ForestObj.o: ForestObj.cpp c
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		GLMatrix.h \
 		ParserX.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
@@ -29516,6 +29523,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GeoTools.o: GeoTools.cpp Geo
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TexLib.h \
 		Texture.h \
 		Brush.h \
@@ -29624,6 +29632,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GroupObj.o: GroupObj.cpp Gro
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		GLMatrix.h \
 		Route.h \
 		TDB.h \
@@ -30411,6 +30420,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/HazardObj.o: HazardObj.cpp H
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		SFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qopenglwidget.h \
@@ -31204,6 +31214,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/LevelCrObj.o: LevelCrObj.cpp
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		SFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qopenglwidget.h \
@@ -34514,13 +34525,15 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ObjTools.o: ObjTools.cpp TSe
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		Game.h \
 		SigCfg.h \
 		SignalShape.h \
 		ForestObj.h \
 		SpeedPost.h \
 		SpeedPostDAT.h \
-		SoundList.h
+		SoundList.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMapIterator
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ObjTools.o ObjTools.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OglObj.o: OglObj.cpp OglObj.h \
@@ -35658,6 +35671,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PickupObj.o: PickupObj.cpp P
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		SFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qopenglwidget.h \
@@ -35809,6 +35823,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PlatformObj.o: PlatformObj.c
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		SFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qopenglwidget.h \
@@ -36621,6 +36636,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesAbstract.o: Proper
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TransformWorldObjDialog.h \
 		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesAbstract.o PropertiesAbstract.cpp
@@ -37079,6 +37095,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesCarspawner.o: Prop
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		PlatformObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesCarspawner.o PropertiesCarspawner.cpp
 
@@ -37537,6 +37554,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesDyntrack.o: Proper
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		Flex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesDyntrack.o PropertiesDyntrack.cpp
 
@@ -37994,6 +38012,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesForest.o: Properti
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		ForestObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesForest.o PropertiesForest.cpp
 
@@ -38452,6 +38471,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesGroup.o: Propertie
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		ParserX.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesGroup.o PropertiesGroup.cpp
 
@@ -38910,6 +38930,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesPickup.o: Properti
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		GuiFunct.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesPickup.o PropertiesPickup.cpp
 
@@ -39367,7 +39388,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesPlatform.o: Proper
 		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesPlatform.o PropertiesPlatform.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSiding.o: PropertiesSiding.cpp PropertiesSiding.h \
@@ -39824,6 +39846,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSiding.o: Properti
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		PlatformObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSiding.o PropertiesSiding.cpp
 
@@ -40283,6 +40306,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSignal.o: Properti
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		Game.h \
 		TDB.h \
 		TextObj.h \
@@ -40747,6 +40771,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSoundSource.o: Pro
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		Game.h \
 		SoundList.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSoundSource.o PropertiesSoundSource.cpp
@@ -41206,6 +41231,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSpeedpost.o: Prope
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TRitem.h \
 		Pointer3d.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSpeedpost.o PropertiesSpeedpost.cpp
@@ -41664,6 +41690,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesStatic.o: Properti
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		StaticObj.h \
 		ParserX.h \
 		EditFileNameDialog.h
@@ -42123,6 +42150,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTrackObj.o: Proper
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TrackObj.h \
 		GLMatrix.h \
 		ParserX.h \
@@ -42583,6 +42611,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTransfer.o: Proper
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TexLib.h \
 		Texture.h \
 		TransferObj.h
@@ -43041,7 +43070,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesUndefined.o: Prope
 		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesUndefined.o PropertiesUndefined.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/QuadTree.o: QuadTree.cpp QuadTree.h \
@@ -43893,19 +43923,19 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ref.o: Ref.cpp Ref.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qnamespace.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qarraydata.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringbuilder.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qalgorithms.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qiterator.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qlist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qalgorithms.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qhashfunctions.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qpair.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qbytearraylist.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringlist.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qregexp.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringmatcher.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qobject.h \
@@ -43926,6 +43956,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ref.o: Ref.cpp Ref.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcontiguouscache.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
 		Game.h \
 		ParserX.h \
 		FileBuffer.h \
@@ -44211,6 +44242,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Route.o: Route.cpp c:/OT/Sta
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TSectionDAT.h \
 		TSection.h \
 		TrackShape.h \
@@ -46282,6 +46314,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SignalObj.o: SignalObj.cpp S
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		SFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qopenglwidget.h \
@@ -46925,6 +46958,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SignalWindow.o: SignalWindow
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		Game.h \
 		TDB.h \
 		TextObj.h \
@@ -47667,6 +47701,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SoundRegionObj.o: SoundRegio
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TS.h \
 		ParserX.h \
 		GLMatrix.h \
@@ -47803,6 +47838,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SoundSourceObj.o: SoundSourc
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		PoleObj.h \
 		GLMatrix.h \
 		TS.h \
@@ -48169,6 +48205,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SpeedpostObj.o: SpeedpostObj
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		SFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qopenglwidget.h \
@@ -48322,6 +48359,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/StaticObj.o: StaticObj.cpp S
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		SFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qopenglwidget.h \
@@ -48605,6 +48643,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TDB.o: TDB.cpp TDB.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h \
 		GLMatrix.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TRnode.h \
 		Vector2i.h \
 		TRitem.h \
@@ -50593,6 +50632,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainTools.o: TerrainTools
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TexLib.h \
 		Texture.h \
 		Brush.h \
@@ -51880,6 +51920,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Tile.o: Tile.cpp Tile.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		Game.h \
 		ParserX.h \
 		ReadFile.h \
@@ -52114,6 +52155,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrWatermarkObj.o: TrWatermar
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		SFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qopenglwidget.h \
@@ -52354,6 +52396,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackObj.o: TrackObj.cpp Tra
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		SFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qopenglwidget.h \
@@ -52536,6 +52579,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TransferObj.o: TransferObj.c
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		ShapeLib.h \
 		GLMatrix.h \
 		ParserX.h \
@@ -54188,6 +54232,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/WorldObj.o: WorldObj.cpp Wor
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		SFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QOpenGLWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qopenglwidget.h \
@@ -54543,6 +54588,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/glwidget.o: glwidget.cpp glw
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		GroupObj.h \
 		Pointer3d.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QCoreApplication \
@@ -55805,6 +55851,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/window.o: window.cpp c:/OT/S
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		GroupObj.h \
 		Pointer3d.h \
 		window.h \

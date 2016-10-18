@@ -30,7 +30,7 @@ PropertiesDyntrack::PropertiesDyntrack() {
     
     this->chSect[0].setText("First Straight section");
     this->chSect[0].setChecked(true);
-    this->chSect[0].setEnabled(false);// .setCheckable(false);
+    //this->chSect[0].setEnabled(false);// .setCheckable(false);
     vbox->addWidget(&chSect[0]);
     vSect[0].setSpacing(2);
     vSect[0].setContentsMargins(3,0,3,0);
@@ -98,7 +98,7 @@ PropertiesDyntrack::PropertiesDyntrack() {
         sSectR[i].setSingleStep(1.0);
     }
     
-    for(int i = 1; i < 5; i++){
+    for(int i = 0; i < 5; i++){
         dyntrackChSect.setMapping(&chSect[i], i);
         connect(&chSect[i], SIGNAL(clicked()), &dyntrackChSect, SLOT(map()));
     }

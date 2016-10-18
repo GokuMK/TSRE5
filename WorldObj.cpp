@@ -274,7 +274,7 @@ void WorldObj::load(int x, int y) {
     this->selected = false;
 }
 
-void WorldObj::set(QString sh, int val) {
+void WorldObj::set(QString sh, long long int val) {
     if (sh == ("x")) {
         this->x = val;
         return;

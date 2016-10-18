@@ -153,7 +153,7 @@ void TrackObj::rotate(float x, float y, float z){
     setMartix();
 }
 
-void TrackObj::set(QString sh, int val) {
+void TrackObj::set(QString sh, long long int val) {
     if (sh == ("sectionidx")) {
         sectionIdx = val;
         return;
