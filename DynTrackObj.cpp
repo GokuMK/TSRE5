@@ -955,7 +955,7 @@ void DynTrackObj::genShape() {
         bound[3] = 9999;
         bound[4] = -9999;
         bound[5] = 9999;
-        for (int i = 0; i < ptr ; i+=8) {
+        for (int i = 0; i < ptr ; i+=9) {
             if(pd[i+0] < bound[1]) bound[1] = pd[i+0];
             if(pd[i+1] < bound[3]) bound[3] = pd[i+1];
             if(pd[i+2] < bound[5]) bound[5] = pd[i+2];
@@ -963,7 +963,7 @@ void DynTrackObj::genShape() {
             if(pd[i+1] > bound[2]) bound[2] = pd[i+1];
             if(pd[i+2] > bound[4]) bound[4] = pd[i+2];
         }
-        for (int i = 0; i < str ; i+=8) {
+        for (int i = 0; i < str ; i+=9) {
             if(sk[i+0] < bound[1]) bound[1] = sk[i+0];
             if(sk[i+1] < bound[3]) bound[3] = sk[i+1];
             if(sk[i+2] < bound[5]) bound[5] = sk[i+2];

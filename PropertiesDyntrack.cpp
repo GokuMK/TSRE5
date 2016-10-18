@@ -106,6 +106,16 @@ PropertiesDyntrack::PropertiesDyntrack() {
     QObject::connect(&dyntrackChSect, SIGNAL(mapped(int)),
             this, SLOT(chSectEnabled(int)));
     
+    for(int i = 0; i < 5; i++){
+        dyntrackSect.setMapping(&sSectR[i], i);
+        connect(&sSectR[i], SIGNAL(valueChanged(double)), &dyntrackSect, SLOT(map()));
+        dyntrackSect.setMapping(&sSectA[i], i);
+        connect(&sSectA[i], SIGNAL(valueChanged(double)), &dyntrackSect, SLOT(map()));
+    }
+    
+    QObject::connect(&dyntrackSect, SIGNAL(mapped(int)),
+            this, SLOT(sSectEnabled(int)));
+    
     QObject::connect(flex, SIGNAL(released()),
                       this, SLOT(flexEnabled()));
     
@@ -130,8 +140,12 @@ void PropertiesDyntrack::showObj(WorldObj* obj){
         }
         this->wSect[i].show();
         this->chSect[i].setChecked(true);
+        this->sSectA[i].blockSignals(true);
+        this->sSectR[i].blockSignals(true);
         this->sSectA[i].setValue(dobj->sections[i].a);
         this->sSectR[i].setValue(dobj->sections[i].r);
+        this->sSectA[i].blockSignals(false);
+        this->sSectR[i].blockSignals(false);
     }
     
     //this->carNumber.setText(QString::number(pobj->getCarNumber(),10));
@@ -157,13 +171,33 @@ void PropertiesDyntrack::chSectEnabled(int idx){
             dobj->sections[idx].a = 0.1;
             dobj->sections[idx].r = 100;
         }
+        this->sSectA[idx].blockSignals(true);
+        this->sSectR[idx].blockSignals(true);
         this->sSectA[idx].setValue(dobj->sections[idx].a);
         this->sSectR[idx].setValue(dobj->sections[idx].r);
+        this->sSectA[idx].blockSignals(false);
+        this->sSectR[idx].blockSignals(false);
     } else {
         this->wSect[idx].hide();
         dobj->sections[idx].sectIdx = 4294967295;
     }
     dobj->modified = true;
+    dobj->deleteVBO();
+}
+
+void PropertiesDyntrack::sSectEnabled(int idx){
+    qDebug() << "sSectEnabled";
+    if(dobj == NULL){
+        infoLabel->setText("NULL");
+        return;
+    }
+    if(idx%2 == 1 && fabs(this->sSectA[idx].value()) < 0.0001 )
+        return;
+
+    dobj->sections[idx].a = this->sSectA[idx].value();
+    dobj->sections[idx].r = this->sSectR[idx].value();
+    dobj->modified = true;
+    dobj->box.loaded = false;
     dobj->deleteVBO();
 }
 

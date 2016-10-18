@@ -27,6 +27,7 @@ public slots:
     void flexEnabled();
     void flexData(int x, int z, float* p);
     void chSectEnabled(int idx);
+    void sSectEnabled(int idx);
     
 signals:
     void enableTool(QString val);
@@ -39,6 +40,7 @@ private:
     QWidget wSect[5];
     DynTrackObj* dobj;
     QSignalMapper dyntrackChSect;
+    QSignalMapper dyntrackSect;
 };
 
 #endif	/* PROPERTIESDYNTRACK_H */
