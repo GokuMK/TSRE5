@@ -46,7 +46,7 @@ public:
     void rotate(float x, float y, float z);
     void resize(float x, float y, float z);
     int getDefaultDetailLevel();
-    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
+    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
     void drawShape();
     int tex;

@@ -132,7 +132,8 @@ void OglObj::render(int selectionColor) {
             if (TexLib::mtex[texId]->loaded) {
                 if (!TexLib::mtex[texId]->glLoaded)
                     TexLib::mtex[texId]->GLTextures();
-                f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texId]->tex[0]);
+                gluu->bindTexture(f, TexLib::mtex[texId]->tex[0]);
+                //f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texId]->tex[0]);
             } else {
             }
         }

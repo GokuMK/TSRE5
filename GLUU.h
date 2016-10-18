@@ -70,12 +70,14 @@ public:
     void enableTextures();
     void disableNormals();
     void enableNormals();
+    void bindTexture(QOpenGLFunctions *f, unsigned int texAddr);
     long long int getMatrixHash(float *matrix);
     void makeShadowFramebuffer(unsigned int &frameBuffer, unsigned int &texture, int texSize, GLenum ATEX );
 private:
     const char* getShader(QString shaderScript, QString type);
     bool textureEnabled;
     bool normalsEnabled;
+    unsigned int currentTexture = -1;
     Vector4f shapeColor;
 };
 

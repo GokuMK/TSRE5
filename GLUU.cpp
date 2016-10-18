@@ -180,6 +180,13 @@ void GLUU::enableNormals(){
     currentShader->setUniformValue(currentShader->shaderEnableNormals, 1.0f);
 }
 
+void GLUU::bindTexture(QOpenGLFunctions *f, unsigned int texAddr){
+    if(this->currentTexture == texAddr)
+        return;
+    this->currentTexture = texAddr;
+    f->glBindTexture(GL_TEXTURE_2D, texAddr);
+}
+
 long long int GLUU::getMatrixHash(float* matrix){
     long long int out = 0;
     for(int i = 0; i < 16; i++){

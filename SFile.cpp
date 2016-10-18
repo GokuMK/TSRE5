@@ -400,7 +400,8 @@ void SFile::render() {
                 //glDisable(GL_TEXTURE_2D);
             } else if (image[texture[primstate[prim_state].arg4].image].texAddr > 0) {
                 //glEnable(GL_TEXTURE_2D);
-                f->glBindTexture(GL_TEXTURE_2D, image[texture[primstate[prim_state].arg4].image].texAddr);
+                gluu->bindTexture(f, image[texture[primstate[prim_state].arg4].image].texAddr);
+                //f->glBindTexture(GL_TEXTURE_2D, image[texture[primstate[prim_state].arg4].image].texAddr);
             } else if (image[texture[primstate[prim_state].arg4].image].tex == -2) {
                 //glDisable(GL_TEXTURE_2D);
             } else if (image[texture[primstate[prim_state].arg4].image].tex == -1) {
