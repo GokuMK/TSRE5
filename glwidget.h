@@ -145,6 +145,7 @@ private:
     float placeRot[4];
     long long int lastMousePressTime = 0;
     bool keyControlEnabled = false;
+    bool keyShiftEnabled = false;
     GLuint FramebufferName1 = 0;
     GLuint depthTexture1 = 0;
     GLuint FramebufferName2 = 0;

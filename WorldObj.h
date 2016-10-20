@@ -42,7 +42,8 @@ public:
         hazard = 16,
         soundsource = 17,
         soundregion = 18,
-        groupobject = 19
+        groupobject = 19,
+        ruler = 20
     };
     TypeID typeID = this->undefined;
     enum ShadowType {

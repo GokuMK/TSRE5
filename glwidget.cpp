@@ -433,6 +433,24 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             translateTool = false;
             rotateTool = false;
             break;
+        case Qt::Key_R:
+            toolEnabled = "selectTool";
+            resizeTool = false;
+            translateTool = false;
+            rotateTool = true;
+            break;
+        case Qt::Key_T:    
+            toolEnabled = "selectTool";
+            resizeTool = false;
+            rotateTool = false;
+            translateTool = true;
+            break;
+        case Qt::Key_Y:    
+            toolEnabled = "selectTool";
+            rotateTool = false;
+            translateTool = false;
+            resizeTool = true;
+            break;
         case Qt::Key_Q:
             if(keyControlEnabled)
                 autoAddToTDB = !autoAddToTDB;
@@ -459,6 +477,9 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 moveStep = moveMinStep;
                 keyControlEnabled = true;
                 break;
+            case Qt::Key_Shift:
+                keyShiftEnabled = true;
+                break;                
             case Qt::Key_Up:    
                 if(Game::usenNumPad) break;
             case Qt::Key_8:
@@ -548,21 +569,6 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     this->selectedObj->resize(0, 0, -moveStep);
                 }
                 break;                
-            case Qt::Key_R:
-                resizeTool = false;
-                translateTool = false;
-                rotateTool = true;
-                break;
-            case Qt::Key_T:    
-                resizeTool = false;
-                rotateTool = false;
-                translateTool = true;
-                break;
-            case Qt::Key_Y:    
-                rotateTool = false;
-                translateTool = false;
-                resizeTool = true;
-                break;
             case Qt::Key_F:
                 if(selectedObj != NULL)
                     route->setTerrainToTrackObj(selectedObj, defaultPaintBrush);
@@ -637,6 +643,9 @@ void GLWidget::keyReleaseEvent(QKeyEvent * event) {
             case Qt::Key_Control:
                 moveStep = moveMaxStep;
                 keyControlEnabled = false;
+                break;
+            case Qt::Key_Shift:
+                keyShiftEnabled = false;
                 break;
             default:
                 break;
@@ -827,8 +836,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
                 if(!translateTool && !rotateTool && !resizeTool){
                     long long int ntime = QDateTime::currentMSecsSinceEpoch();
                     if(ntime - lastMousePressTime > 200){
-                        selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
-                        selectedObj->setMartix();
+                        if(keyShiftEnabled){
+                            float val = mousex - m_lastPos.x();
+                            selectedObj->rotate(0,val*moveStep*0.1,0);
+                        } else {
+                            selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
+                            selectedObj->setMartix();
+                        }
                     }
                 }
                 if(translateTool){
@@ -851,8 +865,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
             if(selectedObj != NULL && mouseLPressed){
                 long long int ntime = QDateTime::currentMSecsSinceEpoch();
                 if(ntime - lastMousePressTime > 200){
-                    selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
-                    selectedObj->setMartix();
+                    if(keyShiftEnabled){
+                        float val = mousex - m_lastPos.x();
+                        selectedObj->rotate(0,val*moveStep*0.1,0);
+                    } else {
+                        selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
+                        selectedObj->setMartix();
+                    }
                 }
             }
         }

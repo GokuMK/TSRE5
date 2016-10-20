@@ -76,6 +76,8 @@
           <itemPath>PropertiesGroup.h</itemPath>
           <itemPath>PropertiesPickup.h</itemPath>
           <itemPath>PropertiesPlatform.h</itemPath>
+          <itemPath>PropertiesRuler.cpp</itemPath>
+          <itemPath>PropertiesRuler.h</itemPath>
           <itemPath>PropertiesSiding.h</itemPath>
           <itemPath>PropertiesSignal.h</itemPath>
           <itemPath>PropertiesSoundSource.h</itemPath>
@@ -156,6 +158,7 @@
           <itemPath>LevelCrObj.h</itemPath>
           <itemPath>PickupObj.h</itemPath>
           <itemPath>PlatformObj.h</itemPath>
+          <itemPath>RulerObj.h</itemPath>
           <itemPath>SignalObj.h</itemPath>
           <itemPath>SoundRegionObj.h</itemPath>
           <itemPath>SoundSourceObj.h</itemPath>
@@ -337,6 +340,7 @@
           <itemPath>LevelCrObj.cpp</itemPath>
           <itemPath>PickupObj.cpp</itemPath>
           <itemPath>PlatformObj.cpp</itemPath>
+          <itemPath>RulerObj.cpp</itemPath>
           <itemPath>SignalObj.cpp</itemPath>
           <itemPath>SoundRegionObj.cpp</itemPath>
           <itemPath>SoundSourceObj.cpp</itemPath>
@@ -666,6 +670,10 @@
       </item>
       <item path="PropertiesPlatform.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesRuler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesRuler.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesSiding.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesSiding.h" ex="false" tool="3" flavor2="0">
@@ -723,6 +731,10 @@
       <item path="Ruch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ruch.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RulerObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RulerObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1243,6 +1255,10 @@
       </item>
       <item path="PropertiesPlatform.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesRuler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesRuler.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesSiding.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesSiding.h" ex="false" tool="3" flavor2="0">
@@ -1300,6 +1316,10 @@
       <item path="Ruch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ruch.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RulerObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RulerObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1813,6 +1833,10 @@
       </item>
       <item path="PropertiesPlatform.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesRuler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesRuler.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesSiding.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesSiding.h" ex="false" tool="3" flavor2="0">
@@ -1870,6 +1894,10 @@
       <item path="Ruch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ruch.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RulerObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RulerObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2390,6 +2418,10 @@
       </item>
       <item path="PropertiesPlatform.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesRuler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesRuler.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesSiding.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesSiding.h" ex="false" tool="3" flavor2="0">
@@ -2447,6 +2479,10 @@
       <item path="Ruch.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Ruch.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RulerObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RulerObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SFile.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -2955,6 +2991,10 @@
       </item>
       <item path="PropertiesPlatform.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesRuler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesRuler.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesSiding.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesSiding.h" ex="false" tool="3" flavor2="0">
@@ -3012,6 +3052,10 @@
       <item path="Ruch.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Ruch.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RulerObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RulerObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SFile.cpp" ex="false" tool="1" flavor2="8">
       </item>

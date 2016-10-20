@@ -27,6 +27,7 @@
 #include "LevelCrObj.h"
 #include "PickupObj.h"
 #include "HazardObj.h"
+#include "RulerObj.h"
 #include "SoundRegionObj.h"
 #include "SoundSourceObj.h"
 #include "Game.h"
@@ -127,11 +128,15 @@ WorldObj* WorldObj::createObj(int sh) {
         nowy = (WorldObj*) (new HazardObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
         (nowy)->typeID = (nowy)->hazard;
-    } /*else if (sh == TS::So) {
-        nowy = (WorldObj*) (new HazardObj());
+    }/* else if (sh == TS::) {
+        nowy = (WorldObj*) (new SoundSourceObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
-        (nowy)->typeID = (nowy)->hazard;
-    } */else {
+        (nowy)->typeID = (nowy)->soundsource;
+    } else if (sh == TS::) {
+        nowy = (WorldObj*) (new SoundRegionObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
+        (nowy)->typeID = (nowy)->soundregion;
+    }*/ else {
         qDebug() << " Unsupported WorldObj !!! " << sh;
         //(*nowy) = new WorldObj();
         return NULL;
@@ -211,6 +216,10 @@ WorldObj* WorldObj::createObj(QString sh) {
         nowy = (WorldObj*) (new SoundRegionObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
         (nowy)->typeID = (nowy)->soundregion;
+    } else if (sh == "ruler") {
+        nowy = (WorldObj*) (new RulerObj());
+        (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
+        (nowy)->typeID = (nowy)->ruler;
     } else {
         qDebug() << " Unsupported WorldObj !!! " + sh;
         //(*nowy) = new WorldObj();

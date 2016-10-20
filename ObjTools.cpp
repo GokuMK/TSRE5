@@ -289,6 +289,13 @@ void ObjTools::routeLoaded(Route* a){
         route->ref->refItems[QString("#TSRE#")+"sound regions"].push_back(item);
     }
     
+    Ref::RefItem item;
+    item.filename = "";
+    item.description = "Ruler";
+    item.clas = "tsre tools";
+    item.type = "ruler";
+    route->ref->refItems[QString("#TSRE#")+"tsre tools"].push_back(item);
+    
     refOther.addItem("Signals");
     refOther.addItem("Forests");
     refOther.addItem("Sound Sources");
@@ -297,6 +304,7 @@ void ObjTools::routeLoaded(Route* a){
     refOther.addItem("SpeedResume");
     refOther.addItem("SpeedWarning");
     refOther.addItem("Milepost");
+    refOther.addItem("TSRE Tools");
     refOther.setMaxVisibleItems(25);
 }
 

@@ -68,6 +68,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesGroup.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesPickup.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesPlatform.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesRuler.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSiding.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSignal.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSoundSource.o
@@ -82,6 +83,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ref.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Route.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ruch.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RulerObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFile.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileC.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileX.o
@@ -164,6 +166,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesGroup.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesPickup.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesPlatform.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesRuler.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSiding.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSignal.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSoundSource.o
