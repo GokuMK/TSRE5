@@ -68,11 +68,13 @@ void TransferObj::set(QString sh, QString val){
 
 void TransferObj::set(QString sh, long long int val){
     if (sh == ("ref_value")) {
+        if(val != 0){
         long long int val1 = (val & 0xFFFFFFFF00000000) >> 32;
         long long int val2 = (val & 0x00000000FFFFFFFF);
         width = (float)val1/1000;
         height = (float)val2/1000;
         //TexLib::addTex(resPath+"/"+texture);
+        }
         return;
     }    
     WorldObj::set(sh, val);
@@ -243,8 +245,10 @@ void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
 void TransferObj::drawShape(){
 
     if (!init) {
+        if(!Game::ignoreLoadLimits){
             if(Game::allowObjLag < 1)  return;
             Game::allowObjLag-=2;
+        }
         
             GLUU* gluu = GLUU::get();
             float alpha = -gluu->alphaTest;

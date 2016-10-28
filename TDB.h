@@ -116,6 +116,7 @@ private:
     void drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx);
     void getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid, float offset = 0, int step = 0);
     void addItemToTrNode(int tid, int iid);
+    void replaceSignalDirJunctionId(int oldId, int newId);
     void deleteItemFromTrNode(int tid, int iid);
     OglObj linieSieci;
     OglObj konceSieci;

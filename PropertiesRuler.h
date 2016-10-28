@@ -23,11 +23,12 @@ public:
     void updateObj(WorldObj* obj);
     
 public slots:
-    
+    void checkboxTwoPointEdited(int val);
 signals:
     
 private:
     QLineEdit lengthM;
+    QCheckBox checkboxTwoPoint;
 };
 
 #endif	/* PROPERTIESRULER_H */

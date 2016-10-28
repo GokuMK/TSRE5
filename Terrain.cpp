@@ -42,16 +42,19 @@ Terrain::Terrain(float x, float y) {
     tfile = new TFile();
 
     QString filename = getTileName((int) x, (int) -y);
-    //qDebug() << filename;
+    qDebug() << filename << x << -y;
     if (!tfile->readT((path + filename + ".t"))) {
         //qDebug() << " t fail";
         return;
     }
-    if (!readRAW((path + filename + "_y.raw"))) {
+    if(tfile->sampleYbuffer == NULL)
+        return;
+    if (!readRAW((path + *tfile->sampleYbuffer/* + "_y.raw"*/))) {
         //qDebug() << " y fail";
         return;
     }
-    jestF = readF(path + filename + "_f.raw");
+    if(tfile->sampleFbuffer != NULL)
+        jestF = readF(path + *tfile->sampleFbuffer/* + "_f.raw"*/);
     modifiedF = false;
     //qDebug() << " ok";
     
@@ -553,7 +556,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                         // gl.glDisable(GL2.GL_TEXTURE_2D);
                     }
                 }
-                if (texid2[yy * 16 + uu] == -2) {
+                /*if (texid2[yy * 16 + uu] == -2) {
                 } else if (tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].count153 < 2){
                         texid2[yy * 16 + uu] = -2;
                 } else {
@@ -573,7 +576,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                     } else {
                         // gl.glDisable(GL2.GL_TEXTURE_2D);
                     }
-                }
+                }*/
                 //QOpenGLVertexArrayObject::Binder vaoBinder(VAO[uu * 16 + yy]);
                 
 
@@ -1350,10 +1353,14 @@ bool Terrain::readRAW(QString fSfile) {
 void Terrain::save() {
     QString path = Game::root + "/routes/" + Game::route + "/tiles/";
     QString filename = getTileName((int) this->mojex, (int) - this->mojez);
-    saveRAW(path + filename + "_y.raw");
+    if(this->tfile->sampleYbuffer == NULL)
+        this->tfile->sampleYbuffer = new QString(filename + "_y.raw");
+    saveRAW(path + *this->tfile->sampleYbuffer );
     this->tfile->save(path + filename + ".t");
     if(jestF && modifiedF){
-        saveF(path + filename + "_f.raw");
+        if(this->tfile->sampleFbuffer == NULL)
+            this->tfile->sampleFbuffer = new QString(filename + "_f.raw");
+        saveF(path + *this->tfile->sampleFbuffer);
     }
     
     for (int u = 0; u < 16; u++)

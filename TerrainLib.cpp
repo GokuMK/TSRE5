@@ -514,9 +514,9 @@ void TerrainLib::setFixedTileHeight(Brush* brush, int x, int z, float* p){
     terr->setModified(true);
 }
 
-void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
+QSet<int> TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
     
-    std::set<int> uterr;
+    QSet<int> uterr;
     
     float posx = round(p[0]/8.0)*8.0;
     float posz = round(p[2]/8.0)*8.0;
@@ -526,8 +526,8 @@ void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
     
     Terrain *terr;
     terr = terrain[(x * 10000 + z)];
-    if (terr == NULL) return;
-    if (terr->loaded == false) return;
+    if (terr == NULL) return uterr;
+    if (terr->loaded == false) return uterr;
     //terr->paintTexture(x, z, posx, posz);
     
     //int px = (posx + 1024)/8;
@@ -621,15 +621,16 @@ void TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
             }
         }
     
-    for (std::set<int>::iterator it = uterr.begin(); it != uterr.end(); ++it) {
+    foreach (int value, uterr){
+    //for (std::set<int>::iterator it = uterr.begin(); it != uterr.end(); ++it) {
         //console.log(obj.type);
-        terr = terrain[(int)*it];
+        terr = terrain[value];
         terr->setModified(true);
         terr->refresh();
     }
     //terr->setModified(true);
     //terr->refresh();
-    
+    return uterr;
 }
 
 void TerrainLib::fillRAW(float** terrainData, int mojex, int mojez) {
@@ -729,7 +730,7 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
         //console.log(obj.type);
         Terrain* obj = (Terrain*) it->second;
         if(obj == NULL) continue;
-        if(!obj->inUse && obj->loaded){
+        if(!obj->inUse && obj->loaded && !obj->isModified()){
            //console.log("a"+this.tile[key]);
            delete obj;
            terrain[(int)it->first] = NULL;

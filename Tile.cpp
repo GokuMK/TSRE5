@@ -365,6 +365,8 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
     nowy->set("ref_class", itemData->clas);
     nowy->set("ref_filename", itemData->filename);
     nowy->set("ref_value", itemData->value);
+    if(itemData->staticFlags != 0)
+        nowy->set("staticflags", itemData->staticFlags);
 
     //Quat::rotateY(q, q, M_PI/2);
     nowy->set("x", x);
@@ -549,6 +551,14 @@ void Tile::setModified(bool value){
 
 void Tile::render() {
     //render(0, 0);
+}
+
+void Tile::updateTerrainObjects(){
+    for (int i = 0; i < jestObiektow; i++) {
+        if (obiekty[i]->loaded) 
+            if(obiekty[i]->typeID == WorldObj::forest || obiekty[i]->typeID == WorldObj::transfer)
+               obiekty[i]->deleteVBO();
+    }
 }
 
 void Tile::render(float * playerT, float* playerW, float* target, float fov, int renderMode) {

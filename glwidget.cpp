@@ -709,7 +709,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if(toolEnabled == "heightTool"){
            // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
-            TerrainLib::paintHeightMap(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            route->paintHeightMap(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == "paintTool"){
            // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
@@ -820,7 +820,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
         }
         if(toolEnabled == "heightTool" && mouseLPressed == true){
             if(mousex != m_lastPos.x() || mousey != m_lastPos.y()){
-                TerrainLib::paintHeightMap(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+                route->paintHeightMap(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
             }
         }
         if(toolEnabled == "putTerrainTexTool" && mouseLPressed == true){

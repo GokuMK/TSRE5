@@ -51,6 +51,7 @@ public:
     WorldObj* placeObject(float* p, float* q, Ref::RefItem* itemData, float* tpos = NULL);
     void transalteObj(float px, float py, float pz, int uid);
     void initNew();
+    void updateTerrainObjects();
     void render();
     void render(float *  playerT, float* playerW, float* target, float fov, int renderMode);
     //void renderWS(float *  playerT, float* playerW, float* target, float fov, int renderMode);

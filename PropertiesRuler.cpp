@@ -39,7 +39,17 @@ PropertiesRuler::PropertiesRuler() {
 
     vlist->addRow("Meters: ",&this->lengthM);
     vbox->addItem(vlist);
-
+    
+    label = new QLabel("Default Settings:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+        checkboxTwoPoint.setText("Only Two-Point Ruler");
+    checkboxTwoPoint.setChecked(false);
+    vbox->addWidget(&checkboxTwoPoint);
+    QObject::connect(&checkboxTwoPoint, SIGNAL(stateChanged(int)),
+                      this, SLOT(checkboxTwoPointEdited(int)));
+    
     vbox->addStretch(1);
     this->setLayout(vbox);
 }
@@ -69,6 +79,17 @@ void PropertiesRuler::updateObj(WorldObj* obj){
     if(!lengthM.hasFocus())
         lengthM.setText(QString::number(robj->getLength(), 'G', 4));
 
+}
+
+void PropertiesRuler::checkboxTwoPointEdited(int val){
+    if(worldObj == NULL)
+        return;
+    RulerObj* robj = (RulerObj*)worldObj;
+    if(val == 2){
+        robj->TwoPointRuler = true;
+    } else {
+        robj->TwoPointRuler = false;
+    }
 }
 
 bool PropertiesRuler::support(WorldObj* obj){

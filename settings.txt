@@ -20,8 +20,8 @@ gameRoot = C:/ts
 routeName = Reda-Hel_ver11
 
 # optional start tile
-#startTileX = -5306
-#startTileY = 14961
+#startTileX = -5439
+#startTileY = 14865
 
 # route edit
 #createNewIfNotExist = true

@@ -335,7 +335,7 @@ bool SFile::getBoxPoints(QVector<float>& points){
 }
 
 void SFile::render() {
-    
+
     if (isinit != 1 || loaded == 2)
         return;
     if (loaded == 0) {

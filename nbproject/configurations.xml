@@ -76,7 +76,6 @@
           <itemPath>PropertiesGroup.h</itemPath>
           <itemPath>PropertiesPickup.h</itemPath>
           <itemPath>PropertiesPlatform.h</itemPath>
-          <itemPath>PropertiesRuler.cpp</itemPath>
           <itemPath>PropertiesRuler.h</itemPath>
           <itemPath>PropertiesSiding.h</itemPath>
           <itemPath>PropertiesSignal.h</itemPath>
@@ -260,6 +259,7 @@
           <itemPath>PropertiesGroup.cpp</itemPath>
           <itemPath>PropertiesPickup.cpp</itemPath>
           <itemPath>PropertiesPlatform.cpp</itemPath>
+          <itemPath>PropertiesRuler.cpp</itemPath>
           <itemPath>PropertiesSiding.cpp</itemPath>
           <itemPath>PropertiesSignal.cpp</itemPath>
           <itemPath>PropertiesSoundSource.cpp</itemPath>

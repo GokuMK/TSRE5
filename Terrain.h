@@ -49,7 +49,7 @@ public:
 
 private:
     unsigned char **fData;
-    bool jestF;
+    bool jestF = false;
     bool modifiedF;
     bool isOgl;
     bool modified;

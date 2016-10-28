@@ -19,6 +19,7 @@ class OglObj;
 
 class RulerObj : public WorldObj {
 public:
+    static bool TwoPointRuler;
     RulerObj();
     RulerObj(const RulerObj& orig);
     virtual ~RulerObj();

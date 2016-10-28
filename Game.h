@@ -41,6 +41,7 @@ public:
     static int tileLod;
     static int allowObjLag;
     static int maxObjLag;
+    static bool ignoreLoadLimits;
     static void load();
     static bool loadRouteEditor();
     static bool loadConEditor();

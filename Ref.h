@@ -23,6 +23,7 @@ public:
         QString align;
         QString description;
         long long int value = 0;
+        unsigned int staticFlags = 0;
         QString getShapePath();
     };
 

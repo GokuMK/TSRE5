@@ -55,6 +55,7 @@ SOURCES       = AboutWindow.cpp \
 		CameraConsist.cpp \
 		CameraFree.cpp \
 		CameraRot.cpp \
+		ChooseFileDialog.cpp \
 		ConEditorWindow.cpp \
 		ConLib.cpp \
 		ConListWidget.cpp \
@@ -65,6 +66,7 @@ SOURCES       = AboutWindow.cpp \
 		CoordsKml.cpp \
 		CoordsMkr.cpp \
 		DynTrackObj.cpp \
+		EditFileNameDialog.cpp \
 		Eng.cpp \
 		EngLib.cpp \
 		EngListWidget.cpp \
@@ -78,6 +80,7 @@ SOURCES       = AboutWindow.cpp \
 		GLUU.cpp \
 		Game.cpp \
 		GeoTools.cpp \
+		GroupObj.cpp \
 		GuiFunct.cpp \
 		HGTfile.cpp \
 		HazardObj.cpp \
@@ -107,8 +110,10 @@ SOURCES       = AboutWindow.cpp \
 		PropertiesCarspawner.cpp \
 		PropertiesDyntrack.cpp \
 		PropertiesForest.cpp \
+		PropertiesGroup.cpp \
 		PropertiesPickup.cpp \
 		PropertiesPlatform.cpp \
+		PropertiesRuler.cpp \
 		PropertiesSiding.cpp \
 		PropertiesSignal.cpp \
 		PropertiesSoundSource.cpp \
@@ -123,10 +128,13 @@ SOURCES       = AboutWindow.cpp \
 		Ref.cpp \
 		Route.cpp \
 		Ruch.cpp \
+		RulerObj.cpp \
 		SFile.cpp \
 		SFileC.cpp \
 		SFileX.cpp \
+		Shader.cpp \
 		ShapeLib.cpp \
+		ShapeViewWindow.cpp \
 		SigCfg.cpp \
 		SignalObj.cpp \
 		SignalShape.cpp \
@@ -161,6 +169,7 @@ SOURCES       = AboutWindow.cpp \
 		TrackObj.cpp \
 		TrackShape.cpp \
 		TransferObj.cpp \
+		TransformWorldObjDialog.cpp \
 		Trk.cpp \
 		TrkWindow.cpp \
 		UnsavedDialog.cpp \
@@ -177,9 +186,11 @@ SOURCES       = AboutWindow.cpp \
 		moc_AceLib.cpp \
 		moc_ActivityTools.cpp \
 		moc_CELoadWindow.cpp \
+		moc_ChooseFileDialog.cpp \
 		moc_ConEditorWindow.cpp \
 		moc_ConListWidget.cpp \
 		moc_ConUnitsWidget.cpp \
+		moc_EditFileNameDialog.cpp \
 		moc_EngListWidget.cpp \
 		moc_GeoTools.cpp \
 		moc_HeightWindow.cpp \
@@ -196,8 +207,10 @@ SOURCES       = AboutWindow.cpp \
 		moc_PropertiesCarspawner.cpp \
 		moc_PropertiesDyntrack.cpp \
 		moc_PropertiesForest.cpp \
+		moc_PropertiesGroup.cpp \
 		moc_PropertiesPickup.cpp \
 		moc_PropertiesPlatform.cpp \
+		moc_PropertiesRuler.cpp \
 		moc_PropertiesSiding.cpp \
 		moc_PropertiesSignal.cpp \
 		moc_PropertiesSoundSource.cpp \
@@ -207,11 +220,13 @@ SOURCES       = AboutWindow.cpp \
 		moc_PropertiesTransfer.cpp \
 		moc_PropertiesUndefined.cpp \
 		moc_RandomConsist.cpp \
+		moc_ShapeViewWindow.cpp \
 		moc_SignalWindow.cpp \
 		moc_SignalWindowLink.cpp \
 		moc_TerrainTools.cpp \
 		moc_TerrainTreeWindow.cpp \
 		moc_TerrainWaterWindow.cpp \
+		moc_TransformWorldObjDialog.cpp \
 		moc_TrkWindow.cpp \
 		moc_UnsavedDialog.cpp \
 		moc_glShapeWidget.cpp \
@@ -228,6 +243,7 @@ OBJECTS       = build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraConsist.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraFree.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraRot.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/ChooseFileDialog.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/ConEditorWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/ConLib.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/ConListWidget.o \
@@ -238,6 +254,7 @@ OBJECTS       = build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsKml.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsMkr.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/DynTrackObj.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/EditFileNameDialog.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/Eng.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/EngLib.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/EngListWidget.o \
@@ -251,6 +268,7 @@ OBJECTS       = build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/GLUU.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/Game.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/GeoTools.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/GroupObj.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/GuiFunct.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/HGTfile.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/HazardObj.o \
@@ -280,8 +298,10 @@ OBJECTS       = build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o \
@@ -296,10 +316,13 @@ OBJECTS       = build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/Ref.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/Route.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/Ruch.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/RulerObj.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/SFile.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileC.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileX.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/Shader.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/ShapeLib.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/ShapeViewWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/SigCfg.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalObj.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalShape.o \
@@ -334,6 +357,7 @@ OBJECTS       = build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackObj.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackShape.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/TransferObj.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/TransformWorldObjDialog.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/Trk.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/TrkWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/UnsavedDialog.o \
@@ -351,9 +375,11 @@ OBJECTS       = build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_AceLib.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ActivityTools.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_CELoadWindow.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ChooseFileDialog.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConEditorWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConListWidget.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConUnitsWidget.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_EditFileNameDialog.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_EngListWidget.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_GeoTools.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_HeightWindow.o \
@@ -370,8 +396,10 @@ OBJECTS       = build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesCarspawner.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesDyntrack.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesForest.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesGroup.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPickup.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPlatform.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesRuler.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSiding.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSignal.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundSource.o \
@@ -381,11 +409,13 @@ OBJECTS       = build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTransfer.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindowLink.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTools.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTreeWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainWaterWindow.o \
+		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TransformWorldObjDialog.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TrkWindow.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_UnsavedDialog.o \
 		build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_glShapeWidget.o \
@@ -403,6 +433,7 @@ DIST          =  AboutWindow.h \
 		CameraConsist.h \
 		CameraFree.h \
 		CameraRot.h \
+		ChooseFileDialog.h \
 		ConEditorWindow.h \
 		ConLib.h \
 		ConListWidget.h \
@@ -413,6 +444,7 @@ DIST          =  AboutWindow.h \
 		CoordsKml.h \
 		CoordsMkr.h \
 		DynTrackObj.h \
+		EditFileNameDialog.h \
 		Eng.h \
 		EngLib.h \
 		EngListWidget.h \
@@ -426,6 +458,7 @@ DIST          =  AboutWindow.h \
 		GLUU.h \
 		Game.h \
 		GeoTools.h \
+		GroupObj.h \
 		GuiFunct.h \
 		HGTfile.h \
 		HazardObj.h \
@@ -455,8 +488,10 @@ DIST          =  AboutWindow.h \
 		PropertiesCarspawner.h \
 		PropertiesDyntrack.h \
 		PropertiesForest.h \
+		PropertiesGroup.h \
 		PropertiesPickup.h \
 		PropertiesPlatform.h \
+		PropertiesRuler.h \
 		PropertiesSiding.h \
 		PropertiesSignal.h \
 		PropertiesSoundSource.h \
@@ -471,10 +506,13 @@ DIST          =  AboutWindow.h \
 		Ref.h \
 		Route.h \
 		Ruch.h \
+		RulerObj.h \
 		SFile.h \
 		SFileC.h \
 		SFileX.h \
+		Shader.h \
 		ShapeLib.h \
+		ShapeViewWindow.h \
 		SigCfg.h \
 		SignalObj.h \
 		SignalShape.h \
@@ -509,6 +547,7 @@ DIST          =  AboutWindow.h \
 		TrackObj.h \
 		TrackShape.h \
 		TransferObj.h \
+		TransformWorldObjDialog.h \
 		Trk.h \
 		TrkWindow.h \
 		UnsavedDialog.h \
@@ -530,6 +569,7 @@ DIST          =  AboutWindow.h \
 		CameraConsist.cpp \
 		CameraFree.cpp \
 		CameraRot.cpp \
+		ChooseFileDialog.cpp \
 		ConEditorWindow.cpp \
 		ConLib.cpp \
 		ConListWidget.cpp \
@@ -540,6 +580,7 @@ DIST          =  AboutWindow.h \
 		CoordsKml.cpp \
 		CoordsMkr.cpp \
 		DynTrackObj.cpp \
+		EditFileNameDialog.cpp \
 		Eng.cpp \
 		EngLib.cpp \
 		EngListWidget.cpp \
@@ -553,6 +594,7 @@ DIST          =  AboutWindow.h \
 		GLUU.cpp \
 		Game.cpp \
 		GeoTools.cpp \
+		GroupObj.cpp \
 		GuiFunct.cpp \
 		HGTfile.cpp \
 		HazardObj.cpp \
@@ -582,8 +624,10 @@ DIST          =  AboutWindow.h \
 		PropertiesCarspawner.cpp \
 		PropertiesDyntrack.cpp \
 		PropertiesForest.cpp \
+		PropertiesGroup.cpp \
 		PropertiesPickup.cpp \
 		PropertiesPlatform.cpp \
+		PropertiesRuler.cpp \
 		PropertiesSiding.cpp \
 		PropertiesSignal.cpp \
 		PropertiesSoundSource.cpp \
@@ -598,10 +642,13 @@ DIST          =  AboutWindow.h \
 		Ref.cpp \
 		Route.cpp \
 		Ruch.cpp \
+		RulerObj.cpp \
 		SFile.cpp \
 		SFileC.cpp \
 		SFileX.cpp \
+		Shader.cpp \
 		ShapeLib.cpp \
+		ShapeViewWindow.cpp \
 		SigCfg.cpp \
 		SignalObj.cpp \
 		SignalShape.cpp \
@@ -636,6 +683,7 @@ DIST          =  AboutWindow.h \
 		TrackObj.cpp \
 		TrackShape.cpp \
 		TransferObj.cpp \
+		TransformWorldObjDialog.cpp \
 		Trk.cpp \
 		TrkWindow.cpp \
 		UnsavedDialog.cpp \
@@ -1082,11 +1130,12 @@ dist:
 	$(ZIP) TSRE5.zip $(SOURCES) $(DIST) nbproject/nbproject/qt-Debug.pro C:/QT/Static/5.7.0/mkspecs/features/spec_pre.prf C:/QT/Static/5.7.0/mkspecs/qdevice.pri C:/QT/Static/5.7.0/mkspecs/features/device_config.prf C:/QT/Static/5.7.0/mkspecs/common/angle.conf C:/QT/Static/5.7.0/mkspecs/qconfig.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dcore.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dcore_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dextras.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dextras_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dinput.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dinput_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dlogic.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dlogic_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquick.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquick_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickextras.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickextras_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickinput.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickinput_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickrender.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickrender_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3drender.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3drender_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axbase.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axbase_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axcontainer.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axcontainer_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axserver.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axserver_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_bluetooth.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_bluetooth_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_bootstrap_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_charts.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_charts_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_clucene_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_concurrent.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_concurrent_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_core.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_core_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_datavisualization.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_datavisualization_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_dbus.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_dbus_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_gamepad.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_gamepad_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_gui.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_gui_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_help.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_help_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_location.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_location_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_multimedia.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_multimedia_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_multimediawidgets.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_multimediawidgets_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_network.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_network_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_nfc.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_nfc_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_opengl.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_opengl_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_openglextensions.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_openglextensions_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_packetprotocol_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_platformsupport_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_positioning.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_positioning_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_printsupport.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_printsupport_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_purchasing.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_purchasing_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qml.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qml_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qmldebug_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qmldevtools_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qmltest.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qmltest_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quick.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quick_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quickcontrols2.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quickcontrols2_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quickparticles_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quicktemplates2_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quickwidgets.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quickwidgets_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_script.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_script_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_scripttools.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_scripttools_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_scxml.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_scxml_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_sensors.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_sensors_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_serialbus.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_serialbus_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_serialport.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_serialport_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_sql.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_sql_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_svg.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_svg_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_testlib.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_testlib_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_uiplugin.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_uitools.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_uitools_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_webchannel.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_webchannel_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_websockets.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_websockets_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_widgets.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_widgets_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_winextras.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_winextras_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_xml.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_xml_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_xmlpatterns.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_xmlpatterns_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_zlib_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_assimpsceneio.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_dsengine.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_gltfsceneio.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qdds.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qgenericbearer.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qicns.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qico.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qminimal.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_debugger.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_inspector.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_local.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_native.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_profiler.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_quickprofiler.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_server.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_tcp.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qnativewifibearer.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qoffscreen.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qsvg.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qsvgicon.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtaudio_windows.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtga.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtgeoservices_mapbox.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtgeoservices_nokia.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtgeoservices_osm.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtiff.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtmedia_audioengine.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtmultimedia_m3u.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtpeakcanbus.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtposition_geoclue.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtposition_positionpoll.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtposition_serialnmea.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtsensorgestures_plugin.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtsensorgestures_shakeplugin.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtsensors_generic.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qttinycanbus.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtuiotouchplugin.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qwbmp.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qwebp.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qwindows.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_windowsprintersupport.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_xinputgamepad.pri C:/QT/Static/5.7.0/mkspecs/features/qt_functions.prf C:/QT/Static/5.7.0/mkspecs/features/qt_config.prf C:/QT/Static/5.7.0/mkspecs/features/win32/qt_config.prf C:/QT/Static/5.7.0/mkspecs/win32-g++/qmake.conf C:/QT/Static/5.7.0/mkspecs/features/spec_post.prf C:/QT/Static/5.7.0/mkspecs/features/exclusive_builds.prf C:/QT/Static/5.7.0/mkspecs/features/default_pre.prf C:/QT/Static/5.7.0/mkspecs/features/win32/default_pre.prf C:/QT/Static/5.7.0/mkspecs/features/resolve_config.prf C:/QT/Static/5.7.0/mkspecs/features/default_post.prf C:/QT/Static/5.7.0/mkspecs/features/win32/rtti.prf C:/QT/Static/5.7.0/mkspecs/features/precompile_header.prf C:/QT/Static/5.7.0/mkspecs/features/warn_on.prf C:/QT/Static/5.7.0/mkspecs/features/qt.prf C:/QT/Static/5.7.0/mkspecs/features/resources.prf C:/QT/Static/5.7.0/mkspecs/features/moc.prf C:/QT/Static/5.7.0/mkspecs/features/win32/opengl.prf C:/QT/Static/5.7.0/mkspecs/features/uic.prf C:/QT/Static/5.7.0/mkspecs/features/file_copies.prf C:/QT/Static/5.7.0/mkspecs/features/win32/windows.prf C:/QT/Static/5.7.0/mkspecs/features/testcase_targets.prf C:/QT/Static/5.7.0/mkspecs/features/exceptions.prf C:/QT/Static/5.7.0/mkspecs/features/yacc.prf C:/QT/Static/5.7.0/mkspecs/features/lex.prf nbproject/qt-Debug.pro C:/QT/Static/5.7.0/lib/qtmaind.prl C:/QT/Static/5.7.0/lib/Qt5OpenGLd.prl C:/QT/Static/5.7.0/lib/Qt5Widgetsd.prl C:/QT/Static/5.7.0/lib/Qt5Guid.prl C:/QT/Static/5.7.0/lib/Qt5Networkd.prl C:/QT/Static/5.7.0/lib/Qt5Cored.prl C:/QT/Static/5.7.0/plugins/platforms/qwindowsd.prl C:/QT/Static/5.7.0/plugins/imageformats/qddsd.prl C:/QT/Static/5.7.0/plugins/imageformats/qicnsd.prl C:/QT/Static/5.7.0/plugins/imageformats/qicod.prl C:/QT/Static/5.7.0/plugins/imageformats/qtgad.prl C:/QT/Static/5.7.0/plugins/imageformats/qtiffd.prl C:/QT/Static/5.7.0/plugins/imageformats/qwbmpd.prl C:/QT/Static/5.7.0/plugins/imageformats/qwebpd.prl C:/QT/Static/5.7.0/plugins/bearer/qgenericbearerd.prl C:/QT/Static/5.7.0/plugins/bearer/qnativewifibearerd.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/AceLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ActLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Activity.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ActivityTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Brush.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CELoadWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Camera.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraConsist.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraFree.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraRot.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConEditorWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConListWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConUnitsWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Consist.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Coords.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsGpx.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsKml.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsMkr.o build/Debug/MinGW_QT_5.7.0_Static-Windows/DynTrackObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Eng.o build/Debug/MinGW_QT_5.7.0_Static-Windows/EngLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/EngListWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Features.o build/Debug/MinGW_QT_5.7.0_Static-Windows/FileBuffer.o build/Debug/MinGW_QT_5.7.0_Static-Windows/FileFunctions.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Flex.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ForestObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/GLH.o build/Debug/MinGW_QT_5.7.0_Static-Windows/GLMatrix.o build/Debug/MinGW_QT_5.7.0_Static-Windows/GLUU.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Game.o build/Debug/MinGW_QT_5.7.0_Static-Windows/GeoTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/GuiFunct.o build/Debug/MinGW_QT_5.7.0_Static-Windows/HGTfile.o build/Debug/MinGW_QT_5.7.0_Static-Windows/HazardObj.o
-	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/HeightWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/IghCoords.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ImageLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Intersections.o build/Debug/MinGW_QT_5.7.0_Static-Windows/LevelCrObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/LoadWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/MapLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/MapWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/NaviBox.o build/Debug/MinGW_QT_5.7.0_Static-Windows/NaviWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/NewRouteWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/OSM.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ObjTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/OglObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/OverwriteDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PaintTexLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ParserX.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Path.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PickupObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PlatformObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Pointer3d.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PoleObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesAbstract.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSpeedpost.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o
-	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o build/Debug/MinGW_QT_5.7.0_Static-Windows/QuadTree.o build/Debug/MinGW_QT_5.7.0_Static-Windows/RandomConsist.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ReadFile.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Ref.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Route.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Ruch.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SFile.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileC.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileX.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ShapeLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SigCfg.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalShape.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalType.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalWindowLink.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SoundList.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SoundRegionObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SoundSourceObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SpeedPost.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SpeedPostDAT.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SpeedpostObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/StaticObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TDB.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TFile.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TRitem.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TRnode.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TS.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TSection.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TSectionDAT.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Terrain.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainTreeWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainWaterWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TexLib.o
-	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/TextObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Texture.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Tile.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrWatermarkObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackItemObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackShape.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TransferObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Trk.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrkWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/UnsavedDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Vector2f.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Vector2i.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Vector3f.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Vector4f.o build/Debug/MinGW_QT_5.7.0_Static-Windows/WorldObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/glShapeWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/glwidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/main.o build/Debug/MinGW_QT_5.7.0_Static-Windows/window.o build/Debug/MinGW_QT_5.7.0_Static-Windows/tsre5_plugin_import.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_AboutWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_AceLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ActivityTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_CELoadWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConEditorWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConListWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConUnitsWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_EngListWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_GeoTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_HeightWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ImageLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_LoadWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_MapLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_MapWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_NaviBox.o
-	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_NaviWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_NewRouteWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ObjTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_OverwriteDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesAbstract.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesCarspawner.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesDyntrack.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesForest.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPickup.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPlatform.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSiding.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSignal.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundSource.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSpeedpost.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesStatic.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTrackObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTransfer.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindowLink.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTreeWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainWaterWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TrkWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_UnsavedDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_glShapeWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_glwidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_window.o
+	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/AceLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ActLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Activity.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ActivityTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Brush.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CELoadWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Camera.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraConsist.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraFree.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraRot.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ChooseFileDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConEditorWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConListWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConUnitsWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Consist.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Coords.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsGpx.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsKml.o build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsMkr.o build/Debug/MinGW_QT_5.7.0_Static-Windows/DynTrackObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/EditFileNameDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Eng.o build/Debug/MinGW_QT_5.7.0_Static-Windows/EngLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/EngListWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Features.o build/Debug/MinGW_QT_5.7.0_Static-Windows/FileBuffer.o build/Debug/MinGW_QT_5.7.0_Static-Windows/FileFunctions.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Flex.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ForestObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/GLH.o build/Debug/MinGW_QT_5.7.0_Static-Windows/GLMatrix.o build/Debug/MinGW_QT_5.7.0_Static-Windows/GLUU.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Game.o build/Debug/MinGW_QT_5.7.0_Static-Windows/GeoTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/GroupObj.o
+	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/GuiFunct.o build/Debug/MinGW_QT_5.7.0_Static-Windows/HGTfile.o build/Debug/MinGW_QT_5.7.0_Static-Windows/HazardObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/HeightWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/IghCoords.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ImageLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Intersections.o build/Debug/MinGW_QT_5.7.0_Static-Windows/LevelCrObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/LoadWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/MapLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/MapWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/NaviBox.o build/Debug/MinGW_QT_5.7.0_Static-Windows/NaviWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/NewRouteWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/OSM.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ObjTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/OglObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/OverwriteDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PaintTexLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ParserX.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Path.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PickupObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PlatformObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Pointer3d.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PoleObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesAbstract.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o
+	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSpeedpost.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o build/Debug/MinGW_QT_5.7.0_Static-Windows/QuadTree.o build/Debug/MinGW_QT_5.7.0_Static-Windows/RandomConsist.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ReadFile.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Ref.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Route.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Ruch.o build/Debug/MinGW_QT_5.7.0_Static-Windows/RulerObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SFile.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileC.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileX.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Shader.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ShapeLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/ShapeViewWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SigCfg.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalShape.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalType.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalWindowLink.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SoundList.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SoundRegionObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SoundSourceObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SpeedPost.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SpeedPostDAT.o build/Debug/MinGW_QT_5.7.0_Static-Windows/SpeedpostObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/StaticObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TDB.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TFile.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TRitem.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TRnode.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TS.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TSection.o
+	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/TSectionDAT.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Terrain.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainTreeWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainWaterWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TexLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TextObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Texture.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Tile.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrWatermarkObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackItemObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackShape.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TransferObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TransformWorldObjDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Trk.o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrkWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/UnsavedDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Vector2f.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Vector2i.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Vector3f.o build/Debug/MinGW_QT_5.7.0_Static-Windows/Vector4f.o build/Debug/MinGW_QT_5.7.0_Static-Windows/WorldObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/glShapeWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/glwidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/main.o build/Debug/MinGW_QT_5.7.0_Static-Windows/window.o build/Debug/MinGW_QT_5.7.0_Static-Windows/tsre5_plugin_import.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_AboutWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_AceLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ActivityTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_CELoadWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ChooseFileDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConEditorWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConListWidget.o
+	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConUnitsWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_EditFileNameDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_EngListWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_GeoTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_HeightWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ImageLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_LoadWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_MapLib.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_MapWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_NaviBox.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_NaviWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_NewRouteWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ObjTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_OverwriteDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesAbstract.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesCarspawner.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesDyntrack.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesForest.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesGroup.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPickup.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPlatform.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesRuler.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSiding.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSignal.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundSource.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSpeedpost.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesStatic.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTrackObj.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTransfer.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o
+	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindowLink.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTools.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTreeWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainWaterWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TransformWorldObjDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TrkWindow.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_UnsavedDialog.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_glShapeWidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_glwidget.o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_window.o
 	-$(DEL_FILE) build/Debug/MinGW_QT_5.7.0_Static-Windows/TSRE5_resource_res.o
 
 distclean: clean 
@@ -1106,9 +1155,9 @@ compiler_no_pch_compiler_make_all:
 compiler_no_pch_compiler_clean:
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
+compiler_moc_header_make_all: moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_ShapeViewWindow.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
+	-$(DEL_FILE) moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_ShapeViewWindow.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
 moc_AboutWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
 		C:/QT/Static/5.7.0/include/QtCore/QtCore \
@@ -2494,6 +2543,449 @@ moc_CELoadWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. CELoadWindow.h -o moc_CELoadWindow.cpp
 
+moc_ChooseFileDialog.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		ChooseFileDialog.h \
+		C:/QT/Static/5.7.0/bin/moc.exe
+	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. ChooseFileDialog.h -o moc_ChooseFileDialog.cpp
+
 moc_ConEditorWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
 		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
@@ -2934,6 +3426,7 @@ moc_ConEditorWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QMainWindow \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		ConEditorWindow.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. ConEditorWindow.h -o moc_ConEditorWindow.cpp
@@ -3377,6 +3870,7 @@ moc_ConListWidget.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		ConListWidget.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. ConListWidget.h -o moc_ConListWidget.cpp
@@ -3823,6 +4317,449 @@ moc_ConUnitsWidget.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
 		ConUnitsWidget.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. ConUnitsWidget.h -o moc_ConUnitsWidget.cpp
+
+moc_EditFileNameDialog.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		EditFileNameDialog.h \
+		C:/QT/Static/5.7.0/bin/moc.exe
+	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. EditFileNameDialog.h -o moc_EditFileNameDialog.cpp
 
 moc_EngListWidget.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
@@ -4715,6 +5652,7 @@ moc_GeoTools.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TDB.h \
 		OglObj.h \
 		TextObj.h \
@@ -4722,6 +5660,7 @@ moc_GeoTools.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		GeoTools.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. GeoTools.h -o moc_GeoTools.cpp
@@ -7943,6 +8882,7 @@ moc_ObjTools.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TDB.h \
 		OglObj.h \
 		TextObj.h \
@@ -7950,6 +8890,7 @@ moc_ObjTools.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		ObjTools.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. ObjTools.h -o moc_ObjTools.cpp
@@ -10172,6 +11113,450 @@ moc_PropertiesForest.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesForest.h -o moc_PropertiesForest.cpp
 
+moc_PropertiesGroup.cpp: PropertiesAbstract.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		PropertiesGroup.h \
+		C:/QT/Static/5.7.0/bin/moc.exe
+	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesGroup.h -o moc_PropertiesGroup.cpp
+
 moc_PropertiesPickup.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
@@ -11059,6 +12444,450 @@ moc_PropertiesPlatform.cpp: PropertiesAbstract.h \
 		PropertiesPlatform.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesPlatform.h -o moc_PropertiesPlatform.cpp
+
+moc_PropertiesRuler.cpp: PropertiesAbstract.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		PropertiesRuler.h \
+		C:/QT/Static/5.7.0/bin/moc.exe
+	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesRuler.h -o moc_PropertiesRuler.cpp
 
 moc_PropertiesSiding.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
@@ -15055,6 +16884,449 @@ moc_RandomConsist.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. RandomConsist.h -o moc_RandomConsist.cpp
 
+moc_ShapeViewWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		ShapeViewWindow.h \
+		C:/QT/Static/5.7.0/bin/moc.exe
+	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. ShapeViewWindow.h -o moc_ShapeViewWindow.cpp
+
 moc_SignalWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
 		C:/QT/Static/5.7.0/include/QtCore/QtCore \
@@ -16389,6 +18661,7 @@ moc_TerrainTools.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TDB.h \
 		OglObj.h \
 		TextObj.h \
@@ -16396,6 +18669,7 @@ moc_TerrainTools.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TerrainTools.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. TerrainTools.h -o moc_TerrainTools.cpp
@@ -17285,6 +19559,449 @@ moc_TerrainWaterWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		TerrainWaterWindow.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. TerrainWaterWindow.h -o moc_TerrainWaterWindow.cpp
+
+moc_TransformWorldObjDialog.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		TransformWorldObjDialog.h \
+		C:/QT/Static/5.7.0/bin/moc.exe
+	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. TransformWorldObjDialog.h -o moc_TransformWorldObjDialog.cpp
 
 moc_TrkWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
@@ -18435,9 +21152,12 @@ moc_glwidget.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
 		Vector4f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		GroupObj.h \
 		Pointer3d.h \
 		glwidget.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
@@ -19922,6 +22642,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ActivityTools.o: ActivityTools.cpp Act
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TDB.h \
 		OglObj.h \
 		TextObj.h \
@@ -19929,11 +22650,14 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ActivityTools.o: ActivityTools.cpp Act
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Game.h \
 		ActLib.h \
 		EngLib.h \
 		ConLib.h \
 		Eng.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
+		C:/QT/Static/5.7.0/include/QtCore/QHash \
 		Consist.h \
 		Activity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/ActivityTools.o ActivityTools.cpp
@@ -20385,7 +23109,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/CELoadWindow.o: CELoadWindow.cpp CELoa
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
 		ConEditorWindow.h \
-		C:/QT/Static/5.7.0/include/QtWidgets/QMainWindow
+		C:/QT/Static/5.7.0/include/QtWidgets/QMainWindow \
+		C:/QT/Static/5.7.0/include/QtCore/QVector
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/CELoadWindow.o CELoadWindow.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/Camera.o: Camera.cpp Camera.h \
@@ -20766,6 +23491,448 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraRot.o: CameraRot.cpp CameraRot.h
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		IghCoords.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/CameraRot.o CameraRot.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/ChooseFileDialog.o: ChooseFileDialog.cpp ChooseFileDialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/ChooseFileDialog.o ChooseFileDialog.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/ConEditorWindow.o: ConEditorWindow.cpp ConEditorWindow.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
@@ -21208,11 +24375,13 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ConEditorWindow.o: ConEditorWindow.cpp
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QMainWindow \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
 		EngLib.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		ConLib.h \
 		Eng.h \
+		C:/QT/Static/5.7.0/include/QtCore/QHash \
 		Consist.h \
 		Game.h \
 		EngListWidget.h \
@@ -21236,6 +24405,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ConEditorWindow.o: ConEditorWindow.cpp
 		AboutWindow.h \
 		OverwriteDialog.h \
 		UnsavedDialog.h \
+		ChooseFileDialog.h \
 		RandomConsist.h \
 		ActLib.h \
 		Activity.h
@@ -21754,12 +24924,17 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ConListWidget.o: ConListWidget.cpp Con
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		ConLib.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		Consist.h \
 		Game.h \
 		ActLib.h \
-		Activity.h
+		Activity.h \
+		Eng.h \
+		C:/QT/Static/5.7.0/include/QtCore/QHash \
+		EngLib.h \
+		OverwriteDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConListWidget.o ConListWidget.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/ConUnitsWidget.o: ConUnitsWidget.cpp ConUnitsWidget.h \
@@ -22205,6 +25380,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ConUnitsWidget.o: ConUnitsWidget.cpp C
 		Consist.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		Eng.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
+		C:/QT/Static/5.7.0/include/QtCore/QHash \
 		EngLib.h \
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConUnitsWidget.o ConUnitsWidget.cpp
@@ -22241,6 +25418,20 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Consist.o: Consist.cpp Consist.h \
 		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
 		Eng.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/QHash \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
 		EngLib.h \
 		ParserX.h \
 		FileBuffer.h \
@@ -22251,15 +25442,6 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Consist.o: Consist.cpp Consist.h \
 		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
 		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
 		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
-		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
-		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
-		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
-		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
-		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
-		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
-		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
-		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
-		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
 		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
 		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
 		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
@@ -22272,12 +25454,9 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Consist.o: Consist.cpp Consist.h \
 		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
 		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
 		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
-		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
-		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
 		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
 		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
 		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
-		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
 		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
 		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
 		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
@@ -22453,6 +25632,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Consist.o: Consist.cpp Consist.h \
 		GLUU.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
 		C:/QT/Static/5.7.0/include/QtCore/QFile \
 		GLMatrix.h \
@@ -22570,6 +25750,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Coords.o: Coords.cpp Coords.h \
 		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TS.h \
 		Game.h \
 		FileFunctions.h \
@@ -22817,6 +25998,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsGpx.o: CoordsGpx.cpp CoordsGpx.h
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TS.h \
 		Game.h \
 		FileFunctions.h \
@@ -23040,6 +26222,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsKml.o: CoordsKml.cpp CoordsKml.h
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TS.h \
 		Game.h \
 		FileFunctions.h \
@@ -23263,6 +26446,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/CoordsMkr.o: CoordsMkr.cpp CoordsMkr.h
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TS.h \
 		Game.h \
 		FileFunctions.h \
@@ -23477,17 +26661,463 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/DynTrackObj.o: DynTrackObj.cpp DynTrac
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		ParserX.h \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
 		GLMatrix.h \
 		TexLib.h \
 		Texture.h \
 		Vector2f.h \
-		TS.h
+		TS.h \
+		TrackItemObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/DynTrackObj.o DynTrackObj.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/EditFileNameDialog.o: EditFileNameDialog.cpp EditFileNameDialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/EditFileNameDialog.o EditFileNameDialog.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/Eng.o: Eng.cpp Eng.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -23520,6 +27150,20 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Eng.o: Eng.cpp Eng.h \
 		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
 		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/QHash \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
 		ParserX.h \
 		FileBuffer.h \
 		ReadFile.h \
@@ -23529,15 +27173,6 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Eng.o: Eng.cpp Eng.h \
 		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
 		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
 		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
-		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
-		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
-		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
-		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
-		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
-		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
-		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
-		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
-		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
 		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
 		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
 		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
@@ -23550,12 +27185,9 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Eng.o: Eng.cpp Eng.h \
 		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
 		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
 		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
-		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
-		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
 		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
 		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
 		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
-		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
 		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
 		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
 		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
@@ -23733,7 +27365,9 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Eng.o: Eng.cpp Eng.h \
 		GLUU.h \
 		Vector4f.h \
 		Vector3f.h \
-		OglObj.h
+		Shader.h \
+		OglObj.h \
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/Eng.o Eng.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/EngLib.o: EngLib.cpp EngLib.h \
@@ -23768,10 +27402,9 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/EngLib.o: EngLib.cpp EngLib.h \
 		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
 		Eng.h \
-		C:/QT/Static/5.7.0/include/QtCore/QDebug \
-		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
 		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
-		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
 		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
 		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
 		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
@@ -23780,6 +27413,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/EngLib.o: EngLib.cpp EngLib.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
 		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/QHash \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/QDebug \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
 		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
 		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
 		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
@@ -23795,8 +27433,6 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/EngLib.o: EngLib.cpp EngLib.h \
 		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
 		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
 		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
-		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
-		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
 		C:/QT/Static/5.7.0/include/QtCore/qset.h \
 		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
 		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
@@ -24252,6 +27888,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/EngListWidget.o: EngListWidget.cpp Eng
 		EngLib.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		Eng.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
+		C:/QT/Static/5.7.0/include/QtCore/QHash \
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/EngListWidget.o EngListWidget.cpp
 
@@ -24970,6 +28608,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Flex.o: Flex.cpp Flex.h \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
+		Shader.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
 		Intersections.h \
@@ -25075,9 +28714,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ForestObj.o: ForestObj.cpp C:/QT/Stati
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		GLMatrix.h \
 		ParserX.h \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
@@ -25301,6 +28942,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/GLUU.o: GLUU.cpp GLUU.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		GLMatrix.h \
 		ReadFile.h \
 		C:/QT/Static/5.7.0/include/QtCore/QtCore \
@@ -26326,6 +29968,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/GeoTools.o: GeoTools.cpp GeoTools.h \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TDB.h \
 		OglObj.h \
 		TextObj.h \
@@ -26333,6 +29976,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/GeoTools.o: GeoTools.cpp GeoTools.h \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TexLib.h \
 		Texture.h \
 		Brush.h \
@@ -26340,6 +29984,136 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/GeoTools.o: GeoTools.cpp GeoTools.h \
 		TransferObj.h \
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/GeoTools.o GeoTools.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/GroupObj.o: GroupObj.cpp GroupObj.h \
+		WorldObj.h \
+		C:/QT/Static/5.7.0/include/QtCore/QString \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		GLUU.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVertexArrayObject \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h \
+		FileBuffer.h \
+		OglObj.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		GLMatrix.h \
+		Route.h \
+		TDB.h \
+		TextObj.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/GroupObj.o GroupObj.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/GuiFunct.o: GuiFunct.cpp GuiFunct.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -27095,9 +30869,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/HazardObj.o: HazardObj.cpp HazardObj.h
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
@@ -27887,9 +31663,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/LevelCrObj.o: LevelCrObj.cpp LevelCrOb
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
@@ -31192,6 +34970,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ObjTools.o: ObjTools.cpp TSectionDAT.h
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
+		Shader.h \
 		TDB.h \
 		OglObj.h \
 		TextObj.h \
@@ -31199,13 +34978,15 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ObjTools.o: ObjTools.cpp TSectionDAT.h
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Game.h \
 		SigCfg.h \
 		SignalShape.h \
 		ForestObj.h \
 		SpeedPost.h \
 		SpeedPostDAT.h \
-		SoundList.h
+		SoundList.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMapIterator
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/ObjTools.o ObjTools.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/OglObj.o: OglObj.cpp OglObj.h \
@@ -31303,8 +35084,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/OglObj.o: OglObj.cpp OglObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TexLib.h \
-		Texture.h
+		Texture.h \
+		Game.h \
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/OglObj.o OglObj.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/OverwriteDialog.o: OverwriteDialog.cpp OverwriteDialog.h \
@@ -32200,6 +35984,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Path.o: Path.cpp Path.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
@@ -32335,9 +36120,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PickupObj.o: PickupObj.cpp PickupObj.h
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
@@ -32485,9 +36272,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PlatformObj.o: PlatformObj.cpp Platfor
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
@@ -32536,7 +36325,117 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PlatformObj.o: PlatformObj.cpp Platfor
 		TRitem.h \
 		Pointer3d.h \
 		TrackItemObj.h \
-		TS.h
+		TS.h \
+		C:/QT/Static/5.7.0/include/QtCore/QFile \
+		ReadFile.h \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PlatformObj.o PlatformObj.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/Pointer3d.o: Pointer3d.cpp Pointer3d.h \
@@ -32634,7 +36533,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Pointer3d.o: Pointer3d.cpp Pointer3d.h
 		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
-		Vector3f.h
+		Vector3f.h \
+		Shader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/Pointer3d.o Pointer3d.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/PoleObj.o: PoleObj.cpp PoleObj.h \
@@ -32732,7 +36632,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PoleObj.o: PoleObj.cpp PoleObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
-		Vector3f.h
+		Vector3f.h \
+		Shader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PoleObj.o PoleObj.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesAbstract.o: PropertiesAbstract.cpp PropertiesAbstract.h \
@@ -33174,7 +37075,23 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesAbstract.o: PropertiesAbstra
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
-		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		WorldObj.h \
+		C:/QT/Static/5.7.0/include/QtCore/QString \
+		GLUU.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVertexArrayObject \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h \
+		FileBuffer.h \
+		OglObj.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		TransformWorldObjDialog.h \
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesAbstract.o PropertiesAbstract.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o: PropertiesCarspawner.cpp PropertiesCarspawner.h \
@@ -33627,9 +37544,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o: PropertiesCars
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		PlatformObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o PropertiesCarspawner.cpp
 
@@ -34084,9 +38003,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o: PropertiesDyntra
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Flex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o PropertiesDyntrack.cpp
 
@@ -34540,11 +38461,472 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o: PropertiesForest.c
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		ForestObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o PropertiesForest.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o: PropertiesGroup.cpp PropertiesGroup.h \
+		PropertiesAbstract.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		GroupObj.h \
+		WorldObj.h \
+		C:/QT/Static/5.7.0/include/QtCore/QString \
+		GLUU.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVertexArrayObject \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h \
+		FileBuffer.h \
+		OglObj.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		ParserX.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o PropertiesGroup.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o: PropertiesPickup.cpp PropertiesPickup.h \
 		PropertiesAbstract.h \
@@ -34997,9 +39379,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o: PropertiesPickup.c
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		GuiFunct.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o PropertiesPickup.cpp
 
@@ -35454,10 +39838,470 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o: PropertiesPlatfo
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o PropertiesPlatform.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o: PropertiesRuler.cpp PropertiesRuler.h \
+		PropertiesAbstract.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		RulerObj.h \
+		WorldObj.h \
+		C:/QT/Static/5.7.0/include/QtCore/QString \
+		GLUU.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVertexArrayObject \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h \
+		FileBuffer.h \
+		OglObj.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o PropertiesRuler.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o: PropertiesSiding.cpp PropertiesSiding.h \
 		PropertiesAbstract.h \
@@ -35909,9 +40753,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o: PropertiesSiding.c
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		PlatformObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o PropertiesSiding.cpp
 
@@ -36367,15 +41213,18 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o: PropertiesSignal.c
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Game.h \
 		TDB.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
 		SigCfg.h \
-		SignalShape.h
+		SignalShape.h \
+		ParserX.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o PropertiesSignal.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o: PropertiesSoundSource.cpp PropertiesSoundSource.h \
@@ -36829,9 +41678,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o: PropertiesSou
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Game.h \
 		SoundList.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o PropertiesSoundSource.cpp
@@ -37287,9 +42138,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSpeedpost.o: PropertiesSpeed
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TRitem.h \
 		Pointer3d.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesSpeedpost.o PropertiesSpeedpost.cpp
@@ -37744,11 +42597,14 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o: PropertiesStatic.c
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		StaticObj.h \
-		ParserX.h
+		ParserX.h \
+		EditFileNameDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o PropertiesStatic.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o: PropertiesTrackObj.cpp PropertiesTrackObj.h \
@@ -38201,12 +43057,15 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o: PropertiesTrackO
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TrackObj.h \
 		GLMatrix.h \
-		ParserX.h
+		ParserX.h \
+		EditFileNameDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o PropertiesTrackObj.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o: PropertiesTransfer.cpp PropertiesTransfer.h \
@@ -38659,9 +43518,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o: PropertiesTransf
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TexLib.h \
 		Texture.h \
 		TransferObj.h
@@ -39117,9 +43978,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o: PropertiesUndef
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o PropertiesUndefined.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/QuadTree.o: QuadTree.cpp QuadTree.h \
@@ -39971,19 +44834,19 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Ref.o: Ref.cpp Ref.h \
 		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
 		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
-		C:/QT/Static/5.7.0/include/QtCore/QDebug \
-		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
-		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
-		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
 		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
 		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
 		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
 		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
 		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
 		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
-		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
 		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
 		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
 		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
@@ -40004,6 +44867,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Ref.o: Ref.cpp Ref.h \
 		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
 		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
 		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QDebug \
 		Game.h \
 		ParserX.h \
 		FileBuffer.h \
@@ -40126,7 +44990,36 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Ref.o: Ref.cpp Ref.h \
 		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
 		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
 		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
-		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		WorldObj.h \
+		GLUU.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVertexArrayObject \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h \
+		OglObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/Ref.o Ref.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/Route.o: Route.cpp C:/QT/Static/5.7.0/include/QtCore/QFile \
@@ -40230,6 +45123,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Route.o: Route.cpp C:/QT/Static/5.7.0/
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TDB.h \
 		OglObj.h \
 		TextObj.h \
@@ -40259,6 +45153,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Route.o: Route.cpp C:/QT/Static/5.7.0/
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TSectionDAT.h \
 		TSection.h \
 		TrackShape.h \
@@ -40382,6 +45277,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Route.o: Route.cpp C:/QT/Static/5.7.0/
 		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
 		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
 		DynTrackObj.h \
+		PlatformObj.h \
 		Flex.h \
 		ForestObj.h \
 		Coords.h \
@@ -40611,7 +45507,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Route.o: Route.cpp C:/QT/Static/5.7.0/
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
-		TrkWindow.h
+		TrkWindow.h \
+		GroupObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/Route.o Route.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/Ruch.o: Ruch.cpp Ruch.h \
@@ -40711,6 +45608,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Ruch.o: Ruch.cpp Ruch.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
@@ -40742,6 +45640,115 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Ruch.o: Ruch.cpp Ruch.h \
 		TSection.h \
 		TrackShape.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/Ruch.o Ruch.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/RulerObj.o: RulerObj.cpp RulerObj.h \
+		WorldObj.h \
+		C:/QT/Static/5.7.0/include/QtCore/QString \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		GLUU.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVertexArrayObject \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h \
+		FileBuffer.h \
+		OglObj.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		GLMatrix.h \
+		TrackObj.h \
+		TrackItemObj.h \
+		ParserX.h \
+		C:/QT/Static/5.7.0/include/QtCore/QDebug \
+		Game.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/RulerObj.o RulerObj.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/SFile.o: SFile.cpp SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
@@ -40987,6 +45994,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/SFile.o: SFile.cpp SFile.h \
 		GLUU.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		GLMatrix.h \
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/SFile.o SFile.cpp
@@ -41118,7 +46126,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileC.o: SFileC.cpp SFileC.h \
 		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
 		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
 		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
-		C:/QT/Static/5.7.0/include/QtCore/QDebug
+		C:/QT/Static/5.7.0/include/QtCore/QDebug \
+		GLUU.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileC.o SFileC.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileX.o: SFileX.cpp SFileX.h \
@@ -41357,8 +46369,92 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileX.o: SFileX.cpp SFileX.h \
 		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
 		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
 		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
-		ParserX.h
+		ParserX.h \
+		GLUU.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/SFileX.o SFileX.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/Shader.o: Shader.cpp Shader.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/Shader.o Shader.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/ShapeLib.o: ShapeLib.cpp ShapeLib.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -41489,6 +46585,463 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ShapeLib.o: ShapeLib.cpp ShapeLib.h \
 		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
 		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/ShapeLib.o ShapeLib.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/ShapeViewWindow.o: ShapeViewWindow.cpp ShapeViewWindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		C:/QT/Static/5.7.0/include/QtCore/QDebug \
+		Game.h \
+		C:/QT/Static/5.7.0/include/QtCore/QString \
+		glShapeWidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVertexArrayObject \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
+		C:/QT/Static/5.7.0/include/QtCore/QBasicTimer \
+		CameraRot.h \
+		Camera.h \
+		Vector2i.h \
+		Vector2f.h \
+		Vector3f.h \
+		C:/QT/Static/5.7.0/include/QtGui/QMouseEvent
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/ShapeViewWindow.o ShapeViewWindow.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/SigCfg.o: SigCfg.cpp SigCfg.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -41777,9 +47330,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalObj.o: SignalObj.cpp SignalObj.h
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
@@ -42419,9 +47974,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/SignalWindow.o: SignalWindow.cpp Signa
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Game.h \
 		TDB.h \
 		TextObj.h \
@@ -43160,9 +48717,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/SoundRegionObj.o: SoundRegionObj.cpp S
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TS.h \
 		ParserX.h \
 		GLMatrix.h \
@@ -43295,9 +48854,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/SoundSourceObj.o: SoundSourceObj.cpp S
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		PoleObj.h \
 		GLMatrix.h \
 		TS.h \
@@ -43660,9 +49221,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/SpeedpostObj.o: SpeedpostObj.cpp Speed
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
@@ -43812,9 +49375,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/StaticObj.o: StaticObj.cpp StaticObj.h
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
@@ -43853,6 +49418,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/StaticObj.o: StaticObj.cpp StaticObj.h
 		GLMatrix.h \
 		ParserX.h \
 		TS.h \
+		TrackItemObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/StaticObj.o StaticObj.cpp
@@ -43953,6 +49519,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TDB.o: TDB.cpp TDB.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
@@ -44096,6 +49663,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TDB.o: TDB.cpp TDB.h \
 		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
 		GLMatrix.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TRnode.h \
 		Vector2i.h \
 		TRitem.h \
@@ -44397,6 +49965,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TRitem.o: TRitem.cpp TRitem.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		ParserX.h \
 		GLMatrix.h \
@@ -44795,6 +50364,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Terrain.o: Terrain.cpp Terrain.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TFile.h \
 		FileBuffer.h \
 		OglObj.h \
@@ -45260,6 +50830,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainLib.o: TerrainLib.cpp TerrainLi
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		Terrain.h \
 		TFile.h \
 		FileBuffer.h \
@@ -46073,6 +51644,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainTools.o: TerrainTools.cpp Terra
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		TDB.h \
 		OglObj.h \
 		TextObj.h \
@@ -46080,6 +51652,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainTools.o: TerrainTools.cpp Terra
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TexLib.h \
 		Texture.h \
 		Brush.h \
@@ -47051,7 +52624,10 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TexLib.o: TexLib.cpp TexLib.h \
 		C:/QT/Static/5.7.0/include/QtCore/qset.h \
 		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
 		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
-		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QFile \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/TexLib.o TexLib.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/TextObj.o: TextObj.cpp TextObj.h \
@@ -47150,6 +52726,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TextObj.o: TextObj.cpp TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
@@ -47359,9 +52936,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Tile.o: Tile.cpp Tile.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Game.h \
 		ParserX.h \
 		ReadFile.h \
@@ -47592,9 +53171,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TrWatermarkObj.o: TrWatermarkObj.cpp T
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
@@ -47731,7 +53312,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackItemObj.o: TrackItemObj.cpp Track
 		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
-		Vector3f.h
+		Vector3f.h \
+		Shader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackItemObj.o TrackItemObj.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackObj.o: TrackObj.cpp TrackObj.h \
@@ -47830,9 +53412,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackObj.o: TrackObj.cpp TrackObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
@@ -47872,7 +53456,14 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackObj.o: TrackObj.cpp TrackObj.h \
 		ParserX.h \
 		TS.h \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
-		Game.h
+		Game.h \
+		TDB.h \
+		TextObj.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		TrackItemObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackObj.o TrackObj.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackShape.o: TrackShape.cpp TrackShape.h \
@@ -48004,9 +53595,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TransferObj.o: TransferObj.cpp Transfe
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		ShapeLib.h \
 		GLMatrix.h \
 		ParserX.h \
@@ -48018,6 +53611,448 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TransferObj.o: TransferObj.cpp Transfe
 		Game.h \
 		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/TransferObj.o TransferObj.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/TransformWorldObjDialog.o: TransformWorldObjDialog.cpp TransformWorldObjDialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
+		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtGui/QtGui \
+		C:/QT/Static/5.7.0/include/QtGui/QtGuiDepends \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessible.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qevent.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qkeysequence.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtouchdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessiblebridge.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qaccessibleplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbitmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qicon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qiconengineplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimageiohandler.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagereader.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimagewriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmovie.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpicture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpictureformatplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmapcache.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstandarditemmodel.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qclipboard.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdrag.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericplugin.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericpluginfactory.h \
+		C:/QT/Static/5.7.0/include/QtGui/qguiapplication.h \
+		C:/QT/Static/5.7.0/include/QtGui/qinputmethod.h \
+		C:/QT/Static/5.7.0/include/QtGui/qoffscreensurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurface.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDeviceWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevicewindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/QWindow \
+		C:/QT/Static/5.7.0/include/QtGui/qwindow.h \
+		C:/QT/Static/5.7.0/include/QtCore/QEvent \
+		C:/QT/Static/5.7.0/include/QtCore/QMargins \
+		C:/QT/Static/5.7.0/include/QtCore/QRect \
+		C:/QT/Static/5.7.0/include/QtGui/QPaintDevice \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLContext \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qpalette.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrasterwindow.h \
+		C:/QT/Static/5.7.0/include/QtGui/qscreen.h \
+		C:/QT/Static/5.7.0/include/QtCore/QList \
+		C:/QT/Static/5.7.0/include/QtCore/QSize \
+		C:/QT/Static/5.7.0/include/QtCore/QSizeF \
+		C:/QT/Static/5.7.0/include/QtGui/QTransform \
+		C:/QT/Static/5.7.0/include/QtGui/qsessionmanager.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstylehints.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengldebug.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglextrafunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglframebufferobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglpixeltransferoptions.h \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltexture.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengltimerquery.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbackingstore.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagedpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagelayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpagesize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintengine.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpdfwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qabstracttextdocumentlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlayout.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qglyphrun.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrawfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontdatabase.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextcursor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocument.h \
+		C:/QT/Static/5.7.0/include/QtGui/qstatictext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qsyntaxhighlighter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentfragment.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextdocumentwriter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextlist.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtexttable.h \
+		C:/QT/Static/5.7.0/include/QtGui/qdesktopservices.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvalidator.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtguiversion.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaccessiblewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolordialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizepolicy.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qerrormessage.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfiledialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfilesystemmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qinputdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlineedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmessagebox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressdialog.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwizard.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicseffect.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsanchorlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsitemanimation.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicslinearlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsproxywidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicswidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsscene.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicssceneevent.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicstransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/QVector3D \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgraphicsview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractscrollarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleoption.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractslider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtabwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qrubberband.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractitemview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolumnview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatawidgetmapper.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdirmodel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfileiconprovider.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qheaderview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qitemeditorfactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlistwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleditemdelegate.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtableview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtablewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreeview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtreewidgetitemiterator.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qactiongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qapplication.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdesktopwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qboxlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlayoutitem.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgridlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qformlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QLayout \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesture.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgesturerecognizer.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QWidget \
+		C:/QT/Static/5.7.0/include/QtWidgets/qshortcut.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedlayout.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtooltip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwhatsthis.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qwidgetaction.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeyeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmouseeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommonstyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdrawutil.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qproxystyle.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/QCommonStyle \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylefactory.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstylepainter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstyleplugin.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcolormap.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcompleter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscroller.h \
+		C:/QT/Static/5.7.0/include/QtCore/QPointF \
+		C:/QT/Static/5.7.0/include/QtWidgets/QScrollerProperties \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollerproperties.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsystemtrayicon.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundogroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundostack.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qundoview.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qabstractbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qbuttongroup.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcalendarwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcheckbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qcommandlinkbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qpushbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdatetimeedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdial.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdialogbuttonbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qdockwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfocusframe.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qfontcombobox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qgroupbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qkeysequenceedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlabel.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qlcdnumber.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmainwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdiarea.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmdisubwindow.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenu.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qmenubar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qplaintextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextedit.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qprogressbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qradiobutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qscrollbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsizegrip.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qspinbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplashscreen.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qsplitter.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstackedwidget.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qstatusbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtextbrowser.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/TransformWorldObjDialog.o TransformWorldObjDialog.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/Trk.o: Trk.cpp Trk.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -49213,9 +55248,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/WorldObj.o: WorldObj.cpp WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QOpenGLWidget \
 		C:/QT/Static/5.7.0/include/QtWidgets/qopenglwidget.h \
@@ -49265,10 +55302,12 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/WorldObj.o: WorldObj.cpp WorldObj.h \
 		LevelCrObj.h \
 		PickupObj.h \
 		HazardObj.h \
+		RulerObj.h \
 		SoundRegionObj.h \
 		SoundSourceObj.h \
 		Game.h \
-		TS.h
+		TS.h \
+		TerrainLib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/WorldObj.o WorldObj.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/glShapeWidget.o: glShapeWidget.cpp glShapeWidget.h \
@@ -49406,9 +55445,12 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/glShapeWidget.o: glShapeWidget.cpp glS
 		GLUU.h \
 		Vector4f.h \
 		Vector3f.h \
+		Shader.h \
 		SFile.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		Eng.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
+		C:/QT/Static/5.7.0/include/QtCore/QHash \
 		EngLib.h \
 		Game.h \
 		GLH.h \
@@ -49563,9 +55605,12 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/glwidget.o: glwidget.cpp glwidget.h \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
 		Vector4f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		GroupObj.h \
 		Pointer3d.h \
 		C:/QT/Static/5.7.0/include/QtCore/QCoreApplication \
 		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
@@ -49687,6 +55732,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/glwidget.o: glwidget.cpp glwidget.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
 		GLMatrix.h \
 		Eng.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
+		C:/QT/Static/5.7.0/include/QtCore/QHash \
 		Tile.h \
 		Game.h \
 		GLH.h \
@@ -49906,7 +55953,10 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/glwidget.o: glwidget.cpp glwidget.h \
 		OSM.h \
 		TerrainTreeWindow.h \
 		ShapeLib.h \
-		EngLib.h
+		EngLib.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions_3_3_Core \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions_3_3_core.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVersionFunctions
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/glwidget.o glwidget.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/main.o: main.cpp C:/QT/Static/5.7.0/include/QtWidgets/QApplication \
@@ -50818,9 +56868,12 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/window.o: window.cpp C:/QT/Static/5.7.
 		GLUU.h \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		Vector4f.h \
+		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		GroupObj.h \
 		Pointer3d.h \
 		window.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/QMainWindow \
@@ -50839,6 +56892,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/window.o: window.cpp C:/QT/Static/5.7.
 		GeoTools.h \
 		ActivityTools.h \
 		NaviBox.h \
+		ShapeViewWindow.h \
 		AboutWindow.h \
 		PropertiesAbstract.h \
 		PropertiesUndefined.h \
@@ -50854,6 +56908,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/window.o: window.cpp C:/QT/Static/5.7.
 		PropertiesSoundSource.h \
 		PropertiesSpeedpost.h \
 		PropertiesTrackObj.h \
+		PropertiesGroup.h \
+		PropertiesRuler.h \
 		NaviWindow.h \
 		UnsavedDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/window.o window.cpp
@@ -50873,6 +56929,9 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ActivityTools.o: moc_ActivityTools
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_CELoadWindow.o: moc_CELoadWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_CELoadWindow.o moc_CELoadWindow.cpp
 
+build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ChooseFileDialog.o: moc_ChooseFileDialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ChooseFileDialog.o moc_ChooseFileDialog.cpp
+
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConEditorWindow.o: moc_ConEditorWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConEditorWindow.o moc_ConEditorWindow.cpp
 
@@ -50881,6 +56940,9 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConListWidget.o: moc_ConListWidget
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConUnitsWidget.o: moc_ConUnitsWidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ConUnitsWidget.o moc_ConUnitsWidget.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_EditFileNameDialog.o: moc_EditFileNameDialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_EditFileNameDialog.o moc_EditFileNameDialog.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_EngListWidget.o: moc_EngListWidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_EngListWidget.o moc_EngListWidget.cpp
@@ -50930,11 +56992,17 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesDyntrack.o: moc_Properti
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesForest.o: moc_PropertiesForest.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesForest.o moc_PropertiesForest.cpp
 
+build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesGroup.o: moc_PropertiesGroup.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesGroup.o moc_PropertiesGroup.cpp
+
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPickup.o: moc_PropertiesPickup.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPickup.o moc_PropertiesPickup.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPlatform.o: moc_PropertiesPlatform.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPlatform.o moc_PropertiesPlatform.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesRuler.o: moc_PropertiesRuler.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesRuler.o moc_PropertiesRuler.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSiding.o: moc_PropertiesSiding.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSiding.o moc_PropertiesSiding.cpp
@@ -50963,6 +57031,9 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o: moc_Propert
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o: moc_RandomConsist.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o moc_RandomConsist.cpp
 
+build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o: moc_ShapeViewWindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o moc_ShapeViewWindow.cpp
+
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o: moc_SignalWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o moc_SignalWindow.cpp
 
@@ -50977,6 +57048,9 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTreeWindow.o: moc_TerrainTr
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainWaterWindow.o: moc_TerrainWaterWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TerrainWaterWindow.o moc_TerrainWaterWindow.cpp
+
+build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TransformWorldObjDialog.o: moc_TransformWorldObjDialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TransformWorldObjDialog.o moc_TransformWorldObjDialog.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TrkWindow.o: moc_TrkWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/moc_TrkWindow.o moc_TrkWindow.cpp

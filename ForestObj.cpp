@@ -69,6 +69,14 @@ void ForestObj::LoadForestList(){
     }
 }
 
+int ForestObj::GetListIdByTexture(QString texture){
+    for(int i = 0; i < forestList.size(); i++){
+        if(forestList[i].texture.toLower() == texture.toLower())
+            return i;
+    }
+    return 0;
+}
+
 void ForestObj::load(int x, int y) {
     this->x = x;
     this->y = y;
@@ -81,16 +89,36 @@ void ForestObj::load(int x, int y) {
     this->modified = false;
 }
 
+void ForestObj::set(QString sh, QString val){
+    if (sh == ("ref_filename")) {
+        treeTexture = val;
+        return;
+    }
+    WorldObj::set(sh, val);
+    return;
+}
+
 void ForestObj::set(QString sh, long long int val) {
     if (sh == ("ref_value")) {
-        treeTexture = ForestObj::forestList[val].texture;
-        scaleRangeX = ForestObj::forestList[val].scaleRangeX;
-        scaleRangeZ = ForestObj::forestList[val].scaleRangeZ;
+        qDebug() << val;
+        int val2        = val & 0xFFFF;
+        int tareax      = (val >> 16) & 0xFFF;
+        int tareaz      = (val >> 28) & 0xFFF;
+        int tpopulation = (val >> 40) & 0xFFFFFF;    
+        treeTexture = ForestObj::forestList[val2].texture;
+        scaleRangeX = ForestObj::forestList[val2].scaleRangeX;
+        scaleRangeZ = ForestObj::forestList[val2].scaleRangeZ;
         areaX = 100;
+        if(tareax != 0)
+            areaX = tareax;
         areaZ = 100;
-        treeSizeX = ForestObj::forestList[val].treeSizeX;
-        treeSizeZ = ForestObj::forestList[val].treeSizeZ;
+        if(tareaz != 0)
+            areaZ = tareaz;
+        treeSizeX = ForestObj::forestList[val2].treeSizeX;
+        treeSizeZ = ForestObj::forestList[val2].treeSizeZ;
         population = 10;
+        if(tpopulation != 0)
+            population = tpopulation;
         return;
     }
     if (sh == ("population")) {
@@ -175,6 +203,18 @@ void ForestObj::set(QString sh, FileBuffer* data) {
     }
     WorldObj::set(sh, data);
     return;
+}
+
+Ref::RefItem* ForestObj::getRefInfo(){
+    Ref::RefItem* r = new Ref::RefItem();
+    r->type = type;
+    r->filename = treeTexture;
+    
+    r->value       = (long long int)this->GetListIdByTexture(treeTexture) & 0xFFFF;
+    r->value      |= ((long long int)areaX & 0xFFF) << 16;
+    r->value      |= ((long long int)areaZ & 0xFFF) << 28;
+    r->value |= ((long long int)population & 0xFFFFFF) << 40;    
+    return r;
 }
 
 void ForestObj::translate(float px, float py, float pz){
@@ -274,8 +314,10 @@ void ForestObj::drawShape(){
     }*/
 
     if (!init) {
+        if(!Game::ignoreLoadLimits){
             if(Game::allowObjLag < 1)  return;
             Game::allowObjLag-=2;
+        }
             
             int iloscv = population*24;
             float* punkty = new float[iloscv*9];

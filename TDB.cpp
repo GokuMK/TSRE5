@@ -2677,12 +2677,27 @@ bool TDB::deleteNulls() {
                         continue;
                     trackNodes[trackNodes[i]->TrPinS[j]]->podmienTrPin(stare, i);
                 }
+                replaceSignalDirJunctionId(stare, i);
                 return true;
             }
         }
         qDebug() << "Juz nie ma nulli ";
         return false;
     }
+
+void TDB::replaceSignalDirJunctionId(int oldId, int newId){
+    for (int i = 0; i <= this->iTRitems; i++) {
+        if(trackItems[i] == NULL) continue;
+        if(trackItems[i]->trSignalDir != NULL){
+            for(int j = 0; j < trackItems[i]->trSignalDirs*4; j+=4){
+                if(trackItems[i]->trSignalDir[j+0] == oldId){
+                    trackItems[i]->trSignalDir[j+0] = newId;
+                    qDebug() << "trSignalDir trndoe id replaced: "<<oldId<<" "<<newId;
+                }
+            }
+        }
+    }
+}
 
 int TDB::findBiggest() {
         for(int i = iTRnodes; i > 0; i--){

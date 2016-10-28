@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.638"; 
+QString Game::AppVersion = "v0.645"; 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -34,6 +34,7 @@ QString Game::trkName = "bbb";
 //QString Game::route = "cmk";
 int Game::allowObjLag = 1000;
 int Game::maxObjLag = 10;
+bool Game::ignoreLoadLimits = false;
 int Game::startTileX = 0;
 int Game::startTileY = 0;
 float Game::objectLod = 3000;

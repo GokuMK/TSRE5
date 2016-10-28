@@ -16,6 +16,8 @@
 #include <QOpenGLShaderProgram>
 #include <QString>
 
+bool AceLib::IsThread = true;
+
 AceLib::AceLib(){
     
 }
@@ -29,9 +31,11 @@ AceLib::~AceLib(){
 ==============================================================*/
 //bool AceLib::LoadACE(Texture* texture) {
 void AceLib::run() {
+
     QFile *file = new QFile(texture->pathid);
     if (!file->open(QIODevice::ReadOnly)){
-        //qDebug() << "ACE: not exist "<<texture->pathid;
+        if(!IsThread)
+            qDebug() << "ACE: not exist "<<texture->pathid;
         //return false;
         return;
     }
@@ -60,11 +64,13 @@ void AceLib::run() {
         texture->bpp = 32;
         texture->typk = typ = 1;
     }
-
-    //qDebug() << "--"<<texture->width<<":"<<texture->height<<" "<<texture->bpp;
+    
+    if(!IsThread)
+        qDebug() << "--"<<texture->width<<":"<<texture->height<<" "<<texture->bpp;
 
     if ((texture->width <= 1) || (texture->height <= 1) || ((texture->bpp != 24) && (texture->bpp != 32))) {
-        qDebug() << "!!!!!!!!!!!!! mega fail tex: " <<  texture->pathid
+        if(!IsThread)
+            qDebug() << "!!!!!!!!!!!!! mega fail tex: " <<  texture->pathid
                 <<  " " <<  texture->width
                 <<  " " <<  texture->height
                 <<  " " <<  texture->bpp
@@ -72,22 +78,23 @@ void AceLib::run() {
         return;
     }
     if (/*(texture->width % 2) != 0 || (texture->height % 2) != 0 ||*/ ((texture->width > 8192) && (texture->height > 8192))) {
-        qDebug() << "!!!!!!!!!!!!! mega fail tex: " <<  texture->pathid
+        if(!IsThread)
+            qDebug() << "!!!!!!!!!!!!! mega fail tex: " <<  texture->pathid
                 <<  " " <<  texture->width
                 <<  " " <<  texture->height
                 <<  " " <<  texture->bpp
                 ;
         return;
     }
-    //if (!(texture->width == 16 || texture->width == 32 || texture->width == 64 || texture->width == 128 ||
-    //        texture->width == 256 || texture->width == 512 || texture->width == 1024 || texture->width == 2048)) {
-    /*    qDebug() << "!!!!!!!!!!!!! mega fail tex 22: " << texture->pathid
+    if ( texture->width % 2 != 0 || texture->height % 2 != 0 ) {
+        if(!IsThread)
+            qDebug() << "!!!!!!!!!!!!! mega fail tex dim % 2 != 0: " << texture->pathid
                 << " " << texture->width
                 << " " << texture->height
                 << " " << texture->bpp
                 ;
         return;
-    }*/
+    }
 
     texture->bytesPerPixel = (texture->bpp / 8);
     texture->imageSize = (texture->bytesPerPixel * texture->width * texture->height);
@@ -112,7 +119,9 @@ void AceLib::run() {
         //    qDebug() << "ace dane: " << dane << texture->pathid;
         //}
 
-        //console.log("tekstura wtyp = " + typ);
+        //if(!IsThread)
+        //    qDebug() << "tekstura wtyp" << typ;
+            
         if (typ == 0) {
             for (int ih = 0; ih<texture->height; ih++) {
                 for (iw = 0; iw<texture->width; iw = iw + 1) {

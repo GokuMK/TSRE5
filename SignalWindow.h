@@ -40,6 +40,8 @@ private:
     QSignalMapper signalsChSect;
     QSignalMapper signalsLinkButton;
     SignalObj* sobj;
+    
+    void setLinkInfo(int i);
 };
 
 #endif	/* SIGNALWINDOW_H */

@@ -375,6 +375,7 @@ Ref::RefItem* TrackObj::getRefInfo(){
     r->type = this->type;
     r->filename = this->fileName;
     r->value = this->sectionIdx;
+    r->staticFlags = this->staticFlags;
     return r;
 }
 

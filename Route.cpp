@@ -240,6 +240,7 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
            this.tile[key].inUse = false;
        }
     }*/
+    Game::ignoreLoadLimits = false;
 }
 
 void Route::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, bool selection) {
@@ -633,6 +634,17 @@ std::unordered_map<std::string, Coords*> Route::getMkrList(){
 void Route::nextDefaultEnd(){
     this->trackDB->nextDefaultEnd();
     this->roadDB->nextDefaultEnd();
+}
+
+void Route::paintHeightMap(Brush* brush, int x, int z, float* p){
+    Game::ignoreLoadLimits = true;
+    QSet<int> modifiedTiles = TerrainLib::paintHeightMap(brush, x, z, p);
+    Tile *ttile;
+    foreach (int value, modifiedTiles){
+        ttile = tile[value];
+        if(ttile != NULL)
+            ttile->updateTerrainObjects();
+    }
 }
 
 void Route::createNew() {

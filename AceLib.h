@@ -19,16 +19,18 @@ class AceLib : public QThread
      Q_OBJECT
 
 public:
+    static bool IsThread;
     AceLib();
     AceLib(const AceLib& orig);
     virtual ~AceLib();
     //static bool LoadACE(Texture* texture);
     Texture* texture;
     static void save(QString path, Texture* t);
+    void run();
 private:
     
 protected:
-     void run();
+    
 };
 
 #endif	/* ACELIB_H */

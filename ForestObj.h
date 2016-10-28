@@ -15,6 +15,7 @@
 #include <QString>
 
 class OglObj;
+class Ref::RefItem;
 
 class ForestObj : public WorldObj{
 public:
@@ -47,7 +48,9 @@ public:
     void set(int sh, FileBuffer* data);
     void set(QString sh, long long int val);
     void set(QString sh, float val);
+    void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
+    Ref::RefItem* getRefInfo();
     void save(QTextStream* out);
     void deleteVBO();
     void translate(float px, float py, float pz);
@@ -56,6 +59,7 @@ public:
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     static void LoadForestList();
+    static int GetListIdByTexture(QString texture);
     virtual ~ForestObj();
 private:
     void drawShape();

@@ -89,7 +89,10 @@ int TexLib::addTex(QString pathid) {
     if(tType == "ace"){
         AceLib* t = new AceLib();
         t->texture = newFile;
-        t->start();
+        if(AceLib::IsThread)
+            t->start();
+        else
+            t->run();
     } else if(tType == "png"||tType == "bmp"||tType == "jpg"||tType == "dds"){
         ImageLib* t = new ImageLib();
         t->texture = newFile;

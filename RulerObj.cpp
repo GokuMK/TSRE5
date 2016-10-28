@@ -18,6 +18,8 @@
 #include <QDebug>
 #include "Game.h"
 
+bool RulerObj::TwoPointRuler = false;
+
 RulerObj::RulerObj() {
     this->shape = -1;
     this->loaded = false;
@@ -53,6 +55,13 @@ void RulerObj::load(int x, int y) {
         Point point;
         Vec3::copy(point.position, this->position);
         this->points.push_back(point);
+        if(TwoPointRuler){
+            Point point2;
+            Vec3::copy(point2.position, this->position);
+            point2.position[2] += 1;
+            this->points.push_back(point2);
+            selectionValue = 1;
+        }
     }
 }
 
@@ -92,7 +101,6 @@ void RulerObj::setPosition(int x, int z, float* p){
     }
     if(line3d != NULL)
         line3d->deleteVBO();
-    refreshLength();
 }
 
 void RulerObj::refreshLength(){
@@ -165,6 +173,7 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         }
         line3d->init(punkty, ptr, line3d->V, GL_LINES);
         delete[] punkty;
+        refreshLength();
     }
     
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));

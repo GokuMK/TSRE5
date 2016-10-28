@@ -529,6 +529,7 @@ Ref::RefItem* WorldObj::getRefInfo(){
     Ref::RefItem* r = new Ref::RefItem();
     r->type = this->type;
     r->filename = this->fileName;
+    r->staticFlags = this->staticFlags;
     return r;
 }
 
