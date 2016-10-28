@@ -42,6 +42,7 @@ public:
     unsigned int shaderLightDirection;
     unsigned int shaderSecondTexEnabled;
     unsigned int shaderShadowsEnabled;
+    unsigned int shaderBrightness;
 private:
 
 };

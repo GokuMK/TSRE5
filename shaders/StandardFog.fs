@@ -25,6 +25,7 @@ uniform float secondTexEnabled;
 uniform mat4 uMVMatrix;
 uniform mat4 uMSMatrix;
 uniform float enableNormals;
+uniform float colorBrightness;
 
 vec2 poissonDisk[16] = vec2[]( 
    vec2( -0.94201624, -0.39906216 ), 
@@ -103,7 +104,7 @@ void main() {
             vec3 color = diffuseColor.xyz;
             color *= clamp(visibility, 0.0, 1.0);
             color += ambientColor.xyz;
-            gl_FragColor.xyz *= color;
+            gl_FragColor.xyz *= color*colorBrightness;
 
             gl_FragColor = mix(gl_FragColor, skyColor, fogFactor);
         }

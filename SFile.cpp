@@ -385,6 +385,11 @@ void SFile::render() {
             else
                 gluu->enableNormals();
             
+            if( vtxstate[vtx_state].arg2 == -12 )
+                gluu->setBrightness(0.5);
+            else
+                gluu->setBrightness(1.0);
+            
             /*if(primstate[prim_state].arg2 < this->ishaders)
                 gluu->alpha = shader[primstate[prim_state].arg2].alpha;
             else 
@@ -406,6 +411,11 @@ void SFile::render() {
                 //glDisable(GL_TEXTURE_2D);
             } else if (image[texture[primstate[prim_state].arg4].image].tex == -1) {
                 //image[texture[primstate[prim_state].arg4].image].tex = -2;
+                //qDebug() << this->nazwa;
+                //if(this->nazwa.contains("pared1_I.s", Qt::CaseInsensitive)){
+                //    qDebug() << vtxstate[vtx_state].arg2;
+                //    qDebug() << "=========" << image[texture[primstate[prim_state].arg4].image].name;
+                //}
                 image[texture[primstate[prim_state].arg4].image].tex = TexLib::addTex(
                         texPath,
                         image[texture[primstate[prim_state].arg4].image].name
@@ -429,6 +439,7 @@ void SFile::render() {
         }
     }
     //gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
+    gluu->setBrightness(1.0);
 }
 
 /*======================================================

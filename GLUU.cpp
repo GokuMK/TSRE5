@@ -88,6 +88,7 @@ void GLUU::initShader() {
         currentShader->shaderLightDirection = currentShader->uniformLocation("lightDirection");
         currentShader->shaderSecondTexEnabled = currentShader->uniformLocation("secondTexEnabled");
         currentShader->shaderShadowsEnabled = currentShader->uniformLocation("shadowsEnabled");
+        currentShader->shaderBrightness = currentShader->uniformLocation("colorBrightness");
         
         unsigned int tex1 = currentShader->uniformLocation("uSampler");
         currentShader->setUniformValue(tex1, 0);
@@ -135,6 +136,7 @@ void GLUU::setMatrixUniforms() {
     currentShader->setUniformValue(currentShader->shaderEnableNormals, 1.0f);
     currentShader->setUniformValue(currentShader->shaderSecondTexEnabled, 0.0f);
     currentShader->setUniformValue(currentShader->shaderShadowsEnabled, Game::shadowsEnabled);
+    currentShader->setUniformValue(currentShader->shaderBrightness, currentBrightness);
 };
 
 float GLUU::degToRad(float degrees) {
@@ -172,6 +174,13 @@ void GLUU::disableNormals(){
     if(!this->normalsEnabled) return;
     this->normalsEnabled = false;
     currentShader->setUniformValue(currentShader->shaderEnableNormals, 0.0f);
+}
+
+void GLUU::setBrightness(float val){
+    if(currentBrightness == val)
+        return;
+    currentBrightness = val;
+    currentShader->setUniformValue(currentShader->shaderBrightness, currentBrightness);
 }
 
 void GLUU::enableNormals(){

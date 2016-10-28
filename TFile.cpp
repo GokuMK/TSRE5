@@ -33,7 +33,7 @@ void TFile::setBufferNames(QString name){
 
 bool TFile::readT(QString fSfile) {
         fSfile.replace("//","/");
-        qDebug() << fSfile;
+        //qDebug() << fSfile;
         QFile *file = new QFile(fSfile);
         if (!file->open(QIODevice::ReadOnly)){
             //qDebug() << "fail t file "<< fSfile;
@@ -116,12 +116,10 @@ void TFile::get139(FileBuffer* data, int length) {
                 case 142:
                     data->off++;
                     floor = data->getFloat();
-                    qDebug() << "floor" << floor;
                     break;
                 case 143:
                     data->off++;
                     scale = data->getFloat();
-                    qDebug() << "scale" << scale;
                     break;
                 case 144:
                     data->off++;

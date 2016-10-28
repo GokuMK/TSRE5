@@ -42,7 +42,7 @@ Terrain::Terrain(float x, float y) {
     tfile = new TFile();
 
     QString filename = getTileName((int) x, (int) -y);
-    qDebug() << filename << x << -y;
+    //qDebug() << filename << x << -y;
     if (!tfile->readT((path + filename + ".t"))) {
         //qDebug() << " t fail";
         return;
@@ -1313,7 +1313,7 @@ void Terrain::initBlob(){
     }
     QString* path = new QString;
     *path += QString::number((int)(this->mojex)*10000+(int)(this->mojez))+".:maptex";
-    qDebug() << *path;
+    //qDebug() << *path;
     terrainBlob.setMaterial(path);
     terrainBlob.init(punkty, ptr, terrainBlob.VNT, GL_TRIANGLES);
     delete[] punkty;
