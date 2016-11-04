@@ -43,6 +43,7 @@ void SignalShape::set(QString sh, FileBuffer* data) {
                 }
                 if (sh == "sigsubtype") {
                     subObj[idx].sigSubType = ParserX::GetString(data);
+                    subObj[idx].sigSubTypeId = SigSubTypeStringToId[subObj[idx].sigSubType];
                     ParserX::SkipToken(data);
                     continue;
                 }
@@ -51,7 +52,7 @@ void SignalShape::set(QString sh, FileBuffer* data) {
                     while((sflags = ParserX::GetStringInside(data)) != "" ){
                         if(sflags == "JN_LINK"){
                             //qDebug() << "JN_LINK";
-                            this->isJnLink = true;
+                            //this->isJnLink = true;
                             subObj[idx].isJnLink = true;
                             continue;
                         }
@@ -97,3 +98,15 @@ void SignalShape::set(QString sh, FileBuffer* data) {
     qDebug() << "-- " << sh;
     return;
 }
+
+QMap< QString, SignalShape::SigSubType > SignalShape::SigSubTypeStringToId = {
+    { "UNDEFINED" , SignalShape::UNDEFINED },
+    { "SIGNAL_HEAD" , SignalShape::SIGNAL_HEAD },
+    { "NUMBER_PLATE" , SignalShape::NUMBER_PLATE },
+    { "GRADIENT_PLATE" , SignalShape::GRADIENT_PLATE },
+    { "USER1" , SignalShape::USER1 },
+    { "USER2" , SignalShape::USER2 },
+    { "USER3" , SignalShape::USER3 },
+    { "USER4" , SignalShape::USER4 },
+    { "DECOR" , SignalShape::DECOR }
+};

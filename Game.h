@@ -90,6 +90,7 @@ public:
     static bool showWorldObjPivotPoints;
     static int shadowMapSize;
     static int shadowsEnabled;
+    static float sunLightDirection[];
 private:
     static Window* window;
     static LoadWindow* loadWindow;

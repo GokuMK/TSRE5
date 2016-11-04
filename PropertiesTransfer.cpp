@@ -186,8 +186,10 @@ void PropertiesTransfer::sizeEnabled(QString val){
     bool ok;
     sizeX.text().toFloat(&ok);
     if(!ok) return;
+    if(sizeX.text().toFloat() <= 0) return;
     sizeY.text().toFloat(&ok);
     if(!ok) return;
+    if(sizeY.text().toFloat() <= 0) return;
     transferObj->set("width", sizeX.text().toFloat());
     transferObj->set("height", sizeY.text().toFloat());
     transferObj->modified = true;

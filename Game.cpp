@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.646"; 
+QString Game::AppVersion = "v0.649"; 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -71,6 +71,7 @@ int Game::oglDefaultLineWidth = 1;
 bool Game::showWorldObjPivotPoints = false;
 int Game::shadowMapSize = 2048;
 int Game::shadowsEnabled = 1;
+float Game::sunLightDirection[] = {-1.0,2.0,1.0};
 
 QString Game::geoPath = "hgst";
 

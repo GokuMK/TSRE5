@@ -16,9 +16,17 @@
 #include "FileBuffer.h"
 
 class TrackItemObj;
+class SignalShape;
 
 class SignalObj : public WorldObj  {
 public:
+    struct SignalUnit {
+        bool enabled = false;
+        bool head = false;
+        int tdbId = 0;
+        int itemId = -1;
+    };
+    
     SignalObj();
     SignalObj(const SignalObj& orig);
     virtual ~SignalObj();
@@ -46,7 +54,8 @@ public:
 private:
     unsigned int signalSubObj;
     int signalUnits = 0;
-    int *trItemId;
+    SignalUnit signalUnit[32];
+    //int *trItemId;
     TrackItemObj* pointer3d = NULL;
     TrackItemObj* pointer3dSelected = NULL;
     float** drawPositions = NULL;
@@ -54,6 +63,7 @@ private:
     void renderTritems(GLUU* gluu, int selectionColor);
     bool getSimpleBorder(float* border);
     bool getBoxPoints(QVector<float> &points);
+    SignalShape* signalShape = NULL;
 };
 
 #endif	/* SIGNALOBJ_H */

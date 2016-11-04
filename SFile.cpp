@@ -401,6 +401,7 @@ void SFile::render() {
             else 
                 gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
             */
+            //if(gluu->textureEnabled)
             if(primstate[prim_state].arg4 == -1){
                 //glDisable(GL_TEXTURE_2D);
             } else if (image[texture[primstate[prim_state].arg4].image].texAddr > 0) {

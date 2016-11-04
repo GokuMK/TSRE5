@@ -451,6 +451,7 @@ void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
         *tfile->amaterials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0] = name;
         qDebug() << *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0];
         texid[y * 16 + u] = TexLib::cloneTex(texid[y * 16 + u]);
+        TexLib::mtex[texid[y * 16 + u]]->pathid = name;
         convertTexToDefaultCoords(y * 16 + u);
         uniqueTex[y * 16 + u] = true;
         reloadLines();

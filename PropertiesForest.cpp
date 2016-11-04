@@ -217,8 +217,10 @@ void PropertiesForest::sizeEnabled(QString val){
     bool ok;
     sizeX.text().toFloat(&ok);
     if(!ok) return;
+    if(sizeX.text().toFloat() <= 0) return;
     sizeY.text().toFloat(&ok);
     if(!ok) return;
+    if(sizeY.text().toFloat() <= 0) return;
     forestObj->set("areaX", sizeX.text().toFloat());
     forestObj->set("areaZ", sizeY.text().toFloat());
     forestObj->modified = true;

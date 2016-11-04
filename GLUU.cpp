@@ -121,13 +121,14 @@ void GLUU::setMatrixUniforms() {
     currentShader->setUniformValue(currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (mvMatrix));
     currentShader->setUniformValue(currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (objStrMatrix));
     currentMsMatrinxHash = 0;
+    currentTexture = -1;
     
     currentShader->setUniformValue(currentShader->lod, Game::objectLod);
     currentShader->setUniformValue(currentShader->skyColor, skyc[0],skyc[1],skyc[2],skyc[3]);
     currentShader->setUniformValue(currentShader->shaderDiffuseColor, 0.7,0.7,0.7,0.7);
     currentShader->setUniformValue(currentShader->shaderAmbientColor, 0.3,0.3,0.3,0.3);
     currentShader->setUniformValue(currentShader->shaderSpecularColor, 1.0,1.0,1.0,1.0);
-    currentShader->setUniformValue(currentShader->shaderLightDirection, -1.0,2.0,1.0);
+    currentShader->setUniformValue(currentShader->shaderLightDirection, Game::sunLightDirection[0], Game::sunLightDirection[1], Game::sunLightDirection[2]);
     currentShader->setUniformValue(currentShader->shaderAlpha, alpha);
     currentShader->setUniformValue(currentShader->shaderAlphaTest, alphaTest);
     textureEnabled = true;

@@ -96,8 +96,8 @@ public:
     void setSpeedpostNum(float val);
     SType getSpeedpostType();
     void linkSignal(int from, int to);
-    void enableSignalSubObj(int i);
-    void disableSignalSubObj(int i);
+    void enableSignalSubObjFlag(int i);
+    void disableSignalSubObjFlag(int i);
     void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);
 private:
     float* drawPosition = NULL;

@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include "OglObj.h"
 #include "TextObj.h"
+#include "SignalObj.h"
 
 class TRnode;
 class TRitem;
@@ -56,6 +57,7 @@ public:
     void save();
     void saveTit();
     void loadTit();
+    int getNewTRitemId();
     static void saveEmpty(bool road);
     bool ifTrackExist(int x, int y, int UiD);
     void removeTrackFromTDB(int x, int y, int UiD);
@@ -100,7 +102,8 @@ public:
     void updateTrItemRData(TRitem* tr);
     void newPlatformObject(int* itemId, int trNodeId, float metry, int type);
     void newPickupObject(int* &itemId, int trNodeId, float metry, int type);
-    void newSignalObject(QString filename, int* &itemId, int &signalUnits, int trNodeId, float metry, int type);
+    void newSignalObject(QString filename, SignalObj::SignalUnit* units, int &signalUnits, int trNodeId, float metry, int type);
+    void enableSignalSubObj(QString filename, SignalObj::SignalUnit &unit, int i, int tritemid);
     void newLevelCrObject(int* &itemId, int trNodeId, float metry, int type);
     void newHazardObject(int* &itemId, int trNodeId, float metry, int type);
     bool getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos);

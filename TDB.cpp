@@ -27,6 +27,7 @@
 #include "FileBuffer.h"
 #include "SpeedPostDAT.h"
 #include "GLUU.h"
+#include "SignalObj.h"
 
 
 TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
@@ -266,6 +267,15 @@ void TDB::trpin(TRnode *tr, FileBuffer* bufor) {
         tr->TrPinS[i] = (int) ParserX::GetNumber(bufor);
         tr->TrPinK[i] = (int) ParserX::GetNumber(bufor);
     }
+}
+
+int TDB::getNewTRitemId(){
+    for (int i = 0; i < this->iTRitems; i++) {
+        if(this->trackItems[i]->type == "emptyitem"){
+            return i;
+        }
+    }
+    return this->iTRitems++;
 }
 
 void TDB::fillDynTrack(DynTrackObj* track){
@@ -2401,14 +2411,16 @@ void TDB::newPickupObject(int* &itemId, int trNodeId, float metry, int type){
     if(type != WorldObj::pickup) 
         return;
     
+    int newTRitemId = getNewTRitemId();
+    
     float trPosition[7];
-    this->trackItems[this->iTRitems] = TRitem::newPickupItem(this->iTRitems, metry);
+    this->trackItems[newTRitemId] = TRitem::newPickupItem(newTRitemId, metry);
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
-    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
-    this->trackItems[this->iTRitems]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[newTRitemId]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
     itemId = new int[2];
     itemId[0] = 0;
-    itemId[1] = this->iTRitems++;
+    itemId[1] = newTRitemId;
     
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
@@ -2419,61 +2431,116 @@ void TDB::newPlatformObject(int* itemId, int trNodeId, float metry, int type){
     if(type == WorldObj::siding) newTRitem = &TRitem::newSidingItem;
     if(type == WorldObj::carspawner) newTRitem = &TRitem::newCarspawnerItem;
 
+    int newTRitemId1 = getNewTRitemId();
     int dlugosc = this->getVectorSectionLength(trNodeId);
     float m = metry - 1;
     if(metry < 0) metry = 0;
     float trPosition[7];
-    this->trackItems[this->iTRitems] = newTRitem(this->iTRitems, m);
-    this->trackItems[this->iTRitems]->platformTrItemData[1] = this->iTRitems + 1;
+    this->trackItems[newTRitemId1] = newTRitem(newTRitemId1, m);
+    int newTRitemId2 = getNewTRitemId();
+    this->trackItems[newTRitemId1]->platformTrItemData[1] = newTRitemId2;
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, m);
-    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
-    itemId[0] = this->iTRitems++;
+    this->trackItems[newTRitemId1]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    itemId[0] = newTRitemId1;
     m = metry + 1;
     if(metry > dlugosc) metry = dlugosc;
-    this->trackItems[this->iTRitems] = newTRitem(this->iTRitems, m);
-    this->trackItems[this->iTRitems]->platformTrItemData[1] = this->iTRitems - 1;
-    this->trackItems[this->iTRitems]->platformTrItemData[0] = 0xFFFF0000;
+    this->trackItems[newTRitemId2] = newTRitem(newTRitemId2, m);
+    this->trackItems[newTRitemId2]->platformTrItemData[1] = newTRitemId1;
+    this->trackItems[newTRitemId2]->platformTrItemData[0] = 0xFFFF0000;
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, m);
-    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
-    itemId[1] = this->iTRitems++;
+    this->trackItems[newTRitemId2]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    itemId[1] = newTRitemId2;
     
     this->addItemToTrNode(trNodeId, itemId[0]);
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
 
-void TDB::newSignalObject(QString filename, int* &itemId, int &signalUnits, int trNodeId, float metry, int type){
+void TDB::newSignalObject(QString filename, SignalObj::SignalUnit* units, int &signalUnits, int trNodeId, float metry, int type){
     if(type != WorldObj::signal) 
         return;
     SignalShape* sShape = this->sigCfg->signalShape[filename.toStdString()];
     if(sShape == NULL)
         return;
     
-    std::vector<int> subObjI;
-    for(int i = 0; i < sShape->iSubObj; i++){
-        if(!sShape->subObj[i].optional){
-            subObjI.push_back(i);
-        }
-    }
+    //std::vector<int> subObjI;
+   // for(int i = 0; i < sShape->iSubObj; i++){
+   //     if(sShape->subObj[i].sigSubTypeId == sShape->SIGNAL_HEAD && !sShape->subObj[i].optional){
+   //         subObjI.push_back(i);
+   //     }
+   // }
     
-    signalUnits = subObjI.size();
+  //  signalUnits = subObjI.size();
     qDebug() << "tdb signalUnits" << signalUnits;
-    itemId = new int[signalUnits*2];
+    //itemId = new int[signalUnits*2];
     float trPosition[7];
 
     unsigned int flags = 0;
-    if(sShape->isJnLink) flags = 1;
-    int sidx = 0;
+    //if(sShape->isJnLink) flags = 1;
+    //int sidx = 0;
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
     
-    for(int i = 0; i<signalUnits; i++){
-        sidx = subObjI[i];
-        this->trackItems[this->iTRitems] = TRitem::newSignalItem(this->iTRitems, metry, flags, sShape->subObj[sidx].sigSubSType);
-        this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
-        this->trackItems[this->iTRitems]->setSignalRot(trPosition[3]);
-        itemId[i*2] = 0;
-        itemId[i*2+1] = this->iTRitems++;
-        this->addItemToTrNode(trNodeId, itemId[i*2+1]);
+    signalUnits = 0;
+    int enabledFlag = 0;
+    for(int i = 0; i < sShape->iSubObj; i++){
+        if(sShape->subObj[i].optional && (!sShape->subObj[i].defaultt))
+            continue;
+        if(sShape->subObj[i].sigSubTypeId == sShape->SIGNAL_HEAD)
+            continue;
+        enabledFlag |= 1 << (i+3);
     }
+    
+    for(int i = 0; i < sShape->iSubObj; i++){
+        //sidx = subObjI[i];
+        if(sShape->subObj[i].optional && (!sShape->subObj[i].defaultt))
+            continue;
+        units[i].enabled = true;
+        units[i].head = false;
+        if(sShape->subObj[i].sigSubTypeId != sShape->SIGNAL_HEAD)
+            continue;
+        units[i].head = true;
+        signalUnits++;
+        flags = 0 + enabledFlag;
+        if(sShape->subObj[i].isJnLink) 
+            flags = 1 + enabledFlag;
+        int newTRitemId = getNewTRitemId();
+        this->trackItems[newTRitemId] = TRitem::newSignalItem(newTRitemId, metry, flags, sShape->subObj[i].sigSubSType);
+        this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+        this->trackItems[newTRitemId]->setSignalRot(trPosition[3]);
+        units[i].tdbId = 0;
+        units[i].itemId =  newTRitemId;
+        this->addItemToTrNode(trNodeId, units[i].itemId);
+    }
+}
+
+void TDB::enableSignalSubObj(QString filename, SignalObj::SignalUnit &unit, int i, int tritemid){
+    SignalShape* sShape = this->sigCfg->signalShape[filename.toStdString()];
+    if(sShape == NULL)
+        return;
+
+    //float trPosition[7];
+    int newTRitemId = getNewTRitemId();
+    unsigned int flags = 0;
+    //if(sShape->isJnLink) flags = 1;
+    //int sidx = 0;
+    TRitem* trit = trackItems[tritemid];
+    if(trit == NULL) return;
+    int nid = findTrItemNodeId(tritemid);
+    if(nid < 0) return;
+    
+    unit.enabled = true;
+    unit.head = false;
+    if(sShape->subObj[i].sigSubTypeId != sShape->SIGNAL_HEAD)
+        return;
+    unit.head = true;
+    flags = trit->trSignalType1 & ~1;
+    if(sShape->subObj[i].isJnLink) 
+        flags |= 1;
+    this->trackItems[newTRitemId] = TRitem::newSignalItem(newTRitemId, trit->trItemSData1, flags, sShape->subObj[i].sigSubSType);
+    this->trackItems[newTRitemId]->setTrItemRData((float*)(trit->trItemRData+3), (float*)trit->trItemRData);
+    this->trackItems[newTRitemId]->setSignalRot(trit->trSignalType3);
+    unit.tdbId = 0;
+    unit.itemId =  newTRitemId;
+    this->addItemToTrNode(nid, unit.itemId);
 }
 
 void TDB::newSpeedPostObject(int speedPostId, int speedPostType, std::vector<int> & itemId, int trNodeId, float metry, int type){
@@ -2485,13 +2552,13 @@ void TDB::newSpeedPostObject(int speedPostId, int speedPostType, std::vector<int
     
     float trPosition[7];
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
-    
-    this->trackItems[this->iTRitems] = TRitem::newSpeedPostItem(this->iTRitems, metry, speedPostType);
-    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
-    this->trackItems[this->iTRitems]->setSpeedpostRot(trPosition[3]);
+    int newTRitemId = getNewTRitemId();
+    this->trackItems[newTRitemId] = TRitem::newSpeedPostItem(newTRitemId, metry, speedPostType);
+    this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[newTRitemId]->setSpeedpostRot(trPosition[3]);
     itemId.clear();
     itemId.push_back(0);
-    itemId.push_back(this->iTRitems++);
+    itemId.push_back(newTRitemId);
     //qDebug() << "tritem size"<<itemId.size();
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
@@ -2502,34 +2569,34 @@ void TDB::newLevelCrObject(int* &itemId, int trNodeId, float metry, int type){
     
     float trPosition[7];
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
-    //qDebug() <<"a1";
-    this->trackItems[this->iTRitems] = TRitem::newLevelCrItem(this->iTRitems, metry);
-    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
-    this->trackItems[this->iTRitems]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
+    int newTRitemId = getNewTRitemId();
+    this->trackItems[newTRitemId] = TRitem::newLevelCrItem(newTRitemId, metry);
+    this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[newTRitemId]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
     //qDebug() <<"a2";
     itemId = new int[2];
     itemId[0] = 0;
     if(this->road){
         itemId[0] = 1;
-        this->trackItems[this->iTRitems]->trItemSData2 = 5;
+        this->trackItems[newTRitemId]->trItemSData2 = 5;
     }
-    itemId[1] = this->iTRitems++;
+    itemId[1] = newTRitemId;
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
 
 void TDB::newSoundRegionObject(int soundregionTrackType, std::vector<int> &itemId, int trNodeId, float metry, int type){
     if(type != WorldObj::soundregion) 
         return;
-    
+    int newTRitemId = getNewTRitemId();
     float trPosition[7];
-    this->trackItems[this->iTRitems] = TRitem::newSoundRegionItem(this->iTRitems, metry);
+    this->trackItems[newTRitemId] = TRitem::newSoundRegionItem(newTRitemId, metry);
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
-    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
-    this->trackItems[this->iTRitems]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
-    this->trackItems[this->iTRitems]->setSoundRegionData(trPosition[3], soundregionTrackType);
+    this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[newTRitemId]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[newTRitemId]->setSoundRegionData(trPosition[3], soundregionTrackType);
     itemId.clear();
     itemId.push_back(0);
-    itemId.push_back(this->iTRitems++);
+    itemId.push_back(newTRitemId);
     
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
@@ -2537,15 +2604,15 @@ void TDB::newSoundRegionObject(int soundregionTrackType, std::vector<int> &itemI
 void TDB::newHazardObject(int * &itemId, int trNodeId, float metry, int type){
     if(type != WorldObj::hazard) 
         return;
-    
+    int newTRitemId = getNewTRitemId();
     float trPosition[7];
-    this->trackItems[this->iTRitems] = TRitem::newHazardItem(this->iTRitems, metry);
+    this->trackItems[newTRitemId] = TRitem::newHazardItem(newTRitemId, metry);
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
-    this->trackItems[this->iTRitems]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
-    this->trackItems[this->iTRitems]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[newTRitemId]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
     itemId = new int[2];
     itemId[0] = 0;
-    itemId[1] = this->iTRitems++;
+    itemId[1] = newTRitemId;
     
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
@@ -2883,7 +2950,7 @@ void TDB::checkSignals(){
     if(this->iTRitems > 0){
         int tid = 0;
         TRnode* n;
-        for (int i = 0; i <= this->iTRitems; i++) {
+        for (int i = 0; i < this->iTRitems; i++) {
             if(trackItems[i] == NULL) continue;
             if(trackItems[i]->trSignalDir != NULL){
                 for(int j = 0; j < trackItems[i]->trSignalDirs*4; j+=4){

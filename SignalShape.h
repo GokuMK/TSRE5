@@ -17,6 +17,20 @@ class FileBuffer;
 
 class SignalShape {
 public:
+    enum SigSubType {
+        UNDEFINED = 0,
+        SIGNAL_HEAD = 1,
+        NUMBER_PLATE = 2,
+        GRADIENT_PLATE = 4,
+        USER1 = 5, 
+        USER2 = 6,
+        USER3 = 7,
+        USER4 = 8,
+        DECOR = 9
+    };
+    
+    static QMap< QString, SigSubType > SigSubTypeStringToId;
+    
     struct SubObj {
         QString type;
         QString desc;
@@ -28,13 +42,14 @@ public:
         bool optional = false;
         bool defaultt = false;
         bool backFacing = false;
+        int sigSubTypeId = 0;
     };
     int listId;
     int iSubObj;
     SubObj* subObj;
     QString name;
     QString desc;
-    bool isJnLink = false;
+    //bool isJnLink = false;
     
     SignalShape();
     virtual ~SignalShape();

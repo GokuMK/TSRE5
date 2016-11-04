@@ -168,11 +168,11 @@ void TRitem::setPickupContent(float val) {
     this->pickupTrItemData1 = val;
 }
 
-void TRitem::enableSignalSubObj(int i) {
+void TRitem::enableSignalSubObjFlag(int i) {
     this->trSignalType1 = this->trSignalType1 | (1 << (i + 3));
 }
 
-void TRitem::disableSignalSubObj(int i) {
+void TRitem::disableSignalSubObjFlag(int i) {
     this->trSignalType1 = this->trSignalType1 ^ (1 << (i + 3));
 }
 
@@ -599,13 +599,13 @@ void TRitem::save(QTextStream* out, bool tit) {
         *(out) << woff + "	PickupItem (\n";
 
     *(out) << woff + "		TrItemId ( " << this->trItemId << " )\n";
-    if (type != "emptyitem")
+    if (type != "emptyitem"){
         *(out) << woff + "		TrItemSData ( " << this->trItemSData1 << " " << tritemsdata << " )\n";
     if (this->trItemPData != NULL)
         *(out) << woff + "		TrItemPData ( " << this->trItemPData[0] << " " << this->trItemPData[1] << " " << this->trItemPData[2] << " " << this->trItemPData[3] << " )\n";
     if (this->trItemRData != NULL)
         *(out) << woff + "		TrItemRData ( " << this->trItemRData[0] << " " << this->trItemRData[1] << " " << this->trItemRData[2] << " " << this->trItemRData[3] << " " << this->trItemRData[4] << " )\n";
-
+    }
     if (type == "crossoveritem" && this->crossoverTrItemData != NULL)
         *(out) << woff + "		CrossoverTrItemData ( " << this->crossoverTrItemData[0] << " " << this->crossoverTrItemData[1] << " )\n";
 

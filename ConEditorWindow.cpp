@@ -30,10 +30,12 @@
 #include "RandomConsist.h"
 #include "ActLib.h"
 #include "Activity.h"
+#include "GLMatrix.h"
 #include <QVector>
 
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
     Game::shadowsEnabled = 0;
+    Vec3::set((float*)Game::sunLightDirection,-1.0,0.0,0.0);
     aboutWindow = new AboutWindow();
     randomConsist = new RandomConsist();
     englib = new EngLib();

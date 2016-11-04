@@ -52,6 +52,7 @@ void SignalObj::load(int x, int y) {
     this->size = -1;
     this->skipLevel = 1;
     this->modified = false;
+    this->signalShape = Game::trackDB->sigCfg->signalShape[fileName.toStdString()];
     setMartix();
 }
 
@@ -66,12 +67,16 @@ bool SignalObj::isTrackItem(){
 void SignalObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
-    for(int i = 0; i<this->signalUnits; i++){
-        if(this->trItemId[i*2] == 0)
-            tdb->deleteTrItem(this->trItemId[i*2+1]);
-        else if(this->trItemId[i*2] == 1)
-            rdb->deleteTrItem(this->trItemId[i*2+1]);
-        this->trItemId[i*2+1] = -1;
+    for(int i = 0; i< 32; i++){
+        if(!this->signalUnit[i].enabled)
+            continue;
+        this->signalUnit[i].enabled = false;
+        if(!this->signalUnit[i].head)
+            continue;
+        if(this->signalUnit[i].tdbId == 0)
+            tdb->deleteTrItem(this->signalUnit[i].itemId);
+        else if(this->signalUnit[i].tdbId == 1)
+            rdb->deleteTrItem(this->signalUnit[i].itemId);
     }
 }
 
@@ -84,18 +89,34 @@ void SignalObj::initTrItems(float* tpos){
     TDB* tdb = Game::trackDB;
     qDebug() <<"new signal  "<<this->fileName;
 
-    tdb->newSignalObject(this->fileName, trItemId, this->signalUnits, trNodeId, metry, this->typeID);
+    tdb->newSignalObject(this->fileName, this->signalUnit, this->signalUnits, trNodeId, metry, this->typeID);
     
     this->signalSubObj = 0;
-    qDebug() <<"signalUnits  "<<this->signalUnits;
-    for(int i = 0; i < this->signalUnits; i++)
-        this->signalSubObj = this->signalSubObj | (1 << i);
+    
+    for(int i = 0; i < 32; i++){
+        if(this->signalUnit[i].enabled)
+            this->signalSubObj = this->signalSubObj | (1 << i);
+    }
+    qDebug() <<"signalUnits  "<<this->signalUnits << this->signalSubObj;
    // this->trItemIdCount = 4;
   //  this->trItemId[0] = isRoad;
    // this->trItemId[1] = trItemId[0];
    // this->trItemId[2] = isRoad;
   //  this->trItemId[3] = trItemId[1];
     this->drawPositions = NULL;
+    
+    if(this->signalUnits > 0){
+        int id = tdb->findTrItemNodeId(this->signalUnit[0].itemId);
+        if (id < 0) {
+            return;
+        }
+        float drawPosition[8];
+        bool ok = tdb->getDrawPositionOnTrNode((float*)&drawPosition, id, tdb->trackItems[this->signalUnit[0].itemId]->trItemSData1);
+        if(!ok){
+            return;
+        }
+        this->rotate(0,drawPosition[3]+M_PI,0);
+    }
 }
 
 void SignalObj::set(QString sh, long long int val) {
@@ -137,17 +158,18 @@ void SignalObj::set(int sh, FileBuffer* data) {
     if (sh == TS::SignalUnits) {
         data->off++;
         signalUnits = data->getUint();
-        trItemId = new int[signalUnits*2];
-        for(int i=0; i<signalUnits; i++){
+        for(int i = 0; i < signalUnits; i++){
             data->getToken();
             data->getInt();
             data->off++;
-            data->getInt();
+            int sUnitId = data->getInt();
             data->getToken();
             data->getInt();
             data->off++;
-            trItemId[i*2+0] = data->getUint();
-            trItemId[i*2+1] = data->getUint();
+            signalUnit[sUnitId].enabled = true;
+            signalUnit[sUnitId].head = true;
+            signalUnit[sUnitId].tdbId = data->getUint();
+            signalUnit[sUnitId].itemId = data->getUint();
         }
         return;
     }
@@ -167,11 +189,12 @@ void SignalObj::set(QString sh, FileBuffer* data) {
     }
     if (sh == ("signalunits")) {
         signalUnits = ParserX::GetNumber(data);
-        trItemId = new int[signalUnits*2];
-        for(int i=0; i<signalUnits; i++){
-            ParserX::GetNumber(data);
-            trItemId[i*2+0] = ParserX::GetNumber(data);
-            trItemId[i*2+1] = ParserX::GetNumber(data);
+        for(int i = 0; i < signalUnits; i++){
+            int sUnitId = ParserX::GetNumber(data);
+            signalUnit[sUnitId].enabled = true;
+            signalUnit[sUnitId].head = true;
+            signalUnit[sUnitId].tdbId = ParserX::GetNumber(data);
+            signalUnit[sUnitId].itemId = ParserX::GetNumber(data);
         }
         return;
     }
@@ -180,19 +203,20 @@ void SignalObj::set(QString sh, FileBuffer* data) {
 }
 
 int SignalObj::getLinkedJunctionValue(int i){
-    if(i >= this->signalUnits) return -1;
+    if(!this->signalUnit[i].enabled) return -1;
+    if(!this->signalUnit[i].head) return -1;
     TDB* tdb = Game::trackDB;
-    int tritId = this->trItemId[i*2+1];
-    TRitem* trit = tdb->trackItems[tritId];
+    TRitem* trit = tdb->trackItems[this->signalUnit[i].itemId];
     if(trit == NULL) return -1;
     if(trit->trSignalDirs < 1) return 0;
     return trit->trSignalDir[0];
 }
 
 bool SignalObj::isJunctionAvailable(int i){
-    if(i >= this->signalUnits) return false;
+    if(!this->signalUnit[i].enabled) return false;
+    if(!this->signalUnit[i].head) return false;
     TDB* tdb = Game::trackDB;
-    int tritId = this->trItemId[i*2+1];
+    int tritId = this->signalUnit[i].itemId;
     TRitem* trit = tdb->trackItems[tritId];
     if(trit == NULL) return false;
     int nid = tdb->findTrItemNodeId(tritId);
@@ -205,11 +229,12 @@ bool SignalObj::isJunctionAvailable(int i){
 }
 
 void SignalObj::linkSignal(int subsigId, int from, int to){
-    if(subsigId > this->signalUnits) return;
+    if(!this->signalUnit[subsigId].enabled) return;
+    if(!this->signalUnit[subsigId].head) return;
     TDB* tdb = Game::trackDB;
-    if(tdb->trackItems[this->trItemId[subsigId*2+1]] == NULL)
+    if(tdb->trackItems[this->signalUnit[subsigId].itemId] == NULL)
         return;
-    tdb->trackItems[this->trItemId[subsigId*2+1]]->linkSignal(from, to);
+    tdb->trackItems[this->signalUnit[subsigId].itemId]->linkSignal(from, to);
 }
 
 bool SignalObj::isSubObjEnabled(int i){
@@ -218,35 +243,60 @@ bool SignalObj::isSubObjEnabled(int i){
 
 void SignalObj::enableSubObj(int i){
     if(isSubObjEnabled(i)) return;
-    
+    if(signalShape == NULL)
+        return;
+    // set signal unit flag enabled
     this->signalSubObj = this->signalSubObj | (1 << i);
+    
     TDB* tdb = Game::trackDB;
-    for(int j = 0; j < this->signalUnits; j++){
-        if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
-            continue;
-        tdb->trackItems[this->trItemId[j*2+1]]->enableSignalSubObj(i);
+    
+    // add signal item to tdb
+    if(signalShape->subObj[i].sigSubTypeId == SignalShape::SIGNAL_HEAD){
+        tdb->enableSignalSubObj(this->fileName, this->signalUnit[i], i, this->signalUnit[0].itemId );
     }
+    
+    // update flags
+    if(!this->signalUnit[i].head)
+        for(int j = 0; j < 32; j++){
+            if(!this->signalUnit[j].enabled)
+                continue;
+            if(!this->signalUnit[j].head)
+                continue;
+            if(tdb->trackItems[this->signalUnit[j].itemId] == NULL)
+                continue;
+            tdb->trackItems[this->signalUnit[j].itemId]->enableSignalSubObjFlag(i);
+        }
     this->modified = true;
     return;
 }
 
 void SignalObj::disableSubObj(int i){
-    if(!isSubObjEnabled(i)) return;
-    
-    SignalShape* signalShape = Game::trackDB->sigCfg->signalShape[fileName.toStdString()];
+    if(!isSubObjEnabled(i)) 
+        return;
     if(signalShape == NULL)
         return;
-    
     if(!signalShape->subObj[i].optional)
         return;
-
+    
     TDB* tdb = Game::trackDB;
-    for(int j = 0; j < this->signalUnits; j++){
-        if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
-            continue;
-        tdb->trackItems[this->trItemId[j*2+1]]->disableSignalSubObj(i);
-    }
+    // add signal item to tdb
+    //tdb->enableSignalSubObj(this->fileName, i);
     this->signalSubObj = this->signalSubObj ^ (1 << i);
+    this->signalUnit[i].enabled = false;
+    
+    if(signalShape->subObj[i].sigSubTypeId == SignalShape::SIGNAL_HEAD)
+        tdb->deleteTrItem(this->signalUnit[i].itemId);
+    
+    if(!this->signalUnit[i].head)
+        for(int j = 0; j < 32; j++){
+            if(!this->signalUnit[j].enabled)
+                continue;
+            if(!this->signalUnit[j].head)
+                continue;
+            if(tdb->trackItems[this->signalUnit[j].itemId] == NULL)
+                continue;
+            tdb->trackItems[this->signalUnit[j].itemId]->disableSignalSubObjFlag(i);
+        }
     this->modified = true; 
 }
 
@@ -257,10 +307,14 @@ void SignalObj::flip(bool flipShape){
     }
 
     TDB* tdb = Game::trackDB;
-    for(int j = 0; j < this->signalUnits; j++){
-        if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
+    for(int j = 0; j < 32; j++){
+        if(!this->signalUnit[j].enabled)
             continue;
-        tdb->trackItems[this->trItemId[j*2+1]]->flipSignal();
+        if(!this->signalUnit[j].head)
+            continue;
+        if(tdb->trackItems[this->signalUnit[j].itemId] == NULL)
+            continue;
+        tdb->trackItems[this->signalUnit[j].itemId]->flipSignal();
     }
     this->modified = true; 
     delete[] drawPositions;
@@ -340,11 +394,13 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
             pointer3dSelected = new TrackItemObj();
             pointer3dSelected->setMaterial(1,0.5,0.5);
         }
-        drawPositions = new float*[this->signalUnits];
+        drawPositions = new float*[32];
         TDB* tdb = Game::trackDB;
-        for(int i = 0; i < this->signalUnits; i++){
+        for(int i = 0; i < 32; i++){
             drawPositions[i] = NULL;
-            int id = tdb->findTrItemNodeId(this->trItemId[i*2+1]);
+            if(!this->signalUnit[i].enabled || !this->signalUnit[i].head)
+                continue;
+            int id = tdb->findTrItemNodeId(this->signalUnit[i].itemId);
             if (id < 0) {
                 qDebug() << "signal fail id";
                 this->loaded = false;
@@ -352,13 +408,13 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
             }
             //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
             drawPositions[i] = new float[8];
-            bool ok = tdb->getDrawPositionOnTrNode(drawPositions[i], id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
+            bool ok = tdb->getDrawPositionOnTrNode(drawPositions[i], id, tdb->trackItems[this->signalUnit[i].itemId]->trItemSData1);
             if(!ok){
                 qDebug() << "signal fail tdb";
                 this->loaded = false;
                 return;
             }
-            drawPositions[i][7] = tdb->trackItems[this->trItemId[i*2+1]]->trSignalType2;
+            drawPositions[i][7] = tdb->trackItems[this->signalUnit[i].itemId]->trSignalType2;
             drawPositions[i][0] += 2048 * (drawPositions[i][5] - this->x);
             drawPositions[i][2] -= 2048 * (-drawPositions[i][6] - this->y);
         }
@@ -456,11 +512,16 @@ void SignalObj::save(QTextStream* out){
 if(this->staticDetailLevel > -1)
 *(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
 *(out) << "		SignalSubObj ( "<<ParserX::MakeFlagsString(this->signalSubObj)<<" )\n";
+signalUnits = 0;
+for(int i=0; i<32; i++)
+    if(this->signalUnit[i].enabled && this->signalUnit[i].head)
+        signalUnits++;
 if(signalUnits > 0){
 *(out) << "		SignalUnits ( "<<this->signalUnits<<"\n";
-for(int i=0; i<signalUnits; i++){
+for(int i=0; i<32; i++)
+    if(this->signalUnit[i].enabled && this->signalUnit[i].head){
 *(out) << "			SignalUnit ( "<<i<<"\n";
-*(out) << "				TrItemId ( "<<this->trItemId[i*2+0]<<" "<<this->trItemId[i*2+1]<<" )\n";
+*(out) << "				TrItemId ( "<<this->signalUnit[i].tdbId<<" "<<this->signalUnit[i].itemId<<" )\n";
 *(out) << "			)\n";
 }
 *(out) << "		)\n";
