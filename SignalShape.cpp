@@ -29,6 +29,8 @@ void SignalShape::set(QString sh, FileBuffer* data) {
         //qDebug() << iSubObj;
         subObj = new SubObj[iSubObj];
         int idx;
+        int fidx = 0;
+        int bidx = 0;
         for(int i = 0; i < iSubObj; i++){
             idx = ParserX::GetNumber(data);
             subObj[idx].iLink = 0;
@@ -92,6 +94,11 @@ void SignalShape::set(QString sh, FileBuffer* data) {
                 continue;
             }
             ParserX::SkipToken(data);
+            if(subObj[idx].backFacing){
+                subObj[idx].faceidx = bidx++;
+            }else{
+                subObj[idx].faceidx = fidx++;
+            }
         }
         return;
     }

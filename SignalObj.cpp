@@ -264,7 +264,8 @@ void SignalObj::enableSubObj(int i){
                 continue;
             if(tdb->trackItems[this->signalUnit[j].itemId] == NULL)
                 continue;
-            tdb->trackItems[this->signalUnit[j].itemId]->enableSignalSubObjFlag(i);
+            if(signalShape->subObj[i].backFacing == signalShape->subObj[j].backFacing)
+                tdb->trackItems[this->signalUnit[j].itemId]->enableSignalSubObjFlag(signalShape->subObj[i].faceidx);
         }
     this->modified = true;
     return;
@@ -295,7 +296,8 @@ void SignalObj::disableSubObj(int i){
                 continue;
             if(tdb->trackItems[this->signalUnit[j].itemId] == NULL)
                 continue;
-            tdb->trackItems[this->signalUnit[j].itemId]->disableSignalSubObjFlag(i);
+            if(signalShape->subObj[i].backFacing == signalShape->subObj[j].backFacing)
+                tdb->trackItems[this->signalUnit[j].itemId]->disableSignalSubObjFlag(signalShape->subObj[i].faceidx);
         }
     this->modified = true; 
 }

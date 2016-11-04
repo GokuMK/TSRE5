@@ -98,14 +98,14 @@ TRitem* TRitem::newHazardItem(int trItemId, float metry) {
     return trit;
 }
 
-TRitem* TRitem::newSignalItem(int trItemId, float metry, unsigned int flags, QString type) {
+TRitem* TRitem::newSignalItem(int trItemId, float metry, int direction, unsigned int flags, QString type) {
     TRitem* trit = new TRitem(trItemId);
     if (!trit->init("signalitem")) return NULL;
     trit->trItemSData1 = metry;
     trit->trItemSData2 = 2;
     trit->platformTrItemData = new unsigned int[2];
     trit->trSignalType1 = flags;
-    trit->trSignalType2 = 1;
+    trit->trSignalType2 = direction;
     trit->trSignalType3 = 0;
     trit->trSignalType4 = type;
     qDebug() << "aa ";

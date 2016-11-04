@@ -43,6 +43,7 @@ public:
         bool defaultt = false;
         bool backFacing = false;
         int sigSubTypeId = 0;
+        int faceidx;
     };
     int listId;
     int iSubObj;

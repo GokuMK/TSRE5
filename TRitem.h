@@ -35,7 +35,7 @@ public:
     static TRitem* newSidingItem(int trItemId, float metry);
     static TRitem* newCarspawnerItem(int trItemId, float metry);
     static TRitem* newPickupItem(int trItemId, float metry);
-    static TRitem* newSignalItem(int trItemId, float metry, unsigned int flags, QString type);
+    static TRitem* newSignalItem(int trItemId, float metry, int direction, unsigned int flags, QString type);
     static TRitem* newSpeedPostItem(int trItemId, float metry, int speedPostType);
     static TRitem* newLevelCrItem(int trItemId, float metry);
     static TRitem* newSoundRegionItem(int trItemId, float metry);

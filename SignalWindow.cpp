@@ -101,9 +101,13 @@ void SignalWindow::showObj(SignalObj* obj) {
 
     int iSubObj = signalShape->iSubObj;
     if (iSubObj > maxSubObj) iSubObj = maxSubObj;
+    QString backFace = "[B] ";
     for (int i = 0; i < iSubObj; i++) {
         this->wSub[i].show();
-        this->dSub[i].setText(signalShape->subObj[i].desc);
+        if(signalShape->subObj[i].backFacing)
+            this->dSub[i].setText(backFace+signalShape->subObj[i].desc);
+        else
+            this->dSub[i].setText(signalShape->subObj[i].desc);
         if (sobj->isSubObjEnabled(i))
             this->chSub[i].setChecked(true);
         if (!signalShape->subObj[i].optional)

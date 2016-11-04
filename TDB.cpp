@@ -2480,13 +2480,17 @@ void TDB::newSignalObject(QString filename, SignalObj::SignalUnit* units, int &s
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
     
     signalUnits = 0;
-    int enabledFlag = 0;
+    int enabledFrontFlag = 0;
+    int enabledBackFlag = 0;
     for(int i = 0; i < sShape->iSubObj; i++){
         if(sShape->subObj[i].optional && (!sShape->subObj[i].defaultt))
             continue;
         if(sShape->subObj[i].sigSubTypeId == sShape->SIGNAL_HEAD)
             continue;
-        enabledFlag |= 1 << (i+3);
+        if(sShape->subObj[i].backFacing)
+            enabledBackFlag |= 1 << (sShape->subObj[i].faceidx+3);
+        else
+            enabledFrontFlag |= 1 << (sShape->subObj[i].faceidx+3);
     }
     
     for(int i = 0; i < sShape->iSubObj; i++){
@@ -2499,13 +2503,26 @@ void TDB::newSignalObject(QString filename, SignalObj::SignalUnit* units, int &s
             continue;
         units[i].head = true;
         signalUnits++;
-        flags = 0 + enabledFlag;
+        if(sShape->subObj[i].backFacing)
+            flags = enabledBackFlag;
+        else
+            flags = enabledFrontFlag;
         if(sShape->subObj[i].isJnLink) 
-            flags = 1 + enabledFlag;
+            flags |= 1;
         int newTRitemId = getNewTRitemId();
-        this->trackItems[newTRitemId] = TRitem::newSignalItem(newTRitemId, metry, flags, sShape->subObj[i].sigSubSType);
+        int direction = 1;
+        float angle = trPosition[3];
+        if(sShape->subObj[i].backFacing){
+            direction = 0;
+            angle += M_PI;
+        }
+        if(angle > 2*M_PI)
+            angle -= 2*M_PI;
+        if(angle < 0)
+            angle += 2*M_PI;
+        this->trackItems[newTRitemId] = TRitem::newSignalItem(newTRitemId, metry, direction, flags, sShape->subObj[i].sigSubSType);
         this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
-        this->trackItems[newTRitemId]->setSignalRot(trPosition[3]);
+        this->trackItems[newTRitemId]->setSignalRot(angle);
         units[i].tdbId = 0;
         units[i].itemId =  newTRitemId;
         this->addItemToTrNode(trNodeId, units[i].itemId);
@@ -2535,9 +2552,17 @@ void TDB::enableSignalSubObj(QString filename, SignalObj::SignalUnit &unit, int 
     flags = trit->trSignalType1 & ~1;
     if(sShape->subObj[i].isJnLink) 
         flags |= 1;
-    this->trackItems[newTRitemId] = TRitem::newSignalItem(newTRitemId, trit->trItemSData1, flags, sShape->subObj[i].sigSubSType);
+    int direction = trit->trSignalType2;
+    float angle = trit->trSignalType3;
+    if(sShape->subObj[i].backFacing != sShape->subObj[0].backFacing){
+        direction = abs(direction - 1);
+        angle += M_PI;
+        if(angle > 2*M_PI)
+            angle -= 2*M_PI;
+    }
+    this->trackItems[newTRitemId] = TRitem::newSignalItem(newTRitemId, trit->trItemSData1, direction, flags, sShape->subObj[i].sigSubSType);
     this->trackItems[newTRitemId]->setTrItemRData((float*)(trit->trItemRData+3), (float*)trit->trItemRData);
-    this->trackItems[newTRitemId]->setSignalRot(trit->trSignalType3);
+    this->trackItems[newTRitemId]->setSignalRot(angle);
     unit.tdbId = 0;
     unit.itemId =  newTRitemId;
     this->addItemToTrNode(nid, unit.itemId);
