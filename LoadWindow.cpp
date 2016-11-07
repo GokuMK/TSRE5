@@ -17,6 +17,7 @@
 
 LoadWindow::LoadWindow() {
     //this->setWindowFlags( Qt::CustomizeWindowHint );
+    setWindowTitle(Game::AppName+" "+Game::AppVersion+" Route Editor");
     this->setFixedSize(600, 700);
     QImage* myImage = new QImage();
     myImage->load("resources/load.png");
@@ -40,7 +41,7 @@ LoadWindow::LoadWindow() {
     connect(neww, SIGNAL (released()), this, SLOT (setNewRoute()));
     exit = new QPushButton("Exit");
     exit->setStyleSheet("background-color: #880000");
-
+    
     
     nowaTrasa = new QLineEdit();
     QRegExp rx("^[a-zA-Z0-9\\_\\-\\ ]*$");
