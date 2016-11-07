@@ -31,7 +31,11 @@ public:
     TSectionDAT *tsection; 
     SoundList* soundList;
     Ref *ref;
-    bool stickToTDB = false;
+    bool placementStickToTDB = false;
+    float placementAutoLength = 50;
+    bool placementAutoTwoPointRot = true;
+    float placementAutoTranslationOffset[3];
+    float placementAutoRotationOffset[3];
     Route();
     Route(const Route& orig);
     virtual ~Route();
@@ -64,6 +68,8 @@ public:
     WorldObj* placeObject(int x, int z, float* p);
     WorldObj* placeObject(int x, int z, float* p, float* q);
     WorldObj* placeObject(int x, int z, float* p, float* q, Ref::RefItem* r);
+    WorldObj* autoPlaceObject(int x, int z, float* p);
+    void autoPlacementDeleteLast();
     void deleteTDBTree(WorldObj* obj);
     void toggleToTDB(WorldObj* obj);
     void addToTDBIfNotExist(WorldObj* obj);
@@ -79,6 +85,7 @@ private:
     std::unordered_map<std::string, Coords*> mkrList;
     Coords * mkr = NULL;
     Trk * trk = NULL;
+    QVector<WorldObj*> autoPlacementLastPlaced;
 };
 
 #endif	/* ROUTE_H */

@@ -309,6 +309,12 @@ Window::Window() {
     QObject::connect(this, SIGNAL(exitNow()),
                       aboutWindow, SLOT(exitNow())); 
     
+    QObject::connect(naviWindow, SIGNAL(windowClosed()),
+                      this, SLOT(naviWindowClosed())); 
+    
+    QObject::connect(shapeViewWindow, SIGNAL(windowClosed()),
+                      this, SLOT(shapeVeiwWindowClosed())); 
+    
     QObject::connect(glWidget, SIGNAL(setToolbox(QString)),
                       this, SLOT(setToolbox(QString)));
     
@@ -536,6 +542,16 @@ void Window::show(){
     naviWindow->move(0, this->height() - naviWindow->height() );
     naviWindow->show();
     QMainWindow::show();
+}
+void Window::naviWindowClosed(){
+    naviAction->blockSignals(true);
+    naviAction->setChecked(false);
+    naviAction->blockSignals(false);
+}
+void Window::shapeVeiwWindowClosed(){
+    shapeViewAction->blockSignals(true);
+    shapeViewAction->setChecked(false);
+    shapeViewAction->blockSignals(false);
 }
 //void Window::exitNow(){
 //    this->hide();

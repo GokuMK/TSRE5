@@ -292,7 +292,7 @@ void CameraFree::keyUp(QKeyEvent * e) {
         case Qt::Key_Space:
             jestcontrol = 0;
             break;
-        case Qt::Key_E: // E
+        //case Qt::Key_E: // E
         case Qt::Key_Shift:
             przesx = przesz = 3;
             break;

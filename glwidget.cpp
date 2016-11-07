@@ -387,6 +387,17 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
     camera->keyDown(event);
     
     switch (event->key()) {
+        case Qt::Key_Control:
+            moveStep = moveMinStep;
+            keyControlEnabled = true;
+            break;
+        case Qt::Key_Shift:
+            keyShiftEnabled = true;
+            break;
+        case Qt::Key_Alt:
+            moveStep = moveUltraStep;
+            keyAltEnabled = true;
+            break;
         //case 'M':
             //route->save();
             //selection = true; //!selection;
@@ -428,34 +439,27 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             //emit setToolbox("terrainTools");    
         //    break;
         case Qt::Key_E:
-            toolEnabled = "selectTool";
-            resizeTool = false;
-            translateTool = false;
-            rotateTool = false;
+            enableTool("selectTool");
             break;
         case Qt::Key_R:
-            toolEnabled = "selectTool";
-            resizeTool = false;
-            translateTool = false;
+            enableTool("selectTool");
             rotateTool = true;
             break;
         case Qt::Key_T:    
-            toolEnabled = "selectTool";
-            resizeTool = false;
-            rotateTool = false;
+            enableTool("selectTool");
             translateTool = true;
             break;
         case Qt::Key_Y:    
-            toolEnabled = "selectTool";
-            rotateTool = false;
-            translateTool = false;
+            enableTool("selectTool");
             resizeTool = true;
             break;
         case Qt::Key_Q:
             if(keyControlEnabled)
                 autoAddToTDB = !autoAddToTDB;
-            else
+            else if(keyShiftEnabled)
                 stickPointerToTerrain = !stickPointerToTerrain;
+            else
+                enableTool("placeTool");
             break;
         default:
             break;
@@ -473,13 +477,6 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
         Vector2f a;
 
         switch (event->key()) {
-            case Qt::Key_Control:
-                moveStep = moveMinStep;
-                keyControlEnabled = true;
-                break;
-            case Qt::Key_Shift:
-                keyShiftEnabled = true;
-                break;                
             case Qt::Key_Up:    
                 if(Game::usenNumPad) break;
             case Qt::Key_8:
@@ -539,7 +536,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(0, moveStep/10, 0);
                 }
-                break;                 
+                break;
             case Qt::Key_PageUp:
                 //Game::cameraFov += 1;
                 //qDebug() << Game::cameraFov;
@@ -637,7 +634,6 @@ void GLWidget::keyReleaseEvent(QKeyEvent * event) {
     Game::currentShapeLib = currentShapeLib;
     if(!route->loaded) return;
     camera->keyUp(event);
-    if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
         switch (event->key()) {
             //case Qt::Key_Alt:
             case Qt::Key_Control:
@@ -647,6 +643,15 @@ void GLWidget::keyReleaseEvent(QKeyEvent * event) {
             case Qt::Key_Shift:
                 keyShiftEnabled = false;
                 break;
+            case Qt::Key_Alt:
+                moveStep = moveMaxStep;
+                keyAltEnabled = false;
+                break;
+            default:
+                break;
+        }
+    if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
+        switch (event->key()) {
             default:
                 break;
         }
@@ -679,6 +684,25 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             float *q = Quat::create();
             Quat::copy(q, this->placeRot);
             setSelectedObj(route->placeObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, q));
+            if(selectedObj != NULL)
+                selectedObj->select();
+            //if(route->ref->selected != NULL){
+            //qDebug() << route->ref->selected->description;
+            //}
+            //camera->MouseDown(event);
+        }
+        if(toolEnabled == "autoPlaceSimpleTool"){
+            if(selectedObj != NULL){
+                selectedObj->unselect();
+                if(autoAddToTDB)
+                    route->addToTDBIfNotExist(selectedObj);
+            }
+            lastNewObjPosT[0] = camera->pozT[0];
+            lastNewObjPosT[1] = camera->pozT[1];
+            lastNewObjPos[0] = aktPointerPos[0];
+            lastNewObjPos[1] = aktPointerPos[1];
+            lastNewObjPos[2] = aktPointerPos[2];
+            setSelectedObj(route->autoPlaceObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos));
             if(selectedObj != NULL)
                 selectedObj->select();
             //if(route->ref->selected != NULL){
@@ -885,11 +909,12 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
 void GLWidget::enableTool(QString name){
     qDebug() << name;
     toolEnabled = name;
-    if(toolEnabled == "placeTool" || toolEnabled == "selectTool"){
-        resizeTool = false;
-        translateTool = false;
-        rotateTool = false;
-    }
+    //if(toolEnabled == "placeTool" || toolEnabled == "selectTool" || toolEnabled == "autoPlaceSimpleTool"){
+    resizeTool = false;
+    translateTool = false;
+    rotateTool = false;
+    //}
+    emit sendMsg("toolEnabled", name);
 }
 
 void GLWidget::jumpTo(PreciseTileCoordinate* c){
@@ -987,12 +1012,19 @@ void GLWidget::msg(QString text){
         //QString texpath = pathid.left(pathid.length() - name.length());
         emit sendMsg("showShape", route->ref->selected->getShapePath());
     }
+    if(text == "autoPlacementDeleteLast"){
+        route->autoPlacementDeleteLast();
+    }
 }
 
 void GLWidget::msg(QString text, bool val){
     qDebug() << text;
     if(text == "stickToTDB"){
-        this->route->stickToTDB = val;
+        this->route->placementStickToTDB = val;
+        return;
+    }
+    if(text == "autoPlacementRotType"){
+        this->route->placementAutoTwoPointRot = val;
         return;
     }
 }
@@ -1001,11 +1033,16 @@ void GLWidget::msg(QString text, int val){
 }
 
 void GLWidget::msg(QString text, float val){
+    qDebug() << text;
+    if(text == "autoPlacementLength"){
+        this->route->placementAutoLength = val;
+        return;
+    }
 }
 
 
 void GLWidget::msg(QString text, QString val){
-    qDebug() << text;
+    //qDebug() << text;
     if(text == "mkrFile"){
         this->route->setMkrFile(val);
         return;

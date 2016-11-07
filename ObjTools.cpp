@@ -26,9 +26,19 @@ ObjTools::ObjTools(QString name)
     //QRadioButton *radio2 = new QRadioButton(tr("R&adio button 2"));
     //QRadioButton *radio3 = new QRadioButton(tr("Ra&dio button 3"));
 
-    QPushButton *selectTool = new QPushButton("Select", this);
-    QPushButton *placeTool = new QPushButton("Place New", this);
+    selectTool = new QPushButton("Select", this);
+    selectTool->setCheckable(true);
+    placeTool = new QPushButton("Place New", this);
+    placeTool->setCheckable(true);
+    autoPlacementButton = new QPushButton("Auto Placement", this);
+    autoPlacementButton->setCheckable(true);
+    QPushButton *advancedPlacenentButton = new QPushButton("...", this);
+    advancedPlacenentButton->setCheckable(true);
+    QObject::connect(advancedPlacenentButton, SIGNAL(toggled(bool)), this, SLOT(advancedPlacementButtonEnabled(bool)));
     QPushButton *resetRotationButton = new QPushButton("Reset Place Rot", this);
+    QPushButton *autoPlacementDeleteLast = new QPushButton("Delete last placed objects", this);
+    QObject::connect(autoPlacementDeleteLast, SIGNAL(released()), this, SLOT(autoPlacementDeleteLastEnabled()));
+    
     QLineEdit *searchBox = new QLineEdit(this);
     //radio1->setChecked(true);
     
@@ -54,10 +64,62 @@ ObjTools::ObjTools(QString name)
     vlist3->setContentsMargins(3,0,1,0);    
     int row = 0;
     vlist3->addWidget(selectTool,row,0);
-    vlist3->addWidget(placeTool,row++,1);
+    vlist3->addWidget(placeTool,row++,1,1,3);
     vlist3->addWidget(&stickToTDB,row,0);
-    vlist3->addWidget(resetRotationButton,row,1);
+    vlist3->addWidget(resetRotationButton,row++,1,1,3);
+    vlist3->addWidget(autoPlacementButton,row,0);
+    vlist3->addWidget(&autoPlacementLength,row,1);
+    autoPlacementLength.setText("50");
+    QDoubleValidator* doubleValidator = new QDoubleValidator(1, 1000, 6, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    autoPlacementLength.setValidator(doubleValidator);
+    QObject::connect(&autoPlacementLength, SIGNAL(textEdited(QString)), this, SLOT(autoPlacementLengthEnabled(QString)));
+    vlist3->addWidget(new QLabel("m"),row,2);
+    vlist3->addWidget(advancedPlacenentButton,row++,3);
     vbox->addItem(vlist3);
+    
+    vlist3 = new QGridLayout;
+    vlist3->setSpacing(2);
+    vlist3->setContentsMargins(3,0,1,0);    
+    row = 0;
+    vlist3->addWidget(new QLabel("Rotation Type:"),row,0,1,1);
+    vlist3->addWidget(&autoPlacementRotType,row++,1,1,6);
+    QObject::connect(&autoPlacementRotType, SIGNAL(activated(QString)),
+                      this, SLOT(autoPlacementRotTypeSelected(QString)));
+    autoPlacementRotType.setStyleSheet("combobox-popup: 0;");
+    autoPlacementRotType.addItem("Two Point Rotation");
+    autoPlacementRotType.addItem("One Point Rotation");
+    vlist3->addWidget(new QLabel("Translate Offset"),row,0);
+    vlist3->addWidget(new QLabel("X:"),row,1);
+    vlist3->addWidget(&autoPlacementPosX,row,2);
+    autoPlacementPosX.setText("0");
+    vlist3->addWidget(new QLabel("Y:"),row,3);
+    vlist3->addWidget(&autoPlacementPosY,row,4);
+    autoPlacementPosY.setText("0");
+    vlist3->addWidget(new QLabel("Z:"),row,5);
+    vlist3->addWidget(&autoPlacementPosZ,row++,6);    
+    autoPlacementPosZ.setText("0");
+    vlist3->addWidget(new QLabel("Rotate Offset"),row,0);
+    vlist3->addWidget(new QLabel("X:"),row,1);
+    vlist3->addWidget(&autoPlacementRotX,row,2);
+    autoPlacementRotX.setText("0");
+    vlist3->addWidget(new QLabel("Y:"),row,3);
+    vlist3->addWidget(&autoPlacementRotY,row,4);
+    autoPlacementRotY.setText("0");
+    vlist3->addWidget(new QLabel("Z:"),row,5);
+    vlist3->addWidget(&autoPlacementRotZ,row++,6);    
+    vlist3->addWidget(autoPlacementDeleteLast,row++,0,1,7);
+    autoPlacementRotZ.setText("0");
+    autoPlacementPosX.setValidator(doubleValidator);
+    autoPlacementPosY.setValidator(doubleValidator);
+    autoPlacementPosZ.setValidator(doubleValidator);
+    autoPlacementRotX.setValidator(doubleValidator);
+    autoPlacementRotY.setValidator(doubleValidator);
+    autoPlacementRotZ.setValidator(doubleValidator);
+    advancedPlacementWidget.setLayout(vlist3);
+    vbox->addWidget(&advancedPlacementWidget);
+    advancedPlacementWidget.hide();
+    
     stickToTDB.setText("Stick To TrackDB");
     stickToTDB.setChecked(false);
     //vbox->addWidget(&stickToTDB);
@@ -108,11 +170,14 @@ ObjTools::ObjTools(QString name)
     QObject::connect(&lastItems, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(lastItemsListSelected(QListWidgetItem*)));
     
-    QObject::connect(selectTool, SIGNAL(released()),
-                      this, SLOT(selectToolEnabled()));
+    QObject::connect(selectTool, SIGNAL(toggled(bool)),
+                      this, SLOT(selectToolEnabled(bool)));
     
-    QObject::connect(placeTool, SIGNAL(released()),
-                      this, SLOT(placeToolEnabled()));
+    QObject::connect(placeTool, SIGNAL(toggled(bool)),
+                      this, SLOT(placeToolEnabled(bool)));
+    
+    QObject::connect(autoPlacementButton, SIGNAL(toggled(bool)),
+                      this, SLOT(autoPlacementButtonEnabled(bool)));
     
     QObject::connect(resetRotationButton, SIGNAL(released()),
                       this, SLOT(resetRotationButtonEnabled()));
@@ -483,16 +548,33 @@ void ObjTools::lastItemsListSelected(QListWidgetItem * item){
     route->ref->selected = lastItemsPtr[item->type()];
 }
 
-void ObjTools::selectToolEnabled(){
-    emit enableTool("selectTool");
+void ObjTools::selectToolEnabled(bool val){
+    if(val)
+        emit enableTool("selectTool");
+    else
+        emit enableTool("");
 }
 
-void ObjTools::placeToolEnabled(){
-    emit enableTool("placeTool");
+void ObjTools::placeToolEnabled(bool val){
+    if(val)
+        emit enableTool("placeTool");
+    else
+        emit enableTool("");
+}
+
+void ObjTools::autoPlacementButtonEnabled(bool val){
+    if(val)
+        emit enableTool("autoPlaceSimpleTool");
+    else
+        emit enableTool("");
 }
 
 void ObjTools::resetRotationButtonEnabled(){
     emit sendMsg("resetPlaceRotation");
+}
+
+void ObjTools::autoPlacementDeleteLastEnabled(){
+    emit sendMsg("autoPlacementDeleteLast");
 }
 
 void ObjTools::itemSelected(Ref::RefItem* item){
@@ -515,6 +597,18 @@ void ObjTools::stickToTDBEnabled(int state){
         this->sendMsg("stickToTDB", false);
 }
 
+void ObjTools::autoPlacementLengthEnabled(QString val){
+    bool ok = false;
+    float v = val.toFloat(&ok);
+    if(!ok) return;
+    
+    sendMsg("autoPlacementLength", v);
+}
+
+void ObjTools::advancedPlacementButtonEnabled(bool val){
+    this->advancedPlacementWidget.setVisible(val);
+}
+
 void ObjTools::msg(QString text){
 }
 
@@ -528,4 +622,28 @@ void ObjTools::msg(QString text, float val){
 }
 
 void ObjTools::msg(QString text, QString val){
+    if(text == "toolEnabled"){
+        selectTool->blockSignals(true);
+        placeTool->blockSignals(true);
+        autoPlacementButton->blockSignals(true);
+        selectTool->setChecked(false);
+        placeTool->setChecked(false);
+        autoPlacementButton->setChecked(false);
+        if(val == "selectTool")
+            selectTool->setChecked(true);
+        if(val == "placeTool")
+            placeTool->setChecked(true);
+        if(val == "autoPlaceSimpleTool")
+            autoPlacementButton->setChecked(true);
+        selectTool->blockSignals(false);
+        placeTool->blockSignals(false);
+        autoPlacementButton->blockSignals(false);
+    }
+}
+
+void ObjTools::autoPlacementRotTypeSelected(QString val){
+    if(autoPlacementRotType.currentIndex() == 0)
+        sendMsg("autoPlacementRotType", true);
+    else
+        sendMsg("autoPlacementRotType", false);
 }

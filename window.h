@@ -61,6 +61,8 @@ public slots:
     void showToolsActivity(bool show);
     void showTerrainTreeEditr();
     void showWorldObjPivotPointsEnabled(bool show);
+    void naviWindowClosed();
+    void shapeVeiwWindowClosed();
 
 signals:
     void exitNow();

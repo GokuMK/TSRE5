@@ -2180,9 +2180,11 @@ bool TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tp
     pos[2] = -best[2];
     posT[0] = best[5];
     posT[1] = -best[6];
-    q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
-    Quat::rotateY(q, q, best[3]);
-    Quat::rotateX(q, q, -best[4]);
+    if(q != NULL){
+        q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
+        Quat::rotateY(q, q, best[3]);
+        Quat::rotateX(q, q, -best[4]);
+    }
     
     return true;
 }

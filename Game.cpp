@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.650"; 
+QString Game::AppVersion = "v0.651"; 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -231,7 +231,7 @@ bool Game::loadRouteEditor(){
     }
     
     window = new Window();
-    window->resize(1280, 720);
+    window->resize(1280, 800);
     
     loadWindow = new LoadWindow();
     QObject::connect(window, SIGNAL(exitNow()),

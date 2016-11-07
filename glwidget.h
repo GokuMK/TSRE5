@@ -133,6 +133,7 @@ private:
     bool mouseRPressed = false;
     QString toolEnabled = "";
     float moveStep = 0.25;
+    float moveUltraStep = 2.0;
     float moveMaxStep = 0.25;
     float moveMinStep = 0.01;
     bool resizeTool = false;
@@ -146,6 +147,7 @@ private:
     long long int lastMousePressTime = 0;
     bool keyControlEnabled = false;
     bool keyShiftEnabled = false;
+    bool keyAltEnabled = false;
     GLuint FramebufferName1 = 0;
     GLuint depthTexture1 = 0;
     GLuint FramebufferName2 = 0;

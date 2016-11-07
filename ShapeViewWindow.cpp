@@ -53,7 +53,7 @@ void ShapeViewWindow::msg(QString text, float val){
 }
 
 void ShapeViewWindow::msg(QString text, QString val){
-    qDebug() << text;
+    //qDebug() << text;
     if(text == "showShape"){
         qDebug() << val;
         if(val.length() < 1) return;
@@ -65,4 +65,8 @@ void ShapeViewWindow::msg(QString text, QString val){
             glShapeWidget->showShape((QString)values[0], (QString)values[1]);
         return;
     }
+}
+
+void ShapeViewWindow::hideEvent(QHideEvent *e){
+    emit windowClosed();
 }

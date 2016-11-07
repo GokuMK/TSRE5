@@ -33,11 +33,16 @@ public slots:
     void trackListSelected(QListWidgetItem * item);
     void otherListSelected(QListWidgetItem * item);
     void lastItemsListSelected(QListWidgetItem * item);
-    void selectToolEnabled();
-    void placeToolEnabled();
+    void selectToolEnabled(bool val);
+    void placeToolEnabled(bool val);
+    void autoPlacementButtonEnabled(bool val);
     void itemSelected(Ref::RefItem* item);
     void stickToTDBEnabled(int state);
+    void autoPlacementLengthEnabled(QString val);
     void resetRotationButtonEnabled();
+    void advancedPlacementButtonEnabled(bool val);
+    void autoPlacementDeleteLastEnabled();
+    void autoPlacementRotTypeSelected(QString val);
     
     void msg(QString name);
     void msg(QString name, bool val);
@@ -66,6 +71,20 @@ private:
     QVector<Ref::RefItem*> currentItemList;
     QCheckBox stickToTDB;
     QCheckBox stickToRDB;
+    QLineEdit autoPlacementLength;
+    QPushButton *selectTool;
+    QPushButton *placeTool;
+    QPushButton *autoPlacementButton;
+    
+    QWidget advancedPlacementWidget;
+    QLineEdit autoPlacementPosX;
+    QLineEdit autoPlacementPosY;
+    QLineEdit autoPlacementPosZ;
+    QLineEdit autoPlacementRotX;
+    QLineEdit autoPlacementRotY;
+    QLineEdit autoPlacementRotZ;
+    QComboBox autoPlacementRotType;
+    
 };
 
 #endif	/* TOOLBOX_H */

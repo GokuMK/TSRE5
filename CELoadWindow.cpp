@@ -186,7 +186,7 @@ void CELoadWindow::handleBrowseButton(){
 
 void CELoadWindow::routeLoad(){
     ConEditorWindow* cwindow = new ConEditorWindow();
-    cwindow->resize(1280, 720);
+    cwindow->resize(1280, 800);
     this->hide();
     cwindow->show();
 }

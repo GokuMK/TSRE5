@@ -201,3 +201,6 @@ void NaviWindow::mkrListSelected(QString item){
 NaviWindow::~NaviWindow() {
 }
 
+void NaviWindow::hideEvent(QHideEvent *e){
+    emit windowClosed();
+}

@@ -42,6 +42,10 @@ signals:
     void sendMsg(QString name, int val);
     void sendMsg(QString name, float val);
     void sendMsg(QString name, QString val);
+    void windowClosed();
+    
+protected:
+    void hideEvent(QHideEvent *e);
     
 private:
     QComboBox markerFiles;

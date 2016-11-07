@@ -153,6 +153,10 @@ void GlShapeWidget::paintGL() {
     //Game::currentEngLib = currentEngLib;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // disable shadows temporaily
+    int shadowsState = Game::shadowsEnabled;
+    Game::shadowsEnabled = 0;
+    
     glClearColor(backgroundGlColor[0], backgroundGlColor[1], backgroundGlColor[2], 1);
     
     float aspect = float(this->width()) / float(this->height());
@@ -249,7 +253,7 @@ void GlShapeWidget::paintGL() {
     }
     
     gluu->currentShader->release();
-
+    Game::shadowsEnabled = shadowsState;
 }
 
 void GlShapeWidget::getImg() {

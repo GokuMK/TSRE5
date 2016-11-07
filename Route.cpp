@@ -80,6 +80,9 @@ Route::Route() {
     Game::trackDB = this->trackDB;
     Game::roadDB = this->roadDB;
     loaded = true;
+    
+    Vec3::set(placementAutoTranslationOffset, 0, 0, 0);
+    Vec3::set(placementAutoRotationOffset, 0, 0, 0);
 }
 
 Route::Route(const Route& orig) {
@@ -308,7 +311,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     // pozycja wzgledem TDB:
     int itemTrackType = WorldObj::isTrackObj(r->type);
     float* tpos = NULL;
-    if(stickToTDB || itemTrackType == 1){
+    if(placementStickToTDB || itemTrackType == 1){
         tpos = new float[2];
         float* playerT = Vec2::fromValues(x, z);
         bool ok = this->trackDB->findNearestPositionOnTDB(playerT, p, q, tpos);
@@ -387,6 +390,102 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     }
     return NULL;
 }
+
+float *fromtwovectors(float* out, float* u, float* v){
+    //float m = sqrt(2.f + 2.f * Vec3::dot(u, v));
+    float w[3];
+    /*Vec3::cross((float*)w, u, v);
+    Vec3::scale((float*)w, (float*)w, (1.f / m));
+    out[0] = 0.5f * m;
+    out[1] = w[0];
+    out[2] = w[1];
+    out[3] = w[2];*/
+    float cos_theta = Vec3::dot(u, v);
+    float angle = acos(cos_theta);
+    Vec3::cross(w, u, v);
+    Vec3::normalize(w, w);
+    Quat::setAxisAngle(out, w, angle);
+    return out;
+}
+
+WorldObj* Route::autoPlaceObject(int x, int z, float* p) {
+    if(ref->selected == NULL) return NULL;
+    Game::check_coords(x, z, p);
+    
+    autoPlacementLastPlaced.clear();
+
+    // pozycja wzgledem TDB:
+    float* tpos = new float[2];
+    float* playerT = Vec2::fromValues(x, z);
+    bool ok = this->trackDB->findNearestPositionOnTDB(playerT, p, NULL, tpos);
+    if(!ok) return NULL;
+    
+    x = playerT[0];
+    z = playerT[1];
+    int trackNodeIdx = tpos[0];
+    int length = this->trackDB->getVectorSectionLength(trackNodeIdx);
+    int metry = 0;
+    float currentPosition[7];
+    float currentPosition1[7];
+    float xyz[3];
+    float *quat = Quat::create();
+    float *vec1 = Vec3::create();
+    vec1[2] = -1.0;
+    float *vec2 = Vec3::create();
+    float step = placementAutoLength;
+    for(float i = 0; i < length; i+=step ){
+        if(!this->trackDB->getDrawPositionOnTrNode((float*)currentPosition, trackNodeIdx, i))
+            return NULL;
+        int i2 = i+step;
+        if(i2 > length)
+            i2 = length - 0.1;
+        if(!this->trackDB->getDrawPositionOnTrNode((float*)currentPosition1, trackNodeIdx, i2))
+            return NULL;
+        x = currentPosition[5];
+        z = -currentPosition[6];
+        //vec1[0] = currentPosition[0];
+        //vec1[1] = currentPosition[1];
+        //vec1[2] = -currentPosition[2];
+        vec2[0] = currentPosition1[0] - (currentPosition[0]-(currentPosition1[5]-currentPosition[5])*2048);
+        vec2[1] = currentPosition1[1] - currentPosition[1];
+        vec2[2] = -currentPosition1[2] + (currentPosition[2]-(currentPosition1[6]-currentPosition[6])*2048);
+        Vec3::normalize(vec2, vec2);
+        //Vec3::normalize(vec1, vec1);
+        if(placementAutoTwoPointRot){
+            fromtwovectors(quat, vec1, vec2);
+        }else {
+            Quat::fill(quat);
+            Quat::rotateY(quat, quat, currentPosition[3]);
+            Quat::rotateX(quat, quat, -currentPosition[4]);
+        }
+        float offset[3];
+        Vec3::copy(offset, placementAutoTranslationOffset);
+        float offsetq[4];
+        Quat::fill(offsetq);
+        Quat::rotateY(offsetq,offsetq,(placementAutoTranslationOffset[1]*M_PI)/180);
+        Quat::rotateX(offsetq,offsetq,(placementAutoTranslationOffset[0]*M_PI)/180);
+        
+        Vec3::transformQuat(offset, offset, quat);
+        Quat::multiply(quat, quat, offsetq);
+        
+        xyz[0] = currentPosition[0] + offset[0];
+        xyz[1] = currentPosition[1] + offset[1];
+        xyz[2] = -currentPosition[2] + offset[2];
+        
+        autoPlacementLastPlaced.push_back(placeObject(x, z, (float*) xyz, quat, ref->selected));
+    }
+
+    return NULL;
+    
+}
+
+void Route::autoPlacementDeleteLast(){
+    for(int i = 0; i < autoPlacementLastPlaced.length(); i++){
+        deleteObj(autoPlacementLastPlaced[i]);
+    }
+    autoPlacementLastPlaced.clear();
+}
+
 
 WorldObj* Route::makeFlexTrack(int x, int z, float* p) {
     float qe[4];
@@ -542,6 +641,8 @@ void Route::deleteTDBTree(WorldObj* obj){
 }
 
 void Route::deleteObj(WorldObj* obj) {
+    if(obj == NULL)
+        return;
     if(obj->typeID == obj->groupobject) {
         GroupObj *gobj = (GroupObj*)obj;
         for(int i = 0; i < gobj->objects.size(); i++ ){

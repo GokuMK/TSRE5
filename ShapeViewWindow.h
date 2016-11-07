@@ -32,7 +32,11 @@ public slots:
     void msg(QString name, QString val);
     
 signals:
+    void windowClosed();
 
+protected:
+    void hideEvent(QHideEvent *e);
+    
 private:
     GlShapeWidget *glShapeWidget;
     Camera *camera;
