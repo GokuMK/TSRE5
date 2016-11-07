@@ -34,6 +34,7 @@ public:
     bool placementStickToTDB = false;
     float placementAutoLength = 50;
     bool placementAutoTwoPointRot = true;
+    int placementAutoTargetType = 0;
     float placementAutoTranslationOffset[3];
     float placementAutoRotationOffset[3];
     Route();

@@ -43,6 +43,8 @@ public slots:
     void advancedPlacementButtonEnabled(bool val);
     void autoPlacementDeleteLastEnabled();
     void autoPlacementRotTypeSelected(QString val);
+    void autoPlacementTargetSelected(QString val);
+    void autoPlacementOffsetEnabled(QString val);
     
     void msg(QString name);
     void msg(QString name, bool val);
@@ -84,6 +86,7 @@ private:
     QLineEdit autoPlacementRotY;
     QLineEdit autoPlacementRotZ;
     QComboBox autoPlacementRotType;
+    QComboBox autoPlacementTarget;
     
 };
 

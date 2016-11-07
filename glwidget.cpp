@@ -1023,10 +1023,6 @@ void GLWidget::msg(QString text, bool val){
         this->route->placementStickToTDB = val;
         return;
     }
-    if(text == "autoPlacementRotType"){
-        this->route->placementAutoTwoPointRot = val;
-        return;
-    }
 }
 
 void GLWidget::msg(QString text, int val){

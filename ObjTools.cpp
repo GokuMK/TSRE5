@@ -70,9 +70,11 @@ ObjTools::ObjTools(QString name)
     vlist3->addWidget(autoPlacementButton,row,0);
     vlist3->addWidget(&autoPlacementLength,row,1);
     autoPlacementLength.setText("50");
-    QDoubleValidator* doubleValidator = new QDoubleValidator(1, 1000, 6, this); 
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-999, 999, 6, this); 
+    QDoubleValidator* doubleValidator1 = new QDoubleValidator(1, 999, 6, this); 
     doubleValidator->setNotation(QDoubleValidator::StandardNotation);
-    autoPlacementLength.setValidator(doubleValidator);
+    doubleValidator1->setNotation(QDoubleValidator::StandardNotation);
+    autoPlacementLength.setValidator(doubleValidator1);
     QObject::connect(&autoPlacementLength, SIGNAL(textEdited(QString)), this, SLOT(autoPlacementLengthEnabled(QString)));
     vlist3->addWidget(new QLabel("m"),row,2);
     vlist3->addWidget(advancedPlacenentButton,row++,3);
@@ -89,27 +91,40 @@ ObjTools::ObjTools(QString name)
     autoPlacementRotType.setStyleSheet("combobox-popup: 0;");
     autoPlacementRotType.addItem("Two Point Rotation");
     autoPlacementRotType.addItem("One Point Rotation");
+    vlist3->addWidget(new QLabel("Target:"),row,0,1,1);
+    vlist3->addWidget(&autoPlacementTarget,row++,1,1,6);
+    QObject::connect(&autoPlacementTarget, SIGNAL(activated(QString)),
+                      this, SLOT(autoPlacementTargetSelected(QString)));
+    autoPlacementTarget.setStyleSheet("combobox-popup: 0;");
+    autoPlacementTarget.addItem("Tracks");
+    autoPlacementTarget.addItem("Roads");
     vlist3->addWidget(new QLabel("Translate Offset"),row,0);
     vlist3->addWidget(new QLabel("X:"),row,1);
     vlist3->addWidget(&autoPlacementPosX,row,2);
+    QObject::connect(&autoPlacementPosX, SIGNAL(textEdited(QString)), this, SLOT(autoPlacementOffsetEnabled(QString)));
     autoPlacementPosX.setText("0");
     vlist3->addWidget(new QLabel("Y:"),row,3);
     vlist3->addWidget(&autoPlacementPosY,row,4);
+    QObject::connect(&autoPlacementPosY, SIGNAL(textEdited(QString)), this, SLOT(autoPlacementOffsetEnabled(QString)));
     autoPlacementPosY.setText("0");
     vlist3->addWidget(new QLabel("Z:"),row,5);
     vlist3->addWidget(&autoPlacementPosZ,row++,6);    
+    QObject::connect(&autoPlacementPosZ, SIGNAL(textEdited(QString)), this, SLOT(autoPlacementOffsetEnabled(QString)));
     autoPlacementPosZ.setText("0");
     vlist3->addWidget(new QLabel("Rotate Offset"),row,0);
     vlist3->addWidget(new QLabel("X:"),row,1);
     vlist3->addWidget(&autoPlacementRotX,row,2);
+    QObject::connect(&autoPlacementRotX, SIGNAL(textEdited(QString)), this, SLOT(autoPlacementOffsetEnabled(QString)));
     autoPlacementRotX.setText("0");
     vlist3->addWidget(new QLabel("Y:"),row,3);
     vlist3->addWidget(&autoPlacementRotY,row,4);
+    QObject::connect(&autoPlacementRotY, SIGNAL(textEdited(QString)), this, SLOT(autoPlacementOffsetEnabled(QString)));
     autoPlacementRotY.setText("0");
     vlist3->addWidget(new QLabel("Z:"),row,5);
     vlist3->addWidget(&autoPlacementRotZ,row++,6);    
-    vlist3->addWidget(autoPlacementDeleteLast,row++,0,1,7);
+    QObject::connect(&autoPlacementRotZ, SIGNAL(textEdited(QString)), this, SLOT(autoPlacementOffsetEnabled(QString)));
     autoPlacementRotZ.setText("0");
+    vlist3->addWidget(autoPlacementDeleteLast,row++,0,1,7);
     autoPlacementPosX.setValidator(doubleValidator);
     autoPlacementPosY.setValidator(doubleValidator);
     autoPlacementPosZ.setValidator(doubleValidator);
@@ -643,7 +658,39 @@ void ObjTools::msg(QString text, QString val){
 
 void ObjTools::autoPlacementRotTypeSelected(QString val){
     if(autoPlacementRotType.currentIndex() == 0)
-        sendMsg("autoPlacementRotType", true);
+        this->route->placementAutoTwoPointRot = true;
     else
-        sendMsg("autoPlacementRotType", false);
+        this->route->placementAutoTwoPointRot = false;
+}
+
+void ObjTools::autoPlacementTargetSelected(QString val){
+    if(autoPlacementTarget.currentIndex() == 0)
+        this->route->placementAutoTargetType = 0;
+    if(autoPlacementTarget.currentIndex() == 1)
+        this->route->placementAutoTargetType = 1;
+}
+
+void ObjTools::autoPlacementOffsetEnabled(QString val){
+    float v;
+    bool ok = false;
+    v = this->autoPlacementPosX.text().toFloat(&ok);
+    if(ok)
+        this->route->placementAutoTranslationOffset[0] = v;
+    v = this->autoPlacementPosY.text().toFloat(&ok);
+    if(ok)
+        this->route->placementAutoTranslationOffset[1] = v;
+    v = this->autoPlacementPosZ.text().toFloat(&ok);
+    if(ok)
+        this->route->placementAutoTranslationOffset[2] = v;
+    
+
+    v = this->autoPlacementRotX.text().toFloat(&ok);
+    if(ok)
+        this->route->placementAutoRotationOffset[0] = v;
+    v = this->autoPlacementRotY.text().toFloat(&ok);
+    if(ok)
+        this->route->placementAutoRotationOffset[1] = v;
+    v = this->autoPlacementRotZ.text().toFloat(&ok);
+    if(ok)
+        this->route->placementAutoRotationOffset[2] = v;
 }

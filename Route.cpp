@@ -414,16 +414,24 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p) {
     
     autoPlacementLastPlaced.clear();
 
+    TDB * tdb = NULL;
+    if(placementAutoTargetType == 0)
+        tdb = this->trackDB;
+    else if(placementAutoTargetType == 1)
+        tdb = this->roadDB;
+    else
+        return NULL;
+    
     // pozycja wzgledem TDB:
     float* tpos = new float[2];
     float* playerT = Vec2::fromValues(x, z);
-    bool ok = this->trackDB->findNearestPositionOnTDB(playerT, p, NULL, tpos);
+    bool ok = tdb->findNearestPositionOnTDB(playerT, p, NULL, tpos);
     if(!ok) return NULL;
     
     x = playerT[0];
     z = playerT[1];
     int trackNodeIdx = tpos[0];
-    int length = this->trackDB->getVectorSectionLength(trackNodeIdx);
+    int length = tdb->getVectorSectionLength(trackNodeIdx);
     int metry = 0;
     float currentPosition[7];
     float currentPosition1[7];
@@ -434,12 +442,12 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p) {
     float *vec2 = Vec3::create();
     float step = placementAutoLength;
     for(float i = 0; i < length; i+=step ){
-        if(!this->trackDB->getDrawPositionOnTrNode((float*)currentPosition, trackNodeIdx, i))
+        if(!tdb->getDrawPositionOnTrNode((float*)currentPosition, trackNodeIdx, i))
             return NULL;
         int i2 = i+step;
         if(i2 > length)
             i2 = length - 0.1;
-        if(!this->trackDB->getDrawPositionOnTrNode((float*)currentPosition1, trackNodeIdx, i2))
+        if(!tdb->getDrawPositionOnTrNode((float*)currentPosition1, trackNodeIdx, i2))
             return NULL;
         x = currentPosition[5];
         z = -currentPosition[6];
@@ -462,8 +470,8 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p) {
         Vec3::copy(offset, placementAutoTranslationOffset);
         float offsetq[4];
         Quat::fill(offsetq);
-        Quat::rotateY(offsetq,offsetq,(placementAutoTranslationOffset[1]*M_PI)/180);
-        Quat::rotateX(offsetq,offsetq,(placementAutoTranslationOffset[0]*M_PI)/180);
+        Quat::rotateY(offsetq,offsetq,(placementAutoRotationOffset[1]*M_PI)/180);
+        Quat::rotateX(offsetq,offsetq,(placementAutoRotationOffset[0]*M_PI)/180);
         
         Vec3::transformQuat(offset, offset, quat);
         Quat::multiply(quat, quat, offsetq);
