@@ -364,6 +364,14 @@ void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     
+    if(Game::showWorldObjPivotPoints){
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0.9,0.9,0.7);
+        }
+        pointer3d->render(selectionColor);
+    }
+    
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
         int sColor = (int)(selectionColor - wColor*65536)/256;
@@ -380,12 +388,13 @@ void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     }
     gluu->mvPopMatrix();
     
-    if(Game::viewInteractives && renderMode != gluu->RENDER_SHADOWMAP) 
-        this->renderTritems(gluu, selectionColor);
+    if(trLoaded >= 0)
+        if(Game::viewInteractives && renderMode != gluu->RENDER_SHADOWMAP) 
+            this->renderTritems(gluu, selectionColor);
 };
 
 void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
-    
+
     ///////////////////////////////
     if (drawPositions == NULL) {
         if(pointer3d == NULL){
@@ -402,10 +411,15 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
             drawPositions[i] = NULL;
             if(!this->signalUnit[i].enabled || !this->signalUnit[i].head)
                 continue;
+            if(tdb->trackItems[this->signalUnit[i].itemId] == NULL){
+                qDebug() << "signal fail tid";
+                this->trLoaded = -1;
+                return;
+            }
             int id = tdb->findTrItemNodeId(this->signalUnit[i].itemId);
             if (id < 0) {
-                qDebug() << "signal fail id";
-                this->loaded = false;
+                qDebug() << "signal fail nid";
+                this->trLoaded = -1;
                 return;
             }
             //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
@@ -413,7 +427,7 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
             bool ok = tdb->getDrawPositionOnTrNode(drawPositions[i], id, tdb->trackItems[this->signalUnit[i].itemId]->trItemSData1);
             if(!ok){
                 qDebug() << "signal fail tdb";
-                this->loaded = false;
+                this->trLoaded = -1;
                 return;
             }
             drawPositions[i][7] = tdb->trackItems[this->signalUnit[i].itemId]->trSignalType2;
@@ -502,8 +516,18 @@ int SignalObj::getDefaultDetailLevel(){
     return -6;
 }
 
+Ref::RefItem* SignalObj::getRefInfo(){
+    Ref::RefItem* r = new Ref::RefItem();
+    r->type = this->type;
+    r->filename = this->fileName;
+    r->staticFlags = this->staticFlags;
+    r->value = this->signalShape->listId;
+    return r;
+}
+
 void SignalObj::save(QTextStream* out){
     if (!loaded) return;
+    if (!trLoaded < 0) return;
     
 *(out) << "	Signal (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";

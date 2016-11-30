@@ -448,6 +448,7 @@ int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
         float dlugosc = this->tsection->sekcja[sect]->getDlugosc();
         //qDebug() <<"dlugosc"<< dlugosc;
         Vector3f *aa = this->tsection->sekcja[sect]->getDrawPosition(dlugosc);
+        aa->rotateX(endNode->UiD[9], 0);  
         aa->rotateY(M_PI + endNode->UiD[10], 0);
         float angle = this->tsection->sekcja[sect]->getAngle();
         int sid = sect;

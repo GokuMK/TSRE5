@@ -40,6 +40,7 @@ public:
     int getLinkedJunctionValue(int i);
     bool isSubObjEnabled(int i);
     bool isJunctionAvailable(int i);
+    Ref::RefItem* getRefInfo();
     bool allowNew();
     bool isTrackItem();
     void initTrItems(float* tpos);

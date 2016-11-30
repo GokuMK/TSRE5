@@ -24,6 +24,7 @@
 #include "CoordsMkr.h"
 #include "IghCoords.h"
 #include "Features.h"
+#include <QTime>
 
 std::unordered_map<int, QImage*> MapWindow::mapTileImages;
 
@@ -92,38 +93,74 @@ void MapWindow::loadOSM(){
     aCoords->TileX = this->tileX;
     aCoords->TileZ = -this->tileZ;
     qDebug() << this->tileX << " " << -this->tileZ;;
+    LatitudeLongitudeCoordinate llpoint[4];
     aCoords->setWxyz(-1024, 0, -1024);
     igh = MstsCoordinates::ConvertToIgh(aCoords);
-    minLatlon = MstsCoordinates::ConvertToLatLon(igh);
+    MstsCoordinates::ConvertToLatLon(igh, &llpoint[0]);
     aCoords->setWxyz(1024, 0, 1024);
     igh = MstsCoordinates::ConvertToIgh(aCoords);
-    maxLatlon = MstsCoordinates::ConvertToLatLon(igh);
-    qDebug() << "lat " << minLatlon->Latitude << " " << maxLatlon->Latitude;
-    qDebug() << "lon " << minLatlon->Longitude << " " << maxLatlon->Longitude;
+    MstsCoordinates::ConvertToLatLon(igh, &llpoint[1]);
     aCoords->setWxyz(-1024, 0, 1024);
     igh = MstsCoordinates::ConvertToIgh(aCoords);
-    minLatlon = MstsCoordinates::ConvertToLatLon(igh);
+    MstsCoordinates::ConvertToLatLon(igh, &llpoint[2]);
     aCoords->setWxyz(1024, 0, -1024);
     igh = MstsCoordinates::ConvertToIgh(aCoords);
-    maxLatlon = MstsCoordinates::ConvertToLatLon(igh);
+    MstsCoordinates::ConvertToLatLon(igh, &llpoint[3]);
+    
+    minLatlon = new LatitudeLongitudeCoordinate(999,999);
+    maxLatlon = new LatitudeLongitudeCoordinate(-999,-999);
+    for(int i = 0; i < 4; i++){
+        if(llpoint[i].Latitude < minLatlon->Latitude)
+            minLatlon->Latitude = llpoint[i].Latitude;
+        if(llpoint[i].Longitude < minLatlon->Longitude)
+            minLatlon->Longitude = llpoint[i].Longitude;
+        if(llpoint[i].Latitude > maxLatlon->Latitude)
+            maxLatlon->Latitude = llpoint[i].Latitude;
+        if(llpoint[i].Longitude > maxLatlon->Longitude)
+            maxLatlon->Longitude = llpoint[i].Longitude;
+    }
+    LatitudeLongitudeCoordinate p00;
+    p00.Latitude = (maxLatlon->Latitude + minLatlon->Latitude)/2.0;
+    p00.Longitude = (maxLatlon->Longitude + minLatlon->Longitude)/2.0;
+    LatitudeLongitudeCoordinate p01;
+    p01.Latitude = (maxLatlon->Latitude + minLatlon->Latitude)/2.0;
+    p01.Longitude = maxLatlon->Longitude;
+    LatitudeLongitudeCoordinate p10;
+    p10.Latitude = maxLatlon->Latitude;
+    p10.Longitude = (maxLatlon->Longitude + minLatlon->Longitude)/2.0;
+    LatitudeLongitudeCoordinate pm10;
+    pm10.Latitude = minLatlon->Latitude;
+    pm10.Longitude = (maxLatlon->Longitude + minLatlon->Longitude)/2.0;
+    LatitudeLongitudeCoordinate p0m1;
+    p0m1.Latitude = (maxLatlon->Latitude + minLatlon->Latitude)/2.0;
+    p0m1.Longitude = minLatlon->Longitude;
+    
     qDebug() << "lat " << minLatlon->Latitude << " " << maxLatlon->Latitude;
     qDebug() << "lon " << minLatlon->Longitude << " " << maxLatlon->Longitude;
-    get();
+    
+    // split osm request to four 1024x1024m requests. 
+    loadCount = 0;
+    totalLoadCount = 4;
+    
+    get(minLatlon, &p00);
+    get(&p00, maxLatlon);
+    get(&pm10, &p01);
+    get(&p0m1, &p10);
 }
 
-void MapWindow::get(){
+void MapWindow::get(LatitudeLongitudeCoordinate* min, LatitudeLongitudeCoordinate* max){
     QNetworkAccessManager* mgr = new QNetworkAccessManager();
     connect(mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(isData(QNetworkReply*)));
     // the HTTP request
     qDebug() << "wait";
     QNetworkRequest req( QUrl( QString("http://www.openstreetmap.org/api/0.6/map?bbox="
-    +QString::number(minLatlon->Longitude)
+    +QString::number(min->Longitude)
     +","
-    +QString::number(minLatlon->Latitude)
+    +QString::number(min->Latitude)
     +","
-    +QString::number(maxLatlon->Longitude)
+    +QString::number(max->Longitude)
     +","
-    +QString::number(maxLatlon->Latitude)
+    +QString::number(max->Latitude)
     ) ) );
     loadButton->setText("Wait ...");
     mgr->get(req);
@@ -132,9 +169,26 @@ void MapWindow::get(){
 void MapWindow::isData(QNetworkReply* r){
     QByteArray data = r->readAll();
     qDebug() << "data " << data.length();    
-    loadButton->setText("Load");
-    load(&data);
-    reload();
+    if(data.length()==0){
+        //"No data from the network..." label
+        loadButton->setText("No data from the network...");
+        // 5 seconds, warning time.
+        QTime cTime= QTime::currentTime().addSecs(5);  
+        while (QTime::currentTime() < cTime){
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        }
+        //End delay
+        r->close();
+        //"Load" label
+        loadButton->setText("Load");
+    } else {
+        load(&data);
+        loadCount++;
+        if(loadCount == totalLoadCount){
+            loadButton->setText("Load");
+            reload(); 
+        }
+    }
 }
 
 void MapWindow::reload(){

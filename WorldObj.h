@@ -86,6 +86,7 @@ public:
     float tRotation[2];
     float *endp = 0;
     int sectionIdx;
+    int trLoaded = 0;
         
     WorldObj();
     WorldObj(const WorldObj& orig);

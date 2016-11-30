@@ -5657,6 +5657,7 @@ moc_GeoTools.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		OglObj.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		SignalObj.h \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
@@ -8887,6 +8888,7 @@ moc_ObjTools.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		OglObj.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		SignalObj.h \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
@@ -18666,6 +18668,7 @@ moc_TerrainTools.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		OglObj.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		SignalObj.h \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
@@ -22647,6 +22650,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ActivityTools.o: ActivityTools.cpp Act
 		OglObj.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		SignalObj.h \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
@@ -24408,7 +24412,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ConEditorWindow.o: ConEditorWindow.cpp
 		ChooseFileDialog.h \
 		RandomConsist.h \
 		ActLib.h \
-		Activity.h
+		Activity.h \
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/ConEditorWindow.o ConEditorWindow.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/ConLib.o: ConLib.cpp ConLib.h \
@@ -28611,6 +28616,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Flex.o: Flex.cpp Flex.h \
 		Shader.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		SignalObj.h \
+		WorldObj.h \
+		FileBuffer.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Intersections.h \
 		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/Flex.o Flex.cpp
@@ -29973,6 +29983,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/GeoTools.o: GeoTools.cpp GeoTools.h \
 		OglObj.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		SignalObj.h \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
@@ -30112,7 +30123,8 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/GroupObj.o: GroupObj.cpp GroupObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
-		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		SignalObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/GroupObj.o GroupObj.cpp
 
 build/Debug/MinGW_QT_5.7.0_Static-Windows/GuiFunct.o: GuiFunct.cpp GuiFunct.h \
@@ -30919,6 +30931,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/HazardObj.o: HazardObj.cpp HazardObj.h
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
 		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		SignalObj.h \
 		TRitem.h \
 		Pointer3d.h \
 		TS.h \
@@ -31711,6 +31724,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/LevelCrObj.o: LevelCrObj.cpp LevelCrOb
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
 		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		SignalObj.h \
 		TRitem.h \
 		Pointer3d.h \
 		Game.h \
@@ -34975,6 +34989,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/ObjTools.o: ObjTools.cpp TSectionDAT.h
 		OglObj.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		SignalObj.h \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
@@ -36009,6 +36024,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Path.o: Path.cpp Path.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		SignalObj.h \
+		WorldObj.h \
+		FileBuffer.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TRnode.h \
 		Vector2i.h \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
@@ -36019,7 +36039,6 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Path.o: Path.cpp Path.h \
 		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
 		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
 		Game.h \
-		FileBuffer.h \
 		Ruch.h \
 		Vector2f.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/Path.o Path.cpp
@@ -36170,6 +36189,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PickupObj.o: PickupObj.cpp PickupObj.h
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
 		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		SignalObj.h \
 		TRitem.h \
 		Pointer3d.h \
 		TrackItemObj.h \
@@ -36322,6 +36342,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/PlatformObj.o: PlatformObj.cpp Platfor
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
 		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		SignalObj.h \
 		TRitem.h \
 		Pointer3d.h \
 		TrackItemObj.h \
@@ -45150,6 +45171,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Route.o: Route.cpp C:/QT/Static/5.7.0/
 		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		SignalObj.h \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
@@ -45633,6 +45655,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/Ruch.o: Ruch.cpp Ruch.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		SignalObj.h \
+		WorldObj.h \
+		FileBuffer.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Vector2f.h \
 		TRnode.h \
 		Vector2i.h \
@@ -48750,6 +48777,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/SoundRegionObj.o: SoundRegionObj.cpp S
 		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		SignalObj.h \
 		TRitem.h \
 		Pointer3d.h \
 		Game.h \
@@ -49269,6 +49297,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/SpeedpostObj.o: SpeedpostObj.cpp Speed
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
 		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		SignalObj.h \
 		TRitem.h \
 		Pointer3d.h \
 		Game.h \
@@ -49544,10 +49573,14 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TDB.o: TDB.cpp TDB.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		SignalObj.h \
+		WorldObj.h \
+		FileBuffer.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
 		Game.h \
 		ParserX.h \
-		FileBuffer.h \
 		ReadFile.h \
 		C:/QT/Static/5.7.0/include/QtCore/QtCore \
 		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
@@ -49662,14 +49695,11 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TDB.o: TDB.cpp TDB.h \
 		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
 		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
 		GLMatrix.h \
-		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TRnode.h \
 		Vector2i.h \
 		TRitem.h \
 		Pointer3d.h \
 		DynTrackObj.h \
-		WorldObj.h \
 		TrackShape.h \
 		Intersections.h \
 		TSectionDAT.h \
@@ -49994,6 +50024,10 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TRitem.o: TRitem.cpp TRitem.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		SignalObj.h \
+		WorldObj.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Game.h \
 		SigCfg.h \
 		SignalShape.h \
@@ -51649,6 +51683,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TerrainTools.o: TerrainTools.cpp Terra
 		OglObj.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		SignalObj.h \
 		WorldObj.h \
 		FileBuffer.h \
 		Ref.h \
@@ -53463,6 +53498,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackObj.o: TrackObj.cpp TrackObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
 		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		SignalObj.h \
 		TrackItemObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_QT_5.7.0_Static-Windows/TrackObj.o TrackObj.cpp
 
@@ -55730,6 +55766,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/glwidget.o: glwidget.cpp glwidget.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
 		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
 		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		SignalObj.h \
 		GLMatrix.h \
 		Eng.h \
 		C:/QT/Static/5.7.0/include/QtCore/QVector \
@@ -56888,6 +56925,7 @@ build/Debug/MinGW_QT_5.7.0_Static-Windows/window.o: window.cpp C:/QT/Static/5.7.
 		TDB.h \
 		TextObj.h \
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		SignalObj.h \
 		TerrainTools.h \
 		GeoTools.h \
 		ActivityTools.h \

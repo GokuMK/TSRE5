@@ -480,75 +480,65 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_Up:    
                 if(Game::usenNumPad) break;
             case Qt::Key_8:
-                if(translateTool && selectedObj != NULL){
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(moveStep, 0, 0);
+                } else if(rotateTool && selectedObj != NULL){
+                    this->selectedObj->rotate(moveStep/10, 0, 0);
+                } else if(selectedObj != NULL){
                     a.y = moveStep;
                     a.rotate(-camera->getRotX(), 0);
                     this->selectedObj->translate(a.x,0,a.y);
-                }
-                if(resizeTool && selectedObj != NULL){
-                    this->selectedObj->resize(moveStep, 0, 0);
-                }
-                if(rotateTool && selectedObj != NULL){
-                    this->selectedObj->rotate(moveStep/10, 0, 0);
-                }
+                }  
                 break;
             case Qt::Key_Down:    
                 if(Game::usenNumPad) break;    
             case Qt::Key_2:
-                if(translateTool && selectedObj != NULL){
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(-moveStep, 0, 0);
+                } else if(rotateTool && selectedObj != NULL){
+                    this->selectedObj->rotate(-moveStep/10, 0, 0);
+                } else if(selectedObj != NULL){
                     a.y = -moveStep;
                     a.rotate(-camera->getRotX(), 0);
                     this->selectedObj->translate(a.x,0,a.y);
-                }
-                if(resizeTool && selectedObj != NULL){
-                    this->selectedObj->resize(-moveStep, 0, 0);
-                }
-                if(rotateTool && selectedObj != NULL){
-                    this->selectedObj->rotate(-moveStep/10, 0, 0);
-                }
+                } 
                 break;    
             case Qt::Key_Left:    
                 if(Game::usenNumPad) break;    
             case Qt::Key_4:
-                if(translateTool && selectedObj != NULL){
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(0, moveStep, 0);
+                } else if(rotateTool && selectedObj != NULL){
+                    this->selectedObj->rotate(0, -moveStep/10, 0);
+                } else if(selectedObj != NULL){
                     a.x = moveStep;
                     a.rotate(-camera->getRotX(), 0);
                     this->selectedObj->translate(a.x,0,a.y);
-                }
-                if(resizeTool && selectedObj != NULL){
-                    this->selectedObj->resize(0, moveStep, 0);
-                }
-                if(rotateTool && selectedObj != NULL){
-                    this->selectedObj->rotate(0, -moveStep/10, 0);
                 }
                 break;
             case Qt::Key_Right:    
                 if(Game::usenNumPad) break;     
             case Qt::Key_6:
-                if(translateTool && selectedObj != NULL){
+                if(resizeTool && selectedObj != NULL){
+                    this->selectedObj->resize(0, -moveStep, 0);
+                } else if(rotateTool && selectedObj != NULL){
+                    this->selectedObj->rotate(0, moveStep/10, 0);
+                } else if(selectedObj != NULL){
                     a.x = -moveStep;
                     a.rotate(-camera->getRotX(), 0);
                     this->selectedObj->translate(a.x,0,a.y);
-                }
-                if(resizeTool && selectedObj != NULL){
-                    this->selectedObj->resize(0, -moveStep, 0);
-                }
-                if(rotateTool && selectedObj != NULL){
-                    this->selectedObj->rotate(0, moveStep/10, 0);
                 }
                 break;
             case Qt::Key_PageUp:
                 //Game::cameraFov += 1;
                 //qDebug() << Game::cameraFov;
             case Qt::Key_9:
-                if(translateTool && selectedObj != NULL){
-                    this->selectedObj->translate(0,moveStep,0);
-                }
                 if(resizeTool && selectedObj != NULL){
                     this->selectedObj->resize(0, 0, moveStep);
-                }
-                if(rotateTool && selectedObj != NULL){
+                } else if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(0, 0, moveStep/10);
+                } else if(selectedObj != NULL){
+                    this->selectedObj->translate(0,moveStep,0);
                 }
                 break;
             case Qt::Key_PageDown:
@@ -556,14 +546,12 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 //qDebug() << Game::cameraFov;
             case Qt::Key_3:
             case Qt::Key_7:    
-                if(translateTool && selectedObj != NULL){
-                    this->selectedObj->translate(0,-moveStep,0);
-                }
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(0, 0, -moveStep/10);
-                }
-                if(resizeTool && selectedObj != NULL){
+                } else if(resizeTool && selectedObj != NULL){
                     this->selectedObj->resize(0, 0, -moveStep);
+                } else if(selectedObj != NULL){
+                    this->selectedObj->translate(0,-moveStep,0);
                 }
                 break;                
             case Qt::Key_F:
@@ -628,6 +616,11 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 break;
         }
     }
+    
+    //switch (event->key()) {
+    //    default:
+    //        break;
+    //}
 }
 
 void GLWidget::keyReleaseEvent(QKeyEvent * event) {

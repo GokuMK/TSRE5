@@ -311,7 +311,23 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     // pozycja wzgledem TDB:
     int itemTrackType = WorldObj::isTrackObj(r->type);
     float* tpos = NULL;
-    if(placementStickToTDB || itemTrackType == 1){
+    if(placementStickToTDB){
+        tpos = new float[2];
+        float* playerT = Vec2::fromValues(x, z);
+        TDB * tdb = NULL;
+        if(placementAutoTargetType == 0)
+            tdb = this->trackDB;
+        else if(placementAutoTargetType == 1)
+            tdb = this->roadDB;
+        else
+            return NULL;
+        bool ok = tdb->findNearestPositionOnTDB(playerT, p, q, tpos);
+        if(!ok) 
+            return NULL;
+        x = playerT[0];
+        z = playerT[1];
+    }
+    if(itemTrackType == 1){
         tpos = new float[2];
         float* playerT = Vec2::fromValues(x, z);
         bool ok = this->trackDB->findNearestPositionOnTDB(playerT, p, q, tpos);

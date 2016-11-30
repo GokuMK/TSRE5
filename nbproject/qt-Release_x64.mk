@@ -33103,7 +33103,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapWindow.o: MapWindow.cpp M
 		CoordsMkr.h \
 		Coords.h \
 		IghCoords.h \
-		Features.h
+		Features.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QTime
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapWindow.o MapWindow.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NaviBox.o: NaviBox.cpp NaviBox.h \

@@ -33,7 +33,7 @@ public:
     virtual ~MapWindow();
     void load(QByteArray* data = NULL);
     bool ok = false;
-    void get();
+    void get(LatitudeLongitudeCoordinate* min, LatitudeLongitudeCoordinate* max);
     int exec();
     
 public slots:
@@ -45,6 +45,8 @@ private:
     QLabel* imageLabel;
     float minlat, minlon, maxlat, maxlon;
     bool invert = false;
+    int loadCount;
+    int totalLoadCount;
     IghCoordinate* igh = NULL;
     LatitudeLongitudeCoordinate* minLatlon = NULL;
     LatitudeLongitudeCoordinate* maxLatlon = NULL;
