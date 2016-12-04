@@ -482,12 +482,7 @@ void Tile::save() {
     out << "SIMISA@@@@@@@@@@JINX0w0t______\n";
     out << "\n";
     out << "Tr_Worldfile (\n";
-    /*if(!Game::deleteViewDbSpheres && viewDbSphereRaw != NULL && this->vDbIdCount > 0){
-        out << "	VDbIdCount ( "<<this->vDbIdCount<<" )\n";
-        out << "	ViewDbSphere (";
-        out << *viewDbSphereRaw;
-        out << "\n";
-    }*/
+
     QString offset = "";
     if(!Game::deleteViewDbSpheres && this->vDbIdCount > 0){
         out << "	VDbIdCount ( "<<this->vDbIdCount<<" )\n";
@@ -495,21 +490,7 @@ void Tile::save() {
             this->viewDbSphere[i].save(&out, offset + "	");
         }
     }
-    /*if(this->vDbIdCount > 0){
-        out << "	VDbIdCount ( "<<this->vDbIdCount<<" )\n";
-        out << "	ViewDbSphere (\n";
-        out << "		VDbId ( "<<viewDbSphere[0].vDbId<<" )\n";
-        out << "		Position ( "<<viewDbSphere[0].position[0]<<" "<<viewDbSphere[0].position[1]<<" "<<viewDbSphere[0].position[2]<<" )\n";
-        out << "		Radius ( "<<viewDbSphere[0].radius<<" )\n";
-        for(int i = 1; i < this->vDbIdCount; i++){
-            out << "		ViewDbSphere (\n";
-            out << "			VDbId ( "<<viewDbSphere[i].vDbId<<" )\n";
-            out << "			Position ( "<<viewDbSphere[i].position[0]<<" "<<viewDbSphere[i].position[1]<<" "<<viewDbSphere[i].position[2]<<" )\n";
-            out << "			Radius ( "<<viewDbSphere[i].radius<<" )\n";
-            out << "		)\n";
-        }
-        out << "	)\n";
-    }*/
+
     if(!Game::sortTileObjects){
         for(int i = 0; i < this->jestObiektow; i++){
             if(this->obiekty[i]->isSoundItem()) continue;
