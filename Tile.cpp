@@ -139,38 +139,16 @@ void Tile::load() {
                 continue;
             } else if (sh == "vdbidcount") {
                 vDbIdCount = ParserX::GetNumber(data);
-                viewDbSphere = new ViewDbSphere[vDbIdCount];
+                //viewDbSphere = new ViewDbSphere[vDbIdCount];
                 ParserX::SkipToken(data);
                 continue;
             } else if (sh == "viewdbsphere") {
-                //qDebug() <<sh;
-                /*int j = 0;
-                do {
-                    for(int i = 0; i< 3; i++){
-                        sh = ParserX::NextTokenInside(data).toLower();
-                        //qDebug() <<sh;
-                        if(sh == ("vdbid")) {
-                            viewDbSphere[j].vDbId = ParserX::GetNumber(data);
-                        }
-                        if(sh == ("position")) {
-                            viewDbSphere[j].position[0] = ParserX::GetNumber(data);
-                            viewDbSphere[j].position[1] = ParserX::GetNumber(data);
-                            viewDbSphere[j].position[2] = ParserX::GetNumber(data);
-                        }
-                        if(sh == ("radius")) {
-                            viewDbSphere[j].radius = ParserX::GetNumber(data);
-                        }
-                        ParserX::SkipToken(data);
-                    }
-
-                    if(j > 0) ParserX::SkipToken(data);
-                    j++;
-                } while (!((sh = ParserX::NextTokenInside(data).toLower()) == ""));
-                */
-                int start = data->off;
+                viewDbSphere.push_back(ViewDbSphere());
+                while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                    viewDbSphere.back().set(sh, data);
+                    ParserX::SkipToken(data);
+                }
                 ParserX::SkipToken(data);
-                int end = data->off;
-                viewDbSphereRaw = (data->getString(start, end));
                 continue;
             } 
             if ((nowy = WorldObj::createObj(sh)) == NULL) {
@@ -198,10 +176,18 @@ void Tile::load() {
             offset = data->off + data->getInt() + 4;
             //qDebug() << idx;
             if(idx == TS::ViewDbSphere){
+                data->off++;
+                viewDbSphere.push_back(ViewDbSphere());
+                while (data->off < offset) {
+                    idxO = data->getToken();
+                    viewDbSphere.back().set(idxO, data);
+                }
                 data->off = offset;
                 continue;
             }
             if(idx == TS::VDbIdCount){
+                data->off++;
+                vDbIdCount = data->getInt();
                 data->off = offset;
                 continue;
             }
@@ -220,7 +206,7 @@ void Tile::load() {
             while (data->off < offset) {
                 idxO = data->getToken();
                 offsetO = data->off + data->getInt() + 4;
-                //qDebug() << "- "<< idxO;
+                //qDebug() << "nid- "<< idxO;
                 nowy->set(idxO, data);
                 data->off = offsetO;
             }
@@ -332,6 +318,68 @@ WorldObj* Tile::getObj(int uid) {
     return NULL;
 }
 
+void Tile::ViewDbSphere::set(QString sh, FileBuffer* data){
+    if (sh == ("vdbid")) {
+        vDbId = ParserX::GetUInt(data);
+        return;
+    }
+    if (sh == ("position")) {
+        position[0] = ParserX::GetNumber(data);
+        position[1] = ParserX::GetNumber(data);
+        position[2] = ParserX::GetNumber(data);
+        return;
+    }
+    if (sh == ("radius")) {
+        radius = ParserX::GetNumber(data);
+        return;
+    }
+    if (sh == ("viewdbsphere")) {
+        viewDbSphere.push_back(ViewDbSphere());
+        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+            viewDbSphere.back().set(sh, data);
+            ParserX::SkipToken(data);
+            }
+        return;
+    }
+    qDebug() << "viewdbsphere unknown:" << sh;
+}
+
+void Tile::ViewDbSphere::set(int sh, FileBuffer* data){
+    int offset = data->off + data->getInt() + 4;
+    data->off++;
+    
+    if (sh == TS::VDbId) {
+        vDbId = data->getUint();
+    } else if (sh == TS::Radius) {
+        radius = data->getFloat();
+    } else if (sh == TS::Position) {
+        position[0] = data->getFloat();
+        position[1] = data->getFloat();
+        position[2] = data->getFloat();
+    } else if(sh == TS::ViewDbSphere){
+        viewDbSphere.push_back(ViewDbSphere());
+        int idx;
+        while (data->off < offset) {
+            idx = data->getToken();
+            viewDbSphere.back().set(idx, data);
+        }
+    } else {
+        qDebug() << "viewdbsphere unknown:" << sh;
+    }
+    data->off = offset;
+}
+
+void Tile::ViewDbSphere::save(QTextStream* out, const QString offset){
+*(out) << offset+"ViewDbSphere (\n";
+*(out) << offset+"	VDbId ( "<<this->vDbId<<" )\n";
+*(out) << offset+"	Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<this->position[2]<<" )\n";
+*(out) << offset+"	Radius ( "<<this->radius<<" )\n";
+for(int i = 0; i < this->viewDbSphere.size(); i++){
+    this->viewDbSphere[i].save(out, offset + "	");
+}
+*(out) << offset+")\n";
+}
+
 void Tile::transalteObj(float px, float py, float pz, int uid) {
     for (int i = 0; i < jestObiektow; i++) {
         if (obiekty[i]->UiD == uid) {
@@ -434,11 +482,18 @@ void Tile::save() {
     out << "SIMISA@@@@@@@@@@JINX0w0t______\n";
     out << "\n";
     out << "Tr_Worldfile (\n";
-    if(!Game::deleteViewDbSpheres && viewDbSphereRaw != NULL && this->vDbIdCount > 0){
+    /*if(!Game::deleteViewDbSpheres && viewDbSphereRaw != NULL && this->vDbIdCount > 0){
         out << "	VDbIdCount ( "<<this->vDbIdCount<<" )\n";
         out << "	ViewDbSphere (";
         out << *viewDbSphereRaw;
         out << "\n";
+    }*/
+    QString offset = "";
+    if(!Game::deleteViewDbSpheres && this->vDbIdCount > 0){
+        out << "	VDbIdCount ( "<<this->vDbIdCount<<" )\n";
+        for(int i = 0; i < this->viewDbSphere.size(); i++){
+            this->viewDbSphere[i].save(&out, offset + "	");
+        }
     }
     /*if(this->vDbIdCount > 0){
         out << "	VDbIdCount ( "<<this->vDbIdCount<<" )\n";

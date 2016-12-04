@@ -18,13 +18,17 @@
 
 class Tile {
 public:
-    struct ViewDbSphere{
+    struct ViewDbSphere {
         int vDbId;
 	float position[3];
 	float radius;
+        QVector<ViewDbSphere> viewDbSphere;
+        void set(int sh, FileBuffer* data);
+        void set(QString sh, FileBuffer* data);
+        void save(QTextStream* out, const QString offset);
     };
     int vDbIdCount;
-    ViewDbSphere* viewDbSphere;
+    QVector<ViewDbSphere> viewDbSphere;
     int loaded;
     bool inUse;
     

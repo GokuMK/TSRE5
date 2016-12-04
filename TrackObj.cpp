@@ -205,8 +205,8 @@ void TrackObj::set(int sh, FileBuffer* data) {
     if (sh == TS::JNodePosn) {
         data->off++;
         jNodePosn.push_back(std::array<float,5>());
-        jNodePosn.back()[0] = data->getFloat();
-        jNodePosn.back()[1] = data->getFloat();
+        jNodePosn.back()[0] = data->getInt();
+        jNodePosn.back()[1] = data->getInt();
         jNodePosn.back()[2] = data->getFloat();
         jNodePosn.back()[3] = data->getFloat();
         jNodePosn.back()[4] = data->getFloat();
