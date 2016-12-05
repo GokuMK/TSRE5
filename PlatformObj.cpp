@@ -33,7 +33,7 @@
 QVector<QString> PlatformObj::CarSpawnerList;
 
 void PlatformObj::LoadCarSpawnerList(){
-    QString path = Game::root + "/routes/" + Game::route + "/openrails/extcarspawn.dat";
+    QString path = Game::root + "/routes/" + Game::route + "/openrails/carspawn.dat";
     path.replace("//", "/");
     qDebug() << path;
     QFile *file = new QFile(path);
