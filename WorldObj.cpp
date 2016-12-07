@@ -368,6 +368,11 @@ void WorldObj::set(int sh, FileBuffer* data) {
         collideFlags = data->getUint();
         return;
     }
+    if (sh == TS::CollideFunction) {
+        data->off++;
+        collideFunction = data->getUint();
+        return;
+    }
     qDebug() << "worldObj "<<this->type<<" unknown: " << sh;
     return;
 }
@@ -425,6 +430,10 @@ void WorldObj::set(QString sh, FileBuffer* data) {
     }
     if (sh == ("collideflags")) {
         collideFlags = ParserX::GetNumber(data);
+        return;
+    }
+    if (sh == ("collidefunction")) {
+        collideFunction = ParserX::GetNumber(data);
         return;
     }
     qDebug() << "worldObj "<<this->type<<" unknown: " << sh;

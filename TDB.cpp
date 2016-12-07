@@ -30,26 +30,42 @@
 #include "SignalObj.h"
 
 
-TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
+TDB::TDB(TSectionDAT* tsection, bool road) {
     loaded = false;
     this->road = road;
     serial = 0;
     wysokoscSieci = 4;
     iTRitems = 0;
     iTRnodes = 0;
-    qDebug() << "Wczytywanie pliku tdb: " << path;
 
     if(tsection == NULL)
         this->tsection = new TSectionDAT();
     else
         this->tsection = tsection;
     
-    int x, i, j, ii, jj, uu;
+    loadTdb();
+    
+    if(!this->road){
+        loadTit();
+        this->speedPostDAT = new SpeedPostDAT();
+        this->sigCfg = new SigCfg();
+        //checkSignals();
+    }
+    //save();
+    loaded = true;
+    return;
+}
+
+void TDB::loadTdb(){
+    int i, j, ii, uu;
     float xx;
     int t;
     QString sh;
+    QString extension = "tdb";
+    if(this->road) extension = "rdb";
+    QString path = Game::root + "/routes/" + Game::route + "/" + Game::routeName + "." + extension;
     path.replace("//", "/");
-    qDebug() << path;
+    qDebug() << "Wczytywanie pliku tdb: " << path;
     QFile *file = new QFile(path);
     if (!file->open(QIODevice::ReadOnly))
         return;
@@ -192,15 +208,6 @@ TDB::TDB(TSectionDAT* tsection, bool road, QString path) {
         }
     }
 
-    if(!this->road){
-        loadTit();
-        this->speedPostDAT = new SpeedPostDAT();
-        this->sigCfg = new SigCfg();
-        //checkSignals();
-    }
-    //save();
-    loaded = true;
-    return;
 }
 
 void TDB::loadTit(){

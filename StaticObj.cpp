@@ -193,8 +193,11 @@ if(type == "collideobject")
 *(out) << "	CollideObject (\n";
 
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
-if(type == "collideobject")
+if(type == "collideobject"){
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
+if(this->collideFunction != -1 )
+*(out) << "		CollideFunction ( "<<this->collideFunction<<" )\n";
+}
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
 if(this->staticFlags != 0)
 *(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";

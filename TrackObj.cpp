@@ -192,11 +192,6 @@ void TrackObj::set(int sh, FileBuffer* data) {
         sectionIdx = data->getUint();
         return;
     }
-    if (sh == TS::CollideFunction) {
-        data->off++;
-        collideFunction = data->getUint();
-        return;
-    }
     if (sh == TS::Elevation) {
         data->off++;
         elevation = data->getFloat();
@@ -237,10 +232,6 @@ void TrackObj::set(QString sh, FileBuffer* data) {
         jNodePosn.back()[2] = ParserX::GetNumber(data);
         jNodePosn.back()[3] = ParserX::GetNumber(data);
         jNodePosn.back()[4] = ParserX::GetNumber(data);
-        return;
-    }
-    if (sh == ("collidefunction")) {
-        collideFunction = ParserX::GetNumber(data);
         return;
     }
     
@@ -400,6 +391,8 @@ if(this->jNodePosn.size() != 0)
         *(out) << "		JNodePosn ( "<<this->jNodePosn[i][0]<<" "<<this->jNodePosn[i][1]<<" "<<this->jNodePosn[i][2]<<" "<<this->jNodePosn[i][3]<<" "<<this->jNodePosn[i][4]<<" )\n";
     }
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
+if(this->collideFunction != -1 )
+*(out) << "		CollideFunction ( "<<this->collideFunction<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
 *(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";

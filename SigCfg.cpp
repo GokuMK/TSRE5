@@ -90,6 +90,7 @@ SigCfg::SigCfg() {
                     //}
                     nowySs->listId = iSignalShape;
                     this->signalShape[nowySs->name.toStdString()] = nowySs;
+                    qDebug() << "nowySs++";
                     this->signalShapeById[iSignalShape] = nowySs;
                     iSignalShape++;
                 }

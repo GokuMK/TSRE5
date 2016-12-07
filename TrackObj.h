@@ -38,7 +38,7 @@ public:
     void setElevation(float prom);
 private:
     float elevation;
-    unsigned int collideFunction;
+    //unsigned int collideFunction;
     bool getSimpleBorder(float* border);
     bool getBoxPoints(QVector<float> &points);
 };

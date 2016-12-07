@@ -549,7 +549,7 @@ void Tile::saveWS() {
     QTextStream out(&file);
     out.setCodec("UTF-16");
     out.setGenerateByteOrderMark(true);
-    out << "SIMISA@@@@@@@@@@JINX0w0t______\n";
+    out << "SIMISA@@@@@@@@@@JINX0W0t______\n";
     out << "\n";
     out << "Tr_Worldsoundfile (\n";
     for(int i = 0; i < this->jestObiektow; i++){

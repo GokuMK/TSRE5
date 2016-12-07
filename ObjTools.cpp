@@ -245,6 +245,7 @@ void ObjTools::routeLoaded(Route* a){
     hash2.clear();
     //int i = 0;
     //int a1ti = 0;
+    if(route->tsection->shape.size() > 0)
     for (auto it = route->tsection->shape.begin(); it != route->tsection->shape.end(); ++it ){
         track = it->second;
         //hash = track->filename.left(3).toStdString();
@@ -286,6 +287,7 @@ void ObjTools::routeLoaded(Route* a){
     refTrackSelected("a1t");
     
     SignalShape * signal;
+    if(Game::trackDB->sigCfg->signalShape.size() > 0)
     for (auto it = Game::trackDB->sigCfg->signalShape.begin(); it != Game::trackDB->sigCfg->signalShape.end(); ++it ){
         signal = it->second;
         if(signal == NULL) continue;

@@ -70,6 +70,7 @@ public:
     unsigned int staticFlags = 0;
     unsigned int vDbId = 4294967295;
     int collideFlags;
+    int collideFunction = -1;
     QString type;
     QString resPath;
     int skipLevel;

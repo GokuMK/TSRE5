@@ -49,13 +49,14 @@ public:
     int iTRnodes;
     int iTRitems;
     int serial;
-    TDB(TSectionDAT* tsection, bool road, QString path);
+    TDB(TSectionDAT* tsection, bool road);
     TDB(const TDB& orig);
     virtual ~TDB();
     void refresh();
     void trpin(TRnode* tr, FileBuffer* bufor );
     void save();
     void saveTit();
+    void loadTdb();
     void loadTit();
     int getNewTRitemId();
     static void saveEmpty(bool road);
