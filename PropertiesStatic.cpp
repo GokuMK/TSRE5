@@ -180,6 +180,21 @@ PropertiesStatic::PropertiesStatic(){
     QObject::connect(&cShadowType, SIGNAL(currentIndexChanged(int)),
                       this, SLOT(cShadowTypeEdited(int)));
 
+    label = new QLabel("MSTS Collision:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(&eCollisionFlags);
+    eCollisionFlags.setDisabled(true);
+    eCollisionFlags.setAlignment(Qt::AlignCenter);
+    cCollisionType.addItem("Disabled");
+    cCollisionType.addItem("Immovable");
+    cCollisionType.addItem("Buffer");
+    cCollisionType.setStyleSheet("combobox-popup: 0;");
+    vbox->addWidget(&cCollisionType);
+    QObject::connect(&cCollisionType, SIGNAL(currentIndexChanged(int)),
+                      this, SLOT(cCollisionTypeEdited(int)));
+    
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -235,6 +250,15 @@ void PropertiesStatic::showObj(WorldObj* obj){
     this->checkboxTerrain.blockSignals(false);
     this->cShadowType.blockSignals(false);
     
+    if(worldObj->type == "collideobject"){
+        eCollisionFlags.setText(QString::number(worldObj->getCollisionFlags()));
+    } else {
+        eCollisionFlags.setText("");
+    }
+    int collisionType = worldObj->getCollisionType();
+    this->cCollisionType.blockSignals(true);
+    this->cCollisionType.setCurrentIndex(collisionType);
+    this->cCollisionType.blockSignals(false);
 }
 
 void PropertiesStatic::updateObj(WorldObj* obj){
@@ -253,6 +277,12 @@ void PropertiesStatic::updateObj(WorldObj* obj){
                 QString::number(obj->qDirection[3], 'G', 4)
                 );
     }
+    
+    if(worldObj->type == "collideobject"){
+        eCollisionFlags.setText(QString::number(worldObj->getCollisionFlags()));
+    } else {
+        eCollisionFlags.setText("");
+    }
 }
 
 bool PropertiesStatic::support(WorldObj* obj){
@@ -261,6 +291,8 @@ bool PropertiesStatic::support(WorldObj* obj){
     if(obj->type == "static")
         return true;
     if(obj->type == "gantry")
+        return true;
+    if(obj->type == "collideobject")
         return true;
     return false;
 }
@@ -336,6 +368,12 @@ void PropertiesStatic::cShadowTypeEdited(int val){
         return;
     worldObj->setShadowType((WorldObj::ShadowType)val);
     this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
+}
+
+void PropertiesStatic::cCollisionTypeEdited(int val){
+    if(worldObj == NULL)
+        return;
+    worldObj->setCollisionType(val-1);
 }
 
 void PropertiesStatic::editFileNameEnabled(){

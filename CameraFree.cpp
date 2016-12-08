@@ -296,6 +296,9 @@ void CameraFree::keyUp(QKeyEvent * e) {
         case Qt::Key_Shift:
             przesx = przesz = 3;
             break;
+        case Qt::Key_Control:
+            przesx = przesz = 3;
+            break;
         case Qt::Key_Left:    
             if(!Game::usenNumPad) break;
         case Qt::Key_A: // A 
@@ -354,6 +357,9 @@ void CameraFree::keyDown(QKeyEvent * e) {
         //case Qt::Key_E: // E
         case Qt::Key_Shift:
             przesx = przesz = 40;
+            break;
+        case Qt::Key_Control:
+            przesx = przesz = 1;
             break;
         default:
             break;

@@ -30,7 +30,7 @@ TrackObj::TrackObj() {
     this->sectionIdx = 0;
     this->elevation = 0;
     this->staticFlags = 0x200180;
-    this->collideFlags = 0;
+    this->collideFlags = 39;
     this->modified = false;
 }
 
@@ -73,6 +73,7 @@ void TrackObj::setElevation(float prom){
     Vec3::transformQuat(vect, vect, q);
     vect[1] = -vect[1];
     //qDebug() << vect[1] << "=" << prom;
+    //qDebug() << (-vect[1]+prom)/1000.0;
     rotate(asin((-vect[1]+prom)/1000.0),0,0);
 }
 
@@ -82,7 +83,7 @@ void TrackObj::rotate(float x, float y, float z){
     if(matrix3x3 != NULL) matrix3x3 = NULL;
     
     //if(this->endp[3] == 1){
-    qDebug() << "rot";
+    qDebug() << "rot" << x << y << z;
     //Mat4::translate(this->matrix, this->matrix, this->endp);
     float vect2[3];
     float vect[3];
@@ -95,7 +96,6 @@ void TrackObj::rotate(float x, float y, float z){
     if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x*this->endp[3]);
     if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y*this->endp[3]);
     if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z*this->endp[3]);    
-    
     
     //Quat::rotateY(quat, quat, -this->endp[4]);
     
@@ -378,6 +378,18 @@ int TrackObj::getDefaultDetailLevel(){
     return -2;
 }
 
+int TrackObj::getCollisionType(){
+    bool enabled = ((this->collideFlags & 2) >> 1) == 0;
+    if(enabled){
+        if(this->collideFunction == 1 )
+            return 2;
+        else 
+            return 1;
+    } else {
+        return 0;
+    }
+}
+
 void TrackObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;
@@ -391,7 +403,7 @@ if(this->jNodePosn.size() != 0)
         *(out) << "		JNodePosn ( "<<this->jNodePosn[i][0]<<" "<<this->jNodePosn[i][1]<<" "<<this->jNodePosn[i][2]<<" "<<this->jNodePosn[i][3]<<" "<<this->jNodePosn[i][4]<<" )\n";
     }
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
-if(this->collideFunction != -1 )
+if(this->collideFunction > 0 )
 *(out) << "		CollideFunction ( "<<this->collideFunction<<" )\n";
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
 *(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";

@@ -69,8 +69,8 @@ public:
     int staticDetailLevel = -1;
     unsigned int staticFlags = 0;
     unsigned int vDbId = 4294967295;
-    int collideFlags;
-    int collideFunction = -1;
+    int collideFlags = 0;
+    int collideFunction = 0;
     QString type;
     QString resPath;
     int skipLevel;
@@ -134,6 +134,9 @@ public:
     virtual void setShadowType(ShadowType val);
     virtual void adjustPositionToTerrain();
     virtual void adjustRotationToTerrain();
+    virtual int getCollisionType();
+    virtual void setCollisionType(int val);
+    virtual int getCollisionFlags();
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 protected:

@@ -32,6 +32,7 @@ public slots:
     void checkboxTerrainEdited(int val);
     void cShadowTypeEdited(int val);
     void editFileNameEnabled();
+    void cCollisionTypeEdited(int val);
     
 signals:
     
@@ -39,6 +40,8 @@ private:
     QCheckBox checkboxAnim;
     QCheckBox checkboxTerrain;
     QComboBox cShadowType;
+    QComboBox cCollisionType;
+    QLineEdit eCollisionFlags;
 };
 
 #endif	/* PROPERTIESSTATIC_H */

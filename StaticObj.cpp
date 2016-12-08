@@ -181,6 +181,39 @@ int StaticObj::getDefaultDetailLevel(){
     return 0;
 }
 
+int StaticObj::getCollisionType(){
+    if(this->type == "collideobject"){
+        bool enabled = ((this->collideFlags & 2) >> 1) == 0;
+        if(enabled){
+            if(this->collideFunction == 1 )
+                return 2;
+            else 
+                return 1;
+        } else {
+            return 0;
+        }
+    } else {
+        return 0;
+    }
+}
+
+void StaticObj::setCollisionType(int val){
+    this->modified = true;
+    if(val < 0){
+        if(this->type == "collideobject")
+            collideFlags = collideFlags | (2);
+        return;
+    }
+    if(this->type != "collideobject"){
+        type = "collideobject";
+        typeID = WorldObj::collideobject;
+        collideFlags = 32;
+    }
+    collideFlags = collideFlags & (~2);
+    collideFunction = val;
+    return;
+}
+
 void StaticObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;
@@ -195,7 +228,7 @@ if(type == "collideobject")
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 if(type == "collideobject"){
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
-if(this->collideFunction != -1 )
+if(this->collideFunction > 0 )
 *(out) << "		CollideFunction ( "<<this->collideFunction<<" )\n";
 }
 *(out) << "		FileName ( "<<this->fileName<<" )\n";

@@ -99,6 +99,7 @@ void RulerObj::setPosition(int x, int z, float* p){
         point.position[2] = -2048*(this->y-z) + p[2];
         this->points.push_back(point);
     }
+    this->modified = true;
     if(line3d != NULL)
         line3d->deleteVBO();
 }

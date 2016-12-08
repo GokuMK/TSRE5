@@ -489,6 +489,7 @@ void WorldObj::setPosition(int x, int z, float* p){
     this->placedAtPosition[0] = this->position[0];
     this->placedAtPosition[1] = this->position[1];
     this->placedAtPosition[2] = this->position[2];
+    this->modified = true;
     deleteVBO();
 }
 
@@ -499,6 +500,7 @@ void WorldObj::setPosition(float* p){
     this->placedAtPosition[0] = this->position[0];
     this->placedAtPosition[1] = this->position[1];
     this->placedAtPosition[2] = this->position[2];
+    this->modified = true;
     deleteVBO();
 }
 
@@ -664,6 +666,7 @@ void WorldObj::setTerrainObj(bool val){
 }
 
 void WorldObj::setShadowType(WorldObj::ShadowType val){
+    this->modified = true;
     staticFlags = staticFlags & (~0x1E000);
     if(val == WorldObj::ShadowNone)
         return;
@@ -675,7 +678,17 @@ void WorldObj::setShadowType(WorldObj::ShadowType val){
         staticFlags = staticFlags | 0x8000;
     else if(val == WorldObj::ShadowDynamic)
         staticFlags = staticFlags | 0x10000;
+}
+
+void WorldObj::setCollisionType(int val){
     this->modified = true;
+    if(val < 0){
+        collideFlags = collideFlags | (2);
+        return;
+    }
+    collideFlags = collideFlags & (~2);
+    collideFunction = val;
+    return;
 }
 
 void WorldObj::adjustPositionToTerrain(){
@@ -708,4 +721,12 @@ void WorldObj::adjustRotationToTerrain(){
     this->qDirection[3] = q[3];
     this->modified = true;
     setMartix();
+}
+
+int WorldObj::getCollisionType(){
+    return 0;
+}
+
+int WorldObj::getCollisionFlags(){
+    return collideFlags;
 }

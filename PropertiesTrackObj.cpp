@@ -174,7 +174,24 @@ PropertiesTrackObj::PropertiesTrackObj(){
     this->elev1inXm.setValidator(doubleValidator);
     QObject::connect(&this->elev1inXm, SIGNAL(textEdited(QString)), this, SLOT(elev1inXmEnabled(QString)));
     vbox->addItem(vlist);
-    
+    label = new QLabel("MSTS Collision:");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(&eCollisionFlags);
+    eCollisionFlags.setDisabled(true);
+    eCollisionFlags.setAlignment(Qt::AlignCenter);
+    cCollisionType.addItem("Disabled");
+    cCollisionType.addItem("Immovable");
+    cCollisionType.addItem("Buffer");
+    cCollisionType.setStyleSheet("combobox-popup: 0;");
+    vbox->addWidget(&cCollisionType);
+    QObject::connect(&cCollisionType, SIGNAL(currentIndexChanged(int)),
+                      this, SLOT(cCollisionTypeEdited(int)));
+    QPushButton *resetFlags = new QPushButton("Reset Flags", this);
+    QObject::connect(resetFlags, SIGNAL(released()),
+                      this, SLOT(copyFEnabled()));
+    vbox->addWidget(resetFlags);
     label = new QLabel("Advanced:");
     label->setStyleSheet("QLabel { color : #999999; }");
     label->setContentsMargins(3,0,0,0);
@@ -265,7 +282,11 @@ void PropertiesTrackObj::showObj(WorldObj* obj){
     //float elev = tan((vect[1]/10.0));
     //qe[1] = pitch;
     //qe[2] = 0;
-    
+    eCollisionFlags.setText(QString::number(worldObj->getCollisionFlags()));
+    int collisionType = worldObj->getCollisionType();
+    this->cCollisionType.blockSignals(true);
+    this->cCollisionType.setCurrentIndex(collisionType);
+    this->cCollisionType.blockSignals(false);
 }
 
 void PropertiesTrackObj::updateObj(WorldObj* obj){
@@ -297,6 +318,7 @@ void PropertiesTrackObj::updateObj(WorldObj* obj){
         this->elevProm.setText(QString::number(vect[1]));
         this->elev1inXm.setText(QString::number(oneInXm));
     }
+    eCollisionFlags.setText(QString::number(worldObj->getCollisionFlags()));
 }
 
 void PropertiesTrackObj::elevPromEnabled(QString val){
@@ -306,7 +328,10 @@ void PropertiesTrackObj::elevPromEnabled(QString val){
     bool ok = false;
     float prom = val.toFloat(&ok);
     if(!ok) return;
+    if(fabs(prom) > 700)
+        return;
     float oneInXm = 1000.0/prom;
+    qDebug () << "prom" << prom;
     this->elev1inXm.setText(QString::number(oneInXm));
     trackObj->setElevation(prom);
 }
@@ -318,7 +343,11 @@ void PropertiesTrackObj::elev1inXmEnabled(QString val){
     bool ok = false;
     float oneInXm = val.toFloat(&ok);
     if(!ok) return;
+    //qDebug () << "oneInXm" << oneInXm;
     float prom = 1000.0/oneInXm;
+    if(fabs(prom) > 700)
+        return;
+    qDebug () << "prom" << prom;
     this->elevProm.setText(QString::number(prom));
     trackObj->setElevation(prom);
 }
@@ -329,6 +358,12 @@ bool PropertiesTrackObj::support(WorldObj* obj){
     if(obj->type == "trackobj")
         return true;
     return false;
+}
+
+void PropertiesTrackObj::cCollisionTypeEdited(int val){
+    if(worldObj == NULL)
+        return;
+    worldObj->setCollisionType(val-1);
 }
 
 void PropertiesTrackObj::editFileNameEnabled(){

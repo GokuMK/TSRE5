@@ -29,6 +29,7 @@ public slots:
     void elevPromEnabled(QString val);
     void elev1inXmEnabled(QString val);
     void editFileNameEnabled();
+    void cCollisionTypeEdited(int val);
         
 signals:
     
@@ -36,7 +37,8 @@ private:
     TrackObj* trackObj;
     QLineEdit elevProm;
     QLineEdit elev1inXm;
-    
+    QComboBox cCollisionType;
+    QLineEdit eCollisionFlags;
 };
 
 #endif	/* PROPERTIESTRACKOBJ_H */

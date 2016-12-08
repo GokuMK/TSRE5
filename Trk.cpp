@@ -74,10 +74,10 @@ void Trk::load(){
 }
 
 void Trk::load(QString path){
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
         return;
-    FileBuffer* data = ReadFile::read(file);
+    FileBuffer* data = ReadFile::read(&file);
     ParserX::NextLine(data);
 
     QString sh = "Tr_RouteFile";

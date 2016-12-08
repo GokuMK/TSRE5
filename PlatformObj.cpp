@@ -649,6 +649,7 @@ QString PlatformObj::getCarListName(){
 
 void PlatformObj::setCarListName(QString val){
     carspawnerListName = val;
+    modified = true;
 }
 
 void PlatformObj::save(QTextStream* out) {

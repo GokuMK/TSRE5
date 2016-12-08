@@ -36,6 +36,7 @@ public:
     QVector<std::array<float, 5>> jNodePosn;
     void fillJNodePosn();
     void setElevation(float prom);
+    int getCollisionType();
 private:
     float elevation;
     //unsigned int collideFunction;

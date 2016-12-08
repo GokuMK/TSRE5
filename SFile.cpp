@@ -228,6 +228,11 @@ void SFile::loadSd() {
                     ParserX::SkipToken(data);
                     continue;
                 }
+                if (sh == ("esd_snapable")) {
+                    qDebug() << "snap";
+                    ParserX::SkipToken(data);
+                    continue;
+                }
                 ParserX::SkipToken(data);
             }
             ParserX::SkipToken(data);
