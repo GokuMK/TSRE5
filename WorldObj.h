@@ -84,6 +84,8 @@ public:
     bool modified = false;
     Vector3f selectionColor;
     OglObj box;
+    OglObj* snapableEndPoint = NULL;
+    bool snapable = false;
     float tRotation[2];
     float *endp = 0;
     int sectionIdx;
@@ -137,6 +139,7 @@ public:
     virtual int getCollisionType();
     virtual void setCollisionType(int val);
     virtual int getCollisionFlags();
+    virtual void insertSnapablePoints(QVector<float> &points);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 protected:

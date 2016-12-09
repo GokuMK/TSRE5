@@ -33,6 +33,7 @@ public slots:
     void cShadowTypeEdited(int val);
     void editFileNameEnabled();
     void cCollisionTypeEdited(int val);
+    void RemoveCollisionsEnabled();
     
 signals:
     

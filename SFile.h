@@ -149,9 +149,12 @@ public:
     void render();
     void getSize();
     bool getBoxPoints(QVector<float> &points);
+    bool isSnapable();
+    void addSnapablePoints(QVector<float> &out);
 private:
     void loadSd();
     float* getPmatrix(float* pmatrix, int matrix);
+    bool snapable = false;
 };
 
 #endif	/* SFILE_H */

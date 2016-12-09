@@ -31,7 +31,7 @@ public:
     TSectionDAT *tsection; 
     SoundList* soundList;
     Ref *ref;
-    bool placementStickToTDB = false;
+    bool placementStickToTarget = false;
     float placementAutoLength = 50;
     bool placementAutoTwoPointRot = true;
     int placementAutoTargetType = 0;

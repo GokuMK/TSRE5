@@ -182,6 +182,9 @@ Window::Window() {
     QAction* viewMarkers = GuiFunct::newMenuCheckAction(tr("&Markers"), this, false); 
     viewMenu->addAction(viewMarkers);
     QObject::connect(viewMarkers, SIGNAL(triggered(bool)), this, SLOT(viewMarkers(bool)));
+    QAction* viewSnapable = GuiFunct::newMenuCheckAction(tr("&Snapable Points"), this, false); 
+    viewMenu->addAction(viewSnapable);
+    QObject::connect(viewSnapable, SIGNAL(triggered(bool)), this, SLOT(viewSnapable(bool)));
     // Tools
     toolsMenu = menuBar()->addMenu(tr("&Tools"));
     propertiesAction = GuiFunct::newMenuCheckAction(tr("&Properties"), this); 
@@ -537,6 +540,9 @@ void Window::viewPointer3d(bool show){
 }
 void Window::viewMarkers(bool show){
     Game::viewMarkers = show;
+}
+void Window::viewSnapable(bool show){
+    Game::viewSnapable = show;
 }
 void Window::show(){
     naviWindow->move(0, this->height() - naviWindow->height() );

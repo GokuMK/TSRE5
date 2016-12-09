@@ -311,21 +311,21 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     // pozycja wzgledem TDB:
     int itemTrackType = WorldObj::isTrackObj(r->type);
     float* tpos = NULL;
-    if(placementStickToTDB){
-        tpos = new float[2];
-        float* playerT = Vec2::fromValues(x, z);
+    if(placementStickToTarget){
         TDB * tdb = NULL;
         if(placementAutoTargetType == 0)
             tdb = this->trackDB;
         else if(placementAutoTargetType == 1)
             tdb = this->roadDB;
-        else
-            return NULL;
-        bool ok = tdb->findNearestPositionOnTDB(playerT, p, q, tpos);
-        if(!ok) 
-            return NULL;
-        x = playerT[0];
-        z = playerT[1];
+        if(tdb != NULL){
+            tpos = new float[2];
+            float* playerT = Vec2::fromValues(x, z);
+            bool ok = tdb->findNearestPositionOnTDB(playerT, p, q, tpos);
+            if(!ok) 
+                return NULL;
+            x = playerT[0];
+            z = playerT[1];
+        }
     }
     if(itemTrackType == 1){
         tpos = new float[2];
@@ -372,6 +372,11 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         }
     }
     if (tTile->loaded == 1) {
+        if(placementStickToTarget && placementAutoTargetType == 2){
+            float snapablePos[3];
+            tTile->getNearestSnapablePosition(p, q, snapablePos);
+        }
+        
         //float pozWW[3];
         //pozWW[2] = pozW[2];
         //for(int j = -1000; j < 1000; j+=10)

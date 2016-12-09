@@ -194,7 +194,10 @@ PropertiesStatic::PropertiesStatic(){
     vbox->addWidget(&cCollisionType);
     QObject::connect(&cCollisionType, SIGNAL(currentIndexChanged(int)),
                       this, SLOT(cCollisionTypeEdited(int)));
-    
+    QPushButton *resetFlags = new QPushButton("Remove Collisions", this);
+    QObject::connect(resetFlags, SIGNAL(released()),
+                      this, SLOT(RemoveCollisionsEnabled()));
+    vbox->addWidget(resetFlags);
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -374,6 +377,13 @@ void PropertiesStatic::cCollisionTypeEdited(int val){
     if(worldObj == NULL)
         return;
     worldObj->setCollisionType(val-1);
+}
+
+void PropertiesStatic::RemoveCollisionsEnabled(){
+    if(worldObj == NULL)
+        return;
+    StaticObj* staticObj = (StaticObj*) worldObj;
+    staticObj->removeCollisions();
 }
 
 void PropertiesStatic::editFileNameEnabled(){

@@ -1013,7 +1013,7 @@ void GLWidget::msg(QString text){
 void GLWidget::msg(QString text, bool val){
     qDebug() << text;
     if(text == "stickToTDB"){
-        this->route->placementStickToTDB = val;
+        this->route->placementStickToTarget = val;
         return;
     }
 }

@@ -46,7 +46,7 @@ void StaticObj::load(int x, int y) {
     this->size = -1;
     this->skipLevel = 1;
     this->box.loaded = false;
-
+            
     setMartix();
 }
 
@@ -115,10 +115,19 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
             if ((ccos > 0) && (xxx > size) && (skipLevel == 1)) return;
         }
     } else {
-        if (Game::currentShapeLib->shape[shape]->loaded)
+        if (Game::currentShapeLib->shape[shape]->loaded){
             size = Game::currentShapeLib->shape[shape]->size;
+            
+            this->snapable = this->shapePointer->isSnapable();
+            if(snapable)
+                this->shapePointer->addSnapablePoints(this->snapablePoints);
+        }
     }
 
+    if(Game::viewSnapable)
+        if(snapablePoints.size() == 6)
+            renderSnapableEndpoints(gluu);  
+    
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     
@@ -145,6 +154,56 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
         drawBox();
     }
 };
+
+void StaticObj::renderSnapableEndpoints(GLUU* gluu) {
+    if (snapableEndPoint == NULL) {
+        snapableEndPoint = new OglObj();
+        float *punkty = new float[3 * 2];
+        int ptr = 0;
+        punkty[ptr++] = 0;
+        punkty[ptr++] = 0;
+        punkty[ptr++] = 0;
+        punkty[ptr++] = 0;
+        punkty[ptr++] = 30;
+        punkty[ptr++] = 0;
+        snapableEndPoint->setMaterial(0.0, 1.0, 0.0);
+        snapableEndPoint->init(punkty, ptr, snapableEndPoint->V, GL_LINES);
+        delete[] punkty;
+    }
+    
+    float vec[3];
+    for(int i = 0; i < 6; i+=3){
+        Vec3::transformQuat(vec, (float*)&snapablePoints[i], qDirection);
+        Vec3::add(vec, vec, position);
+        gluu->mvPushMatrix();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, vec);
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        snapableEndPoint->render();
+        gluu->mvPopMatrix();
+    }
+}
+
+void StaticObj::insertSnapablePoints(QVector<float>& points){
+    if(snapablePoints.size() == 6){
+        float vec[3];
+        for(int i = 0; i < 6; i+=3){
+            Vec3::transformQuat(vec, (float*)&snapablePoints[i], qDirection);
+            points.push_back(vec[0]);
+            points.push_back(vec[1]);
+            points.push_back(vec[2]);
+            Vec3::add(vec, vec, position);
+            points.push_back(vec[0]);
+            points.push_back(vec[1]);
+            points.push_back(vec[2]);
+            
+            points.push_back(qDirection[0]);
+            points.push_back(qDirection[1]);
+            points.push_back(qDirection[2]);
+            points.push_back(qDirection[3]);
+        }
+    }
+    return;
+}
 
 bool StaticObj::getSimpleBorder(float* border){
     if (shapePointer == 0) return false;
@@ -212,6 +271,16 @@ void StaticObj::setCollisionType(int val){
     collideFlags = collideFlags & (~2);
     collideFunction = val;
     return;
+}
+
+void StaticObj::removeCollisions(){
+    if(type != "static"){
+        type = "static";
+        typeID = WorldObj::sstatic;
+        collideFlags = 0;
+        collideFunction = 0;
+        modified = true;
+    }
 }
 
 void StaticObj::save(QTextStream* out){

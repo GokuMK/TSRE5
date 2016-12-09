@@ -229,7 +229,7 @@ void SFile::loadSd() {
                     continue;
                 }
                 if (sh == ("esd_snapable")) {
-                    qDebug() << "snap";
+                    snapable = true;
                     ParserX::SkipToken(data);
                     continue;
                 }
@@ -337,6 +337,20 @@ bool SFile::getBoxPoints(QVector<float>& points){
         }
     }
     return true;
+}
+
+bool SFile::isSnapable(){
+    return snapable;
+}
+
+void SFile::addSnapablePoints(QVector<float> &out){
+    if(esdBoundingBox.size() == 0) return;
+    out.push_back(esdBoundingBox[0].shape[0]);
+    out.push_back(0);
+    out.push_back(esdBoundingBox[0].shape[2]);
+    out.push_back(esdBoundingBox[0].shape[3]);
+    out.push_back(0);
+    out.push_back(esdBoundingBox[0].shape[5]);
 }
 
 void SFile::render() {

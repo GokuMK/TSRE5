@@ -55,6 +55,7 @@ public slots:
     void viewTsectionLines(bool show);
     void viewPointer3d(bool show);
     void viewMarkers(bool show);
+    void viewSnapable(bool show);
     void showToolsObject(bool show);
     void showToolsTerrain(bool show);
     void showToolsGeo(bool show);

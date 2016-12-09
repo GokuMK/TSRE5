@@ -98,6 +98,7 @@ ObjTools::ObjTools(QString name)
     autoPlacementTarget.setStyleSheet("combobox-popup: 0;");
     autoPlacementTarget.addItem("Tracks");
     autoPlacementTarget.addItem("Roads");
+    autoPlacementTarget.addItem("Snapable");
     vlist3->addWidget(new QLabel("Translate Offset"),row,0);
     vlist3->addWidget(new QLabel("X:"),row,1);
     vlist3->addWidget(&autoPlacementPosX,row,2);
@@ -135,7 +136,7 @@ ObjTools::ObjTools(QString name)
     vbox->addWidget(&advancedPlacementWidget);
     advancedPlacementWidget.hide();
     
-    stickToTDB.setText("Stick To TrackDB");
+    stickToTDB.setText("Stick To Target");
     stickToTDB.setChecked(false);
     //vbox->addWidget(&stickToTDB);
     QLabel *label2 = new QLabel("Recent items:");
@@ -670,6 +671,8 @@ void ObjTools::autoPlacementTargetSelected(QString val){
         this->route->placementAutoTargetType = 0;
     if(autoPlacementTarget.currentIndex() == 1)
         this->route->placementAutoTargetType = 1;
+    if(autoPlacementTarget.currentIndex() == 2)
+        this->route->placementAutoTargetType = 2;
 }
 
 void ObjTools::autoPlacementOffsetEnabled(QString val){

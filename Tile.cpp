@@ -597,6 +597,35 @@ void Tile::updateTerrainObjects(){
     }
 }
 
+float Tile::getNearestSnapablePosition(float* pos, float *quat, float* out){
+    QVector<float> points;
+    for (int i = 0; i < jestObiektow; i++) {
+        if (obiekty[i]->loaded && obiekty[i]->snapable) {
+            obiekty[i]->insertSnapablePoints(points);                
+        }
+    }
+    float distance = 9999;
+    float t;
+    float tpos[3];
+    float tquat[4];
+    for (int i = 0; i < points.size(); i+=10){
+        //qDebug() << points[i+3] << points[i+4] << points[i+5];
+        t = Vec3::dist(pos, (float*)&points[i+3]);
+        //qDebug() << t;
+        if(t < distance){
+            distance = t;
+            Vec3::copy(tpos, (float*)&points[i+3]);
+            Vec3::add(tpos, tpos, (float*)&points[i]);
+            Quat::copy(tquat, (float*)&points[i+6]);
+        }
+    }
+    if(distance < 20){
+        Vec3::copy(pos, tpos);
+        Quat::copy(quat, tquat);
+    }
+    return distance;
+}
+
 void Tile::render(float * playerT, float* playerW, float* target, float fov, int renderMode) {
     if (loaded != 1) return;
     GLUU* gluu = GLUU::get();

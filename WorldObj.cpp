@@ -730,3 +730,7 @@ int WorldObj::getCollisionType(){
 int WorldObj::getCollisionFlags(){
     return collideFlags;
 }
+
+void WorldObj::insertSnapablePoints(QVector<float>& points){
+    return;
+}
