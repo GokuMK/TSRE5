@@ -13,6 +13,7 @@
 
 #include <QString>
 #include <unordered_map>
+#include "QHash"
 
 struct SoundListItem {
     enum SoundType {
@@ -33,8 +34,8 @@ private:
 
 class SoundList {
 public:
-    std::unordered_map<std::string, SoundListItem*> sources;
-    std::unordered_map<std::string, SoundListItem*> regions;
+    QHash<QString, SoundListItem*> sources;
+    QHash<QString, SoundListItem*> regions;
     bool sourcesLoaded = false;
     bool regionsLoaded = false;
     void loadSoundSources(QString path);

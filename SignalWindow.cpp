@@ -18,8 +18,8 @@
 #include "SignalWindowLink.h"
 
 SignalWindow::SignalWindow()
-: QDialog() {
-    //this->setWindowFlags(Qt::WindowStaysOnTopHint);
+: QWidget() {
+    this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->setFixedWidth(400);
 
 
@@ -49,10 +49,31 @@ SignalWindow::SignalWindow()
 
     connect(&signalsChSect, SIGNAL(mapped(int)), this, SLOT(chSubEnabled(int)));
     connect(&signalsLinkButton, SIGNAL(mapped(int)), this, SLOT(bLinkEnabled(int)));
-    QPushButton* browse = new QPushButton("Close");
-    connect(browse, SIGNAL(released()), this, SLOT(close()));
-    vbox->addWidget(browse);
-    vbox->setAlignment(browse, Qt::AlignBottom);
+    QPushButton* closeButton = new QPushButton("Close");
+    connect(closeButton, SIGNAL(released()), this, SLOT(close()));
+    //vbox->setAlignment(setLinkButton, Qt::AlignBottom);
+    vbox->addWidget(closeButton);
+    QLabel *label = new QLabel("SubObj Link Info (press Link button above to show):");
+    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    
+    QGridLayout *vlist = new QGridLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,1,0);    
+    setLinkButton = new QPushButton("Set Link");
+    connect(setLinkButton, SIGNAL(released()), this, SLOT(setLink()));
+    label = new QLabel("From - To: ");
+    vlist->addWidget(label,0,0);
+    vlist->addWidget(&eLink1,0,1);
+    eLink1.setDisabled(true);
+    vlist->addWidget(&eLink2,0,2);
+    eLink2.setDisabled(true);
+    vlist->addWidget(&eLink3,0,3);
+    eLink3.setDisabled(true);
+    vlist->addWidget(setLinkButton,0,4);
+    vbox->addItem(vlist);
+
     vbox->setContentsMargins(1, 1, 1, 1);
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -73,8 +94,33 @@ void SignalWindow::chSubEnabled(int i) {
 void SignalWindow::bLinkEnabled(int i) {
     if (sobj == NULL)
         return;
-
-    SignalWindowLink window;
+    
+    currentSubObjLinkInfo = i;
+    if(currentSubObjLinkInfo < 0){
+        setLinkButton->setDisabled(true);
+        setLinkButton->setText("Set Link");
+        eLink1.setText("");
+        eLink2.setText("");
+        eLink3.setText("");
+        return;
+    }
+    this->sobj->subObjSelected = i;
+    setLinkButton->setDisabled(false);
+    setLinkButton->setText(QString("Set Link [")+QString::number(i)+"]");
+    int ids[3];
+    int linkId = sobj->getLinkedJunctionValue(i);
+    if(linkId < 1){
+        eLink1.setText("");
+        eLink2.setText("");
+        eLink3.setText("");
+        return;
+    }
+    sobj->getLinkInfo((int*)&ids);
+    eLink1.setText(QString::number(ids[0]));
+    eLink2.setText(QString::number(ids[1]));
+    eLink3.setText(QString::number(ids[2]));
+    
+    /*SignalWindowLink window;
     window.setWindowTitle("Link Signal");
     window.exec();
     if (window.changed) {
@@ -83,8 +129,13 @@ void SignalWindow::bLinkEnabled(int i) {
         qDebug() << "link val: " << from << " " << to;
         sobj->linkSignal(i, from, to);
         showObj(sobj);
-    }
+    }*/
 
+}
+
+void SignalWindow::setLink(){
+    if(currentSubObjLinkInfo >= 0)
+        emit sendMsg("enableTool","signalLinkTool");
 }
 
 void SignalWindow::showObj(SignalObj* obj) {
@@ -141,6 +192,44 @@ void SignalWindow::showObj(SignalObj* obj) {
         }
     }
     this->resize(this->width(), this->minimumHeight());
+    bLinkEnabled(-1);
+}
+
+void SignalWindow::updateObj(SignalObj* obj) {
+    this->sobj = obj;
+    if(sobj == NULL)
+        return;
+    
+    TDB* tdb = Game::trackDB;
+    SignalShape* signalShape = tdb->sigCfg->signalShape[sobj->fileName.toStdString()];
+    int iSubObj = signalShape->iSubObj;
+    if (iSubObj > maxSubObj) iSubObj = maxSubObj;
+    int linkPtr;
+    
+    for (int i = 0; i < iSubObj; i++) {
+        if (signalShape->subObj[i].isJnLink) {
+            this->bSub[i].show();
+            this->bSub[i].setStyleSheet("color: gray");
+            this->bSub[i].setText("Link");
+            this->bSub[i].setEnabled(false);
+            if (this->chSub[i].isChecked()) {
+                setLinkInfo(i);
+            }
+        } else if (signalShape->subObj[i].iLink > 0) {
+            this->bSub[i].show();
+            this->bSub[i].setStyleSheet("color: gray");
+            this->bSub[i].setText("Link");
+            this->bSub[i].setEnabled(false);
+            for (int j = 0; j < signalShape->subObj[i].iLink; j++) {
+                linkPtr = signalShape->subObj[i].sigSubJnLinkIf[j];
+                if (this->chSub[linkPtr].isChecked()) {
+                    setLinkInfo(i);
+                    break;
+                }
+            }
+        }
+    }
+    bLinkEnabled(currentSubObjLinkInfo);
 }
 
 void SignalWindow::setLinkInfo(int i) {

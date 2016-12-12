@@ -115,13 +115,20 @@ PropertiesSignal::PropertiesSignal() {
     //QObject::connect(&signalsChSect, SIGNAL(mapped(int)),
     //    this, SLOT(chSubEnabled(int)));
     
-    
+    QObject::connect(signalWindow, SIGNAL(sendMsg(QString,QString)),
+        this, SLOT(msg(QString,QString)));   
     
     vbox->addStretch(1);
     this->setLayout(vbox);
 }
 
 PropertiesSignal::~PropertiesSignal() {
+}
+
+void PropertiesSignal::msg(QString name, QString val){
+    if(name == "enableTool"){
+        emit enableTool(val);
+    }
 }
 
 void PropertiesSignal::showObj(WorldObj* obj){
@@ -170,6 +177,15 @@ void PropertiesSignal::showObj(WorldObj* obj){
     this->cShadowType.blockSignals(false);
 }
 
+void PropertiesSignal::updateObj(WorldObj* obj){
+    if(sobj == NULL){
+        return;
+    }
+    
+    this->signalWindow->updateObj(sobj);
+    
+}
+
 void PropertiesSignal::flipSignal(){
     if(sobj == NULL)
         return;
@@ -177,7 +193,7 @@ void PropertiesSignal::flipSignal(){
 }
 
 void PropertiesSignal::showSubObjList(){
-    this->signalWindow->exec();
+    this->signalWindow->show();
 }
 
 bool PropertiesSignal::support(WorldObj* obj){

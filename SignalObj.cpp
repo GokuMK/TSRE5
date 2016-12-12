@@ -22,6 +22,7 @@
 #include "SignalShape.h"
 #include "Game.h"
 #include "TS.h"
+#include "TRnode.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -212,6 +213,25 @@ int SignalObj::getLinkedJunctionValue(int i){
     return trit->trSignalDir[0];
 }
 
+void SignalObj::getLinkInfo(int *ids){
+    ids[0] = -1;
+    if(!this->signalUnit[subObjSelected].enabled) return;
+    if(!this->signalUnit[subObjSelected].head) return;
+    TDB* tdb = Game::trackDB;
+    TRitem* trit = tdb->trackItems[this->signalUnit[subObjSelected].itemId];
+    if(trit == NULL) return;
+    if(trit->trSignalDirs < 1) return;
+    int jid = trit->trSignalDir[0];
+    int dir = trit->trSignalDir[2];
+    ids[0] = jid;
+    ids[1] = tdb->trackNodes[jid]->TrPinS[1+dir];
+    TRnode *n = tdb->trackNodes[ids[1]];
+    if(n->TrPinS[0] == ids[0])
+        ids[2] = n->TrPinS[1];
+    else
+        ids[2] = n->TrPinS[0];
+}
+
 bool SignalObj::isJunctionAvailable(int i){
     if(!this->signalUnit[i].enabled) return false;
     if(!this->signalUnit[i].head) return false;
@@ -228,13 +248,22 @@ bool SignalObj::isJunctionAvailable(int i){
     return false;
 }
 
-void SignalObj::linkSignal(int subsigId, int from, int to){
+/*void SignalObj::linkSignal(int subsigId, int from, int to){
     if(!this->signalUnit[subsigId].enabled) return;
     if(!this->signalUnit[subsigId].head) return;
     TDB* tdb = Game::trackDB;
     if(tdb->trackItems[this->signalUnit[subsigId].itemId] == NULL)
         return;
     tdb->trackItems[this->signalUnit[subsigId].itemId]->linkSignal(from, to);
+}*/
+
+void SignalObj::linkSignal(int trackId, int dist){
+    if(!this->signalUnit[subObjSelected].enabled) return;
+    if(!this->signalUnit[subObjSelected].head) return;
+    TDB* tdb = Game::trackDB;
+    if(tdb->trackItems[this->signalUnit[subObjSelected].itemId] == NULL)
+        return;
+    tdb->trackItems[this->signalUnit[subObjSelected].itemId]->linkSignal(trackId, dist);
 }
 
 bool SignalObj::isSubObjEnabled(int i){

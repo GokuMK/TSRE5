@@ -71,6 +71,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesRuler.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSiding.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSignal.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSoundRegion.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSoundSource.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSpeedpost.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesStatic.o
@@ -169,6 +170,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesRuler.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSiding.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSignal.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSoundRegion.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSoundSource.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSpeedpost.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesStatic.o

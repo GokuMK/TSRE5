@@ -412,6 +412,19 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     return NULL;
 }
 
+void Route::linkSignal(int x, int z, float* p, WorldObj* obj){
+    if(obj == NULL)
+        return;
+    if(obj->typeID != obj->signal)
+        return;
+    SignalObj* sobj = (SignalObj*)obj;
+    float *tpos = new float[2];
+    float* playerT = Vec2::fromValues(x, z);
+    bool ok = this->trackDB->findNearestPositionOnTDB(playerT, p, NULL, tpos);
+    if(!ok) return;
+    sobj->linkSignal(tpos[0], tpos[1]);
+}
+
 float *fromtwovectors(float* out, float* u, float* v){
     //float m = sqrt(2.f + 2.f * Vec3::dot(u, v));
     float w[3];

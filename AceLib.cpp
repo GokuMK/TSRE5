@@ -15,6 +15,7 @@
 #include <QDebug>
 #include <QOpenGLShaderProgram>
 #include <QString>
+#include "Game.h"
 
 bool AceLib::IsThread = true;
 
@@ -32,14 +33,14 @@ AceLib::~AceLib(){
 //bool AceLib::LoadACE(Texture* texture) {
 void AceLib::run() {
 
-    QFile *file = new QFile(texture->pathid);
-    if (!file->open(QIODevice::ReadOnly)){
+    QFile file(texture->pathid);
+    if (!file.open(QIODevice::ReadOnly)){
         if(!IsThread)
             qDebug() << "ACE: not exist "<<texture->pathid;
         //return false;
         return;
     }
-    FileBuffer* data = ReadFile::read(file);
+    FileBuffer* data = ReadFile::read(&file);
     //qDebug() << "Date:" << data->length;
     unsigned char* bufor = data->data;
     int offset = 0;//-16;
@@ -172,8 +173,8 @@ void AceLib::run() {
                 }
             }
         }
-        texture->loaded = true;
-        texture->editable = true;        
+        //texture->loaded = true;
+        //texture->editable = true;        
     } else {
         //var start = new Date().getTime();
         ptr = 216 + offset;
@@ -248,12 +249,38 @@ void AceLib::run() {
                 }
             }
         }
-        texture->loaded = true;
-        texture->editable = true;
+        //texture->loaded = true;
+        //texture->editable = true;
     }
+    if(Game::textureQuality > 1){
+        int nw = texture->width/Game::textureQuality;
+        int nh = texture->height/Game::textureQuality;
+        float scalew = (float)texture->width/nw;
+        float scaleh = (float)texture->height/nh;
+        texture->imageSize = (texture->bytesPerPixel * nw * nh );
+        //qDebug() << texture->width << texture->height << nw << nh;
+        unsigned char * nd = new unsigned char[texture->imageSize];
+
+        for (int ii = 0; ii < nh; ii++) {
+            for (int jj = 0; jj < nw; jj++) {
+                int wsi = scaleh*ii;
+                int hsi = scalew*jj;
+                nd[ii*nw*texture->bytesPerPixel + jj*texture->bytesPerPixel+0] = texture->imageData[wsi*texture->width*texture->bytesPerPixel + hsi*texture->bytesPerPixel+0];
+                nd[ii*nw*texture->bytesPerPixel + jj*texture->bytesPerPixel+1] = texture->imageData[wsi*texture->width*texture->bytesPerPixel + hsi*texture->bytesPerPixel+1];
+                nd[ii*nw*texture->bytesPerPixel + jj*texture->bytesPerPixel+2] = texture->imageData[wsi*texture->width*texture->bytesPerPixel + hsi*texture->bytesPerPixel+2];
+                if(texture->bytesPerPixel == 4)
+                    nd[ii*nw*texture->bytesPerPixel + jj*texture->bytesPerPixel+3] = texture->imageData[wsi*texture->width*texture->bytesPerPixel + hsi*texture->bytesPerPixel+3];
+            }
+        }
+        delete [] texture->imageData;
+        texture->imageData = nd;
+        texture->width = nw;
+        texture->height = nh;
+    }
+    texture->loaded = true;
+    texture->editable = true;        
     //qDebug() << "--";
     delete data;
-    file->close();
     //qDebug() << "2";
     return;
 }

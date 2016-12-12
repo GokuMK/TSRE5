@@ -24,6 +24,7 @@ public:
     virtual ~PropertiesSignal();
     bool support(WorldObj* obj);
     void showObj(WorldObj* obj);
+    void updateObj(WorldObj* obj);
 
 public slots:
     void flipSignal();
@@ -31,8 +32,10 @@ public slots:
     void checkboxAnimEdited(int val);
     void checkboxTerrainEdited(int val);
     void cShadowTypeEdited(int val);
+    void msg(QString name, QString val);
     
 signals:
+    void enableTool(QString val);
     
 private:
     QLineEdit name;

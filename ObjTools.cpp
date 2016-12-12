@@ -353,22 +353,25 @@ void ObjTools::routeLoaded(Route* a){
         item.value = i*1000+3;
         route->ref->refItems[QString("#TSRE#")+"milepost"].push_back(item);
     }
-   for (auto it = route->soundList->sources.begin(); it != route->soundList->sources.end(); ++it ){
+    
+    foreach (SoundListItem* it, route->soundList->sources){
+   //for (auto it = route->soundList->sources.constBegin(); it != route->soundList->sources.constEnd(); ++it ){
         Ref::RefItem item;
-        item.filename = it->second->name;
-        item.description = it->second->name;
+        item.filename = it->name;
+        item.description = it->name;
         item.clas = "sound sources";
         item.type = "soundsource";
-        item.value = it->second->id;
+        item.value = it->id;
         route->ref->refItems[QString("#TSRE#")+"sound sources"].push_back(item);
     }
-    for (auto it = route->soundList->regions.begin(); it != route->soundList->regions.end(); ++it ){
+    foreach (SoundListItem* it, route->soundList->regions){
+    //for (auto it = route->soundList->regions.begin(); it != route->soundList->regions.end(); ++it ){
         Ref::RefItem item;
-        item.filename = it->second->name;
-        item.description = it->second->name;
+        item.filename = it->name;
+        item.description = it->name;
         item.clas = "sound regions";
         item.type = "soundregion";
-        item.value = it->second->id;
+        item.value = it->id;
         route->ref->refItems[QString("#TSRE#")+"sound regions"].push_back(item);
     }
     

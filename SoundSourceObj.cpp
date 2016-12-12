@@ -44,9 +44,10 @@ void SoundSourceObj::load(int x, int y) {
 void SoundSourceObj::set(QString sh, long long int val){
     if (sh == ("ref_value")) {
         this->fileName = "";
-        for (auto it = Game::soundList->sources.begin(); it != Game::soundList->sources.end(); ++it ){
-            if(it->second->id == val){
-                this->fileName = it->second->file1;
+        foreach (SoundListItem* it, Game::soundList->sources){
+        //for (auto it = Game::soundList->sources.begin(); it != Game::soundList->sources.end(); ++it ){
+            if(it->id == val){
+                this->fileName = it->file1;
             }
         }
         return;
@@ -108,8 +109,15 @@ void SoundSourceObj::render(GLUU* gluu, float lod, float posx, float posz, float
     
     if(pointer3d == NULL)
         pointer3d = new PoleObj();
-        
-    pointer3d->render(selectionColor);
+    if(pointer3dSelected == NULL){
+        pointer3dSelected = new PoleObj();
+        pointer3dSelected->setMaterial(1.0,1.0,0.5);
+    }
+    
+    if(this->selected) 
+        pointer3dSelected->render(selectionColor);
+    else
+        pointer3d->render(selectionColor);
 };
 
 int SoundSourceObj::getDefaultDetailLevel(){

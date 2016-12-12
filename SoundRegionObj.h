@@ -32,7 +32,9 @@ public:
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
+    void flip();
     int getDefaultDetailLevel();
+    int getSoundregionTrackType();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
     float soundregionRoty;
@@ -40,6 +42,7 @@ private:
     std::vector<int> trItemId;
     //int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL; 
+    TrackItemObj* pointer3dSelected = NULL; 
     float* drawPositionB = NULL;
     float* drawPositionE = NULL;
     OglObj* drawLine = NULL;

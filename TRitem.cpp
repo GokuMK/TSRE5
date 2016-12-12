@@ -108,7 +108,7 @@ TRitem* TRitem::newSignalItem(int trItemId, float metry, int direction, unsigned
     trit->trSignalType2 = direction;
     trit->trSignalType3 = 0;
     trit->trSignalType4 = type;
-    qDebug() << "aa ";
+    //qDebug() << "aa ";
     return trit;
 }
 
@@ -393,7 +393,7 @@ void TRitem::setSignalDirection(int dir) {
     this->trSignalType2 = dir;
 }
 
-void TRitem::linkSignal(int from, int to) {
+/*void TRitem::linkSignal(int from, int to) {
     TDB* tdb = Game::trackDB;
     TRnode* n = tdb->trackNodes[from];
     if(n == NULL) return;
@@ -436,6 +436,60 @@ void TRitem::linkSignal(int from, int to) {
     trSignalRDir[0 + 3] = n->UiD[4];
     trSignalRDir[0 + 4] = n->UiD[5];
     trSignalRDir[0 + 5] = n->UiD[10];
+}*/
+
+void TRitem::linkSignal(int trackId, int dist) {
+    TDB* tdb = Game::trackDB;
+    TRnode* n = tdb->trackNodes[trackId];
+    if(n == NULL) return;
+    if(n->typ != 1) {
+        qDebug() << "link is no track";
+        return;
+    }
+    float length = tdb->getVectorSectionLength(trackId);
+    int end = 0;
+    if(dist*2 > length)
+        end = 1;
+    int jid = n->TrPinS[end];
+    n = tdb->trackNodes[jid];
+    if(n->typ != 2 ) {
+        qDebug() << "link is no junction";
+        return;
+    }
+    // find to;
+    int direction;
+
+    TRnode* n1 = tdb->trackNodes[n->TrPinS[1]];
+    TRnode* n2 = tdb->trackNodes[n->TrPinS[2]];
+
+    if(n1 == NULL) return;
+    if(n2 == NULL) return;
+    if(n->TrPinS[1] == trackId){
+        direction = 0;
+    }
+    else if(n->TrPinS[2] == trackId){
+        direction = 1;
+    }
+    else {
+        qDebug() << "no route from to";
+        return;
+    }
+    trSignalDirs = 1;
+    trSignalDir = new int[trSignalDirs * 4];
+    trSignalDir[0 + 0] = jid;
+    trSignalDir[0 + 1] = 1;
+    trSignalDir[0 + 2] = direction;
+    trSignalDir[0 + 3] = 0;
+
+    // calc position n - nd;
+    
+    trSignalRDir = new float[trSignalDirs * 6];
+    trSignalRDir[0 + 0] = n->UiD[6];
+    trSignalRDir[0 + 1] = n->UiD[7];
+    trSignalRDir[0 + 2] = n->UiD[8];
+    trSignalRDir[0 + 3] = n->UiD[4];
+    trSignalRDir[0 + 4] = n->UiD[5];
+    trSignalRDir[0 + 5] = n->UiD[10];
 }
 
 void TRitem::setSpeedpostRot(float rot) {
@@ -458,6 +512,14 @@ void TRitem::flipSpeedpost() {
         this->speedpostTrItemData[this->speedpostTrItemDataLength - 1] -= 2 * M_PI;
     if (this->speedpostTrItemData[this->speedpostTrItemDataLength - 1] < 0)
         this->speedpostTrItemData[this->speedpostTrItemDataLength - 1] += 2 * M_PI;
+}
+
+void TRitem::flipSoundRegion(){
+    this->trItemSRData[2] += M_PI;
+    if (this->trItemSRData[2] > 2 * M_PI)
+        this->trItemSRData[2] -= 2 * M_PI;
+    if (this->trItemSRData[2] < 0)
+        this->trItemSRData[2] += 2 * M_PI;
 }
 
 void TRitem::setSpeedpostSpeed(float val) {

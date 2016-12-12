@@ -76,17 +76,45 @@ void SoundRegionObj::initTrItems(float* tpos){
     tdb->newSoundRegionObject(this->soundregionTrackType, trItemId, trNodeId, metry, this->typeID);
     float *srd = tdb->trackItems[this->trItemId[1]]->trItemSRData;
     this->soundregionRoty = srd[2];
+    Quat::fill(this->qDirection);
+    Quat::rotateY(this->qDirection, this->qDirection, this->soundregionRoty);
     this->position[1] += 1;
+    this->drawPositionB = NULL;
+}
+
+void SoundRegionObj::flip(){
+
+    TDB* tdb = Game::trackDB;
+    for(int j = 0; j < this->trItemId.size()/2; j++){
+        if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
+            continue;
+        tdb->trackItems[this->trItemId[j*2+1]]->flipSoundRegion();
+    }
+    float *srd = tdb->trackItems[this->trItemId[1]]->trItemSRData;
+    this->soundregionRoty = srd[2];
+    Quat::rotateY(this->qDirection, this->qDirection, M_PI);
+    this->modified = true; 
+    delete this->drawPositionB;
     this->drawPositionB = NULL;
 }
 
 void SoundRegionObj::set(QString sh, long long int val){
     if (sh == ("ref_value")) {
-        this->fileName = "";
-        for (auto it = Game::soundList->regions.begin(); it != Game::soundList->sources.end(); ++it ){
-            if(it->second->id == val){
-                this->soundregionRoty = val;
-            }
+        //this->fileName = "IMRegionPoint.s";
+        //for (auto it = Game::soundList->regions.begin(); it != Game::soundList->sources.end(); ++it ){
+        //    if(it->second->id == val){
+        this->soundregionTrackType = val;
+        ///    }
+        //}
+        return;
+    }
+    if (sh == ("update_type")) {
+        this->soundregionTrackType = val;
+        TDB* tdb = Game::trackDB;
+        for(int j = 0; j < this->trItemId.size()/2; j++){
+            if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
+                continue;
+            tdb->trackItems[this->trItemId[j*2+1]]->trItemSRData[1] = val;
         }
         return;
     }
@@ -190,10 +218,13 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
         drawPositionE[2] -= 2048 * (-drawPositionE[6] - this->y);
         
         if(pointer3d == NULL){
-            pointer3d = new TrackItemObj(1);
+            pointer3d = new TrackItemObj(2);
             pointer3d->setMaterial(1.0,1.0,0.0);
         }
-        
+        if(pointer3dSelected == NULL){
+            pointer3dSelected = new TrackItemObj(2);
+            pointer3dSelected->setMaterial(1.0,1.0,0.5);
+        }
         // line
         drawLine = new OglObj();
         float* tpoints = new float[7];
@@ -205,7 +236,7 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
                 continue;
             int id = tdb->findTrItemNodeId(this->trItemId[i*2+1]);
             if (id < 0) {
-                qDebug() << "speedpost: fail id";
+                qDebug() << "SoundRegionObj: fail id";
                 loaded = false;
                 return;
             }
@@ -240,22 +271,34 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
     
     gluu->mvPushMatrix();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[0] + 0 * (drawPositionB[4] - this->x), drawPositionB[1] + 1, -drawPositionB[2] + 0 * (-drawPositionB[5] - this->y));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[3]);
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -angle+M_PI);
+    //Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[3]);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    pointer3d->render(selectionColor + (1)*131072*8*useSC);
+    if(this->selected) 
+        pointer3dSelected->render(selectionColor + 1*131072*8*useSC);
+    else
+        pointer3d->render(selectionColor + 1*131072*8*useSC);
     gluu->mvPopMatrix();
     gluu->mvPushMatrix();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[0] + 0 * (drawPositionE[4] - this->x), drawPositionE[1] + 1, -drawPositionE[2] + 0 * (-drawPositionE[5] - this->y));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[3]);
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -angle+M_PI);
+    //Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[3]);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    pointer3d->render(selectionColor + (1)*131072*8*useSC);
+    if(this->selected) 
+        pointer3dSelected->render(selectionColor + 3*131072*8*useSC);
+    else
+        pointer3d->render(selectionColor + 3*131072*8*useSC);
     gluu->mvPopMatrix();
 };
 
 int SoundRegionObj::getDefaultDetailLevel(){
     return -5;
+}
+
+int SoundRegionObj::getSoundregionTrackType(){
+    return this->soundregionTrackType;
 }
 
 void SoundRegionObj::save(QTextStream* out){

@@ -28,6 +28,8 @@
 DynTrackObj::DynTrackObj() {
     sectionIdx = -1;
     sections = NULL;
+    collideFlags = 39;    
+    staticFlags = 0x100000;
 }
 
 DynTrackObj::DynTrackObj(const DynTrackObj& orig) {

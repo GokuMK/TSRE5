@@ -2628,7 +2628,7 @@ void TDB::newSoundRegionObject(int soundregionTrackType, std::vector<int> &itemI
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
     this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
     this->trackItems[newTRitemId]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
-    this->trackItems[newTRitemId]->setSoundRegionData(trPosition[3], soundregionTrackType);
+    this->trackItems[newTRitemId]->setSoundRegionData(-trPosition[3], soundregionTrackType);
     itemId.clear();
     itemId.push_back(0);
     itemId.push_back(newTRitemId);

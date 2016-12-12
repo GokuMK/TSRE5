@@ -79,6 +79,7 @@
           <itemPath>PropertiesRuler.h</itemPath>
           <itemPath>PropertiesSiding.h</itemPath>
           <itemPath>PropertiesSignal.h</itemPath>
+          <itemPath>PropertiesSoundRegion.h</itemPath>
           <itemPath>PropertiesSoundSource.h</itemPath>
           <itemPath>PropertiesSpeedpost.h</itemPath>
           <itemPath>PropertiesStatic.h</itemPath>
@@ -262,6 +263,7 @@
           <itemPath>PropertiesRuler.cpp</itemPath>
           <itemPath>PropertiesSiding.cpp</itemPath>
           <itemPath>PropertiesSignal.cpp</itemPath>
+          <itemPath>PropertiesSoundRegion.cpp</itemPath>
           <itemPath>PropertiesSoundSource.cpp</itemPath>
           <itemPath>PropertiesSpeedpost.cpp</itemPath>
           <itemPath>PropertiesStatic.cpp</itemPath>
@@ -681,6 +683,10 @@
       <item path="PropertiesSignal.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesSignal.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSoundRegion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSoundRegion.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesSoundSource.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1267,6 +1273,10 @@
       </item>
       <item path="PropertiesSignal.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesSoundRegion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSoundRegion.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesSoundSource.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesSoundSource.h" ex="false" tool="3" flavor2="0">
@@ -1844,6 +1854,10 @@
       <item path="PropertiesSignal.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesSignal.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSoundRegion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSoundRegion.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesSoundSource.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2430,6 +2444,10 @@
       </item>
       <item path="PropertiesSignal.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesSoundRegion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSoundRegion.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesSoundSource.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesSoundSource.h" ex="false" tool="3" flavor2="0">
@@ -3002,6 +3020,10 @@
       <item path="PropertiesSignal.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesSignal.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesSoundRegion.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesSoundRegion.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesSoundSource.cpp" ex="false" tool="1" flavor2="8">
       </item>

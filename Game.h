@@ -92,6 +92,7 @@ public:
     static int shadowMapSize;
     static int shadowsEnabled;
     static float sunLightDirection[];
+    static int textureQuality;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

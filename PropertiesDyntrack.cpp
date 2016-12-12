@@ -195,7 +195,8 @@ void PropertiesDyntrack::sSectEnabled(int idx){
         return;
 
     dobj->sections[idx].a = this->sSectA[idx].value();
-    dobj->sections[idx].r = this->sSectR[idx].value();
+    if(idx%2 == 1)
+        dobj->sections[idx].r = this->sSectR[idx].value();
     dobj->modified = true;
     dobj->box.loaded = false;
     dobj->deleteVBO();

@@ -47,13 +47,23 @@ PropertiesSoundSource::PropertiesSoundSource() {
     vbox->addWidget(label);
     vbox->addWidget(&this->sources);
     this->sources.setStyleSheet("combobox-popup: 0;");
-    QPushButton *set = new QPushButton("Set", this);
-    vbox->addWidget(set);
+    QObject::connect(&this->sources, SIGNAL(activated(QString)),
+        this, SLOT(sourcesListSelected(QString)));
     vbox->addStretch(1);
     this->setLayout(vbox);
 }
 
 PropertiesSoundSource::~PropertiesSoundSource() {
+}
+
+void PropertiesSoundSource::sourcesListSelected(QString val){
+    if(sobj == NULL)
+        return;
+    if(Game::soundList == NULL)
+        return;
+    sobj->set("filename", Game::soundList->sources[val]->file1);
+    sobj->modified = true;
+    this->sName.setText(val);
 }
 
 void PropertiesSoundSource::showObj(WorldObj* obj){
@@ -68,11 +78,13 @@ void PropertiesSoundSource::showObj(WorldObj* obj){
     this->tY.setText(QString::number(-obj->y, 10));
     this->infoLabel->setText("Object: "+obj->type);
     
+    this->sources.clear();
     if(Game::soundList != NULL)
-        for (auto it = Game::soundList->sources.begin(); it != Game::soundList->sources.end(); ++it ){
-            if(it->second->file1.toLower() == sobj->fileName.toLower())
-                this->sName.setText(it->second->name);
-            this->sources.addItem(it->second->name);
+        foreach (SoundListItem* it, Game::soundList->sources){
+        //for (auto it = Game::soundList->sources.begin(); it != Game::soundList->sources.end(); ++it ){
+            if(it->file1.toLower() == sobj->fileName.toLower())
+                this->sName.setText(it->name);
+            this->sources.addItem(it->name);
         }
 }
 

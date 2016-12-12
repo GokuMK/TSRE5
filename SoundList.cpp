@@ -45,7 +45,7 @@ void SoundList::loadSoundSources(QString path){
             s->file1 = ParserX::GetString(data);
             s->type = SoundListItem::Source;
             s->id = id++;
-            sources[s->name.toStdString()] = s;
+            sources[s->name] = s;
             ParserX::SkipToken(data);
             ParserX::SkipToken(data);
             continue;
@@ -77,7 +77,7 @@ void SoundList::loadSoundRegions(QString path){
             s->file2 = ParserX::GetString(data);
             s->type = SoundListItem::Region;
             s->id = id++;
-            regions[s->name.toStdString()] = s;
+            regions[s->name] = s;
             ParserX::SkipToken(data);
             continue;
         }

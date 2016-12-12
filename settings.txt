@@ -52,3 +52,4 @@ useImperial = false
 #ortsEngEnable = false
 #oglDefaultLineWidth = 2
 shadowsEnabled = 1
+#textureQuality = 2

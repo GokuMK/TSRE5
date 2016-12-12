@@ -777,6 +777,10 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         if(toolEnabled == "gapsTool"){
             TerrainLib::toggleGaps((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
+        if(toolEnabled == "signalLinkTool"){
+            route->linkSignal((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, selectedObj);
+            enableTool("");
+        }
         if(toolEnabled == ""){
             camera->MouseDown(event);
         }

@@ -15,21 +15,27 @@
 
 class SignalObj;
 
-class SignalWindow : public QDialog {
+class SignalWindow : public QWidget { //QDialog {
     Q_OBJECT
 
 public:
     SignalWindow();
     virtual ~SignalWindow();
     void showObj(SignalObj* obj);
+    void updateObj(SignalObj* obj);
     
 public slots:
     void exitNow();
+    void setLink();
     void chSubEnabled(int i);
     void bLinkEnabled(int i);
     
+signals:
+    void sendMsg(QString name, QString val);
+    
 private:
     static const int maxSubObj = 30;
+    int currentSubObjLinkInfo = 0;
     QLineEdit name;
     QLineEdit description;
     QCheckBox chSub[maxSubObj];
@@ -40,6 +46,10 @@ private:
     QSignalMapper signalsChSect;
     QSignalMapper signalsLinkButton;
     SignalObj* sobj;
+    QPushButton* setLinkButton;
+    QLineEdit eLink1;
+    QLineEdit eLink2;
+    QLineEdit eLink3;
     
     void setLinkInfo(int i);
 };

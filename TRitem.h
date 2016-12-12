@@ -92,10 +92,12 @@ public:
     void setSignalDirection(int dir);
     void flipSignal();
     void flipSpeedpost();
+    void flipSoundRegion();
     void setSpeedpostSpeed(float val);
     void setSpeedpostNum(float val);
     SType getSpeedpostType();
-    void linkSignal(int from, int to);
+    //void linkSignal(int from, int to);
+    void linkSignal(int trackId, int dist);
     void enableSignalSubObjFlag(int i);
     void disableSignalSubObjFlag(int i);
     void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);

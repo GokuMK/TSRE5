@@ -38,6 +38,7 @@
 #include "PropertiesTrackObj.h"
 #include "PropertiesGroup.h"
 #include "PropertiesRuler.h"
+#include "PropertiesSoundRegion.h"
 #include "NaviWindow.h"
 #include "UnsavedDialog.h"
 
@@ -68,6 +69,7 @@ Window::Window() {
     objProperties.push_back(new PropertiesTrackObj);
     objProperties.push_back(new PropertiesGroup);
     objProperties.push_back(new PropertiesRuler);
+    objProperties.push_back(new PropertiesSoundRegion);
     // last 
     objProperties.push_back(new PropertiesUndefined);
     
@@ -284,6 +286,12 @@ Window::Window() {
     
     QObject::connect(geoTools, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));   
+    
+    for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
+        if(*it == NULL) continue;
+        QObject::connect((*it), SIGNAL(enableTool(QString)),
+            glWidget, SLOT(enableTool(QString)));   
+    }
     
     QObject::connect(propertiesDyntrack, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));

@@ -38,6 +38,7 @@ public:
     void save(QTextStream* out);
     bool select(int value);
     int getLinkedJunctionValue(int i);
+    void getLinkInfo(int *ids);
     bool isSubObjEnabled(int i);
     bool isJunctionAvailable(int i);
     Ref::RefItem* getRefInfo();
@@ -48,10 +49,12 @@ public:
     void enableSubObj(int i);
     void disableSubObj(int i);
     void flip(bool flipShape);
-    void linkSignal(int subsigId, int from, int to);
+    //void linkSignal(int subsigId, int from, int to);
+    void linkSignal(int trackId, int dist);
     QString getShapePath();
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
+    int subObjSelected = 0;
 private:
     unsigned int signalSubObj;
     int signalUnits = 0;

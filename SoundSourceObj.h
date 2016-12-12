@@ -33,6 +33,7 @@ public:
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
     PoleObj* pointer3d = NULL;
+    PoleObj* pointer3dSelected = NULL;
 };
 
 #endif	/* SOUNDSOURCE_H */

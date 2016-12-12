@@ -8,29 +8,31 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#ifndef PROPERTIESSOUNDSOURCE_H
-#define	PROPERTIESSOUNDSOURCE_H
-
+#ifndef PROPERTIESSOUNDREGION_H
+#define	PROPERTIESSOUNDREGION_H
 #include "PropertiesAbstract.h"
 
-class SoundSourceObj;
+class SoundRegionObj;
 
-class PropertiesSoundSource : public PropertiesAbstract{
-    Q_OBJECT 
+class PropertiesSoundRegion : public PropertiesAbstract {
+    Q_OBJECT
 public:
+    PropertiesSoundRegion();
+    virtual ~PropertiesSoundRegion();
     bool support(WorldObj* obj);
     void showObj(WorldObj* obj);
-    PropertiesSoundSource();
-    virtual ~PropertiesSoundSource();
     
 public slots:
+    void flip();
     void sourcesListSelected(QString val);
     
+signals:
+    
 private:
-    SoundSourceObj *sobj = NULL;
+    SoundRegionObj* sobj;
     QComboBox sources;
     QLineEdit sName;
 };
 
-#endif	/* PROPERTIESSOUNDSOURCE_H */
+#endif	/* PROPERTIESSOUNDREGION_H */
 
