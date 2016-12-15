@@ -138,6 +138,28 @@ void SpeedpostObj::setNumber(float val){
     }
 }
 
+void SpeedpostObj::setSpeedUnitId(int val){
+    TDB* tdb = Game::trackDB;
+    if(this->trItemId.size() < 2)
+        return;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return;
+    for(int j = 0; j < this->trItemId.size()/2; j++){
+        if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
+            continue;
+        tdb->trackItems[this->trItemId[j*2+1]]->setSpeedPostSpeedUnitId(val);
+    }
+}
+
+int SpeedpostObj::getSpeedUnitId(){
+    TDB* tdb = Game::trackDB;
+    if(this->trItemId.size() < 2)
+        return 0;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return 0;
+    return tdb->trackItems[this->trItemId[1]]->getSpeedPostSpeedUnitId();
+}
+
 void SpeedpostObj::flip(bool flipShape){
     if(flipShape){
         Quat::rotateY(this->qDirection, this->qDirection, M_PI);
@@ -153,6 +175,7 @@ void SpeedpostObj::flip(bool flipShape){
     this->modified = true; 
     delete[] drawPositions;
     drawPositions = NULL;
+    drawPosition = NULL;
 }
 
 void SpeedpostObj::initTrItems(float* tpos){
@@ -166,15 +189,9 @@ void SpeedpostObj::initTrItems(float* tpos){
 
     tdb->newSpeedPostObject(speedPostId, speedPostType, trItemId, trNodeId, metry, this->typeID);
     
-    //this->signalSubObj = 0;
-    //qDebug() <<"signalUnits  "<<this->signalUnits;
-    //for(int i = 0; i < this->signalUnits; i++)
-    //    this->signalSubObj = this->signalSubObj | (1 << i);
-   // this->trItemIdCount = 4;
-  //  this->trItemId[0] = isRoad;
-   // this->trItemId[1] = trItemId[0];
-   // this->trItemId[2] = isRoad;
-  //  this->trItemId[3] = trItemId[1];
+    if(this->trItemId.size() < 2)
+        return;
+    this->rotate(0,tdb->trackItems[this->trItemId[1]]->getSpeedpostRot()-M_PI/2,0);
     this->drawPositions = NULL;
 }
 
@@ -399,17 +416,18 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
             return;
         }
                 //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
-        drawPosition = new float[7];
+        drawPosition = new float[8];
         //qDebug() << this->trItemId[1];
         bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
         if(!ok){
             this->loaded = false;
             return;
         }
+        drawPosition[7] = tdb->trackItems[this->trItemId[1]]->getSpeedpostRot();
         drawPosition[0] += 2048 * (drawPosition[5] - this->x);
         drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
         if(pointer3d == NULL){
-            pointer3d = new TrackItemObj(1);
+            pointer3d = new TrackItemObj(0);
             pointer3d->setMaterial(0.7,0.7,0.7);
         }
         
@@ -458,7 +476,7 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
     gluu->mvPushMatrix();
     drawLine->render();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 0 * (drawPosition[4] - this->x), drawPosition[1] + 1, -drawPosition[2] + 0 * (-drawPosition[5] - this->y));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3]);
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[7]-M_PI/2);
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));

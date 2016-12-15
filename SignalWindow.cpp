@@ -207,6 +207,8 @@ void SignalWindow::updateObj(SignalObj* obj) {
     int linkPtr;
     
     for (int i = 0; i < iSubObj; i++) {
+        if(this->bSub[i].hasFocus())
+            continue;
         if (signalShape->subObj[i].isJnLink) {
             this->bSub[i].show();
             this->bSub[i].setStyleSheet("color: gray");

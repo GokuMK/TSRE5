@@ -107,16 +107,7 @@ void SignalObj::initTrItems(float* tpos){
     this->drawPositions = NULL;
     
     if(this->signalUnits > 0){
-        int id = tdb->findTrItemNodeId(this->signalUnit[0].itemId);
-        if (id < 0) {
-            return;
-        }
-        float drawPosition[8];
-        bool ok = tdb->getDrawPositionOnTrNode((float*)&drawPosition, id, tdb->trackItems[this->signalUnit[0].itemId]->trItemSData1);
-        if(!ok){
-            return;
-        }
-        this->rotate(0,drawPosition[3]+M_PI,0);
+        this->rotate(0,-tdb->trackItems[this->signalUnit[0].itemId]->trSignalType3+M_PI,0);
     }
 }
 
@@ -459,7 +450,8 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
                 this->trLoaded = -1;
                 return;
             }
-            drawPositions[i][7] = tdb->trackItems[this->signalUnit[i].itemId]->trSignalType2;
+            //drawPositions[i][7] = tdb->trackItems[this->signalUnit[i].itemId]->trSignalType2;
+            drawPositions[i][7] = tdb->trackItems[this->signalUnit[i].itemId]->trSignalType3;
             drawPositions[i][0] += 2048 * (drawPositions[i][5] - this->x);
             drawPositions[i][2] -= 2048 * (-drawPositions[i][6] - this->y);
         }
@@ -475,7 +467,8 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
         if(drawPositions[i] == NULL) continue;
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][0] + 0 * (drawPositions[i][4] - this->x), drawPositions[i][1] + i + 1, -drawPositions[i][2] + 0 * (-drawPositions[i][5] - this->y));
-        Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][3] + drawPositions[i][7]*M_PI);
+        //Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][3] + drawPositions[i][7]*M_PI);
+        Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -drawPositions[i][7]+M_PI);
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));

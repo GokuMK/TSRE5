@@ -27,6 +27,8 @@ public slots:
     void flipSignal();
     void speedEnabled(QString val);
     void numberEnabled(QString val);
+    void kmmListSelected(int);
+    void ptbListSelected(int);
 signals:
     
 private:
@@ -35,6 +37,7 @@ private:
     QLineEdit speed;
     QLineEdit number;
     QComboBox ptb;
+    QComboBox kmm;
     QCheckBox chFlipShape;
 };
 

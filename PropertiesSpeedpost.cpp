@@ -48,6 +48,10 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     label2->setContentsMargins(3,0,0,0);
     vbox->addWidget(label2);
     vbox->addWidget(&speed);
+    vbox->addWidget(&kmm);
+    kmm.setStyleSheet("combobox-popup: 0;");
+    kmm.addItem("Kilometers");
+    kmm.addItem("Miles");
     label2 = new QLabel("Speed for:");
     label2->setStyleSheet("QLabel { color : #999999; }");
     label2->setContentsMargins(3,0,0,0);
@@ -56,6 +60,7 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     ptb.addItem("Passenger");
     ptb.addItem("Freight");
     ptb.addItem("Both");
+    ptb.setStyleSheet("combobox-popup: 0;");
     label2 = new QLabel("Number:");
     label2->setStyleSheet("QLabel { color : #999999; }");
     label2->setContentsMargins(3,0,0,0);
@@ -74,6 +79,10 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
                       this, SLOT(speedEnabled(QString)));
     QObject::connect(&number, SIGNAL(textChanged(QString)),
                       this, SLOT(numberEnabled(QString)));
+    QObject::connect(&kmm, SIGNAL(activated(int)),
+        this, SLOT(kmmListSelected(int)));
+    QObject::connect(&ptb, SIGNAL(activated(int)),
+        this, SLOT(ptbListSelected(int)));
 }
 
 PropertiesSpeedpost::~PropertiesSpeedpost() {
@@ -89,6 +98,16 @@ void PropertiesSpeedpost::numberEnabled(QString val){
     if(sobj == NULL) return;
     float numberval = this->number.text().toInt(0,10);
     sobj->setNumber(numberval);
+}
+
+void PropertiesSpeedpost::kmmListSelected(int val){
+    if(sobj == NULL) return;
+    sobj->setSpeedUnitId(val);
+}
+
+void PropertiesSpeedpost::ptbListSelected(int val){
+    if(sobj == NULL) return;
+
 }
 
 void PropertiesSpeedpost::flipSignal(){
@@ -122,19 +141,23 @@ void PropertiesSpeedpost::showObj(WorldObj* obj){
     
     if(stype == "milepost"){
         this->speed.setDisabled(true);
+        this->kmm.hide();
         this->number.setDisabled(false);
         this->speed.setText("");
         this->number.setText(QString::number(sobj->getNumber(), 'G', 4));
     }
     if(stype == "warning" || stype == "speedsign"){
         this->speed.setDisabled(false);
+        this->kmm.show();
         this->number.setDisabled(true);
         this->number.setText("");
         this->speed.setText(QString::number(sobj->getSpeed(), 'G', 4));
+        this->kmm.setCurrentIndex(sobj->getSpeedUnitId());
     }
     if(stype == "resume"){
-        this->speed.setDisabled(false);
-        this->number.setDisabled(false);
+        this->speed.setDisabled(true);
+        this->kmm.hide();
+        this->number.setDisabled(true);
         this->number.setText("");
         this->speed.setText("");
     }

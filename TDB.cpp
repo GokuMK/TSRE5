@@ -2521,7 +2521,7 @@ void TDB::newSignalObject(QString filename, SignalObj::SignalUnit* units, int &s
             flags |= 1;
         int newTRitemId = getNewTRitemId();
         int direction = 1;
-        float angle = trPosition[3];
+        float angle = -trPosition[3];
         if(sShape->subObj[i].backFacing){
             direction = 0;
             angle += M_PI;
@@ -2590,7 +2590,12 @@ void TDB::newSpeedPostObject(int speedPostId, int speedPostType, std::vector<int
     int newTRitemId = getNewTRitemId();
     this->trackItems[newTRitemId] = TRitem::newSpeedPostItem(newTRitemId, metry, speedPostType);
     this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
-    this->trackItems[newTRitemId]->setSpeedpostRot(trPosition[3]);
+    float angle = trPosition[3]-M_PI/2;
+    if(angle > 2*M_PI)
+        angle -= 2*M_PI;
+    if(angle < 0)
+        angle += 2*M_PI;
+    this->trackItems[newTRitemId]->setSpeedpostRot(angle);
     itemId.clear();
     itemId.push_back(0);
     itemId.push_back(newTRitemId);

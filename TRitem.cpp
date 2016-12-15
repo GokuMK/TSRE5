@@ -496,6 +496,10 @@ void TRitem::setSpeedpostRot(float rot) {
     this->speedpostTrItemData[this->speedpostTrItemDataLength - 1] = rot;
 }
 
+float TRitem::getSpeedpostRot() {
+    return this->speedpostTrItemData[this->speedpostTrItemDataLength - 1];
+}
+
 void TRitem::flipSignal() {
     this->trSignalType2 = abs(this->trSignalType2 - 1);
     this->trSignalType3 += M_PI;
@@ -554,6 +558,17 @@ void TRitem::setSpeedpostNum(float val) {
 
 TRitem::SType TRitem::getSpeedpostType() {
     return (TRitem::SType)((int) (this->speedpostTrItemData[0]) & 0b11);
+}
+
+void TRitem::setSpeedPostSpeedUnitId(int val){
+    if(val == 1)
+        this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] | (1 << 8);
+    if(val == 0)
+        this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] & ~(1 << 8);
+}
+
+int TRitem::getSpeedPostSpeedUnitId(){
+    return (((int)this->speedpostTrItemData[0] >> 8) & 1);
 }
 
 void TRitem::addToTrackPos(float d) {

@@ -87,6 +87,7 @@ public:
     void setPickupContent(float val);
     void setSignalRot(float rot);
     void setSpeedpostRot(float rot);
+    float getSpeedpostRot();
     void setSoundRegionRot(float rot);
     void setSoundRegionData(float rot, float ttype, float val = 0);
     void setSignalDirection(int dir);
@@ -95,6 +96,8 @@ public:
     void flipSoundRegion();
     void setSpeedpostSpeed(float val);
     void setSpeedpostNum(float val);
+    void setSpeedPostSpeedUnitId(int val);
+    int getSpeedPostSpeedUnitId();
     SType getSpeedpostType();
     //void linkSignal(int from, int to);
     void linkSignal(int trackId, int dist);
