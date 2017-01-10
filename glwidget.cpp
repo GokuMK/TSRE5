@@ -212,6 +212,7 @@ void GLWidget::paintGL() {
     if(this->isActiveWindow()){
         emit this->naviInfo(route->getTileObjCount((int)camera->pozT[0], (int)camera->pozT[1]), route->getTileHiddenObjCount((int)camera->pozT[0], (int)camera->pozT[1]));
         emit this->posInfo(camera->getCurrentPos());
+        emit this->pointerInfo(aktPointerPos);
     }
 }
 

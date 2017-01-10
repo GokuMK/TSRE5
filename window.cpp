@@ -269,6 +269,9 @@ Window::Window() {
     QObject::connect(glWidget, SIGNAL(posInfo(PreciseTileCoordinate*)),
                       naviWindow, SLOT(posInfo(PreciseTileCoordinate*)));
     
+    QObject::connect(glWidget, SIGNAL(pointerInfo(float*)),
+                      naviWindow, SLOT(pointerInfo(float*)));
+    
     QObject::connect(glWidget, SIGNAL(mkrList(std::unordered_map<std::string, Coords*>)),
                       naviWindow, SLOT(mkrList(std::unordered_map<std::string, Coords*>)));
     

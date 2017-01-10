@@ -10,7 +10,7 @@
 
 #include "Undo.h"
 
-void Undo::Undo(){
+void Undo::UndoLast(){
     
 }
 

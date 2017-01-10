@@ -590,7 +590,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
         if(Game::viewTerrainGrid){
             gluu->disableTextures(0.7,0.7,0.7,1.0);
             gluu->mvPushMatrix();
-            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0.1, 0);
+            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0.05, 0);
             gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
             glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
             for (int uu = 0; uu < 16; uu++) {

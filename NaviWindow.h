@@ -29,6 +29,7 @@ public slots:
     void jumpTileSelected();  
     void naviInfo(int all, int hidden);
     void posInfo(PreciseTileCoordinate* coords);
+    void pointerInfo(float* coords);
     void latLonChanged(QString val);
     void xyChanged(QString val);
     void mkrList(std::unordered_map<std::string, Coords*> list);
@@ -57,6 +58,9 @@ private:
     QLineEdit xBox;
     QLineEdit yBox;
     QLineEdit zBox;
+    QLineEdit pxBox;
+    QLineEdit pyBox;
+    QLineEdit pzBox;
     QLabel tileInfo;
     QString lastEdit = "";
     

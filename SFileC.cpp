@@ -308,6 +308,7 @@
             // odczytanie ilosci subobjektow
             bufor->off += 9;
             pliks->distancelevel[j].iloscs = bufor->getInt();
+            //qDebug () << "--iloscs " << pliks->distancelevel[j].iloscs;
 
             // przydzielenie im pamieci
             pliks->distancelevel[j].subobiekty = new SFile::sub[pliks->distancelevel[j].iloscs + 1];
@@ -321,7 +322,7 @@
                 bufor->off += 5;
                 v_ilosc = bufor->getInt();
                 
-                //System.out.println("iloscv "+v_ilosc);
+                //qDebug () << "iloscv " << v_ilosc;
                 
                 for (int jj = 0; jj < v_ilosc; jj++) {
                     bufor->off += 9;

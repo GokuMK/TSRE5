@@ -11,9 +11,15 @@
 #ifndef UNDO_H
 #define	UNDO_H
 
+struct UndoState {
+    unsigned long long id;
+    
+};
+
 class Undo {
+
 public:
-    static void Undo();
+    static void UndoLast();
     static void StateBegin();
     static void StateEnd();
     static void PushTerrainHeightMap(int x, int z, float *data);

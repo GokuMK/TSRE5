@@ -19,8 +19,8 @@ public:
     std::unordered_map<int, TSection*> sekcja;
     std::unordered_map<int, TrackShape*> shape;
     bool loaded;
-    int tsectionMaxIdx;// = 40000;
-    int tsectionShapes;// = 40000;
+    int tsectionMaxIdx = 0;// = 40000;
+    int tsectionShapes = 0;// = 40000;
     int routeMaxIdx;// = 40000;
     int routeShapes;// = 40000;
     //std::unordered_map<int, TrackShape::SectionIdx*> routeShape;

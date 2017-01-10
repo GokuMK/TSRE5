@@ -300,7 +300,7 @@ if(type == "collideobject"){
 if(this->collideFunction > 0 )
 *(out) << "		CollideFunction ( "<<this->collideFunction<<" )\n";
 }
-*(out) << "		FileName ( "<<this->fileName<<" )\n";
+*(out) << "		FileName ( "<<ParserX::AddComIfReq(this->fileName)<<" )\n";
 if(this->staticFlags != 0)
 *(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";

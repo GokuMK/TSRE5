@@ -550,7 +550,7 @@ for(int i = 0; i < this->speedSignShape[0]*4; i++)
 *(out) << "		Speed_Text_Size ( "<<this->speedTextSize[0]<<" "<<this->speedTextSize[1]<<" "<<this->speedTextSize[2]<<" )\n";
 for(int i = 0; i < this->trItemId.size(); i+=2)
     *(out) << "		TrItemId ( "<<this->trItemId[i]<<" "<<this->trItemId[i+1]<<" )\n";
-*(out) << "		FileName ( "<<this->fileName<<" )\n";
+*(out) << "		FileName ( "<<ParserX::AddComIfReq(this->fileName)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";

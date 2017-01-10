@@ -73,6 +73,7 @@ signals:
     void itemSelected(Ref::RefItem* pointer);
     void naviInfo(int all, int hidden);
     void posInfo(PreciseTileCoordinate* pos);
+    void pointerInfo(float* pos);
     void setToolbox(QString name);
     void setBrushTextureId(int val);
     void showProperties(WorldObj* obj);

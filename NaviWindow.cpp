@@ -19,17 +19,22 @@
 NaviWindow::NaviWindow(){
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->setFixedWidth(300);
-    this->setFixedHeight(160);
+    this->setFixedHeight(180);
     this->setWindowTitle(tr("World Position"));
     markerFiles.setStyleSheet("combobox-popup: 0;");
     markerList.setStyleSheet("combobox-popup: 0;");
     
     QPushButton *jumpButton = new QPushButton("Jump", this);
+    QLabel *cameraPosLabel = new QLabel("Camera:", this);
+    QLabel *pointerPosLabel = new QLabel("Pointer:", this);
     QLabel *txLabel = new QLabel("X", this);
     QLabel *tyLabel = new QLabel("Y", this);
     QLabel *xLabel = new QLabel("x", this);
     QLabel *yLabel = new QLabel("y", this);
     QLabel *zLabel = new QLabel("z", this);
+    QLabel *pxLabel = new QLabel("x", this);
+    QLabel *pyLabel = new QLabel("y", this);
+    QLabel *pzLabel = new QLabel("z", this);
     QLabel *latLabel = new QLabel("lat", this);
     QLabel *lonLabel = new QLabel("lon", this);
     QLabel *empty = new QLabel(" ", this);
@@ -43,19 +48,29 @@ NaviWindow::NaviWindow(){
     v->setContentsMargins(0,1,1,1);
     v->addWidget(&markerFiles);
     v->addWidget(&markerList);
+    
     QGridLayout *vbox = new QGridLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(3,0,1,0);    
-    int row = 0;
-    vbox->addWidget(xLabel,0,0);
-    vbox->addWidget(&xBox,0,1);
-    vbox->addWidget(yLabel,0,2);
-    vbox->addWidget(&yBox,0,3);
-    vbox->addWidget(zLabel,0,4);
-    vbox->addWidget(&zBox,0,5);
-
+    vbox->addWidget(pointerPosLabel,0,0);
+    vbox->addWidget(pxLabel,0,1);
+    vbox->addWidget(&pxBox,0,2);
+    vbox->addWidget(pyLabel,0,3);
+    vbox->addWidget(&pyBox,0,4);
+    vbox->addWidget(pzLabel,0,5);
+    vbox->addWidget(&pzBox,0,6);
+    pxBox.setEnabled(false);
+    pyBox.setEnabled(false);
+    pzBox.setEnabled(false);
+    vbox->addWidget(cameraPosLabel,1,0);
+    vbox->addWidget(xLabel,1,1);
+    vbox->addWidget(&xBox,1,2);
+    vbox->addWidget(yLabel,1,3);
+    vbox->addWidget(&yBox,1,4);
+    vbox->addWidget(zLabel,1,5);
+    vbox->addWidget(&zBox,1,6);
     v->addItem(vbox);
-    
+        
     vbox = new QGridLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(3,0,1,0);    
@@ -145,6 +160,12 @@ void NaviWindow::naviInfo(int all, int hidden){
         objHidden = hidden;
         this->tileInfo.setText("Objects: "+QString::number(all, 10)+" ( including "+QString::number(hidden, 10)+" hidden )");
     }
+}
+
+void NaviWindow::pointerInfo(float* coords){
+    this->pxBox.setText(QString::number(coords[0]));
+    this->pyBox.setText(QString::number(coords[1]));
+    this->pzBox.setText(QString::number(coords[2]));
 }
 
 void NaviWindow::posInfo(PreciseTileCoordinate* coords){

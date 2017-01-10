@@ -405,7 +405,7 @@ if(this->jNodePosn.size() != 0)
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
 if(this->collideFunction > 0 )
 *(out) << "		CollideFunction ( "<<this->collideFunction<<" )\n";
-*(out) << "		FileName ( "<<this->fileName<<" )\n";
+*(out) << "		FileName ( "<<ParserX::AddComIfReq(this->fileName)<<" )\n";
 *(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 if(this->matrix3x3!=NULL)

@@ -414,7 +414,7 @@ void TransferObj::save(QTextStream* out){
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		Width ( "<<this->width<<" )\n";
 *(out) << "		Height ( "<<this->height<<" )\n";
-*(out) << "		FileName ( "<<this->texture<<" )\n";
+*(out) << "		FileName ( "<<ParserX::AddComIfReq(this->texture)<<" )\n";
 *(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";

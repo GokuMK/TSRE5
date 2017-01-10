@@ -472,7 +472,7 @@ void ForestObj::save(QTextStream* out){
 *(out) << "	Forest (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 if(this->treeTexture != "")
-*(out) << "		TreeTexture ( "<<this->treeTexture<<" )\n";
+*(out) << "		TreeTexture ( "<<ParserX::AddComIfReq(this->treeTexture)<<" )\n";
 *(out) << "		ScaleRange ( "<<this->scaleRangeX<<" "<<this->scaleRangeZ<<" )\n";
 *(out) << "		Area ( "<<this->areaX<<" "<<this->areaZ<<" )\n";
 *(out) << "		Population ( "<<this->population<<" )\n";
