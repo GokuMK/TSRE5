@@ -10,10 +10,12 @@
 
 #include "Texture.h"
 #include "Brush.h"
+#include "Undo.h"
 #include <QOpenGLShaderProgram>
 #include <QString>
 #include <QDebug>
 #include <QColor>
+#include "Undo.h"
 
 Texture::Texture() {
 }
@@ -163,6 +165,19 @@ void Texture::crop(float x1, float y1, float x2, float y2){
     this->update();
 }
 
+void Texture::sendToUndo(int id){
+    if(!editable) 
+        setEditable();
+    Undo::PushTextureData(id, imageData, bytesPerPixel*width*height);
+}
+
+void Texture::fillData(unsigned char* data){
+    if(imageData == NULL)
+        return;
+    memcpy(imageData, data, bytesPerPixel*width*height);
+    update();
+}
+
 void Texture::paint(Brush* brush, float x, float z){
     if(!editable) 
         setEditable();
@@ -250,6 +265,7 @@ bool Texture::GLTextures() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,  GL_LINEAR );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     delete[] imageData;
+    imageData = NULL;
     this->editable = false;
     glLoaded = true;
     return true;

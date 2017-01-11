@@ -13,6 +13,7 @@
 #include "StaticObj.h"
 #include "ParserX.h"
 #include "EditFileNameDialog.h"
+#include "Undo.h"
 
 PropertiesStatic::PropertiesStatic(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -312,6 +313,8 @@ void PropertiesStatic::editPositionEnabled(QString val){
     if(!ok) return;
     pos[2] = -this->posZ.text().toFloat(&ok);
     if(!ok) return;
+    
+    Undo::SinglePushWorldObjData(staticObj);
     staticObj->setPosition((float*)pos);
     staticObj->modified = true;
     staticObj->setMartix();

@@ -15,6 +15,7 @@
 #include "GLMatrix.h"
 #include "ParserX.h"
 #include "EditFileNameDialog.h"
+#include "Undo.h"
 
 PropertiesTrackObj::PropertiesTrackObj(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -333,6 +334,8 @@ void PropertiesTrackObj::elevPromEnabled(QString val){
     float oneInXm = 1000.0/prom;
     qDebug () << "prom" << prom;
     this->elev1inXm.setText(QString::number(oneInXm));
+    
+    Undo::SinglePushWorldObjData(trackObj);
     trackObj->setElevation(prom);
 }
 
@@ -349,6 +352,8 @@ void PropertiesTrackObj::elev1inXmEnabled(QString val){
         return;
     qDebug () << "prom" << prom;
     this->elevProm.setText(QString::number(prom));
+    
+    Undo::SinglePushWorldObjData(trackObj);
     trackObj->setElevation(prom);
 }
 

@@ -10,10 +10,28 @@
 
 #ifndef UNDO_H
 #define	UNDO_H
+#include <QMap>
+#include <QVector>
+#include "WorldObj.h"
 
 struct UndoState {
+    ~UndoState();
+    struct TerrainData {
+        int x;
+        int z;
+        float data[257*257];
+    };
+    struct WorldObjInfo {
+        WorldObj * obj;
+        QString action;
+        float pos[3];
+        float qdirection[4];
+    };
     unsigned long long id;
-    
+    bool modified = false;
+    QMap<int, TerrainData*> terrainData;
+    QMap<int, unsigned char*> texData;
+    QMap<long long int, WorldObjInfo*> objData;
 };
 
 class Undo {
@@ -21,13 +39,20 @@ class Undo {
 public:
     static void UndoLast();
     static void StateBegin();
+    static void StateBeginIfNotExist();
     static void StateEnd();
-    static void PushTerrainHeightMap(int x, int z, float *data);
+    static void StateEndIfLongTime();
+    static void PushTerrainHeightMap(int x, int z, float **data);
+    static void PushTextureData(int id, unsigned char *data, unsigned int size);
+    static void PushWorldObjData(WorldObj* obj);
+    static void PushWorldObjRemoved(WorldObj* obj);
+    static void SinglePushWorldObjData(WorldObj* obj);
     //static void PushTerrainTexture(int x, int z, int uu, unsigned char* data);
     
 private:
-    
-
+    static QVector<UndoState*> undoStates;
+    static UndoState* currentState;
+    static unsigned long long int undoTime;
 };
 
 #endif	/* UNDO_H */

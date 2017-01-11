@@ -144,6 +144,10 @@ Window::Window() {
     routeMenu->addAction(exitAction);
     // Edit
     editMenu = menuBar()->addMenu(tr("&Edit"));
+    undoAction = new QAction(tr("&Undo"), this); 
+    undoAction->setShortcut(QKeySequence("Ctrl+Z"));
+    QObject::connect(undoAction, SIGNAL(triggered()), glWidget, SLOT(editUndo()));
+    editMenu->addAction(undoAction);
     copyAction = new QAction(tr("&Copy"), this); 
     copyAction->setShortcut(QKeySequence("Ctrl+C"));
     QObject::connect(copyAction, SIGNAL(triggered()), glWidget, SLOT(editCopy()));

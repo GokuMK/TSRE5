@@ -18,6 +18,7 @@
 #include "Brush.h"
 #include "HeightWindow.h"
 #include "QuadTree.h"
+#include "Undo.h"
 
 HeightWindow* TerrainLib::heightWindow = NULL;
 std::unordered_map<int, Terrain*> TerrainLib::terrain;
@@ -210,6 +211,13 @@ float TerrainLib::getHeight(int x, int z, float posx, float posz, bool addR) {
     //return -1;
 }
 
+void TerrainLib::fillHeightMap(int x, int z, float* data){
+    Terrain *terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->fillHeightMap(data);
+}
+
 void TerrainLib::getRotation(float* rot, int x, int z, float posx, float posz){
     Game::check_coords(x, z, posx, posz);
     rot[0] = 0;
@@ -323,8 +331,34 @@ void TerrainLib::setTerrainToTrackObj(Brush* brush, float* punkty, int length, i
     float diffC = 0;
     float diffE = 0;
     int iis, jjs;
+    
+    //set to undo
+    int ttx, ttz;
+    Terrain *terr = NULL;
     for(int ii = -brush->eRadius; ii < brush->eRadius; ii++)
-        for(int jj = -brush->eRadius; jj < brush->eRadius; jj++)
+        for(int jj = -brush->eRadius; jj < brush->eRadius; jj++){
+            if(sqrt(ii*ii + jj*jj) > brush->eRadius) continue;
+            for(int i = 0; i< length; i+=3){
+                xx = floor((float)punkty[i]/8.0) + ii;
+                zz = floor((float)punkty[i+2]/8.0) + jj;
+                xx *= 8;
+                zz *= 8;
+                ttx = tx;
+                ttz = tz;
+                Game::check_coords(ttx, ttz, xx, zz);
+                if (terr != terrain[(ttx * 10000 + ttz)]){
+                    terr = terrain[(ttx * 10000 + ttz)];
+                    if (terr == NULL) continue;
+                    if (terr->loaded == false) continue;
+                    Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData);
+                }
+            }
+        }
+    //
+    
+    for(int ii = -brush->eRadius; ii < brush->eRadius; ii++)
+        for(int jj = -brush->eRadius; jj < brush->eRadius; jj++){
+            if(sqrt(ii*ii + jj*jj) > brush->eRadius) continue;
             for(int i = 0; i< length; i+=3){
                 xx = floor((float)punkty[i]/8.0);
                 zz = floor((float)punkty[i+2]/8.0);
@@ -343,12 +377,13 @@ void TerrainLib::setTerrainToTrackObj(Brush* brush, float* punkty, int length, i
                 else
                     jjs = 0;
                 h = vec3d - vec3.x*xx*8 - vec3.z*zz*8;
-                if(sqrt(ii*ii + jj*jj) > brush->eRadius) continue;
+                //
                 diffC = sqrt(iis*iis + jjs*jjs)*brush->eCut;
                 diffE = sqrt(iis*iis + jjs*jjs)*brush->eEmb;
                 //qDebug() << diffC <<" "<<diffE;
                 uterr.insert(setHeight256(tx, tz, xx*8, zz*8, h, diffC, diffE));
             }
+        }
     
     /*for(int j = 0; j < brush->eSize; j++)
         for(int i = 0; i< length; i+=3){
@@ -369,7 +404,7 @@ void TerrainLib::setTerrainToTrackObj(Brush* brush, float* punkty, int length, i
             //qDebug() << xx << " " << zz << " " << h;
         }*/
     
-    Terrain *terr;
+    //Terrain *terr;
     for (std::set<int>::iterator it = uterr.begin(); it != uterr.end(); ++it) {
         if(*it == -1) continue;
         //console.log(obj.type);
@@ -542,6 +577,24 @@ QSet<int> TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
     int tpx, tpz;
     int count = 0;
     
+    // add tiles that can be modified to undo;
+    Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData);
+    for(int i = -size; i < size; i++)
+        for(int j = -size; j < size; j++){
+            tpx = px+i*8;
+            tpz = pz+j*8;
+            tx = x;
+            tz = z;
+            Game::check_coords(tx, tz, tpx, tpz);
+            if(terr != terrain[(tx * 10000 + tz)]){
+                terr = terrain[(tx * 10000 + tz)];
+                if (terr == NULL) continue;
+                if (!terr->loaded) continue;
+                Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData);
+            }
+        }
+    //
+    terr = terrain[(x * 10000 + z)];
     h = brush->alpha*brush->direction*10.0;
     if(brush->hType == 1){
         terr->terrainData[(pz+1024)/8][(px+1024)/8] += h;

@@ -459,6 +459,7 @@ void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
         //TexLib::mtex[texid[y * 16 + u]]->GLTextures();
     }
 
+    TexLib::mtex[texid[y * 16 + u]]->sendToUndo(texid[y * 16 + u]);
     TexLib::mtex[texid[y * 16 + u]]->paint(brush, z, x);
     TexLib::mtex[texid[y * 16 + u]]->update();
     this->texModified[y * 16 + u] = true;
@@ -1349,6 +1350,14 @@ bool Terrain::readRAW(QString fSfile) {
     }
     delete data;
     return true;
+}
+
+void Terrain::fillHeightMap(float* data){
+    for (int i = 0; i < 257; i++)
+        for (int j = 0; j < 257; j++) {
+            terrainData[i][j] = data[i*257+j];
+        }
+    this->refresh();
 }
 
 void Terrain::save() {

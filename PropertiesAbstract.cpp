@@ -12,6 +12,7 @@
 #include "WorldObj.h"
 #include "TransformWorldObjDialog.h"
 #include "GLMatrix.h"
+#include "Undo.h"
 
 PropertiesAbstract::PropertiesAbstract() : QWidget() {
     foreach (QObject *child, children()) {
@@ -48,6 +49,10 @@ void PropertiesAbstract::resetRotEnabled(){
     worldObj->setMartix();
 }
 
+void PropertiesAbstract::enableTool(){
+    
+}
+
 void PropertiesAbstract::copyREnabled(){
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(this->quat.text());
@@ -81,6 +86,8 @@ void PropertiesAbstract::copyPREnabled(){
 void PropertiesAbstract::rotYEnabled(){
     if(worldObj == NULL)
         return;
+    
+    Undo::SinglePushWorldObjData(worldObj);
     worldObj->rotate(0,M_PI/2,0);
     worldObj->modified = true;
     worldObj->setMartix();
@@ -98,6 +105,8 @@ void PropertiesAbstract::pasteREnabled(){
     nq[1] = args[1].toFloat();
     nq[2] = args[2].toFloat();
     nq[3] = args[3].toFloat();
+    
+    Undo::SinglePushWorldObjData(worldObj);
     worldObj->setQdirection((float*)&nq);
     worldObj->modified = true;
     worldObj->setMartix();
@@ -115,6 +124,8 @@ void PropertiesAbstract::pastePEnabled(){
     nq[0] = args[0].toFloat();
     nq[1] = args[1].toFloat();
     nq[2] = -args[2].toFloat();
+    
+    Undo::SinglePushWorldObjData(worldObj);
     worldObj->setPosition((float*)&nq);
     worldObj->modified = true;
     worldObj->setMartix();
@@ -139,6 +150,8 @@ void PropertiesAbstract::pastePREnabled(){
     rq[1] = args[4].toFloat();
     rq[2] = -args[5].toFloat();
     rq[3] = args[6].toFloat();
+    
+    Undo::SinglePushWorldObjData(worldObj);
     worldObj->setPosition((float*)&nq);
     worldObj->setQdirection((float*)&rq);
     worldObj->modified = true;
@@ -156,6 +169,7 @@ void PropertiesAbstract::transformEnabled(){
     transformWindow.exec();
     //qDebug() << waterWindow->changed;
     if(transformWindow.isOk){
+        Undo::SinglePushWorldObjData(worldObj);
         if(transformWindow.x != 0 || transformWindow.y != 0 || + transformWindow.z != 0){
             float pos[3];
             pos[0] = transformWindow.x;

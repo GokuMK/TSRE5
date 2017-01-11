@@ -33,6 +33,7 @@
 #include "ShapeLib.h"
 #include "EngLib.h"
 #include "QOpenGLFunctions_3_3_Core"
+#include "Undo.h"
 
 GLWidget::GLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -74,6 +75,7 @@ void GLWidget::timerEvent(QTimerEvent * event) {
         //qDebug() << "new second" << timeNow;
         if(selectedObj != NULL)
             emit updateProperties(selectedObj);
+        Undo::StateEndIfLongTime();
     }
     
     lastTime = timeNow;
@@ -387,6 +389,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
     if(!route->loaded) return;
     camera->keyDown(event);
     
+    Undo::StateBeginIfNotExist();
+    
     switch (event->key()) {
         case Qt::Key_Control:
             moveStep = moveMinStep;
@@ -468,7 +472,8 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
     if(toolEnabled == "heightTool"){
         switch (event->key()) {
             case Qt::Key_Z:
-                this->defaultPaintBrush->direction = -this->defaultPaintBrush->direction;
+                if(!keyControlEnabled)
+                    this->defaultPaintBrush->direction = -this->defaultPaintBrush->direction;
                 break;
             default:
                 break;
@@ -481,6 +486,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_Up:    
                 if(Game::usenNumPad) break;
             case Qt::Key_8:
+                Undo::PushWorldObjData(selectedObj);
                 if(resizeTool && selectedObj != NULL){
                     this->selectedObj->resize(moveStep, 0, 0);
                 } else if(rotateTool && selectedObj != NULL){
@@ -494,6 +500,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_Down:    
                 if(Game::usenNumPad) break;    
             case Qt::Key_2:
+                Undo::PushWorldObjData(selectedObj);
                 if(resizeTool && selectedObj != NULL){
                     this->selectedObj->resize(-moveStep, 0, 0);
                 } else if(rotateTool && selectedObj != NULL){
@@ -507,6 +514,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_Left:    
                 if(Game::usenNumPad) break;    
             case Qt::Key_4:
+                Undo::PushWorldObjData(selectedObj);
                 if(resizeTool && selectedObj != NULL){
                     this->selectedObj->resize(0, moveStep, 0);
                 } else if(rotateTool && selectedObj != NULL){
@@ -520,6 +528,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_Right:    
                 if(Game::usenNumPad) break;     
             case Qt::Key_6:
+                Undo::PushWorldObjData(selectedObj);
                 if(resizeTool && selectedObj != NULL){
                     this->selectedObj->resize(0, -moveStep, 0);
                 } else if(rotateTool && selectedObj != NULL){
@@ -534,6 +543,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 //Game::cameraFov += 1;
                 //qDebug() << Game::cameraFov;
             case Qt::Key_9:
+                Undo::PushWorldObjData(selectedObj);
                 if(resizeTool && selectedObj != NULL){
                     this->selectedObj->resize(0, 0, moveStep);
                 } else if(rotateTool && selectedObj != NULL){
@@ -547,6 +557,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 //qDebug() << Game::cameraFov;
             case Qt::Key_3:
             case Qt::Key_7:    
+                Undo::PushWorldObjData(selectedObj);
                 if(rotateTool && selectedObj != NULL){
                     this->selectedObj->rotate(0, 0, -moveStep/10);
                 } else if(resizeTool && selectedObj != NULL){
@@ -556,10 +567,12 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 }
                 break;                
             case Qt::Key_F:
+                Undo::StateBegin();
                 if(selectedObj != NULL)
                     route->setTerrainToTrackObj(selectedObj, defaultPaintBrush);
                 else
                     route->setTerrainToTrackObj(lastSelectedObj, defaultPaintBrush);
+                Undo::StateEnd();
                 break;
             case Qt::Key_H:
                 if(selectedObj != NULL)
@@ -571,6 +584,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 break;
             case Qt::Key_Delete:
                 if(selectedObj != NULL){
+                    Undo::PushWorldObjRemoved(selectedObj);
                     route->deleteObj(selectedObj);
                     selectedObj->unselect();
                     setSelectedObj(NULL);
@@ -662,6 +676,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         camera->MouseDown(event);
     }
     if((event->button()) == Qt::LeftButton){
+        Undo::StateBegin();
         mouseLPressed = true;
         lastMousePressTime = QDateTime::currentMSecsSinceEpoch();
         if(toolEnabled == "placeTool"){
@@ -711,6 +726,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             if(selectedObj != NULL){
                 mouseLPressed = true;
                 if(translateTool){
+                    Undo::PushWorldObjData(selectedObj);
                     selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
                     selectedObj->setMartix();
                 }
@@ -726,11 +742,11 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             emit flexData((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == "heightTool"){
-           // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
+            // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
             route->paintHeightMap(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == "paintTool"){
-           // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
+            // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
             TerrainLib::paintTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == "pickTerrainTexTool"){
@@ -796,6 +812,8 @@ void GLWidget::wheelEvent(QWheelEvent *event)
     if (event->orientation() == Qt::Vertical) {
         if(toolEnabled == "selectTool" || toolEnabled == "placeTool"){
             if(selectedObj != NULL){
+                Undo::StateBeginIfNotExist();
+                Undo::PushWorldObjData(selectedObj);
                 this->selectedObj->translate(0,numDegrees*moveStep,0);
             }
         }
@@ -814,6 +832,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent* event) {
     }
     if((event->button()) == Qt::LeftButton){
         mouseLPressed = false;
+        Undo::StateEnd();
     }
 }
 
@@ -858,6 +877,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
                 if(!translateTool && !rotateTool && !resizeTool){
                     long long int ntime = QDateTime::currentMSecsSinceEpoch();
                     if(ntime - lastMousePressTime > 200){
+                        Undo::PushWorldObjData(selectedObj);
                         if(keyShiftEnabled){
                             float val = mousex - m_lastPos.x();
                             selectedObj->rotate(0,val*moveStep*0.1,0);
@@ -868,10 +888,12 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
                     }
                 }
                 if(translateTool){
+                    Undo::PushWorldObjData(selectedObj);
                     selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
                     selectedObj->setMartix();
                 }
                 if(rotateTool){
+                    Undo::PushWorldObjData(selectedObj);
                     float val = mousex - m_lastPos.x();
                     selectedObj->rotate(0,val*moveStep*0.1,0);
                 }
@@ -887,6 +909,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
             if(selectedObj != NULL && mouseLPressed){
                 long long int ntime = QDateTime::currentMSecsSinceEpoch();
                 if(ntime - lastMousePressTime > 200){
+                    Undo::PushWorldObjData(selectedObj);
                     if(keyShiftEnabled){
                         float val = mousex - m_lastPos.x();
                         selectedObj->rotate(0,val*moveStep*0.1,0);
@@ -972,6 +995,10 @@ void GLWidget::editPaste(){
             }
         }
     }
+}
+
+void GLWidget::editUndo(){
+    Undo::UndoLast();
 }
 
 void GLWidget::showTrkEditr(){

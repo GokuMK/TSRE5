@@ -98,6 +98,7 @@ private:
     QAction *createPathsAction;
     QAction *exitAction;
     QAction *copyAction;
+    QAction *undoAction;
     QAction *pasteAction;
     QAction *aboutAction;
     QAction *propertiesAction;

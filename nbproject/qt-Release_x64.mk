@@ -37571,7 +37571,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesAbstract.o: Proper
 		Ref.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		TransformWorldObjDialog.h \
-		GLMatrix.h
+		GLMatrix.h \
+		Undo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesAbstract.o PropertiesAbstract.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesCarspawner.o: PropertiesCarspawner.cpp PropertiesCarspawner.h \
@@ -43546,7 +43548,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesStatic.o: Properti
 		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		StaticObj.h \
 		ParserX.h \
-		EditFileNameDialog.h
+		EditFileNameDialog.h \
+		Undo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesStatic.o PropertiesStatic.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTrackObj.o: PropertiesTrackObj.cpp PropertiesTrackObj.h \
@@ -44007,7 +44011,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTrackObj.o: Proper
 		TrackObj.h \
 		GLMatrix.h \
 		ParserX.h \
-		EditFileNameDialog.h
+		EditFileNameDialog.h \
+		Undo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTrackObj.o PropertiesTrackObj.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTransfer.o: PropertiesTransfer.cpp PropertiesTransfer.h \
@@ -52153,7 +52159,12 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainLib.o: TerrainLib.cpp
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbox.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
-		QuadTree.h
+		QuadTree.h \
+		Undo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
+		WorldObj.h \
+		Ref.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainLib.o TerrainLib.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainTools.o: TerrainTools.cpp TerrainTools.h \
@@ -53747,54 +53758,78 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Texture.o: Texture.cpp Textu
 		c:/OT/Static/5.7.0_x64/include/QtCore/qarraydata.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringbuilder.h \
 		Brush.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLShaderProgram \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglshaderprogram.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qopengl.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qt_windows.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qopengles2ext.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglext.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qvector2d.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qmetatype.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qvarlengtharray.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qcontainerfwd.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qalgorithms.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs_impl.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qvector3d.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qvector4d.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qmatrix4x4.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qquaternion.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qgenericmatrix.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
+		Undo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qiterator.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qlist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qalgorithms.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qhashfunctions.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qpair.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qbytearraylist.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringlist.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qregexp.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringmatcher.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs_impl.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcoreevent.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qscopedpointer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmetatype.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvarlengtharray.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcontainerfwd.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qobject_impl.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qlocale.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qvariant.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qshareddata.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qvector.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qset.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcontiguouscache.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
+		WorldObj.h \
+		GLUU.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLFunctions \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopengl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qt_windows.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopengles2ext.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglext.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglcontext.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QObject \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QScopedPointer \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QSurfaceFormat \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qsurfaceformat.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglversionfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLVertexArrayObject \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglvertexarrayobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLBuffer \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglbuffer.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QMatrix4x4 \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qmatrix4x4.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector3d.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector4d.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qquaternion.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qgenericmatrix.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qdatastream.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qrect.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qmargins.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qsize.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLShaderProgram \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglshaderprogram.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector2d.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h \
+		FileBuffer.h \
+		OglObj.h \
+		Ref.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
 		c:/OT/Static/5.7.0_x64/include/QtGui/QColor \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qcolor.h \
@@ -55662,7 +55697,115 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrkWindow.o: TrkWindow.cpp T
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrkWindow.o TrkWindow.cpp
 
-build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Undo.o: Undo.cpp Undo.h
+build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Undo.o: Undo.cpp Undo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qiterator.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qglobal.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qconfig.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfeatures.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsystemdetection.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qprocessordetection.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcompilerdetection.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtypeinfo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtypetraits.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qisenum.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsysinfo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlogging.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qflags.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbasicatomic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic_bootstrap.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qgenericatomic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic_cxx11.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic_msvc.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qglobalstatic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmutex.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qnumeric.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qversiontagging.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qalgorithms.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qrefcount.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qarraydata.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhashfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qchar.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpair.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbytearraylist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbytearray.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qnamespace.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstring.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstringbuilder.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstringlist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qregexp.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstringmatcher.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcoreevent.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qscopedpointer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmetatype.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvarlengtharray.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcontainerfwd.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobject_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlocale.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvariant.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qshareddata.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvector.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qset.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcontiguouscache.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
+		WorldObj.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
+		GLUU.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLFunctions \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopengl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qt_windows.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopengles2ext.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglext.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglcontext.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QObject \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QScopedPointer \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QSurfaceFormat \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qsurfaceformat.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglversionfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLVertexArrayObject \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglvertexarrayobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLBuffer \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglbuffer.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QMatrix4x4 \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qmatrix4x4.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector3d.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector4d.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qquaternion.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qgenericmatrix.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdatastream.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qrect.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmargins.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsize.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLShaderProgram \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglshaderprogram.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector2d.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h \
+		FileBuffer.h \
+		OglObj.h \
+		Ref.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
+		TerrainLib.h \
+		TexLib.h \
+		Texture.h \
+		GLMatrix.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QDateTime \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Undo.o Undo.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/UnsavedDialog.o: UnsavedDialog.cpp UnsavedDialog.h \
@@ -56923,7 +57066,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/glwidget.o: glwidget.cpp glw
 		EngLib.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLFunctions_3_3_Core \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglfunctions_3_3_core.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLVersionFunctions
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLVersionFunctions \
+		Undo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/glwidget.o glwidget.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/main.o: main.cpp c:/OT/Static/5.7.0_x64/include/QtWidgets/QApplication \

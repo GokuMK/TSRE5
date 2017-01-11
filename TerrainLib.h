@@ -32,6 +32,7 @@ public:
     static float getHeight(int x, int z, float posx, float posz, bool addR);
     static void getRotation(float *rot, int x, int z, float posx, float posz);
     static void setHeight(int x, int z, float posx, float posz, float h);
+    static void fillHeightMap(int x, int z, float *data);
     static int setHeight256(int x, int z, int posx, int posz, float h);
     static int setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE);
     static void setHeightFromGeoGui(int x, int z, float* p);

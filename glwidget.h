@@ -66,6 +66,7 @@ public slots:
     
     void editCopy();
     void editPaste();
+    void editUndo();
     void showTrkEditr();
     
 signals:
