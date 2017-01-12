@@ -63,10 +63,6 @@ Route::Route() {
 
     this->tsection = new TSectionDAT();
     this->trackDB = new TDB(tsection, false);
-
-    TDB *temp = new TDB(*this->trackDB);
-    this->trackDB = temp;
-    
     this->roadDB = new TDB(tsection, true);
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
 
