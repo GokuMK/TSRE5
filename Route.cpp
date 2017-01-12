@@ -721,6 +721,8 @@ void Route::deleteObj(WorldObj* obj) {
     obj->loaded = false;
     obj->modified = true;
     if (obj->isTrackItem()) {
+        //Undo::PushTrackDB(trackDB, false);
+        //Undo::PushTrackDB(roadDB, true);
         obj->deleteTrItems();
     }
     Tile *tTile;

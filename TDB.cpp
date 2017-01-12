@@ -256,7 +256,8 @@ void TDB::loadTit(){
                 if(this->trackItems[nowy->trItemId] == NULL){
                     qDebug() << "tit tdb fail" << nowy->trItemId;
                 } else {
-                    this->trackItems[nowy->trItemId]->trSignalRDir = nowy->trSignalRDir;
+                    this->trackItems[nowy->trItemId]->trSignalRDir = new float[nowy->trSignalDirs * 6];
+                    memcpy(this->trackItems[nowy->trItemId]->trSignalRDir, nowy->trSignalRDir, sizeof(float[nowy->trSignalDirs * 6]));
                 }
                 ParserX::SkipToken(bufor);
                 continue;
