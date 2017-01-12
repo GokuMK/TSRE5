@@ -10,6 +10,8 @@
 
 #include "TRnode.h"
 #include <math.h>
+#include <QString>
+#include <QDebug>
 
 TRnode::TRnode() {
     typ = -1;
@@ -22,10 +24,34 @@ TRnode::TRnode() {
     TrPinK[0] = TrPinK[1] = TrPinK[2] = 0;
 }
 
-TRnode::TRnode(const TRnode& orig) {
+TRnode::TRnode(const TRnode& o) {
+    typ = o.typ;
+    memcpy(args, o.args, sizeof(int[3]));
+    memcpy(UiD, o.UiD, sizeof(float[12]));
+    iTrv = o.iTrv;
+    if(iTrv > 0){
+        trVectorSection = new TRSect[iTrv];
+        for(int i = 0; i < iTrv; i++){
+            memcpy(trVectorSection[i].param, o.trVectorSection[i].param, sizeof(float[16]));
+        }
+    }
+    iTri = o.iTri;
+    if(iTri > 0){
+        trItemRef = new int[iTri];
+        memcpy(trItemRef, o.trItemRef, sizeof(int[iTri]));
+    }
+    TrP1 = o.TrP1;
+    TrP2 = o.TrP2;
+    memcpy(TrPinS, o.TrPinS, sizeof(int[3]));
+    memcpy(TrPinK, o.TrPinK, sizeof(int[3]));
 }
 
 TRnode::~TRnode() {
+    if(trVectorSection != NULL)
+        delete[] trVectorSection;
+        
+    if(trItemRef != NULL)
+        delete[] trItemRef;
 }
 
 Vector2i* TRnode::getTile() {

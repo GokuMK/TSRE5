@@ -584,7 +584,6 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 break;
             case Qt::Key_Delete:
                 if(selectedObj != NULL){
-                    Undo::PushWorldObjRemoved(selectedObj);
                     route->deleteObj(selectedObj);
                     selectedObj->unselect();
                     setSelectedObj(NULL);

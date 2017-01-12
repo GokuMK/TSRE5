@@ -42,7 +42,7 @@ public:
     static TRitem* newHazardItem(int trItemId, float metry);
     TRitem();
     TRitem(int id);
-    TRitem(const TRitem& orig);
+    TRitem(const TRitem& o);
     virtual ~TRitem();
     
     QString type;
@@ -53,7 +53,7 @@ public:
     float *trItemPData = NULL;
     float *trItemRData = NULL;
     
-    int *crossoverTrItemData;
+    int *crossoverTrItemData = NULL;
     
     unsigned int *platformTrItemData = NULL;
     QString platformName;

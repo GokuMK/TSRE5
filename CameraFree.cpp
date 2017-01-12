@@ -13,6 +13,7 @@
 #include "GLMatrix.h"
 #include "Game.h"
 #include "IghCoords.h"
+#include "TerrainLib.h"
 
 CameraFree::CameraFree(float* pt) {
     pozT = pt;
@@ -251,6 +252,12 @@ void CameraFree::check_coords() {
     if (playerPos[2]<-1024) {
         playerPos[2] += 2048;
         pozT[1]--;
+    }
+    
+    if(Game::cameraStickToTerrain){
+        float h = TerrainLib::getHeight(pozT[0], pozT[1], playerPos[0], playerPos[2]);
+        if(h + 2 > playerPos[1])
+            playerPos[1] = h + 2;
     }
 }
 

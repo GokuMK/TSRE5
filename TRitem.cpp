@@ -183,10 +183,93 @@ TRitem::TRitem(int id) {
     this->trItemId = id;
 }
 
-TRitem::TRitem(const TRitem& orig) {
+TRitem::TRitem(const TRitem& o) {
+    type = o.type;
+    
+    trItemId = o.trItemId;
+    trItemSData1 = o.trItemSData1;
+    trItemSData2 = o.trItemSData2;
+    
+    trItemPData = o.trItemPData;
+    if(trItemPData != NULL){
+        trItemPData = new float[4];
+        memcpy(trItemPData, o.trItemPData, sizeof(float[4]));
+    }
+    trItemRData = o.trItemRData;
+    if(trItemRData != NULL){
+        trItemRData = new float[5];
+        memcpy(trItemRData, o.trItemRData, sizeof(float[5]));
+    }
+
+    crossoverTrItemData = o.crossoverTrItemData;
+    if(crossoverTrItemData != NULL){
+        crossoverTrItemData = new int[2];
+        memcpy(crossoverTrItemData, o.crossoverTrItemData, sizeof(int[2]));
+    }
+    platformTrItemData = o.platformTrItemData;
+    if(platformTrItemData != NULL){
+        platformTrItemData = new unsigned int[2];
+        memcpy(platformTrItemData, o.platformTrItemData, sizeof(unsigned int[2]));
+    }
+    
+    platformName = o.platformName;
+    stationName = o.stationName;
+    platformMinWaitingTime = o.platformMinWaitingTime;
+    platformNumPassengersWaiting = o.platformNumPassengersWaiting;
+    
+    trItemSRData = o.trItemSRData;
+    if(trItemSRData != NULL){
+        trItemSRData = new float[3];
+        memcpy(trItemSRData, o.trItemSRData, sizeof(float[3]));
+    }
+    speedpostTrItemData = o.speedpostTrItemData;
+    if(speedpostTrItemData != NULL){
+        speedpostTrItemData = new float[4];
+        memcpy(speedpostTrItemData, o.speedpostTrItemData, sizeof(float[4]));
+    }
+    
+    trSignalType1 = o.trSignalType1;
+    trSignalType2 = o.trSignalType2;
+    trSignalType3 = o.trSignalType3;
+    trSignalType4 = o.trSignalType4;
+    trSignalDirs = o.trSignalDirs;
+        
+    trSignalDir = o.trSignalDir;
+    if(trSignalDir != NULL){
+        trSignalDir = new int[trSignalDirs * 4];
+        memcpy(trSignalDir, o.trSignalDir, sizeof(int[trSignalDirs * 4]));
+    }
+    trSignalRDir = o.trSignalRDir;
+    if(trSignalRDir != NULL){
+        trSignalRDir = new float[trSignalDirs * 6];
+        memcpy(trSignalRDir, o.trSignalRDir, sizeof(float[trSignalDirs * 6]));
+    }
+    
+    titLoading = o.titLoading;
+    pickupTrItemData1 = o.pickupTrItemData1;
+    pickupTrItemData2 = o.pickupTrItemData2;
+    
+    speedpostTrItemDataLength = o.speedpostTrItemDataLength;
+    
 }
 
 TRitem::~TRitem() {
+    if(trItemPData != NULL)
+        delete[] trItemPData;
+    if(trItemRData != NULL)
+        delete[] trItemRData;
+    if(crossoverTrItemData != NULL)
+        delete[] crossoverTrItemData;
+    if(platformTrItemData != NULL)
+        delete[] platformTrItemData;
+    if(trItemSRData != NULL)
+        delete[] trItemSRData;
+    if(speedpostTrItemData != NULL)
+        delete[] speedpostTrItemData;
+    if(trSignalDir != NULL)
+        delete[] trSignalDir;
+    if(trSignalRDir != NULL)
+        delete[] trSignalRDir;
 }
 
 bool TRitem::init(QString sh) {

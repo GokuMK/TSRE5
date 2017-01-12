@@ -14,6 +14,10 @@
 #include "TexLib.h"
 #include "GLMatrix.h"
 #include <QDateTime>
+#include "WorldObj.h"
+#include "TDB.h"
+#include "Game.h"
+#include "Route.h"
 
 UndoState* Undo::currentState = NULL;
 QVector<UndoState*> Undo::undoStates;
@@ -91,6 +95,17 @@ void Undo::UndoLast(){
             }
         }
     }
+    
+    if(state->trackDB != NULL){
+        if(Game::currentRoute != NULL)
+            Game::currentRoute->setTDB(state->trackDB, false);
+    }
+    
+    if(state->roadDB != NULL){
+        if(Game::currentRoute != NULL)
+            Game::currentRoute->setTDB(state->roadDB, true);
+    }
+    
     delete state;
     undoStates.removeLast();
 }
@@ -203,6 +218,19 @@ void Undo::PushWorldObjRemoved(WorldObj* obj){
         tdata = currentState->objData[(long long int)obj];
         tdata->obj = obj;
         tdata->action = "remove";
+        currentState->modified = true;
+    }
+}
+
+void Undo::PushTrackDB(TDB* tdb, bool road){
+    if(currentState == NULL)
+        return;
+    
+    if(road && currentState->roadDB == NULL ){
+        currentState->roadDB = new TDB(*tdb);
+        currentState->modified = true;
+    } else if(currentState->trackDB == NULL) {
+        currentState->trackDB = new TDB(*tdb);
         currentState->modified = true;
     }
 }

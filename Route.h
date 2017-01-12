@@ -78,6 +78,7 @@ public:
     void newPositionTDB(WorldObj* obj, float* post, float* pos);
     void linkSignal(int x, int z, float* p, WorldObj* obj);
     void transalteObj(int x, int z, float px, float py, float pz, int uid);
+    void setTDB(TDB* tdb, bool road);
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, int renderMode);
     void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, bool selection);
 private:

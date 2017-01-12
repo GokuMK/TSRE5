@@ -38,9 +38,10 @@
 #include "TrkWindow.h"
 #include "PlatformObj.h"
 #include "GroupObj.h"
+#include "Undo.h"
 
 Route::Route() {
-
+    Game::currentRoute = this;
     QFile file(Game::root + "/routes");
     if (!file.exists()) return;
     file.setFileName(Game::root + "/global");
@@ -62,6 +63,10 @@ Route::Route() {
 
     this->tsection = new TSectionDAT();
     this->trackDB = new TDB(tsection, false);
+
+    TDB *temp = new TDB(*this->trackDB);
+    this->trackDB = temp;
+    
     this->roadDB = new TDB(tsection, true);
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
 
@@ -607,6 +612,20 @@ void Route::addToTDB(WorldObj* obj) {
     } 
 }
 
+void Route::setTDB(TDB* tdb, bool road){
+    if(tdb == NULL)
+        return;
+    if(road){
+        delete this->roadDB;
+        this->roadDB = tdb;
+        Game::roadDB = tdb;
+    } else {
+        delete this->trackDB;
+        this->trackDB = tdb;
+        Game::trackDB = tdb;
+    }
+}
+
 void Route::toggleToTDB(WorldObj* obj) {
     if(obj == NULL) return;
     
@@ -694,10 +713,15 @@ void Route::deleteObj(WorldObj* obj) {
     }
     
     if (obj->type == "trackobj" || obj->type == "dyntrack") {
+        //Undo::PushTrackDB(trackDB, false);
+        //Undo::PushTrackDB(roadDB, true);
         removeTrackFromTDB(obj);
         if(Game::leaveTrackShapeAfterDelete)
             return;
     }
+    
+    Undo::PushWorldObjRemoved(obj);
+    
     obj->loaded = false;
     obj->modified = true;
     if (obj->isTrackItem()) {

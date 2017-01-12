@@ -40,6 +40,7 @@ public slots:
     void show();
     void createPaths();
     void about();
+    void terrainCamera(bool val);
     void setToolbox(QString name);
     void showProperties(WorldObj* obj);
     void updateProperties(WorldObj* obj);
@@ -93,6 +94,7 @@ private:
     QMenu *viewMenu;
     QMenu *helpMenu;
     QMenu *toolsMenu;
+    QMenu *settingsMenu;
     
     QAction *saveAction;
     QAction *createPathsAction;
@@ -101,6 +103,7 @@ private:
     QAction *undoAction;
     QAction *pasteAction;
     QAction *aboutAction;
+    QAction *terrainCameraAction;
     QAction *propertiesAction;
     QAction *naviAction;
     QAction *shapeViewAction;

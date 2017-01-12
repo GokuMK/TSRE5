@@ -24,6 +24,7 @@ class SoundList;
 class ShapeLib;
 class EngLib;
 class QColor;
+class Route;
 
 class Game {
 public:
@@ -64,6 +65,7 @@ public:
     static bool toolsHidden;
     static bool usenNumPad;
     static float cameraFov;
+    static bool cameraStickToTerrain;
     static bool viewWorldGrid;
     static bool viewTileGrid;
     static bool viewTerrainGrid;
@@ -81,6 +83,7 @@ public:
     static QString geoPath;
     static ShapeLib *currentShapeLib;
     static EngLib *currentEngLib;
+    static Route *currentRoute;
     static QColor *colorConView;
     static QColor *colorShapeView;
     static bool consoleOutput;

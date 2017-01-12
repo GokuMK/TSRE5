@@ -130,10 +130,12 @@ Window::Window() {
     // MENUBAR
     // Route
     saveAction = new QAction(tr("&Save"), this);
+    saveAction->setShortcut(QKeySequence("Ctrl+S"));
     QObject::connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
     createPathsAction = new QAction(tr("&Save Paths"), this);
     QObject::connect(createPathsAction, SIGNAL(triggered()), this, SLOT(createPaths()));
     exitAction = new QAction(tr("&Exit"), this);
+    exitAction->setShortcut(QKeySequence("Alt+F4"));
     QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
     trkEditr = new QAction(tr("&Edit route settings"), this);
     QObject::connect(trkEditr, SIGNAL(triggered()), glWidget, SLOT(showTrkEditr()));
@@ -222,6 +224,12 @@ Window::Window() {
     activityAction->setShortcut(QKeySequence("F4"));
     toolsMenu->addAction(activityAction);
     QObject::connect(activityAction, SIGNAL(triggered(bool)), this, SLOT(showToolsActivity(bool)));
+    // Settigs
+    terrainCameraAction = GuiFunct::newMenuCheckAction(tr("&Stick Camera To Terrain"), this); 
+    terrainCameraAction->setChecked(false);
+    QObject::connect(terrainCameraAction, SIGNAL(triggered(bool)), this, SLOT(terrainCamera(bool)));
+    settingsMenu = menuBar()->addMenu(tr("&Settings"));
+    settingsMenu->addAction(terrainCameraAction);
     // Help
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -400,6 +408,10 @@ void Window::createPaths(){
       default:
           break;
     }
+}
+
+void Window::terrainCamera(bool val){
+    Game::cameraStickToTerrain = val;
 }
 
 void Window::about(){

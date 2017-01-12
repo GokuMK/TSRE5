@@ -3007,9 +3007,52 @@ void TDB::checkSignals(){
     qDebug() << "suma: "<<trtype[0]<<" "<<trtype[1]<<" "<<trtype[2]<<" "<<trtype[3];
 }
 
-TDB::TDB(const TDB& orig) {
+TDB::TDB(const TDB& o) {
+    
+    // simple copy
+    tsection = o.tsection; 
+    sigCfg = o.sigCfg;
+    speedPostDAT = o.speedPostDAT;
+    endIdObj = o.endIdObj;
+    junctIdObj = o.junctIdObj;
+    
+    collisionLineBuffer = o.collisionLineBuffer;
+    collisionLineLength = o.collisionLineLength;
+    collisionLineHash = o.collisionLineHash;
+    
+    // deep copy
+    loaded = o.loaded;
+    iTRnodes = o.iTRnodes;
+    iTRitems = o.iTRitems;
+    serial = o.serial;
+    defaultEnd = o.defaultEnd;
+    wysokoscSieci = o.wysokoscSieci;
+    road = o.road;
+    
+    for (auto it = o.trackItems.begin(); it != o.trackItems.end(); ++it ){
+        if(it->second == NULL)
+            continue;
+        trackItems[it->first] = new TRitem(*(it->second));
+    }
+    
+    for (auto it = o.trackNodes.begin(); it != o.trackNodes.end(); ++it ){
+        if(it->second == NULL)
+            continue;
+        trackNodes[it->first] = new TRnode(*(it->second));
+    }
 }
 
 TDB::~TDB() {
+    for (auto it = trackItems.begin(); it != trackItems.end(); ++it ){
+        if(it->second == NULL)
+            continue;
+        delete it->second;
+    }
+    
+    for (auto it = trackNodes.begin(); it != trackNodes.end(); ++it ){
+        if(it->second == NULL)
+            continue;
+        delete it->second;
+    }
 }
 

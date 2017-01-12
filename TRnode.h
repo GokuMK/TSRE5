@@ -12,6 +12,7 @@
 #define	TRNODE_H
 
 #include "Vector2i.h"
+#include <QString>
 
 class TRnode {
 public:
@@ -21,10 +22,10 @@ public:
     int typ;
     int args[3];
     float UiD[12];
-    int iTrv;
-    TRSect *trVectorSection;
-    int iTri;
-    int *trItemRef;
+    int iTrv = 0;
+    TRSect *trVectorSection = NULL;
+    int iTri = 0;
+    int *trItemRef = NULL;
     int TrP1;
     int TrP2;
     int TrPinS[3];

@@ -50,7 +50,7 @@ public:
     int iTRitems;
     int serial;
     TDB(TSectionDAT* tsection, bool road);
-    TDB(const TDB& orig);
+    TDB(const TDB& o);
     virtual ~TDB();
     void refresh();
     void trpin(TRnode* tr, FileBuffer* bufor );

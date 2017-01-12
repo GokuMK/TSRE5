@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.664"; 
+QString Game::AppVersion = "v0.665"; 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -49,6 +49,7 @@ bool Game::systemTheme = false;
 bool Game::toolsHidden = false;
 bool Game::usenNumPad = false;
 float Game::cameraFov = 55.0f;
+bool Game::cameraStickToTerrain = false;
 
 bool Game::viewWorldGrid = true;
 bool Game::viewTileGrid = true;
@@ -81,6 +82,7 @@ Window* Game::window = NULL;
 LoadWindow* Game::loadWindow = NULL;
 ShapeLib *Game::currentShapeLib = NULL;
 EngLib *Game::currentEngLib = NULL;
+Route *Game::currentRoute = NULL;
 QColor *Game::colorConView = NULL;
 QColor *Game::colorShapeView = NULL;
 void Game::load() {
