@@ -19,12 +19,6 @@ class TrackItemObj;
 
 class PickupObj : public WorldObj {
 public:
-    float speedRange[2];
-    int pickupType[2];
-    int pickupAnimData1;
-    float pickupAnimData2;
-    int pickupCapacity1;
-    float pickupCapacity2;
     PickupObj();
     PickupObj(const PickupObj& orig);
     virtual ~PickupObj();
@@ -37,12 +31,36 @@ public:
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
-    float getPickupContent();
+    void setTypeId(int val);
+    void setCapacity(float val);
+    void setFillRate(float val);
     void setPickupContent(float val);
+    void setSpeedMin(float val);
+    void setSpeedMax(float val);
+    void setAnimTypeId(int val);
+    void setAnimLength(float val);
+    void setInfinite(bool val);
+    void setBroken(bool val);
+    int getTypeId();
+    float getCapacity();
+    float getFillRate();
+    float getPickupContent();
+    float getSpeedMin();
+    float getSpeedMax();
+    int getAnimTypeId();
+    float getAnimLength();
+    bool isInfinite();
+    bool isBroken();
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 
 private:
+    float speedRange[2];
+    int pickupType[2];
+    int pickupAnimData1;
+    float pickupAnimData2;
+    float pickupCapacity1;
+    float pickupCapacity2;
     int *trItemId = NULL;
     int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL;

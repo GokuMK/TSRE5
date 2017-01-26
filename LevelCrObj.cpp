@@ -111,7 +111,7 @@ void LevelCrObj::initTrItems(float* tpos){
 
     trItemIdCount = ipoints.size()*4;
     levelCrData[1] = ipoints.size();
-    trItemId = new int[ipoints.size()*4];    
+    trItemId.fill(-1,levelCrData[1]*4);
     for(int i = 0; i < ipoints.size(); i++){
         tdb->newLevelCrObject(tid, ipoints[i]->idx, ipoints[i]->m, this->typeID);
         trItemId[i*2+0] = 0;
@@ -158,7 +158,7 @@ void LevelCrObj::set(int sh, FileBuffer* data) {
         data->off++;
         levelCrData[0] = data->getUint();
         levelCrData[1] = data->getUint();
-        trItemId = new int[levelCrData[1]*4];
+        trItemId.fill(-1,levelCrData[1]*4);
         return;
     }
     if (sh == TS::LevelCrTiming) {
@@ -198,7 +198,7 @@ void LevelCrObj::set(QString sh, FileBuffer* data) {
     if (sh == ("levelcrdata")) {
         levelCrData[0] = ParserX::GetHex(data);
         levelCrData[1] = ParserX::GetNumber(data);
-        trItemId = new int[levelCrData[1]*4];
+        trItemId.fill(-1,levelCrData[1]*4);
         return;
     }
     if (sh == ("levelcrtiming")) {
@@ -210,7 +210,8 @@ void LevelCrObj::set(QString sh, FileBuffer* data) {
     if (sh == ("tritemid")) {
         trItemId[trItemIdCount++] = ParserX::GetNumber(data);
         trItemId[trItemIdCount++] = ParserX::GetNumber(data);
-        qDebug() <<"levelcr "<<trItemId[trItemIdCount-2] <<" "<<trItemId[trItemIdCount-1];
+        //qDebug() << trItemId.size();
+        //qDebug() <<"levelcr "<<trItemId[trItemIdCount-2] <<" "<<trItemId[trItemIdCount-1];
         return;
     }
     if (sh == ("filename")) {
@@ -281,7 +282,7 @@ void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
     ///////////////////////////////
     TDB* tdb = Game::trackDB;
     if(drawPositions.size() == 0){
-        if(this->trItemId == NULL){
+        if(this->trItemId.capacity() == 0 || trItemIdCount == 0){
             qDebug() << "LevelCrObj: fail trItemId";
             loaded = false;
             return;
@@ -309,6 +310,10 @@ void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
                 pointer3d = new TrackItemObj(1);
                 pointer3d->setMaterial(0.9,0.5,0.0);
             }
+            if(pointer3dSelected == NULL){
+                pointer3dSelected = new TrackItemObj(1);
+                pointer3dSelected->setMaterial(1.0,0.8,0.3);
+            }
             drawPositions.push_back(drawPosition);
         }
     }
@@ -324,12 +329,50 @@ void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+
         useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-        pointer3d->render(selectionColor + (1)*131072*8*useSC);
+        if(this->selected && this->selectionValue == i+1) 
+            pointer3dSelected->render(selectionColor + (i+1)*131072*8*useSC);
+        else
+            pointer3d->render(selectionColor + (i+1)*131072*8*useSC);
         gluu->mvPopMatrix();
     }
 
 };
+
+bool LevelCrObj::select(int value){
+    this->selectionValue = value;
+    this->selected = true;
+}
+
+void LevelCrObj::deleteSelectedTrItem(){
+    if(selectionValue < 1)
+        return;
+    if(selectionValue > trItemIdCount/4)
+        return;
+
+    TDB* tdb = Game::trackDB;
+    TDB* rdb = Game::roadDB;
+    
+    int i = selectionValue - 1;
+    qDebug() << "remove tritem " << i;
+    qDebug() << trItemIdCount;
+    qDebug() << this->trItemId[i*2] << this->trItemId[trItemIdCount/2+i*2];
+    if(this->trItemId[i*2] == 0 && this->trItemId[trItemIdCount/2+i*2] == 1){
+        
+        tdb->deleteTrItem(this->trItemId[i*2+1]);
+        rdb->deleteTrItem(this->trItemId[trItemIdCount/2+i*2+1]);
+        trItemId.remove(trItemIdCount/2+i*2+1);
+        trItemId.remove(trItemIdCount/2+i*2+0);
+        trItemId.remove(i*2+1);
+        trItemId.remove(i*2+0);
+        trItemIdCount-=4;
+        this->levelCrData[1]-=1;
+        drawPositions.clear();
+        //qDebug() << drawPositions.size();
+        this->modified = true;
+    }
+}
 
 bool LevelCrObj::getSimpleBorder(float* border){
     if (shape < 0) return false;
@@ -381,6 +424,82 @@ bool LevelCrObj::getBoxPoints(QVector<float>& points){
 
 int LevelCrObj::getDefaultDetailLevel(){
     return -9;
+}
+
+void LevelCrObj::setSensitivityActivateLevel(float val){
+    this->levelCrParameters[0] = val;
+    this->modified = true;
+}
+
+void LevelCrObj::setSensitivityMinimunDistance(float val){
+    this->levelCrParameters[1] = val;
+    this->modified = true;
+}
+
+void LevelCrObj::setTimingInitialWarning(float val){
+    this->levelCrTiming[0] = val;
+    this->modified = true;
+}
+
+void LevelCrObj::setTimingSeriousWarning(float val){
+    this->levelCrTiming[1] = val;
+    this->modified = true;
+}
+
+void LevelCrObj::setTimingAnimationLength(float val){
+    this->levelCrTiming[2] = val;
+    this->modified = true;
+}
+
+void LevelCrObj::setCrashProbability(float val){
+    this->crashProbability = val;
+    this->modified = true;
+}
+
+void LevelCrObj::setInvisible(bool val){
+    if(val)
+        this->levelCrData[0] = this->levelCrData[0] | 1;
+    else
+        this->levelCrData[0] = this->levelCrData[0] & ~(1);
+}
+
+void LevelCrObj::setSilentMstsHax(bool val){
+    if(val)
+        this->levelCrData[0] = this->levelCrData[0] | 6;
+    else
+        this->levelCrData[0] = this->levelCrData[0] & ~(6);
+}
+
+float LevelCrObj::getSensitivityActivateLevel(){
+    return this->levelCrParameters[0];
+}
+
+float LevelCrObj::getSensitivityMinimunDistance(){
+    return this->levelCrParameters[1];
+}
+
+float LevelCrObj::getTimingInitialWarning(){
+    return this->levelCrTiming[0];
+}
+
+float LevelCrObj::getTimingSeriousWarning(){
+    return this->levelCrTiming[1];
+}
+
+float LevelCrObj::getTimingAnimationLength(){
+    return this->levelCrTiming[2];
+}
+
+float LevelCrObj::getCrashProbability(){
+    return this->crashProbability;
+}
+
+bool LevelCrObj::isInvisibleEnabled(){
+    return ((this->levelCrData[0]) & 1) == 1;
+}
+
+bool LevelCrObj::isSilentMstsHaxEnabled(){
+    return ((this->levelCrData[0]) & 6) == 6;
 }
 
 void LevelCrObj::save(QTextStream* out){

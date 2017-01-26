@@ -339,7 +339,7 @@ void TransferObj::drawShape(){
                         punkty[ptr++] = alpha;
                 }
             }
-
+            
         texturePath = new QString(resPath.toLower()+"/"+texture.toLower());
         shape.setMaterial(texturePath);
         shape.init(punkty, ptr, shape.VNT, GL_TRIANGLES);

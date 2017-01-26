@@ -173,7 +173,7 @@ void TRitem::enableSignalSubObjFlag(int i) {
 }
 
 void TRitem::disableSignalSubObjFlag(int i) {
-    this->trSignalType1 = this->trSignalType1 ^ (1 << (i + 3));
+    this->trSignalType1 = this->trSignalType1 & ~(1 << (i + 3));
 }
 
 TRitem::TRitem() {

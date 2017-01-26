@@ -38,6 +38,7 @@
 #include "PropertiesTrackObj.h"
 #include "PropertiesGroup.h"
 #include "PropertiesRuler.h"
+#include "PropertiesLevelCr.h"
 #include "PropertiesSoundRegion.h"
 #include "NaviWindow.h"
 #include "UnsavedDialog.h"
@@ -70,6 +71,7 @@ Window::Window() {
     objProperties.push_back(new PropertiesGroup);
     objProperties.push_back(new PropertiesRuler);
     objProperties.push_back(new PropertiesSoundRegion);
+    objProperties.push_back(new PropertiesLevelCr);
     // last 
     objProperties.push_back(new PropertiesUndefined);
     

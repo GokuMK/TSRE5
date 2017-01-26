@@ -89,13 +89,6 @@ void PickupObj::initTrItems(float* tpos){
     pickupType[1] = 0;
 }
 
-void PickupObj::setPickupContent(float val){
-    TDB* tdb = Game::trackDB;
-    if(tdb->trackItems[this->trItemId[1]] == NULL)
-        return;
-    tdb->trackItems[this->trItemId[1]]->setPickupContent(val);
-}
-
 void PickupObj::set(QString sh, QString val){
     if (sh == ("filename")) {
         fileName = val;
@@ -332,11 +325,107 @@ bool PickupObj::getBoxPoints(QVector<float>& points){
         return true;
 }
 
+void PickupObj::setTypeId(int val){
+    pickupType[0] = val + 1;
+    this->modified = true;
+}
+
+void PickupObj::setCapacity(float val){
+    pickupCapacity1 = val;
+    this->modified = true;
+}
+
+void PickupObj::setFillRate(float val){
+    pickupCapacity2 = val;
+    this->modified = true;
+}
+
+void PickupObj::setPickupContent(float val){
+    TDB* tdb = Game::trackDB;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return;
+    tdb->trackItems[this->trItemId[1]]->setPickupContent(val);
+}
+
+void PickupObj::setSpeedMin(float val){
+    speedRange[0] = val;
+    this->modified = true;
+}
+
+void PickupObj::setSpeedMax(float val){
+    speedRange[1] = val;
+    this->modified = true;
+}
+
+void PickupObj::setAnimTypeId(int val){
+    pickupAnimData1 = val;
+    this->modified = true;
+}
+
+void PickupObj::setAnimLength(float val){
+    pickupAnimData2 = val;
+    this->modified = true;
+}
+
+void PickupObj::setInfinite(bool val){
+    if(val)
+        pickupType[1] = 1;
+    else
+        pickupType[1] = 0;
+    this->modified = true;
+}
+
+void PickupObj::setBroken(bool val){
+    if(val){
+        this->setPickupContent(0);
+    } else {
+        //nothing to do
+    }
+    this->modified = true;
+}
+
+int PickupObj::getTypeId(){
+    return pickupType[0]-1;
+}
+
+float PickupObj::getCapacity(){
+    return pickupCapacity1;
+}
+
+float PickupObj::getFillRate(){
+    return pickupCapacity2;
+}
+    
 float PickupObj::getPickupContent(){
     TRitem* trit = Game::trackDB->trackItems[this->trItemId[1]];
-    if(trit == NULL) return 0;
+    if(trit == NULL) 
+        return 0;
     return trit->pickupTrItemData1;
     return 0;
+}
+
+float PickupObj::getSpeedMin(){
+    return speedRange[0];
+}
+
+float PickupObj::getSpeedMax(){
+    return speedRange[1];
+}
+
+int PickupObj::getAnimTypeId(){
+    return pickupAnimData1;
+}
+
+float PickupObj::getAnimLength(){
+    return pickupAnimData2;
+}
+
+bool PickupObj::isInfinite(){
+    return (pickupType[1] == 1);
+}
+
+bool PickupObj::isBroken(){
+    return (getPickupContent() == 0);
 }
 
 int PickupObj::getDefaultDetailLevel(){

@@ -492,8 +492,8 @@ int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
 
         vector[0] = sid;
         vector[1] = r;
-        vector[2] = endNode->UiD[4];
-        vector[3] = endNode->UiD[5];
+        vector[2] = endNode->UiD[0];
+        vector[3] = endNode->UiD[1];
         vector[4] = uid;
         vector[5] = ends[0];
         vector[6] = ends[1];
@@ -507,8 +507,8 @@ int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
         vector[14] = endNode->UiD[10] + vangle;
         vector[15] = endNode->UiD[11];
 
-        endNode->UiD[0] = endNode->UiD[4];
-        endNode->UiD[1] = endNode->UiD[5];
+        //endNode->UiD[0] = endNode->UiD[0];
+        //endNode->UiD[1] = endNode->UiD[1];
         endNode->UiD[2] = uid;
         endNode->UiD[3] = ends[1];
         endNode->UiD[4] = x;
@@ -2481,7 +2481,7 @@ void TDB::newSignalObject(QString filename, SignalObj::SignalUnit* units, int &s
    // }
     
   //  signalUnits = subObjI.size();
-    qDebug() << "tdb signalUnits" << signalUnits;
+    //qDebug() << "tdb signalUnits" << signalUnits;
     //itemId = new int[signalUnits*2];
     float trPosition[7];
 

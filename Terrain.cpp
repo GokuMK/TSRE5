@@ -359,7 +359,10 @@ void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
     tx /= 128;
     tz /= 128;
     qDebug() << tx << " " << tz;
-
+    
+    if (brush->texId < 0)
+        return;
+    
     if (brush->texId == texid[y * 16 + u]) {
         qDebug() << "same tex";
         this->rotateTex(y * 16 + u);

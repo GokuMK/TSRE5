@@ -39,7 +39,7 @@ ObjTools::ObjTools(QString name)
     QPushButton *autoPlacementDeleteLast = new QPushButton("Delete last placed objects", this);
     QObject::connect(autoPlacementDeleteLast, SIGNAL(released()), this, SLOT(autoPlacementDeleteLastEnabled()));
     
-    QLineEdit *searchBox = new QLineEdit(this);
+    //searchBox = new QLineEdit(this);
     //radio1->setChecked(true);
     
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -56,7 +56,7 @@ ObjTools::ObjTools(QString name)
     vlist->addRow("Tracks:",&refTrack);
     vlist->addRow("Roads:",&refRoad);
     vlist->addRow("Other:",&refOther);
-    vlist->addRow("Search:",searchBox);
+    vlist->addRow("Search:",&searchBox);
     vbox->addItem(vlist);
     vbox->addWidget(&refList);
     QGridLayout *vlist3 = new QGridLayout;
@@ -177,7 +177,7 @@ ObjTools::ObjTools(QString name)
     QObject::connect(&refOther, SIGNAL(activated(QString)),
                       this, SLOT(refOtherSelected(QString)));
     
-    QObject::connect(searchBox, SIGNAL(textEdited(QString)),
+    QObject::connect(&searchBox, SIGNAL(textEdited(QString)),
                       this, SLOT(refSearchSelected(QString)));
     
     QObject::connect(&refList, SIGNAL(itemClicked(QListWidgetItem*)),
@@ -185,6 +185,9 @@ ObjTools::ObjTools(QString name)
     
     QObject::connect(&lastItems, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(lastItemsListSelected(QListWidgetItem*)));
+    
+    lastItems.setContextMenuPolicy(Qt::CustomContextMenu);
+    QObject::connect(&lastItems, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showLastItemsContextMenu(QPoint)));
     
     QObject::connect(selectTool, SIGNAL(toggled(bool)),
                       this, SLOT(selectToolEnabled(bool)));
@@ -701,4 +704,18 @@ void ObjTools::autoPlacementOffsetEnabled(QString val){
     v = this->autoPlacementRotZ.text().toFloat(&ok);
     if(ok)
         this->route->placementAutoRotationOffset[2] = v;
+}
+
+void ObjTools::showLastItemsContextMenu(QPoint val){
+    QPoint globalPos = lastItems.mapToGlobal(val);
+
+    QMenu myMenu;
+    myMenu.addAction("Find similar", this, SLOT(lastItemsMenuFindSimilar()));
+
+    myMenu.exec(globalPos);
+}
+
+void ObjTools::lastItemsMenuFindSimilar(){
+    this->searchBox.setText(lastItems.currentItem()->text().left(6));
+    refSearchSelected((const QString)lastItems.currentItem()->text().left(6));
 }

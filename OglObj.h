@@ -17,7 +17,7 @@
 
 class OglObj {
 public:
-    enum VertexAttr {NO_ATTR = 0, V = 3, VT = 5, VNT = 8};
+    enum VertexAttr {NO_ATTR = 0, V = 3, VT = 6, VNT = 9};
     enum MaterialType {NONE, TEXTURE, COLOR};
     bool loaded;
     

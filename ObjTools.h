@@ -45,6 +45,9 @@ public slots:
     void autoPlacementRotTypeSelected(QString val);
     void autoPlacementTargetSelected(QString val);
     void autoPlacementOffsetEnabled(QString val);
+
+    void showLastItemsContextMenu(QPoint val);
+    void lastItemsMenuFindSimilar();
     
     void msg(QString name);
     void msg(QString name, bool val);
@@ -74,6 +77,7 @@ private:
     QCheckBox stickToTDB;
     QCheckBox stickToRDB;
     QLineEdit autoPlacementLength;
+    QLineEdit searchBox;
     QPushButton *selectTool;
     QPushButton *placeTool;
     QPushButton *autoPlacementButton;

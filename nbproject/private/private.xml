@@ -2,14 +2,49 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>4</activeConfTypeElem>
-        <activeConfIndexElem>3</activeConfIndexElem>
+        <activeConfIndexElem>1</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/OglObj.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/NaviWindow.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TRitem.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TSectionDAT.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Undo.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Undo.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Game.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Eng.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TRnode.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Route.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/glwidget.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Terrain.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/NaviWindow.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/glwidget.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainLib.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Route.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Terrain.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TRitem.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainLib.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Game.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Texture.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesAbstract.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/OglObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/main.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TRnode.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TransferObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TDB.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesAbstract.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SignalObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ObjTools.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/window.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesTrackObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TDB.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/WorldObj.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Tile.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/window.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesStatic.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/StaticObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Texture.cpp</file>
         </group>
     </open-files>
 </project-private>

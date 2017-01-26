@@ -74,6 +74,7 @@
           <itemPath>PropertiesDyntrack.h</itemPath>
           <itemPath>PropertiesForest.h</itemPath>
           <itemPath>PropertiesGroup.h</itemPath>
+          <itemPath>PropertiesLevelCr.h</itemPath>
           <itemPath>PropertiesPickup.h</itemPath>
           <itemPath>PropertiesPlatform.h</itemPath>
           <itemPath>PropertiesRuler.h</itemPath>
@@ -259,6 +260,7 @@
           <itemPath>PropertiesDyntrack.cpp</itemPath>
           <itemPath>PropertiesForest.cpp</itemPath>
           <itemPath>PropertiesGroup.cpp</itemPath>
+          <itemPath>PropertiesLevelCr.cpp</itemPath>
           <itemPath>PropertiesPickup.cpp</itemPath>
           <itemPath>PropertiesPlatform.cpp</itemPath>
           <itemPath>PropertiesRuler.cpp</itemPath>
@@ -665,6 +667,10 @@
       <item path="PropertiesGroup.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesGroup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesLevelCr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesLevelCr.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesPickup.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1259,6 +1265,10 @@
       </item>
       <item path="PropertiesGroup.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesLevelCr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesLevelCr.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesPickup.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesPickup.h" ex="false" tool="3" flavor2="0">
@@ -1844,6 +1854,10 @@
       <item path="PropertiesGroup.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesGroup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesLevelCr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesLevelCr.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesPickup.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2438,6 +2452,10 @@
       </item>
       <item path="PropertiesGroup.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesLevelCr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesLevelCr.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesPickup.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesPickup.h" ex="false" tool="3" flavor2="0">
@@ -3018,6 +3036,10 @@
       <item path="PropertiesGroup.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesGroup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesLevelCr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesLevelCr.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesPickup.cpp" ex="false" tool="1" flavor2="8">
       </item>

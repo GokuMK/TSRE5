@@ -24,7 +24,16 @@ public:
     void showObj(WorldObj* obj);
     
 public slots:
-        
+    void cPickupTypeEdited(int val);
+    void cAnimTypeEdited(int val);
+    void eCapacityEnabled(QString val);
+    void eContentEnabled(QString val);
+    void eFillEnabled(QString val);
+    void eSpeedMinEnabled(QString val);
+    void eSpeedMaxEnabled(QString val);
+    void eAnimLengthEnabled(QString val);
+    void chInfiniteEnabled(int val);
+    void chBrokenEnabled(int val);
 signals:
     
 private:

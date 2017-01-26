@@ -106,8 +106,10 @@ void SignalObj::initTrItems(float* tpos){
   //  this->trItemId[3] = trItemId[1];
     this->drawPositions = NULL;
     
-    if(this->signalUnits > 0){
-        this->rotate(0,-tdb->trackItems[this->signalUnit[0].itemId]->trSignalType3+M_PI,0);
+    // find head item 
+    int base = getBaseSignalItemId();
+    if(this->signalUnits > 0 && base >= 0){
+        this->rotate(0,-tdb->trackItems[this->signalUnit[base].itemId]->trSignalType3+M_PI,0);
     }
 }
 
@@ -265,15 +267,19 @@ void SignalObj::enableSubObj(int i){
     if(isSubObjEnabled(i)) return;
     if(signalShape == NULL)
         return;
-    // set signal unit flag enabled
-    this->signalSubObj = this->signalSubObj | (1 << i);
     
     TDB* tdb = Game::trackDB;
     
+    // find head item 
+    int base = getBaseSignalItemId();
     // add signal item to tdb
     if(signalShape->subObj[i].sigSubTypeId == SignalShape::SIGNAL_HEAD){
-        tdb->enableSignalSubObj(this->fileName, this->signalUnit[i], i, this->signalUnit[0].itemId );
+        if(base < 0)
+            return;
+        tdb->enableSignalSubObj(this->fileName, this->signalUnit[i], i, this->signalUnit[base].itemId );
     }
+    // set signal unit flag enabled
+    this->signalSubObj = this->signalSubObj | (1 << i);
     
     // update flags
     if(!this->signalUnit[i].head)
@@ -302,7 +308,7 @@ void SignalObj::disableSubObj(int i){
     TDB* tdb = Game::trackDB;
     // add signal item to tdb
     //tdb->enableSignalSubObj(this->fileName, i);
-    this->signalSubObj = this->signalSubObj ^ (1 << i);
+    this->signalSubObj = this->signalSubObj & ~(1 << i);
     this->signalUnit[i].enabled = false;
     
     if(signalShape->subObj[i].sigSubTypeId == SignalShape::SIGNAL_HEAD)
@@ -463,10 +469,13 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
     int w = 1;
     //w = this->signalUnits;
 
-    for(int i = 0; i < w; i++){
-        if(drawPositions[i] == NULL) continue;
+    // find head item 
+    int i = getBaseSignalItemId();
+    if(drawPositions[i] == NULL) return;
+    //for(int i = 0; i < w; i++){
+        //if(drawPositions[i] == NULL) continue;
         gluu->mvPushMatrix();
-        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][0] + 0 * (drawPositions[i][4] - this->x), drawPositions[i][1] + i + 1, -drawPositions[i][2] + 0 * (-drawPositions[i][5] - this->y));
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][0] + 0 * (drawPositions[i][4] - this->x), drawPositions[i][1] + /*i +*/ 1, -drawPositions[i][2] + 0 * (-drawPositions[i][5] - this->y));
         //Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositions[i][3] + drawPositions[i][7]*M_PI);
         Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -drawPositions[i][7]+M_PI);
         //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
@@ -478,8 +487,21 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
         else
             pointer3d->render(selectionColor + (i+1)*131072*8*useSC);
         gluu->mvPopMatrix();
-    }
+    //}
 };
+
+int SignalObj::getBaseSignalItemId(){
+    int i = -1;
+    for(int j = 0; j < 32; j++){
+        if(!this->signalUnit[j].enabled)
+            continue;
+        if(!this->signalUnit[j].head)
+            continue;
+        i = j;
+        break;
+    }
+    return i;
+}
 
 bool SignalObj::select(int value){
     this->selectionValue = value;

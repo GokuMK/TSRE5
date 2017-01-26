@@ -349,14 +349,14 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         float* playerT = Vec2::fromValues(x, z);
         bool ok = this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
         if(!ok) return NULL;
-        x = playerT[0];
-        z = playerT[1];
         float* buffer;
         int len;
         this->roadDB->getVectorSectionLine(buffer, len, playerT[0], playerT[1], tpos[0], 0, 0);
         qDebug() << "len "<<len;
         ok = this->trackDB->getSegmentIntersectionPositionOnTDB(playerT, buffer, len, p, q, tpos);
         if(!ok) return NULL;
+        x = playerT[0];
+        z = playerT[1];
         //return NULL;
     }
 
