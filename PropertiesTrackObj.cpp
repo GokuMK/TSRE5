@@ -16,6 +16,8 @@
 #include "ParserX.h"
 #include "EditFileNameDialog.h"
 #include "Undo.h"
+#include "Game.h"
+#include "Route.h"
 
 PropertiesTrackObj::PropertiesTrackObj(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -202,6 +204,11 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vbox->addWidget(label);
     vbox->addWidget(fixJNodePosn);
     
+    QPushButton *hacks = new QPushButton("Hacks", this);
+    QObject::connect(hacks, SIGNAL(released()),
+                      this, SLOT(hacksButtonEnabled()));
+    vbox->addWidget(hacks);
+    
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -217,6 +224,56 @@ void PropertiesTrackObj::fixJNodePosnEnabled(){
         return;
     }
     trackObj->fillJNodePosn();
+}
+
+void PropertiesTrackObj::hacksButtonEnabled(){
+    if(trackObj == NULL){
+        return;
+    }
+    
+    QDialog d;
+    d.setMinimumWidth(400);
+    d.setWindowTitle("TrackObj Hacks");
+    QVBoxLayout *vbox = new QVBoxLayout;
+    QLabel *label = new QLabel("These functions will damage your route if you don't know what you are doing.");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    label->setWordWrap(true);
+    
+    QPushButton *haxRemoveTDBVector = new QPushButton("Remove TDB Vector ( remove TrItems first )", this);
+    QObject::connect(haxRemoveTDBVector, SIGNAL(released()),
+                      this, SLOT(haxRemoveTDBVectorEnabled()));
+    vbox->addWidget(haxRemoveTDBVector);
+    
+    QPushButton *haxRemoveTDBTree = new QPushButton("Remove TDB Tree ( remove TrItems first; max 1000 nodes )", this);
+    QObject::connect(haxRemoveTDBTree, SIGNAL(released()),
+                      this, SLOT(haxRemoveTDBTreeEnabled()));
+    vbox->addWidget(haxRemoveTDBTree);
+
+
+    vbox->setSpacing(2);
+    vbox->setContentsMargins(3,3,3,3);
+    vbox->addStretch(1);
+    d.setLayout(vbox);
+    d.exec();
+}
+
+void PropertiesTrackObj::haxRemoveTDBVectorEnabled(){
+    if(trackObj == NULL)
+        return;
+    if(Game::currentRoute == NULL)
+        return;
+    
+    Game::currentRoute->deleteTDBVector(trackObj);
+}
+
+void PropertiesTrackObj::haxRemoveTDBTreeEnabled(){
+    if(trackObj == NULL)
+        return;
+    if(Game::currentRoute == NULL)
+        return;
+    
+    Game::currentRoute->deleteTDBTree(trackObj);
 }
 
 void PropertiesTrackObj::showObj(WorldObj* obj){

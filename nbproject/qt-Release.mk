@@ -44943,7 +44943,13 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o: PropertiesTrac
 		ParserX.h \
 		EditFileNameDialog.h \
 		Undo.h \
-		C:/QT/Static/5.7.0/include/QtCore/QVector
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
+		Game.h \
+		Route.h \
+		TDB.h \
+		TextObj.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		SignalObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o PropertiesTrackObj.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o: PropertiesTransfer.cpp PropertiesTransfer.h \

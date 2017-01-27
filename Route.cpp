@@ -697,6 +697,14 @@ void Route::deleteTDBTree(WorldObj* obj){
     }
 }
 
+void Route::deleteTDBVector(WorldObj* obj){
+    if (obj->type == "trackobj" || obj->type == "dyntrack") {
+        this->roadDB->deleteVectorSection(obj->x, obj->y, obj->UiD);
+        this->trackDB->deleteVectorSection(obj->x, obj->y, obj->UiD);
+    }
+}
+
+
 void Route::deleteObj(WorldObj* obj) {
     if(obj == NULL)
         return;

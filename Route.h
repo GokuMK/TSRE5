@@ -72,6 +72,7 @@ public:
     WorldObj* autoPlaceObject(int x, int z, float* p);
     void autoPlacementDeleteLast();
     void deleteTDBTree(WorldObj* obj);
+    void deleteTDBVector(WorldObj* obj);
     void toggleToTDB(WorldObj* obj);
     void addToTDBIfNotExist(WorldObj* obj);
     void addToTDB(WorldObj* obj);

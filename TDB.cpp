@@ -2698,6 +2698,32 @@ void TDB::deleteItemFromTrNode(int tid, int iid){
     n->trItemRef = newVec;
 }
 
+void TDB::deleteVectorSection(int x, int y, int UiD){
+    y = -y;
+    
+    TRnode *n;
+    int tid = -1;
+    for (int i = 1; i <= iTRnodes; i++) {
+            n = trackNodes[i];
+            if (n == NULL) continue;
+            if (n ->typ == -1) continue;
+            if (n->typ == 1) {
+                for(int j = 0; j < n->iTrv; j++)
+                    if(n->trVectorSection[j].param[2] == x)
+                        if(n->trVectorSection[j].param[3] == y)
+                            if(n->trVectorSection[j].param[4] == UiD){
+                                tid = i;
+                                break;
+                    }
+            }
+        }
+    if(tid > 0){
+        qDebug() << "mam id: " << tid;
+        deleteVectorSection(tid);
+    }
+    TDB::refresh();
+}
+
 void TDB::deleteTree(int x, int y, int UiD){
     y = -y;
     
@@ -2748,6 +2774,7 @@ void TDB::deleteTree(int d) {
         for(int i = 1; i <= iTRnodes; i++){
             if(drzewo[i] == 1){
                 qDebug() << "Usuwam " << i;
+                deleteAllTrItemsFromVectorSection(i);
                 trackNodes[i] = NULL;
             }
         }

@@ -67,6 +67,7 @@ public:
     int joinVectorSections(int id1, int id2);
     void deleteJunction(int id);
     void deleteVectorSection(int id);
+    void deleteVectorSection(int x, int y, int UiD);
     bool deleteFromVectorSection(int id, int j);
     bool deleteAllTrItemsFromVectorSection(int id);
     int splitVectorSection(int id, int j);
