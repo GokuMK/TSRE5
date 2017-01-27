@@ -517,6 +517,43 @@ bool LevelCrObj::isSilentMstsHaxEnabled(){
     return ((this->levelCrData[0]) & 6) == 6;
 }
 
+void LevelCrObj::translate(float px, float py, float pz){
+    if(this->selectionValue == 0){
+        return WorldObj::translate(px, py, pz);
+    }
+    
+    if(pz == 0) 
+        return;
+    TDB* tdb = Game::trackDB;
+    
+    int trid = this->selectionValue - 1;
+        
+    int id = tdb->findTrItemNodeId(this->trItemId[trid*2+1]);
+    if (id < 0) {
+        qDebug() << "fail id";
+        return;
+    }
+    
+    float dlugosc = tdb->getVectorSectionLength(id);
+    TRitem* trit = tdb->trackItems[this->trItemId[trid*2+1]];
+    if(trit == NULL) 
+        return;
+    if(pz < 0){
+        trit->trItemSData1 -= 0.5;
+        if(trit->trItemSData1 < 0)
+            trit->trItemSData1 = 0;
+        tdb->updateTrItemRData(trit);
+    } else if(pz > 0){
+        trit->trItemSData1 += 0.5;
+        if(trit->trItemSData1 > dlugosc)
+            trit->trItemSData1 = dlugosc;
+        tdb->updateTrItemRData(trit);
+    }
+    drawPositions.clear();
+    this->modified = true;
+    setMartix();
+}
+
 void LevelCrObj::save(QTextStream* out){
     if (!loaded) return;
 

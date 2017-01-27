@@ -210,7 +210,7 @@ void Undo::SinglePushWorldObjData(WorldObj* obj){
 void Undo::PushWorldObjData(WorldObj* obj){
     if(currentState == NULL)
         return;
-    qDebug() << "a"<<obj->type;
+
     UndoState::WorldObjInfo * tdata = currentState->objData[(long long int)obj];
     if(tdata == NULL){
         currentState->objData[(long long int)obj] = new UndoState::WorldObjInfo();

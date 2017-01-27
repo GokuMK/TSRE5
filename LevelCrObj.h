@@ -51,13 +51,14 @@ public:
     int getDefaultDetailLevel();
     bool select(int value);
     void deleteSelectedTrItem();
+    void translate(float px, float py, float pz);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
     int selectionValue = 0;
     int levelCrParameters[2];
     float crashProbability = 0;
     unsigned int levelCrData[2];
-    int levelCrTiming[3];
+    float levelCrTiming[3];
     QVector<int> trItemId;
     //int *trItemId = NULL;
     int trItemIdCount = 0;
