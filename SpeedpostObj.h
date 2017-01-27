@@ -54,7 +54,7 @@ private:
     //int *trItemId = NULL;
     QVector<int> trItemId;
     //int trItemIdCount = 0;
-    TrackItemObj* pointer3d = NULL;
+    TrackItemObj* spointer3d = NULL;
     float* drawPosition = NULL;
     OglObj* drawLine = NULL;
     

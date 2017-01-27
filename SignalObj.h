@@ -62,8 +62,8 @@ private:
     int signalUnits = 0;
     SignalUnit signalUnit[32];
     //int *trItemId;
-    TrackItemObj* pointer3d = NULL;
-    TrackItemObj* pointer3dSelected = NULL;
+    TrackItemObj* spointer3d = NULL;
+    TrackItemObj* spointer3dSelected = NULL;
     float** drawPositions = NULL;
     int selectionValue = 0;
     void renderTritems(GLUU* gluu, int selectionColor);

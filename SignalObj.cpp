@@ -439,13 +439,13 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
 
     ///////////////////////////////
     if (drawPositions == NULL) {
-        if(pointer3d == NULL){
-            pointer3d = new TrackItemObj();
-            pointer3d->setMaterial(1,0,0);
+        if(spointer3d == NULL){
+            spointer3d = new TrackItemObj();
+            spointer3d->setMaterial(1,0,0);
         }
-        if(pointer3dSelected == NULL){
-            pointer3dSelected = new TrackItemObj();
-            pointer3dSelected->setMaterial(1,0.5,0.5);
+        if(spointer3dSelected == NULL){
+            spointer3dSelected = new TrackItemObj();
+            spointer3dSelected->setMaterial(1,0.5,0.5);
         }
         drawPositions = new float*[32];
         TDB* tdb = Game::trackDB;
@@ -499,9 +499,9 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         useSC = (float)selectionColor/(float)(selectionColor+0.000001);
         if(this->selected && this->selectionValue > 0) 
-            pointer3dSelected->render(selectionColor + (i+1)*131072*8*useSC);
+            spointer3dSelected->render(selectionColor + (i+1)*131072*8*useSC);
         else
-            pointer3d->render(selectionColor + (i+1)*131072*8*useSC);
+            spointer3d->render(selectionColor + (i+1)*131072*8*useSC);
         gluu->mvPopMatrix();
     //}
 };

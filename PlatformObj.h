@@ -66,8 +66,8 @@ private:
     int trItemIdCount = 0;
     int carFrequency = 0;
     int	carAvSpeed = 0;
-    TrackItemObj* pointer3d = NULL;
-    TrackItemObj* pointer3dSelected = NULL;
+    TrackItemObj* spointer3d = NULL;
+    TrackItemObj* spointer3dSelected = NULL;
     OglObj* line = NULL;
     float* drawPositionB = NULL;
     float* drawPositionE = NULL;

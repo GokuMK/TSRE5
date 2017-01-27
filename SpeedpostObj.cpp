@@ -396,6 +396,14 @@ void SpeedpostObj::render(GLUU* gluu, float lod, float posx, float posz, float* 
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     
+    if(Game::showWorldObjPivotPoints){
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0.9,0.9,0.7);
+        }
+        pointer3d->render(selectionColor);
+    }
+    
     if(selectionColor != 0){
         int wColor = (int)(selectionColor/65536);
         int sColor = (int)(selectionColor - wColor*65536)/256;
@@ -443,9 +451,9 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
         drawPosition[7] = tdb->trackItems[this->trItemId[1]]->getSpeedpostRot();
         drawPosition[0] += 2048 * (drawPosition[5] - this->x);
         drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
-        if(pointer3d == NULL){
-            pointer3d = new TrackItemObj(0);
-            pointer3d->setMaterial(0.7,0.7,0.7);
+        if(spointer3d == NULL){
+            spointer3d = new TrackItemObj(0);
+            spointer3d->setMaterial(0.7,0.7,0.7);
         }
         
         // line
@@ -498,7 +506,7 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    pointer3d->render(selectionColor + (1)*131072*8*useSC);
+    spointer3d->render(selectionColor + (1)*131072*8*useSC);
     gluu->mvPopMatrix();
 };
 

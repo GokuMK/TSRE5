@@ -296,6 +296,7 @@ void PlatformObj::setStationName(QString name){
     trit = tdb->trackItems[id];
     if(trit == NULL) return;
     trit->stationName = name;
+    this->modified = true;
 }
 void PlatformObj::setPlatformName(QString name){
     TDB* tdb = Game::trackDB;
@@ -307,6 +308,7 @@ void PlatformObj::setPlatformName(QString name){
     trit = tdb->trackItems[id];
     if(trit == NULL) return;
     trit->platformName = name;
+    this->modified = true;
 }
 void PlatformObj::setPlatformMinWaitingTime(int val){
     TDB* tdb = Game::trackDB;
@@ -318,6 +320,7 @@ void PlatformObj::setPlatformMinWaitingTime(int val){
     trit = tdb->trackItems[id];
     if(trit == NULL) return;
     trit->platformMinWaitingTime = val;
+    this->modified = true;
 }
 void PlatformObj::setPlatformNumPassengersWaiting(int val){
     TDB* tdb = Game::trackDB;
@@ -329,6 +332,7 @@ void PlatformObj::setPlatformNumPassengersWaiting(int val){
     trit = tdb->trackItems[id];
     if(trit == NULL) return;
     trit->platformNumPassengersWaiting = val;
+    this->modified = true;
 }
     
 float PlatformObj::getLength(){
@@ -359,6 +363,9 @@ void PlatformObj::setSideLeft(bool val){
         this->platformData = this->platformData | 2;
     else 
         this->platformData = this->platformData ^ 2;
+    delete line;
+    line = NULL;
+    this->modified = true;
 }
 
 void PlatformObj::setSideRight(bool val){
@@ -366,6 +373,9 @@ void PlatformObj::setSideRight(bool val){
         this->platformData = this->platformData | 4;
     else 
         this->platformData = this->platformData ^ 4;
+    delete line;
+    line = NULL;
+    this->modified = true;
 }
 
 void PlatformObj::setDisabled(bool val){
@@ -377,6 +387,9 @@ void PlatformObj::setDisabled(bool val){
         trit->platformTrItemData[0] = trit->platformTrItemData[0] | 1;
     else
         trit->platformTrItemData[0] = trit->platformTrItemData[0] ^ 1;
+    delete line;
+    line = NULL;
+    this->modified = true;
 }
 
 int PlatformObj::getCarNumber(){
@@ -389,10 +402,12 @@ int PlatformObj::getCarSpeed(){
 
 void PlatformObj::setCarNumber(int val){
     this->carFrequency = val;
+    this->modified = true;
 }
 
 void PlatformObj::setCarSpeed(int val){
     this->carAvSpeed = val;
+    this->modified = true;
 }
 
 
@@ -400,6 +415,19 @@ void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
     //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
     if(!this->loaded) 
         return;
+    
+    if(Game::showWorldObjPivotPoints){
+        gluu->mvPushMatrix();
+        Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0.9,0.9,0.7);
+        }
+        pointer3d->render(selectionColor);
+        gluu->mvPopMatrix();
+    }
+    
     if(Game::viewInteractives && renderMode != gluu->RENDER_SHADOWMAP) 
         this->renderTritems(gluu, selectionColor);
 };
@@ -450,25 +478,25 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     }
 
     if(line == NULL){
-        if(pointer3d == NULL) pointer3d = new TrackItemObj();
-        if(pointer3dSelected == NULL) pointer3dSelected = new TrackItemObj();
+        if(spointer3d == NULL) spointer3d = new TrackItemObj();
+        if(spointer3dSelected == NULL) spointer3dSelected = new TrackItemObj();
 
         makelineShape();
         
         if(this->typeID == this->platform){
             line->setMaterial(0.0, 1.0, 0.0);
-            pointer3d->setMaterial(0.0, 1.0, 0.0);
-            pointer3dSelected->setMaterial(0.5, 1.0, 0.5);
+            spointer3d->setMaterial(0.0, 1.0, 0.0);
+            spointer3dSelected->setMaterial(0.5, 1.0, 0.5);
         }
         if(this->typeID == this->siding){
             line->setMaterial(1.0, 0.7, 0.0);
-            pointer3d->setMaterial(1.0, 0.7, 0.0);
-            pointer3dSelected->setMaterial(1.0, 1.0, 0.5);
+            spointer3d->setMaterial(1.0, 0.7, 0.0);
+            spointer3dSelected->setMaterial(1.0, 1.0, 0.5);
         }
         if(this->typeID == this->carspawner){
             line->setMaterial(0.4, 0.0, 1.0);
-            pointer3d->setMaterial(0.4, 0.0, 1.0);
-            pointer3dSelected->setMaterial(0.9, 0.5, 1.0);
+            spointer3d->setMaterial(0.4, 0.0, 1.0);
+            spointer3dSelected->setMaterial(0.9, 0.5, 1.0);
         }
     }
     //if(pos == NULL) return;
@@ -489,9 +517,9 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
     if(this->selected && this->selectionValue == 1) 
-        pointer3dSelected->render(selectionColor + 1*131072*8*useSC);
+        spointer3dSelected->render(selectionColor + 1*131072*8*useSC);
     else
-        pointer3d->render(selectionColor + 1*131072*8*useSC);
+        spointer3d->render(selectionColor + 1*131072*8*useSC);
     gluu->mvPopMatrix();
     
     gluu->mvPushMatrix();
@@ -502,9 +530,9 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
     if(this->selected && this->selectionValue == 3) 
-        pointer3dSelected->render(selectionColor + 3*131072*8*useSC);
+        spointer3dSelected->render(selectionColor + 3*131072*8*useSC);
     else
-        pointer3d->render(selectionColor + 3*131072*8*useSC);
+        spointer3d->render(selectionColor + 3*131072*8*useSC);
     gluu->mvPopMatrix();
     
     gluu->mvPushMatrix();
