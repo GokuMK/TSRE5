@@ -269,41 +269,41 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(sIntensity, SIGNAL(valueChanged(int)),
                       this, SLOT(setBrushAlpha(int)));
 
-    QObject::connect(leSize, SIGNAL(textChanged(QString)),
+    QObject::connect(leSize, SIGNAL(textEdited(QString)),
                       this, SLOT(setBrushSize(QString)));
     
-    QObject::connect(leIntensity, SIGNAL(textChanged(QString)),
+    QObject::connect(leIntensity, SIGNAL(textEdited(QString)),
                       this, SLOT(setBrushAlpha(QString)));
     
     // embarkment
     QObject::connect(sEsize, SIGNAL(valueChanged(int)),
                       this, SLOT(setEsize(int)));
     
-    QObject::connect(leEsize, SIGNAL(textChanged(QString)),
+    QObject::connect(leEsize, SIGNAL(textEdited(QString)),
                       this, SLOT(setEsize(QString)));    
     
     QObject::connect(sEemb, SIGNAL(valueChanged(int)),
                       this, SLOT(setEemb(int)));
 
-    QObject::connect(leEemb, SIGNAL(textChanged(QString)),
+    QObject::connect(leEemb, SIGNAL(textEdited(QString)),
                       this, SLOT(setEemb(QString)));
 
     QObject::connect(sEcut, SIGNAL(valueChanged(int)),
                       this, SLOT(setEcut(int)));
 
-    QObject::connect(leEcut, SIGNAL(textChanged(QString)),
+    QObject::connect(leEcut, SIGNAL(textEdited(QString)),
                       this, SLOT(setEcut(QString)));
     
     QObject::connect(sEradius, SIGNAL(valueChanged(int)),
                       this, SLOT(setEradius(int)));
 
-    QObject::connect(leEradius, SIGNAL(textChanged(QString)),
+    QObject::connect(leEradius, SIGNAL(textEdited(QString)),
                       this, SLOT(setEradius(QString)));
     
     QObject::connect(putTexTool, SIGNAL(released()),
                       this, SLOT(putTexToolEnabled()));
     
-    QObject::connect(fheight, SIGNAL(textChanged(QString)),
+    QObject::connect(fheight, SIGNAL(textEdited(QString)),
                       this, SLOT(setFheight(QString)));
     
     QObject::connect(hType, SIGNAL(currentIndexChanged(int)),

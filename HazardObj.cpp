@@ -26,7 +26,18 @@ HazardObj::HazardObj() {
     this->loaded = false;
 }
 
-HazardObj::HazardObj(const HazardObj& orig) {
+HazardObj::HazardObj(const HazardObj& o) : WorldObj(o) {
+    if(o.trItemIdCount > 0){
+        trItemIdCount = o.trItemIdCount;
+        trItemId = new int[trItemIdCount];
+        for(int i = 0; i < trItemIdCount; i++){
+            trItemId[i] = o.trItemId[i];
+        }
+    }
+}
+
+WorldObj* HazardObj::clone(){
+    return new HazardObj(*this);
 }
 
 HazardObj::~HazardObj() {

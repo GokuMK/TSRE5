@@ -33,7 +33,22 @@ LevelCrObj::LevelCrObj() {
     this->levelCrTiming[2] = 4;
 }
 
-LevelCrObj::LevelCrObj(const LevelCrObj& orig) {
+LevelCrObj::LevelCrObj(const LevelCrObj& o) : WorldObj(o) {
+    selectionValue = o.selectionValue;
+    levelCrParameters[0] = o.levelCrParameters[0];
+    levelCrParameters[1] = o.levelCrParameters[2];
+    crashProbability = o.crashProbability;
+    levelCrData[0] = o.levelCrData[0];
+    levelCrData[1] = o.levelCrData[1];
+    levelCrTiming[0] = o.levelCrTiming[0];
+    levelCrTiming[1] = o.levelCrTiming[1];
+    levelCrTiming[2] = o.levelCrTiming[2];
+    trItemId.append(o.trItemId);
+    trItemIdCount = o.trItemIdCount;
+}
+
+WorldObj* LevelCrObj::clone(){
+    return new LevelCrObj(*this);
 }
 
 LevelCrObj::~LevelCrObj() {

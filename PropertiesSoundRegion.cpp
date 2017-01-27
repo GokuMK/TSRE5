@@ -74,7 +74,11 @@ void PropertiesSoundRegion::sourcesListSelected(QString val){
         return;
     if(Game::soundList == NULL)
         return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB);
     sobj->set("update_type", Game::soundList->regions[val]->id);
+    Undo::StateEnd();
     sobj->modified = true;
     this->sName.setText(val);
 }
@@ -82,7 +86,11 @@ void PropertiesSoundRegion::sourcesListSelected(QString val){
 void PropertiesSoundRegion::flip(){
     if(sobj == NULL)
         return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB);
     sobj->flip();
+    Undo::StateEnd();
 }
 
 void PropertiesSoundRegion::showObj(WorldObj* obj){
@@ -90,7 +98,7 @@ void PropertiesSoundRegion::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
-    
+    worldObj = obj;
     sobj = (SoundRegionObj*)obj;
     
     this->infoLabel->setText("Object: "+obj->type);

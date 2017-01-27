@@ -37,7 +37,23 @@ SignalObj::SignalObj() {
     //pointer3dSelected->setMaterial(1,0.5,0.5);
 }
 
-SignalObj::SignalObj(const SignalObj& orig) {
+SignalObj::SignalObj(const SignalObj& o) : WorldObj(o) {
+    subObjSelected = o.subObjSelected;
+    signalSubObj = o.signalSubObj;
+    signalUnits = o.signalUnits;
+    for(int i = 0; i < 32; i++){
+        signalUnit[i].enabled = o.signalUnit[i].enabled;
+        signalUnit[i].head = o.signalUnit[i].head;
+        signalUnit[i].itemId = o.signalUnit[i].itemId;
+        signalUnit[i].tdbId = o.signalUnit[i].tdbId;
+    }
+
+    selectionValue = o.selectionValue;
+    signalShape = o.signalShape;
+}
+
+WorldObj* SignalObj::clone(){
+    return new SignalObj(*this);
 }
 
 SignalObj::~SignalObj() {

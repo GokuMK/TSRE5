@@ -30,7 +30,21 @@ bool RulerObj::allowNew(){
     return true;
 }
 
-RulerObj::RulerObj(const RulerObj& orig) {
+RulerObj::RulerObj(const RulerObj& o) : WorldObj(o){
+
+    for(int i = 0; i < o.points.size(); i++){
+        Point point;
+        point.position[0] = o.points[i].position[0];
+        point.position[1] = o.points[i].position[1];
+        point.position[2] = o.points[i].position[2];
+        points.push_back(point);
+    }
+    selectionValue = o.selectionValue;
+    length = o.length;
+}
+
+WorldObj* RulerObj::clone(){
+    return new RulerObj(*this);
 }
 
 RulerObj::~RulerObj() {

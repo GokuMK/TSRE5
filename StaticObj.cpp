@@ -29,7 +29,13 @@ bool StaticObj::allowNew(){
     return true;
 }
 
-StaticObj::StaticObj(const StaticObj& orig) {
+StaticObj::StaticObj(const StaticObj& o) : WorldObj(o) {
+    snapablePoints.append(o.snapablePoints);
+    
+}
+
+WorldObj* StaticObj::clone(){
+    return new StaticObj(*this);
 }
 
 StaticObj::~StaticObj() {

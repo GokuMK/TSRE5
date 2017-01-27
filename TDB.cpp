@@ -2579,7 +2579,7 @@ void TDB::enableSignalSubObj(QString filename, SignalObj::SignalUnit &unit, int 
     this->addItemToTrNode(nid, unit.itemId);
 }
 
-void TDB::newSpeedPostObject(int speedPostId, int speedPostType, std::vector<int> & itemId, int trNodeId, float metry, int type){
+void TDB::newSpeedPostObject(int speedPostId, int speedPostType, QVector<int> & itemId, int trNodeId, float metry, int type){
     if(type != WorldObj::speedpost) 
         return;
     SpeedPost* sShape = this->speedPostDAT->speedPost[speedPostId];
@@ -2625,7 +2625,7 @@ void TDB::newLevelCrObject(int* &itemId, int trNodeId, float metry, int type){
     this->addItemToTrNode(trNodeId, itemId[1]);
 }
 
-void TDB::newSoundRegionObject(int soundregionTrackType, std::vector<int> &itemId, int trNodeId, float metry, int type){
+void TDB::newSoundRegionObject(int soundregionTrackType, QVector<int> &itemId, int trNodeId, float metry, int type){
     if(type != WorldObj::soundregion) 
         return;
     int newTRitemId = getNewTRitemId();

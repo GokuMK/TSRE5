@@ -12,6 +12,7 @@
 #include "SoundSourceObj.h"
 #include "Game.h"
 #include "SoundList.h"
+#include "Undo.h"
 
 PropertiesSoundSource::PropertiesSoundSource() {
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -61,6 +62,7 @@ void PropertiesSoundSource::sourcesListSelected(QString val){
         return;
     if(Game::soundList == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     sobj->set("filename", Game::soundList->sources[val]->file1);
     sobj->modified = true;
     this->sName.setText(val);
@@ -71,6 +73,7 @@ void PropertiesSoundSource::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
+    worldObj = obj;
     sobj = (SoundSourceObj*)obj;
     this->fileName.setText(sobj->fileName);
     this->uid.setText(QString::number(obj->UiD, 10));

@@ -20,7 +20,8 @@ class TrackItemObj;
 class LevelCrObj : public WorldObj {
 public:
     LevelCrObj();
-    LevelCrObj(const LevelCrObj& orig);
+    LevelCrObj(const LevelCrObj& o);
+    WorldObj* clone();
     virtual ~LevelCrObj();
     void load(int x, int y);
     void set(QString sh, QString val);

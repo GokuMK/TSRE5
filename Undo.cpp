@@ -42,12 +42,22 @@ UndoState::~UndoState(){
     while (i2.hasNext()) {
         i2.next();
         UndoState::WorldObjInfo* tdata = i2.value();
-        if(tdata != NULL)
-           delete tdata;
+        if(tdata != NULL){
+            //delete tdata->data;
+            delete tdata;
+        }
     }
     terrainData.clear();
     texData.clear();
     objData.clear();
+}
+
+void Undo::Clear(){
+    currentState = NULL;
+    for(int i = 0; i < undoStates.size();){
+        delete undoStates.last();
+        undoStates.removeLast();
+    }
 }
 
 void Undo::UndoLast(){
@@ -84,14 +94,19 @@ void Undo::UndoLast(){
         i2.next();
         UndoState::WorldObjInfo* tdata = i2.value();
         if(tdata != NULL){
-            if(tdata->action == "pos"){
-                tdata->obj->setPosition(tdata->pos);
-                tdata->obj->setQdirection(tdata->qdirection);
-                tdata->obj->setMartix();
+            if(tdata->action == "data"){
+                if(Game::currentRoute != NULL)
+                    Game::currentRoute->replaceWorldObjPointer(tdata->obj, tdata->data);
             }
             if(tdata->action == "remove"){
-                tdata->obj->loaded = true;
-                tdata->obj->modified = true;
+                tdata->data->loaded = true;
+                tdata->data->modified = true;
+                if(Game::currentRoute != NULL)
+                    Game::currentRoute->replaceWorldObjPointer(tdata->obj, tdata->data);
+            }
+            if(tdata->action == "place"){
+                if(Game::currentRoute != NULL)
+                    Game::currentRoute->undoPlaceObj(tdata->obj->x, tdata->obj->y, tdata->obj->UiD);
             }
         }
     }
@@ -195,15 +210,15 @@ void Undo::SinglePushWorldObjData(WorldObj* obj){
 void Undo::PushWorldObjData(WorldObj* obj){
     if(currentState == NULL)
         return;
-    
+    qDebug() << "a"<<obj->type;
     UndoState::WorldObjInfo * tdata = currentState->objData[(long long int)obj];
     if(tdata == NULL){
         currentState->objData[(long long int)obj] = new UndoState::WorldObjInfo();
         tdata = currentState->objData[(long long int)obj];
         tdata->obj = obj;
-        tdata->action = "pos";
-        Vec3::copy(tdata->pos, obj->position);
-        Quat::copy(tdata->qdirection, obj->qDirection);
+        tdata->data = obj->clone();
+        tdata->data->unselect();
+        tdata->action = "data";
         currentState->modified = true;
      }
 }
@@ -217,7 +232,23 @@ void Undo::PushWorldObjRemoved(WorldObj* obj){
         currentState->objData[(long long int)obj] = new UndoState::WorldObjInfo();
         tdata = currentState->objData[(long long int)obj];
         tdata->obj = obj;
+        tdata->data = obj->clone();
+        tdata->data->unselect();
         tdata->action = "remove";
+        currentState->modified = true;
+    }
+}
+
+void Undo::PushWorldObjPlaced(WorldObj* obj){
+    if(currentState == NULL)
+        return;
+    
+    UndoState::WorldObjInfo * tdata = currentState->objData[(long long int)obj];
+    if(tdata == NULL){
+        currentState->objData[(long long int)obj] = new UndoState::WorldObjInfo();
+        tdata = currentState->objData[(long long int)obj];
+        tdata->obj = obj;
+        tdata->action = "place";
         currentState->modified = true;
     }
 }

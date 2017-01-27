@@ -40,7 +40,24 @@ SpeedpostObj::SpeedpostObj() {
     this->loaded = false;
 }
 
-SpeedpostObj::SpeedpostObj(const SpeedpostObj& orig) {
+SpeedpostObj::SpeedpostObj(const SpeedpostObj& o) : WorldObj(o) {
+    speedPostId = o.speedPostId;
+    speedPostType = o.speedPostType;
+    speedDigitTex = o.speedDigitTex;
+    if(o.speedSignShape != NULL){
+        speedSignShape = new float[(int)o.speedSignShape[0]*4+1];
+        for(int i = 0; i < this->speedSignShape[0]*4+1; i++)
+            speedSignShape[i] = o.speedSignShape[i];
+    }
+    speedTextSize[0] = o.speedTextSize[0];
+    speedTextSize[1] = o.speedTextSize[1];
+    speedTextSize[2] = o.speedTextSize[2];
+    trItemId.append(o.trItemId);
+    selectionValue = o.selectionValue;
+}
+
+WorldObj* SpeedpostObj::clone(){
+    return new SpeedpostObj(*this);
 }
 
 SpeedpostObj::~SpeedpostObj() {

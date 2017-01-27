@@ -21,7 +21,8 @@ class RulerObj : public WorldObj {
 public:
     static bool TwoPointRuler;
     RulerObj();
-    RulerObj(const RulerObj& orig);
+    RulerObj(const RulerObj& o);
+    WorldObj* clone();
     virtual ~RulerObj();
     bool allowNew();
     void load(int x, int y);

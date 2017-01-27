@@ -26,6 +26,18 @@
 SoundRegionObj::SoundRegionObj() {
 }
 
+SoundRegionObj::SoundRegionObj(const SoundRegionObj& o) : WorldObj(o) {
+    soundregionRoty = o.soundregionRoty;
+    soundregionTrackType = o.soundregionTrackType;
+    trItemId.append(o.trItemId);
+    selectionValue = o.selectionValue;
+    angle = o.angle;
+}
+
+WorldObj* SoundRegionObj::clone(){
+    return new SoundRegionObj(*this);
+}
+
 SoundRegionObj::~SoundRegionObj() {
 }
 

@@ -17,16 +17,20 @@ GroupObj::GroupObj() {
     this->type = "groupobject";
 }
 
-GroupObj::GroupObj(const GroupObj* orig) {
+GroupObj::GroupObj(const GroupObj& o) : WorldObj(o) {
     this->typeID = WorldObj::groupobject;
     this->type = "groupobject";
-    this->objects.append(orig->objects);
+    this->objects.append(o.objects);
     this->selected = true;
-    this->pivot.set = orig->pivot.set;
-    this->pivot.x = orig->pivot.x;
-    this->pivot.z = orig->pivot.z;
-    Vec3::copy(this->pivot.position, (float*)orig->pivot.position);
-    Vec3::copy(this->pivot.qDirection, (float*)orig->pivot.qDirection);
+    this->pivot.set = o.pivot.set;
+    this->pivot.x = o.pivot.x;
+    this->pivot.z = o.pivot.z;
+    Vec3::copy(this->pivot.position, (float*)o.pivot.position);
+    Vec3::copy(this->pivot.qDirection, (float*)o.pivot.qDirection);
+}
+
+WorldObj* GroupObj::clone(){
+    return new GroupObj(*this);
 }
 
 GroupObj::~GroupObj() {

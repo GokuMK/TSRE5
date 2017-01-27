@@ -190,6 +190,7 @@ void PropertiesTransfer::sizeEnabled(QString val){
     sizeY.text().toFloat(&ok);
     if(!ok) return;
     if(sizeY.text().toFloat() <= 0) return;
+    Undo::SinglePushWorldObjData(worldObj);
     transferObj->set("width", sizeX.text().toFloat());
     transferObj->set("height", sizeY.text().toFloat());
     transferObj->modified = true;

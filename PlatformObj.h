@@ -24,7 +24,8 @@ public:
     static QVector<QString> CarSpawnerList;
     
     PlatformObj();
-    PlatformObj(const PlatformObj& orig);
+    PlatformObj(const PlatformObj& o);
+    WorldObj* clone();
     virtual ~PlatformObj();
     void load(int x, int y);
     bool allowNew();

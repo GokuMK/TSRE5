@@ -19,7 +19,8 @@
 class TrackObj : public WorldObj  {
 public:
     TrackObj();
-    TrackObj(const TrackObj& orig);
+    TrackObj(const TrackObj& o);
+    WorldObj* clone();
     virtual ~TrackObj();
     bool allowNew();
     void load(int x, int y);

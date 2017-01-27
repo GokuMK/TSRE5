@@ -311,6 +311,12 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
 
     // pozycja wzgledem TDB:
     int itemTrackType = WorldObj::isTrackObj(r->type);
+    
+    if(itemTrackType != 0){
+        Undo::PushTrackDB(trackDB, false);
+        Undo::PushTrackDB(roadDB, true);
+    }
+    
     float* tpos = NULL;
     if(placementStickToTarget){
         TDB * tdb = NULL;
@@ -406,7 +412,8 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
             nowy->setQdirection(q);
             nowy->setMartix();
         }
-
+        
+        Undo::PushWorldObjPlaced(nowy);
         return nowy;
         //}
     }
@@ -530,6 +537,24 @@ void Route::autoPlacementDeleteLast(){
 }
 
 
+void Route::replaceWorldObjPointer(WorldObj* o, WorldObj* n){
+    int x = o->x;
+    int z = o->y;
+    
+    Tile *tTile;
+    tTile = tile[((x)*10000 + z)];
+    if (tTile == NULL)
+        return;
+    
+    for(int i = 0; i < tTile->jestObiektow; i++){
+        if(tTile->obiekty[i]->UiD == o->UiD){
+            tTile->obiekty[i] = n;
+            emit objSelected(n);
+            return;
+        }
+    }
+}
+
 WorldObj* Route::makeFlexTrack(int x, int z, float* p) {
     float qe[4];
     qe[0] = 0;
@@ -597,6 +622,7 @@ void Route::addToTDB(WorldObj* obj) {
         //obj->setMartix();
         //track->setJNodePosN();
     } else if(obj->type == "dyntrack"){
+        Undo::Clear();
         DynTrackObj* dynTrack = (DynTrackObj*) obj;
         if(dynTrack->sectionIdx == -1){
             this->trackDB->fillDynTrack(dynTrack);
@@ -660,6 +686,12 @@ void Route::addToTDBIfNotExist(WorldObj* obj) {
     if(roadDB->ifTrackExist(obj->x, obj->y, obj->UiD) || trackDB->ifTrackExist(obj->x, obj->y, obj->UiD)){
         return;
     }
+    
+    Undo::StateBegin();
+    Undo::PushTrackDB(trackDB, false);
+    Undo::PushTrackDB(roadDB, true);
+    Undo::StateEnd();
+    
     addToTDB(obj);
 }
 
@@ -691,19 +723,44 @@ void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
 }
 
 void Route::deleteTDBTree(WorldObj* obj){
+    Undo::StateBegin();
+    Undo::PushTrackDB(this->trackDB, false);
+    Undo::PushTrackDB(this->roadDB, true);
     if (obj->type == "trackobj" || obj->type == "dyntrack") {
         this->roadDB->deleteTree(obj->x, obj->y, obj->UiD);
         this->trackDB->deleteTree(obj->x, obj->y, obj->UiD);
     }
+    Undo::StateEnd();
 }
 
 void Route::deleteTDBVector(WorldObj* obj){
+    Undo::StateBegin();
+    Undo::PushTrackDB(this->trackDB, false);
+    Undo::PushTrackDB(this->roadDB, true);
+    
     if (obj->type == "trackobj" || obj->type == "dyntrack") {
         this->roadDB->deleteVectorSection(obj->x, obj->y, obj->UiD);
         this->trackDB->deleteVectorSection(obj->x, obj->y, obj->UiD);
     }
+    Undo::StateEnd();
 }
 
+void Route::undoPlaceObj(int x, int y, int UiD){
+    Tile *tTile;
+    tTile = tile[((x)*10000 + y)];
+    if (tTile == NULL)
+        return;
+    
+    for(int i = 0; i < tTile->jestObiektow; i++){
+        if(tTile->obiekty[i]->UiD == UiD){
+            tTile->obiekty[i]->loaded = false;
+            tTile->obiekty[i]->modified = false;
+            tTile->obiekty[i]->UiD = -1;
+            emit objSelected(NULL);
+            return;
+        }
+    }
+}
 
 void Route::deleteObj(WorldObj* obj) {
     if(obj == NULL)
@@ -717,8 +774,8 @@ void Route::deleteObj(WorldObj* obj) {
     }
     
     if (obj->type == "trackobj" || obj->type == "dyntrack") {
-        //Undo::PushTrackDB(trackDB, false);
-        //Undo::PushTrackDB(roadDB, true);
+        Undo::PushTrackDB(trackDB, false);
+        Undo::PushTrackDB(roadDB, true);
         removeTrackFromTDB(obj);
         if(Game::leaveTrackShapeAfterDelete)
             return;
@@ -729,8 +786,8 @@ void Route::deleteObj(WorldObj* obj) {
     obj->loaded = false;
     obj->modified = true;
     if (obj->isTrackItem()) {
-        //Undo::PushTrackDB(trackDB, false);
-        //Undo::PushTrackDB(roadDB, true);
+        Undo::PushTrackDB(trackDB, false);
+        Undo::PushTrackDB(roadDB, true);
         obj->deleteTrItems();
     }
     Tile *tTile;

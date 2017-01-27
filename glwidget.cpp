@@ -124,7 +124,7 @@ void GLWidget::initializeGL() {
 
     route = new Route();
     if(!route->loaded) return;
-
+    QObject::connect(route, SIGNAL(objSelected(WorldObj*)), this, SLOT(objSelected(WorldObj*)));
     
     float * aaa = new float[2]{0,0};
     camera = new CameraFree(aaa);
@@ -331,8 +331,9 @@ void GLWidget::handleSelection(){
         } else {
             if(selectedObj != NULL) {
                 selectedObj->unselect();
-                if(autoAddToTDB)
+                if(autoAddToTDB){
                     route->addToTDBIfNotExist(selectedObj);
+                }
             }
             lastSelectedObj = selectedObj;
             setSelectedObj(route->getObj(wx, wz, UiD));
@@ -613,8 +614,11 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 //route->refreshObj(selectedObj);
                 //route->trackDB->setDefaultEnd(0);
                 //route->addToTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&selectedObj->position);
-                
+                Undo::StateBegin();
+                Undo::PushTrackDB(Game::trackDB, false);
+                Undo::PushTrackDB(Game::roadDB, true);
                 route->toggleToTDB(selectedObj);
+                Undo::StateEnd();
                 if(selectedObj != NULL) selectedObj->unselect();
                 lastSelectedObj = selectedObj;
                 setSelectedObj(NULL);
@@ -681,9 +685,11 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         if(toolEnabled == "placeTool"){
             if(selectedObj != NULL){
                 selectedObj->unselect();
-                if(autoAddToTDB)
+                if(autoAddToTDB){
                     route->addToTDBIfNotExist(selectedObj);
+                }
             }
+            Undo::StateBeginIfNotExist();
             lastNewObjPosT[0] = camera->pozT[0];
             lastNewObjPosT[1] = camera->pozT[1];
             lastNewObjPos[0] = aktPointerPos[0];
@@ -702,9 +708,11 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         if(toolEnabled == "autoPlaceSimpleTool"){
             if(selectedObj != NULL){
                 selectedObj->unselect();
-                if(autoAddToTDB)
+                if(autoAddToTDB){
                     route->addToTDBIfNotExist(selectedObj);
+                }
             }
+            Undo::StateBeginIfNotExist();
             lastNewObjPosT[0] = camera->pozT[0];
             lastNewObjPosT[1] = camera->pozT[1];
             lastNewObjPos[0] = aktPointerPos[0];
@@ -794,6 +802,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             TerrainLib::toggleGaps((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == "signalLinkTool"){
+            Undo::PushWorldObjData(selectedObj);
+            Undo::PushTrackDB(Game::trackDB);
             route->linkSignal((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, selectedObj);
             enableTool("");
         }
@@ -947,6 +957,14 @@ void GLWidget::jumpTo(PreciseTileCoordinate* c){
     
 }
 
+void GLWidget::objSelected(WorldObj* o){
+    if(selectedObj == NULL)
+        return;
+    setSelectedObj(o);
+    if(selectedObj != NULL)
+        selectedObj->select();
+}
+
 void GLWidget::setPaintBrush(Brush* brush){
     this->defaultPaintBrush = brush;
 }
@@ -963,7 +981,7 @@ void GLWidget::editCopy(){
         if(selectedObj != NULL){
             if(selectedObj->typeID == WorldObj::groupobject){
                 delete copyPasteGroupObj;
-                copyPasteGroupObj = new GroupObj(groupObj);
+                copyPasteGroupObj = new GroupObj(*groupObj);
                 copyPasteObj = copyPasteGroupObj;
             } else {
                 copyPasteObj = selectedObj;

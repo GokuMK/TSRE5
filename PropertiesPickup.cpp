@@ -11,6 +11,7 @@
 #include "PropertiesPickup.h"
 #include "PickupObj.h"
 #include "GuiFunct.h"
+#include "Game.h"
 
 PropertiesPickup::PropertiesPickup() {
     QDoubleValidator* doubleValidator = new QDoubleValidator(-1000000, 1000000, 6, this);
@@ -124,6 +125,7 @@ void PropertiesPickup::showObj(WorldObj* obj) {
         infoLabel->setText("NULL");
         return;
     }
+    worldObj = obj;
     pobj = (PickupObj*) obj;
 
     this->infoLabel->setText("Object: " + obj->type);
@@ -141,7 +143,9 @@ void PropertiesPickup::showObj(WorldObj* obj) {
     cAnimType.setCurrentIndex(pobj->getAnimTypeId());
     cAnimType.blockSignals(false);
     eAnimLength.setText(QString::number(pobj->getAnimLength()));
+    this->chInfinite.blockSignals(true);
     chInfinite.setChecked((pobj->isInfinite()));
+    this->chInfinite.blockSignals(false);
     this->chBroken.blockSignals(true);
     this->chBroken.setChecked(pobj->isBroken());
     this->chBroken.blockSignals(false);
@@ -151,6 +155,7 @@ void PropertiesPickup::cPickupTypeEdited(int val) {
     if (pobj == NULL) {
         return;
     }
+    Undo::SinglePushWorldObjData(worldObj);
     pobj->setTypeId(val);
 }
 
@@ -158,6 +163,7 @@ void PropertiesPickup::cAnimTypeEdited(int val) {
     if (pobj == NULL) {
         return;
     }
+    Undo::SinglePushWorldObjData(worldObj);
     pobj->setAnimTypeId(val);
 }
 
@@ -167,8 +173,10 @@ void PropertiesPickup::eCapacityEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         pobj->setCapacity(fval);
+    }
 }
 
 void PropertiesPickup::eContentEnabled(QString val){
@@ -177,8 +185,13 @@ void PropertiesPickup::eContentEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::StateBegin();
+        Undo::PushWorldObjData(worldObj);
+        Undo::PushTrackDB(Game::trackDB);
         pobj->setPickupContent(fval);
+        Undo::StateEnd();
+    }
 }
 
 void PropertiesPickup::eFillEnabled(QString val){
@@ -187,8 +200,10 @@ void PropertiesPickup::eFillEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         pobj->setFillRate(fval);
+    }
 }
 
 void PropertiesPickup::eSpeedMinEnabled(QString val){
@@ -197,8 +212,10 @@ void PropertiesPickup::eSpeedMinEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         pobj->setSpeedMin(fval);
+    }
 }
 
 void PropertiesPickup::eSpeedMaxEnabled(QString val){
@@ -207,8 +224,10 @@ void PropertiesPickup::eSpeedMaxEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         pobj->setSpeedMax(fval);
+    }
 }
 
 void PropertiesPickup::eAnimLengthEnabled(QString val){
@@ -217,14 +236,17 @@ void PropertiesPickup::eAnimLengthEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         pobj->setAnimLength(fval);
+    }
 }
 
 void PropertiesPickup::chInfiniteEnabled(int val){
     if (pobj == NULL) {
         return;
     }
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         pobj->setInfinite(true);
     } else {
@@ -236,6 +258,7 @@ void PropertiesPickup::chBrokenEnabled(int val){
     if (pobj == NULL) {
         return;
     }
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         pobj->setBroken(true);
     } else {

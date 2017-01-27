@@ -22,7 +22,8 @@ class OglObj;
 class SpeedpostObj : public WorldObj  {
 public:
     SpeedpostObj();
-    SpeedpostObj(const SpeedpostObj& orig);
+    SpeedpostObj(const SpeedpostObj& o);
+    WorldObj* clone();
     virtual ~SpeedpostObj();
     void load(int x, int y);
     void set(QString sh, long long int val);
@@ -48,10 +49,10 @@ private:
     int speedPostId = -1;
     int speedPostType = -1;
     QString speedDigitTex;
-    float* speedSignShape;
+    float* speedSignShape = NULL;
     float speedTextSize[3];
     //int *trItemId = NULL;
-    std::vector<int> trItemId;
+    QVector<int> trItemId;
     //int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL;
     float* drawPosition = NULL;

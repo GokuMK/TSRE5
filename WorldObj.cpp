@@ -258,7 +258,47 @@ WorldObj::WorldObj() {
     this->tRotation[1] = 0;
 }
 
-WorldObj::WorldObj(const WorldObj& orig) {
+WorldObj::WorldObj(const WorldObj& o) {
+    UiD = o.UiD;
+    typeID = o.typeID;
+    fileName = o.fileName;
+    Vec3::copy(position, (float*)o.position);
+    Vec3::copy(placedAtPosition, (float*)o.placedAtPosition);
+    Quat::copy(qDirection, (float*)o.qDirection);
+    memcpy(matrix, o.matrix, sizeof(float)*16);
+    staticDetailLevel = o.staticDetailLevel;
+    staticFlags = o.staticFlags;
+    vDbId = o.vDbId;
+    collideFlags = o.collideFlags;
+    collideFunction = o.collideFunction;
+    type = o.type;
+    resPath = o.resPath;
+    skipLevel = o.skipLevel;
+    x = o.x;
+    y = o.y;
+    shape = o.shape;
+    shapePointer = o.shapePointer;
+    loaded = o.loaded;
+    size = o.size;
+    jestPQ = o.jestPQ;
+    modified = o.modified;
+    selectionColor.x = o.selectionColor.x;
+    selectionColor.y = o.selectionColor.y;
+    selectionColor.z = o.selectionColor.z;
+    snapable = o.snapable;
+    Vec2::copy(tRotation, (float*)o.tRotation);
+    endp = o.endp;
+    sectionIdx = o.sectionIdx;
+    trLoaded = o.trLoaded;
+    if(o.matrix3x3 != NULL){
+        matrix3x3 = new float[9];
+        memcpy(matrix3x3, o.matrix3x3, sizeof(float)*9);
+    }
+        
+}
+
+WorldObj* WorldObj::clone(){
+    return new WorldObj(*this);
 }
 
 WorldObj::~WorldObj() {

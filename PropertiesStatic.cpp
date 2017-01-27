@@ -13,7 +13,6 @@
 #include "StaticObj.h"
 #include "ParserX.h"
 #include "EditFileNameDialog.h"
-#include "Undo.h"
 
 PropertiesStatic::PropertiesStatic(){
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -314,7 +313,7 @@ void PropertiesStatic::editPositionEnabled(QString val){
     pos[2] = -this->posZ.text().toFloat(&ok);
     if(!ok) return;
     
-    Undo::SinglePushWorldObjData(staticObj);
+    Undo::SinglePushWorldObjData(worldObj);
     staticObj->setPosition((float*)pos);
     staticObj->modified = true;
     staticObj->setMartix();
@@ -324,6 +323,7 @@ void PropertiesStatic::enableCustomDetailLevelEnabled(int val){
     if(worldObj == NULL)
         return;
     StaticObj* staticObj = (StaticObj*) worldObj;
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         customDetailLevel.setEnabled(true);
         customDetailLevel.setText("0");
@@ -343,6 +343,7 @@ void PropertiesStatic::customDetailLevelEdited(QString val){
     int level = val.toInt(&ok);
     //qDebug() << "aaaaaaaaaa";
     if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         staticObj->setCustomDetailLevel(level);
     }
 }
@@ -350,6 +351,7 @@ void PropertiesStatic::customDetailLevelEdited(QString val){
 void PropertiesStatic::checkboxAnimEdited(int val){
     if(worldObj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         worldObj->setAnimated(true);
     } else {
@@ -361,6 +363,7 @@ void PropertiesStatic::checkboxAnimEdited(int val){
 void PropertiesStatic::checkboxTerrainEdited(int val){
     if(worldObj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         worldObj->setTerrainObj(true);
     } else {
@@ -372,6 +375,7 @@ void PropertiesStatic::checkboxTerrainEdited(int val){
 void PropertiesStatic::cShadowTypeEdited(int val){
     if(worldObj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     worldObj->setShadowType((WorldObj::ShadowType)val);
     this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
 }
@@ -379,12 +383,14 @@ void PropertiesStatic::cShadowTypeEdited(int val){
 void PropertiesStatic::cCollisionTypeEdited(int val){
     if(worldObj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     worldObj->setCollisionType(val-1);
 }
 
 void PropertiesStatic::RemoveCollisionsEnabled(){
     if(worldObj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     StaticObj* staticObj = (StaticObj*) worldObj;
     staticObj->removeCollisions();
 }
@@ -397,6 +403,7 @@ void PropertiesStatic::editFileNameEnabled(){
     eWindow.exec();
     //qDebug() << waterWindow->changed;
     if(eWindow.isOk){
+        Undo::SinglePushWorldObjData(worldObj);
         worldObj->fileName = eWindow.name.text();
         worldObj->position[2] = -worldObj->position[2];
         worldObj->qDirection[2] = -worldObj->qDirection[2];

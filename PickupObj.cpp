@@ -27,7 +27,27 @@ PickupObj::PickupObj() {
     pointer3d = NULL;
 }
 
-PickupObj::PickupObj(const PickupObj& orig) {
+PickupObj::PickupObj(const PickupObj& o) : WorldObj(o) {
+    speedRange[0] = o.speedRange[0];
+    speedRange[1] = o.speedRange[1];
+    pickupType[0] = o.pickupType[0];
+    pickupType[1] = o.pickupType[1];
+    pickupAnimData1 = o.pickupAnimData1;
+    pickupAnimData2 = o.pickupAnimData2;
+    pickupCapacity1 = o.pickupCapacity1;
+    pickupCapacity2 = o.pickupCapacity2;
+    
+    if(o.trItemIdCount > 0){
+        trItemIdCount = o.trItemIdCount;
+        trItemId = new int[trItemIdCount];
+        for(int i = 0; i < trItemIdCount; i++){
+            trItemId[i] = o.trItemId[i];
+        }
+    }
+}
+
+WorldObj* PickupObj::clone(){
+    return new PickupObj(*this);
 }
 
 PickupObj::~PickupObj() {

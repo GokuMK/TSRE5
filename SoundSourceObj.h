@@ -20,6 +20,8 @@ class PoleObj;
 class SoundSourceObj : public WorldObj {
 public:
     SoundSourceObj();
+    SoundSourceObj(const SoundSourceObj& o);
+    WorldObj* clone();
     virtual ~SoundSourceObj();
     bool allowNew();
     bool isSoundItem();

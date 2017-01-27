@@ -34,7 +34,21 @@ TrackObj::TrackObj() {
     this->modified = false;
 }
 
-TrackObj::TrackObj(const TrackObj& orig) {
+TrackObj::TrackObj(const TrackObj& o) : WorldObj(o) {
+    for(int i = 0; i < o.jNodePosn.size(); i++ ){
+        jNodePosn.push_back(std::array<float,5>());
+        jNodePosn.back()[0] = o.jNodePosn[i][0];
+        jNodePosn.back()[1] = o.jNodePosn[i][1];
+        jNodePosn.back()[2] = o.jNodePosn[i][2];
+        jNodePosn.back()[3] = o.jNodePosn[i][3];
+        jNodePosn.back()[4] = o.jNodePosn[i][4];
+    }
+
+    elevation = o.elevation;
+}
+
+WorldObj* TrackObj::clone(){
+    return new TrackObj(*this);
 }
 
 TrackObj::~TrackObj() {

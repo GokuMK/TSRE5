@@ -11,6 +11,7 @@
 #include "PropertiesSiding.h"
 #include "WorldObj.h"
 #include "PlatformObj.h"
+#include "Game.h"
 
 PropertiesSiding::PropertiesSiding() {
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -50,7 +51,7 @@ PropertiesSiding::PropertiesSiding() {
     
     QObject::connect(&disablePlatform, SIGNAL(stateChanged(int)),
                       this, SLOT(disablePlatformEnabled(int)));
-    QObject::connect(&namePlatform, SIGNAL(textChanged(QString)),
+    QObject::connect(&namePlatform, SIGNAL(textEdited(QString)),
                       this, SLOT(namePlatformEnabled(QString)));
 }
 
@@ -62,6 +63,7 @@ void PropertiesSiding::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
+    worldObj = obj;
     this->uid.setText(QString::number(obj->UiD, 10));
     this->tX.setText(QString::number(obj->x, 10));
     this->tY.setText(QString::number(-obj->y, 10));
@@ -74,15 +76,23 @@ void PropertiesSiding::showObj(WorldObj* obj){
 
 void PropertiesSiding:: disablePlatformEnabled(int state){
     if(pobj == NULL) return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB);
     if(state == Qt::Checked)
         pobj->setDisabled(true);
     else
         pobj->setDisabled(false);
+    Undo::StateEnd();
 }
 
 void PropertiesSiding::namePlatformEnabled(QString val){
     if(pobj == NULL) return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB);
     pobj->setPlatformName(val);
+    Undo::StateEnd();
 }
 
 bool PropertiesSiding::support(WorldObj* obj){

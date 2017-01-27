@@ -22,8 +22,10 @@ class Brush;
 class Coords;
 class Trk;
 class SoundList;
+class GLWidget;
 
-class Route {
+class Route : public QObject {
+    Q_OBJECT
 public:
     std::unordered_map<int, Tile*> tile;
     std::vector<int> activityId;
@@ -50,6 +52,7 @@ public:
     void newTile(int x, int z);
     void reloadTile(int x, int z);
     void deleteObj(WorldObj* obj);
+    void undoPlaceObj(int x, int y, int UiD);
     void removeTrackFromTDB(WorldObj* obj);
     void nextDefaultEnd();
     void setTerrainToTrackObj(WorldObj* obj, Brush* brush);
@@ -70,6 +73,7 @@ public:
     WorldObj* placeObject(int x, int z, float* p, float* q);
     WorldObj* placeObject(int x, int z, float* p, float* q, Ref::RefItem* r);
     WorldObj* autoPlaceObject(int x, int z, float* p);
+    void replaceWorldObjPointer(WorldObj* o, WorldObj* n);
     void autoPlacementDeleteLast();
     void deleteTDBTree(WorldObj* obj);
     void deleteTDBVector(WorldObj* obj);
@@ -82,6 +86,10 @@ public:
     void setTDB(TDB* tdb, bool road);
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, int renderMode);
     void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, bool selection);
+
+signals:
+    objSelected(WorldObj* obj);
+
 private:
     void loadTrk();
     TDB *trackDB;

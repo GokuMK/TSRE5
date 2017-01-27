@@ -223,7 +223,9 @@ void PropertiesTrackObj::fixJNodePosnEnabled(){
     if(trackObj == NULL){
         return;
     }
+    Undo::SinglePushWorldObjData(worldObj);
     trackObj->fillJNodePosn();
+    Undo::StateEnd();
 }
 
 void PropertiesTrackObj::hacksButtonEnabled(){
@@ -263,7 +265,6 @@ void PropertiesTrackObj::haxRemoveTDBVectorEnabled(){
         return;
     if(Game::currentRoute == NULL)
         return;
-    
     Game::currentRoute->deleteTDBVector(trackObj);
 }
 
@@ -392,7 +393,7 @@ void PropertiesTrackObj::elevPromEnabled(QString val){
     qDebug () << "prom" << prom;
     this->elev1inXm.setText(QString::number(oneInXm));
     
-    Undo::SinglePushWorldObjData(trackObj);
+    Undo::SinglePushWorldObjData(worldObj);
     trackObj->setElevation(prom);
 }
 
@@ -410,7 +411,7 @@ void PropertiesTrackObj::elev1inXmEnabled(QString val){
     qDebug () << "prom" << prom;
     this->elevProm.setText(QString::number(prom));
     
-    Undo::SinglePushWorldObjData(trackObj);
+    Undo::SinglePushWorldObjData(worldObj);
     trackObj->setElevation(prom);
 }
 
@@ -425,6 +426,7 @@ bool PropertiesTrackObj::support(WorldObj* obj){
 void PropertiesTrackObj::cCollisionTypeEdited(int val){
     if(worldObj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     worldObj->setCollisionType(val-1);
 }
 
@@ -436,6 +438,7 @@ void PropertiesTrackObj::editFileNameEnabled(){
     eWindow.exec();
     //qDebug() << waterWindow->changed;
     if(eWindow.isOk){
+        Undo::SinglePushWorldObjData(worldObj);
         worldObj->fileName = eWindow.name.text();
         worldObj->position[2] = -worldObj->position[2];
         worldObj->qDirection[2] = -worldObj->qDirection[2];

@@ -29,7 +29,8 @@ public:
     float height = 0;
     
     TransferObj();
-    TransferObj(const TransferObj& orig);
+    TransferObj(const TransferObj& o);
+    WorldObj* clone();
     virtual ~TransferObj();
     bool allowNew();
     void load(int x, int y);

@@ -29,7 +29,21 @@ TransferObj::TransferObj() {
     this->texture = "shadwrct.ace";
 }
 
-TransferObj::TransferObj(const TransferObj& orig) {
+TransferObj::TransferObj(const TransferObj& o) : WorldObj(o) {
+    texture = o.texture;
+    width = o.width;
+    height = o.height;
+
+    tex = o.tex;
+    init = false;
+    if(o.texturePath != NULL){
+        texturePath = new QString();
+        *texturePath = *o.texturePath;
+    }
+}
+
+WorldObj* TransferObj::clone(){
+    return new TransferObj(*this);
 }
 
 TransferObj::~TransferObj() {

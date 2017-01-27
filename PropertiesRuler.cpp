@@ -10,6 +10,7 @@
 
 #include "PropertiesRuler.h"
 #include "RulerObj.h"
+#include "Undo.h"
 
 PropertiesRuler::PropertiesRuler() {
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -74,6 +75,7 @@ void PropertiesRuler::updateObj(WorldObj* obj){
     if(obj == NULL){
         return;
     }
+    worldObj = obj;
     RulerObj* robj = (RulerObj*)obj;
 
     if(!lengthM.hasFocus())
@@ -85,6 +87,7 @@ void PropertiesRuler::checkboxTwoPointEdited(int val){
     if(worldObj == NULL)
         return;
     RulerObj* robj = (RulerObj*)worldObj;
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         robj->TwoPointRuler = true;
     } else {

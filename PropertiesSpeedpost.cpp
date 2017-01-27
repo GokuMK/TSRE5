@@ -11,6 +11,7 @@
 #include "PropertiesSpeedpost.h"
 #include "SpeedpostObj.h"
 #include "TRitem.h"
+#include "Game.h"
 
 PropertiesSpeedpost::PropertiesSpeedpost() {
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -75,9 +76,9 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     vbox->addStretch(1);
     this->setLayout(vbox);
     
-    QObject::connect(&speed, SIGNAL(textChanged(QString)),
+    QObject::connect(&speed, SIGNAL(textEdited(QString)),
                       this, SLOT(speedEnabled(QString)));
-    QObject::connect(&number, SIGNAL(textChanged(QString)),
+    QObject::connect(&number, SIGNAL(textEdited(QString)),
                       this, SLOT(numberEnabled(QString)));
     QObject::connect(&kmm, SIGNAL(activated(int)),
         this, SLOT(kmmListSelected(int)));
@@ -91,18 +92,30 @@ PropertiesSpeedpost::~PropertiesSpeedpost() {
 void PropertiesSpeedpost::speedEnabled(QString val){
     if(sobj == NULL) return;
     int speedval = this->speed.text().toInt(0,10);
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB);
     sobj->setSpeed(speedval);
+    Undo::StateEnd();
 }
 
 void PropertiesSpeedpost::numberEnabled(QString val){
     if(sobj == NULL) return;
     float numberval = this->number.text().toInt(0,10);
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB);
     sobj->setNumber(numberval);
+    Undo::StateEnd();
 }
 
 void PropertiesSpeedpost::kmmListSelected(int val){
     if(sobj == NULL) return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB);
     sobj->setSpeedUnitId(val);
+    Undo::StateEnd();
 }
 
 void PropertiesSpeedpost::ptbListSelected(int val){
@@ -113,7 +126,11 @@ void PropertiesSpeedpost::ptbListSelected(int val){
 void PropertiesSpeedpost::flipSignal(){
     if(sobj == NULL)
         return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB);
     sobj->flip(chFlipShape.isChecked());
+    Undo::StateEnd();
 }
 
 void PropertiesSpeedpost::showObj(WorldObj* obj){
@@ -121,7 +138,7 @@ void PropertiesSpeedpost::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
-    
+    worldObj = obj;
     sobj = (SpeedpostObj*)obj;
     QString stype = sobj->getSpeedpostType();
     this->infoLabel->setText("Object: "+obj->type);

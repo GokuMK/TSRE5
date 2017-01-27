@@ -110,8 +110,8 @@ public:
     void newHazardObject(int* &itemId, int trNodeId, float metry, int type);
     bool getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos);
     bool getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint*> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos);
-    void newSpeedPostObject(int speedPostId, int speedPostType, std::vector<int> & itemId, int trNodeId, float metry, int type);
-    void newSoundRegionObject(int soundregionTrackType, std::vector<int> & itemId, int trNodeId, float metry, int type);
+    void newSpeedPostObject(int speedPostId, int speedPostType, QVector<int> & itemId, int trNodeId, float metry, int type);
+    void newSoundRegionObject(int soundregionTrackType, QVector<int> & itemId, int trNodeId, float metry, int type);
 private:
     bool deleteNulls();
     int findBiggest();

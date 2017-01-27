@@ -25,9 +25,10 @@ struct UndoState {
     };
     struct WorldObjInfo {
         WorldObj * obj;
+        WorldObj * data;
         QString action;
-        float pos[3];
-        float qdirection[4];
+        int x;
+        int z;
     };
     unsigned long long id;
     bool modified = false;
@@ -42,6 +43,7 @@ class Undo {
 
 public:
     static void UndoLast();
+    static void Clear();
     static void StateBegin();
     static void StateBeginIfNotExist();
     static void StateEnd();
@@ -50,8 +52,9 @@ public:
     static void PushTextureData(int id, unsigned char *data, unsigned int size);
     static void PushWorldObjData(WorldObj* obj);
     static void PushWorldObjRemoved(WorldObj* obj);
+    static void PushWorldObjPlaced(WorldObj* obj);
     static void SinglePushWorldObjData(WorldObj* obj);
-    static void PushTrackDB(TDB *tdb, bool road);
+    static void PushTrackDB(TDB *tdb, bool road = false);
     //static void PushTerrainTexture(int x, int z, int uu, unsigned char* data);
     
 private:

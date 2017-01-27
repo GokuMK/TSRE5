@@ -19,7 +19,8 @@ class TrWatermarkObj : public WorldObj  {
 public:
     TrWatermarkObj();
     TrWatermarkObj(int level);
-    TrWatermarkObj(const TrWatermarkObj& orig);
+    TrWatermarkObj(const TrWatermarkObj& o);
+    WorldObj* clone();
     virtual ~TrWatermarkObj();
     void load(int x, int y);
     void set(QString sh, FileBuffer* data);

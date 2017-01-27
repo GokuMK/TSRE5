@@ -24,10 +24,11 @@ public:
         float r;
     };
     
-    Section* sections;
+    Section* sections = NULL;
     OglObj shape[2];
     DynTrackObj();
-    DynTrackObj(const DynTrackObj& orig);
+    DynTrackObj(const DynTrackObj& o);
+    WorldObj* clone();
     virtual ~DynTrackObj();
     bool allowNew();
     void load(int x, int y);

@@ -33,7 +33,26 @@ ForestObj::ForestObj() {
     this->loaded = false;
 }
 
-ForestObj::ForestObj(const ForestObj& orig) {
+ForestObj::ForestObj(const ForestObj& o) : WorldObj(o) {
+    treeTexture = o.treeTexture;
+    scaleRangeX = o.scaleRangeX;
+    scaleRangeZ = o.scaleRangeZ;
+    areaX = o.areaX;
+    areaZ = o.areaZ;
+    treeSizeX = o.treeSizeX;
+    treeSizeZ = o.treeSizeZ;
+    population = o.population;
+    tex = o.tex;
+    init = false;
+    if(o.texturePath != NULL){
+        texturePath = new QString();
+        *texturePath = *o.texturePath;
+    }
+
+}
+
+WorldObj* ForestObj::clone(){
+    return new ForestObj(*this);
 }
 
 ForestObj::~ForestObj() {

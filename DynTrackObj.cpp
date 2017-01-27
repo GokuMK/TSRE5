@@ -32,7 +32,29 @@ DynTrackObj::DynTrackObj() {
     staticFlags = 0x100000;
 }
 
-DynTrackObj::DynTrackObj(const DynTrackObj& orig) {
+DynTrackObj::DynTrackObj(const DynTrackObj& o) : WorldObj(o) {
+    if(o.sections != NULL){
+        sections = new Section[5];
+        for (int i = 0; i < 5; i++) {
+            sections[i].type = o.sections[i].type;
+            sections[i].sectIdx = o.sections[i].sectIdx;
+            sections[i].a = o.sections[i].a;
+            sections[i].r = o.sections[i].r;
+        }
+    }
+    tex1 = o.tex1;
+    tex2 = o.tex2;
+    init = false;// o.init;
+    elevation = o.elevation;
+    if(o.jNodePosn!=NULL){
+        jNodePosn = new float[5];
+        memcpy(jNodePosn, o.jNodePosn, sizeof(float)*5);
+    }
+    sidxSelected = o.sidxSelected;
+}
+
+WorldObj* DynTrackObj::clone(){
+    return new DynTrackObj(*this);
 }
 
 DynTrackObj::~DynTrackObj() {

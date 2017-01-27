@@ -20,6 +20,8 @@ class TrackItemObj;
 class SoundRegionObj : public WorldObj{
 public:
     SoundRegionObj();
+    SoundRegionObj(const SoundRegionObj& o);
+    WorldObj* clone();
     virtual ~SoundRegionObj();
     bool allowNew();
     bool isTrackItem();
@@ -39,7 +41,7 @@ public:
 private:
     float soundregionRoty;
     int soundregionTrackType;
-    std::vector<int> trItemId;
+    QVector<int> trItemId;
     //int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL; 
     TrackItemObj* pointer3dSelected = NULL; 

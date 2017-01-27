@@ -54,9 +54,9 @@ PropertiesCarspawner::PropertiesCarspawner() {
     carNumber.setValidator(doubleValidator);
     carSpeed.setValidator(doubleValidator);
     
-    QObject::connect(&carNumber, SIGNAL(textChanged(QString)),
+    QObject::connect(&carNumber, SIGNAL(textEdited(QString)),
                       this, SLOT(carNumberEnabled(QString)));
-    QObject::connect(&carSpeed, SIGNAL(textChanged(QString)),
+    QObject::connect(&carSpeed, SIGNAL(textEdited(QString)),
                       this, SLOT(carSpeedEnabled(QString)));
     QObject::connect(&useCustomList, SIGNAL(stateChanged(int)),
                       this, SLOT(useCustomListEnabled(int)));
@@ -77,6 +77,7 @@ void PropertiesCarspawner::showObj(WorldObj* obj){
     this->uid.setText(QString::number(obj->UiD, 10));
     this->tX.setText(QString::number(obj->x, 10));
     this->tY.setText(QString::number(-obj->y, 10));
+    worldObj = obj;
     cobj = (PlatformObj*)obj;
     this->lengthPlatform.setText(QString::number(cobj->getLength())+" m");
     this->carNumber.setText(QString::number(cobj->getCarNumber(),10));
@@ -101,11 +102,13 @@ void PropertiesCarspawner::showObj(WorldObj* obj){
 
 void PropertiesCarspawner::carNumberEnabled(QString val){
     if(cobj == NULL) return;
+    Undo::SinglePushWorldObjData(worldObj);
     cobj->setCarNumber(val.toInt());
 }
 
 void PropertiesCarspawner::carSpeedEnabled(QString val){
     if(cobj == NULL) return;
+    Undo::SinglePushWorldObjData(worldObj);
     cobj->setCarSpeed(val.toInt());
 }
 
@@ -120,12 +123,14 @@ bool PropertiesCarspawner::support(WorldObj* obj){
 void PropertiesCarspawner::carspawnListSelected(QString val){
     if(cobj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     cobj->setCarListName(val);
 }
 
 void PropertiesCarspawner::useCustomListEnabled(int val){
     if(cobj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         if(cobj->CarSpawnerList.length() == 0)
             return;

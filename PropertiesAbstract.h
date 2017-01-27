@@ -12,6 +12,7 @@
 #define	PROPERTIESABSTRACT_H
 
 #include <QtWidgets>
+#include "Undo.h"
 
 class WorldObj;
 

@@ -20,7 +20,8 @@ class TrackItemObj;
 class HazardObj : public WorldObj {
 public:
     HazardObj();
-    HazardObj(const HazardObj& orig);
+    HazardObj(const HazardObj& o);
+    WorldObj* clone();
     virtual ~HazardObj();
     bool allowNew();
     bool isTrackItem();

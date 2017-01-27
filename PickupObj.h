@@ -20,7 +20,8 @@ class TrackItemObj;
 class PickupObj : public WorldObj {
 public:
     PickupObj();
-    PickupObj(const PickupObj& orig);
+    PickupObj(const PickupObj& o);
+    WorldObj* clone();
     virtual ~PickupObj();
     bool allowNew();
     bool isTrackItem();

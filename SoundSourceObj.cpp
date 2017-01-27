@@ -20,6 +20,14 @@
 SoundSourceObj::SoundSourceObj() {
 }
 
+SoundSourceObj::SoundSourceObj(const SoundSourceObj& o) : WorldObj(o) {
+
+}
+
+WorldObj* SoundSourceObj::clone(){
+    return new SoundSourceObj(*this);
+}
+
 SoundSourceObj::~SoundSourceObj() {
 }
 

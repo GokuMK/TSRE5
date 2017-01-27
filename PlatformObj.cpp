@@ -75,7 +75,23 @@ PlatformObj::PlatformObj() {
     //pointer3dSelected = new TrackItemObj();
 }
 
-PlatformObj::PlatformObj(const PlatformObj& orig) {
+PlatformObj::PlatformObj(const PlatformObj& o) : WorldObj(o) {
+    platformData = o.platformData;
+    trItemId[0] = o.trItemId[0];
+    trItemId[1] = o.trItemId[1];
+    trItemId[2] = o.trItemId[2];
+    trItemId[3] = o.trItemId[3];
+    trItemIdCount = o.trItemIdCount;
+    carFrequency = o.carFrequency;
+    carAvSpeed = o.carAvSpeed;
+    rotB = o.rotB;
+    rotE = o.rotE;
+    selectionValue = o.selectionValue;
+    carspawnerListName = o.carspawnerListName;
+}
+
+WorldObj* PlatformObj::clone(){
+    return new PlatformObj(*this);
 }
 
 PlatformObj::~PlatformObj() {

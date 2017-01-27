@@ -28,7 +28,8 @@ public:
     };
     
     SignalObj();
-    SignalObj(const SignalObj& orig);
+    SignalObj(const SignalObj& o);
+    WorldObj* clone();
     virtual ~SignalObj();
     void load(int x, int y);
     void set(QString sh, long long int val);

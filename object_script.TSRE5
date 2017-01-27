@@ -181,6 +181,7 @@ INPUT(
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTransfer.o
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o
+./build/Release/MinGW_QT_5.7.0_Static-Windows/moc_Route.o
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o
 ./build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindowLink.o

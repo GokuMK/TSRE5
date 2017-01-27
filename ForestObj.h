@@ -42,7 +42,8 @@ public:
     float treeSizeZ = 0;
     float population = 0;
     ForestObj();
-    ForestObj(const ForestObj& orig);
+    ForestObj(const ForestObj& o);
+    WorldObj* clone();
     bool allowNew();
     void load(int x, int y);
     void set(int sh, FileBuffer* data);

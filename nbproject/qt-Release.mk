@@ -225,6 +225,7 @@ SOURCES       = AboutWindow.cpp \
 		moc_PropertiesTransfer.cpp \
 		moc_PropertiesUndefined.cpp \
 		moc_RandomConsist.cpp \
+		moc_Route.cpp \
 		moc_ShapeViewWindow.cpp \
 		moc_SignalWindow.cpp \
 		moc_SignalWindowLink.cpp \
@@ -419,6 +420,7 @@ OBJECTS       = build/Release/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTransfer.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o \
+		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_Route.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindowLink.o \
@@ -1151,7 +1153,7 @@ clean: compiler_clean
 	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundRegion.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSpeedpost.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o build/Release/MinGW_QT_5.7.0_Static-Windows/QuadTree.o build/Release/MinGW_QT_5.7.0_Static-Windows/RandomConsist.o build/Release/MinGW_QT_5.7.0_Static-Windows/ReadFile.o build/Release/MinGW_QT_5.7.0_Static-Windows/Ref.o build/Release/MinGW_QT_5.7.0_Static-Windows/Route.o build/Release/MinGW_QT_5.7.0_Static-Windows/Ruch.o build/Release/MinGW_QT_5.7.0_Static-Windows/RulerObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SFile.o build/Release/MinGW_QT_5.7.0_Static-Windows/SFileC.o build/Release/MinGW_QT_5.7.0_Static-Windows/SFileX.o build/Release/MinGW_QT_5.7.0_Static-Windows/Shader.o build/Release/MinGW_QT_5.7.0_Static-Windows/ShapeLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/ShapeViewWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/SigCfg.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalShape.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalType.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalWindowLink.o build/Release/MinGW_QT_5.7.0_Static-Windows/SoundList.o build/Release/MinGW_QT_5.7.0_Static-Windows/SoundRegionObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SoundSourceObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SpeedPost.o build/Release/MinGW_QT_5.7.0_Static-Windows/SpeedPostDAT.o build/Release/MinGW_QT_5.7.0_Static-Windows/SpeedpostObj.o
 	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/StaticObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TDB.o build/Release/MinGW_QT_5.7.0_Static-Windows/TFile.o build/Release/MinGW_QT_5.7.0_Static-Windows/TRitem.o build/Release/MinGW_QT_5.7.0_Static-Windows/TRnode.o build/Release/MinGW_QT_5.7.0_Static-Windows/TS.o build/Release/MinGW_QT_5.7.0_Static-Windows/TSection.o build/Release/MinGW_QT_5.7.0_Static-Windows/TSectionDAT.o build/Release/MinGW_QT_5.7.0_Static-Windows/Terrain.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainTreeWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainWaterWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/TexLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/TextObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/Texture.o build/Release/MinGW_QT_5.7.0_Static-Windows/Tile.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrWatermarkObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrackItemObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrackShape.o build/Release/MinGW_QT_5.7.0_Static-Windows/TransferObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TransformWorldObjDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/Trk.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrkWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/Undo.o build/Release/MinGW_QT_5.7.0_Static-Windows/UnsavedDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector2f.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector2i.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector3f.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector4f.o build/Release/MinGW_QT_5.7.0_Static-Windows/WorldObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/glShapeWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/glwidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/main.o build/Release/MinGW_QT_5.7.0_Static-Windows/window.o
 	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/tsre5_plugin_import.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_AboutWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_AceLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ActivityTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_CELoadWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ChooseFileDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ConEditorWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ConListWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ConUnitsWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_EditFileNameDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_EngListWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_GeoTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_HeightWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ImageLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_LoadWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_NaviBox.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_NaviWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_NewRouteWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ObjTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_OverwriteDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesAbstract.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesCarspawner.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesDyntrack.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesForest.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesGroup.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesLevelCr.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPickup.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPlatform.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesRuler.o
-	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSiding.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSignal.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundRegion.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundSource.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSpeedpost.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesStatic.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTransfer.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindowLink.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTreeWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainWaterWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TransformWorldObjDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TrkWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_UnsavedDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_glShapeWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_glwidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_window.o
+	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSiding.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSignal.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundRegion.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundSource.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSpeedpost.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesStatic.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTransfer.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_Route.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindowLink.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTreeWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainWaterWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TransformWorldObjDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TrkWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_UnsavedDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_glShapeWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_glwidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_window.o
 	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/TSRE5_resource_res.o
 
 distclean: clean 
@@ -1171,9 +1173,9 @@ compiler_no_pch_compiler_make_all:
 compiler_no_pch_compiler_clean:
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_ShapeViewWindow.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
+compiler_moc_header_make_all: moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_Route.cpp moc_ShapeViewWindow.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_ShapeViewWindow.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
+	-$(DEL_FILE) moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_Route.cpp moc_ShapeViewWindow.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
 moc_AboutWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
 		C:/QT/Static/5.7.0/include/QtCore/QtCore \
@@ -9795,6 +9797,9 @@ moc_PropertiesAbstract.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesAbstract.h -o moc_PropertiesAbstract.cpp
@@ -10239,6 +10244,9 @@ moc_PropertiesCarspawner.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesCarspawner.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesCarspawner.h -o moc_PropertiesCarspawner.cpp
@@ -10683,6 +10691,9 @@ moc_PropertiesDyntrack.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesDyntrack.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesDyntrack.h -o moc_PropertiesDyntrack.cpp
@@ -11127,6 +11138,9 @@ moc_PropertiesForest.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesForest.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesForest.h -o moc_PropertiesForest.cpp
@@ -11571,6 +11585,9 @@ moc_PropertiesGroup.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesGroup.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesGroup.h -o moc_PropertiesGroup.cpp
@@ -12015,6 +12032,9 @@ moc_PropertiesLevelCr.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesLevelCr.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesLevelCr.h -o moc_PropertiesLevelCr.cpp
@@ -12459,6 +12479,9 @@ moc_PropertiesPickup.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesPickup.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesPickup.h -o moc_PropertiesPickup.cpp
@@ -12903,6 +12926,9 @@ moc_PropertiesPlatform.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesPlatform.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesPlatform.h -o moc_PropertiesPlatform.cpp
@@ -13347,6 +13373,9 @@ moc_PropertiesRuler.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesRuler.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesRuler.h -o moc_PropertiesRuler.cpp
@@ -13791,6 +13820,9 @@ moc_PropertiesSiding.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesSiding.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesSiding.h -o moc_PropertiesSiding.cpp
@@ -14235,6 +14267,9 @@ moc_PropertiesSignal.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesSignal.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesSignal.h -o moc_PropertiesSignal.cpp
@@ -14679,6 +14714,9 @@ moc_PropertiesSoundRegion.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesSoundRegion.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesSoundRegion.h -o moc_PropertiesSoundRegion.cpp
@@ -15123,6 +15161,9 @@ moc_PropertiesSoundSource.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesSoundSource.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesSoundSource.h -o moc_PropertiesSoundSource.cpp
@@ -15567,6 +15608,9 @@ moc_PropertiesSpeedpost.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesSpeedpost.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesSpeedpost.h -o moc_PropertiesSpeedpost.cpp
@@ -16011,6 +16055,9 @@ moc_PropertiesStatic.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesStatic.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesStatic.h -o moc_PropertiesStatic.cpp
@@ -16455,6 +16502,9 @@ moc_PropertiesTrackObj.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesTrackObj.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesTrackObj.h -o moc_PropertiesTrackObj.cpp
@@ -16899,6 +16949,9 @@ moc_PropertiesTransfer.cpp: PropertiesAbstract.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesTransfer.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesTransfer.h -o moc_PropertiesTransfer.cpp
@@ -17343,6 +17396,9 @@ moc_PropertiesUndefined.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
 		PropertiesAbstract.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesUndefined.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. PropertiesUndefined.h -o moc_PropertiesUndefined.cpp
@@ -17789,6 +17845,136 @@ moc_RandomConsist.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		RandomConsist.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. RandomConsist.h -o moc_RandomConsist.cpp
+
+moc_Route.cpp: C:/QT/Static/5.7.0/include/QtCore/QString \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		GLUU.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qt_windows.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopengles2ext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglext.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVertexArrayObject \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix4x4.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector3d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector4d.h \
+		C:/QT/Static/5.7.0/include/QtGui/qquaternion.h \
+		C:/QT/Static/5.7.0/include/QtGui/qgenericmatrix.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglshaderprogram.h \
+		C:/QT/Static/5.7.0/include/QtGui/qvector2d.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h \
+		TDB.h \
+		OglObj.h \
+		TextObj.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		SignalObj.h \
+		WorldObj.h \
+		FileBuffer.h \
+		Ref.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		Route.h \
+		C:/QT/Static/5.7.0/bin/moc.exe
+	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. Route.h -o moc_Route.cpp
 
 moc_ShapeViewWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
@@ -38027,6 +38213,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesAbstract.o: PropertiesAbst
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		GLUU.h \
@@ -38040,11 +38229,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesAbstract.o: PropertiesAbst
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TransformWorldObjDialog.h \
-		GLMatrix.h \
-		Undo.h \
-		C:/QT/Static/5.7.0/include/QtCore/QVector
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesAbstract.o PropertiesAbstract.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o: PropertiesCarspawner.cpp PropertiesCarspawner.h \
@@ -38488,6 +38674,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o: PropertiesCa
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		GLUU.h \
@@ -38501,7 +38690,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o: PropertiesCa
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		PlatformObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o PropertiesCarspawner.cpp
 
@@ -38946,6 +39134,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o: PropertiesDynt
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		DynTrackObj.h \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -38960,7 +39151,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o: PropertiesDynt
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Flex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o PropertiesDyntrack.cpp
 
@@ -39405,6 +39595,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o: PropertiesForest
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		GLUU.h \
@@ -39418,7 +39611,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o: PropertiesForest
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		ForestObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o PropertiesForest.cpp
 
@@ -39863,6 +40055,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o: PropertiesGroup.c
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		GroupObj.h \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -39877,7 +40072,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o: PropertiesGroup.c
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		ParserX.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o PropertiesGroup.cpp
 
@@ -40322,6 +40516,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesLevelCr.o: PropertiesLevel
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		LevelCrObj.h \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -40336,8 +40533,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesLevelCr.o: PropertiesLevel
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
-		GuiFunct.h
+		GuiFunct.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesLevelCr.o PropertiesLevelCr.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o: PropertiesPickup.cpp PropertiesPickup.h \
@@ -40781,6 +40978,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o: PropertiesPickup
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PickupObj.h \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -40795,8 +40995,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o: PropertiesPickup
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
-		GuiFunct.h
+		GuiFunct.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o PropertiesPickup.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o: PropertiesPlatform.cpp PropertiesPlatform.h \
@@ -41240,6 +41440,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o: PropertiesPlat
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PlatformObj.h \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -41254,7 +41457,7 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o: PropertiesPlat
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o PropertiesPlatform.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o: PropertiesRuler.cpp PropertiesRuler.h \
@@ -41698,6 +41901,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o: PropertiesRuler.c
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		RulerObj.h \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -41711,8 +41917,7 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o: PropertiesRuler.c
 		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap
+		Ref.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o PropertiesRuler.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o: PropertiesSiding.cpp PropertiesSiding.h \
@@ -42156,6 +42361,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o: PropertiesSiding
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		GLUU.h \
@@ -42169,8 +42377,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o: PropertiesSiding
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
-		PlatformObj.h
+		PlatformObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o PropertiesSiding.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o: PropertiesSignal.cpp PropertiesSignal.h \
@@ -42614,6 +42822,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o: PropertiesSignal
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		SignalWindow.h \
 		SignalObj.h \
 		WorldObj.h \
@@ -42629,7 +42840,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o: PropertiesSignal
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Game.h \
 		TDB.h \
 		TextObj.h \
@@ -43080,6 +43290,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundRegion.o: PropertiesS
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		SoundRegionObj.h \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -43094,7 +43307,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundRegion.o: PropertiesS
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		SoundList.h \
 		C:/QT/Static/5.7.0/include/QtCore/QHash \
 		Game.h
@@ -43541,6 +43753,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o: PropertiesS
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		SoundSourceObj.h \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -43555,7 +43770,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o: PropertiesS
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		Game.h \
 		SoundList.h \
 		C:/QT/Static/5.7.0/include/QtCore/QHash
@@ -44002,6 +44216,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSpeedpost.o: PropertiesSpe
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		SpeedpostObj.h \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
@@ -44016,9 +44233,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSpeedpost.o: PropertiesSpe
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TRitem.h \
-		Pointer3d.h
+		Pointer3d.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSpeedpost.o PropertiesSpeedpost.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o: PropertiesStatic.cpp PropertiesStatic.h \
@@ -44462,6 +44679,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o: PropertiesStatic
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		GLUU.h \
@@ -44475,12 +44695,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o: PropertiesStatic
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		StaticObj.h \
 		ParserX.h \
-		EditFileNameDialog.h \
-		Undo.h \
-		C:/QT/Static/5.7.0/include/QtCore/QVector
+		EditFileNameDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o PropertiesStatic.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o: PropertiesTrackObj.cpp PropertiesTrackObj.h \
@@ -44924,6 +45141,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o: PropertiesTrac
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		GLUU.h \
@@ -44937,13 +45157,10 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o: PropertiesTrac
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TrackObj.h \
 		GLMatrix.h \
 		ParserX.h \
 		EditFileNameDialog.h \
-		Undo.h \
-		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		Game.h \
 		Route.h \
 		TDB.h \
@@ -45393,6 +45610,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o: PropertiesTran
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		GLUU.h \
@@ -45406,7 +45626,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o: PropertiesTran
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap \
 		TexLib.h \
 		Texture.h \
 		TransferObj.h
@@ -45853,6 +46072,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o: PropertiesUnd
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
 		PropertiesAbstract.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		WorldObj.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		GLUU.h \
@@ -45865,8 +46087,7 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o: PropertiesUnd
 		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h \
-		C:/QT/Static/5.7.0/include/QtCore/QMap
+		Ref.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o PropertiesUndefined.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/QuadTree.o: QuadTree.cpp QuadTree.h \
@@ -49880,7 +50101,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/SignalWindow.o: SignalWindow.cpp Sig
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
 		SigCfg.h \
 		SignalShape.h \
-		SignalWindowLink.h
+		SignalWindowLink.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalWindow.o SignalWindow.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/SignalWindowLink.o: SignalWindowLink.cpp SignalWindowLink.h \
@@ -59013,6 +59236,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/window.o: window.cpp C:/QT/Static/5.
 		ShapeViewWindow.h \
 		AboutWindow.h \
 		PropertiesAbstract.h \
+		Undo.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVector \
 		PropertiesUndefined.h \
 		PropertiesStatic.h \
 		PropertiesTransfer.h \
@@ -59156,6 +59381,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o: moc_Prope
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o: moc_RandomConsist.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o moc_RandomConsist.cpp
+
+build/Release/MinGW_QT_5.7.0_Static-Windows/moc_Route.o: moc_Route.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_Route.o moc_Route.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o: moc_ShapeViewWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o moc_ShapeViewWindow.cpp

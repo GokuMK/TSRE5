@@ -16,6 +16,7 @@
 #include "SigCfg.h"
 #include "SignalShape.h"
 #include "ParserX.h"
+#include "Game.h"
 
 PropertiesSignal::PropertiesSignal() {
     signalWindow = new SignalWindow();
@@ -189,7 +190,11 @@ void PropertiesSignal::updateObj(WorldObj* obj){
 void PropertiesSignal::flipSignal(){
     if(sobj == NULL)
         return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB);
     sobj->flip(chFlipShape.isChecked());
+    Undo::StateEnd();
 }
 
 void PropertiesSignal::showSubObjList(){
@@ -207,6 +212,7 @@ bool PropertiesSignal::support(WorldObj* obj){
 void PropertiesSignal::checkboxAnimEdited(int val){
     if(worldObj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         worldObj->setAnimated(true);
     } else {
@@ -218,6 +224,7 @@ void PropertiesSignal::checkboxAnimEdited(int val){
 void PropertiesSignal::checkboxTerrainEdited(int val){
     if(worldObj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         worldObj->setTerrainObj(true);
     } else {
@@ -229,6 +236,7 @@ void PropertiesSignal::checkboxTerrainEdited(int val){
 void PropertiesSignal::cShadowTypeEdited(int val){
     if(worldObj == NULL)
         return;
+    Undo::SinglePushWorldObjData(worldObj);
     worldObj->setShadowType((WorldObj::ShadowType)val);
     this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
 }

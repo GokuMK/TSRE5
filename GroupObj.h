@@ -16,7 +16,7 @@
 
 class Route;
 
-class GroupObj : public WorldObj{
+class GroupObj : public WorldObj {
 public:
     struct Pivot {
         int set = -1;
@@ -28,7 +28,8 @@ public:
     QVector<WorldObj*> objects;
     
     GroupObj();
-    GroupObj(const GroupObj* orig);
+    GroupObj(const GroupObj& o);
+    WorldObj* clone();
     void translate(float px, float py, float pz);
     void rotate(float x, float y, float z);
     void resize(float x, float y, float z);

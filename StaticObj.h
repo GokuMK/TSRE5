@@ -18,7 +18,8 @@
 class StaticObj : public WorldObj  {
 public:
     StaticObj();
-    StaticObj(const StaticObj& orig);
+    StaticObj(const StaticObj& o);
+    WorldObj* clone();
     virtual ~StaticObj();
     bool allowNew();
     void load(int x, int y);

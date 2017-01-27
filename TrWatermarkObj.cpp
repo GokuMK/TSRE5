@@ -36,7 +36,11 @@ TrWatermarkObj::TrWatermarkObj(int level) {
     this->modified = false;
 }
 
-TrWatermarkObj::TrWatermarkObj(const TrWatermarkObj& orig) {
+TrWatermarkObj::TrWatermarkObj(const TrWatermarkObj& o) : WorldObj(o) {
+}
+
+WorldObj* TrWatermarkObj::clone(){
+    return new TrWatermarkObj(*this);
 }
 
 TrWatermarkObj::~TrWatermarkObj() {

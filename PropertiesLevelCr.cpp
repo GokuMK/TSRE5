@@ -11,6 +11,7 @@
 #include "PropertiesLevelCr.h"
 #include "LevelCrObj.h"
 #include "GuiFunct.h"
+#include "Game.h"
 
 PropertiesLevelCr::PropertiesLevelCr() {
 
@@ -112,6 +113,7 @@ void PropertiesLevelCr::showObj(WorldObj* obj){
         infoLabel->setText("NULL");
         return;
     }
+    worldObj = obj;
     lobj = (LevelCrObj*)obj;
     
     this->infoLabel->setText("Object: "+obj->type);
@@ -137,8 +139,10 @@ void PropertiesLevelCr::eActivateLevelCrossingEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         lobj->setSensitivityActivateLevel(fval);
+    }
 }
 
 void PropertiesLevelCr::eMinActDistEnabled(QString val){
@@ -147,8 +151,10 @@ void PropertiesLevelCr::eMinActDistEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         lobj->setSensitivityMinimunDistance(fval);
+    }
 }
 
 void PropertiesLevelCr::eInitialWarningEnabled(QString val){
@@ -157,8 +163,10 @@ void PropertiesLevelCr::eInitialWarningEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         lobj->setTimingInitialWarning(fval);
+    }
 }
 
 void PropertiesLevelCr::eMoreWarningEnabled(QString val){
@@ -167,8 +175,10 @@ void PropertiesLevelCr::eMoreWarningEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         lobj->setTimingSeriousWarning(fval);
+    }
 }
 
 void PropertiesLevelCr::eGateAnimLengthEnabled(QString val){
@@ -177,8 +187,10 @@ void PropertiesLevelCr::eGateAnimLengthEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         lobj->setTimingAnimationLength(fval);
+    }
 }
 
 void PropertiesLevelCr::eCrashProbabilityEnabled(QString val){
@@ -187,14 +199,17 @@ void PropertiesLevelCr::eCrashProbabilityEnabled(QString val){
     }
     bool ok = false;
     float fval = val.toFloat(&ok);
-    if(ok)
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
         lobj->setCrashProbability(fval);
+    }
 }
 
 void PropertiesLevelCr::chInvisibleEnabled(int val){
     if(lobj == NULL){
         return;
     }
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         lobj->setInvisible(true);
     } else {
@@ -206,6 +221,7 @@ void PropertiesLevelCr::chSilentHaxEnabled(int val){
     if(lobj == NULL){
         return;
     }
+    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         lobj->setSilentMstsHax(true);
     } else {
@@ -217,7 +233,12 @@ void PropertiesLevelCr::bDeleteSelectedEnabled(){
     if(lobj == NULL){
         return;
     }
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB, false);
+    Undo::PushTrackDB(Game::roadDB, true);
     lobj->deleteSelectedTrItem();
+    Undo::StateEnd();
 }
 
 bool PropertiesLevelCr::support(WorldObj* obj){

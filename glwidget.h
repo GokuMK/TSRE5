@@ -57,6 +57,7 @@ public slots:
     void enableTool(QString name);
     void setPaintBrush(Brush* brush);
     void jumpTo(PreciseTileCoordinate*);
+    void objSelected(WorldObj* o);
     
     void msg(QString text);
     void msg(QString name, bool val);

@@ -92,8 +92,9 @@ public:
     int trLoaded = 0;
         
     WorldObj();
-    WorldObj(const WorldObj& orig);
+    WorldObj(const WorldObj& o);
     virtual ~WorldObj();
+    virtual WorldObj* clone();
     virtual void load(int x, int y);
     virtual void set(int sh, FileBuffer* data);
     virtual void set(QString sh, FileBuffer* data);

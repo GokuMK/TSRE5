@@ -16,6 +16,7 @@
 #include "SigCfg.h"
 #include "SignalShape.h"
 #include "SignalWindowLink.h"
+#include "Undo.h"
 
 SignalWindow::SignalWindow()
 : QWidget() {
@@ -83,11 +84,14 @@ void SignalWindow::chSubEnabled(int i) {
     if (sobj == NULL)
         return;
 
+    Undo::StateBegin();
+    Undo::PushWorldObjData(sobj);
+    Undo::PushTrackDB(Game::trackDB);
     if (chSub[i].isChecked())
         sobj->enableSubObj(i);
     else
         sobj->disableSubObj(i);
-
+    Undo::StateEnd();
     showObj(sobj);
 }
 
