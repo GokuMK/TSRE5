@@ -92,10 +92,12 @@ bool TRnode::equalsIgnoreType(TRnode* r) {
             return false;
         if (UiD[5] != r->UiD[5])
             return false;
-        float lenx = UiD[6] - r->UiD[6];
-        float leny = UiD[7] - r->UiD[7];
-        float lenz = UiD[8] - r->UiD[8];
-        if (fabs(lenx) < 0.1 && fabs(leny) < 0.1 && fabs(lenz) < 0.1)
+        float len[3];
+        len[0] = UiD[6] - r->UiD[6];
+        len[1] = UiD[7] - r->UiD[7];
+        len[2] = UiD[8] - r->UiD[8];
+        
+        if (fabs(Vec3::length(len)) < 0.17)
             return true;
     }
     return false;
