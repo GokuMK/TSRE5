@@ -96,6 +96,13 @@ public:
     static int shadowsEnabled;
     static float sunLightDirection[];
     static int textureQuality;
+    
+    static QString StyleMainLabel;
+    static QString StyleGreenButton;
+    static QString StyleRedButton;
+    static QString StyleYellowButton;
+    static QString StyleGreenText;
+    static QString StyleRedText;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

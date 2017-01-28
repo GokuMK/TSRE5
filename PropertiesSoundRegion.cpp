@@ -18,7 +18,7 @@ PropertiesSoundRegion::PropertiesSoundRegion() {
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("SoundRegion:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
     QFormLayout *vlist = new QFormLayout;
@@ -33,7 +33,7 @@ PropertiesSoundRegion::PropertiesSoundRegion() {
     vbox->addItem(vlist);
     
     QLabel * label2 = new QLabel("Position:");
-    label2->setStyleSheet("QLabel { color : #999999; }");
+    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label2->setContentsMargins(3,0,0,0);
     vbox->addWidget(label2);
     vlist = new QFormLayout;

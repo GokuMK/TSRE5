@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.668"; 
+QString Game::AppVersion = "v0.670"; 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -85,6 +85,14 @@ EngLib *Game::currentEngLib = NULL;
 Route *Game::currentRoute = NULL;
 QColor *Game::colorConView = NULL;
 QColor *Game::colorShapeView = NULL;
+
+QString Game::StyleMainLabel = "#770000";
+QString Game::StyleGreenButton = "#55FF55";
+QString Game::StyleRedButton = "#FF5555";
+QString Game::StyleYellowButton = "#FFFF55";
+QString Game::StyleGreenText = "#009900";
+QString Game::StyleRedText = "#990000";
+
 void Game::load() {
     
     QString sh;

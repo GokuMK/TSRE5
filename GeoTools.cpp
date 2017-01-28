@@ -41,7 +41,7 @@ GeoTools::GeoTools(QString name)
     
     label0 = new QLabel("World Tile:");
     label0->setContentsMargins(3,0,0,0);
-    label0->setStyleSheet("QLabel { color : #999999; }");
+    label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
     vbox->addItem(vlist3);
 

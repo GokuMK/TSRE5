@@ -29,7 +29,7 @@ ActivityTools::ActivityTools(QString name)
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     QLabel *label1 = new QLabel("Objects:");
-    label1->setStyleSheet("QLabel { color : #999999; }");
+    label1->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label1->setContentsMargins(3,0,0,0);
     vbox->addWidget(&actShow);
     actShow.setStyleSheet("combobox-popup: 0;");

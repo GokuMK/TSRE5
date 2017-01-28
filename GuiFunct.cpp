@@ -12,6 +12,7 @@
 #include "AboutWindow.h"
 #include <QtWidgets>
 #include "window.h"
+#include "Game.h"
 
 QLabel* GuiFunct::newQLabel(QString text, int width){
     QLabel* label = new QLabel(text);
@@ -22,7 +23,7 @@ QLabel* GuiFunct::newQLabel(QString text, int width){
 QLabel* GuiFunct::newTQLabel(QString text, int width){
     QLabel *l = new QLabel(text);
     l->setContentsMargins(3,0,0,0);
-    l->setStyleSheet("QLabel { color : #999999; }");
+    l->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     if(width >=0)
         l->setMinimumWidth(width);
     return l;

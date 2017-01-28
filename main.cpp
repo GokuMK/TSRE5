@@ -58,9 +58,9 @@ int main(int argc, char *argv[]){
     QApplication app(argc, argv);
 
     Game::load();
-    
+    app.setStyle(QStyleFactory::create("Fusion"));
     if(!Game::systemTheme){
-        app.setStyle(QStyleFactory::create("Fusion"));
+        //app.setStyle(QStyleFactory::create("Fusion"));
         QPalette darkPalette;
         darkPalette.setColor(QPalette::Window, QColor(53,53,53));
         darkPalette.setColor(QPalette::WindowText, Qt::white);
@@ -77,7 +77,13 @@ int main(int argc, char *argv[]){
         darkPalette.setColor(QPalette::HighlightedText, Qt::black);
         app.setPalette(darkPalette);
         app.setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
-    }
+        Game::StyleMainLabel = "#999999";
+        Game::StyleGreenButton = "#008800";
+        Game::StyleRedButton = "#880000";
+        Game::StyleYellowButton = "#888800";
+        Game::StyleGreenText = "#55FF55";
+        Game::StyleRedText = "#FF5555";
+    } 
     
     //Game::window.resize(1280, 720);
     //window.resize(window.sizeHint());

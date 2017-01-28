@@ -55,7 +55,7 @@ SignalWindow::SignalWindow()
     //vbox->setAlignment(setLinkButton, Qt::AlignBottom);
     vbox->addWidget(closeButton);
     QLabel *label = new QLabel("SubObj Link Info (press Link button above to show):");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     

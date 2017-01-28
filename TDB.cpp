@@ -2270,7 +2270,7 @@ bool TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float
     return true;
 }
 
-bool TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint*> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos){
+bool TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos){
     float *lineBuffer;
     int length = 0;
     getLines(lineBuffer, length, posT);
@@ -2306,8 +2306,9 @@ bool TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint
                 segment [ j + 0]<< " " << segment [ j + 2]<< " " <<
                 segment [ j+6 + 0]<< " " << segment [ j+6 + 2]<< " " ;
             dist = Vec3::distance(intersectionPoint, pos);
-
-            p = new IntersectionPoint;
+            
+            ipoints.push_back(IntersectionPoint());
+            p = &ipoints.back();
             p->distance = dist;
             p->idx = lineBuffer[i+3];
             p->sidx = segment[j+3];
@@ -2325,7 +2326,7 @@ bool TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint
             p->sm = metry + segment[j+5] + (segment[j+11] - segment[j+5])*dist1;
             
             qDebug() << "item p: " << p->distance << " " << p->idx << " " << p->m<< " " << p->sidx << " " << p->sm;
-            ipoints.push_back(p);
+            //ipoints.push_back(p);
         }
     }
     std::sort(ipoints.begin(), ipoints.end());

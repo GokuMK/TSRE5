@@ -20,7 +20,7 @@ PropertiesSoundSource::PropertiesSoundSource() {
     vbox->setContentsMargins(0,1,1,1);
     
     infoLabel = new QLabel("Sound Source:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
     QFormLayout *vlist = new QFormLayout;

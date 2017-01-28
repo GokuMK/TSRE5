@@ -11,6 +11,7 @@
 #include "PropertiesDyntrack.h"
 #include "DynTrackObj.h"
 #include "Flex.h"
+#include "Game.h"
 
 PropertiesDyntrack::PropertiesDyntrack() {
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -18,12 +19,12 @@ PropertiesDyntrack::PropertiesDyntrack() {
     vbox->setContentsMargins(0,1,1,1);
     
     infoLabel = new QLabel("DynTrack:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
 
     QLabel * label2 = new QLabel("Sections:");
-    label2->setStyleSheet("QLabel { color : #999999; }");
+    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label2->setContentsMargins(3,0,0,0);
     vbox->addWidget(label2);
     

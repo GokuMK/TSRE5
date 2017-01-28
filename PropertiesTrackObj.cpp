@@ -24,7 +24,7 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("TrackObj:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
     QFormLayout *vlist = new QFormLayout;
@@ -58,7 +58,7 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vbox->addItem(filenameList);
     
     label = new QLabel("Position & Rotation:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vlist = new QFormLayout;
@@ -115,7 +115,7 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vbox->addItem(posRotList);
     
     label = new QLabel("Detail Level:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->defaultDetailLevel.setDisabled(true);
@@ -140,7 +140,7 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vbox->addItem(detailLevelView);
     
     label = new QLabel("Flags:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->flags.setDisabled(true);
@@ -160,7 +160,7 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vbox->addItem(flagslView);
     
     label = new QLabel("Elevation:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vlist = new QFormLayout;
@@ -178,7 +178,7 @@ PropertiesTrackObj::PropertiesTrackObj(){
     QObject::connect(&this->elev1inXm, SIGNAL(textEdited(QString)), this, SLOT(elev1inXmEnabled(QString)));
     vbox->addItem(vlist);
     label = new QLabel("MSTS Collision:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vbox->addWidget(&eCollisionFlags);
@@ -196,7 +196,7 @@ PropertiesTrackObj::PropertiesTrackObj(){
                       this, SLOT(copyFEnabled()));
     vbox->addWidget(resetFlags);
     label = new QLabel("Advanced:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     QPushButton *fixJNodePosn = new QPushButton("Fix JNodePosn", this);
     QObject::connect(fixJNodePosn, SIGNAL(released()),

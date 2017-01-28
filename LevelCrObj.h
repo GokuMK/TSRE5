@@ -19,6 +19,8 @@ class TrackItemObj;
 
 class LevelCrObj : public WorldObj {
 public:
+    static float MaxPlacingDistance;
+    
     LevelCrObj();
     LevelCrObj(const LevelCrObj& o);
     WorldObj* clone();

@@ -99,7 +99,7 @@ CELoadWindow::CELoadWindow() {
         load->show();
         exit->setFixedWidth(100);
         browse->setText(Game::root);
-        browse->setStyleSheet("color: #00AA00");
+        browse->setStyleSheet(QString("color: ")+Game::StyleGreenText);
         info->show();
         listInfo();
     } else {
@@ -115,7 +115,7 @@ void CELoadWindow::dirSelected(){
     QString directory = recentDirs.currentItem()->text();
     //Game::root = directory;
     browse->setText(directory);
-    browse->setStyleSheet("color: #AA0000");
+    browse->setStyleSheet(QString("color: ")+Game::StyleRedText);
     load->hide();
     info->hide();
     //nowa->hide();
@@ -124,7 +124,7 @@ void CELoadWindow::dirSelected(){
         qDebug()<<"ok";
         load->show();
         exit->setFixedWidth(100);
-        browse->setStyleSheet("color: #00AA00");
+        browse->setStyleSheet(QString("color: ")+Game::StyleGreenText);
         Game::root = directory;
         info->show();
         listInfo();        
@@ -148,7 +148,7 @@ void CELoadWindow::handleBrowseButton(){
     }
     //Game::root = directory;
     browse->setText(directory);
-    browse->setStyleSheet("color: #AA0000");
+    browse->setStyleSheet(QString("color: ")+Game::StyleRedText);
     load->hide();
     info->hide();
     //nowa->hide();
@@ -158,7 +158,7 @@ void CELoadWindow::handleBrowseButton(){
         load->show();
    
         exit->setFixedWidth(100);
-        browse->setStyleSheet("color: #00AA00");
+        browse->setStyleSheet(QString("color: ")+Game::StyleGreenText);
         Game::root = directory;
         //this->listRoutes();
         recentDirs.addItem(directory.toLower());

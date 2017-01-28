@@ -21,6 +21,8 @@
 #include "TS.h"
 #include <QDebug>
 
+float LevelCrObj::MaxPlacingDistance = 30;
+
 LevelCrObj::LevelCrObj() {
     this->shape = -1;
     this->loaded = false;
@@ -90,20 +92,12 @@ void LevelCrObj::deleteTrItems(){
 void LevelCrObj::initTrItems(float* tpos){
     if(tpos == NULL)
         return;
-    int trNodeId = tpos[0];
-    float metry = tpos[1];
     
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
     qDebug() <<"new levelcr  "<<this->fileName;
 
-    //trItemIdCount = 4;
-    //levelCrData[1] = 1;
-    //trItemId = new int[4];
     int* tid;
-    //tdb->newLevelCrObject(tid, trNodeId, metry, this->typeID);
-    //trItemId[0] = 0;
-    //trItemId[1] = tid[1];
     float* playerT = Vec2::fromValues(this->x, this->y);
     float pos[3];
     Vec3::set(pos, position[0], position[1], -position[2]);
@@ -115,31 +109,30 @@ void LevelCrObj::initTrItems(float* tpos){
     qDebug() << "road pos "<<tpos[0]<<" "<<tpos[1];
     rdb->getVectorSectionLine(buffer, len, playerT[0], playerT[1], tpos[0], 0, 0);
     qDebug() << "and find intersections ";
-    std::vector<TDB::IntersectionPoint*> ipoints;
+    std::vector<TDB::IntersectionPoint> ipoints;
     tdb->getSegmentIntersectionPositionOnTDB(ipoints, rdb, playerT, buffer, len, (float*)&pos);
     qDebug() << "intersection count: "<<ipoints.size();
-    //trNodeId = tpos[0];
-    //metry = tpos[1];
-    //rdb->newLevelCrObject(tid, trNodeId, metry, this->typeID);
-    //trItemId[2] = 1;
-    //trItemId[3] = tid[1];
+    
+    int pointCount;
+    for(pointCount = 0; pointCount < ipoints.size(); ){
+        if(ipoints[pointCount].distance > MaxPlacingDistance)
+            break;
+        else
+            pointCount++;
+    }
 
-    trItemIdCount = ipoints.size()*4;
-    levelCrData[1] = ipoints.size();
+    trItemIdCount = pointCount*4;
+    levelCrData[1] = pointCount;
     trItemId.fill(-1,levelCrData[1]*4);
-    for(int i = 0; i < ipoints.size(); i++){
-        tdb->newLevelCrObject(tid, ipoints[i]->idx, ipoints[i]->m, this->typeID);
+    for(int i = 0; i < pointCount; i++){
+        //qDebug() << ipoints[i].distance;
+        tdb->newLevelCrObject(tid, ipoints[i].idx, ipoints[i].m, this->typeID);
         trItemId[i*2+0] = 0;
         trItemId[i*2+1] = tid[1];
-        rdb->newLevelCrObject(tid, ipoints[i]->sidx, ipoints[i]->sm, this->typeID);
-        trItemId[ipoints.size()*2+i*2+0] = 1;
-        trItemId[ipoints.size()*2+i*2+1] = tid[1];
+        rdb->newLevelCrObject(tid, ipoints[i].sidx, ipoints[i].sm, this->typeID);
+        trItemId[pointCount*2+i*2+0] = 1;
+        trItemId[pointCount*2+i*2+1] = tid[1];
     }
-    //trNodeId = tpos[0];
-    //metry = tpos[1];
-    //rdb->newLevelCrObject(tid, trNodeId, metry, this->typeID);
-    //trItemId[2] = 1;
-    //trItemId[3] = tid[1];
 
     this->drawPosition = NULL;
 }
@@ -364,6 +357,8 @@ void LevelCrObj::deleteSelectedTrItem(){
     if(selectionValue < 1)
         return;
     if(selectionValue > trItemIdCount/4)
+        return;
+    if(trItemId.size() < 5)
         return;
 
     TDB* tdb = Game::trackDB;

@@ -31685,7 +31685,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GuiFunct.o: GuiFunct.cpp Gui
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
 		window.h \
-		c:/OT/Static/5.7.0_x64/include/QtWidgets/QMainWindow
+		c:/OT/Static/5.7.0_x64/include/QtWidgets/QMainWindow \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GuiFunct.o GuiFunct.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/HGTfile.o: HGTfile.cpp HGTfile.h \
@@ -34660,7 +34661,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NaviBox.o: NaviBox.cpp NaviB
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbar.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbox.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
-		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h
+		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
+		Game.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NaviBox.o NaviBox.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NaviWindow.o: NaviWindow.cpp NaviWindow.h \
@@ -35108,7 +35111,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NaviWindow.o: NaviWindow.cpp
 		Coords.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		CoordsMkr.h \
-		CoordsKml.h
+		CoordsKml.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NaviWindow.o NaviWindow.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NewRouteWindow.o: NewRouteWindow.cpp NewRouteWindow.h \
@@ -38691,7 +38695,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesCarspawner.o: Prop
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		PlatformObj.h
+		PlatformObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesCarspawner.o PropertiesCarspawner.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesDyntrack.o: PropertiesDyntrack.cpp PropertiesDyntrack.h \
@@ -39152,7 +39157,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesDyntrack.o: Proper
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		Flex.h
+		Flex.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesDyntrack.o PropertiesDyntrack.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesForest.o: PropertiesForest.cpp PropertiesForest.h \
@@ -39612,7 +39618,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesForest.o: Properti
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		ForestObj.h
+		ForestObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesForest.o PropertiesForest.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesGroup.o: PropertiesGroup.cpp PropertiesGroup.h \
@@ -40073,7 +40080,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesGroup.o: Propertie
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		ParserX.h
+		ParserX.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesGroup.o PropertiesGroup.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesLevelCr.o: PropertiesLevelCr.cpp PropertiesLevelCr.h \
@@ -41918,7 +41926,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesRuler.o: Propertie
 		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesRuler.o PropertiesRuler.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSiding.o: PropertiesSiding.cpp PropertiesSiding.h \
@@ -44698,7 +44707,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesStatic.o: Properti
 		Ref.h \
 		StaticObj.h \
 		ParserX.h \
-		EditFileNameDialog.h
+		EditFileNameDialog.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesStatic.o PropertiesStatic.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTrackObj.o: PropertiesTrackObj.cpp PropertiesTrackObj.h \
@@ -45629,7 +45639,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTransfer.o: Proper
 		Ref.h \
 		TexLib.h \
 		Texture.h \
-		TransferObj.h
+		TransferObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTransfer.o PropertiesTransfer.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesUndefined.o: PropertiesUndefined.cpp PropertiesUndefined.h \
@@ -46088,7 +46099,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesUndefined.o: Prope
 		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesUndefined.o PropertiesUndefined.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/QuadTree.o: QuadTree.cpp QuadTree.h \
@@ -52164,6 +52176,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TRnode.o: TRnode.cpp TRnode.
 		c:/OT/Static/5.7.0_x64/include/QtCore/qnamespace.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qarraydata.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringbuilder.h \
+		GLMatrix.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qalgorithms.h \

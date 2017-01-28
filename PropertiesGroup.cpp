@@ -11,17 +11,18 @@
 #include "PropertiesGroup.h"
 #include "GroupObj.h"
 #include "ParserX.h"
+#include "Game.h"
 
 PropertiesGroup::PropertiesGroup() {
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("Group:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
     QLabel *label = new QLabel("Detail Level:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->defaultDetailLevel.setDisabled(true);
@@ -46,7 +47,7 @@ PropertiesGroup::PropertiesGroup() {
     vbox->addItem(detailLevelView);
     
     label = new QLabel("Flags:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->flags.setDisabled(true);

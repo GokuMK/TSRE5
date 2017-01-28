@@ -22,7 +22,7 @@ PropertiesLevelCr::PropertiesLevelCr() {
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("LevelCr:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
 
@@ -34,7 +34,7 @@ PropertiesLevelCr::PropertiesLevelCr() {
     vbox->addWidget(&fileName);
 
     label = new QLabel("Level Crossing Sensitivity:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     //QFormLayout *vlist = new QFormLayout;
@@ -50,7 +50,7 @@ PropertiesLevelCr::PropertiesLevelCr() {
     QObject::connect(&eMinActDist, SIGNAL(textEdited(QString)), this, SLOT(eMinActDistEnabled(QString)));
     //vbox->addItem(vlist);
     label = new QLabel("Level Crossing Timing:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     //vlist = new QFormLayout;
@@ -71,7 +71,7 @@ PropertiesLevelCr::PropertiesLevelCr() {
     //vbox->addItem(vlist);
 
     label = new QLabel("More Options:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     //vlist = new QFormLayout;
@@ -92,7 +92,7 @@ PropertiesLevelCr::PropertiesLevelCr() {
     chSilentHax.setText("Silent crossing MSTS HAX");
     
     label = new QLabel("Track Items:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     
@@ -100,6 +100,16 @@ PropertiesLevelCr::PropertiesLevelCr() {
     vbox->addWidget(bDeleteSelected);
     QObject::connect(bDeleteSelected, SIGNAL(released()),
                       this, SLOT(bDeleteSelectedEnabled()));
+    
+    label = new QLabel("Global settings:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(new QLabel("Max placing radius:"));
+    vbox->addWidget(&eMaxPlacingDistance);
+    eMaxPlacingDistance.setValidator(doubleValidator);
+    QObject::connect(&eMaxPlacingDistance, SIGNAL(textEdited(QString)), this, SLOT(eMaxPlacingDistanceEnabled(QString)));
+    
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -125,6 +135,7 @@ void PropertiesLevelCr::showObj(WorldObj* obj){
     this->eMoreWarning.setText(QString::number(lobj->getTimingSeriousWarning()));
     this->eGateAnimLength.setText(QString::number(lobj->getTimingAnimationLength()));
     this->eCrashProbability.setText(QString::number(lobj->getCrashProbability()));
+    this->eMaxPlacingDistance.setText(QString::number(lobj->MaxPlacingDistance));
     this->chInvisible.blockSignals(true);
     this->chInvisible.setChecked(lobj->isInvisibleEnabled());
     this->chInvisible.blockSignals(false);
@@ -142,6 +153,18 @@ void PropertiesLevelCr::eActivateLevelCrossingEnabled(QString val){
     if(ok){
         Undo::SinglePushWorldObjData(worldObj);
         lobj->setSensitivityActivateLevel(fval);
+    }
+}
+
+void PropertiesLevelCr::eMaxPlacingDistanceEnabled(QString val){
+    if(lobj == NULL){
+        return;
+    }
+    bool ok = false;
+    float fval = val.toFloat(&ok);
+    if(ok){
+        if(fval > 0)
+            lobj->MaxPlacingDistance = fval;
     }
 }
 

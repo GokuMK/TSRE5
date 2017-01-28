@@ -30,6 +30,7 @@ public slots:
     void eMoreWarningEnabled(QString val);
     void eGateAnimLengthEnabled(QString val);
     void eCrashProbabilityEnabled(QString val);
+    void eMaxPlacingDistanceEnabled(QString val);
     void chInvisibleEnabled(int val);
     void chSilentHaxEnabled(int val);
     void bDeleteSelectedEnabled();
@@ -45,6 +46,7 @@ private:
     QLineEdit eGateAnimLength;
     QLineEdit eMoreWarning;
     QLineEdit eCrashProbability;
+    QLineEdit eMaxPlacingDistance;
     
     QCheckBox chInvisible;
     QCheckBox chSilentHax;

@@ -11,6 +11,7 @@
 
 #include "PropertiesUndefined.h"
 #include "WorldObj.h"
+#include "Game.h"
 
 PropertiesUndefined::PropertiesUndefined(){
     
@@ -18,7 +19,7 @@ PropertiesUndefined::PropertiesUndefined(){
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("Select to see properties.");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel); 
     

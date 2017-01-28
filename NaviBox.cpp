@@ -9,6 +9,7 @@
  */
 
 #include "NaviBox.h"
+#include "Game.h"
 
 NaviBox::NaviBox() : QWidget(){
     QPushButton *jumpButton = new QPushButton("Jump", this);
@@ -17,7 +18,7 @@ NaviBox::NaviBox() : QWidget(){
     
     QLabel *label1 = new QLabel("Position:");
     label1->setContentsMargins(3,0,0,0);
-    label1->setStyleSheet("QLabel { color : #999999; }");
+    label1->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     QFormLayout *vbox = new QFormLayout;
     vbox->setSpacing(2);
     vbox->addRow(label1);

@@ -13,13 +13,14 @@
 #include "StaticObj.h"
 #include "ParserX.h"
 #include "EditFileNameDialog.h"
+#include "Game.h"
 
 PropertiesStatic::PropertiesStatic(){
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("Static:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
     QFormLayout *vlist = new QFormLayout;
@@ -34,7 +35,7 @@ PropertiesStatic::PropertiesStatic(){
     vbox->addItem(vlist);
     QLabel * label;
     label = new QLabel("FileName:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->fileName.setDisabled(true);
@@ -54,7 +55,7 @@ PropertiesStatic::PropertiesStatic(){
     vbox->addItem(filenameList);
     
     label = new QLabel("Position & Rotation:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vlist = new QFormLayout;
@@ -119,7 +120,7 @@ PropertiesStatic::PropertiesStatic(){
     vbox->addItem(posRotList);
     
     label = new QLabel("Detail Level:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->defaultDetailLevel.setDisabled(true);
@@ -144,7 +145,7 @@ PropertiesStatic::PropertiesStatic(){
     vbox->addItem(detailLevelView);
     
     label = new QLabel("Flags:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->flags.setDisabled(true);
@@ -181,7 +182,7 @@ PropertiesStatic::PropertiesStatic(){
                       this, SLOT(cShadowTypeEdited(int)));
 
     label = new QLabel("MSTS Collision:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vbox->addWidget(&eCollisionFlags);

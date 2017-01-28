@@ -91,22 +91,22 @@ TerrainTools::TerrainTools(QString name)
     
     label0 = new QLabel("World Tile:");
     label0->setContentsMargins(3,0,0,0);
-    label0->setStyleSheet("QLabel { color : #999999; }");
+    label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
     vbox->addItem(vlist3);
     label0 = new QLabel("Tile:");
     label0->setContentsMargins(3,0,0,0);
-    label0->setStyleSheet("QLabel { color : #999999; }");
+    label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
     vbox->addItem(vlist4);
     label0 = new QLabel("Paint:");
     label0->setContentsMargins(3,0,0,0);
-    label0->setStyleSheet("QLabel { color : #999999; }");
+    label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
     vbox->addItem(vlist0);
     label0 = new QLabel("Texture:");
     label0->setContentsMargins(3,0,0,0);
-    label0->setStyleSheet("QLabel { color : #999999; }");
+    label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
     vbox->addItem(vlist1);
 
@@ -114,7 +114,7 @@ TerrainTools::TerrainTools(QString name)
     vbox->setAlignment(texPreviewLabel, Qt::AlignHCenter);
     QLabel *label2 = new QLabel("Brush settings:");
     label2->setContentsMargins(3,0,0,0);
-    label2->setStyleSheet("QLabel { color : #999999; }");
+    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label2);
     
 
@@ -190,7 +190,7 @@ TerrainTools::TerrainTools(QString name)
     leEradius = GuiFunct::newQLineEdit(25,3);
     leEradius->setValidator(new QIntValidator(1, 100, this));
     QLabel *label3 = new QLabel("Embankment settings:");
-    label3->setStyleSheet("QLabel { color : #999999; }");
+    label3->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label3->setContentsMargins(3,0,0,0);
     vbox->addWidget(label3);
     

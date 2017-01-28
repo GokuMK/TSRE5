@@ -11,13 +11,14 @@
 #include "PropertiesForest.h"
 #include "WorldObj.h"
 #include "ForestObj.h"
+#include "Game.h"
 
 PropertiesForest::PropertiesForest() {
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("Forest:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     
    
@@ -32,7 +33,7 @@ PropertiesForest::PropertiesForest() {
     vbox->addItem(vlistt);
     
     QLabel * label = new QLabel("Texture:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     QLabel * label1 = new QLabel("FileName:");
@@ -45,7 +46,7 @@ PropertiesForest::PropertiesForest() {
     vbox->addWidget(copyF);
     
     QLabel * label12 = new QLabel("Size:");
-    label12->setStyleSheet("QLabel { color : #999999; }");
+    label12->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label12->setContentsMargins(3,0,0,0);
     vbox->addWidget(label12);
     QFormLayout *vlist = new QFormLayout;
@@ -74,7 +75,7 @@ PropertiesForest::PropertiesForest() {
     vbox->addItem(vlist);
     
     label = new QLabel("Position & Rotation:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vlist = new QFormLayout;
@@ -131,7 +132,7 @@ PropertiesForest::PropertiesForest() {
     vbox->addItem(posRotList);
     
     label = new QLabel("Detail Level:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->defaultDetailLevel.setDisabled(true);
@@ -156,7 +157,7 @@ PropertiesForest::PropertiesForest() {
     vbox->addItem(detailLevelView);
     
     label = new QLabel("Flags:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->flags.setDisabled(true);

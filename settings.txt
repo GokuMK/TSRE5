@@ -34,7 +34,7 @@ writeTDB = true
 geoPath = F:/hgst
 
 # misc
-#systemTheme = true
+systemTheme = true
 #colorConView = #FF0000
 #colorShapeView = #00FF00
 #toolsHidden = true

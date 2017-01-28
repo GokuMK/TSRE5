@@ -34,13 +34,13 @@ LoadWindow::LoadWindow() {
     browse = new QPushButton("Browse");
     connect(browse, SIGNAL (released()), this, SLOT (handleBrowseButton()));
     load = new QPushButton("Load");
-    load->setStyleSheet("background-color: #008800");
+    load->setStyleSheet(QString("background-color: ")+Game::StyleGreenButton);
     connect(load, SIGNAL (released()), this, SLOT (routeLoad()));
     neww = new QPushButton("New");
-    neww->setStyleSheet("background-color: #888800");
+    neww->setStyleSheet(QString("background-color: ")+Game::StyleYellowButton);
     connect(neww, SIGNAL (released()), this, SLOT (setNewRoute()));
     exit = new QPushButton("Exit");
-    exit->setStyleSheet("background-color: #880000");
+    exit->setStyleSheet(QString("background-color: ")+Game::StyleRedButton);
     
     
     nowaTrasa = new QLineEdit();
@@ -98,7 +98,7 @@ LoadWindow::LoadWindow() {
         neww->setFixedWidth(100);
         exit->setFixedWidth(100);
         browse->setText(Game::root);
-        browse->setStyleSheet("color: #00AA00");
+        browse->setStyleSheet(QString("color: ")+Game::StyleGreenText);
         this->listRoutes();
     } else {
         exit->setFixedWidth(600);
@@ -125,7 +125,7 @@ void LoadWindow::handleBrowseButton(){
     }
     //Game::root = directory;
     browse->setText(directory);
-    browse->setStyleSheet("color: #AA0000");
+    browse->setStyleSheet(QString("color: ")+Game::StyleRedText);
     load->hide();
     //nowa->hide();
     neww->hide();
@@ -137,7 +137,7 @@ void LoadWindow::handleBrowseButton(){
         neww->show();
         neww->setFixedWidth(100);
         exit->setFixedWidth(100);
-        browse->setStyleSheet("color: #00AA00");
+        browse->setStyleSheet(QString("color: ")+Game::StyleGreenText);
         Game::root = directory;
         this->listRoutes();
     }

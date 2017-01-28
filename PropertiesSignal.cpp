@@ -26,7 +26,7 @@ PropertiesSignal::PropertiesSignal() {
     vbox->setContentsMargins(0,1,1,1);
     
     infoLabel = new QLabel("Signal:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
     QFormLayout *vlist = new QFormLayout;
@@ -54,7 +54,7 @@ PropertiesSignal::PropertiesSignal() {
     chFlipShape.setChecked(true);
     vbox->addWidget(&chFlipShape);
     label = new QLabel("SubObjects:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     button = new QPushButton("Show list", this);
@@ -62,7 +62,7 @@ PropertiesSignal::PropertiesSignal() {
     connect(button, SIGNAL(released()), this, SLOT(showSubObjList()));
     
     label = new QLabel("Flags:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     this->flags.setDisabled(true);

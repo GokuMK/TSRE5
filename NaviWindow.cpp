@@ -15,6 +15,7 @@
 #include "Coords.h"
 #include "CoordsMkr.h"
 #include "CoordsKml.h"
+#include "Game.h"
 
 NaviWindow::NaviWindow(){
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
@@ -41,7 +42,7 @@ NaviWindow::NaviWindow(){
     
     QLabel *label1 = new QLabel("Position:");
     label1->setContentsMargins(3,0,0,0);
-    label1->setStyleSheet("QLabel { color : #999999; }");
+    label1->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
 
     QVBoxLayout *v = new QVBoxLayout;
     v->setSpacing(2);

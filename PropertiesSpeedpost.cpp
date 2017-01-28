@@ -18,7 +18,7 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("SpeedPost:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
     vbox->addWidget(&speedpostType);
@@ -34,7 +34,7 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     vbox->addItem(vlist);
     
     QLabel * label2 = new QLabel("Position:");
-    label2->setStyleSheet("QLabel { color : #999999; }");
+    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label2->setContentsMargins(3,0,0,0);
     vbox->addWidget(label2);
     vlist = new QFormLayout;
@@ -45,7 +45,7 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     vlist->addRow("Z:",&this->posZ);
     vbox->addItem(vlist);
     label2 = new QLabel("Speed:");
-    label2->setStyleSheet("QLabel { color : #999999; }");
+    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label2->setContentsMargins(3,0,0,0);
     vbox->addWidget(label2);
     vbox->addWidget(&speed);
@@ -54,7 +54,7 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     kmm.addItem("Kilometers");
     kmm.addItem("Miles");
     label2 = new QLabel("Speed for:");
-    label2->setStyleSheet("QLabel { color : #999999; }");
+    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label2->setContentsMargins(3,0,0,0);
     vbox->addWidget(label2);
     vbox->addWidget(&ptb);
@@ -63,7 +63,7 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     ptb.addItem("Both");
     ptb.setStyleSheet("combobox-popup: 0;");
     label2 = new QLabel("Number:");
-    label2->setStyleSheet("QLabel { color : #999999; }");
+    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label2->setContentsMargins(3,0,0,0);
     vbox->addWidget(label2);
     vbox->addWidget(&number);

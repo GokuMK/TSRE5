@@ -11,13 +11,14 @@
 #include "PropertiesRuler.h"
 #include "RulerObj.h"
 #include "Undo.h"
+#include "Game.h"
 
 PropertiesRuler::PropertiesRuler() {
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("Ruler:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
     QFormLayout *vlist = new QFormLayout;
@@ -31,7 +32,7 @@ PropertiesRuler::PropertiesRuler() {
     vlist->addRow("Tile Z:",&this->tY);
     vbox->addItem(vlist);
     QLabel *label = new QLabel("Length:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vlist = new QFormLayout;
@@ -42,7 +43,7 @@ PropertiesRuler::PropertiesRuler() {
     vbox->addItem(vlist);
     
     label = new QLabel("Default Settings:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
         checkboxTwoPoint.setText("Only Two-Point Ruler");

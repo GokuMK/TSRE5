@@ -18,7 +18,7 @@ PropertiesPlatform::PropertiesPlatform() {
     vbox->setContentsMargins(0,1,1,1);
     
     infoLabel = new QLabel("Platform:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
     QFormLayout *vlist = new QFormLayout;
@@ -44,7 +44,7 @@ PropertiesPlatform::PropertiesPlatform() {
     vbox->addWidget(&this->namePlatform);
     // side
     label = new QLabel("Side:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     leftSide.setText("Left");
     rightSide.setText("Right");
@@ -52,7 +52,7 @@ PropertiesPlatform::PropertiesPlatform() {
     vbox->addWidget(&rightSide);
     // wait
     label = new QLabel("Platform Wait:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vlist = new QFormLayout;
@@ -64,7 +64,7 @@ PropertiesPlatform::PropertiesPlatform() {
     vbox->addItem(vlist);
     // misc
     label = new QLabel("Misc:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     disablePlatform.setText("Disable Platform");

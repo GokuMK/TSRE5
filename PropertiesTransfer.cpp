@@ -12,13 +12,14 @@
 #include "WorldObj.h"
 #include "TexLib.h"
 #include "TransferObj.h"
+#include "Game.h"
 
 PropertiesTransfer::PropertiesTransfer() {
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("Transfer:");
-    infoLabel->setStyleSheet("QLabel { color : #999999; }");
+    infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     
     texPreview = new QPixmap(150,150);
@@ -38,7 +39,7 @@ PropertiesTransfer::PropertiesTransfer() {
     vbox->addItem(vlistt);
     
     QLabel * label0 = new QLabel("Texture:");
-    label0->setStyleSheet("QLabel { color : #999999; }");
+    label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label0->setContentsMargins(3,0,0,0);
     vbox->addWidget(label0);
     QLabel * label1 = new QLabel("FileName:");
@@ -59,7 +60,7 @@ PropertiesTransfer::PropertiesTransfer() {
     vbox->addWidget(texPut);
     
     QLabel * label = new QLabel("Size:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     QFormLayout *vlist = new QFormLayout;
@@ -78,7 +79,7 @@ PropertiesTransfer::PropertiesTransfer() {
                       this, SLOT(sizeEnabled(QString)));
     
     label = new QLabel("Position & Rotation:");
-    label->setStyleSheet("QLabel { color : #999999; }");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vlist = new QFormLayout;

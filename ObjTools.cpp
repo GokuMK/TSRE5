@@ -46,7 +46,7 @@ ObjTools::ObjTools(QString name)
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     QLabel *label1 = new QLabel("Objects:");
-    label1->setStyleSheet("QLabel { color : #999999; }");
+    label1->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label1->setContentsMargins(3,0,0,0);
     vbox->addWidget(label1);
     QFormLayout *vlist = new QFormLayout;
@@ -140,7 +140,7 @@ ObjTools::ObjTools(QString name)
     stickToTDB.setChecked(false);
     //vbox->addWidget(&stickToTDB);
     QLabel *label2 = new QLabel("Recent items:");
-    label2->setStyleSheet("QLabel { color : #999999; }");
+    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label2->setContentsMargins(3,0,0,0);
     //refClasssetMargin(0);
     //refTrack->sets >setMargin(0);
