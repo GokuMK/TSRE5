@@ -35,6 +35,11 @@
       <logicalFolder name="f14" displayName="GEO" projectFiles="true">
         <itemPath>HGTfile.h</itemPath>
         <itemPath>HeightWindow.h</itemPath>
+        <itemPath>MapData.h</itemPath>
+        <itemPath>MapDataOSM.h</itemPath>
+        <itemPath>MapDataUrlImage.h</itemPath>
+        <itemPath>MapWindow.h</itemPath>
+        <itemPath>OSMFeatures.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
         <itemPath>ChooseFileDialog.h</itemPath>
@@ -60,11 +65,6 @@
         <itemPath>Shader.h</itemPath>
         <itemPath>TextObj.h</itemPath>
         <itemPath>TrackItemObj.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="OSM" projectFiles="true">
-        <itemPath>Features.h</itemPath>
-        <itemPath>MapWindow.h</itemPath>
-        <itemPath>OSM.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
@@ -221,6 +221,11 @@
       <logicalFolder name="f12" displayName="GEO" projectFiles="true">
         <itemPath>HGTfile.cpp</itemPath>
         <itemPath>HeightWindow.cpp</itemPath>
+        <itemPath>MapData.cpp</itemPath>
+        <itemPath>MapDataOSM.cpp</itemPath>
+        <itemPath>MapDataUrlImage.cpp</itemPath>
+        <itemPath>MapWindow.cpp</itemPath>
+        <itemPath>OSMFeatures.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
         <itemPath>ChooseFileDialog.cpp</itemPath>
@@ -246,11 +251,6 @@
         <itemPath>Shader.cpp</itemPath>
         <itemPath>TextObj.cpp</itemPath>
         <itemPath>TrackItemObj.cpp</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f11" displayName="OSM" projectFiles="true">
-        <itemPath>Features.cpp</itemPath>
-        <itemPath>MapWindow.cpp</itemPath>
-        <itemPath>OSM.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
@@ -502,10 +502,6 @@
       </item>
       <item path="EngListWidget.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Features.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Features.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
@@ -584,6 +580,18 @@
       </item>
       <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MapData.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapDataOSM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapDataOSM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapDataUrlImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapDataUrlImage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="MapLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="MapLib.h" ex="false" tool="3" flavor2="0">
@@ -604,9 +612,9 @@
       </item>
       <item path="NewRouteWindow.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="OSM.cpp" ex="false" tool="1" flavor2="0">
+      <item path="OSMFeatures.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="OSM.h" ex="false" tool="3" flavor2="0">
+      <item path="OSMFeatures.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1099,10 +1107,6 @@
       </item>
       <item path="EngListWidget.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Features.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Features.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
@@ -1181,6 +1185,18 @@
       </item>
       <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MapData.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapDataOSM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapDataOSM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapDataUrlImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapDataUrlImage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="MapLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="MapLib.h" ex="false" tool="3" flavor2="0">
@@ -1201,9 +1217,9 @@
       </item>
       <item path="NewRouteWindow.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="OSM.cpp" ex="false" tool="1" flavor2="0">
+      <item path="OSMFeatures.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="OSM.h" ex="false" tool="3" flavor2="0">
+      <item path="OSMFeatures.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1689,10 +1705,6 @@
       </item>
       <item path="EngListWidget.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Features.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Features.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
@@ -1771,6 +1783,18 @@
       </item>
       <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MapData.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapDataOSM.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapDataOSM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapDataUrlImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapDataUrlImage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="MapLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="MapLib.h" ex="false" tool="3" flavor2="0">
@@ -1791,9 +1815,9 @@
       </item>
       <item path="NewRouteWindow.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="OSM.cpp" ex="false" tool="1" flavor2="0">
+      <item path="OSMFeatures.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="OSM.h" ex="false" tool="3" flavor2="0">
+      <item path="OSMFeatures.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2286,10 +2310,6 @@
       </item>
       <item path="EngListWidget.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Features.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="Features.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
@@ -2368,6 +2388,18 @@
       </item>
       <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MapData.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapDataOSM.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="MapDataOSM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapDataUrlImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapDataUrlImage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="MapLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="MapLib.h" ex="false" tool="3" flavor2="0">
@@ -2388,9 +2420,9 @@
       </item>
       <item path="NewRouteWindow.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="OSM.cpp" ex="false" tool="1" flavor2="8">
+      <item path="OSMFeatures.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="OSM.h" ex="false" tool="3" flavor2="0">
+      <item path="OSMFeatures.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -2871,10 +2903,6 @@
       </item>
       <item path="EngListWidget.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Features.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="Features.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
@@ -2953,6 +2981,18 @@
       </item>
       <item path="LoadWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="MapData.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapData.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapDataOSM.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="MapDataOSM.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MapDataUrlImage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MapDataUrlImage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="MapLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="MapLib.h" ex="false" tool="3" flavor2="0">
@@ -2973,9 +3013,9 @@
       </item>
       <item path="NewRouteWindow.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="OSM.cpp" ex="false" tool="1" flavor2="8">
+      <item path="OSMFeatures.cpp" ex="false" tool="1" flavor2="8">
       </item>
-      <item path="OSM.h" ex="false" tool="3" flavor2="0">
+      <item path="OSMFeatures.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="8">
       </item>

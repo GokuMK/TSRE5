@@ -8,9 +8,9 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#include "Features.h"
+#include "OSMFeatures.h"
 
-std::unordered_map<std::string, int> Features::LIST {
+std::unordered_map<std::string, int> OSMFeatures::LIST {
     {"AERIALWAY_CABLE_CAR",0},
     {"AERIALWAY_CHAIR_LIFT",1},
     {"AERIALWAY_DRAG_LIFT",2},
@@ -650,7 +650,7 @@ std::unordered_map<std::string, int> Features::LIST {
     {"WATERWAY_WEIR",636}
 };
 
-std::vector<int> Features::LAYER = [] {
+std::vector<int> OSMFeatures::LAYER = [] {
     std::vector<int> v;
         /*0*/ v.push_back(0);
         /*1*/ v.push_back(0);

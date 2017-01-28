@@ -10,20 +10,14 @@
 
 #include "MapWindow.h"
 #include <QDebug>
-#include <QFile>
-#include <QXmlStreamReader>
 #include <QString>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QUrl>
-#include <QUrlQuery>
 #include "CoordsMkr.h"
 #include "IghCoords.h"
-#include "Features.h"
+#include "OSMFeatures.h"
+#include "MapDataOSM.h"
 #include <QTime>
 
 std::unordered_map<int, QImage*> MapWindow::mapTileImages;
@@ -67,7 +61,7 @@ MapWindow::MapWindow() : QDialog() {
     //imageLabel->setPixmap(QPixmap::fromImage(*myImage));
     
     QObject::connect(loadButton, SIGNAL(released()),
-                      this, SLOT(loadOSM()));
+                      this, SLOT(load()));
     
     //
         
@@ -88,7 +82,7 @@ void MapWindow::colorComboActivated(QString val){
     reload();
 }
 
-void MapWindow::loadOSM(){
+void MapWindow::load(){
     if(aCoords == NULL) aCoords = new PreciseTileCoordinate();
     aCoords->TileX = this->tileX;
     aCoords->TileZ = -this->tileZ;
@@ -119,84 +113,43 @@ void MapWindow::loadOSM(){
         if(llpoint[i].Longitude > maxLatlon->Longitude)
             maxLatlon->Longitude = llpoint[i].Longitude;
     }
-    LatitudeLongitudeCoordinate p00;
-    p00.Latitude = (maxLatlon->Latitude + minLatlon->Latitude)/2.0;
-    p00.Longitude = (maxLatlon->Longitude + minLatlon->Longitude)/2.0;
-    LatitudeLongitudeCoordinate p01;
-    p01.Latitude = (maxLatlon->Latitude + minLatlon->Latitude)/2.0;
-    p01.Longitude = maxLatlon->Longitude;
-    LatitudeLongitudeCoordinate p10;
-    p10.Latitude = maxLatlon->Latitude;
-    p10.Longitude = (maxLatlon->Longitude + minLatlon->Longitude)/2.0;
-    LatitudeLongitudeCoordinate pm10;
-    pm10.Latitude = minLatlon->Latitude;
-    pm10.Longitude = (maxLatlon->Longitude + minLatlon->Longitude)/2.0;
-    LatitudeLongitudeCoordinate p0m1;
-    p0m1.Latitude = (maxLatlon->Latitude + minLatlon->Latitude)/2.0;
-    p0m1.Longitude = minLatlon->Longitude;
     
-    qDebug() << "lat " << minLatlon->Latitude << " " << maxLatlon->Latitude;
-    qDebug() << "lon " << minLatlon->Longitude << " " << maxLatlon->Longitude;
+    //OSM Vector data
+    if(dane == NULL)
+        dane = new MapDataOSM();
+    //Image Data
     
-    // split osm request to four 1024x1024m requests. 
-    loadCount = 0;
-    totalLoadCount = 4;
+    //
     
-    get(minLatlon, &p00);
-    get(&p00, maxLatlon);
-    get(&pm10, &p01);
-    get(&p0m1, &p10);
-}
-
-void MapWindow::get(LatitudeLongitudeCoordinate* min, LatitudeLongitudeCoordinate* max){
-    QNetworkAccessManager* mgr = new QNetworkAccessManager();
-    connect(mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(isData(QNetworkReply*)));
-    // the HTTP request
-    qDebug() << "wait";
-    QNetworkRequest req( QUrl( QString("http://www.openstreetmap.org/api/0.6/map?bbox="
-    +QString::number(min->Longitude)
-    +","
-    +QString::number(min->Latitude)
-    +","
-    +QString::number(max->Longitude)
-    +","
-    +QString::number(max->Latitude)
-    ) ) );
+    dane->tileX = this->tileX;
+    dane->tileZ = -this->tileZ;
+    dane->minlon = minLatlon->Longitude;
+    dane->minlat = minLatlon->Latitude;
+    dane->maxlon = maxLatlon->Longitude;
+    dane->maxlat = maxLatlon->Latitude;
+    
     loadButton->setText("Wait ...");
-    mgr->get(req);
+    
+    QObject::connect(dane, SIGNAL(loaded()), this, SLOT(reload()));
+    QObject::connect(dane, SIGNAL(statusInfo(QString)), this, SLOT(isStatusInfo(QString)));
+    dane->load();
 }
 
-void MapWindow::isData(QNetworkReply* r){
-    QByteArray data = r->readAll();
-    qDebug() << "data " << data.length();    
-    if(data.length()==0){
-        //"No data from the network..." label
-        loadButton->setText("No data from the network...");
-        // 5 seconds, warning time.
-        QTime cTime= QTime::currentTime().addSecs(5);  
-        while (QTime::currentTime() < cTime){
-            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-        }
-        //End delay
-        r->close();
-        //"Load" label
-        loadButton->setText("Load");
-    } else {
-        load(&data);
-        loadCount++;
-        if(loadCount == totalLoadCount){
-            loadButton->setText("Load");
-            reload(); 
-        }
-    }
+void MapWindow::isStatusInfo(QString val){
+    loadButton->setText(val);
 }
 
 void MapWindow::reload(){
-    if(dane.nodes.size() == 0) return;
-    if(dane.tileX != this->tileX) return;
-    if(dane.tileZ != -this->tileZ) return;
+    if(dane == NULL)
+        return;
+    if(dane->tileX != this->tileX) return;
+    if(dane->tileZ != -this->tileZ) return;
     QImage* myImage = new QImage(4096, 4096, QImage::Format_RGB888);
-    dane.draw(myImage);
+
+    if(!dane->draw(myImage)){
+        delete myImage;
+        return;
+    }
     //myImage->save(QString::number(dane.tileX)+"_"+QString::number(dane.tileZ)+"_d.png");
     if(this->invert)
         myImage->invertPixels(QImage::InvertRgba); 
@@ -206,159 +159,7 @@ void MapWindow::reload(){
     int hash = (int)(this->tileX)*10000+(int)(this->tileZ);
     if(MapWindow::mapTileImages[hash] != NULL)
         delete MapWindow::mapTileImages[hash];
-    MapWindow::mapTileImages[hash] = myImage;    
-}
-
-void MapWindow::load(QByteArray* data){
-    if(data == NULL){
-        QFile file("F:/OSM/tczew.osm");
-        if (!file.open(QFile::ReadOnly | QFile::Text)) {
-            qDebug() << "no file" << file.errorString();
-            exit(0);
-        }
-        qDebug() <<  "file";
-        QByteArray data2 = file.readAll();
-        data = &data2;
-    } 
-    
-    int inode = 0;
-    int iway = 0;
-    bool node = true;
-    bool way = false;
-    bool bounds = false;
-    int iii = 0, uuu = 0;
-    
-    Node* tnode;
-    Way* tway;
-    
-    QXmlStreamReader reader((*data));
-    reader.readNext();
-    QString name;
-    QXmlStreamAttributes attr;
-    while (!reader.isEndDocument()) {
-        if (reader.isStartElement()) {
-            name = reader.name().toString();
-            attr = reader.attributes();
-            
-            if (name.toUpper() == ("NODE")) {
-                node = true;
-                if (inode++ % 100000 == 0) qDebug() << "n " << inode;
-                tnode = new Node(
-                        attr.value("id").toULongLong(),
-                        attr.value("lat").toFloat(),
-                        attr.value("lon").toFloat()
-                        );
-            } else if (name.toUpper() == ("WAY")) {
-                way = true;
-                if (iway++ % 100000 == 0) qDebug() << "w " << iway;
-                tway = new Way(attr.value("id").toULongLong());
-                tway->ref.clear();
-            } else if (name.toUpper() == ("ND") && way) {
-                tway->ref.push_back ((attr.value("ref").toLongLong()));
-            } else if (name.toUpper() == ("TAG")&&(way || node)) {
-                //adres
-                if (attr.value("k").startsWith("ADDR", Qt::CaseInsensitive)) {
-                }
-                //nazwa
-                else if (attr.value("k").startsWith("NAME", Qt::CaseInsensitive)) {
-                }
-                //drogi
-                else if (attr.value("k").startsWith("ONEWAY", Qt::CaseInsensitive)) {}
-                else if (attr.value("k").startsWith("MAXSPEED", Qt::CaseInsensitive)) {}
-                else if (attr.value("k").startsWith("SURFACE", Qt::CaseInsensitive))  {}
-                else if (attr.value("k").startsWith("BRIDGE", Qt::CaseInsensitive)) {
-                    if (way) tway->val2 = 7;
-                }
-                else if (attr.value("k").startsWith("TUNNEL", Qt::CaseInsensitive)) {
-                    if (way) tway->val2 = 6;
-                }
-                //miejsca
-                else if (attr.value("k").startsWith("AMENITY", Qt::CaseInsensitive)) {
-                    //System.out.println(attr.getValue("v").toUpperCase());
-                    //if(node) {
-                    //    uuu++;
-                    //    dane.miejsca.add(new Miejsce(tnode.lat, tnode.lon, attr.getValue("v").toUpperCase().replace("_", "")));
-                    //}
-                }
-                //bariery
-                else if (attr.value("k").startsWith("BARRIER", Qt::CaseInsensitive)) {}
-                //las
-                else if (attr.value("k").startsWith("WOOD", Qt::CaseInsensitive)) {}
-                //sport
-                else if (attr.value("k").startsWith("SPORT", Qt::CaseInsensitive)) {}
-                else {
-                    //inne budynki 
-                    if (attr.value("k").startsWith("BUILDING", Qt::CaseInsensitive)) {
-                        if (way) tway->type = (short) Features::LIST["BUILDING_YES"];
-                        iii++;
-                    }
-                    //jakies gowna co nie chce
-                    //if(attr.getValue("k").toUpperCase().startsWith("SOURCE", 0)) return;
-                    //if(attr.getValue("k").toUpperCase().startsWith("CREATED", 0)) return;
-                    //if(attr.getValue("k").toUpperCase().startsWith("EWMAPA", 0)) return;
-                    //if(attr.getValue("k").toUpperCase().startsWith("BUILDING:", 0)) return;
-                    //if(attr.getValue("k").toUpperCase().startsWith("REF", 0)) return;
-                    //if(attr.getValue("k").toUpperCase().startsWith("WIKI", 0)) return;
-                    //if(attr.getValue("k").toUpperCase().startsWith("ACCESS", 0)) return;
-                    //if(attr.getValue("k").toUpperCase().startsWith("NOTE", 0)) return;
-                    //if(attr.getValue("k").toUpperCase().startsWith("TRACKTYPE", 0)) return;
-                    //inne -> enum
-                    QString fname = "";
-                    fname += attr.value("k").toString() + "_" + attr.value("v").toString();
-                    fname = fname.toUpper();
-                    if (Features::LIST[fname.toStdString()] != 0) {
-                        if (way) tway->type = (short) Features::LIST[fname.toStdString()];
-                        if (node) tnode->type = (short) Features::LIST[fname.toStdString()];
-                        iii++; //System.out.println(fname);
-                    } else {
-                        //if(!fname.startsWith("source", Qt::CaseInsensitive)
-                        //    && !fname.startsWith("created", Qt::CaseInsensitive)
-                        //    )
-                        //    qDebug() << "fail: " << fname;
-                    }
-                }
-            } else if (name.toUpper() == ("BOUNDS")) {
-                bounds = true;
-                dane.minlat = attr.value("minlat").toFloat();
-                dane.minlon = attr.value("minlon").toFloat();
-                dane.maxlat = attr.value("maxlat").toFloat();
-                dane.maxlon = attr.value("maxlon").toFloat();
-                qDebug() << "minmax";
-                qDebug() << dane.minlat << " " << dane.maxlat;
-                qDebug() << dane.minlon << " " << dane.maxlon;
-            }
-        } else if (reader.isEndElement()) {
-            name = reader.name().toString();
-            if (name.toUpper() == ("NODE")) {
-                dane.nodes[tnode->id] = tnode;
-                node = false;
-            }
-            if (name.toUpper() == ("WAY")) {
-                //qDebug() << Features::LAYER[tway->type];
-                int tlayer = Features::LAYER[tway->type];
-                if(tlayer > 9) tlayer = 9;
-                if(tway->val2==7) 
-                    dane.ways[9].push_back(tway);
-                else
-                    dane.ways[9-tlayer].push_back(tway);
-                way = false;
-            }
-            if (name.toUpper() == ("BOUNDS")) {
-                bounds = false;
-            }
-        } else if (reader.isCharacters()) {
-
-        }
-        
-        reader.readNext();
-    }
-    qDebug() << "node/way: " << inode << "/" << iway;
-    dane.tileX = this->tileX;
-    dane.tileZ = -this->tileZ;
-    dane.minlon = this->minLatlon->Longitude;
-    dane.minlat = this->minLatlon->Latitude;
-    dane.maxlon = this->maxLatlon->Longitude;
-    dane.maxlat = this->maxLatlon->Latitude;
+    MapWindow::mapTileImages[hash] = myImage;
 }
 
 MapWindow::~MapWindow() {

@@ -12,7 +12,8 @@
 #define	MAPWINDOW_H
 
 #include <QtWidgets>
-#include "OSM.h"
+#include <unordered_map>
+#include <vector>
 
 class QNetworkReply;
 class QImage;
@@ -20,39 +21,37 @@ class IghCoordinate;
 class LatitudeLongitudeCoordinate;
 class PreciseTileCoordinate;
 class QPushButton;
+class MapData;
 
 class MapWindow : public QDialog {
     Q_OBJECT
 public:
-    OSM dane;
     int tileX;
     int tileZ;
     
     static std::unordered_map<int, QImage*> mapTileImages;
     MapWindow();
     virtual ~MapWindow();
-    void load(QByteArray* data = NULL);
     bool ok = false;
-    void get(LatitudeLongitudeCoordinate* min, LatitudeLongitudeCoordinate* max);
+
     int exec();
     
 public slots:
-    void isData(QNetworkReply* r);
-    void loadOSM();
+    void load();
     void colorComboActivated(QString val);
+    void reload();
+    void isStatusInfo(QString val);
 
 private:
+    MapData *dane = NULL;
     QLabel* imageLabel;
     float minlat, minlon, maxlat, maxlon;
     bool invert = false;
-    int loadCount;
-    int totalLoadCount;
     IghCoordinate* igh = NULL;
     LatitudeLongitudeCoordinate* minLatlon = NULL;
     LatitudeLongitudeCoordinate* maxLatlon = NULL;
     PreciseTileCoordinate* aCoords = NULL;
     QPushButton *loadButton = NULL;
-    void reload();
 };
 
 #endif	/* MAPWINDOW_H */

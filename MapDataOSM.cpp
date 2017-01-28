@@ -8,38 +8,52 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#include "OSM.h"
+#include "MapDataOSM.h"
 #include <QDebug>
+#include <QFile>
+#include <QXmlStreamReader>
 #include <QString>
 #include <QImage>
 #include <QPainter>
 #include "IghCoords.h"
+#include <QCoreApplication>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QUrl>
+#include <QUrlQuery>
+#include "CoordsMkr.h"
+#include "IghCoords.h"
+#include "OSMFeatures.h"
+#include <QTime>
 
-OSM::OSM() {
+MapDataOSM::MapDataOSM() {
 }
 
-OSM::~OSM() {
+MapDataOSM::~MapDataOSM() {
 }
 
-void OSM::setColor(QColor* color){
+void MapDataOSM::setColor(QColor* color){
     setColor(color->red(), color->green(), color->blue());
 }
 
-void OSM::setColor(int r, int g, int b){
+void MapDataOSM::setColor(int r, int g, int b){
     color->setRgb(r,g,b);
     p->setColor(*color);
     gg->setPen(*p);
     brush->setColor(*color);
 }
 
-void OSM::setPenSettings(QPen* pen){
+void MapDataOSM::setPenSettings(QPen* pen){
     p->setCapStyle(pen->capStyle());
     p->setJoinStyle(pen->joinStyle());
     p->setWidthF(pen->widthF());
     gg->setPen(*p);
 }
 
-void OSM::draw(QImage* myImage) {
+bool MapDataOSM::draw(QImage* myImage) {
+    if(nodes.size() == 0) return false;
+    
     igh = new IghCoordinate();
     latlon = new LatitudeLongitudeCoordinate();
     aCoords = new PreciseTileCoordinate();
@@ -463,23 +477,250 @@ void OSM::draw(QImage* myImage) {
 
     gg->end();
     qDebug() << "fail " << fail;
+    return true;
 }
 
-void OSM::r(int& x, int& y, float lat, float lon){
+void MapDataOSM::r(int& x, int& y, float lat, float lon){
     igh = MstsCoordinates::ConvertToIgh(lat, lon, igh);
     aCoords = MstsCoordinates::ConvertToTile(igh, aCoords);
     x = (aCoords->X+(aCoords->TileX-this->tileX))*height;
     y = (aCoords->Z-(aCoords->TileZ-this->tileZ))*height;
 }
 
-int OSM::rX(float tlon) {
+int MapDataOSM::rX(float tlon) {
     //float minlon = lon - lonScale*zoom;
     //float maxlon = lon + lonScale*zoom;
     return (int) ((float) (tlon - minlon)*((float) height / ((maxlon - minlon))));
 }
 
-int OSM::rY(float tlat) {
+int MapDataOSM::rY(float tlat) {
     //float minlat = lat - latScale*zoom;
     //float maxlat = lat + latScale*zoom;
     return (int) ((float) (tlat - maxlat)*((float) height / ((minlat - maxlat))));
+}
+
+void MapDataOSM::load(){
+
+    LatitudeLongitudeCoordinate p00;
+    p00.Latitude = (maxlat + minlat)/2.0;
+    p00.Longitude = (maxlon + minlon)/2.0;
+    LatitudeLongitudeCoordinate p01;
+    p01.Latitude = (maxlat + minlat)/2.0;
+    p01.Longitude = maxlon;
+    LatitudeLongitudeCoordinate p10;
+    p10.Latitude = maxlat;
+    p10.Longitude = (maxlon + minlon)/2.0;
+    LatitudeLongitudeCoordinate pm10;
+    pm10.Latitude = minlat;
+    pm10.Longitude = (maxlon + minlon)/2.0;
+    LatitudeLongitudeCoordinate p0m1;
+    p0m1.Latitude = (maxlat + minlat)/2.0;
+    p0m1.Longitude = minlon;
+    LatitudeLongitudeCoordinate minLatlon;
+    LatitudeLongitudeCoordinate maxLatlon;
+    minLatlon.Latitude = minlat;
+    minLatlon.Longitude = minlon;
+    maxLatlon.Latitude = maxlat;
+    maxLatlon.Longitude = maxlon;
+    
+    qDebug() << "lat " << minlat << " " << maxlat;
+    qDebug() << "lon " << minlon << " " << maxlon;
+    
+    // split osm request to four 1024x1024m requests. 
+    loadCount = 0;
+    totalLoadCount = 4;
+    
+    get(&minLatlon, &p00);
+    get(&p00, &maxLatlon);
+    get(&pm10, &p01);
+    get(&p0m1, &p10);
+}
+
+void MapDataOSM::get(LatitudeLongitudeCoordinate* min, LatitudeLongitudeCoordinate* max){
+    QNetworkAccessManager* mgr = new QNetworkAccessManager();
+    connect(mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(isData(QNetworkReply*)));
+    // the HTTP request
+    qDebug() << "wait";
+    QNetworkRequest req( QUrl( QString("http://www.openstreetmap.org/api/0.6/map?bbox="
+    +QString::number(min->Longitude)
+    +","
+    +QString::number(min->Latitude)
+    +","
+    +QString::number(max->Longitude)
+    +","
+    +QString::number(max->Latitude)
+    ) ) );
+    mgr->get(req);
+}
+
+void MapDataOSM::isData(QNetworkReply* r){
+    QByteArray data = r->readAll();
+    qDebug() << "data " << data.length();    
+
+    if(data.length()==0){
+        //"No data from the network..." label
+        emit statusInfo(QString("No data from the network..."));
+        // 5 seconds, warning time.
+        QTime cTime = QTime::currentTime().addSecs(5);  
+        while (QTime::currentTime() < cTime){
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        }
+        //End delay
+        r->close();
+        //"Load" label
+        emit statusInfo(QString("Load"));
+    } else {
+        loadData(&data);
+        loadCount++;
+        if(loadCount == totalLoadCount){
+            emit statusInfo(QString("Load"));
+            emit loaded(); 
+        }
+    }
+}
+
+void MapDataOSM::loadData(QByteArray* data){
+    if(data == NULL){
+        QFile file("F:/OSM/tczew.osm");
+        if (!file.open(QFile::ReadOnly | QFile::Text)) {
+            qDebug() << "no file" << file.errorString();
+            exit(0);
+        }
+        qDebug() <<  "file";
+        QByteArray data2 = file.readAll();
+        data = &data2;
+    } 
+    
+    int inode = 0;
+    int iway = 0;
+    bool node = true;
+    bool way = false;
+    bool bounds = false;
+    int iii = 0, uuu = 0;
+    
+    Node* tnode;
+    Way* tway;
+    
+    QXmlStreamReader reader((*data));
+    reader.readNext();
+    QString name;
+    QXmlStreamAttributes attr;
+    while (!reader.isEndDocument()) {
+        if (reader.isStartElement()) {
+            name = reader.name().toString();
+            attr = reader.attributes();
+            
+            if (name.toUpper() == ("NODE")) {
+                node = true;
+                if (inode++ % 100000 == 0) qDebug() << "n " << inode;
+                tnode = new Node(
+                        attr.value("id").toULongLong(),
+                        attr.value("lat").toFloat(),
+                        attr.value("lon").toFloat()
+                        );
+            } else if (name.toUpper() == ("WAY")) {
+                way = true;
+                if (iway++ % 100000 == 0) qDebug() << "w " << iway;
+                tway = new Way(attr.value("id").toULongLong());
+                tway->ref.clear();
+            } else if (name.toUpper() == ("ND") && way) {
+                tway->ref.push_back ((attr.value("ref").toLongLong()));
+            } else if (name.toUpper() == ("TAG")&&(way || node)) {
+                //adres
+                if (attr.value("k").startsWith("ADDR", Qt::CaseInsensitive)) {
+                }
+                //nazwa
+                else if (attr.value("k").startsWith("NAME", Qt::CaseInsensitive)) {
+                }
+                //drogi
+                else if (attr.value("k").startsWith("ONEWAY", Qt::CaseInsensitive)) {}
+                else if (attr.value("k").startsWith("MAXSPEED", Qt::CaseInsensitive)) {}
+                else if (attr.value("k").startsWith("SURFACE", Qt::CaseInsensitive))  {}
+                else if (attr.value("k").startsWith("BRIDGE", Qt::CaseInsensitive)) {
+                    if (way) tway->val2 = 7;
+                }
+                else if (attr.value("k").startsWith("TUNNEL", Qt::CaseInsensitive)) {
+                    if (way) tway->val2 = 6;
+                }
+                //miejsca
+                else if (attr.value("k").startsWith("AMENITY", Qt::CaseInsensitive)) {
+                    //System.out.println(attr.getValue("v").toUpperCase());
+                    //if(node) {
+                    //    uuu++;
+                    //    dane.miejsca.add(new Miejsce(tnode.lat, tnode.lon, attr.getValue("v").toUpperCase().replace("_", "")));
+                    //}
+                }
+                //bariery
+                else if (attr.value("k").startsWith("BARRIER", Qt::CaseInsensitive)) {}
+                //las
+                else if (attr.value("k").startsWith("WOOD", Qt::CaseInsensitive)) {}
+                //sport
+                else if (attr.value("k").startsWith("SPORT", Qt::CaseInsensitive)) {}
+                else {
+                    //inne budynki 
+                    if (attr.value("k").startsWith("BUILDING", Qt::CaseInsensitive)) {
+                        if (way) tway->type = (short) OSMFeatures::LIST["BUILDING_YES"];
+                        iii++;
+                    }
+                    //jakies gowna co nie chce
+                    //if(attr.getValue("k").toUpperCase().startsWith("SOURCE", 0)) return;
+                    //if(attr.getValue("k").toUpperCase().startsWith("CREATED", 0)) return;
+                    //if(attr.getValue("k").toUpperCase().startsWith("EWMAPA", 0)) return;
+                    //if(attr.getValue("k").toUpperCase().startsWith("BUILDING:", 0)) return;
+                    //if(attr.getValue("k").toUpperCase().startsWith("REF", 0)) return;
+                    //if(attr.getValue("k").toUpperCase().startsWith("WIKI", 0)) return;
+                    //if(attr.getValue("k").toUpperCase().startsWith("ACCESS", 0)) return;
+                    //if(attr.getValue("k").toUpperCase().startsWith("NOTE", 0)) return;
+                    //if(attr.getValue("k").toUpperCase().startsWith("TRACKTYPE", 0)) return;
+                    //inne -> enum
+                    QString fname = "";
+                    fname += attr.value("k").toString() + "_" + attr.value("v").toString();
+                    fname = fname.toUpper();
+                    if (OSMFeatures::LIST[fname.toStdString()] != 0) {
+                        if (way) tway->type = (short) OSMFeatures::LIST[fname.toStdString()];
+                        if (node) tnode->type = (short) OSMFeatures::LIST[fname.toStdString()];
+                        iii++; //System.out.println(fname);
+                    } else {
+                        //if(!fname.startsWith("source", Qt::CaseInsensitive)
+                        //    && !fname.startsWith("created", Qt::CaseInsensitive)
+                        //    )
+                        //    qDebug() << "fail: " << fname;
+                    }
+                }
+            } else if (name.toUpper() == ("BOUNDS")) {
+                bounds = true;
+                //minlat = attr.value("minlat").toFloat();
+                //minlon = attr.value("minlon").toFloat();
+                //maxlat = attr.value("maxlat").toFloat();
+                //maxlon = attr.value("maxlon").toFloat();
+                //qDebug() << "minmax";
+                //qDebug() << minlat << " " << maxlat;
+                ///qDebug() << minlon << " " << maxlon;
+            }
+        } else if (reader.isEndElement()) {
+            name = reader.name().toString();
+            if (name.toUpper() == ("NODE")) {
+                nodes[tnode->id] = tnode;
+                node = false;
+            }
+            if (name.toUpper() == ("WAY")) {
+                //qDebug() << Features::LAYER[tway->type];
+                int tlayer = OSMFeatures::LAYER[tway->type];
+                if(tlayer > 9) tlayer = 9;
+                if(tway->val2==7) 
+                    ways[9].push_back(tway);
+                else
+                    ways[9-tlayer].push_back(tway);
+                way = false;
+            }
+            if (name.toUpper() == ("BOUNDS")) {
+                bounds = false;
+            }
+        } else if (reader.isCharacters()) {
+
+        }
+        
+        reader.readNext();
+    }
+    qDebug() << "node/way: " << inode << "/" << iway;
 }

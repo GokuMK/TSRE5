@@ -8,21 +8,21 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#ifndef FEATURES_H
-#define	FEATURES_H
+#ifndef OSMFEATURES_H
+#define	OSMFEATURES_H
 
 #include <unordered_map>
 #include <vector>
 
-class Features {
+class OSMFeatures {
 public:
     static std::unordered_map<std::string, int> LIST;
     static std::vector<int> LAYER;
-    Features();
-    virtual ~Features();
+    OSMFeatures();
+    virtual ~OSMFeatures();
 private:
 
 };
 
-#endif	/* FEATURES_H */
+#endif	/* OSMFEATURES_H */
 

@@ -25,7 +25,6 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Eng.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/EngLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/EngListWidget.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Features.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/FileBuffer.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/FileFunctions.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Flex.o
@@ -45,12 +44,15 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Intersections.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/LevelCrObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/LoadWindow.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapData.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapDataOSM.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapDataUrlImage.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NaviBox.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NaviWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NewRouteWindow.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OSM.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OSMFeatures.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ObjTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OglObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OverwriteDialog.o
@@ -155,6 +157,9 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_HeightWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ImageLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_LoadWindow.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_MapData.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_MapDataOSM.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_MapDataUrlImage.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_MapLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_MapWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_NaviBox.o
