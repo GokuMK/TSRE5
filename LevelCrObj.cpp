@@ -471,6 +471,7 @@ void LevelCrObj::setInvisible(bool val){
         this->levelCrData[0] = this->levelCrData[0] | 1;
     else
         this->levelCrData[0] = this->levelCrData[0] & ~(1);
+    this->modified = true;
 }
 
 void LevelCrObj::setSilentMstsHax(bool val){
@@ -478,6 +479,7 @@ void LevelCrObj::setSilentMstsHax(bool val){
         this->levelCrData[0] = this->levelCrData[0] | 6;
     else
         this->levelCrData[0] = this->levelCrData[0] & ~(6);
+    this->modified = true;
 }
 
 float LevelCrObj::getSensitivityActivateLevel(){

@@ -61,6 +61,8 @@ private:
     static QVector<UndoState*> undoStates;
     static UndoState* currentState;
     static unsigned long long int undoTime;
+    
+    static void PushWorldObjDataInfo(WorldObj* obj);
 };
 
 #endif	/* UNDO_H */

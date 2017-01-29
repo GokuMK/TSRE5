@@ -61,7 +61,7 @@ public:
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
-    unsigned int platformData;
+    unsigned int platformData = 0;
     int trItemId[4];
     int trItemIdCount = 0;
     int carFrequency = 0;

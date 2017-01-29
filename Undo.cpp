@@ -18,6 +18,7 @@
 #include "TDB.h"
 #include "Game.h"
 #include "Route.h"
+#include "GroupObj.h"
 
 UndoState* Undo::currentState = NULL;
 QVector<UndoState*> Undo::undoStates;
@@ -95,14 +96,18 @@ void Undo::UndoLast(){
         UndoState::WorldObjInfo* tdata = i2.value();
         if(tdata != NULL){
             if(tdata->action == "data"){
-                if(Game::currentRoute != NULL)
+                if(Game::currentRoute != NULL){
+                    tdata->data->unselect();
                     Game::currentRoute->replaceWorldObjPointer(tdata->obj, tdata->data);
+                }
             }
             if(tdata->action == "remove"){
                 tdata->data->loaded = true;
                 tdata->data->modified = true;
-                if(Game::currentRoute != NULL)
+                if(Game::currentRoute != NULL){
+                    tdata->data->unselect();
                     Game::currentRoute->replaceWorldObjPointer(tdata->obj, tdata->data);
+                }
             }
             if(tdata->action == "place"){
                 if(Game::currentRoute != NULL)
@@ -211,6 +216,18 @@ void Undo::PushWorldObjData(WorldObj* obj){
     if(currentState == NULL)
         return;
 
+    if(obj->typeID == obj->groupobject) {
+        GroupObj *gobj = (GroupObj*)obj;
+        for(int i = 0; i < gobj->objects.size(); i++ ){
+            PushWorldObjDataInfo(gobj->objects[i]);
+        }
+        return;
+    } else {
+        PushWorldObjDataInfo(obj);
+    }
+}
+
+void Undo::PushWorldObjDataInfo(WorldObj* obj){
     UndoState::WorldObjInfo * tdata = currentState->objData[(long long int)obj];
     if(tdata == NULL){
         currentState->objData[(long long int)obj] = new UndoState::WorldObjInfo();

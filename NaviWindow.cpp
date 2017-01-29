@@ -166,7 +166,7 @@ void NaviWindow::naviInfo(int all, int hidden){
 void NaviWindow::pointerInfo(float* coords){
     this->pxBox.setText(QString::number(coords[0]));
     this->pyBox.setText(QString::number(coords[1]));
-    this->pzBox.setText(QString::number(coords[2]));
+    this->pzBox.setText(QString::number(-coords[2]));
 }
 
 void NaviWindow::posInfo(PreciseTileCoordinate* coords){
@@ -180,8 +180,9 @@ void NaviWindow::posInfo(PreciseTileCoordinate* coords){
         this->tyBox.setText(QString::number(lastTZ, 10));
         this->xBox.setText(QString::number(lastX, 10));
         this->yBox.setText(QString::number(lastY, 10));
-        this->zBox.setText(QString::number(lastZ, 10));
+        this->zBox.setText(QString::number(-lastZ, 10));
         igh = MstsCoordinates::ConvertToIgh(coords);
+        
         latlon = MstsCoordinates::ConvertToLatLon(igh);
         this->latBox.setText(QString::number(latlon->Latitude));
         this->lonBox.setText(QString::number(latlon->Longitude));

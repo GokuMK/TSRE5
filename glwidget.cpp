@@ -960,6 +960,7 @@ void GLWidget::jumpTo(PreciseTileCoordinate* c){
 void GLWidget::objSelected(WorldObj* o){
     if(selectedObj == NULL)
         return;
+    selectedObj->unselect();
     setSelectedObj(o);
     if(selectedObj != NULL)
         selectedObj->select();

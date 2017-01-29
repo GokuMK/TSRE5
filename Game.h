@@ -103,6 +103,7 @@ public:
     static QString StyleYellowButton;
     static QString StyleGreenText;
     static QString StyleRedText;
+    static QString GoogleMapsKey;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

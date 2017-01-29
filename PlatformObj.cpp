@@ -70,6 +70,7 @@ void PlatformObj::LoadCarSpawnerList(){
 PlatformObj::PlatformObj() {
     this->shape = -1;
     this->loaded = false;
+    this->staticFlags = 0x100;
 
     //pointer3d = new TrackItemObj();
     //pointer3dSelected = new TrackItemObj();

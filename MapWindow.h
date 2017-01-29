@@ -43,6 +43,7 @@ public slots:
     void isStatusInfo(QString val);
 
 private:
+    QVector<MapData*> mapServices;
     MapData *dane = NULL;
     QLabel* imageLabel;
     float minlat, minlon, maxlat, maxlon;
@@ -52,6 +53,7 @@ private:
     LatitudeLongitudeCoordinate* maxLatlon = NULL;
     PreciseTileCoordinate* aCoords = NULL;
     QPushButton *loadButton = NULL;
+    QComboBox mapServicesCombo;
 };
 
 #endif	/* MAPWINDOW_H */

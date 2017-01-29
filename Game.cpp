@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.670"; 
+QString Game::AppVersion = "v0.674"; 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -93,6 +93,8 @@ QString Game::StyleYellowButton = "#FFFF55";
 QString Game::StyleGreenText = "#009900";
 QString Game::StyleRedText = "#990000";
 
+QString Game::GoogleMapsKey;
+
 void Game::load() {
     
     QString sh;
@@ -125,7 +127,7 @@ void Game::load() {
             root = args[1].trimmed();
         if(val == "routeName")
             route = args[1].trimmed();
-        
+
         if(val == "startTileX"){
             Game::start++;
             startTileX = args[1].trimmed().toInt();
@@ -233,6 +235,10 @@ void Game::load() {
         if(val == "textureQuality"){
             textureQuality = args[1].trimmed().toInt();
         }
+        
+        if(val == "googleMapsKey")
+            GoogleMapsKey = args[1].trimmed();
+        
     }
 }
 

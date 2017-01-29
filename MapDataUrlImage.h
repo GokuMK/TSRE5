@@ -15,22 +15,72 @@
 #include "MapData.h"
 #include <unordered_map>
 #include <vector>
+#include <QImage>
+
+class LatitudeLongitudeCoordinate;
+class QNetworkReply;
 
 class MapDataUrlImage : public MapData {
+
     Q_OBJECT
 public:
+    static double Zoom;
+    static double Resolution;
+    
+    struct MapImage {
+        double lat;
+        double lon;
+        
+        double minlat;
+        double minlon;
+        
+        double maxlat;
+        double maxlon;
+        
+        int zoom;
+        QImage image;
+        MapImage();
+        MapImage(double tlat, double tlon, int tzoom, unsigned char *data, int length);
+        //double getDistaneToCenter();
+        unsigned int getPixel(double tlat, double tlon);
+        bool isPoint(double tlat, double tlon);
+        double distanceToCenter(double tlat, double tlon);
+    };
+
+    struct Mercator {
+        double MERCATOR_RANGE = 256;
+        double pixelOriginX;
+        double pixelOriginY;
+        double pixelsPerLonDegree;
+        double pixelsPerLonRadian;
+
+        Mercator();
+        double bound(double value, double opt_min, double opt_max);
+        double degreesToRadians(double deg);
+        double radiansToDegrees(double rad);
+        void fromLatLngToPoint(double tlat, double tlon, double &x, double &y);
+        void fromPointToLatLng(double x, double y, double &tlat, double &tlon);
+    };
+
     MapDataUrlImage();
     MapDataUrlImage(const MapDataUrlImage& orig);
     virtual ~MapDataUrlImage();
     bool draw(QImage* myImage);
     void load();
-    
+
 signals:
     void loaded();
     void statusInfo(QString val);
-    
-private:
 
+public slots:
+    void isData(QNetworkReply* r);
+
+private:
+    QVector<MapImage> images;
+    int requestCout;
+    int totalRequestCout;
+
+    void get(LatitudeLongitudeCoordinate* center);
 };
 
 #endif	/* MAPDATAURLIMAGE_H */

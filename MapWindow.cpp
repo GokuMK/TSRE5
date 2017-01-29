@@ -18,11 +18,20 @@
 #include "IghCoords.h"
 #include "OSMFeatures.h"
 #include "MapDataOSM.h"
+#include "MapDataUrlImage.h"
 #include <QTime>
 
 std::unordered_map<int, QImage*> MapWindow::mapTileImages;
 
 MapWindow::MapWindow() : QDialog() {
+
+    mapServicesCombo.setMaximumWidth(100);
+    mapServicesCombo.setStyleSheet("combobox-popup: 0;");
+    mapServicesCombo.addItem("OSM Vector", 0);
+    mapServices.push_back(new MapDataOSM());
+    mapServicesCombo.addItem("Google Satellite", 1);
+    mapServices.push_back(new MapDataUrlImage());
+    
     loadButton = new QPushButton("Load", this);
     QImage myImage(800, 800, QImage::Format_RGB888);
     //myImage->load("F:/2.png");
@@ -41,10 +50,11 @@ MapWindow::MapWindow() : QDialog() {
     colorCombo->addItem("invert", 1);
     QGridLayout *vlist3 = new QGridLayout;
     vlist3->setSpacing(2);
-    vlist3->setContentsMargins(3,0,1,0);    
-    vlist3->addWidget(loadButton,0,0);
-    vlist3->addWidget(colorLabel,0,1);
-    vlist3->addWidget(colorCombo,0,2);
+    vlist3->setContentsMargins(3,0,1,0);
+    vlist3->addWidget(&mapServicesCombo,0,0);
+    vlist3->addWidget(loadButton,0,1);
+    vlist3->addWidget(colorLabel,0,2);
+    vlist3->addWidget(colorCombo,0,3);
     mainLayout->addItem(vlist3);
     mainLayout->addWidget(imageLabel);
     mainLayout->setContentsMargins(1,1,1,1);
@@ -114,12 +124,7 @@ void MapWindow::load(){
             maxLatlon->Longitude = llpoint[i].Longitude;
     }
     
-    //OSM Vector data
-    if(dane == NULL)
-        dane = new MapDataOSM();
-    //Image Data
-    
-    //
+    dane = mapServices[mapServicesCombo.currentIndex()];
     
     dane->tileX = this->tileX;
     dane->tileZ = -this->tileZ;

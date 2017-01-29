@@ -49,7 +49,7 @@ PreciseTileCoordinate* CameraFree::getCurrentPos(){
     this->currentPos->TileX = this->pozT[0];
     this->currentPos->TileZ = -this->pozT[1];
     float* p = this->getPos();
-    this->currentPos->setWxyz(p[0], p[1], -p[2]);
+    this->currentPos->setWxyz(p[0], p[1], p[2]);
     return this->currentPos;
 }
 

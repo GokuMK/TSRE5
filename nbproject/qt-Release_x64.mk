@@ -6794,6 +6794,28 @@ moc_MapDataUrlImage.cpp: MapData.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qvarlengtharray.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcontainerfwd.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qobject_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QImage \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qimage.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qcolor.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qrgb.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qrgba64.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpaintdevice.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qwindowdefs.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qwindowdefs_win.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qrect.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmargins.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsize.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpixelformat.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qtransform.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qmatrix.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpolygon.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvector.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qregion.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdatastream.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qline.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpainterpath.h \
 		MapDataUrlImage.h \
 		c:/OT/Static/5.7.0_x64/bin/moc.exe
 	'c:\OT\Static\5.7.0_x64\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -Ic:/OT/Static/5.7.0_x64/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -Ic:/OT/Static/5.7.0_x64/include -Ic:/OT/Static/5.7.0_x64/include/QtOpenGL -Ic:/OT/Static/5.7.0_x64/include/QtWidgets -Ic:/OT/Static/5.7.0_x64/include/QtGui -Ic:/OT/Static/5.7.0_x64/include/QtNetwork -Ic:/OT/Static/5.7.0_x64/include/QtCore -I. MapDataUrlImage.h -o moc_MapDataUrlImage.cpp
@@ -33702,25 +33724,6 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapDataUrlImage.o: MapDataUr
 		c:/OT/Static/5.7.0_x64/include/QtCore/qvarlengtharray.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcontainerfwd.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qobject_impl.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qlocale.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qvariant.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qshareddata.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qvector.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qset.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qcontiguouscache.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer_impl.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QFile \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qfile.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qfiledevice.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		c:/OT/Static/5.7.0_x64/include/QtGui/QImage \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qimage.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qcolor.h \
@@ -33732,14 +33735,33 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapDataUrlImage.o: MapDataUr
 		c:/OT/Static/5.7.0_x64/include/QtCore/qrect.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qmargins.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qsize.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qpixelformat.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qtransform.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qmatrix.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qpolygon.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvector.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qregion.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qdatastream.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qline.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qpainterpath.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlocale.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvariant.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qshareddata.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qset.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcontiguouscache.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QFile \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfile.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfiledevice.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		c:/OT/Static/5.7.0_x64/include/QtGui/QPainter \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qpainter.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qpixmap.h \
@@ -33783,7 +33805,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapDataUrlImage.o: MapDataUr
 		c:/OT/Static/5.7.0_x64/include/QtCore/QUrlQuery \
 		CoordsMkr.h \
 		Coords.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QTime
+		GLMatrix.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QTime \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapDataUrlImage.o MapDataUrlImage.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapLib.o: MapLib.cpp MapLib.h \
@@ -34686,6 +34710,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapWindow.o: MapWindow.cpp M
 		OSMFeatures.h \
 		MapDataOSM.h \
 		MapData.h \
+		MapDataUrlImage.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QTime
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapWindow.o MapWindow.cpp
 
@@ -57422,7 +57447,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Undo.o: Undo.cpp Undo.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qfontmetrics.h \
 		SignalObj.h \
 		Game.h \
-		Route.h
+		Route.h \
+		GroupObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Undo.o Undo.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/UnsavedDialog.o: UnsavedDialog.cpp UnsavedDialog.h \
