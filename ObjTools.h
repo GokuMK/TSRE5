@@ -30,8 +30,6 @@ public slots:
     void refOtherSelected(const QString & text);
     void refSearchSelected(const QString & text);
     void refListSelected(QListWidgetItem * item);
-    void trackListSelected(QListWidgetItem * item);
-    void otherListSelected(QListWidgetItem * item);
     void lastItemsListSelected(QListWidgetItem * item);
     void selectToolEnabled(bool val);
     void placeToolEnabled(bool val);
@@ -78,9 +76,10 @@ private:
     QCheckBox stickToRDB;
     QLineEdit autoPlacementLength;
     QLineEdit searchBox;
-    QPushButton *selectTool;
-    QPushButton *placeTool;
-    QPushButton *autoPlacementButton;
+    //QPushButton *selectTool;
+    //QPushButton *placeTool;
+    //QPushButton *autoPlacementButton;
+    QMap<QString, QPushButton*> buttonTools;
     
     QWidget advancedPlacementWidget;
     QLineEdit autoPlacementPosX;

@@ -22,7 +22,19 @@ PropertiesDyntrack::PropertiesDyntrack() {
     infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
-
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    this->uid.setDisabled(true);
+    this->tX.setDisabled(true);
+    this->tY.setDisabled(true);
+    this->eSectionIdx.setDisabled(true);
+    vlist->addRow("UiD:",&this->uid);
+    vlist->addRow("Tile X:",&this->tX);
+    vlist->addRow("Tile Z:",&this->tY);
+    vlist->addRow("TrackShape:",&this->eSectionIdx);
+    vbox->addItem(vlist);
+    
     QLabel * label2 = new QLabel("Sections:");
     label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label2->setContentsMargins(3,0,0,0);
@@ -132,6 +144,14 @@ void PropertiesDyntrack::showObj(WorldObj* obj){
     }
     dobj = (DynTrackObj*)obj;
     this->infoLabel->setText("Object: "+obj->type);
+    
+    this->uid.setText(QString::number(obj->UiD, 10));
+    this->tX.setText(QString::number(obj->x, 10));
+    this->tY.setText(QString::number(-obj->y, 10));
+    if(obj->sectionIdx < 0)
+        this->eSectionIdx.setText("");
+    else
+        this->eSectionIdx.setText(QString::number(obj->sectionIdx, 10));
     
     for (int i = 0; i < 5; i++) {
         if(dobj->sections[i].sectIdx > 1000000){

@@ -36,6 +36,7 @@ signals:
 private:
     QCheckBox checkboxAnim;
     QCheckBox checkboxTerrain;
+    QCheckBox chSeparateRotation;
     QComboBox cShadowType;
 };
 

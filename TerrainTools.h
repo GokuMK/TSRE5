@@ -58,6 +58,7 @@ public slots:
     //void mapTileShowToolEnabled();
     //void mapTileLoadToolEnabled();
     //void heightTileLoadToolEnabled();
+    void msg(QString text, QString val);
     
 signals:
     void enableTool(QString name);
@@ -87,6 +88,8 @@ private:
     QLineEdit *leEemb;
     QLineEdit *leEcut;
     QLineEdit *leEradius;
+    
+    QMap<QString, QPushButton*> buttonTools;
 };
 
 #endif	/* TERRAINTOOLS_H */

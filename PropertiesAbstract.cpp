@@ -48,10 +48,10 @@ void PropertiesAbstract::resetRotEnabled(){
     worldObj->modified = true;
     worldObj->setMartix();
 }
-
+/*
 void PropertiesAbstract::enableTool(){
     
-}
+}*/
 
 void PropertiesAbstract::copyREnabled(){
     QClipboard *clipboard = QApplication::clipboard();

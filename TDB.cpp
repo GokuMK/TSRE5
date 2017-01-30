@@ -1598,10 +1598,11 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     return true;
 }
 
-void TDB::removeTrackFromTDB(int x, int y, int UiD){
+bool TDB::removeTrackFromTDB(int x, int y, int UiD){
     y = -y;
     qDebug() << "usune Track " << x << " " << y << " " << UiD; 
     
+    bool ok = false;
     TRnode *n;
     for (int i = 1; i <= iTRnodes; i++) {
             n = trackNodes[i];
@@ -1612,6 +1613,7 @@ void TDB::removeTrackFromTDB(int x, int y, int UiD){
                     if(n->trVectorSection[j].param[2] == x)
                         if(n->trVectorSection[j].param[3] == y)
                             if(n->trVectorSection[j].param[4] == UiD){
+                                ok = true;
                                 qDebug() << "jest";
                                 if(deleteFromVectorSection(i, j))
                                     j = -1;
@@ -1626,12 +1628,16 @@ void TDB::removeTrackFromTDB(int x, int y, int UiD){
                 if(n->UiD[0] == x)
                     if(n->UiD[1] == y)
                         if(n->UiD[2] == UiD){
+                            ok = true;
                             qDebug() << "jest j";
                             deleteJunction(i);
                 }
             }
         }
-    TDB::refresh();
+    
+    if(ok)
+        TDB::refresh();
+    return ok;
 }
 
 bool TDB::ifTrackExist(int x, int y, int UiD){

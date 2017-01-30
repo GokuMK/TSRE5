@@ -25,6 +25,8 @@ public:
     void updateObj(WorldObj* obj);
     
 public slots:
+    void enableCustomDetailLevelEnabled(int val);
+    void customDetailLevelEdited(QString val);
     void fixJNodePosnEnabled();
     void hacksButtonEnabled();
     void elevPromEnabled(QString val);
@@ -42,6 +44,7 @@ private:
     QLineEdit elev1inXm;
     QComboBox cCollisionType;
     QLineEdit eCollisionFlags;
+    QLineEdit eSectionIdx;
 };
 
 #endif	/* PROPERTIESTRACKOBJ_H */

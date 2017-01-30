@@ -41,6 +41,7 @@ private:
     DynTrackObj* dobj;
     QSignalMapper dyntrackChSect;
     QSignalMapper dyntrackSect;
+    QLineEdit eSectionIdx;
 };
 
 #endif	/* PROPERTIESDYNTRACK_H */

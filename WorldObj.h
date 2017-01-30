@@ -111,6 +111,7 @@ public:
     virtual void setMartix();
     virtual bool allowNew();
     virtual void deleteVBO();
+    virtual void removedFromTDB();
     virtual void translate(float px, float py, float pz);
     virtual void rotate(float x, float y, float z);
     virtual void resize(float x, float y, float z);
@@ -123,6 +124,8 @@ public:
     virtual bool unselect();
     virtual bool isSelected();
     virtual void deleteTrItems();
+    virtual float *getPosition();
+    virtual float *getQuatRotation();
     virtual int getDefaultDetailLevel();
     virtual int getCustomDetailLevel();
     virtual int getCurrentDetailLevel();

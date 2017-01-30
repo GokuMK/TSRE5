@@ -21,7 +21,67 @@ PropertiesGroup::PropertiesGroup() {
     infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
-    QLabel *label = new QLabel("Detail Level:");
+    
+    QLabel *label = new QLabel("Position & Rotation:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    this->quat.setDisabled(true);
+    this->quat.setAlignment(Qt::AlignCenter);
+    vlist->addRow("Rot:",&this->quat);
+    vbox->addItem(vlist);
+    
+    QGridLayout *posRotList = new QGridLayout;
+    posRotList->setSpacing(2);
+    posRotList->setContentsMargins(0,0,0,0);    
+
+    QPushButton *copyPos = new QPushButton("Copy Pos", this);
+    QObject::connect(copyPos, SIGNAL(released()),
+                      this, SLOT(copyPEnabled()));
+    QPushButton *pastePos = new QPushButton("Paste", this);
+    QObject::connect(pastePos, SIGNAL(released()),
+                      this, SLOT(pastePEnabled()));
+    QPushButton *copyQrot = new QPushButton("Copy Rot", this);
+    QObject::connect(copyQrot, SIGNAL(released()),
+                      this, SLOT(copyREnabled()));
+    QPushButton *pasteQrot = new QPushButton("Paste", this);
+    QObject::connect(pasteQrot, SIGNAL(released()),
+                      this, SLOT(pasteREnabled()));
+    QPushButton *copyPosRot = new QPushButton("Copy Pos+Rot", this);
+    QObject::connect(copyPosRot, SIGNAL(released()),
+                      this, SLOT(copyPREnabled()));
+    QPushButton *pastePosRot = new QPushButton("Paste", this);
+    QObject::connect(pastePosRot, SIGNAL(released()),
+                      this, SLOT(pastePREnabled()));
+    QPushButton *resetQrot = new QPushButton("Reset Rot", this);
+    QObject::connect(resetQrot, SIGNAL(released()),
+                      this, SLOT(resetRotEnabled()));
+    QPushButton *qRot90 = new QPushButton("Rot Y 90°", this);
+    QObject::connect(qRot90, SIGNAL(released()),
+                      this, SLOT(rotYEnabled()));
+    QPushButton *transform = new QPushButton("Transform ...", this);
+    QObject::connect(transform, SIGNAL(released()),
+                      this, SLOT(transformEnabled()));
+    chSeparateRotation.setText("Separate Rotation");
+    QObject::connect(&chSeparateRotation, SIGNAL(stateChanged(int)),
+                      this, SLOT(chIndividualRotationEdited(int)));
+    
+    posRotList->addWidget(copyPos, 0, 0);
+    posRotList->addWidget(pastePos, 0, 1);
+    posRotList->addWidget(copyQrot, 1, 0);
+    posRotList->addWidget(pasteQrot, 1, 1);
+    posRotList->addWidget(copyPosRot, 2, 0);
+    posRotList->addWidget(pastePosRot, 2, 1);
+    posRotList->addWidget(resetQrot, 3, 0);
+    posRotList->addWidget(qRot90, 3, 1);
+    posRotList->addWidget(transform, 4, 0, 1, 2);
+    posRotList->addWidget(&chSeparateRotation, 5, 0, 1, 2);
+    vbox->addItem(posRotList);
+    
+    label = new QLabel("Detail Level:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
@@ -97,6 +157,19 @@ void PropertiesGroup::showObj(WorldObj* obj){
         return;
     }
     worldObj = obj;
+    
+    float *qDirection = obj->getQuatRotation();
+    float *position = obj->getPosition();
+    this->posX.setText(QString::number(position[0], 'G', 4));
+    this->posY.setText(QString::number(position[1], 'G', 4));
+    this->posZ.setText(QString::number(-position[2], 'G', 4));
+    this->quat.setText (
+        QString::number(qDirection[0], 'G', 4) + " " +
+        QString::number(qDirection[1], 'G', 4) + " " +
+        QString::number(-qDirection[2], 'G', 4) + " " +
+        QString::number(qDirection[3], 'G', 4)
+        );
+    
     defaultDetailLevel.setText(QString::number(obj->getDefaultDetailLevel()));
     enableCustomDetailLevel.blockSignals(true);
     if(obj->customDetailLevelEnabled()){
@@ -125,6 +198,20 @@ void PropertiesGroup::showObj(WorldObj* obj){
 void PropertiesGroup::updateObj(WorldObj* obj){
     if(obj == NULL){
         return;
+    }
+    
+    if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
+        float *qDirection = obj->getQuatRotation();
+        float *position = obj->getPosition();
+        this->posX.setText(QString::number(position[0], 'G', 4));
+        this->posY.setText(QString::number(position[1], 'G', 4));
+        this->posZ.setText(QString::number(-position[2], 'G', 4));
+        this->quat.setText (
+            QString::number(qDirection[0], 'G', 4) + " " +
+            QString::number(qDirection[1], 'G', 4) + " " +
+            QString::number(-qDirection[2], 'G', 4) + " " +
+            QString::number(qDirection[3], 'G', 4)
+            );
     }
 }
 

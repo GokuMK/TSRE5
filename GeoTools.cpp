@@ -21,18 +21,22 @@ GeoTools::GeoTools(QString name)
     
     int row = 0;
     
-    QPushButton *mapTileShowTool = new QPushButton("Show/H Map", this);
-    QPushButton *mapTileLoadTool = new QPushButton("Load Map", this);
-    QPushButton *heightTileLoadTool = new QPushButton("Load Height", this);
-    
+    buttonTools["mapTileShowTool"] = new QPushButton("Show/H Map", this);
+    buttonTools["mapTileLoadTool"] = new QPushButton("Load Map", this);
+    buttonTools["heightTileLoadTool"] = new QPushButton("Load Height", this);
+    QMapIterator<QString, QPushButton*> i(buttonTools);
+    while (i.hasNext()) {
+        i.next();
+        i.value()->setCheckable(true);
+    }
     
     QGridLayout *vlist3 = new QGridLayout;
     vlist3->setSpacing(2);
     vlist3->setContentsMargins(3,0,1,0);    
     row = 0;
-    vlist3->addWidget(mapTileShowTool,row,0);
-    vlist3->addWidget(mapTileLoadTool,row,1);
-    vlist3->addWidget(heightTileLoadTool,row++,2);
+    vlist3->addWidget(buttonTools["mapTileShowTool"],row,0);
+    vlist3->addWidget(buttonTools["mapTileLoadTool"],row,1);
+    vlist3->addWidget(buttonTools["heightTileLoadTool"],row++,2);
 
     QLabel *label0;
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -50,13 +54,13 @@ GeoTools::GeoTools(QString name)
     
     
     // signals
-    QObject::connect(mapTileShowTool, SIGNAL(released()),
+    QObject::connect(buttonTools["mapTileShowTool"], SIGNAL(released()),
                       this, SLOT(mapTileShowToolEnabled()));
     
-    QObject::connect(mapTileLoadTool, SIGNAL(released()),
+    QObject::connect(buttonTools["mapTileLoadTool"], SIGNAL(released()),
                       this, SLOT(mapTileLoadToolEnabled()));
     
-    QObject::connect(heightTileLoadTool, SIGNAL(released()),
+    QObject::connect(buttonTools["heightTileLoadTool"], SIGNAL(released()),
                       this, SLOT(heightTileLoadToolEnabled()));
     
 }
@@ -76,3 +80,24 @@ void GeoTools::heightTileLoadToolEnabled(){
 GeoTools::~GeoTools() {
 }
 
+void GeoTools::msg(QString text, QString val){
+    if(text == "toolEnabled"){
+        QMapIterator<QString, QPushButton*> i(buttonTools);
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(true);
+            i.value()->setChecked(false);
+        }
+        if(buttonTools[val] != NULL)
+            buttonTools[val]->setChecked(true);
+        i.toFront();
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(false);
+        }
+    }
+}

@@ -75,15 +75,26 @@ int main(int argc, char *argv[]){
         darkPalette.setColor(QPalette::Link, QColor(240, 130, 0));
         darkPalette.setColor(QPalette::Highlight, QColor(240, 130, 0));
         darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+        darkPalette.setColor(QPalette::Disabled, QPalette::Text , QColor(153,153,153));
+        darkPalette.setColor(QPalette::Disabled, QPalette::WindowText , QColor(153,153,153));
         app.setPalette(darkPalette);
         app.setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
-        Game::StyleMainLabel = "#999999";
+        app.setStyleSheet("QPushButton:checked{background-color: #666666;} ");
+        Game::StyleMainLabel = "#c4a480";
         Game::StyleGreenButton = "#008800";
         Game::StyleRedButton = "#880000";
         Game::StyleYellowButton = "#888800";
         Game::StyleGreenText = "#55FF55";
         Game::StyleRedText = "#FF5555";
-    } 
+    } else {
+        QPalette palette = app.palette();
+        palette.setColor(QPalette::Disabled, QPalette::Text , QColor(160,90,64));
+        palette.setColor(QPalette::Disabled, QPalette::WindowText , QColor(160,90,64));
+        palette.setColor(QPalette::Highlight, QColor(160, 90, 64));
+        palette.setColor(QPalette::Inactive, QPalette::HighlightedText, Qt::white);
+        app.setPalette(palette);
+        app.setStyleSheet("QPushButton:checked{background-color: #e0c0a4;} ");
+    }
     
     //Game::window.resize(1280, 720);
     //window.resize(window.sizeHint());

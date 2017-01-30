@@ -21,7 +21,7 @@ NaviWindow::NaviWindow(){
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->setFixedWidth(300);
     this->setFixedHeight(180);
-    this->setWindowTitle(tr("World Position"));
+    this->setWindowTitle(tr("Navi Window"));
     markerFiles.setStyleSheet("combobox-popup: 0;");
     markerList.setStyleSheet("combobox-popup: 0;");
     

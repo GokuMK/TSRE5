@@ -71,6 +71,10 @@ void DynTrackObj::deleteVBO(){
     shape[1].deleteVBO();
 }
 
+void DynTrackObj::removedFromTDB(){
+    this->sectionIdx = -1;
+}
+
 void DynTrackObj::load(int x, int y) {
     this->tex1 = -1;
     this->init = false;

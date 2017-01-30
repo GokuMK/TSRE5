@@ -26,12 +26,15 @@ ObjTools::ObjTools(QString name)
     //QRadioButton *radio2 = new QRadioButton(tr("R&adio button 2"));
     //QRadioButton *radio3 = new QRadioButton(tr("Ra&dio button 3"));
 
-    selectTool = new QPushButton("Select", this);
-    selectTool->setCheckable(true);
-    placeTool = new QPushButton("Place New", this);
-    placeTool->setCheckable(true);
-    autoPlacementButton = new QPushButton("Auto Placement", this);
-    autoPlacementButton->setCheckable(true);
+    buttonTools["selectTool"] = new QPushButton("Select", this);
+    buttonTools["placeTool"] = new QPushButton("Place New", this);
+    buttonTools["autoPlaceSimpleTool"] = new QPushButton("Auto Placement", this);
+    QMapIterator<QString, QPushButton*> i(buttonTools);
+    while (i.hasNext()) {
+        i.next();
+        i.value()->setCheckable(true);
+    }
+    
     QPushButton *advancedPlacenentButton = new QPushButton("...", this);
     advancedPlacenentButton->setCheckable(true);
     QObject::connect(advancedPlacenentButton, SIGNAL(toggled(bool)), this, SLOT(advancedPlacementButtonEnabled(bool)));
@@ -63,11 +66,11 @@ ObjTools::ObjTools(QString name)
     vlist3->setSpacing(2);
     vlist3->setContentsMargins(3,0,1,0);    
     int row = 0;
-    vlist3->addWidget(selectTool,row,0);
-    vlist3->addWidget(placeTool,row++,1,1,3);
+    vlist3->addWidget(buttonTools["selectTool"],row,0);
+    vlist3->addWidget(buttonTools["placeTool"],row++,1,1,3);
     vlist3->addWidget(&stickToTDB,row,0);
     vlist3->addWidget(resetRotationButton,row++,1,1,3);
-    vlist3->addWidget(autoPlacementButton,row,0);
+    vlist3->addWidget(buttonTools["autoPlaceSimpleTool"],row,0);
     vlist3->addWidget(&autoPlacementLength,row,1);
     autoPlacementLength.setText("50");
     QDoubleValidator* doubleValidator = new QDoubleValidator(-999, 999, 6, this); 
@@ -189,13 +192,13 @@ ObjTools::ObjTools(QString name)
     lastItems.setContextMenuPolicy(Qt::CustomContextMenu);
     QObject::connect(&lastItems, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showLastItemsContextMenu(QPoint)));
     
-    QObject::connect(selectTool, SIGNAL(toggled(bool)),
+    QObject::connect(buttonTools["selectTool"], SIGNAL(toggled(bool)),
                       this, SLOT(selectToolEnabled(bool)));
     
-    QObject::connect(placeTool, SIGNAL(toggled(bool)),
+    QObject::connect(buttonTools["placeTool"], SIGNAL(toggled(bool)),
                       this, SLOT(placeToolEnabled(bool)));
     
-    QObject::connect(autoPlacementButton, SIGNAL(toggled(bool)),
+    QObject::connect(buttonTools["autoPlaceSimpleTool"], SIGNAL(toggled(bool)),
                       this, SLOT(autoPlacementButtonEnabled(bool)));
     
     QObject::connect(resetRotationButton, SIGNAL(released()),
@@ -518,7 +521,6 @@ void ObjTools::refOtherSelected(const QString & text){
 }
 
 void ObjTools::refListSelected(QListWidgetItem * item){
-    //refList.addItem(
     try {
         route->ref->selected = currentItemList[item->type()];//&route->ref->refItems[refClass.currentText().toStdString()][refList.currentRow()];
         emit sendMsg("engItemSelected");
@@ -526,48 +528,11 @@ void ObjTools::refListSelected(QListWidgetItem * item){
     } catch(const std::out_of_range& oor){
         route->ref->selected = NULL;
     }
-}
-
-void ObjTools::trackListSelected(QListWidgetItem * item){
-    qDebug() << item->type() << " " << item->text();
-    Ref::RefItem* itemRef = new Ref::RefItem(); 
-    itemRef->filename = item->text();
-    itemRef->clas = "";
-    itemRef->type = "trackobj";
-    itemRef->value = item->type();
-    try{
-        route->ref->selected = itemRef;
-        emit sendMsg("engItemSelected");
-        itemSelected((Ref::RefItem*)route->ref->selected);
-    } catch(const std::out_of_range& oor){
-        route->ref->selected = NULL;
-    }
-}
-
-void ObjTools::otherListSelected(QListWidgetItem * item){
-    Ref::RefItem* itemRef = new Ref::RefItem(); 
-    if(refOther.currentText().toLower() == "signals") itemRef->type = "signal";
-    if(refOther.currentText().toLower() == "forests") itemRef->type = "forest";
-    if(refOther.currentText().toLower() == "speedsign") itemRef->type = "speedpost";
-    if(refOther.currentText().toLower() == "speedresume") itemRef->type = "speedpost";
-    if(refOther.currentText().toLower() == "speedwarning") itemRef->type = "speedpost";
-    if(refOther.currentText().toLower() == "milepost") itemRef->type = "speedpost";
-    if(refOther.currentText().toLower() == "sound sources") itemRef->type = "soundsource";
-    if(refOther.currentText().toLower() == "sound regions") itemRef->type = "soundregion";
-    qDebug() << item->type() << " " << item->text();
-    itemRef->clas = refOther.currentText().toLower();
-    itemRef->filename = item->text();
-    itemRef->value = item->type();
-    try{
-        route->ref->selected = itemRef;
-        itemSelected((Ref::RefItem*)route->ref->selected);
-    } catch(const std::out_of_range& oor){
-        route->ref->selected = NULL;
-    }
+    lastItems.clearSelection();
 }
 
 void ObjTools::lastItemsListSelected(QListWidgetItem * item){
-    
+    refList.clearSelection();
     qDebug() << item->type() << " " << item->text();
     route->ref->selected = lastItemsPtr[item->type()];
 }
@@ -647,21 +612,23 @@ void ObjTools::msg(QString text, float val){
 
 void ObjTools::msg(QString text, QString val){
     if(text == "toolEnabled"){
-        selectTool->blockSignals(true);
-        placeTool->blockSignals(true);
-        autoPlacementButton->blockSignals(true);
-        selectTool->setChecked(false);
-        placeTool->setChecked(false);
-        autoPlacementButton->setChecked(false);
-        if(val == "selectTool")
-            selectTool->setChecked(true);
-        if(val == "placeTool")
-            placeTool->setChecked(true);
-        if(val == "autoPlaceSimpleTool")
-            autoPlacementButton->setChecked(true);
-        selectTool->blockSignals(false);
-        placeTool->blockSignals(false);
-        autoPlacementButton->blockSignals(false);
+        QMapIterator<QString, QPushButton*> i(buttonTools);
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(true);
+            i.value()->setChecked(false);
+        }
+        if(buttonTools[val] != NULL)
+            buttonTools[val]->setChecked(true);
+        i.toFront();
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(false);
+        }
     }
 }
 

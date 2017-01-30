@@ -24,31 +24,33 @@ TerrainTools::TerrainTools(QString name)
     this->texPreview = new QPixmap(256,256);
     this->texPreview->fill(Qt::gray);
     
-    QPushButton *heightTool = new QPushButton("HeightMap +", this);
-    QPushButton *paintTool = new QPushButton("Color", this);
-    QPushButton *paintTool2 = new QPushButton("Texture", this);
-    QPushButton *pickTexTool = new QPushButton("Pick", this);
-    QPushButton *setTexTool = new QPushButton("Load", this);
-    QPushButton *putTexTool = new QPushButton("Put", this);
-    QPushButton *lockTexTool = new QPushButton("Lock", this);
-    QPushButton *waterTerrTool = new QPushButton("Show/H Water", this);
-    QPushButton *drawTerrTool = new QPushButton("Show/H Tile", this);
-    QPushButton *gapsTerrTool = new QPushButton("Gaps", this);
-    QPushButton *waterTileTool = new QPushButton("Water level", this);
-    QPushButton *fixedTileTool = new QPushButton("Fixed Height", this);
-    //QPushButton *mapTileShowTool = new QPushButton("Show/H Map", this);
-    //QPushButton *mapTileLoadTool = new QPushButton("Load Map", this);
-    //QPushButton *heightTileLoadTool = new QPushButton("Load Height", this);
-    //QPushButton *fixedTerrTool = new QPushButton("Fixed Height", this);
+
+    buttonTools["heightTool"] = new QPushButton("HeightMap +", this);
+    buttonTools["pickTerrainTexTool"] = new QPushButton("Pick", this);
+    buttonTools["putTerrainTexTool"] = new QPushButton("Put", this);
+    buttonTools["lockTexTool"] = new QPushButton("Lock", this);
+    buttonTools["waterTerrTool"] = new QPushButton("Show/H Water", this);
+    buttonTools["drawTerrTool"] = new QPushButton("Show/H Tile", this);
+    buttonTools["gapsTerrainTool"] = new QPushButton("Gaps", this);
+    buttonTools["waterHeightTileTool"] = new QPushButton("Water level", this);
+    buttonTools["fixedTileTool"] = new QPushButton("Fixed Height", this);
+    buttonTools["paintToolColor"] = new QPushButton("Color", this);
+    buttonTools["paintToolTexture"] = new QPushButton("Texture", this);
+    QMapIterator<QString, QPushButton*> i(buttonTools);
+    while (i.hasNext()) {
+        i.next();
+        i.value()->setCheckable(true);
+    }
     
+    QPushButton *loadTerrainTexTool = new QPushButton("Load...", this);
     
     QGridLayout *vlist3 = new QGridLayout;
     vlist3->setSpacing(2);
     vlist3->setContentsMargins(3,0,1,0);    
     row = 0;
-    vlist3->addWidget(heightTool,row,0);
-    vlist3->addWidget(fixedTileTool,row,1);
-    vlist3->addWidget(waterTileTool,row,2);
+    vlist3->addWidget(buttonTools["heightTool"],row,0);
+    vlist3->addWidget(buttonTools["fixedTileTool"],row,1);
+    vlist3->addWidget(buttonTools["waterHeightTileTool"],row,2);
     //vlist3->addWidget(mapTileShowTool,row,0);
     //vlist3->addWidget(mapTileLoadTool,row,1);
     //vlist3->addWidget(heightTileLoadTool,row++,2);
@@ -57,25 +59,25 @@ TerrainTools::TerrainTools(QString name)
     vlist4->setSpacing(2);
     vlist4->setContentsMargins(3,0,1,0);    
     row = 0;
-    vlist4->addWidget(waterTerrTool,row,0);
-    vlist4->addWidget(drawTerrTool,row,1);
-    vlist4->addWidget(gapsTerrTool,row++,2);
+    vlist4->addWidget(buttonTools["waterTerrTool"],row,0);
+    vlist4->addWidget(buttonTools["drawTerrTool"],row,1);
+    vlist4->addWidget(buttonTools["gapsTerrainTool"],row++,2);
     
     QGridLayout *vlist0 = new QGridLayout;
     vlist0->setSpacing(2);
     vlist0->setContentsMargins(3,0,1,0);    
     row = 0;
-    vlist0->addWidget(paintTool,row,0);
-    vlist0->addWidget(paintTool2,row,1);
-    vlist0->addWidget(lockTexTool,row++,2);
+    vlist0->addWidget(buttonTools["paintToolColor"],row,0);
+    vlist0->addWidget(buttonTools["paintToolTexture"],row,1);
+    vlist0->addWidget(buttonTools["lockTexTool"],row++,2);
     
     QGridLayout *vlist1 = new QGridLayout;
     vlist1->setSpacing(2);
     vlist1->setContentsMargins(3,0,1,0);    
     row = 0;
-    vlist1->addWidget(pickTexTool,row,0);
-    vlist1->addWidget(putTexTool,row,1);
-    vlist1->addWidget(setTexTool,row,2);
+    vlist1->addWidget(buttonTools["pickTerrainTexTool"],row,0);
+    vlist1->addWidget(buttonTools["putTerrainTexTool"],row,1);
+    vlist1->addWidget(loadTerrainTexTool,row,2);
     
     colorw = new QPushButton("#000000", this);
     colorw->setStyleSheet("background-color:black;");
@@ -217,34 +219,34 @@ TerrainTools::TerrainTools(QString name)
     
     
     // signals
-    QObject::connect(heightTool, SIGNAL(released()),
+    QObject::connect(buttonTools["heightTool"], SIGNAL(released()),
                       this, SLOT(heightToolEnabled()));
     
-    QObject::connect(paintTool, SIGNAL(released()),
+    QObject::connect(buttonTools["paintToolColor"], SIGNAL(released()),
                       this, SLOT(paintColorToolEnabled()));
     
-    QObject::connect(paintTool2, SIGNAL(released()),
+    QObject::connect(buttonTools["paintToolTexture"], SIGNAL(released()),
                       this, SLOT(paintTexToolEnabled()));
     
-    QObject::connect(lockTexTool, SIGNAL(released()),
+    QObject::connect(buttonTools["lockTexTool"], SIGNAL(released()),
                       this, SLOT(lockTexToolEnabled()));
     
-    QObject::connect(pickTexTool, SIGNAL(released()),
+    QObject::connect(buttonTools["pickTerrainTexTool"], SIGNAL(released()),
                       this, SLOT(pickTexToolEnabled()));
     
-    QObject::connect(setTexTool, SIGNAL(released()),
+    QObject::connect(loadTerrainTexTool, SIGNAL(released()),
                       this, SLOT(setTexToolEnabled()));
     
-    QObject::connect(waterTerrTool, SIGNAL(released()),
+    QObject::connect(buttonTools["waterTerrTool"], SIGNAL(released()),
                       this, SLOT(waterTerrToolEnabled()));
     
-    QObject::connect(waterTileTool, SIGNAL(released()),
+    QObject::connect(buttonTools["waterHeightTileTool"], SIGNAL(released()),
                       this, SLOT(waterHeightTileToolEnabled()));
     
-    QObject::connect(fixedTileTool, SIGNAL(released()),
+    QObject::connect(buttonTools["fixedTileTool"], SIGNAL(released()),
                       this, SLOT(fixedTileToolEnabled()));
     
-    QObject::connect(gapsTerrTool, SIGNAL(released()),
+    QObject::connect(buttonTools["gapsTerrainTool"], SIGNAL(released()),
                       this, SLOT(gapsTerrToolEnabled()));
     
     /*QObject::connect(mapTileShowTool, SIGNAL(released()),
@@ -256,7 +258,7 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(heightTileLoadTool, SIGNAL(released()),
                       this, SLOT(heightTileLoadToolEnabled()));*/
     
-    QObject::connect(drawTerrTool, SIGNAL(released()),
+    QObject::connect(buttonTools["drawTerrTool"], SIGNAL(released()),
                       this, SLOT(drawTerrToolEnabled()));
     
     QObject::connect(colorw, SIGNAL(released()),
@@ -300,7 +302,7 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(leEradius, SIGNAL(textEdited(QString)),
                       this, SLOT(setEradius(QString)));
     
-    QObject::connect(putTexTool, SIGNAL(released()),
+    QObject::connect(buttonTools["putTerrainTexTool"], SIGNAL(released()),
                       this, SLOT(putTexToolEnabled()));
     
     QObject::connect(fheight, SIGNAL(textEdited(QString)),
@@ -330,17 +332,17 @@ void TerrainTools::heightToolEnabled(){
 void TerrainTools::paintColorToolEnabled(){
     this->paintBrush->useTexture = false;
     emit setPaintBrush(this->paintBrush);
-    emit enableTool("paintTool");
+    emit enableTool("paintToolColor");
 }
 
 void TerrainTools::gapsTerrToolEnabled(){
-    emit enableTool("gapsTool");
+    emit enableTool("gapsTerrainTool");
 }
 
 void TerrainTools::paintTexToolEnabled(){
     this->paintBrush->useTexture = true;
     emit setPaintBrush(this->paintBrush);
-    emit enableTool("paintTool");
+    emit enableTool("paintToolTexture");
 }
 
 void TerrainTools::chooseColorEnabled(){
@@ -530,4 +532,30 @@ void TerrainTools::updateTexPrev(){
         texPreviewLabel->setPixmap(QPixmap::fromImage(QImage(out,256,256,QImage::Format_RGB888)));
     if(this->paintBrush->tex->bytesPerPixel == 4)
         texPreviewLabel->setPixmap(QPixmap::fromImage(QImage(out,256,256,QImage::Format_RGBA8888)));    
+}
+
+void TerrainTools::msg(QString text, QString val){
+    if(text == "toolEnabled"){
+        QMapIterator<QString, QPushButton*> i(buttonTools);
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(true);
+            i.value()->setChecked(false);
+        }
+        if(buttonTools[val] != NULL)
+            buttonTools[val]->setChecked(true);
+        i.toFront();
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(false);
+        }
+    } else if(text == "brushDirection"){
+        QString t = buttonTools["heightTool"]->text().left(buttonTools["heightTool"]->text().length() - 1);
+        buttonTools["heightTool"]->setText(t+val);
+    }
+
 }

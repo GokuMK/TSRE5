@@ -155,6 +155,21 @@ unsigned int GroupObj::count(){
     return objects.size();
 }
 
+float *GroupObj::getPosition(){
+    if(pivot.set < 0)
+        return (float*)pivot.position;
+    else 
+        return (float*)objects[pivot.set]->position;
+}
+
+float *GroupObj::getQuatRotation(){
+    if(pivot.set < 0){
+        return (float*)pivot.qDirection;
+    }else {
+        return (float*)objects[pivot.set]->qDirection;
+    }
+}
+
 void GroupObj::translate(float px, float py, float pz){
     for(int i = 0; i < this->objects.size(); i++){
         this->objects[i]->translate(px, py, pz);
@@ -233,15 +248,52 @@ void GroupObj::setPosition(float* p){
 }
 
 void GroupObj::setNewQdirection(){
-    for(int i = 0; i < this->objects.size(); i++){
-        this->objects[i]->setNewQdirection();
-    }
+    float q[4];
+    Quat::fill(q);
+    setQdirection(q);
+    
+    //for(int i = 0; i < this->objects.size(); i++){
+    //    this->objects[i]->setNewQdirection();
+    //}
 }
 
 void GroupObj::setQdirection(float* q){
+    
+    float tp[3];
+    float *qqq = Quat::create();
+    float tpos1[3];
+    float tpos2[3];
+    int pid = 0;
+    if (pivot.set == -2 ) {
+        Vec3::copy(tp, pivot.position);
+        Quat::copy(qqq, pivot.qDirection);
+        Vec3::copy(pivot.qDirection, q);
+    } else {
+        pid = pivot.set;
+        if(pid < 0 ||pid >= objects.size())
+            pid = 0;
+        Vec3::copy(tp, objects[pid]->position);
+        Quat::copy(qqq, objects[pid]->qDirection);
+        this->objects[pid]->setQdirection(q);
+    }  
+    float* qq = Quat::create();
+    Quat::fill(qq);
+    Quat::multiply(qq, qq, qqq);
     for(int i = 0; i < this->objects.size(); i++){
+        if(i == pid) continue;
+        tpos2[0] = 0;
+        tpos2[1] = 0;
+        tpos2[2] = Vec3::distance(tp, objects[i]->position);
+        Vec3::transformQuat(tpos2, tpos2, q);
+        //qDebug() << "tpos2" << tpos2[0]<< tpos2[2];
+        this->objects[i]->setPosition(tp);
+        this->objects[i]->translate(-tpos2[0], -tpos2[1], -tpos2[2]);
         this->objects[i]->setQdirection(q);
     }
+    
+    //for(int i = 0; i < this->objects.size(); i++){
+    //    this->objects[i]->setQdirection(q);
+    //}
 }
 
 void GroupObj::initPQ(float* p, float* q){

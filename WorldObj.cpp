@@ -491,6 +491,10 @@ void WorldObj::deleteVBO(){
     
 }
 
+void WorldObj::removedFromTDB(){
+    
+}
+
 void WorldObj::setMartix(){
     Mat4::fromRotationTranslation(this->matrix, qDirection, position);
     Mat4::rotate(this->matrix, this->matrix, M_PI, 0, -1, 0);
@@ -632,6 +636,14 @@ void WorldObj::deleteTrItems(){
 
 QString WorldObj::getShapePath(){
     return "";
+}
+
+float *WorldObj::getPosition(){
+    return (float*)position;
+}
+
+float *WorldObj::getQuatRotation(){
+    return (float*)qDirection;
 }
 
 int WorldObj::getDefaultDetailLevel(){

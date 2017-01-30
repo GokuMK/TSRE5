@@ -38,7 +38,9 @@ public slots:
     void rotYEnabled();
     void transformEnabled();
     void resetRotEnabled();
-    virtual void enableTool();
+    
+signals:
+    void enableTool(QString);
     
 protected:
     QLabel *infoLabel;    

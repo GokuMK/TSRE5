@@ -797,8 +797,11 @@ void Route::deleteObj(WorldObj* obj) {
 }
 
 void Route::removeTrackFromTDB(WorldObj* obj) {
-    this->roadDB->removeTrackFromTDB(obj->x, obj->y, obj->UiD);
-    this->trackDB->removeTrackFromTDB(obj->x, obj->y, obj->UiD);
+    bool ok;
+    ok = this->roadDB->removeTrackFromTDB(obj->x, obj->y, obj->UiD);
+    ok |= this->trackDB->removeTrackFromTDB(obj->x, obj->y, obj->UiD);
+    if(ok)
+        obj->removedFromTDB();
 }
 
 int Route::getTileObjCount(int x, int z) {

@@ -404,12 +404,6 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             moveStep = moveUltraStep;
             keyAltEnabled = true;
             break;
-        //case 'M':
-            //route->save();
-            //selection = true; //!selection;
-            // paintGL();
-            // selection = !selection;
-        //    break;
         //case Qt::Key_N:
             //if(selectedObj != NULL)
             //    route->deleteTDBTree(selectedObj);
@@ -436,14 +430,6 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 route->newTile((int)camera->pozT[0], (int)camera->pozT[1]);
             }
             break;
-        //case Qt::Key_F1:
-            //toolEnabled = "";
-            //emit setToolbox("objTools");
-        //    break;
-        //case Qt::Key_F2:
-            //toolEnabled = "";
-            //emit setToolbox("terrainTools");    
-        //    break;
         case Qt::Key_E:
             enableTool("selectTool");
             break;
@@ -467,14 +453,24 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
             else
                 enableTool("placeTool");
             break;
+        case Qt::Key_Home:
+            aktPointerPos[1]+=40;
+            jumpTo(camera->pozT, aktPointerPos);
+            aktPointerPos[1]-=40;
+            break;
         default:
             break;
     }
     if(toolEnabled == "heightTool"){
         switch (event->key()) {
             case Qt::Key_Z:
-                if(!keyControlEnabled)
+                if(!keyControlEnabled){
                     this->defaultPaintBrush->direction = -this->defaultPaintBrush->direction;
+                    if(this->defaultPaintBrush->direction == 1)
+                        emit sendMsg(QString("brushDirection"),QString("+"));
+                    else
+                        emit sendMsg(QString("brushDirection"),QString("-"));
+                }
                 break;
             default:
                 break;
@@ -752,7 +748,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
             route->paintHeightMap(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
-        if(toolEnabled == "paintTool"){
+        if(toolEnabled.startsWith("paintTool")){
             // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
             TerrainLib::paintTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
@@ -798,7 +794,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         if(toolEnabled == "lockTexTool"){
             TerrainLib::lockTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
-        if(toolEnabled == "gapsTool"){
+        if(toolEnabled == "gapsTerrainTool"){
             TerrainLib::toggleGaps((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == "signalLinkTool"){
@@ -863,7 +859,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
         camera->MouseMove(event);
     }
     if((event->buttons() & 1) == Qt::LeftButton){
-        if(toolEnabled == "paintTool" && mouseLPressed == true){
+        if(toolEnabled.startsWith("paintTool") && mouseLPressed == true){
             if(mousex != m_lastPos.x() || mousey != m_lastPos.y()){
                 TerrainLib::paintTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
             }
@@ -948,12 +944,25 @@ void GLWidget::enableTool(QString name){
 }
 
 void GLWidget::jumpTo(PreciseTileCoordinate* c){
-    qDebug() << "jump: "<< c->TileX << " "<< c->TileZ;
-    TerrainLib::load(c->TileX, -c->TileZ);
-    float h = TerrainLib::getHeight(c->TileX, -c->TileZ, c->wX, c->wY, -c->wZ);
-    if(c->wY < h || c->wY > h+100) c->wY = h + 20;
-    camera->setPozT(c->TileX, -c->TileZ);
-    camera->setPos(c->wX, c->wY, -c->wZ);
+    jumpTo(c->TileX, -c->TileZ, c->wX, c->wY, -c->wZ);
+}
+
+void GLWidget::jumpTo(float *posT, float *pos){
+    int X = posT[0];
+    int Z = posT[1];
+    float x = pos[0];
+    float z = pos[2];
+    Game::check_coords(X, Z, x, z);
+    jumpTo(X, Z, x, pos[1], z);
+}
+
+void GLWidget::jumpTo(int X, int Z, float x, float y, float z){
+    qDebug() << "jump: "<< X << " "<< Z;
+    TerrainLib::load(X, Z);
+    float h = TerrainLib::getHeight(X, Z, x, y, z);
+    if(y < h || y > h+100) y = h + 20;
+    camera->setPozT(X, Z);
+    camera->setPos(x, y, z);
     
 }
 

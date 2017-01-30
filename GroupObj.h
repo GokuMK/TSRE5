@@ -30,6 +30,8 @@ public:
     GroupObj();
     GroupObj(const GroupObj& o);
     WorldObj* clone();
+    float *getPosition();
+    float *getQuatRotation();
     void translate(float px, float py, float pz);
     void rotate(float x, float y, float z);
     void resize(float x, float y, float z);

@@ -24,12 +24,13 @@ public slots:
     void mapTileShowToolEnabled();
     void mapTileLoadToolEnabled();
     void heightTileLoadToolEnabled();
+    void msg(QString text, QString val);
     
 signals:
     void enableTool(QString name);
     
 private:
-
+    QMap<QString, QPushButton*> buttonTools;
 };
 
 #endif	/* GEOTOOLS_H */

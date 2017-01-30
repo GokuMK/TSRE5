@@ -33,9 +33,11 @@ PropertiesTrackObj::PropertiesTrackObj(){
     this->uid.setDisabled(true);
     this->tX.setDisabled(true);
     this->tY.setDisabled(true);
+    this->eSectionIdx.setDisabled(true);
     vlist->addRow("UiD:",&this->uid);
     vlist->addRow("Tile X:",&this->tX);
     vlist->addRow("Tile Z:",&this->tY);
+    vlist->addRow("TrackShape:",&this->eSectionIdx);
     vbox->addItem(vlist);
     
     QLabel * label = new QLabel("FileName:");
@@ -291,6 +293,7 @@ void PropertiesTrackObj::showObj(WorldObj* obj){
     this->uid.setText(QString::number(obj->UiD, 10));
     this->tX.setText(QString::number(obj->x, 10));
     this->tY.setText(QString::number(-obj->y, 10));
+    this->eSectionIdx.setText(QString::number(obj->sectionIdx, 10));
     this->posX.setText(QString::number(obj->position[0], 'G', 4));
     this->posY.setText(QString::number(obj->position[1], 'G', 4));
     this->posZ.setText(QString::number(-obj->position[2], 'G', 4));
@@ -444,5 +447,34 @@ void PropertiesTrackObj::editFileNameEnabled(){
         worldObj->qDirection[2] = -worldObj->qDirection[2];
         worldObj->load(worldObj->x, worldObj->y);
         worldObj->modified = true;
+    }
+}
+
+void PropertiesTrackObj::enableCustomDetailLevelEnabled(int val){
+    if(worldObj == NULL)
+        return;
+    TrackObj* tObj = (TrackObj*) worldObj;
+    Undo::SinglePushWorldObjData(worldObj);
+    if(val == 2){
+        customDetailLevel.setEnabled(true);
+        customDetailLevel.setText("0");
+        tObj->setCustomDetailLevel(0);
+    } else {
+        customDetailLevel.setEnabled(false);
+        customDetailLevel.setText("");
+        tObj->setCustomDetailLevel(-1);
+    }
+}
+
+void PropertiesTrackObj::customDetailLevelEdited(QString val){
+    if(worldObj == NULL)
+        return;
+    TrackObj* tObj = (TrackObj*) worldObj;
+    bool ok = false;
+    int level = val.toInt(&ok);
+    //qDebug() << "aaaaaaaaaa";
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
+        tObj->setCustomDetailLevel(level);
     }
 }
