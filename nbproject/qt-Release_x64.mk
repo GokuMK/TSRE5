@@ -34711,7 +34711,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapWindow.o: MapWindow.cpp M
 		MapDataOSM.h \
 		MapData.h \
 		MapDataUrlImage.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QTime
+		c:/OT/Static/5.7.0_x64/include/QtCore/QTime \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MapWindow.o MapWindow.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NaviBox.o: NaviBox.cpp NaviBox.h \

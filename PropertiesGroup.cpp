@@ -157,6 +157,7 @@ void PropertiesGroup::showObj(WorldObj* obj){
         return;
     }
     worldObj = obj;
+    GroupObj *gobj = (GroupObj*)worldObj;
     
     float *qDirection = obj->getQuatRotation();
     float *position = obj->getPosition();
@@ -187,12 +188,15 @@ void PropertiesGroup::showObj(WorldObj* obj){
     this->checkboxAnim.blockSignals(true);
     this->checkboxTerrain.blockSignals(true);
     this->cShadowType.blockSignals(true);
+    this->chSeparateRotation.blockSignals(true);
     this->checkboxAnim.setChecked(obj->isAnimated());
     this->checkboxTerrain.setChecked(obj->isTerrainObj());
     this->cShadowType.setCurrentIndex((int)obj->getShadowType());
+    this->chSeparateRotation.setChecked(gobj->isIndividualRotation());
     this->checkboxAnim.blockSignals(false);
     this->checkboxTerrain.blockSignals(false);
     this->cShadowType.blockSignals(false);
+    this->chSeparateRotation.blockSignals(false);
 }
 
 void PropertiesGroup::updateObj(WorldObj* obj){
@@ -277,4 +281,15 @@ void PropertiesGroup::cShadowTypeEdited(int val){
         return;
     worldObj->setShadowType((WorldObj::ShadowType)val);
     this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
+}
+
+void PropertiesGroup::chIndividualRotationEdited(int val){
+    if(worldObj == NULL)
+        return;
+    GroupObj *gobj = (GroupObj*)worldObj;
+    if(val == 2){
+        gobj->setIndividualRotation(true);
+    } else {
+        gobj->setIndividualRotation(false);
+    }
 }

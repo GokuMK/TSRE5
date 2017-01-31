@@ -24,12 +24,18 @@ public:
     virtual ~TerrainTools();
     
 public slots:
-    void heightToolEnabled();
-    void paintColorToolEnabled();
-    void paintTexToolEnabled();
-    void pickTexToolEnabled();
+    void heightToolEnabled(bool val);
+    void paintColorToolEnabled(bool val);
+    void paintTexToolEnabled(bool val);
+    void pickTexToolEnabled(bool val);
+    void putTexToolEnabled(bool val);
+    void waterTerrToolEnabled(bool val);
+    void drawTerrToolEnabled(bool val);
+    void lockTexToolEnabled(bool val);
+    void gapsTerrToolEnabled(bool val);
+    void waterHeightTileToolEnabled(bool val);
+    void fixedTileToolEnabled(bool val);
     void setTexToolEnabled();
-    void putTexToolEnabled();
     void chooseColorEnabled();
     void updateTexPrev();
     void setBrushTextureId(int val);
@@ -49,15 +55,6 @@ public slots:
     void setEcut(QString val);
     void setEradius(int val);
     void setEradius(QString val);
-    void waterTerrToolEnabled();
-    void drawTerrToolEnabled();
-    void lockTexToolEnabled();
-    void gapsTerrToolEnabled();
-    void waterHeightTileToolEnabled();
-    void fixedTileToolEnabled();
-    //void mapTileShowToolEnabled();
-    //void mapTileLoadToolEnabled();
-    //void heightTileLoadToolEnabled();
     void msg(QString text, QString val);
     
 signals:

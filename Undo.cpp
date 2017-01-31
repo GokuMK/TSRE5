@@ -215,6 +215,8 @@ void Undo::SinglePushWorldObjData(WorldObj* obj){
 void Undo::PushWorldObjData(WorldObj* obj){
     if(currentState == NULL)
         return;
+    if(obj == NULL)
+        return;
 
     if(obj->typeID == obj->groupobject) {
         GroupObj *gobj = (GroupObj*)obj;
@@ -243,6 +245,8 @@ void Undo::PushWorldObjDataInfo(WorldObj* obj){
 void Undo::PushWorldObjRemoved(WorldObj* obj){
     if(currentState == NULL)
         return;
+    if(obj == NULL)
+        return;
     
     UndoState::WorldObjInfo * tdata = currentState->objData[(long long int)obj];
     if(tdata == NULL){
@@ -258,6 +262,8 @@ void Undo::PushWorldObjRemoved(WorldObj* obj){
 
 void Undo::PushWorldObjPlaced(WorldObj* obj){
     if(currentState == NULL)
+        return;
+    if(obj == NULL)
         return;
     
     UndoState::WorldObjInfo * tdata = currentState->objData[(long long int)obj];

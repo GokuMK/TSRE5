@@ -38,6 +38,7 @@ public slots:
     void rotYEnabled();
     void transformEnabled();
     void resetRotEnabled();
+    void msg(QString name, QString val);
     
 signals:
     void enableTool(QString);
@@ -57,6 +58,7 @@ protected:
     QLineEdit customDetailLevel;
     QCheckBox enableCustomDetailLevel;
     WorldObj *worldObj;
+    QMap<QString, QPushButton*> buttonTools;
 private:
 
 };

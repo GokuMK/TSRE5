@@ -73,6 +73,9 @@ void TrackObj::load(int x, int y) {
     this->placedAtPosition[0] = this->position[0];
     this->placedAtPosition[1] = this->position[1];
     this->placedAtPosition[2] = this->position[2];
+    this->firstPosition[0] = this->position[0];
+    this->firstPosition[1] = this->position[1];
+    this->firstPosition[2] = this->position[2];
     setMartix();
 }
 

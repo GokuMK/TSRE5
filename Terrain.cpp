@@ -285,8 +285,13 @@ void Terrain::setTileBlob(){
     qDebug() << hash;
     if(MapWindow::mapTileImages[hash] != NULL)
         this->showBlob = true;
-    else
-        qDebug() << "load map first!";
+    else {
+        if(MapWindow::LoadMapFromDisk(mojex, mojez)){
+            this->showBlob = true;
+        } else {
+            qDebug() << "load map first!";
+        }
+    }
 }
 
 void Terrain::setWaterDraw(int x, int z, float posx, float posz) {
@@ -507,7 +512,8 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
         float size = 512;
 
         QOpenGLVertexArrayObject::Binder vaoBinder(VAO);
-
+        
+        if(Game::viewTerrainShape)
         for (int uu = 0; uu < 16; uu++) {
             for (int yy = 0; yy < 16; yy++) {
                 if (hidden[yy * 16 + uu]) continue;
@@ -591,7 +597,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
             }
         }
         
-        if(Game::viewTerrainGrid){
+        if(Game::viewTerrainGrid || !Game::viewTerrainShape){
             gluu->disableTextures(0.7,0.7,0.7,1.0);
             gluu->mvPushMatrix();
             Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0.05, 0);
@@ -604,7 +610,8 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                     float lodxx = lodx + uu * 128 - 1024;
                     float lodzz = lodz + yy * 128 - 1024;
                     lod = sqrt(lodxx * lodxx + lodzz * lodzz);
-                    if (lod > 300) continue;
+                    if(Game::viewTerrainShape)
+                        if (lod > 300) continue;
                     f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
                 }
             }

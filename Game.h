@@ -56,6 +56,7 @@ public:
     static int start;
     static int startTileX;
     static int startTileY;
+    static bool ignoreMissingGlobalShapes;
     static bool deleteTrWatermarks;
     static bool deleteViewDbSpheres;
     static bool createNewRoutes;
@@ -69,6 +70,7 @@ public:
     static bool viewWorldGrid;
     static bool viewTileGrid;
     static bool viewTerrainGrid;
+    static bool viewTerrainShape;
     static bool viewInteractives;
     static bool viewTrackDbLines;
     static bool viewTsectionLines;
@@ -96,6 +98,7 @@ public:
     static int shadowsEnabled;
     static float sunLightDirection[];
     static int textureQuality;
+    static float snapableRadius;
     
     static QString StyleMainLabel;
     static QString StyleGreenButton;

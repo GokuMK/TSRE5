@@ -305,7 +305,7 @@ void TDB::fillDynTrack(DynTrackObj* track){
     }
     
     bool success;
-    for(int i = tsection->tsectionShapes; i< tsection->routeShapes; i++){
+    for(int i = tsection->tsectionShapes; i < tsection->routeShapes; i++){
         success = true;
         if(tsection->shape[i] == NULL) continue;
         
@@ -390,8 +390,14 @@ void TDB::fillDynTrack(DynTrackObj* track){
         tsection->shape[tsection->routeShapes++] = newShape;
     }
     //qDebug() << "foundIdx "<<foundIdx;
-    
     track->sectionIdx = foundIdx;
+    for (int i = 0, j = 0; i < 5; i++) {
+        if(track->sections[i].sectIdx > 1000000) {
+            continue;
+        }
+        track->sections[i].sectIdx = tsection->shape[track->sectionIdx]->path[0].sect[j];
+        j++;
+    }
 }
 
 int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
@@ -1289,7 +1295,7 @@ void TDB::nextDefaultEnd(){
     this->defaultEnd++;
 }
 
-bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sectionIdx, int uid){
+bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sectionIdx){
     float qe[3];
     qe[0] = 0;
     qe[1] = 0;
@@ -2143,7 +2149,7 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
     }
 }
 
-bool TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpos){
+int TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpos){
     float *lineBuffer;
     int length = 0;
     getLines(lineBuffer, length, posT);
@@ -2176,8 +2182,11 @@ bool TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tp
         }
     }
     qDebug() << "item pos: " << best[0] << " " << best[1] << " " << best[2] << " " << best[3];
-    if(best[0] == 99999 )
-        return false;
+    float minDistance = best[0];
+    //if(best[0] == 99999 )
+    //    return false;
+    if(best[0] >= 99999)
+        return -1;
     //TRnode* n = trackNodes[(int)best[1]];
     //posT[0] = n->trVectorSection[(int)best[2]].param[8];
     //posT[1] = -n->trVectorSection[(int)best[2]].param[9];
@@ -2201,7 +2210,7 @@ bool TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tp
         Quat::rotateX(q, q, -best[4]);
     }
     
-    return true;
+    return minDistance;
 }
 
 bool TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos){

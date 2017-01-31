@@ -194,7 +194,7 @@ void GLWidget::paintGL() {
     if (!selection){
         TerrainLib::render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
     }
-    if(stickPointerToTerrain)
+    if(stickPointerToTerrain && Game::viewTerrainShape)
         if (!selection) drawPointer();
     
     int renderMode = GLUU::RENDER_DEFAULT;
@@ -202,7 +202,7 @@ void GLWidget::paintGL() {
         renderMode = GLUU::RENDER_SELECTION;
     route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, renderMode);
     
-    if(!stickPointerToTerrain)
+    if(!stickPointerToTerrain || !Game::viewTerrainShape)
         if (!selection) drawPointer();
 
     gluu->currentShader->release();
@@ -624,7 +624,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                     return;
                 //route->refreshObj(selectedObj);
                 route->nextDefaultEnd();
-                route->newPositionTDB(selectedObj, (float*)&lastNewObjPosT, (float*)&lastNewObjPos);                
+                route->newPositionTDB(selectedObj, (float*)lastNewObjPosT, (float*)selectedObj->firstPosition);                
                 break;
             default:
                 break;

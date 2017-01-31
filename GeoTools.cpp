@@ -54,27 +54,39 @@ GeoTools::GeoTools(QString name)
     
     
     // signals
-    QObject::connect(buttonTools["mapTileShowTool"], SIGNAL(released()),
-                      this, SLOT(mapTileShowToolEnabled()));
+    QObject::connect(buttonTools["mapTileShowTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(mapTileShowToolEnabled(bool)));
     
-    QObject::connect(buttonTools["mapTileLoadTool"], SIGNAL(released()),
-                      this, SLOT(mapTileLoadToolEnabled()));
+    QObject::connect(buttonTools["mapTileLoadTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(mapTileLoadToolEnabled(bool)));
     
-    QObject::connect(buttonTools["heightTileLoadTool"], SIGNAL(released()),
-                      this, SLOT(heightTileLoadToolEnabled()));
+    QObject::connect(buttonTools["heightTileLoadTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(heightTileLoadToolEnabled(bool)));
     
 }
 
-void GeoTools::mapTileShowToolEnabled(){
-    emit enableTool("mapTileShowTool");
+void GeoTools::mapTileShowToolEnabled(bool val){
+    if(val){
+        emit enableTool("mapTileShowTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void GeoTools::mapTileLoadToolEnabled(){
-    emit enableTool("mapTileLoadTool");
+void GeoTools::mapTileLoadToolEnabled(bool val){
+    if(val){
+        emit enableTool("mapTileLoadTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void GeoTools::heightTileLoadToolEnabled(){
-    emit enableTool("heightTileLoadTool");
+void GeoTools::heightTileLoadToolEnabled(bool val){
+    if(val){
+        emit enableTool("heightTileLoadTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
 GeoTools::~GeoTools() {

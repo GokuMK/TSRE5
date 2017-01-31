@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.675"; 
+QString Game::AppVersion = "v0.679"; 
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -40,6 +40,7 @@ int Game::startTileY = 0;
 float Game::objectLod = 3000;
 int Game::tileLod = 2;
 int Game::start = 0;
+bool Game::ignoreMissingGlobalShapes = false;
 bool Game::deleteTrWatermarks = false;
 bool Game::deleteViewDbSpheres = false;
 bool Game::createNewRoutes = false;
@@ -54,6 +55,7 @@ bool Game::cameraStickToTerrain = false;
 bool Game::viewWorldGrid = true;
 bool Game::viewTileGrid = true;
 bool Game::viewTerrainGrid = false;
+bool Game::viewTerrainShape = true;
 bool Game::viewInteractives = true;
 bool Game::viewTrackDbLines = true;
 bool Game::viewTsectionLines = true;
@@ -75,6 +77,7 @@ int Game::shadowMapSize = 2048;
 int Game::shadowsEnabled = 1;
 float Game::sunLightDirection[] = {-1.0,2.0,1.0};
 int Game::textureQuality = 1;
+float Game::snapableRadius = 20;
 
 QString Game::geoPath = "hgst";
 
@@ -226,6 +229,11 @@ void Game::load() {
                 sortTileObjects = true;
             else
                 sortTileObjects = false;
+        if(val == "ignoreMissingGlobalShapes")
+            if(args[1].trimmed().toLower() == "true")
+                ignoreMissingGlobalShapes = true;
+            else
+                ignoreMissingGlobalShapes = false;
         if(val == "oglDefaultLineWidth"){
             oglDefaultLineWidth = args[1].trimmed().toInt();
         }

@@ -264,6 +264,7 @@ WorldObj::WorldObj(const WorldObj& o) {
     fileName = o.fileName;
     Vec3::copy(position, (float*)o.position);
     Vec3::copy(placedAtPosition, (float*)o.placedAtPosition);
+    Vec3::copy(firstPosition, (float*)o.firstPosition);
     Quat::copy(qDirection, (float*)o.qDirection);
     memcpy(matrix, o.matrix, sizeof(float)*16);
     staticDetailLevel = o.staticDetailLevel;
@@ -569,6 +570,9 @@ void WorldObj::initPQ(float* p, float* q){
     this->placedAtPosition[0] = this->position[0];
     this->placedAtPosition[1] = this->position[1];
     this->placedAtPosition[2] = this->position[2];
+    this->firstPosition[0] = this->position[0];
+    this->firstPosition[1] = this->position[1];
+    this->firstPosition[2] = -this->position[2];
     this->qDirection[0] = q[0];
     this->qDirection[1] = q[1];
     this->qDirection[2] = -q[2];

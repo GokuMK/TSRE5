@@ -36,6 +36,7 @@ public:
     bool placementStickToTarget = false;
     float placementAutoLength = 50;
     bool placementAutoTwoPointRot = true;
+    bool snapableOnlyRotation = false;
     int placementAutoTargetType = 0;
     float placementAutoTranslationOffset[3];
     float placementAutoRotationOffset[3];
@@ -43,6 +44,7 @@ public:
     Route(const Route& orig);
     virtual ~Route();
     WorldObj* getObj(int x, int z, int uid);
+    Tile * requestTile(int x, int z);
     void save();
     void saveTrk();
     void createNewPaths();
@@ -75,6 +77,7 @@ public:
     WorldObj* autoPlaceObject(int x, int z, float* p);
     void replaceWorldObjPointer(WorldObj* o, WorldObj* n);
     void autoPlacementDeleteLast();
+    void moveWorldObjToTile(int x, int z, WorldObj* obj);
     void deleteTDBTree(WorldObj* obj);
     void deleteTDBVector(WorldObj* obj);
     void toggleToTDB(WorldObj* obj);

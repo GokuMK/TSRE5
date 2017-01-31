@@ -101,6 +101,7 @@ ObjTools::ObjTools(QString name)
     autoPlacementTarget.setStyleSheet("combobox-popup: 0;");
     autoPlacementTarget.addItem("Tracks");
     autoPlacementTarget.addItem("Roads");
+    autoPlacementTarget.addItem("Tracks & Roads");
     autoPlacementTarget.addItem("Snapable");
     vlist3->addWidget(new QLabel("Translate Offset"),row,0);
     vlist3->addWidget(new QLabel("X:"),row,1);
@@ -128,6 +129,15 @@ ObjTools::ObjTools(QString name)
     vlist3->addWidget(&autoPlacementRotZ,row++,6);    
     QObject::connect(&autoPlacementRotZ, SIGNAL(textEdited(QString)), this, SLOT(autoPlacementOffsetEnabled(QString)));
     autoPlacementRotZ.setText("0");
+    vlist3->addWidget(new QLabel("Snapable max radius:"),row,0,1,1);
+    vlist3->addWidget(&autoSnapableRadius,row,1,1,3);
+    QObject::connect(&autoSnapableRadius, SIGNAL(textEdited(QString)), this, SLOT(autoSnapableRadiusEnabled(QString)));
+    autoSnapableRadius.setText(QString::number(Game::snapableRadius));
+    autoSnapableRadius.setValidator(doubleValidator1);
+    QCheckBox *chSnapableOnlyRotation = new QCheckBox("Only Rot ");
+    vlist3->addWidget(chSnapableOnlyRotation,row++,4,1,3);
+    chSnapableOnlyRotation->setChecked(false);
+    QObject::connect(chSnapableOnlyRotation, SIGNAL(stateChanged(int)), this, SLOT(chSnapableOnlyRotation(int)));
     vlist3->addWidget(autoPlacementDeleteLast,row++,0,1,7);
     autoPlacementPosX.setValidator(doubleValidator);
     autoPlacementPosY.setValidator(doubleValidator);
@@ -252,12 +262,18 @@ void ObjTools::routeLoaded(Route* a){
     hash2.clear();
     //int i = 0;
     //int a1ti = 0;
+    QDir globalShapes(Game::root+"/global/shapes");
+    QStringList globalShapesList;
+    if(Game::ignoreMissingGlobalShapes)
+        globalShapesList = globalShapes.entryList();
     if(route->tsection->shape.size() > 0)
     for (auto it = route->tsection->shape.begin(); it != route->tsection->shape.end(); ++it ){
         track = it->second;
         //hash = track->filename.left(3).toStdString();
         if(track == NULL) continue;
         if(track->dyntrack) continue;
+        if(Game::ignoreMissingGlobalShapes)
+            if(!globalShapesList.contains(track->filename, Qt::CaseInsensitive)) continue;
         if(track->roadshape){
             hash2.append(track->filename.left(3).toLower());
         } else {
@@ -575,8 +591,20 @@ void ObjTools::itemSelected(Ref::RefItem* item){
     lastItemsPtr.push_back(item);
     
     new QListWidgetItem ( text, &lastItems, lastItemsPtr.size() - 1 );
-        if(lastItems.count() > 11)
-            delete lastItems.takeItem(0);
+    if(lastItems.count() > 11){
+        int val = 2147483646;
+        int itID = -1;
+        for(int i = 0; i < lastItems.count(); i++){
+            if(lastItems.item(i)->type() < val){
+                val = lastItems.item(i)->type();
+                itID = i;
+            }
+        }
+        if(itID != -1)
+            delete lastItems.takeItem(itID);
+    }
+    
+    lastItems.sortItems();
 }
 
 void ObjTools::stickToTDBEnabled(int state){
@@ -640,12 +668,24 @@ void ObjTools::autoPlacementRotTypeSelected(QString val){
 }
 
 void ObjTools::autoPlacementTargetSelected(QString val){
-    if(autoPlacementTarget.currentIndex() == 0)
-        this->route->placementAutoTargetType = 0;
-    if(autoPlacementTarget.currentIndex() == 1)
-        this->route->placementAutoTargetType = 1;
-    if(autoPlacementTarget.currentIndex() == 2)
-        this->route->placementAutoTargetType = 2;
+    this->route->placementAutoTargetType = autoPlacementTarget.currentIndex();
+}
+
+void ObjTools::autoSnapableRadiusEnabled(QString val){
+    float v;
+    bool ok = false;
+    v = val.toFloat(&ok);
+    qDebug()<< "Game::snapableRadius"<<v;
+    if(ok)
+        Game::snapableRadius = v;
+}
+
+
+void ObjTools::chSnapableOnlyRotation(int val){
+    if(val == 2)
+         this->route->snapableOnlyRotation = true;
+    else
+         this->route->snapableOnlyRotation = false;
 }
 
 void ObjTools::autoPlacementOffsetEnabled(QString val){

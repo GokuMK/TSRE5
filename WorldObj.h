@@ -64,6 +64,7 @@ public:
     QString fileName;
     float position[3];
     float placedAtPosition[3];
+    float firstPosition[3];
     float qDirection[4];
     float matrix[16];
     int staticDetailLevel = -1;

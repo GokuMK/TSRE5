@@ -173,7 +173,10 @@ Window::Window() {
     QObject::connect(viewTileGrid, SIGNAL(triggered(bool)), this, SLOT(viewTileGrid(bool)));    
     QAction* viewTerrainGrid = GuiFunct::newMenuCheckAction(tr("&Terrain Grid"), this, false); 
     viewMenu->addAction(viewTerrainGrid);
-    QObject::connect(viewTerrainGrid, SIGNAL(triggered(bool)), this, SLOT(viewTerrainGrid(bool)));    
+    QObject::connect(viewTerrainGrid, SIGNAL(triggered(bool)), this, SLOT(viewTerrainGrid(bool)));   
+    QAction* viewTerrainShape = GuiFunct::newMenuCheckAction(tr("&Terrain Shape"), this); 
+    viewMenu->addAction(viewTerrainShape);
+    QObject::connect(viewTerrainShape, SIGNAL(triggered(bool)), this, SLOT(viewTerrainShape(bool)));   
     QAction* showWorldObjPivotPoints = GuiFunct::newMenuCheckAction(tr("&WorldObj Markers"), this, false); 
     viewMenu->addAction(showWorldObjPivotPoints);
     QObject::connect(showWorldObjPivotPoints, SIGNAL(triggered(bool)), this, SLOT(showWorldObjPivotPointsEnabled(bool)));
@@ -311,6 +314,8 @@ Window::Window() {
         if(*it == NULL) continue;
         QObject::connect((*it), SIGNAL(enableTool(QString)),
             glWidget, SLOT(enableTool(QString)));   
+        QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), 
+                (*it), SLOT(msg(QString, QString)));
     }
     
     QObject::connect(propertiesDyntrack, SIGNAL(enableTool(QString)),
@@ -551,6 +556,9 @@ void Window::viewWorldGrid(bool show){
 }
 void Window::viewTileGrid(bool show){
     Game::viewTileGrid = show;
+}
+void Window::viewTerrainShape(bool show){
+    Game::viewTerrainShape = show;
 }
 void Window::viewTerrainGrid(bool show){
     Game::viewTerrainGrid = show;

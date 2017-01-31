@@ -30,6 +30,7 @@ public:
     int tileZ;
     
     static std::unordered_map<int, QImage*> mapTileImages;
+    static bool LoadMapFromDisk(int x, int z);
     MapWindow();
     virtual ~MapWindow();
     bool ok = false;
@@ -38,6 +39,7 @@ public:
     
 public slots:
     void load();
+    void saveToDisk();
     void colorComboActivated(QString val);
     void reload();
     void isStatusInfo(QString val);

@@ -14,6 +14,13 @@
 #include "Game.h"
 
 PropertiesDyntrack::PropertiesDyntrack() {
+    buttonTools["FlexTool"] = new QPushButton("Flex", this);
+    QMapIterator<QString, QPushButton*> i(buttonTools);
+    while (i.hasNext()) {
+        i.next();
+        i.value()->setCheckable(true);
+    }
+    
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
@@ -87,8 +94,7 @@ PropertiesDyntrack::PropertiesDyntrack() {
     wSect[4].setLayout(&vSect[4]);
     vbox->addWidget(&wSect[4]);
     
-    QPushButton *flex = new QPushButton("Flex", this);
-    vbox->addWidget(flex);
+    vbox->addWidget(buttonTools["FlexTool"]);
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -129,12 +135,34 @@ PropertiesDyntrack::PropertiesDyntrack() {
     QObject::connect(&dyntrackSect, SIGNAL(mapped(int)),
             this, SLOT(sSectEnabled(int)));
     
-    QObject::connect(flex, SIGNAL(released()),
+    QObject::connect(buttonTools["FlexTool"], SIGNAL(released()),
                       this, SLOT(flexEnabled()));
     
 }
 
 PropertiesDyntrack::~PropertiesDyntrack() {
+}
+
+void PropertiesDyntrack::msg(QString name, QString val){
+    if(name == "toolEnabled"){
+        QMapIterator<QString, QPushButton*> i(buttonTools);
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(true);
+            i.value()->setChecked(false);
+        }
+        if(buttonTools[val] != NULL)
+            buttonTools[val]->setChecked(true);
+        i.toFront();
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(false);
+        }
+    }
 }
 
 void PropertiesDyntrack::showObj(WorldObj* obj){

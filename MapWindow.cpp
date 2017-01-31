@@ -20,6 +20,7 @@
 #include "MapDataOSM.h"
 #include "MapDataUrlImage.h"
 #include <QTime>
+#include "Game.h"
 
 std::unordered_map<int, QImage*> MapWindow::mapTileImages;
 
@@ -33,6 +34,8 @@ MapWindow::MapWindow() : QDialog() {
     mapServices.push_back(new MapDataUrlImage());
     
     loadButton = new QPushButton("Load", this);
+    QPushButton *saveButton = new QPushButton("Save to disk", this);
+    saveButton->setFixedWidth(100);
     QImage myImage(800, 800, QImage::Format_RGB888);
     //myImage->load("F:/2.png");
     imageLabel = new QLabel("");
@@ -55,6 +58,7 @@ MapWindow::MapWindow() : QDialog() {
     vlist3->addWidget(loadButton,0,1);
     vlist3->addWidget(colorLabel,0,2);
     vlist3->addWidget(colorCombo,0,3);
+    vlist3->addWidget(saveButton,0,4);
     mainLayout->addItem(vlist3);
     mainLayout->addWidget(imageLabel);
     mainLayout->setContentsMargins(1,1,1,1);
@@ -73,7 +77,8 @@ MapWindow::MapWindow() : QDialog() {
     QObject::connect(loadButton, SIGNAL(released()),
                       this, SLOT(load()));
     
-    //
+    QObject::connect(saveButton, SIGNAL(released()),
+                      this, SLOT(saveToDisk()));
         
     QObject::connect(colorCombo, SIGNAL(activated(QString)),
                       this, SLOT(colorComboActivated(QString)));
@@ -165,6 +170,27 @@ void MapWindow::reload(){
     if(MapWindow::mapTileImages[hash] != NULL)
         delete MapWindow::mapTileImages[hash];
     MapWindow::mapTileImages[hash] = myImage;
+}
+
+void MapWindow::saveToDisk(){
+    int hash = (int)(this->tileX)*10000+(int)(this->tileZ);
+    if(MapWindow::mapTileImages[hash] == NULL)
+        return;
+    QString path = Game::root + "/routes/" + Game::route + "/terrain_maps/";
+    path.replace("//","/");
+    if (!QDir(path).exists()) {
+        QDir().mkdir(path);
+    }
+    MapWindow::mapTileImages[hash]->save(path+QString::number(hash)+".png", "PNG");
+}
+
+bool MapWindow::LoadMapFromDisk(int x, int z){
+    int hash = x*10000+z;
+    QString path = Game::root + "/routes/" + Game::route + "/terrain_maps/"+QString::number(hash)+".png";
+    QFile file(path);
+    if(!file.exists())
+        return false;
+    MapWindow::mapTileImages[hash] = new QImage(QImage(path).convertToFormat(QImage::Format_RGB888));
 }
 
 MapWindow::~MapWindow() {

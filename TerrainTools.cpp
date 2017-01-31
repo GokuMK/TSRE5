@@ -219,47 +219,41 @@ TerrainTools::TerrainTools(QString name)
     
     
     // signals
-    QObject::connect(buttonTools["heightTool"], SIGNAL(released()),
-                      this, SLOT(heightToolEnabled()));
+    QObject::connect(buttonTools["heightTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(heightToolEnabled(bool)));
     
-    QObject::connect(buttonTools["paintToolColor"], SIGNAL(released()),
-                      this, SLOT(paintColorToolEnabled()));
+    QObject::connect(buttonTools["paintToolColor"], SIGNAL(toggled(bool)),
+                      this, SLOT(paintColorToolEnabled(bool)));
     
-    QObject::connect(buttonTools["paintToolTexture"], SIGNAL(released()),
-                      this, SLOT(paintTexToolEnabled()));
+    QObject::connect(buttonTools["paintToolTexture"], SIGNAL(toggled(bool)),
+                      this, SLOT(paintTexToolEnabled(bool)));
     
-    QObject::connect(buttonTools["lockTexTool"], SIGNAL(released()),
-                      this, SLOT(lockTexToolEnabled()));
+    QObject::connect(buttonTools["lockTexTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(lockTexToolEnabled(bool)));
     
-    QObject::connect(buttonTools["pickTerrainTexTool"], SIGNAL(released()),
-                      this, SLOT(pickTexToolEnabled()));
+    QObject::connect(buttonTools["pickTerrainTexTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(pickTexToolEnabled(bool)));
+    
+    QObject::connect(buttonTools["waterTerrTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(waterTerrToolEnabled(bool)));
+    
+    QObject::connect(buttonTools["waterHeightTileTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(waterHeightTileToolEnabled(bool)));
+    
+    QObject::connect(buttonTools["fixedTileTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(fixedTileToolEnabled(bool)));
+    
+    QObject::connect(buttonTools["gapsTerrainTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(gapsTerrToolEnabled(bool)));
+    
+    QObject::connect(buttonTools["drawTerrTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(drawTerrToolEnabled(bool)));
+    
+    QObject::connect(buttonTools["putTerrainTexTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(putTexToolEnabled(bool)));
     
     QObject::connect(loadTerrainTexTool, SIGNAL(released()),
                       this, SLOT(setTexToolEnabled()));
-    
-    QObject::connect(buttonTools["waterTerrTool"], SIGNAL(released()),
-                      this, SLOT(waterTerrToolEnabled()));
-    
-    QObject::connect(buttonTools["waterHeightTileTool"], SIGNAL(released()),
-                      this, SLOT(waterHeightTileToolEnabled()));
-    
-    QObject::connect(buttonTools["fixedTileTool"], SIGNAL(released()),
-                      this, SLOT(fixedTileToolEnabled()));
-    
-    QObject::connect(buttonTools["gapsTerrainTool"], SIGNAL(released()),
-                      this, SLOT(gapsTerrToolEnabled()));
-    
-    /*QObject::connect(mapTileShowTool, SIGNAL(released()),
-                      this, SLOT(mapTileShowToolEnabled()));
-    
-    QObject::connect(mapTileLoadTool, SIGNAL(released()),
-                      this, SLOT(mapTileLoadToolEnabled()));
-    
-    QObject::connect(heightTileLoadTool, SIGNAL(released()),
-                      this, SLOT(heightTileLoadToolEnabled()));*/
-    
-    QObject::connect(buttonTools["drawTerrTool"], SIGNAL(released()),
-                      this, SLOT(drawTerrToolEnabled()));
     
     QObject::connect(colorw, SIGNAL(released()),
                       this, SLOT(chooseColorEnabled()));
@@ -302,9 +296,6 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(leEradius, SIGNAL(textEdited(QString)),
                       this, SLOT(setEradius(QString)));
     
-    QObject::connect(buttonTools["putTerrainTexTool"], SIGNAL(released()),
-                      this, SLOT(putTexToolEnabled()));
-    
     QObject::connect(fheight, SIGNAL(textEdited(QString)),
                       this, SLOT(setFheight(QString)));
     
@@ -324,25 +315,41 @@ TerrainTools::TerrainTools(QString name)
 TerrainTools::~TerrainTools() {
 }
 
-void TerrainTools::heightToolEnabled(){
-    emit setPaintBrush(this->paintBrush);
-    emit enableTool("heightTool");
+void TerrainTools::heightToolEnabled(bool val){
+    if(val){
+        emit setPaintBrush(this->paintBrush);
+        emit enableTool("heightTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void TerrainTools::paintColorToolEnabled(){
-    this->paintBrush->useTexture = false;
-    emit setPaintBrush(this->paintBrush);
-    emit enableTool("paintToolColor");
+void TerrainTools::paintColorToolEnabled(bool val){
+     if(val){
+        this->paintBrush->useTexture = false;
+        emit setPaintBrush(this->paintBrush);
+        emit enableTool("paintToolColor");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void TerrainTools::gapsTerrToolEnabled(){
-    emit enableTool("gapsTerrainTool");
+void TerrainTools::gapsTerrToolEnabled(bool val){
+    if(val){
+        emit enableTool("gapsTerrainTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void TerrainTools::paintTexToolEnabled(){
-    this->paintBrush->useTexture = true;
-    emit setPaintBrush(this->paintBrush);
-    emit enableTool("paintToolTexture");
+void TerrainTools::paintTexToolEnabled(bool val){
+    if(val){
+        this->paintBrush->useTexture = true;
+        emit setPaintBrush(this->paintBrush);
+        emit enableTool("paintToolTexture");
+    } else {
+        emit enableTool("");
+    }
 }
 
 void TerrainTools::chooseColorEnabled(){
@@ -354,34 +361,62 @@ void TerrainTools::chooseColorEnabled(){
     colorw->setText(color.name());
 }
 
-void TerrainTools::pickTexToolEnabled(){
-    emit enableTool("pickTerrainTexTool");
+void TerrainTools::pickTexToolEnabled(bool val){
+    if(val){
+        emit enableTool("pickTerrainTexTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void TerrainTools::lockTexToolEnabled(){
-    emit enableTool("lockTexTool");
+void TerrainTools::lockTexToolEnabled(bool val){
+    if(val){
+        emit enableTool("lockTexTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void TerrainTools::waterTerrToolEnabled(){
-    emit enableTool("waterTerrTool");
+void TerrainTools::waterTerrToolEnabled(bool val){
+    if(val){
+        emit enableTool("waterTerrTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void TerrainTools::drawTerrToolEnabled(){
-    emit enableTool("drawTerrTool");
+void TerrainTools::drawTerrToolEnabled(bool val){
+    if(val){
+        emit enableTool("drawTerrTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void TerrainTools::waterHeightTileToolEnabled(){
-    emit enableTool("waterHeightTileTool");
+void TerrainTools::waterHeightTileToolEnabled(bool val){
+    if(val){
+        emit enableTool("waterHeightTileTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void TerrainTools::putTexToolEnabled(){
-    emit setPaintBrush(this->paintBrush);
-    emit enableTool("putTerrainTexTool");
+void TerrainTools::putTexToolEnabled(bool val){
+    if(val){
+        emit setPaintBrush(this->paintBrush);
+        emit enableTool("putTerrainTexTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
-void TerrainTools::fixedTileToolEnabled(){
-    emit setPaintBrush(this->paintBrush);
-    emit enableTool("fixedTileTool");
+void TerrainTools::fixedTileToolEnabled(bool val){
+    if(val){
+        emit setPaintBrush(this->paintBrush);
+        emit enableTool("fixedTileTool");
+    } else {
+        emit enableTool("");
+    }
 }
 
 void TerrainTools::setTexToolEnabled(){

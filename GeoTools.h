@@ -21,9 +21,9 @@ public:
     virtual ~GeoTools();
     
 public slots:
-    void mapTileShowToolEnabled();
-    void mapTileLoadToolEnabled();
-    void heightTileLoadToolEnabled();
+    void mapTileShowToolEnabled(bool val);
+    void mapTileLoadToolEnabled(bool val);
+    void heightTileLoadToolEnabled(bool val);
     void msg(QString text, QString val);
     
 signals:

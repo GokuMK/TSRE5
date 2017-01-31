@@ -140,7 +140,6 @@ void MapDataUrlImage::load() {
             p00.Longitude = minlon + j*lonstep;
             p00.Latitude = floor(p00.Latitude*10000)/10000;
             p00.Longitude = floor(p00.Longitude*10000)/10000;
-            p00.Longitude = minlon + j*lonstep;
             get(&p00);
         }
 
@@ -243,15 +242,17 @@ MapDataUrlImage::MapImage::MapImage(double tlat, double tlon, int tzoom, unsigne
     Mercator proj;
     double cx, cy;
     proj.fromLatLngToPoint(lat, lon, cx, cy);
-
+    //qDebug() << "cp: "<<cx<<cy;
     //double fix = 0.96;
     double SWx = (cx - (Resolution/2.0)/ scale);
     double SWy = (cy + (Resolution/2.0)/ scale);
+    //qDebug() << "c1: "<<SWx<<SWy;
     proj.fromPointToLatLng(SWx, SWy, minlat, minlon);
     //qDebug() << "corner: "<<minlat<<minlon;
 
     double NEx = (cx + (Resolution/2.0)/ scale);
     double NEy = (cy - (Resolution/2.0)/ scale);
+    //qDebug() << "c2: "<<NEx<<NEy;
     proj.fromPointToLatLng(NEx, NEy, maxlat, maxlon);
     //qDebug() << "corner: "<<maxlat<<maxlon;
     //qDebug() << "lat size: "<<maxlat-minlat;

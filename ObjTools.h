@@ -43,6 +43,8 @@ public slots:
     void autoPlacementRotTypeSelected(QString val);
     void autoPlacementTargetSelected(QString val);
     void autoPlacementOffsetEnabled(QString val);
+    void autoSnapableRadiusEnabled(QString val);
+    void chSnapableOnlyRotation(int val);
 
     void showLastItemsContextMenu(QPoint val);
     void lastItemsMenuFindSimilar();
@@ -88,6 +90,7 @@ private:
     QLineEdit autoPlacementRotX;
     QLineEdit autoPlacementRotY;
     QLineEdit autoPlacementRotZ;
+    QLineEdit autoSnapableRadius;
     QComboBox autoPlacementRotType;
     QComboBox autoPlacementTarget;
     

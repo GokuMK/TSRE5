@@ -28,6 +28,7 @@ public slots:
     void flexData(int x, int z, float* p);
     void chSectEnabled(int idx);
     void sSectEnabled(int idx);
+    void msg(QString name, QString val);
     
 signals:
     void enableTool(QString val);

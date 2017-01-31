@@ -83,6 +83,7 @@ void Tile::wczytajObiekty() {
     for (auto it = obiekty.begin(); it != obiekty.end(); ++it) {
         //console.log(obj.type);
         WorldObj* obj = (WorldObj*) it->second;
+        if(obj == NULL) continue;
         obj->load(x, z);
         if(obj->UiD < 1000000)
             if(obj->UiD > maxUiD) maxUiD = obj->UiD;
@@ -311,6 +312,7 @@ void Tile::loadWS() {
 
 WorldObj* Tile::getObj(int uid) {
     for (int i = 0; i < jestObiektow; i++) {
+        if(obiekty[i] == NULL) continue;
         if (obiekty[i]->UiD == uid) {
             return obiekty[i];
         }
@@ -382,11 +384,42 @@ for(int i = 0; i < this->viewDbSphere.size(); i++){
 
 void Tile::transalteObj(float px, float py, float pz, int uid) {
     for (int i = 0; i < jestObiektow; i++) {
+        if(obiekty[i] == NULL) continue;
         if (obiekty[i]->UiD == uid) {
             obiekty[i]->translate(px, py, pz);
         }
     }
     modified = true;
+}
+
+void Tile::deleteObject(WorldObj* obj){
+    for(int i = 0; i < jestObiektow; i++ ){
+        if(obiekty[i] == NULL) continue;
+        if(obiekty[i] == obj){
+            obiekty[i] = NULL;
+            if(i == jestObiektow - 1)
+                jestObiektow--;
+            if(obj->UiD == maxUiD )
+                maxUiD--;
+            return;
+        }
+    }
+}
+
+WorldObj* Tile::placeObject(WorldObj* obj){
+    if(loaded != 1) return NULL;
+    obiekty[jestObiektow++] = obj;
+    //qDebug() << obiekty[jestObiektow-1]->qDirection[3];
+    obj->set("x", x);
+    obj->set("z", z);
+    obj->modified = true;
+    if(obj->isSoundItem())
+        obj->UiD = ++maxUiDWS;
+    else
+        obj->UiD = ++maxUiD;
+    modified = true;
+    obj->setMartix();
+    return obj;
 }
 
 WorldObj* Tile::placeObject(float* p, Ref::RefItem* itemData) {
@@ -493,6 +526,7 @@ void Tile::save() {
 
     if(!Game::sortTileObjects){
         for(int i = 0; i < this->jestObiektow; i++){
+            if(obiekty[i] == NULL) continue;
             if(this->obiekty[i]->isSoundItem()) continue;
                 this->obiekty[i]->save(&out);
         }
@@ -503,6 +537,7 @@ void Tile::save() {
             count = 0;
             if( iLevel > 0 ){
                 for(int i = 0; i < this->jestObiektow; i++){
+                    if(obiekty[i] == NULL) continue;
                     if(this->obiekty[i]->isSoundItem()) continue;
                     if(this->obiekty[i]->getCurrentDetailLevel() == iLevel)
                         count++;
@@ -513,6 +548,7 @@ void Tile::save() {
             }
             // save current level objects;
             for(int i = 0; i < this->jestObiektow; i++){
+                if(obiekty[i] == NULL) continue;
                 if(this->obiekty[i]->isSoundItem()) continue;
                 if(this->obiekty[i]->getCurrentDetailLevel() == iLevel)
                     this->obiekty[i]->save(&out);
@@ -536,6 +572,7 @@ void Tile::saveWS() {
     
     int countWS = 0;
     for(int i = 0; i < this->jestObiektow; i++){
+        if(obiekty[i] == NULL) continue;
         if(this->obiekty[i]->isSoundItem() && this->obiekty[i]->loaded) countWS++;
     }
     qDebug() << countWS;
@@ -553,6 +590,7 @@ void Tile::saveWS() {
     out << "\n";
     out << "Tr_Worldsoundfile (\n";
     for(int i = 0; i < this->jestObiektow; i++){
+        if(obiekty[i] == NULL) continue;
         if(!this->obiekty[i]->isSoundItem()) continue;
             this->obiekty[i]->save(&out);
     }
@@ -567,6 +605,7 @@ bool Tile::isModified(){
     
     if(value == false)
         for (int i = 0; i < jestObiektow; i++) {
+            if(obiekty[i] == NULL) continue;
             if(obiekty[i]->modified)
                 return true;
             }
@@ -580,6 +619,7 @@ void Tile::setModified(bool value){
     
     if(value == false){
         for (int i = 0; i < jestObiektow; i++) {
+            if(obiekty[i] == NULL) continue;
             obiekty[i]->modified = false;
         }
     }
@@ -591,6 +631,7 @@ void Tile::render() {
 
 void Tile::updateTerrainObjects(){
     for (int i = 0; i < jestObiektow; i++) {
+        if(obiekty[i] == NULL) continue;
         if (obiekty[i]->loaded) 
             if(obiekty[i]->typeID == WorldObj::forest || obiekty[i]->typeID == WorldObj::transfer)
                obiekty[i]->deleteVBO();
@@ -600,6 +641,7 @@ void Tile::updateTerrainObjects(){
 float Tile::getNearestSnapablePosition(float* pos, float *quat, float* out){
     QVector<float> points;
     for (int i = 0; i < jestObiektow; i++) {
+        if(obiekty[i] == NULL) continue;
         if (obiekty[i]->loaded && obiekty[i]->snapable) {
             obiekty[i]->insertSnapablePoints(points);                
         }
@@ -619,7 +661,7 @@ float Tile::getNearestSnapablePosition(float* pos, float *quat, float* out){
             Quat::copy(tquat, (float*)&points[i+6]);
         }
     }
-    if(distance < 20){
+    if(distance < Game::snapableRadius){
         Vec3::copy(pos, tpos);
         Quat::copy(quat, tquat);
     }
@@ -635,6 +677,7 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, int
     int selectionColor = 0;
     float lodx, lodz, lod;
     for (int i = 0; i < jestObiektow; i++) {
+        if(obiekty[i] == NULL) continue;
         if (obiekty[i]->loaded) {
             lodx = (x - playerT[0])*2048 + obiekty[i]->position[0] - playerW[0];
             lodz = (z - playerT[1])*2048 + obiekty[i]->position[2] - playerW[2];

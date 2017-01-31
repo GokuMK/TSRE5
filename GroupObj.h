@@ -58,12 +58,15 @@ public:
     bool select();
     bool select(int val);
     bool unselect();
+    void setIndividualRotation(bool val);
+    bool isIndividualRotation();
     unsigned int count();
     void fromNewObjects(GroupObj *objList, Route *route, int x, int z, float *p);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     virtual ~GroupObj();
 private:
     Pivot pivot;
+    bool individualRotation = false;
 };
 
 #endif	/* GROUPOBJ_H */

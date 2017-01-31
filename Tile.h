@@ -51,6 +51,8 @@ public:
     bool isModified();
     void setModified(bool value);
     WorldObj* getObj(int uid);
+    void deleteObject(WorldObj* obj);
+    WorldObj* placeObject(WorldObj* obj);
     WorldObj* placeObject(float* p, Ref::RefItem* itemData);
     WorldObj* placeObject(float* p, float* q, Ref::RefItem* itemData, float* tpos = NULL);
     void transalteObj(float px, float py, float pz, int uid);

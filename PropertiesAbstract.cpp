@@ -53,6 +53,10 @@ void PropertiesAbstract::enableTool(){
     
 }*/
 
+void PropertiesAbstract::msg(QString name, QString val){
+    
+}
+
 void PropertiesAbstract::copyREnabled(){
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(this->quat.text());
