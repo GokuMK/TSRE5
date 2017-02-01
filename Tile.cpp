@@ -638,7 +638,7 @@ void Tile::updateTerrainObjects(){
     }
 }
 
-float Tile::getNearestSnapablePosition(float* pos, float *quat, float* out){
+float Tile::getNearestSnapablePosition(float* pos, float *quat, int uid){
     QVector<float> points;
     for (int i = 0; i < jestObiektow; i++) {
         if(obiekty[i] == NULL) continue;
@@ -650,22 +650,32 @@ float Tile::getNearestSnapablePosition(float* pos, float *quat, float* out){
     float t;
     float tpos[3];
     float tquat[4];
-    for (int i = 0; i < points.size(); i+=10){
+    int nrp = -1;
+    for (int i = 0, j = 0; i < points.size(); i+=11, j++){
+        if(points[i+10] == uid) continue;
         //qDebug() << points[i+3] << points[i+4] << points[i+5];
         t = Vec3::dist(pos, (float*)&points[i+3]);
         //qDebug() << t;
         if(t < distance){
             distance = t;
+            nrp = j%2;
             Vec3::copy(tpos, (float*)&points[i+3]);
-            Vec3::add(tpos, tpos, (float*)&points[i]);
+            //Vec3::add(tpos, tpos, (float*)&points[i]);
+            //if(j%2 == 0)
+            //    Vec3::sub(tpos, tpos, (float*)&points[i+11]);
+            //else
+            //    Vec3::sub(tpos, tpos, (float*)&points[i-11]);
             Quat::copy(tquat, (float*)&points[i+6]);
         }
     }
     if(distance < Game::snapableRadius){
         Vec3::copy(pos, tpos);
-        Quat::copy(quat, tquat);
+        if(quat != NULL)
+            Quat::copy(quat, tquat);
+        if(quat != NULL)
+            Quat::copy(quat, tquat);
     }
-    return distance;
+    return nrp;
 }
 
 void Tile::render(float * playerT, float* playerW, float* target, float fov, int renderMode) {

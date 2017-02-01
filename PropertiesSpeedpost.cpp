@@ -21,13 +21,14 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
-    vbox->addWidget(&speedpostType);
     QFormLayout *vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
     this->uid.setDisabled(true);
     this->tX.setDisabled(true);
     this->tY.setDisabled(true);
+    vlist->addRow("Type:",&this->speedpostType);
+    speedpostType.setDisabled(true);
     vlist->addRow("UiD:",&this->uid);
     vlist->addRow("Tile X:",&this->tX);
     vlist->addRow("Tile Z:",&this->tY);
@@ -177,6 +178,27 @@ void PropertiesSpeedpost::showObj(WorldObj* obj){
         this->number.setDisabled(true);
         this->number.setText("");
         this->speed.setText("");
+    }
+}
+
+void PropertiesSpeedpost::updateObj(WorldObj* obj){
+    if(obj == NULL){
+        return;
+    }
+
+    if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
+        this->uid.setText(QString::number(obj->UiD, 10));
+        this->tX.setText(QString::number(obj->x, 10));
+        this->tY.setText(QString::number(-obj->y, 10));
+        this->posX.setText(QString::number(obj->position[0], 'G', 4));
+        this->posY.setText(QString::number(obj->position[1], 'G', 4));
+        this->posZ.setText(QString::number(-obj->position[2], 'G', 4));
+        this->quat.setText(
+                QString::number(obj->qDirection[0], 'G', 4) + " " +
+                QString::number(obj->qDirection[1], 'G', 4) + " " +
+                QString::number(-obj->qDirection[2], 'G', 4) + " " +
+                QString::number(obj->qDirection[3], 'G', 4)
+                );
     }
 }
 

@@ -66,6 +66,7 @@ public:
     float getStartpZ();
     Trk *getTrk();
     std::unordered_map<std::string, Coords*> getMkrList();
+    void dragWorldObject(WorldObj* obj, int x, int z, float* pos);
     void setMkrFile(QString name);
     void getUnsavedInfo(std::vector<QString> &items);
     void showTrkEditr(Trk * val = NULL);

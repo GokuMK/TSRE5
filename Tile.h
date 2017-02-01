@@ -58,7 +58,7 @@ public:
     void transalteObj(float px, float py, float pz, int uid);
     void initNew();
     void updateTerrainObjects();
-    float getNearestSnapablePosition(float *pos, float *quat, float *out);
+    float getNearestSnapablePosition(float *pos, float *quat, int uid = -1);
     void render();
     void render(float *  playerT, float* playerW, float* target, float fov, int renderMode);
     //void renderWS(float *  playerT, float* playerW, float* target, float fov, int renderMode);

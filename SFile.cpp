@@ -166,6 +166,8 @@ void SFile::load() {
 }
 
 void SFile::loadSd() {
+    if(loadedSd == true)
+        return;
     QFile file(pathid+"d");
     if (!file.open(QIODevice::ReadOnly)){
         qDebug() << "Sd Shape: not exist "<<pathid+"d";
@@ -344,6 +346,8 @@ bool SFile::isSnapable(){
 }
 
 void SFile::addSnapablePoints(QVector<float> &out){
+    //if(!this->loadedSd)
+    //    loadSd();
     if(esdBoundingBox.size() == 0) return;
     out.push_back(esdBoundingBox[0].shape[0]);
     out.push_back(0);

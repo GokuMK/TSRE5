@@ -1301,8 +1301,8 @@ bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sect
     qe[1] = 0;
     qe[2] = 0;
     int findValue = findNearestNode(x, z, p, (float*) &qe);
-    qDebug() << findValue;
     if(findValue < 0) return false;
+    qDebug() << findValue;
     
     bool b;
     
@@ -1648,7 +1648,7 @@ bool TDB::removeTrackFromTDB(int x, int y, int UiD){
 
 bool TDB::ifTrackExist(int x, int y, int UiD){
     y = -y;
-    qDebug() << "is Track? " << x << " " << y << " " << UiD; 
+    //qDebug() << "is Track? " << x << " " << y << " " << UiD; 
     
     TRnode *n;
     for (int i = 1; i <= iTRnodes; i++) {

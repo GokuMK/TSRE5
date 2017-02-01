@@ -22,6 +22,7 @@ public:
     virtual ~PropertiesSpeedpost();
     bool support(WorldObj* obj);
     void showObj(WorldObj* obj);
+    void updateObj(WorldObj* obj);
     
 public slots:
     void flipSignal();
@@ -33,7 +34,7 @@ signals:
     
 private:
     SpeedpostObj* sobj;
-    QLabel speedpostType;
+    QLineEdit speedpostType;
     QLineEdit speed;
     QLineEdit number;
     QComboBox ptb;

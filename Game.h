@@ -99,6 +99,7 @@ public:
     static float sunLightDirection[];
     static int textureQuality;
     static float snapableRadius;
+    static bool snapableOnlyRot;
     
     static QString StyleMainLabel;
     static QString StyleGreenButton;

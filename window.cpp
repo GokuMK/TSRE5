@@ -232,6 +232,7 @@ Window::Window() {
     // Settigs
     terrainCameraAction = GuiFunct::newMenuCheckAction(tr("&Stick Camera To Terrain"), this); 
     terrainCameraAction->setChecked(false);
+    terrainCameraAction->setShortcut(QKeySequence("/"));
     QObject::connect(terrainCameraAction, SIGNAL(triggered(bool)), this, SLOT(terrainCamera(bool)));
     settingsMenu = menuBar()->addMenu(tr("&Settings"));
     settingsMenu->addAction(terrainCameraAction);

@@ -496,6 +496,14 @@ void WorldObj::removedFromTDB(){
     
 }
 
+void WorldObj::snapped(int side){
+    
+}
+
+void WorldObj::loadSnapablePoints(){
+    
+}
+
 void WorldObj::setMartix(){
     Mat4::fromRotationTranslation(this->matrix, qDirection, position);
     Mat4::rotate(this->matrix, this->matrix, M_PI, 0, -1, 0);

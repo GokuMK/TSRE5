@@ -123,10 +123,7 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     } else {
         if (Game::currentShapeLib->shape[shape]->loaded){
             size = Game::currentShapeLib->shape[shape]->size;
-            
-            this->snapable = this->shapePointer->isSnapable();
-            if(snapable)
-                this->shapePointer->addSnapablePoints(this->snapablePoints);
+            loadSnapablePoints();
         }
     }
 
@@ -160,6 +157,29 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
         drawBox();
     }
 };
+
+void StaticObj::snapped(int side){
+    if(side > -1){
+        QVector<float> points;
+        loadSnapablePoints();
+        insertSnapablePoints(points);
+        if(points.size() > 11){
+            if(side%2 == 0)
+                Vec3::sub(position, position, (float*)&points[11]);
+            else
+                Vec3::sub(position, position, (float*)&points[0]);
+            setMartix();
+        }
+    }
+}
+
+void StaticObj::loadSnapablePoints() {
+    if(snapable == true)
+        return;
+    snapable = this->shapePointer->isSnapable();
+    if(snapable)
+        this->shapePointer->addSnapablePoints(this->snapablePoints);
+}
 
 void StaticObj::renderSnapableEndpoints(GLUU* gluu) {
     if (snapableEndPoint == NULL) {
@@ -206,6 +226,7 @@ void StaticObj::insertSnapablePoints(QVector<float>& points){
             points.push_back(qDirection[1]);
             points.push_back(qDirection[2]);
             points.push_back(qDirection[3]);
+            points.push_back(UiD);
         }
     }
     return;

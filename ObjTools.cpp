@@ -136,7 +136,7 @@ ObjTools::ObjTools(QString name)
     autoSnapableRadius.setValidator(doubleValidator1);
     QCheckBox *chSnapableOnlyRotation = new QCheckBox("Only Rot ");
     vlist3->addWidget(chSnapableOnlyRotation,row++,4,1,3);
-    chSnapableOnlyRotation->setChecked(false);
+    chSnapableOnlyRotation->setChecked(Game::snapableOnlyRot);
     QObject::connect(chSnapableOnlyRotation, SIGNAL(stateChanged(int)), this, SLOT(chSnapableOnlyRotation(int)));
     vlist3->addWidget(autoPlacementDeleteLast,row++,0,1,7);
     autoPlacementPosX.setValidator(doubleValidator);
@@ -225,7 +225,11 @@ ObjTools::~ObjTools() {
 
 void ObjTools::routeLoaded(Route* a){
     this->route = a;
-
+            
+    autoPlacementTarget.setCurrentIndex(2);
+    route->placementAutoTargetType = 2;
+    route->snapableOnlyRotation = Game::snapableOnlyRot;
+    
     QStringList hash;
     QStringList hash2;
     QMapIterator<QString, QVector<Ref::RefItem>> i(route->ref->refItems);

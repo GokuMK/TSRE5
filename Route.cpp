@@ -387,44 +387,91 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     if(tTile == NULL) return NULL;
     if(tTile->loaded != 1) return NULL;
     
-        if(placementStickToTarget && placementAutoTargetType == 3){
-            float snapablePos[3];
-            tTile->getNearestSnapablePosition(p, q, snapablePos);
-        }
+    int snapableSide = -1;
+    if(placementStickToTarget && placementAutoTargetType == 3){
+        snapableSide = tTile->getNearestSnapablePosition(p, q);
+    }
         
-        float endp[5];
-        memset(endp, 0, sizeof(endp));
-        endp[3] = 1;
-        float firstPos[3];
-        if ((r->type == "trackobj" || r->type == "dyntrack" )) {
-            qDebug() <<"1: "<< x <<" "<<z<<" "<<p[0]<<" "<<p[1]<<" "<<p[2]; 
-            int oldx = x;
-            int oldz = z;
-            Vec3::copy(firstPos, p);
-            if(this->tsection->isRoadShape(r->value))
-                this->roadDB->findPosition(x, z, p, q, endp, r->value);
-            else
-                this->trackDB->findPosition(x, z, p, q, endp, r->value);
-            Game::check_coords(x, z, p);
-            firstPos[0] -= (x-oldx)*2048;
-            firstPos[2] -= (z-oldz)*2048;
-            qDebug() <<"2: "<< x <<" "<<z<<" "<<p[0]<<" "<<p[1]<<" "<<p[2]; 
-            tTile = requestTile(x, z);
-            if(tTile == NULL) return NULL;
-            if(tTile->loaded != 1) return NULL;
-        }
-        
-        WorldObj* nowy = tTile->placeObject(p, q, r, tpos);
-
-        if ((r->type == "trackobj" || r->type == "dyntrack" )&& nowy != NULL) {
-            if(nowy->endp == 0) nowy->endp = new float[5];
-            memcpy(nowy->endp, endp, sizeof(float)*5);
-            Vec3::copy(nowy->firstPosition,firstPos);
-        }
-        
-        Undo::PushWorldObjPlaced(nowy);
-        return nowy;
+    float endp[5];
+    memset(endp, 0, sizeof(endp));
+    endp[3] = 1;
+    float firstPos[3];
+    if ((r->type == "trackobj" || r->type == "dyntrack" )) {
+        qDebug() <<"1: "<< x <<" "<<z<<" "<<p[0]<<" "<<p[1]<<" "<<p[2]; 
+        int oldx = x;
+        int oldz = z;
+        Vec3::copy(firstPos, p);
+        if(this->tsection->isRoadShape(r->value))
+            this->roadDB->findPosition(x, z, p, q, endp, r->value);
+        else
+            this->trackDB->findPosition(x, z, p, q, endp, r->value);
+        Game::check_coords(x, z, p);
+        firstPos[0] -= (x-oldx)*2048;
+        firstPos[2] -= (z-oldz)*2048;
+        qDebug() <<"2: "<< x <<" "<<z<<" "<<p[0]<<" "<<p[1]<<" "<<p[2]; 
+        tTile = requestTile(x, z);
+        if(tTile == NULL) return NULL;
+        if(tTile->loaded != 1) return NULL;
+    }
     
+    WorldObj* nowy = tTile->placeObject(p, q, r, tpos);
+
+    if ((r->type == "trackobj" || r->type == "dyntrack" )&& nowy != NULL) {
+        if(nowy->endp == 0) nowy->endp = new float[5];
+        memcpy(nowy->endp, endp, sizeof(float)*5);
+        Vec3::copy(nowy->firstPosition,firstPos);
+    }
+    nowy->snapped(snapableSide);
+        
+    Undo::PushWorldObjPlaced(nowy);
+    return nowy;
+}
+
+void Route::dragWorldObject(WorldObj* obj, int x, int z, float* pos){
+    if(obj->isTrackItem()){
+        obj->setPosition(x, z, pos);
+        obj->setMartix();
+        return;
+    }
+    if (obj->typeID == obj->trackobj || obj->typeID == obj->dyntrack)
+        if(roadDB->ifTrackExist(obj->x, obj->y, obj->UiD) || trackDB->ifTrackExist(obj->x, obj->y, obj->UiD)){
+            obj->setPosition(x, z, pos);
+            obj->setMartix();
+            return;
+    }
+    float tpos[3];
+    Vec3::copy(tpos, pos);
+    Game::check_coords(x, z, tpos);
+    Tile *tTile = requestTile(x, z);
+    if(tTile == NULL) return;
+    if(tTile->loaded != 1) return;
+    int snapableSide = -1;
+    float q[4];
+    Quat::copy(q, obj->qDirection);
+    
+    if(placementStickToTarget && placementAutoTargetType == 3){
+        snapableSide = tTile->getNearestSnapablePosition(tpos, q, obj->UiD);
+    }
+
+    if ((obj->typeID == obj->trackobj || obj->typeID == obj->dyntrack )) {
+        if(this->tsection->isRoadShape(obj->sectionIdx)){
+            this->roadDB->setDefaultEnd(0);
+            this->roadDB->findPosition(x, z, tpos, q, obj->endp, obj->sectionIdx);
+        }else{
+            this->trackDB->setDefaultEnd(0);
+            this->trackDB->findPosition(x, z, tpos, q, obj->endp, obj->sectionIdx);
+        }
+        tTile = requestTile(x, z);
+        if(tTile == NULL) return;
+        if(tTile->loaded != 1) return;
+    }
+
+    obj->setPosition(tpos);
+    Vec3::copy(obj->firstPosition, obj->position);
+    obj->setQdirection(q);
+    obj->snapped(snapableSide);
+    moveWorldObjToTile(x, z, obj);
+    obj->setMartix();
 }
 
 Tile * Route::requestTile(int x, int z){
@@ -751,22 +798,23 @@ void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
 }
 
 void Route::moveWorldObjToTile(int x, int z, WorldObj* obj){
+    //qDebug() << "new tile" << obj->x <<" "<< obj->y<<" "<< obj->position[0]<<" "<< -obj->position[2];
+    float oldPos[3];
     int xx = x, zz = z;
-    
-    qDebug() << "new tile" << obj->x <<" "<< obj->y<<" "<< obj->position[0]<<" "<< -obj->position[2];
-    
-    Game::check_coords(xx, zz, (float*) &obj->position);
-    
-    qDebug() << "new tile" << xx <<" "<< zz <<" "<< obj->position[0]<<" "<< -obj->position[2];
-    
+    Vec3::copy(oldPos, obj->position);
+    Game::check_coords(xx, zz, oldPos);
     if(xx == obj->x && zz == obj->y)
         return;
-    
+    Vec3::copy(obj->position, oldPos);
     x = xx;
     z = zz;
     
     qDebug() << "obj outside tile border !!!";
     //qDebug() << "new tile" << x <<" "<< z;
+    qDebug() << "new tile" << xx <<" "<< zz <<" "<< obj->position[0]<<" "<< -obj->position[2];
+
+    
+    Undo::Clear();
     
     Tile *tTile = tile[((obj->x)*10000 + obj->y)];
     tTile->deleteObject(obj);

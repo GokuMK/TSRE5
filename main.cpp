@@ -108,9 +108,6 @@ int main(int argc, char *argv[]){
     //    window.showMaximized();
 
     //Game::loadWindow.show();
-    QKeySequence n = QKeySequence::fromString("SHIFT");
-    qDebug() << n[0];
-    qDebug() << (Qt::ShiftModifier | Qt::Key_A);
     if(app.arguments().count() > 1){
         qDebug() << "arg1 " << app.arguments().at(1);    
         if(app.arguments().at(1) == "--aceconv"){

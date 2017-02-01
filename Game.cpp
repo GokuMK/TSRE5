@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.679"; 
+QString Game::AppVersion = "v0.680";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -78,6 +78,7 @@ int Game::shadowsEnabled = 1;
 float Game::sunLightDirection[] = {-1.0,2.0,1.0};
 int Game::textureQuality = 1;
 float Game::snapableRadius = 20;
+bool Game::snapableOnlyRot = false;
 
 QString Game::geoPath = "hgst";
 
@@ -234,6 +235,12 @@ void Game::load() {
                 ignoreMissingGlobalShapes = true;
             else
                 ignoreMissingGlobalShapes = false;
+        if(val == "snapableOnlyRot")
+            if(args[1].trimmed().toLower() == "true")
+                snapableOnlyRot = true;
+            else
+                snapableOnlyRot = false; 
+        
         if(val == "oglDefaultLineWidth"){
             oglDefaultLineWidth = args[1].trimmed().toInt();
         }

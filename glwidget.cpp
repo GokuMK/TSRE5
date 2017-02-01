@@ -329,14 +329,15 @@ void GLWidget::handleSelection(){
                 setSelectedObj(NULL);
             }
         } else {
-            if(selectedObj != NULL) {
+            WorldObj* twobj = route->getObj(wx, wz, UiD);
+            if(selectedObj != NULL && twobj != selectedObj) {
                 selectedObj->unselect();
                 if(autoAddToTDB){
                     route->addToTDBIfNotExist(selectedObj);
                 }
             }
             lastSelectedObj = selectedObj;
-            setSelectedObj(route->getObj(wx, wz, UiD));
+            setSelectedObj(twobj);
             if (selectedObj == NULL){
                 qDebug() << "brak obiektu";
             } else {
@@ -887,8 +888,9 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
                             float val = mousex - m_lastPos.x();
                             selectedObj->rotate(0,val*moveStep*0.1,0);
                         } else {
-                            selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
-                            selectedObj->setMartix();
+                            route->dragWorldObject(selectedObj, camera->pozT[0], camera->pozT[1], aktPointerPos);
+                            //selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
+                            //selectedObj->setMartix();
                         }
                     }
                 }
@@ -919,8 +921,9 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
                         float val = mousex - m_lastPos.x();
                         selectedObj->rotate(0,val*moveStep*0.1,0);
                     } else {
-                        selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
-                        selectedObj->setMartix();
+                        route->dragWorldObject(selectedObj, camera->pozT[0], camera->pozT[1], aktPointerPos);
+                        //selectedObj->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
+                        //selectedObj->setMartix();
                     }
                 }
             }

@@ -32,9 +32,11 @@ public:
     int getCollisionType();
     void setCollisionType(int val);
     void removeCollisions();
+    void snapped(int side);
     void insertSnapablePoints(QVector<float>& points);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
+    void loadSnapablePoints();
     bool getSimpleBorder(float* border);
     bool getBoxPoints(QVector<float> &points);
     void renderSnapableEndpoints(GLUU* gluu);

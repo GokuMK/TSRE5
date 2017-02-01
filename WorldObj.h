@@ -145,9 +145,11 @@ public:
     virtual void setCollisionType(int val);
     virtual int getCollisionFlags();
     virtual void insertSnapablePoints(QVector<float> &points);
+    virtual void snapped(int side);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 protected:
+    virtual void loadSnapablePoints();
     virtual bool getSimpleBorder(float* border);
     virtual bool getBoxPoints(QVector<float> &points);
     float* matrix3x3 = NULL;

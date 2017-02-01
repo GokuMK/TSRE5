@@ -25,14 +25,37 @@ PropertiesLevelCr::PropertiesLevelCr() {
     infoLabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     infoLabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(infoLabel);
-
-    QLabel *label = new QLabel("Filename:");
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    this->uid.setDisabled(true);
+    this->tX.setDisabled(true);
+    this->tY.setDisabled(true);
+    vlist->addRow("UiD:",&this->uid);
+    vlist->addRow("Tile X:",&this->tX);
+    vlist->addRow("Tile Z:",&this->tY);
+    vbox->addItem(vlist);
+    
+    QLabel * label = new QLabel("Position:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("X:",&this->posX);
+    vlist->addRow("Y:",&this->posY);
+    vlist->addRow("Z:",&this->posZ);
+    vbox->addItem(vlist);
+    
+    label = new QLabel("Filename:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     fileName.setDisabled(true);
     fileName.setAlignment(Qt::AlignCenter);
     vbox->addWidget(&fileName);
-
+    
     label = new QLabel("Level Crossing Sensitivity:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
@@ -129,6 +152,19 @@ void PropertiesLevelCr::showObj(WorldObj* obj){
     this->infoLabel->setText("Object: "+obj->type);
     this->fileName.setText(lobj->fileName);
 
+    this->uid.setText(QString::number(obj->UiD, 10));
+    this->tX.setText(QString::number(obj->x, 10));
+    this->tY.setText(QString::number(-obj->y, 10));
+    this->posX.setText(QString::number(obj->position[0], 'G', 4));
+    this->posY.setText(QString::number(obj->position[1], 'G', 4));
+    this->posZ.setText(QString::number(-obj->position[2], 'G', 4));
+    this->quat.setText(
+            QString::number(obj->qDirection[0], 'G', 4) + " " +
+            QString::number(obj->qDirection[1], 'G', 4) + " " +
+            QString::number(-obj->qDirection[2], 'G', 4) + " " +
+            QString::number(obj->qDirection[3], 'G', 4)
+            );
+    
     this->eActivateLevelCrossing.setText(QString::number(lobj->getSensitivityActivateLevel()));
     this->eMinActDist.setText(QString::number(lobj->getSensitivityMinimunDistance()));
     this->eInitialWarning.setText(QString::number(lobj->getTimingInitialWarning()));
@@ -142,6 +178,27 @@ void PropertiesLevelCr::showObj(WorldObj* obj){
     this->chSilentHax.blockSignals(true);
     this->chSilentHax.setChecked(lobj->isSilentMstsHaxEnabled());
     this->chSilentHax.blockSignals(false);
+}
+
+void PropertiesLevelCr::updateObj(WorldObj* obj){
+    if(obj == NULL){
+        return;
+    }
+    
+    if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
+        this->uid.setText(QString::number(obj->UiD, 10));
+        this->tX.setText(QString::number(obj->x, 10));
+        this->tY.setText(QString::number(-obj->y, 10));
+        this->posX.setText(QString::number(obj->position[0], 'G', 4));
+        this->posY.setText(QString::number(obj->position[1], 'G', 4));
+        this->posZ.setText(QString::number(-obj->position[2], 'G', 4));
+        this->quat.setText(
+                QString::number(obj->qDirection[0], 'G', 4) + " " +
+                QString::number(obj->qDirection[1], 'G', 4) + " " +
+                QString::number(-obj->qDirection[2], 'G', 4) + " " +
+                QString::number(obj->qDirection[3], 'G', 4)
+                );
+    }
 }
 
 void PropertiesLevelCr::eActivateLevelCrossingEnabled(QString val){
