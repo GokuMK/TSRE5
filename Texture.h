@@ -43,6 +43,7 @@ public:
 
     bool GLTextures();
     void update();
+    void advancedCrop(float *texCoords, int w = 0, int h = 0);
     void crop(float x1, float y1, float x2, float y2);
     void paint(Brush* brush, float x, float z);
     void sendToUndo(int id);

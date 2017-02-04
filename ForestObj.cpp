@@ -62,10 +62,10 @@ void ForestObj::LoadForestList(){
     QString path = Game::root + "/routes/" + Game::route + "/forests.dat";
     path.replace("//", "/");
     qDebug() << path;
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
         return;
-    FileBuffer* data = ReadFile::read(file);
+    FileBuffer* data = ReadFile::read(&file);
     ParserX::NextLine(data);
 
     QString sh = "";

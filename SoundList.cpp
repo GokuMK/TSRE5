@@ -26,10 +26,10 @@ SoundListItem::~SoundListItem() {
 void SoundList::loadSoundSources(QString path){
     path.replace("//", "/");
     qDebug() << path;
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
         return;
-    FileBuffer* data = ReadFile::read(file);
+    FileBuffer* data = ReadFile::read(&file);
     ParserX::NextLine(data);
 
     QString sh = "";
@@ -59,10 +59,10 @@ void SoundList::loadSoundSources(QString path){
 void SoundList::loadSoundRegions(QString path){
     path.replace("//", "/");
     qDebug() << path;
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
         return;
-    FileBuffer* data = ReadFile::read(file);
+    FileBuffer* data = ReadFile::read(&file);
     ParserX::NextLine(data);
 
     QString sh = "";

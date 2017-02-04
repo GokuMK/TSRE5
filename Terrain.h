@@ -44,6 +44,7 @@ public:
     void toggleGaps(int x, int z, float posx, float posz);
     void setErrorBias(int x, int z, float val);
     void setTileBlob();
+    void makeTextureFromMap();
     void fillHeightMap(float *data);
     int getTexture(int x, int z, float posx, float posz);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov);

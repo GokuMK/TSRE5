@@ -751,7 +751,10 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if(toolEnabled.startsWith("paintTool")){
             // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
-            TerrainLib::paintTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+            if(keyControlEnabled)
+                route->setTerrainTextureToTrackObj((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, defaultPaintBrush);
+            else
+                TerrainLib::paintTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == "pickTerrainTexTool"){
            // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
@@ -803,6 +806,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             Undo::PushTrackDB(Game::trackDB);
             route->linkSignal((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, selectedObj);
             enableTool("");
+        }
+        if(toolEnabled == "makeTileTextureTool"){
+            TerrainLib::makeTextureFromMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == ""){
             camera->MouseDown(event);

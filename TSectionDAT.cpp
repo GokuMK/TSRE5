@@ -243,10 +243,10 @@ bool TSectionDAT::loadRoute() {
     path = Game::root + "/routes/" + Game::route + "/tsection.dat";
     path.replace("//", "/");
     qDebug() << path;
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
         return false;
-    FileBuffer* bufor = ReadFile::read(file);
+    FileBuffer* bufor = ReadFile::read(&file);
 
     //szukanie TrackSections
     sh = "TrackSections";

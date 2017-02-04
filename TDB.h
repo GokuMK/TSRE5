@@ -80,7 +80,9 @@ public:
     void nextDefaultEnd();
     float getVectorSectionLength(int id);
     float getVectorSectionLengthToIdx(int id, int idx);
-    void getVectorSectionPoints(int x, int y, int uid, float * &ptr);
+    void getVectorSectionPoints(int x, int y, float *pos, float *&ptr);
+    void getVectorSectionPoints(int x, int y, int uid, float *&ptr);
+    void getVectorSectionPoints(int x, int y, int nId, int sId, float *&ptr);
     void getVectorSectionLine(float * &buffer, int &len, int x, int y, int uid, float begin = 0, float end = 0);
     void moveItemsFrom2to1(int id2, int id1);
     int appendToJunction(int junctionId, int eId, int idx);

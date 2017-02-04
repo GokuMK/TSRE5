@@ -270,6 +270,41 @@ void Route::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, float* 
     }
 }
 
+void Route::setTerrainTextureToTrackObj(int x, int y, float *pos, Brush* brush){
+    float* punkty = new float[10000];
+    Game::check_coords(x, y, pos);
+    float* ptr = punkty;
+    float playerT[2];
+    playerT[0] = x;
+    playerT[1] = y;
+    float tp[3];
+    Vec3::copy(tp,pos);
+    int ok1, ok2;
+    
+    if(placementAutoTargetType == 0) {
+        this->trackDB->getVectorSectionPoints(x, y, pos, ptr);
+    } else if(placementAutoTargetType == 1) {
+        this->roadDB->getVectorSectionPoints(x, y, pos, ptr);
+    } else if(placementAutoTargetType == 2) {
+        bool road = false;
+        ok1 = this->trackDB->findNearestPositionOnTDB(playerT, tp, NULL, NULL);
+        ok2 = this->roadDB->findNearestPositionOnTDB(playerT, tp, NULL, NULL);
+        if(ok2 >= 0)
+            if(ok1 < 0 || ok2 < ok1){
+                road = true;
+        }
+        if(road)
+            this->roadDB->getVectorSectionPoints(x, y, pos, ptr);
+        else
+            this->trackDB->getVectorSectionPoints(x, y, pos, ptr);
+    }
+    
+    //this->trackDB->getVectorSectionPoints(x, y, pos, ptr);
+    int length = ptr - punkty;
+    qDebug() << "l "<<length;
+    TerrainLib::setTextureToTrackObj(brush, punkty, length, x, y);
+}
+
 void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
     if(obj == NULL) return;
     
@@ -319,7 +354,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     
     float* tpos = NULL;
     if(placementStickToTarget){
-            tpos = new float[2];
+            tpos = new float[3];
             float* playerT = Vec2::fromValues(x, z);
             float tp[3], tp2[3];
             float tq[4], tq2[3];
@@ -352,7 +387,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
             }
     }
     if(itemTrackType == 1){
-        tpos = new float[2];
+        tpos = new float[3];
         float* playerT = Vec2::fromValues(x, z);
         int ok = this->trackDB->findNearestPositionOnTDB(playerT, p, q, tpos);
         if(ok < 0) return NULL;
@@ -360,7 +395,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         z = playerT[1];
     }
     if(itemTrackType == 2){
-        tpos = new float[2];
+        tpos = new float[3];
         float* playerT = Vec2::fromValues(x, z);
         int ok = this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
         if(ok < 0) return NULL;
@@ -368,7 +403,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         z = playerT[1];
     } 
     if(itemTrackType == 3){
-        tpos = new float[2];
+        tpos = new float[3];
         float* playerT = Vec2::fromValues(x, z);
         int ok = this->roadDB->findNearestPositionOnTDB(playerT, p, q, tpos);
         if(ok < 0) return NULL;
@@ -422,13 +457,15 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         Vec3::copy(nowy->firstPosition,firstPos);
     }
     nowy->snapped(snapableSide);
-        
+    if(nowy->typeID == nowy->sstatic){
+        moveWorldObjToTile(nowy->x, nowy->y, nowy);
+    }
     Undo::PushWorldObjPlaced(nowy);
     return nowy;
 }
 
 void Route::dragWorldObject(WorldObj* obj, int x, int z, float* pos){
-    if(obj->isTrackItem()){
+    if(obj->isTrackItem() || obj->typeID == obj->groupobject || obj->typeID == obj->ruler ){
         obj->setPosition(x, z, pos);
         obj->setMartix();
         return;
@@ -496,7 +533,7 @@ void Route::linkSignal(int x, int z, float* p, WorldObj* obj){
     if(obj->typeID != obj->signal)
         return;
     SignalObj* sobj = (SignalObj*)obj;
-    float *tpos = new float[2];
+    float *tpos = new float[3];
     float* playerT = Vec2::fromValues(x, z);
     int ok = this->trackDB->findNearestPositionOnTDB(playerT, p, NULL, tpos);
     if(ok < 0) return;
@@ -535,7 +572,7 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p) {
         return NULL;
     
     // pozycja wzgledem TDB:
-    float* tpos = new float[2];
+    float* tpos = new float[3];
     float* playerT = Vec2::fromValues(x, z);
     int ok = tdb->findNearestPositionOnTDB(playerT, p, NULL, tpos);
     if(ok < 0) return NULL;

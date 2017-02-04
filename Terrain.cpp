@@ -191,7 +191,7 @@ int Terrain::getTexture(int x, int z, float posx, float posz) {
 }
 
 void Terrain::convertTexToDefaultCoords(int idx) {
-    float x11 = (0) * tfile->tdata[(idx)*13 + 3 + 6] + (0) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    /*float x11 = (0) * tfile->tdata[(idx)*13 + 3 + 6] + (0) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
     float y11 = (0) * tfile->tdata[(idx)*13 + 5 + 6] + (0) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
     //qDebug() << x11 << " " <<y11;
     float x21 = (16) * tfile->tdata[(idx)*13 + 3 + 6] + (0) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
@@ -203,17 +203,17 @@ void Terrain::convertTexToDefaultCoords(int idx) {
     float x22 = (16) * tfile->tdata[(idx)*13 + 3 + 6] + (16) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
     float y22 = (16) * tfile->tdata[(idx)*13 + 5 + 6] + (16) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
     //qDebug() << x22 << " " <<y22;
-    float t;
-    if ((x11 < x21) && (y11 == y21)) {
+    float t;*/
+    /*if ((x11 < x21) && (y11 == y21)) {
         qDebug() << "rot1 - ok";
     } else {
         qDebug() << "rot";
         TexLib::mtex[texid[idx]]->crop(x11, y11, x22, y22);
-    }
-
+        TexLib::mtex[texid[idx]]->advancedCrop((float*)&tfile->tdata[(idx)*13 + 6]);
+    }*/
+    TexLib::mtex[texid[idx]]->advancedCrop((float*)&tfile->tdata[(idx)*13 + 6], 512, 512);
     tfile->tdata[(idx)*13 + 1 + 6] = 0.001;
     tfile->tdata[(idx)*13 + 2 + 6] = 0.001;
-
     tfile->tdata[(idx)*13 + 3 + 6] = 0.062375;
     tfile->tdata[(idx)*13 + 4 + 6] = 0.0;
     tfile->tdata[(idx)*13 + 5 + 6] = 0.0;
@@ -292,6 +292,48 @@ void Terrain::setTileBlob(){
             qDebug() << "load map first!";
         }
     }
+}
+
+void Terrain::makeTextureFromMap(){
+    int hash = (int)(this->mojex)*10000+(int)(this->mojez);
+    qDebug() << hash;
+    if(MapWindow::mapTileImages[hash] == NULL){
+        return;
+    }
+    QString path = QString::number((int)(this->mojex)*10000+(int)(this->mojez))+".:maptex";
+    QString name = this->getTileName(mojex, -mojez) + "_map.ace";
+    int mapTexid = TexLib::addTex(path);
+    if(!TexLib::mtex[mapTexid]->loaded)
+        return;
+    
+    int newMat = tfile->getMatByTexture(name);
+    if(newMat >= 0){
+        qDebug() << "material already exist";
+    } else {
+        newMat = tfile->cloneMat(0);
+    }
+    *tfile->materials[newMat].tex[0] = name;
+    *tfile->amaterials[newMat].tex[0] = name;
+
+    int newTexture = TexLib::cloneTex(mapTexid);
+    TexLib::mtex[newTexture]->pathid = name;
+    TexLib::save("ace", texturepath + name, newTexture);
+    float texstep = 1.0/16.0;
+    for(int i = 0; i < 16; i++)
+        for(int j = 0; j < 16; j++){
+            texid[j * 16 + i] = newTexture;
+            tfile->tdata[(j * 16 + i)*13 + 0 + 6] = newMat;
+            tfile->tdata[(j * 16 + i)*13 + 1 + 6] = texstep*i;
+            tfile->tdata[(j * 16 + i)*13 + 2 + 6] = texstep*j;
+            tfile->tdata[(j * 16 + i)*13 + 3 + 6] = texstep/16.0;
+            tfile->tdata[(j * 16 + i)*13 + 4 + 6] = 0;
+            tfile->tdata[(j * 16 + i)*13 + 5 + 6] = 0;
+            tfile->tdata[(j * 16 + i)*13 + 6 + 6] = texstep/16.0;
+            //TexLib::mtex[texid[j * 16 + i]]->pathid = name;
+        }
+
+    refresh();
+    this->modified = true;
 }
 
 void Terrain::setWaterDraw(int x, int z, float posx, float posz) {
@@ -450,9 +492,11 @@ void Terrain::lockTexture(Brush* brush, int x, int z, float posx, float posz) {
 void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
     qDebug() << "painttile " << x << " " << z;
     if (y > 15 || u > 15 || y < 0 || u < 0) return;
-
+    //qDebug() << "painttile " << y << " " << u;
     QString name = this->getTileName(mojex, -mojez) + "_" + QString::number(y) + "_" + QString::number(u) + ".ace";
-
+    if (texid[y * 16 + u] < 0)
+        return;
+    
     if (name != *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0]) {
         tfile->tdata[(y * 16 + u)*13 + 0 + 6] = tfile->cloneMat(tfile->tdata[(y * 16 + u)*13 + 0 + 6]);
         *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0] = name;

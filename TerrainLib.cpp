@@ -276,6 +276,24 @@ void TerrainLib::setHeightFromGeoGui(int x, int z, float* p){
     }
 }
 
+void TerrainLib::setTextureToTrackObj(Brush* brush, float* punkty, int length, int tx, int tz){
+    float posx, posz;
+    int ttx, ttz;
+    for(int i = 0; i < length; i+=3 ){
+        posx = punkty[i];
+        posz = punkty[i+2];
+        ttx = tx;
+        ttz = tz;
+        Game::check_coords(ttx, ttz, posx, posz);
+        
+        Terrain *terr;
+        terr = terrain[(ttx * 10000 + ttz)];
+        if (terr == NULL) continue;
+        if (terr->loaded == false) continue;
+        terr->paintTexture(brush, ttx, ttz, posx, posz);
+    }
+}
+
 void TerrainLib::setTerrainToTrackObj(Brush* brush, float* punkty, int length, int tx, int tz, float* matrix){
     std::set<int> uterr;
     // calculating plane equation
@@ -438,6 +456,19 @@ void TerrainLib::setWaterDraw(int x, int z, float* p){
     if (terr == NULL) return;
     if (terr->loaded == false) return;
     terr->setWaterDraw(x, z, posx, posz);
+}
+
+void TerrainLib::makeTextureFromMap(int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->makeTextureFromMap();
 }
 
 void TerrainLib::setTileBlob(int x, int z, float* p){

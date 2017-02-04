@@ -24,6 +24,7 @@ GeoTools::GeoTools(QString name)
     buttonTools["mapTileShowTool"] = new QPushButton("Show/H Map", this);
     buttonTools["mapTileLoadTool"] = new QPushButton("Load Map", this);
     buttonTools["heightTileLoadTool"] = new QPushButton("Load Height", this);
+    buttonTools["makeTileTextureTool"] = new QPushButton("makeTileTextureTool", this);
     QMapIterator<QString, QPushButton*> i(buttonTools);
     while (i.hasNext()) {
         i.next();
@@ -48,7 +49,7 @@ GeoTools::GeoTools(QString name)
     label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
     vbox->addItem(vlist3);
-
+    vbox->addWidget(buttonTools["makeTileTextureTool"]);
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -62,6 +63,9 @@ GeoTools::GeoTools(QString name)
     
     QObject::connect(buttonTools["heightTileLoadTool"], SIGNAL(toggled(bool)),
                       this, SLOT(heightTileLoadToolEnabled(bool)));
+    
+    QObject::connect(buttonTools["makeTileTextureTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(makeTileTextureToolEnabled(bool)));
     
 }
 
@@ -84,6 +88,14 @@ void GeoTools::mapTileLoadToolEnabled(bool val){
 void GeoTools::heightTileLoadToolEnabled(bool val){
     if(val){
         emit enableTool("heightTileLoadTool");
+    } else {
+        emit enableTool("");
+    }
+}
+
+void GeoTools::makeTileTextureToolEnabled(bool val){
+    if(val){
+        emit enableTool("makeTileTextureTool");
     } else {
         emit enableTool("");
     }

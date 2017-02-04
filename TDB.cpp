@@ -66,10 +66,10 @@ void TDB::loadTdb(){
     QString path = Game::root + "/routes/" + Game::route + "/" + Game::routeName + "." + extension;
     path.replace("//", "/");
     qDebug() << "Wczytywanie pliku tdb: " << path;
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
         return;
-    FileBuffer* bufor = ReadFile::read(file);
+    FileBuffer* bufor = ReadFile::read(&file);
 
     //szukanie trackdb
     sh = "TrackDB";
@@ -217,10 +217,10 @@ void TDB::loadTit(){
     QString path = Game::root + "/routes/" + Game::route + "/" + Game::routeName + "." + extension;
     path.replace("//", "/");
     qDebug() << path;
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
         return;
-    FileBuffer* bufor = ReadFile::read(file);
+    FileBuffer* bufor = ReadFile::read(&file);
 
     //szukanie trackdb
     sh = "TrItemTable";
@@ -2197,6 +2197,7 @@ int TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpo
     if(tpos != NULL){
         tpos[0] = best[1];
         tpos[1] = metry + best[3];
+        tpos[2] = best[2];
     }    
     this->getDrawPositionOnTrNode((float*)best, best[1], metry + best[3]);
     pos[0] = best[0];
@@ -2348,21 +2349,25 @@ bool TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint
     return true;
 }
 
+void TDB::getVectorSectionPoints(int x, int y, float* pos, float*& ptr){
+    float posT[2];
+    posT[0] = x;
+    posT[1] = y;
+    float tpos[3];
+    int ok = this->findNearestPositionOnTDB((float*)posT, pos, NULL, (float*)&tpos);
+    if(ok < 0)
+        return;
+
+    y = -y;
+    int nid = tpos[0];
+    int sid = tpos[2];
+    
+    getVectorSectionPoints(x, y, nid, sid, ptr);
+}
+
 void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
-        //Vector3f p;
-        Vector3f o;
-        //qDebug() << x << " "<< y << " "<< uid;
-        //int len = 0;
-        float matrix[16];
-        float q[4];
-        float p[3];
-        q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
-        float rot[3];
-        y = -y;
-        
-        //float* punkty = new float[10000];
-        //float* ptr = punkty;
-        
+    y = -y;
+    qDebug() << "aaa";
         for (int j = 1; j <= iTRnodes; j++) {
             TRnode* n = trackNodes[j];
             if (n == NULL) continue;
@@ -2371,56 +2376,37 @@ void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
                 for (int i = 0; i < n->iTrv; i++) {
                     if(n->trVectorSection[i].param[2] == x && n->trVectorSection[i].param[3] == y && n->trVectorSection[i].param[4] == uid ){
                         qDebug() << "mam";
-                    
-                        //p.set(
-                        //    (n->trVectorSection[i].param[8] - x)*2048 + n->trVectorSection[i].param[10],
-                        //    n->trVectorSection[i].param[11],
-                        //    (-n->trVectorSection[i].param[9] - y)*2048 - n->trVectorSection[i].param[12]
-                        //    );
-                        //o.set(
-                        //rot = n->trVectorSection[i].param[13];
-                        //    n->trVectorSection[i].param[14],
-                        //    n->trVectorSection[i].param[15]
-                        //    );
-                    
-                        //q[0] = q[1] = q[2] = 0;  q[3] = 1;
-                        //rot[0] = M_PI; rot[1] = -o.y; rot[2] = o.z;
-                        
-                        //Quat::fromRotationXYZ(q, rot);
-                        
-                        //Mat4::fromRotationTranslation(matrix, q, reinterpret_cast<float *> (&p));
-                        //Mat4::rotate(matrix, matrix, o.x, 1, 0, 0);
-                        //Mat4::identity(matrix);
-                        //Mat4:: rotate(matrix, matrix, o.x, 1, 0, 0);
-                        //Mat4::multiply(matrix, matrix, objMatrix);
-                        //matrix = Mat4::clone(objMatrix);
-                        
-                        //float matrix[16];
-                        //float q[4];
-                        //q[0] = q[1] = q[2] = 0;
-                        //q[3] = 1;
-                        //float rot[3];
-                        rot[0] = M_PI;
-                        rot[1] = -n->trVectorSection[i].param[14];
-                        rot[2] = n->trVectorSection[i].param[15];
-                        p[0] = (n->trVectorSection[i].param[8] - x)*2048 + n->trVectorSection[i].param[10];
-                        p[1] = n->trVectorSection[i].param[11];
-                        p[2] = (-n->trVectorSection[i].param[9] + y)*2048 - n->trVectorSection[i].param[12];
-                        
-                        Quat::fromRotationXYZ(q, rot);
-                        Mat4::fromRotationTranslation(matrix, q, p);
-                        Mat4::rotate(matrix, matrix, n->trVectorSection[i].param[13], 1, 0, 0);
-                        
-                        //Mat4::fromRotationTranslation(matrix, q, objMatrix);
-                        if(tsection->sekcja[(int) n->trVectorSection[i].param[0]] == NULL){
-                            qDebug() << "nie ma sekcji " << (int) n->trVectorSection[i].param[0];
-                        }
-                        
-                        tsection->sekcja[(int) n->trVectorSection[i].param[0]]->getPoints(ptr, matrix);
+                        getVectorSectionPoints(x, y, j, i, ptr);
                     }
                 }
             }
     }
+}
+
+void TDB::getVectorSectionPoints(int x, int y, int nId, int sId, float * &ptr){
+    float matrix[16];
+    float q[4];
+    float p[3];
+    q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
+    float rot[3];
+
+    TRnode* n = trackNodes[nId];
+        
+    rot[0] = M_PI;
+    rot[1] = -n->trVectorSection[sId].param[14];
+    rot[2] = n->trVectorSection[sId].param[15];
+    p[0] = (n->trVectorSection[sId].param[8] - x)*2048 + n->trVectorSection[sId].param[10];
+    p[1] = n->trVectorSection[sId].param[11];
+    p[2] = (-n->trVectorSection[sId].param[9] + y)*2048 - n->trVectorSection[sId].param[12];
+                        
+    Quat::fromRotationXYZ(q, rot);
+    Mat4::fromRotationTranslation(matrix, q, p);
+    Mat4::rotate(matrix, matrix, n->trVectorSection[sId].param[13], 1, 0, 0);
+    //Mat4::fromRotationTranslation(matrix, q, objMatrix);
+    if(tsection->sekcja[(int) n->trVectorSection[sId].param[0]] == NULL){
+        qDebug() << "nie ma sekcji " << (int) n->trVectorSection[sId].param[0];
+    }
+    tsection->sekcja[(int) n->trVectorSection[sId].param[0]]->getPoints(ptr, matrix);
     return;
 }
 

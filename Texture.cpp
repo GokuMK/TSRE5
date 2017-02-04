@@ -102,6 +102,55 @@ unsigned char * Texture::getImageData(int width, int height){
     return out;
 }
 
+void Texture::advancedCrop(float* texCoords, int w, int h){
+    if(w == 0) 
+        w = width;
+    if(h == 0) 
+        h = height;
+    float texCoords2[7];
+    texCoords2[1] = texCoords[1]*w;
+    texCoords2[2] = texCoords[2]*h;
+    texCoords2[3] = texCoords[3]*16.0;//*width;
+    texCoords2[4] = texCoords[4]*16.0;//*height;
+    texCoords2[5] = texCoords[5]*16.0;//*width;
+    texCoords2[6] = texCoords[6]*16.0;//*height;
+    
+    qDebug() << w << h;
+    qDebug() << texCoords2[1] << texCoords2[2] << texCoords2[3] << texCoords2[4] << texCoords2[5] << texCoords2[6];
+    qDebug() << texCoords[1] << texCoords[2] << texCoords[3] << texCoords[4] << texCoords[5] << texCoords[6];
+    
+    unsigned char* newData = new unsigned char[w*h*this->bytesPerPixel];    
+    
+    float ii, jj;
+    float widthRatio = (float)width/w;
+    float heightTatio = (float)height/h;
+    for(int i = 0; i < w; i++)
+        for(int j = 0; j < h; j++){
+            jj = texCoords2[1] + texCoords2[3]*j + texCoords2[4]*i;
+            ii = texCoords2[2] + texCoords2[5]*j + texCoords2[6]*i;
+            ii *= widthRatio;
+            jj *= heightTatio;
+            if(ii >= width)
+                ii = width - 1;
+            if(jj >= height)
+                jj = height - 1;
+            //ii = ii % width;
+            //jj = jj % height;
+                            
+            newData[i*w*bytesPerPixel+j*bytesPerPixel+0] = imageData[(int)ii*width*bytesPerPixel+(int)jj*bytesPerPixel+0];
+            newData[i*w*bytesPerPixel+j*bytesPerPixel+1] = imageData[(int)ii*width*bytesPerPixel+(int)jj*bytesPerPixel+1];
+            newData[i*w*bytesPerPixel+j*bytesPerPixel+2] = imageData[(int)ii*width*bytesPerPixel+(int)jj*bytesPerPixel+2];
+            if(this->bytesPerPixel == 4)
+                newData[i*width*bytesPerPixel+j*bytesPerPixel+3] = imageData[(int)ii*width*bytesPerPixel+(int)jj*bytesPerPixel+3];            
+        }
+        
+    delete[] this->imageData;
+    this->imageData = newData;
+    this->width = w;
+    this->height = h;
+    this->update();
+}
+
 void Texture::crop(float x1, float y1, float x2, float y2){
     if(!editable) 
         setEditable();
@@ -123,7 +172,8 @@ void Texture::crop(float x1, float y1, float x2, float y2){
                 newData[i*width*bytesPerPixel+j*bytesPerPixel+1] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+1];
                 newData[i*width*bytesPerPixel+j*bytesPerPixel+2] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+2];
                 if(this->bytesPerPixel == 4)
-                    newData[i*width*bytesPerPixel+j*bytesPerPixel+3] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+3];            }
+                    newData[i*width*bytesPerPixel+j*bytesPerPixel+3] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+3];            
+            }
     }
     
     if(x1 > x2 && y1 < y2){
@@ -136,7 +186,8 @@ void Texture::crop(float x1, float y1, float x2, float y2){
                 newData[i*width*bytesPerPixel+j*bytesPerPixel+1] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+1];
                 newData[i*width*bytesPerPixel+j*bytesPerPixel+2] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+2];
                 if(this->bytesPerPixel == 4)
-                    newData[i*width*bytesPerPixel+j*bytesPerPixel+3] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+3];            }
+                    newData[i*width*bytesPerPixel+j*bytesPerPixel+3] = imageData[ii*width*bytesPerPixel+jj*bytesPerPixel+3];            
+            }
         ii = this->height;
         this->height = this->width;
         this->width = ii;

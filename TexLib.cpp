@@ -113,10 +113,11 @@ int TexLib::addTex(QString pathid) {
 }
 
 int TexLib::cloneTex(int id) {
-
-    Texture* t = mtex.at(id);
-    if(t == NULL) return -2;
-    
+    Texture* t = mtex[id];
+    if(t == NULL) {
+        qDebug() << "null texture " << id;
+        return -2;
+    }
     Texture* newFile = new Texture(t);
     newFile->ref++;
     mtex[jesttextur] = newFile;

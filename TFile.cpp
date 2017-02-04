@@ -189,7 +189,7 @@ void TFile::get151(FileBuffer* data) {
             slen = data->getShort()*2;
             tmat->name = data->getString(data->off, data->off + slen);
             //*tname = tname->trimmed();
-            //qDebug() << *tname;
+            //qDebug() << *tmat->name;
             data->off += slen;
             
             for (int jj = 0; jj < 2; ) {
@@ -409,6 +409,8 @@ int TFile::cloneMat(int id){
     cloneAMat(id);
     return this->materialsCount++;
 }
+
+
 
 int TFile::cloneAMat(int id){
     QString* name = new QString();
