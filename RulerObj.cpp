@@ -180,10 +180,10 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         
         for(int i = 0; i < points.size() - 1; i++){
             punkty[ptr++] = points[i].position[0];
-            punkty[ptr++] = points[i].position[1]+10;
+            punkty[ptr++] = points[i].position[1]+1;
             punkty[ptr++] = points[i].position[2];
             punkty[ptr++] = points[i+1].position[0];
-            punkty[ptr++] = points[i+1].position[1]+10;
+            punkty[ptr++] = points[i+1].position[1]+1;
             punkty[ptr++] = points[i+1].position[2];
         }
         line3d->init(punkty, ptr, line3d->V, GL_LINES);
@@ -207,6 +207,50 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         gluu->mvPopMatrix();
     }
 };
+
+bool RulerObj::hasLinePoints(){
+    return true;
+}
+
+void RulerObj::getLinePoints(float *&punkty){
+    
+    float pos[3];
+    for(float i = 0; i < this->length; i += 1){
+        getPosition(i, pos);
+        *punkty++ = pos[0];
+        *punkty++ = pos[1];
+        *punkty++ = pos[2];
+    }
+    //for(int i = 0; i < points.size(); i++){
+    //    *punkty++ = points[i].position[0];
+    //    *punkty++ = points[i].position[1];
+    //    *punkty++ = points[i].position[2];
+    //}
+    return;
+}
+
+void RulerObj::getPosition(float len, float* pos){
+    float slen = 0;
+    float tlen;
+    for(int i = 0; i < points.size()-1; i++){
+        tlen = Vec3::dist(points[i].position, points[i+1].position);
+        slen += tlen;
+        if(slen > len){
+            float len1 = len - slen + tlen;
+            float len2 = slen - len;
+            len1 = len1/tlen;
+            len2 = len2/tlen;
+            pos[0] = len1*points[i].position[0] + len2*points[i+1].position[0];
+            pos[1] = len1*points[i].position[1] + len2*points[i+1].position[1];
+            pos[2] = len1*points[i].position[2] + len2*points[i+1].position[2];
+            return;
+        }
+    }
+    pos[0] = points[points.size()-1].position[0];
+    pos[1] = points[points.size()-1].position[1];
+    pos[2] = points[points.size()-1].position[2];
+    
+}
 
 bool RulerObj::select(int value){
     this->selectionValue = value;

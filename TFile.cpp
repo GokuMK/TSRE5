@@ -244,7 +244,7 @@ void TFile::get153(FileBuffer* data, TFile::Mat* m) {
             slen = data->getShort()*2;
             m->tex[j] = data->getString(data->off, data->off + slen);
             //*tname = tname->trimmed();
-            //qDebug() << *tname;
+            //qDebug() << *m->tex[j];
             data->off += slen;
             
             
@@ -435,6 +435,81 @@ int TFile::cloneAMat(int id){
     }
         
     return this->materialsCount;
+}
+
+int TFile::newMat(){
+    QString* name = new QString();
+    *name += "DetailTerrain";
+    materials[materialsCount].name = name;
+    name = new QString();
+    *name += "AlphaTerrain";
+    amaterials[materialsCount].name = name;
+    
+    materials[materialsCount].count153 = 2;
+    name = new QString();
+    *name += "terrain.ace";
+    materials[materialsCount].tex[0] = name;
+    materials[materialsCount].atex[0][0] = 1;
+    materials[materialsCount].atex[0][1] = 0;
+    name = new QString();
+    *name += "microtex.ace";
+    materials[materialsCount].tex[1] = name;
+    materials[materialsCount].atex[1][0] = 1;
+    materials[materialsCount].atex[1][1] = 1;
+
+    materials[materialsCount].count155 = 2;
+    materials[materialsCount].itex[0][0] = 1;
+    materials[materialsCount].itex[0][1] = 0;
+    materials[materialsCount].itex[0][2] = 0;
+    materials[materialsCount].itex[0][3] = 0;
+    materials[materialsCount].itex[1][0] = 2;
+    materials[materialsCount].itex[1][1] = 0;
+    materials[materialsCount].itex[1][2] = 1;
+    materials[materialsCount].itex[1][3] = 1107296256;
+    
+    amaterials[materialsCount].count153 = 1;
+    name = new QString();
+    *name += "terrain.ace";
+    amaterials[materialsCount].tex[0] = name;
+    amaterials[materialsCount].atex[0][0] = 1;
+    amaterials[materialsCount].atex[0][1] = 0;
+    
+    amaterials[materialsCount].count155 = 1;
+    amaterials[materialsCount].itex[0][0] = 1;
+    amaterials[materialsCount].itex[0][1] = 0;
+    amaterials[materialsCount].itex[0][2] = 0;
+    amaterials[materialsCount].itex[0][3] = 0;
+        
+    return this->materialsCount++;
+}
+
+void TFile::removeMat(int id){
+    if(id <= 0) 
+        return;
+    if(id > materialsCount)
+        return;
+    
+    for(int j = 0; j < patchsetNpatches*patchsetNpatches; j++){
+        if(tdata[j*13+0+6] == id){
+            tdata[j*13+0+6] = 0;
+            tdata[j*13 + 1 + 6] = 0.001;
+            tdata[j*13 + 2 + 6] = 0.001;
+            tdata[j*13 + 3 + 6] = 0.062375;
+            tdata[j*13 + 4 + 6] = 0.0;
+            tdata[j*13 + 5 + 6] = 0.0;
+            tdata[j*13 + 6 + 6] = 0.062375;
+        }
+    }
+    for(int j = 0; j < patchsetNpatches*patchsetNpatches; j++){
+        if(tdata[j*13+0+6] == materialsCount-1)
+            tdata[j*13+0+6] = id;
+    }
+    
+    qDebug() << *materials[id].name;
+    materials[id] = materials[materialsCount-1];
+    amaterials[id] = amaterials[materialsCount-1];
+    qDebug() << *materials[id].name;
+    materialsCount--;
 }
 
 int TFile::getMatByTexture(QString tname){

@@ -24,7 +24,8 @@ GeoTools::GeoTools(QString name)
     buttonTools["mapTileShowTool"] = new QPushButton("Show/H Map", this);
     buttonTools["mapTileLoadTool"] = new QPushButton("Load Map", this);
     buttonTools["heightTileLoadTool"] = new QPushButton("Load Height", this);
-    buttonTools["makeTileTextureTool"] = new QPushButton("makeTileTextureTool", this);
+    buttonTools["makeTileTextureTool"] = new QPushButton("Make Tile Texture from Map", this);
+    buttonTools["removeTileTextureTool"] = new QPushButton("Remove Map Tile Texture", this);
     QMapIterator<QString, QPushButton*> i(buttonTools);
     while (i.hasNext()) {
         i.next();
@@ -50,6 +51,7 @@ GeoTools::GeoTools(QString name)
     vbox->addWidget(label0);
     vbox->addItem(vlist3);
     vbox->addWidget(buttonTools["makeTileTextureTool"]);
+    vbox->addWidget(buttonTools["removeTileTextureTool"]);
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -66,6 +68,10 @@ GeoTools::GeoTools(QString name)
     
     QObject::connect(buttonTools["makeTileTextureTool"], SIGNAL(toggled(bool)),
                       this, SLOT(makeTileTextureToolEnabled(bool)));
+    
+    QObject::connect(buttonTools["removeTileTextureTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(removeTileTextureToolEnabled(bool)));
+    
     
 }
 
@@ -96,6 +102,14 @@ void GeoTools::heightTileLoadToolEnabled(bool val){
 void GeoTools::makeTileTextureToolEnabled(bool val){
     if(val){
         emit enableTool("makeTileTextureTool");
+    } else {
+        emit enableTool("");
+    }
+}
+
+void GeoTools::removeTileTextureToolEnabled(bool val){
+    if(val){
+        emit enableTool("removeTileTextureTool");
     } else {
         emit enableTool("");
     }

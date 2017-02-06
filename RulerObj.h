@@ -31,6 +31,9 @@ public:
     void setPosition(int x, int z, float* p);
     bool select(int value);
     void save(QTextStream* out);
+    bool hasLinePoints();
+    void getLinePoints(float *&punkty);
+    void getPosition(float len, float* pos);
     float getLength();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 

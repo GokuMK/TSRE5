@@ -270,39 +270,52 @@ void Route::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, float* 
     }
 }
 
-void Route::setTerrainTextureToTrackObj(int x, int y, float *pos, Brush* brush){
-    float* punkty = new float[10000];
-    Game::check_coords(x, y, pos);
-    float* ptr = punkty;
-    float playerT[2];
-    playerT[0] = x;
-    playerT[1] = y;
-    float tp[3];
-    Vec3::copy(tp,pos);
-    int ok1, ok2;
-    
-    if(placementAutoTargetType == 0) {
-        this->trackDB->getVectorSectionPoints(x, y, pos, ptr);
-    } else if(placementAutoTargetType == 1) {
-        this->roadDB->getVectorSectionPoints(x, y, pos, ptr);
-    } else if(placementAutoTargetType == 2) {
-        bool road = false;
-        ok1 = this->trackDB->findNearestPositionOnTDB(playerT, tp, NULL, NULL);
-        ok2 = this->roadDB->findNearestPositionOnTDB(playerT, tp, NULL, NULL);
-        if(ok2 >= 0)
-            if(ok1 < 0 || ok2 < ok1){
-                road = true;
-        }
-        if(road)
-            this->roadDB->getVectorSectionPoints(x, y, pos, ptr);
-        else
-            this->trackDB->getVectorSectionPoints(x, y, pos, ptr);
+void Route::setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, WorldObj* obj){
+    bool useObj = false;
+    if(obj != NULL){
+        useObj = obj->hasLinePoints();
     }
+        
+    float* punkty = new float[9000];
     
-    //this->trackDB->getVectorSectionPoints(x, y, pos, ptr);
-    int length = ptr - punkty;
-    qDebug() << "l "<<length;
-    TerrainLib::setTextureToTrackObj(brush, punkty, length, x, y);
+    if(useObj){
+        float* ptr = punkty;
+        obj->getLinePoints(ptr);
+        int length = ptr - punkty;
+        qDebug() << "lo "<<length;
+        TerrainLib::setTextureToTrackObj(brush, punkty, length, obj->x, obj->y);
+    } else {
+        Game::check_coords(x, y, pos);
+        float* ptr = punkty;
+        float playerT[2];
+        playerT[0] = x;
+        playerT[1] = y;
+        float tp[3];
+        Vec3::copy(tp,pos);
+        int ok1, ok2;
+
+        if(placementAutoTargetType == 0) {
+            this->trackDB->getVectorSectionPoints(x, y, pos, ptr);
+        } else if(placementAutoTargetType == 1) {
+            this->roadDB->getVectorSectionPoints(x, y, pos, ptr);
+        } else if(placementAutoTargetType == 2) {
+            bool road = false;
+            ok1 = this->trackDB->findNearestPositionOnTDB(playerT, tp, NULL, NULL);
+            ok2 = this->roadDB->findNearestPositionOnTDB(playerT, tp, NULL, NULL);
+            if(ok2 >= 0)
+                if(ok1 < 0 || ok2 < ok1){
+                    road = true;
+            }
+            if(road)
+                this->roadDB->getVectorSectionPoints(x, y, pos, ptr);
+            else
+                this->trackDB->getVectorSectionPoints(x, y, pos, ptr);
+        }
+        int length = ptr - punkty;
+        qDebug() << "l "<<length;
+        TerrainLib::setTextureToTrackObj(brush, punkty, length, x, y);
+    }
+    delete[] punkty;
 }
 
 void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
@@ -316,18 +329,29 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
         return;
     }
     
-    if(obj->type != "trackobj" && obj->type != "dyntrack" ) return;
-    //TrackObj* tobj = (TrackObj*)obj;
-    //TrackObj* track = (TrackObj*)obj;
-    float* punkty = new float[10000];
-    float* ptr = punkty;
-    if(this->tsection->isRoadShape(obj->sectionIdx))
-        this->roadDB->getVectorSectionPoints(obj->x, obj->y, obj->UiD, ptr);
-    else
-        this->trackDB->getVectorSectionPoints(obj->x, obj->y, obj->UiD, ptr);
-    int length = ptr - punkty;
-    qDebug() << "l "<<length;
-    TerrainLib::setTerrainToTrackObj(brush, punkty, length, obj->x, obj->y, obj->matrix);
+    if(obj->type == "trackobj" || obj->type == "dyntrack" ){
+        //TrackObj* tobj = (TrackObj*)obj;
+        //TrackObj* track = (TrackObj*)obj;
+        float* punkty = new float[10000];
+        float* ptr = punkty;
+        if(this->tsection->isRoadShape(obj->sectionIdx))
+            this->roadDB->getVectorSectionPoints(obj->x, obj->y, obj->UiD, ptr);
+        else
+            this->trackDB->getVectorSectionPoints(obj->x, obj->y, obj->UiD, ptr);
+        int length = ptr - punkty;
+        qDebug() << "l "<<length;
+        TerrainLib::setTerrainToTrackObj(brush, punkty, length, obj->x, obj->y, obj->matrix);
+        delete[] punkty;
+    } else if(obj->hasLinePoints()) {
+        float* punkty = new float[10000];
+        float* ptr = punkty;
+        obj->getLinePoints(ptr);
+        int length = ptr - punkty;
+        qDebug() << "l "<<length;
+        TerrainLib::setTerrainToTrackObj(brush, punkty, length, obj->x, obj->y, obj->matrix);
+        delete[] punkty;
+    }
+    
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p) {

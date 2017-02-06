@@ -62,6 +62,10 @@ void main() {
             gl_FragColor = shapeColor;
         } else {
             gl_FragColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+            vec4 tex2 = texture(uSampler2, vec2(vTextureCoord.s*secondTexEnabled, vTextureCoord.t*secondTexEnabled));
+            if(secondTexEnabled > 0){
+                gl_FragColor *= tex2*2.0;
+            }
             //gl_FragColor.a = max(gl_FragColor.a, isAlpha);  
 
             // discard if transparent

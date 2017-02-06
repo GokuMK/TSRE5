@@ -57,7 +57,7 @@ public:
     void undoPlaceObj(int x, int y, int UiD);
     void removeTrackFromTDB(WorldObj* obj);
     void nextDefaultEnd();
-    void setTerrainTextureToTrackObj(int x, int y, float *pos, Brush* brush);
+    void setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, WorldObj* obj = NULL);
     void setTerrainToTrackObj(WorldObj* obj, Brush* brush);
     int getTileObjCount(int x, int z);
     int getTileHiddenObjCount(int x, int z);

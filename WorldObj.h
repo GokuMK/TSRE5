@@ -118,6 +118,8 @@ public:
     virtual void resize(float x, float y, float z);
     virtual bool isTrackItem();
     virtual bool isSoundItem();
+    virtual bool hasLinePoints();
+    virtual void getLinePoints(float *&punkty);
     virtual Ref::RefItem* getRefInfo();
     virtual void drawBox();
     virtual bool select();

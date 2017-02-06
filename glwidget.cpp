@@ -179,6 +179,7 @@ void GLWidget::paintGL() {
 
     // Render Scene
     gluu->currentShader = gluu->shaders["StandardBloom"];
+    //gluu->currentShader = gluu->shaders["StandardFog"];
     gluu->currentShader->bind();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE0);
@@ -752,7 +753,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         if(toolEnabled.startsWith("paintTool")){
             // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
             if(keyControlEnabled)
-                route->setTerrainTextureToTrackObj((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, defaultPaintBrush);
+                route->setTerrainTextureToObj((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, defaultPaintBrush, selectedObj);
             else
                 TerrainLib::paintTexture(defaultPaintBrush, (int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
@@ -809,6 +810,9 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if(toolEnabled == "makeTileTextureTool"){
             TerrainLib::makeTextureFromMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
+        if(toolEnabled == "removeTileTextureTool"){
+            TerrainLib::removeTileTextureFromMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == ""){
             camera->MouseDown(event);

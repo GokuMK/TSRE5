@@ -310,10 +310,12 @@ void Terrain::makeTextureFromMap(){
     if(newMat >= 0){
         qDebug() << "material already exist";
     } else {
-        newMat = tfile->cloneMat(0);
+        newMat = tfile->newMat();
     }
     *tfile->materials[newMat].tex[0] = name;
     *tfile->amaterials[newMat].tex[0] = name;
+    float *texmult = (float*)&tfile->materials[newMat].itex[1][3];
+    *texmult = 32*16;
 
     int newTexture = TexLib::cloneTex(mapTexid);
     TexLib::mtex[newTexture]->pathid = name;
@@ -332,6 +334,20 @@ void Terrain::makeTextureFromMap(){
             //TexLib::mtex[texid[j * 16 + i]]->pathid = name;
         }
 
+    refresh();
+    this->modified = true;
+}
+
+void Terrain::removeTextureFromMap(){
+    QString name = this->getTileName(mojex, -mojez) + "_map.ace";
+    int newMat = tfile->getMatByTexture(name);
+    if(newMat <= 0){
+        return;
+    }
+    tfile->removeMat(newMat);
+    for (int i = 0; i < 256; i++) {
+        texid[i] = -1;
+    }    
     refresh();
     this->modified = true;
 }
@@ -459,7 +475,7 @@ void Terrain::paintTexture(Brush* brush, int x, int z, float posx, float posz) {
     //tz/= 128;
 
     float size = (float) (brush->size) / (512);
-    qDebug() << "size " << size << " " << tx / 128 << " " << tz / 128;
+    //qDebug() << "size " << size << " " << tx / 128 << " " << tz / 128;
 
     for (int i = u - 1; i < u + 2; i++)
         for (int j = y - 1; j < y + 2; j++) {
@@ -467,7 +483,7 @@ void Terrain::paintTexture(Brush* brush, int x, int z, float posx, float posz) {
             float tz = posz + 1024 - j * 128;
             tx /= 128;
             tz /= 128;
-            qDebug() << tx << " " << tz;
+            //qDebug() << tx << " " << tz;
             if ((tx < 0.0 - size) || (tx > 1.0 + size) || (tz < 0.0 - size) || (tz > 1.0 + size))
                 continue;
             if(!texLocked[j * 16 + i])
@@ -490,7 +506,7 @@ void Terrain::lockTexture(Brush* brush, int x, int z, float posx, float posz) {
 }
 
 void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
-    qDebug() << "painttile " << x << " " << z;
+    //qDebug() << "painttile " << x << " " << z;
     if (y > 15 || u > 15 || y < 0 || u < 0) return;
     //qDebug() << "painttile " << y << " " << u;
     QString name = this->getTileName(mojex, -mojez) + "_" + QString::number(y) + "_" + QString::number(u) + ".ace";
@@ -499,6 +515,7 @@ void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
     
     if (name != *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0]) {
         tfile->tdata[(y * 16 + u)*13 + 0 + 6] = tfile->cloneMat(tfile->tdata[(y * 16 + u)*13 + 0 + 6]);
+        tfile->materials[tfile->tdata[(y * 16 + u)*13 + 0 + 6]].itex[1][3] = 1107296256;
         *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0] = name;
         *tfile->amaterials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0] = name;
         qDebug() << *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0];
@@ -547,17 +564,17 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
 
     gluu->enableTextures();  
     gluu->enableNormals();
-    if(this->showBlob){
-            terrainBlob.render();
-    } else {
-        //gluu->currentShader->setUniformValue(gluu->currentShader->shaderSecondTexEnabled, 1.0f);
-        int off = 0;
-        float lod = 0;
-        float size = 512;
+    if(showBlob){
+        terrainBlob.render();
+    } 
+    
+    float lod = 0;
+    float size = 512;
 
-        QOpenGLVertexArrayObject::Binder vaoBinder(VAO);
+    QOpenGLVertexArrayObject::Binder vaoBinder(VAO);
         
-        if(Game::viewTerrainShape)
+    if(Game::viewTerrainShape && !showBlob){
+        float shaderSecondTexUV = 0;
         for (int uu = 0; uu < 16; uu++) {
             for (int yy = 0; yy < 16; yy++) {
                 if (hidden[yy * 16 + uu]) continue;
@@ -601,17 +618,13 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                     if (TexLib::mtex[texid[yy * 16 + uu]]->loaded) {
                         if (!TexLib::mtex[texid[yy * 16 + uu]]->glLoaded)
                             TexLib::mtex[texid[yy * 16 + uu]]->GLTextures();
-                        gluu->bindTexture(f, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
+                        f->glActiveTexture(GL_TEXTURE0);
                         //f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
-                        //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
-                        //  gl.glEnable(GL2.GL_TEXTURE_2D);
-                        //gl.glDisable(GL2.GL_ALPHA_TEST);
-                        //gl.glDisable(GL2.GL_BLEND);
+                        gluu->bindTexture(f, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
                     } else {
-                        // gl.glDisable(GL2.GL_TEXTURE_2D);
                     }
                 }
-                /*if (texid2[yy * 16 + uu] == -2) {
+                if (texid2[yy * 16 + uu] == -2) {
                 } else if (tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].count153 < 2){
                         texid2[yy * 16 + uu] = -2;
                 } else {
@@ -620,51 +633,48 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                     }
                     if (TexLib::mtex[texid2[yy * 16 + uu]]->loaded) {
                         if (!TexLib::mtex[texid2[yy * 16 + uu]]->glLoaded)
-                            TexLib::mtex[texid2[yy * 16 + uu]]->GLTextures();
-                        //f->glActiveTexture(GL_TEXTURE1);
-                        //f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid2[yy * 16 + uu]]->tex[0]);
-                        //f->glActiveTexture(GL_TEXTURE0);
-                        //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
-                        //  gl.glEnable(GL2.GL_TEXTURE_2D);
-                        //gl.glDisable(GL2.GL_ALPHA_TEST);
-                        //gl.glDisable(GL2.GL_BLEND);
+                            TexLib::mtex[texid2[yy * 16 + uu]]->GLTextures(true);
+                        f->glActiveTexture(GL_TEXTURE1);
+                        f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid2[yy * 16 + uu]]->tex[0]);
+                        if(shaderSecondTexUV != *(float*)&tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].itex[1][3]){
+                            shaderSecondTexUV = *(float*)&tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].itex[1][3];
+                            gluu->currentShader->setUniformValue(gluu->currentShader->shaderSecondTexEnabled, shaderSecondTexUV);
+                        }
                     } else {
-                        // gl.glDisable(GL2.GL_TEXTURE_2D);
                     }
-                }*/
-                //QOpenGLVertexArrayObject::Binder vaoBinder(VAO[uu * 16 + yy]);
-                
-
-                f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
-                
-
-            }
-        }
-        
-        if(Game::viewTerrainGrid || !Game::viewTerrainShape){
-            gluu->disableTextures(0.7,0.7,0.7,1.0);
-            gluu->mvPushMatrix();
-            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0.05, 0);
-            gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-            glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-            for (int uu = 0; uu < 16; uu++) {
-                for (int yy = 0; yy < 16; yy++) {
-                    if (hidden[yy * 16 + uu]) continue;
-                    if ((tfile->flags[yy * 16 + uu] & 1) != 0) continue;
-                    float lodxx = lodx + uu * 128 - 1024;
-                    float lodzz = lodz + yy * 128 - 1024;
-                    lod = sqrt(lodxx * lodxx + lodzz * lodzz);
-                    if(Game::viewTerrainShape)
-                        if (lod > 300) continue;
-                    f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
                 }
+                
+                f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
             }
-            gluu->mvPopMatrix();
-            glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
         }
+        f->glActiveTexture(GL_TEXTURE0);
         gluu->currentShader->setUniformValue(gluu->currentShader->shaderSecondTexEnabled, 0.0f);
-        renderWater(lodx, lodz, playerT, playerW, target, fov);
     }
+        
+    if(Game::viewTerrainGrid || !Game::viewTerrainShape){
+        gluu->disableTextures(0.7,0.7,0.7,1.0);
+        gluu->mvPushMatrix();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0.05, 0);
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+        for (int uu = 0; uu < 16; uu++) {
+            for (int yy = 0; yy < 16; yy++) {
+                if (hidden[yy * 16 + uu]) continue;
+                if ((tfile->flags[yy * 16 + uu] & 1) != 0) continue;
+                float lodxx = lodx + uu * 128 - 1024;
+                float lodzz = lodz + yy * 128 - 1024;
+                lod = sqrt(lodxx * lodxx + lodzz * lodzz);
+                if(Game::viewTerrainShape)
+                    if (lod > 300) continue;
+                f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
+            }
+        }
+        gluu->mvPopMatrix();
+        glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+    }
+    
+    if(!showBlob)
+        renderWater(lodx, lodz, playerT, playerW, target, fov);
 }
 
 void Terrain::renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov) {

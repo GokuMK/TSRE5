@@ -15,7 +15,7 @@
 #include <QString>
 #include <QDebug>
 #include <QColor>
-#include "Undo.h"
+#include "GLUU.h"
 
 Texture::Texture() {
 }
@@ -300,21 +300,27 @@ void Texture::update(){
 Texture::~Texture() {
 }
 
-bool Texture::GLTextures() {
+bool Texture::GLTextures(bool mipmaps) {
     if(!loaded) return false;
     
     tex = new unsigned int[1];
-    //QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     
     glGenTextures(1, tex);
     glBindTexture(GL_TEXTURE_2D, tex[0]);
     glTexImage2D(GL_TEXTURE_2D, 0, type, width, height, 0, type, GL_UNSIGNED_BYTE, imageData);
     
-    //glTexStorage2D(GL_TEXTURE_2D, 4, GL_RGBA8, width, height);
+    //f->glTexStorage2D(GL_TEXTURE_2D, 4, GL_RGBA8, width, height);
     //f->glTexSubImage2D(GL_TEXTURE_2D, 0​, 0, 0, width​, height​, GL_BGRA, GL_UNSIGNED_BYTE, pixels);
-    //f->glGenerateMipmap(GL_TEXTURE_2D);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,  GL_LINEAR );
+    if(mipmaps){
+        f->glGenerateMipmap(GL_TEXTURE_2D);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,  GL_LINEAR_MIPMAP_LINEAR );
+    } else {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,  GL_LINEAR );
+    }
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
     delete[] imageData;
     imageData = NULL;
     this->editable = false;

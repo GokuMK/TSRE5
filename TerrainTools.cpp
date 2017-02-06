@@ -353,10 +353,11 @@ void TerrainTools::paintTexToolEnabled(bool val){
 }
 
 void TerrainTools::chooseColorEnabled(){
-    QColor color = QColorDialog::getColor(Qt::black, this, "Text Color",  QColorDialog::DontUseNativeDialog);
-    this->paintBrush->color[0] = color.red();
-    this->paintBrush->color[1] = color.green();
-    this->paintBrush->color[2] = color.blue();
+    QColor aColor(paintBrush->color[0], paintBrush->color[1], paintBrush->color[2]);
+    QColor color = QColorDialog::getColor(aColor, this, "Text Color",  QColorDialog::DontUseNativeDialog);
+    paintBrush->color[0] = color.red();
+    paintBrush->color[1] = color.green();
+    paintBrush->color[2] = color.blue();
     colorw->setStyleSheet("background-color:"+color.name()+";");
     colorw->setText(color.name());
 }

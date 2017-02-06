@@ -62,8 +62,10 @@ public:
     virtual ~TFile();
     bool readT(QString fSfile);
     void save(QString name);
+    int newMat();
     int cloneMat(int id);
     int getMatByTexture(QString tname);
+    void removeMat(int id);
     void setBufferNames(QString name);
     
 private:

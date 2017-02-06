@@ -471,6 +471,19 @@ void TerrainLib::makeTextureFromMap(int x, int z, float* p){
     terr->makeTextureFromMap();
 }
 
+void TerrainLib::removeTileTextureFromMap(int x, int z, float* p){
+    float posx = p[0];
+    float posz = p[2];
+    Game::check_coords(x, z, posx, posz);
+    qDebug() << x << " " << z << " " << posx << " " << posz;
+    
+    Terrain *terr;
+    terr = terrain[(x * 10000 + z)];
+    if (terr == NULL) return;
+    if (terr->loaded == false) return;
+    terr->removeTextureFromMap();
+}
+
 void TerrainLib::setTileBlob(int x, int z, float* p){
     float posx = p[0];
     float posz = p[2];
@@ -571,7 +584,7 @@ void TerrainLib::setFixedTileHeight(Brush* brush, int x, int z, float* p){
 
     if (terr == NULL) return;
     if (terr->loaded == false) return;
-    
+    Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData);
     for (int i = 0; i < 256; i++)
         for (int j = 0; j < 256; j++) {
             terr->terrainData[i][j] = brush->hFixed;

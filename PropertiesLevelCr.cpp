@@ -155,9 +155,9 @@ void PropertiesLevelCr::showObj(WorldObj* obj){
     this->uid.setText(QString::number(obj->UiD, 10));
     this->tX.setText(QString::number(obj->x, 10));
     this->tY.setText(QString::number(-obj->y, 10));
-    this->posX.setText(QString::number(obj->position[0], 'G', 4));
-    this->posY.setText(QString::number(obj->position[1], 'G', 4));
-    this->posZ.setText(QString::number(-obj->position[2], 'G', 4));
+    this->posX.setText(QString::number(obj->position[0], 'G', 6));
+    this->posY.setText(QString::number(obj->position[1], 'G', 6));
+    this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
     this->quat.setText(
             QString::number(obj->qDirection[0], 'G', 4) + " " +
             QString::number(obj->qDirection[1], 'G', 4) + " " +
@@ -189,9 +189,9 @@ void PropertiesLevelCr::updateObj(WorldObj* obj){
         this->uid.setText(QString::number(obj->UiD, 10));
         this->tX.setText(QString::number(obj->x, 10));
         this->tY.setText(QString::number(-obj->y, 10));
-        this->posX.setText(QString::number(obj->position[0], 'G', 4));
-        this->posY.setText(QString::number(obj->position[1], 'G', 4));
-        this->posZ.setText(QString::number(-obj->position[2], 'G', 4));
+        this->posX.setText(QString::number(obj->position[0], 'G', 6));
+        this->posY.setText(QString::number(obj->position[1], 'G', 6));
+        this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
         this->quat.setText(
                 QString::number(obj->qDirection[0], 'G', 4) + " " +
                 QString::number(obj->qDirection[1], 'G', 4) + " " +

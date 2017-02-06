@@ -317,6 +317,14 @@ bool WorldObj::isSoundItem(){
     return false;
 }
 
+bool WorldObj::hasLinePoints(){
+    return false;
+}
+
+void WorldObj::getLinePoints(float *&punkty){
+    return;
+}
+
 void WorldObj::load(int x, int y) {
     this->x = x;
     this->y = y;

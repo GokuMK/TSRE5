@@ -55449,7 +55449,24 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Texture.o: Texture.cpp Textu
 		c:/OT/Static/5.7.0_x64/include/QtGui/QColor \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qcolor.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qrgb.h \
-		c:/OT/Static/5.7.0_x64/include/QtGui/qrgba64.h
+		c:/OT/Static/5.7.0_x64/include/QtGui/qrgba64.h \
+		GLUU.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLFunctions \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglcontext.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QObject \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QScopedPointer \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QSurfaceFormat \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qsurfaceformat.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglversionfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLVertexArrayObject \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglvertexarrayobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLBuffer \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglbuffer.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QMatrix4x4 \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Texture.o Texture.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Tile.o: Tile.cpp Tile.h \

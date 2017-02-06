@@ -70,7 +70,6 @@ SOURCES       = AboutWindow.cpp \
 		Eng.cpp \
 		EngLib.cpp \
 		EngListWidget.cpp \
-		Features.cpp \
 		FileBuffer.cpp \
 		FileFunctions.cpp \
 		Flex.cpp \
@@ -90,12 +89,15 @@ SOURCES       = AboutWindow.cpp \
 		Intersections.cpp \
 		LevelCrObj.cpp \
 		LoadWindow.cpp \
+		MapData.cpp \
+		MapDataOSM.cpp \
+		MapDataUrlImage.cpp \
 		MapLib.cpp \
 		MapWindow.cpp \
 		NaviBox.cpp \
 		NaviWindow.cpp \
 		NewRouteWindow.cpp \
-		OSM.cpp \
+		OSMFeatures.cpp \
 		ObjTools.cpp \
 		OglObj.cpp \
 		OverwriteDialog.cpp \
@@ -199,6 +201,9 @@ SOURCES       = AboutWindow.cpp \
 		moc_HeightWindow.cpp \
 		moc_ImageLib.cpp \
 		moc_LoadWindow.cpp \
+		moc_MapData.cpp \
+		moc_MapDataOSM.cpp \
+		moc_MapDataUrlImage.cpp \
 		moc_MapLib.cpp \
 		moc_MapWindow.cpp \
 		moc_NaviBox.cpp \
@@ -264,7 +269,6 @@ OBJECTS       = build/Release/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/Eng.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/EngLib.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/EngListWidget.o \
-		build/Release/MinGW_QT_5.7.0_Static-Windows/Features.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/FileBuffer.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/FileFunctions.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/Flex.o \
@@ -284,12 +288,15 @@ OBJECTS       = build/Release/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/Intersections.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/LevelCrObj.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/LoadWindow.o \
+		build/Release/MinGW_QT_5.7.0_Static-Windows/MapData.o \
+		build/Release/MinGW_QT_5.7.0_Static-Windows/MapDataOSM.o \
+		build/Release/MinGW_QT_5.7.0_Static-Windows/MapDataUrlImage.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/MapLib.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/MapWindow.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/NaviBox.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/NaviWindow.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/NewRouteWindow.o \
-		build/Release/MinGW_QT_5.7.0_Static-Windows/OSM.o \
+		build/Release/MinGW_QT_5.7.0_Static-Windows/OSMFeatures.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/ObjTools.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/OglObj.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/OverwriteDialog.o \
@@ -394,6 +401,9 @@ OBJECTS       = build/Release/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_HeightWindow.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ImageLib.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_LoadWindow.o \
+		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapData.o \
+		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapDataOSM.o \
+		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapDataUrlImage.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapLib.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapWindow.o \
 		build/Release/MinGW_QT_5.7.0_Static-Windows/moc_NaviBox.o \
@@ -460,7 +470,6 @@ DIST          =  AboutWindow.h \
 		Eng.h \
 		EngLib.h \
 		EngListWidget.h \
-		Features.h \
 		FileBuffer.h \
 		FileFunctions.h \
 		Flex.h \
@@ -480,12 +489,15 @@ DIST          =  AboutWindow.h \
 		Intersections.h \
 		LevelCrObj.h \
 		LoadWindow.h \
+		MapData.h \
+		MapDataOSM.h \
+		MapDataUrlImage.h \
 		MapLib.h \
 		MapWindow.h \
 		NaviBox.h \
 		NaviWindow.h \
 		NewRouteWindow.h \
-		OSM.h \
+		OSMFeatures.h \
 		ObjTools.h \
 		OglObj.h \
 		OverwriteDialog.h \
@@ -599,7 +611,6 @@ DIST          =  AboutWindow.h \
 		Eng.cpp \
 		EngLib.cpp \
 		EngListWidget.cpp \
-		Features.cpp \
 		FileBuffer.cpp \
 		FileFunctions.cpp \
 		Flex.cpp \
@@ -619,12 +630,15 @@ DIST          =  AboutWindow.h \
 		Intersections.cpp \
 		LevelCrObj.cpp \
 		LoadWindow.cpp \
+		MapData.cpp \
+		MapDataOSM.cpp \
+		MapDataUrlImage.cpp \
 		MapLib.cpp \
 		MapWindow.cpp \
 		NaviBox.cpp \
 		NaviWindow.cpp \
 		NewRouteWindow.cpp \
-		OSM.cpp \
+		OSMFeatures.cpp \
 		ObjTools.cpp \
 		OglObj.cpp \
 		OverwriteDialog.cpp \
@@ -1148,12 +1162,12 @@ dist:
 	$(ZIP) TSRE5.zip $(SOURCES) $(DIST) nbproject/nbproject/qt-Release.pro C:/QT/Static/5.7.0/mkspecs/features/spec_pre.prf C:/QT/Static/5.7.0/mkspecs/qdevice.pri C:/QT/Static/5.7.0/mkspecs/features/device_config.prf C:/QT/Static/5.7.0/mkspecs/common/angle.conf C:/QT/Static/5.7.0/mkspecs/qconfig.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dcore.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dcore_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dextras.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dextras_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dinput.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dinput_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dlogic.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dlogic_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquick.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquick_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickextras.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickextras_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickinput.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickinput_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickrender.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3dquickrender_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3drender.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_3drender_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axbase.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axbase_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axcontainer.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axcontainer_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axserver.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_axserver_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_bluetooth.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_bluetooth_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_bootstrap_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_charts.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_charts_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_clucene_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_concurrent.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_concurrent_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_core.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_core_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_datavisualization.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_datavisualization_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_dbus.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_dbus_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_gamepad.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_gamepad_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_gui.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_gui_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_help.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_help_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_location.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_location_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_multimedia.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_multimedia_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_multimediawidgets.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_multimediawidgets_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_network.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_network_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_nfc.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_nfc_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_opengl.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_opengl_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_openglextensions.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_openglextensions_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_packetprotocol_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_platformsupport_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_positioning.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_positioning_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_printsupport.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_printsupport_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_purchasing.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_purchasing_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qml.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qml_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qmldebug_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qmldevtools_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qmltest.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qmltest_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quick.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quick_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quickcontrols2.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quickcontrols2_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quickparticles_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quicktemplates2_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quickwidgets.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_quickwidgets_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_script.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_script_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_scripttools.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_scripttools_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_scxml.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_scxml_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_sensors.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_sensors_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_serialbus.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_serialbus_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_serialport.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_serialport_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_sql.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_sql_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_svg.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_svg_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_testlib.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_testlib_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_uiplugin.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_uitools.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_uitools_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_webchannel.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_webchannel_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_websockets.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_websockets_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_widgets.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_widgets_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_winextras.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_winextras_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_xml.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_xml_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_xmlpatterns.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_xmlpatterns_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_lib_zlib_private.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_assimpsceneio.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_dsengine.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_gltfsceneio.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qdds.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qgenericbearer.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qicns.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qico.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qminimal.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_debugger.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_inspector.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_local.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_native.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_profiler.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_quickprofiler.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_server.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qmldbg_tcp.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qnativewifibearer.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qoffscreen.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qsvg.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qsvgicon.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtaudio_windows.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtga.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtgeoservices_mapbox.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtgeoservices_nokia.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtgeoservices_osm.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtiff.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtmedia_audioengine.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtmultimedia_m3u.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtpeakcanbus.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtposition_geoclue.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtposition_positionpoll.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtposition_serialnmea.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtsensorgestures_plugin.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtsensorgestures_shakeplugin.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtsensors_generic.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qttinycanbus.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtuiotouchplugin.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qtvirtualkeyboardplugin.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qwbmp.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qwebp.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_qwindows.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_windowsprintersupport.pri C:/QT/Static/5.7.0/mkspecs/modules/qt_plugin_xinputgamepad.pri C:/QT/Static/5.7.0/mkspecs/features/qt_functions.prf C:/QT/Static/5.7.0/mkspecs/features/qt_config.prf C:/QT/Static/5.7.0/mkspecs/features/win32/qt_config.prf C:/QT/Static/5.7.0/mkspecs/win32-g++/qmake.conf C:/QT/Static/5.7.0/mkspecs/features/spec_post.prf C:/QT/Static/5.7.0/mkspecs/features/exclusive_builds.prf C:/QT/Static/5.7.0/mkspecs/features/default_pre.prf C:/QT/Static/5.7.0/mkspecs/features/win32/default_pre.prf C:/QT/Static/5.7.0/mkspecs/features/resolve_config.prf C:/QT/Static/5.7.0/mkspecs/features/default_post.prf C:/QT/Static/5.7.0/mkspecs/features/win32/rtti.prf C:/QT/Static/5.7.0/mkspecs/features/precompile_header.prf C:/QT/Static/5.7.0/mkspecs/features/warn_on.prf C:/QT/Static/5.7.0/mkspecs/features/qt.prf C:/QT/Static/5.7.0/mkspecs/features/resources.prf C:/QT/Static/5.7.0/mkspecs/features/moc.prf C:/QT/Static/5.7.0/mkspecs/features/win32/opengl.prf C:/QT/Static/5.7.0/mkspecs/features/uic.prf C:/QT/Static/5.7.0/mkspecs/features/file_copies.prf C:/QT/Static/5.7.0/mkspecs/features/win32/windows.prf C:/QT/Static/5.7.0/mkspecs/features/testcase_targets.prf C:/QT/Static/5.7.0/mkspecs/features/exceptions.prf C:/QT/Static/5.7.0/mkspecs/features/yacc.prf C:/QT/Static/5.7.0/mkspecs/features/lex.prf nbproject/qt-Release.pro C:/QT/Static/5.7.0/lib/qtmain.prl C:/QT/Static/5.7.0/lib/Qt5OpenGL.prl C:/QT/Static/5.7.0/lib/Qt5Widgets.prl C:/QT/Static/5.7.0/lib/Qt5Gui.prl C:/QT/Static/5.7.0/lib/Qt5Network.prl C:/QT/Static/5.7.0/lib/Qt5Core.prl C:/QT/Static/5.7.0/plugins/platforms/qwindows.prl C:/QT/Static/5.7.0/plugins/imageformats/qdds.prl C:/QT/Static/5.7.0/plugins/imageformats/qicns.prl C:/QT/Static/5.7.0/plugins/imageformats/qico.prl C:/QT/Static/5.7.0/plugins/imageformats/qtga.prl C:/QT/Static/5.7.0/plugins/imageformats/qtiff.prl C:/QT/Static/5.7.0/plugins/imageformats/qwbmp.prl C:/QT/Static/5.7.0/plugins/imageformats/qwebp.prl C:/QT/Static/5.7.0/plugins/bearer/qgenericbearer.prl C:/QT/Static/5.7.0/plugins/bearer/qnativewifibearer.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/AceLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/ActLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/Activity.o build/Release/MinGW_QT_5.7.0_Static-Windows/ActivityTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/Brush.o build/Release/MinGW_QT_5.7.0_Static-Windows/CELoadWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/Camera.o build/Release/MinGW_QT_5.7.0_Static-Windows/CameraConsist.o build/Release/MinGW_QT_5.7.0_Static-Windows/CameraFree.o build/Release/MinGW_QT_5.7.0_Static-Windows/CameraRot.o build/Release/MinGW_QT_5.7.0_Static-Windows/ChooseFileDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/ConEditorWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/ConLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/ConListWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/ConUnitsWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/Consist.o build/Release/MinGW_QT_5.7.0_Static-Windows/Coords.o build/Release/MinGW_QT_5.7.0_Static-Windows/CoordsGpx.o build/Release/MinGW_QT_5.7.0_Static-Windows/CoordsKml.o build/Release/MinGW_QT_5.7.0_Static-Windows/CoordsMkr.o build/Release/MinGW_QT_5.7.0_Static-Windows/DynTrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/EditFileNameDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/Eng.o build/Release/MinGW_QT_5.7.0_Static-Windows/EngLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/EngListWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/Features.o build/Release/MinGW_QT_5.7.0_Static-Windows/FileBuffer.o build/Release/MinGW_QT_5.7.0_Static-Windows/FileFunctions.o build/Release/MinGW_QT_5.7.0_Static-Windows/Flex.o build/Release/MinGW_QT_5.7.0_Static-Windows/ForestObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/GLH.o build/Release/MinGW_QT_5.7.0_Static-Windows/GLMatrix.o build/Release/MinGW_QT_5.7.0_Static-Windows/GLUU.o build/Release/MinGW_QT_5.7.0_Static-Windows/Game.o build/Release/MinGW_QT_5.7.0_Static-Windows/GeoTools.o
-	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/GroupObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/GuiFunct.o build/Release/MinGW_QT_5.7.0_Static-Windows/HGTfile.o build/Release/MinGW_QT_5.7.0_Static-Windows/HazardObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/HeightWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/IghCoords.o build/Release/MinGW_QT_5.7.0_Static-Windows/ImageLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/Intersections.o build/Release/MinGW_QT_5.7.0_Static-Windows/LevelCrObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/LoadWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/MapLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/MapWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/NaviBox.o build/Release/MinGW_QT_5.7.0_Static-Windows/NaviWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/NewRouteWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/OSM.o build/Release/MinGW_QT_5.7.0_Static-Windows/ObjTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/OglObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/OverwriteDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/PaintTexLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/ParserX.o build/Release/MinGW_QT_5.7.0_Static-Windows/Path.o build/Release/MinGW_QT_5.7.0_Static-Windows/PickupObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/PlatformObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/Pointer3d.o build/Release/MinGW_QT_5.7.0_Static-Windows/PoleObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesAbstract.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesLevelCr.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o
-	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundRegion.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSpeedpost.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o build/Release/MinGW_QT_5.7.0_Static-Windows/QuadTree.o build/Release/MinGW_QT_5.7.0_Static-Windows/RandomConsist.o build/Release/MinGW_QT_5.7.0_Static-Windows/ReadFile.o build/Release/MinGW_QT_5.7.0_Static-Windows/Ref.o build/Release/MinGW_QT_5.7.0_Static-Windows/Route.o build/Release/MinGW_QT_5.7.0_Static-Windows/Ruch.o build/Release/MinGW_QT_5.7.0_Static-Windows/RulerObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SFile.o build/Release/MinGW_QT_5.7.0_Static-Windows/SFileC.o build/Release/MinGW_QT_5.7.0_Static-Windows/SFileX.o build/Release/MinGW_QT_5.7.0_Static-Windows/Shader.o build/Release/MinGW_QT_5.7.0_Static-Windows/ShapeLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/ShapeViewWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/SigCfg.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalShape.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalType.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalWindowLink.o build/Release/MinGW_QT_5.7.0_Static-Windows/SoundList.o build/Release/MinGW_QT_5.7.0_Static-Windows/SoundRegionObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SoundSourceObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SpeedPost.o build/Release/MinGW_QT_5.7.0_Static-Windows/SpeedPostDAT.o build/Release/MinGW_QT_5.7.0_Static-Windows/SpeedpostObj.o
-	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/StaticObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TDB.o build/Release/MinGW_QT_5.7.0_Static-Windows/TFile.o build/Release/MinGW_QT_5.7.0_Static-Windows/TRitem.o build/Release/MinGW_QT_5.7.0_Static-Windows/TRnode.o build/Release/MinGW_QT_5.7.0_Static-Windows/TS.o build/Release/MinGW_QT_5.7.0_Static-Windows/TSection.o build/Release/MinGW_QT_5.7.0_Static-Windows/TSectionDAT.o build/Release/MinGW_QT_5.7.0_Static-Windows/Terrain.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainTreeWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainWaterWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/TexLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/TextObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/Texture.o build/Release/MinGW_QT_5.7.0_Static-Windows/Tile.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrWatermarkObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrackItemObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrackShape.o build/Release/MinGW_QT_5.7.0_Static-Windows/TransferObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TransformWorldObjDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/Trk.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrkWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/Undo.o build/Release/MinGW_QT_5.7.0_Static-Windows/UnsavedDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector2f.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector2i.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector3f.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector4f.o build/Release/MinGW_QT_5.7.0_Static-Windows/WorldObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/glShapeWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/glwidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/main.o build/Release/MinGW_QT_5.7.0_Static-Windows/window.o
-	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/tsre5_plugin_import.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_AboutWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_AceLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ActivityTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_CELoadWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ChooseFileDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ConEditorWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ConListWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ConUnitsWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_EditFileNameDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_EngListWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_GeoTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_HeightWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ImageLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_LoadWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_NaviBox.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_NaviWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_NewRouteWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ObjTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_OverwriteDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesAbstract.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesCarspawner.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesDyntrack.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesForest.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesGroup.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesLevelCr.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPickup.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPlatform.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesRuler.o
-	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSiding.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSignal.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundRegion.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundSource.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSpeedpost.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesStatic.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTransfer.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_Route.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindowLink.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTreeWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainWaterWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TransformWorldObjDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TrkWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_UnsavedDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_glShapeWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_glwidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_window.o
+	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/AboutWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/AceLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/ActLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/Activity.o build/Release/MinGW_QT_5.7.0_Static-Windows/ActivityTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/Brush.o build/Release/MinGW_QT_5.7.0_Static-Windows/CELoadWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/Camera.o build/Release/MinGW_QT_5.7.0_Static-Windows/CameraConsist.o build/Release/MinGW_QT_5.7.0_Static-Windows/CameraFree.o build/Release/MinGW_QT_5.7.0_Static-Windows/CameraRot.o build/Release/MinGW_QT_5.7.0_Static-Windows/ChooseFileDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/ConEditorWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/ConLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/ConListWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/ConUnitsWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/Consist.o build/Release/MinGW_QT_5.7.0_Static-Windows/Coords.o build/Release/MinGW_QT_5.7.0_Static-Windows/CoordsGpx.o build/Release/MinGW_QT_5.7.0_Static-Windows/CoordsKml.o build/Release/MinGW_QT_5.7.0_Static-Windows/CoordsMkr.o build/Release/MinGW_QT_5.7.0_Static-Windows/DynTrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/EditFileNameDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/Eng.o build/Release/MinGW_QT_5.7.0_Static-Windows/EngLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/EngListWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/FileBuffer.o build/Release/MinGW_QT_5.7.0_Static-Windows/FileFunctions.o build/Release/MinGW_QT_5.7.0_Static-Windows/Flex.o build/Release/MinGW_QT_5.7.0_Static-Windows/ForestObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/GLH.o build/Release/MinGW_QT_5.7.0_Static-Windows/GLMatrix.o build/Release/MinGW_QT_5.7.0_Static-Windows/GLUU.o build/Release/MinGW_QT_5.7.0_Static-Windows/Game.o build/Release/MinGW_QT_5.7.0_Static-Windows/GeoTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/GroupObj.o
+	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/GuiFunct.o build/Release/MinGW_QT_5.7.0_Static-Windows/HGTfile.o build/Release/MinGW_QT_5.7.0_Static-Windows/HazardObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/HeightWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/IghCoords.o build/Release/MinGW_QT_5.7.0_Static-Windows/ImageLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/Intersections.o build/Release/MinGW_QT_5.7.0_Static-Windows/LevelCrObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/LoadWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/MapData.o build/Release/MinGW_QT_5.7.0_Static-Windows/MapDataOSM.o build/Release/MinGW_QT_5.7.0_Static-Windows/MapDataUrlImage.o build/Release/MinGW_QT_5.7.0_Static-Windows/MapLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/MapWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/NaviBox.o build/Release/MinGW_QT_5.7.0_Static-Windows/NaviWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/NewRouteWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/OSMFeatures.o build/Release/MinGW_QT_5.7.0_Static-Windows/ObjTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/OglObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/OverwriteDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/PaintTexLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/ParserX.o build/Release/MinGW_QT_5.7.0_Static-Windows/Path.o build/Release/MinGW_QT_5.7.0_Static-Windows/PickupObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/PlatformObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/Pointer3d.o build/Release/MinGW_QT_5.7.0_Static-Windows/PoleObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesAbstract.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesLevelCr.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPickup.o
+	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesPlatform.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundRegion.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundSource.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSpeedpost.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o build/Release/MinGW_QT_5.7.0_Static-Windows/QuadTree.o build/Release/MinGW_QT_5.7.0_Static-Windows/RandomConsist.o build/Release/MinGW_QT_5.7.0_Static-Windows/ReadFile.o build/Release/MinGW_QT_5.7.0_Static-Windows/Ref.o build/Release/MinGW_QT_5.7.0_Static-Windows/Route.o build/Release/MinGW_QT_5.7.0_Static-Windows/Ruch.o build/Release/MinGW_QT_5.7.0_Static-Windows/RulerObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SFile.o build/Release/MinGW_QT_5.7.0_Static-Windows/SFileC.o build/Release/MinGW_QT_5.7.0_Static-Windows/SFileX.o build/Release/MinGW_QT_5.7.0_Static-Windows/Shader.o build/Release/MinGW_QT_5.7.0_Static-Windows/ShapeLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/ShapeViewWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/SigCfg.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalShape.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalType.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/SignalWindowLink.o build/Release/MinGW_QT_5.7.0_Static-Windows/SoundList.o build/Release/MinGW_QT_5.7.0_Static-Windows/SoundRegionObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SoundSourceObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/SpeedPost.o
+	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/SpeedPostDAT.o build/Release/MinGW_QT_5.7.0_Static-Windows/SpeedpostObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/StaticObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TDB.o build/Release/MinGW_QT_5.7.0_Static-Windows/TFile.o build/Release/MinGW_QT_5.7.0_Static-Windows/TRitem.o build/Release/MinGW_QT_5.7.0_Static-Windows/TRnode.o build/Release/MinGW_QT_5.7.0_Static-Windows/TS.o build/Release/MinGW_QT_5.7.0_Static-Windows/TSection.o build/Release/MinGW_QT_5.7.0_Static-Windows/TSectionDAT.o build/Release/MinGW_QT_5.7.0_Static-Windows/Terrain.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainTreeWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainWaterWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/TexLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/TextObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/Texture.o build/Release/MinGW_QT_5.7.0_Static-Windows/Tile.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrWatermarkObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrackItemObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrackShape.o build/Release/MinGW_QT_5.7.0_Static-Windows/TransferObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/TransformWorldObjDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/Trk.o build/Release/MinGW_QT_5.7.0_Static-Windows/TrkWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/Undo.o build/Release/MinGW_QT_5.7.0_Static-Windows/UnsavedDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector2f.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector2i.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector3f.o build/Release/MinGW_QT_5.7.0_Static-Windows/Vector4f.o build/Release/MinGW_QT_5.7.0_Static-Windows/WorldObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/glShapeWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/glwidget.o
+	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/main.o build/Release/MinGW_QT_5.7.0_Static-Windows/window.o build/Release/MinGW_QT_5.7.0_Static-Windows/tsre5_plugin_import.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_AboutWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_AceLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ActivityTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_CELoadWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ChooseFileDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ConEditorWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ConListWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ConUnitsWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_EditFileNameDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_EngListWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_GeoTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_HeightWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ImageLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_LoadWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapData.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapDataOSM.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapDataUrlImage.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapLib.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_NaviBox.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_NaviWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_NewRouteWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ObjTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_OverwriteDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesAbstract.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesCarspawner.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesDyntrack.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesForest.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesGroup.o
+	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesLevelCr.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPickup.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesPlatform.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesRuler.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSiding.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSignal.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundRegion.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSoundSource.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesSpeedpost.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesStatic.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTrackObj.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesTransfer.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_PropertiesUndefined.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_RandomConsist.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_Route.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ShapeViewWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_SignalWindowLink.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTools.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainTreeWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TerrainWaterWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TransformWorldObjDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_TrkWindow.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_UnsavedDialog.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_glShapeWidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_glwidget.o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_window.o
 	-$(DEL_FILE) build/Release/MinGW_QT_5.7.0_Static-Windows/TSRE5_resource_res.o
 
 distclean: clean 
@@ -1173,9 +1187,9 @@ compiler_no_pch_compiler_make_all:
 compiler_no_pch_compiler_clean:
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_Route.cpp moc_ShapeViewWindow.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
+compiler_moc_header_make_all: moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapData.cpp moc_MapDataOSM.cpp moc_MapDataUrlImage.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_Route.cpp moc_ShapeViewWindow.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_Route.cpp moc_ShapeViewWindow.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
+	-$(DEL_FILE) moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapData.cpp moc_MapDataOSM.cpp moc_MapDataUrlImage.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_Route.cpp moc_ShapeViewWindow.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp moc_glShapeWidget.cpp moc_glwidget.cpp moc_window.cpp
 moc_AboutWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtWidgets/QtWidgetsDepends \
 		C:/QT/Static/5.7.0/include/QtCore/QtCore \
@@ -6625,6 +6639,186 @@ moc_LoadWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. LoadWindow.h -o moc_LoadWindow.cpp
 
+moc_MapData.cpp: C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		MapData.h \
+		C:/QT/Static/5.7.0/bin/moc.exe
+	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. MapData.h -o moc_MapData.cpp
+
+moc_MapDataOSM.cpp: MapData.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		MapDataOSM.h \
+		C:/QT/Static/5.7.0/bin/moc.exe
+	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. MapDataOSM.h -o moc_MapDataOSM.cpp
+
+moc_MapDataUrlImage.cpp: MapData.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		MapDataUrlImage.h \
+		C:/QT/Static/5.7.0/bin/moc.exe
+	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. MapDataUrlImage.h -o moc_MapDataUrlImage.cpp
+
 moc_MapLib.cpp: C:/QT/Static/5.7.0/include/QtCore/QThread \
 		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
 		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
@@ -7119,7 +7313,6 @@ moc_MapWindow.cpp: C:/QT/Static/5.7.0/include/QtWidgets/QtWidgets \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
-		OSM.h \
 		MapWindow.h \
 		C:/QT/Static/5.7.0/bin/moc.exe
 	'C:\QT\Static\5.7.0\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -IC:/QT/Static/5.7.0/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -IC:/QT/Static/5.7.0/include -IC:/QT/Static/5.7.0/include/QtOpenGL -IC:/QT/Static/5.7.0/include/QtWidgets -IC:/QT/Static/5.7.0/include/QtGui -IC:/QT/Static/5.7.0/include/QtNetwork -IC:/QT/Static/5.7.0/include/QtCore -I. MapWindow.h -o moc_MapWindow.cpp
@@ -29011,9 +29204,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/EngListWidget.o: EngListWidget.cpp E
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/EngListWidget.o EngListWidget.cpp
 
-build/Release/MinGW_QT_5.7.0_Static-Windows/Features.o: Features.cpp Features.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/Features.o Features.cpp
-
 build/Release/MinGW_QT_5.7.0_Static-Windows/FileBuffer.o: FileBuffer.cpp FileBuffer.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
@@ -31684,7 +31874,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/GuiFunct.o: GuiFunct.cpp GuiFunct.h 
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
 		window.h \
-		C:/QT/Static/5.7.0/include/QtWidgets/QMainWindow
+		C:/QT/Static/5.7.0/include/QtWidgets/QMainWindow \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/GuiFunct.o GuiFunct.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/HGTfile.o: HGTfile.cpp HGTfile.h \
@@ -33294,6 +33485,330 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/LoadWindow.o: LoadWindow.cpp LoadWin
 		IghCoords.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/LoadWindow.o LoadWindow.cpp
 
+build/Release/MinGW_QT_5.7.0_Static-Windows/MapData.o: MapData.cpp MapData.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/MapData.o MapData.cpp
+
+build/Release/MinGW_QT_5.7.0_Static-Windows/MapDataOSM.o: MapDataOSM.cpp MapDataOSM.h \
+		MapData.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QDebug \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QFile \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/QXmlStreamReader \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/QString \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		IghCoords.h \
+		C:/QT/Static/5.7.0/include/QtCore/QCoreApplication \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/QNetworkAccessManager \
+		C:/QT/Static/5.7.0/include/QtNetwork/qnetworkaccessmanager.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/QSslConfiguration \
+		C:/QT/Static/5.7.0/include/QtNetwork/qsslconfiguration.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qsslsocket.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qtcpsocket.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qabstractsocket.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qsslerror.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qsslcertificate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qssl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QFlags \
+		C:/QT/Static/5.7.0/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		C:/QT/Static/5.7.0/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		C:/QT/Static/5.7.0/include/QtCore/QtGlobal \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtNetwork/QNetworkRequest \
+		C:/QT/Static/5.7.0/include/QtNetwork/qnetworkrequest.h \
+		C:/QT/Static/5.7.0/include/QtCore/QUrl \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtNetwork/QNetworkReply \
+		C:/QT/Static/5.7.0/include/QtNetwork/qnetworkreply.h \
+		C:/QT/Static/5.7.0/include/QtCore/QIODevice \
+		C:/QT/Static/5.7.0/include/QtCore/QUrlQuery \
+		CoordsMkr.h \
+		Coords.h \
+		OSMFeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/QTime
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/MapDataOSM.o MapDataOSM.cpp
+
+build/Release/MinGW_QT_5.7.0_Static-Windows/MapDataUrlImage.o: MapDataUrlImage.cpp MapDataUrlImage.h \
+		MapData.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
+		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
+		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
+		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
+		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
+		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
+		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
+		C:/QT/Static/5.7.0/include/QtGui/QImage \
+		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
+		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
+		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
+		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
+		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
+		C:/QT/Static/5.7.0/include/QtCore/QDebug \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qset.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QFile \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/QString \
+		C:/QT/Static/5.7.0/include/QtGui/QPainter \
+		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
+		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
+		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
+		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
+		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
+		IghCoords.h \
+		C:/QT/Static/5.7.0/include/QtCore/QCoreApplication \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/QNetworkAccessManager \
+		C:/QT/Static/5.7.0/include/QtNetwork/qnetworkaccessmanager.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/QSslConfiguration \
+		C:/QT/Static/5.7.0/include/QtNetwork/qsslconfiguration.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qsslsocket.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qtcpsocket.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qabstractsocket.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qsslerror.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qsslcertificate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtNetwork/qssl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QFlags \
+		C:/QT/Static/5.7.0/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		C:/QT/Static/5.7.0/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		C:/QT/Static/5.7.0/include/QtCore/QtGlobal \
+		C:/QT/Static/5.7.0/include/QtCore/QSharedDataPointer \
+		C:/QT/Static/5.7.0/include/QtCore/QMetaType \
+		C:/QT/Static/5.7.0/include/QtNetwork/QNetworkRequest \
+		C:/QT/Static/5.7.0/include/QtNetwork/qnetworkrequest.h \
+		C:/QT/Static/5.7.0/include/QtCore/QUrl \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/QVariant \
+		C:/QT/Static/5.7.0/include/QtNetwork/QNetworkReply \
+		C:/QT/Static/5.7.0/include/QtNetwork/qnetworkreply.h \
+		C:/QT/Static/5.7.0/include/QtCore/QIODevice \
+		C:/QT/Static/5.7.0/include/QtCore/QUrlQuery \
+		CoordsMkr.h \
+		Coords.h \
+		GLMatrix.h \
+		C:/QT/Static/5.7.0/include/QtCore/QTime \
+		Game.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/MapDataUrlImage.o MapDataUrlImage.cpp
+
 build/Release/MinGW_QT_5.7.0_Static-Windows/MapLib.o: MapLib.cpp MapLib.h \
 		C:/QT/Static/5.7.0/include/QtCore/QThread \
 		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
@@ -33738,7 +34253,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/MapLib.o: MapLib.cpp MapLib.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
-		OSM.h \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
 		C:/QT/Static/5.7.0/include/QtGui/QOpenGLShaderProgram \
 		C:/QT/Static/5.7.0/include/QtGui/QColor
@@ -34184,40 +34698,20 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/MapWindow.o: MapWindow.cpp MapWindow
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
-		OSM.h \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
-		C:/QT/Static/5.7.0/include/QtCore/QFile \
-		C:/QT/Static/5.7.0/include/QtCore/QXmlStreamReader \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		C:/QT/Static/5.7.0/include/QtWidgets/QGraphicsScene \
 		C:/QT/Static/5.7.0/include/QtWidgets/QGraphicsView \
 		C:/QT/Static/5.7.0/include/QtWidgets/QGraphicsPixmapItem \
-		C:/QT/Static/5.7.0/include/QtNetwork/QNetworkAccessManager \
-		C:/QT/Static/5.7.0/include/QtNetwork/qnetworkaccessmanager.h \
-		C:/QT/Static/5.7.0/include/QtNetwork/QSslConfiguration \
-		C:/QT/Static/5.7.0/include/QtNetwork/qsslconfiguration.h \
-		C:/QT/Static/5.7.0/include/QtNetwork/qsslsocket.h \
-		C:/QT/Static/5.7.0/include/QtNetwork/qtcpsocket.h \
-		C:/QT/Static/5.7.0/include/QtNetwork/qabstractsocket.h \
-		C:/QT/Static/5.7.0/include/QtNetwork/qsslerror.h \
-		C:/QT/Static/5.7.0/include/QtNetwork/qsslcertificate.h \
-		C:/QT/Static/5.7.0/include/QtNetwork/qssl.h \
-		C:/QT/Static/5.7.0/include/QtCore/QFlags \
-		C:/QT/Static/5.7.0/include/QtNetwork/QSslPreSharedKeyAuthenticator \
-		C:/QT/Static/5.7.0/include/QtNetwork/qsslpresharedkeyauthenticator.h \
-		C:/QT/Static/5.7.0/include/QtCore/QtGlobal \
-		C:/QT/Static/5.7.0/include/QtNetwork/QNetworkRequest \
-		C:/QT/Static/5.7.0/include/QtNetwork/qnetworkrequest.h \
-		C:/QT/Static/5.7.0/include/QtCore/QUrl \
-		C:/QT/Static/5.7.0/include/QtNetwork/QNetworkReply \
-		C:/QT/Static/5.7.0/include/QtNetwork/qnetworkreply.h \
-		C:/QT/Static/5.7.0/include/QtCore/QIODevice \
-		C:/QT/Static/5.7.0/include/QtCore/QUrlQuery \
 		CoordsMkr.h \
 		Coords.h \
 		IghCoords.h \
-		Features.h \
-		C:/QT/Static/5.7.0/include/QtCore/QTime
+		OSMFeatures.h \
+		MapDataOSM.h \
+		MapData.h \
+		MapDataUrlImage.h \
+		C:/QT/Static/5.7.0/include/QtCore/QTime \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/MapWindow.o MapWindow.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/NaviBox.o: NaviBox.cpp NaviBox.h \
@@ -34659,7 +35153,9 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/NaviBox.o: NaviBox.cpp NaviBox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbar.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
-		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h
+		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
+		Game.h \
+		C:/QT/Static/5.7.0/include/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/NaviBox.o NaviBox.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/NaviWindow.o: NaviWindow.cpp NaviWindow.h \
@@ -35107,7 +35603,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/NaviWindow.o: NaviWindow.cpp NaviWin
 		Coords.h \
 		C:/QT/Static/5.7.0/include/QtCore/QString \
 		CoordsMkr.h \
-		CoordsKml.h
+		CoordsKml.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/NaviWindow.o NaviWindow.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/NewRouteWindow.o: NewRouteWindow.cpp NewRouteWindow.h \
@@ -35552,100 +36049,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/NewRouteWindow.o: NewRouteWindow.cpp
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/NewRouteWindow.o NewRouteWindow.cpp
 
-build/Release/MinGW_QT_5.7.0_Static-Windows/OSM.o: OSM.cpp OSM.h \
-		C:/QT/Static/5.7.0/include/QtCore/QDebug \
-		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
-		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
-		C:/QT/Static/5.7.0/include/QtCore/qglobal.h \
-		C:/QT/Static/5.7.0/include/QtCore/qconfig.h \
-		C:/QT/Static/5.7.0/include/QtCore/qfeatures.h \
-		C:/QT/Static/5.7.0/include/QtCore/qsystemdetection.h \
-		C:/QT/Static/5.7.0/include/QtCore/qprocessordetection.h \
-		C:/QT/Static/5.7.0/include/QtCore/qcompilerdetection.h \
-		C:/QT/Static/5.7.0/include/QtCore/qtypeinfo.h \
-		C:/QT/Static/5.7.0/include/QtCore/qtypetraits.h \
-		C:/QT/Static/5.7.0/include/QtCore/qisenum.h \
-		C:/QT/Static/5.7.0/include/QtCore/qsysinfo.h \
-		C:/QT/Static/5.7.0/include/QtCore/qlogging.h \
-		C:/QT/Static/5.7.0/include/QtCore/qflags.h \
-		C:/QT/Static/5.7.0/include/QtCore/qatomic.h \
-		C:/QT/Static/5.7.0/include/QtCore/qbasicatomic.h \
-		C:/QT/Static/5.7.0/include/QtCore/qatomic_bootstrap.h \
-		C:/QT/Static/5.7.0/include/QtCore/qgenericatomic.h \
-		C:/QT/Static/5.7.0/include/QtCore/qatomic_cxx11.h \
-		C:/QT/Static/5.7.0/include/QtCore/qatomic_msvc.h \
-		C:/QT/Static/5.7.0/include/QtCore/qglobalstatic.h \
-		C:/QT/Static/5.7.0/include/QtCore/qmutex.h \
-		C:/QT/Static/5.7.0/include/QtCore/qnumeric.h \
-		C:/QT/Static/5.7.0/include/QtCore/qversiontagging.h \
-		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
-		C:/QT/Static/5.7.0/include/QtCore/qchar.h \
-		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
-		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
-		C:/QT/Static/5.7.0/include/QtCore/qrefcount.h \
-		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
-		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
-		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
-		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
-		C:/QT/Static/5.7.0/include/QtCore/qbytearray.h \
-		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
-		C:/QT/Static/5.7.0/include/QtCore/qstring.h \
-		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
-		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
-		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
-		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
-		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
-		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
-		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
-		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
-		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
-		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
-		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
-		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
-		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
-		C:/QT/Static/5.7.0/include/QtCore/qvarlengtharray.h \
-		C:/QT/Static/5.7.0/include/QtCore/qcontainerfwd.h \
-		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
-		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
-		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
-		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
-		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
-		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
-		C:/QT/Static/5.7.0/include/QtCore/qset.h \
-		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
-		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
-		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
-		C:/QT/Static/5.7.0/include/QtCore/QString \
-		C:/QT/Static/5.7.0/include/QtGui/QImage \
-		C:/QT/Static/5.7.0/include/QtGui/qimage.h \
-		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
-		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
-		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
-		C:/QT/Static/5.7.0/include/QtGui/qpaintdevice.h \
-		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs.h \
-		C:/QT/Static/5.7.0/include/QtGui/qwindowdefs_win.h \
-		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
-		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
-		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
-		C:/QT/Static/5.7.0/include/QtGui/qpixelformat.h \
-		C:/QT/Static/5.7.0/include/QtGui/qtransform.h \
-		C:/QT/Static/5.7.0/include/QtGui/qmatrix.h \
-		C:/QT/Static/5.7.0/include/QtGui/qpolygon.h \
-		C:/QT/Static/5.7.0/include/QtGui/qregion.h \
-		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
-		C:/QT/Static/5.7.0/include/QtCore/qline.h \
-		C:/QT/Static/5.7.0/include/QtGui/qpainterpath.h \
-		C:/QT/Static/5.7.0/include/QtGui/QPainter \
-		C:/QT/Static/5.7.0/include/QtGui/qpainter.h \
-		C:/QT/Static/5.7.0/include/QtGui/qpixmap.h \
-		C:/QT/Static/5.7.0/include/QtGui/qtextoption.h \
-		C:/QT/Static/5.7.0/include/QtGui/qpen.h \
-		C:/QT/Static/5.7.0/include/QtGui/qbrush.h \
-		C:/QT/Static/5.7.0/include/QtGui/qfontinfo.h \
-		C:/QT/Static/5.7.0/include/QtGui/qfont.h \
-		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
-		IghCoords.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/OSM.o OSM.cpp
+build/Release/MinGW_QT_5.7.0_Static-Windows/OSMFeatures.o: OSMFeatures.cpp OSMFeatures.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/OSMFeatures.o OSMFeatures.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/ObjTools.o: ObjTools.cpp TSectionDAT.h \
 		TSection.h \
@@ -38690,7 +39095,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o: PropertiesCa
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		PlatformObj.h
+		PlatformObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesCarspawner.o PropertiesCarspawner.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o: PropertiesDyntrack.cpp PropertiesDyntrack.h \
@@ -39151,7 +39557,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o: PropertiesDynt
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		Flex.h
+		Flex.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesDyntrack.o PropertiesDyntrack.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o: PropertiesForest.cpp PropertiesForest.h \
@@ -39611,7 +40018,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o: PropertiesForest
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		ForestObj.h
+		ForestObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesForest.o PropertiesForest.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o: PropertiesGroup.cpp PropertiesGroup.h \
@@ -40072,7 +40480,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o: PropertiesGroup.c
 		FileBuffer.h \
 		OglObj.h \
 		Ref.h \
-		ParserX.h
+		ParserX.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesGroup.o PropertiesGroup.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesLevelCr.o: PropertiesLevelCr.cpp PropertiesLevelCr.h \
@@ -41917,7 +42326,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o: PropertiesRuler.c
 		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesRuler.o PropertiesRuler.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSiding.o: PropertiesSiding.cpp PropertiesSiding.h \
@@ -44697,7 +45107,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o: PropertiesStatic
 		Ref.h \
 		StaticObj.h \
 		ParserX.h \
-		EditFileNameDialog.h
+		EditFileNameDialog.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesStatic.o PropertiesStatic.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTrackObj.o: PropertiesTrackObj.cpp PropertiesTrackObj.h \
@@ -45628,7 +46039,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o: PropertiesTran
 		Ref.h \
 		TexLib.h \
 		Texture.h \
-		TransferObj.h
+		TransferObj.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesTransfer.o PropertiesTransfer.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o: PropertiesUndefined.cpp PropertiesUndefined.h \
@@ -46087,7 +46499,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o: PropertiesUnd
 		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesUndefined.o PropertiesUndefined.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/QuadTree.o: QuadTree.cpp QuadTree.h \
@@ -52163,6 +52576,7 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/TRnode.o: TRnode.cpp TRnode.h \
 		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
 		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
+		GLMatrix.h \
 		C:/QT/Static/5.7.0/include/QtCore/QDebug \
 		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
 		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
@@ -52922,8 +53336,7 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/Terrain.o: Terrain.cpp Terrain.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
-		MapWindow.h \
-		OSM.h
+		MapWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/Terrain.o Terrain.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/TerrainLib.o: TerrainLib.cpp TerrainLib.h \
@@ -55035,7 +55448,24 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/Texture.o: Texture.cpp Texture.h \
 		C:/QT/Static/5.7.0/include/QtGui/QColor \
 		C:/QT/Static/5.7.0/include/QtGui/qcolor.h \
 		C:/QT/Static/5.7.0/include/QtGui/qrgb.h \
-		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h
+		C:/QT/Static/5.7.0/include/QtGui/qrgba64.h \
+		GLUU.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLFunctions \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglcontext.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtGui/QSurfaceFormat \
+		C:/QT/Static/5.7.0/include/QtGui/qsurfaceformat.h \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglversionfunctions.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLVertexArrayObject \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglvertexarrayobject.h \
+		C:/QT/Static/5.7.0/include/QtGui/QOpenGLBuffer \
+		C:/QT/Static/5.7.0/include/QtGui/qopenglbuffer.h \
+		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/Texture.o Texture.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/Tile.o: Tile.cpp Tile.h \
@@ -57034,7 +57464,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/Undo.o: Undo.cpp Undo.h \
 		C:/QT/Static/5.7.0/include/QtGui/qfontmetrics.h \
 		SignalObj.h \
 		Game.h \
-		Route.h
+		Route.h \
+		GroupObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/Undo.o Undo.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/UnsavedDialog.o: UnsavedDialog.cpp UnsavedDialog.h \
@@ -58289,7 +58720,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/glwidget.o: glwidget.cpp glwidget.h 
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbox.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
-		OSM.h \
 		TerrainTreeWindow.h \
 		ShapeLib.h \
 		EngLib.h \
@@ -58747,7 +59177,6 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/main.o: main.cpp C:/QT/Static/5.7.0/
 		C:/QT/Static/5.7.0/include/QtWidgets/qtoolbutton.h \
 		C:/QT/Static/5.7.0/include/QtWidgets/qtwidgetsversion.h \
 		MapWindow.h \
-		OSM.h \
 		C:/QT/Static/5.7.0/include/QtCore/QFile \
 		C:/QT/Static/5.7.0/include/QtCore/QTextStream
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/main.o main.cpp
@@ -59303,6 +59732,15 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/moc_ImageLib.o: moc_ImageLib.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/moc_LoadWindow.o: moc_LoadWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_LoadWindow.o moc_LoadWindow.cpp
+
+build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapData.o: moc_MapData.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapData.o moc_MapData.cpp
+
+build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapDataOSM.o: moc_MapDataOSM.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapDataOSM.o moc_MapDataOSM.cpp
+
+build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapDataUrlImage.o: moc_MapDataUrlImage.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapDataUrlImage.o moc_MapDataUrlImage.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapLib.o: moc_MapLib.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/moc_MapLib.o moc_MapLib.cpp

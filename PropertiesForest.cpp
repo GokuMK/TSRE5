@@ -201,9 +201,9 @@ void PropertiesForest::showObj(WorldObj* obj){
     this->sizeY.setText(QString::number(tobj->areaZ, 'G', 4));
     this->population.setText(QString::number((int)tobj->population, 10));
     this->densitykm.setText(QString::number((int)(tobj->population*(1000000.0/(tobj->areaX*tobj->areaZ))), 10));
-    this->posX.setText(QString::number(obj->position[0], 'G', 4));
-    this->posY.setText(QString::number(obj->position[1], 'G', 4));
-    this->posZ.setText(QString::number(-obj->position[2], 'G', 4));
+    this->posX.setText(QString::number(obj->position[0], 'G', 6));
+    this->posY.setText(QString::number(obj->position[1], 'G', 6));
+    this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
     this->quat.setText(
             QString::number(obj->qDirection[0], 'G', 4) + " " +
             QString::number(obj->qDirection[1], 'G', 4) + " " +

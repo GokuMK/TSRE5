@@ -25,6 +25,7 @@ public slots:
     void mapTileLoadToolEnabled(bool val);
     void heightTileLoadToolEnabled(bool val);
     void makeTileTextureToolEnabled(bool val);
+    void removeTileTextureToolEnabled(bool val);
     void msg(QString text, QString val);
     
 signals:

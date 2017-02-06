@@ -161,9 +161,9 @@ void PropertiesGroup::showObj(WorldObj* obj){
     
     float *qDirection = obj->getQuatRotation();
     float *position = obj->getPosition();
-    this->posX.setText(QString::number(position[0], 'G', 4));
-    this->posY.setText(QString::number(position[1], 'G', 4));
-    this->posZ.setText(QString::number(-position[2], 'G', 4));
+    this->posX.setText(QString::number(position[0], 'G', 6));
+    this->posY.setText(QString::number(position[1], 'G', 6));
+    this->posZ.setText(QString::number(-position[2], 'G', 6));
     this->quat.setText (
         QString::number(qDirection[0], 'G', 4) + " " +
         QString::number(qDirection[1], 'G', 4) + " " +
@@ -207,9 +207,9 @@ void PropertiesGroup::updateObj(WorldObj* obj){
     if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
         float *qDirection = obj->getQuatRotation();
         float *position = obj->getPosition();
-        this->posX.setText(QString::number(position[0], 'G', 4));
-        this->posY.setText(QString::number(position[1], 'G', 4));
-        this->posZ.setText(QString::number(-position[2], 'G', 4));
+        this->posX.setText(QString::number(position[0], 'G', 6));
+        this->posY.setText(QString::number(position[1], 'G', 6));
+        this->posZ.setText(QString::number(-position[2], 'G', 6));
         this->quat.setText (
             QString::number(qDirection[0], 'G', 4) + " " +
             QString::number(qDirection[1], 'G', 4) + " " +
