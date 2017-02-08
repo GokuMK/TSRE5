@@ -19,6 +19,7 @@ class TrackItemObj;
 
 class SoundRegionObj : public WorldObj{
 public:
+    static float MaxPlacingDistance;
     SoundRegionObj();
     SoundRegionObj(const SoundRegionObj& o);
     WorldObj* clone();
@@ -35,6 +36,9 @@ public:
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     void flip();
+    bool select(int value);
+    void expandTrItems();
+    void deleteSelectedTrItem();
     int getDefaultDetailLevel();
     int getSoundregionTrackType();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
@@ -45,11 +49,11 @@ private:
     //int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL; 
     TrackItemObj* pointer3dSelected = NULL; 
-    float* drawPositionB = NULL;
-    float* drawPositionE = NULL;
+    
+    float* drawPosition = NULL;
     OglObj* drawLine = NULL;
     void renderTritems(GLUU* gluu, int selectionColor);
-    float* drawPositions = NULL;
+    std::vector<float*> drawPositions;
     int selectionValue = 0;
     float angle;
 };

@@ -14,6 +14,10 @@
 #include "Game.h"
 
 PropertiesSpeedpost::PropertiesSpeedpost() {
+    
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-10000, 10000, 6, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
@@ -34,10 +38,10 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     vlist->addRow("Tile Z:",&this->tY);
     vbox->addItem(vlist);
     
-    QLabel * label2 = new QLabel("Position:");
-    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
-    label2->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label2);
+    QLabel * label = new QLabel("Position:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
     vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
@@ -45,28 +49,28 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     vlist->addRow("Y:",&this->posY);
     vlist->addRow("Z:",&this->posZ);
     vbox->addItem(vlist);
-    label2 = new QLabel("Speed:");
-    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
-    label2->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label2);
+    label = new QLabel("Speed:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
     vbox->addWidget(&speed);
     vbox->addWidget(&kmm);
     kmm.setStyleSheet("combobox-popup: 0;");
     kmm.addItem("Kilometers");
     kmm.addItem("Miles");
-    label2 = new QLabel("Speed for:");
-    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
-    label2->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label2);
+    label = new QLabel("Speed for:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
     vbox->addWidget(&ptb);
     ptb.addItem("Passenger");
     ptb.addItem("Freight");
     ptb.addItem("Both");
     ptb.setStyleSheet("combobox-popup: 0;");
-    label2 = new QLabel("Number:");
-    label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
-    label2->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label2);
+    label = new QLabel("Number:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
     vbox->addWidget(&number);
     QPushButton *button = new QPushButton("Flip", this);
     vbox->addWidget(button);
@@ -74,8 +78,30 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     chFlipShape.setText("Flip Shape");
     chFlipShape.setChecked(true);
     vbox->addWidget(&chFlipShape);
-    vbox->addStretch(1);
-    this->setLayout(vbox);
+    
+    label = new QLabel("Track Items:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    
+    QPushButton *bDeleteSelected = new QPushButton("Delete Selected");
+    vbox->addWidget(bDeleteSelected);
+    QObject::connect(bDeleteSelected, SIGNAL(released()),
+                      this, SLOT(bDeleteSelectedEnabled()));
+    QPushButton *bExpandSelected = new QPushButton("Expand");
+    vbox->addWidget(bExpandSelected);
+    QObject::connect(bExpandSelected, SIGNAL(released()),
+                      this, SLOT(bExpandEnabled()));
+    
+    label = new QLabel("Global settings:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(new QLabel("Max placing radius:"));
+    vbox->addWidget(&eMaxPlacingDistance);
+    eMaxPlacingDistance.setValidator(doubleValidator);
+    QObject::connect(&eMaxPlacingDistance, SIGNAL(textEdited(QString)), this, SLOT(eMaxPlacingDistanceEnabled(QString)));
+    
     
     QObject::connect(&speed, SIGNAL(textEdited(QString)),
                       this, SLOT(speedEnabled(QString)));
@@ -85,6 +111,9 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
         this, SLOT(kmmListSelected(int)));
     QObject::connect(&ptb, SIGNAL(activated(int)),
         this, SLOT(ptbListSelected(int)));
+    
+    vbox->addStretch(1);
+    this->setLayout(vbox);
 }
 
 PropertiesSpeedpost::~PropertiesSpeedpost() {
@@ -179,6 +208,8 @@ void PropertiesSpeedpost::showObj(WorldObj* obj){
         this->number.setText("");
         this->speed.setText("");
     }
+    
+    this->eMaxPlacingDistance.setText(QString::number(sobj->MaxPlacingDistance));
 }
 
 void PropertiesSpeedpost::updateObj(WorldObj* obj){
@@ -208,4 +239,36 @@ bool PropertiesSpeedpost::support(WorldObj* obj){
     if(obj->type == "speedpost")
         return true;
     return false;
+}
+
+void PropertiesSpeedpost::eMaxPlacingDistanceEnabled(QString val){
+    if(sobj == NULL){
+        return;
+    }
+    bool ok = false;
+    float fval = val.toFloat(&ok);
+    if(ok){
+        if(fval > 0)
+            sobj->MaxPlacingDistance = fval;
+    }
+}
+
+void PropertiesSpeedpost::bDeleteSelectedEnabled(){
+    if(sobj == NULL)
+        return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB, false);
+    sobj->deleteSelectedTrItem();
+    Undo::StateEnd();
+}
+
+void PropertiesSpeedpost::bExpandEnabled(){
+    if(sobj == NULL)
+        return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB, false);
+    sobj->expandTrItems();
+    Undo::StateEnd();
 }

@@ -26,6 +26,7 @@
 #include "IghCoords.h"
 #include "OSMFeatures.h"
 #include <QTime>
+#include "MapWindow.h"
 
 MapDataOSM::MapDataOSM() {
 }
@@ -61,6 +62,8 @@ bool MapDataOSM::draw(QImage* myImage) {
     gg = new QPainter();
     gg->begin(myImage);
     gg->setRenderHint(QPainter::RenderHint::Antialiasing, false);
+    gg->setOpacity((255.0-MapWindow::isAlpha)/255.0);
+    
     color = new QColor();
     roadBorder = new QColor();
     p = new QPen;

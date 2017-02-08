@@ -97,7 +97,7 @@ QString Game::StyleYellowButton = "#FFFF55";
 QString Game::StyleGreenText = "#009900";
 QString Game::StyleRedText = "#990000";
 
-QString Game::GoogleMapsKey;
+QString Game::imageMapsUrl;
 
 void Game::load() {
     
@@ -117,7 +117,11 @@ void Game::load() {
         line = in.readLine();
         //qDebug() << line;
         if(line.startsWith("#", Qt::CaseInsensitive)) continue;
-        args = line.split("=");
+        //args = line.split("=");
+        args.clear();
+        args.push_back(line.section('=', 0, 0));
+        args.push_back(line.section('=', 1));
+        //qDebug() << args[0] << args[1];
         if(args.count() < 2) continue;
         val = args[0].trimmed();
         //qDebug() << args[0].trimmed() << " "<< args[1].trimmed();
@@ -251,8 +255,8 @@ void Game::load() {
             textureQuality = args[1].trimmed().toInt();
         }
         
-        if(val == "googleMapsKey")
-            GoogleMapsKey = args[1].trimmed();
+        if(val == "imageMapsUrl")
+            imageMapsUrl = args[1].trimmed();
         
     }
 }

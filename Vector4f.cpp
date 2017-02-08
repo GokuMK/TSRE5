@@ -18,6 +18,10 @@ Vector4f::Vector4f() {
 }
 
 Vector4f::Vector4f(const Vector4f& orig) {
+    this->x = orig.x;
+    this->y = orig.y;
+    this->z = orig.z;
+    this->c = orig.c;
 }
 
 Vector4f::~Vector4f() {
@@ -43,4 +47,8 @@ void Vector4f::set(float x, float y, float z) {
 
 void Vector4f::set(float x, float y, float z, float c) {
     this->x = x; this->y = y; this->z = z; this->c = c;
+}
+
+bool Vector4f::SortByC(Vector4f &a, Vector4f &b){
+    return a.c < b.c;
 }

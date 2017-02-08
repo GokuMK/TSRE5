@@ -22,6 +22,7 @@ TransformWorldObjDialog::TransformWorldObjDialog() : QDialog(){
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
     int row = 0;
+    useObjRot.setChecked(true);
     useObjRot.setText("Use Object Rotation for translation");
     vlist->addWidget(&useObjRot,row++, 0, 1, 2);
     vlist->addWidget(new QLabel("Translate:"),row++, 0, 1, 2);

@@ -399,6 +399,7 @@ void Terrain::setWaterLevelGui(){
     waterWindow.exec();
     //qDebug() << waterWindow->changed;
     if(waterWindow.changed){
+        tfile->waterLevel = true;
         tfile->WNE = waterWindow.WNE;
         tfile->WSE = waterWindow.WSE;
         tfile->WNW = waterWindow.WNW;
@@ -564,16 +565,13 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
 
     gluu->enableTextures();  
     gluu->enableNormals();
-    if(showBlob){
-        terrainBlob.render();
-    } 
     
     float lod = 0;
     float size = 512;
 
     QOpenGLVertexArrayObject::Binder vaoBinder(VAO);
         
-    if(Game::viewTerrainShape && !showBlob){
+    if(Game::viewTerrainShape && !(showBlob && MapWindow::isAlpha == 0)){
         float shaderSecondTexUV = 0;
         for (int uu = 0; uu < 16; uu++) {
             for (int yy = 0; yy < 16; yy++) {
@@ -673,6 +671,21 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
         glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
     }
     
+    if(showBlob){
+        if(MapWindow::isAlpha == 0){
+            gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+            terrainBlob.render();
+        }else{
+            gluu->mvPushMatrix();
+            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0.35, 0);
+            gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+            terrainBlob.render();
+            gluu->mvPopMatrix();
+        }
+    } 
+    
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+            
     if(!showBlob)
         renderWater(lodx, lodz, playerT, playerW, target, fov);
 }
@@ -1314,7 +1327,7 @@ void Terrain::oglInit() {
 void Terrain::initBlob(){
     
     GLUU* gluu = GLUU::get();
-    float alpha = -gluu->alphaTest;    
+    float alpha = -0.01;
     
     float *punkty = new float[65536 * 54];
     int ptr = 0;
@@ -1322,7 +1335,7 @@ void Terrain::initBlob(){
     for (int jj = 0; jj < 256; jj++) {
         for (int ii = 0; ii < 256; ii++) {
             punkty[ptr++] = vertexData[jj][ii].x;
-            punkty[ptr++] = vertexData[jj][ii].y+0.02;
+            punkty[ptr++] = vertexData[jj][ii].y+0.00;
             punkty[ptr++] = vertexData[jj][ii].z;
             punkty[ptr++] = normalData[jj][ii].x;
             punkty[ptr++] = normalData[jj][ii].y;
@@ -1331,7 +1344,7 @@ void Terrain::initBlob(){
             punkty[ptr++] = (ii)*step;
             punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj][ii+1].x;
-            punkty[ptr++] = vertexData[jj][ii+1].y+0.02;
+            punkty[ptr++] = vertexData[jj][ii+1].y+0.00;
             punkty[ptr++] = vertexData[jj][ii+1].z;
             punkty[ptr++] = normalData[jj][ii+1].x;
             punkty[ptr++] = normalData[jj][ii+1].y;
@@ -1340,7 +1353,7 @@ void Terrain::initBlob(){
             punkty[ptr++] = (ii+1)*step;
             punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj+1][ii+1].x;
-            punkty[ptr++] = vertexData[jj+1][ii+1].y+0.02;
+            punkty[ptr++] = vertexData[jj+1][ii+1].y+0.00;
             punkty[ptr++] = vertexData[jj+1][ii+1].z;
             punkty[ptr++] = normalData[jj+1][ii+1].x;
             punkty[ptr++] = normalData[jj+1][ii+1].y;
@@ -1349,7 +1362,7 @@ void Terrain::initBlob(){
             punkty[ptr++] = (ii+1)*step;
             punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj][ii].x;
-            punkty[ptr++] = vertexData[jj][ii].y+0.02;
+            punkty[ptr++] = vertexData[jj][ii].y+0.00;
             punkty[ptr++] = vertexData[jj][ii].z;
             punkty[ptr++] = normalData[jj][ii].x;
             punkty[ptr++] = normalData[jj][ii].y;
@@ -1358,7 +1371,7 @@ void Terrain::initBlob(){
             punkty[ptr++] = (ii)*step;
             punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj+1][ii+1].x;
-            punkty[ptr++] = vertexData[jj+1][ii+1].y+0.02;
+            punkty[ptr++] = vertexData[jj+1][ii+1].y+0.00;
             punkty[ptr++] = vertexData[jj+1][ii+1].z;
             punkty[ptr++] = normalData[jj+1][ii+1].x;
             punkty[ptr++] = normalData[jj+1][ii+1].y;
@@ -1367,7 +1380,7 @@ void Terrain::initBlob(){
             punkty[ptr++] = (ii+1)*step;
             punkty[ptr++] = alpha;
             punkty[ptr++] = vertexData[jj+1][ii].x;
-            punkty[ptr++] = vertexData[jj+1][ii].y+0.02;
+            punkty[ptr++] = vertexData[jj+1][ii].y+0.00;
             punkty[ptr++] = vertexData[jj+1][ii].z;
             punkty[ptr++] = normalData[jj+1][ii].x;
             punkty[ptr++] = normalData[jj+1][ii].y;

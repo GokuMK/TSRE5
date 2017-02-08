@@ -32,6 +32,7 @@ public:
         float treeSizeX = 0;
         float treeSizeZ = 0;
     };
+    static float ForestClearDistance;
     static std::vector<ForestList> forestList;
     QString treeTexture = "";
     float scaleRangeX = 0;

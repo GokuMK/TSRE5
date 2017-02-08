@@ -23,11 +23,15 @@
 #include "Game.h"
 #include "FileFunctions.h"
 #include "ReadFile.h"
+#include "TDB.h"
+#include "Vector4f.h"
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
 
 std::vector<ForestObj::ForestList> ForestObj::forestList;
+float ForestObj::ForestClearDistance = 0;
 
 ForestObj::ForestObj() {
     this->loaded = false;
@@ -349,16 +353,66 @@ void ForestObj::drawShape(){
             //Random random = new Random(seed);
             std::srand(seed);
             float treeSizeXt = treeSizeX*0.7;
+            float posT[2];
+            posT[0] = x;
+            posT[1] = y;
+            //qDebug() << x << y;
+            float tposx, tposz;
+            
+            std::vector<Vector4f> fpoints;
+            float off = ((qDirection[1]+0.00001f)/fabs(qDirection[1]+0.00001f))*(float)-acos(qDirection[3])*2.0;
             for(int uu = 0; uu < population; uu++){
-
-                float tposx = ((float)((std::rand()%1000))/1000)*areaX-areaX/2.0;
-                float tposz = ((float)((std::rand()%1000))/1000)*areaZ-areaZ/2.0;
+                
+                tposx = ((float)((std::rand()%1000))/1000)*areaX-areaX/2.0;
+                tposz = ((float)((std::rand()%1000))/1000)*areaZ-areaZ/2.0;
+                
                 Vector2f uuu(tposx,tposz);
-                uuu.rotate(((qDirection[1]+0.00001f)/fabs(qDirection[1]+0.00001f))*(float)-acos(qDirection[3])*2.0, 0);
+                uuu.rotate(off, 0);
                 tposx = uuu.x;
                 tposz = uuu.y;
+                                
+                fpoints.emplace_back(tposx+position[0], 0, tposz+position[2], 9999);
+            }
+            
+            if(ForestClearDistance > 0){
+                float bBox[4];
+                bBox[0] = bBox[2] = 9999;
+                bBox[1] = bBox[3] = -9999;
+                Vector2f v;
+                for(int u = -1; u < 2; u+=2)
+                    for(int y = -1; y < 2; y+=2){
+                        v.set(areaX*u/2,areaZ*y/2);
+                        v.rotate(off, 0);
+                        if(v.x < bBox[0])
+                            bBox[0] = v.x;
+                        if(v.x > bBox[1])
+                            bBox[1] = v.x;
+                        if(v.y < bBox[2])
+                            bBox[2] = v.y;
+                        if(v.y > bBox[3])
+                            bBox[3] = v.y;
+                    }
+                bBox[0] += position[0];
+                bBox[1] += position[0];
+                bBox[2] += position[2];
+                bBox[3] += position[2];            
+                qDebug() << bBox[0] << bBox[1] << bBox[2] << bBox[3];
+            
+                if(Game::trackDB != NULL)
+                    Game::trackDB->fillNearestSquaredDistanceToTDBXZ(posT, fpoints, bBox);
+                if(Game::roadDB != NULL)
+                    Game::roadDB->fillNearestSquaredDistanceToTDBXZ(posT, fpoints, bBox);
+            }
+            for(int uu = 0; uu < population; uu++){
+                if(ForestClearDistance > 0){
+                    if(fpoints[uu].c < ForestClearDistance*ForestClearDistance)
+                        continue;
+                }
 
-                float wysokosc = TerrainLib::getHeight(x, y, tposx+position[0], tposz+position[2]);
+                float wysokosc = TerrainLib::getHeight(x, y, fpoints[uu].x, fpoints[uu].z);
+                
+                tposx = fpoints[uu].x - position[0];
+                tposz = fpoints[uu].z - position[2];
                 
                 for(int j = -1; j < 2; j+=2){
                     for(int i = -1; i<2; i+=2){

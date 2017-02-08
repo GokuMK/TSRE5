@@ -150,7 +150,7 @@ TRitem* TRitem::newSpeedPostItem(int trItemId, float metry, int speedPostType) {
         trit->speedpostTrItemData[2] = 0;
         trit->speedpostTrItemData[3] = 0;
     }
-    qDebug() << "aa ";
+    //qDebug() << "aa ";
     return trit;
 }
 

@@ -30,6 +30,7 @@ public:
     int tileZ;
     
     static std::unordered_map<int, QImage*> mapTileImages;
+    static int isAlpha;
     static bool LoadMapFromDisk(int x, int z);
     MapWindow();
     virtual ~MapWindow();
@@ -41,6 +42,7 @@ public slots:
     void load();
     void saveToDisk();
     void colorComboActivated(QString val);
+    void alphaBoxActivated(int val);
     void reload();
     void isStatusInfo(QString val);
 
@@ -55,6 +57,7 @@ private:
     LatitudeLongitudeCoordinate* maxLatlon = NULL;
     PreciseTileCoordinate* aCoords = NULL;
     QPushButton *loadButton = NULL;
+    QSpinBox alphaBox;
     QComboBox mapServicesCombo;
 };
 

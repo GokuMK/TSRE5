@@ -23,6 +23,7 @@
 #include "Game.h"
 
 std::unordered_map<int, QImage*> MapWindow::mapTileImages;
+int MapWindow::isAlpha = 0;
 
 MapWindow::MapWindow() : QDialog() {
 
@@ -30,7 +31,7 @@ MapWindow::MapWindow() : QDialog() {
     mapServicesCombo.setStyleSheet("combobox-popup: 0;");
     mapServicesCombo.addItem("OSM Vector", 0);
     mapServices.push_back(new MapDataOSM());
-    mapServicesCombo.addItem("Google Satellite", 1);
+    mapServicesCombo.addItem("Raster Images", 1);
     mapServices.push_back(new MapDataUrlImage());
     
     loadButton = new QPushButton("Load", this);
@@ -45,20 +46,28 @@ MapWindow::MapWindow() : QDialog() {
     QVBoxLayout *mainLayout = new QVBoxLayout;
     //mainLayout->addWidget(loadButton);
     QLabel *colorLabel = new QLabel("Color: ");
-    colorLabel->setMaximumWidth(50);
+    colorLabel->setMaximumWidth(40);
     QComboBox *colorCombo = new QComboBox();
     colorCombo->setMaximumWidth(100);
     colorCombo->setStyleSheet("combobox-popup: 0;");
     colorCombo->addItem("standard", 0);
     colorCombo->addItem("invert", 1);
+    QLabel *alphaLabel = new QLabel("Alpha: ");
+    alphaBox.setMaximumWidth(40);
+    alphaBox.setMaximum(255);
+    alphaBox.setMinimum(0);
+    alphaBox.setValue(255-MapWindow::isAlpha);
+    alphaLabel->setMaximumWidth(50);
     QGridLayout *vlist3 = new QGridLayout;
     vlist3->setSpacing(2);
     vlist3->setContentsMargins(3,0,1,0);
     vlist3->addWidget(&mapServicesCombo,0,0);
-    vlist3->addWidget(loadButton,0,1);
-    vlist3->addWidget(colorLabel,0,2);
-    vlist3->addWidget(colorCombo,0,3);
-    vlist3->addWidget(saveButton,0,4);
+    vlist3->addWidget(alphaLabel,0,1);
+    vlist3->addWidget(&alphaBox,0,2);
+    vlist3->addWidget(loadButton,0,3);
+    vlist3->addWidget(colorLabel,0,4);
+    vlist3->addWidget(colorCombo,0,5);
+    vlist3->addWidget(saveButton,0,6);
     mainLayout->addItem(vlist3);
     mainLayout->addWidget(imageLabel);
     mainLayout->setContentsMargins(1,1,1,1);
@@ -82,12 +91,19 @@ MapWindow::MapWindow() : QDialog() {
         
     QObject::connect(colorCombo, SIGNAL(activated(QString)),
                       this, SLOT(colorComboActivated(QString)));
+    
+    QObject::connect(&alphaBox, SIGNAL(valueChanged(int)),
+                      this, SLOT(alphaBoxActivated(int)));
 }
 
 int MapWindow::exec() {
     this->setWindowTitle("Tile: " + QString::number(this->tileX) + " " + QString::number(-this->tileZ));
     return QDialog::exec();
 } 
+
+void MapWindow::alphaBoxActivated(int val){
+    MapWindow::isAlpha = 255-val;
+}
 
 void MapWindow::colorComboActivated(QString val){
     if(val == "standard")
@@ -154,7 +170,11 @@ void MapWindow::reload(){
         return;
     if(dane->tileX != this->tileX) return;
     if(dane->tileZ != -this->tileZ) return;
-    QImage* myImage = new QImage(4096, 4096, QImage::Format_RGB888);
+    QImage* myImage = NULL;
+    if(MapWindow::isAlpha > 0)
+        myImage = new QImage(4096, 4096, QImage::Format_RGBA8888);
+    else
+        myImage = new QImage(4096, 4096, QImage::Format_RGB888);
 
     if(!dane->draw(myImage)){
         delete myImage;
@@ -190,7 +210,21 @@ bool MapWindow::LoadMapFromDisk(int x, int z){
     QFile file(path);
     if(!file.exists())
         return false;
-    MapWindow::mapTileImages[hash] = new QImage(QImage(path).convertToFormat(QImage::Format_RGB888));
+    QImage image(path);
+    QImage *img = NULL;
+    if(MapWindow::isAlpha == 0){
+        img = new QImage(image.convertToFormat(QImage::Format_RGB888));
+    } else {
+        img = new QImage(image.convertToFormat(QImage::Format_RGBA8888));
+        for(double i = 0; i < img->height(); i++)
+            for(double j = 0; j < img->width(); j++){
+                unsigned int pix = img->pixel(i, j);
+                pix &= 0x00FFFFFF;
+                pix |= (255-MapWindow::isAlpha) << 24;
+                img->setPixel(i, j, pix);
+        }
+    }
+    MapWindow::mapTileImages[hash] = img;
 }
 
 MapWindow::~MapWindow() {

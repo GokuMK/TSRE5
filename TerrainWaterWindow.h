@@ -32,6 +32,7 @@ public:
 public slots:
     void cancel();
     void ok();
+    void eWSWtextEdited(QString val);
     
 private:
 

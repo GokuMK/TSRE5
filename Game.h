@@ -107,7 +107,7 @@ public:
     static QString StyleYellowButton;
     static QString StyleGreenText;
     static QString StyleRedText;
-    static QString GoogleMapsKey;
+    static QString imageMapsUrl;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

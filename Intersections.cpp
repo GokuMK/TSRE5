@@ -49,6 +49,36 @@ float Intersections::pointSegmentDistance(float* p1, float* p2, float* p, float*
     return Vec3::distance(p, Pb);
 }
 
+float Intersections::pointSegmentSquaredDistanceXZ(float* p1, float* p2, float* p){
+    float v1, v2;
+    float w1, w2;
+    float o1, o2;
+
+    v1 = p2[0] - p1[0];
+    v2 = p2[2] - p1[2];
+    w1 = p[0] - p1[0];
+    w2 = p[2] - p1[2];
+
+    float c1 = w1 * v1 + w2 * v2;
+    
+    if ( c1 <= 0 ){
+        return w1*w1 + w2*w2;
+    }
+
+    float c2 = v1 * v1 + v2 * v2;
+    if ( c2 <= c1 ){
+        o1 = p[0] - p2[0];
+        o2 = p[2] - p2[2];
+        return o1*o1 + o2*o2;
+    }
+
+    c1 = c1 / c2;
+    
+    o1 = p[0] - (p1[0] + v1*c1);
+    o2 = p[2] - (p1[2] + v2*c1);
+    return o1*o1 + o2*o2;
+}
+
 // Returns 1 if the lines intersect, otherwise 0. In addition, if the lines 
 // intersect the intersection point may be stored in the floats i_x and i_y.
 bool Intersections::segmentIntersection(float &p0_x, float &p0_y, float &p1_x, float &p1_y, 

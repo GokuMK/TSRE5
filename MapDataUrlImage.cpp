@@ -28,6 +28,7 @@
 #include <QTime>
 #include <algorithm>
 #include "Game.h"
+#include "MapWindow.h"
 
 double MapDataUrlImage::Zoom = 17;
 double MapDataUrlImage::Resolution = 640;
@@ -42,9 +43,9 @@ MapDataUrlImage::~MapDataUrlImage() {
 }
 
 bool MapDataUrlImage::draw(QImage* myImage) {
-
-    myImage->fill(Qt::red);
     
+    myImage->fill(Qt::red);
+
     PreciseTileCoordinate *aCoords = new PreciseTileCoordinate();
     IghCoordinate* igh = new IghCoordinate();
     aCoords->TileX = this->tileX;
@@ -66,11 +67,6 @@ bool MapDataUrlImage::draw(QImage* myImage) {
     aCoords->setWxyz(1024, 0, -1024);
     igh = MstsCoordinates::ConvertToIgh(aCoords);
     MstsCoordinates::ConvertToLatLon(igh, &llpoint01);
-
-    //QPainter *gg = new QPainter();
-    //gg->begin(myImage);
-    //gg->setRenderHint(QPainter::RenderHint::Antialiasing, false);
-    //gg->drawImage(0, 0, images.first().image);
 
     double tx, tz;
     double tlat, tlon;
@@ -106,16 +102,28 @@ bool MapDataUrlImage::draw(QImage* myImage) {
                 }
                 //}
             }
-            if(minId >= 0 && minId < images.length())
-                myImage->setPixelColor(i, j, images[minId].getPixel(tlat, tlon));
+            //QRgb;
+            if(minId >= 0 && minId < images.length());
+                //myImage->setPixelColor(i, j, images[minId].getPixel(tlat, tlon));
+                //myImage->setPixelColor(i, j, QColor::fromRgba(images[minId].getPixel(tlat, tlon)));
+            //myImage->setPixel(i, j, qRgba(128,128,128,128));
+            myImage->setPixel(i, j, images[minId].getPixel(tlat, tlon));
+            
         }
     }
-    
-    //gg->end();
+
     return true;
 }
 
 void MapDataUrlImage::load() {
+    
+    if(Game::imageMapsUrl.length() < 2){
+        QMessageBox msgBox;
+        msgBox.setText("Enter imageMapsUrl (for example google static maps url) in settings.txt!");
+        msgBox.exec();
+        return;
+    }
+    
     images.clear();
     LatitudeLongitudeCoordinate p00;
     
@@ -151,13 +159,12 @@ void MapDataUrlImage::get(LatitudeLongitudeCoordinate* center) {
     // the HTTP request
     qDebug() << "wait";
     
-    QNetworkRequest req(QUrl(QString("http://maps.googleapis.com/maps/api/staticmap?center=") 
-    + QString::number(center->Latitude) + "," 
-    + QString::number(center->Longitude) + QString("&zoom=")
-    + QString::number(Zoom) + QString("&size=")
-    + QString::number(Resolution) + QString("x")
-    + QString::number(Resolution) + QString("&maptype=satellite&key=")
-    + Game::GoogleMapsKey));
+    QString imageMapsUrl = Game::imageMapsUrl;
+    imageMapsUrl.replace("{lat}", QString::number(center->Latitude));
+    imageMapsUrl.replace("{lon}", QString::number(center->Longitude));
+    imageMapsUrl.replace("{zoom}", QString::number(Zoom));
+    imageMapsUrl.replace("{res}", QString::number(Resolution));
+    QNetworkRequest req(QUrl(QString("")+imageMapsUrl));
     qDebug() << req.url();
 
     QNetworkReply* r = mgr->get(req);
@@ -213,6 +220,7 @@ unsigned int MapDataUrlImage::MapImage::getPixel(double tlat, double tlon){
     unsigned int val = 0;
     //val |= *(image.bits()+tx*lineWidth + ty*3 + 0);
     //val |= *(image.bits()+tx*lineWidth + ty*3 + 1) >> 0xFF;
+    val |= (255-MapWindow::isAlpha) << 24;
     val |= *((image.bits()+ty*image.width()*3 + tx*3 + 0)) << 16;
     val |= *((image.bits()+ty*image.width()*3 + tx*3 + 1)) << 8;
     val |= *((image.bits()+ty*image.width()*3 + tx*3 + 2));

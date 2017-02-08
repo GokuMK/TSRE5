@@ -15,6 +15,7 @@
 #include "OglObj.h"
 #include "TextObj.h"
 #include "SignalObj.h"
+#include "Vector4f.h"
 
 class TRnode;
 class TRitem;
@@ -97,7 +98,8 @@ public:
     void renderItems(GLUU *gluu, float* playerT, float playerRot);
     bool getDrawPositionOnTrNode(float* out, int id, float metry);
     int findTrItemNodeId(int id);
-    int findNearestPositionOnTDB(float* posT, float* pos, float* q, float* tpos = NULL);
+    int findNearestPositionOnTDB(float* posT, float* pos, float* q = NULL, float* tpos = NULL);
+    void fillNearestSquaredDistanceToTDBXZ(float* posT, std::vector<Vector4f> &points, float* bbox = NULL);
     void deleteTrItem(int trid);
     void deleteTree(int x, int y, int UiD);
     void deleteTree(int d);
@@ -112,7 +114,7 @@ public:
     void newHazardObject(int* &itemId, int trNodeId, float metry, int type);
     bool getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos);
     bool getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos);
-    void newSpeedPostObject(int speedPostId, int speedPostType, QVector<int> & itemId, int trNodeId, float metry, int type);
+    void newSpeedPostObject(int speedPostType, QVector<int> & itemId, int trNodeId, float metry, int type);
     void newSoundRegionObject(int soundregionTrackType, QVector<int> & itemId, int trNodeId, float metry, int type);
 private:
     bool deleteNulls();

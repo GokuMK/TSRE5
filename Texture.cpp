@@ -302,7 +302,7 @@ Texture::~Texture() {
 
 bool Texture::GLTextures(bool mipmaps) {
     if(!loaded) return false;
-    
+
     tex = new unsigned int[1];
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     
@@ -320,7 +320,7 @@ bool Texture::GLTextures(bool mipmaps) {
     }
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
+
     delete[] imageData;
     imageData = NULL;
     this->editable = false;

@@ -102,6 +102,8 @@ void OglObj::render() {
 }
 
 void OglObj::render(int selectionColor) {
+    if(!loaded)
+        return;
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     GLUU *gluu = GLUU::get();
     

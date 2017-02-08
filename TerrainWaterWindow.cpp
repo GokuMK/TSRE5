@@ -25,6 +25,7 @@ TerrainWaterWindow::TerrainWaterWindow() : QDialog(){
     vlist->addRow("WSE:",&this->eWSE);
     vlist->addRow("WNE:",&this->eWNE);
     vlist->addRow("WNW:",&this->eWNW);
+    connect(&this->eWSW, SIGNAL (textEdited(QString)), this, SLOT (eWSWtextEdited(QString)));
     vlist->addRow(ok,cancel);
 //    mainLayout->setAlignment(browse, Qt::AlignBottom);
     vlist->setContentsMargins(1,1,1,1);
@@ -55,3 +56,8 @@ void TerrainWaterWindow::ok(){
 TerrainWaterWindow::~TerrainWaterWindow() {
 }
 
+void TerrainWaterWindow::eWSWtextEdited(QString val){
+    this->eWNE.setText(val);
+    this->eWSE.setText(val);
+    this->eWNW.setText(val);
+}

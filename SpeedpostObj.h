@@ -21,6 +21,7 @@ class OglObj;
 
 class SpeedpostObj : public WorldObj  {
 public:
+    static float MaxPlacingDistance;
     SpeedpostObj();
     SpeedpostObj(const SpeedpostObj& o);
     WorldObj* clone();
@@ -43,6 +44,9 @@ public:
     void setSpeedUnitId(int val);
     int getSpeedUnitId();
     void flip(bool flipShape);
+    bool select(int value);
+    void expandTrItems();
+    void deleteSelectedTrItem();
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
@@ -54,12 +58,13 @@ private:
     //int *trItemId = NULL;
     QVector<int> trItemId;
     //int trItemIdCount = 0;
-    TrackItemObj* spointer3d = NULL;
+    TrackItemObj* pointer3d = NULL; 
+    TrackItemObj* pointer3dSelected = NULL; 
+    std::vector<float*> drawPositions;
     float* drawPosition = NULL;
     OglObj* drawLine = NULL;
     
     void renderTritems(GLUU* gluu, int selectionColor);
-    float* drawPositions = NULL;
     int selectionValue = 0;
     bool getSimpleBorder(float* border);
     bool getBoxPoints(QVector<float> &points);

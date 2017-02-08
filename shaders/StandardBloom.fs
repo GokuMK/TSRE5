@@ -63,9 +63,11 @@ void main() {
         } else {
             gl_FragColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
             vec4 tex2 = texture(uSampler2, vec2(vTextureCoord.s*secondTexEnabled, vTextureCoord.t*secondTexEnabled));
-            if(secondTexEnabled > 0){
-                gl_FragColor *= tex2*2.0;
-            }
+            //if(secondTexEnabled > 0){
+            //    gl_FragColor *= tex2*2.0;
+            //}
+            float isSecondTexEnabled = sign(secondTexEnabled);
+            gl_FragColor = gl_FragColor*(1-isSecondTexEnabled) + gl_FragColor*tex2*2.0*isSecondTexEnabled;
             //gl_FragColor.a = max(gl_FragColor.a, isAlpha);  
 
             // discard if transparent

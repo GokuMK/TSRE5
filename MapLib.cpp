@@ -34,8 +34,14 @@ void MapLib::run(){
     
     texture->width = img->width();
     texture->height = img->height();
-    texture->bytesPerPixel = 3;
-    texture->type = GL_RGB;
+    if(img->format() == QImage::Format_RGBA8888){
+        texture->bytesPerPixel = 4;
+        texture->type = GL_RGBA;
+    }else{
+        texture->bytesPerPixel = 3;
+        texture->type = GL_RGB;
+    }
+
     texture->imageData = new unsigned char[texture->width*texture->height*texture->bytesPerPixel];//img.bits();
     int lineWidth = (texture->width*texture->bytesPerPixel);
     if( lineWidth%4 == 0){
@@ -48,6 +54,5 @@ void MapLib::run(){
     }
     texture->loaded = true;
     texture->editable = true;
-    
     return;
 }

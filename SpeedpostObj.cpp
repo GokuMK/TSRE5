@@ -22,10 +22,12 @@
 #include "SpeedPostDAT.h"
 #include "SpeedPost.h"
 #include <QDebug>
-
+#include "Vector4f.h"
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+
+float SpeedpostObj::MaxPlacingDistance = 20;
 
 bool SpeedpostObj::allowNew(){
     return true;
@@ -190,9 +192,81 @@ void SpeedpostObj::flip(bool flipShape){
         tdb->trackItems[this->trItemId[j*2+1]]->flipSpeedpost();
     }
     this->modified = true; 
-    delete[] drawPositions;
-    drawPositions = NULL;
+    drawPositions.clear();
+    //delete[] drawPositions;
+    //drawPositions = NULL;
     drawPosition = NULL;
+}
+
+void SpeedpostObj::expandTrItems(){
+    TDB* tdb = Game::trackDB;
+    qDebug() <<"ex sound region  "<<this->fileName;
+
+    float* playerT = Vec2::fromValues(this->x, this->y);
+    float pos[3];
+    Vec3::set(pos, position[0], position[1], position[2]);
+    float quat[4];
+    float* buffer = new float[12];
+    float vec1[3];
+    float vec2[3];
+    Vec3::set(vec1, -MaxPlacingDistance, 0, 0);
+    Vec3::set(vec2, MaxPlacingDistance, 0, 0);
+    Quat::fill(quat);
+    Quat::rotateY(quat, quat, tdb->trackItems[this->trItemId[1]]->getSpeedpostRot()-M_PI/2);
+    Vec3::transformQuat(vec1, vec1, quat);
+    Vec3::transformQuat(vec2, vec2, quat);
+    
+    buffer[0] = position[0]+vec1[0];
+    buffer[1] = position[1];
+    buffer[2] = position[2]+vec1[2];
+    buffer[6] = position[0]+vec2[0];
+    buffer[7] = position[1];
+    buffer[8] = position[2]+vec2[2]; 
+    int len = 12;
+    qDebug() << "and find intersections ";
+    std::vector<TDB::IntersectionPoint> ipoints;
+    tdb->getSegmentIntersectionPositionOnTDB(ipoints, NULL, playerT, buffer, len, (float*)&pos);
+    qDebug() << "intersection count: "<<ipoints.size();
+    
+    int tid = tdb->findTrItemNodeId(this->trItemId[1]);
+    for(int i = 0; i < ipoints.size(); i++){
+        qDebug() << ipoints[i].distance;
+        
+        if(ipoints[i].distance < 0.5)
+            continue;
+        if(ipoints[i].idx == tid)
+            continue;
+        
+        int trNodeId = ipoints[i].idx;
+        float metry = ipoints[i].m;
+        
+        qDebug() <<"new speedpost  "<<this->fileName;
+
+        tdb->newSpeedPostObject(tdb->trackItems[this->trItemId[1]]->getSpeedpostType(), trItemId, trNodeId, metry, this->typeID);
+        tdb->trackItems[this->trItemId.last()]->setSpeedpostRot(tdb->trackItems[this->trItemId[1]]->getSpeedpostRot());
+    }
+    drawPositions.clear();
+    modified = true;
+}
+
+void SpeedpostObj::deleteSelectedTrItem(){
+    if(selectionValue < 1)
+        return;
+    if(selectionValue > trItemId.size()/2)
+        return;
+    if(trItemId.size() < 3)
+        return;
+
+    TDB* tdb = Game::trackDB;
+    
+    int i = selectionValue - 1;
+    qDebug() << "remove tritem " << i;
+    tdb->deleteTrItem(this->trItemId[i*2+1]);
+    trItemId.remove(i*2+1);
+    trItemId.remove(i*2+0);
+    
+    drawPositions.clear();
+    modified = true;
 }
 
 void SpeedpostObj::initTrItems(float* tpos){
@@ -201,15 +275,16 @@ void SpeedpostObj::initTrItems(float* tpos){
     int trNodeId = tpos[0];
     float metry = tpos[1];
     
+    trItemId.clear();
     TDB* tdb = Game::trackDB;
     qDebug() <<"new speedpost  "<<this->fileName;
 
-    tdb->newSpeedPostObject(speedPostId, speedPostType, trItemId, trNodeId, metry, this->typeID);
+    tdb->newSpeedPostObject(speedPostType, trItemId, trNodeId, metry, this->typeID);
     
     if(this->trItemId.size() < 2)
         return;
     this->rotate(0,tdb->trackItems[this->trItemId[1]]->getSpeedpostRot()-M_PI/2,0);
-    this->drawPositions = NULL;
+    drawPositions.clear();
 }
 
 void SpeedpostObj::set(QString sh, long long int val){
@@ -360,6 +435,11 @@ void SpeedpostObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
+bool SpeedpostObj::select(int value){
+    this->selectionValue = value;
+    this->selected = true;
+}
+
 void SpeedpostObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     if (!loaded) return;
 
@@ -428,39 +508,28 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
     
     ///////////////////////////////
     TDB* tdb = Game::trackDB;
-    if(drawPosition == NULL){
+    if(drawPositions.size() == 0){
         if(this->trItemId.size() < 2){
             qDebug() << "speedpost: fail trItemId";
             loaded = false;
             return;
         }
-        int id = tdb->findTrItemNodeId(this->trItemId[1]);
-        if (id < 0) {
-            qDebug() << "speedpost: fail id";
-            loaded = false;
-            return;
-        }
-                //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
-        drawPosition = new float[8];
-        //qDebug() << this->trItemId[1];
-        bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
-        if(!ok){
-            this->loaded = false;
-            return;
-        }
-        drawPosition[7] = tdb->trackItems[this->trItemId[1]]->getSpeedpostRot();
-        drawPosition[0] += 2048 * (drawPosition[5] - this->x);
-        drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
-        if(spointer3d == NULL){
-            spointer3d = new TrackItemObj(0);
-            spointer3d->setMaterial(0.7,0.7,0.7);
-        }
-        
-        // line
+
         drawLine = new OglObj();
         float* tpoints = new float[7];
-        float* lpoints = new float[trItemId.size()*6];
         int ptr = 0;
+        std::vector<Vector4f> ipoints;
+        int minlidx = -1;
+        float minlval = 9999;
+        
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(0);
+            pointer3d->setMaterial(0.7,0.7,0.7);
+        }
+        if(pointer3dSelected == NULL){
+            pointer3dSelected = new TrackItemObj(0);
+            pointer3dSelected->setMaterial(0.9,0.9,0.9);
+        }
 
         for(int i = 0; i < trItemId.size()/2; i++){
             if(this->trItemId[i*2] != 0)
@@ -471,43 +540,69 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
                 loaded = false;
                 return;
             }
-            //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
-            bool ok = tdb->getDrawPositionOnTrNode(tpoints, id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
+            
+            drawPosition = new float[8];
+
+            bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
             if(!ok){
                 this->loaded = false;
                 return;
             }
+            memcpy(tpoints, drawPosition, sizeof(float)*7 );
+            drawPosition[7] = tdb->trackItems[this->trItemId[1]]->getSpeedpostRot();
+            drawPosition[0] += 2048 * (drawPosition[5] - this->x);
+            drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
+            drawPositions.push_back(drawPosition);
+
             tpoints[0] += 2048 * (tpoints[5] - this->x);
             tpoints[2] -= 2048 * (-tpoints[6] - this->y);
-            lpoints[ptr++] = tpoints[0];
-            lpoints[ptr++] = tpoints[1]+1.0;
-            lpoints[ptr++] = -tpoints[2];
-            if((i > 0 && i < trItemId.size()/2-1) || trItemId.size() == 2){
-                lpoints[ptr++] = tpoints[0];
-                lpoints[ptr++] = tpoints[1]+1.0;
-                lpoints[ptr++] = -tpoints[2];
+            ipoints.emplace_back(tpoints[0], tpoints[1]+1.0, -tpoints[2], 0);
+            if(tpoints[0] < minlval){
+                minlval = tpoints[0];
+                minlidx = ipoints.size()-1;
             }
         }
-        drawLine->init(lpoints, ptr, drawLine->V, GL_LINES);
-        drawLine->setMaterial(1.0, 0.0, 0.0);
+
+        if(ipoints.size() > 1){
+            for(int i = 0; i < ipoints.size(); i++){
+                ipoints[i].c = Vec3::dist((float*)&ipoints[minlidx], (float*)&ipoints[i]);
+            }
+            std::sort(ipoints.begin(), ipoints.end(), Vector4f::SortByC);
+            float* lpoints = new float[ipoints.size()*6];
+            for(int i = 0; i < ipoints.size()-1; i++){
+                lpoints[ptr++] = ipoints[i].x;
+                lpoints[ptr++] = ipoints[i].y;
+                lpoints[ptr++] = ipoints[i].z;
+                lpoints[ptr++] = ipoints[i+1].x;
+                lpoints[ptr++] = ipoints[i+1].y;
+                lpoints[ptr++] = ipoints[i+1].z;
+            }
+            drawLine->init(lpoints, ptr, drawLine->V, GL_LINES);
+            drawLine->setMaterial(1.0, 0.0, 0.0);
+        }
     }
     
     //int aaa = drawPosition[0];
     //if(pos == NULL) return;
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-
-    int useSC;
-
-    gluu->mvPushMatrix();
     drawLine->render();
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 0 * (drawPosition[4] - this->x), drawPosition[1] + 1, -drawPosition[2] + 0 * (-drawPosition[5] - this->y));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[7]-M_PI/2);
-    //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
-    //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
-    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    spointer3d->render(selectionColor + (1)*131072*8*useSC);
-    gluu->mvPopMatrix();
+    int useSC;
+    
+    for(int i = 0; i < drawPositions.size(); i++){
+        drawPosition = drawPositions[i];
+        gluu->mvPushMatrix();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 0 * (drawPosition[4] - this->x), drawPosition[1] + 1, -drawPosition[2] + 0 * (-drawPosition[5] - this->y));
+        Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[7]-M_PI/2);
+        //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
+        //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        useSC = (float)selectionColor/(float)(selectionColor+0.000001);
+        if(this->selected && this->selectionValue == i+1) 
+            pointer3dSelected->render(selectionColor + (i+1)*131072*8*useSC);
+        else
+            pointer3d->render(selectionColor + (i+1)*131072*8*useSC);
+        gluu->mvPopMatrix();
+    }
 };
 
 bool SpeedpostObj::getSimpleBorder(float* border){

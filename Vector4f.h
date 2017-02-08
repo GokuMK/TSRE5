@@ -24,6 +24,7 @@ public:
     ~Vector4f();
     void set(float x, float y, float z);
     void set(float x, float y, float z, float c);
+    static bool SortByC(Vector4f &a, Vector4f &b);
 private:
 
 };

@@ -1838,7 +1838,7 @@ void TDB::getLines(float * &lineBuffer, int &length, float* playerT){
             }
         }
     }
-    qDebug() << "len" << len;
+    //qDebug() << "len" << len;
     this->collisionLineBuffer = new float[len];
     float* ptr = this->collisionLineBuffer;
 
@@ -2154,9 +2154,9 @@ int TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpo
     int length = 0;
     getLines(lineBuffer, length, posT);
     
-    qDebug() << "lines length" << length;
+    //qDebug() << "lines length" << length;
 
-    qDebug() << ": " << posT[0]<<" "<<posT[1]<<" "<<pos[0]<<" "<<pos[1]<<" "<<pos[2];
+    //qDebug() << ": " << posT[0]<<" "<<posT[1]<<" "<<pos[0]<<" "<<pos[1]<<" "<<pos[2];
     float best[7];
     best[0] = 99999;
     float dist = 0;
@@ -2181,7 +2181,7 @@ int TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpo
             //best[5] = intersectionPoint[2];
         }
     }
-    qDebug() << "item pos: " << best[0] << " " << best[1] << " " << best[2] << " " << best[3];
+    //qDebug() << "item pos: " << best[0] << " " << best[1] << " " << best[2] << " " << best[3];
     float minDistance = best[0];
     //if(best[0] == 99999 )
     //    return false;
@@ -2212,6 +2212,33 @@ int TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpo
     }
     
     return minDistance;
+}
+
+void TDB::fillNearestSquaredDistanceToTDBXZ(float* posT, std::vector<Vector4f> &points, float* bbox){
+    float *lineBuffer;
+    int length = 0;
+    getLines(lineBuffer, length, posT);
+    
+    float dist = 0;
+    int yyy = 0;
+    for(int i = 0; i < length*12; i+=12){
+        if(bbox != NULL){
+            if((lineBuffer[i] < bbox[0] && lineBuffer[i+6] < bbox[0] ) || (lineBuffer[i] > bbox[1] && lineBuffer[i+6] > bbox[1] )){
+                //yyy++;
+                continue;
+            }
+            if((lineBuffer[i+2] < bbox[2] && lineBuffer[i+8] < bbox[2] ) || (lineBuffer[i+2] > bbox[3] && lineBuffer[i+8] > bbox[3] )){
+                //yyy++;
+                continue;
+            }
+        }
+        for(int j = 0; j < points.size(); j++){
+            dist = Intersections::pointSegmentSquaredDistanceXZ(lineBuffer + i, lineBuffer + i+6, (float*)&points[j]);
+            if(dist < points[j].c)
+                points[j].c = dist;
+        }
+    }
+    //qDebug() << yyy << length;
 }
 
 bool TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos){
@@ -2335,12 +2362,13 @@ bool TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint
             metry = this->getVectorSectionLengthToIdx(p->idx, lineBuffer[i+4]);
             p->m = metry + lineBuffer[i+5] + (lineBuffer[i+11] - lineBuffer[i+5])*dist1;
             
-            dist1 = Vec3::distance(segment + j, segment + j+6);
-            dist2 = Vec3::distance(segment + j, intersectionPoint);
-            dist1 = dist2/dist1;
-            metry = segmentTDB->getVectorSectionLengthToIdx(p->sidx, segment[j+4]);
-            p->sm = metry + segment[j+5] + (segment[j+11] - segment[j+5])*dist1;
-            
+            if(segmentTDB != NULL){
+                dist1 = Vec3::distance(segment + j, segment + j+6);
+                dist2 = Vec3::distance(segment + j, intersectionPoint);
+                dist1 = dist2/dist1;
+                metry = segmentTDB->getVectorSectionLengthToIdx(p->sidx, segment[j+4]);
+                p->sm = metry + segment[j+5] + (segment[j+11] - segment[j+5])*dist1;
+            }
             qDebug() << "item p: " << p->distance << " " << p->idx << " " << p->m<< " " << p->sidx << " " << p->sm;
             //ipoints.push_back(p);
         }
@@ -2581,12 +2609,12 @@ void TDB::enableSignalSubObj(QString filename, SignalObj::SignalUnit &unit, int 
     this->addItemToTrNode(nid, unit.itemId);
 }
 
-void TDB::newSpeedPostObject(int speedPostId, int speedPostType, QVector<int> & itemId, int trNodeId, float metry, int type){
+void TDB::newSpeedPostObject(int speedPostType, QVector<int> & itemId, int trNodeId, float metry, int type){
     if(type != WorldObj::speedpost) 
         return;
-    SpeedPost* sShape = this->speedPostDAT->speedPost[speedPostId];
-    if(sShape == NULL)
-        return;
+    //SpeedPost* sShape = this->speedPostDAT->speedPost[speedPostId];
+    //if(sShape == NULL)
+    //    return;
     
     float trPosition[7];
     getDrawPositionOnTrNode((float*)&trPosition, trNodeId, metry);
@@ -2599,11 +2627,10 @@ void TDB::newSpeedPostObject(int speedPostId, int speedPostType, QVector<int> & 
     if(angle < 0)
         angle += 2*M_PI;
     this->trackItems[newTRitemId]->setSpeedpostRot(angle);
-    itemId.clear();
     itemId.push_back(0);
     itemId.push_back(newTRitemId);
     //qDebug() << "tritem size"<<itemId.size();
-    this->addItemToTrNode(trNodeId, itemId[1]);
+    this->addItemToTrNode(trNodeId, itemId.last());
 }
 
 void TDB::newLevelCrObject(int* &itemId, int trNodeId, float metry, int type){
@@ -2637,11 +2664,11 @@ void TDB::newSoundRegionObject(int soundregionTrackType, QVector<int> &itemId, i
     this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
     this->trackItems[newTRitemId]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
     this->trackItems[newTRitemId]->setSoundRegionData(-trPosition[3], soundregionTrackType);
-    itemId.clear();
+    
     itemId.push_back(0);
     itemId.push_back(newTRitemId);
     
-    this->addItemToTrNode(trNodeId, itemId[1]);
+    this->addItemToTrNode(trNodeId, itemId.last());
 }
 
 void TDB::newHazardObject(int * &itemId, int trNodeId, float metry, int type){

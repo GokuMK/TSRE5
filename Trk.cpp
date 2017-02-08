@@ -248,6 +248,12 @@ void Trk::load(QString path){
             ParserX::SkipToken(data);
             continue;
         }
+        if (sh == ("ortsuserpreferenceforestcleardistance")) {
+            this->forestClearDistance = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        
         qDebug() << "TRK undefined: " << sh;
         ParserX::SkipToken(data);
     }
@@ -332,6 +338,8 @@ void Trk::save() {
     out << "	DerailScale ( " << this->derailScale << " )" << "\n";
     if(this->timetableTollerance >= 0)
     out << "	TimetableTollerance ( " << this->timetableTollerance << " )" << "\n";
+    if(this->forestClearDistance >= 0)
+    out << "	ORTSUserPreferenceForestClearDistance ( " << this->forestClearDistance << " )" << "\n";
     out << ")" << "\n";
 
     out.flush();

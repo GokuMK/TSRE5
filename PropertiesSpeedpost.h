@@ -30,6 +30,10 @@ public slots:
     void numberEnabled(QString val);
     void kmmListSelected(int);
     void ptbListSelected(int);
+    void eMaxPlacingDistanceEnabled(QString val);
+    void bDeleteSelectedEnabled();
+    void bExpandEnabled();
+    
 signals:
     
 private:
@@ -40,6 +44,7 @@ private:
     QComboBox ptb;
     QComboBox kmm;
     QCheckBox chFlipShape;
+    QLineEdit eMaxPlacingDistance;
 };
 
 #endif	/* PROPERTIESSPEEDPOST_H */

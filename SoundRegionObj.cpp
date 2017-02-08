@@ -22,6 +22,9 @@
 #include "TS.h"
 #include "SoundList.h"
 #include <QDebug>
+#include "Vector4f.h"
+
+float SoundRegionObj::MaxPlacingDistance = 30;
 
 SoundRegionObj::SoundRegionObj() {
 }
@@ -81,17 +84,17 @@ void SoundRegionObj::initTrItems(float* tpos){
         return;
     int trNodeId = tpos[0];
     float metry = tpos[1];
-    
+    trItemId.clear();
     TDB* tdb = Game::trackDB;
     qDebug() <<"new soundregion  "<<this->fileName;
-
+    
     tdb->newSoundRegionObject(this->soundregionTrackType, trItemId, trNodeId, metry, this->typeID);
     float *srd = tdb->trackItems[this->trItemId[1]]->trItemSRData;
     this->soundregionRoty = srd[2];
     Quat::fill(this->qDirection);
-    Quat::rotateY(this->qDirection, this->qDirection, this->soundregionRoty);
+    Quat::rotateY(this->qDirection, this->qDirection, -this->soundregionRoty);
     this->position[1] += 1;
-    this->drawPositionB = NULL;
+    this->drawPositions.clear();
 }
 
 void SoundRegionObj::flip(){
@@ -106,8 +109,82 @@ void SoundRegionObj::flip(){
     this->soundregionRoty = srd[2];
     Quat::rotateY(this->qDirection, this->qDirection, M_PI);
     this->modified = true; 
-    delete this->drawPositionB;
-    this->drawPositionB = NULL;
+    this->drawPositions.clear();
+}
+
+void SoundRegionObj::expandTrItems(){
+    TDB* tdb = Game::trackDB;
+    qDebug() <<"ex sound region  "<<this->fileName;
+
+    float* playerT = Vec2::fromValues(this->x, this->y);
+    float pos[3];
+    Vec3::set(pos, position[0], position[1], position[2]);
+    float quat[4];
+    float* buffer = new float[12];
+    float vec1[3];
+    float vec2[3];
+    Vec3::set(vec1, -MaxPlacingDistance, 0, 0);
+    Vec3::set(vec2, MaxPlacingDistance, 0, 0);
+    Quat::fill(quat);
+    Quat::rotateY(quat, quat, -soundregionRoty);
+    Vec3::transformQuat(vec1, vec1, quat);
+    Vec3::transformQuat(vec2, vec2, quat);
+    
+    buffer[0] = position[0]+vec1[0];
+    buffer[1] = position[1];
+    buffer[2] = position[2]+vec1[2];
+    buffer[6] = position[0]+vec2[0];
+    buffer[7] = position[1];
+    buffer[8] = position[2]+vec2[2]; 
+    int len = 12;
+    qDebug() << "and find intersections ";
+    std::vector<TDB::IntersectionPoint> ipoints;
+    tdb->getSegmentIntersectionPositionOnTDB(ipoints, NULL, playerT, buffer, len, (float*)&pos);
+    qDebug() << "intersection count: "<<ipoints.size();
+    
+    int tid = tdb->findTrItemNodeId(this->trItemId[1]);
+    for(int i = 0; i < ipoints.size(); i++){
+        qDebug() << ipoints[i].distance;
+        if(ipoints[i].distance < 0.5)
+            continue;
+        if(ipoints[i].idx == tid)
+            continue;
+        
+        int trNodeId = ipoints[i].idx;
+        float metry = ipoints[i].m;
+
+        qDebug() <<"new soundregion  "<<this->fileName;
+
+        tdb->newSoundRegionObject(this->soundregionTrackType, trItemId, trNodeId, metry, this->typeID);
+        tdb->trackItems[this->trItemId.last()]->trItemSRData[2] = this->soundregionRoty;
+    }
+    drawPositions.clear();
+    modified = true;
+}
+
+void SoundRegionObj::deleteSelectedTrItem(){
+    if(selectionValue < 1)
+        return;
+    if(selectionValue > trItemId.size()/2)
+        return;
+    if(trItemId.size() < 3)
+        return;
+
+    TDB* tdb = Game::trackDB;
+    
+    int i = selectionValue - 1;
+    qDebug() << "remove tritem " << i;
+    tdb->deleteTrItem(this->trItemId[i*2+1]);
+    trItemId.remove(i*2+1);
+    trItemId.remove(i*2+0);
+    
+    drawPositions.clear();
+    modified = true;
+}
+
+bool SoundRegionObj::select(int value){
+    this->selectionValue = value;
+    this->selected = true;
 }
 
 void SoundRegionObj::set(QString sh, long long int val){
@@ -195,40 +272,8 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
     
     ///////////////////////////////
     TDB* tdb = Game::trackDB;
-    if(drawPositionB == NULL){
-        if(this->trItemId.size() < 2){
-            qDebug() << "SoundRegionObj: fail trItemId";
-            loaded = false;
-            return;
-        }
-        int id = tdb->findTrItemNodeId(this->trItemId[1]);
-        if (id < 0) {
-            qDebug() << "SoundRegionObj: fail id";
-            loaded = false;
-            return;
-        }
-        float *srd = tdb->trackItems[this->trItemId[1]]->trItemSRData;
-        if(srd != NULL)
-            angle = srd[2];
-        drawPositionB = new float[7];
-        drawPositionE = new float[7];
-        //qDebug() << this->trItemId[1];
-        bool ok = tdb->getDrawPositionOnTrNode(drawPositionB, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
-        if(!ok){
-            this->loaded = false;
-            return;
-        }
-        drawPositionB[0] += 2048 * (drawPositionB[5] - this->x);
-        drawPositionB[2] -= 2048 * (-drawPositionB[6] - this->y);
-        id = tdb->findTrItemNodeId(this->trItemId[this->trItemId.size()-1]);
-        ok = tdb->getDrawPositionOnTrNode(drawPositionE, id, tdb->trackItems[this->trItemId[this->trItemId.size()-1]]->trItemSData1);
-        if(!ok){
-            this->loaded = false;
-            return;
-        }
-        drawPositionE[0] += 2048 * (drawPositionE[5] - this->x);
-        drawPositionE[2] -= 2048 * (-drawPositionE[6] - this->y);
-        
+    
+    if(drawPositions.size() == 0){
         if(pointer3d == NULL){
             pointer3d = new TrackItemObj(2);
             pointer3d->setMaterial(1.0,1.0,0.0);
@@ -239,10 +284,13 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
         }
         // line
         drawLine = new OglObj();
+        
+        std::vector<Vector4f> ipoints;
         float* tpoints = new float[7];
-        float* lpoints = new float[trItemId.size()*6];
         int ptr = 0;
-
+        int minlidx = -1;
+        float minlval = 9999;
+        
         for(int i = 0; i < trItemId.size()/2; i++){
             if(this->trItemId[i*2] != 0)
                 continue;
@@ -252,57 +300,68 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
                 loaded = false;
                 return;
             }
-            //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
-            bool ok = tdb->getDrawPositionOnTrNode(tpoints, id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
+            
+            drawPosition = new float[8];
+            bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
             if(!ok){
+                qDebug() << "SoundRegionObj: fail drawPosition";
                 this->loaded = false;
                 return;
             }
+            memcpy(tpoints, drawPosition, sizeof(float)*7 );
+            drawPosition[0] += 2048 * (drawPosition[5] - this->x);
+            drawPosition[2] -= 2048 * (-drawPosition[6] - this->y);
+            float *srd = tdb->trackItems[this->trItemId[i*2+1]]->trItemSRData;
+            if(srd != NULL)
+                drawPosition[7] = srd[2];
+            drawPositions.push_back(drawPosition);
+            
             tpoints[0] += 2048 * (tpoints[5] - this->x);
             tpoints[2] -= 2048 * (-tpoints[6] - this->y);
-            //lpoints[ptr++] = tpoints[0];
-            //lpoints[ptr++] = tpoints[1]+1.0;
-            //lpoints[ptr++] = -tpoints[2];
-            //if((i > 0 && i < trItemId.size()/2-1) || trItemId.size() == 2){
-            if(i == 0 || i == trItemId.size()/2 - 1){
-                lpoints[ptr++] = tpoints[0];
-                lpoints[ptr++] = tpoints[1]+1.0;
-                lpoints[ptr++] = -tpoints[2];
+            ipoints.emplace_back(tpoints[0], tpoints[1]+1.0, -tpoints[2], 0);
+            if(tpoints[0] < minlval){
+                minlval = tpoints[0];
+                minlidx = ipoints.size()-1;
             }
         }
-        drawLine->init(lpoints, ptr, drawLine->V, GL_LINES);
-        drawLine->setMaterial(1.0, 1.0, 0.0);
+
+        if(ipoints.size() > 1){
+            for(int i = 0; i < ipoints.size(); i++){
+                ipoints[i].c = Vec3::dist((float*)&ipoints[minlidx], (float*)&ipoints[i]);
+            }
+            std::sort(ipoints.begin(), ipoints.end(), Vector4f::SortByC);
+            float* lpoints = new float[ipoints.size()*6];
+            for(int i = 0; i < ipoints.size()-1; i++){
+                lpoints[ptr++] = ipoints[i].x;
+                lpoints[ptr++] = ipoints[i].y;
+                lpoints[ptr++] = ipoints[i].z;
+                lpoints[ptr++] = ipoints[i+1].x;
+                lpoints[ptr++] = ipoints[i+1].y;
+                lpoints[ptr++] = ipoints[i+1].z;
+            }
+            drawLine->init(lpoints, ptr, drawLine->V, GL_LINES);
+            drawLine->setMaterial(1.0, 1.0, 0.0);
+        }
     }
-    
-    //int aaa = drawPosition[0];
-    //if(pos == NULL) return;
+
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    int useSC;
-    
     drawLine->render();
-    
-    gluu->mvPushMatrix();
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[0] + 0 * (drawPositionB[4] - this->x), drawPositionB[1] + 1, -drawPositionB[2] + 0 * (-drawPositionB[5] - this->y));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -angle+M_PI);
-    //Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[3]);
-    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    if(this->selected) 
-        pointer3dSelected->render(selectionColor + 1*131072*8*useSC);
-    else
-        pointer3d->render(selectionColor + 1*131072*8*useSC);
-    gluu->mvPopMatrix();
-    gluu->mvPushMatrix();
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[0] + 0 * (drawPositionE[4] - this->x), drawPositionE[1] + 1, -drawPositionE[2] + 0 * (-drawPositionE[5] - this->y));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -angle+M_PI);
-    //Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[3]);
-    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    if(this->selected) 
-        pointer3dSelected->render(selectionColor + 3*131072*8*useSC);
-    else
-        pointer3d->render(selectionColor + 3*131072*8*useSC);
-    gluu->mvPopMatrix();
+    int useSC;
+
+    for(int i = 0; i < drawPositions.size(); i++){
+        drawPosition = drawPositions[i];
+        gluu->mvPushMatrix();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 0 * (drawPosition[4] - this->x), drawPosition[1] + 1, -drawPosition[2] + 0 * (-drawPosition[5] - this->y));
+        Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -drawPosition[7]+M_PI);
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        useSC = (float)selectionColor/(float)(selectionColor+0.000001);
+        if(this->selected && this->selectionValue == i+1) 
+            pointer3dSelected->render(selectionColor + (i+1)*131072*8*useSC);
+        else
+            pointer3d->render(selectionColor + (i+1)*131072*8*useSC);
+        gluu->mvPopMatrix();
+    }
+
 };
 
 int SoundRegionObj::getDefaultDetailLevel(){

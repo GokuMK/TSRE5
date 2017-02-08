@@ -76,6 +76,7 @@ Route::Route() {
     
     TerrainLib::LoadQuadTree();
     ForestObj::LoadForestList();
+    ForestObj::ForestClearDistance = trk->forestClearDistance;
     PlatformObj::LoadCarSpawnerList();
     
     Game::trackDB = this->trackDB;

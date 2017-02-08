@@ -25,6 +25,9 @@ public:
 public slots:
     void flip();
     void sourcesListSelected(QString val);
+    void eMaxPlacingDistanceEnabled(QString val);
+    void bDeleteSelectedEnabled();
+    void bExpandEnabled();
     
 signals:
     
@@ -32,6 +35,7 @@ private:
     SoundRegionObj* sobj;
     QComboBox sources;
     QLineEdit sName;
+    QLineEdit eMaxPlacingDistance;
 };
 
 #endif	/* PROPERTIESSOUNDREGION_H */

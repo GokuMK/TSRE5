@@ -48,6 +48,7 @@ public:
     float tempRestrictedSpeed;
     float gravityScale;
     float timetableTollerance;
+    float forestClearDistance = 0;
     float derailScale;
     int imageLoadId;
     int imageDetailsId;

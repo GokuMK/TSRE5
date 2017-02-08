@@ -14,6 +14,10 @@
 #include "Game.h"
 
 PropertiesSoundRegion::PropertiesSoundRegion() {
+    
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-10000, 10000, 6, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
@@ -60,6 +64,30 @@ PropertiesSoundRegion::PropertiesSoundRegion() {
     this->sources.setStyleSheet("combobox-popup: 0;");
     QObject::connect(&this->sources, SIGNAL(activated(QString)),
         this, SLOT(sourcesListSelected(QString)));
+    
+    label = new QLabel("Track Items:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    
+    QPushButton *bDeleteSelected = new QPushButton("Delete Selected");
+    vbox->addWidget(bDeleteSelected);
+    QObject::connect(bDeleteSelected, SIGNAL(released()),
+                      this, SLOT(bDeleteSelectedEnabled()));
+    QPushButton *bExpandSelected = new QPushButton("Expand");
+    vbox->addWidget(bExpandSelected);
+    QObject::connect(bExpandSelected, SIGNAL(released()),
+                      this, SLOT(bExpandEnabled()));
+    
+    label = new QLabel("Global settings:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(new QLabel("Max placing radius:"));
+    vbox->addWidget(&eMaxPlacingDistance);
+    eMaxPlacingDistance.setValidator(doubleValidator);
+    QObject::connect(&eMaxPlacingDistance, SIGNAL(textEdited(QString)), this, SLOT(eMaxPlacingDistanceEnabled(QString)));
+
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -124,6 +152,8 @@ void PropertiesSoundRegion::showObj(WorldObj* obj){
                 this->sName.setText(it->name);
             this->sources.addItem(it->name);
         }
+        
+    this->eMaxPlacingDistance.setText(QString::number(sobj->MaxPlacingDistance));
 }
 
 bool PropertiesSoundRegion::support(WorldObj* obj){
@@ -132,4 +162,36 @@ bool PropertiesSoundRegion::support(WorldObj* obj){
     if(obj->type == "soundregion")
         return true;
     return false;
+}
+
+void PropertiesSoundRegion::eMaxPlacingDistanceEnabled(QString val){
+    if(sobj == NULL){
+        return;
+    }
+    bool ok = false;
+    float fval = val.toFloat(&ok);
+    if(ok){
+        if(fval > 0)
+            sobj->MaxPlacingDistance = fval;
+    }
+}
+
+void PropertiesSoundRegion::bDeleteSelectedEnabled(){
+    if(sobj == NULL)
+        return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB, false);
+    sobj->deleteSelectedTrItem();
+    Undo::StateEnd();
+}
+
+void PropertiesSoundRegion::bExpandEnabled(){
+    if(sobj == NULL)
+        return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB, false);
+    sobj->expandTrItems();
+    Undo::StateEnd();
 }
