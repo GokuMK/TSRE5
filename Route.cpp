@@ -341,7 +341,21 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
             this->trackDB->getVectorSectionPoints(obj->x, obj->y, obj->UiD, ptr);
         int length = ptr - punkty;
         qDebug() << "l "<<length;
-        TerrainLib::setTerrainToTrackObj(brush, punkty, length, obj->x, obj->y, obj->matrix);
+        if(length == 0){
+            if(obj->sectionIdx != 0){
+                float matrix[16];
+                for(int i = 0; i < tsection->shape[obj->sectionIdx]->path[0].n; i++){
+                    memcpy(matrix, obj->matrix, sizeof(float)*16);
+                    int sidx = tsection->shape[obj->sectionIdx]->path[0].sect[i];
+                    tsection->sekcja[sidx]->getPoints(ptr, matrix);
+                }
+            }
+            length = ptr - punkty;
+            qDebug() << "l "<<length;
+        }
+        
+        if(length > 0)
+            TerrainLib::setTerrainToTrackObj(brush, punkty, length, obj->x, obj->y, obj->matrix);
         delete[] punkty;
     } else if(obj->hasLinePoints()) {
         float* punkty = new float[10000];

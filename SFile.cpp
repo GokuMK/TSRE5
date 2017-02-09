@@ -308,6 +308,7 @@ bool SFile::getBoxPoints(QVector<float>& points){
             tbound[4] = this->esdBoundingBox[u].shape[2];
             tbound[5] = this->esdBoundingBox[u].shape[5];
             
+            //int pointsBeg = points.size();
             ///////////
             for(int i=0; i<2; i++)
                 for(int j=4; j<6; j++){
@@ -336,9 +337,118 @@ bool SFile::getBoxPoints(QVector<float>& points){
                     points.push_back(tbound[j]);
                     points.push_back(tbound[i]);
                 }
+            //int pointsEnd = points.size();
+            //for(int i = pointsBeg; i < pointsEnd; i++){
+            //    //Vec3::add(&points[i], &points[i], this->esdBoundingBox[u].translation);
+            //}
         }
     }
     return true;
+}
+
+void SFile::getFloorBorderLinePoints(float *&punkty){
+    if(this->esdBoundingBox.size() == 0){
+        float h = bound[2];
+        if(bound[3] < bound[2])
+            h = bound[3];
+//0 1 / 4 5
+        float vec1[3], vec2[3], dist;
+        Vec3::set(vec1, bound[0], h, bound[4]);
+        Vec3::set(vec2, bound[0], h, bound[5]);
+        dist = Vec3::distance(vec1, vec2);
+        Vec3::sub(vec2, vec2, vec1);
+        Vec3::normalize(vec2, vec2);
+        for(float i = 0; i < dist + 2; i+=4 ){
+            *punkty++ = vec1[0] + i*vec2[0];
+            *punkty++ = h;
+            *punkty++ = vec1[2] + i*vec2[2];
+        }
+        Vec3::set(vec1, bound[0], h, bound[5]);
+        Vec3::set(vec2, bound[1], h, bound[5]);
+        dist = Vec3::distance(vec1, vec2);
+        Vec3::sub(vec2, vec2, vec1);
+        Vec3::normalize(vec2, vec2);
+        for(float i = 0; i < dist + 2; i+=4 ){
+            *punkty++ = vec1[0] + i*vec2[0];
+            *punkty++ = h;
+            *punkty++ = vec1[2] + i*vec2[2];
+        }
+        Vec3::set(vec1, bound[1], h, bound[4]);
+        Vec3::set(vec2, bound[0], h, bound[4]);
+        dist = Vec3::distance(vec1, vec2);
+        Vec3::sub(vec2, vec2, vec1);
+        Vec3::normalize(vec2, vec2);
+        for(float i = 0; i < dist + 2; i+=4 ){
+            *punkty++ = vec1[0] + i*vec2[0];
+            *punkty++ = h;
+            *punkty++ = vec1[2] + i*vec2[2];
+        }
+        Vec3::set(vec1, bound[1], h, bound[5]);
+        Vec3::set(vec2, bound[1], h, bound[4]);
+        dist = Vec3::distance(vec1, vec2);
+        Vec3::sub(vec2, vec2, vec1);
+        Vec3::normalize(vec2, vec2);
+        for(float i = 0; i < dist + 2; i+=4 ){
+            *punkty++ = vec1[0] + i*vec2[0];
+            *punkty++ = h;
+            *punkty++ = vec1[2] + i*vec2[2];
+        }
+    } else {
+        float tbound[6];
+        for(int u = 0; u < this->esdBoundingBox.size(); u++ ){
+            tbound[0] = this->esdBoundingBox[u].shape[0];
+            tbound[1] = this->esdBoundingBox[u].shape[3];
+            tbound[2] = this->esdBoundingBox[u].shape[1];
+            tbound[3] = this->esdBoundingBox[u].shape[4];
+            tbound[4] = this->esdBoundingBox[u].shape[2];
+            tbound[5] = this->esdBoundingBox[u].shape[5];
+            
+        float h = tbound[2];
+        if(tbound[3] < tbound[2])
+            h = tbound[3];
+        float vec1[3], vec2[3], dist;
+        Vec3::set(vec1, bound[0], h, bound[4]);
+        Vec3::set(vec2, bound[0], h, bound[5]);
+        dist = Vec3::distance(vec1, vec2);
+        Vec3::sub(vec2, vec2, vec1);
+        Vec3::normalize(vec2, vec2);
+        for(float i = 0; i < dist + 2; i+=4 ){
+            *punkty++ = vec1[0] + i*vec2[0];
+            *punkty++ = h;
+            *punkty++ = vec1[2] + i*vec2[2];
+        }
+        Vec3::set(vec1, bound[0], h, bound[5]);
+        Vec3::set(vec2, bound[1], h, bound[5]);
+        dist = Vec3::distance(vec1, vec2);
+        Vec3::sub(vec2, vec2, vec1);
+        Vec3::normalize(vec2, vec2);
+        for(float i = 0; i < dist + 2; i+=4 ){
+            *punkty++ = vec1[0] + i*vec2[0];
+            *punkty++ = h;
+            *punkty++ = vec1[2] + i*vec2[2];
+        }
+        Vec3::set(vec1, bound[1], h, bound[4]);
+        Vec3::set(vec2, bound[0], h, bound[4]);
+        dist = Vec3::distance(vec1, vec2);
+        Vec3::sub(vec2, vec2, vec1);
+        Vec3::normalize(vec2, vec2);
+        for(float i = 0; i < dist + 2; i+=4 ){
+            *punkty++ = vec1[0] + i*vec2[0];
+            *punkty++ = h;
+            *punkty++ = vec1[2] + i*vec2[2];
+        }
+        Vec3::set(vec1, bound[1], h, bound[5]);
+        Vec3::set(vec2, bound[1], h, bound[4]);
+        dist = Vec3::distance(vec1, vec2);
+        Vec3::sub(vec2, vec2, vec1);
+        Vec3::normalize(vec2, vec2);
+        for(float i = 0; i < dist + 2; i+=4 ){
+            *punkty++ = vec1[0] + i*vec2[0];
+            *punkty++ = h;
+            *punkty++ = vec1[2] + i*vec2[2];
+        }
+        }
+    }
 }
 
 bool SFile::isSnapable(){

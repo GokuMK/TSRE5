@@ -30,10 +30,10 @@
 #include "Game.h"
 #include "MapWindow.h"
 
-double MapDataUrlImage::Zoom = 17;
 double MapDataUrlImage::Resolution = 640;
 
-MapDataUrlImage::MapDataUrlImage() {
+MapDataUrlImage::MapDataUrlImage(double zoom) {
+    this->zoom = zoom;
 }
 
 MapDataUrlImage::MapDataUrlImage(const MapDataUrlImage& orig) {
@@ -73,6 +73,14 @@ bool MapDataUrlImage::draw(QImage* myImage) {
     double mindist;
     int minId;
     double tdist;
+    unsigned char* imageData = myImage->bits();
+    int bytesPerPixel = 3;
+    bool alpha = false;
+    if(myImage->format() == QImage::Format_RGBA8888){
+        bytesPerPixel = 4;
+        alpha = true;
+    }
+    
     for(double i = 0; i < myImage->height(); i++){
         for(double j = 0; j < myImage->width(); j++){
             tx = i/myImage->height();
@@ -103,11 +111,13 @@ bool MapDataUrlImage::draw(QImage* myImage) {
                 //}
             }
             //QRgb;
-            if(minId >= 0 && minId < images.length());
+            //if(minId >= 0 && minId < images.length());
                 //myImage->setPixelColor(i, j, images[minId].getPixel(tlat, tlon));
                 //myImage->setPixelColor(i, j, QColor::fromRgba(images[minId].getPixel(tlat, tlon)));
             //myImage->setPixel(i, j, qRgba(128,128,128,128));
-            myImage->setPixel(i, j, images[minId].getPixel(tlat, tlon));
+            //imageData
+            images[minId].getPixel(tlat, tlon, imageData + (int)j*myImage->width()*bytesPerPixel + (int)i*bytesPerPixel, alpha );
+            //myImage->setPixel(i, j, images[minId].getPixel(tlat, tlon));
             
         }
     }
@@ -133,9 +143,11 @@ void MapDataUrlImage::load() {
     if(maxlat > 53.4)
         isteps = 7;
     
-    //if(maxlat > 55.0)
-    //    jsteps = 6;
-
+    if(zoom == 18){
+        isteps *= 2;
+        jsteps *= 2;
+    }
+    
     totalRequestCout = (jsteps+1)*(isteps+1);
     
     double latstep = (maxlat - minlat) / isteps;
@@ -162,7 +174,7 @@ void MapDataUrlImage::get(LatitudeLongitudeCoordinate* center) {
     QString imageMapsUrl = Game::imageMapsUrl;
     imageMapsUrl.replace("{lat}", QString::number(center->Latitude));
     imageMapsUrl.replace("{lon}", QString::number(center->Longitude));
-    imageMapsUrl.replace("{zoom}", QString::number(Zoom));
+    imageMapsUrl.replace("{zoom}", QString::number(zoom));
     imageMapsUrl.replace("{res}", QString::number(Resolution));
     QNetworkRequest req(QUrl(QString("")+imageMapsUrl));
     qDebug() << req.url();
@@ -170,7 +182,7 @@ void MapDataUrlImage::get(LatitudeLongitudeCoordinate* center) {
     QNetworkReply* r = mgr->get(req);
     r->setProperty("centerLat", QVariant(center->Latitude));
     r->setProperty("centerLon", QVariant(center->Longitude));
-    r->setProperty("zoom", Zoom);
+    r->setProperty("zoom", zoom);
 
 }
 
@@ -211,20 +223,41 @@ MapDataUrlImage::MapImage::MapImage() {
     zoom = 0;
 }
 
-unsigned int MapDataUrlImage::MapImage::getPixel(double tlat, double tlon){
-    int tx = ((double) (tlon - minlon)*((double) Resolution / ((maxlon - minlon))));
-    int ty = Resolution - ((double) (tlat - minlat)*((double) Resolution / ((maxlat - minlat))));
+void MapDataUrlImage::MapImage::getPixel(double tlat, double tlon, unsigned char* val, bool alpha){
+    double tx = ((double) (tlon - minlon)*((double) Resolution / ((maxlon - minlon))));
+    double ty = Resolution - ((double) (tlat - minlat)*((double) Resolution / ((maxlat - minlat))));
     if(tx < 0 || ty < 0 || tx >= Resolution || ty >= Resolution)
-        return 0;
+        return;
     
-    unsigned int val = 0;
-    //val |= *(image.bits()+tx*lineWidth + ty*3 + 0);
-    //val |= *(image.bits()+tx*lineWidth + ty*3 + 1) >> 0xFF;
-    val |= (255-MapWindow::isAlpha) << 24;
-    val |= *((image.bits()+ty*image.width()*3 + tx*3 + 0)) << 16;
-    val |= *((image.bits()+ty*image.width()*3 + tx*3 + 1)) << 8;
-    val |= *((image.bits()+ty*image.width()*3 + tx*3 + 2));
-    return val;
+    //unsigned int val = 0;
+    //*val = 0;
+    if(alpha)
+        val[3] = (255-MapWindow::isAlpha);
+    val[2] = (int)getImagePixelFromFloatXY(tx, ty, 2);
+    val[1] = (int)getImagePixelFromFloatXY(tx, ty, 1);
+    val[0] = (int)getImagePixelFromFloatXY(tx, ty, 0);
+    //*val |= (255-MapWindow::isAlpha) << 24;
+    //*val |= (int)getImagePixelFromFloatXY(tx, ty, 0) << 16;
+    //*val |= (int)getImagePixelFromFloatXY(tx, ty, 1) << 8;
+    //*val |= (int)getImagePixelFromFloatXY(tx, ty, 2);
+    //return val;
+}
+
+unsigned char MapDataUrlImage::MapImage::getImagePixelFromFloatXY(double x, double y, int color){
+    if(x < 1 || y < 1 || x > image.width() - 2 || y > image.height() - 2)
+        return *((image.bits()+(int)y*image.width()*3 + (int)x*3 + color));
+    
+    int tx = floor(x);
+    int ty = floor(y);
+    x = x - tx;
+    y = y - ty;
+    
+    unsigned char out = 0;
+    out += *((image.bits()+(ty)*image.width()*3 + (tx)*3 + color))*(1.0 - x)*(1.0 - y);
+    out += *((image.bits()+(ty)*image.width()*3 + (tx+1)*3 + color))*(x)*(1.0 - y);
+    out += *((image.bits()+(ty+1)*image.width()*3 + (tx)*3 + color))*(1.0 - x)*(y);
+    out += *((image.bits()+(ty+1)*image.width()*3 + (tx+1)*3 + color))*(x)*(y);
+    return out;
 }
 
 bool MapDataUrlImage::MapImage::isPoint(double tlat, double tlon){

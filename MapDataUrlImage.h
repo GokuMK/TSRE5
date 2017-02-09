@@ -24,7 +24,6 @@ class MapDataUrlImage : public MapData {
 
     Q_OBJECT
 public:
-    static double Zoom;
     static double Resolution;
     
     struct MapImage {
@@ -42,7 +41,8 @@ public:
         MapImage();
         MapImage(double tlat, double tlon, int tzoom, unsigned char *data, int length);
         //double getDistaneToCenter();
-        unsigned int getPixel(double tlat, double tlon);
+        void getPixel(double tlat, double tlon, unsigned char* pixel, bool alpha);
+        unsigned char getImagePixelFromFloatXY(double x, double y, int color);
         bool isPoint(double tlat, double tlon);
         double distanceToCenter(double tlat, double tlon);
     };
@@ -62,7 +62,7 @@ public:
         void fromPointToLatLng(double x, double y, double &tlat, double &tlon);
     };
 
-    MapDataUrlImage();
+    MapDataUrlImage(double zoom = 17);
     MapDataUrlImage(const MapDataUrlImage& orig);
     virtual ~MapDataUrlImage();
     bool draw(QImage* myImage);
@@ -76,6 +76,7 @@ public slots:
     void isData(QNetworkReply* r);
 
 private:
+    double zoom;
     QVector<MapImage> images;
     int requestCout;
     int totalRequestCout;

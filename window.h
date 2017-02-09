@@ -55,6 +55,7 @@ public slots:
     void viewInteractives(bool show);
     void viewTrackDbLines(bool show);
     void viewTsectionLines(bool show);
+    void viewTrackItems(bool show);
     void viewPointer3d(bool show);
     void viewMarkers(bool show);
     void viewSnapable(bool show);

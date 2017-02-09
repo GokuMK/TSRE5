@@ -466,7 +466,7 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
             }
             //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
             drawPositions[i] = new float[8];
-            bool ok = tdb->getDrawPositionOnTrNode(drawPositions[i], id, tdb->trackItems[this->signalUnit[i].itemId]->trItemSData1);
+            bool ok = tdb->getDrawPositionOnTrNode(drawPositions[i], id, tdb->trackItems[this->signalUnit[i].itemId]->getTrackPosition());
             if(!ok){
                 qDebug() << "signal fail tdb";
                 this->trLoaded = -1;

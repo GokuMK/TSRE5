@@ -173,6 +173,25 @@ void StaticObj::snapped(int side){
     }
 }
 
+bool StaticObj::hasLinePoints(){
+
+    return true;
+}
+
+void StaticObj::getLinePoints(float *&punkty){
+    float *beg = punkty;
+    if(shapePointer != NULL)
+        shapePointer->getFloorBorderLinePoints(punkty);
+    int len = punkty - beg;
+    for(int i = 0; i < len; i+=3){
+        beg[i+0] = -beg[i+0];
+        beg[i+2] = beg[i+2];
+        Vec3::transformMat4(&beg[i], &beg[i], matrix);
+        qDebug() << beg[i] << beg[i+1] << beg[i+2];
+    }
+    return;
+}
+
 void StaticObj::loadSnapablePoints() {
     if(snapable == true)
         return;

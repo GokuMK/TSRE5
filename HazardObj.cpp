@@ -205,7 +205,7 @@ void HazardObj::renderTritems(GLUU* gluu, int selectionColor){
         }
                 //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
         drawPosition = new float[7];
-        bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
+        bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[1]]->getTrackPosition());
         if(!ok){
             this->loaded = false;
             return;

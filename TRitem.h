@@ -40,6 +40,7 @@ public:
     static TRitem* newLevelCrItem(int trItemId, float metry);
     static TRitem* newSoundRegionItem(int trItemId, float metry);
     static TRitem* newHazardItem(int trItemId, float metry);
+    static TRitem* newCrossOverItem(int trItemId, float metry, int trItemId2, int shapeIdx);
     TRitem();
     TRitem(int id);
     TRitem(const TRitem& o);
@@ -48,7 +49,6 @@ public:
     QString type;
     
     unsigned int trItemId;
-    float trItemSData1;
     int trItemSData2;
     float *trItemPData = NULL;
     float *trItemRData = NULL;
@@ -103,8 +103,14 @@ public:
     void linkSignal(int trackId, int dist);
     void enableSignalSubObjFlag(int i);
     void disableSignalSubObjFlag(int i);
+    void refresh();
+    float getTrackPosition();
+    void setTrackPosition(float val);
+    void trackPositionAdd(float val);
     void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);
 private:
+    float trItemSData1;
+    
     float* drawPosition = NULL;
     int speedpostTrItemDataLength = 0;
     static TrackItemObj* pointer3d; 

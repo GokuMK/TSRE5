@@ -189,6 +189,10 @@ Window::Window() {
     QAction* viewTsectionLines = GuiFunct::newMenuCheckAction(tr("&Tsection Lines"), this); 
     viewMenu->addAction(viewTsectionLines);
     QObject::connect(viewTsectionLines, SIGNAL(triggered(bool)), this, SLOT(viewTsectionLines(bool)));
+    QAction* viewTrackItems = GuiFunct::newMenuCheckAction(tr("&TrackDB Items"), this, Game::renderTrItems); 
+    viewMenu->addAction(viewTrackItems);
+    QObject::connect(viewTrackItems, SIGNAL(triggered(bool)), this, SLOT(viewTrackItems(bool)));
+    
     QAction* viewPointer3d = GuiFunct::newMenuCheckAction(tr("&3D Pointer"), this); 
     viewMenu->addAction(viewPointer3d);
     QObject::connect(viewPointer3d, SIGNAL(triggered(bool)), this, SLOT(viewPointer3d(bool)));
@@ -576,6 +580,11 @@ void Window::viewTrackDbLines(bool show){
 void Window::viewTsectionLines(bool show){
     Game::viewTsectionLines = show;
 }
+
+void Window::viewTrackItems(bool show){
+    Game::renderTrItems = show;
+}
+
 void Window::viewPointer3d(bool show){
     Game::viewPointer3d = show;
 }

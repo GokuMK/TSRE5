@@ -190,14 +190,14 @@ void PlatformObj::translate(float px, float py, float pz){
     if(trit == NULL) 
         return;
     if(pz < 0){
-        trit->trItemSData1 -= 1;
-        if(trit->trItemSData1 < 0)
-            trit->trItemSData1 = 0;
+        trit->trackPositionAdd(-1);
+        if(trit->getTrackPosition() < 0)
+            trit->setTrackPosition(0);
         tdb->updateTrItemRData(trit);
     } else if(pz > 0){
-        trit->trItemSData1 += 1;
-        if(trit->trItemSData1 > dlugosc)
-            trit->trItemSData1 = dlugosc;
+        trit->trackPositionAdd(1);
+        if(trit->getTrackPosition() > dlugosc)
+            trit->setTrackPosition(dlugosc);
         tdb->updateTrItemRData(trit);
     }
     if(this->selectionValue == 1){
@@ -341,7 +341,7 @@ float PlatformObj::getLength(){
     TRitem* p1 = tdb->trackItems[this->trItemId[1]];
     TRitem* p2 = tdb->trackItems[this->trItemId[3]];
     if(p1 == NULL || p2 == NULL) return 0;
-    return fabs(p2->trItemSData1 - p1->trItemSData1);
+    return fabs(p2->getTrackPosition() - p1->getTrackPosition());
 }
 
 bool PlatformObj::getSideLeft(){
@@ -448,7 +448,7 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
         //qDebug() << "id: "<< this->trItemId[1] << " "<< id;
         //qDebug() << "d: "<< tdb->trackItems[this->trItemId[1]]->trItemSData1;
         drawPositionB = new float[7];
-        bool ok = tdb->getDrawPositionOnTrNode(drawPositionB, id, tdb->trackItems[this->trItemId[1]]->trItemSData1);
+        bool ok = tdb->getDrawPositionOnTrNode(drawPositionB, id, tdb->trackItems[this->trItemId[1]]->getTrackPosition());
         if(!ok){
             qDebug() << "platform fail tdb "<<id;
             this->loaded = false;
@@ -468,7 +468,7 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
             return;
         }
         drawPositionE = new float[7];
-        bool ok = tdb->getDrawPositionOnTrNode(drawPositionE, id, tdb->trackItems[this->trItemId[3]]->trItemSData1);
+        bool ok = tdb->getDrawPositionOnTrNode(drawPositionE, id, tdb->trackItems[this->trItemId[3]]->getTrackPosition());
         if(!ok){
             qDebug() << "platform fail tdb "<<id;
             this->loaded = false;
@@ -553,8 +553,8 @@ void PlatformObj::makelineShape(){
         int id = tdb->findTrItemNodeId(this->trItemId[1]);
         tdb->getVectorSectionLine(ptr, length, x, y, id);
         
-        float beg = tdb->trackItems[this->trItemId[1]]->trItemSData1;
-        float end = tdb->trackItems[this->trItemId[3]]->trItemSData1;
+        float beg = tdb->trackItems[this->trItemId[1]]->getTrackPosition();
+        float end = tdb->trackItems[this->trItemId[3]]->getTrackPosition();
         float posB[3], posE[3];
         int side = 0;
         if(end < beg){

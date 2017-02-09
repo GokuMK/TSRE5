@@ -98,6 +98,17 @@ TRitem* TRitem::newHazardItem(int trItemId, float metry) {
     return trit;
 }
 
+TRitem* TRitem::newCrossOverItem(int trItemId, float metry, int trItemId2, int shapeIdx){
+    TRitem* trit = new TRitem(trItemId);
+    if (!trit->init("crossoveritem")) return NULL;
+    trit->trItemSData1 = metry;
+    trit->trItemSData2 = 2;
+    trit->crossoverTrItemData = new int[2];
+    trit->crossoverTrItemData[0] = trItemId2;
+    trit->crossoverTrItemData[1] = shapeIdx;
+    return trit;
+}
+
 TRitem* TRitem::newSignalItem(int trItemId, float metry, int direction, unsigned int flags, QString type) {
     TRitem* trit = new TRitem(trItemId);
     if (!trit->init("signalitem")) return NULL;
@@ -660,6 +671,25 @@ void TRitem::addToTrackPos(float d) {
 
 void TRitem::flipTrackPos(float d) {
     this->trItemSData1 = d - this->trItemSData1;
+}
+
+float TRitem::getTrackPosition(){
+    return trItemSData1;
+}
+
+void TRitem::setTrackPosition(float val){
+    trItemSData1 = val;
+    refresh();
+}
+
+void TRitem::trackPositionAdd(float val){
+    trItemSData1 += val;
+    refresh();
+}
+
+void TRitem::refresh(){
+    delete[] drawPosition;
+    drawPosition = NULL;
 }
 
 void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot) {

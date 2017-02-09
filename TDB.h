@@ -99,6 +99,7 @@ public:
     bool getDrawPositionOnTrNode(float* out, int id, float metry);
     int findTrItemNodeId(int id);
     int findNearestPositionOnTDB(float* posT, float* pos, float* q = NULL, float* tpos = NULL);
+    int findNearestPositionsOnTDB(float* posT, float * pos, std::vector<TDB::IntersectionPoint> &points, float maxDistance = 10.0);
     void fillNearestSquaredDistanceToTDBXZ(float* posT, std::vector<Vector4f> &points, float* bbox = NULL);
     void deleteTrItem(int trid);
     void deleteTree(int x, int y, int UiD);
@@ -112,6 +113,7 @@ public:
     void enableSignalSubObj(QString filename, SignalObj::SignalUnit &unit, int i, int tritemid);
     void newLevelCrObject(int* &itemId, int trNodeId, float metry, int type);
     void newHazardObject(int* &itemId, int trNodeId, float metry, int type);
+    void newCrossOverObject(int id1, float m1, int id2, float m2, int shapeIdx);
     bool getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos);
     bool getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos);
     void newSpeedPostObject(int speedPostType, QVector<int> & itemId, int trNodeId, float metry, int type);
@@ -138,6 +140,7 @@ private:
     int iobjHash;
     bool isInitSectLines = false;
     bool isInitLines = false;
+    bool isInitTrItemsDraw = false;
     bool road = false;
     
     float *collisionLineBuffer = NULL;

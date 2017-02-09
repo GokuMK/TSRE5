@@ -543,7 +543,7 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
             
             drawPosition = new float[8];
 
-            bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
+            bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[i*2+1]]->getTrackPosition());
             if(!ok){
                 this->loaded = false;
                 return;

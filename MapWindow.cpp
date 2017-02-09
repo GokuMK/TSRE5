@@ -27,12 +27,14 @@ int MapWindow::isAlpha = 0;
 
 MapWindow::MapWindow() : QDialog() {
 
-    mapServicesCombo.setMaximumWidth(100);
+    mapServicesCombo.setMaximumWidth(130);
     mapServicesCombo.setStyleSheet("combobox-popup: 0;");
     mapServicesCombo.addItem("OSM Vector", 0);
     mapServices.push_back(new MapDataOSM());
-    mapServicesCombo.addItem("Raster Images", 1);
-    mapServices.push_back(new MapDataUrlImage());
+    mapServicesCombo.addItem("Raster Images Z17", 1);
+    mapServices.push_back(new MapDataUrlImage(17));
+    mapServicesCombo.addItem("Raster Images Z18", 2);
+    mapServices.push_back(new MapDataUrlImage(18));
     
     loadButton = new QPushButton("Load", this);
     QPushButton *saveButton = new QPushButton("Save to disk", this);
@@ -171,10 +173,11 @@ void MapWindow::reload(){
     if(dane->tileX != this->tileX) return;
     if(dane->tileZ != -this->tileZ) return;
     QImage* myImage = NULL;
+    int res = Game::mapImageResolution;
     if(MapWindow::isAlpha > 0)
-        myImage = new QImage(4096, 4096, QImage::Format_RGBA8888);
+        myImage = new QImage(res, res, QImage::Format_RGBA8888);
     else
-        myImage = new QImage(4096, 4096, QImage::Format_RGB888);
+        myImage = new QImage(res, res, QImage::Format_RGB888);
 
     if(!dane->draw(myImage)){
         delete myImage;

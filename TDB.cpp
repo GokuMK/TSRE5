@@ -279,6 +279,8 @@ void TDB::trpin(TRnode *tr, FileBuffer* bufor) {
 
 int TDB::getNewTRitemId(){
     for (int i = 0; i < this->iTRitems; i++) {
+        if(this->trackItems[i] == NULL)
+            continue;
         if(this->trackItems[i]->type == "emptyitem"){
             return i;
         }
@@ -881,7 +883,7 @@ int TDB::splitVectorSection(int id, int j){
         for(int i = 0; i < vect->iTri; i++){
             trit = this->trackItems[vect->trItemRef[i]];
             if(trit == NULL) continue;
-            if(trit->trItemSData1 < vectDlugosc) ivecItems++;
+            if(trit->getTrackPosition() < vectDlugosc) ivecItems++;
             else inewItems++;
         }
         int* vecItems = new int[ivecItems];
@@ -893,10 +895,10 @@ int TDB::splitVectorSection(int id, int j){
             trit = this->trackItems[vect->trItemRef[i]];
             if(trit == NULL) 
                 continue;
-            if(trit->trItemSData1 < vectDlugosc) 
+            if(trit->getTrackPosition() < vectDlugosc) 
                 vecItems[ivecItems++] = vect->trItemRef[i];
             else {
-                trit->trItemSData1 -= vectDlugosc;
+                trit->trackPositionAdd(-vectDlugosc);
                 newItems[inewItems++] = vect->trItemRef[i];
             }
         }
@@ -1090,7 +1092,7 @@ bool TDB::deleteFromVectorSection(int id, int j){
                 if(trit == NULL) 
                     continue;
                 trit->addToTrackPos(-sectDlugosc);
-                if(trit->trItemSData1 < 0){
+                if(trit->getTrackPosition() < 0){
                     qDebug() << "delete item? - before section";
                     // item delete
                     qDebug() << "item delete " << trit->trItemId;
@@ -1138,7 +1140,7 @@ bool TDB::deleteFromVectorSection(int id, int j){
                 trit = this->trackItems[vect->trItemRef[i]];
                 if(trit == NULL) 
                     continue;
-                if(trit->trItemSData1 > vectDlugosc){
+                if(trit->getTrackPosition() > vectDlugosc){
                     qDebug() << "delete item? - behind section";
                     // item delete
                     qDebug() << "item delete " << trit->trItemId;
@@ -1454,27 +1456,18 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     qDebug() << shp->filename;
     float pp[3];
     float qee[3];
-    float startPos[3];
-    float objPosOffset[3];
     int endp;
-    // if (append > 0) {
-        /*     endp = appendTrack(append, r->value, shp->path[0].sect[0], uid);
-     } else {
-     */
-    //p[0] += shp->path[0].pos[0];
-    //p[1] += shp->path[0].pos[1];
-    //p[2] += shp->path[0].pos[2];
-
+    Vector3f aa;
     int start;
     int ends[2];
+    
     ////////////////////////////////
+    
     int *endsNumbres = new int[shp->numpaths*2];
     std::unordered_map<int, int> endsIds;
     std::unordered_map<int, int> isJunction;
     std::unordered_map<int, int> junctionId;
     int nextNumber = 0;
-    //int junctions[6];
-    //int junctionCount = 0;
     
     for (int i = 0; i < shp->numpaths; i++) {
         int posIdx = (float)shp->path[i].pos[0]*100000 + (float)shp->path[i].pos[1]*1000 + (float)shp->path[i].pos[2]*10;
@@ -1493,53 +1486,17 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
         endsNumbres[i*2+1] = nextNumber++;
         //qDebug() << "ends: "<< ends[0] <<" "<<ends[1];
     }
-    //////
     
-    //while(defaultEnd >= shp->numpaths*2){
-    //    defaultEnd -= shp->numpaths*2;
-    //}
+    ////////////////////////////////
     
-    //qDebug() << "defaultEnd" << defaultEnd;
-    
-    int startEnd = 0;//defaultEnd/2;
-    //int endend = defaultEnd - (startEnd)*2;
-    
-    Vector3f aa;
-    Vector3f bb;
-    Vector3f* aa2;
-    
-    /*if(endend == 1){
-        float angle = 0;
-        float dlugosc = 0;
-        for (int i = 0; i < shp->path[startEnd].n; i++) {
-            dlugosc = this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDlugosc();
-            //qDebug() << dlugosc;
-            aa2 = this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(dlugosc);
-            aa2->rotateY(angle, 0);
-            //qDebug() << "aa " << aa2->x << " "<<aa2->z;
-            aa.x+=aa2->x;
-            aa.z+=aa2->z;
-            angle += this->tsection->sekcja[shp->path[startEnd].sect[i]]->getAngle();
-        }
-        aa.rotateY(-qe[1], 0);
-        startPos[0] = aa.x;
-        startPos[2] = aa.z;
-        qe[1] -= angle - M_PI;
-        
-    } else {*/
-        startPos[0] = aa.x;
-        startPos[2] = aa.z;
-    //}
-    //int append = findNearestNode(x, z, p, (float*) &qe);
-
     for (int i = 0; i < shp->numpaths; i++) {
         aa.set(shp->path[i].pos[0], shp->path[i].pos[1], shp->path[i].pos[2]);
         //aa.rotateY(-qe[1] + shp->path[i].rotDeg*M_PI/180 - shp->path[startEnd].rotDeg*M_PI/180, 0);
         aa.rotateY(-qe[1], 0);
 
-        pp[0] = p[0] + aa.x + startPos[0];
+        pp[0] = p[0] + aa.x;
         pp[1] = p[1] + shp->path[i].pos[1];
-        pp[2] = p[2] - aa.z - startPos[2];
+        pp[2] = p[2] - aa.z;
         qee[0] = qe[0];
         qee[1] = qe[1] + shp->path[i].rotDeg*M_PI/180;
         qee[2] = qe[2];
@@ -1580,25 +1537,29 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
          joinTracks(endp);
     }
     
-    /*bb.x = shp->path[0].pos[0];
-    bb.z = shp->path[0].pos[2];
-    bb.rotateY(-qe[1], 0);
-    aa.set(shp->path[0].pos[0] - shp->path[startEnd].pos[0], shp->path[0].pos[1], shp->path[0].pos[2] - shp->path[startEnd].pos[2]);
-    aa.rotateY(-qe[1] + shp->path[startEnd].rotDeg*M_PI/180, 0);
-    p[0] = p[0] + aa.x + startPos[0];
-    p[1] = p[1] + shp->path[0].pos[1];
-    p[2] = p[2] - aa.z - startPos[2];
-    p[0] -= bb.x;
-    p[2] += bb.z;
+    ////////////////////////////////
     
-    q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
-    //qe[1] += shp->path[startEnd].rotDeg*M_PI/180;
-    //qe[2] = -qe[2];
-    //float rot[3];
-    //rot[0] = M_PI; rot[1] = qe[1]; rot[2] = qe[2];
-    //Quat::fromRotationXYZ(q, rot);
-    Quat::rotateY(q, q, -qe[1] + shp->path[startEnd].rotDeg*M_PI/180);
-    Quat::rotateX(q, q, -qe[0]);*/
+    if(shp->crossovershape){
+        std::vector<TDB::IntersectionPoint> cPoints;
+        float posT[2];
+        Vec2::set(posT, x, z);
+        Vector3f cPos;
+        for(int i = 0; i < shp->xoverpts; i++){
+            cPos.set((float*)&shp->xoverpt[i*3]);
+            cPos.rotateY(-qe[1], 0);
+            cPos.z = - cPos.z;
+            cPos.add(p);
+            
+            this->findNearestPositionsOnTDB(posT, (float*)&cPos, cPoints, 0.5);
+            qDebug() << "crossover";
+            qDebug() << cPos.x<<cPos.y<<cPos.z;
+            if(cPoints.size() != 2)
+                continue;
+            //qDebug() << cPoints.size();
+            qDebug() << cPoints[0].idx << cPoints[0].m << cPoints[1].idx << cPoints[1].m;
+            this->newCrossOverObject(cPoints[0].idx, cPoints[0].m, cPoints[1].idx, cPoints[1].m, sectionIdx);
+        }
+    }
     
     refresh();
     return true;
@@ -1671,6 +1632,7 @@ bool TDB::ifTrackExist(int x, int y, int UiD){
 void TDB::refresh() {
     isInitSectLines = false;
     isInitLines = false;
+    isInitTrItemsDraw = false;
     collisionLineHash = 0;
 }
 
@@ -2076,9 +2038,12 @@ void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot) {
         //console.log(obj.type);
         TRitem* obj = (TRitem*) it->second;
         if(obj != NULL){
+            if(!isInitTrItemsDraw)
+                obj->refresh();
             obj->render(this, gluu, playerT, playerRot);
         }
     }
+    isInitTrItemsDraw = true;
 }
 
 int TDB::getLineBufferSize(int idx, int pointSize, int offset, int step) {
@@ -2211,6 +2176,38 @@ int TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpo
         Quat::rotateX(q, q, -best[4]);
     }
     
+    return minDistance;
+}
+
+int TDB::findNearestPositionsOnTDB(float* posT, float * pos, std::vector<TDB::IntersectionPoint> &points, float maxDistance){
+    float *lineBuffer;
+    int length = 0;
+    getLines(lineBuffer, length, posT);
+
+    float dist = 0;
+    float intersectionPoint[3];
+    float minDistance = 99999;
+    
+    for(int i = 0; i < length*12; i+=12){
+        dist = Intersections::pointSegmentDistance(lineBuffer + i, lineBuffer + i+6, pos, (float*)&intersectionPoint);
+        if(dist < maxDistance){
+            points.push_back(TDB::IntersectionPoint());
+            points.back().distance = dist;
+            points.back().idx = lineBuffer[i+3];
+            points.back().m = this->getVectorSectionLengthToIdx(lineBuffer[i+3], lineBuffer[i+4]);
+            
+            float dist1 = Vec3::distance(lineBuffer + i, lineBuffer + i+6);
+            float dist2 = Vec3::distance(lineBuffer + i, intersectionPoint);
+            dist1 = dist2/dist1;
+            points.back().m += lineBuffer[i+5] + (lineBuffer[i+11] - lineBuffer[i+5])*dist1;
+        }
+        if(dist < minDistance)
+            minDistance = dist;
+    }
+
+    if(minDistance >= 99999)
+        return -1;
+
     return minDistance;
 }
 
@@ -2395,7 +2392,7 @@ void TDB::getVectorSectionPoints(int x, int y, float* pos, float*& ptr){
 
 void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
     y = -y;
-    qDebug() << "aaa";
+    //qDebug() << "aaa";
         for (int j = 1; j <= iTRnodes; j++) {
             TRnode* n = trackNodes[j];
             if (n == NULL) continue;
@@ -2444,7 +2441,7 @@ void TDB::updateTrItemRData(TRitem* tr){
     float trPosition[7];
     int id = findTrItemNodeId(tr->trItemId);
     if(id < 1) return;
-    getDrawPositionOnTrNode((float*)&trPosition, id, tr->trItemSData1);
+    getDrawPositionOnTrNode((float*)&trPosition, id, tr->getTrackPosition());
     tr->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
 }
 
@@ -2601,7 +2598,7 @@ void TDB::enableSignalSubObj(QString filename, SignalObj::SignalUnit &unit, int 
         if(angle > 2*M_PI)
             angle -= 2*M_PI;
     }
-    this->trackItems[newTRitemId] = TRitem::newSignalItem(newTRitemId, trit->trItemSData1, direction, flags, sShape->subObj[i].sigSubSType);
+    this->trackItems[newTRitemId] = TRitem::newSignalItem(newTRitemId, trit->getTrackPosition(), direction, flags, sShape->subObj[i].sigSubSType);
     this->trackItems[newTRitemId]->setTrItemRData((float*)(trit->trItemRData+3), (float*)trit->trItemRData);
     this->trackItems[newTRitemId]->setSignalRot(angle);
     unit.tdbId = 0;
@@ -2685,6 +2682,27 @@ void TDB::newHazardObject(int * &itemId, int trNodeId, float metry, int type){
     itemId[1] = newTRitemId;
     
     this->addItemToTrNode(trNodeId, itemId[1]);
+}
+
+void TDB::newCrossOverObject(int id1, float m1, int id2, float m2, int shapeIdx){
+    int newTRitemId1 = getNewTRitemId();
+    trackItems[newTRitemId1] = NULL;
+    int newTRitemId2 = getNewTRitemId();
+    float trPosition[7];
+    
+    trackItems[newTRitemId1] = TRitem::newCrossOverItem(newTRitemId1, m1, newTRitemId2, shapeIdx);
+    
+    getDrawPositionOnTrNode((float*)&trPosition, id1, m1);
+    //qDebug() << trPosition[0]<< trPosition[1]<< trPosition[2];
+    trackItems[newTRitemId1]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    addItemToTrNode(id1, newTRitemId1);
+    
+    trackItems[newTRitemId2] = TRitem::newCrossOverItem(newTRitemId2, m2, newTRitemId1, shapeIdx);
+    getDrawPositionOnTrNode((float*)&trPosition, id2, m2);
+    //qDebug() << trPosition[0]<< trPosition[1]<< trPosition[2];
+    trackItems[newTRitemId2]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    addItemToTrNode(id2, newTRitemId2);
+    
 }
 
 void TDB::deleteTrItem(int trid){

@@ -34,6 +34,8 @@ public:
     void removeCollisions();
     void snapped(int side);
     void insertSnapablePoints(QVector<float>& points);
+    bool hasLinePoints();
+    void getLinePoints(float *&punkty);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     void loadSnapablePoints();

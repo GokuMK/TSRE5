@@ -307,7 +307,7 @@ void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
             }
             //qDebug() << "id: "<< this->trItemId[i*2+1] << " "<< id;
             drawPosition = new float[7];
-            bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[i*2+1]]->trItemSData1);
+            bool ok = tdb->getDrawPositionOnTrNode(drawPosition, id, tdb->trackItems[this->trItemId[i*2+1]]->getTrackPosition());
             if(!ok){
                 this->loaded = false;
                 return;
@@ -536,14 +536,14 @@ void LevelCrObj::translate(float px, float py, float pz){
     if(trit == NULL) 
         return;
     if(pz < 0){
-        trit->trItemSData1 -= 0.5;
-        if(trit->trItemSData1 < 0)
-            trit->trItemSData1 = 0;
+        trit->trackPositionAdd(-0.5);
+        if(trit->getTrackPosition() < 0)
+            trit->setTrackPosition(0);
         tdb->updateTrItemRData(trit);
     } else if(pz > 0){
-        trit->trItemSData1 += 0.5;
-        if(trit->trItemSData1 > dlugosc)
-            trit->trItemSData1 = dlugosc;
+        trit->trackPositionAdd(0.5);
+        if(trit->getTrackPosition() > dlugosc)
+            trit->setTrackPosition(dlugosc);
         tdb->updateTrItemRData(trit);
     }
     drawPositions.clear();

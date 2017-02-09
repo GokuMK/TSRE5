@@ -21,11 +21,13 @@ public:
     Vector3f(float x, float y, float z);
     ~Vector3f();
     void set(float x, float y, float z);
+    void set(float *pos);
     void rotateY(float a, float r);
     void rotateX(float a, float r);
     void rotate(Vector3f o);
     void setFromAdd(Vector3f v1, Vector3f v2);
     void add(Vector3f v);
+    void add(float *pos);
     void setFromSub(Vector3f v1, Vector3f v2);
     void setFromCross(Vector3f v1, Vector3f v2) ;
     void div(float d);

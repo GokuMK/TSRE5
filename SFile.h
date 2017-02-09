@@ -149,6 +149,7 @@ public:
     void render();
     void getSize();
     bool getBoxPoints(QVector<float> &points);
+    void getFloorBorderLinePoints(float *&punkty);
     bool isSnapable();
     void addSnapablePoints(QVector<float> &out);
 private:

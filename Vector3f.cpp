@@ -36,6 +36,10 @@ void Vector3f::set(float x, float y, float z) {
     this->x = x; this->y = y; this->z = z;
 }
 
+void Vector3f::set(float *pos) {
+    this->x = pos[0]; this->y = pos[1]; this->z = pos[2];
+}
+
 /*float* Vector3f::toFloat() {
     return { this->x, this->y, this->z };
 }*/
@@ -45,6 +49,10 @@ void Vector3f::setFromAdd(Vector3f v1, Vector3f v2) {
 
 void Vector3f::add(Vector3f v) {
     this->x += v.x; this->y += v.y; this->z += v.z;
+}
+
+void Vector3f::add(float *pos) {
+    this->x += pos[0]; this->y += pos[1]; this->z += pos[2];
 }
 
 void Vector3f::setFromSub(Vector3f v1, Vector3f v2) {
