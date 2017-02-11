@@ -20,8 +20,45 @@
 #include "GLUU.h"
 #include "OglObj.h"
 #include "GLMatrix.h"
+#include "TDB.h"
+#include "Ruch.h"
 
 Eng::Eng() {
+    
+}
+
+Eng::Eng(Eng *o) {
+    
+    coupling.append(o->coupling);
+    filePaths.append(o->filePaths);
+    shape = o->shape;
+    freightanimShape.append(o->freightanimShape);
+    
+    name = o->name;
+    path = o->path;
+    pathid = o->pathid;
+    orpathid = o->orpathid;
+    orpath = o->orpath;
+
+    engName = o->engName;
+    displayName = o->displayName;
+    engType = o->engType;
+    typeHash = o->typeHash;
+    type = o->type;
+    brakeSystemType = o->brakeSystemType;
+    wagonTypeId = o->wagonTypeId;
+    mass = o->mass;
+    sizex = o->sizex;
+    sizey = o->sizey;
+    sizez = o->sizez;
+    maxSpeed = o->maxSpeed;
+    maxForce = o->maxForce;
+    maxPower = o->maxPower;
+    maxCurrent = o->maxCurrent;
+    flip = o->flip;
+    loaded = o->loaded;
+    kierunek = o->kierunek;
+    ref = o->ref;
 }
 
 Eng::~Eng() {
@@ -137,7 +174,7 @@ void Eng::load(){
                     continue;
                 }
                 if (sh == ("freightanim")) {
-                    freightanimShape.emplace_back();
+                    freightanimShape.push_back(EngShape());
                     freightanimShape.back().name = ParserX::GetString(data);
                     //freightanimShape.back().id = -2;
                     //qDebug() << "=====znaleziono s2 " << path << sNames[1];
@@ -211,7 +248,7 @@ void Eng::load(){
                             continue;
                         }
                         if (sh == ("freightanimstatic")) {
-                            freightanimShape.emplace_back();
+                            freightanimShape.push_back(EngShape());
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 //qDebug() << "orts " << sh;
                                 if (sh == ("subtype")) {
@@ -529,4 +566,117 @@ void Eng::render(int aktwx, int aktwz, int selectionColor) {
 
      //gluu.mvPopMatrix();
      //
+}
+
+void Eng::renderOnTrack(GLUU* gluu, float* playerT) {
+    if (loaded != 1) return;
+
+    long long int shapeLibId = reinterpret_cast<long long int>(Game::currentShapeLib);
+    if(!shape.id.keys().contains(shapeLibId)){
+        if(shape.name.length() > 1)
+            shape.id[shapeLibId] = Game::currentShapeLib->addShape(path +"/"+ shape.name, path);
+        else 
+            shape.id[shapeLibId] = -1;
+    }
+
+    for(int i = 0; i < freightanimShape.size(); i++){
+        if(!freightanimShape[i].id.keys().contains(shapeLibId)){
+            if(freightanimShape[i].name.length() > 1)
+                freightanimShape[i].id[shapeLibId] = Game::currentShapeLib->addShape(path +"/"+ freightanimShape[i].name, path);
+            else 
+                freightanimShape[i].id[shapeLibId] = -1;
+        }
+    }
+    
+    if (ruchPoint == NULL) {
+        ruchPoint = new OglObj();
+        float *punkty = new float[3 * 2];
+        int ptr = 0;
+        punkty[ptr++] = 0;
+        punkty[ptr++] = 0;
+        punkty[ptr++] = 0;
+        punkty[ptr++] = 0;
+        punkty[ptr++] = 30;
+        punkty[ptr++] = 0;
+        ruchPoint->setMaterial(0.0, 1.0, 0.0);
+        ruchPoint->init(punkty, ptr, ruchPoint->V, GL_LINES);
+        delete[] punkty;
+    }
+    
+    float *drawPosition1 = ruch1->getCurrentPosition();
+    float *drawPosition2 = ruch2->getCurrentPosition();
+    /*gluu->mvPushMatrix();
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition2[0] + 2048 * (drawPosition2[5] - playerT[0]), drawPosition2[1], -drawPosition2[2] + 2048 * (-drawPosition2[6] - playerT[1]));
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    ruchPoint->render();
+    gluu->mvPopMatrix();
+    gluu->mvPushMatrix();
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition1[0] + 2048 * (drawPosition1[5] - playerT[0]), drawPosition1[1], -drawPosition1[2] + 2048 * (-drawPosition1[6] - playerT[1]));
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    ruchPoint->render();
+    gluu->mvPopMatrix();*/
+
+    float pos[5];
+    pos[3] = drawPosition1[5];
+    pos[4] = drawPosition1[6];
+    drawPosition2[0] += 2048*(drawPosition2[5]-drawPosition1[5]);
+    drawPosition2[2] += 2048*(drawPosition2[6]-drawPosition1[6]);
+    Vec3::add(pos, drawPosition1, drawPosition2);
+    Vec3::scale(pos, pos, 0.5);
+    float dlugosc = Vec3::distance(drawPosition1, drawPosition2);
+    
+    int someval = (((drawPosition2[2]-drawPosition1[2])+0.00001f)/fabs((drawPosition2[2]-drawPosition1[2])+0.00001f));
+    float rotY = (someval+1)*(M_PI/2)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
+    float rotX = -(float)(atan((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
+            
+    gluu->enableTextures();
+        
+    gluu->mvPushMatrix();
+ 
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, pos[0] + 2048 * (pos[3] - playerT[0]), pos[1]+0.25, -pos[2] + 2048 * (-pos[4] - playerT[1]));
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rotY);
+    Mat4::rotateX(gluu->mvMatrix, gluu->mvMatrix, -rotX);
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+
+    if(shape.id[shapeLibId] >= 0) 
+        Game::currentShapeLib->shape[shape.id[shapeLibId]]->render();
+    
+    
+    for(int i = 0; i < freightanimShape.size(); i++){
+        if(freightanimShape[i].id[shapeLibId] >= 0) {
+            gluu->mvPushMatrix();
+            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, freightanimShape[i].x, freightanimShape[i].y, -freightanimShape[i].z);
+            gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+            Game::currentShapeLib->shape[freightanimShape[i].id[shapeLibId]]->render();
+            gluu->mvPopMatrix();
+        }
+    }
+    gluu->mvPopMatrix();
+    
+}
+
+void Eng::move(float m){
+    if(ruch1 != NULL)
+        ruch1->next(m);
+    if(ruch2 != NULL)
+        ruch2->next(m);
+}
+
+void Eng::initOnTrack(float *tpos, int direction){
+    TDB* tdb = Game::trackDB;
+    
+    ruch1 = new Ruch();
+    ruch1->set(tpos[0], tpos[1], direction);
+    ruch2 = new Ruch();
+    ruch2->set(tpos[0], tpos[1], direction);
+    ruch2->next(getFullWidth());
+    //ruch1->getCurrentPosition();
+    
+    //qDebug() << drawPosition[0] << drawPosition[1] << drawPosition[2];
+    //qDebug() << drawPosition[5] << drawPosition[6];
+
+    //    qDebug() << "fail";
+    //    this->loaded = -1;
+    this->loaded = 1;
+    qDebug() << "ok";
 }

@@ -13,17 +13,18 @@
 
 #include <QString>
 #include <unordered_map>
+#include <QVector>
 
 class Eng;
 class TextObj;
 class FileBuffer;
 class QTextStream;
+class GLUU;
 
 class Consist {
 public:
     static std::unordered_map<int, TextObj*> txtNumbers;
     static int lastTxtNumbersColor;
-    int lastTxtColor;
     static TextObj * txtEngineE;
     static TextObj * txtEngineD;
     static TextObj * txtEngineS;
@@ -34,6 +35,7 @@ public:
         bool flip = false;
         int uid = 0;
         int eng = -1;
+        Eng *engPointer = NULL;
         float pos = 0;
         float conLength = 0;
         int type = 0;
@@ -42,8 +44,9 @@ public:
         QString ename;
     };
     Consist();
-    Consist(Consist * con);
+    Consist(Consist * con, bool fullCopy = true);
     virtual ~Consist();
+    int lastTxtColor;
     QString name;
     QString path;
     QString pathid;
@@ -58,6 +61,7 @@ public:
     float mass = 0;
     float emass = 0;
     int loaded = -1;
+    bool isOnTrack = false;
     bool kierunek = false;
     int ref = 0;
     int posInit = false;
@@ -87,6 +91,8 @@ public:
     void reverse();
     void setTextColor(float *bgColor);
     void setDurability(float val);
+    void initOnTrack(float *posTXZ, int direction);
+    void renderOnTrack(GLUU* gluu, float * playerT);
     void render(int selectionColor = 0, bool renderText = false);
     void render(int aktwx, int aktwz, int selectionColor, bool renderText);
     void initPos();

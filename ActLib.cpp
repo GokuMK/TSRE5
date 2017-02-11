@@ -70,3 +70,27 @@ int ActLib::loadAll(QString gameRoot){
     qDebug() << "loaded";
     return 0;
 }
+
+void ActLib::getUnsavedInfo(std::vector<QString>& items){
+    Activity * e;
+    for (int i = 0; i < ActLib::jestact; i++){
+        e = ActLib::act[i];
+        if(e == NULL) continue;
+        if(e->loaded != 1) continue;
+        if(e->isUnSaved()){
+            items.push_back("[A]" + e->name );
+        }
+    }
+}
+
+void ActLib::save(){
+    Activity * e;
+    for (int i = 0; i < ActLib::jestact; i++){
+        e = ActLib::act[i];
+        if(e == NULL) continue;
+        if(e->loaded != 1) continue;
+        if(e->isUnSaved()){
+            e->save();
+        }
+    }
+}

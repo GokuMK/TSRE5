@@ -244,7 +244,8 @@ void ObjTools::routeLoaded(Route* a){
     hash.sort(Qt::CaseInsensitive);
     hash.removeDuplicates();
     refClass.addItems(hash);
-    refClass.setMaxVisibleItems(25);
+    refClass.setMaxVisibleItems(35);
+    refClass.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     //trackList.clear();
     /*TrackShape * track;
     for (auto it = route->trackDB->tsection->shape.begin(); it != route->trackDB->tsection->shape.end(); ++it ){
@@ -303,11 +304,13 @@ void ObjTools::routeLoaded(Route* a){
     hash.sort(Qt::CaseInsensitive);
     hash.removeDuplicates();
     refTrack.addItems(hash);
-    refTrack.setMaxVisibleItems(25);
+    refTrack.setMaxVisibleItems(35);
+    refTrack.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     hash2.sort(Qt::CaseInsensitive);
     hash2.removeDuplicates();
     refRoad.addItems(hash2);
-    refRoad.setMaxVisibleItems(25);
+    refRoad.setMaxVisibleItems(35);
+    refRoad.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     //refTrack.s .sortItems(Qt::AscendingOrder);
     
     refTrack.setCurrentText("a1t");
@@ -417,7 +420,7 @@ void ObjTools::routeLoaded(Route* a){
     refOther.addItem("SpeedWarning");
     refOther.addItem("Milepost");
     refOther.addItem("TSRE Tools");
-    refOther.setMaxVisibleItems(25);
+    refOther.setMaxVisibleItems(35);
 }
 
 void ObjTools::refClassSelected(const QString & text){

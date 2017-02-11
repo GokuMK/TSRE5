@@ -678,6 +678,16 @@ float Tile::getNearestSnapablePosition(float* pos, float *quat, int uid){
     return nrp;
 }
 
+void Tile::updateSim(float deltaTime){
+    if (loaded != 1) return;
+    for (int i = 0; i < jestObiektow; i++) {
+        if(obiekty[i] == NULL) continue;
+        if (obiekty[i]->loaded) {
+            obiekty[i]->updateSim(deltaTime);
+        }
+    }
+}
+
 void Tile::render(float * playerT, float* playerW, float* target, float fov, int renderMode) {
     if (loaded != 1) return;
     GLUU* gluu = GLUU::get();

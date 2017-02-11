@@ -92,6 +92,7 @@
           <itemPath>TransformWorldObjDialog.h</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
+        <itemPath>ActivityServiceTools.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
         <itemPath>GeoTools.h</itemPath>
         <itemPath>LoadWindow.h</itemPath>
@@ -119,7 +120,6 @@
         <itemPath>glShapeWidget.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="TDB" projectFiles="true">
-        <itemPath>Path.h</itemPath>
         <itemPath>Ruch.h</itemPath>
         <itemPath>SigCfg.h</itemPath>
         <itemPath>SignalShape.h</itemPath>
@@ -149,9 +149,13 @@
         <itemPath>Consist.h</itemPath>
         <itemPath>Eng.h</itemPath>
         <itemPath>EngLib.h</itemPath>
+        <itemPath>Path.h</itemPath>
+        <itemPath>Service.h</itemPath>
+        <itemPath>Traffic.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="world" projectFiles="true">
         <logicalFolder name="f1" displayName="objects" projectFiles="true">
+          <itemPath>CarSpawnerObj.h</itemPath>
           <itemPath>DynTrackObj.h</itemPath>
           <itemPath>ForestObj.h</itemPath>
           <itemPath>GroupObj.h</itemPath>
@@ -278,6 +282,7 @@
           <itemPath>TransformWorldObjDialog.cpp</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
+        <itemPath>ActivityServiceTools.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
         <itemPath>GeoTools.cpp</itemPath>
         <itemPath>LoadWindow.cpp</itemPath>
@@ -305,7 +310,6 @@
         <itemPath>glShapeWidget.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="TDB" projectFiles="true">
-        <itemPath>Path.cpp</itemPath>
         <itemPath>Ruch.cpp</itemPath>
         <itemPath>SigCfg.cpp</itemPath>
         <itemPath>SignalShape.cpp</itemPath>
@@ -335,9 +339,13 @@
         <itemPath>Consist.cpp</itemPath>
         <itemPath>Eng.cpp</itemPath>
         <itemPath>EngLib.cpp</itemPath>
+        <itemPath>Path.cpp</itemPath>
+        <itemPath>Service.cpp</itemPath>
+        <itemPath>Traffic.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="world" projectFiles="true">
         <logicalFolder name="f1" displayName="objects" projectFiles="true">
+          <itemPath>CarSpawnerObj.cpp</itemPath>
           <itemPath>DynTrackObj.cpp</itemPath>
           <itemPath>ForestObj.cpp</itemPath>
           <itemPath>GroupObj.cpp</itemPath>
@@ -414,6 +422,10 @@
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityTools.h" ex="false" tool="3" flavor2="0">
@@ -441,6 +453,10 @@
       <item path="CameraRot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CarSpawnerObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CarSpawnerObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ChooseFileDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -770,6 +786,10 @@
       </item>
       <item path="SFileX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Service.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Service.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Shader.h" ex="false" tool="3" flavor2="0">
@@ -913,6 +933,10 @@
       <item path="TrackShape.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TrackShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Traffic.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1019,6 +1043,10 @@
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityTools.h" ex="false" tool="3" flavor2="0">
@@ -1046,6 +1074,10 @@
       <item path="CameraRot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CarSpawnerObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CarSpawnerObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ChooseFileDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1375,6 +1407,10 @@
       </item>
       <item path="SFileX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Service.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Service.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Shader.h" ex="false" tool="3" flavor2="0">
@@ -1518,6 +1554,10 @@
       <item path="TrackShape.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TrackShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Traffic.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1617,6 +1657,10 @@
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityTools.h" ex="false" tool="3" flavor2="0">
@@ -1644,6 +1688,10 @@
       <item path="CameraRot.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CarSpawnerObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CarSpawnerObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ChooseFileDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1973,6 +2021,10 @@
       </item>
       <item path="SFileX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Service.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Service.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Shader.h" ex="false" tool="3" flavor2="0">
@@ -2116,6 +2168,10 @@
       <item path="TrackShape.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TrackShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Traffic.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2222,6 +2278,10 @@
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityTools.h" ex="false" tool="3" flavor2="0">
@@ -2249,6 +2309,10 @@
       <item path="CameraRot.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CarSpawnerObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CarSpawnerObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ChooseFileDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2578,6 +2642,10 @@
       </item>
       <item path="SFileX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Service.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Service.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Shader.h" ex="false" tool="3" flavor2="0">
@@ -2721,6 +2789,10 @@
       <item path="TrackShape.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TrackShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Traffic.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -2815,6 +2887,10 @@
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityTools.h" ex="false" tool="3" flavor2="0">
@@ -2842,6 +2918,10 @@
       <item path="CameraRot.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="CameraRot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CarSpawnerObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CarSpawnerObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ChooseFileDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3171,6 +3251,10 @@
       </item>
       <item path="SFileX.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Service.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Service.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Shader.h" ex="false" tool="3" flavor2="0">
@@ -3314,6 +3398,10 @@
       <item path="TrackShape.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TrackShape.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Traffic.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="8">
       </item>

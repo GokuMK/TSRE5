@@ -174,7 +174,7 @@ Window::Window() {
     QAction* viewTerrainGrid = GuiFunct::newMenuCheckAction(tr("&Terrain Grid"), this, false); 
     viewMenu->addAction(viewTerrainGrid);
     QObject::connect(viewTerrainGrid, SIGNAL(triggered(bool)), this, SLOT(viewTerrainGrid(bool)));   
-    QAction* viewTerrainShape = GuiFunct::newMenuCheckAction(tr("&Terrain Shape"), this); 
+    QAction* viewTerrainShape = GuiFunct::newMenuCheckAction(tr("&Hide Terrain Shape"), this, false); 
     viewMenu->addAction(viewTerrainShape);
     QObject::connect(viewTerrainShape, SIGNAL(triggered(bool)), this, SLOT(viewTerrainShape(bool)));   
     QAction* showWorldObjPivotPoints = GuiFunct::newMenuCheckAction(tr("&WorldObj Markers"), this, false); 
@@ -275,6 +275,7 @@ Window::Window() {
     
     QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), terrainTools, SLOT(msg(QString, QString)));
     QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), geoTools, SLOT(msg(QString, QString)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), activityTools, SLOT(msg(QString, QString)));
     
     QObject::connect(naviWindow, SIGNAL(sendMsg(QString)), glWidget, SLOT(msg(QString)));
     QObject::connect(naviWindow, SIGNAL(sendMsg(QString, bool)), glWidget, SLOT(msg(QString, bool)));
@@ -313,6 +314,9 @@ Window::Window() {
                       glWidget, SLOT(enableTool(QString)));   
     
     QObject::connect(geoTools, SIGNAL(enableTool(QString)),
+                      glWidget, SLOT(enableTool(QString)));   
+    
+    QObject::connect(activityTools, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));   
     
     for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
@@ -563,7 +567,7 @@ void Window::viewTileGrid(bool show){
     Game::viewTileGrid = show;
 }
 void Window::viewTerrainShape(bool show){
-    Game::viewTerrainShape = show;
+    Game::viewTerrainShape = !show;
 }
 void Window::viewTerrainGrid(bool show){
     Game::viewTerrainGrid = show;

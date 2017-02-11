@@ -41,6 +41,7 @@ private:
     QLineEdit speedpostType;
     QLineEdit speed;
     QLineEdit number;
+    QLabel *lSpeedFor;
     QComboBox ptb;
     QComboBox kmm;
     QCheckBox chFlipShape;

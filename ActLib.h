@@ -25,6 +25,8 @@ public:
     virtual ~ActLib();
     static int addAct(QString path, QString name);
     static int loadAll(QString gameRoot);
+    static void getUnsavedInfo(std::vector<QString> &items);
+    static void save();
 private:
 
 };

@@ -120,6 +120,7 @@ public:
     void newSoundRegionObject(int soundregionTrackType, QVector<int> & itemId, int trNodeId, float metry, int type);
 private:
     bool deleteNulls();
+    void sortItemRefs();
     int findBiggest();
     void addToDeletedTree(int* drzewo, int d);
     int getLineBufferSize(int idx, int pointSize, int offset, int step = 0);
@@ -149,6 +150,9 @@ private:
     
     std::unordered_map<int, TextObj*> endIdObj;
     std::unordered_map<int, TextObj*> junctIdObj;
+    
+    static bool SortItemRefsCompare(int a, int b);
+    static std::unordered_map<int, TRitem*>* StaticTrackItems;
 };
 
 #endif	/* TDB_H */

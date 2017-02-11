@@ -8,7 +8,7 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#include "PlatformObj.h"
+#include "CarSpawnerObj.h"
 #include "SFile.h"
 #include "ShapeLib.h"
 #include "GLMatrix.h"
@@ -30,7 +30,70 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-PlatformObj::PlatformObj() {
+QVector<CarSpawnerObj::CarSpawnerList> CarSpawnerObj::carSpawnerList;
+
+void CarSpawnerObj::LoadCarSpawnerList(){
+    QString path = Game::root + "/routes/" + Game::route + "/carspawn.dat";
+    path.replace("//", "/");
+    qDebug() << path;
+    QFile *file = new QFile(path);
+    if (!file->open(QIODevice::ReadOnly))
+        return;
+    FileBuffer* data = ReadFile::read(file);
+    file->close();
+    data->toUtf16();
+    ParserX::NextLine(data);
+    QString sh = "";
+    parseCarList(data);
+    delete data;
+    
+    path = Game::root + "/routes/" + Game::route + "/openrails/carspawn.dat";
+    path.replace("//", "/");
+    qDebug() << path;
+    file = new QFile(path);
+    if (!file->open(QIODevice::ReadOnly))
+        return;
+    data = ReadFile::read(file);
+    file->close();
+    data->toUtf16();
+    ParserX::NextLine(data);
+    
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == ("carspawnerlist")) {
+            parseCarList(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        ParserX::SkipToken(data);
+    }
+    delete data;
+}
+
+void CarSpawnerObj::parseCarList(FileBuffer* data){
+    QString sh;
+    carSpawnerList.push_back(CarSpawnerList());
+    carSpawnerList.back().name = "DEFAULT";
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == ("listname")) {
+            carSpawnerList.back().name = ParserX::GetString(data);
+            qDebug() << carSpawnerList.back().name;
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("carspawneritem")) {
+            carSpawnerList.back().carName.push_back(ParserX::GetString(data));
+            carSpawnerList.back().val.push_back(ParserX::GetNumber(data));
+            ParserX::SkipToken(data);
+            continue;
+        }
+        ParserX::SkipToken(data);
+    }
+    return;
+}
+
+CarSpawnerObj::CarSpawnerObj() {
     this->shape = -1;
     this->loaded = false;
     this->staticFlags = 0x100;
@@ -39,26 +102,28 @@ PlatformObj::PlatformObj() {
     //pointer3dSelected = new TrackItemObj();
 }
 
-PlatformObj::PlatformObj(const PlatformObj& o) : WorldObj(o) {
-    platformData = o.platformData;
+CarSpawnerObj::CarSpawnerObj(const CarSpawnerObj& o) : WorldObj(o) {
     trItemId[0] = o.trItemId[0];
     trItemId[1] = o.trItemId[1];
     trItemId[2] = o.trItemId[2];
     trItemId[3] = o.trItemId[3];
     trItemIdCount = o.trItemIdCount;
+    carFrequency = o.carFrequency;
+    carAvSpeed = o.carAvSpeed;
     rotB = o.rotB;
     rotE = o.rotE;
     selectionValue = o.selectionValue;
+    carspawnerListName = o.carspawnerListName;
 }
 
-WorldObj* PlatformObj::clone(){
-    return new PlatformObj(*this);
+WorldObj* CarSpawnerObj::clone(){
+    return new CarSpawnerObj(*this);
 }
 
-PlatformObj::~PlatformObj() {
+CarSpawnerObj::~CarSpawnerObj() {
 }
 
-void PlatformObj::load(int x, int y) {
+void CarSpawnerObj::load(int x, int y) {
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
@@ -67,17 +132,87 @@ void PlatformObj::load(int x, int y) {
     this->skipLevel = 1;
     this->modified = false;
     
+    if(this->typeID == this->carspawner){
+        this->carAvSpeed = 20;
+        this->carFrequency = 5;
+    }
+    
+    carListId = 0;
+    if(carspawnerListName.length() > 0){
+        for(int i = 0; i < this->carSpawnerList.size(); i++){
+            if(carspawnerListName == this->carSpawnerList[i].name ){
+                carListId = i;
+                break;
+            }
+        }
+    }
+    
     setMartix();
 }
 
-bool PlatformObj::allowNew(){
+CarSpawnerObj::SimpleCar::SimpleCar(){
+}
+
+CarSpawnerObj::SimpleCar::~SimpleCar(){
+    //if(drawPosition != NULL){
+    //    delete[] drawPosition;
+    //    drawPosition = NULL;
+    //}
+}
+
+
+CarSpawnerObj::SimpleCar::SimpleCar(QString name){
+    carName = name;
+    QString resPath = Game::root + "/routes/" + Game::route + "/shapes";
+    shapeId = Game::currentShapeLib->addShape(resPath +"/"+ name);
+    shapePointer = Game::currentShapeLib->shape[shapeId];
+}
+
+void CarSpawnerObj::SimpleCar::updateSim(float deltaTime){
+    trPosMb += speed*deltaTime*direction;
+    if(trPosMb*direction > trPosMe*direction)
+        loaded = false;
+    if(trPosMb < 0)
+        loaded = false;
+}
+
+void CarSpawnerObj::SimpleCar::render(GLUU *gluu, int selectionColor){
+    //if(drawPosition == NULL)
+    //    drawPosition = new float[7];
+        //qDebug() <<"car"<< trNodeId<< trPosM;
+        bool ok = Game::roadDB->getDrawPositionOnTrNode(drawPosition, trNodeId, trPosMb);
+        if(!ok){
+            loaded = false;
+            return;
+        }
+        drawPosition[0] += 2048 * (drawPosition[5] - x);
+        drawPosition[2] -= 2048 * (-drawPosition[6] - y);
+    //}
+    int useSC;
+
+    gluu->mvPushMatrix();
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0], drawPosition[1], -drawPosition[2]);
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3] + M_PI*1.5 + M_PI*0.5*direction);
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    useSC = (float)selectionColor/(float)(selectionColor+0.000001);
+    Game::currentShapeLib->shape[shapeId]->render();
+    //this->shapePointer->render();
+    gluu->mvPopMatrix();
+}
+
+bool CarSpawnerObj::allowNew(){
     return true;
 }
 
-void PlatformObj::set(int sh, FileBuffer* data) {
-    if (sh == TS::SidingData || sh == TS::PlatformData) {
+void CarSpawnerObj::set(int sh, FileBuffer* data) {
+    if (sh == TS::CarFrequency) {
         data->off++;
-        platformData = data->getUint();
+        carFrequency = data->getFloat();
+        return;
+    }
+    if (sh == TS::CarAvSpeed) {
+        data->off++;
+        carAvSpeed = data->getFloat();
         return;
     }
     if (sh == TS::TrItemId) {
@@ -90,9 +225,13 @@ void PlatformObj::set(int sh, FileBuffer* data) {
     return;
 }
 
-void PlatformObj::set(QString sh, FileBuffer* data) {
-    if (sh == ("sidingdata") || sh == ("platformdata")) {
-        platformData = ParserX::GetHex(data);
+void CarSpawnerObj::set(QString sh, FileBuffer* data) {
+    if (sh == ("carfrequency")) {
+        carFrequency = ParserX::GetNumber(data);
+        return;
+    }
+    if (sh == ("caravspeed")) {
+        carAvSpeed = ParserX::GetNumber(data);
         return;
     }
     if (sh == ("tritemid")) {
@@ -100,12 +239,16 @@ void PlatformObj::set(QString sh, FileBuffer* data) {
         trItemId[trItemIdCount++] = ParserX::GetNumber(data);
         return;
     }
+    if (sh == ("ortslistname")) {
+        this->carspawnerListName = ParserX::GetString(data);
+        return;
+    }
      
     WorldObj::set(sh, data);
     return;
 }
 
-void PlatformObj::translate(float px, float py, float pz){
+void CarSpawnerObj::translate(float px, float py, float pz){
     if(pz == 0) 
         return;
     TDB* tdb = Game::trackDB;
@@ -146,16 +289,16 @@ void PlatformObj::translate(float px, float py, float pz){
     setMartix();
 }
 
-bool PlatformObj::select(int value){
+bool CarSpawnerObj::select(int value){
     this->selectionValue = value;
     this->selected = true;
 }
 
-bool PlatformObj::isTrackItem(){
+bool CarSpawnerObj::isTrackItem(){
     return true;
 }
 
-void PlatformObj::initTrItems(float* tpos){
+void CarSpawnerObj::initTrItems(float* tpos){
     if(tpos == NULL)
         return;
     int trNodeId = tpos[0];
@@ -179,7 +322,7 @@ void PlatformObj::initTrItems(float* tpos){
     this->trItemId[3] = trItemId[1];
 }
 
-void PlatformObj::deleteTrItems(){
+void CarSpawnerObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
     for(int i = 0; i<this->trItemIdCount/2; i++){
@@ -190,86 +333,8 @@ void PlatformObj::deleteTrItems(){
         this->trItemId[i*2+1] = -1;
     }
 }
-
-QString PlatformObj::getStationName(){
-    TDB* tdb = Game::trackDB;
-    int id = this->trItemId[1];
-    TRitem* trit = tdb->trackItems[id];
-    if(trit == NULL) return "";
-    return trit->stationName;
-}
-
-QString PlatformObj::getPlatformName(){
-    TDB* tdb = Game::trackDB;
-    int id = this->trItemId[1];
-    TRitem* trit = tdb->trackItems[id];
-    if(trit == NULL) return "";
-    return trit->platformName;
-}
-int PlatformObj::getPlatformMinWaitingTime(){
-    TDB* tdb = Game::trackDB;
-    int id = this->trItemId[1];
-    TRitem* trit = tdb->trackItems[id];
-    if(trit == NULL) return 0;
-    return trit->platformMinWaitingTime;
-}
-int PlatformObj::getPlatformNumPassengersWaiting(){
-    TDB* tdb = Game::trackDB;
-    int id = this->trItemId[1];
-    TRitem* trit = tdb->trackItems[id];
-    if(trit == NULL) return 0;
-    return trit->platformNumPassengersWaiting;
-}
-void PlatformObj::setStationName(QString name){
-    TDB* tdb = Game::trackDB;
-    int id = this->trItemId[1];
-    TRitem* trit = tdb->trackItems[id];
-    if(trit == NULL) return;
-    trit->stationName = name;
-    id = this->trItemId[3];
-    trit = tdb->trackItems[id];
-    if(trit == NULL) return;
-    trit->stationName = name;
-    this->modified = true;
-}
-void PlatformObj::setPlatformName(QString name){
-    TDB* tdb = Game::trackDB;
-    int id = this->trItemId[1];
-    TRitem* trit = tdb->trackItems[id];
-    if(trit == NULL) return;
-    trit->platformName = name;
-    id = this->trItemId[3];
-    trit = tdb->trackItems[id];
-    if(trit == NULL) return;
-    trit->platformName = name;
-    this->modified = true;
-}
-void PlatformObj::setPlatformMinWaitingTime(int val){
-    TDB* tdb = Game::trackDB;
-    int id = this->trItemId[1];
-    TRitem* trit = tdb->trackItems[id];
-    if(trit == NULL) return;
-    trit->platformMinWaitingTime = val;
-    id = this->trItemId[3];
-    trit = tdb->trackItems[id];
-    if(trit == NULL) return;
-    trit->platformMinWaitingTime = val;
-    this->modified = true;
-}
-void PlatformObj::setPlatformNumPassengersWaiting(int val){
-    TDB* tdb = Game::trackDB;
-    int id = this->trItemId[1];
-    TRitem* trit = tdb->trackItems[id];
-    if(trit == NULL) return;
-    trit->platformNumPassengersWaiting = val;
-    id = this->trItemId[3];
-    trit = tdb->trackItems[id];
-    if(trit == NULL) return;
-    trit->platformNumPassengersWaiting = val;
-    this->modified = true;
-}
     
-float PlatformObj::getLength(){
+float CarSpawnerObj::getLength(){
     TDB* tdb = Game::trackDB;
     TRitem* p1 = tdb->trackItems[this->trItemId[1]];
     TRitem* p2 = tdb->trackItems[this->trItemId[3]];
@@ -277,56 +342,62 @@ float PlatformObj::getLength(){
     return fabs(p2->getTrackPosition() - p1->getTrackPosition());
 }
 
-bool PlatformObj::getSideLeft(){
-    return ((this->platformData & 2) == 2);
+int CarSpawnerObj::getCarNumber(){
+    return this->carFrequency;
 }
 
-bool PlatformObj::getSideRight(){
-    return ((this->platformData & 4) == 4);
+int CarSpawnerObj::getCarSpeed(){
+    return this->carAvSpeed;
 }
 
-bool PlatformObj::getDisabled(){
-    TDB* tdb = Game::trackDB;
-    int id = this->trItemId[1];
-    TRitem* trit = tdb->trackItems[id];
-    if(trit == NULL) return false;
-    return ((trit->platformTrItemData[0] & 1) == 1);
-}
-void PlatformObj::setSideLeft(bool val){
-    if(val)
-        this->platformData = this->platformData | 2;
-    else 
-        this->platformData = this->platformData ^ 2;
-    delete line;
-    line = NULL;
+void CarSpawnerObj::setCarNumber(int val){
+    this->carFrequency = val;
     this->modified = true;
 }
 
-void PlatformObj::setSideRight(bool val){
-    if(val)
-        this->platformData = this->platformData | 4;
-    else 
-        this->platformData = this->platformData ^ 4;
-    delete line;
-    line = NULL;
+void CarSpawnerObj::setCarSpeed(int val){
+    this->carAvSpeed = val;
     this->modified = true;
 }
 
-void PlatformObj::setDisabled(bool val){
-    TDB* tdb = Game::trackDB;
-    int id = this->trItemId[1];
-    TRitem* trit = tdb->trackItems[id];
-    if(trit == NULL) return;
-    if(val)
-        trit->platformTrItemData[0] = trit->platformTrItemData[0] | 1;
-    else
-        trit->platformTrItemData[0] = trit->platformTrItemData[0] ^ 1;
-    delete line;
-    line = NULL;
-    this->modified = true;
-}
 
-void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
+void CarSpawnerObj::updateSim(float deltaTime){
+    if(!this->loaded) 
+        return;
+    
+    carsNewTime += deltaTime;
+
+    if(carsNewTime > carFreq){
+        TDB* tdb = Game::roadDB;
+
+        int carRnd = std::rand()%carSpawnerList[carListId].carName.size();
+        
+        cars.push_back(SimpleCar(carSpawnerList[carListId].carName[carRnd]));
+        cars.back().trNodeId = tdb->findTrItemNodeId(this->trItemId[1]);
+        cars.back().trPosMb = tdb->trackItems[this->trItemId[1]]->getTrackPosition();
+        cars.back().trPosMe = tdb->trackItems[this->trItemId[3]]->getTrackPosition();
+        if(cars.back().trPosMe > cars.back().trPosMb)
+            cars.back().direction = 1;
+        else
+            cars.back().direction = -1;
+        cars.back().speed = carAvSpeed;
+        cars.back().x = x;
+        cars.back().y = y;
+        cars.back().loaded = true;
+        //carFreq = (float)(std::rand()%(100)+10)/1000.0;
+        carFreq = (float)(std::rand()%(carFrequency*1000+1)+500)/1000.0;
+        carsNewTime = 0;
+    }
+    for(int i = 0; i < cars.size(); i++){
+        cars[i].updateSim(deltaTime);
+        if(!cars[i].loaded){
+            cars.remove(i);
+            i--;
+        }
+    }
+};
+
+void CarSpawnerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
     if(!this->loaded) 
         return;
@@ -343,11 +414,24 @@ void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
         gluu->mvPopMatrix();
     }
     
+    if(selectionColor != 0){
+        int wColor = (int)(selectionColor/65536);
+        int sColor = (int)(selectionColor - wColor*65536)/256;
+        int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
+        gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
+    } else {
+        gluu->enableTextures();
+    }
+
+    for(int i = 0; i < cars.size(); i++){
+        cars[i].render(gluu, selectionColor);
+    }
+    
     if(Game::viewInteractives && renderMode != gluu->RENDER_SHADOWMAP) 
         this->renderTritems(gluu, selectionColor);
 };
 
-void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
+void CarSpawnerObj::renderTritems(GLUU* gluu, int selectionColor){
     
     if (drawPositionB == NULL) {
         TDB* tdb = Game::trackDB;
@@ -457,7 +541,30 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     gluu->mvPopMatrix();
 };
 
-void PlatformObj::makelineShape(){
+void CarSpawnerObj::expand(){
+    TDB *tdb = Game::roadDB;
+    int id = tdb->findTrItemNodeId(this->trItemId[1]);
+    float maxLen = tdb->getVectorSectionLength(id);
+    float p1 = tdb->trackItems[this->trItemId[1]]->getTrackPosition();
+    float p2 = tdb->trackItems[this->trItemId[3]]->getTrackPosition();
+    if( p1 < p2 ){
+        tdb->trackItems[this->trItemId[1]]->setTrackPosition(1);
+        tdb->trackItems[this->trItemId[3]]->setTrackPosition(maxLen-1);
+    } else {
+        tdb->trackItems[this->trItemId[3]]->setTrackPosition(1);
+        tdb->trackItems[this->trItemId[1]]->setTrackPosition(maxLen-1);
+    }
+    delete[] drawPositionB;
+    drawPositionB = NULL;   
+    delete[] drawPositionE;
+    drawPositionE = NULL;
+    delete line;
+    line = NULL;
+    this->modified = true;
+    
+}
+
+void CarSpawnerObj::makelineShape(){
         line = new OglObj();
         float *ptr, *punkty;// = new float[6];
         int length, len = 0;
@@ -522,58 +629,15 @@ void PlatformObj::makelineShape(){
                 Vec3::sub(tp, tp2, tp1);
                 Vec3::normalize(tp, tp);
                 Vec3::transformQuat(tp3, tp, quat90);
-                if(!this->getSideRight() && !this->getSideLeft()){
-                    punkty[len++] = tp1[0];
-                    punkty[len++] = tp1[1];
-                    punkty[len++] = tp1[2];
-                    punkty[len++] = tp2[0];
-                    punkty[len++] = tp2[1];
-                    punkty[len++] = tp2[2];
-                }
-                if(this->getSideRight()){
-                    punkty[len++] = tp1[0] + tp3[0]*side;
-                    punkty[len++] = tp1[1] + tp3[1]*side;
-                    punkty[len++] = tp1[2] - tp3[2]*side;
-                    punkty[len++] = tp2[0] + tp3[0]*side;
-                    punkty[len++] = tp2[1] + tp3[1]*side;
-                    punkty[len++] = tp2[2] - tp3[2]*side;
-                }
-                if(this->getSideLeft()){
-                    punkty[len++] = tp1[0] - tp3[0]*side;
-                    punkty[len++] = tp1[1] - tp3[1]*side;
-                    punkty[len++] = tp1[2] + tp3[2]*side;
-                    punkty[len++] = tp2[0] - tp3[0]*side;
-                    punkty[len++] = tp2[1] - tp3[1]*side;
-                    punkty[len++] = tp2[2] + tp3[2]*side;
-                }
+                
+                punkty[len++] = tp1[0];
+                punkty[len++] = tp1[1];
+                punkty[len++] = tp1[2];
+                punkty[len++] = tp2[0];
+                punkty[len++] = tp2[1];
+                punkty[len++] = tp2[2];
+
                 if(endd) break;
-            }
-            if(this->getSideRight() && this->getSideLeft()){
-                punkty[len++] = punkty[0];
-                punkty[len++] = punkty[1];
-                punkty[len++] = punkty[2];
-                punkty[len++] = punkty[6];
-                punkty[len++] = punkty[7];
-                punkty[len++] = punkty[8];
-                punkty[len++] = punkty[len-3-7];
-                punkty[len++] = punkty[len-2-8];
-                punkty[len++] = punkty[len-1-9];
-                punkty[len++] = punkty[len-9-10];
-                punkty[len++] = punkty[len-8-11];
-                punkty[len++] = punkty[len-7-12];
-            } else if(this->getSideLeft() || this->getSideRight()){
-                punkty[len++] = punkty[0];
-                punkty[len++] = punkty[1];
-                punkty[len++] = punkty[2];
-                punkty[len++] = posB[0];
-                punkty[len++] = posB[1]+1;
-                punkty[len++] = -posB[2];
-                punkty[len++] = punkty[len-3-7];
-                punkty[len++] = punkty[len-2-8];
-                punkty[len++] = punkty[len-1-9];
-                punkty[len++] = posE[0];
-                punkty[len++] = posE[1]+1;
-                punkty[len++] = -posE[2];
             }
         } else {
             punkty = new float[6];
@@ -585,38 +649,41 @@ void PlatformObj::makelineShape(){
             punkty[len-2] = posE[1]+1;
             punkty[len-1] = -posE[2];
         }
-        
-        //qDebug() << "len "<<len;
-        //punkty[ptr++] = 0;
-        //punkty[ptr++] = 0;
-        //punkty[ptr++] = 0;
-        //punkty[ptr++] = drawPositionE[0]-drawPositionB[0];
-        //punkty[ptr++] = drawPositionE[1]-drawPositionB[1];
-        //punkty[ptr++] = -drawPositionE[2]+drawPositionB[2];
+
         line->init(punkty, len, line->V, GL_LINES);
         delete[] ptr;
         delete[] punkty;
 }
 
-int PlatformObj::getDefaultDetailLevel(){
+int CarSpawnerObj::getDefaultDetailLevel(){
     return -7;
 }
 
-void PlatformObj::save(QTextStream* out) {
-    if (!loaded) return;
-    int l;
-    QString flags = ParserX::MakeFlagsString(this->staticFlags);
-    QString flags2 = ParserX::MakeFlagsString(this->platformData);
+QString CarSpawnerObj::getCarListName(){
+    return carspawnerListName;
+}
 
-    if (type == "siding")
-        *(out) << "	Siding (\n";
-    if (type == "platform")
-        *(out) << "	Platform (\n";
+void CarSpawnerObj::setCarListName(QString val){
+    carspawnerListName = val;
+    carListId = 0;
+    for(int i = 0; i < this->carSpawnerList.size(); i++)
+        if(carspawnerListName == this->carSpawnerList[i].name ){
+            carListId = i;
+            break;
+        }
+    modified = true;
+}
+
+void CarSpawnerObj::save(QTextStream* out) {
+    if (!loaded) return;
+    QString flags = ParserX::MakeFlagsString(this->staticFlags);
+
+    *(out) << "	CarSpawner (\n";
     *(out) << "		UiD ( " << this->UiD << " )\n";
-    if (type == "siding")
-        *(out) << "		SidingData ( " << flags2 << " )\n";
-    if (type == "platform")
-        *(out) << "		PlatformData ( " << flags2 << " )\n";
+    *(out) << "		CarFrequency ( " << this->carFrequency << " )\n";
+    *(out) << "		CarAvSpeed ( " << this->carAvSpeed << " )\n";
+    if (this->carspawnerListName.length() > 0)
+        *(out) << "		ORTSListName ( " << ParserX::AddComIfReq(this->carspawnerListName) << " )\n";
     *(out) << "		TrItemId ( " << this->trItemId[0] << " " << this->trItemId[1] << " )\n";
     *(out) << "		TrItemId ( " << this->trItemId[2] << " " << this->trItemId[3] << " )\n";
     *(out) << "		StaticFlags ( " << flags << " )\n";

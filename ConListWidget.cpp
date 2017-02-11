@@ -105,7 +105,7 @@ void ConListWidget::newConsist(){
 }
 
 void ConListWidget::newConsist(Consist * con){
-    ConLib::con[ConLib::jestcon] = new Consist(con);
+    ConLib::con[ConLib::jestcon] = new Consist(con, false);
     ConLib::con[ConLib::jestcon]->setNewConsistFlag();
     if(ConLib::con[ConLib::jestcon]->showName.length() < 1)
         ConLib::con[ConLib::jestcon]->showName = "new";

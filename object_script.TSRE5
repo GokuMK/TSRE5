@@ -3,6 +3,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/AceLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Activity.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityServiceTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Brush.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CELoadWindow.o
@@ -10,6 +11,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CameraConsist.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CameraFree.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CameraRot.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CarSpawnerObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ChooseFileDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConEditorWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ConLib.o
@@ -91,6 +93,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFile.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileC.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileX.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Service.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Shader.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ShapeLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ShapeViewWindow.o
@@ -127,6 +130,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackItemObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackShape.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Traffic.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TransferObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TransformWorldObjDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Trk.o
@@ -145,6 +149,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/tsre5_plugin_import.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AboutWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AceLib.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityServiceTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_CELoadWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ChooseFileDialog.o

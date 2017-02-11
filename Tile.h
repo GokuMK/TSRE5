@@ -59,6 +59,7 @@ public:
     void initNew();
     void updateTerrainObjects();
     float getNearestSnapablePosition(float *pos, float *quat, int uid = -1);
+    void updateSim(float deltaTime);
     void render();
     void render(float *  playerT, float* playerW, float* target, float fov, int renderMode);
     //void renderWS(float *  playerT, float* playerW, float* target, float fov, int renderMode);

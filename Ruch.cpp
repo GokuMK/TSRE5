@@ -11,30 +11,128 @@
 #include "Ruch.h"
 #include "TRnode.h"
 #include "TSectionDAT.h"
+#include "Game.h"
 
-Ruch::Ruch(TDB *t) {
-    this->trackDB = t;
+Ruch::Ruch() {
+
 }
 
-void Ruch::set(int at){
-    aktt = at;
-    if(trackDB->trackNodes[aktt]!=NULL)
-        if(trackDB->trackNodes[aktt]->typ!=0)
-            aktt = -1;
-    
-    pozW.set(0,0,0);
-    pozT.set(0,0,0);
-    pozO.set(0,0,0);
-    idx = -1;
-}
+void Ruch::set(int nid, int m, int tdirection) {
+    nodeIdx = nid;
+    nodeDist = m;
+    kierunek = tdirection;
+    direction = (kierunek - 0.5)*2;
 
-void Ruch::toNext(float metry){
-    metrpp = metry;
-    while(metrpp!=0){
-        next();
+    TDB *tdb = Game::trackDB;
+    if (tdb->trackNodes[nodeIdx]->typ == 0 || tdb->trackNodes[nodeIdx]->typ == 2) {
+        kierunek = tdb->trackNodes[nodeIdx]->TrPinK[0];
+        nodeIdx = tdb->trackNodes[nodeIdx]->TrPinS[0];
+        nodeLength = Game::trackDB->getVectorSectionLength(nodeIdx);
+        if (kierunek == 1) {
+            nodeDist = 0;
+        } else {
+            nodeDist = nodeLength;
+        }
+        direction = (kierunek - 0.5)*2;
+    } else {
+        nodeLength = nodeLength = Game::trackDB->getVectorSectionLength(nodeIdx);
     }
 }
 
+void Ruch::next(float m) {
+    if(m < 0){
+        back(m);
+    } else {
+        while(m > 0){
+            if(m > 0.5){
+                toNext(0.5);
+                m -= 0.5;
+            } else {
+                toNext(m);
+                m = 0;
+            }
+        }
+    }
+    //nodeDist += m*direction;
+    //checkNode();
+}
+
+void Ruch::back(float m) {
+    if(m > 0){
+        next(m);
+    } else {
+        m = -m;
+        while(m > 0){
+            if(m > 0.5){
+                toNext(-0.5);
+                m -= 0.5;
+            } else {
+                toNext(-m);
+                m = 0;
+            }
+        }
+    }
+}
+
+void Ruch::toNext(float m){
+    nodeDist += m*direction;
+    checkNode();
+}
+
+void Ruch::checkNode() {
+    TDB *tdb = Game::trackDB;
+    int kier, nodeId;
+    if (nodeDist >= nodeLength) {
+        kier = tdb->trackNodes[nodeIdx]->TrPinK[1];
+        nodeId = tdb->trackNodes[nodeIdx]->TrPinS[1];
+    } else if (nodeDist < 0) {
+        kier = tdb->trackNodes[nodeIdx]->TrPinK[0];
+        nodeId = tdb->trackNodes[nodeIdx]->TrPinS[0];
+    } else {
+        return;
+    }
+
+    TRnode *n = tdb->trackNodes[nodeId];
+    if (n == NULL)
+        return;
+    if (n->typ == 2) {
+        int u = 0;// n->TrP1-1;
+        if (kier == 1){
+            u = 1;//n->TrP1;//+n->TrP2-1;
+        }
+        
+        // todo if u > 1 allow junction switch
+        //if(u > 1)
+        //    u++;
+        //u = n->TrP1*kierunek;
+        kierunek = n->TrPinK[u];
+        nodeIdx = n->TrPinS[u];
+        nodeLength = Game::trackDB->getVectorSectionLength(nodeIdx);
+
+    } else if (n->typ == 0) {
+        kierunek = n->TrPinK[0];
+        nodeIdx = n->TrPinS[0];
+        nodeLength = Game::trackDB->getVectorSectionLength(nodeIdx);
+
+    } else if (n->typ == 1) {
+        nodeIdx = nodeId;
+        kierunek = kier;
+        nodeLength = Game::trackDB->getVectorSectionLength(nodeIdx);
+    }
+    
+    if (kierunek == 1) {
+        nodeDist = 0;
+    } else {
+        nodeDist = nodeLength;
+    }
+    direction = (kierunek - 0.5)*2;
+}
+
+float * Ruch::getCurrentPosition() {
+    Game::trackDB->getDrawPositionOnTrNode(drawPosition, nodeIdx, nodeDist);
+    return drawPosition;
+}
+/*
 bool Ruch::next(){
         if(aktt==-1) return true;
         
@@ -203,31 +301,4 @@ bool Ruch::next(){
         }
         return false;
 }
-
-Vector3f* Ruch::getPosition(){
-        
-        if(aktt==-1) 
-            return new Vector3f();
-   
-        float x = pozW.x;
-        float y = pozW.y;
-        float z = -pozW.z;
-        
-        if(trackDB->trackNodes[aktt]->typ==1){
-            if(trackDB->tsection->sekcja[idx] == NULL)
-                return new Vector3f(x,y,z);
-            Vector3f* poss = trackDB->tsection->sekcja[idx]->getDrawPosition(metry);
-            poss->rotate(pozO);
-            return new Vector3f(x-poss->x, y+poss->y, z-poss->z);
-        } else {
-            return new Vector3f(x,y,z);
-        }
-    }
-
-int Ruch::getAktTx(){
-        return pozT.x;
-    }
-int Ruch::getAktTz(){
-        return -pozT.z;
-    }
-
+*/

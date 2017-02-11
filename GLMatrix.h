@@ -120,6 +120,7 @@ public:
     static float* perspective(float* out, float fovy, float aspect, float near, float far);
     static float* rotate(float* out, float* a, float rad, float* axis);
     static float* rotate(float* out, float* a, float rad, float x, float y, float z);
+    static float* rotateX(float* out, float* a, float rad);
     static float* rotateY(float* out, float* a, float rad);
     static float* translate(float* out, float* a, float* v);
     static float* translate(float* out, float* a,float x,float y,float z);

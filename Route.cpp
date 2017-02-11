@@ -25,6 +25,7 @@
 #include "ReadFile.h"
 #include "DynTrackObj.h"
 #include "PlatformObj.h"
+#include "CarSpawnerObj.h"
 #include "Flex.h"
 #include "ForestObj.h"
 #include "Coords.h"
@@ -39,6 +40,10 @@
 #include "PlatformObj.h"
 #include "GroupObj.h"
 #include "Undo.h"
+#include "Activity.h"
+#include "Service.h"
+#include "Traffic.h"
+#include "Path.h"
 
 Route::Route() {
     Game::currentRoute = this;
@@ -68,6 +73,9 @@ Route::Route() {
 
     loadMkrList();
     loadActivities();
+    loadServices();
+    loadTraffic();
+    loadPaths();
     
     soundList = new SoundList();
     soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
@@ -77,7 +85,7 @@ Route::Route() {
     TerrainLib::LoadQuadTree();
     ForestObj::LoadForestList();
     ForestObj::ForestClearDistance = trk->forestClearDistance;
-    PlatformObj::LoadCarSpawnerList();
+    CarSpawnerObj::LoadCarSpawnerList();
     
     Game::trackDB = this->trackDB;
     Game::roadDB = this->roadDB;
@@ -91,6 +99,10 @@ Route::Route(const Route& orig) {
 }
 
 Route::~Route() {
+}
+
+void Route::activitySelected(Activity* selected){
+    currentActivity = selected;
 }
 
 Trk *Route::getTrk(){
@@ -146,7 +158,49 @@ void Route::loadActivities(){
         activityId.push_back(ActLib::addAct(dir.path(), actfile));
     }
 
-    qDebug() << "loaded";
+    qDebug() << "activity loaded";
+    return;
+}
+
+void Route::loadServices(){
+    QDir dir(Game::root + "/routes/" + Game::route + "/services");
+    if(!dir.exists()) 
+        return;
+    dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList()<<"*.srv");
+    foreach(QString actfile, dir.entryList()){
+        service.push_back(new Service(dir.path(), actfile));
+    }
+
+    qDebug() << "service loaded";
+    return;
+}
+
+void Route::loadTraffic(){
+    QDir dir(Game::root + "/routes/" + Game::route + "/traffic");
+    if(!dir.exists()) 
+        return;
+    dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList()<<"*.trf");
+    foreach(QString actfile, dir.entryList()){
+        traffic.push_back(new Traffic(dir.path(), actfile));
+    }
+
+    qDebug() << "traffic loaded";
+    return;
+}
+
+void Route::loadPaths(){
+    QDir dir(Game::root + "/routes/" + Game::route + "/paths");
+    if(!dir.exists()) 
+        return;
+    dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList()<<"*.pat");
+    foreach(QString actfile, dir.entryList()){
+        path.push_back(new Path(dir.path(), actfile));
+    }
+
+    qDebug() << "paths loaded";
     return;
 }
 
@@ -172,6 +226,25 @@ void Route::transalteObj(int x, int z, float px, float py, float pz, int uid) {
     //} catch (const std::out_of_range& oor) {
 
     //}
+}
+
+void Route::updateSim(float *playerT, float deltaTime){
+    if(!loaded) return;
+    
+    int mintile = -Game::tileLod;
+    int maxtile = Game::tileLod;
+
+    Tile *tTile;
+    for (int i = mintile; i <= maxtile; i++) {
+        for (int j = maxtile; j >= mintile; j--) {
+            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
+            if (tTile == NULL)
+                continue;
+            if (tTile->loaded == 1) {
+                tTile->updateSim(deltaTime);
+            }
+        }
+    }
 }
 
 void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, int renderMode) {
@@ -232,6 +305,9 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
             if(this->mkr != NULL)
                 this->mkr->render(gluu, playerT, playerW, playerRot);
     }
+    
+    if(currentActivity != NULL)
+        currentActivity->render(gluu, playerT);
     //trackDB->renderItems(gluu, playerT, playerRot);
     /*
     for (var key in this.tile){
@@ -269,6 +345,8 @@ void Route::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, float* 
             }
         }
     }
+    if(currentActivity != NULL)
+        currentActivity->render(gluu, playerT);
 }
 
 void Route::setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, WorldObj* obj){
@@ -548,6 +626,23 @@ void Route::dragWorldObject(WorldObj* obj, int x, int z, float* pos){
     obj->snapped(snapableSide);
     moveWorldObjToTile(x, z, obj);
     obj->setMartix();
+}
+
+void Route::actNewLooseConsist(int x, int z, float* p){
+    if(currentActivity == NULL)
+        return;
+    float tp[3];
+    float tpos[3];
+    float posT[2];
+    
+    Vec3::copy(tp, p);
+    Game::check_coords(x, z, tp);
+    posT[0] = x;
+    posT[1] = z;            
+    int ok = this->trackDB->findNearestPositionOnTDB(posT, tp, NULL, tpos);
+    if(ok >= 0){
+        currentActivity->newLooseConsist(tpos);
+    }
 }
 
 Tile * Route::requestTile(int x, int z){
@@ -1020,6 +1115,21 @@ void Route::getUnsavedInfo(std::vector<QString> &items){
     TerrainLib::getUnsavedInfo(items);
     if(this->trk->isModified())
         items.push_back("[S] Route Settings - TRK File");
+    
+    ActLib::getUnsavedInfo(items);
+    
+    foreach(Service *s, service){
+        if(s == NULL)
+            continue;
+        if(s->isModified())
+            items.push_back("[S] "+s->name);
+    }
+    foreach(Path *p, path){
+        if(p == NULL)
+            continue;
+        if(p->isModified())
+            items.push_back("[P] "+p->name);
+    }
     //this->trackDB->save();
     //this->roadDB->save();
 }
@@ -1041,6 +1151,19 @@ void Route::save() {
     this->trackDB->save();
     this->roadDB->save();
     this->trk->save();
+    ActLib::save();
+    foreach(Service *s, service){
+        if(s == NULL)
+            continue;
+        if(s->isModified())
+            s->save();
+    }
+    /*foreach(Path *p, path){
+        if(p == NULL)
+            continue;
+        if(p->isModified())
+            p->save();
+    }*/
 }
 
 void Route::createNewPaths() {

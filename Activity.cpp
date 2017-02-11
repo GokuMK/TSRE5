@@ -16,28 +16,79 @@
 #include "Game.h"
 #include <QDebug>
 #include <QFile>
+#include "GLUU.h"
+#include "ConLib.h"
+#include "TDB.h"
 
 Activity::Activity() {
+}
+
+void Activity::init(QString route, QString name) {
+    serial = 1;
+    header = new ActivityHeader(route, name);
+    nextServiceUID = 1;
+    nextActivityObjectUID = 32768;
+    playerServiceDefinition = new ServiceDefinition();
+    playerServiceDefinition->player = true;
+}
+
+Activity::ActivityHeader::ActivityHeader(){
+    
+}
+
+Activity::ActivityHeader::ActivityHeader(QString route, QString hname){
+    routeid = route;
+    name = hname;
+    description = "";
+    briefing = "";
+    completeActivity = 0;
+    type = 0;
+    mode = 2;
+    startTime[0] = 12;
+    startTime[1] = 0;
+    startTime[2] = 0;
+    season = 1;
+    weather = 0;
+    startingSpeed = 0;
+    duration[0] = 0;
+    duration[1] = 0;
+    difficulty = 0;
+    fuelWater = 100;
+    fuelCoal = 100;
+    fuelDiesel = 100;
+    animals = 100;
+    workers = 100;
 }
 
 Activity::~Activity() {
 }
 
-Activity::Activity(QString p, QString n) {
+Activity::Activity(QString p, QString n, bool nowe) {
     pathid = p + "/" + n;
     pathid.replace("//", "/");
     path = p;
     name = n;
-    loaded = -1;
-    load();
+    if(!nowe){
+        loaded = -1;
+        load();
+    } else {
+        loaded = 1;
+        modified = true;
+    }
 }
 
-Activity::Activity(QString src, QString p, QString n) {
+Activity::Activity(QString src, QString p, QString n, bool nowe) {
     pathid = src;
     path = p;
     name = n;
     loaded = -1;
-    load();
+    if(!nowe){
+        loaded = -1;
+        load();
+    } else {
+        loaded = 1;
+        modified = true;
+    }
 }
 
 void Activity::load() {
@@ -53,10 +104,13 @@ void Activity::load() {
 
     FileBuffer* data = ReadFile::read(file);
     file->close();
-    data->off = 48+16;
+    data->toUtf16();
+    data->skipBOM();
 
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-
+        if (sh == ("simisa@@@@@@@@@@jinx0a0t______")) {
+            continue;
+        }
         if (sh == ("include")) {
             QString incPath = ParserX::GetStringInside(data);
             ParserX::SkipToken(data);
@@ -717,6 +771,7 @@ void Activity::ServiceDefinition::load(FileBuffer* data) {
     if(!player)
         path = ParserX::GetNumber(data);
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        empty = false;
         if (sh == ("player_traffic_definition")) {
             trafficDefinition = new TrafficDefinition();
             trafficDefinition->load(data);
@@ -756,6 +811,17 @@ void Activity::ServiceDefinition::load(FileBuffer* data) {
 
 void Activity::ServiceDefinition::save(QTextStream* out) {
     QString woff;
+    
+    if(empty){
+        if (player){
+            woff = "";
+            *out << "		Player_Service_Definition ( )\n";
+        } else {
+            woff = "	";
+            *out << woff << "		Service_Definition ( )\n";
+        }
+        return;
+    }
     
     if (player){
         woff = "";
@@ -903,11 +969,15 @@ void Activity::ActivityHeader::save(QTextStream* out) {
     *out << "		Description ( ";
     *out << ParserX::SplitToMultiline(description, "			 ");
     *out << " )\n";
+    } else {
+    *out << "		Description ( )\n";
     }
     if (briefing.length() > 0){
     *out << "		Briefing ( ";
     *out << ParserX::SplitToMultiline(briefing, "			 ");
     *out << " )\n";
+    } else {
+    *out << "		Briefing ( )\n";
     }
     *out << "		CompleteActivity ( " << completeActivity << " )\n";
     if (type != -1)
@@ -939,6 +1009,14 @@ void Activity::ActivityHeader::save(QTextStream* out) {
     if (fuelDiesel != -1)
         *out << "		FuelDiesel ( " << fuelDiesel << " )\n";
     *out << "	)\n";
+}
+
+Activity::ActivityObject::ActivityObject(){
+    id = -1;
+}
+
+Activity::ActivityObject::ActivityObject(int tid){
+    id = tid;
 }
 
 void Activity::ActivityObject::load(FileBuffer* data) {
@@ -1006,4 +1084,58 @@ bool Activity::isUnSaved(){
                 return true;
     }
     return modified;
+}
+
+void Activity::render(GLUU* gluu, float * playerT){
+    Consist *e;
+    for (int i = 0; i < activityObjects.size(); i++){
+        e = activityObjects[i].con;
+        if(e == NULL) continue;
+        if (!e->isOnTrack)
+            e->initOnTrack(activityObjects[i].tile, activityObjects[i].direction);
+        e->renderOnTrack(gluu, playerT);
+    }
+}
+/*
+void Activity::initActivityObjects(){
+    Consist *e;
+    for (int i = 0; i < activityObjects.size(); i++){
+        e = activityObjects[i].con;
+        if(e == NULL) continue;
+        
+        e->initOnTrack(activityObjects[i].tile, activityObjects[i].direction);
+    }
+}*/
+
+void Activity::newLooseConsist(float *tdbPos){
+    float *drawPosition = new float[7];
+    TDB *tdb = Game::trackDB;
+    bool ok = tdb->getDrawPositionOnTrNode(drawPosition, tdbPos[0], tdbPos[1]);
+    if(!ok)
+        return;
+    
+    activityObjects.push_back(ActivityObject(nextActivityObjectUID++));
+    ActivityObject *ao = &activityObjects.back();
+
+    ao->objectType = "WagonsList";
+    ao->direction = 1;
+    ao->tile[0] = drawPosition[5];
+    ao->tile[1] = drawPosition[6];
+    ao->tile[2] = drawPosition[0];
+    ao->tile[3] = drawPosition[2];
+    int conId = ConLib::addCon(editorConListSelected.section("/", 0, -2), editorConListSelected.section("/", -1));
+    ao->con = new Consist(ConLib::con[conId]);
+    
+    modified = true;
+}
+
+void Activity::createNewPlayerService(QString sName, int sTime ){
+    playerServiceDefinition = new ServiceDefinition();
+    playerServiceDefinition->player = true;
+    playerServiceDefinition->empty = false;
+    playerServiceDefinition->name = sName;
+    playerServiceDefinition->uid = 0;
+    playerServiceDefinition->trafficDefinition = new TrafficDefinition();
+    playerServiceDefinition->trafficDefinition->id = sTime;
+    modified = true;
 }

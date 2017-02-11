@@ -13,7 +13,7 @@
 
 #include "PropertiesAbstract.h"
 
-class PlatformObj;
+class CarSpawnerObj;
 
 class PropertiesCarspawner : public PropertiesAbstract{
     Q_OBJECT
@@ -28,12 +28,13 @@ public slots:
     void carSpeedEnabled(QString val);
     void useCustomListEnabled(int val);
     void carspawnListSelected(QString val);
+    void bExpandEnabled();
 signals:
     
 private:
     QLineEdit carNumber;
     QLineEdit carSpeed;
-    PlatformObj* cobj;
+    CarSpawnerObj* cobj;
     QLineEdit lengthPlatform;
     QCheckBox useCustomList;
     QComboBox carspawnList;

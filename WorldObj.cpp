@@ -30,6 +30,7 @@
 #include "RulerObj.h"
 #include "SoundRegionObj.h"
 #include "SoundSourceObj.h"
+#include "CarSpawnerObj.h"
 #include "Game.h"
 #include "TS.h"
 #include "TerrainLib.h"
@@ -113,7 +114,7 @@ WorldObj* WorldObj::createObj(int sh) {
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
         (nowy)->typeID = (nowy)->siding;
     } else if (sh == TS::CarSpawner || sh == TS::CarSpawner2) {
-        nowy = (WorldObj*) (new PlatformObj());
+        nowy = (WorldObj*) (new CarSpawnerObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";     
         (nowy)->typeID = (nowy)->carspawner;
     } else if (sh == TS::LevelCr) {
@@ -193,7 +194,7 @@ WorldObj* WorldObj::createObj(QString sh) {
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";       
         (nowy)->typeID = (nowy)->siding;
     } else if (sh == "carspawner") {
-        nowy = (WorldObj*) (new PlatformObj());
+        nowy = (WorldObj*) (new CarSpawnerObj());
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";     
         (nowy)->typeID = (nowy)->carspawner;
     } else if (sh == "levelcr") {
@@ -487,6 +488,10 @@ void WorldObj::set(QString sh, FileBuffer* data) {
     }
     qDebug() << "worldObj "<<this->type<<" unknown: " << sh;
     return;
+}
+
+void WorldObj::updateSim(float deltaTime){
+    
 }
 
 void WorldObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {

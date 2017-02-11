@@ -19,9 +19,15 @@ AboutWindow::AboutWindow() {
     myImage->load("resources/load.png");
 
     QLabel* myLabel = new QLabel("");
-    myLabel->setContentsMargins(0,0,0,0);
-    QLabel* myLabel2 = new QLabel("Copyright © GokuMK, mail pgadecki@gmail.com ");
+    myLabel->setContentsMargins(0,0,0,0);   
+    
+    QLabel* myLabel2 = new QLabel("<b>User guide</b> <a href=\"http://koniec.org/tsre5/\"><b>http://koniec.org/tsre5.</b></a>");
+    myLabel2->setOpenExternalLinks(true);
     myLabel2->setContentsMargins(5,0,0,0);
+    
+    QLabel* myLabel3 = new QLabel("Copyright © GokuMK, mail pgadecki@gmail.com ");
+    myLabel3->setContentsMargins(5,0,0,0);
+  
     
     myLabel->setPixmap(QPixmap::fromImage(*myImage));
 
@@ -31,10 +37,12 @@ AboutWindow::AboutWindow() {
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(myLabel);
     mainLayout->addWidget(myLabel2);
+    mainLayout->addWidget(myLabel3);
     mainLayout->addWidget(browse);
     
     mainLayout->setAlignment(myLabel, Qt::AlignTop);
     mainLayout->setAlignment(myLabel2, Qt::AlignTop);
+    mainLayout->setAlignment(myLabel3, Qt::AlignTop);
     mainLayout->setAlignment(browse, Qt::AlignBottom);
     mainLayout->setContentsMargins(1,1,1,1);
     this->setLayout(mainLayout);

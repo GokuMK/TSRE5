@@ -8,38 +8,35 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#ifndef PATH_H
-#define	PATH_H
+#ifndef TRAFFIC_H
+#define	TRAFFIC_H
 
-#include "TDB.h"
+#include <QString>
+#include <QVector>
 
-class Path {
+class Traffic {
 public:
+    struct ServiceDefinition {
+        QString name;
+        int time;
+    };
+    
+    QVector<ServiceDefinition> service;
     QString displayName;
     QString name;
-    QString nameId;
     QString path;
     QString pathid;  
-    QString pathId;
-    QString trPathName;
-    QString trPathStart;
-    QString trPathEnd;
+    int loaded = -1;
+    int ref = 0;
     
-    QVector<float*> trackPdp;
-    QVector<unsigned int*> trPathNode;
-    
-    Path();
-    Path(QString p, QString n, bool nowe = false);
-    Path(const Path& orig);
-    virtual ~Path();
+    Traffic(QString p, QString n, bool nowe = false);
+    Traffic(const Traffic& orig);
+    virtual ~Traffic();
     void load();
-    bool isModified();
-    static void CreatePaths(TDB * tdb);
 private:
-    int loaded;
     bool modified = false;
     int serial = -1;
 };
 
-#endif	/* PATH_H */
+#endif	/* TRAFFIC_H */
 

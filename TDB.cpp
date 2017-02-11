@@ -29,6 +29,7 @@
 #include "GLUU.h"
 #include "SignalObj.h"
 
+std::unordered_map<int, TRitem*>* TDB::StaticTrackItems;
 
 TDB::TDB(TSectionDAT* tsection, bool road) {
     loaded = false;
@@ -463,15 +464,16 @@ int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
         //qDebug() <<"sect"<< sect;
         float dlugosc = this->tsection->sekcja[sect]->getDlugosc();
         //qDebug() <<"dlugosc"<< dlugosc;
-        Vector3f *aa = this->tsection->sekcja[sect]->getDrawPosition(dlugosc);
-        aa->rotateX(endNode->UiD[9], 0);  
-        aa->rotateY(M_PI + endNode->UiD[10], 0);
+        Vector3f aa;
+        this->tsection->sekcja[sect]->getDrawPosition(aa, dlugosc);
+        aa.rotateX(endNode->UiD[9], 0);  
+        aa.rotateY(M_PI + endNode->UiD[10], 0);
         float angle = this->tsection->sekcja[sect]->getAngle();
         int sid = sect;
 
-        p[0] = endNode->UiD[6] + aa->x;
-        p[1] = endNode->UiD[7] + aa->y;
-        p[2] = endNode->UiD[8] - aa->z;
+        p[0] = endNode->UiD[6] + aa.x;
+        p[1] = endNode->UiD[7] + aa.y;
+        p[2] = endNode->UiD[8] - aa.z;
         int x = endNode->UiD[4];
         int z = endNode->UiD[5];
         int xx = endNode->UiD[4];
@@ -606,21 +608,22 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     qDebug() << sect;
     float dlugosc = this->tsection->sekcja[sect]->getDlugosc();
     qDebug() << dlugosc;
-    Vector3f *aa = this->tsection->sekcja[sect]->getDrawPosition(dlugosc);
+    Vector3f aa;
+    this->tsection->sekcja[sect]->getDrawPosition(aa, dlugosc);
     //if(qe[1] > M_PI)
     //    aa->rotateX(-qe[0], 0);
     //else
     
-    aa->rotateX(qe[0], 0);  
-    aa->rotateY(M_PI + qe[1], 0);
+    aa.rotateX(qe[0], 0);  
+    aa.rotateY(M_PI + qe[1], 0);
     
     
     float angle = this->tsection->sekcja[sect]->getAngle();
     //Quat::
     //float pp[3];
-    pp[0] = pp[0] + aa->x;
-    pp[1] = pp[1] + aa->y;
-    pp[2] = -pp[2] - aa->z;
+    pp[0] = pp[0] + aa.x;
+    pp[1] = pp[1] + aa.y;
+    pp[2] = -pp[2] - aa.z;
     Game::check_coords(xx, zz, pp);
 
     this->trackNodes[end2Id] = new TRnode();
@@ -1330,7 +1333,7 @@ bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sect
     Vector3f aa;
     Vector3f aa3;
     Vector3f bb;
-    Vector3f* aa2;
+    Vector3f aa2;
     
     if(endend == 1){
         float angle = -qe[1];
@@ -1340,16 +1343,16 @@ bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sect
         //for (int i = 0; i < shp->path[startEnd].n; i++) {
             dlugosc = this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDlugosc();
             //qDebug() << dlugosc;
-            aa2 = this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(dlugosc);
-            aa2->rotateY(angle, 0);
+            this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(aa2, dlugosc);
+            aa2.rotateY(angle, 0);
             //qDebug() << "aa " << aa2->x << " "<<aa2->z;
-            aa.x+=aa2->x;
-            aa.z+=aa2->z;
+            aa.x+=aa2.x;
+            aa.z+=aa2.z;
             angle += this->tsection->sekcja[shp->path[startEnd].sect[i]]->getAngle();
-            aa2 = this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(dlugosc);
-            aa2->rotateY(angle2, 0);
-            aa3.x+=aa2->x;
-            aa3.z+=aa2->z;
+            this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(aa2, dlugosc);
+            aa2.rotateY(angle2, 0);
+            aa3.x+=aa2.x;
+            aa3.z+=aa2.z;
             angle2 += this->tsection->sekcja[shp->path[startEnd].sect[i]]->getAngle();
         }
         endp[0] = -aa3.x;
@@ -1955,11 +1958,12 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
     float sectionLength = 0;
     float length = 0;
     int idx = 0;
+    Vector3f position;
     for (int i = 0; i < n->iTrv; i++) {
         idx = n->trVectorSection[i].param[0];
         
         if(tsection->sekcja[idx] == NULL){
-            qDebug() << "nie ma sekcji " << idx;
+            //qDebug() << "nie ma sekcji " << idx;
             return false;
         } else {
             sectionLength = tsection->sekcja[idx]->getDlugosc();
@@ -1968,7 +1972,8 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
         if(length < metry)
             continue;
         
-        Vector3f *position = tsection->sekcja.at(idx)->getDrawPosition(metry - length + sectionLength);
+        tsection->sekcja.at(idx)->getDrawPosition(position, metry - length + sectionLength);
+        //qDebug() << "position"<<position.x<<position.y<<position.z;
 
         float matrix[16];
         float q[4];
@@ -1987,9 +1992,9 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
         Mat4::fromRotationTranslation(matrix, q, pos);
         Mat4::rotate(matrix, matrix, -n->trVectorSection[i].param[13], 1, 0, 0);
 
-        pos[0] = position->x;
-        pos[1] = position->y;
-        pos[2] = -position->z;
+        pos[0] = position.x;
+        pos[1] = position.y;
+        pos[2] = -position.z;
         Vec3::transformMat4(pos, pos, matrix);
         
         out[3] = -n->trVectorSection[i].param[14] - tsection->sekcja.at(idx)->getDrawAngle(metry - length + sectionLength);
@@ -2867,6 +2872,21 @@ bool TDB::deleteNulls() {
         return false;
     }
 
+void TDB::sortItemRefs(){
+    StaticTrackItems = &trackItems;
+    for(int i = 1; i <= iTRnodes; i++){
+        if(trackNodes[i]->iTri > 0){
+            int *pointer = trackNodes[i]->trItemRef;
+            int len = trackNodes[i]->iTri;
+            std::sort(pointer, pointer + len, SortItemRefsCompare );
+        }
+    }
+}
+
+bool TDB::SortItemRefsCompare(int a, int b){
+    return TDB::StaticTrackItems[0][a]->getTrackPosition() < TDB::StaticTrackItems[0][b]->getTrackPosition();
+}
+
 void TDB::replaceSignalDirJunctionId(int oldId, int newId){
     for (int i = 0; i <= this->iTRitems; i++) {
         if(trackItems[i] == NULL) continue;
@@ -2915,6 +2935,7 @@ void TDB::save() {
     if(!Game::writeTDB) return;
     
     while(deleteNulls());
+    sortItemRefs();
     this->isInitLines = false;
     
     QString sh;

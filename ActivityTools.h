@@ -24,15 +24,48 @@ public:
 
 public slots:
     void loadActFiles();
-    void fillConListAct(QString n);
+    void activitySelected(QString n);
+    void conFilesShowEnabled(QString);
     void routeLoaded(Route* r);
+    void actNewLooseConsistToolEnabled(bool val);
+    void newActButtonEnabled();
+    void cServiceEnabled(QString val);
+    void actServiceNewEnabled();
+    void msg(QString text, QString val);
     
-signals:    
+signals:
+    void enableTool(QString name);
 
 private:
     Route *route = NULL;
-    QListWidget consists;
+    QComboBox consists;
     QComboBox actShow;
+    QComboBox conFilesShow;
+    QMap<QString, QPushButton*> buttonTools;
+    
+    QLineEdit eDisplayName;
+
+    QLineEdit eDuration;
+    QLineEdit eStartTime;
+    
+    QLineEdit* eHazardAnimal;
+    QLineEdit* eHazardPeople;
+    QLineEdit* eFuelCoal;
+    QLineEdit* eFuelWater;
+    QLineEdit* eFuelDiesel;
+    QSlider sHazardAnimal;
+    QSlider sHazardPeople;
+    QSlider sFuelCoal;
+    QSlider sFuelWater;
+    QSlider sFuelDiesel;
+    
+    QComboBox cDifficulty;
+    QComboBox cSeason;
+    QComboBox cWeather;
+
+    QComboBox cService;
+    QComboBox cTraffic;
+    QComboBox cPath;
 };
 
 #endif	/* ACTIVITYTOOLS_H */

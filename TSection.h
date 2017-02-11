@@ -32,7 +32,7 @@ public:
     void getPoints(float* &ptr, float* matrix);
     void setDrawPosition(float metry);
     float getAngle();
-    Vector3f *getDrawPosition(float metry);
+    void getDrawPosition(Vector3f &out, float metry);
     void setCamPosition(float metry, float ob);
     void setCamRotation(float metry, float ob);
     float getDrawAngle(float metry);

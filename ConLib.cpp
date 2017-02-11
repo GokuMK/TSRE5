@@ -16,7 +16,8 @@
 
 int ConLib::jestcon = 0;
 std::unordered_map<int, Consist*> ConLib::con;
-    
+QVector<QString> ConLib::conFileList;
+
 ConLib::ConLib() {
 }
 
@@ -37,7 +38,7 @@ int ConLib::addCon(QString path, QString name) {
                 return (int)it->first;
             }
     }
-    //qDebug() << "Nowy " << jestcon << " con: " << pathid;
+    qDebug() << "Nowy " << jestcon << " con: " << pathid;
 
     con[jestcon] = new Consist(pathid, path, name);
 
@@ -57,6 +58,25 @@ int ConLib::loadAll(QString gameRoot){
     qDebug() << dir.count() <<" con files";
     foreach(QString engfile, dir.entryList())
         ConLib::addCon(path,engfile);
+    qDebug() << "loaded";
+    return 0;
+}
+
+int ConLib::loadSimpleList(QString gameRoot, bool reload){
+    if(ConLib::conFileList.size() > 0 && reload == false)
+        return 0;
+    QString path;
+    path = gameRoot + "/trains/consists/";
+    QDir dir(path);
+    QDir trainDir;
+    dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList()<<"*.con");
+    qDebug() << path;
+    if(!dir.exists())
+        qDebug() << "not exist";
+    qDebug() << dir.count() <<" con files";
+    foreach(QString engfile, dir.entryList())
+        ConLib::conFileList.push_back(path+engfile);
     qDebug() << "loaded";
     return 0;
 }

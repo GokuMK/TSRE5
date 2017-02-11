@@ -20,10 +20,12 @@ class ConLib {
 public:
     static int jestcon;
     static std::unordered_map<int, Consist*> con;
+    static QVector<QString> conFileList;
     ConLib();
     virtual ~ConLib();
     static int addCon(QString path, QString name);
     static int loadAll(QString gameRoot);
+    static int loadSimpleList(QString gameRoot, bool reload = false);
 private:
 
 };

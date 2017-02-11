@@ -261,13 +261,16 @@ void TSection::setDrawPosition(float metry) {
          }*/
 }
 
-Vector3f *TSection::getDrawPosition(float metry) {
+void TSection::getDrawPosition(Vector3f &out, float metry) {
 
     if (metry > this->getDlugosc())
         metry = this->getDlugosc();
     //prosta
     if (type == 0) {
-        return (new Vector3f(0, 0, metry));
+        out.x = 0;
+        out.y = 0;
+        out.z = metry;
+        return;// (new Vector3f(0, 0, metry));
     }        //krzywa
     else if (type == 1) {
         float kierunek = 1;
@@ -278,9 +281,12 @@ Vector3f *TSection::getDrawPosition(float metry) {
         Vector2f a;
         a.rotate(aa, radius);
 
-        return (new Vector3f(kierunek * a.x, 0, kierunek * a.y));
+        out.x = kierunek * a.x;
+        out.y = 0;
+        out.z = kierunek * a.y;
+        return;// (new Vector3f(kierunek * a.x, 0, kierunek * a.y));
     }
-    return new Vector3f();
+    return;
 }
 
 float TSection::getDrawAngle(float metry) {

@@ -46,6 +46,8 @@ public:
     void flip(bool flipShape);
     bool select(int value);
     void expandTrItems();
+    int getTrainType();
+    void setTrainType(int val);
     void deleteSelectedTrItem();
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);

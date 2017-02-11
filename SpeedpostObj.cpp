@@ -179,6 +179,27 @@ int SpeedpostObj::getSpeedUnitId(){
     return tdb->trackItems[this->trItemId[1]]->getSpeedPostSpeedUnitId();
 }
 
+int SpeedpostObj::getTrainType(){
+    TDB* tdb = Game::trackDB;
+    if(this->trItemId.size() < 2)
+        return 0;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return 0;
+    return tdb->trackItems[this->trItemId[1]]->getSpeedPostTrainType();
+}
+
+void SpeedpostObj::setTrainType(int val){
+    TDB* tdb = Game::trackDB;
+
+    for(int j = 0; j < this->trItemId.size()/2; j++){
+        if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
+            continue;
+        tdb->trackItems[this->trItemId[j*2+1]]->setSpeedPostTrainType(val);
+    }
+    this->modified = true; 
+}
+
+
 void SpeedpostObj::flip(bool flipShape){
     if(flipShape){
         Quat::rotateY(this->qDirection, this->qDirection, M_PI);

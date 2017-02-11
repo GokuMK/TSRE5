@@ -25,25 +25,22 @@
 
 class Ruch {
 public:
-    Ruch(TDB *t);
-    void toNext(float metry);
-    void set(int at);
-    Vector3f* getPosition();
-    int getAktTx();
-    int getAktTz();
+    Ruch();
+    void next(float m);
+    void back(float m);
+    void toNext(float m);
+    void set(int nid, int m, int tdirection);
+    float *getCurrentPosition();
+
 private:
-    TDB *trackDB;
-    int aktt = -1;
-    int idx;
-    int kierunek;
-    bool rozjazd = false;
-    float metry = 0;
-    float metrpp = 1;
-    int u = 0, i = 0, akticz = 0;
-    Vector3f pozW;
-    Vector3f pozT;
-    Vector3f pozO;
-    bool next();
+    void checkNode();
+    float kierunek = 1;
+    float direction = 1;
+    int nodeIdx;
+    float nodeDist;
+    float nodeLength;
+    float drawPosition[8];
+    //bool next();
 };
 
 #endif	/* RUCH_H */

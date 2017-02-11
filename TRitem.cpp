@@ -665,6 +665,28 @@ int TRitem::getSpeedPostSpeedUnitId(){
     return (((int)this->speedpostTrItemData[0] >> 8) & 1);
 }
 
+int TRitem::getSpeedPostTrainType(){
+    if(((int)this->speedpostTrItemData[0] >> 7) & 1)
+        return 2;
+    if(((int)this->speedpostTrItemData[0] >> 6) & 1)
+        return 1;
+    if(((int)this->speedpostTrItemData[0] >> 5) & 1)
+        return 0;
+    return 0;
+}
+
+void TRitem::setSpeedPostTrainType(int val){
+    this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] & ~(1 << 7);
+    this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] & ~(1 << 6);
+    this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] & ~(1 << 5);
+    if(val == 0)
+        this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] | (1 << 5);
+    if(val == 1)
+        this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] | (1 << 6);
+    if(val == 2)
+        this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] | (1 << 7);
+}
+
 void TRitem::addToTrackPos(float d) {
     this->trItemSData1 += d;
 }

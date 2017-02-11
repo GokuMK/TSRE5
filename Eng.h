@@ -15,6 +15,8 @@
 #include <QHash>
 
 class OglObj;
+class GLUU;
+class Ruch;
 
 class Eng {
 public:
@@ -32,7 +34,7 @@ public:
         QHash<long long int, int> id;// = -2;
     };
     
-    std::vector<Coupling> coupling;
+    QVector<Coupling> coupling;
     QString name;
     QString path;
     QString pathid;
@@ -41,7 +43,7 @@ public:
     QVector<QString> filePaths;
     
     EngShape shape;
-    std::vector<EngShape> freightanimShape;
+    QVector<EngShape> freightanimShape;
 
     QString engName;
     QString displayName;
@@ -63,6 +65,7 @@ public:
     bool kierunek = false;
     int ref = 0;
     Eng();
+    Eng(Eng *o);
     virtual ~Eng();
     Eng(QString p, QString n);
     Eng(QString src, QString p, QString n);
@@ -76,11 +79,17 @@ public:
     bool engFilter(QString q);
     bool couplingFilter(QString q);
     bool searchFilter(QString q);
+    void initOnTrack(float *tpos, int direction);
+    void renderOnTrack(GLUU* gluu, float* playerT);
+    void move(float m);
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);
 private:
     bool selected = false;
     OglObj *borderObj = NULL;
+    OglObj *ruchPoint = NULL;
+    Ruch *ruch1 = NULL;
+    Ruch *ruch2 = NULL;
     void addToFileList(QString val);
 };
 

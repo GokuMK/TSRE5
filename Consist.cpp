@@ -22,6 +22,7 @@
 #include <QFile>
 #include "GLMatrix.h"
 #include "TextObj.h"
+#include "TDB.h"
 
 std::unordered_map<int, TextObj*> Consist::txtNumbers;
 int Consist::lastTxtNumbersColor = 0;
@@ -40,7 +41,7 @@ Consist::Consist() {
     initPos();
 }
 
-Consist::Consist(Consist * con) {
+Consist::Consist(Consist * con, bool fullCopy) {
     path = con->path;
     loaded = 1;
     serial = 1;
@@ -54,6 +55,35 @@ Consist::Consist(Consist * con) {
         engItems.back().epath = con->engItems[i].epath;
         engItems.back().eng = con->engItems[i].eng;
         engItems.back().flip = con->engItems[i].flip;
+    }
+    
+    if(fullCopy){
+        lastTxtColor = con->lastTxtColor;
+        name = con->name;
+        pathid = con->pathid;
+        conName = con->conName;
+        showName = con->showName;
+        serial = con->serial;
+        maxVelocity[0] = con->maxVelocity[0];
+        maxVelocity[1] = con->maxVelocity[1];
+        nextWagonUID = con->nextWagonUID;
+        durability = con->durability;
+        conLength = con->conLength;
+        mass = con->mass;
+        emass = con->emass;
+        loaded = con->loaded;
+        isOnTrack = false;
+        kierunek = con->kierunek;
+        ref = con->ref;
+        posInit = false;
+        selectedIdx = -1;
+        textColor[0] = con->textColor[0];
+        textColor[1] = con->textColor[1];
+        textColor[2] = con->textColor[2];
+        newConsist = con->newConsist;
+        modified = con->modified;
+        defaultValue = con->defaultValue;
+        maxVelocityFixed = con->maxVelocityFixed;
     }
     
     initPos();
@@ -560,6 +590,56 @@ void Consist::render(int aktwx, int aktwz, int selectionColor, bool renderText) 
      //if(sfile[1] != -1) ShapeLib::shape[sfile[1]]->render();
      //gluu.mvPopMatrix();
      //
+}
+
+void Consist::initOnTrack(float *posTXZ, int direction){
+    if(direction > 0)
+        direction = 1;
+    
+    float posT[2];
+    Vec2::set(posT, posTXZ[0], -posTXZ[1]);
+    float pos[3];
+    float tpos[3];
+    Vec3::set(pos, posTXZ[2], 0, -posTXZ[3]);
+    
+    qDebug() << posT[0]<< posT[1];
+    qDebug() << pos[0]<< pos[1]<< pos[2];
+    
+    int ok = Game::trackDB->findNearestPositionOnTDB(posT, pos, NULL, tpos);
+    if(ok < 0) {
+        qDebug() << "coninit fail";
+        return;
+    }
+    qDebug() << "coninit init";
+    qDebug() << tpos[0];
+    
+    float conLen = 0;
+    if(engItems.size() > 0)
+        conLen = engItems[0].pos;
+    for(int i = 0; i < engItems.size(); i++){
+        engItems[i].engPointer = new Eng(Game::currentEngLib->eng[engItems[i].eng]);
+        engItems[i].engPointer->initOnTrack(tpos, direction);
+        //engItems[i].engPointer->move(26.5*i);
+        //engItems[i].engPointer->move(engItems[i].conLength);
+        engItems[i].engPointer->move(engItems[i].conLength-conLen);
+    }
+    this->isOnTrack = true;
+}
+
+void Consist::renderOnTrack(GLUU* gluu, float* playerT) {
+    if (loaded != 1) return;
+
+    int scolor = 0;
+    for(int i = 0; i < engItems.size(); i++){
+        gluu->mvPushMatrix();
+        //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0, engItems[i].pos);
+        //if(!engItems[i].flip)
+        //    Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI, 0, 1, 0);
+        //gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        
+        engItems[i].engPointer->renderOnTrack(gluu, playerT);
+        gluu->mvPopMatrix();
+    }
 }
 
 bool Consist::isNewConsist(){

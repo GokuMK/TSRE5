@@ -17,23 +17,199 @@
 #include "Eng.h"
 #include "Consist.h"
 #include "Activity.h"
+#include "GuiFunct.h"
+#include "Service.h"
+#include "Traffic.h"
+#include "Path.h"
+#include "ActivityServiceTools.h"
 
 ActivityTools::ActivityTools(QString name)
     : QWidget(){
-    QPushButton *loadActFilesButton = new QPushButton("Load Activities", this);
-    QPushButton *placeTool = new QPushButton("Place New", this);
-    QPushButton *resetRotationButton = new QPushButton("Reset Place Rot", this);
+
+    cSeason.setStyleSheet("combobox-popup: 0;");
+    cSeason.addItem("Spring",0);
+    cSeason.addItem("Summer",1);
+    cSeason.addItem("Autumn",2);
+    cSeason.addItem("Winter",3);
+    cWeather.setStyleSheet("combobox-popup: 0;");
+    cWeather.addItem("Clear",0);
+    cWeather.addItem("Rain",1);
+    cWeather.addItem("Snow",2);
+    cDifficulty.setStyleSheet("combobox-popup: 0;");
+    cDifficulty.addItem("Easy",0);
+    cDifficulty.addItem("Medium",1);
+    cDifficulty.addItem("Hard",2);
+    
+    buttonTools["actNewLooseConsistTool"] = new QPushButton("Place Consist", this);
+    QMapIterator<QString, QPushButton*> i(buttonTools);
+    while (i.hasNext()) {
+        i.next();
+        i.value()->setCheckable(true);
+    }
+    QObject::connect(buttonTools["actNewLooseConsistTool"], SIGNAL(toggled(bool)), this, SLOT(actNewLooseConsistToolEnabled(bool)));
+    
+    //QPushButton *loadActFilesButton = new QPushButton("Load Activities", this);
+    QPushButton *newActButton = new QPushButton("New Activity", this);
+    //advancedPlacenentButton->setCheckable(true);
+    QObject::connect(newActButton, SIGNAL(released()), this, SLOT(newActButtonEnabled()));
+
     //radio1->setChecked(true);
     
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
-    QLabel *label1 = new QLabel("Objects:");
-    label1->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
-    label1->setContentsMargins(3,0,0,0);
+    QLabel *label = new QLabel("Activity List:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
     vbox->addWidget(&actShow);
     actShow.setStyleSheet("combobox-popup: 0;");
+    vbox->addWidget(newActButton);
+    
+    label = new QLabel("Player:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(&cService);
+    cService.setStyleSheet("combobox-popup: 0;");
+    QGridLayout *vlist1 = new QGridLayout;
+    vlist1->setSpacing(2);
+    vlist1->setContentsMargins(0,0,1,0);
+    QPushButton *actServiceNew = new QPushButton("New");
+    QObject::connect(actServiceNew, SIGNAL(released()), this, SLOT(actServiceNewEnabled()));
+    QPushButton *actServiceEdit = new QPushButton("Edit");
+    QPushButton *actServiceClone = new QPushButton("Clone");
+    QPushButton *actServiceDelete = new QPushButton("Delete");
+    vlist1->addWidget(actServiceNew,0,0);
+    vlist1->addWidget(actServiceEdit,0,1);
+    vlist1->addWidget(actServiceClone,0,2);
+    vlist1->addWidget(actServiceDelete,0,3);
+    vbox->addItem(vlist1);
+    
+    label = new QLabel("Traffic:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(&cTraffic);
+    cTraffic.setStyleSheet("combobox-popup: 0;");
+    vlist1 = new QGridLayout;
+    vlist1->setSpacing(2);
+    vlist1->setContentsMargins(0,0,1,0);
+    QPushButton *actTrafficNew = new QPushButton("New");
+    QPushButton *actTrafficEdit = new QPushButton("Edit");
+    QPushButton *actTrafficClone = new QPushButton("Clone");
+    QPushButton *actTrafficDelete = new QPushButton("Delete");
+    vlist1->addWidget(actTrafficNew,0,0);
+    vlist1->addWidget(actTrafficEdit,0,1);
+    vlist1->addWidget(actTrafficClone,0,2);
+    vlist1->addWidget(actTrafficDelete,0,3);
+    vbox->addItem(vlist1);
+    
+    label = new QLabel("Paths:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(&cPath);
+    cPath.setStyleSheet("combobox-popup: 0;");
+    vlist1 = new QGridLayout;
+    vlist1->setSpacing(2);
+    vlist1->setContentsMargins(0,0,1,0);
+    QPushButton *actPathsNew = new QPushButton("New");
+    QPushButton *actPathsEdit = new QPushButton("Edit");
+    QPushButton *actPathsClone = new QPushButton("Clone");
+    QPushButton *actPathsDelete = new QPushButton("Delete");
+    vlist1->addWidget(actPathsNew,0,0);
+    vlist1->addWidget(actPathsEdit,0,1);
+    vlist1->addWidget(actPathsClone,0,2);
+    vlist1->addWidget(actPathsDelete,0,3);
+    vbox->addItem(vlist1);    
+   
+    label = new QLabel("Activity Objects List:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
     vbox->addWidget(&consists);
+    consists.setStyleSheet("combobox-popup: 0;");
+    vlist1 = new QGridLayout;
+    vlist1->setSpacing(2);
+    vlist1->setContentsMargins(0,0,1,0);
+    QPushButton *actConsistJump = new QPushButton("Jump To");
+    QPushButton *actConsistFlip = new QPushButton("Flip");
+    QPushButton *actConsistDelete = new QPushButton("Delete");
+    vlist1->addWidget(actConsistJump,0,0);
+    vlist1->addWidget(actConsistFlip,0,1);
+    vlist1->addWidget(actConsistDelete,0,2);
+    vlist1->addWidget(buttonTools["actNewLooseConsistTool"],0,3,1,2);
+    vbox->addItem(vlist1);
+    label = new QLabel("Consist List:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(&conFilesShow);
+    conFilesShow.setStyleSheet("combobox-popup: 0;");
+    conFilesShow.setMaxVisibleItems(35);
+    conFilesShow.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    
+    label = new QLabel("Events:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QPushButton *actEventsOpen = new QPushButton("Open Event Editor");
+    vbox->addWidget(actEventsOpen);
+    
+    label = new QLabel("Activity Info:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("Display Name:",&eDisplayName);
+    vlist->addRow("Difficulty:",&cDifficulty);
+    vlist->addRow("Duration:",&eDuration);
+    vlist->addRow("Start Time:",&eStartTime);
+    vlist->addRow("Season:",&cSeason);
+    vlist->addRow("Weather:",&cWeather);
+    vbox->addItem(vlist);
+    int row = 0;
+    int labelWidth = 70;
+    vlist1 = new QGridLayout;
+    vlist1->setSpacing(2);
+    vlist1->setContentsMargins(0,0,1,0);
+
+    eFuelCoal = GuiFunct::newQLineEdit(25,3);
+    eFuelDiesel = GuiFunct::newQLineEdit(25,3);
+    eFuelWater = GuiFunct::newQLineEdit(25,3);
+    eHazardAnimal = GuiFunct::newQLineEdit(25,3);  
+    eHazardPeople = GuiFunct::newQLineEdit(25,3);  
+            
+    vlist1->addWidget(GuiFunct::newQLabel("Fuel Coal:", labelWidth), row, 0);
+    vlist1->addWidget(eFuelCoal, row, 1);
+    vlist1->addWidget(&sFuelCoal, row++, 2);
+    sFuelCoal.setRange(0, 100);
+    sFuelCoal.setOrientation(Qt::Horizontal);
+    vlist1->addWidget(GuiFunct::newQLabel("Fuel Diesel:", labelWidth), row, 0);
+    vlist1->addWidget(eFuelDiesel, row, 1);
+    vlist1->addWidget(&sFuelDiesel, row++, 2);
+    sFuelDiesel.setRange(0, 100);
+    sFuelDiesel.setOrientation(Qt::Horizontal);
+    vlist1->addWidget(GuiFunct::newQLabel("Fuel Water:", labelWidth), row, 0);
+    vlist1->addWidget(eFuelWater, row, 1);
+    vlist1->addWidget(&sFuelWater, row++, 2);
+    sFuelWater.setRange(0, 100);
+    sFuelWater.setOrientation(Qt::Horizontal);
+    vlist1->addWidget(GuiFunct::newQLabel("Hazard Animal:", labelWidth), row, 0);
+    vlist1->addWidget(eHazardAnimal, row, 1);
+    vlist1->addWidget(&sHazardAnimal, row++, 2);
+    sHazardAnimal.setRange(0, 100);
+    sHazardAnimal.setOrientation(Qt::Horizontal);
+    vlist1->addWidget(GuiFunct::newQLabel("Hazard People:", labelWidth), row, 0);
+    vlist1->addWidget(eHazardPeople, row, 1);
+    vlist1->addWidget(&sHazardPeople, row++, 2);
+    sHazardPeople.setRange(0, 100);
+    sHazardPeople.setOrientation(Qt::Horizontal);
+    vbox->addItem(vlist1);
+    
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -41,7 +217,11 @@ ActivityTools::ActivityTools(QString name)
     QObject::connect(&consists, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(itemsSelected(QListWidgetItem*)));
     QObject::connect(&actShow, SIGNAL(activated(QString)),
-                      this, SLOT(fillConListAct(QString)));
+                      this, SLOT(activitySelected(QString)));
+    QObject::connect(&conFilesShow, SIGNAL(activated(QString)),
+                      this, SLOT(conFilesShowEnabled(QString)));
+    QObject::connect(&cService, SIGNAL(activated(QString)),
+                      this, SLOT(cServiceEnabled(QString)));
     //QObject::connect(loadActFilesButton, SIGNAL(released()),
     //                  this, SLOT(loadActFiles()));
 }
@@ -53,17 +233,93 @@ void ActivityTools::routeLoaded(Route* r){
     foreach(int id, route->activityId){
         actShow.addItem(ActLib::act[id]->header->name, QVariant(id));
     }
+    ConLib::loadSimpleList(Game::root);
+    foreach(QString name, ConLib::conFileList){
+        conFilesShow.addItem(name.section('/', -1), QVariant(name));
+    }
+    
+    cService.clear();
+    cService.addItem("UNDEFINED", QVariant(-1));
+    for(int i = 0; i < route->service.size(); i++ )
+        cService.addItem(route->service[i]->displayName, QVariant(i));
+
+    cTraffic.clear();
+    cTraffic.addItem("UNDEFINED", QVariant(-1));
+    for(int i = 0; i < route->traffic.size(); i++ )
+        cTraffic.addItem(route->traffic[i]->displayName, QVariant(i));
+
+    cPath.clear();
+    for(int i = 0; i < route->path.size(); i++ )
+        cPath.addItem(route->path[i]->displayName, QVariant(i));
 }
 
-void ActivityTools::fillConListAct(QString n){
+void ActivityTools::conFilesShowEnabled(QString val){
+    QString file = conFilesShow.currentData().toString();
+    qDebug() << file;
+    int id = actShow.currentData().toInt();
+    if(ActLib::act[id] == NULL)
+        return;
+    ActLib::act[id]->editorConListSelected = file;
+}
+
+void ActivityTools::activitySelected(QString n){
     int id = actShow.currentData().toInt();
     consists.clear();
-    Consist * e;
+    Consist *e;
+    Activity *a = ActLib::act[id];
+    
+    if(ActLib::act[id] == NULL)
+        return;
+
+    eDisplayName.setText(a->header->name);
+    eDuration.setText(QString::number(a->header->duration[0])+":"+QString::number(a->header->duration[1]));
+    eStartTime.setText(QString::number(a->header->startTime[0])+":"+QString::number(a->header->startTime[1]));
+
+    eHazardAnimal->setText(QString::number(a->header->animals));
+    eHazardPeople->setText(QString::number(a->header->workers));
+    eFuelCoal->setText(QString::number(a->header->fuelCoal));
+    eFuelWater->setText(QString::number(a->header->fuelWater));
+    eFuelDiesel->setText(QString::number(a->header->fuelDiesel));
+    sHazardAnimal.setValue(a->header->animals);
+    sHazardPeople.setValue(a->header->workers);
+    sFuelCoal.setValue(a->header->fuelCoal);
+    sFuelWater.setValue(a->header->fuelWater);
+    sFuelDiesel.setValue(a->header->fuelDiesel);
+    
+    cDifficulty.setCurrentIndex(a->header->difficulty);
+    cSeason.setCurrentIndex(a->header->season);
+    cWeather.setCurrentIndex(a->header->weather);
+    
+   
+    if(a->playerServiceDefinition == NULL){
+        cService.setCurrentIndex(0);
+    } else {
+        cService.setCurrentIndex(0);
+        QString cname = a->playerServiceDefinition->name.toLower();
+        for(int i = 0; i < cService.count() ; i++ ){
+            int id = cService.itemData(i).toInt();
+            if(id < 0)
+                continue;
+            if(route->service[id] == NULL)
+                continue;
+            //qDebug() << cname << route->service[id]->name;
+            if(cname == route->service[id]->nameId){
+                cService.setCurrentIndex(i);
+                break;
+            }
+        }
+    }
     
     for (int i = 0; i < ActLib::act[id]->activityObjects.size(); i++){
         e = ActLib::act[id]->activityObjects[i].con;
         if(e == NULL) continue;
-        new QListWidgetItem ( e->showName, &consists, i);
+        consists.addItem(e->showName, QVariant(i));
+    }
+
+    if(route != NULL){
+        //if(!ActLib::act[id]->isInitActivityObjects)
+        //    ActLib::act[id]->initActivityObjects();
+        route->activitySelected(ActLib::act[id]);
     }
 }
 
@@ -71,6 +327,78 @@ void ActivityTools::loadActFiles(){
     if(route == NULL)
         return;
     
+}
+
+void ActivityTools::actNewLooseConsistToolEnabled(bool val){
+    if(val){
+        emit enableTool("actNewLooseConsistTool");
+    } else {
+        emit enableTool("");
+    }
+}
+
+void ActivityTools::msg(QString text, QString val){
+    if(text == "toolEnabled"){
+        QMapIterator<QString, QPushButton*> i(buttonTools);
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(true);
+            i.value()->setChecked(false);
+        }
+        if(buttonTools[val] != NULL)
+            buttonTools[val]->setChecked(true);
+        i.toFront();
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(false);
+        }
+    }
+}
+
+void ActivityTools::cServiceEnabled(QString val){
+    int id = cService.currentData().toInt();
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::act[aid];
+    
+    if(id == -1){
+        a->playerServiceDefinition = NULL;
+    } else {
+        int startTime = a->header->startTime[0]*60*60 + a->header->startTime[0]*60;
+        a->createNewPlayerService(route->service[id]->nameId, startTime);
+
+    }
+    
+}
+
+void ActivityTools::newActButtonEnabled(){
+    QString pathid = Game::root + "/routes/" + Game::route + "/activities/";
+    QString name = "aaaaa1";
+    ActLib::act[ActLib::jestact] = new Activity(pathid, name+".act", true);
+    ActLib::act[ActLib::jestact]->init(Game::route, name);
+    route->activityId.push_back(ActLib::jestact);
+    
+    qDebug()<< ActLib::act[ActLib::jestact]->header->name;
+    actShow.addItem(ActLib::act[ActLib::jestact]->header->name, QVariant(ActLib::jestact));
+    actShow.setCurrentIndex(actShow.count()-1); 
+    activitySelected("");
+    
+    ActLib::jestact++;
+}
+
+void ActivityTools::actServiceNewEnabled(){
+    ActivityServiceTools sTools;
+    QString pathid = Game::root + "/routes/" + Game::route + "/services/";
+    QString name = "aaaaa1";
+    Service *s = new Service(pathid, name+".srv", true);
+    sTools.setData(s, route->path);
+    sTools.exec();
+    if(sTools.changed){
+        route->service.push_back(s);
+    }
 }
 
 ActivityTools::~ActivityTools() {

@@ -22,10 +22,10 @@ SigCfg::SigCfg() {
     QString path = Game::root + "/routes/" + Game::route + "/sigcfg.dat";
     path.replace("//", "/");
     qDebug() << path;
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly))
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
         return;
-    FileBuffer* bufor = ReadFile::read(file);
+    FileBuffer* bufor = ReadFile::read(&file);
     bufor->off += 46+16;
     //szukanie trackdb
 

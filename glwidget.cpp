@@ -78,6 +78,8 @@ void GLWidget::timerEvent(QTimerEvent * event) {
         Undo::StateEndIfLongTime();
     }
     
+    route->updateSim(camera->pozT, (float)(timeNow-lastTime)/1000.0);
+    
     lastTime = timeNow;
 
     if (Game::allowObjLag < Game::maxObjLag)
@@ -812,6 +814,10 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             TerrainLib::makeTextureFromMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == "removeTileTextureTool"){
+            TerrainLib::removeTileTextureFromMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
+        }
+        if(toolEnabled == "actNewLooseConsistTool"){
+            route->actNewLooseConsist((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
             TerrainLib::removeTileTextureFromMap((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
         }
         if(toolEnabled == ""){

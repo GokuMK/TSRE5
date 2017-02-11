@@ -98,6 +98,8 @@ public:
     void setSpeedpostNum(float val);
     void setSpeedPostSpeedUnitId(int val);
     int getSpeedPostSpeedUnitId();
+    int getSpeedPostTrainType();
+    void setSpeedPostTrainType(int val);
     SType getSpeedpostType();
     //void linkSignal(int from, int to);
     void linkSignal(int trackId, int dist);

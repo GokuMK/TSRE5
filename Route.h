@@ -23,12 +23,19 @@ class Coords;
 class Trk;
 class SoundList;
 class GLWidget;
+class Activity;
+class Service;
+class Traffic;
+class Path;
 
 class Route : public QObject {
     Q_OBJECT
 public:
     std::unordered_map<int, Tile*> tile;
-    std::vector<int> activityId;
+    QVector<int> activityId;
+    QVector<Service*> service;
+    QVector<Traffic*> traffic;
+    QVector<Path*> path;
     bool loaded = false;
     TSectionDAT *tsection; 
     SoundList* soundList;
@@ -45,12 +52,16 @@ public:
     virtual ~Route();
     WorldObj* getObj(int x, int z, int uid);
     Tile * requestTile(int x, int z);
+    void activitySelected(Activity* selected);
     void save();
     void saveTrk();
     void createNewPaths();
     void createNew();
     void loadMkrList();
     void loadActivities();
+    void loadServices();
+    void loadTraffic();
+    void loadPaths();
     void newTile(int x, int z);
     void reloadTile(int x, int z);
     void deleteObj(WorldObj* obj);
@@ -87,8 +98,10 @@ public:
     void addToTDB(WorldObj* obj);
     void newPositionTDB(WorldObj* obj, float* post, float* pos);
     void linkSignal(int x, int z, float* p, WorldObj* obj);
+    void actNewLooseConsist(int x, int z, float* p);
     void transalteObj(int x, int z, float px, float py, float pz, int uid);
     void setTDB(TDB* tdb, bool road);
+    void updateSim(float *playerT, float deltaTime);
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, int renderMode);
     void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, bool selection);
 
@@ -103,6 +116,7 @@ private:
     Coords * mkr = NULL;
     Trk * trk = NULL;
     QVector<WorldObj*> autoPlacementLastPlaced;
+    Activity* currentActivity = NULL;
 };
 
 #endif	/* ROUTE_H */

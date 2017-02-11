@@ -17,13 +17,14 @@
 class FileBuffer;
 class Consist;
 class QTextStream;
+class GLUU;
 
 class Activity {
 public:
     Activity();
     virtual ~Activity();
-    Activity(QString p, QString n);
-    Activity(QString src, QString p, QString n);
+    Activity(QString p, QString n, bool nowe = false);
+    Activity(QString src, QString p, QString n, bool nowe = false);
     
     struct ActivityObject {
         Consist* con = NULL;
@@ -31,6 +32,8 @@ public:
         float direction = 0;
         int id = 0;
         float tile[4];
+        ActivityObject();
+        ActivityObject(int tid);
         void load(FileBuffer* data);
         void save(QTextStream* out);
     };
@@ -51,6 +54,7 @@ public:
         int path = -1;
         int uid = -1;
         bool player = false;
+        bool empty = true;
         std::vector<float> efficiency;
         std::vector<int> skipCount;
         std::vector<float> distanceDownPath;
@@ -141,6 +145,8 @@ public:
         int* voltage = NULL;
         void load(FileBuffer* data);
         void save(QTextStream* out);
+        ActivityHeader();
+        ActivityHeader(QString route, QString hname);
     };
     
     QString name;
@@ -163,6 +169,14 @@ public:
     bool isUnSaved();
     void load();
     void save();
+    bool isInitActivityObjects = false;
+    //void initActivityObjects();
+    void render(GLUU* gluu, float * playerT);
+    
+    QString editorConListSelected;
+    void init(QString route, QString name);
+    void newLooseConsist(float *tdbPos);
+    void createNewPlayerService(QString sName, int sTime );
 private:
     bool modified = false;
 };

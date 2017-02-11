@@ -58,10 +58,10 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     kmm.setStyleSheet("combobox-popup: 0;");
     kmm.addItem("Kilometers");
     kmm.addItem("Miles");
-    label = new QLabel("Speed for:");
-    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
-    label->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label);
+    lSpeedFor = new QLabel("Speed for:");
+    lSpeedFor->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    lSpeedFor->setContentsMargins(3,0,0,0);
+    vbox->addWidget(lSpeedFor);
     vbox->addWidget(&ptb);
     ptb.addItem("Passenger");
     ptb.addItem("Freight");
@@ -150,7 +150,7 @@ void PropertiesSpeedpost::kmmListSelected(int val){
 
 void PropertiesSpeedpost::ptbListSelected(int val){
     if(sobj == NULL) return;
-
+    sobj->setTrainType(ptb.currentIndex());
 }
 
 void PropertiesSpeedpost::flipSignal(){
@@ -192,6 +192,8 @@ void PropertiesSpeedpost::showObj(WorldObj* obj){
         this->number.setDisabled(false);
         this->speed.setText("");
         this->number.setText(QString::number(sobj->getNumber(), 'G', 4));
+        this->lSpeedFor->hide();
+        this->ptb.hide();
     }
     if(stype == "warning" || stype == "speedsign"){
         this->speed.setDisabled(false);
@@ -200,6 +202,8 @@ void PropertiesSpeedpost::showObj(WorldObj* obj){
         this->number.setText("");
         this->speed.setText(QString::number(sobj->getSpeed(), 'G', 4));
         this->kmm.setCurrentIndex(sobj->getSpeedUnitId());
+        this->lSpeedFor->show();
+        this->ptb.show();
     }
     if(stype == "resume"){
         this->speed.setDisabled(true);
@@ -207,7 +211,11 @@ void PropertiesSpeedpost::showObj(WorldObj* obj){
         this->number.setDisabled(true);
         this->number.setText("");
         this->speed.setText("");
+        this->lSpeedFor->hide();
+        this->ptb.hide();
     }
+    
+    ptb.setCurrentIndex(sobj->getTrainType());
     
     this->eMaxPlacingDistance.setText(QString::number(sobj->MaxPlacingDistance));
 }
