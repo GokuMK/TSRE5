@@ -92,8 +92,8 @@ void PropertiesCarspawner::showObj(WorldObj* obj){
     worldObj = obj;
     cobj = (CarSpawnerObj*)obj;
     this->lengthPlatform.setText(QString::number(cobj->getLength())+" m");
-    this->carNumber.setText(QString::number(cobj->getCarNumber(),10));
-    this->carSpeed.setText(QString::number(cobj->getCarSpeed(),10));
+    this->carNumber.setText(QString::number(cobj->getCarNumber()));
+    this->carSpeed.setText(QString::number(cobj->getCarSpeed()));
     
     carspawnList.clear();
     //carspawnList.setDisabled(true);

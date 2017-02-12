@@ -68,6 +68,7 @@ public:
     void undoPlaceObj(int x, int y, int UiD);
     void removeTrackFromTDB(WorldObj* obj);
     void nextDefaultEnd();
+    void flipObject(WorldObj *obj);
     void setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, WorldObj* obj = NULL);
     void setTerrainToTrackObj(WorldObj* obj, Brush* brush);
     int getTileObjCount(int x, int z);
@@ -87,7 +88,7 @@ public:
     WorldObj* placeObject(int x, int z, float* p);
     WorldObj* placeObject(int x, int z, float* p, float* q);
     WorldObj* placeObject(int x, int z, float* p, float* q, Ref::RefItem* r);
-    WorldObj* autoPlaceObject(int x, int z, float* p);
+    WorldObj* autoPlaceObject(int x, int z, float* p, int mode);
     void replaceWorldObjPointer(WorldObj* o, WorldObj* n);
     void autoPlacementDeleteLast();
     void moveWorldObjToTile(int x, int z, WorldObj* obj);
@@ -96,7 +97,7 @@ public:
     void toggleToTDB(WorldObj* obj);
     void addToTDBIfNotExist(WorldObj* obj);
     void addToTDB(WorldObj* obj);
-    void newPositionTDB(WorldObj* obj, float* post, float* pos);
+    void newPositionTDB(WorldObj* obj);
     void linkSignal(int x, int z, float* p, WorldObj* obj);
     void actNewLooseConsist(int x, int z, float* p);
     void transalteObj(int x, int z, float px, float py, float pz, int uid);

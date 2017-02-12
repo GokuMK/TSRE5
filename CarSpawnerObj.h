@@ -79,8 +79,8 @@ public:
 private:
     int trItemId[4];
     int trItemIdCount = 0;
-    int carFrequency = 0;
-    int	carAvSpeed = 0;
+    int carFrequency = 5;
+    int	carAvSpeed = 20;
     TrackItemObj* spointer3d = NULL;
     TrackItemObj* spointer3dSelected = NULL;
     OglObj* line = NULL;

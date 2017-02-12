@@ -208,7 +208,15 @@ void TDB::loadTdb(){
             ParserX::SkipToken(bufor);
         }
     }
-
+    /*for(int i = 1; i <= iTRnodes; i++){
+        int old;
+        for(int j = 0; j < trackNodes[i]->iTri; j++){
+            if(j > 0 && old > trackItems[trackNodes[i]->trItemRef[j]]->getTrackPosition())
+                qDebug() << "--fail!--"<< old << trackItems[trackNodes[i]->trItemRef[j]]->getTrackPosition();
+            old = trackItems[trackNodes[i]->trItemRef[j]]->getTrackPosition();
+        }
+    }*/
+    
 }
 
 void TDB::loadTit(){
@@ -1537,7 +1545,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
             joinTracks(start);
         }
         
-         joinTracks(endp);
+        joinTracks(endp);
     }
     
     ////////////////////////////////

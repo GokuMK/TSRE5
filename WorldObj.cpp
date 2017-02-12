@@ -522,6 +522,10 @@ void WorldObj::setMartix(){
     Mat4::rotate(this->matrix, this->matrix, M_PI, 0, -1, 0);
 }
 
+void WorldObj::flip(bool flipShape){
+    
+}
+
 void WorldObj::translate(float px, float py, float pz){
     this->position[0]+=px;
     this->position[1]+=py;

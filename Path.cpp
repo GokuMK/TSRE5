@@ -58,6 +58,7 @@ void Path::load(){
     data->skipBOM();
 
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        //qDebug() << sh;
         if (sh == ("simisa@@@@@@@@@@jinx0p0t______")) {
             continue;
         }
@@ -103,6 +104,11 @@ void Path::load(){
                     ParserX::SkipToken(data);
                     continue;
                 }
+                if (sh == ("trpathflags")) {
+                    trPathFlags = ParserX::GetHex(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
                 if (sh == ("trpathnodes")) {
                     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                         if (sh == ("trpathnode")) {
@@ -111,7 +117,6 @@ void Path::load(){
                             trPathNode.back()[1] = ParserX::GetUInt(data);
                             trPathNode.back()[2] = ParserX::GetUInt(data);
                             trPathNode.back()[3] = ParserX::GetUInt(data);
-                            serial = ParserX::GetNumber(data);
                             ParserX::SkipToken(data);
                             continue;
                         }

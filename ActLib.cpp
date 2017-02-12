@@ -78,7 +78,7 @@ void ActLib::getUnsavedInfo(std::vector<QString>& items){
         if(e == NULL) continue;
         if(e->loaded != 1) continue;
         if(e->isUnSaved()){
-            items.push_back("[A]" + e->name );
+            items.push_back("[A] " + e->name );
         }
     }
 }

@@ -608,7 +608,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 }
                 break;
             case Qt::Key_L:
-                route->nextDefaultEnd();
+                //route->nextDefaultEnd();
                 break;
             case Qt::Key_Z:
                 //route->refreshObj(selectedObj);
@@ -627,8 +627,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
                 if(selectedObj == NULL)
                     return;
                 //route->refreshObj(selectedObj);
-                route->nextDefaultEnd();
-                route->newPositionTDB(selectedObj, (float*)lastNewObjPosT, (float*)selectedObj->firstPosition);                
+                route->flipObject(selectedObj);
                 break;
             default:
                 break;
@@ -718,7 +717,12 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
             lastNewObjPos[0] = aktPointerPos[0];
             lastNewObjPos[1] = aktPointerPos[1];
             lastNewObjPos[2] = aktPointerPos[2];
-            setSelectedObj(route->autoPlaceObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos));
+            int mode = 0;
+            if(keyControlEnabled) 
+                mode = 1;
+            if(keyShiftEnabled) 
+                mode = 2;
+            setSelectedObj(route->autoPlaceObject((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos, mode));
             if(selectedObj != NULL)
                 selectedObj->select();
             //if(route->ref->selected != NULL){

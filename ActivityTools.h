@@ -32,7 +32,25 @@ public slots:
     void cServiceEnabled(QString val);
     void actServiceNewEnabled();
     void msg(QString text, QString val);
-    
+    void eFileNameEnabled(QString val);
+    void eDisplayNameEnabled(QString val);
+    void cDifficultyEnabled(int val);
+    void eDurationEnabled();
+    void eStartTimeEnabled();
+    void cSeasonEnabled(int val);
+    void cWeatherEnabled(int val);
+    void eFuelCoalEnabled(QString val);
+    void sFuelCoalEnabled();
+    void eFuelDieselEnabled(QString val);
+    void sFuelDieselEnabled();
+    void eFuelWaterEnabled(QString val);
+    void sFuelWaterEnabled();
+    void eHazardAnimalEnabled(QString val);
+    void sHazardAnimalEnabled();
+    void eHazardPeopleEnabled(QString val);
+    void sHazardPeopleEnabled();
+    void descriptionOpenEnabled();
+    void briefingOpenEnabled();
 signals:
     void enableTool(QString name);
 
@@ -44,9 +62,10 @@ private:
     QMap<QString, QPushButton*> buttonTools;
     
     QLineEdit eDisplayName;
+    QLineEdit eFileName;
 
-    QLineEdit eDuration;
-    QLineEdit eStartTime;
+    QTimeEdit eDuration;
+    QTimeEdit eStartTime;
     
     QLineEdit* eHazardAnimal;
     QLineEdit* eHazardPeople;
@@ -66,6 +85,8 @@ private:
     QComboBox cService;
     QComboBox cTraffic;
     QComboBox cPath;
+    
+    void reloadServicesList();
 };
 
 #endif	/* ACTIVITYTOOLS_H */

@@ -132,10 +132,10 @@ void CarSpawnerObj::load(int x, int y) {
     this->skipLevel = 1;
     this->modified = false;
     
-    if(this->typeID == this->carspawner){
+    /*if(this->typeID == this->carspawner){
         this->carAvSpeed = 20;
         this->carFrequency = 5;
-    }
+    }*/
     
     carListId = 0;
     if(carspawnerListName.length() > 0){

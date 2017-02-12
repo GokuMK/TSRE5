@@ -24,6 +24,7 @@ public:
     QString trPathName;
     QString trPathStart;
     QString trPathEnd;
+    unsigned int trPathFlags;
     
     QVector<float*> trackPdp;
     QVector<unsigned int*> trPathNode;

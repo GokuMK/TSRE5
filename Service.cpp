@@ -163,7 +163,38 @@ void Service::load(){
 }
 
 void Service::save(){
+    QString tpath;
+    tpath = path+"/"+name;
+    tpath.replace("//", "/");
+    qDebug() << tpath;
+    QFile file(tpath);
+
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
     
+    out << "SIMISA@@@@@@@@@@JINX0v0t______\n";
+    out << "\n";
+    out << "Service_Definition (\n";
+    if (serial >= 0) {
+        out << "	Serial ( " << serial << " )\n";
+    }
+    out << "	Name ( "<<ParserX::AddComIfReq(displayName)<<" )\n";
+    out << "	Train_Config ( "<<ParserX::AddComIfReq(this->trainConfig)<<" )\n";
+    out << "	PathID ( "<<ParserX::AddComIfReq(this->pathId)<<" )\n";
+    out << "	MaxWheelAcceleration ( "<<this->maxWheelAcceleration<<" )\n";
+    out << "	Efficiency ( "<<this->efficiency<<" )\n";
+    out << "	TimeTable (\n";
+    out << "		StartingSpeed ( "<<this->startingSpeed<<" )\n";
+    out << "		EndingSpeed ( "<<this->endingSpeed<<" )\n";
+    out << "		StartInWorld ( "<<this->startInWorld<<" )\n";
+    out << "		EndInWorld ( "<<this->endInWorld<<" )\n";
+    out << "	)\n";
+    out << ")\n";
+    
+    file.close();
+    modified = false;
 }
 
 bool Service::isModified(){

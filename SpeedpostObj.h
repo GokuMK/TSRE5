@@ -43,7 +43,7 @@ public:
     void setNumber(float val);
     void setSpeedUnitId(int val);
     int getSpeedUnitId();
-    void flip(bool flipShape);
+    void flip(bool flipShape = true);
     bool select(int value);
     void expandTrItems();
     int getTrainType();

@@ -22,6 +22,7 @@
 #include "Traffic.h"
 #include "Path.h"
 #include "ActivityServiceTools.h"
+#include "TextEditDialog.h"
 
 ActivityTools::ActivityTools(QString name)
     : QWidget(){
@@ -164,12 +165,22 @@ ActivityTools::ActivityTools(QString name)
     QFormLayout *vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("File Name:",&eFileName);
+    QObject::connect(&eFileName, SIGNAL(textEdited(QString)), this, SLOT(eFileNameEnabled(QString)));
     vlist->addRow("Display Name:",&eDisplayName);
+    QObject::connect(&eDisplayName, SIGNAL(textEdited(QString)), this, SLOT(eDisplayNameEnabled(QString)));
     vlist->addRow("Difficulty:",&cDifficulty);
+    QObject::connect(&cDifficulty, SIGNAL(activated(int)), this, SLOT(cDifficultyEnabled(int)));
     vlist->addRow("Duration:",&eDuration);
+    QObject::connect(&eDuration, SIGNAL(editingFinished()), this, SLOT(eDurationEnabled()));
+    eDuration.setDisplayFormat("HH:mm");
     vlist->addRow("Start Time:",&eStartTime);
+    QObject::connect(&eStartTime, SIGNAL(editingFinished()), this, SLOT(eStartTimeEnabled()));
+    eStartTime.setDisplayFormat("HH:mm:ss");
     vlist->addRow("Season:",&cSeason);
+    QObject::connect(&cSeason, SIGNAL(activated(int)), this, SLOT(cSeasonEnabled(int)));
     vlist->addRow("Weather:",&cWeather);
+    QObject::connect(&cWeather, SIGNAL(activated(int)), this, SLOT(cWeatherEnabled(int)));
     vbox->addItem(vlist);
     int row = 0;
     int labelWidth = 70;
@@ -186,31 +197,45 @@ ActivityTools::ActivityTools(QString name)
     vlist1->addWidget(GuiFunct::newQLabel("Fuel Coal:", labelWidth), row, 0);
     vlist1->addWidget(eFuelCoal, row, 1);
     vlist1->addWidget(&sFuelCoal, row++, 2);
+    QObject::connect(eFuelCoal, SIGNAL(edited(QString)), this, SLOT(eFuelCoalEnabled(QString)));
+    QObject::connect(&sFuelCoal, SIGNAL(sliderReleased()), this, SLOT(sFuelCoalEnabled()));
     sFuelCoal.setRange(0, 100);
     sFuelCoal.setOrientation(Qt::Horizontal);
     vlist1->addWidget(GuiFunct::newQLabel("Fuel Diesel:", labelWidth), row, 0);
     vlist1->addWidget(eFuelDiesel, row, 1);
     vlist1->addWidget(&sFuelDiesel, row++, 2);
+    QObject::connect(eFuelDiesel, SIGNAL(edited(QString)), this, SLOT(eFuelDieselEnabled(QString)));
+    QObject::connect(&sFuelDiesel, SIGNAL(sliderReleased()), this, SLOT(sFuelDieselEnabled()));
     sFuelDiesel.setRange(0, 100);
     sFuelDiesel.setOrientation(Qt::Horizontal);
     vlist1->addWidget(GuiFunct::newQLabel("Fuel Water:", labelWidth), row, 0);
     vlist1->addWidget(eFuelWater, row, 1);
     vlist1->addWidget(&sFuelWater, row++, 2);
+    QObject::connect(eFuelWater, SIGNAL(edited(QString)), this, SLOT(eFuelWaterEnabled(QString)));
+    QObject::connect(&sFuelWater, SIGNAL(sliderReleased()), this, SLOT(sFuelWaterEnabled()));
     sFuelWater.setRange(0, 100);
     sFuelWater.setOrientation(Qt::Horizontal);
     vlist1->addWidget(GuiFunct::newQLabel("Hazard Animal:", labelWidth), row, 0);
     vlist1->addWidget(eHazardAnimal, row, 1);
     vlist1->addWidget(&sHazardAnimal, row++, 2);
+    QObject::connect(eHazardAnimal, SIGNAL(edited(QString)), this, SLOT(eHazardAnimalEnabled(QString)));
+    QObject::connect(&sHazardAnimal, SIGNAL(sliderReleased()), this, SLOT(sHazardAnimalEnabled()));
     sHazardAnimal.setRange(0, 100);
     sHazardAnimal.setOrientation(Qt::Horizontal);
     vlist1->addWidget(GuiFunct::newQLabel("Hazard People:", labelWidth), row, 0);
     vlist1->addWidget(eHazardPeople, row, 1);
     vlist1->addWidget(&sHazardPeople, row++, 2);
+    QObject::connect(eHazardPeople, SIGNAL(edited(QString)), this, SLOT(eHazardPeopleEnabled(QString)));
+    QObject::connect(&sHazardPeople, SIGNAL(sliderReleased()), this, SLOT(sHazardPeopleEnabled()));
     sHazardPeople.setRange(0, 100);
     sHazardPeople.setOrientation(Qt::Horizontal);
     vbox->addItem(vlist1);
-    
-    
+    QPushButton *descriptionOpen = new QPushButton("Edit Description");
+    QObject::connect(descriptionOpen, SIGNAL(released()), this, SLOT(descriptionOpenEnabled()));
+    vbox->addWidget(descriptionOpen);
+    QPushButton *briefingOpen = new QPushButton("Edit Briefing");
+    vbox->addWidget(briefingOpen);
+    QObject::connect(briefingOpen, SIGNAL(released()), this, SLOT(briefingOpenEnabled()));
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -233,15 +258,14 @@ void ActivityTools::routeLoaded(Route* r){
     foreach(int id, route->activityId){
         actShow.addItem(ActLib::act[id]->header->name, QVariant(id));
     }
+    actShow.setCurrentIndex(-1);
+    
     ConLib::loadSimpleList(Game::root);
     foreach(QString name, ConLib::conFileList){
         conFilesShow.addItem(name.section('/', -1), QVariant(name));
     }
     
-    cService.clear();
-    cService.addItem("UNDEFINED", QVariant(-1));
-    for(int i = 0; i < route->service.size(); i++ )
-        cService.addItem(route->service[i]->displayName, QVariant(i));
+    reloadServicesList();
 
     cTraffic.clear();
     cTraffic.addItem("UNDEFINED", QVariant(-1));
@@ -251,6 +275,18 @@ void ActivityTools::routeLoaded(Route* r){
     cPath.clear();
     for(int i = 0; i < route->path.size(); i++ )
         cPath.addItem(route->path[i]->displayName, QVariant(i));
+}
+
+void ActivityTools::reloadServicesList(){
+    cService.clear();
+    int idx = cService.currentIndex();
+
+    cService.addItem("UNDEFINED", QVariant(-1));
+    for(int i = 0; i < route->service.size(); i++ )
+        cService.addItem(route->service[i]->displayName, QVariant(i));
+    
+    if(idx >= 0)
+        cService.setCurrentIndex(idx);
 }
 
 void ActivityTools::conFilesShowEnabled(QString val){
@@ -271,9 +307,14 @@ void ActivityTools::activitySelected(QString n){
     if(ActLib::act[id] == NULL)
         return;
 
+    eFileName.setText(a->nameid);
+    if(a->isNew())
+        eFileName.setEnabled(true);
+    else
+        eFileName.setEnabled(false);
     eDisplayName.setText(a->header->name);
-    eDuration.setText(QString::number(a->header->duration[0])+":"+QString::number(a->header->duration[1]));
-    eStartTime.setText(QString::number(a->header->startTime[0])+":"+QString::number(a->header->startTime[1]));
+    eDuration.setTime(QTime(a->header->duration[0], a->header->duration[1]));
+    eStartTime.setTime(QTime(a->header->startTime[0], a->header->startTime[1], a->header->startTime[2]));
 
     eHazardAnimal->setText(QString::number(a->header->animals));
     eHazardPeople->setText(QString::number(a->header->workers));
@@ -369,15 +410,14 @@ void ActivityTools::cServiceEnabled(QString val){
     } else {
         int startTime = a->header->startTime[0]*60*60 + a->header->startTime[0]*60;
         a->createNewPlayerService(route->service[id]->nameId, startTime);
-
     }
     
 }
 
 void ActivityTools::newActButtonEnabled(){
     QString pathid = Game::root + "/routes/" + Game::route + "/activities/";
-    QString name = "aaaaa1";
-    ActLib::act[ActLib::jestact] = new Activity(pathid, name+".act", true);
+    QString name = "New Activity";
+    ActLib::act[ActLib::jestact] = new Activity(pathid, "file.act", true);
     ActLib::act[ActLib::jestact]->init(Game::route, name);
     route->activityId.push_back(ActLib::jestact);
     
@@ -396,11 +436,195 @@ void ActivityTools::actServiceNewEnabled(){
     Service *s = new Service(pathid, name+".srv", true);
     sTools.setData(s, route->path);
     sTools.exec();
-    if(sTools.changed){
+    if(sTools.changed) {
         route->service.push_back(s);
+        reloadServicesList();
     }
 }
 
+void ActivityTools::eFileNameEnabled(QString val){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    a->setFileName(val);
+}
+
+void ActivityTools::eDisplayNameEnabled(QString val){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    a->setDisplayName(val);
+}
+
+void ActivityTools::cDifficultyEnabled(int val){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    a->setDifficulty(val);
+}
+
+void ActivityTools::eDurationEnabled(){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    a->setDuration(eDuration.time().hour(),  eDuration.time().minute());
+}
+
+void ActivityTools::eStartTimeEnabled(){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    a->setStartTime(eStartTime.time().hour(), eStartTime.time().minute(), eStartTime.time().second());
+}
+
+void ActivityTools::cSeasonEnabled(int val){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    a->setSeason(val);
+}
+
+void ActivityTools::cWeatherEnabled(int val){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    a->setWeather(val);
+}
+
+void ActivityTools::eFuelCoalEnabled(QString val){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    bool ok = false;
+    int ival = val.toInt(&ok);
+    if(!ok)
+        return;
+    sFuelCoal.setValue(ival);
+    a->setFuelCoal(ival);
+}
+
+void ActivityTools::sFuelCoalEnabled(){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    eFuelCoal->setText(QString::number(sFuelCoal.value()));
+    a->setFuelCoal(sFuelCoal.value());
+}
+
+void ActivityTools::eFuelDieselEnabled(QString val){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    bool ok = false;
+    int ival = val.toInt(&ok);
+    if(!ok)
+        return;
+    sFuelDiesel.setValue(ival);
+    a->setFuelDiesel(ival);
+}
+
+void ActivityTools::sFuelDieselEnabled(){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    eFuelDiesel->setText(QString::number(sFuelDiesel.value()));
+    a->setFuelDiesel(sFuelDiesel.value());
+}
+
+void ActivityTools::eFuelWaterEnabled(QString val){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    bool ok = false;
+    int ival = val.toInt(&ok);
+    if(!ok)
+        return;
+    sFuelWater.setValue(ival);
+    a->setFuelWater(ival);
+}
+
+void ActivityTools::sFuelWaterEnabled(){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    eFuelWater->setText(QString::number(sFuelWater.value()));
+    a->setFuelWater(sFuelWater.value());
+}
+
+void ActivityTools::eHazardAnimalEnabled(QString val){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    bool ok = false;
+    int ival = val.toInt(&ok);
+    if(!ok)
+        return;
+    sHazardAnimal.setValue(ival);
+    a->setHazardAnimals(ival);
+}
+
+void ActivityTools::sHazardAnimalEnabled(){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    eHazardAnimal->setText(QString::number(sHazardAnimal.value()));
+    a->setHazardAnimals(sHazardAnimal.value());
+}
+
+void ActivityTools::eHazardPeopleEnabled(QString val){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    bool ok = false;
+    int ival = val.toInt(&ok);
+    if(!ok)
+        return;
+    sHazardPeople.setValue(ival);
+    a->setHazardWorkers(ival);
+}
+
+void ActivityTools::sHazardPeopleEnabled(){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    eHazardPeople->setText(QString::number(sHazardPeople.value()));
+    a->setHazardWorkers(sHazardPeople.value());
+}
+
+void ActivityTools::descriptionOpenEnabled(){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    TextEditDialog dialog;
+    QString txt = a->header->description;
+    txt.replace("\\n","\n");
+    dialog.textBox.setPlainText(txt);
+    dialog.setWindowTitle("Activity Description");
+    dialog.exec();
+    if(dialog.changed == 1){
+        txt = dialog.textBox.toPlainText();
+        txt.replace("\n","\\n");
+        a->setDescription(txt);
+    }
+}
+
+void ActivityTools::briefingOpenEnabled(){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    TextEditDialog dialog;
+    QString txt = a->header->briefing;
+    txt.replace("\\n","\n");
+    dialog.textBox.setPlainText(txt);
+    dialog.setWindowTitle("Activity Description");
+    dialog.exec();
+    if(dialog.changed == 1){
+        txt = dialog.textBox.toPlainText();
+        txt.replace("\n","\\n");
+        a->setBriefing(txt);
+    }
+}
+    
 ActivityTools::~ActivityTools() {
 }
 

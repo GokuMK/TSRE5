@@ -44,6 +44,7 @@
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
         <itemPath>ChooseFileDialog.h</itemPath>
         <itemPath>GuiFunct.h</itemPath>
+        <itemPath>TextEditDialog.h</itemPath>
         <itemPath>UnsavedDialog.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="math3d" projectFiles="true">
@@ -234,6 +235,7 @@
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
         <itemPath>ChooseFileDialog.cpp</itemPath>
         <itemPath>GuiFunct.cpp</itemPath>
+        <itemPath>TextEditDialog.cpp</itemPath>
         <itemPath>UnsavedDialog.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="math3d" projectFiles="true">
@@ -906,6 +908,10 @@
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TextEditDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TextEditDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TextObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TextObj.h" ex="false" tool="3" flavor2="0">
@@ -1527,6 +1533,10 @@
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TextEditDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TextEditDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TextObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TextObj.h" ex="false" tool="3" flavor2="0">
@@ -2140,6 +2150,10 @@
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TextEditDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TextEditDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TextObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2762,6 +2776,10 @@
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TextEditDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TextEditDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TextObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TextObj.h" ex="false" tool="3" flavor2="0">
@@ -3370,6 +3388,10 @@
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TextEditDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TextEditDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TextObj.cpp" ex="false" tool="1" flavor2="8">
       </item>

@@ -420,13 +420,15 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
         int length = ptr - punkty;
         qDebug() << "l "<<length;
         if(length == 0){
-            if(obj->sectionIdx != 0){
+            if(obj->sectionIdx >= 0){
                 float matrix[16];
                 for(int i = 0; i < tsection->shape[obj->sectionIdx]->path[0].n; i++){
                     memcpy(matrix, obj->matrix, sizeof(float)*16);
                     int sidx = tsection->shape[obj->sectionIdx]->path[0].sect[i];
                     tsection->sekcja[sidx]->getPoints(ptr, matrix);
                 }
+            } else {
+                //obj->getLinePoints(ptr);
             }
             length = ptr - punkty;
             qDebug() << "l "<<length;
@@ -691,17 +693,19 @@ float *fromtwovectors(float* out, float* u, float* v){
     return out;
 }
 
-WorldObj* Route::autoPlaceObject(int x, int z, float* p) {
+WorldObj* Route::autoPlaceObject(int x, int z, float* p, int mode) {
     if(ref->selected == NULL) return NULL;
     Game::check_coords(x, z, p);
     
     autoPlacementLastPlaced.clear();
-
+    
     TDB * tdb = NULL;
     if(placementAutoTargetType == 0)
         tdb = this->trackDB;
     else if(placementAutoTargetType == 1)
         tdb = this->roadDB;
+    else if(placementAutoTargetType == 2)
+        tdb = this->trackDB;
     else
         return NULL;
     
@@ -716,23 +720,46 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p) {
     int trackNodeIdx = tpos[0];
     int length = tdb->getVectorSectionLength(trackNodeIdx);
     int metry = 0;
-    float currentPosition[7];
-    float currentPosition1[7];
+    float drawPosition1[7];
+    float drawPosition2[7];
     float xyz[3];
     float *quat = Quat::create();
     float *vec1 = Vec3::create();
     vec1[2] = -1.0;
     float *vec2 = Vec3::create();
     float step = placementAutoLength;
-    for(float i = 0; i < length; i+=step ){
-        if(!tdb->getDrawPositionOnTrNode((float*)currentPosition, trackNodeIdx, i))
+    float startPos = 0;
+    float endPos = length;
+    float rot = 0;
+    if(mode == 1){
+        startPos = tpos[1];
+    }
+    if(mode == 2){
+        startPos = 0;
+        endPos = tpos[1];
+        rot = M_PI;
+    }    
+    int i1, i2;
+    for(float i = startPos; i < endPos; i+=step ){
+        if(mode == 2){
+           i1 = endPos - i;
+           i2 = i1-step;
+           if(i2 < 0)
+                i2 = 0 + 0.1;
+        } else {
+            i1 = i;
+            i2 = i1+step;
+            if(i2 > length)
+                i2 = length - 0.1;
+        }
+        if(!tdb->getDrawPositionOnTrNode((float*)drawPosition1, trackNodeIdx, i1))
             return NULL;
-        int i2 = i+step;
-        if(i2 > length)
-            i2 = length - 0.1;
-        if(!tdb->getDrawPositionOnTrNode((float*)currentPosition1, trackNodeIdx, i2))
+        if(!tdb->getDrawPositionOnTrNode((float*)drawPosition2, trackNodeIdx, i2))
             return NULL;
-        x = currentPosition[5];
+        x = drawPosition1[5];
+        z = -drawPosition1[6];
+        
+        /*x = currentPosition[5];
         z = -currentPosition[6];
         //vec1[0] = currentPosition[0];
         //vec1[1] = currentPosition[1];
@@ -744,11 +771,31 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p) {
         //Vec3::normalize(vec1, vec1);
         if(placementAutoTwoPointRot){
             fromtwovectors(quat, vec1, vec2);
+            Quat::rotateY(quat, quat, rot);
         }else {
             Quat::fill(quat);
             Quat::rotateY(quat, quat, currentPosition[3]);
             Quat::rotateX(quat, quat, -currentPosition[4]);
         }
+        */
+        drawPosition2[0] += 2048*(drawPosition2[5]-drawPosition1[5]);
+        drawPosition2[2] += 2048*(drawPosition2[6]-drawPosition1[6]);
+        float dlugosc = Vec3::distance(drawPosition1, drawPosition2);
+
+        int someval = (((drawPosition2[2]-drawPosition1[2])+0.00001f)/fabs((drawPosition2[2]-drawPosition1[2])+0.00001f));
+        float rotY = (someval+1)*(M_PI/2)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
+        float rotX = -(float)(atan((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
+
+        if(placementAutoTwoPointRot){
+            Quat::fill(quat);
+            Quat::rotateY(quat, quat, -rotY+M_PI);
+            Quat::rotateX(quat, quat, rotX);
+        }else {
+            Quat::fill(quat);
+            Quat::rotateY(quat, quat, drawPosition1[3]+rot);
+            Quat::rotateX(quat, quat, -drawPosition1[4]);
+        }
+        
         float offset[3];
         Vec3::copy(offset, placementAutoTranslationOffset);
         float offsetq[4];
@@ -759,9 +806,9 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p) {
         Vec3::transformQuat(offset, offset, quat);
         Quat::multiply(quat, quat, offsetq);
         
-        xyz[0] = currentPosition[0] + offset[0];
-        xyz[1] = currentPosition[1] + offset[1];
-        xyz[2] = -currentPosition[2] + offset[2];
+        xyz[0] = drawPosition1[0] + offset[0];
+        xyz[1] = drawPosition1[1] + offset[1];
+        xyz[2] = -drawPosition1[2] + offset[2];      
         
         autoPlacementLastPlaced.push_back(placeObject(x, z, (float*) xyz, quat, ref->selected));
     }
@@ -937,13 +984,13 @@ void Route::addToTDBIfNotExist(WorldObj* obj) {
     addToTDB(obj);
 }
 
-void Route::newPositionTDB(WorldObj* obj, float* post, float* pos) {
+void Route::newPositionTDB(WorldObj* obj) {
     int x = obj->x;//post[0];
     int z = obj->y;//post[1];
     float p[3]; 
-    p[0] = pos[0];
-    p[1] = pos[1];
-    p[2] = pos[2];
+    p[0] = obj->firstPosition[0];
+    p[1] = obj->firstPosition[1];
+    p[2] = obj->firstPosition[2];
     Game::check_coords(x, z, (float*) &p);
 
     if (obj->type == "trackobj") {
@@ -1178,6 +1225,18 @@ std::unordered_map<std::string, Coords*> Route::getMkrList(){
 void Route::nextDefaultEnd(){
     this->trackDB->nextDefaultEnd();
     this->roadDB->nextDefaultEnd();
+}
+
+void Route::flipObject(WorldObj *obj){
+    if(obj == NULL)
+        return;
+    if(obj->typeID == obj->trackobj || obj->typeID == obj->dyntrack ){
+        nextDefaultEnd();
+        newPositionTDB(obj);                
+    } else {
+        obj->flip();
+    }
+                
 }
 
 void Route::paintHeightMap(Brush* brush, int x, int z, float* p){

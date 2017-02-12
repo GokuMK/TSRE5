@@ -35,7 +35,7 @@ public:
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
-    void flip();
+    void flip(bool flipShape = true);
     bool select(int value);
     void expandTrItems();
     void deleteSelectedTrItem();

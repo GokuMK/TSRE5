@@ -97,7 +97,7 @@ void SoundRegionObj::initTrItems(float* tpos){
     this->drawPositions.clear();
 }
 
-void SoundRegionObj::flip(){
+void SoundRegionObj::flip(bool flipShape){
 
     TDB* tdb = Game::trackDB;
     for(int j = 0; j < this->trItemId.size()/2; j++){

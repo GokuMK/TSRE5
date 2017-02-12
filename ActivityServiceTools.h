@@ -28,6 +28,8 @@ public:
 public slots:
     void bOkEnabled();
     void bCancelEnabled();
+    void cPathEnabled(int val);
+    void cConFilesEnabled(int val);
     
 signals:
 

@@ -48,6 +48,8 @@ ActivityServiceTools::ActivityServiceTools() : QDialog(){
     cConFiles.setStyleSheet("combobox-popup: 0;");
     cConFiles.setMaxVisibleItems(35);
     cConFiles.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    QObject::connect(&cConFiles, SIGNAL(activated(int)),
+                      this, SLOT(cConFilesEnabled(int)));
     
     label = new QLabel("Path:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -57,7 +59,9 @@ ActivityServiceTools::ActivityServiceTools() : QDialog(){
     cPath.setStyleSheet("combobox-popup: 0;");
     cPath.setMaxVisibleItems(35);
     cPath.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    
+    QObject::connect(&cPath, SIGNAL(activated(int)),
+                      this, SLOT(cPathEnabled(int)));
+
     QPushButton * bOk = new QPushButton("OK");
     QObject::connect(bOk, SIGNAL(released()), this, SLOT(bOkEnabled()));
     QPushButton * bCancel = new QPushButton("Cancel");
@@ -81,13 +85,15 @@ ActivityServiceTools::~ActivityServiceTools() {
 void ActivityServiceTools::setData(Service *s, QVector<Path*> &path){
     service = s;
     
+    cConFiles.clear();
     ConLib::loadSimpleList(Game::root);
     foreach(QString name, ConLib::conFileList){
-        cConFiles.addItem(name.section('/', -1), QVariant(name));
+        cConFiles.addItem(name.section('/', -1), QVariant(name.section('/', -1)));
     }
-        cPath.clear();
+    
+    cPath.clear();
     for(int i = 0; i < path.size(); i++ )
-        cPath.addItem(path[i]->displayName, QVariant(i));
+        cPath.addItem(path[i]->displayName, QVariant(path[i]->nameId));
         
     eFileName.setText(s->nameId);
     eDisplayName.setText(s->displayName);
@@ -100,6 +106,15 @@ void ActivityServiceTools::bCancelEnabled(){
     this->changed = false;
     this->close();
 }
+
+void ActivityServiceTools::cPathEnabled(int val){
+
+}
+
+void ActivityServiceTools::cConFilesEnabled(int val){
+
+}
+
 void ActivityServiceTools::bOkEnabled(){
     this->changed = true;
     service->setNameId(eFileName.text());
@@ -107,5 +122,7 @@ void ActivityServiceTools::bOkEnabled(){
     service->efficiency = ePlayerPerformance.text().toFloat();
     service->startingSpeed = eStartSpeed.text().toFloat();
     service->endingSpeed = eEndSpeed.text().toFloat();
+    service->trainConfig = cConFiles.currentData().toString().section('.', 0, -2);
+    service->pathId = cPath.currentData().toString();
     this->close();
 }

@@ -56,22 +56,24 @@ Activity::ActivityHeader::ActivityHeader(QString route, QString hname){
     fuelWater = 100;
     fuelCoal = 100;
     fuelDiesel = 100;
-    animals = 100;
-    workers = 100;
+    animals = 0;
+    workers = 0;
 }
 
 Activity::~Activity() {
 }
 
-Activity::Activity(QString p, QString n, bool nowe) {
+Activity::Activity(QString p, QString n, bool isnew) {
     pathid = p + "/" + n;
     pathid.replace("//", "/");
     path = p;
     name = n;
-    if(!nowe){
+    nameid = n.section(".", 0, -2);
+    if(!isnew){
         loaded = -1;
         load();
     } else {
+        nowe = true;
         loaded = 1;
         modified = true;
     }
@@ -81,6 +83,7 @@ Activity::Activity(QString src, QString p, QString n, bool nowe) {
     pathid = src;
     path = p;
     name = n;
+    nameid = n.section(".",0,-2);
     loaded = -1;
     if(!nowe){
         loaded = -1;
@@ -291,12 +294,11 @@ void Activity::load() {
 }
 
 void Activity::save() {
-    QString sh;
-    QString path;
-    path = pathid;
-    path.replace("//", "/");
-    qDebug() << path;
-    QFile file(path);
+    QString tpath;
+    tpath = path+"/"+name;
+    tpath.replace("//", "/");
+    qDebug() << tpath;
+    QFile file(tpath);
 
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&file);
@@ -367,6 +369,7 @@ void Activity::save() {
 
     file.close();
     modified = false;
+    nowe = false;
     for(int i = 0; i < activityObjects.size(); i++){
         if(activityObjects[i].con != NULL)
             activityObjects[i].con->setModified(false);
@@ -1077,6 +1080,10 @@ void Activity::ActivityObject::save(QTextStream* out) {
     *out << "			)\n";
 }
 
+bool Activity::isNew(){
+    return nowe;
+}
+
 bool Activity::isUnSaved(){
     for(int i = 0; i < activityObjects.size(); i++){
         if(activityObjects[i].con != NULL)
@@ -1085,7 +1092,47 @@ bool Activity::isUnSaved(){
     }
     return modified;
 }
+void Activity::setFileName(QString val){
+    if(!isNew())
+        return;
+    nameid = val;
+    name = val+".act";
+    modified = true;
+}
 
+void Activity::setDisplayName(QString val){
+    header->name = val;
+    modified = true;
+}
+
+void Activity::setDifficulty(int val){
+    header->difficulty = val;
+    modified = true;
+}
+
+void Activity::setDuration(int h, int m){
+    header->duration[0] = h;
+    header->duration[1] = m;
+    modified = true;
+}
+
+void Activity::setStartTime(int h, int m, int s){
+    header->startTime[0] = h;
+    header->startTime[1] = m;
+    header->startTime[2] = s;
+    modified = true;
+}
+
+void Activity::setSeason(int val){
+    header->season = val;
+    modified = true;
+}
+
+void Activity::setWeather(int val){
+    header->weather = val;
+    modified = true;
+}
+    
 void Activity::render(GLUU* gluu, float * playerT){
     Consist *e;
     for (int i = 0; i < activityObjects.size(); i++){
@@ -1137,5 +1184,35 @@ void Activity::createNewPlayerService(QString sName, int sTime ){
     playerServiceDefinition->uid = 0;
     playerServiceDefinition->trafficDefinition = new TrafficDefinition();
     playerServiceDefinition->trafficDefinition->id = sTime;
+    modified = true;
+}
+
+void Activity::setFuelCoal(int val){
+    header->fuelCoal = val;
+}
+
+void Activity::setFuelWater(int val){
+    header->fuelWater = val;
+}
+
+void Activity::setFuelDiesel(int val){
+    header->fuelDiesel = val;
+}
+
+void Activity::setHazardWorkers(int val){
+    header->animals = val;
+}
+
+void Activity::setHazardAnimals(int val){
+    header->workers = val;
+}
+
+void Activity::setDescription(QString val){
+    header->description = val;
+    modified = true;
+}
+
+void Activity::setBriefing(QString val){
+    header->briefing = val;
     modified = true;
 }

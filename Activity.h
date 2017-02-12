@@ -23,7 +23,7 @@ class Activity {
 public:
     Activity();
     virtual ~Activity();
-    Activity(QString p, QString n, bool nowe = false);
+    Activity(QString p, QString n, bool isnew = false);
     Activity(QString src, QString p, QString n, bool nowe = false);
     
     struct ActivityObject {
@@ -150,6 +150,7 @@ public:
     };
     
     QString name;
+    QString nameid;
     QString path;
     QString pathid;  
     int loaded = -1;
@@ -166,7 +167,7 @@ public:
     std::vector<int> activityFailedSignal;
     std::vector<Event> event;
     int serial = -1;
-    bool isUnSaved();
+    
     void load();
     void save();
     bool isInitActivityObjects = false;
@@ -175,10 +176,28 @@ public:
     
     QString editorConListSelected;
     void init(QString route, QString name);
+    bool isNew();
+    bool isUnSaved();
+    void setFileName(QString val);
+    void setDisplayName(QString val);
+    void setDifficulty(int val);
+    void setDuration(int h, int m);
+    void setStartTime(int h, int m, int s);
+    void setSeason(int val);
+    void setWeather(int val);
     void newLooseConsist(float *tdbPos);
-    void createNewPlayerService(QString sName, int sTime );
+    void createNewPlayerService(QString sName, int sTime );\
+    void setFuelCoal(int val);
+    void setFuelWater(int val);
+    void setFuelDiesel(int val);
+    void setHazardWorkers(int val);
+    void setHazardAnimals(int val);
+    void setDescription(QString val);
+    void setBriefing(QString val);
+    
 private:
     bool modified = false;
+    bool nowe = false;
 };
 
 #endif	/* ACTIVITY_H */
