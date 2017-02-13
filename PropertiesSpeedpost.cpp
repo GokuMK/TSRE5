@@ -49,10 +49,10 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     vlist->addRow("Y:",&this->posY);
     vlist->addRow("Z:",&this->posZ);
     vbox->addItem(vlist);
-    label = new QLabel("Speed:");
-    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
-    label->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label);
+    speedlabel = new QLabel("Speed:");
+    speedlabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    speedlabel->setContentsMargins(3,0,0,0);
+    vbox->addWidget(speedlabel);
     vbox->addWidget(&speed);
     vbox->addWidget(&kmm);
     kmm.setStyleSheet("combobox-popup: 0;");
@@ -67,23 +67,24 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     ptb.addItem("Freight");
     ptb.addItem("Both");
     ptb.setStyleSheet("combobox-popup: 0;");
-    label = new QLabel("Number:");
+    numberlabel = new QLabel("Number:");
+    numberlabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    numberlabel->setContentsMargins(3,0,0,0);
+    vbox->addWidget(numberlabel);
+    vbox->addWidget(&number);
+    chNumberDot.setText("Show Dot");
+    vbox->addWidget(&chNumberDot);
+
+    label = new QLabel("Track Items:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
-    vbox->addWidget(&number);
     QPushButton *button = new QPushButton("Flip", this);
     vbox->addWidget(button);
     connect(button, SIGNAL(released()), this, SLOT(flipSignal()));
     chFlipShape.setText("Flip Shape");
     chFlipShape.setChecked(true);
     vbox->addWidget(&chFlipShape);
-    
-    label = new QLabel("Track Items:");
-    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
-    label->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label);
-    
     QPushButton *bDeleteSelected = new QPushButton("Delete Selected");
     vbox->addWidget(bDeleteSelected);
     QObject::connect(bDeleteSelected, SIGNAL(released()),
@@ -107,6 +108,8 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
                       this, SLOT(speedEnabled(QString)));
     QObject::connect(&number, SIGNAL(textEdited(QString)),
                       this, SLOT(numberEnabled(QString)));
+    QObject::connect(&chNumberDot, SIGNAL(stateChanged(int)),
+                      this, SLOT(numberDotEnabled(int)));
     QObject::connect(&kmm, SIGNAL(activated(int)),
         this, SLOT(kmmListSelected(int)));
     QObject::connect(&ptb, SIGNAL(activated(int)),
@@ -121,7 +124,10 @@ PropertiesSpeedpost::~PropertiesSpeedpost() {
 
 void PropertiesSpeedpost::speedEnabled(QString val){
     if(sobj == NULL) return;
-    int speedval = this->speed.text().toInt(0,10);
+    bool ok = false;
+    int speedval = this->speed.text().toInt(&ok);
+    if(!ok)
+        return;
     Undo::StateBegin();
     Undo::PushWorldObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
@@ -131,11 +137,28 @@ void PropertiesSpeedpost::speedEnabled(QString val){
 
 void PropertiesSpeedpost::numberEnabled(QString val){
     if(sobj == NULL) return;
-    float numberval = this->number.text().toInt(0,10);
+    bool ok = false;
+    float numberval = this->number.text().toFloat(&ok);
+    if(!ok)
+        return;
+    numberval = floor(numberval*100.0)/100.0;
     Undo::StateBegin();
     Undo::PushWorldObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     sobj->setNumber(numberval);
+    Undo::StateEnd();
+}
+
+void PropertiesSpeedpost::numberDotEnabled(int val){
+    if(sobj == NULL) return;
+    qDebug()<<"aaa";
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB, false);
+    if(val == 2)
+        sobj->setNumberDot(true);
+    else
+        sobj->setNumberDot(false);
     Undo::StateEnd();
 }
 
@@ -150,7 +173,10 @@ void PropertiesSpeedpost::kmmListSelected(int val){
 
 void PropertiesSpeedpost::ptbListSelected(int val){
     if(sobj == NULL) return;
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
     sobj->setTrainType(ptb.currentIndex());
+    Undo::StateEnd();
 }
 
 void PropertiesSpeedpost::flipSignal(){
@@ -186,34 +212,48 @@ void PropertiesSpeedpost::showObj(WorldObj* obj){
             QString::number(obj->qDirection[3], 'G', 4)
             );
     
+    this->chNumberDot.blockSignals(true);
     if(stype == "milepost"){
-        this->speed.setDisabled(true);
+        this->speed.hide();
         this->kmm.hide();
-        this->number.setDisabled(false);
+        this->number.show();
+        this->chNumberDot.show();
+        this->chNumberDot.setChecked(sobj->isNumberDot());
         this->speed.setText("");
+        this->speedlabel->hide();
+        this->numberlabel->show();
         this->number.setText(QString::number(sobj->getNumber(), 'G', 4));
         this->lSpeedFor->hide();
         this->ptb.hide();
     }
     if(stype == "warning" || stype == "speedsign"){
-        this->speed.setDisabled(false);
+        this->speed.show();
         this->kmm.show();
-        this->number.setDisabled(true);
+        this->number.hide();
+        this->chNumberDot.hide();
+        this->chNumberDot.setChecked(false);
         this->number.setText("");
+        this->speedlabel->show();
+        this->numberlabel->hide();
         this->speed.setText(QString::number(sobj->getSpeed(), 'G', 4));
         this->kmm.setCurrentIndex(sobj->getSpeedUnitId());
         this->lSpeedFor->show();
         this->ptb.show();
     }
     if(stype == "resume"){
-        this->speed.setDisabled(true);
+        this->speed.hide();
         this->kmm.hide();
-        this->number.setDisabled(true);
+        this->number.hide();
+        this->chNumberDot.hide();
+        this->chNumberDot.setChecked(false);
         this->number.setText("");
+        this->speedlabel->hide();
+        this->numberlabel->hide();
         this->speed.setText("");
         this->lSpeedFor->hide();
         this->ptb.hide();
     }
+    this->chNumberDot.blockSignals(false);
     
     ptb.setCurrentIndex(sobj->getTrainType());
     

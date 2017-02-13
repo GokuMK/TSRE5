@@ -50,6 +50,8 @@ public:
     void setTrainType(int val);
     void deleteSelectedTrItem();
     int getDefaultDetailLevel();
+    bool isNumberDot();
+    void setNumberDot(bool val);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
     int speedPostId = -1;

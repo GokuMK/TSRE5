@@ -11,6 +11,7 @@
 #include "SpeedPost.h"
 #include "FileBuffer.h"
 #include "ParserX.h"
+#include <math.h>
 #include <QDebug>
 
 void SpeedPost::set(QString sh, FileBuffer* data) {
@@ -51,7 +52,7 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
             this->speedResumeSignShape[i * 4 + 0] = ParserX::GetNumber(data);
             this->speedResumeSignShape[i * 4 + 1] = ParserX::GetNumber(data);
             this->speedResumeSignShape[i * 4 + 2] = ParserX::GetNumber(data);
-            this->speedResumeSignShape[i * 4 + 3] = ParserX::GetNumber(data);
+            this->speedResumeSignShape[i * 4 + 3] = ParserX::GetNumber(data)*M_PI/180.0;
         }
         return;
         return;
@@ -69,7 +70,7 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
             this->speedWarningSignShape[i * 4 + 0] = ParserX::GetNumber(data);
             this->speedWarningSignShape[i * 4 + 1] = ParserX::GetNumber(data);
             this->speedWarningSignShape[i * 4 + 2] = ParserX::GetNumber(data);
-            this->speedWarningSignShape[i * 4 + 3] = ParserX::GetNumber(data);
+            this->speedWarningSignShape[i * 4 + 3] = ParserX::GetNumber(data)*M_PI/180.0;
         }
         return;
         return;
@@ -87,7 +88,7 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
             this->speedSignShape[i * 4 + 0] = ParserX::GetNumber(data);
             this->speedSignShape[i * 4 + 1] = ParserX::GetNumber(data);
             this->speedSignShape[i * 4 + 2] = ParserX::GetNumber(data);
-            this->speedSignShape[i * 4 + 3] = ParserX::GetNumber(data);
+            this->speedSignShape[i * 4 + 3] = ParserX::GetNumber(data)*M_PI/180.0;
         }
         return;
     }

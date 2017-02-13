@@ -84,7 +84,7 @@ public:
     void getVectorSectionPoints(int x, int y, float *pos, float *&ptr);
     void getVectorSectionPoints(int x, int y, int uid, float *&ptr);
     void getVectorSectionPoints(int x, int y, int nId, int sId, float *&ptr);
-    void getVectorSectionLine(float * &buffer, int &len, int x, int y, int uid, float begin = 0, float end = 0);
+    void getVectorSectionLine(float * &buffer, int &len, int x, int y, int uid, bool useOffset = false);
     void moveItemsFrom2to1(int id2, int id1);
     int appendToJunction(int junctionId, int eId, int idx);
     int newTrack(int x, int z, float* p, float* q, int* ends, int r, int sect, int uid);

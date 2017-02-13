@@ -687,6 +687,19 @@ void TRitem::setSpeedPostTrainType(int val){
         this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] | (1 << 7);
 }
 
+bool TRitem::getSpeedPostNumberDot(){
+    if(((int)this->speedpostTrItemData[0] >> 9) & 1)
+        return true;
+    return false;
+}
+
+void TRitem::setSpeedPostNumberDot(bool val){
+    if(val)
+        this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] | (1 << 9);
+    else
+        this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] & ~(1 << 9);
+}
+
 void TRitem::addToTrackPos(float d) {
     this->trItemSData1 += d;
 }

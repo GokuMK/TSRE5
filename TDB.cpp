@@ -198,7 +198,6 @@ void TDB::loadTdb(){
                     nowy->set(sh, bufor);
                     ParserX::SkipToken(bufor);
                 }
-                //qDebug() << "itid: "<<nowy->trItemId;
                 this->trackItems[nowy->trItemId] = nowy;
 
                 ParserX::SkipToken(bufor);
@@ -1841,7 +1840,7 @@ void TDB::getLines(float * &lineBuffer, int &length, float* playerT){
     lineBuffer = this->collisionLineBuffer;
 }
 
-void TDB::getVectorSectionLine(float * &buffer, int &len, int x, int y, int uid, float begin, float end){
+void TDB::getVectorSectionLine(float * &buffer, int &len, int x, int y, int uid, bool useOffset){
     if (!loaded) return;
 
     Vector3f p;
@@ -1858,6 +1857,7 @@ void TDB::getVectorSectionLine(float * &buffer, int &len, int x, int y, int uid,
     buffer = new float[len]; 
     float* ptr = buffer;
     
+    float offset = 0;
     float dlugosc = 0;
     for (int i = 0; i < n->iTrv; i++) {
         p.set(
@@ -1870,7 +1870,10 @@ void TDB::getVectorSectionLine(float * &buffer, int &len, int x, int y, int uid,
             n->trVectorSection[i].param[14],
             n->trVectorSection[i].param[15]
         );
-        getLine(ptr, p, o, (int) n->trVectorSection[i].param[0], uid, i, dlugosc, 2);
+
+        if(useOffset)
+            offset = dlugosc;
+        getLine(ptr, p, o, (int) n->trVectorSection[i].param[0], uid, i, offset, 2);
         if(tsection->sekcja[n->trVectorSection[i].param[0]] != NULL)
             dlugosc += tsection->sekcja[n->trVectorSection[i].param[0]]->getDlugosc();
     }

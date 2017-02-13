@@ -100,6 +100,8 @@ public:
     int getSpeedPostSpeedUnitId();
     int getSpeedPostTrainType();
     void setSpeedPostTrainType(int val);
+    bool getSpeedPostNumberDot();
+    void setSpeedPostNumberDot(bool val);
     SType getSpeedpostType();
     //void linkSignal(int from, int to);
     void linkSignal(int trackId, int dist);

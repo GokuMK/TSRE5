@@ -528,7 +528,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
         if(ok < 0) return NULL;
         float* buffer;
         int len;
-        this->roadDB->getVectorSectionLine(buffer, len, playerT[0], playerT[1], tpos[0], 0, 0);
+        this->roadDB->getVectorSectionLine(buffer, len, playerT[0], playerT[1], tpos[0]);
         qDebug() << "len "<<len;
         bool ok1 = this->trackDB->getSegmentIntersectionPositionOnTDB(playerT, buffer, len, p, q, tpos);
         if(!ok1) return NULL;

@@ -162,7 +162,7 @@ void Undo::StateEnd(){
     if(currentState != NULL){
         if(currentState->modified == true){
             undoStates.push_back(currentState);
-            if(undoStates.size() > 100)
+            if(undoStates.size() > 50)
                 undoStates.removeFirst();
         } else {
             delete currentState;

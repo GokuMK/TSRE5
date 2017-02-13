@@ -465,7 +465,7 @@ void PlatformObj::makelineShape(){
         if(this->typeID == this->carspawner)
             tdb = Game::roadDB;
         int id = tdb->findTrItemNodeId(this->trItemId[1]);
-        tdb->getVectorSectionLine(ptr, length, x, y, id);
+        tdb->getVectorSectionLine(ptr, length, x, y, id, true);
         
         float beg = tdb->trackItems[this->trItemId[1]]->getTrackPosition();
         float end = tdb->trackItems[this->trItemId[3]]->getTrackPosition();

@@ -28,6 +28,7 @@ public slots:
     void flipSignal();
     void speedEnabled(QString val);
     void numberEnabled(QString val);
+    void numberDotEnabled(int val);
     void kmmListSelected(int);
     void ptbListSelected(int);
     void eMaxPlacingDistanceEnabled(QString val);
@@ -41,7 +42,10 @@ private:
     QLineEdit speedpostType;
     QLineEdit speed;
     QLineEdit number;
+    QCheckBox chNumberDot;
     QLabel *lSpeedFor;
+    QLabel *speedlabel;
+    QLabel *numberlabel;
     QComboBox ptb;
     QComboBox kmm;
     QCheckBox chFlipShape;

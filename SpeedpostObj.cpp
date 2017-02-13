@@ -188,6 +188,28 @@ int SpeedpostObj::getTrainType(){
     return tdb->trackItems[this->trItemId[1]]->getSpeedPostTrainType();
 }
 
+bool SpeedpostObj::isNumberDot(){
+    TDB* tdb = Game::trackDB;
+    if(this->trItemId.size() < 2)
+        return 0;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return 0;
+    return tdb->trackItems[this->trItemId[1]]->getSpeedPostNumberDot();
+}
+
+void SpeedpostObj::setNumberDot(bool val){
+    TDB* tdb = Game::trackDB;
+    if(this->trItemId.size() < 2)
+        return;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return;
+    for(int j = 0; j < this->trItemId.size()/2; j++){
+        if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
+            continue;
+        tdb->trackItems[this->trItemId[j*2+1]]->setSpeedPostNumberDot(val);
+    }
+}
+
 void SpeedpostObj::setTrainType(int val){
     TDB* tdb = Game::trackDB;
 
@@ -341,10 +363,17 @@ void SpeedpostObj::set(QString sh, long long int val){
                 speedSignShape[i+1] = speedPost->milepostShape[i];
         }
         
-        speedDigitTex = speedPost->speedDigitTex;
-        speedTextSize[0] = speedPost->speedTextSize[0];
-        speedTextSize[1] = speedPost->speedTextSize[1];
-        speedTextSize[2] = speedPost->speedTextSize[2];
+        if(speedPostType == 0 || speedPostType == 1 || speedPostType == 2){
+            speedDigitTex = speedPost->speedDigitTex;
+            speedTextSize[0] = speedPost->speedTextSize[0];
+            speedTextSize[1] = speedPost->speedTextSize[1];
+            speedTextSize[2] = speedPost->speedTextSize[2];
+        } else if(speedPostType == 3) {
+            speedDigitTex = speedPost->milepostDigitTex;
+            speedTextSize[0] = speedPost->milepostTextSize[0];
+            speedTextSize[1] = speedPost->milepostTextSize[1];
+            speedTextSize[2] = speedPost->milepostTextSize[2];
+        }
         return;
     }
     WorldObj::set(sh, val);
