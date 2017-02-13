@@ -105,7 +105,7 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
             this->milepostShape[i * 4 + 0] = ParserX::GetNumber(data);
             this->milepostShape[i * 4 + 1] = ParserX::GetNumber(data);
             this->milepostShape[i * 4 + 2] = ParserX::GetNumber(data);
-            this->milepostShape[i * 4 + 3] = ParserX::GetNumber(data);
+            this->milepostShape[i * 4 + 3] = ParserX::GetNumber(data)*M_PI/180.0;
         }
         return;
     }/**/

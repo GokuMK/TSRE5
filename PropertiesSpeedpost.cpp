@@ -17,7 +17,9 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     
     QDoubleValidator* doubleValidator = new QDoubleValidator(-10000, 10000, 6, this); 
     doubleValidator->setNotation(QDoubleValidator::StandardNotation);
-
+    QDoubleValidator* doubleValidator2 = new QDoubleValidator(-10000, 10000, 2, this); 
+    doubleValidator2->setNotation(QDoubleValidator::StandardNotation);
+    
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
@@ -72,6 +74,7 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     numberlabel->setContentsMargins(3,0,0,0);
     vbox->addWidget(numberlabel);
     vbox->addWidget(&number);
+    number.setValidator(doubleValidator2);
     chNumberDot.setText("Show Dot");
     vbox->addWidget(&chNumberDot);
 
@@ -141,7 +144,6 @@ void PropertiesSpeedpost::numberEnabled(QString val){
     float numberval = this->number.text().toFloat(&ok);
     if(!ok)
         return;
-    numberval = floor(numberval*100.0)/100.0;
     Undo::StateBegin();
     Undo::PushWorldObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
