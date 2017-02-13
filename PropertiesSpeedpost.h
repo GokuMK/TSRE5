@@ -29,6 +29,8 @@ public slots:
     void speedEnabled(QString val);
     void numberEnabled(QString val);
     void numberDotEnabled(int val);
+    void chCustomNumberEnabled(int val);
+    void chCustomSpeedEnabled(int val);
     void kmmListSelected(int);
     void ptbListSelected(int);
     void eMaxPlacingDistanceEnabled(QString val);
@@ -43,6 +45,8 @@ private:
     QLineEdit speed;
     QLineEdit number;
     QCheckBox chNumberDot;
+    QCheckBox chCustomSpeed;
+    QCheckBox chCustomNumber;
     QLabel *lSpeedFor;
     QLabel *speedlabel;
     QLabel *numberlabel;

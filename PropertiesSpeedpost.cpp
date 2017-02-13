@@ -54,14 +54,15 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     speedlabel = new QLabel("Speed:");
     speedlabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     speedlabel->setContentsMargins(3,0,0,0);
+    chCustomSpeed.setText("Speed instead of Number");
     vbox->addWidget(speedlabel);
+    vbox->addWidget(&chCustomSpeed);
     vbox->addWidget(&speed);
     vbox->addWidget(&kmm);
     kmm.setStyleSheet("combobox-popup: 0;");
     kmm.addItem("Kilometers");
     kmm.addItem("Miles");
     lSpeedFor = new QLabel("Speed for:");
-    lSpeedFor->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     lSpeedFor->setContentsMargins(3,0,0,0);
     vbox->addWidget(lSpeedFor);
     vbox->addWidget(&ptb);
@@ -72,7 +73,9 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     numberlabel = new QLabel("Number:");
     numberlabel->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     numberlabel->setContentsMargins(3,0,0,0);
+    chCustomNumber.setText("Number instead of Speed");
     vbox->addWidget(numberlabel);
+    vbox->addWidget(&chCustomNumber);
     vbox->addWidget(&number);
     number.setValidator(doubleValidator2);
     chNumberDot.setText("Show Dot");
@@ -113,6 +116,10 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
                       this, SLOT(numberEnabled(QString)));
     QObject::connect(&chNumberDot, SIGNAL(stateChanged(int)),
                       this, SLOT(numberDotEnabled(int)));
+    QObject::connect(&chCustomNumber, SIGNAL(stateChanged(int)),
+                      this, SLOT(chCustomNumberEnabled(int)));
+    QObject::connect(&chCustomSpeed, SIGNAL(stateChanged(int)),
+                      this, SLOT(chCustomSpeedEnabled(int)));
     QObject::connect(&kmm, SIGNAL(activated(int)),
         this, SLOT(kmmListSelected(int)));
     QObject::connect(&ptb, SIGNAL(activated(int)),
@@ -161,6 +168,46 @@ void PropertiesSpeedpost::numberDotEnabled(int val){
         sobj->setNumberDot(true);
     else
         sobj->setNumberDot(false);
+    Undo::StateEnd();
+}
+
+void PropertiesSpeedpost::chCustomNumberEnabled(int val){
+    if(sobj == NULL) return;
+    qDebug()<<"aaa";
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB, false);
+    if(val == 2){
+        sobj->setNumberInsteadSpeed(true);
+        this->number.show();
+        this->chNumberDot.show();
+        this->numberlabel->show();
+    }else{
+        sobj->setNumberInsteadSpeed(false);
+        this->number.hide();
+        this->chNumberDot.hide();
+        this->numberlabel->hide();
+    }
+    Undo::StateEnd();
+}
+
+void PropertiesSpeedpost::chCustomSpeedEnabled(int val){
+    if(sobj == NULL) return;
+    qDebug()<<"aaa";
+    Undo::StateBegin();
+    Undo::PushWorldObjData(worldObj);
+    Undo::PushTrackDB(Game::trackDB, false);
+    if(val == 2){
+        sobj->setSpeedInsteadNumber(true);
+        this->speedlabel->show();
+        this->speed.show();
+        this->kmm.show();
+    }else{
+        sobj->setSpeedInsteadNumber(false);
+        this->speedlabel->hide();
+        this->speed.hide();
+        this->kmm.hide();
+    }
     Undo::StateEnd();
 }
 
@@ -214,52 +261,64 @@ void PropertiesSpeedpost::showObj(WorldObj* obj){
             QString::number(obj->qDirection[3], 'G', 4)
             );
     
+    this->chCustomNumber.blockSignals(true);
+    this->chCustomSpeed.blockSignals(true);
     this->chNumberDot.blockSignals(true);
+    
+    this->ptb.setCurrentIndex(sobj->getTrainType());
+    this->eMaxPlacingDistance.setText(QString::number(sobj->MaxPlacingDistance));
+    this->speed.setText(QString::number(sobj->getSpeed(), 'G', 4));
+    this->number.setText(QString::number(sobj->getNumber(), 'G', 4));
+    this->kmm.setCurrentIndex(sobj->getSpeedUnitId());
+    this->chNumberDot.setChecked(sobj->isNumberDot());
+    this->chCustomSpeed.setChecked(sobj->getSpeedInsteadNumber());
+    this->chCustomNumber.setChecked(sobj->getNumberInsteadSpeed());
+    this->chCustomSpeed.hide();
+    this->speed.hide();
+    this->kmm.hide();
+    this->chCustomNumber.hide();
+    this->number.hide();
+    this->chNumberDot.hide();
+    this->speedlabel->hide();
+    this->numberlabel->hide();
+    this->lSpeedFor->hide();
+    this->ptb.hide();
+    
     if(stype == "milepost"){
-        this->speed.hide();
-        this->kmm.hide();
+        if(sobj->getSpeedInsteadNumber()){
+            this->speedlabel->show();
+            this->speed.show();
+            this->kmm.show();
+        }
+        this->chCustomSpeed.show();
         this->number.show();
         this->chNumberDot.show();
-        this->chNumberDot.setChecked(sobj->isNumberDot());
-        this->speed.setText("");
-        this->speedlabel->hide();
         this->numberlabel->show();
-        this->number.setText(QString::number(sobj->getNumber(), 'G', 4));
-        this->lSpeedFor->hide();
-        this->ptb.hide();
     }
     if(stype == "warning" || stype == "speedsign"){
         this->speed.show();
         this->kmm.show();
-        this->number.hide();
-        this->chNumberDot.hide();
-        this->chNumberDot.setChecked(false);
-        this->number.setText("");
+        if(sobj->getNumberInsteadSpeed()){
+            this->number.show();
+            this->chNumberDot.show();
+            this->numberlabel->show();
+        }
+        this->chCustomNumber.show();
         this->speedlabel->show();
-        this->numberlabel->hide();
-        this->speed.setText(QString::number(sobj->getSpeed(), 'G', 4));
-        this->kmm.setCurrentIndex(sobj->getSpeedUnitId());
         this->lSpeedFor->show();
         this->ptb.show();
     }
     if(stype == "resume"){
-        this->speed.hide();
-        this->kmm.hide();
-        this->number.hide();
-        this->chNumberDot.hide();
-        this->chNumberDot.setChecked(false);
-        this->number.setText("");
-        this->speedlabel->hide();
-        this->numberlabel->hide();
-        this->speed.setText("");
-        this->lSpeedFor->hide();
-        this->ptb.hide();
+        if(sobj->getNumberInsteadSpeed()){
+            this->number.show();
+            this->chNumberDot.show();
+            this->numberlabel->show();
+        }
+        this->chCustomNumber.show();
     }
     this->chNumberDot.blockSignals(false);
-    
-    ptb.setCurrentIndex(sobj->getTrainType());
-    
-    this->eMaxPlacingDistance.setText(QString::number(sobj->MaxPlacingDistance));
+    this->chCustomNumber.blockSignals(false);
+    this->chCustomSpeed.blockSignals(false);
 }
 
 void PropertiesSpeedpost::updateObj(WorldObj* obj){
@@ -281,6 +340,8 @@ void PropertiesSpeedpost::updateObj(WorldObj* obj){
                 QString::number(obj->qDirection[3], 'G', 4)
                 );
     }
+    
+
 }
 
 bool PropertiesSpeedpost::support(WorldObj* obj){

@@ -118,7 +118,7 @@ float SpeedpostObj::getSpeed(){
     }
     TRitem* item = Game::trackDB->trackItems[this->trItemId[1]];
     if(item == NULL) return 0;
-    return item->speedpostTrItemData[1];
+    return item->getSpeedpostSpeed();
 }
 
 float SpeedpostObj::getNumber(){
@@ -128,7 +128,7 @@ float SpeedpostObj::getNumber(){
     }
     TRitem* item = Game::trackDB->trackItems[this->trItemId[1]];
     if(item == NULL) return 0;
-    return item->speedpostTrItemData[1];
+    return item->getSpeedpostNumber();
 }
 
 void SpeedpostObj::setSpeed(float val){
@@ -142,6 +142,7 @@ void SpeedpostObj::setSpeed(float val){
             continue;
         tdb->trackItems[this->trItemId[j*2+1]]->setSpeedpostSpeed(val);
     }
+    this->modified = true; 
 }
 
 void SpeedpostObj::setNumber(float val){
@@ -153,8 +154,9 @@ void SpeedpostObj::setNumber(float val){
     for(int j = 0; j < this->trItemId.size()/2; j++){
         if(tdb->trackItems[this->trItemId[j*2+1]] == NULL)
             continue;
-        tdb->trackItems[this->trItemId[j*2+1]]->setSpeedpostNum(val);
+        tdb->trackItems[this->trItemId[j*2+1]]->setSpeedpostNumber(val);
     }
+    this->modified = true; 
 }
 
 void SpeedpostObj::setSpeedUnitId(int val){
@@ -168,6 +170,7 @@ void SpeedpostObj::setSpeedUnitId(int val){
             continue;
         tdb->trackItems[this->trItemId[j*2+1]]->setSpeedPostSpeedUnitId(val);
     }
+    this->modified = true; 
 }
 
 int SpeedpostObj::getSpeedUnitId(){
@@ -177,6 +180,44 @@ int SpeedpostObj::getSpeedUnitId(){
     if(tdb->trackItems[this->trItemId[1]] == NULL)
         return 0;
     return tdb->trackItems[this->trItemId[1]]->getSpeedPostSpeedUnitId();
+}
+
+void SpeedpostObj::setSpeedInsteadNumber(bool val){
+    TDB* tdb = Game::trackDB;
+    if(this->trItemId.size() < 2)
+        return;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return;
+    tdb->trackItems[this->trItemId[1]]->setSpeedpostSpeedInsteadNumber(val);
+    this->modified = true; 
+}
+
+void SpeedpostObj::setNumberInsteadSpeed(bool val){
+    TDB* tdb = Game::trackDB;
+    if(this->trItemId.size() < 2)
+        return;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return;
+    tdb->trackItems[this->trItemId[1]]->setSpeedpostNumberInsteadSpeed(val);
+    this->modified = true; 
+}
+
+bool SpeedpostObj::getSpeedInsteadNumber(){
+    TDB* tdb = Game::trackDB;
+    if(this->trItemId.size() < 2)
+        return 0;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return 0;
+    return tdb->trackItems[this->trItemId[1]]->getSpeedpostSpeedInsteadNumber();
+}
+
+bool SpeedpostObj::getNumberInsteadSpeed(){
+    TDB* tdb = Game::trackDB;
+    if(this->trItemId.size() < 2)
+        return 0;
+    if(tdb->trackItems[this->trItemId[1]] == NULL)
+        return 0;
+    return tdb->trackItems[this->trItemId[1]]->getSpeedpostNumberInsteadSpeed();
 }
 
 int SpeedpostObj::getTrainType(){
@@ -208,6 +249,7 @@ void SpeedpostObj::setNumberDot(bool val){
             continue;
         tdb->trackItems[this->trItemId[j*2+1]]->setSpeedPostNumberDot(val);
     }
+    this->modified = true; 
 }
 
 void SpeedpostObj::setTrainType(int val){

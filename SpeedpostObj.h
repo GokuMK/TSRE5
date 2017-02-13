@@ -43,6 +43,10 @@ public:
     void setNumber(float val);
     void setSpeedUnitId(int val);
     int getSpeedUnitId();
+    void setSpeedInsteadNumber(bool val);
+    void setNumberInsteadSpeed(bool val);
+    bool getSpeedInsteadNumber();
+    bool getNumberInsteadSpeed();
     void flip(bool flipShape = true);
     bool select(int value);
     void expandTrItems();

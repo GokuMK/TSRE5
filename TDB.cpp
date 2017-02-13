@@ -2986,7 +2986,7 @@ void TDB::save() {
                 out << "			)\n";
                 break;
             case 1:
-                out << "			TrVectorNode ( \n";
+                out << "			TrVectorNode (\n";
                 out << "				TrVectorSections ( " << trackNodes[i]->iTrv << "";
                 for (int j = 0; j < trackNodes[i]->iTrv; j++) {
                     for (int jj = 0; jj < 7; jj++) {

@@ -385,20 +385,19 @@ void TRitem::set(QString sh, FileBuffer* data) {
         speedpostTrItemDataLength = 0;
         speedpostTrItemData[0] = ParserX::GetNumberInside(data, &ok);
         /*
-        10 - speed or dot
-        9 - mph
-        8 - both
-        7 - tow
-        6 - pas
-        5 - number instead speed
-        4 - set speed
-        3 - ?
-        1, 2 - speed, warning, resume
+        9 - speed or dot
+        8 - mph
+        7 - both
+        6 - tow
+        5 - pas
+        4 - number instead speed
+        3 - speed instead number
+        2 - ?
+        0, 1 - speed, warning, resume
         00 - spost; 2 - 3;
         01 - warning 2 - 3;
         10 - speed; 2 - 3
         11 - resume; 1 - 2*/
-        //if(speedpostTrItemData[0] !=384)qDebug() << ":sp " << speedpostTrItemData[0];
         if (!ok) return;
         speedpostTrItemDataLength++;
         speedpostTrItemData[1] = ParserX::GetNumberInside(data, &ok);
@@ -620,12 +619,16 @@ void TRitem::flipSoundRegion(){
         this->trItemSRData[2] += 2 * M_PI;
 }
 
+
+
 void TRitem::setSpeedpostSpeed(float val) {
     SType stype = getSpeedpostType();
     if (stype == TRitem::RESUME) {
         return;
     }
     if (stype == TRitem::MILEPOST) {
+        if(((int)this->speedpostTrItemData[0] >> 3) & 1)
+            this->speedpostTrItemData[1] = val;
         return;
     }
     if (stype == TRitem::WARNING || stype == TRitem::SIGN) {
@@ -634,18 +637,87 @@ void TRitem::setSpeedpostSpeed(float val) {
     }
 }
 
-void TRitem::setSpeedpostNum(float val) {
+float TRitem::getSpeedpostSpeed(){
     SType stype = getSpeedpostType();
     if (stype == TRitem::RESUME) {
-        return;
-    }
-    if (stype == TRitem::MILEPOST) {
-        this->speedpostTrItemData[1] = val;
-        return;
+        return 0;
     }
     if (stype == TRitem::WARNING || stype == TRitem::SIGN) {
+        return this->speedpostTrItemData[1];
+    }
+    if (stype == TRitem::MILEPOST) {
+        if(((int)this->speedpostTrItemData[0] >> 3) & 1)
+            return this->speedpostTrItemData[1];
+    }
+    return 0;
+}
 
-        //this->speedpostTrItemData[1] = val;
+void TRitem::setSpeedpostSpeedInsteadNumber(bool val){
+    if(val){
+        if((((int)this->speedpostTrItemData[0] >> 3) & 1) == 1)
+            return;
+        this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] | (1 << 3);
+        this->speedpostTrItemData[3] = this->speedpostTrItemData[2];
+        this->speedpostTrItemData[2] = this->speedpostTrItemData[1];
+        this->speedpostTrItemData[1] = 0;
+        this->speedpostTrItemDataLength++;
+    } else {
+        if((((int)this->speedpostTrItemData[0] >> 3) & 1) == 0)
+            return;
+        this->speedpostTrItemData[0] = (int)this->speedpostTrItemData[0] & ~(1 << 3);
+        this->speedpostTrItemData[1] = this->speedpostTrItemData[2];
+        this->speedpostTrItemData[2] = this->speedpostTrItemData[3];
+        this->speedpostTrItemDataLength--;
+    }
+}
+
+bool TRitem::getSpeedpostSpeedInsteadNumber(){
+    return ((((int)this->speedpostTrItemData[0] >> 3) & 1) == 1);
+}
+
+bool TRitem::getSpeedpostNumberInsteadSpeed(){
+    return ((((int)this->speedpostTrItemData[0] >> 4) & 1) == 1);
+}
+    
+void TRitem::setSpeedpostNumberInsteadSpeed(bool val){
+    if(val){
+        if((((int)speedpostTrItemData[0] >> 4) & 1) == 1)
+            return;
+        speedpostTrItemData[0] = (int)speedpostTrItemData[0] | (1 << 4);
+        speedpostTrItemData[speedpostTrItemDataLength] = speedpostTrItemData[speedpostTrItemDataLength-1];
+        speedpostTrItemData[speedpostTrItemDataLength-1] = 0;
+        speedpostTrItemDataLength++;
+    } else {
+        if((((int)speedpostTrItemData[0] >> 4) & 1) == 0)
+            return;
+        speedpostTrItemData[0] = (int)speedpostTrItemData[0] & ~(1 << 4);
+        speedpostTrItemData[speedpostTrItemDataLength-2] = speedpostTrItemData[speedpostTrItemDataLength-1];
+        speedpostTrItemDataLength--;
+    }
+}
+    
+float TRitem::getSpeedpostNumber(){
+    SType stype = getSpeedpostType();
+    if (stype == TRitem::MILEPOST) {
+        return this->speedpostTrItemData[speedpostTrItemDataLength - 2];
+    }
+    if (stype == TRitem::WARNING || stype == TRitem::SIGN || stype == TRitem::RESUME) {
+        if(((int)this->speedpostTrItemData[0] >> 4) & 1)
+            return this->speedpostTrItemData[speedpostTrItemDataLength - 2];
+    }
+    return 0;    
+}
+    
+void TRitem::setSpeedpostNumber(float val) {
+    SType stype = getSpeedpostType();
+
+    if (stype == TRitem::MILEPOST) {
+        this->speedpostTrItemData[speedpostTrItemDataLength - 2] = val;
+        return;
+    }
+    if (stype == TRitem::WARNING || stype == TRitem::SIGN || stype == TRitem::RESUME) {
+        if(((int)this->speedpostTrItemData[0] >> 4) & 1)
+            this->speedpostTrItemData[speedpostTrItemDataLength - 2] = val;
         return;
     }
 }

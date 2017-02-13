@@ -95,7 +95,13 @@ public:
     void flipSpeedpost();
     void flipSoundRegion();
     void setSpeedpostSpeed(float val);
-    void setSpeedpostNum(float val);
+    void setSpeedpostNumber(float val);
+    float getSpeedpostSpeed();
+    float getSpeedpostNumber();
+    void setSpeedpostSpeedInsteadNumber(bool val);
+    void setSpeedpostNumberInsteadSpeed(bool val);
+    bool getSpeedpostSpeedInsteadNumber();
+    bool getSpeedpostNumberInsteadSpeed();
     void setSpeedPostSpeedUnitId(int val);
     int getSpeedPostSpeedUnitId();
     int getSpeedPostTrainType();
