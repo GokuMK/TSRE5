@@ -111,8 +111,8 @@ public:
     SType getSpeedpostType();
     //void linkSignal(int from, int to);
     void linkSignal(int trackId, int dist);
-    void enableSignalSubObjFlag(int i);
-    void disableSignalSubObjFlag(int i);
+    void enableSignalSubObjFlag(QString sType);
+    void disableSignalSubObjFlag(QString sType);
     void refresh();
     float getTrackPosition();
     void setTrackPosition(float val);

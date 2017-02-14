@@ -71,6 +71,10 @@ void SignalObj::load(int x, int y) {
     this->modified = false;
     this->signalShape = Game::trackDB->sigCfg->signalShape[fileName.toStdString()];
     setMartix();
+    
+    // chec flags
+    //QStringList list;
+    //checkFlags(list);
 }
 
 bool SignalObj::allowNew(){
@@ -293,7 +297,18 @@ void SignalObj::enableSubObj(int i){
         if(base < 0)
             return;
         tdb->enableSignalSubObj(this->fileName, this->signalUnit[i], i, this->signalUnit[base].itemId );
+        for(int j = 0; j < 32; j++){
+            //qDebug() << ((this->signalSubObj >> j) & 1);
+            if(!((this->signalSubObj >> j) & 1))
+                continue;
+            if(this->signalUnit[j].head)
+                continue;
+            //qDebug() << signalShape->subObj[i].backFacing << signalShape->subObj[j].backFacing;
+            if(signalShape->subObj[i].backFacing == signalShape->subObj[j].backFacing)
+                tdb->trackItems[this->signalUnit[i].itemId]->enableSignalSubObjFlag(signalShape->subObj[j].sigSubType);
+        }
     }
+    
     // set signal unit flag enabled
     this->signalSubObj = this->signalSubObj | (1 << i);
     
@@ -307,7 +322,7 @@ void SignalObj::enableSubObj(int i){
             if(tdb->trackItems[this->signalUnit[j].itemId] == NULL)
                 continue;
             if(signalShape->subObj[i].backFacing == signalShape->subObj[j].backFacing)
-                tdb->trackItems[this->signalUnit[j].itemId]->enableSignalSubObjFlag(signalShape->subObj[i].faceidx);
+                tdb->trackItems[this->signalUnit[j].itemId]->enableSignalSubObjFlag(signalShape->subObj[i].sigSubType);
         }
     this->modified = true;
     return;
@@ -339,9 +354,92 @@ void SignalObj::disableSubObj(int i){
             if(tdb->trackItems[this->signalUnit[j].itemId] == NULL)
                 continue;
             if(signalShape->subObj[i].backFacing == signalShape->subObj[j].backFacing)
-                tdb->trackItems[this->signalUnit[j].itemId]->disableSignalSubObjFlag(signalShape->subObj[i].faceidx);
+                tdb->trackItems[this->signalUnit[j].itemId]->disableSignalSubObjFlag(signalShape->subObj[i].sigSubType);
         }
     this->modified = true; 
+}
+
+void SignalObj::checkFlags(QStringList &list){
+    TDB* tdb = Game::trackDB;
+    unsigned int tFlags[32];
+    for(int i = 0; i < 32; i++){
+        if(!signalUnit[i].enabled)
+            continue;
+        if(!signalUnit[i].head)
+            continue;
+        if(tdb->trackItems[signalUnit[i].itemId] == NULL)
+            continue;
+        list.push_back(ParserX::MakeFlagsString(tdb->trackItems[signalUnit[i].itemId]->trSignalType1));
+        
+        tFlags[i] = 0;
+        if(signalShape->subObj[i].isJnLink)
+            tFlags[i] |= 0b0000001;
+        for(int j = 0; j < 32; j++){
+            if(!((this->signalSubObj >> j) & 1))
+                continue;
+            if(this->signalUnit[j].head)
+                continue;
+            if(signalShape->subObj[i].backFacing != signalShape->subObj[j].backFacing)
+                continue;
+            if(signalShape->subObj[j].sigSubType == "NUMBER_PLATE")
+                tFlags[i] |= 0b0000010000;
+            if(signalShape->subObj[j].sigSubType == "GRADIENT_PLATE")
+                tFlags[i] |= 0b0000100000;
+            if(signalShape->subObj[j].sigSubType == "USER1")
+                tFlags[i] |= 0b0001000000;
+            if(signalShape->subObj[j].sigSubType == "USER2")
+                tFlags[i] |= 0b0010000000;
+            if(signalShape->subObj[j].sigSubType == "USER3")
+                tFlags[i] |= 0b0100000000;
+            if(signalShape->subObj[j].sigSubType == "USER4")
+                tFlags[i] |= 0b1000000000;
+        }
+        
+        list.back() += " " + ParserX::MakeFlagsString(tFlags[i]);
+        if(list.back().split(" ")[0] != list.back().split(" ")[1]){
+            //qDebug() << "[E] --- signal flags fail: "<< list.back();
+            list.back() += " [E]";
+        }
+    }
+}
+
+void SignalObj::fixFlags(){
+    TDB* tdb = Game::trackDB;
+    unsigned int tFlags;
+    for(int i = 0; i < 32; i++){
+        if(!signalUnit[i].enabled)
+            continue;
+        if(!signalUnit[i].head)
+            continue;
+        if(tdb->trackItems[signalUnit[i].itemId] == NULL)
+            continue;
+        
+        tFlags = 0;
+        if(signalShape->subObj[i].isJnLink)
+            tFlags |= 0b0000001;
+        for(int j = 0; j < 32; j++){
+            if(!((this->signalSubObj >> j) & 1))
+                continue;
+            if(this->signalUnit[j].head)
+                continue;
+            if(signalShape->subObj[i].backFacing != signalShape->subObj[j].backFacing)
+                continue;
+            if(signalShape->subObj[j].sigSubType == "NUMBER_PLATE")
+                tFlags |= 0b0000010000;
+            if(signalShape->subObj[j].sigSubType == "GRADIENT_PLATE")
+                tFlags |= 0b0000100000;
+            if(signalShape->subObj[j].sigSubType == "USER1")
+                tFlags |= 0b0001000000;
+            if(signalShape->subObj[j].sigSubType == "USER2")
+                tFlags |= 0b0010000000;
+            if(signalShape->subObj[j].sigSubType == "USER3")
+                tFlags |= 0b0100000000;
+            if(signalShape->subObj[j].sigSubType == "USER4")
+                tFlags |= 0b1000000000;
+        }
+        tdb->trackItems[signalUnit[i].itemId]->trSignalType1 = tFlags;
+    }
+    this->modified = true;
 }
 
 void SignalObj::flip(bool flipShape){

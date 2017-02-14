@@ -2536,15 +2536,29 @@ void TDB::newSignalObject(QString filename, SignalObj::SignalUnit* units, int &s
     signalUnits = 0;
     int enabledFrontFlag = 0;
     int enabledBackFlag = 0;
+    int *enableFlag = NULL;
     for(int i = 0; i < sShape->iSubObj; i++){
         if(sShape->subObj[i].optional && (!sShape->subObj[i].defaultt))
             continue;
         if(sShape->subObj[i].sigSubTypeId == sShape->SIGNAL_HEAD)
             continue;
         if(sShape->subObj[i].backFacing)
-            enabledBackFlag |= 1 << (sShape->subObj[i].faceidx+3);
+            enableFlag = &enabledBackFlag;//|= 1 << (sShape->subObj[i].faceidx+3);
         else
-            enabledFrontFlag |= 1 << (sShape->subObj[i].faceidx+3);
+            enableFlag = &enabledFrontFlag;//|= 1 << (sShape->subObj[i].faceidx+3);
+        
+        if(sShape->subObj[i].sigSubType == "NUMBER_PLATE")
+            *enableFlag |= 0b0000010000;
+        if(sShape->subObj[i].sigSubType == "GRADIENT_PLATE")
+            *enableFlag |= 0b0000100000;
+        if(sShape->subObj[i].sigSubType == "USER1")
+            *enableFlag |= 0b0001000000;
+        if(sShape->subObj[i].sigSubType == "USER2")
+            *enableFlag |= 0b0010000000;
+        if(sShape->subObj[i].sigSubType == "USER3")
+            *enableFlag |= 0b0100000000;
+        if(sShape->subObj[i].sigSubType == "USER4")
+            *enableFlag |= 0b1000000000;
     }
     
     for(int i = 0; i < sShape->iSubObj; i++){

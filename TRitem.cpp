@@ -179,12 +179,37 @@ void TRitem::setPickupContent(float val) {
     this->pickupTrItemData1 = val;
 }
 
-void TRitem::enableSignalSubObjFlag(int i) {
-    this->trSignalType1 = this->trSignalType1 | (1 << (i + 3));
+void TRitem::enableSignalSubObjFlag(QString sType) {
+    qDebug() << sType;
+    //this->trSignalType1 = this->trSignalType1 | (1 << (i + 3));
+        if(sType == "NUMBER_PLATE")
+            trSignalType1 |= 0b0000010000;
+        if(sType == "GRADIENT_PLATE")
+            trSignalType1 |= 0b0000100000;
+        if(sType == "USER1")
+            trSignalType1 |= 0b0001000000;
+        if(sType == "USER2")
+            trSignalType1 |= 0b0010000000;
+        if(sType == "USER3")
+            trSignalType1 |= 0b0100000000;
+        if(sType == "USER4")
+            trSignalType1 |= 0b1000000000;
 }
 
-void TRitem::disableSignalSubObjFlag(int i) {
-    this->trSignalType1 = this->trSignalType1 & ~(1 << (i + 3));
+void TRitem::disableSignalSubObjFlag(QString sType) {
+    //this->trSignalType1 = this->trSignalType1 & ~(1 << (i + 3));
+        if(sType == "NUMBER_PLATE")
+            trSignalType1 &= ~(0b0000010000);
+        if(sType == "GRADIENT_PLATE")
+            trSignalType1 &= ~(0b0000100000);
+        if(sType == "USER1")
+            trSignalType1 &= ~(0b0001000000);
+        if(sType == "USER2")
+            trSignalType1 &= ~(0b0010000000);
+        if(sType == "USER3")
+            trSignalType1 &= ~(0b0100000000);
+        if(sType == "USER4")
+            trSignalType1 &= ~(0b1000000000);
 }
 
 TRitem::TRitem() {

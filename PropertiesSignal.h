@@ -32,6 +32,8 @@ public slots:
     void checkboxAnimEdited(int val);
     void checkboxTerrainEdited(int val);
     void cShadowTypeEdited(int val);
+    void hacksButtonEnabled();
+    void haxFixFlagsEnabled();
     void msg(QString name, QString val);
     
 signals:

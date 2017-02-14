@@ -45793,7 +45793,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o: PropertiesSignal
 		C:/QT/Static/5.7.0/include/QtGui/QPainter \
 		SigCfg.h \
 		SignalShape.h \
-		ParserX.h
+		ParserX.h \
+		TextEditDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSignal.o PropertiesSignal.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/PropertiesSoundRegion.o: PropertiesSoundRegion.cpp PropertiesSoundRegion.h \

@@ -17,6 +17,7 @@
 #include "SignalShape.h"
 #include "ParserX.h"
 #include "Game.h"
+#include "TextEditDialog.h"
 
 PropertiesSignal::PropertiesSignal() {
     signalWindow = new SignalWindow();
@@ -97,24 +98,15 @@ PropertiesSignal::PropertiesSignal() {
     vbox->addWidget(&cShadowType);
     QObject::connect(&cShadowType, SIGNAL(currentIndexChanged(int)),
                       this, SLOT(cShadowTypeEdited(int)));
-    /*for(int i = 0; i < maxSubObj; i++){
-        this->chSub[i].setText("");
-        vSub[i].setSpacing(2);
-        vSub[i].setContentsMargins(3,0,1,0);    
-        dSub[i].setEnabled(false);
-        vSub[i].addWidget(&this->chSub[i],0,0);
-        vSub[i].addWidget(&this->bSub[i],0,1);
-        vSub[i].addWidget(&this->dSub[i],1,0,1,2);
-        wSub[i].setLayout(&vSub[i]);
-        vbox->addWidget(&wSub[i]);
-        wSub[i].hide();
-
-        signalsChSect.setMapping(&chSub[i], i);
-        connect(&chSub[i], SIGNAL(clicked()), &signalsChSect, SLOT(map()));
-    }*/
-
-    //QObject::connect(&signalsChSect, SIGNAL(mapped(int)),
-    //    this, SLOT(chSubEnabled(int)));
+    
+    label = new QLabel("Advanced:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QPushButton *hacks = new QPushButton("Hacks", this);
+    QObject::connect(hacks, SIGNAL(released()),
+                      this, SLOT(hacksButtonEnabled()));
+    vbox->addWidget(hacks);
     
     QObject::connect(signalWindow, SIGNAL(sendMsg(QString,QString)),
         this, SLOT(msg(QString,QString)));   
@@ -239,4 +231,54 @@ void PropertiesSignal::cShadowTypeEdited(int val){
     Undo::SinglePushWorldObjData(worldObj);
     worldObj->setShadowType((WorldObj::ShadowType)val);
     this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
+}
+
+void PropertiesSignal::hacksButtonEnabled(){
+    if(sobj == NULL){
+        return;
+    }
+    
+    QDialog d;
+    d.setMinimumWidth(400);
+    d.setWindowTitle("SignalObj Hacks");
+    QVBoxLayout *vbox = new QVBoxLayout;
+    QLabel *label = new QLabel("Use only if you know what you are doing.");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    label->setWordWrap(true);
+    QPushButton *haxRemoveTDBVector = new QPushButton("Fix TrSignalType Flags", this);
+    QObject::connect(haxRemoveTDBVector, SIGNAL(released()),
+                      this, SLOT(haxFixFlagsEnabled()));
+    vbox->addWidget(haxRemoveTDBVector);
+    
+    /*QPushButton *haxRemoveTDBTree = new QPushButton("Remove TDB Tree ( remove TrItems first; max 1000 nodes )", this);
+    QObject::connect(haxRemoveTDBTree, SIGNAL(released()),
+                      this, SLOT(haxRemoveTDBTreeEnabled()));
+    vbox->addWidget(haxRemoveTDBTree);*/
+    vbox->setSpacing(2);
+    vbox->setContentsMargins(3,3,3,3);
+    vbox->addStretch(1);
+    d.setLayout(vbox);
+    d.exec();
+}
+
+void PropertiesSignal::haxFixFlagsEnabled(){
+    if(sobj == NULL){
+        return;
+    }
+    QStringList list;
+
+    sobj->checkFlags(list);
+    TextEditDialog dialog;
+    QString txt;
+    txt += "___old_____new___\n";
+    for(int i = 0; i < list.size(); i++)
+        txt += list[i]+"\n";
+    dialog.textBox.setPlainText(txt);
+    dialog.setWindowTitle("Signal Flags");
+    dialog.exec();
+    if(dialog.changed == 1){
+        sobj->fixFlags();
+    }
+
 }
