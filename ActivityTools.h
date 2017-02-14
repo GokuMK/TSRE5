@@ -30,6 +30,7 @@ public slots:
     void actNewLooseConsistToolEnabled(bool val);
     void newActButtonEnabled();
     void cServiceEnabled(QString val);
+    void cTrafficEnabled(QString val);
     void actServiceNewEnabled();
     void msg(QString text, QString val);
     void eFileNameEnabled(QString val);

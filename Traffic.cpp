@@ -23,6 +23,7 @@ Traffic::Traffic(QString p, QString n, bool nowe) {
     pathid.replace("//", "/");
     path = p;
     name = n;
+    nameId = n.section(".", 0, -2);
     if(!nowe){
         loaded = -1;
         load();

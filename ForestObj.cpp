@@ -341,6 +341,8 @@ void ForestObj::drawShape(){
             if(Game::allowObjLag < 1)  return;
             Game::allowObjLag-=2;
         }
+        
+        //qint64 timeNow = QDateTime::currentMSecsSinceEpoch();
             
             int iloscv = population*24;
             float* punkty = new float[iloscv*9];
@@ -476,7 +478,8 @@ void ForestObj::drawShape(){
         f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
         shape.VBO.release();*/
         //shape.iloscv = ptr/8;
-
+        //qint64 timeNow2 = QDateTime::currentMSecsSinceEpoch();
+        //qDebug() << "forest gen time: " << (timeNow2 - timeNow);
         delete[] punkty;
         init = true;
     }

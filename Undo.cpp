@@ -48,6 +48,12 @@ UndoState::~UndoState(){
             delete tdata;
         }
     }
+    
+    if(trackDB != NULL)
+        delete trackDB;
+    if(roadDB != NULL)
+        delete roadDB;
+
     terrainData.clear();
     texData.clear();
     objData.clear();
@@ -117,13 +123,17 @@ void Undo::UndoLast(){
     }
     
     if(state->trackDB != NULL){
-        if(Game::currentRoute != NULL)
+        if(Game::currentRoute != NULL){
             Game::currentRoute->setTDB(state->trackDB, false);
+            state->trackDB = NULL;
+        }
     }
     
     if(state->roadDB != NULL){
-        if(Game::currentRoute != NULL)
+        if(Game::currentRoute != NULL){
             Game::currentRoute->setTDB(state->roadDB, true);
+            state->roadDB = NULL;
+        }
     }
     
     delete state;
@@ -162,8 +172,10 @@ void Undo::StateEnd(){
     if(currentState != NULL){
         if(currentState->modified == true){
             undoStates.push_back(currentState);
-            if(undoStates.size() > 50)
+            if(undoStates.size() > 50){
+                delete undoStates.first();
                 undoStates.removeFirst();
+            }
         } else {
             delete currentState;
         }

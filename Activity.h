@@ -16,6 +16,7 @@
 
 class FileBuffer;
 class Consist;
+class Traffic;
 class QTextStream;
 class GLUU;
 
@@ -38,7 +39,7 @@ public:
         void save(QTextStream* out);
     };
     
-    struct TrafficDefinition {
+    struct PlayerTrafficDefinition {
         int id = 0;
         std::vector<int> arrivalTime;
         std::vector<int> departTime;
@@ -59,12 +60,12 @@ public:
         std::vector<int> skipCount;
         std::vector<float> distanceDownPath;
         std::vector<int> platformStartId;
-        TrafficDefinition *trafficDefinition = NULL;
+        PlayerTrafficDefinition *trafficDefinition = NULL;
         void load(FileBuffer* data);
         void save(QTextStream* out);
     };
     
-    struct Traffic {
+    struct TrafficDefinition {
         QString name;
         std::vector<ServiceDefinition> service;
     };
@@ -158,7 +159,7 @@ public:
     
     ServiceDefinition *playerServiceDefinition = NULL;
     ActivityHeader *header = NULL;
-    Traffic *traffic = NULL;
+    TrafficDefinition *traffic = NULL;
     int nextServiceUID = -1;
     int nextActivityObjectUID = -1;
     std::vector<ActivityObject> activityObjects;
@@ -186,7 +187,8 @@ public:
     void setSeason(int val);
     void setWeather(int val);
     void newLooseConsist(float *tdbPos);
-    void createNewPlayerService(QString sName, int sTime );\
+    void createNewPlayerService(QString sName, int sTime );
+    void createNewTrafficService(Traffic *t);
     void setFuelCoal(int val);
     void setFuelWater(int val);
     void setFuelDiesel(int val);

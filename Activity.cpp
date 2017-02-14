@@ -18,6 +18,7 @@
 #include <QFile>
 #include "GLUU.h"
 #include "ConLib.h"
+#include "Traffic.h"
 #include "TDB.h"
 
 Activity::Activity() {
@@ -162,7 +163,7 @@ void Activity::load() {
                             continue;
                         }
                         if (sh == ("traffic_definition")) {
-                            traffic = new Traffic();
+                            traffic = new TrafficDefinition();
                             traffic->name = ParserX::GetStringInside(data);
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
@@ -382,7 +383,7 @@ void Activity::save() {
     QFile::remove(path);
 }
 
-void Activity::TrafficDefinition::load(FileBuffer* data) {
+void Activity::PlayerTrafficDefinition::load(FileBuffer* data) {
     QString sh;
     id = ParserX::GetNumber(data);
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
@@ -418,7 +419,7 @@ void Activity::TrafficDefinition::load(FileBuffer* data) {
     }
 }
 
-void Activity::TrafficDefinition::save(QTextStream* out) {
+void Activity::PlayerTrafficDefinition::save(QTextStream* out) {
 
     *out << "			Player_Traffic_Definition ( "<< id <<"\n";
 
@@ -776,7 +777,7 @@ void Activity::ServiceDefinition::load(FileBuffer* data) {
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         empty = false;
         if (sh == ("player_traffic_definition")) {
-            trafficDefinition = new TrafficDefinition();
+            trafficDefinition = new PlayerTrafficDefinition();
             trafficDefinition->load(data);
             ParserX::SkipToken(data);
             continue;
@@ -1182,9 +1183,25 @@ void Activity::createNewPlayerService(QString sName, int sTime ){
     playerServiceDefinition->empty = false;
     playerServiceDefinition->name = sName;
     playerServiceDefinition->uid = 0;
-    playerServiceDefinition->trafficDefinition = new TrafficDefinition();
+    playerServiceDefinition->trafficDefinition = new PlayerTrafficDefinition();
     playerServiceDefinition->trafficDefinition->id = sTime;
     modified = true;
+}
+
+void Activity::createNewTrafficService(Traffic *t){
+    /*traffic = new TrafficDefinition();
+    traffic->name = t->nameId;
+    for(int i = 0; i < t->service.size(); i++){
+        traffic->service.emplace_back();
+        traffic->service[i].empty = false;
+        traffic->service[i].uid = nextServiceUID++;
+        for(int j = 0; j < 0; j++){
+            traffic->service[i].efficiency[j] = 0.75;
+            traffic->service[i].skipCount[j] = 0;
+            traffic->service[i].distanceDownPath[j] = 0;
+            traffic->service[i].platformStartId[j] = 0;
+        }
+    }*/
 }
 
 void Activity::setFuelCoal(int val){

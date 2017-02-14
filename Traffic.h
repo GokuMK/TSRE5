@@ -24,6 +24,7 @@ public:
     QVector<ServiceDefinition> service;
     QString displayName;
     QString name;
+    QString nameId;
     QString path;
     QString pathid;  
     int loaded = -1;

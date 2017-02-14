@@ -247,6 +247,8 @@ ActivityTools::ActivityTools(QString name)
                       this, SLOT(conFilesShowEnabled(QString)));
     QObject::connect(&cService, SIGNAL(activated(QString)),
                       this, SLOT(cServiceEnabled(QString)));
+    QObject::connect(&cTraffic, SIGNAL(activated(QString)),
+                      this, SLOT(cTrafficEnabled(QString)));
     //QObject::connect(loadActFilesButton, SIGNAL(released()),
     //                  this, SLOT(loadActFiles()));
 }
@@ -300,7 +302,6 @@ void ActivityTools::conFilesShowEnabled(QString val){
 
 void ActivityTools::activitySelected(QString n){
     int id = actShow.currentData().toInt();
-    consists.clear();
     Consist *e;
     Activity *a = ActLib::act[id];
     
@@ -351,6 +352,26 @@ void ActivityTools::activitySelected(QString n){
         }
     }
     
+    if(a->traffic == NULL){
+        cTraffic.setCurrentIndex(0);
+    } else {
+        cTraffic.setCurrentIndex(0);
+        QString cname = a->traffic->name.toLower();
+        for(int i = 0; i < cTraffic.count() ; i++ ){
+            int id = cTraffic.itemData(i).toInt();
+            if(id < 0)
+                continue;
+            if(route->traffic[id] == NULL)
+                continue;
+            //qDebug() << cname << route->service[id]->name;
+            if(cname == route->traffic[id]->nameId){
+                cTraffic.setCurrentIndex(i);
+                break;
+            }
+        }
+    }
+    
+    consists.clear();
     for (int i = 0; i < ActLib::act[id]->activityObjects.size(); i++){
         e = ActLib::act[id]->activityObjects[i].con;
         if(e == NULL) continue;
@@ -411,7 +432,18 @@ void ActivityTools::cServiceEnabled(QString val){
         int startTime = a->header->startTime[0]*60*60 + a->header->startTime[0]*60;
         a->createNewPlayerService(route->service[id]->nameId, startTime);
     }
+}
+
+void ActivityTools::cTrafficEnabled(QString val){
+    int id = cTraffic.currentData().toInt();
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::act[aid];
     
+    if(id == -1){
+        a->traffic = NULL;
+    } else {
+        a->createNewTrafficService(route->traffic[id]);
+    }
 }
 
 void ActivityTools::newActButtonEnabled(){

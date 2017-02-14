@@ -397,7 +397,7 @@ void SignalObj::checkFlags(QStringList &list){
         
         list.back() += " " + ParserX::MakeFlagsString(tFlags[i]);
         if(list.back().split(" ")[0] != list.back().split(" ")[1]){
-            //qDebug() << "[E] --- signal flags fail: "<< list.back();
+            qDebug() << "[E] --- signal flags fail: "<< this->UiD << this->x << this->y << this->position[0] << this->position[2] << list.back();
             list.back() += " [E]";
         }
     }

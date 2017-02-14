@@ -24419,6 +24419,7 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/Activity.o: Activity.cpp Activity.h 
 		Vector3f.h \
 		Shader.h \
 		ConLib.h \
+		Traffic.h \
 		TDB.h \
 		OglObj.h \
 		TextObj.h \

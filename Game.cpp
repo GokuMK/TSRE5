@@ -25,7 +25,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.688";
+QString Game::AppVersion = "v0.6881";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -127,12 +127,12 @@ void Game::load() {
         if(args.count() < 2) continue;
         val = args[0].trimmed();
         //qDebug() << args[0].trimmed() << " "<< args[1].trimmed();
-        if(val == "consoleOutput")
+        if(val == "consoleOutput"){
             if(args[1].trimmed().toLower() == "true")
                 Game::consoleOutput = true;
             else
                 Game::consoleOutput = false;
-
+        }
         if(val == "gameRoot")
             root = args[1].trimmed();
         if(val == "routeName")
@@ -146,46 +146,54 @@ void Game::load() {
             Game::start++;
             startTileY = args[1].trimmed().toInt();
         }
-        if(val == "deleteTrWatermarks")
+        if(val == "deleteTrWatermarks"){
             if(args[1].trimmed().toLower() == "true")
                 deleteTrWatermarks = true;
             else
                 deleteTrWatermarks = false;
-        if(val == "deleteViewDbSpheres")
+        }
+        if(val == "deleteViewDbSpheres"){
             if(args[1].trimmed().toLower() == "true")
                 deleteViewDbSpheres = true;
             else
                 deleteViewDbSpheres = false;
-        if(val == "createNewIfNotExist")
+        }
+        if(val == "createNewIfNotExist"){
             if(args[1].trimmed().toLower() == "true")
                 createNewRoutes = true;
             else
                 createNewRoutes = false;
-        if(val == "writeEnabled")
+        }
+        if(val == "writeEnabled"){
             if(args[1].trimmed().toLower() == "true")
                 writeEnabled = true;
             else
                 writeEnabled = false;
-        if(val == "writeTDB")
+        }
+        if(val == "writeTDB"){
             if(args[1].trimmed().toLower() == "true")
                 writeTDB = true;
             else
                 writeTDB = false;
-        if(val == "systemTheme")
+        }
+        if(val == "systemTheme"){
             if(args[1].trimmed().toLower() == "true")
                 systemTheme = true;
             else
                 systemTheme = false;
-        if(val == "toolsHidden")
+        }
+        if(val == "toolsHidden"){
             if(args[1].trimmed().toLower() == "true")
                 toolsHidden = true;
             else
                 toolsHidden = false;
-        if(val == "usenNumPad")
+        }
+        if(val == "usenNumPad"){
             if(args[1].trimmed().toLower() == "true")
                 usenNumPad = true;
             else
                 usenNumPad = false;
+        }
         if(val == "tileLod"){
             tileLod = args[1].trimmed().toInt();
         }
@@ -204,49 +212,54 @@ void Game::load() {
         if(val == "cameraFov"){
             cameraFov = args[1].trimmed().toFloat();
         }
-        if(val == "warningBox")
+        if(val == "warningBox"){
             if(args[1].trimmed().toLower() == "true")
                 warningBox = true;
             else
                 warningBox = false;
-        if(val == "leaveTrackShapeAfterDelete")
+        }
+        if(val == "leaveTrackShapeAfterDelete"){
             if(args[1].trimmed().toLower() == "true")
                 leaveTrackShapeAfterDelete = true;
             else
                 leaveTrackShapeAfterDelete = false;
-        if(val == "renderTrItems")
+        }
+        if(val == "renderTrItems"){
             if(args[1].trimmed().toLower() == "true")
                 renderTrItems = true;
             else
                 renderTrItems = false;
+        }
         if(val == "geoPath")
             geoPath = args[1].trimmed();
         if(val == "colorConView")
             colorConView = new QColor(args[1].trimmed());
         if(val == "colorShapeView")
             colorShapeView = new QColor(args[1].trimmed());
-        if(val == "ortsEngEnable")
+        if(val == "ortsEngEnable"){
             if(args[1].trimmed().toLower() == "true")
                 ortsEngEnable = true;
             else
                 ortsEngEnable = false;
-        
-        if(val == "sortTileObjects")
+        }
+        if(val == "sortTileObjects"){
             if(args[1].trimmed().toLower() == "true")
                 sortTileObjects = true;
             else
                 sortTileObjects = false;
-        if(val == "ignoreMissingGlobalShapes")
+        }
+        if(val == "ignoreMissingGlobalShapes"){
             if(args[1].trimmed().toLower() == "true")
                 ignoreMissingGlobalShapes = true;
             else
                 ignoreMissingGlobalShapes = false;
-        if(val == "snapableOnlyRot")
+        }
+        if(val == "snapableOnlyRot"){
             if(args[1].trimmed().toLower() == "true")
                 snapableOnlyRot = true;
             else
                 snapableOnlyRot = false; 
-        
+        }
         if(val == "oglDefaultLineWidth"){
             oglDefaultLineWidth = args[1].trimmed().toInt();
         }

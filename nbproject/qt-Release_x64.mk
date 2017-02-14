@@ -24419,6 +24419,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Activity.o: Activity.cpp Act
 		Vector3f.h \
 		Shader.h \
 		ConLib.h \
+		Traffic.h \
 		TDB.h \
 		OglObj.h \
 		TextObj.h \
@@ -45793,7 +45794,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSignal.o: Properti
 		c:/OT/Static/5.7.0_x64/include/QtGui/QPainter \
 		SigCfg.h \
 		SignalShape.h \
-		ParserX.h
+		ParserX.h \
+		TextEditDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSignal.o PropertiesSignal.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSoundRegion.o: PropertiesSoundRegion.cpp PropertiesSoundRegion.h \
@@ -58916,7 +58918,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Texture.o: Texture.cpp Textu
 		c:/OT/Static/5.7.0_x64/include/QtGui/QMatrix4x4 \
 		Vector4f.h \
 		Vector3f.h \
-		Shader.h
+		Shader.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Texture.o Texture.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Tile.o: Tile.cpp Tile.h \
