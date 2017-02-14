@@ -44,12 +44,14 @@ int main(int argc, char *argv[]){
     //loc.setNumberOptions(lepsze.numberOptions());
     QLocale::setDefault(lepsze);
     
+    Game::load();
+        
     QSurfaceFormat format;
-    //format.setVersion(3, 2);
+    //format.setVersion(3, 3);
     //format.setProfile(QSurfaceFormat::CoreProfile);
     //format.setDepthBufferSize(32);
     //format.setStencilBufferSize(8);
-    //format.setSamples(16);
+    format.setSamples(Game::AASamples);
     //format.set
     format.setSwapInterval(0);
     QSurfaceFormat::setDefaultFormat(format);
@@ -57,7 +59,6 @@ int main(int argc, char *argv[]){
     
     QApplication app(argc, argv);
 
-    Game::load();
     app.setStyle(QStyleFactory::create("Fusion"));
     if(!Game::systemTheme){
         //app.setStyle(QStyleFactory::create("Fusion"));

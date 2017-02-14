@@ -1189,22 +1189,27 @@ void Activity::createNewPlayerService(QString sName, int sTime ){
 
 void Activity::setFuelCoal(int val){
     header->fuelCoal = val;
+    modified = true;
 }
 
 void Activity::setFuelWater(int val){
     header->fuelWater = val;
+    modified = true;
 }
 
 void Activity::setFuelDiesel(int val){
     header->fuelDiesel = val;
+    modified = true;
 }
 
 void Activity::setHazardWorkers(int val){
     header->animals = val;
+    modified = true;
 }
 
 void Activity::setHazardAnimals(int val){
     header->workers = val;
+    modified = true;
 }
 
 void Activity::setDescription(QString val){

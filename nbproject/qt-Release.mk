@@ -58916,7 +58916,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/Texture.o: Texture.cpp Texture.h \
 		C:/QT/Static/5.7.0/include/QtGui/QMatrix4x4 \
 		Vector4f.h \
 		Vector3f.h \
-		Shader.h
+		Shader.h \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/Texture.o Texture.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/Tile.o: Tile.cpp Tile.h \

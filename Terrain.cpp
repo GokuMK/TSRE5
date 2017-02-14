@@ -1402,10 +1402,10 @@ bool Terrain::readRAW(QString fSfile) {
     fSfile.replace("//", "/");
     //qDebug() << fSfile;
     //qDebug() << "Wczytam teren RAW: " << fSfile;
-    QFile *file = new QFile(fSfile);
-    if (!file->open(QIODevice::ReadOnly))
+    QFile file(fSfile);
+    if (!file.open(QIODevice::ReadOnly))
         return false;
-    FileBuffer* data = ReadFile::readRAW(file);
+    FileBuffer* data = ReadFile::readRAW(&file);
 
     //qDebug() << data->length;
     terrainData = new float*[257];
@@ -1514,10 +1514,10 @@ void Terrain::newF(){
 
 bool Terrain::readF(QString fSfile) {
     fSfile.replace("//", "/");
-    QFile *file = new QFile(fSfile);
-    if (!file->open(QIODevice::ReadOnly))
+    QFile file(fSfile);
+    if (!file.open(QIODevice::ReadOnly))
         return false;
-    FileBuffer* data = ReadFile::readRAW(file);
+    FileBuffer* data = ReadFile::readRAW(&file);
 
     //qDebug() << "Wczytam teren F: " << fSfile << data->length;
 

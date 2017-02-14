@@ -99,6 +99,7 @@ QString Game::StyleRedText = "#990000";
 
 QString Game::imageMapsUrl;
 int Game::mapImageResolution = 4096;
+int Game::AASamples = 0;
 
 void Game::load() {
     
@@ -260,6 +261,9 @@ void Game::load() {
         }
         if(val == "mapImageResolution"){
             mapImageResolution = args[1].trimmed().toInt();
+        }
+        if(val == "AASamples"){
+            AASamples = args[1].trimmed().toInt();
         }
     }
 }

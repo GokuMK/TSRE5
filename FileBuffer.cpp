@@ -130,13 +130,13 @@ void FileBuffer::insertFile(QString incPath){
     incPath.replace("\\","/");
     incPath.replace("//","/");
     //qDebug() << pathid;
-    QFile *file = new QFile(incPath);
-    if (!file->open(QIODevice::ReadOnly)){
+    QFile file(incPath);
+    if (!file.open(QIODevice::ReadOnly)){
         qDebug() << incPath << "not exist";
         return;
     }
     qDebug() << incPath;
-    FileBuffer* incData = ReadFile::readRAW(file);
+    FileBuffer* incData = ReadFile::readRAW(&file);
     incData->toUtf16();
     int remaining = length-off;
     unsigned char * newData = new unsigned char[incData->length + remaining ];
@@ -146,5 +146,5 @@ void FileBuffer::insertFile(QString incPath){
     data = newData;
     length = incData->length + remaining;
     off = 0;
-    this->skipBOM();
+    skipBOM();
 }

@@ -37,6 +37,7 @@ bool TSectionDAT::loadGlobal() {
     QFile *file = new QFile(orpath);
     if (!file->open(QIODevice::ReadOnly)){
         incpath = path.toLower();
+        file->close();
         file = new QFile(path);
         if (!file->open(QIODevice::ReadOnly)){
             qDebug() << path << "not exist";

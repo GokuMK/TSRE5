@@ -47,6 +47,7 @@ void SFile::load() {
     QFile *file = new QFile(pathid);
     if (!file->open(QIODevice::ReadOnly)){
         qDebug() << "S Shape: not exist "<<pathid;
+        file->close();
         return;
     }
     FileBuffer* bufor = ReadFile::read(file);

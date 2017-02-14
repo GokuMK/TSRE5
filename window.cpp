@@ -132,9 +132,9 @@ Window::Window() {
     // MENUBAR
     // Route
     saveAction = new QAction(tr("&Save"), this);
-    saveAction->setShortcut(QKeySequence("Ctrl+S"));
+    saveAction->setShortcut(QKeySequence("Shift+Ctrl+S"));
     QObject::connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
-    createPathsAction = new QAction(tr("&Save Paths"), this);
+    createPathsAction = new QAction(tr("&Create Paths"), this);
     QObject::connect(createPathsAction, SIGNAL(triggered()), this, SLOT(createPaths()));
     exitAction = new QAction(tr("&Exit"), this);
     exitAction->setShortcut(QKeySequence("Alt+F4"));

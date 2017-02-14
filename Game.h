@@ -109,6 +109,8 @@ public:
     static QString StyleRedText;
     static QString imageMapsUrl;
     static int mapImageResolution;
+    
+    static int AASamples;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

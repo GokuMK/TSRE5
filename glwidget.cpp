@@ -97,13 +97,13 @@ void GLWidget::initializeGL() {
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
     //qDebug() << "initializeOpenGLFunctions();";
     initializeOpenGLFunctions();
-    //QOpenGLFunctions_3_3_Core* funcs = 0;
-    //funcs = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
-    //if (!funcs) {
-    //    qWarning() << "Could not obtain required OpenGL context version";
-    //    exit(1);
-    //}
-    //funcs->initializeOpenGLFunctions();
+    /*QOpenGLFunctions_3_3_Core* funcs = 0;
+    funcs = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
+    if (!funcs) {
+        qWarning() << "Could not obtain required OpenGL context version";
+        exit(1);
+    }
+    funcs->initializeOpenGLFunctions();*/
     glClearColor(0, 0, 0, 1);
     //qDebug() << "gluu->initShader();";
     gluu->initShader();
@@ -187,7 +187,7 @@ void GLWidget::paintGL() {
     glActiveTexture(GL_TEXTURE0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(gluu->skyc[0], gluu->skyc[1], gluu->skyc[2], 1.0);
-    
+
     glViewport(0,0,this->width(),this->height());
     Mat4::perspective(gluu->pMatrix, Game::cameraFov*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
@@ -372,7 +372,7 @@ void GLWidget::drawPointer(){
         gluu->pMatrix,
         viewport,
         aktPointerPos);
-        
+    //qDebug()<<aktPointerPos[0]<< aktPointerPos[1]<< aktPointerPos[2];
     if(Game::viewPointer3d){
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, aktPointerPos[0], aktPointerPos[1], aktPointerPos[2]);

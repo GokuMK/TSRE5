@@ -16,6 +16,7 @@
 #include <QDebug>
 #include <QColor>
 #include "GLUU.h"
+#include "Game.h"
 
 Texture::Texture() {
 }
@@ -302,6 +303,18 @@ Texture::~Texture() {
 
 bool Texture::GLTextures(bool mipmaps) {
     if(!loaded) return false;
+    
+    if(Game::AASamples > 0)
+        if(type == GL_RGBA){
+            for (int i = 0; i < height; i++)
+                imageData[i*width*bytesPerPixel + (width-1)*bytesPerPixel + 3] = 0;
+            for (int i = 0; i < height; i++)
+                imageData[i*width*bytesPerPixel + 3] = 0;
+            for (int i = 0; i < width; i++)
+                imageData[(height-1)*width*bytesPerPixel + i*bytesPerPixel + 3] = 0;
+            for (int i = 0; i < width; i++)
+                imageData[i*bytesPerPixel + 3] = 0;
+        }
 
     tex = new unsigned int[1];
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();

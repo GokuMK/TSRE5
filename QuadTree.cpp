@@ -27,12 +27,12 @@ void QuadTree::load() {
     path = Game::root + "/routes/" + Game::route + "/td/td_idx.dat";
     path.replace("//", "/");
 
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly)) {
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "w file not exist    " << path;
         return;
     }
-    FileBuffer* data = ReadFile::read(file);
+    FileBuffer* data = ReadFile::read(&file);
     //qDebug() << "Date:" << data->length;
     //data->off = 0;
     //for(int i = 0; i < 64; i++){
@@ -251,12 +251,12 @@ void QuadTree::loadTD(int x, int y){
     path = Game::root + "/routes/" + Game::route + "/td/"+ getNameXY(x) + "" + getNameXY(y) +".td";
     path.replace("//", "/");
 
-    QFile *file = new QFile(path);
-    if (!file->open(QIODevice::ReadOnly)) {
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly)) {
         qDebug() << "w file not exist    " << path;
         return;
     }
-    FileBuffer* data = ReadFile::read(file);
+    FileBuffer* data = ReadFile::read(&file);
     TdFile* ttd = new TdFile();
     ttd->x = x*512;
     ttd->y = y*512;

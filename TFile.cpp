@@ -34,12 +34,12 @@ void TFile::setBufferNames(QString name){
 bool TFile::readT(QString fSfile) {
         fSfile.replace("//","/");
         //qDebug() << fSfile;
-        QFile *file = new QFile(fSfile);
-        if (!file->open(QIODevice::ReadOnly)){
+        QFile file(fSfile);
+        if (!file.open(QIODevice::ReadOnly)){
             //qDebug() << "fail t file "<< fSfile;
             return false;
         }
-        FileBuffer* data = ReadFile::read(file);
+        FileBuffer* data = ReadFile::read(&file);
         //qDebug() << "Date:" << data->length;
         data->off = 32;
         
