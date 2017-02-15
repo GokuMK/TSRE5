@@ -36,7 +36,7 @@
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
     Game::shadowsEnabled = 0;
     Vec3::set((float*)Game::sunLightDirection,-1.0,0.0,0.0);
-    aboutWindow = new AboutWindow();
+    aboutWindow = new AboutWindow(this);
     randomConsist = new RandomConsist();
     englib = new EngLib();
     englib->loadAll(Game::root);

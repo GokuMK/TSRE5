@@ -27,13 +27,8 @@ SigCfg::SigCfg() {
         return;
     FileBuffer* bufor = ReadFile::read(&file);
     bufor->off += 46+16;
-    //szukanie trackdb
+    //szukanie sigcfg
 
-    //int iiTRitems = (int) ParserX::GetNumber(bufor); //odczytanie ilosci sciezek
-
-    //TRitem* nowy; // = new TRitem();
-    //nowy = new TRitem();
-    //nowy->titLoading = true;
     qDebug() << "sigcfg!";
     int iSignalType = 0;
     int iSignalShape = 0;
@@ -41,12 +36,28 @@ SigCfg::SigCfg() {
         if (sh == "") {
             break;
         }
+        if (sh == "_info" || sh == "skip" || sh == "_skip") {
+            ParserX::SkipToken(bufor);
+            continue;
+        }
+        if (sh == "lighttextures") {
+            ParserX::SkipToken(bufor);
+            continue;
+        }
+        if (sh == "lightstab") {
+            ParserX::SkipToken(bufor);
+            continue;
+        }
         if (sh == "signaltypes") {
             SignalType* nowySt;
             while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
                 //qDebug() << "- " << sh;
                 if (sh == "") {
                     break;
+                }
+                if (sh == "_info" || sh == "skip" || sh == "_skip") {
+                    ParserX::SkipToken(bufor);
+                    continue;
                 }
                 if (sh == "signaltype") {
                     nowySt = new SignalType();
@@ -59,7 +70,10 @@ SigCfg::SigCfg() {
                     //this->signalType[iSignalType++] = nowySt;
                     iSignalType++;
                     this->signalType[nowySt->type.toStdString()] = nowySt;
+                    ParserX::SkipToken(bufor);
+                    continue;
                 }
+                qDebug() << "#signaltypes - undefined token: "<<sh;
                 ParserX::SkipToken(bufor);
                 continue;
             }
@@ -73,11 +87,15 @@ SigCfg::SigCfg() {
                 if (sh == "") {
                     break;
                 }
+                if (sh == "_info" || sh == "skip" || sh == "_skip") {
+                    ParserX::SkipToken(bufor);
+                    continue;
+                }
                 if (sh == "signalshape") {
                     nowySs = new SignalShape();
                     nowySs->name = ParserX::GetString(bufor);
                     nowySs->desc = ParserX::GetString(bufor);
-
+                    //qDebug() << "- " << nowySs->name;
                     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
                         nowySs->set(sh, bufor);
                         ParserX::SkipToken(bufor);
@@ -92,15 +110,17 @@ SigCfg::SigCfg() {
                     this->signalShape[nowySs->name.toStdString()] = nowySs;
                     this->signalShapeById[iSignalShape] = nowySs;
                     iSignalShape++;
+                    ParserX::SkipToken(bufor);
+                    continue;
                 }
-                
+                qDebug() << "#signalshapes - undefined token: "<<sh;
                 ParserX::SkipToken(bufor);
                 continue;
             }
             ParserX::SkipToken(bufor);
             continue;
         }
-        qDebug() << sh;
+        qDebug() << "#sigcfg - undefined token: "<<sh;
         ParserX::SkipToken(bufor);
         continue;
     }

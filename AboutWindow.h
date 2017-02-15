@@ -17,7 +17,7 @@ class AboutWindow : public QWidget {
     Q_OBJECT
 
 public:
-    AboutWindow();
+    AboutWindow(QWidget* parent);
     AboutWindow(const AboutWindow& orig);
     virtual ~AboutWindow();
     

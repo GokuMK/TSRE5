@@ -12,7 +12,7 @@
 #include <QtWidgets>
 #include <QDebug>
 
-AboutWindow::AboutWindow() {
+AboutWindow::AboutWindow(QWidget* parent) {
     this->setWindowFlags( Qt::CustomizeWindowHint );
     this->setFixedSize(600, 300);
     QImage* myImage = new QImage();

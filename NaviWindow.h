@@ -22,7 +22,7 @@ class Coords;
 class NaviWindow : public QWidget {
     Q_OBJECT
 public:
-    NaviWindow();
+    NaviWindow(QWidget* parent);
     virtual ~NaviWindow();
     
 public slots:

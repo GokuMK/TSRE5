@@ -15,6 +15,8 @@
 #include "Route.h"
 
 class Brush;
+class ClickableLabel;
+class Texture;
 
 class TerrainTools : public QWidget{
     Q_OBJECT
@@ -56,6 +58,7 @@ public slots:
     void setEradius(int val);
     void setEradius(QString val);
     void msg(QString text, QString val);
+    void texPreviewEnabled(int val);
     
 signals:
     void enableTool(QString name);
@@ -63,9 +66,15 @@ signals:
     
 private:
     Brush* paintBrush;
+    QVector<QPair<int, Texture*>> texLastItems;
     
     QPixmap* texPreview;
-    QLabel* texPreviewLabel;
+    QPixmap* defaultTexPreview;
+    QVector<QPixmap*> texPreviews;
+    ClickableLabel* texPreviewLabel;
+    QVector<ClickableLabel*> texPreviewLabels;
+    QSignalMapper texPreviewSignals;
+    
     QPushButton* colorw;
     
     // brush gui
@@ -87,6 +96,7 @@ private:
     QLineEdit *leEradius;
     
     QMap<QString, QPushButton*> buttonTools;
+
 };
 
 #endif	/* TERRAINTOOLS_H */

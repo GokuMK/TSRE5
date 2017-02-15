@@ -17,7 +17,7 @@
 #include "CoordsKml.h"
 #include "Game.h"
 
-NaviWindow::NaviWindow(){
+NaviWindow::NaviWindow(QWidget* parent) {
     this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->setFixedWidth(300);
     this->setFixedHeight(180);

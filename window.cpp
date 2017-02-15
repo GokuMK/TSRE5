@@ -52,8 +52,8 @@ Window::Window() {
     //naviBox = new NaviBox();
     glWidget = new GLWidget(this);
     shapeViewWindow = new ShapeViewWindow(this);
-    aboutWindow = new AboutWindow();
-    naviWindow = new NaviWindow();
+    aboutWindow = new AboutWindow(this);
+    naviWindow = new NaviWindow(this);
     
     objProperties.push_back(new PropertiesStatic);
     objProperties.push_back(new PropertiesTransfer);

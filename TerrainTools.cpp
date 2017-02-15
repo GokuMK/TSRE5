@@ -14,16 +14,32 @@
 #include "Texture.h"
 #include "GuiFunct.h"
 #include "TransferObj.h"
+#include "ClickableLabel.h"
 #include "Game.h"
 
 TerrainTools::TerrainTools(QString name)
     : QWidget(){
     
     int row = 0;
-    this->paintBrush = new Brush();
-    this->texPreview = new QPixmap(256,256);
-    this->texPreview->fill(Qt::gray);
+    paintBrush = new Brush();
     
+    texPreview = new QPixmap(192,192);
+    defaultTexPreview = new QPixmap(64,64);
+    defaultTexPreview->fill(Qt::transparent);
+    texPreview->fill(Qt::gray);
+    texPreviewLabel = new ClickableLabel("");
+    texPreviewLabel->setContentsMargins(0,0,0,0);
+    texPreviewLabel->setPixmap(*texPreview);
+    for(int i = 0; i < 7; i++){
+        texPreviewLabels.push_back(new ClickableLabel(""));
+        texPreviewLabels.back()->setContentsMargins(0,0,0,0);
+        texPreviewLabels.back()->setPixmap(*defaultTexPreview);
+        texPreviewSignals.setMapping(texPreviewLabels.back(), i);
+        connect(texPreviewLabels.back(), SIGNAL(clicked()), &texPreviewSignals, SLOT(map()));
+    }
+    texPreviewSignals.setMapping(texPreviewLabel, 7);
+    connect(texPreviewLabel, SIGNAL(clicked()), &texPreviewSignals, SLOT(map()));
+    connect(&texPreviewSignals, SIGNAL(mapped(int)), this, SLOT(texPreviewEnabled(int)));
 
     buttonTools["heightTool"] = new QPushButton("HeightMap +", this);
     buttonTools["pickTerrainTexTool"] = new QPushButton("Pick", this);
@@ -81,11 +97,7 @@ TerrainTools::TerrainTools(QString name)
     
     colorw = new QPushButton("#000000", this);
     colorw->setStyleSheet("background-color:black;");
-    
-    texPreviewLabel = new QLabel("");
-    texPreviewLabel->setContentsMargins(0,0,0,0);
-    texPreviewLabel->setPixmap(*texPreview);
-    
+
     QLabel *label0;
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
@@ -112,8 +124,21 @@ TerrainTools::TerrainTools(QString name)
     vbox->addWidget(label0);
     vbox->addItem(vlist1);
 
-    vbox->addWidget(texPreviewLabel);
-    vbox->setAlignment(texPreviewLabel, Qt::AlignHCenter);
+    vlist1 = new QGridLayout;
+    vlist1->setSpacing(0);
+    vlist1->setContentsMargins(0,0,0,0);    
+    vlist1->addWidget(texPreviewLabel, 0, 0, 3, 3);
+    vlist1->addWidget(texPreviewLabels[0], 0, 3);
+    vlist1->addWidget(texPreviewLabels[1], 1, 3);
+    vlist1->addWidget(texPreviewLabels[2], 2, 3);
+    vlist1->addWidget(texPreviewLabels[3], 3, 2);
+    vlist1->addWidget(texPreviewLabels[4], 3, 1);
+    vlist1->addWidget(texPreviewLabels[5], 3, 0);
+    vlist1->addWidget(texPreviewLabels[6], 3, 3);
+    vbox->addItem(vlist1);
+    vbox->setAlignment(vlist1, Qt::AlignHCenter);
+    //vbox->addWidget(texPreviewLabel);
+    //vbox->setAlignment(texPreviewLabel, Qt::AlignHCenter);
     QLabel *label2 = new QLabel("Brush settings:");
     label2->setContentsMargins(3,0,0,0);
     label2->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -441,6 +466,12 @@ void TerrainTools::setTexToolEnabled(){
     int tid = TexLib::addTex(filename);
     this->paintBrush->texId = tid;
     this->paintBrush->tex = TexLib::mtex[tid];
+    
+    texLastItems.push_back(qMakePair(this->paintBrush->texId, this->paintBrush->tex));
+    if(texLastItems.size() > 7){
+        texLastItems.removeFirst();
+    }
+    updateTexPrev();
     //emit enableTool("setTexTool");
     
     emit setPaintBrush(this->paintBrush);
@@ -556,18 +587,51 @@ void TerrainTools::setBrushTextureId(int val){
     if(TexLib::mtex[val] == NULL) return;
     this->paintBrush->texId = val;
     this->paintBrush->tex = TexLib::mtex[val];
+    
+    texLastItems.push_back(qMakePair(this->paintBrush->texId, this->paintBrush->tex));
+    if(texLastItems.size() > 7){
+        texLastItems.removeFirst();
+    }
     updateTexPrev();
 }
 
 void TerrainTools::updateTexPrev(){
     if(!this->paintBrush->tex->loaded)
         return;
-    
-    unsigned char * out = this->paintBrush->tex->getImageData(256,256);
-    if(this->paintBrush->tex->bytesPerPixel == 3)
-        texPreviewLabel->setPixmap(QPixmap::fromImage(QImage(out,256,256,QImage::Format_RGB888)));
-    if(this->paintBrush->tex->bytesPerPixel == 4)
-        texPreviewLabel->setPixmap(QPixmap::fromImage(QImage(out,256,256,QImage::Format_RGBA8888)));    
+
+    ClickableLabel *tlabel;
+    unsigned char * out;
+    int idx;
+    int res;
+    for(int i = 1; i < 8; i++){
+        idx = texLastItems.size() - i;
+        if(idx < 0)
+            continue;
+        if(i == 1){
+            tlabel = texPreviewLabel;
+            res = 192;
+            out = this->paintBrush->tex->getImageData(res,res);
+            
+        } else {
+            tlabel = texPreviewLabels[i-2];
+            res = 64;
+            out = texLastItems[idx].second->getImageData(res,res);
+        }
+        if(texLastItems[idx].second->bytesPerPixel == 3)
+            tlabel->setPixmap(QPixmap::fromImage(QImage(out,res,res,QImage::Format_RGB888)));
+        if(texLastItems[idx].second->bytesPerPixel == 4)
+            tlabel->setPixmap(QPixmap::fromImage(QImage(out,res,res,QImage::Format_RGBA8888)));   
+    }
+}
+
+void TerrainTools::texPreviewEnabled(int val){
+    qDebug() << val;
+    int idx = 5 - val;//texLastItems.size() - val - 1;
+    if(val > texLastItems.size() - 1) return;
+    if(idx < 0) return;
+    this->paintBrush->tex = texLastItems[idx].second;
+    this->paintBrush->texId = texLastItems[idx].first;
+    updateTexPrev();
 }
 
 void TerrainTools::msg(QString text, QString val){
