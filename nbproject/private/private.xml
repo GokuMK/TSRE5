@@ -2,7 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>4</activeConfTypeElem>
-        <activeConfIndexElem>3</activeConfIndexElem>
+        <activeConfIndexElem>1</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
@@ -31,6 +31,7 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundRegionObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MapDataOSM.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Game.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/glShapeWidget.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TSectionDAT.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TransferObj.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TransferObj.cpp</file>
@@ -52,6 +53,7 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/LoadWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/OglObj.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TrackShape.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/CameraRot.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesSignal.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityServiceTools.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Undo.cpp</file>

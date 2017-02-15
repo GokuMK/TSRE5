@@ -108,45 +108,45 @@ void SFile::load() {
         //for (int i = 0; i < 100; i++)
         //qDebug() << ":" << (char)bufor->data[i];
         QString sh = "shape";
-        if(!ParserX::szukajsekcji1(sh, bufor)) return;
+        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         sh = "shader_names";
-        if(!ParserX::szukajsekcji1(sh, bufor)) return;
+        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
         SFileX::odczytajshaders(bufor, this);
         
         sh = "points";
-        if(!ParserX::szukajsekcji1(sh, bufor)) return;
+        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         SFileX::odczytajpunkty(bufor, this);
         getSize();
         
         sh = "uv_points";
-        if(!ParserX::szukajsekcji1(sh, bufor)) return;
+        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje "<< sh <<" na " << bufor->off;
         SFileX::odczytajuvpunkty(bufor, this);
 
         sh = "normals";
-        if(!ParserX::szukajsekcji1(sh, bufor)) return;
+        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje "<< sh <<" na " << bufor->off;
         SFileX::odczytajnormalne(bufor, this);
 
         sh = "matrices";
-        if(!ParserX::szukajsekcji1(sh, bufor)) return;
+        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         SFileX::odczytajmatrices(bufor, this);
 
         sh = "images";
-        if(!ParserX::szukajsekcji1(sh, bufor)) return;
+        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         SFileX::odczytajimages(bufor, this);
 
         sh = "textures";
-        if(!ParserX::szukajsekcji1(sh, bufor)) return;
+        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         SFileX::odczytajtextures(bufor, this);
 
         sh = "vtx_states";
-        if(!ParserX::szukajsekcji1(sh, bufor)) return;
+        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
         //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
         SFileX::odczytajvtx_states(bufor, this);
 

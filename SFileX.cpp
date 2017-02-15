@@ -223,11 +223,11 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
 
     i = 0; // odczytujemy jeden lodcontrol=0;
     sh = "lod_control";
-    ParserX::szukajsekcji1(sh, bufor);
+    ParserX::FindTokenDomIgnore(sh, bufor);
     //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
     //szukamy sekcji distance levels
     sh = "distance_levels";
-    ParserX::szukajsekcji1(sh, bufor);
+    ParserX::FindTokenDomIgnore(sh, bufor);
     //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
     // wczytujemy ilosc distancelevels
     pliks->iloscd = ParserX::GetNumber(bufor);
@@ -238,11 +238,11 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
         //pliks->distancelevel[j] = new SFile->Dist();
 
         sh = "distance_level";
-        ParserX::szukajsekcji1(sh, bufor);
+        ParserX::FindTokenDomIgnore(sh, bufor);
         //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
         //wczytanie hierarchii
         sh = "distance_level_header";
-        ParserX::szukajsekcji1(sh, bufor);
+        ParserX::FindTokenDomIgnore(sh, bufor);
         nul = ParserX::GetNumber(bufor); //dlevel_selection//
         pliks->distancelevel[j].ilosch = ParserX::GetNumber(bufor);
         pliks->distancelevel[j].hierarchia = new int[pliks->distancelevel[j].ilosch + 1];
@@ -252,7 +252,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
 
         //szukamy subobjektow
         sh = "sub_objects";
-        ParserX::szukajsekcji1(sh, bufor);
+        ParserX::FindTokenDomIgnore(sh, bufor);
         //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
         //ilosc subobjektow
         pliks->distancelevel[j].iloscs = ParserX::GetNumber(bufor);
@@ -265,11 +265,11 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
 
             //szukanie itego subobjekta
             sh = "sub_object";
-            ParserX::szukajsekcji1(sh, bufor);
+            ParserX::FindTokenDomIgnore(sh, bufor);
             //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
             //szukaj sekcji wierzcholki
             sh = "vertices";
-            ParserX::szukajsekcji1(sh, bufor);
+            ParserX::FindTokenDomIgnore(sh, bufor);
             //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
             //ilosc wierzcholkow
             v_ilosc = ParserX::GetNumber(bufor);
@@ -306,10 +306,10 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
             //szukaj sekcji z czesciami
 
             sh = "vertex_sets";
-            ParserX::szukajsekcji1(sh, bufor);
+            ParserX::FindTokenDomIgnore(sh, bufor);
             //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
             sh = "primitives";
-            ParserX::szukajsekcji1(sh, bufor);
+            ParserX::FindTokenDomIgnore(sh, bufor);
             //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
             pliks->distancelevel[j].subobiekty[ii].iloscc = ParserX::GetNumber(bufor);
             //console.log("wczytam p " + iloscc);
@@ -324,14 +324,16 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
                 //pliks->distancelevel[j].subobiekty[ii][czilosc] = new pliks->Czesc();
                 //qDebug() << "cc " << pliks->distancelevel[j].subobiekty[ii].iloscc;
                 //wybor sekcji lista czy indeks
-                w = ParserX::sekcjap(bufor);
+                //w = ParserX::sekcjap(bufor);
+                sh = ParserX::NextTokenDomIgnore(bufor).toLower();
+                //w = 
                 //console.log("ww " + w);
-                if (w == -1) {
+                if (sh == "indexed_trilist") {
                     //jesli lista
                     pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].prim_state_idx = aktidx;
                     //wczytanie indeksow wierzcholkow
                     sh = "vertex_idxs";
-                    ParserX::szukajsekcji1(sh, bufor);
+                    ParserX::FindTokenDomIgnore(sh, bufor);
                     //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
                     pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv = ParserX::GetNumber(bufor);
 
@@ -379,12 +381,12 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
                     //pliks->distancelevel[j].subobiekty[ii][czilosc].pwierzcholki = pwierzcholki;
                     //pominiecie normals i flags 
                     sh = "normal_idxs";
-                    ParserX::szukajsekcji1(sh, bufor);
+                    ParserX::FindTokenDomIgnore(sh, bufor);
                     sh = "flags";
-                    ParserX::szukajsekcji1(sh, bufor);
+                    ParserX::FindTokenDomIgnore(sh, bufor);
                     czilosc++;
                 } else {
-                    aktidx = w;
+                    aktidx = ParserX::GetNumber(bufor);
                 }
             }
             pliks->distancelevel[j].subobiekty[ii].iloscc = czilosc;

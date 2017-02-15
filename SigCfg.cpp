@@ -120,7 +120,7 @@ SigCfg::SigCfg() {
             ParserX::SkipToken(bufor);
             continue;
         }
-        qDebug() << "#sigcfg - undefined token: "<<sh;
+        qDebug() << "#sigcfg.dat - undefined token: "<<sh;
         ParserX::SkipToken(bufor);
         continue;
     }

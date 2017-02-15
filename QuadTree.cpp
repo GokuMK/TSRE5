@@ -41,7 +41,7 @@ void QuadTree::load() {
     //}
     data->off = 32;
     sh = "terrain_desc";
-    ParserX::szukajsekcji1(sh, data);
+    ParserX::FindTokenDomIgnore(sh, data);
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         qDebug() << sh;
         if (sh == "terrain_desc_size") {
@@ -390,19 +390,19 @@ void QuadTree::QuadTile::load(FileBuffer* data){
         
         if(isPopulated & 0b1000) {
             populated[0][1] = true;
-            qDebug() << "p" <<" "<< a << x << " " << y + level;
+            //qDebug() << "p" <<" "<< a << x << " " << y + level;
         }
         if(isPopulated & 0b0100){
             populated[1][1] = true;
-            qDebug() << "p" <<" "<< a << x + level << " " << y + level;
+            //qDebug() << "p" <<" "<< a << x + level << " " << y + level;
         }
         if(isPopulated & 0b0010){
             populated[1][0] = true;
-            qDebug() << "p" <<" "<< a << x + level << " " << y;
+            //qDebug() << "p" <<" "<< a << x + level << " " << y;
         }
         if(isPopulated & 0b0001){
             populated[0][0] = true;
-            qDebug() << "p" <<" "<< a << x << " " << y;
+            //qDebug() << "p" <<" "<< a << x << " " << y;
         }
         
         //qDebug() << level <<" "<< a << qt->x << " " << qt->y;
@@ -417,7 +417,7 @@ void QuadTree::QuadTile::load(FileBuffer* data){
             tile[0][0]->load(data);
         
         if(a == "----"){
-            qDebug() << lev <<" "<< a << x << " " << y;
+            //qDebug() << lev <<" "<< a << x << " " << y;
         }
 }
 

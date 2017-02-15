@@ -188,7 +188,7 @@ void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(gluu->skyc[0], gluu->skyc[1], gluu->skyc[2], 1.0);
 
-    glViewport(0,0,this->width(),this->height());
+    glViewport(0,0,(float)this->width()*Game::PixelRatio,(float)this->height()*Game::PixelRatio);
     Mat4::perspective(gluu->pMatrix, Game::cameraFov*M_PI/180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
     Mat4::identity(gluu->mvMatrix);
@@ -672,7 +672,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
     Game::currentShapeLib = currentShapeLib;
     if(!route->loaded) return;
     m_lastPos = event->pos();
-    
+    m_lastPos *= Game::PixelRatio;
     if((event->button()) == Qt::RightButton){
         mouseRPressed = true;
         camera->MouseDown(event);
@@ -873,8 +873,8 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     } else if (event->buttons() & Qt::RightButton) {
 
     }*/
-    mousex = event->x();
-    mousey = event->y();
+    mousex = event->x()*Game::PixelRatio;
+    mousey = event->y()*Game::PixelRatio;
 
     if((event->buttons() & 2) == Qt::RightButton){
         camera->MouseMove(event);
@@ -953,6 +953,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
         }
     }
     m_lastPos = event->pos();
+    m_lastPos *= Game::PixelRatio;
 }
 
 void GLWidget::enableTool(QString name){

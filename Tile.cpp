@@ -118,10 +118,10 @@ void Tile::load() {
         qDebug() << "w file uncompressed " << path;
         data->off = 0;
         sh = "Tr_Worldfile";
-        ParserX::szukajsekcji1(sh, data);
+        ParserX::FindTokenDomIgnore(sh, data);
 
         for (int tt = 0;; tt++) {
-            sh = ParserX::nazwasekcji(data).toLower();
+            sh = ParserX::NextTokenDomIgnore(data).toLower();
             //qDebug() << "= " << sh;
 
             WorldObj* nowy;
@@ -248,10 +248,10 @@ void Tile::loadWS() {
         qDebug() << "w file uncompressed " << path;
         data->off = 0;
         sh = "Tr_Worldsoundfile";
-        ParserX::szukajsekcji1(sh, data);
+        ParserX::FindTokenDomIgnore(sh, data);
 
         for (int tt = 0;; tt++) {
-            sh = ParserX::nazwasekcji(data).toLower();
+            sh = ParserX::NextTokenDomIgnore(data).toLower();
             //qDebug() << "= " << sh;
 
             WorldObj* nowy;

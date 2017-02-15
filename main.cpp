@@ -56,9 +56,14 @@ int main(int argc, char *argv[]){
     format.setSwapInterval(0);
     QSurfaceFormat::setDefaultFormat(format);
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+    //QApplication::pr
+
     
     QApplication app(argc, argv);
-
+    //app.set
+    Game::PixelRatio = app.devicePixelRatio();
+    qDebug() << "devicePixelRatio"<< app.devicePixelRatio();
     app.setStyle(QStyleFactory::create("Fusion"));
     if(!Game::systemTheme){
         //app.setStyle(QStyleFactory::create("Fusion"));

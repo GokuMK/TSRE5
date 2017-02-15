@@ -81,7 +81,7 @@ void Trk::load(QString path){
     ParserX::NextLine(data);
 
     QString sh = "Tr_RouteFile";
-    ParserX::szukajsekcji1(sh, data);
+    ParserX::FindTokenDomIgnore(sh, data);
     this->milepostUnitsKilometers = false;
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         if (sh == ("routeid")) {

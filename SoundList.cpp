@@ -39,9 +39,9 @@ void SoundList::loadSoundSources(QString path){
         //qDebug() << sh;
         if (sh == ("sound")) {
             s = new SoundListItem();
-            ParserX::szukajsekcji1("name", data);
+            ParserX::FindTokenDomIgnore("name", data);
             s->name = ParserX::GetString(data);
-            ParserX::szukajsekcji1("filename", data);
+            ParserX::FindTokenDomIgnore("filename", data);
             s->file1 = ParserX::GetString(data);
             s->type = SoundListItem::Source;
             s->id = id++;

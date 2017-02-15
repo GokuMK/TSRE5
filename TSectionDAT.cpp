@@ -251,7 +251,7 @@ bool TSectionDAT::loadRoute() {
 
     //szukanie TrackSections
     sh = "TrackSections";
-    ParserX::szukajsekcji1(sh, bufor);
+    ParserX::FindTokenDomIgnore(sh, bufor);
 
     int index = 0;
 
@@ -259,7 +259,6 @@ bool TSectionDAT::loadRoute() {
     //this->routeMaxIdx = 0;
     //this->routeShapes = 0;
     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-        //    sh = ParserX::nazwasekcji(bufor);
         //qDebug() << sh;
         //if (sh.toLower() =="sectionidx") break;
         if (sh.toLower() == "tracksection") {
@@ -289,7 +288,7 @@ bool TSectionDAT::loadRoute() {
     this->routeMaxIdx += 2 - this->routeMaxIdx % 2;
 
     sh = "SectionIdx";
-    ParserX::szukajsekcji1(sh, bufor);
+    ParserX::FindTokenDomIgnore(sh, bufor);
     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
         if (sh.toLower() == "trackpath") {
             //   qDebug() << (int) ParserX::GetNumber(bufor);

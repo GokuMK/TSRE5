@@ -296,6 +296,7 @@ void GlShapeWidget::keyReleaseEvent(QKeyEvent * event) {
 
 void GlShapeWidget::mousePressEvent(QMouseEvent *event) {
     m_lastPos = event->pos();
+    m_lastPos *= Game::PixelRatio;
     mousePressed = true;
     selection = true;
     if(event->button() == Qt::RightButton)
@@ -314,8 +315,8 @@ void GlShapeWidget::mouseReleaseEvent(QMouseEvent* event) {
 }
 
 void GlShapeWidget::mouseMoveEvent(QMouseEvent *event) {
-    mousex = event->x();
-    mousey = event->y();
+    mousex = event->x()*Game::PixelRatio;
+    mousey = event->y()*Game::PixelRatio;
     
     if(mode == "rot"){
         if (mousePressed) {
@@ -332,6 +333,7 @@ void GlShapeWidget::mouseMoveEvent(QMouseEvent *event) {
         camera->MouseMove(event);
     }
     m_lastPos = event->pos();
+    m_lastPos *= Game::PixelRatio;
 }
 
 void GlShapeWidget::resetRot(){

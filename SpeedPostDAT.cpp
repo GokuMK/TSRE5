@@ -27,7 +27,7 @@ SpeedPostDAT::SpeedPostDAT() {
     FileBuffer* bufor = ReadFile::read(&file);
     bufor->off += 46+16;
 
-    qDebug() << "speedpost!";
+    qDebug() << "speedpost.dat!";
     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
         if (sh == "speed_warning_sign_shape") {
             this->speed_Warning_Sign_Shape = ParserX::GetString(bufor);
@@ -55,7 +55,7 @@ SpeedPostDAT::SpeedPostDAT() {
             ParserX::SkipToken(bufor);
             continue;
         }
-        qDebug() << sh;
+        qDebug() <<"#speedpost.dat - undefined token: "<< sh;
         ParserX::SkipToken(bufor);
         continue;
     }

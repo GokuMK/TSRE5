@@ -446,37 +446,49 @@ void TerrainTools::fixedTileToolEnabled(bool val){
 }
 
 void TerrainTools::setTexToolEnabled(){
-    QFileDialog *fd = new QFileDialog();
+    QFileDialog fd;
     QString path = Game::root+"/routes/"+Game::route+"/terrtex";
     path.replace("//", "/");
-    fd->setDirectory(path);
+    fd.setDirectory(path);
+    fd.setFileMode(QFileDialog::ExistingFiles);
     //QTreeView *tree = fd->findChild <QTreeView*>();
     //tree->setRootIsDecorated(true);
     //tree->setItemsExpandable(true);
     //fd->setFileMode(QFileDialog::F);
     //fd->setOption(QFileDialog::ShowDirsOnly);
     //fd->setViewMode(QFileDialog::Detail);
-    int result = fd->exec();
+    int result = fd.exec();
     QString filename;
     if (!result) return;
     
-    filename = fd->selectedFiles()[0];
-    qDebug()<<"texture file "<<filename;
-
-    int tid = TexLib::addTex(filename);
-    this->paintBrush->texId = tid;
-    this->paintBrush->tex = TexLib::mtex[tid];
-    
-    texLastItems.push_back(qMakePair(this->paintBrush->texId, this->paintBrush->tex));
-    if(texLastItems.size() > 7){
-        texLastItems.removeFirst();
+    for(int i = 0; i < fd.selectedFiles().length(); i++){
+        filename = fd.selectedFiles()[i];
+        TexLib::addTex(filename);
     }
-    updateTexPrev();
-    //emit enableTool("setTexTool");
     
+    QTime cTime = QTime::currentTime().addMSecs(300);  
+    while (QTime::currentTime() < cTime){
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    }
+    
+    for(int i = 0; i < fd.selectedFiles().length(); i++){
+        filename = fd.selectedFiles()[i];
+        qDebug()<<"texture file "<<filename;
+
+        int tid = TexLib::addTex(filename);
+        this->paintBrush->texId = tid;
+        this->paintBrush->tex = TexLib::mtex[tid];
+
+        texLastItems.push_back(qMakePair(this->paintBrush->texId, this->paintBrush->tex));
+        if(texLastItems.size() > 7){
+            texLastItems.removeFirst();
+        }
+        updateTexPrev();
+    //emit enableTool("setTexTool");
+    }
     emit setPaintBrush(this->paintBrush);
     
-    QTimer::singleShot(200, this, SLOT(updateTexPrev()));
+    //QTimer::singleShot(200, this, SLOT(updateTexPrev()));
 }
 
 // brush

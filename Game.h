@@ -111,6 +111,7 @@ public:
     static int mapImageResolution;
     
     static int AASamples;
+    static float PixelRatio;
 private:
     static Window* window;
     static LoadWindow* loadWindow;

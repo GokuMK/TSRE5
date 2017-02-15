@@ -17,6 +17,10 @@ QString ParserX::AddComIfReq(QString n){
         return "\""+n+"\"";
     if(n.contains(" "))
         return "\""+n+"\"";
+    for(int i = 0; i < n.length(); i++){
+        if(n[i].row() != 0)
+            return "\""+n+"\"";
+    }
     return n;
 }
 
@@ -63,11 +67,9 @@ QString ParserX::SplitToMultiline(QString n, QString woff){
 //Next line
 //-----------------------------------
 int ParserX::NextLine(FileBuffer* bufor){
-    unsigned char b;
+    unsigned short int b;
     while (bufor->length >= bufor->off + 2) {
-        b = bufor->get();
-        //qDebug() << b;
-        bufor->off++;
+        b = bufor->getShort();
         if(b == '\n'){
             return 1;
         }
@@ -76,17 +78,18 @@ int ParserX::NextLine(FileBuffer* bufor){
 }
 //-----------------------------------
 //Szukanie sekcji
+// DEPRECATED - DO NOT USE
 //-----------------------------------
-int ParserX::szukajsekcji1(QString sh, FileBuffer* bufor){
-    unsigned char b;
+int ParserX::FindTokenDomIgnore(QString sh, FileBuffer* bufor){
+    unsigned short int b;
     int i = 0, czytam = 0;
     int poziom = 0;
     QString sekcja = "";
 
     while (bufor->length >= bufor->off + 2) {
-        b = bufor->get();
+        b = bufor->getShort();
         //qDebug() << b;
-        bufor->off++;
+        //bufor->off++;
         if (b == 40 && czytam == 0) {
             poziom++;
         }
@@ -110,8 +113,8 @@ int ParserX::szukajsekcji1(QString sh, FileBuffer* bufor){
                             return 0;
                         //qDebug() << "fail ";
                         //qDebug() << b;
-                        b = bufor->get();
-                        bufor->off++;
+                        b = bufor->getShort();
+                        //bufor->off++;
                         if (b == 40) {
                             return 1;
                         }
@@ -127,16 +130,17 @@ int ParserX::szukajsekcji1(QString sh, FileBuffer* bufor){
 }
 //-----------------------------------
 //Szukanie sekcji
+// DEPRECATED - DO NOT USE
 //-----------------------------------
-QString ParserX::nazwasekcji(FileBuffer* bufor){
-    unsigned char b;
+QString ParserX::NextTokenDomIgnore(FileBuffer* bufor){
+    unsigned short int b;
     int i = 0, czytam = 0;
     int poziom = 0;
     QString sekcja = "";
 
     while (bufor->length >= bufor->off + 2) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if (b == 40 && czytam == 0) {
             poziom++;
         }
@@ -157,8 +161,8 @@ QString ParserX::nazwasekcji(FileBuffer* bufor){
                 for (;;) {
                     //if(bufor->length <= bufor->off + 2)
                     //    return "";
-                    b = bufor->get();
-                    bufor->off++;
+                    b = bufor->getShort();
+                    //bufor->off++;
                     if (b == 40) {
                         return sekcja;
                     }
@@ -172,15 +176,15 @@ QString ParserX::nazwasekcji(FileBuffer* bufor){
 //Szukanie sekcji
 //-----------------------------------
 QString ParserX::NextTokenInside(FileBuffer* bufor){
-    unsigned char b;
+    unsigned short int b;
     int i = 0, czytam = 0;
     int poziom = 0;
     //bool koniec = false;
     QString sekcja = "";
 
     while (bufor->length >= bufor->off + 2) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if (b == 40 && czytam == 0) {
             poziom++;
         }
@@ -206,8 +210,8 @@ QString ParserX::NextTokenInside(FileBuffer* bufor){
                 for (;;) {
                     if(bufor->length <= bufor->off + 2)
                         return "";
-                    b = bufor->get();
-                    bufor->off++;
+                    b = bufor->getShort();
+                    //bufor->off++;
                     if (b > 63) {
                         //qDebug() << "PARSER FAIL ===================== " << sekcja;
                         bufor->off-=2;
@@ -226,161 +230,36 @@ QString ParserX::NextTokenInside(FileBuffer* bufor){
     return "";
 }
 //-----------------------------------
-//Szukanie 2 sekcji
-//-----------------------------------
-int ParserX::szukajsekcji2(QString sh1, QString sh2, FileBuffer* bufor){
-    unsigned char b;
-    int i = 0, czytam = 0;
-    int poziom = 0;
-    QString sekcja = "";
-
-    while (bufor->length >= bufor->off + 2) {
-        b = bufor->get();
-        bufor->off++;
-        if (b == 40 && czytam == 0) {
-            poziom++;
-        }
-        if (b == 41 && czytam == 0) {
-            poziom--;
-        }
-        if (poziom > 0) continue;
-        //if (poziom < 0) return -1;
-        if ((b > 64) || (b>47 && b<58 && czytam == 1)) {
-            czytam = 1;
-            sekcja += b;
-            i++;
-        } else {
-            if (czytam == 1) {
-                if (b == 40) bufor->off -= 2;
-                i = 0;
-                if (sekcja.toLower() == sh1.toLower()) {
-                    for (;;) {
-                        b = bufor->get();
-                        bufor->off++;
-                        if (b == 40) {
-                            return 1;
-                        }
-                    }
-                }
-                if (sekcja.toLower() == sh2.toLower()) {
-                    for (;;) {
-                        b = bufor->get();
-                        bufor->off++;
-                        if (b == 40) {
-                            return 2;
-                        }
-                    }
-
-                }
-                sekcja = "";
-                czytam = 0;
-            }
-        }
-    }
-    return -1;
-}
-//-----------------------------------
-//Szukanie n sekcji
-//-----------------------------------
-int ParserX::szukajsekcjiN(QString sh, FileBuffer* bufor){
-    /*var b;
-    var i = 0, czytam = 0;
-    var poziom = 0;
-    var sekcja = "";
-
-    while (bufor.d.length > bufor.p + 2) {
-        b = bufor.d[bufor.p++];
-        bufor.p++;
-        if (b == = 40) {
-            poziom++;
-        }
-        if (b == = 41) {
-            poziom--;
-        }
-        if (poziom > 0) continue;
-        if (poziom < -1) return -1;
-        if (b > 64) {
-            czytam = 1;
-            sekcja += String.fromCharCode(b);
-            i++;
-        } else {
-            if (czytam == = 1) {
-                if (b == = 40) bufor.p -= 2;
-                i = 0;
-                for (var ii = 0; ii < sh.length; ii++) {
-                    if (sekcja.toUpperCase() == = sh[ii].toUpperCase()) {
-                        //if (b == '(') ibufor--;
-                        for (;;) {
-                            b = bufor.d[bufor.p++];
-                            bufor.p++;
-                            if (b == = 40) {
-                                return ii;
-                            }
-                        }
-                    }
-                }
-                sekcja = "";
-                czytam = 0;
-            }
-        }
-    }
-    return -1;*/
-}
-//-----------------------------------
-//Pominiecie sekcji
-//-----------------------------------
-int ParserX::pominsekcjec(FileBuffer* bufor){
-    unsigned char b;
-    int poziom = 0;
-    while (bufor->length >= bufor->off + 2) {
-        b = bufor->get();
-        bufor->off++;
-        if (b == 40) {
-            poziom++;
-        }
-        if (b == 41) {
-            poziom--;
-        }
-        if (poziom > 0) continue;
-        if (poziom < 0) {
-            bufor->off -= 2;
-            return -1;
-        }
-    }
-    return 0;
-}
-//-----------------------------------
 //Parsowanie stringa
 //-----------------------------------
 QString ParserX::GetString(FileBuffer* bufor){
     QString sciezka = "";
-    unsigned char b = 0;
+    unsigned short int b = 0;
     while ((b < 46) && (b != 34) && (b!=33)&&(b!=35)&&(b!=36)&&(b!=37)&&(b!=38)) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
     }
     //bufor.position(bufor.position()-2); 
     if (b == 34) {
         bool specialChar = false;
-        while ((b = bufor->get()) != 34 || specialChar) {
+        while ((b = bufor->getShort()) != 34 || specialChar) {
             //bufor->off++;
             if(!specialChar){
                 if(b == '\\') specialChar = true;
             } else {
                 specialChar = false;
             }
-            sciezka += QChar(b, bufor->get());
+            sciezka += QChar(b);
         }
     } else {
         bufor->off -= 2;
-        while (((b = bufor->get()) > 32) && (b != 41)) {
+        while (((b = bufor->getShort()) > 32) && (b != 41)) {
             //bufor->off++;
-            sciezka += QChar(b, bufor->get());
+            sciezka += QChar(b);
         }
     }
     if(b == 41)
         bufor->off-=2;
-    bufor->off++;
+    //bufor->off++;
     //qDebug() << sciezka;
     return sciezka;
 }
@@ -389,10 +268,9 @@ QString ParserX::GetString(FileBuffer* bufor){
 //-----------------------------------
 QString ParserX::GetStringInside(FileBuffer* bufor){
     QString sciezka = "";
-    unsigned char b = 0;
+    unsigned short int b = 0;
     while ((b < 46) && (b != 34) && (b!=33)&&(b!=35)&&(b!=36)&&(b!=37)&&(b!=38)) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
         if (b == 41){
             bufor->off -= 2;
             return "";
@@ -401,18 +279,18 @@ QString ParserX::GetStringInside(FileBuffer* bufor){
     //bufor.position(bufor.position()-2); 
     if (b == 34) {
         bool specialChar = false;
-        while ((b = bufor->get()) != 34 || specialChar) {
+        while ((b = bufor->getShort()) != 34 || specialChar) {
             //bufor->off++;
             if(!specialChar){
                 if(b == '\\') specialChar = true;
             } else {
                 specialChar = false;
             }
-            sciezka += QChar(b, bufor->get());
+            sciezka += QChar(b);
         }
-        bufor->off++;
-        b = bufor->get();
-        bufor->off++;
+        //bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if(b == '+'){
             sciezka += ParserX::GetStringInside(bufor);
         } else {
@@ -421,13 +299,13 @@ QString ParserX::GetStringInside(FileBuffer* bufor){
         return sciezka;
     } else {
         bufor->off -= 2;
-        while (((b = bufor->get()) > 32) && (b != 41)) {
+        while (((b = bufor->getShort()) > 32) && (b != 41)) {
             //bufor->off++;
-            sciezka += QChar(b, bufor->get());
+            sciezka += QChar(b);
         }
         if(b == 41)
             bufor->off-=2;
-        bufor->off++;
+        //bufor->off++;
         //qDebug() << sciezka;
         return sciezka;
     }
@@ -437,55 +315,55 @@ QString ParserX::GetStringInside(FileBuffer* bufor){
 //Parsowanie liczby rzeczywistej
 //-----------------------------------
 float ParserX::GetNumber(FileBuffer* bufor){
-    unsigned char b = 0;
+    unsigned short int b = 0;
     int j;
     float x, t;
     int liczba = 1, ujemna = 0;
 
     while (b < 45 || (b > 46 && b < 48) || b > 57) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
     }
     x = 0;
     liczba = 1;
     ujemna = 0;
     if (b == 45) {
         ujemna = 1;
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
     }
     if (b != 46) {
         while (b > 47 && b < 58) {
             x = x * 10.0 + b - 48;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         }
     }
     if (b == 46 || b == 44) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         while (b > 47 && b < 58) {
             liczba = liczba * 10;
             t = b;
             x = x + (t - 48) / liczba;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         }
     }
     if (ujemna == 1) x = -x;
     if (b == 69 || b == 101) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if (b == 45) {
             ujemna = 1;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         } else ujemna = 0;
         liczba = 0;
         while (b > 47 && b < 58) {
             liczba = liczba * 10.0 + b - 48;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         }
         if (ujemna == 1) {
             for (j = 0; j < liczba; j++) {
@@ -508,13 +386,13 @@ float ParserX::GetNumber(FileBuffer* bufor){
 //Parsowanie liczby rzeczywistej
 //-----------------------------------
 float ParserX::GetNumberInside(FileBuffer* bufor, bool *ok){
-    unsigned char b = 0;
+    unsigned short int b = 0;
     int j;
     float x, t;
     int liczba = 1, ujemna = 0;
     while (b < 45 || (b > 46 && b < 48) || b > 57) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //ufor->off++;
         if (b == 41){
             bufor->off = bufor->off - 2;
             if(ok != NULL) *ok = false;
@@ -526,41 +404,41 @@ float ParserX::GetNumberInside(FileBuffer* bufor, bool *ok){
     ujemna = 0;
     if (b == 45) {
         ujemna = 1;
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
     }
     if (b != 46) {
         while (b > 47 && b < 58) {
             x = x * 10.0 + b - 48;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         }
     }
     if (b == 46 || b == 44) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         while (b > 47 && b < 58) {
             liczba = liczba * 10;
             t = b;
             x = x + (t - 48) / liczba;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         }
     }
     if (ujemna == 1) x = -x;
     if (b == 69 || b == 101) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if (b == 45) {
             ujemna = 1;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         } else ujemna = 0;
         liczba = 0;
         while (b > 47 && b < 58) {
             liczba = liczba * 10.0 + b - 48;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         }
         if (ujemna == 1) {
             for (j = 0; j < liczba; j++) {
@@ -581,62 +459,62 @@ float ParserX::GetNumberInside(FileBuffer* bufor, bool *ok){
     return x;
 }
 
-float ParserX::NumberUnit(float x, unsigned char &b, FileBuffer* bufor){
+float ParserX::NumberUnit(float x, unsigned short int &b, FileBuffer* bufor){
     if(b == 'c' || b == 'C'){
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if(b == 'm' || b == 'M'){
             x = x/100.0;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         }
     } else if(b == 'm' || b == 'M'){
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if(b == 'p' || b == 'P'){
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
             if(b == 'h' || b == 'H'){
                 x = x*1.609344;
-                b = bufor->get();
-                bufor->off++;
+                b = bufor->getShort();
+                //bufor->off++;
             }
         }
     } else if(b == 'l' || b == 'L'){
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if(b == 'b' || b == 'B'){
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
             if(b == 'f' || b == 'F'){
                 x = x*4.448221615;
-                b = bufor->get();
-                bufor->off++;
+                b = bufor->getShort();
+                //bufor->off++;
             }
         }
     } else if(b == 'k' || b == 'K'){
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if(b == 'n' || b == 'N'){
             x = x*1000;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         }
     } else if(b == 'f' || b == 'F'){
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if(b == 't' || b == 'T'){
             x = x*0.3048;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         }
     } else if(b == 'i' || b == 'I'){
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
         if(b == 'n' || b == 'N'){
             x = x*0.0254;
-            b = bufor->get();
-            bufor->off++;
+            b = bufor->getShort();
+            //bufor->off++;
         }
     }
         
@@ -646,18 +524,18 @@ float ParserX::NumberUnit(float x, unsigned char &b, FileBuffer* bufor){
 //Parsowanie liczby uint
 //-----------------------------------
 unsigned int ParserX::GetUInt(FileBuffer* bufor){
-    unsigned char b = 0;
+    unsigned short int b = 0;
     unsigned int x;
 
     while (b < 45 || (b > 45 && b < 48) || b > 57) {
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
     }
     x = 0;
     while (b > 47 && b < 58) {
         x = x * 10 + b - 48;
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
     }
     bufor->off -= 2;
     return x;
@@ -666,13 +544,13 @@ unsigned int ParserX::GetUInt(FileBuffer* bufor){
 //Parsowanie liczby szesnastkowej
 //-----------------------------------
 unsigned int ParserX::GetHex(FileBuffer* bufor){
-    unsigned char b = 0, sb = 0;
+    unsigned short int b = 0, sb = 0;
     unsigned int x;
 
     while (((b < 48) || (b > 57 && b < 65) || (b > 70 && b < 97) || (b > 102)) || sb != 32) {
         sb = b;
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
     }
     x = 0;
     while ((b > 47 && b < 58) || (b > 64 && b < 71) || (b > 96 && b < 103)) {
@@ -681,8 +559,8 @@ unsigned int ParserX::GetHex(FileBuffer* bufor){
             if (b > 64) b = (b - 55 + 48);
         }
         x = x * 16 + b - 48;
-        b = bufor->get();
-        bufor->off++;
+        b = bufor->getShort();
+        //bufor->off++;
     }
     bufor->off -= 2;
     return x;
@@ -691,70 +569,20 @@ unsigned int ParserX::GetHex(FileBuffer* bufor){
 //Pominiecie sekcji
 //-----------------------------------
 int ParserX::SkipToken(FileBuffer* bufor){
-    unsigned char b;
+    unsigned short int b;
     int poziom = 0;
 
     for (int tt = 0; tt < 20000000; tt++){
-    //for (;;){
         if(bufor->length <= bufor->off + 2)
             return 0;
-        b = bufor->get();
-        bufor->off++;
-        //System.out.print(b);
-        //if (b === 0) { return -3; }
+        b = bufor->getShort();
+
         if (b == 40) {
             poziom++;
         }
         if (b == 41) {
             poziom--;
         }
-        //console.log(",, "+String.fromCharCode(b)+" "+poziom);
         if (poziom < 0) return 0;
     }
-}
-//-----------------------------------
-//Wybranie sekcji primitives
-//-----------------------------------
-int ParserX::sekcjap(FileBuffer* bufor){
-    unsigned char b;
-    int i = 0, czytam = 0;
-    int w;
-    QString psi = "prim_state_idx";
-    int poziom = 0;
-    QString sekcja = "";
-
-    while (bufor->length >= bufor->off + 2) {
-        b = bufor->get();
-        bufor->off++;
-        if (b == 40) {
-            poziom++;
-        }
-        if (b == 41) {
-            poziom--;
-        }
-        if (poziom > 0) continue;
-        if (b > 65) {
-            czytam = 1;
-            sekcja += b;
-            i++;
-        } else {
-            if (czytam == 1) {
-                i = 0;
-                //(sekcja + " bylo");
-                if (sekcja.toLower() == psi.toLower()) {
-                    w = ParserX::GetNumber(bufor);
-                    return w;
-                } else {
-                    for (;;) {
-                        b = bufor->get();
-                        bufor->off++;
-                        if (b == 40) {
-                            return -1;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return -3;
 }

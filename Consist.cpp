@@ -126,7 +126,7 @@ void Consist::load(){
     data->off = 0;
     file->close();
     sh = "Train";
-    ParserX::szukajsekcji1(sh, data);
+    ParserX::FindTokenDomIgnore(sh, data);
     //qDebug() << data->off << " " << data->length;
     if(!load(data)){
         delete data;
@@ -141,7 +141,7 @@ void Consist::load(){
 bool Consist::load(FileBuffer* data){
     QString sh;
     sh = "TrainCfg";
-    int ok = ParserX::szukajsekcji1(sh, data);
+    int ok = ParserX::FindTokenDomIgnore(sh, data);
     if(ok == 0) return false;
     //qDebug() << "========znaleziono sekcje " << sh << " na " << data->off;
     conName = ParserX::GetString(data).trimmed();

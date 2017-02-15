@@ -74,7 +74,7 @@ void TDB::loadTdb(){
 
     //szukanie trackdb
     sh = "TrackDB";
-    ParserX::szukajsekcji1(sh, bufor);
+    ParserX::FindTokenDomIgnore(sh, bufor);
     qDebug() << "znaleziono sekcje na " << bufor->off;
     iTRnodes = 0;
     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
@@ -86,21 +86,21 @@ void TDB::loadTdb(){
             //zapisanie x tracknodes
             for (i = 0; i < iTRnodes; i++) {
                 sh = "TrackNode";
-                ParserX::szukajsekcji1(sh, bufor);
+                ParserX::FindTokenDomIgnore(sh, bufor);
                 t = (int) ParserX::GetNumber(bufor); // odczytanie numeru sciezki
-                sh = ParserX::nazwasekcji(bufor);
+                sh = ParserX::NextTokenDomIgnore(bufor);
                 //System.out.println("----"+sh);
                 trackNodes[t] = new TRnode();
                 switch (sh.length()) {// wybranie typu sciezki ^^
                     case 9:
                         trackNodes[t]->typ = 0; //typ endnode
                         sh = "UiD";
-                        ParserX::szukajsekcji1(sh, bufor);
+                        ParserX::FindTokenDomIgnore(sh, bufor);
                         for (ii = 0; ii < 12; ii++) {
                             trackNodes[t]->UiD[ii] = ParserX::GetNumber(bufor);
                         }
                         sh = "TrPins";
-                        ParserX::szukajsekcji1(sh, bufor);
+                        ParserX::FindTokenDomIgnore(sh, bufor);
                         trpin(trackNodes[t], bufor);
                         ParserX::SkipToken(bufor);
                         ParserX::SkipToken(bufor);
@@ -139,7 +139,7 @@ void TDB::loadTdb(){
                             ParserX::SkipToken(bufor);
                         }
                         sh = "TrPins";
-                        ParserX::szukajsekcji1(sh, bufor);
+                        ParserX::FindTokenDomIgnore(sh, bufor);
                         trpin(trackNodes[t], bufor);
                         ParserX::SkipToken(bufor);
                         ParserX::SkipToken(bufor);
@@ -150,12 +150,12 @@ void TDB::loadTdb(){
                         trackNodes[t]->args[1] = ParserX::GetNumber(bufor);
                         trackNodes[t]->args[2] = ParserX::GetNumber(bufor);
                         sh = "UiD";
-                        ParserX::szukajsekcji1(sh, bufor);
+                        ParserX::FindTokenDomIgnore(sh, bufor);
                         for (ii = 0; ii < 12; ii++) {
                             trackNodes[t]->UiD[ii] = ParserX::GetNumber(bufor);
                         }
                         sh = "TrPins";
-                        ParserX::szukajsekcji1(sh, bufor);
+                        ParserX::FindTokenDomIgnore(sh, bufor);
                         trpin(trackNodes[t], bufor);
                         ParserX::SkipToken(bufor);
                         ParserX::SkipToken(bufor);
@@ -179,7 +179,7 @@ void TDB::loadTdb(){
             TRitem* nowy;// = new TRitem();
             
             for (int i = 0; i < iTRitems; i++) {
-                sh = ParserX::nazwasekcji(bufor).toLower();
+                sh = ParserX::NextTokenDomIgnore(bufor).toLower();
 
                 if (sh == "") {
                     qDebug() << "tritemtable Fail";
@@ -232,7 +232,7 @@ void TDB::loadTit(){
 
     //szukanie trackdb
     sh = "TrItemTable";
-    ParserX::szukajsekcji1(sh, bufor);
+    ParserX::FindTokenDomIgnore(sh, bufor);
     qDebug() << "znaleziono sekcje TrItemTable na " << bufor->off;
     
             int iiTRitems = (int) ParserX::GetNumber(bufor); //odczytanie ilosci sciezek
@@ -242,7 +242,7 @@ void TDB::loadTit(){
             nowy->titLoading = true;
             
             for (int i = 0; i < iiTRitems; i++) {
-                sh = ParserX::nazwasekcji(bufor).toLower();
+                sh = ParserX::NextTokenDomIgnore(bufor).toLower();
 
                 if (sh == "") {
                     qDebug() << "tritemtable Fail";

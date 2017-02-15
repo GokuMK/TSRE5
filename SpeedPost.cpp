@@ -108,8 +108,8 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
             this->milepostShape[i * 4 + 3] = ParserX::GetNumber(data)*M_PI/180.0;
         }
         return;
-    }/**/
-    qDebug() << "speedpost value unknown: " << sh;
+    }
+    qDebug() << "#speedpost_set - undefined token: " << sh;
     return;
 }
 
