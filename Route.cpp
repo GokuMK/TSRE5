@@ -131,16 +131,21 @@ void Route::loadMkrList(){
     dir.setFilter(QDir::Files);
     foreach(QString dirFile, dir.entryList()){
         if(dirFile.endsWith(".mkr", Qt::CaseInsensitive))
-            mkrList[(dirFile).toStdString()] = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + dirFile);
+            mkrList[(dirFile).toLower().toStdString()] = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + dirFile);
         if(dirFile.endsWith(".kml", Qt::CaseInsensitive))
-            mkrList[(dirFile).toStdString()] = new CoordsKml(Game::root + "/routes/" + Game::route + "/" + dirFile);
+            mkrList[(dirFile).toLower().toStdString()] = new CoordsKml(Game::root + "/routes/" + Game::route + "/" + dirFile);
         if(dirFile.endsWith(".gpx", Qt::CaseInsensitive))
-            mkrList[(dirFile).toStdString()] = new CoordsGpx(Game::root + "/routes/" + Game::route + "/" + dirFile);
+            mkrList[(dirFile).toLower().toStdString()] = new CoordsGpx(Game::root + "/routes/" + Game::route + "/" + dirFile);
     }
-    if(mkrList[(Game::routeName+".mkr").toStdString()] != NULL)
-        this->mkr = mkrList[(Game::routeName+".mkr").toStdString()];
-    else
-        this->mkr = mkrList.begin()->second;
+    if(mkrList.size() > 0)
+        if(mkrList[(Game::routeName+".mkr").toLower().toStdString()] != NULL){
+            if(mkrList[(Game::routeName+".mkr").toLower().toStdString()]->loaded)
+                mkr = mkrList[(Game::routeName+".mkr").toLower().toStdString()];
+            else
+                mkr = mkrList[(Game::routeName+".mkr").toLower().toStdString()];
+        } else {
+            mkr = mkrList.begin()->second;
+        }
 }
 
 void Route::setMkrFile(QString name){

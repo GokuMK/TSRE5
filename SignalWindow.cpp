@@ -18,9 +18,9 @@
 #include "SignalWindowLink.h"
 #include "Undo.h"
 
-SignalWindow::SignalWindow()
-: QWidget() {
-    this->setWindowFlags(Qt::WindowStaysOnTopHint);
+SignalWindow::SignalWindow(QWidget *parent) : QWidget(parent) {
+    this->setWindowFlags(Qt::WindowType::Tool);
+    //this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->setFixedWidth(400);
 
 

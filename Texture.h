@@ -40,7 +40,8 @@ public:
     Texture(QString pathid) {
         this->pathid = pathid;
     }
-
+    
+    void setEditable();
     bool GLTextures(bool mipmaps = false);
     void update();
     void advancedCrop(float *texCoords, int w = 0, int h = 0);
@@ -51,8 +52,7 @@ public:
     unsigned char * getImageData(int width, int height);
     void delVBO();
 private:
-    
-    void setEditable();
+        
 };
 
 #endif	/* TEXTURE_H */

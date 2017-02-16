@@ -13,8 +13,9 @@
 #include "glShapeWidget.h"
 #include "CameraRot.h"
 
-ShapeViewWindow::ShapeViewWindow(QWidget* parent) {
-    this->setWindowFlags(Qt::WindowStaysOnTopHint);
+ShapeViewWindow::ShapeViewWindow(QWidget* parent) : QWidget(parent) {
+    this->setWindowFlags(Qt::WindowType::Tool);
+    //this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->setWindowTitle(tr("Shape Preview"));
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     this->resize(384,256);

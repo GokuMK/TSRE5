@@ -429,14 +429,30 @@ void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
     
     if (brush->texId == texid[y * 16 + u]) {
         qDebug() << "same tex";
-        this->rotateTex(y * 16 + u);
+        rotateTex(y * 16 + u);
     } else {
+        QString path = texturepath + brush->tex->pathid.section("/", -1);
+        qDebug() << path;
+        if (!QFile::exists(path)){
+            int newTidx = TexLib::getTex(path);
+            if(newTidx >= 0){
+                qDebug() << "ref tex";
+                texid[y * 16 + u] = newTidx;
+            } else {
+                qDebug() << "new tex";
+                texid[y * 16 + u] = TexLib::cloneTex(brush->texId);
+                path = path.section(".", 0, -2) + ".ace";
+                TexLib::mtex[texid[y * 16 + u]]->pathid = path;
+                texModified[y * 16 + u] = true;
+            }
+            brush->texId = texid[y * 16 + u];
+            brush->tex = TexLib::mtex[texid[y * 16 + u]];
+        }
         texid[y * 16 + u] = brush->texId;
         uniqueTex[y * 16 + u] = false;
-        QStringList tpath = TexLib::mtex[brush->texId]->pathid.split("/");
+        QString tname = TexLib::mtex[brush->texId]->pathid.section("/", -1);
         qDebug() << TexLib::mtex[brush->texId]->pathid;
-        qDebug() << tpath.last();
-        QString tname = tpath.last();
+        qDebug() << tname;
         int mid = tfile->getMatByTexture(tname);
         if(mid < 0){
             tfile->tdata[(y * 16 + u)*13 + 0 + 6] = tfile->cloneMat(tfile->tdata[(y * 16 + u)*13 + 0 + 6]);
@@ -521,7 +537,7 @@ void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
         *tfile->amaterials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0] = name;
         qDebug() << *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0];
         texid[y * 16 + u] = TexLib::cloneTex(texid[y * 16 + u]);
-        TexLib::mtex[texid[y * 16 + u]]->pathid = name;
+        TexLib::mtex[texid[y * 16 + u]]->pathid = texturepath + name;
         convertTexToDefaultCoords(y * 16 + u);
         uniqueTex[y * 16 + u] = true;
         reloadLines();
@@ -1454,7 +1470,7 @@ void Terrain::save() {
         for (int y = 0; y < 16; y++) {
             if (this->texModified[y * 16 + u] == false) continue;
             QString name = this->getTileName(mojex, -mojez) + "_" + QString::number(y) + "_" + QString::number(u) + ".ace";
-            TexLib::save("ace", texturepath + name, texid[y * 16 + u]);
+            TexLib::save("ace", TexLib::mtex[texid[y * 16 + u]]->pathid, texid[y * 16 + u]);
             this->texModified[y * 16 + u] = false;
         }
 }

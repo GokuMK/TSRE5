@@ -16,7 +16,7 @@
 class SignalWindow;
 class SignalObj;
 
-class PropertiesSignal : public PropertiesAbstract{
+class PropertiesSignal : public PropertiesAbstract {
     Q_OBJECT
     
 public:

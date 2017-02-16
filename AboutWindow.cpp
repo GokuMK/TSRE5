@@ -12,8 +12,9 @@
 #include <QtWidgets>
 #include <QDebug>
 
-AboutWindow::AboutWindow(QWidget* parent) {
+AboutWindow::AboutWindow(QWidget* parent) : QWidget(parent) {
     this->setWindowFlags( Qt::CustomizeWindowHint );
+    this->setWindowFlags(Qt::WindowType::Tool);
     this->setFixedSize(600, 300);
     QImage* myImage = new QImage();
     myImage->load("resources/load.png");

@@ -16,7 +16,7 @@
 
 class WorldObj;
 
-class PropertiesAbstract : public QWidget{
+class PropertiesAbstract : public QWidget {
     Q_OBJECT
 public:
     PropertiesAbstract();

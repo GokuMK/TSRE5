@@ -57,6 +57,18 @@ int TexLib::addTex(QString path, QString name) {
     return addTex(pathid);
 }
 
+int TexLib::getTex(QString pathid) {
+    for ( auto it = mtex.begin(); it != mtex.end(); ++it ){
+        if(it->second == NULL) continue;
+        if (((Texture*) it->second)->pathid.length() == pathid.length()) 
+            if (((Texture*) it->second)->pathid == pathid) {
+                ((Texture*) it->second)->ref++;
+                return (int)it->first;
+            }
+    }
+    return -1;
+}
+
 int TexLib::addTex(QString pathid) {
 
     for ( auto it = mtex.begin(); it != mtex.end(); ++it ){
@@ -127,6 +139,9 @@ int TexLib::cloneTex(int id) {
 
 void TexLib::save(QString type, QString path, int id){
     Texture* t = mtex.at(id);
-    if(t == NULL) return;
+    if(t == NULL) 
+        return;
+    if(!t->editable)
+        t->setEditable();
     AceLib::save(path, t);
 }

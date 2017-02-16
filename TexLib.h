@@ -27,6 +27,7 @@ public:
     static void addRef(int texx);
     static int addTex(QString path, QString name);
     static int addTex(QString pathid);
+    static int getTex(QString pathid);
     static int cloneTex(int id);
     static void save(QString type, QString path, int id);
 private:

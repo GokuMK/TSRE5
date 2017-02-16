@@ -17,8 +17,9 @@
 #include "CoordsKml.h"
 #include "Game.h"
 
-NaviWindow::NaviWindow(QWidget* parent) {
-    this->setWindowFlags(Qt::WindowStaysOnTopHint);
+NaviWindow::NaviWindow(QWidget* parent) : QWidget(parent) {
+    this->setWindowFlags(Qt::WindowType::Tool);
+    //this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->setFixedWidth(300);
     this->setFixedHeight(180);
     this->setWindowTitle(tr("Navi Window"));
@@ -194,6 +195,8 @@ void NaviWindow::mkrList(std::unordered_map<std::string, Coords*> list){
     for (auto it = list.begin(); it != list.end(); ++it ){
         markerFiles.addItem(QString::fromStdString(it->first));
     }
+    if(markerFiles.count() > 0)
+        mkrFilesSelected(markerFiles.itemText(0));
 }
 
 void NaviWindow::mkrFilesSelected(QString item){

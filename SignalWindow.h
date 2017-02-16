@@ -19,7 +19,7 @@ class SignalWindow : public QWidget { //QDialog {
     Q_OBJECT
 
 public:
-    SignalWindow();
+    SignalWindow(QWidget *parent);
     virtual ~SignalWindow();
     void showObj(SignalObj* obj);
     void updateObj(SignalObj* obj);

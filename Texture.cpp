@@ -30,12 +30,17 @@ Texture::Texture(const Texture* orig) {
     bytesPerPixel = orig->bytesPerPixel;
     
     //QOpenGLFunctions_3_2_Core *f = new QOpenGLFunctions_3_2_Core();
+    if(orig->editable){
+        imageData = new unsigned char[bytesPerPixel*width*height];
+        memcpy(imageData, orig->imageData, bytesPerPixel*width*height);
+        this->editable = true;
+    } else {
+        imageData = new unsigned char[bytesPerPixel*width*height];
+        glBindTexture(GL_TEXTURE_2D, orig->tex[0]);
+        glGetTexImage(GL_TEXTURE_2D, 0, orig->type, GL_UNSIGNED_BYTE, imageData);
+        this->editable = true;
+    }
 
-    imageData = new unsigned char[bytesPerPixel*width*height];
-    glBindTexture(GL_TEXTURE_2D, orig->tex[0]);
-    glGetTexImage(GL_TEXTURE_2D, 0, orig->type, GL_UNSIGNED_BYTE, imageData);
-    this->editable = true;
-    
     tex = new unsigned int[1];
     glGenTextures(1, tex);
     glBindTexture(GL_TEXTURE_2D, tex[0]);
@@ -44,7 +49,7 @@ Texture::Texture(const Texture* orig) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     //delete imageData;
     glLoaded = true;
-    
+
     /*unsigned int* pex = new unsigned int[1];
     f->glGenBuffers(1, pex);
     f->glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pex[0]);

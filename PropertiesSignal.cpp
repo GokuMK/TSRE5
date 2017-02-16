@@ -20,7 +20,7 @@
 #include "TextEditDialog.h"
 
 PropertiesSignal::PropertiesSignal() {
-    signalWindow = new SignalWindow();
+    signalWindow = new SignalWindow(this);
     
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
