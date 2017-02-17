@@ -12,6 +12,7 @@
 #define	BRUSH_H
 
 class Texture;
+class QImage;
 
 class Brush {
 public:
@@ -34,6 +35,8 @@ public:
     int eEmb = 5;
     int eCut = 5;
     int eRadius = 20;
+    QImage* brushshape = 0; 
+    float getAlpha(int x, int y, int size );
 private:
 
 };

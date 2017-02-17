@@ -66,7 +66,11 @@ signals:
     
 private:
     Brush* paintBrush;
+    QVector<QImage> brushShapes;
+    int currentBrushShape = -1;
+    void nextBrushShape();
     QVector<QPair<int, Texture*>> texLastItems;
+    //QVector<QImage
     
     QPixmap* texPreview;
     QPixmap* defaultTexPreview;

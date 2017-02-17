@@ -265,9 +265,10 @@ void Texture::paint(Brush* brush, float x, float z){
             if(tz+j >= width) continue;
             if(tx+i < 0) continue;
             if(tz+j < 0) continue;
-            if(sqrt(i*i + j*j) > size) continue;
+            //if(sqrt(i*i + j*j) > size) continue;
             
-            talpha = (brush->alpha)*(1.0-(float)sqrt(i*i + j*j)/size);
+            talpha = (brush->alpha)*brush->getAlpha(i, j, size);
+            //talpha = (brush->alpha)*(1.0-(float)sqrt(i*i + j*j)/size);
             txi*=1;
             tzj*=1;
             

@@ -21,7 +21,6 @@ TerrainTools::TerrainTools(QString name)
     : QWidget(){
     
     int row = 0;
-    paintBrush = new Brush();
     
     texPreview = new QPixmap(192,192);
     defaultTexPreview = new QPixmap(64,64);
@@ -41,6 +40,15 @@ TerrainTools::TerrainTools(QString name)
     connect(texPreviewLabel, SIGNAL(clicked()), &texPreviewSignals, SLOT(map()));
     connect(&texPreviewSignals, SIGNAL(mapped(int)), this, SLOT(texPreviewEnabled(int)));
 
+    paintBrush = new Brush();
+
+    QDir dir("resources/brush/");
+    dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList()<<"*.png");
+    foreach(QString bfile, dir.entryList())
+        brushShapes.push_back(QImage("resources/brush/"+bfile).convertToFormat(QImage::Format_Grayscale8));
+    nextBrushShape();
+    
     buttonTools["heightTool"] = new QPushButton("HeightMap +", this);
     buttonTools["pickTerrainTexTool"] = new QPushButton("Pick", this);
     buttonTools["putTerrainTexTool"] = new QPushButton("Put", this);
@@ -338,6 +346,16 @@ TerrainTools::TerrainTools(QString name)
 
 
 TerrainTools::~TerrainTools() {
+}
+
+void TerrainTools::nextBrushShape(){
+    currentBrushShape++;
+    if(currentBrushShape > brushShapes.size()-1)
+        currentBrushShape = 0;
+    if(brushShapes.size() > 0){
+        paintBrush->brushshape = &brushShapes[currentBrushShape];
+        texPreviewLabels[6]->setPixmap(QPixmap::fromImage(*paintBrush->brushshape));
+    }
 }
 
 void TerrainTools::heightToolEnabled(bool val){
@@ -638,6 +656,10 @@ void TerrainTools::updateTexPrev(){
 
 void TerrainTools::texPreviewEnabled(int val){
     qDebug() << val;
+    if(val == 6){
+        nextBrushShape();
+        return;
+    }
     int idx = 5 - val;//texLastItems.size() - val - 1;
     if(val > texLastItems.size() - 1) return;
     if(idx < 0) return;

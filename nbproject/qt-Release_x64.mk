@@ -25842,7 +25842,76 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityTools.o: ActivityToo
 		TextEditDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityTools.o ActivityTools.cpp
 
-build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Brush.o: Brush.cpp Brush.h
+build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Brush.o: Brush.cpp Brush.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QImage \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qimage.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qcolor.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qrgb.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qglobal.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qconfig.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfeatures.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsystemdetection.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qprocessordetection.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcompilerdetection.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtypeinfo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtypetraits.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qisenum.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsysinfo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlogging.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qflags.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbasicatomic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic_bootstrap.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qgenericatomic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic_cxx11.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic_msvc.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qglobalstatic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmutex.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qnumeric.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qversiontagging.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qnamespace.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstringlist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qalgorithms.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qiterator.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qrefcount.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qarraydata.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhashfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qchar.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpair.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbytearraylist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbytearray.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstring.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstringbuilder.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qregexp.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstringmatcher.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qrgba64.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpaintdevice.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qwindowdefs.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qwindowdefs_win.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qrect.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmargins.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsize.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpixelformat.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qtransform.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qmatrix.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpolygon.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvector.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qregion.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdatastream.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qscopedpointer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcoreevent.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmetatype.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvarlengtharray.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcontainerfwd.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobject_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qline.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpainterpath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Brush.o Brush.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/CELoadWindow.o: CELoadWindow.cpp CELoadWindow.h \
