@@ -251,6 +251,7 @@ QString WorldObj::getResPath(Ref::RefItem* sh) {
 }
 
 WorldObj::WorldObj() {
+    this->typeObj = this->worldobj;
     this->shape = -1;
     this->loaded = false;
     this->selected = false;
@@ -260,6 +261,7 @@ WorldObj::WorldObj() {
 }
 
 WorldObj::WorldObj(const WorldObj& o) {
+    typeObj = o.typeObj;
     UiD = o.UiD;
     typeID = o.typeID;
     fileName = o.fileName;
@@ -649,6 +651,7 @@ bool WorldObj::select(int value){
 
 bool WorldObj::unselect(){
     this->selected = false;
+    return false;
 }
 
 bool WorldObj::isSelected(){

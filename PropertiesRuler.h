@@ -18,9 +18,9 @@ class PropertiesRuler: public PropertiesAbstract{
 public:
     PropertiesRuler();
     virtual ~PropertiesRuler();
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
-    void updateObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
+    void updateObj(GameObj* obj);
     
 public slots:
     void checkboxTwoPointEdited(int val);

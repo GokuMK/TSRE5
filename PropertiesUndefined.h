@@ -14,15 +14,13 @@
 #include <QtWidgets>
 #include "PropertiesAbstract.h"
 
-class WorldObj;
-
 class PropertiesUndefined : public PropertiesAbstract{
     Q_OBJECT
 public:
     PropertiesUndefined();
     virtual ~PropertiesUndefined();
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
     
 public slots:
     

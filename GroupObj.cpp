@@ -109,6 +109,8 @@ void GroupObj::fromNewObjects(GroupObj* objList, Route* route, int x, int z, flo
 void GroupObj::addObject(WorldObj* obj){
     if(obj == NULL) 
         return;
+    if(obj->typeID != WorldObj::groupobject)
+        return;
     if(!selected){
         objects.clear();
         selected = true;

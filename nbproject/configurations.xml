@@ -187,6 +187,7 @@
         <itemPath>Trk.h</itemPath>
       </logicalFolder>
       <itemPath>Game.h</itemPath>
+      <itemPath>GameObj.h</itemPath>
       <itemPath>Undo.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -379,6 +380,7 @@
         <itemPath>Trk.cpp</itemPath>
       </logicalFolder>
       <itemPath>Game.cpp</itemPath>
+      <itemPath>GameObj.cpp</itemPath>
       <itemPath>Undo.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -557,6 +559,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GameObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1187,6 +1193,10 @@
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GameObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GameObj.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
@@ -1808,6 +1818,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GameObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2438,6 +2452,10 @@
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GameObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GameObj.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
@@ -3054,6 +3072,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GameObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
       </item>

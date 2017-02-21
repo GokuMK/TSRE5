@@ -31,13 +31,15 @@ PropertiesUndefined::PropertiesUndefined(){
 PropertiesUndefined::~PropertiesUndefined() {
 }
 
-void PropertiesUndefined::showObj(WorldObj* obj){
+void PropertiesUndefined::showObj(GameObj* obj){
     if(obj == NULL)
         infoLabel->setText("Select to see properties.");
+    else if(obj->typeObj == GameObj::worldobj)
+        infoLabel->setText("Unsupported: "+((WorldObj*)obj)->type);
     else
-        infoLabel->setText("Unsupported: "+obj->type);
+        infoLabel->setText("Unsupported");
 }
 
-bool PropertiesUndefined::support(WorldObj* obj){
+bool PropertiesUndefined::support(GameObj* obj){
     return true;
 }

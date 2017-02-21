@@ -597,9 +597,9 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         useSC = (float)selectionColor/(float)(selectionColor+0.000001);
         if(this->selected && this->selectionValue > 0) 
-            spointer3dSelected->render(selectionColor + (i+1)*131072*8*useSC);
+            spointer3dSelected->render(selectionColor | (i+1)*useSC);
         else
-            spointer3d->render(selectionColor + (i+1)*131072*8*useSC);
+            spointer3d->render(selectionColor | (i+1)*useSC);
         gluu->mvPopMatrix();
     //}
 };

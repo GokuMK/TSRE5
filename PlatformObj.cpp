@@ -432,9 +432,9 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
     if(this->selected && this->selectionValue == 1) 
-        spointer3dSelected->render(selectionColor + 1*131072*8*useSC);
+        spointer3dSelected->render(selectionColor | 1*useSC);
     else
-        spointer3d->render(selectionColor + 1*131072*8*useSC);
+        spointer3d->render(selectionColor | 1*useSC);
     gluu->mvPopMatrix();
     
     gluu->mvPushMatrix();
@@ -445,9 +445,9 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
     if(this->selected && this->selectionValue == 3) 
-        spointer3dSelected->render(selectionColor + 3*131072*8*useSC);
+        spointer3dSelected->render(selectionColor | 3*useSC);
     else
-        spointer3d->render(selectionColor + 3*131072*8*useSC);
+        spointer3d->render(selectionColor | 3*useSC);
     gluu->mvPopMatrix();
     
     gluu->mvPushMatrix();

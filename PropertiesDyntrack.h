@@ -20,8 +20,8 @@ class PropertiesDyntrack : public PropertiesAbstract{
 public:
     PropertiesDyntrack();
     virtual ~PropertiesDyntrack();
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
     
 public slots:
     void flexEnabled();

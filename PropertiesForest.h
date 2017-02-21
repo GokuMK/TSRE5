@@ -20,8 +20,8 @@ class PropertiesForest : public PropertiesAbstract{
 public:
     PropertiesForest();
     virtual ~PropertiesForest();
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
     
 public slots:
     void sizeEnabled(QString val);

@@ -20,9 +20,9 @@ class PropertiesGroup : public PropertiesAbstract{
 public:
     PropertiesGroup();
     virtual ~PropertiesGroup();
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
-    void updateObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
+    void updateObj(GameObj* obj);
     
 public slots:
     void enableCustomDetailLevelEnabled(int val);

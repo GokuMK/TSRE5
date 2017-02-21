@@ -68,18 +68,18 @@ void PropertiesSoundSource::sourcesListSelected(QString val){
     this->sName.setText(val);
 }
 
-void PropertiesSoundSource::showObj(WorldObj* obj){
+void PropertiesSoundSource::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     sobj = (SoundSourceObj*)obj;
     this->fileName.setText(sobj->fileName);
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    this->infoLabel->setText("Object: "+obj->type);
+    this->uid.setText(QString::number(sobj->UiD, 10));
+    this->tX.setText(QString::number(sobj->x, 10));
+    this->tY.setText(QString::number(-sobj->y, 10));
+    this->infoLabel->setText("Object: "+sobj->type);
     
     this->sources.clear();
     if(Game::soundList != NULL)
@@ -91,10 +91,12 @@ void PropertiesSoundSource::showObj(WorldObj* obj){
         }
 }
 
-bool PropertiesSoundSource::support(WorldObj* obj){
+bool PropertiesSoundSource::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "soundsource")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "soundsource")
         return true;
     return false;
 }

@@ -346,7 +346,7 @@ void Consist::appendEngItem(int id, int pos, bool flip){
 
     newE->type = eng->wagonTypeId / 4;
     newE->eng = id;
-    newE->ename = eng->name.split(".")[0];
+    newE->ename = eng->name.section(".", 0, -2);
     newE->epath = eng->path.split("/").last();
     newE->uid = this->nextWagonUID++;
     newE->flip = flip;

@@ -357,7 +357,8 @@ void Route::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, float* 
 void Route::setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, WorldObj* obj){
     bool useObj = false;
     if(obj != NULL){
-        useObj = obj->hasLinePoints();
+        if(obj->typeObj == WorldObj::worldobj)
+            useObj = obj->hasLinePoints();
     }
         
     float* punkty = new float[9000];
@@ -404,6 +405,8 @@ void Route::setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, World
 
 void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
     if(obj == NULL) return;
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     
     if(obj->typeID == obj->groupobject) {
         GroupObj *gobj = (GroupObj*)obj;
@@ -480,6 +483,7 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     if(placementStickToTarget){
             tpos = new float[3];
             float* playerT = Vec2::fromValues(x, z);
+            float* playerT2 = Vec2::fromValues(x, z);
             float tp[3], tp2[3];
             float tq[4], tq2[3];
             Vec3::copy(tp, p);
@@ -493,12 +497,13 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
                 ok = this->roadDB->findNearestPositionOnTDB(playerT, tp, tq, tpos);
             } else if(placementAutoTargetType == 2) {
                 ok = this->trackDB->findNearestPositionOnTDB(playerT, tp, tq, tpos);
-                int ok2 = this->roadDB->findNearestPositionOnTDB(playerT, tp2, tq2, tpos);
+                int ok2 = this->roadDB->findNearestPositionOnTDB(playerT2, tp2, tq2, tpos);
                 if(ok2 >= 0)
                     if(ok < 0 || ok2 < ok){
                         ok = ok2;
                         Vec3::copy(tp, tp2);
                         Quat::copy(tq, tq2);
+                        Vec2::copy(playerT, playerT2);
                     }
             }
             if(ok >= 0 && ok <= Game::snapableRadius) {
@@ -589,6 +594,8 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
 }
 
 void Route::dragWorldObject(WorldObj* obj, int x, int z, float* pos){
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     if(obj->isTrackItem() || obj->typeID == obj->groupobject || obj->typeID == obj->ruler ){
         obj->setPosition(x, z, pos);
         obj->setMartix();
@@ -671,6 +678,8 @@ Tile * Route::requestTile(int x, int z){
 void Route::linkSignal(int x, int z, float* p, WorldObj* obj){
     if(obj == NULL)
         return;
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     if(obj->typeID != obj->signal)
         return;
     SignalObj* sobj = (SignalObj*)obj;
@@ -744,7 +753,7 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p, int mode) {
         endPos = tpos[1];
         rot = M_PI;
     }    
-    int i1, i2;
+    float i1, i2;
     for(float i = startPos; i < endPos; i+=step ){
         if(mode == 2){
            i1 = endPos - i;
@@ -788,7 +797,7 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p, int mode) {
         float dlugosc = Vec3::distance(drawPosition1, drawPosition2);
 
         int someval = (((drawPosition2[2]-drawPosition1[2])+0.00001f)/fabs((drawPosition2[2]-drawPosition1[2])+0.00001f));
-        float rotY = (someval+1)*(M_PI/2)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
+        float rotY = ((float)someval+1.0)*(M_PI/2)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
         float rotX = -(float)(atan((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
 
         if(placementAutoTwoPointRot){
@@ -831,6 +840,10 @@ void Route::autoPlacementDeleteLast(){
 
 
 void Route::replaceWorldObjPointer(WorldObj* o, WorldObj* n){
+    if(o->typeObj != WorldObj::worldobj)
+        return;
+    if(n->typeObj != WorldObj::worldobj)
+        return;
     int x = o->x;
     int z = o->y;
     
@@ -843,7 +856,7 @@ void Route::replaceWorldObjPointer(WorldObj* o, WorldObj* n){
         if(tTile->obiekty[i] == NULL) continue;
         if(tTile->obiekty[i]->UiD == o->UiD){
             tTile->obiekty[i] = n;
-            emit objSelected(n);
+            emit objSelected((GameObj*)n);
             return;
         }
     }
@@ -879,7 +892,8 @@ WorldObj* Route::makeFlexTrack(int x, int z, float* p) {
 
 void Route::addToTDB(WorldObj* obj) {
     if(obj == NULL) return;
-    
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     int x = obj->x;//post[0];
     int z = obj->y;//post[1];
     float p[3];
@@ -944,7 +958,8 @@ void Route::setTDB(TDB* tdb, bool road){
 
 void Route::toggleToTDB(WorldObj* obj) {
     if(obj == NULL) return;
-    
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     if(obj->typeID == obj->groupobject) {
         GroupObj *gobj = (GroupObj*)obj;
         for(int i = 0; i < gobj->objects.size(); i++ ){
@@ -965,7 +980,8 @@ void Route::toggleToTDB(WorldObj* obj) {
 
 void Route::addToTDBIfNotExist(WorldObj* obj) {
     if(obj == NULL) return;
-    
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     if(obj->typeID == obj->groupobject) {
         GroupObj *gobj = (GroupObj*)obj;
         for(int i = 0; i < gobj->objects.size(); i++ ){
@@ -990,6 +1006,8 @@ void Route::addToTDBIfNotExist(WorldObj* obj) {
 }
 
 void Route::newPositionTDB(WorldObj* obj) {
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     int x = obj->x;//post[0];
     int z = obj->y;//post[1];
     float p[3]; 
@@ -1021,6 +1039,10 @@ void Route::newPositionTDB(WorldObj* obj) {
 }
 
 void Route::moveWorldObjToTile(int x, int z, WorldObj* obj){
+    if(obj == NULL)
+        return;
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     //qDebug() << "new tile" << obj->x <<" "<< obj->y<<" "<< obj->position[0]<<" "<< -obj->position[2];
     float oldPos[3];
     int xx = x, zz = z;
@@ -1100,6 +1122,8 @@ void Route::undoPlaceObj(int x, int y, int UiD){
 void Route::deleteObj(WorldObj* obj) {
     if(obj == NULL)
         return;
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     if(obj->typeID == obj->groupobject) {
         GroupObj *gobj = (GroupObj*)obj;
         for(int i = 0; i < gobj->objects.size(); i++ ){
@@ -1132,6 +1156,8 @@ void Route::deleteObj(WorldObj* obj) {
 }
 
 void Route::removeTrackFromTDB(WorldObj* obj) {
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     bool ok;
     ok = this->roadDB->removeTrackFromTDB(obj->x, obj->y, obj->UiD);
     ok |= this->trackDB->removeTrackFromTDB(obj->x, obj->y, obj->UiD);
@@ -1234,6 +1260,8 @@ void Route::nextDefaultEnd(){
 
 void Route::flipObject(WorldObj *obj){
     if(obj == NULL)
+        return;
+    if(obj->typeObj != WorldObj::worldobj)
         return;
     if(obj->typeID == obj->trackobj || obj->typeID == obj->dyntrack ){
         nextDefaultEnd();

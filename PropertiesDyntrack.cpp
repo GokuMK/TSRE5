@@ -165,21 +165,21 @@ void PropertiesDyntrack::msg(QString name, QString val){
     }
 }
 
-void PropertiesDyntrack::showObj(WorldObj* obj){
+void PropertiesDyntrack::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
     dobj = (DynTrackObj*)obj;
-    this->infoLabel->setText("Object: "+obj->type);
+    this->infoLabel->setText("Object: "+dobj->type);
     
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    if(obj->sectionIdx < 0)
+    this->uid.setText(QString::number(dobj->UiD, 10));
+    this->tX.setText(QString::number(dobj->x, 10));
+    this->tY.setText(QString::number(-dobj->y, 10));
+    if(dobj->sectionIdx < 0)
         this->eSectionIdx.setText("");
     else
-        this->eSectionIdx.setText(QString::number(obj->sectionIdx, 10));
+        this->eSectionIdx.setText(QString::number(dobj->sectionIdx, 10));
     
     for (int i = 0; i < 5; i++) {
         if(dobj->sections[i].sectIdx > 1000000){
@@ -251,10 +251,12 @@ void PropertiesDyntrack::sSectEnabled(int idx){
     dobj->deleteVBO();
 }
 
-bool PropertiesDyntrack::support(WorldObj* obj){
+bool PropertiesDyntrack::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "dyntrack")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "dyntrack")
         return true;
     return false;
 }

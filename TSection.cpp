@@ -202,7 +202,7 @@ void TSection::getPoints(float* &ptr, float* matrix) {
         step = 4;
         if(step > size)
             step = size;
-        for (int i = 0; i <= size; i += step) {
+        for (float i = 0; i <= size; i += step) {
             point1[0] = 0;
             point1[1] = 0;
             point1[2] = i;

@@ -20,8 +20,8 @@ class PropertiesCarspawner : public PropertiesAbstract{
 public:
     PropertiesCarspawner();
     virtual ~PropertiesCarspawner();
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
     
 public slots:
     void carNumberEnabled(QString val);

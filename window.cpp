@@ -345,11 +345,11 @@ Window::Window() {
     QObject::connect(glWidget, SIGNAL(itemSelected(Ref::RefItem*)),
                       objTools, SLOT(itemSelected(Ref::RefItem*)));
 
-    QObject::connect(glWidget, SIGNAL(showProperties(WorldObj*)),
-                      this, SLOT(showProperties(WorldObj*)));
+    QObject::connect(glWidget, SIGNAL(showProperties(GameObj*)),
+                      this, SLOT(showProperties(GameObj*)));
     
-    QObject::connect(glWidget, SIGNAL(updateProperties(WorldObj*)),
-                      this, SLOT(updateProperties(WorldObj*)));
+    QObject::connect(glWidget, SIGNAL(updateProperties(GameObj*)),
+                      this, SLOT(updateProperties(GameObj*)));
     
     QObject::connect(this, SIGNAL(exitNow()),
                       aboutWindow, SLOT(exitNow())); 
@@ -511,7 +511,7 @@ void Window::hideAllTools(){
     activityAction->setChecked(false);
 }
 
-void Window::showProperties(WorldObj* obj){
+void Window::showProperties(GameObj* obj){
     // hide all
     for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
         if(*it == NULL) continue;
@@ -519,6 +519,8 @@ void Window::showProperties(WorldObj* obj){
     }
     if(obj == NULL) return;
     // show 
+    //qDebug() << obj->typeObj;
+
     for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
         if(*it == NULL) continue;
         if(!(*it)->support(obj)) continue;
@@ -528,15 +530,16 @@ void Window::showProperties(WorldObj* obj){
     }
 }
 
-void Window::updateProperties(WorldObj* obj){
+void Window::updateProperties(GameObj* obj){
     if(obj == NULL) return;
     // show 
+
     for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
         if(*it == NULL) continue;
-        if((*it)->isVisible() && (*it)->support(obj)){
-            (*it)->updateObj(obj);
-            return;
-        }
+            if((*it)->isVisible() && (*it)->support(obj)){
+                (*it)->updateObj(obj);
+                return;
+            }
     }
 }
 

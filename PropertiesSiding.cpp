@@ -58,16 +58,16 @@ PropertiesSiding::PropertiesSiding() {
 PropertiesSiding::~PropertiesSiding() {
 }
 
-void PropertiesSiding::showObj(WorldObj* obj){
+void PropertiesSiding::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    this->infoLabel->setText("Object: "+obj->type);
+    worldObj = (WorldObj*)obj;
+    this->uid.setText(QString::number(worldObj->UiD, 10));
+    this->tX.setText(QString::number(worldObj->x, 10));
+    this->tY.setText(QString::number(-worldObj->y, 10));
+    this->infoLabel->setText("Object: "+worldObj->type);
     pobj = (PlatformObj*)obj;
     this->lengthPlatform.setText(QString::number(pobj->getLength())+" m");
     this->namePlatform.setText(pobj->getPlatformName());
@@ -77,7 +77,7 @@ void PropertiesSiding::showObj(WorldObj* obj){
 void PropertiesSiding:: disablePlatformEnabled(int state){
     if(pobj == NULL) return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     if(state == Qt::Checked)
         pobj->setDisabled(true);
@@ -89,16 +89,18 @@ void PropertiesSiding:: disablePlatformEnabled(int state){
 void PropertiesSiding::namePlatformEnabled(QString val){
     if(pobj == NULL) return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     pobj->setPlatformName(val);
     Undo::StateEnd();
 }
 
-bool PropertiesSiding::support(WorldObj* obj){
+bool PropertiesSiding::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "siding")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "siding")
         return true;
     return false;
 }

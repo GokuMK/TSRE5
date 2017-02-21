@@ -19,8 +19,8 @@ class PropertiesSoundRegion : public PropertiesAbstract {
 public:
     PropertiesSoundRegion();
     virtual ~PropertiesSoundRegion();
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
     
 public slots:
     void flip();

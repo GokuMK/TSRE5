@@ -59,24 +59,24 @@ PropertiesRuler::PropertiesRuler() {
 PropertiesRuler::~PropertiesRuler() {
 }
 
-void PropertiesRuler::showObj(WorldObj* obj){
+void PropertiesRuler::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     RulerObj* robj = (RulerObj*)obj;
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
+    this->uid.setText(QString::number(robj->UiD, 10));
+    this->tX.setText(QString::number(robj->x, 10));
+    this->tY.setText(QString::number(-robj->y, 10));
     lengthM.setText(QString::number(robj->getLength(), 'G', 4));
 }
 
-void PropertiesRuler::updateObj(WorldObj* obj){
+void PropertiesRuler::updateObj(GameObj* obj){
     if(obj == NULL){
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     RulerObj* robj = (RulerObj*)obj;
 
     if(!lengthM.hasFocus())
@@ -96,10 +96,12 @@ void PropertiesRuler::checkboxTwoPointEdited(int val){
     }
 }
 
-bool PropertiesRuler::support(WorldObj* obj){
+bool PropertiesRuler::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "ruler")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "ruler")
         return true;
     return false;
 }

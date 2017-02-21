@@ -36,6 +36,7 @@ class Coords;
 class MapWindow;
 class ShapeLib;
 class EngLib;
+class QOpenGLFunctions_3_3_Core;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -59,7 +60,7 @@ public slots:
     void jumpTo(PreciseTileCoordinate*);
     void jumpTo(float *posT, float *pos);
     void jumpTo(int X, int Z, float x, float y, float z);
-    void objSelected(WorldObj* o);
+    void objSelected(GameObj* o);
     
     void msg(QString text);
     void msg(QString name, bool val);
@@ -80,8 +81,8 @@ signals:
     void pointerInfo(float* pos);
     void setToolbox(QString name);
     void setBrushTextureId(int val);
-    void showProperties(WorldObj* obj);
-    void updateProperties(WorldObj* obj);
+    void showProperties(GameObj* obj);
+    void updateProperties(GameObj* obj);
     void flexData(int x, int z, float* p);
     void mkrList(std::unordered_map<std::string, Coords*> list);
     
@@ -107,7 +108,7 @@ protected:
     void drawPointer();
 private:
     void setupVertexAttribs();
-    void setSelectedObj(WorldObj* o);
+    void setSelectedObj(GameObj* o);
     QBasicTimer timer;
     unsigned long long int lastTime;
     unsigned long long int timeNow;
@@ -122,12 +123,14 @@ private:
     Tile* tile;
     Route* route = NULL;
     GLUU* gluu;
+    QOpenGLFunctions_3_3_Core* funcs = 0;
+    unsigned int fbo[3];
     bool m_transparent;
     Camera* camera;
     bool selection = false;
     int mousex, mousey;
-    WorldObj* selectedObj = NULL;
-    WorldObj* lastSelectedObj = NULL;
+    GameObj* selectedObj = NULL;
+    GameObj* lastSelectedObj = NULL;
     WorldObj* copyPasteObj = NULL;
     GroupObj* groupObj = NULL;
     GroupObj* copyPasteGroupObj = NULL;

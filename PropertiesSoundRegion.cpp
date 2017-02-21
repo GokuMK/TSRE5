@@ -103,7 +103,7 @@ void PropertiesSoundRegion::sourcesListSelected(QString val){
     if(Game::soundList == NULL)
         return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     sobj->set("update_type", Game::soundList->regions[val]->id);
     Undo::StateEnd();
@@ -115,33 +115,33 @@ void PropertiesSoundRegion::flip(){
     if(sobj == NULL)
         return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     sobj->flip();
     Undo::StateEnd();
 }
 
-void PropertiesSoundRegion::showObj(WorldObj* obj){
+void PropertiesSoundRegion::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     sobj = (SoundRegionObj*)obj;
     
-    this->infoLabel->setText("Object: "+obj->type);
+    this->infoLabel->setText("Object: "+sobj->type);
     
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    this->posX.setText(QString::number(obj->position[0], 'G', 6));
-    this->posY.setText(QString::number(obj->position[1], 'G', 6));
-    this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+    this->uid.setText(QString::number(sobj->UiD, 10));
+    this->tX.setText(QString::number(sobj->x, 10));
+    this->tY.setText(QString::number(-sobj->y, 10));
+    this->posX.setText(QString::number(sobj->position[0], 'G', 6));
+    this->posY.setText(QString::number(sobj->position[1], 'G', 6));
+    this->posZ.setText(QString::number(-sobj->position[2], 'G', 6));
     this->quat.setText(
-            QString::number(obj->qDirection[0], 'G', 4) + " " +
-            QString::number(obj->qDirection[1], 'G', 4) + " " +
-            QString::number(-obj->qDirection[2], 'G', 4) + " " +
-            QString::number(obj->qDirection[3], 'G', 4)
+            QString::number(sobj->qDirection[0], 'G', 4) + " " +
+            QString::number(sobj->qDirection[1], 'G', 4) + " " +
+            QString::number(-sobj->qDirection[2], 'G', 4) + " " +
+            QString::number(sobj->qDirection[3], 'G', 4)
             );
     
     this->sources.clear();
@@ -156,10 +156,12 @@ void PropertiesSoundRegion::showObj(WorldObj* obj){
     this->eMaxPlacingDistance.setText(QString::number(sobj->MaxPlacingDistance));
 }
 
-bool PropertiesSoundRegion::support(WorldObj* obj){
+bool PropertiesSoundRegion::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "soundregion")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "soundregion")
         return true;
     return false;
 }
@@ -180,7 +182,7 @@ void PropertiesSoundRegion::bDeleteSelectedEnabled(){
     if(sobj == NULL)
         return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB, false);
     sobj->deleteSelectedTrItem();
     Undo::StateEnd();
@@ -190,7 +192,7 @@ void PropertiesSoundRegion::bExpandEnabled(){
     if(sobj == NULL)
         return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB, false);
     sobj->expandTrItems();
     Undo::StateEnd();

@@ -25,7 +25,7 @@ class AboutWindow;
 class NaviWindow;
 class ShapeViewWindow;
 class PropertiesAbstract;
-class WorldObj;
+class GameObj;
 class PreciseTileCoordinate;
 
 class Window : public QMainWindow
@@ -42,8 +42,8 @@ public slots:
     void about();
     void terrainCamera(bool val);
     void setToolbox(QString name);
-    void showProperties(WorldObj* obj);
-    void updateProperties(WorldObj* obj);
+    void showProperties(GameObj* obj);
+    void updateProperties(GameObj* obj);
     void hideShowToolWidget(bool show);
     void hideShowPropertiesWidget(bool show);
     void hideShowNaviWidget(bool);

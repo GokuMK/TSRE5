@@ -79,17 +79,17 @@ PropertiesCarspawner::PropertiesCarspawner() {
 PropertiesCarspawner::~PropertiesCarspawner() {
 }
 
-void PropertiesCarspawner::showObj(WorldObj* obj){
+void PropertiesCarspawner::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
+    worldObj = (WorldObj*)obj;
+    this->infoLabel->setText("Object: "+worldObj->type);
+    this->uid.setText(QString::number(worldObj->UiD, 10));
+    this->tX.setText(QString::number(worldObj->x, 10));
+    this->tY.setText(QString::number(-worldObj->y, 10));
     
-    this->infoLabel->setText("Object: "+obj->type);
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    worldObj = obj;
     cobj = (CarSpawnerObj*)obj;
     this->lengthPlatform.setText(QString::number(cobj->getLength())+" m");
     this->carNumber.setText(QString::number(cobj->getCarNumber()));
@@ -123,10 +123,12 @@ void PropertiesCarspawner::carSpeedEnabled(QString val){
     cobj->setCarSpeed(val.toInt());
 }
 
-bool PropertiesCarspawner::support(WorldObj* obj){
+bool PropertiesCarspawner::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "carspawner")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "carspawner")
         return true;
     return false;
 }

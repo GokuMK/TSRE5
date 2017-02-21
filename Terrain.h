@@ -15,10 +15,11 @@
 #include "TFile.h"
 #include "Vector3f.h"
 #include "OglObj.h"
+#include "GameObj.h"
 
 class Brush;
 
-class Terrain {
+class Terrain : public GameObj {
 public:
     int loaded;
     float **terrainData;
@@ -48,7 +49,7 @@ public:
     void removeTextureFromMap();
     void fillHeightMap(float *data);
     int getTexture(int x, int z, float posx, float posz);
-    void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov);
+    void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int selectionColor);
 
 private:
     unsigned char **fData;

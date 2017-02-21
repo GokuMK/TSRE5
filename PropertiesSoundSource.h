@@ -18,8 +18,8 @@ class SoundSourceObj;
 class PropertiesSoundSource : public PropertiesAbstract{
     Q_OBJECT 
 public:
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
     PropertiesSoundSource();
     virtual ~PropertiesSoundSource();
     

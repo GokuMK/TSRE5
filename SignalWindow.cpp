@@ -85,7 +85,7 @@ void SignalWindow::chSubEnabled(int i) {
         return;
 
     Undo::StateBegin();
-    Undo::PushWorldObjData(sobj);
+    Undo::PushGameObjData(sobj);
     Undo::PushTrackDB(Game::trackDB);
     if (chSub[i].isChecked())
         sobj->enableSubObj(i);

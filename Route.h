@@ -107,7 +107,7 @@ public:
     void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, bool selection);
 
 signals:
-    objSelected(WorldObj* obj);
+    objSelected(GameObj* obj);
 
 private:
     void loadTrk();

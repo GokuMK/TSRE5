@@ -139,7 +139,7 @@ void PropertiesSpeedpost::speedEnabled(QString val){
     if(!ok)
         return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     sobj->setSpeed(speedval);
     Undo::StateEnd();
@@ -152,7 +152,7 @@ void PropertiesSpeedpost::numberEnabled(QString val){
     if(!ok)
         return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     sobj->setNumber(numberval);
     Undo::StateEnd();
@@ -162,7 +162,7 @@ void PropertiesSpeedpost::numberDotEnabled(int val){
     if(sobj == NULL) return;
     qDebug()<<"aaa";
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB, false);
     if(val == 2)
         sobj->setNumberDot(true);
@@ -175,7 +175,7 @@ void PropertiesSpeedpost::chCustomNumberEnabled(int val){
     if(sobj == NULL) return;
     qDebug()<<"aaa";
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB, false);
     if(val == 2){
         sobj->setNumberInsteadSpeed(true);
@@ -195,7 +195,7 @@ void PropertiesSpeedpost::chCustomSpeedEnabled(int val){
     if(sobj == NULL) return;
     qDebug()<<"aaa";
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB, false);
     if(val == 2){
         sobj->setSpeedInsteadNumber(true);
@@ -214,7 +214,7 @@ void PropertiesSpeedpost::chCustomSpeedEnabled(int val){
 void PropertiesSpeedpost::kmmListSelected(int val){
     if(sobj == NULL) return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     sobj->setSpeedUnitId(val);
     Undo::StateEnd();
@@ -223,7 +223,7 @@ void PropertiesSpeedpost::kmmListSelected(int val){
 void PropertiesSpeedpost::ptbListSelected(int val){
     if(sobj == NULL) return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     sobj->setTrainType(ptb.currentIndex());
     Undo::StateEnd();
 }
@@ -232,33 +232,33 @@ void PropertiesSpeedpost::flipSignal(){
     if(sobj == NULL)
         return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     sobj->flip(chFlipShape.isChecked());
     Undo::StateEnd();
 }
 
-void PropertiesSpeedpost::showObj(WorldObj* obj){
+void PropertiesSpeedpost::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     sobj = (SpeedpostObj*)obj;
     QString stype = sobj->getSpeedpostType();
-    this->infoLabel->setText("Object: "+obj->type);
+    this->infoLabel->setText("Object: "+sobj->type);
     this->speedpostType.setText(stype);
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    this->posX.setText(QString::number(obj->position[0], 'G', 6));
-    this->posY.setText(QString::number(obj->position[1], 'G', 6));
-    this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+    this->uid.setText(QString::number(sobj->UiD, 10));
+    this->tX.setText(QString::number(sobj->x, 10));
+    this->tY.setText(QString::number(-sobj->y, 10));
+    this->posX.setText(QString::number(sobj->position[0], 'G', 6));
+    this->posY.setText(QString::number(sobj->position[1], 'G', 6));
+    this->posZ.setText(QString::number(-sobj->position[2], 'G', 6));
     this->quat.setText(
-            QString::number(obj->qDirection[0], 'G', 4) + " " +
-            QString::number(obj->qDirection[1], 'G', 4) + " " +
-            QString::number(-obj->qDirection[2], 'G', 4) + " " +
-            QString::number(obj->qDirection[3], 'G', 4)
+            QString::number(sobj->qDirection[0], 'G', 4) + " " +
+            QString::number(sobj->qDirection[1], 'G', 4) + " " +
+            QString::number(-sobj->qDirection[2], 'G', 4) + " " +
+            QString::number(sobj->qDirection[3], 'G', 4)
             );
     
     this->chCustomNumber.blockSignals(true);
@@ -321,33 +321,35 @@ void PropertiesSpeedpost::showObj(WorldObj* obj){
     this->chCustomSpeed.blockSignals(false);
 }
 
-void PropertiesSpeedpost::updateObj(WorldObj* obj){
+void PropertiesSpeedpost::updateObj(GameObj* obj){
     if(obj == NULL){
         return;
     }
-
+    sobj = (SpeedpostObj*)obj;
     if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
-        this->uid.setText(QString::number(obj->UiD, 10));
-        this->tX.setText(QString::number(obj->x, 10));
-        this->tY.setText(QString::number(-obj->y, 10));
-        this->posX.setText(QString::number(obj->position[0], 'G', 6));
-        this->posY.setText(QString::number(obj->position[1], 'G', 6));
-        this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+        this->uid.setText(QString::number(sobj->UiD, 10));
+        this->tX.setText(QString::number(sobj->x, 10));
+        this->tY.setText(QString::number(-sobj->y, 10));
+        this->posX.setText(QString::number(sobj->position[0], 'G', 6));
+        this->posY.setText(QString::number(sobj->position[1], 'G', 6));
+        this->posZ.setText(QString::number(-sobj->position[2], 'G', 6));
         this->quat.setText(
-                QString::number(obj->qDirection[0], 'G', 4) + " " +
-                QString::number(obj->qDirection[1], 'G', 4) + " " +
-                QString::number(-obj->qDirection[2], 'G', 4) + " " +
-                QString::number(obj->qDirection[3], 'G', 4)
+                QString::number(sobj->qDirection[0], 'G', 4) + " " +
+                QString::number(sobj->qDirection[1], 'G', 4) + " " +
+                QString::number(-sobj->qDirection[2], 'G', 4) + " " +
+                QString::number(sobj->qDirection[3], 'G', 4)
                 );
     }
     
 
 }
 
-bool PropertiesSpeedpost::support(WorldObj* obj){
+bool PropertiesSpeedpost::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "speedpost")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "speedpost")
         return true;
     return false;
 }
@@ -368,7 +370,7 @@ void PropertiesSpeedpost::bDeleteSelectedEnabled(){
     if(sobj == NULL)
         return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB, false);
     sobj->deleteSelectedTrItem();
     Undo::StateEnd();
@@ -378,7 +380,7 @@ void PropertiesSpeedpost::bExpandEnabled(){
     if(sobj == NULL)
         return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB, false);
     sobj->expandTrItems();
     Undo::StateEnd();

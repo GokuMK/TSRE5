@@ -25,13 +25,13 @@ PropertiesAbstract::PropertiesAbstract() : QWidget() {
 PropertiesAbstract::~PropertiesAbstract() {
 }
 
-void PropertiesAbstract::showObj(WorldObj* obj){
+void PropertiesAbstract::showObj(GameObj* obj){
 }
 
-void PropertiesAbstract::updateObj(WorldObj* obj){
+void PropertiesAbstract::updateObj(GameObj* obj){
 }
 
-bool PropertiesAbstract::support(WorldObj* obj){
+bool PropertiesAbstract::support(GameObj* obj){
     return false;
 }
 

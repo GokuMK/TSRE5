@@ -200,9 +200,9 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         int useSC = (float)selectionColor/(float)(selectionColor+0.000001);
         if(this->selected && this->selectionValue == i) 
-            point3dSelected->render(selectionColor + (i&0xF)*131072*8*useSC);
+            point3dSelected->render(selectionColor | (i&0xF)*useSC);
         else
-            point3d->render(selectionColor + (i&0xF)*131072*8*useSC);
+            point3d->render(selectionColor | (i&0xF)*useSC);
         //    pointer3d->render(selectionColor + (i+1)*131072*8*useSC);
         gluu->mvPopMatrix();
     }

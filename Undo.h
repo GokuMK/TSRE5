@@ -15,6 +15,7 @@
 
 class TDB;
 class WorldObj;
+class GameObj;
 
 struct UndoState {
     ~UndoState();
@@ -50,6 +51,7 @@ public:
     static void StateEndIfLongTime();
     static void PushTerrainHeightMap(int x, int z, float **data);
     static void PushTextureData(int id, unsigned char *data, unsigned int size);
+    static void PushGameObjData(GameObj* obj);
     static void PushWorldObjData(WorldObj* obj);
     static void PushWorldObjRemoved(WorldObj* obj);
     static void PushWorldObjPlaced(WorldObj* obj);

@@ -690,9 +690,9 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         useSC = (float)selectionColor/(float)(selectionColor+0.000001);
         if(this->selected && this->selectionValue == i+1) 
-            pointer3dSelected->render(selectionColor + (i+1)*131072*8*useSC);
+            pointer3dSelected->render(selectionColor | (i+1)*useSC);
         else
-            pointer3d->render(selectionColor + (i+1)*131072*8*useSC);
+            pointer3d->render(selectionColor | (i+1)*useSC);
         gluu->mvPopMatrix();
     }
 };

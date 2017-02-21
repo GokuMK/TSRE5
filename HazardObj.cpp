@@ -228,7 +228,7 @@ void HazardObj::renderTritems(GLUU* gluu, int selectionColor){
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    pointer3d->render(selectionColor + (1)*131072*8*useSC);
+    pointer3d->render(selectionColor | 1*useSC);
     gluu->mvPopMatrix();
 
 };

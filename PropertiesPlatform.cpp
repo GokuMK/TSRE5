@@ -97,17 +97,17 @@ PropertiesPlatform::PropertiesPlatform() {
 PropertiesPlatform::~PropertiesPlatform() {
 }
 
-void PropertiesPlatform::showObj(WorldObj* obj){
+void PropertiesPlatform::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     pobj = (PlatformObj*)obj;
-    this->infoLabel->setText("Object: "+obj->type);
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
+    this->infoLabel->setText("Object: "+pobj->type);
+    this->uid.setText(QString::number(pobj->UiD, 10));
+    this->tX.setText(QString::number(pobj->x, 10));
+    this->tY.setText(QString::number(-pobj->y, 10));
     this->lengthPlatform.setText(QString::number(pobj->getLength())+" m");
     this->nameStation.setText(pobj->getStationName());
     this->namePlatform.setText(pobj->getPlatformName());
@@ -128,10 +128,12 @@ void PropertiesPlatform::showObj(WorldObj* obj){
     this->disablePlatform.blockSignals(false);
 }
 
-bool PropertiesPlatform::support(WorldObj* obj){
+bool PropertiesPlatform::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "platform")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "platform")
         return true;
     return false;
 }
@@ -139,7 +141,7 @@ bool PropertiesPlatform::support(WorldObj* obj){
 void PropertiesPlatform::leftSideEnabled(int state){
     if(pobj == NULL) return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     if(state == Qt::Checked)
         pobj->setSideLeft(true);
@@ -150,7 +152,7 @@ void PropertiesPlatform::leftSideEnabled(int state){
 void PropertiesPlatform::rightSideEnabled(int state){
     if(pobj == NULL) return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     if(state == Qt::Checked)
         pobj->setSideRight(true);
@@ -161,7 +163,7 @@ void PropertiesPlatform::rightSideEnabled(int state){
 void PropertiesPlatform:: disablePlatformEnabled(int state){
     if(pobj == NULL) return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     if(state == Qt::Checked)
         pobj->setDisabled(true);
@@ -172,7 +174,7 @@ void PropertiesPlatform:: disablePlatformEnabled(int state){
 void PropertiesPlatform::nameStationEnabled(QString val){
     if(pobj == NULL) return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     pobj->setStationName(val);
     Undo::StateEnd();
@@ -180,7 +182,7 @@ void PropertiesPlatform::nameStationEnabled(QString val){
 void PropertiesPlatform::namePlatformEnabled(QString val){
     if(pobj == NULL) return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     pobj->setPlatformName(val);
     Undo::StateEnd();
@@ -190,7 +192,7 @@ void PropertiesPlatform::waitMinEnabled(QString val){
     int min = this->waitMin.text().toInt(0,10);
     int sec = this->waitSec.text().toInt(0,10);
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     pobj->setPlatformMinWaitingTime(min*60+sec);
     Undo::StateEnd();
@@ -200,7 +202,7 @@ void PropertiesPlatform::waitSecEnabled(QString val){
     int min = this->waitMin.text().toInt(0,10);
     int sec = this->waitSec.text().toInt(0,10);
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     pobj->setPlatformMinWaitingTime(min*60+sec);
     Undo::StateEnd();
@@ -208,7 +210,7 @@ void PropertiesPlatform::waitSecEnabled(QString val){
 void PropertiesPlatform::waitPasEnabled(QString val){
     if(pobj == NULL) return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     pobj->setPlatformNumPassengersWaiting(val.toInt(0,10));
     Undo::StateEnd();

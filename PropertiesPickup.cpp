@@ -120,15 +120,15 @@ PropertiesPickup::PropertiesPickup() {
 PropertiesPickup::~PropertiesPickup() {
 }
 
-void PropertiesPickup::showObj(WorldObj* obj) {
+void PropertiesPickup::showObj(GameObj* obj) {
     if (obj == NULL) {
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     pobj = (PickupObj*) obj;
 
-    this->infoLabel->setText("Object: " + obj->type);
+    this->infoLabel->setText("Object: " + pobj->type);
     this->fileName.setText(pobj->fileName);
     this->eBrokenFileName.setText(pobj->fileName.split('.')[0] + "_d.s");
     cPickupType.blockSignals(true);
@@ -187,7 +187,7 @@ void PropertiesPickup::eContentEnabled(QString val){
     float fval = val.toFloat(&ok);
     if(ok){
         Undo::StateBegin();
-        Undo::PushWorldObjData(worldObj);
+        Undo::PushGameObjData(worldObj);
         Undo::PushTrackDB(Game::trackDB);
         pobj->setPickupContent(fval);
         Undo::StateEnd();
@@ -266,10 +266,12 @@ void PropertiesPickup::chBrokenEnabled(int val){
     }
 }
 
-bool PropertiesPickup::support(WorldObj* obj) {
+bool PropertiesPickup::support(GameObj* obj) {
     if (obj == NULL)
         return false;
-    if (obj->type == "pickup")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "pickup")
         return true;
     return false;
 }

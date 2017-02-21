@@ -20,8 +20,8 @@ class PropertiesPickup : public PropertiesAbstract{
 public:
     PropertiesPickup();
     virtual ~PropertiesPickup();
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
     
 public slots:
     void cPickupTypeEdited(int val);

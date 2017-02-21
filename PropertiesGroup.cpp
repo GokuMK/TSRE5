@@ -151,16 +151,16 @@ PropertiesGroup::PropertiesGroup() {
 PropertiesGroup::~PropertiesGroup() {
 }
 
-void PropertiesGroup::showObj(WorldObj* obj){
+void PropertiesGroup::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     GroupObj *gobj = (GroupObj*)worldObj;
     
-    float *qDirection = obj->getQuatRotation();
-    float *position = obj->getPosition();
+    float *qDirection = gobj->getQuatRotation();
+    float *position = gobj->getPosition();
     this->posX.setText(QString::number(position[0], 'G', 6));
     this->posY.setText(QString::number(position[1], 'G', 6));
     this->posZ.setText(QString::number(-position[2], 'G', 6));
@@ -171,11 +171,11 @@ void PropertiesGroup::showObj(WorldObj* obj){
         QString::number(qDirection[3], 'G', 4)
         );
     
-    defaultDetailLevel.setText(QString::number(obj->getDefaultDetailLevel()));
+    defaultDetailLevel.setText(QString::number(gobj->getDefaultDetailLevel()));
     enableCustomDetailLevel.blockSignals(true);
-    if(obj->customDetailLevelEnabled()){
+    if(gobj->customDetailLevelEnabled()){
         enableCustomDetailLevel.setChecked(true);
-        customDetailLevel.setText(QString::number(obj->getCustomDetailLevel()));
+        customDetailLevel.setText(QString::number(gobj->getCustomDetailLevel()));
         customDetailLevel.setEnabled(true);
     } else {
         enableCustomDetailLevel.setChecked(false);
@@ -184,14 +184,14 @@ void PropertiesGroup::showObj(WorldObj* obj){
     }
     enableCustomDetailLevel.blockSignals(false);
     
-    this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
+    this->flags.setText(ParserX::MakeFlagsString(gobj->staticFlags));
     this->checkboxAnim.blockSignals(true);
     this->checkboxTerrain.blockSignals(true);
     this->cShadowType.blockSignals(true);
     this->chSeparateRotation.blockSignals(true);
-    this->checkboxAnim.setChecked(obj->isAnimated());
-    this->checkboxTerrain.setChecked(obj->isTerrainObj());
-    this->cShadowType.setCurrentIndex((int)obj->getShadowType());
+    this->checkboxAnim.setChecked(gobj->isAnimated());
+    this->checkboxTerrain.setChecked(gobj->isTerrainObj());
+    this->cShadowType.setCurrentIndex((int)gobj->getShadowType());
     this->chSeparateRotation.setChecked(gobj->isIndividualRotation());
     this->checkboxAnim.blockSignals(false);
     this->checkboxTerrain.blockSignals(false);
@@ -199,14 +199,14 @@ void PropertiesGroup::showObj(WorldObj* obj){
     this->chSeparateRotation.blockSignals(false);
 }
 
-void PropertiesGroup::updateObj(WorldObj* obj){
+void PropertiesGroup::updateObj(GameObj* obj){
     if(obj == NULL){
         return;
     }
-    
+    GroupObj *gobj = (GroupObj*)obj;
     if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
-        float *qDirection = obj->getQuatRotation();
-        float *position = obj->getPosition();
+        float *qDirection = gobj->getQuatRotation();
+        float *position = gobj->getPosition();
         this->posX.setText(QString::number(position[0], 'G', 6));
         this->posY.setText(QString::number(position[1], 'G', 6));
         this->posZ.setText(QString::number(-position[2], 'G', 6));
@@ -219,10 +219,12 @@ void PropertiesGroup::updateObj(WorldObj* obj){
     }
 }
 
-bool PropertiesGroup::support(WorldObj* obj){
+bool PropertiesGroup::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "groupobject")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "groupobject")
         return true;
     return false;
 }

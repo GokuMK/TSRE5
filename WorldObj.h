@@ -11,6 +11,7 @@
 #ifndef WORLDOBJ_H
 #define	WORLDOBJ_H
 
+#include "GameObj.h"
 #include <QString>
 #include "GLUU.h"
 #include "FileBuffer.h"
@@ -20,7 +21,7 @@
 class SFile;
 class TrackItemObj;
 
-class WorldObj {
+class WorldObj : public GameObj {
 public:
     enum TypeID {
         none = 0,
@@ -157,7 +158,7 @@ protected:
     virtual bool getSimpleBorder(float* border);
     virtual bool getBoxPoints(QVector<float> &points);
     float* matrix3x3 = NULL;
-    bool selected;
+    
 };
 
 #endif	/* WORLDOBJ_H */

@@ -14,6 +14,7 @@
 #include <QtWidgets>
 #include "Undo.h"
 
+class GameObj;
 class WorldObj;
 
 class PropertiesAbstract : public QWidget {
@@ -21,10 +22,10 @@ class PropertiesAbstract : public QWidget {
 public:
     PropertiesAbstract();
     virtual ~PropertiesAbstract();
-    virtual bool support(WorldObj* obj);
-    virtual void showObj(WorldObj* obj);
-    virtual void updateObj(WorldObj* obj);
-
+    virtual bool support(GameObj* obj);
+    virtual void showObj(GameObj* obj);
+    virtual void updateObj(GameObj* obj);
+    
 public slots:
     void copyFileNameEnabled();
     void copyREnabled();

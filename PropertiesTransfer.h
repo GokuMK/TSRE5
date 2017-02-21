@@ -20,8 +20,8 @@ class PropertiesTransfer : public PropertiesAbstract{
 public:
     PropertiesTransfer();
     virtual ~PropertiesTransfer();
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
     
 public slots:
     void sizeEnabled(QString val);

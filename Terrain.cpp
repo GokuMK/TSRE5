@@ -21,6 +21,7 @@
 #include "MapWindow.h"
 
 Terrain::Terrain(float x, float y) {
+    typeObj = this->terrainobj;
     loaded = false;
     isOgl = false;
     modified = false;
@@ -552,7 +553,7 @@ void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
     this->modified = true;
 }
 
-void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov) {
+void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int selectionColor) {
     if (!loaded)
         return;
     if (!isOgl) {
@@ -571,9 +572,9 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
 
     gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->currentMsMatrinxHash = 0;//gluu->getMatrixHash(gluu->objStrMatrix);
-    if(Game::viewWorldGrid)
+    if(Game::viewWorldGrid && selectionColor == 0)
         lines.render();
-    if(Game::viewTileGrid){
+    if(Game::viewTileGrid && selectionColor == 0){
         slines.render();
         ulines.render();
         lockedlines.render();
@@ -617,44 +618,50 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                     if ((ccos > 0) && (xxx > size)) continue;
                 }
 
-                if (texid[yy * 16 + uu] == -2) {
-                    //gl.glColor3f(0.5f, 0.5f, 0f);
-                    //gl.glDisable(GL2.GL_TEXTURE_2D);
+                if(selectionColor != 0){
+                    int tselectionColor = selectionColor | (yy * 16 + uu);
+                    int wColor = (int)(tselectionColor/65536);
+                    int sColor = (int)(tselectionColor - wColor*65536)/256;
+                    int bColor = (int)(tselectionColor - wColor*65536 - sColor*256);
+                    gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
                 } else {
-                    if (texid[yy * 16 + uu] == -1) {
-                        //texid[uu*16+yy] = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
-                        //qDebug() << texturepath << " "<<tfile->tdata[(yy * 16 + uu)*7+0] <<" "<< tfile->materials[(int)tfile->tdata[(yy * 16 + uu)*7+0]].tex[0];
-                        texid[yy * 16 + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].tex[0]);
-                        //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
-                        //texid = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
-                        //    gl.glDisable(GL2.GL_TEXTURE_2D);
-                    }
-                    if (TexLib::mtex[texid[yy * 16 + uu]]->loaded) {
-                        if (!TexLib::mtex[texid[yy * 16 + uu]]->glLoaded)
-                            TexLib::mtex[texid[yy * 16 + uu]]->GLTextures();
-                        f->glActiveTexture(GL_TEXTURE0);
-                        //f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
-                        gluu->bindTexture(f, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
+                    if (texid[yy * 16 + uu] == -2) {
                     } else {
-                    }
-                }
-                if (texid2[yy * 16 + uu] == -2) {
-                } else if (tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].count153 < 2){
-                        texid2[yy * 16 + uu] = -2;
-                } else {
-                    if (texid2[yy * 16 + uu] == -1) {
-                        texid2[yy * 16 + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].tex[1]);
-                    }
-                    if (TexLib::mtex[texid2[yy * 16 + uu]]->loaded) {
-                        if (!TexLib::mtex[texid2[yy * 16 + uu]]->glLoaded)
-                            TexLib::mtex[texid2[yy * 16 + uu]]->GLTextures(true);
-                        f->glActiveTexture(GL_TEXTURE1);
-                        f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid2[yy * 16 + uu]]->tex[0]);
-                        if(shaderSecondTexUV != *(float*)&tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].itex[1][3]){
-                            shaderSecondTexUV = *(float*)&tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].itex[1][3];
-                            gluu->currentShader->setUniformValue(gluu->currentShader->shaderSecondTexEnabled, shaderSecondTexUV);
+                        if (texid[yy * 16 + uu] == -1) {
+                            //texid[uu*16+yy] = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
+                            //qDebug() << texturepath << " "<<tfile->tdata[(yy * 16 + uu)*7+0] <<" "<< tfile->materials[(int)tfile->tdata[(yy * 16 + uu)*7+0]].tex[0];
+                            texid[yy * 16 + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].tex[0]);
+                            //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
+                            //texid = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
+                            //    gl.glDisable(GL2.GL_TEXTURE_2D);
                         }
+                        if (TexLib::mtex[texid[yy * 16 + uu]]->loaded) {
+                            if (!TexLib::mtex[texid[yy * 16 + uu]]->glLoaded)
+                                TexLib::mtex[texid[yy * 16 + uu]]->GLTextures();
+                            f->glActiveTexture(GL_TEXTURE0);
+                            //f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
+                            gluu->bindTexture(f, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
+                        } else {
+                        }
+                    }
+                    if (texid2[yy * 16 + uu] == -2) {
+                    } else if (tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].count153 < 2){
+                            texid2[yy * 16 + uu] = -2;
                     } else {
+                        if (texid2[yy * 16 + uu] == -1) {
+                            texid2[yy * 16 + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].tex[1]);
+                        }
+                        if (TexLib::mtex[texid2[yy * 16 + uu]]->loaded) {
+                            if (!TexLib::mtex[texid2[yy * 16 + uu]]->glLoaded)
+                                TexLib::mtex[texid2[yy * 16 + uu]]->GLTextures(true);
+                            f->glActiveTexture(GL_TEXTURE1);
+                            f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid2[yy * 16 + uu]]->tex[0]);
+                            if(shaderSecondTexUV != *(float*)&tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].itex[1][3]){
+                                shaderSecondTexUV = *(float*)&tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].itex[1][3];
+                                gluu->currentShader->setUniformValue(gluu->currentShader->shaderSecondTexEnabled, shaderSecondTexUV);
+                            }
+                        } else {
+                        }
                     }
                 }
                 
@@ -702,7 +709,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
             
-    if(!showBlob)
+    if(!showBlob && selectionColor == 0)
         renderWater(lodx, lodz, playerT, playerW, target, fov);
 }
 

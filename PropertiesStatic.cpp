@@ -207,34 +207,34 @@ PropertiesStatic::PropertiesStatic(){
 PropertiesStatic::~PropertiesStatic() {
 }
 
-void PropertiesStatic::showObj(WorldObj* obj){
+void PropertiesStatic::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     
-    this->infoLabel->setText("Object: "+obj->type);
-    this->fileName.setText(obj->fileName);
+    this->infoLabel->setText("Object: "+worldObj->type);
+    this->fileName.setText(worldObj->fileName);
     
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    this->posX.setText(QString::number(obj->position[0], 'G', 6));
-    this->posY.setText(QString::number(obj->position[1], 'G', 6));
-    this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+    this->uid.setText(QString::number(worldObj->UiD, 10));
+    this->tX.setText(QString::number(worldObj->x, 10));
+    this->tY.setText(QString::number(-worldObj->y, 10));
+    this->posX.setText(QString::number(worldObj->position[0], 'G', 6));
+    this->posY.setText(QString::number(worldObj->position[1], 'G', 6));
+    this->posZ.setText(QString::number(-worldObj->position[2], 'G', 6));
     this->quat.setText(
-            QString::number(obj->qDirection[0], 'G', 4) + " " +
-            QString::number(obj->qDirection[1], 'G', 4) + " " +
-            QString::number(-obj->qDirection[2], 'G', 4) + " " +
-            QString::number(obj->qDirection[3], 'G', 4)
+            QString::number(worldObj->qDirection[0], 'G', 4) + " " +
+            QString::number(worldObj->qDirection[1], 'G', 4) + " " +
+            QString::number(-worldObj->qDirection[2], 'G', 4) + " " +
+            QString::number(worldObj->qDirection[3], 'G', 4)
             );
     
-    defaultDetailLevel.setText(QString::number(obj->getDefaultDetailLevel()));
+    defaultDetailLevel.setText(QString::number(worldObj->getDefaultDetailLevel()));
     enableCustomDetailLevel.blockSignals(true);
-    if(obj->customDetailLevelEnabled()){
+    if(worldObj->customDetailLevelEnabled()){
         enableCustomDetailLevel.setChecked(true);
-        customDetailLevel.setText(QString::number(obj->getCustomDetailLevel()));
+        customDetailLevel.setText(QString::number(worldObj->getCustomDetailLevel()));
         customDetailLevel.setEnabled(true);
     } else {
         enableCustomDetailLevel.setChecked(false);
@@ -243,13 +243,13 @@ void PropertiesStatic::showObj(WorldObj* obj){
     }
     enableCustomDetailLevel.blockSignals(false);
     
-    this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
+    this->flags.setText(ParserX::MakeFlagsString(worldObj->staticFlags));
     this->checkboxAnim.blockSignals(true);
     this->checkboxTerrain.blockSignals(true);
     this->cShadowType.blockSignals(true);
-    this->checkboxAnim.setChecked(obj->isAnimated());
-    this->checkboxTerrain.setChecked(obj->isTerrainObj());
-    this->cShadowType.setCurrentIndex((int)obj->getShadowType());
+    this->checkboxAnim.setChecked(worldObj->isAnimated());
+    this->checkboxTerrain.setChecked(worldObj->isTerrainObj());
+    this->cShadowType.setCurrentIndex((int)worldObj->getShadowType());
     this->checkboxAnim.blockSignals(false);
     this->checkboxTerrain.blockSignals(false);
     this->cShadowType.blockSignals(false);
@@ -265,23 +265,23 @@ void PropertiesStatic::showObj(WorldObj* obj){
     this->cCollisionType.blockSignals(false);
 }
 
-void PropertiesStatic::updateObj(WorldObj* obj){
+void PropertiesStatic::updateObj(GameObj* obj){
     if(obj == NULL){
         return;
     }
-
+    worldObj = (WorldObj*)obj;
     if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
-        this->uid.setText(QString::number(obj->UiD, 10));
-        this->tX.setText(QString::number(obj->x, 10));
-        this->tY.setText(QString::number(-obj->y, 10));
-        this->posX.setText(QString::number(obj->position[0], 'G', 6));
-        this->posY.setText(QString::number(obj->position[1], 'G', 6));
-        this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+        this->uid.setText(QString::number(worldObj->UiD, 10));
+        this->tX.setText(QString::number(worldObj->x, 10));
+        this->tY.setText(QString::number(-worldObj->y, 10));
+        this->posX.setText(QString::number(worldObj->position[0], 'G', 6));
+        this->posY.setText(QString::number(worldObj->position[1], 'G', 6));
+        this->posZ.setText(QString::number(-worldObj->position[2], 'G', 6));
         this->quat.setText(
-                QString::number(obj->qDirection[0], 'G', 4) + " " +
-                QString::number(obj->qDirection[1], 'G', 4) + " " +
-                QString::number(-obj->qDirection[2], 'G', 4) + " " +
-                QString::number(obj->qDirection[3], 'G', 4)
+                QString::number(worldObj->qDirection[0], 'G', 4) + " " +
+                QString::number(worldObj->qDirection[1], 'G', 4) + " " +
+                QString::number(-worldObj->qDirection[2], 'G', 4) + " " +
+                QString::number(worldObj->qDirection[3], 'G', 4)
                 );
     }
     
@@ -292,14 +292,16 @@ void PropertiesStatic::updateObj(WorldObj* obj){
     }
 }
 
-bool PropertiesStatic::support(WorldObj* obj){
+bool PropertiesStatic::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "static")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "static")
         return true;
-    if(obj->type == "gantry")
+    if(((WorldObj*)obj)->type == "gantry")
         return true;
-    if(obj->type == "collideobject")
+    if(((WorldObj*)obj)->type == "collideobject")
         return true;
     return false;
 }

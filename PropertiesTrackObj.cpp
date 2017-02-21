@@ -279,36 +279,36 @@ void PropertiesTrackObj::haxRemoveTDBTreeEnabled(){
     Game::currentRoute->deleteTDBTree(trackObj);
 }
 
-void PropertiesTrackObj::showObj(WorldObj* obj){
+void PropertiesTrackObj::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     trackObj = (TrackObj*) obj;
     
-    this->infoLabel->setText("Object: "+obj->type);
-    this->fileName.setText(obj->fileName);
+    this->infoLabel->setText("Object: "+trackObj->type);
+    this->fileName.setText(trackObj->fileName);
     
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    this->eSectionIdx.setText(QString::number(obj->sectionIdx, 10));
-    this->posX.setText(QString::number(obj->position[0], 'G', 6));
-    this->posY.setText(QString::number(obj->position[1], 'G', 6));
-    this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+    this->uid.setText(QString::number(trackObj->UiD, 10));
+    this->tX.setText(QString::number(trackObj->x, 10));
+    this->tY.setText(QString::number(-trackObj->y, 10));
+    this->eSectionIdx.setText(QString::number(trackObj->sectionIdx, 10));
+    this->posX.setText(QString::number(trackObj->position[0], 'G', 6));
+    this->posY.setText(QString::number(trackObj->position[1], 'G', 6));
+    this->posZ.setText(QString::number(-trackObj->position[2], 'G', 6));
     this->quat.setText(
-            QString::number(obj->qDirection[0], 'G', 4) + " " +
-            QString::number(obj->qDirection[1], 'G', 4) + " " +
-            QString::number(-obj->qDirection[2], 'G', 4) + " " +
-            QString::number(obj->qDirection[3], 'G', 4)
+            QString::number(trackObj->qDirection[0], 'G', 4) + " " +
+            QString::number(trackObj->qDirection[1], 'G', 4) + " " +
+            QString::number(-trackObj->qDirection[2], 'G', 4) + " " +
+            QString::number(trackObj->qDirection[3], 'G', 4)
             );
     
-    defaultDetailLevel.setText(QString::number(obj->getDefaultDetailLevel()));
+    defaultDetailLevel.setText(QString::number(trackObj->getDefaultDetailLevel()));
     enableCustomDetailLevel.blockSignals(true);
-    if(obj->customDetailLevelEnabled()){
+    if(trackObj->customDetailLevelEnabled()){
         enableCustomDetailLevel.setChecked(true);
-        customDetailLevel.setText(QString::number(obj->getCustomDetailLevel()));
+        customDetailLevel.setText(QString::number(trackObj->getCustomDetailLevel()));
         customDetailLevel.setEnabled(true);
     } else {
         enableCustomDetailLevel.setChecked(false);
@@ -317,7 +317,7 @@ void PropertiesTrackObj::showObj(WorldObj* obj){
     }
     enableCustomDetailLevel.blockSignals(false);
     
-    this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
+    this->flags.setText(ParserX::MakeFlagsString(trackObj->staticFlags));
     
     ///////////
     TrackObj* track = (TrackObj*)obj;
@@ -351,7 +351,7 @@ void PropertiesTrackObj::showObj(WorldObj* obj){
     this->cCollisionType.blockSignals(false);
 }
 
-void PropertiesTrackObj::updateObj(WorldObj* obj){
+void PropertiesTrackObj::updateObj(GameObj* obj){
     if(obj == NULL){
         return;
     }
@@ -366,17 +366,17 @@ void PropertiesTrackObj::updateObj(WorldObj* obj){
 
     oneInXm = 1000.0/vect[1];
     if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
-        this->uid.setText(QString::number(obj->UiD, 10));
-        this->tX.setText(QString::number(obj->x, 10));
-        this->tY.setText(QString::number(-obj->y, 10));
-        this->posX.setText(QString::number(obj->position[0], 'G', 6));
-        this->posY.setText(QString::number(obj->position[1], 'G', 6));
-        this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+        this->uid.setText(QString::number(trackObj->UiD, 10));
+        this->tX.setText(QString::number(trackObj->x, 10));
+        this->tY.setText(QString::number(-trackObj->y, 10));
+        this->posX.setText(QString::number(trackObj->position[0], 'G', 6));
+        this->posY.setText(QString::number(trackObj->position[1], 'G', 6));
+        this->posZ.setText(QString::number(-trackObj->position[2], 'G', 6));
         this->quat.setText(
-                QString::number(obj->qDirection[0], 'G', 4) + " " +
-                QString::number(obj->qDirection[1], 'G', 4) + " " +
-                QString::number(-obj->qDirection[2], 'G', 4) + " " +
-                QString::number(obj->qDirection[3], 'G', 4)
+                QString::number(trackObj->qDirection[0], 'G', 4) + " " +
+                QString::number(trackObj->qDirection[1], 'G', 4) + " " +
+                QString::number(-trackObj->qDirection[2], 'G', 4) + " " +
+                QString::number(trackObj->qDirection[3], 'G', 4)
                 );
     }
     if(!this->elevProm.hasFocus() && !this->elev1inXm.hasFocus()){
@@ -421,10 +421,12 @@ void PropertiesTrackObj::elev1inXmEnabled(QString val){
     trackObj->setElevation(prom);
 }
 
-bool PropertiesTrackObj::support(WorldObj* obj){
+bool PropertiesTrackObj::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "trackobj")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "trackobj")
         return true;
     return false;
 }

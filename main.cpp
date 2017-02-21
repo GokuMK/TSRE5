@@ -54,6 +54,7 @@ int main(int argc, char *argv[]){
     format.setSamples(Game::AASamples);
     //format.set
     format.setSwapInterval(0);
+    //format.setSwapBehavior(QSurfaceFormat::TripleBuffer);
     QSurfaceFormat::setDefaultFormat(format);
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);

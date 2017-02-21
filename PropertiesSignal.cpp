@@ -124,17 +124,17 @@ void PropertiesSignal::msg(QString name, QString val){
     }
 }
 
-void PropertiesSignal::showObj(WorldObj* obj){
+void PropertiesSignal::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     sobj = (SignalObj*)obj;
-    this->infoLabel->setText("Object: "+obj->type);
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
+    this->infoLabel->setText("Object: "+sobj->type);
+    this->uid.setText(QString::number(sobj->UiD, 10));
+    this->tX.setText(QString::number(sobj->x, 10));
+    this->tY.setText(QString::number(-sobj->y, 10));
     
     /*for (int i = 0; i < maxSubObj; i++) {
         this->wSub[i].hide();
@@ -158,19 +158,19 @@ void PropertiesSignal::showObj(WorldObj* obj){
     QRect rec = QApplication::desktop()->screenGeometry();
     signalWindow->move(rec.width()/2-signalWindow->width()/2 ,rec.height()/2-signalWindow->height()/2);
     
-    this->flags.setText(ParserX::MakeFlagsString(obj->staticFlags));
+    this->flags.setText(ParserX::MakeFlagsString(sobj->staticFlags));
     this->checkboxAnim.blockSignals(true);
     this->checkboxTerrain.blockSignals(true);
     this->cShadowType.blockSignals(true);
-    this->checkboxAnim.setChecked(obj->isAnimated());
-    this->checkboxTerrain.setChecked(obj->isTerrainObj());
-    this->cShadowType.setCurrentIndex((int)obj->getShadowType());
+    this->checkboxAnim.setChecked(sobj->isAnimated());
+    this->checkboxTerrain.setChecked(sobj->isTerrainObj());
+    this->cShadowType.setCurrentIndex((int)sobj->getShadowType());
     this->checkboxAnim.blockSignals(false);
     this->checkboxTerrain.blockSignals(false);
     this->cShadowType.blockSignals(false);
 }
 
-void PropertiesSignal::updateObj(WorldObj* obj){
+void PropertiesSignal::updateObj(GameObj* obj){
     if(sobj == NULL){
         return;
     }
@@ -183,7 +183,7 @@ void PropertiesSignal::flipSignal(){
     if(sobj == NULL)
         return;
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB);
     sobj->flip(chFlipShape.isChecked());
     Undo::StateEnd();
@@ -193,10 +193,12 @@ void PropertiesSignal::showSubObjList(){
     this->signalWindow->show();
 }
 
-bool PropertiesSignal::support(WorldObj* obj){
+bool PropertiesSignal::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "signal")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "signal")
         return true;
     return false;
 }

@@ -20,8 +20,8 @@ class PropertiesPlatform : public PropertiesAbstract{
 public:
     PropertiesPlatform();
     virtual ~PropertiesPlatform();
-    bool support(WorldObj* obj);
-    void showObj(WorldObj* obj);
+    bool support(GameObj* obj);
+    void showObj(GameObj* obj);
     
 public slots:
     void leftSideEnabled(int state);

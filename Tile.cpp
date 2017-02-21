@@ -708,19 +708,25 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, int
                 //obiekty[i]->render(gluu, lod, x-playerT[0]*2048, z-playerT[1]*2048);
                 if (renderMode == gluu->RENDER_SELECTION) {
                     int sxx = 0;
-                         if(x < playerT[0] && z < playerT[1]) sxx = 0;
-                    else if(x < playerT[0] && z == playerT[1]) sxx = 1;
-                    else if(x < playerT[0] && z > playerT[1]) sxx = 2;
-                    else if(x == playerT[0] && z < playerT[1]) sxx = 3;
-                    else if(x == playerT[0] && z == playerT[1]) sxx = 4;
-                    else if(x == playerT[0] && z > playerT[1]) sxx = 5;
-                    else if(x > playerT[0] && z < playerT[1]) sxx = 6;
-                    else if(x > playerT[0] && z == playerT[1]) sxx = 7;
+                         if(x < playerT[0] && z < playerT[1]) sxx = 1;
+                    else if(x < playerT[0] && z == playerT[1]) sxx = 2;
+                    else if(x < playerT[0] && z > playerT[1]) sxx = 3;
+                    else if(x == playerT[0] && z < playerT[1]) sxx = 4;
+                    else if(x == playerT[0] && z == playerT[1]) sxx = 5;
+                    else if(x == playerT[0] && z > playerT[1]) sxx = 6;
+                    else if(x > playerT[0] && z < playerT[1]) sxx = 7;
+                    else if(x > playerT[0] && z == playerT[1]) sxx = 8;
+                    else if(x > playerT[0] && z > playerT[1]) sxx = 9;
                     // only 3 bits for tile number but this requires 4 .. 
                     //else if(x > playerT[0] && z > playerT[1]) sxx = 8;
                     //int sxx = (x - playerT[0] + 1)*4 + (z - playerT[1] + 1);
                     //qDebug() << sxx;
-                    selectionColor = obiekty[i]->UiD + sxx * 131072;
+                    //selectionColor = obiekty[i]->UiD + sxx * 131072;
+                    selectionColor = sxx << 20;
+                    if(obiekty[i]->isSoundItem())
+                        selectionColor |= (obiekty[i]->UiD - 50000) << 4;
+                    else
+                        selectionColor |= (obiekty[i]->UiD) << 4;
                 }
                 obiekty[i]->render(gluu, lod, lodx, lodz, playerW, target, fov, selectionColor, renderMode);
                 //obiekty[i]->render(gluu);

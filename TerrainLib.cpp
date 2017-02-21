@@ -770,10 +770,14 @@ void TerrainLib::fillRAW(float** terrainData, int mojex, int mojez) {
     }/**/
 }
 
-void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* target, float fov) {
+void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, int renderMode) {
     int mintile = -Game::tileLod;
     int maxtile = Game::tileLod;
-
+    
+    if(renderMode == gluu->RENDER_SELECTION){
+        mintile = -1;
+        maxtile = 1;
+    }
     //TerrainLib.render(playerT, playerW); 
 
     /*for (auto it = terrain.begin(); it != terrain.end(); ++it) {
@@ -787,6 +791,7 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
     gluu->enableNormals();
 
     Terrain *tTile;
+    int selectionColor = 0;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
             tTile = terrain[(((int)playerT[0] + i)*10000 + (int)playerT[1] + j)];
@@ -801,13 +806,19 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
             tTile->inUse = true;
             if (tTile->loaded == false) continue;
             //tTile->inUse = true;
+            
             if (tTile->loaded) {
                 float lodx = 2048 * i - playerW[0];
                 float lodz = 2048 * j - playerW[2];
                 gluu->mvPushMatrix();
                 Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * i, 0, 2048 * j);
                 gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-                tTile->render(lodx, lodz, playerT, playerW, target, fov);
+                if (renderMode == gluu->RENDER_SELECTION) {
+                    selectionColor = 10 << 20;
+                    selectionColor |= ((i+1) << 10);
+                    selectionColor |= ((j+1) << 8);
+                }
+                tTile->render(lodx, lodz, playerT, playerW, target, fov, selectionColor);
                 gluu->mvPopMatrix();
             }
         }
@@ -865,7 +876,7 @@ void TerrainLib::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, fl
                 gluu->mvPushMatrix();
                 Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * i, 0, 2048 * j);
                 gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-                tTile->render(lodx, lodz, playerT, playerW, target, fov);
+                tTile->render(lodx, lodz, playerT, playerW, target, fov, 1);
                 gluu->mvPopMatrix();
             }
         }

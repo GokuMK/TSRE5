@@ -141,28 +141,28 @@ PropertiesLevelCr::PropertiesLevelCr() {
 PropertiesLevelCr::~PropertiesLevelCr() {
 }
 
-void PropertiesLevelCr::showObj(WorldObj* obj){
+void PropertiesLevelCr::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     lobj = (LevelCrObj*)obj;
     
-    this->infoLabel->setText("Object: "+obj->type);
+    this->infoLabel->setText("Object: "+lobj->type);
     this->fileName.setText(lobj->fileName);
 
-    this->uid.setText(QString::number(obj->UiD, 10));
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
-    this->posX.setText(QString::number(obj->position[0], 'G', 6));
-    this->posY.setText(QString::number(obj->position[1], 'G', 6));
-    this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+    this->uid.setText(QString::number(lobj->UiD, 10));
+    this->tX.setText(QString::number(lobj->x, 10));
+    this->tY.setText(QString::number(-lobj->y, 10));
+    this->posX.setText(QString::number(lobj->position[0], 'G', 6));
+    this->posY.setText(QString::number(lobj->position[1], 'G', 6));
+    this->posZ.setText(QString::number(-lobj->position[2], 'G', 6));
     this->quat.setText(
-            QString::number(obj->qDirection[0], 'G', 4) + " " +
-            QString::number(obj->qDirection[1], 'G', 4) + " " +
-            QString::number(-obj->qDirection[2], 'G', 4) + " " +
-            QString::number(obj->qDirection[3], 'G', 4)
+            QString::number(lobj->qDirection[0], 'G', 4) + " " +
+            QString::number(lobj->qDirection[1], 'G', 4) + " " +
+            QString::number(-lobj->qDirection[2], 'G', 4) + " " +
+            QString::number(lobj->qDirection[3], 'G', 4)
             );
     
     this->eActivateLevelCrossing.setText(QString::number(lobj->getSensitivityActivateLevel()));
@@ -180,23 +180,23 @@ void PropertiesLevelCr::showObj(WorldObj* obj){
     this->chSilentHax.blockSignals(false);
 }
 
-void PropertiesLevelCr::updateObj(WorldObj* obj){
+void PropertiesLevelCr::updateObj(GameObj* obj){
     if(obj == NULL){
         return;
     }
-    
+    lobj = (LevelCrObj*)obj;
     if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
-        this->uid.setText(QString::number(obj->UiD, 10));
-        this->tX.setText(QString::number(obj->x, 10));
-        this->tY.setText(QString::number(-obj->y, 10));
-        this->posX.setText(QString::number(obj->position[0], 'G', 6));
-        this->posY.setText(QString::number(obj->position[1], 'G', 6));
-        this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+        this->uid.setText(QString::number(lobj->UiD, 10));
+        this->tX.setText(QString::number(lobj->x, 10));
+        this->tY.setText(QString::number(-lobj->y, 10));
+        this->posX.setText(QString::number(lobj->position[0], 'G', 6));
+        this->posY.setText(QString::number(lobj->position[1], 'G', 6));
+        this->posZ.setText(QString::number(-lobj->position[2], 'G', 6));
         this->quat.setText(
-                QString::number(obj->qDirection[0], 'G', 4) + " " +
-                QString::number(obj->qDirection[1], 'G', 4) + " " +
-                QString::number(-obj->qDirection[2], 'G', 4) + " " +
-                QString::number(obj->qDirection[3], 'G', 4)
+                QString::number(lobj->qDirection[0], 'G', 4) + " " +
+                QString::number(lobj->qDirection[1], 'G', 4) + " " +
+                QString::number(-lobj->qDirection[2], 'G', 4) + " " +
+                QString::number(lobj->qDirection[3], 'G', 4)
                 );
     }
 }
@@ -314,17 +314,19 @@ void PropertiesLevelCr::bDeleteSelectedEnabled(){
         return;
     }
     Undo::StateBegin();
-    Undo::PushWorldObjData(worldObj);
+    Undo::PushGameObjData(worldObj);
     Undo::PushTrackDB(Game::trackDB, false);
     Undo::PushTrackDB(Game::roadDB, true);
     lobj->deleteSelectedTrItem();
     Undo::StateEnd();
 }
 
-bool PropertiesLevelCr::support(WorldObj* obj){
+bool PropertiesLevelCr::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "levelcr")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "levelcr")
         return true;
     return false;
 }

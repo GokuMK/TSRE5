@@ -142,31 +142,31 @@ PropertiesTransfer::PropertiesTransfer() {
 PropertiesTransfer::~PropertiesTransfer() {
 }
 
-void PropertiesTransfer::showObj(WorldObj* obj){
+void PropertiesTransfer::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     transferObj = (TransferObj*)obj;
 
     TransferObj* tobj = (TransferObj*)obj;
         
-    this->infoLabel->setText("Object: "+obj->type);
+    this->infoLabel->setText("Object: "+transferObj->type);
     this->fileName.setText(tobj->texture);
         
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
+    this->tX.setText(QString::number(transferObj->x, 10));
+    this->tY.setText(QString::number(-transferObj->y, 10));
     this->sizeX.setText(QString::number(tobj->width, 'G', 4));
     this->sizeY.setText(QString::number(tobj->height, 'G', 4));
-    this->posX.setText(QString::number(obj->position[0], 'G', 6));
-    this->posY.setText(QString::number(obj->position[1], 'G', 6));
-    this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+    this->posX.setText(QString::number(transferObj->position[0], 'G', 6));
+    this->posY.setText(QString::number(transferObj->position[1], 'G', 6));
+    this->posZ.setText(QString::number(-transferObj->position[2], 'G', 6));
     this->quat.setText(
-            QString::number(obj->qDirection[0], 'G', 4) + " " +
-            QString::number(obj->qDirection[1], 'G', 4) + " " +
-            QString::number(-obj->qDirection[2], 'G', 4) + " " +
-            QString::number(obj->qDirection[3], 'G', 4)
+            QString::number(transferObj->qDirection[0], 'G', 4) + " " +
+            QString::number(transferObj->qDirection[1], 'G', 4) + " " +
+            QString::number(-transferObj->qDirection[2], 'G', 4) + " " +
+            QString::number(transferObj->qDirection[3], 'G', 4)
             );
     
 
@@ -198,10 +198,12 @@ void PropertiesTransfer::sizeEnabled(QString val){
     transferObj->deleteVBO();
 }
 
-bool PropertiesTransfer::support(WorldObj* obj){
+bool PropertiesTransfer::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "transfer")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "transfer")
         return true;
     return false;
 }

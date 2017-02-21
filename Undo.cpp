@@ -224,6 +224,18 @@ void Undo::SinglePushWorldObjData(WorldObj* obj){
     StateEnd();
 }
 
+void Undo::PushGameObjData(GameObj* obj){
+    if(currentState == NULL)
+        return;
+    if(obj == NULL)
+        return;
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
+    WorldObj* wobj = (WorldObj*)obj;
+    
+    PushWorldObjData(wobj);
+}
+
 void Undo::PushWorldObjData(WorldObj* obj){
     if(currentState == NULL)
         return;
@@ -259,6 +271,8 @@ void Undo::PushWorldObjRemoved(WorldObj* obj){
         return;
     if(obj == NULL)
         return;
+    if(obj->typeObj != WorldObj::worldobj)
+        return;
     
     UndoState::WorldObjInfo * tdata = currentState->objData[(long long int)obj];
     if(tdata == NULL){
@@ -276,6 +290,8 @@ void Undo::PushWorldObjPlaced(WorldObj* obj){
     if(currentState == NULL)
         return;
     if(obj == NULL)
+        return;
+    if(obj->typeObj != WorldObj::worldobj)
         return;
     
     UndoState::WorldObjInfo * tdata = currentState->objData[(long long int)obj];

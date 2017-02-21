@@ -183,32 +183,32 @@ PropertiesForest::PropertiesForest() {
 PropertiesForest::~PropertiesForest() {
 }
 
-void PropertiesForest::showObj(WorldObj* obj){
+void PropertiesForest::showObj(GameObj* obj){
     if(obj == NULL){
         infoLabel->setText("NULL");
         return;
     }
-    worldObj = obj;
+    worldObj = (WorldObj*)obj;
     forestObj = (ForestObj*)obj;
     ForestObj* tobj = (ForestObj*)obj;
         
-    this->infoLabel->setText("Object: "+obj->type);
+    this->infoLabel->setText("Object: "+forestObj->type);
     this->fileName.setText(tobj->treeTexture);
         
-    this->tX.setText(QString::number(obj->x, 10));
-    this->tY.setText(QString::number(-obj->y, 10));
+    this->tX.setText(QString::number(forestObj->x, 10));
+    this->tY.setText(QString::number(-forestObj->y, 10));
     this->sizeX.setText(QString::number(tobj->areaX, 'G', 4));
     this->sizeY.setText(QString::number(tobj->areaZ, 'G', 4));
     this->population.setText(QString::number((int)tobj->population, 10));
     this->densitykm.setText(QString::number((int)(tobj->population*(1000000.0/(tobj->areaX*tobj->areaZ))), 10));
-    this->posX.setText(QString::number(obj->position[0], 'G', 6));
-    this->posY.setText(QString::number(obj->position[1], 'G', 6));
-    this->posZ.setText(QString::number(-obj->position[2], 'G', 6));
+    this->posX.setText(QString::number(forestObj->position[0], 'G', 6));
+    this->posY.setText(QString::number(forestObj->position[1], 'G', 6));
+    this->posZ.setText(QString::number(-forestObj->position[2], 'G', 6));
     this->quat.setText(
-            QString::number(obj->qDirection[0], 'G', 4) + " " +
-            QString::number(obj->qDirection[1], 'G', 4) + " " +
-            QString::number(-obj->qDirection[2], 'G', 4) + " " +
-            QString::number(obj->qDirection[3], 'G', 4)
+            QString::number(forestObj->qDirection[0], 'G', 4) + " " +
+            QString::number(forestObj->qDirection[1], 'G', 4) + " " +
+            QString::number(-forestObj->qDirection[2], 'G', 4) + " " +
+            QString::number(forestObj->qDirection[3], 'G', 4)
             );
 }
 
@@ -249,10 +249,12 @@ void PropertiesForest::densitykmEnabled(QString val){
     forestObj->deleteVBO();
 }
 
-bool PropertiesForest::support(WorldObj* obj){
+bool PropertiesForest::support(GameObj* obj){
     if(obj == NULL)
         return false;
-    if(obj->type == "forest")
+    if(obj->typeObj != GameObj::worldobj)
+        return false;
+    if(((WorldObj*)obj)->type == "forest")
         return true;
     return false;
 }
