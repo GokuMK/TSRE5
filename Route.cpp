@@ -312,7 +312,7 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     }
     
     if(currentActivity != NULL)
-        currentActivity->render(gluu, playerT);
+        currentActivity->render(gluu, playerT, renderMode);
     //trackDB->renderItems(gluu, playerT, playerRot);
     /*
     for (var key in this.tile){
@@ -351,7 +351,7 @@ void Route::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, float* 
         }
     }
     if(currentActivity != NULL)
-        currentActivity->render(gluu, playerT);
+        currentActivity->render(gluu, playerT, 0);
 }
 
 void Route::setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, WorldObj* obj){
@@ -455,6 +455,14 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
         delete[] punkty;
     }
     
+}
+
+Consist* Route::getActivityConsist(int id){
+    if(currentActivity == NULL)
+        return NULL;
+    if(currentActivity->activityObjects.size() > id)
+        return currentActivity->activityObjects[id].con;
+    return NULL;
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p) {

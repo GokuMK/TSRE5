@@ -69,6 +69,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PoleObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesAbstract.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesCarspawner.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesConsist.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesDyntrack.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesForest.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesGroup.o
@@ -82,6 +83,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSoundSource.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesSpeedpost.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesStatic.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTerrain.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTrackObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesTransfer.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesUndefined.o
@@ -178,6 +180,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_OverwriteDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesAbstract.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesCarspawner.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesConsist.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesDyntrack.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesForest.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesGroup.o
@@ -191,6 +194,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSoundSource.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSpeedpost.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesStatic.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesTerrain.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesTrackObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesTransfer.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesUndefined.o

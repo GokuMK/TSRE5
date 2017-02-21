@@ -1134,14 +1134,19 @@ void Activity::setWeather(int val){
     modified = true;
 }
     
-void Activity::render(GLUU* gluu, float * playerT){
+void Activity::render(GLUU* gluu, float * playerT, int renderMode){
     Consist *e;
+    int selectionColor = 0;
     for (int i = 0; i < activityObjects.size(); i++){
         e = activityObjects[i].con;
         if(e == NULL) continue;
         if (!e->isOnTrack)
             e->initOnTrack(activityObjects[i].tile, activityObjects[i].direction);
-        e->renderOnTrack(gluu, playerT);
+        if(renderMode == gluu->RENDER_SELECTION){
+            selectionColor = 11 << 20;
+            selectionColor |= i << 8;
+        }
+        e->renderOnTrack(gluu, playerT, selectionColor);
     }
 }
 /*

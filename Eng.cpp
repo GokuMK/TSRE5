@@ -504,10 +504,7 @@ void Eng::render(int aktwx, int aktwz, int selectionColor) {
     GLUU *gluu = GLUU::get();
     
      if(selectionColor != 0){
-        int wColor = (int)(selectionColor/65536);
-        int sColor = (int)(selectionColor - wColor*65536)/256;
-        int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
-        gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
+        gluu->disableTextures(selectionColor);
     } else {
         gluu->enableTextures();
     }
@@ -568,7 +565,7 @@ void Eng::render(int aktwx, int aktwz, int selectionColor) {
      //
 }
 
-void Eng::renderOnTrack(GLUU* gluu, float* playerT) {
+void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
     if (loaded != 1) return;
 
     long long int shapeLibId = reinterpret_cast<long long int>(Game::currentShapeLib);
@@ -629,12 +626,16 @@ void Eng::renderOnTrack(GLUU* gluu, float* playerT) {
     float rotY = (someval+1)*(M_PI/2)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
     float rotX = -(float)(atan((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
             
-    gluu->enableTextures();
+     if(selectionColor != 0){
+        gluu->disableTextures(selectionColor);
+    } else {
+        gluu->enableTextures();
+    }
         
     gluu->mvPushMatrix();
  
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, pos[0] + 2048 * (pos[3] - playerT[0]), pos[1]+0.25, -pos[2] + 2048 * (-pos[4] - playerT[1]));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rotY);
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rotY + flip*M_PI + M_PI);
     Mat4::rotateX(gluu->mvMatrix, gluu->mvMatrix, -rotX);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
 

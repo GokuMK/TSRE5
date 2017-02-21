@@ -14,6 +14,7 @@
 #include <QString>
 #include <unordered_map>
 #include <QVector>
+#include "GameObj.h"
 
 class Eng;
 class TextObj;
@@ -21,7 +22,7 @@ class FileBuffer;
 class QTextStream;
 class GLUU;
 
-class Consist {
+class Consist : GameObj {
 public:
     static std::unordered_map<int, TextObj*> txtNumbers;
     static int lastTxtNumbersColor;
@@ -74,7 +75,7 @@ public:
     bool load(FileBuffer* data);
     void save();
     void save(QString woff, QTextStream *out);
-    void select(int idx);
+    bool select(int idx);
     void appendEngItem(int id);
     void appendEngItem(int id, int pos = 2, bool flip = false);
     void deteleSelected();
@@ -92,7 +93,7 @@ public:
     void setTextColor(float *bgColor);
     void setDurability(float val);
     void initOnTrack(float *posTXZ, int direction);
-    void renderOnTrack(GLUU* gluu, float * playerT);
+    void renderOnTrack(GLUU* gluu, float * playerT, int selectionColor);
     void render(int selectionColor = 0, bool renderText = false);
     void render(int aktwx, int aktwz, int selectionColor, bool renderText);
     void initPos();

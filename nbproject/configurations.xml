@@ -73,6 +73,7 @@
           <itemPath>EditFileNameDialog.h</itemPath>
           <itemPath>PropertiesAbstract.h</itemPath>
           <itemPath>PropertiesCarspawner.h</itemPath>
+          <itemPath>PropertiesConsist.h</itemPath>
           <itemPath>PropertiesDyntrack.h</itemPath>
           <itemPath>PropertiesForest.h</itemPath>
           <itemPath>PropertiesGroup.h</itemPath>
@@ -86,6 +87,7 @@
           <itemPath>PropertiesSoundSource.h</itemPath>
           <itemPath>PropertiesSpeedpost.h</itemPath>
           <itemPath>PropertiesStatic.h</itemPath>
+          <itemPath>PropertiesTerrain.h</itemPath>
           <itemPath>PropertiesTrackObj.h</itemPath>
           <itemPath>PropertiesTransfer.h</itemPath>
           <itemPath>PropertiesUndefined.h</itemPath>
@@ -266,6 +268,7 @@
           <itemPath>EditFileNameDialog.cpp</itemPath>
           <itemPath>PropertiesAbstract.cpp</itemPath>
           <itemPath>PropertiesCarspawner.cpp</itemPath>
+          <itemPath>PropertiesConsist.cpp</itemPath>
           <itemPath>PropertiesDyntrack.cpp</itemPath>
           <itemPath>PropertiesForest.cpp</itemPath>
           <itemPath>PropertiesGroup.cpp</itemPath>
@@ -279,6 +282,7 @@
           <itemPath>PropertiesSoundSource.cpp</itemPath>
           <itemPath>PropertiesSpeedpost.cpp</itemPath>
           <itemPath>PropertiesStatic.cpp</itemPath>
+          <itemPath>PropertiesTerrain.cpp</itemPath>
           <itemPath>PropertiesTrackObj.cpp</itemPath>
           <itemPath>PropertiesTransfer.cpp</itemPath>
           <itemPath>PropertiesUndefined.cpp</itemPath>
@@ -694,6 +698,10 @@
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.h" ex="false" tool="3" flavor2="0">
@@ -745,6 +753,10 @@
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTerrain.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTerrain.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1327,6 +1339,10 @@
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.h" ex="false" tool="3" flavor2="0">
@@ -1378,6 +1394,10 @@
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTerrain.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTerrain.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1953,6 +1973,10 @@
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.h" ex="false" tool="3" flavor2="0">
@@ -2004,6 +2028,10 @@
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTerrain.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTerrain.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2586,6 +2614,10 @@
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesDyntrack.h" ex="false" tool="3" flavor2="0">
@@ -2637,6 +2669,10 @@
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTerrain.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTerrain.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3207,6 +3243,10 @@
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesDyntrack.h" ex="false" tool="3" flavor2="0">
@@ -3258,6 +3298,10 @@
       <item path="PropertiesStatic.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesStatic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesTerrain.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTerrain.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>

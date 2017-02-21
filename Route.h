@@ -24,6 +24,7 @@ class Trk;
 class SoundList;
 class GLWidget;
 class Activity;
+class Consist;
 class Service;
 class Traffic;
 class Path;
@@ -103,6 +104,7 @@ public:
     void transalteObj(int x, int z, float px, float py, float pz, int uid);
     void setTDB(TDB* tdb, bool road);
     void updateSim(float *playerT, float deltaTime);
+    Consist* getActivityConsist(int id);
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, int renderMode);
     void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, bool selection);
 

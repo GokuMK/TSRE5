@@ -80,7 +80,7 @@ public:
     bool couplingFilter(QString q);
     bool searchFilter(QString q);
     void initOnTrack(float *tpos, int direction);
-    void renderOnTrack(GLUU* gluu, float* playerT);
+    void renderOnTrack(GLUU* gluu, float* playerT, int selectionColor);
     void move(float m);
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);

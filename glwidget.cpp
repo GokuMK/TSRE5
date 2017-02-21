@@ -309,7 +309,7 @@ void GLWidget::handleSelection() {
             }
         } else if( ww >= 1 && ww <= 9 ){
             int UiD = (colorHash >> 4) & 0xFFFF;
-            if(UiD > 50000)
+            if(UiD >= 50000)
                 UiD += 50000;
             int cdata = colorHash & 0xF;
             int wx = 0;
@@ -364,6 +364,27 @@ void GLWidget::handleSelection() {
             int UiD = (colorHash) & 0xFF;
             qDebug() << wx << wz << UiD;
             setSelectedObj((GameObj*)TerrainLib::terrain[wx*10000+wz]);
+            if (selectedObj == NULL) {
+                qDebug() << "brak obiektu";
+            } else {
+                selectedObj->select(UiD);
+            }
+        } else if( ww == 11 ){
+            if (selectedObj != NULL) {
+                selectedObj->unselect();
+                if (autoAddToTDB)
+                    route->addToTDBIfNotExist((WorldObj*)selectedObj);
+                setSelectedObj(NULL);
+            }
+            int CID = ((colorHash) >> 8) & 0xFF;
+            int EID = ((colorHash)) & 0xFF;
+            qDebug() << CID << EID;
+            setSelectedObj((GameObj*)route->getActivityConsist(CID));
+            if (selectedObj == NULL) {
+                qDebug() << "brak obiektu";
+            } else {
+                //selectedObj->select(EID);
+            }
         } else {
             if (selectedObj != NULL) {
                 selectedObj->unselect();

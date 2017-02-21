@@ -116,7 +116,7 @@ TerrainTools::TerrainTools(QString name)
     label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
     vbox->addItem(vlist3);
-    label0 = new QLabel("Tile:");
+    label0 = new QLabel("Terrain Patch:");
     label0->setContentsMargins(3,0,0,0);
     label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);

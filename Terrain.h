@@ -42,13 +42,23 @@ public:
     void setWaterDraw(int x, int z, float posx, float posz);
     void setWaterLevelGui();
     void setDraw(int x, int z, float posx, float posz);
+    void setWaterDraw();
+    void setDraw();
+    void setDrawAdjacent();
+    void rotatePatchTexture();
+    void removeAllGaps();
     void toggleGaps(int x, int z, float posx, float posz);
     void setErrorBias(int x, int z, float val);
+    float getErrorBias();
+    void setErrorBias(float val);
     void setTileBlob();
     void makeTextureFromMap();
     void removeTextureFromMap();
     void fillHeightMap(float *data);
     int getTexture(int x, int z, float posx, float posz);
+    int getSelectedPathId();
+    int getSelectedShaderId();
+    bool select(int value);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int selectionColor);
 
 private:
@@ -84,6 +94,8 @@ private:
     int wTexid = -1;
     TFile* tfile;
         
+    int selectedPathId = -1;
+    
     void saveRAW(QString name);
     bool readRAW(QString fSfile);
     bool readF(QString fSfile);

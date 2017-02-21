@@ -17,7 +17,8 @@ public:
         none = 0,
         undefined = 1,
         worldobj = 2,
-        terrainobj = 3
+        terrainobj = 3,
+        consistobj = 4
     };
     
     TypeObj typeObj = this->undefined;

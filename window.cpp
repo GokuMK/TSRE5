@@ -40,6 +40,8 @@
 #include "PropertiesRuler.h"
 #include "PropertiesLevelCr.h"
 #include "PropertiesSoundRegion.h"
+#include "PropertiesTerrain.h"
+#include "PropertiesConsist.h"
 #include "NaviWindow.h"
 #include "UnsavedDialog.h"
 
@@ -72,6 +74,8 @@ Window::Window() {
     objProperties.push_back(new PropertiesRuler);
     objProperties.push_back(new PropertiesSoundRegion);
     objProperties.push_back(new PropertiesLevelCr);
+    objProperties.push_back(new PropertiesTerrain);
+    objProperties.push_back(new PropertiesConsist);
     // last 
     objProperties.push_back(new PropertiesUndefined);
     

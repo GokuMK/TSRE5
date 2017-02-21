@@ -49,7 +49,7 @@ public:
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
-    void drawShape();
+    void drawShape(int selectionColor = 0);
     int tex;
     bool init;
     float bound[6];

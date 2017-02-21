@@ -238,25 +238,14 @@ void TransferObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
     //var z = this.position[0]*mmm[9] + this.position[1]*mmm[7] + this.position[2]*mmm[9];
 
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-   
-    if(selectionColor != 0){
-        int wColor = (int)(selectionColor/65536);
-        int sColor = (int)(selectionColor - wColor*65536)/256;
-        int bColor = (int)(selectionColor - wColor*65536 - sColor*256);
-        shape.setMaterial((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f);
-        //gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
-    } else {
-        shape.setMaterial(texturePath);
-        //gluu->enableTextures();
-    }
-    
-    drawShape();
+       
+    drawShape(selectionColor);
     if(selected){
         drawBox();
     }
 };
 
-void TransferObj::drawShape(){
+void TransferObj::drawShape(int selectionColor){
 
     if (!init) {
         if(!Game::ignoreLoadLimits){
@@ -361,7 +350,7 @@ void TransferObj::drawShape(){
         init = true;
     }
     
-    shape.render();
+    shape.render(selectionColor);
 }
 
 bool TransferObj::getBoxPoints(QVector<float>& points){

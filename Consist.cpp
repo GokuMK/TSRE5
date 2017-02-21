@@ -34,6 +34,7 @@ TextObj * Consist::txtEngineW = NULL;
 TextObj * Consist::txtEngineT = NULL;
 
 Consist::Consist() {
+    typeObj = this->consistobj;
     path = Game::root + "/trains/consists/";
     loaded = 1;
     serial = 1;
@@ -42,6 +43,7 @@ Consist::Consist() {
 }
 
 Consist::Consist(Consist * con, bool fullCopy) {
+    typeObj = con->consistobj;
     path = con->path;
     loaded = 1;
     serial = 1;
@@ -93,6 +95,7 @@ Consist::~Consist() {
 }
 
 Consist::Consist(QString p, QString n) {
+    typeObj = this->consistobj;
     pathid = p + "/" + n;
     pathid.replace("//", "/");
     path = p;
@@ -103,6 +106,7 @@ Consist::Consist(QString p, QString n) {
 }
 
 Consist::Consist(QString src, QString p, QString n) {
+    typeObj = this->consistobj;
     pathid = src;
     path = p;
     name = n;
@@ -304,8 +308,9 @@ void Consist::setModified(bool val){
     modified = val;
 }
 
-void Consist::select(int idx){
+bool Consist::select(int idx){
     selectedIdx = idx;
+    return true;
 }
 
 void Consist::deteleSelected(){
@@ -619,6 +624,7 @@ void Consist::initOnTrack(float *posTXZ, int direction){
     for(int i = 0; i < engItems.size(); i++){
         engItems[i].engPointer = new Eng(Game::currentEngLib->eng[engItems[i].eng]);
         engItems[i].engPointer->initOnTrack(tpos, direction);
+        engItems[i].engPointer->flip = engItems[i].flip;
         //engItems[i].engPointer->move(26.5*i);
         //engItems[i].engPointer->move(engItems[i].conLength);
         engItems[i].engPointer->move(engItems[i].conLength-conLen);
@@ -626,7 +632,7 @@ void Consist::initOnTrack(float *posTXZ, int direction){
     this->isOnTrack = true;
 }
 
-void Consist::renderOnTrack(GLUU* gluu, float* playerT) {
+void Consist::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
     if (loaded != 1) return;
 
     int scolor = 0;
@@ -636,8 +642,10 @@ void Consist::renderOnTrack(GLUU* gluu, float* playerT) {
         //if(!engItems[i].flip)
         //    Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI, 0, 1, 0);
         //gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-        
-        engItems[i].engPointer->renderOnTrack(gluu, playerT);
+        if(selectionColor != 0){
+            selectionColor |= i;
+        }
+        engItems[i].engPointer->renderOnTrack(gluu, playerT, selectionColor);
         gluu->mvPopMatrix();
     }
 }

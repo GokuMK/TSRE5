@@ -158,6 +158,13 @@ void GLUU::disableTextures(Vector3f* color){
     currentShader->setUniformValue(currentShader->shaderTextureEnabled, 0.0f);
 }
 
+void GLUU::disableTextures(int color){
+    int wColor = (int)(color/65536);
+    int sColor = (int)(color - wColor*65536)/256;
+    int bColor = (int)(color - wColor*65536 - sColor*256);
+    disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
+}
+
 void GLUU::disableTextures(float x, float y, float z, float a){
     currentShader->setUniformValue(currentShader->shaderShapeColor, x, y, z, a);
     if(!this->textureEnabled) return;

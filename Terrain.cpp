@@ -353,6 +353,13 @@ void Terrain::removeTextureFromMap(){
     this->modified = true;
 }
 
+void Terrain::setWaterDraw() {
+    if(selectedPathId < 0)
+        return;
+    tfile->flags[selectedPathId] = tfile->flags[selectedPathId] ^ 0x10000c0;
+    this->setModified(true);
+}
+
 void Terrain::setWaterDraw(int x, int z, float posx, float posz) {
 
     int u = (posx + 1024) / 128;
@@ -365,6 +372,48 @@ void Terrain::setWaterDraw(int x, int z, float posx, float posz) {
     qDebug() << tx << " " << tz;
     //qDebug() << tfile->erroeBias[y * 16 + u];
     tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x10000c0;
+    this->setModified(true);
+}
+void Terrain::setDrawAdjacent(){
+    if(selectedPathId < 0)
+        return;
+    int u = selectedPathId / 16;
+    int y = selectedPathId - u*16;
+    for(int i = u - 1; i <= u+1; i++)
+        for(int j = y - 1; j <= y+1; j++){
+            if(i < 0 || j < 0 || i > 15 || j > 15)
+                continue;
+            tfile->flags[i*16+j] = tfile->flags[i*16+j] & ~(0x1);
+        }
+    this->setModified(true);
+}
+
+void Terrain::rotatePatchTexture(){
+    if(selectedPathId < 0)
+        return;
+    rotateTex(selectedPathId);
+}
+
+void Terrain::removeAllGaps(){
+    if(selectedPathId < 0)
+        return;
+    if(!jestF)
+        return;
+    int u = selectedPathId / 16;
+    int y = selectedPathId - u*16;
+    
+    for(int i = 0; i < 16; i++)
+        for(int j = 0; j < 16; j++)
+            fData[u*16+i][y*16+j] &= ~(0x04);
+    modifiedF = true;
+    modified = true;
+    refresh();
+}
+    
+void Terrain::setDraw() {
+    if(selectedPathId < 0)
+        return;
+    tfile->flags[selectedPathId] = tfile->flags[selectedPathId] ^ 0x1;
     this->setModified(true);
 }
 
@@ -380,6 +429,20 @@ void Terrain::setDraw(int x, int z, float posx, float posz) {
     qDebug() << tx << " " << tz;
     qDebug() << tfile->flags[y * 16 + u];
     tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x1;
+    this->setModified(true);
+}
+
+float Terrain::getErrorBias(){
+    if(selectedPathId < 0)
+        return -1;
+    return tfile->erroeBias[selectedPathId];
+}
+
+
+void Terrain::setErrorBias(float val){
+    if(selectedPathId < 0)
+        return;
+    tfile->erroeBias[selectedPathId] = val;
     this->setModified(true);
 }
 
@@ -1577,4 +1640,20 @@ void Terrain::saveF(QString name) {
     modifiedF = false;
     file->close();
     return;
+}
+
+int Terrain::getSelectedPathId(){
+    return selectedPathId;
+}
+
+int Terrain::getSelectedShaderId(){
+    if(selectedPathId < 0)
+        return -1;
+    return tfile->tdata[(selectedPathId)*13 + 0 + 6];
+}
+
+bool Terrain::select(int value){
+    this->selected = true;
+    selectedPathId = value;
+    return true;
 }
