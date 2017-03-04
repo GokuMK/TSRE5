@@ -52,7 +52,7 @@ public:
     Route();
     Route(const Route& orig);
     virtual ~Route();
-    WorldObj* getObj(int x, int z, int uid);
+    WorldObj* getObj(int x, int z, int id);
     Tile * requestTile(int x, int z);
     void activitySelected(Activity* selected);
     void save();

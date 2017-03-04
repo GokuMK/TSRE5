@@ -151,6 +151,7 @@ public:
     virtual void snapped(int side);
     virtual void flip(bool flipShape = true);
     virtual void updateSim(float deltaTime);
+    virtual void reload();
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 protected:

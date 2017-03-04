@@ -469,6 +469,10 @@ void SFile::addSnapablePoints(QVector<float> &out){
     out.push_back(avgZ);
 }
 
+void SFile::reload() {
+    loaded = 0;
+}
+
 void SFile::render() {
 
     if (isinit != 1 || loaded == 2)

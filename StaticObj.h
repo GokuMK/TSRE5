@@ -36,6 +36,7 @@ public:
     void insertSnapablePoints(QVector<float>& points);
     bool hasLinePoints();
     void getLinePoints(float *&punkty);
+    void reload();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
 private:
     void loadSnapablePoints();

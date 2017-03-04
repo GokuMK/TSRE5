@@ -209,13 +209,13 @@ void Route::loadPaths(){
     return;
 }
 
-WorldObj* Route::getObj(int x, int z, int uid) {
+WorldObj* Route::getObj(int x, int z, int id) {
     Tile *tTile;
     //try {
     tTile = tile[((x)*10000 + z)];
     if (tTile == NULL)
         return NULL;
-    return tTile->getObj(uid);
+    return tTile->getObj(id);
     //} catch (const std::out_of_range& oor) {
 
     //}

@@ -309,8 +309,8 @@ void GLWidget::handleSelection() {
             }
         } else if( ww >= 1 && ww <= 9 ){
             int UiD = (colorHash >> 4) & 0xFFFF;
-            if(UiD >= 50000)
-                UiD += 50000;
+            //if(UiD >= 50000)
+            //    UiD += 50000;
             int cdata = colorHash & 0xF;
             int wx = 0;
             int wz = 0;

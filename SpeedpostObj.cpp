@@ -379,25 +379,25 @@ void SpeedpostObj::set(QString sh, long long int val){
         qDebug() << "speedPostId "<<speedPostId<< " speedPostType " << speedPostType;
         SpeedPost *speedPost = Game::trackDB->speedPostDAT->speedPost[speedPostId];
         
-        if(speedPostType == 0){
+        if(speedPostType == TRitem::SIGN){
             fileName = speedPost->speedSignShapeName;
             speedSignShape = new float[speedPost->speedSignShapeCount*4+1];
             speedSignShape[0] = speedPost->speedSignShapeCount;
             for(int i = 0; i<speedSignShape[0]*4; i++)
                 speedSignShape[i+1] = speedPost->speedSignShape[i];
-        }else if(speedPostType == 1){
+        }else if(speedPostType == TRitem::RESUME){
             fileName = speedPost->speedResumeSignShapeName;
             speedSignShape = new float[speedPost->speedResumeSignShapeCount*4+1];
             speedSignShape[0] = speedPost->speedResumeSignShapeCount;
             for(int i = 0; i<speedSignShape[0]*4; i++)
                 speedSignShape[i+1] = speedPost->speedResumeSignShape[i];
-        }else if(speedPostType == 2){
+        }else if(speedPostType == TRitem::WARNING){
             fileName = speedPost->speedWarningSignShapeName;
             speedSignShape = new float[speedPost->speedWarningSignShapeCount*4+1];
             speedSignShape[0] = speedPost->speedWarningSignShapeCount;
             for(int i = 0; i<speedSignShape[0]*4; i++)
                 speedSignShape[i+1] = speedPost->speedWarningSignShape[i];
-        }else if(speedPostType == 3){
+        }else if(speedPostType == TRitem::MILEPOST){
             fileName = speedPost->milepostShapeName;
             speedSignShape = new float[speedPost->milepostShapeCount*4+1];
             speedSignShape[0] = speedPost->milepostShapeCount;

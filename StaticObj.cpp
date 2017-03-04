@@ -194,7 +194,8 @@ void StaticObj::loadSnapablePoints() {
         return;
     snapable = this->shapePointer->isSnapable();
     if(snapable)
-        this->shapePointer->addSnapablePoints(this->snapablePoints);
+        if(shapePointer != NULL)
+            this->shapePointer->addSnapablePoints(this->snapablePoints);
 }
 
 void StaticObj::renderSnapableEndpoints(GLUU* gluu) {
@@ -324,6 +325,11 @@ void StaticObj::removeCollisions(){
         collideFunction = 0;
         modified = true;
     }
+}
+
+void StaticObj::reload(){
+    if(shapePointer != NULL)
+        shapePointer->reload();
 }
 
 void StaticObj::save(QTextStream* out){

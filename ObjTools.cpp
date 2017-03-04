@@ -18,6 +18,7 @@
 #include "SpeedPost.h"
 #include "SpeedPostDAT.h"
 #include "SoundList.h"
+#include "TRitem.h"
 #include <QMapIterator>
 
 ObjTools::ObjTools(QString name)
@@ -346,7 +347,7 @@ void ObjTools::routeLoaded(Route* a){
         item.description = Game::trackDB->speedPostDAT->speedPost[i]->name;
         item.clas = "speedsign";
         item.type = "speedpost";
-        item.value = i*1000+0;
+        item.value = i*1000+TRitem::SIGN;
         route->ref->refItems[QString("#TSRE#")+"speedsign"].push_back(item);
     }
     for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
@@ -357,7 +358,7 @@ void ObjTools::routeLoaded(Route* a){
         item.description = Game::trackDB->speedPostDAT->speedPost[i]->name;
         item.clas = "speedresume";
         item.type = "speedpost";
-        item.value = i*1000+1;
+        item.value = i*1000+TRitem::RESUME;
         route->ref->refItems[QString("#TSRE#")+"speedresume"].push_back(item);
     }
     for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
@@ -368,7 +369,7 @@ void ObjTools::routeLoaded(Route* a){
         item.description = Game::trackDB->speedPostDAT->speedPost[i]->name;
         item.clas = "speedwarning";
         item.type = "speedpost";
-        item.value = i*1000+2;
+        item.value = i*1000+TRitem::WARNING;
         route->ref->refItems[QString("#TSRE#")+"speedwarning"].push_back(item);
     }
     for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
@@ -379,7 +380,7 @@ void ObjTools::routeLoaded(Route* a){
         item.description = Game::trackDB->speedPostDAT->speedPost[i]->name;
         item.clas = "milepost";
         item.type = "speedpost";
-        item.value = i*1000+3;
+        item.value = i*1000+TRitem::MILEPOST;
         route->ref->refItems[QString("#TSRE#")+"milepost"].push_back(item);
     }
     

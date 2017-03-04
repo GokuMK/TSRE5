@@ -50,7 +50,7 @@ public:
     void loadWS();
     bool isModified();
     void setModified(bool value);
-    WorldObj* getObj(int uid);
+    WorldObj* getObj(int id);
     void deleteObject(WorldObj* obj);
     WorldObj* placeObject(WorldObj* obj);
     WorldObj* placeObject(float* p, Ref::RefItem* itemData);

@@ -129,7 +129,7 @@ TRitem* TRitem::newSpeedPostItem(int trItemId, float metry, int speedPostType) {
     trit->trItemSData1 = metry;
     trit->trItemSData2 = 6;
     trit->platformTrItemData = new unsigned int[2];
-    if (speedPostType == 0) { // sign
+    if (speedPostType == TRitem::SIGN) { // sign
         trit->speedpostTrItemDataLength = 3;
         trit->speedpostTrItemData = new float[4];
         trit->speedpostTrItemData[0] = 0b10000010;
@@ -137,7 +137,7 @@ TRitem* TRitem::newSpeedPostItem(int trItemId, float metry, int speedPostType) {
         trit->speedpostTrItemData[2] = 0;
         trit->speedpostTrItemData[3] = 0;
     }
-    if (speedPostType == 1) { // resume
+    if (speedPostType == TRitem::RESUME) { // resume
         trit->speedpostTrItemDataLength = 2;
         trit->speedpostTrItemData = new float[4];
         trit->speedpostTrItemData[0] = 0b10000011;
@@ -145,7 +145,7 @@ TRitem* TRitem::newSpeedPostItem(int trItemId, float metry, int speedPostType) {
         trit->speedpostTrItemData[2] = 0;
         trit->speedpostTrItemData[3] = 0;
     }
-    if (speedPostType == 2) { // warning
+    if (speedPostType == TRitem::WARNING) { // warning
         trit->speedpostTrItemDataLength = 3;
         trit->speedpostTrItemData = new float[4];
         trit->speedpostTrItemData[0] = 0b10000001;
@@ -153,7 +153,7 @@ TRitem* TRitem::newSpeedPostItem(int trItemId, float metry, int speedPostType) {
         trit->speedpostTrItemData[2] = 0;
         trit->speedpostTrItemData[3] = 0;
     }
-    if (speedPostType == 3) { // milepost
+    if (speedPostType == TRitem::MILEPOST) { // milepost
         trit->speedpostTrItemDataLength = 3;
         trit->speedpostTrItemData = new float[4];
         trit->speedpostTrItemData[0] = 0b10000000;

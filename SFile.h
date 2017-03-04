@@ -152,6 +152,7 @@ public:
     void getFloorBorderLinePoints(float *&punkty);
     bool isSnapable();
     void addSnapablePoints(QVector<float> &out);
+    void reload();
 private:
     void loadSd();
     float* getPmatrix(float* pmatrix, int matrix);

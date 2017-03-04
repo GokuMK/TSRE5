@@ -310,14 +310,16 @@ void Tile::loadWS() {
     }
 }
 
-WorldObj* Tile::getObj(int uid) {
-    for (int i = 0; i < jestObiektow; i++) {
+WorldObj* Tile::getObj(int id) {
+    /*for (int i = 0; i < jestObiektow; i++) {
         if(obiekty[i] == NULL) continue;
         if (obiekty[i]->UiD == uid) {
             return obiekty[i];
         }
-    }
-    return NULL;
+    }*/
+    if(obiekty[id] == NULL)
+        return NULL;
+    return obiekty[id];
 }
 
 void Tile::ViewDbSphere::set(QString sh, FileBuffer* data){
@@ -723,10 +725,10 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, int
                     //qDebug() << sxx;
                     //selectionColor = obiekty[i]->UiD + sxx * 131072;
                     selectionColor = sxx << 20;
-                    if(obiekty[i]->isSoundItem())
-                        selectionColor |= (obiekty[i]->UiD - 50000) << 4;
-                    else
-                        selectionColor |= (obiekty[i]->UiD) << 4;
+                    //if(obiekty[i]->isSoundItem())
+                    //    selectionColor |= (obiekty[i]->UiD - 50000) << 4;
+                    //else
+                        selectionColor |= (i) << 4;
                 }
                 obiekty[i]->render(gluu, lod, lodx, lodz, playerW, target, fov, selectionColor, renderMode);
                 //obiekty[i]->render(gluu);

@@ -41300,6 +41300,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ObjTools.o: ObjTools.cpp TSe
 		SpeedPostDAT.h \
 		SoundList.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QHash \
+		TRitem.h \
+		Pointer3d.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QMapIterator
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ObjTools.o ObjTools.cpp
 

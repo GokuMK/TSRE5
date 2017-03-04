@@ -197,8 +197,16 @@ PropertiesStatic::PropertiesStatic(){
                       this, SLOT(cCollisionTypeEdited(int)));
     QPushButton *resetFlags = new QPushButton("Remove Collisions", this);
     QObject::connect(resetFlags, SIGNAL(released()),
-                      this, SLOT(RemoveCollisionsEnabled()));
+                      this, SLOT(removeCollisionsEnabled()));
     vbox->addWidget(resetFlags);
+    label = new QLabel("Position & Rotation:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QPushButton *reload = new QPushButton("Reload", this);
+    QObject::connect(reload, SIGNAL(released()),
+                      this, SLOT(reloadEnabled()));
+    vbox->addWidget(reload);
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -393,12 +401,19 @@ void PropertiesStatic::cCollisionTypeEdited(int val){
     worldObj->setCollisionType(val-1);
 }
 
-void PropertiesStatic::RemoveCollisionsEnabled(){
+void PropertiesStatic::removeCollisionsEnabled(){
     if(worldObj == NULL)
         return;
     Undo::SinglePushWorldObjData(worldObj);
     StaticObj* staticObj = (StaticObj*) worldObj;
     staticObj->removeCollisions();
+}
+
+void PropertiesStatic::reloadEnabled(){
+    if(worldObj == NULL)
+        return;
+    Undo::SinglePushWorldObjData(worldObj);
+    worldObj->reload();
 }
 
 void PropertiesStatic::editFileNameEnabled(){

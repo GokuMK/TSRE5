@@ -496,6 +496,10 @@ void WorldObj::updateSim(float deltaTime){
     
 }
 
+void WorldObj::reload(){
+    
+}
+
 void WorldObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     render(gluu, lod, posx, posz, pos, target, fov, selectionColor);
 }
