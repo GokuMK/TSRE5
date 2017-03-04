@@ -326,6 +326,10 @@ void GLWidget::handleSelection() {
             if (keyControlEnabled) {
                 if (selectedWorldObj == NULL)
                     setSelectedObj(groupObj);
+                if (selectedWorldObj->typeObj != GameObj::worldobj){
+                    selectedWorldObj->unselect();
+                    setSelectedObj(groupObj);
+                }
                 if (selectedWorldObj->typeObj == GameObj::worldobj) {
                     groupObj->addObject(selectedWorldObj);
                     setSelectedObj(groupObj);
@@ -380,6 +384,22 @@ void GLWidget::handleSelection() {
             int EID = ((colorHash)) & 0xFF;
             qDebug() << CID << EID;
             setSelectedObj((GameObj*)route->getActivityConsist(CID));
+            if (selectedObj == NULL) {
+                qDebug() << "brak obiektu";
+            } else {
+                //selectedObj->select(EID);
+            }
+        } else if( ww == 12 ){
+            if (selectedObj != NULL) {
+                selectedObj->unselect();
+                if (autoAddToTDB)
+                    route->addToTDBIfNotExist((WorldObj*)selectedObj);
+                setSelectedObj(NULL);
+            }
+            int TID = ((colorHash) >> 19) & 0x1;
+            int UID = ((colorHash)) & 0xFFFF;
+            qDebug() << TID << UID;
+            setSelectedObj((GameObj*)route->getTrackItem(TID, UID));
             if (selectedObj == NULL) {
                 qDebug() << "brak obiektu";
             } else {

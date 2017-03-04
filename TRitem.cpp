@@ -213,13 +213,16 @@ void TRitem::disableSignalSubObjFlag(QString sType) {
 }
 
 TRitem::TRitem() {
+    typeObj = this->tritemobj;
 }
 
 TRitem::TRitem(int id) {
-    this->trItemId = id;
+    typeObj = this->tritemobj;
+    trItemId = id;
 }
 
 TRitem::TRitem(const TRitem& o) {
+    typeObj = o.typeObj;
     type = o.type;
     
     trItemId = o.trItemId;
@@ -824,7 +827,7 @@ void TRitem::refresh(){
     drawPosition = NULL;
 }
 
-void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot) {
+void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot, int selectionColor) {
     if (this->type == "emptyitem") {
         //qDebug() << "empty";
         return;
@@ -866,7 +869,9 @@ void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot) {
         pointer3d->setMaterial(0.5, 0.5, 0.5);
     else
         pointer3d->setMaterial(0, 0, 0);
-    pointer3d->render();
+    if(selectionColor != 0)
+        selectionColor |= trItemId;
+    pointer3d->render(selectionColor);
     gluu->mvPopMatrix();
 }
 

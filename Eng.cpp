@@ -622,8 +622,8 @@ void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
     Vec3::scale(pos, pos, 0.5);
     float dlugosc = Vec3::distance(drawPosition1, drawPosition2);
     
-    int someval = (((drawPosition2[2]-drawPosition1[2])+0.00001f)/fabs((drawPosition2[2]-drawPosition1[2])+0.00001f));
-    float rotY = (someval+1)*(M_PI/2)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
+    int someval = (((drawPosition1[2]-drawPosition2[2])+0.00001f)/fabs((drawPosition1[2]-drawPosition2[2])+0.00001f));
+    float rotY = ((float)someval+1.0)*(M_PI/2.0)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
     float rotX = -(float)(atan((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
             
      if(selectionColor != 0){
@@ -634,9 +634,10 @@ void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
         
     gluu->mvPushMatrix();
  
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, pos[0] + 2048 * (pos[3] - playerT[0]), pos[1]+0.25, -pos[2] + 2048 * (-pos[4] - playerT[1]));
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rotY + flip*M_PI + M_PI);
-    Mat4::rotateX(gluu->mvMatrix, gluu->mvMatrix, -rotX);
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, pos[0] + 2048 * (pos[3] - playerT[0]), pos[1]+0.28, -pos[2] + 2048 * (-pos[4] - playerT[1]));
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rotY /* + flip*M_PI+ M_PI*/);
+    Mat4::rotateX(gluu->mvMatrix, gluu->mvMatrix, rotX );
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, flip*M_PI /*+ M_PI*/);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
 
     if(shape.id[shapeLibId] >= 0) 

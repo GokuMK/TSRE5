@@ -28,6 +28,7 @@ class Consist;
 class Service;
 class Traffic;
 class Path;
+class TRitem;
 
 class Route : public QObject {
     Q_OBJECT
@@ -79,6 +80,7 @@ public:
     float getStartpX();
     float getStartpZ();
     Trk *getTrk();
+    TRitem *getTrackItem(int TID, int UID);
     std::unordered_map<std::string, Coords*> getMkrList();
     void dragWorldObject(WorldObj* obj, int x, int z, float* pos);
     void setMkrFile(QString name);

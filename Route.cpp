@@ -292,23 +292,21 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         }
     }
     if (renderMode == gluu->RENDER_DEFAULT) {
-        if(Game::viewTrackDbLines){
-            if(Game::renderTrItems){
-                trackDB->renderItems(gluu, playerT, playerRot);
-                roadDB->renderItems(gluu, playerT, playerRot);
-            }
+        if(Game::viewTrackDbLines)
             trackDB->renderAll(gluu, playerT, playerRot);
-        }
         if(Game::viewTsectionLines)
             trackDB->renderLines(gluu, playerT, playerRot);
         if(Game::viewTrackDbLines)
             roadDB->renderAll(gluu, playerT, playerRot);
         if(Game::viewTsectionLines)
             roadDB->renderLines(gluu, playerT, playerRot);
-        
         if(Game::viewMarkers)
             if(this->mkr != NULL)
                 this->mkr->render(gluu, playerT, playerW, playerRot);
+    }
+    if(Game::renderTrItems){
+        trackDB->renderItems(gluu, playerT, playerRot, renderMode);
+        roadDB->renderItems(gluu, playerT, playerRot, renderMode);
     }
     
     if(currentActivity != NULL)
@@ -650,6 +648,14 @@ void Route::dragWorldObject(WorldObj* obj, int x, int z, float* pos){
     obj->setMartix();
 }
 
+TRitem *Route::getTrackItem(int TID, int UID){
+    if(TID == 0)
+        return trackDB->trackItems[UID];
+    if(TID == 1)
+        return roadDB->trackItems[UID];
+    return NULL;
+    
+}
 void Route::actNewLooseConsist(int x, int z, float* p){
     if(currentActivity == NULL)
         return;
@@ -1140,6 +1146,8 @@ void Route::deleteObj(WorldObj* obj) {
         return;
     }
     
+    Undo::PushWorldObjRemoved(obj);
+    
     if (obj->type == "trackobj" || obj->type == "dyntrack") {
         Undo::PushTrackDB(trackDB, false);
         Undo::PushTrackDB(roadDB, true);
@@ -1147,8 +1155,6 @@ void Route::deleteObj(WorldObj* obj) {
         if(Game::leaveTrackShapeAfterDelete)
             return;
     }
-    
-    Undo::PushWorldObjRemoved(obj);
     
     obj->loaded = false;
     obj->modified = true;

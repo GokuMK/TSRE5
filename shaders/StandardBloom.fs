@@ -90,8 +90,15 @@ void main() {
             // calculate shadows
             vec4 shadowPos2 = shadowPos*0.5+0.5;
             vec4 shadow2Pos2 = shadow2Pos*0.5+0.5;
-            float t = insideBox(shadowPos2.xy, vec2(0, 0), vec2(1, 1));
-            float t2 = insideBox(shadow2Pos2.xy, vec2(0, 0), vec2(1, 1));
+            //float t = insideBox(shadowPos2.xy, vec2(0, 0), vec2(1, 1));
+            //float t2 = insideBox(shadow2Pos2.xy, vec2(0, 0), vec2(1, 1));
+            float camdist = length(shadowPos.xyz);
+            camdist = clamp(camdist, 0, 1.0);
+            float camdist2 = length(shadow2Pos.xyz);
+            camdist2 = clamp(camdist2, 0, 1.0);
+            float t = 1.0 - floor(camdist);
+            float t2 = 1.0 - floor(camdist2);
+
             float shadowsEnabled2 = shadowsEnabled;
             int index = 0;
             visibility -= shadowsEnabled2*t*0.2*(1.0-texture( shadow1, vec3(shadowPos2.xy + poissonDisk[index]/2000.0, (shadowPos2.z-bias)) ));
@@ -105,7 +112,7 @@ void main() {
             index = 3;
             visibility -= shadowsEnabled2*t*0.2*(1.0-texture( shadow1, vec3(shadowPos2.xy + poissonDisk[index]/2000.0, (shadowPos2.z-bias)) ));
             visibility -= shadowsEnabled2*(1.0-t)*t2*0.2*(1.0-texture( shadow2, vec3(shadow2Pos2.xy + poissonDisk[index]/4000.0, (shadow2Pos2.z-0.002)) ));
-            
+
             // calculate light color
             vec3 color = diffuseColor.xyz;
             color *= clamp(visibility, 0.0, 1.0);

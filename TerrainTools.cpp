@@ -619,7 +619,7 @@ void TerrainTools::setBrushTextureId(int val){
     this->paintBrush->tex = TexLib::mtex[val];
     
     texLastItems.push_back(qMakePair(this->paintBrush->texId, this->paintBrush->tex));
-    if(texLastItems.size() > 7){
+    if(texLastItems.size() > 6){
         texLastItems.removeFirst();
     }
     updateTexPrev();
@@ -641,12 +641,15 @@ void TerrainTools::updateTexPrev(){
             tlabel = texPreviewLabel;
             res = 192;
             out = this->paintBrush->tex->getImageData(res,res);
-            
-        } else {
-            tlabel = texPreviewLabels[i-2];
-            res = 64;
-            out = texLastItems[idx].second->getImageData(res,res);
-        }
+            if(texLastItems[idx].second->bytesPerPixel == 3)
+                tlabel->setPixmap(QPixmap::fromImage(QImage(out,res,res,QImage::Format_RGB888)));
+            if(texLastItems[idx].second->bytesPerPixel == 4)
+                tlabel->setPixmap(QPixmap::fromImage(QImage(out,res,res,QImage::Format_RGBA8888)));   
+        }// else {
+        tlabel = texPreviewLabels[i-1];
+        res = 64;
+        out = texLastItems[idx].second->getImageData(res,res);
+        //}
         if(texLastItems[idx].second->bytesPerPixel == 3)
             tlabel->setPixmap(QPixmap::fromImage(QImage(out,res,res,QImage::Format_RGB888)));
         if(texLastItems[idx].second->bytesPerPixel == 4)
@@ -660,8 +663,9 @@ void TerrainTools::texPreviewEnabled(int val){
         nextBrushShape();
         return;
     }
-    int idx = 5 - val;//texLastItems.size() - val - 1;
-    if(val > texLastItems.size() - 1) return;
+    qDebug() <<texLastItems.size() ;
+    int idx = texLastItems.size() - val - 1;
+    if(idx > texLastItems.size() - 1) return;
     if(idx < 0) return;
     this->paintBrush->tex = texLastItems[idx].second;
     this->paintBrush->texId = texLastItems[idx].first;

@@ -276,7 +276,8 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
         }
         pointer3d->render(selectionColor);
     }
-
+    //if(selectionColor ==0)
+    //    selectionColor = 1;
     drawShape(selectionColor);
     
     if(selected){

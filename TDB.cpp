@@ -2046,17 +2046,23 @@ int TDB::getEndpointType(int trid, int endp){
     return n->typ;
 }
 
-void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot) {
+void TDB::renderItems(GLUU *gluu, float* playerT, float playerRot, int renderMode) {
 
     gluu->setMatrixUniforms();
     
+    int selectionColor = 0;
     for (auto it = this->trackItems.begin(); it != this->trackItems.end(); ++it) {
         //console.log(obj.type);
         TRitem* obj = (TRitem*) it->second;
         if(obj != NULL){
             if(!isInitTrItemsDraw)
                 obj->refresh();
-            obj->render(this, gluu, playerT, playerRot);
+            if(renderMode == gluu->RENDER_SELECTION){
+                selectionColor = 12 << 20;
+                if(this->road)
+                    selectionColor |= 1 << 19;
+            }
+            obj->render(this, gluu, playerT, playerRot, selectionColor);
         }
     }
     isInitTrItemsDraw = true;
@@ -2648,6 +2654,7 @@ void TDB::newSpeedPostObject(int speedPostType, QVector<int> & itemId, int trNod
     int newTRitemId = getNewTRitemId();
     this->trackItems[newTRitemId] = TRitem::newSpeedPostItem(newTRitemId, metry, speedPostType);
     this->trackItems[newTRitemId]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
+    this->trackItems[newTRitemId]->setTrItemPData((float*)&trPosition+5, (float*)&trPosition);
     float angle = trPosition[3]-M_PI/2;
     if(angle > 2*M_PI)
         angle -= 2*M_PI;

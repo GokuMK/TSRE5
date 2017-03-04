@@ -17,13 +17,14 @@
 
 #include <QString>
 #include "Pointer3d.h"
+#include "GameObj.h"
 
 class FileBuffer;
 class QTextStream;
 class TDB;
 class TrackItemObj;
 
-class TRitem {
+class TRitem : public GameObj {
 public:
     enum SType {
         MILEPOST = 0,
@@ -117,7 +118,7 @@ public:
     float getTrackPosition();
     void setTrackPosition(float val);
     void trackPositionAdd(float val);
-    void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot);
+    void render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot, int selectionColor);
 private:
     float trItemSData1;
     

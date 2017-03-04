@@ -48,6 +48,7 @@ CoordsKml::CoordsKml(QString path) {
     QString name;
     QXmlStreamAttributes attr;
     while (!reader.isEndDocument()) {
+        //qDebug() << reader.name().toString();
         if (reader.isStartElement()) {
             name = reader.name().toString();
             attr = reader.attributes();

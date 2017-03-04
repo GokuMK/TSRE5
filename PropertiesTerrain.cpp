@@ -9,7 +9,6 @@
  */
 
 #include "PropertiesTerrain.h"
-#include "GameObj.h"
 #include "Terrain.h"
 #include "Game.h"
 

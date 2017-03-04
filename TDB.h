@@ -95,7 +95,7 @@ public:
     void getLines(float * &lineBuffer, int &length, float* playerT);
     void renderAll(GLUU *gluu, float * playerT, float playerRot);
     void renderLines(GLUU *gluu, float* playerT, float playerRot);
-    void renderItems(GLUU *gluu, float* playerT, float playerRot);
+    void renderItems(GLUU *gluu, float* playerT, float playerRot, int renderMode);
     bool getDrawPositionOnTrNode(float* out, int id, float metry);
     int findTrItemNodeId(int id);
     int findNearestPositionOnTDB(float* posT, float* pos, float* q = NULL, float* tpos = NULL);

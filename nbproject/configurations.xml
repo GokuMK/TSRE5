@@ -88,6 +88,7 @@
           <itemPath>PropertiesSpeedpost.h</itemPath>
           <itemPath>PropertiesStatic.h</itemPath>
           <itemPath>PropertiesTerrain.h</itemPath>
+          <itemPath>PropertiesTrackItem.h</itemPath>
           <itemPath>PropertiesTrackObj.h</itemPath>
           <itemPath>PropertiesTransfer.h</itemPath>
           <itemPath>PropertiesUndefined.h</itemPath>
@@ -283,6 +284,7 @@
           <itemPath>PropertiesSpeedpost.cpp</itemPath>
           <itemPath>PropertiesStatic.cpp</itemPath>
           <itemPath>PropertiesTerrain.cpp</itemPath>
+          <itemPath>PropertiesTrackItem.cpp</itemPath>
           <itemPath>PropertiesTrackObj.cpp</itemPath>
           <itemPath>PropertiesTransfer.cpp</itemPath>
           <itemPath>PropertiesUndefined.cpp</itemPath>
@@ -395,6 +397,8 @@
     </logicalFolder>
     <itemPath>LICENSE.md</itemPath>
     <itemPath>README.md</itemPath>
+    <itemPath>shaders/shadowt.fs</itemPath>
+    <itemPath>shaders/shadowt.vs</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -758,6 +762,10 @@
       </item>
       <item path="PropertiesTerrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesTrackItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTrackItem.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesTrackObj.h" ex="false" tool="3" flavor2="0">
@@ -1021,6 +1029,10 @@
       <item path="glwidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="shaders/shadowt.fs" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="shaders/shadowt.vs" ex="false" tool="3" flavor2="0">
       </item>
       <item path="window.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1399,6 +1411,10 @@
       </item>
       <item path="PropertiesTerrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesTrackItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTrackItem.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesTrackObj.h" ex="false" tool="3" flavor2="0">
@@ -1662,6 +1678,10 @@
       <item path="glwidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="shaders/shadowt.fs" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="shaders/shadowt.vs" ex="false" tool="3" flavor2="0">
       </item>
       <item path="window.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2033,6 +2053,10 @@
       </item>
       <item path="PropertiesTerrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesTrackItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTrackItem.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesTrackObj.h" ex="false" tool="3" flavor2="0">
@@ -2296,6 +2320,10 @@
       <item path="glwidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="shaders/shadowt.fs" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="shaders/shadowt.vs" ex="false" tool="3" flavor2="0">
       </item>
       <item path="window.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2674,6 +2702,10 @@
       </item>
       <item path="PropertiesTerrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesTrackItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTrackItem.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesTrackObj.h" ex="false" tool="3" flavor2="0">
@@ -2937,6 +2969,10 @@
       <item path="glwidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="shaders/shadowt.fs" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="shaders/shadowt.vs" ex="false" tool="3" flavor2="0">
       </item>
       <item path="window.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3303,6 +3339,10 @@
       </item>
       <item path="PropertiesTerrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesTrackItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesTrackItem.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesTrackObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesTrackObj.h" ex="false" tool="3" flavor2="0">
@@ -3566,6 +3606,10 @@
       <item path="glwidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="shaders/shadowt.fs" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="shaders/shadowt.vs" ex="false" tool="3" flavor2="0">
       </item>
       <item path="window.cpp" ex="false" tool="1" flavor2="8">
       </item>

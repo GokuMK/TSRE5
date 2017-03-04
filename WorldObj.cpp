@@ -543,6 +543,7 @@ void WorldObj::rotate(float x, float y, float z){
     this->tRotation[0] += x;
     this->tRotation[1] += y;
     if(matrix3x3 != NULL) matrix3x3 = NULL;
+
     if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x);
     if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y);
     if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z);

@@ -18,7 +18,8 @@ public:
         undefined = 1,
         worldobj = 2,
         terrainobj = 3,
-        consistobj = 4
+        consistobj = 4,
+        tritemobj = 5
     };
     
     TypeObj typeObj = this->undefined;
@@ -40,7 +41,7 @@ public:
     virtual void setMartix();
 
 protected:
-    bool selected;
+    bool selected = false;
 };
 
 #endif	/* GAMEOBJ_H */
