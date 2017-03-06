@@ -28,6 +28,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Eng.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/EngLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/EngListWidget.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Environment.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/FileBuffer.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/FileFunctions.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Flex.o

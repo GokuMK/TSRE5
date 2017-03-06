@@ -50,6 +50,7 @@ public:
     void flip(bool flipShape = true);
     bool select(int value);
     void expandTrItems();
+    int fixTrackItems();
     int getTrainType();
     void setTrainType(int val);
     void deleteSelectedTrItem();

@@ -36,7 +36,8 @@ public slots:
     void eMaxPlacingDistanceEnabled(QString val);
     void bDeleteSelectedEnabled();
     void bExpandEnabled();
-    
+    void hacksButtonEnabled();
+    void haxFixTrackItemsEnabled();
 signals:
     
 private:

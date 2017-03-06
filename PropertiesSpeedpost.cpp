@@ -109,6 +109,14 @@ PropertiesSpeedpost::PropertiesSpeedpost() {
     eMaxPlacingDistance.setValidator(doubleValidator);
     QObject::connect(&eMaxPlacingDistance, SIGNAL(textEdited(QString)), this, SLOT(eMaxPlacingDistanceEnabled(QString)));
     
+    label = new QLabel("Advanced:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QPushButton *hacks = new QPushButton("Hacks", this);
+    QObject::connect(hacks, SIGNAL(released()),
+                      this, SLOT(hacksButtonEnabled()));
+    vbox->addWidget(hacks);
     
     QObject::connect(&speed, SIGNAL(textEdited(QString)),
                       this, SLOT(speedEnabled(QString)));
@@ -384,4 +392,45 @@ void PropertiesSpeedpost::bExpandEnabled(){
     Undo::PushTrackDB(Game::trackDB, false);
     sobj->expandTrItems();
     Undo::StateEnd();
+}
+
+void PropertiesSpeedpost::hacksButtonEnabled(){
+    if(sobj == NULL){
+        return;
+    }
+    
+    QDialog d;
+    d.setMinimumWidth(400);
+    d.setWindowTitle("SpeedpostObj Hacks");
+    QVBoxLayout *vbox = new QVBoxLayout;
+    QLabel *label = new QLabel("Use only if you know what you are doing.");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    label->setWordWrap(true);
+    QPushButton *haxRemoveTDBVector = new QPushButton("Remove broken Track Items & Expand", this);
+    QObject::connect(haxRemoveTDBVector, SIGNAL(released()),
+                      this, SLOT(haxFixTrackItemsEnabled()));
+    vbox->addWidget(haxRemoveTDBVector);
+
+    vbox->setSpacing(2);
+    vbox->setContentsMargins(3,3,3,3);
+    vbox->addStretch(1);
+    d.setLayout(vbox);
+    d.exec();
+}
+
+void PropertiesSpeedpost::haxFixTrackItemsEnabled(){
+    if(sobj == NULL){
+        return;
+    }
+
+    int res = sobj->fixTrackItems();
+    QMessageBox dialog;
+    if(res == -1)
+        dialog.setText("Speedpost broken, can't fix.");
+    else if(res == 0)
+        dialog.setText("No need for fix.");
+    else
+        dialog.setText("Fixed "+QString::number(res)+"Track Items.");
+    dialog.exec();
 }

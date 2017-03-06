@@ -334,6 +334,47 @@ void SpeedpostObj::expandTrItems(){
     modified = true;
 }
 
+int SpeedpostObj::fixTrackItems(){
+    if(this->trItemId.size() < 2)
+        return -1;
+    TRitem* item = Game::trackDB->trackItems[this->trItemId[1]];
+    if(item == NULL) 
+        return -1;
+    if(this->trItemId.size() < 4)
+        return 0;
+    
+    TRitem::SType stype = item->getSpeedpostType();
+
+    //if(trItemId)
+    int errors = 0;
+    for(int i = 1; i < trItemId.size()/2; i++){
+        if(this->trItemId[i*2] != 0)
+            continue;
+        item = Game::trackDB->trackItems[this->trItemId[i*2+1]];
+        if(item == NULL) {
+            errors++;
+            continue;
+        }
+        if(stype != item->getSpeedpostType()){
+            errors++;
+            continue;
+        }
+    }
+    
+    if(errors > 0){
+        for(int i = 1; i < trItemId.size()-1;){
+            Game::trackDB->deleteTrItem(this->trItemId[i*2+1]);
+            trItemId.remove(i*2+1);
+            trItemId.remove(i*2+0);
+        }
+        selectionValue = 0;
+        
+        expandTrItems();
+    }
+
+    return errors;
+}
+
 void SpeedpostObj::deleteSelectedTrItem(){
     if(selectionValue < 1)
         return;

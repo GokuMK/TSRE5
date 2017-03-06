@@ -44,6 +44,7 @@
 #include "Service.h"
 #include "Traffic.h"
 #include "Path.h"
+#include "Environment.h"
 
 Route::Route() {
     Game::currentRoute = this;
@@ -63,6 +64,7 @@ Route::Route() {
 
     trk = new Trk();
     trk->load();
+    env = new Environment(Game::root + "/routes/" + Game::route + "/ENVFILES/editor.env");
     Game::routeName = trk->routeName.toLower();
     qDebug() << Game::routeName;
 

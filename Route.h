@@ -29,6 +29,7 @@ class Service;
 class Traffic;
 class Path;
 class TRitem;
+class Environment;
 
 class Route : public QObject {
     Q_OBJECT
@@ -42,6 +43,7 @@ public:
     TSectionDAT *tsection; 
     SoundList* soundList;
     Ref *ref;
+    Environment *env;
     bool placementStickToTarget = false;
     float placementAutoLength = 50;
     bool placementAutoTwoPointRot = true;
