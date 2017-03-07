@@ -12,7 +12,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
-#include "window.h"
+#include "RouteEditorWindow.h"
 #include "LoadWindow.h"
 #include "CELoadWindow.h"
 #include "SoundList.h"
@@ -50,6 +50,9 @@ bool Game::systemTheme = false;
 bool Game::toolsHidden = false;
 bool Game::usenNumPad = false;
 float Game::cameraFov = 55.0f;
+float Game::cameraSpeedMin = 1.0;
+float Game::cameraSpeedStd = 3.0;
+float Game::cameraSpeedMax = 40.0;
 bool Game::cameraStickToTerrain = false;
 
 bool Game::viewWorldGrid = true;
@@ -82,7 +85,7 @@ bool Game::snapableOnlyRot = false;
 
 QString Game::geoPath = "hgst";
 
-Window* Game::window = NULL;
+RouteEditorWindow* Game::window = NULL;
 LoadWindow* Game::loadWindow = NULL;
 ShapeLib *Game::currentShapeLib = NULL;
 EngLib *Game::currentEngLib = NULL;
@@ -279,6 +282,21 @@ void Game::load() {
         if(val == "AASamples"){
             AASamples = args[1].trimmed().toInt();
         }
+        if(val == "cameraStickToTerrain"){
+            if(args[1].trimmed().toLower() == "true")
+                cameraStickToTerrain = true;
+            else
+                cameraStickToTerrain = false; 
+        }
+        if(val == "cameraSpeedMin"){
+            cameraSpeedMin = args[1].trimmed().toFloat();
+        }
+        if(val == "cameraSpeedStd"){
+            cameraSpeedStd = args[1].trimmed().toFloat();
+        }
+        if(val == "cameraSpeedMax"){
+            cameraSpeedMax = args[1].trimmed().toFloat();
+        }
     }
 }
 
@@ -291,7 +309,7 @@ bool Game::loadRouteEditor(){
         msgBox.exec();
     }
     
-    window = new Window();
+    window = new RouteEditorWindow();
     window->resize(1280, 800);
     
     loadWindow = new LoadWindow();

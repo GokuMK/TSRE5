@@ -9,8 +9,8 @@
  */
 
 #include <QtWidgets>
-#include "glwidget.h"
-#include "window.h"
+#include "RouteEditorGLWidget.h"
+#include "RouteEditorWindow.h"
 #include "Game.h"
 #include "AceLib.h"
 #include <QDebug>
@@ -46,14 +46,14 @@
 #include "NaviWindow.h"
 #include "UnsavedDialog.h"
 
-Window::Window() {
+RouteEditorWindow::RouteEditorWindow() {
     
     objTools = new ObjTools("ObjTools");
     terrainTools = new TerrainTools("TerrainTools");
     geoTools = new GeoTools("GeoTools");
     activityTools = new ActivityTools("ActivityTools");
     //naviBox = new NaviBox();
-    glWidget = new GLWidget(this);
+    glWidget = new RouteEditorGLWidget(this);
     shapeViewWindow = new ShapeViewWindow(this);
     aboutWindow = new AboutWindow(this);
     naviWindow = new NaviWindow(this);
@@ -171,43 +171,47 @@ Window::Window() {
     //toolsAction = GuiFunct::newMenuCheckAction(tr("&Tools"), this); 
     //viewMenu->addAction(toolsAction);
     //QObject::connect(toolsAction, SIGNAL(triggered(bool)), this, SLOT(hideShowToolWidget(bool)));
-    QAction* viewWorldGrid = GuiFunct::newMenuCheckAction(tr("&World Grid"), this); 
-    viewMenu->addAction(viewWorldGrid);
-    QObject::connect(viewWorldGrid, SIGNAL(triggered(bool)), this, SLOT(viewWorldGrid(bool)));
-    QAction* viewTileGrid = GuiFunct::newMenuCheckAction(tr("&Tile Grid"), this); 
-    viewMenu->addAction(viewTileGrid);
-    QObject::connect(viewTileGrid, SIGNAL(triggered(bool)), this, SLOT(viewTileGrid(bool)));    
-    QAction* viewTerrainGrid = GuiFunct::newMenuCheckAction(tr("&Terrain Grid"), this, false); 
-    viewMenu->addAction(viewTerrainGrid);
-    QObject::connect(viewTerrainGrid, SIGNAL(triggered(bool)), this, SLOT(viewTerrainGrid(bool)));   
-    QAction* viewTerrainShape = GuiFunct::newMenuCheckAction(tr("&Hide Terrain Shape"), this, false); 
-    viewMenu->addAction(viewTerrainShape);
-    QObject::connect(viewTerrainShape, SIGNAL(triggered(bool)), this, SLOT(viewTerrainShape(bool)));   
-    QAction* showWorldObjPivotPoints = GuiFunct::newMenuCheckAction(tr("&WorldObj Markers"), this, false); 
-    viewMenu->addAction(showWorldObjPivotPoints);
-    QObject::connect(showWorldObjPivotPoints, SIGNAL(triggered(bool)), this, SLOT(showWorldObjPivotPointsEnabled(bool)));
-    QAction* viewInteractives = GuiFunct::newMenuCheckAction(tr("&Interactives"), this); 
-    viewMenu->addAction(viewInteractives);
-    QObject::connect(viewInteractives, SIGNAL(triggered(bool)), this, SLOT(viewInteractives(bool)));
-    QAction* viewTrackDbLines = GuiFunct::newMenuCheckAction(tr("&TrackDB Lines"), this); 
-    viewMenu->addAction(viewTrackDbLines);
-    QObject::connect(viewTrackDbLines, SIGNAL(triggered(bool)), this, SLOT(viewTrackDbLines(bool)));    
-    QAction* viewTsectionLines = GuiFunct::newMenuCheckAction(tr("&Tsection Lines"), this); 
-    viewMenu->addAction(viewTsectionLines);
-    QObject::connect(viewTsectionLines, SIGNAL(triggered(bool)), this, SLOT(viewTsectionLines(bool)));
-    QAction* viewTrackItems = GuiFunct::newMenuCheckAction(tr("&TrackDB Items"), this, Game::renderTrItems); 
-    viewMenu->addAction(viewTrackItems);
-    QObject::connect(viewTrackItems, SIGNAL(triggered(bool)), this, SLOT(viewTrackItems(bool)));
+    QAction* viewUnselectAll = new QAction(tr("&Unselect All"), this); 
+    viewMenu->addAction(viewUnselectAll);
+    QObject::connect(viewUnselectAll, SIGNAL(triggered()), this, SLOT(viewUnselectAll()));
+    viewMenu->addSeparator();
+    vViewWorldGrid = GuiFunct::newMenuCheckAction(tr("&World Grid"), this); 
+    viewMenu->addAction(vViewWorldGrid);
+    QObject::connect(vViewWorldGrid, SIGNAL(triggered(bool)), this, SLOT(viewWorldGrid(bool)));
+    vViewTileGrid = GuiFunct::newMenuCheckAction(tr("&Tile Grid"), this); 
+    viewMenu->addAction(vViewTileGrid);
+    QObject::connect(vViewTileGrid, SIGNAL(triggered(bool)), this, SLOT(viewTileGrid(bool)));    
+    vViewTerrainGrid = GuiFunct::newMenuCheckAction(tr("&Terrain Grid"), this, false); 
+    viewMenu->addAction(vViewTerrainGrid);
+    QObject::connect(vViewTerrainGrid, SIGNAL(triggered(bool)), this, SLOT(viewTerrainGrid(bool)));   
+    vViewTerrainShape = GuiFunct::newMenuCheckAction(tr("&Hide Terrain Shape"), this, false); 
+    viewMenu->addAction(vViewTerrainShape);
+    QObject::connect(vViewTerrainShape, SIGNAL(triggered(bool)), this, SLOT(viewTerrainShape(bool)));   
+    vShowWorldObjPivotPoints = GuiFunct::newMenuCheckAction(tr("&WorldObj Markers"), this, false); 
+    viewMenu->addAction(vShowWorldObjPivotPoints);
+    QObject::connect(vShowWorldObjPivotPoints, SIGNAL(triggered(bool)), this, SLOT(showWorldObjPivotPointsEnabled(bool)));
+    vViewInteractives = GuiFunct::newMenuCheckAction(tr("&Interactives"), this); 
+    viewMenu->addAction(vViewInteractives);
+    QObject::connect(vViewInteractives, SIGNAL(triggered(bool)), this, SLOT(viewInteractives(bool)));
+    vViewTrackDbLines = GuiFunct::newMenuCheckAction(tr("&TrackDB Lines"), this); 
+    viewMenu->addAction(vViewTrackDbLines);
+    QObject::connect(vViewTrackDbLines, SIGNAL(triggered(bool)), this, SLOT(viewTrackDbLines(bool)));    
+    vViewTsectionLines = GuiFunct::newMenuCheckAction(tr("&Tsection Lines"), this); 
+    viewMenu->addAction(vViewTsectionLines);
+    QObject::connect(vViewTsectionLines, SIGNAL(triggered(bool)), this, SLOT(viewTsectionLines(bool)));
+    vViewTrackItems = GuiFunct::newMenuCheckAction(tr("&TrackDB Items"), this, Game::renderTrItems); 
+    viewMenu->addAction(vViewTrackItems);
+    QObject::connect(vViewTrackItems, SIGNAL(triggered(bool)), this, SLOT(viewTrackItems(bool)));
     
-    QAction* viewPointer3d = GuiFunct::newMenuCheckAction(tr("&3D Pointer"), this); 
-    viewMenu->addAction(viewPointer3d);
-    QObject::connect(viewPointer3d, SIGNAL(triggered(bool)), this, SLOT(viewPointer3d(bool)));
-    QAction* viewMarkers = GuiFunct::newMenuCheckAction(tr("&Markers"), this, false); 
-    viewMenu->addAction(viewMarkers);
-    QObject::connect(viewMarkers, SIGNAL(triggered(bool)), this, SLOT(viewMarkers(bool)));
-    QAction* viewSnapable = GuiFunct::newMenuCheckAction(tr("&Snapable Points"), this, false); 
-    viewMenu->addAction(viewSnapable);
-    QObject::connect(viewSnapable, SIGNAL(triggered(bool)), this, SLOT(viewSnapable(bool)));
+    vViewPointer3d = GuiFunct::newMenuCheckAction(tr("&3D Pointer"), this); 
+    viewMenu->addAction(vViewPointer3d);
+    QObject::connect(vViewPointer3d, SIGNAL(triggered(bool)), this, SLOT(viewPointer3d(bool)));
+    vViewMarkers = GuiFunct::newMenuCheckAction(tr("&Markers"), this, false); 
+    viewMenu->addAction(vViewMarkers);
+    QObject::connect(vViewMarkers, SIGNAL(triggered(bool)), this, SLOT(viewMarkers(bool)));
+    vViewSnapable = GuiFunct::newMenuCheckAction(tr("&Snapable Points"), this, false); 
+    viewMenu->addAction(vViewSnapable);
+    QObject::connect(vViewSnapable, SIGNAL(triggered(bool)), this, SLOT(viewSnapable(bool)));
     // Tools
     toolsMenu = menuBar()->addMenu(tr("&Tools"));
     propertiesAction = GuiFunct::newMenuCheckAction(tr("&Properties"), this); 
@@ -241,7 +245,7 @@ Window::Window() {
     QObject::connect(activityAction, SIGNAL(triggered(bool)), this, SLOT(showToolsActivity(bool)));
     // Settigs
     terrainCameraAction = GuiFunct::newMenuCheckAction(tr("&Stick Camera To Terrain"), this); 
-    terrainCameraAction->setChecked(false);
+    terrainCameraAction->setChecked(Game::cameraStickToTerrain);
     terrainCameraAction->setShortcut(QKeySequence("/"));
     QObject::connect(terrainCameraAction, SIGNAL(triggered(bool)), this, SLOT(terrainCamera(bool)));
     settingsMenu = menuBar()->addMenu(tr("&Settings"));
@@ -371,7 +375,7 @@ Window::Window() {
     
 }
 
-void Window::keyPressEvent(QKeyEvent *e) {
+void RouteEditorWindow::keyPressEvent(QKeyEvent *e) {
 
     if (e->key() == Qt::Key_Escape)
         close();
@@ -379,7 +383,7 @@ void Window::keyPressEvent(QKeyEvent *e) {
         QWidget::keyPressEvent(e);
 }
 
-void Window::closeEvent(QCloseEvent * event ){
+void RouteEditorWindow::closeEvent(QCloseEvent * event ){
     std::vector<QString> unsavedItems;
     glWidget->getUnsavedInfo(unsavedItems);
     if(unsavedItems.size() == 0){
@@ -415,11 +419,11 @@ void Window::closeEvent(QCloseEvent * event ){
     qApp->quit();
 }
 
-void Window::save(){
+void RouteEditorWindow::save(){
     emit sendMsg(QString("save"));
 }
 
-void Window::createPaths(){
+void RouteEditorWindow::createPaths(){
     QMessageBox msgBox;
     msgBox.setText("This will delete all your existing paths and create new simple paths! Continue?");
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -435,19 +439,19 @@ void Window::createPaths(){
     }
 }
 
-void Window::terrainCamera(bool val){
+void RouteEditorWindow::terrainCamera(bool val){
     Game::cameraStickToTerrain = val;
 }
 
-void Window::about(){
+void RouteEditorWindow::about(){
     aboutWindow->show();
 }
 
-void Window::showTerrainTreeEditr(){
+void RouteEditorWindow::showTerrainTreeEditr(){
     emit sendMsg(QString("showTerrainTreeEditr"));
 }
 
-void Window::showToolsObject(bool show){
+void RouteEditorWindow::showToolsObject(bool show){
     if(show){
         hideShowToolWidget(true);
         setToolbox("objTools");
@@ -456,7 +460,7 @@ void Window::showToolsObject(bool show){
     }
 }
 
-void Window::showToolsTerrain(bool show){
+void RouteEditorWindow::showToolsTerrain(bool show){
     if(show){
         hideShowToolWidget(true);
         setToolbox("terrainTools");
@@ -465,7 +469,7 @@ void Window::showToolsTerrain(bool show){
     }
 }
 
-void Window::showToolsGeo(bool show){
+void RouteEditorWindow::showToolsGeo(bool show){
     if(show){
         hideShowToolWidget(true);
         setToolbox("geoTools");
@@ -474,7 +478,7 @@ void Window::showToolsGeo(bool show){
     }
 }
 
-void Window::showToolsActivity(bool show){
+void RouteEditorWindow::showToolsActivity(bool show){
     if(show){
         hideShowToolWidget(true);
         setToolbox("activityTools");
@@ -483,7 +487,7 @@ void Window::showToolsActivity(bool show){
     }
 }
 
-void Window::setToolbox(QString name){
+void RouteEditorWindow::setToolbox(QString name){
     if(name == "objTools"){
         hideAllTools();
         objTools->show();
@@ -506,7 +510,7 @@ void Window::setToolbox(QString name){
     }
 }
 
-void Window::hideAllTools(){
+void RouteEditorWindow::hideAllTools(){
     objTools->hide();
     terrainTools->hide();
     geoTools->hide();
@@ -517,7 +521,7 @@ void Window::hideAllTools(){
     activityAction->setChecked(false);
 }
 
-void Window::showProperties(GameObj* obj){
+void RouteEditorWindow::showProperties(GameObj* obj){
     // hide all
     for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
         if(*it == NULL) continue;
@@ -536,7 +540,7 @@ void Window::showProperties(GameObj* obj){
     }
 }
 
-void Window::updateProperties(GameObj* obj){
+void RouteEditorWindow::updateProperties(GameObj* obj){
     if(obj == NULL) return;
     // show 
 
@@ -549,78 +553,106 @@ void Window::updateProperties(GameObj* obj){
     }
 }
 
-void Window::hideShowPropertiesWidget(bool show){
+void RouteEditorWindow::hideShowPropertiesWidget(bool show){
     if(show) box2->show();
     else box2->hide();
 }
 
-void Window::hideShowShapeViewWidget(bool show){
+void RouteEditorWindow::hideShowShapeViewWidget(bool show){
     if(show) shapeViewWindow->show();
     else shapeViewWindow->hide();
 }
 
-void Window::hideShowNaviWidget(bool show){
+void RouteEditorWindow::hideShowNaviWidget(bool show){
     if(show) naviWindow->show();
     else naviWindow->hide();
 }
 
-void Window::hideShowToolWidget(bool show){
+void RouteEditorWindow::hideShowToolWidget(bool show){
     if(show) box->show();
     else box->hide();
 }
 
-void Window::viewWorldGrid(bool show){
+void RouteEditorWindow::viewWorldGrid(bool show){
     Game::viewWorldGrid = show;
 }
-void Window::viewTileGrid(bool show){
+void RouteEditorWindow::viewTileGrid(bool show){
     Game::viewTileGrid = show;
 }
-void Window::viewTerrainShape(bool show){
+void RouteEditorWindow::viewTerrainShape(bool show){
     Game::viewTerrainShape = !show;
 }
-void Window::viewTerrainGrid(bool show){
+void RouteEditorWindow::viewTerrainGrid(bool show){
     Game::viewTerrainGrid = show;
 }
-void Window::showWorldObjPivotPointsEnabled(bool show){
+void RouteEditorWindow::showWorldObjPivotPointsEnabled(bool show){
     Game::showWorldObjPivotPoints = show;
 }
-void Window::viewInteractives(bool show){
+void RouteEditorWindow::viewInteractives(bool show){
     Game::viewInteractives = show;
 }
-void Window::viewTrackDbLines(bool show){
+void RouteEditorWindow::viewTrackDbLines(bool show){
     Game::viewTrackDbLines = show;
 }
-void Window::viewTsectionLines(bool show){
+void RouteEditorWindow::viewTsectionLines(bool show){
     Game::viewTsectionLines = show;
 }
 
-void Window::viewTrackItems(bool show){
+void RouteEditorWindow::viewTrackItems(bool show){
     Game::renderTrItems = show;
 }
 
-void Window::viewPointer3d(bool show){
+void RouteEditorWindow::viewPointer3d(bool show){
     Game::viewPointer3d = show;
 }
-void Window::viewMarkers(bool show){
+void RouteEditorWindow::viewMarkers(bool show){
     Game::viewMarkers = show;
 }
-void Window::viewSnapable(bool show){
+void RouteEditorWindow::viewSnapable(bool show){
     Game::viewSnapable = show;
 }
-void Window::show(){
+void RouteEditorWindow::show(){
     naviWindow->move(0, this->height() - naviWindow->height() );
     naviWindow->show();
     QMainWindow::show();
 }
-void Window::naviWindowClosed(){
+void RouteEditorWindow::naviWindowClosed(){
     naviAction->blockSignals(true);
     naviAction->setChecked(false);
     naviAction->blockSignals(false);
 }
-void Window::shapeVeiwWindowClosed(){
+void RouteEditorWindow::shapeVeiwWindowClosed(){
     shapeViewAction->blockSignals(true);
     shapeViewAction->setChecked(false);
     shapeViewAction->blockSignals(false);
+}
+void RouteEditorWindow::viewUnselectAll(){
+
+    vViewWorldGrid->setChecked(false);
+    vViewTileGrid->setChecked(false);
+    vViewTerrainGrid->setChecked(false);
+    vViewTerrainShape->setChecked(false);
+    vShowWorldObjPivotPoints->setChecked(false);
+    vViewInteractives->setChecked(false);
+    vViewTrackDbLines->setChecked(false);
+    vViewTsectionLines->setChecked(false);
+    vViewTrackItems->setChecked(false);
+    vViewPointer3d->setChecked(false);
+    vViewMarkers->setChecked(false);
+    vViewSnapable->setChecked(false);
+
+    vViewWorldGrid->triggered(false);
+    vViewTileGrid->triggered(false);
+    vViewTerrainGrid->triggered(false);
+    vViewTerrainShape->triggered(false);
+    vShowWorldObjPivotPoints->triggered(false);
+    vViewInteractives->triggered(false);
+    vViewTrackDbLines->triggered(false);
+    vViewTsectionLines->triggered(false);
+    vViewTrackItems->triggered(false);
+    vViewPointer3d->triggered(false);
+    vViewMarkers->triggered(false);
+    vViewSnapable->triggered(false);
 }
 //void Window::exitNow(){
 //    this->hide();

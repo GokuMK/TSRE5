@@ -14,7 +14,7 @@
 #include <QtCore>
 #include <iostream>
 #include "Game.h"
-#include "window.h"
+#include "RouteEditorWindow.h"
 #include "LoadWindow.h"
 #include "MapWindow.h"
 #include <QFile>

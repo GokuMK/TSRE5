@@ -19,7 +19,7 @@
 class EngListWidget;
 class ConListWidget;
 class ConUnitsWidget;
-class GlShapeWidget;
+class ShapeViewerGLWidget;
 class QScrollBar;
 class Camera;
 class Consist;
@@ -97,8 +97,8 @@ private:
     EngListWidget *eng2;
     ConListWidget *con1;
     ConUnitsWidget *units;
-    GlShapeWidget *glShapeWidget;
-    GlShapeWidget *glConWidget;
+    ShapeViewerGLWidget *glShapeWidget;
+    ShapeViewerGLWidget *glConWidget;
     QScrollBar *conSlider;
     
     AboutWindow* aboutWindow;

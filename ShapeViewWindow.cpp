@@ -10,7 +10,7 @@
 #include "ShapeViewWindow.h"
 #include <QDebug>
 #include "Game.h"
-#include "glShapeWidget.h"
+#include "ShapeViewerGLWidget.h"
 #include "CameraRot.h"
 
 ShapeViewWindow::ShapeViewWindow(QWidget* parent) : QWidget(parent) {
@@ -19,7 +19,7 @@ ShapeViewWindow::ShapeViewWindow(QWidget* parent) : QWidget(parent) {
     this->setWindowTitle(tr("Shape Preview"));
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     this->resize(384,256);
-    glShapeWidget = new GlShapeWidget(parent);
+    glShapeWidget = new ShapeViewerGLWidget(parent);
     if(Game::colorShapeView != NULL)
         glShapeWidget->setBackgroundGlColor(Game::colorShapeView->redF(), Game::colorShapeView->greenF(), Game::colorShapeView->blueF());
     camera = new CameraRot();

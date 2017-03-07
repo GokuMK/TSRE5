@@ -22,7 +22,7 @@ class Brush;
 class Coords;
 class Trk;
 class SoundList;
-class GLWidget;
+class RouteEditorGLWidget;
 class Activity;
 class Consist;
 class Service;

@@ -19,6 +19,8 @@
 #include "Brush.h"
 #include "TerrainWaterWindow.h"
 #include "MapWindow.h"
+#include "Route.h"
+#include "Environment.h"
 
 Terrain::Terrain(float x, float y) {
     typeObj = this->terrainobj;
@@ -467,10 +469,14 @@ void Terrain::setWaterLevelGui(){
         tfile->WNE = waterWindow.WNE;
         tfile->WSE = waterWindow.WSE;
         tfile->WNW = waterWindow.WNW;
-        tfile->WSW = waterWindow.WSW;    
-        for (int uu = 0; uu < 16; uu++) {
-            for (int yy = 0; yy < 16; yy++) {
-                water[uu * 16 + yy].loaded = false;
+        tfile->WSW = waterWindow.WSW;
+        for (WaterTile* wt : water){
+            if(wt == NULL)
+                continue;
+            for (int uu = 0; uu < 16; uu++) {
+                for (int yy = 0; yy < 16; yy++) {
+                    wt->w[uu * 16 + yy].loaded = false;
+                }
             }
         }
         this->setModified(true);
@@ -772,15 +778,19 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
             
-    if(!showBlob && selectionColor == 0)
-        renderWater(lodx, lodz, playerT, playerW, target, fov);
+    //if(!showBlob && selectionColor == 0)
+    //    renderWater(lodx, lodz, playerT, playerW, target, fov);
 }
 
-void Terrain::renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov) {
+void Terrain::renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int layer, int selectionColor) {
     float lod;
+    if(showBlob || selectionColor != 0)
+        return;
+    float alpha = 0;
     
-    GLUU *gluu = GLUU::get();
-    float alpha = -gluu->alphaTest;
+    if(water[layer] == NULL)
+        water[layer] = new WaterTile();
+    OglObj *w = water[layer]->w;
     
     for (int uu = 0; uu < 16; uu++) {
         for (int yy = 0; yy < 16; yy++) {
@@ -793,7 +803,7 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
             
             if ((tfile->flags[yy * 16 + uu] & 0xc0) != 0) {
 
-                if (!water[uu * 16 + yy].loaded) {
+                if (!w[uu * 16 + yy].loaded) {
 
                     float x1 = (uu)*128 - 1024;
                     float x2 = (uu + 1)*128 - 1024;
@@ -878,13 +888,13 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = 0;
                     punkty[ptr++] = 0;
                     punkty[ptr++] = alpha;
-
-                    QString *texturePath = new QString("resources/woda.ace");
-                    water[uu * 16 + yy].setMaterial(texturePath);
-                    water[uu * 16 + yy].init(punkty, ptr, water[uu * 16 + yy].VNT, GL_TRIANGLES);
+                    //QString *texturePath = new QString("resources/woda.ace");
+                    //water[uu * 16 + yy].setMaterial(texturePath);
+                    w[uu * 16 + yy].setMaterial(&Game::currentRoute->env->water[layer].tex);
+                    w[uu * 16 + yy].init(punkty, ptr, w[uu * 16 + yy].VNT, GL_TRIANGLES);
                     delete punkty;
                 }
-                water[uu * 16 + yy].render();
+                w[uu * 16 + yy].render();
             }
         }
     }

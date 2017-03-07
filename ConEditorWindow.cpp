@@ -17,7 +17,7 @@
 #include "Game.h"
 #include "EngListWidget.h"
 #include "ConListWidget.h"
-#include "glShapeWidget.h"
+#include "ShapeViewerGLWidget.h"
 #include "CameraFree.h"
 #include "CameraConsist.h"
 #include "CameraRot.h"
@@ -43,11 +43,11 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     Game::currentEngLib = englib;
     ConLib::loadAll(Game::root);
     ActLib::loadAll(Game::root);
-    glShapeWidget = new GlShapeWidget(this);
+    glShapeWidget = new ShapeViewerGLWidget(this);
     if(Game::colorShapeView != NULL)
         glShapeWidget->setBackgroundGlColor(Game::colorShapeView->redF(), Game::colorShapeView->greenF(), Game::colorShapeView->blueF());
     //glShapeWidget->currentEngLib = englib;
-    glConWidget = new GlShapeWidget(this);
+    glConWidget = new ShapeViewerGLWidget(this);
     if(Game::colorConView != NULL)
         glConWidget->setBackgroundGlColor(Game::colorConView->redF(), Game::colorConView->greenF(), Game::colorConView->blueF());
 

@@ -19,6 +19,8 @@
 #include "HeightWindow.h"
 #include "QuadTree.h"
 #include "Undo.h"
+#include "Route.h"
+#include "Environment.h"
 
 HeightWindow* TerrainLib::heightWindow = NULL;
 std::unordered_map<int, Terrain*> TerrainLib::terrain;
@@ -845,6 +847,46 @@ void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* targ
        } else {
            obj->inUse = false;
        }
+    }
+}
+
+void TerrainLib::renderWater(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, int renderMode, int layer) {
+    int mintile = -Game::tileLod;
+    int maxtile = Game::tileLod;
+    
+    if(renderMode == gluu->RENDER_SELECTION){
+        mintile = -1;
+        maxtile = 1;
+    }
+    
+    gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, 0.0f);
+    gluu->enableNormals();
+
+    Terrain *tTile;
+    int selectionColor = 0;
+    for (int i = mintile; i <= maxtile; i++) {
+        for (int j = maxtile; j >= mintile; j--) {
+            tTile = terrain[(((int)playerT[0] + i)*10000 + (int)playerT[1] + j)];
+            if (tTile == NULL) 
+                continue;
+            if (tTile->loaded == false) 
+                continue;
+            
+            if (tTile->loaded) {
+                float lodx = 2048 * i - playerW[0];
+                float lodz = 2048 * j - playerW[2];
+                gluu->mvPushMatrix();
+                Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * i, Game::currentRoute->env->water[layer].height, 2048 * j);
+                gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+                if (renderMode == gluu->RENDER_SELECTION) {
+                    selectionColor = 10 << 20;
+                    selectionColor |= ((i+1) << 10);
+                    selectionColor |= ((j+1) << 8);
+                }
+                tTile->renderWater(lodx, lodz, playerT, playerW, target, fov, layer, selectionColor);
+                gluu->mvPopMatrix();
+            }
+        }
     }
 }
 

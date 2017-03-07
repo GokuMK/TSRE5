@@ -11,7 +11,7 @@
 #include "GuiFunct.h"
 #include "AboutWindow.h"
 #include <QtWidgets>
-#include "window.h"
+#include "RouteEditorWindow.h"
 #include "Game.h"
 
 QLabel* GuiFunct::newQLabel(QString text, int width){

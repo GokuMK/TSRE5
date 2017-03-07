@@ -19,7 +19,8 @@
 
 Environment::Environment(QString path) {
     loaded = false;
-
+    texturePath = Game::root + "/routes/" + Game::route + "/envfiles/textures/";
+            
     qDebug() << "Wczytywanie pliku env: " << path;
 
     QString sh;
@@ -53,10 +54,11 @@ Environment::Environment(QString path) {
                 if (sh == "world_water") {
                     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                         if (sh == "world_water_layers") {
-                            ParserX::GetNumber(data);
+                            waterCount = ParserX::GetNumber(data);
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                                 if (sh == "world_water_layer") {
+                                    water.push_back(WaterLayer());
                                     loadWaterLayer(data);
                                     //traffic->service.emplace_back();
                                     //traffic->service.back().load(data);
@@ -86,8 +88,11 @@ Environment::Environment(QString path) {
     }
     delete data;
     loaded = 1;
-
-    //save();
+qDebug() << water.size();
+    for(int i = 0; i < water.size(); i++){
+        qDebug() << water[i].height;
+qDebug() << water[i].tex;
+    }
     return;
 }
 
@@ -95,6 +100,7 @@ void Environment::loadWaterLayer(FileBuffer* data){
     QString sh;
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         if (sh == "world_water_layer_height") {
+            water.back().height = ParserX::GetNumber(data);
             ParserX::SkipToken(data);
             continue;
         }
@@ -106,6 +112,7 @@ void Environment::loadWaterLayer(FileBuffer* data){
                         if (sh == "terrain_texslots") {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == "terrain_texslot") {
+                                    water.back().tex = texturePath + ParserX::GetString(data).toLower();
                                     ParserX::SkipToken(data);
                                     continue;
                                 }

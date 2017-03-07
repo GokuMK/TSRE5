@@ -15,7 +15,7 @@
 #include <QMainWindow>
 
 class QSlider;
-class GLWidget;
+class RouteEditorGLWidget;
 class ObjTools;
 class GeoTools;
 class TerrainTools;
@@ -28,12 +28,12 @@ class PropertiesAbstract;
 class GameObj;
 class PreciseTileCoordinate;
 
-class Window : public QMainWindow
+class RouteEditorWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    Window();
+    RouteEditorWindow();
     
 public slots:
     void save();
@@ -67,6 +67,7 @@ public slots:
     void showWorldObjPivotPointsEnabled(bool show);
     void naviWindowClosed();
     void shapeVeiwWindowClosed();
+    void viewUnselectAll();
 
 signals:
     void exitNow();
@@ -81,7 +82,7 @@ private:
     QWidget* box;
     QWidget* box2;
     
-    GLWidget *glWidget;
+    RouteEditorGLWidget *glWidget;
     ObjTools *objTools;
     GeoTools *geoTools;
     TerrainTools *terrainTools;
@@ -116,6 +117,19 @@ private:
     QAction *trkEditr;
     QAction *geoAction;
     QAction *activityAction;
+    
+    QAction* vViewWorldGrid;
+    QAction* vViewTileGrid;
+    QAction* vViewTerrainGrid;
+    QAction* vViewTerrainShape;
+    QAction* vShowWorldObjPivotPoints;
+    QAction* vViewInteractives;
+    QAction* vViewTrackDbLines;
+    QAction* vViewTsectionLines;
+    QAction* vViewTrackItems;
+    QAction* vViewPointer3d;
+    QAction* vViewMarkers;
+    QAction* vViewSnapable;
     
     AboutWindow* aboutWindow;
     NaviWindow* naviWindow;

@@ -40,13 +40,13 @@ class QOpenGLFunctions_3_3_Core;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
-class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
+class RouteEditorGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 
 public:
-    GLWidget(QWidget *parent = 0);
-    ~GLWidget();
+    RouteEditorGLWidget(QWidget *parent = 0);
+    ~RouteEditorGLWidget();
 
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
     QSize sizeHint() const Q_DECL_OVERRIDE;

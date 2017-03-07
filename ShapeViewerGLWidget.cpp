@@ -8,7 +8,7 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#include "glShapeWidget.h"
+#include "ShapeViewerGLWidget.h"
 #include <QMouseEvent>
 #include <QOpenGLShaderProgram>
 #include <QCoreApplication>
@@ -31,7 +31,7 @@
 #include "ActLib.h"
 #include "Activity.h"
 
-GlShapeWidget::GlShapeWidget(QWidget *parent)
+ShapeViewerGLWidget::ShapeViewerGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
 m_xRot(0),
 m_yRot(0),
@@ -40,26 +40,26 @@ m_zRot(0) {
     currentShapeLib = new ShapeLib();
 }
 
-GlShapeWidget::~GlShapeWidget() {
+ShapeViewerGLWidget::~ShapeViewerGLWidget() {
 
 }
 
-void GlShapeWidget::cleanup() {
+void ShapeViewerGLWidget::cleanup() {
     makeCurrent();
     //delete gluu->m_program;
     //gluu->m_program = 0;
     doneCurrent();
 }
 
-QSize GlShapeWidget::minimumSizeHint() const {
+QSize ShapeViewerGLWidget::minimumSizeHint() const {
     return QSize(50, 50);
 }
 
-QSize GlShapeWidget::sizeHint() const {
+QSize ShapeViewerGLWidget::sizeHint() const {
     return QSize(1500, 700);
 }
 
-void GlShapeWidget::timerEvent(QTimerEvent * event) {
+void ShapeViewerGLWidget::timerEvent(QTimerEvent * event) {
 
     timeNow = QDateTime::currentMSecsSinceEpoch();
     if (timeNow - lastTime < 1)
@@ -78,11 +78,11 @@ void GlShapeWidget::timerEvent(QTimerEvent * event) {
     
 }
 
-void GlShapeWidget::setCamera(Camera* cam){
+void ShapeViewerGLWidget::setCamera(Camera* cam){
     camera = cam;
 }
 
-void GlShapeWidget::initializeGL() {
+void ShapeViewerGLWidget::initializeGL() {
     Game::currentShapeLib = currentShapeLib;
     /*if(currentEngLib == NULL){
          currentEngLib = new EngLib();
@@ -91,7 +91,7 @@ void GlShapeWidget::initializeGL() {
     //qDebug() << "GLUU::get();";
     gluu = GLUU::get();
     //context()->set
-    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GlShapeWidget::cleanup);
+    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &ShapeViewerGLWidget::cleanup);
     //qDebug() << "initializeOpenGLFunctions();";
     initializeOpenGLFunctions();
     if(backgroundGlColor[0] == -2){
@@ -139,7 +139,7 @@ void GlShapeWidget::initializeGL() {
     setMouseTracking(true);
 }
 
-void GlShapeWidget::setBackgroundGlColor(float r, float g, float b){
+void ShapeViewerGLWidget::setBackgroundGlColor(float r, float g, float b){
     backgroundGlColor[0] = r;
     backgroundGlColor[1] = g;
     backgroundGlColor[2] = b;
@@ -148,7 +148,7 @@ void GlShapeWidget::setBackgroundGlColor(float r, float g, float b){
     }
 }
 
-void GlShapeWidget::paintGL() {
+void ShapeViewerGLWidget::paintGL() {
     Game::currentShapeLib = currentShapeLib;
     //Game::currentEngLib = currentEngLib;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -256,15 +256,15 @@ void GlShapeWidget::paintGL() {
     Game::shadowsEnabled = shadowsState;
 }
 
-void GlShapeWidget::getImg() {
+void ShapeViewerGLWidget::getImg() {
     getImage = true;
     return;
 }
 
-void GlShapeWidget::resizeGL(int w, int h) {
+void ShapeViewerGLWidget::resizeGL(int w, int h) {
 }
 
-void GlShapeWidget::keyPressEvent(QKeyEvent * event) {
+void ShapeViewerGLWidget::keyPressEvent(QKeyEvent * event) {
     camera->keyDown(event);
     Game::currentShapeLib = currentShapeLib;
     //Game::currentEngLib = currentEngLib;
@@ -290,11 +290,11 @@ void GlShapeWidget::keyPressEvent(QKeyEvent * event) {
 
 }
 
-void GlShapeWidget::keyReleaseEvent(QKeyEvent * event) {
+void ShapeViewerGLWidget::keyReleaseEvent(QKeyEvent * event) {
     camera->keyUp(event);
 }
 
-void GlShapeWidget::mousePressEvent(QMouseEvent *event) {
+void ShapeViewerGLWidget::mousePressEvent(QMouseEvent *event) {
     m_lastPos = event->pos();
     m_lastPos *= Game::PixelRatio;
     mousePressed = true;
@@ -307,14 +307,14 @@ void GlShapeWidget::mousePressEvent(QMouseEvent *event) {
     setFocus();
 }
 
-void GlShapeWidget::mouseReleaseEvent(QMouseEvent* event) {
+void ShapeViewerGLWidget::mouseReleaseEvent(QMouseEvent* event) {
     camera->MouseUp(event);
     mousePressed = false;
     mouseRPressed = false;
     mouseLPressed = false;
 }
 
-void GlShapeWidget::mouseMoveEvent(QMouseEvent *event) {
+void ShapeViewerGLWidget::mouseMoveEvent(QMouseEvent *event) {
     mousex = event->x()*Game::PixelRatio;
     mousey = event->y()*Game::PixelRatio;
     
@@ -336,19 +336,19 @@ void GlShapeWidget::mouseMoveEvent(QMouseEvent *event) {
     m_lastPos *= Game::PixelRatio;
 }
 
-void GlShapeWidget::resetRot(){
+void ShapeViewerGLWidget::resetRot(){
     rotY = M_PI;
     rotZ = 0;
 }
 
 
-void GlShapeWidget::showEng(Eng *e){
+void ShapeViewerGLWidget::showEng(Eng *e){
     eng = e;
     con = NULL;
     renderItem = 2;
 }
 
-void GlShapeWidget::showEng(QString path, QString name){
+void ShapeViewerGLWidget::showEng(QString path, QString name){
     int idx = Game::currentEngLib->addEng(path, name);
     qDebug() << "eng id "<< idx;
     eng = Game::currentEngLib->eng[idx];
@@ -356,7 +356,7 @@ void GlShapeWidget::showEng(QString path, QString name){
     renderItem = 2;
 }
 
-void GlShapeWidget::showEngSet(int id){
+void ShapeViewerGLWidget::showEngSet(int id){
     qDebug() << "eng set id "<< id;
     con = ConLib::con[id];
     con->setTextColor(backgroundGlColor);
@@ -364,7 +364,7 @@ void GlShapeWidget::showEngSet(int id){
     renderItem = 2;
 }
 
-void GlShapeWidget::showCon(int id){
+void ShapeViewerGLWidget::showCon(int id){
     if(id < 0){
         con = NULL;
         eng = NULL;
@@ -379,14 +379,14 @@ void GlShapeWidget::showCon(int id){
     renderItem = 3;
 }
 
-void GlShapeWidget::showCon(int aid, int id){
+void ShapeViewerGLWidget::showCon(int aid, int id){
     qDebug() << "con aid "<< aid<< " con id "<< id;
     con = ActLib::act[aid]->activityObjects[id].con;
     con->setTextColor(backgroundGlColor);
     renderItem = 3;
 }
 
-void GlShapeWidget::showShape(QString path, QString texPath){
+void ShapeViewerGLWidget::showShape(QString path, QString texPath){
     int shapeId;
     if(texPath.length() > 0)
         shapeId = currentShapeLib->addShape(path, texPath);
@@ -403,6 +403,6 @@ void GlShapeWidget::showShape(QString path, QString texPath){
     eng = NULL;
 }
 
-void GlShapeWidget::setMode(QString n){
+void ShapeViewerGLWidget::setMode(QString n){
     mode = n;
 }

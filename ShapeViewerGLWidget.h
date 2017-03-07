@@ -29,11 +29,11 @@ class QImage;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
-class GlShapeWidget : public QOpenGLWidget, protected QOpenGLFunctions {
+class ShapeViewerGLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
     Q_OBJECT
 public:
-    GlShapeWidget(QWidget *parent = 0);
-    virtual ~GlShapeWidget();
+    ShapeViewerGLWidget(QWidget *parent = 0);
+    virtual ~ShapeViewerGLWidget();
     
     QSize minimumSizeHint() const Q_DECL_OVERRIDE;
     QSize sizeHint() const Q_DECL_OVERRIDE;

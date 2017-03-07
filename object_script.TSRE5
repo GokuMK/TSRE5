@@ -94,6 +94,8 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ReadFile.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ref.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Route.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RouteEditorGLWidget.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RouteEditorWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ruch.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RulerObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFile.o
@@ -103,6 +105,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Shader.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ShapeLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ShapeViewWindow.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ShapeViewerGLWidget.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SigCfg.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SignalObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SignalShape.o
@@ -149,10 +152,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Vector3f.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Vector4f.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/WorldObj.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/glShapeWidget.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/glwidget.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/main.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/window.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/tsre5_plugin_import.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AboutWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AceLib.o
@@ -203,7 +203,10 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesUndefined.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_RandomConsist.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_Route.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_RouteEditorGLWidget.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_RouteEditorWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ShapeViewWindow.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ShapeViewerGLWidget.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindowLink.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTools.o
@@ -213,7 +216,4 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TransformWorldObjDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TrkWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_UnsavedDialog.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_glShapeWidget.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_glwidget.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_window.o
 );

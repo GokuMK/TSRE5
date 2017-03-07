@@ -12,11 +12,11 @@
 
 #include <QtWidgets>
 
-class GlShapeWidget;
+class ShapeViewerGLWidget;
 class QScrollBar;
 class Camera;
 class WorldObj;
-class Window;
+class RouteEditorWindow;
 
 class ShapeViewWindow : public QWidget {
     Q_OBJECT
@@ -38,7 +38,7 @@ protected:
     void hideEvent(QHideEvent *e);
     
 private:
-    GlShapeWidget *glShapeWidget;
+    ShapeViewerGLWidget *glShapeWidget;
     Camera *camera;
 };
 

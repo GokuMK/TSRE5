@@ -13,16 +13,24 @@
 #define	ENVIRONMENT_H
 
 #include <QString>
+#include <QVector>
 
 class FileBuffer;
 
 class Environment {
 public:
+    struct WaterLayer {
+        float height = 0;
+        QString tex;
+    };
+    QVector<WaterLayer> water;
+    int waterCount = 0;
     Environment(QString path);
     virtual ~Environment();
     void renderWater();
 private:
     bool loaded;
+    QString texturePath;
     void loadWaterLayer(FileBuffer* data);
 };
 

@@ -8,7 +8,7 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#include "glwidget.h"
+#include "RouteEditorGLWidget.h"
 #include <QMouseEvent>
 #include <QOpenGLShaderProgram>
 #include <QCoreApplication>
@@ -34,8 +34,9 @@
 #include "EngLib.h"
 #include "QOpenGLFunctions_3_3_Core"
 #include "Undo.h"
+#include "Environment.h"
 
-GLWidget::GLWidget(QWidget *parent)
+RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
 m_xRot(0),
 m_yRot(0),
@@ -43,26 +44,26 @@ m_zRot(0) {
 
 }
 
-GLWidget::~GLWidget() {
+RouteEditorGLWidget::~RouteEditorGLWidget() {
     cleanup();
 }
 
-QSize GLWidget::minimumSizeHint() const {
+QSize RouteEditorGLWidget::minimumSizeHint() const {
     return QSize(50, 50);
 }
 
-QSize GLWidget::sizeHint() const {
+QSize RouteEditorGLWidget::sizeHint() const {
     return QSize(1000, 700);
 }
 
-void GLWidget::cleanup() {
+void RouteEditorGLWidget::cleanup() {
     makeCurrent();
     //delete gluu->m_program;
     //gluu->m_program = 0;
     doneCurrent();
 }
 
-void GLWidget::timerEvent(QTimerEvent * event) {
+void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
     Game::currentShapeLib = currentShapeLib;
     timeNow = QDateTime::currentMSecsSinceEpoch();
     if (timeNow - lastTime < 1)
@@ -89,12 +90,12 @@ void GLWidget::timerEvent(QTimerEvent * event) {
     update();
 }
 
-void GLWidget::initializeGL() {
+void RouteEditorGLWidget::initializeGL() {
     currentShapeLib = new ShapeLib();
     Game::currentShapeLib = currentShapeLib;
     //qDebug() << "GLUU::get();";
     gluu = GLUU::get();
-    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
+    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &RouteEditorGLWidget::cleanup);
     //qDebug() << "initializeOpenGLFunctions();";
     initializeOpenGLFunctions();
     //funcs = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
@@ -171,7 +172,7 @@ void GLWidget::initializeGL() {
     glActiveTexture(GL_TEXTURE0);
 }
 
-void GLWidget::paintGL() {
+void RouteEditorGLWidget::paintGL() {
     Game::currentShapeLib = currentShapeLib;
     if (route == NULL) return;
     if (!route->loaded) return;
@@ -205,10 +206,14 @@ void GLWidget::paintGL() {
         if (!selection) drawPointer();
 
     route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, renderMode);
-
+    
+    if (!selection)
+        for(int i = 0; i < route->env->waterCount; i++)
+            TerrainLib::renderWater(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
+    
     if (!stickPointerToTerrain || !Game::viewTerrainShape)
         if (!selection) drawPointer();
-
+    
     gluu->currentShader->release();
 
     // Handle Selection
@@ -222,7 +227,7 @@ void GLWidget::paintGL() {
     }
 }
 
-void GLWidget::renderShadowMaps() {
+void RouteEditorGLWidget::renderShadowMaps() {
     float* lookAt = Mat4::create();
     float* out1 = Vec3::create();
     Vec3::set(out1, 0, 1, 0);
@@ -275,7 +280,7 @@ void GLWidget::renderShadowMaps() {
     gluu->currentShader->release();
 }
 
-void GLWidget::handleSelection() {
+void RouteEditorGLWidget::handleSelection() {
     if (selection) {
         int x = mousex;
         int y = mousey;
@@ -419,7 +424,7 @@ void GLWidget::handleSelection() {
     }
 }
 
-void GLWidget::drawPointer() {
+void RouteEditorGLWidget::drawPointer() {
     int x = mousex;
     int y = mousey;
 
@@ -450,12 +455,12 @@ void GLWidget::drawPointer() {
     }
 }
 
-void GLWidget::resizeGL(int w, int h) {
+void RouteEditorGLWidget::resizeGL(int w, int h) {
     //gluu->m_proj.setToIdentity();
     //gluu->m_proj.perspective(45.0f, GLfloat(w) / h, 0.01f, 100.0f);
 }
 
-void GLWidget::keyPressEvent(QKeyEvent * event) {
+void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
     Game::currentShapeLib = currentShapeLib;
     if (!route->loaded) return;
     camera->keyDown(event);
@@ -708,7 +713,7 @@ void GLWidget::keyPressEvent(QKeyEvent * event) {
     }
 }
 
-void GLWidget::keyReleaseEvent(QKeyEvent * event) {
+void RouteEditorGLWidget::keyReleaseEvent(QKeyEvent * event) {
     Game::currentShapeLib = currentShapeLib;
     if (!route->loaded) return;
     camera->keyUp(event);
@@ -736,7 +741,7 @@ void GLWidget::keyReleaseEvent(QKeyEvent * event) {
     }
 }
 
-void GLWidget::mousePressEvent(QMouseEvent *event) {
+void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
     Game::currentShapeLib = currentShapeLib;
     if (!route->loaded) return;
     m_lastPos = event->pos();
@@ -891,7 +896,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
     setFocus();
 }
 
-void GLWidget::wheelEvent(QWheelEvent *event) {
+void RouteEditorGLWidget::wheelEvent(QWheelEvent *event) {
     float numDegrees = 0.01 * event->delta();
 
     if (event->orientation() == Qt::Vertical) {
@@ -910,7 +915,7 @@ void GLWidget::wheelEvent(QWheelEvent *event) {
     event->accept();
 }
 
-void GLWidget::mouseReleaseEvent(QMouseEvent* event) {
+void RouteEditorGLWidget::mouseReleaseEvent(QMouseEvent* event) {
     Game::currentShapeLib = currentShapeLib;
     if (!route->loaded) return;
     camera->MouseUp(event);
@@ -923,7 +928,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent* event) {
     }
 }
 
-void GLWidget::mouseMoveEvent(QMouseEvent *event) {
+void RouteEditorGLWidget::mouseMoveEvent(QMouseEvent *event) {
     Game::currentShapeLib = currentShapeLib;
     if (!route->loaded) return;
     /*int dx = event->x() - m_lastPos.x();
@@ -1010,7 +1015,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     m_lastPos *= Game::PixelRatio;
 }
 
-void GLWidget::enableTool(QString name) {
+void RouteEditorGLWidget::enableTool(QString name) {
     qDebug() << name;
     toolEnabled = name;
     //if(toolEnabled == "placeTool" || toolEnabled == "selectTool" || toolEnabled == "autoPlaceSimpleTool"){
@@ -1021,11 +1026,11 @@ void GLWidget::enableTool(QString name) {
     emit sendMsg("toolEnabled", name);
 }
 
-void GLWidget::jumpTo(PreciseTileCoordinate* c) {
+void RouteEditorGLWidget::jumpTo(PreciseTileCoordinate* c) {
     jumpTo(c->TileX, -c->TileZ, c->wX, c->wY, -c->wZ);
 }
 
-void GLWidget::jumpTo(float *posT, float *pos) {
+void RouteEditorGLWidget::jumpTo(float *posT, float *pos) {
     int X = posT[0];
     int Z = posT[1];
     float x = pos[0];
@@ -1034,7 +1039,7 @@ void GLWidget::jumpTo(float *posT, float *pos) {
     jumpTo(X, Z, x, pos[1], z);
 }
 
-void GLWidget::jumpTo(int X, int Z, float x, float y, float z) {
+void RouteEditorGLWidget::jumpTo(int X, int Z, float x, float y, float z) {
     qDebug() << "jump: " << X << " " << Z;
     TerrainLib::load(X, Z);
     float h = TerrainLib::getHeight(X, Z, x, y, z);
@@ -1044,7 +1049,7 @@ void GLWidget::jumpTo(int X, int Z, float x, float y, float z) {
 
 }
 
-void GLWidget::objSelected(GameObj* o) {
+void RouteEditorGLWidget::objSelected(GameObj* o) {
     if (selectedObj == NULL)
         return;
     selectedObj->unselect();
@@ -1053,11 +1058,11 @@ void GLWidget::objSelected(GameObj* o) {
         selectedObj->select();
 }
 
-void GLWidget::setPaintBrush(Brush* brush) {
+void RouteEditorGLWidget::setPaintBrush(Brush* brush) {
     this->defaultPaintBrush = brush;
 }
 
-void GLWidget::setSelectedObj(GameObj* o) {
+void RouteEditorGLWidget::setSelectedObj(GameObj* o) {
     this->selectedObj = o;
     emit showProperties(selectedObj);
     if (o != NULL)
@@ -1065,7 +1070,7 @@ void GLWidget::setSelectedObj(GameObj* o) {
             emit sendMsg("showShape", ((WorldObj*) o)->getShapePath());
 }
 
-void GLWidget::editCopy() {
+void RouteEditorGLWidget::editCopy() {
     if (toolEnabled == "selectTool" || toolEnabled == "placeTool") {
         if (selectedObj != NULL) {
             if (selectedObj->typeObj == GameObj::worldobj) {
@@ -1082,7 +1087,7 @@ void GLWidget::editCopy() {
     }
 }
 
-void GLWidget::editPaste() {
+void RouteEditorGLWidget::editPaste() {
     if (toolEnabled == "selectTool" || toolEnabled == "placeTool") {
         if (copyPasteObj != NULL) {
             if (selectedObj != NULL)
@@ -1106,22 +1111,22 @@ void GLWidget::editPaste() {
     }
 }
 
-void GLWidget::editUndo() {
+void RouteEditorGLWidget::editUndo() {
     Undo::UndoLast();
 }
 
-void GLWidget::showTrkEditr() {
+void RouteEditorGLWidget::showTrkEditr() {
     if (route != NULL)
         route->showTrkEditr();
 }
 
-void GLWidget::getUnsavedInfo(std::vector<QString> &items) {
+void RouteEditorGLWidget::getUnsavedInfo(std::vector<QString> &items) {
     if (this->route == NULL)
         return;
     route->getUnsavedInfo(items);
 }
 
-void GLWidget::msg(QString text) {
+void RouteEditorGLWidget::msg(QString text) {
     qDebug() << text;
     if (text == "save") {
         route->save();
@@ -1151,7 +1156,7 @@ void GLWidget::msg(QString text) {
     }
 }
 
-void GLWidget::msg(QString text, bool val) {
+void RouteEditorGLWidget::msg(QString text, bool val) {
     qDebug() << text;
     if (text == "stickToTDB") {
         this->route->placementStickToTarget = val;
@@ -1159,10 +1164,10 @@ void GLWidget::msg(QString text, bool val) {
     }
 }
 
-void GLWidget::msg(QString text, int val) {
+void RouteEditorGLWidget::msg(QString text, int val) {
 }
 
-void GLWidget::msg(QString text, float val) {
+void RouteEditorGLWidget::msg(QString text, float val) {
     qDebug() << text;
     if (text == "autoPlacementLength") {
         this->route->placementAutoLength = val;
@@ -1170,7 +1175,7 @@ void GLWidget::msg(QString text, float val) {
     }
 }
 
-void GLWidget::msg(QString text, QString val) {
+void RouteEditorGLWidget::msg(QString text, QString val) {
     //qDebug() << text;
     if (text == "mkrFile") {
         this->route->setMkrFile(val);

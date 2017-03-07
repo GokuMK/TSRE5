@@ -60,6 +60,7 @@ public:
     int getSelectedShaderId();
     bool select(int value);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int selectionColor);
+    void renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int layer, int selectionColor = 0);
 
 private:
     unsigned char **fData;
@@ -84,7 +85,12 @@ private:
     OglObj slines;
     OglObj ulines;
     OglObj lockedlines;
-    OglObj water[256];
+    
+    struct WaterTile {
+        OglObj w[256];
+    };
+    QMap<int, WaterTile*> water;
+    //OglObj water[256];
     
     
     OglObj terrainBlob;
@@ -109,7 +115,6 @@ private:
     void convertTexToDefaultCoords(int idx);
     void paintTextureOnTile(Brush* brush, int y, int u, float x, float z);
     void reloadLines();
-    void renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov);
 };
 
 #endif	/* TERRAIN_H */

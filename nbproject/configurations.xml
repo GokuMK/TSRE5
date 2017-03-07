@@ -105,13 +105,13 @@
         <itemPath>NaviWindow.h</itemPath>
         <itemPath>NewRouteWindow.h</itemPath>
         <itemPath>ObjTools.h</itemPath>
+        <itemPath>RouteEditorGLWidget.h</itemPath>
+        <itemPath>RouteEditorWindow.h</itemPath>
         <itemPath>ShapeViewWindow.h</itemPath>
         <itemPath>TerrainTools.h</itemPath>
         <itemPath>TerrainTreeWindow.h</itemPath>
         <itemPath>TerrainWaterWindow.h</itemPath>
         <itemPath>TrkWindow.h</itemPath>
-        <itemPath>glwidget.h</itemPath>
-        <itemPath>window.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
@@ -122,7 +122,7 @@
         <itemPath>ShapeLib.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f13" displayName="shapeViewer" projectFiles="true">
-        <itemPath>glShapeWidget.h</itemPath>
+        <itemPath>ShapeViewerGLWidget.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="TDB" projectFiles="true">
         <itemPath>Ruch.h</itemPath>
@@ -302,13 +302,13 @@
         <itemPath>NaviWindow.cpp</itemPath>
         <itemPath>NewRouteWindow.cpp</itemPath>
         <itemPath>ObjTools.cpp</itemPath>
+        <itemPath>RouteEditorGLWidget.cpp</itemPath>
+        <itemPath>RouteEditorWindow.cpp</itemPath>
         <itemPath>ShapeViewWindow.cpp</itemPath>
         <itemPath>TerrainTools.cpp</itemPath>
         <itemPath>TerrainTreeWindow.cpp</itemPath>
         <itemPath>TerrainWaterWindow.cpp</itemPath>
         <itemPath>TrkWindow.cpp</itemPath>
-        <itemPath>glwidget.cpp</itemPath>
-        <itemPath>window.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="shape" projectFiles="true">
         <logicalFolder name="f1" displayName="sfile" projectFiles="true">
@@ -319,7 +319,7 @@
         <itemPath>ShapeLib.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f14" displayName="shapeViewer" projectFiles="true">
-        <itemPath>glShapeWidget.cpp</itemPath>
+        <itemPath>ShapeViewerGLWidget.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="TDB" projectFiles="true">
         <itemPath>Ruch.cpp</itemPath>
@@ -806,6 +806,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Ruch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ruch.h" ex="false" tool="3" flavor2="0">
@@ -841,6 +849,10 @@
       <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeViewWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerGLWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerGLWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1026,23 +1038,11 @@
       </item>
       <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="glShapeWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="glShapeWidget.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="glwidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="glwidget.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="shaders/shadowt.fs" ex="false" tool="3" flavor2="0">
       </item>
       <item path="shaders/shadowt.vs" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="window.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="window.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="4">
@@ -1459,6 +1459,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Ruch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ruch.h" ex="false" tool="3" flavor2="0">
@@ -1494,6 +1502,10 @@
       <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeViewWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerGLWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerGLWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1679,23 +1691,11 @@
       </item>
       <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="glShapeWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="glShapeWidget.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="glwidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="glwidget.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="shaders/shadowt.fs" ex="false" tool="3" flavor2="0">
       </item>
       <item path="shaders/shadowt.vs" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="window.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="window.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="dynamic_release" type="4">
@@ -2105,6 +2105,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Ruch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ruch.h" ex="false" tool="3" flavor2="0">
@@ -2140,6 +2148,10 @@
       <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeViewWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerGLWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerGLWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2325,23 +2337,11 @@
       </item>
       <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="glShapeWidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="glShapeWidget.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="glwidget.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="glwidget.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="shaders/shadowt.fs" ex="false" tool="3" flavor2="0">
       </item>
       <item path="shaders/shadowt.vs" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="window.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="window.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release_x64" type="4">
@@ -2758,6 +2758,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="RouteEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Ruch.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Ruch.h" ex="false" tool="3" flavor2="0">
@@ -2793,6 +2801,10 @@
       <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeViewWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerGLWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ShapeViewerGLWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -2978,23 +2990,11 @@
       </item>
       <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="glShapeWidget.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="glShapeWidget.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="glwidget.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="glwidget.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="shaders/shadowt.fs" ex="false" tool="3" flavor2="0">
       </item>
       <item path="shaders/shadowt.vs" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="window.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="window.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Debug_x64" type="4">
@@ -3399,6 +3399,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="RouteEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Ruch.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Ruch.h" ex="false" tool="3" flavor2="0">
@@ -3434,6 +3442,10 @@
       <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeViewWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerGLWidget.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="ShapeViewerGLWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3619,23 +3631,11 @@
       </item>
       <item path="WorldObj.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="glShapeWidget.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="glShapeWidget.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="glwidget.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="glwidget.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="shaders/shadowt.fs" ex="false" tool="3" flavor2="0">
       </item>
       <item path="shaders/shadowt.vs" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="window.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="window.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

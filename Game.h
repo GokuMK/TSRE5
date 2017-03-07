@@ -17,7 +17,7 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-class Window;
+class RouteEditorWindow;
 class LoadWindow;
 class TDB;
 class SoundList;
@@ -66,6 +66,9 @@ public:
     static bool toolsHidden;
     static bool usenNumPad;
     static float cameraFov;
+    static float cameraSpeedMin;
+    static float cameraSpeedStd;
+    static float cameraSpeedMax;
     static bool cameraStickToTerrain;
     static bool viewWorldGrid;
     static bool viewTileGrid;
@@ -113,7 +116,7 @@ public:
     static int AASamples;
     static float PixelRatio;
 private:
-    static Window* window;
+    static RouteEditorWindow* window;
     static LoadWindow* loadWindow;
 };
 
