@@ -186,7 +186,8 @@ void CameraFree::update(float fps) {
 void CameraFree::moveForward(float fps) {
     playerPos[2] = playerPos[2] + (30.0 / fps) * przesz * cos(playerRot[0]) * cos(playerRot[1]);
     playerPos[0] = playerPos[0] + (30.0 / fps) * przesz * sin(playerRot[0]) * cos(playerRot[1]);
-    playerPos[1] = playerPos[1] + (30.0 / fps) * przesz * sin(playerRot[1]);
+    if(!lockYaxis)
+        playerPos[1] = playerPos[1] + (30.0 / fps) * przesz * sin(playerRot[1]);
 
     //playerPos[2] = playerPos[2] + przesz * (float) cos(playerRot[0]);
     // playerPos[0] = playerPos[0] + przesz * (float) sin(playerRot[0]);
@@ -196,7 +197,8 @@ void CameraFree::moveForward(float fps) {
 void CameraFree::moveBackward(float fps) {
     playerPos[2] = playerPos[2] - (30.0 / fps) * przesz * cos(playerRot[0]) * cos(playerRot[1]);
     playerPos[0] = playerPos[0] - (30.0 / fps) * przesz * sin(playerRot[0]) * cos(playerRot[1]);
-    playerPos[1] = playerPos[1] - (30.0 / fps) * przesz * sin(playerRot[1]);
+    if(!lockYaxis)
+        playerPos[1] = playerPos[1] - (30.0 / fps) * przesz * sin(playerRot[1]);
     //playerPos[2] = playerPos[2] - przesz * (float) cos(playerRot[0]);
     //playerPos[0] = playerPos[0] - przesz * (float) sin(playerRot[0]);
     check_coords();
@@ -367,6 +369,9 @@ void CameraFree::keyDown(QKeyEvent * e) {
             break;
         case Qt::Key_Control:
             przesx = przesz = Game::cameraSpeedMin;
+            break;
+        case Qt::Key_Period:
+            lockYaxis = !lockYaxis;
             break;
         default:
             break;

@@ -20,11 +20,13 @@ class ImageLib : public QThread
 
 public:
     ImageLib();
+    static bool IsThread;
     Texture* texture;
+    void run();
 private:
     
 protected:
-     void run();
+
 };
 
 #endif	/* IMAGELIB_H */

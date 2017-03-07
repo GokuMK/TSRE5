@@ -50,11 +50,11 @@ void TexLib::addRef(int texx) {
     }    
 }
 
-int TexLib::addTex(QString path, QString name) {
+int TexLib::addTex(QString path, QString name, bool reload) {
     QString pathid = (path+"/"+name).toLower();
     pathid.replace("\\", "/");
     pathid.replace("//", "/");
-    return addTex(pathid);
+    return addTex(pathid, reload);
 }
 
 int TexLib::getTex(QString pathid) {
@@ -69,14 +69,20 @@ int TexLib::getTex(QString pathid) {
     return -1;
 }
 
-int TexLib::addTex(QString pathid) {
-
+int TexLib::addTex(QString pathid, bool reload) {
+    
+    Texture* newFile = NULL;
     for ( auto it = mtex.begin(); it != mtex.end(); ++it ){
         if(it->second == NULL) continue;
         if (((Texture*) it->second)->pathid.length() == pathid.length()) 
             if (((Texture*) it->second)->pathid == pathid) {
-                ((Texture*) it->second)->ref++;
-                return (int)it->first;
+                if(!reload){
+                    ((Texture*) it->second)->ref++;
+                    return (int)it->first;
+                } else {
+                    newFile = ((Texture*) it->second);
+                    break;
+                }
             }
     }
     //qDebug() << "Nowa " << jesttextur << " textura: " << pathid;
@@ -92,23 +98,33 @@ int TexLib::addTex(QString pathid) {
         }
     }
     
-    Texture* newFile = new Texture(pathid);
-    newFile->ref++;
-    mtex[jesttextur] = newFile;
+    int texId = 0;
+    if(newFile == NULL){
+        newFile = new Texture(pathid);
+        newFile->ref++;
+        mtex[jesttextur] = newFile;
+        texId = jesttextur;
+        jesttextur++;
+    } else {
+        newFile->delVBO();
+    }
     //qDebug() << pathid.toLower();
     //qDebug() << tType;
         
     if(tType == "ace"){
         AceLib* t = new AceLib();
         t->texture = newFile;
-        if(AceLib::IsThread)
+        if(AceLib::IsThread && !reload)
             t->start();
         else
             t->run();
     } else if(tType == "png"||tType == "bmp"||tType == "jpg"||tType == "dds"){
         ImageLib* t = new ImageLib();
         t->texture = newFile;
-        t->start();
+        if(AceLib::IsThread && !reload)
+            t->start();
+        else
+            t->run();
     } else if(tType == ":painttex"){
         PaintTexLib* t = new PaintTexLib();
         t->texture = newFile;
@@ -121,7 +137,7 @@ int TexLib::addTex(QString pathid) {
     }
     //AceLib::LoadACE(newFile);
     //tConcurrent::run();
-    return jesttextur++;
+    return texId;
 }
 
 int TexLib::cloneTex(int id) {

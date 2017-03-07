@@ -14,6 +14,8 @@
 #include <QImage>
 #include <QOpenGLShaderProgram>
 
+bool ImageLib::IsThread = true;
+
 ImageLib::ImageLib() {
 }
 

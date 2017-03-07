@@ -237,6 +237,9 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     eOpenLegacyInExtEditor = new QAction(tr("&Open legacy ENG in ext. editor"), this); 
     engMenu->addAction(eOpenLegacyInExtEditor);
     QObject::connect(eOpenLegacyInExtEditor, SIGNAL(triggered(bool)), this, SLOT(eOpenLegacyInExternalEditor()));
+    eReload = new QAction(tr("&Reload Shape"), this); 
+    engMenu->addAction(eReload);
+    QObject::connect(eReload, SIGNAL(triggered(bool)), this, SLOT(eReloadEnabled()));
     viewMenu = menuBar()->addMenu(tr("&View"));
     vConList = GuiFunct::newMenuCheckAction(tr("&Consist List"), this); 
     viewMenu->addAction(vConList);
@@ -392,6 +395,12 @@ void ConEditorWindow::eOpenLegacyInExternalEditor(){
     QFileInfo fileInfo(currentEng->pathid);
     if(fileInfo.exists())
         QDesktopServices::openUrl(QUrl::fromLocalFile(currentEng->pathid));
+}
+
+void ConEditorWindow::eReloadEnabled(){
+    if(currentEng == NULL) return;
+    Game::currentShapeLib = glShapeWidget->currentShapeLib;
+    currentEng->reload();
 }
 
 void ConEditorWindow::eOpenInExternalEditor(){

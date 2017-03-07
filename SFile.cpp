@@ -471,6 +471,26 @@ void SFile::addSnapablePoints(QVector<float> &out){
 
 void SFile::reload() {
     loaded = 0;
+    qDebug() << "reload";
+    QStringList list;
+    
+    for (int i = 0; i < distancelevel[0].iloscs; i++) {
+        for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {
+            int prim_state = distancelevel[0].subobiekty[i].czesci[j].prim_state_idx;
+
+            if(primstate[prim_state].arg4 == -1)
+                continue;
+            if (image[texture[primstate[prim_state].arg4].image].tex == -2)
+                continue;
+            list.push_back(image[texture[primstate[prim_state].arg4].image].name);
+       }
+    }
+    
+    list.removeDuplicates();
+    for(QString s : list){
+        qDebug() << s;
+        TexLib::addTex(texPath, s, true);
+    }
 }
 
 void SFile::render() {
@@ -543,7 +563,7 @@ void SFile::render() {
             //if(gluu->textureEnabled)
             if(primstate[prim_state].arg4 == -1){
                 //glDisable(GL_TEXTURE_2D);
-            } else if (image[texture[primstate[prim_state].arg4].image].texAddr > 0) {
+            } else if (image[texture[primstate[prim_state].arg4].image].texAddr >= 0) {
                 //glEnable(GL_TEXTURE_2D);
                 gluu->bindTexture(f, image[texture[primstate[prim_state].arg4].image].texAddr);
                 //f->glBindTexture(GL_TEXTURE_2D, image[texture[primstate[prim_state].arg4].image].texAddr);

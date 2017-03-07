@@ -63,6 +63,7 @@ protected:
     float relativeRot[2];
     float lookAt[16];
     float przesx = 3, przesy = 1, przesz = 3;
+    bool lockYaxis = false;
     int jestcontrol;
     int lpm = 0;
     int rpm = 0;

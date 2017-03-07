@@ -563,6 +563,18 @@ void Eng::render(int aktwx, int aktwz, int selectionColor) {
 
      //gluu.mvPopMatrix();
      //
+
+}
+void Eng::reload(){
+    long long int shapeLibId = reinterpret_cast<long long int>(Game::currentShapeLib);
+    if(shape.id[shapeLibId] >= 0) 
+        Game::currentShapeLib->shape[shape.id[shapeLibId]]->reload();
+    
+    for(int i = 0; i < freightanimShape.size(); i++){
+        if(freightanimShape[i].id[shapeLibId] >= 0) {
+            Game::currentShapeLib->shape[freightanimShape[i].id[shapeLibId]]->reload();
+        }
+    }
 }
 
 void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {

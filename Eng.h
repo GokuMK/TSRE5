@@ -82,6 +82,7 @@ public:
     void initOnTrack(float *tpos, int direction);
     void renderOnTrack(GLUU* gluu, float* playerT, int selectionColor);
     void move(float m);
+    void reload();
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);
 private:
