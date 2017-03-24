@@ -407,7 +407,7 @@ void PropertiesSpeedpost::hacksButtonEnabled(){
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     label->setWordWrap(true);
-    QPushButton *haxRemoveTDBVector = new QPushButton("Remove broken Track Items & Expand", this);
+    QPushButton *haxRemoveTDBVector = new QPushButton("Remove broken Track Items and Expand", this);
     QObject::connect(haxRemoveTDBVector, SIGNAL(released()),
                       this, SLOT(haxFixTrackItemsEnabled()));
     vbox->addWidget(haxRemoveTDBVector);
