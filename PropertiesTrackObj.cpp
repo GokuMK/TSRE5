@@ -172,12 +172,24 @@ PropertiesTrackObj::PropertiesTrackObj(){
     doubleValidator->setNotation(QDoubleValidator::StandardNotation);
     QDoubleValidator* doubleValidator1 = new QDoubleValidator(-1000, 1000, 6, this); 
     doubleValidator1->setNotation(QDoubleValidator::StandardNotation);
+    
+    //‰
     vlist->addRow("‰",&this->elevProm);
     this->elevProm.setValidator(doubleValidator1);
     QObject::connect(&this->elevProm, SIGNAL(textEdited(QString)), this, SLOT(elevPromEnabled(QString)));
+    //oneInXm
     vlist->addRow("1 in 'x' m",&this->elev1inXm);
     this->elev1inXm.setValidator(doubleValidator);
     QObject::connect(&this->elev1inXm, SIGNAL(textEdited(QString)), this, SLOT(elev1inXmEnabled(QString)));
+    //º
+    vlist->addRow("º",&this->elevProg);
+    this->elevProg.setValidator(doubleValidator1);
+    QObject::connect(&this->elevProg, SIGNAL(textEdited(QString)), this, SLOT(elevProgEnabled(QString)));
+    //%
+    vlist->addRow("%",&this->elevProp);
+    this->elevProp.setValidator(doubleValidator1);
+    QObject::connect(&this->elevProp, SIGNAL(textEdited(QString)), this, SLOT(elevPropEnabled(QString)));
+    
     vbox->addItem(vlist);
     label = new QLabel("MSTS Collision:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -323,14 +335,19 @@ void PropertiesTrackObj::showObj(GameObj* obj){
     TrackObj* track = (TrackObj*)obj;
     float * q = track->qDirection;
     float vect[3];
-    vect[0] = 0; vect[1] = 0; vect [2] = 1000;
+    vect[0] = 0; vect[1] = 0; vect [2] = 1000.0;
     Vec3::transformQuat(vect, vect, q);
     vect[1] = -vect[1];
-    
-    float oneInXm = 0;
+     
+    float oneInXm = 0.0;
+    float prog = qRadiansToDegrees(qAtan(vect[1]/1000.0));
+    float prop = vect[1]/10.0;
+
     //if(vect[1] > 0)
         oneInXm = 1000.0/vect[1];
     this->elevProm.setText(QString::number(vect[1]));
+    this->elevProg.setText(QString::number(prog));
+    this->elevProp.setText(QString::number(prop));
     this->elev1inXm.setText(QString::number(oneInXm));
     /*float pitch = asin(2*(q[0]*q[2] - q[1]*q[3]));
     
@@ -357,14 +374,16 @@ void PropertiesTrackObj::updateObj(GameObj* obj){
     }
     TrackObj* track = (TrackObj*)obj;
     float * q = track->qDirection;
-    float vect[3];
-    vect[0] = 0; vect[1] = 0; vect [2] = 1000;
+     float vect[3];
+    vect[0] = 0; vect[1] = 0; vect [2] = 1000.0;
     Vec3::transformQuat(vect, vect, q);
     vect[1] = -vect[1];
-    
-    float oneInXm = 0;
-
+     
+    float oneInXm = 0.0;
     oneInXm = 1000.0/vect[1];
+    float prog = 2*qRadiansToDegrees(qAtan(vect[1]/1000.0));
+    float prop = vect[1]/10.0;
+       
     if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
         this->uid.setText(QString::number(trackObj->UiD, 10));
         this->tX.setText(QString::number(trackObj->x, 10));
@@ -379,10 +398,12 @@ void PropertiesTrackObj::updateObj(GameObj* obj){
                 QString::number(trackObj->qDirection[3], 'G', 4)
                 );
     }
-    if(!this->elevProm.hasFocus() && !this->elev1inXm.hasFocus()){
+    if(!this->elevProm.hasFocus() && !this->elev1inXm.hasFocus() && !this->elevProg.hasFocus() && !this->elevProp.hasFocus()){
         this->elevProm.setText(QString::number(vect[1]));
+        this->elevProg.setText(QString::number(prog));
+        this->elevProp.setText(QString::number(prop));
         this->elev1inXm.setText(QString::number(oneInXm));
-    }
+     }
     eCollisionFlags.setText(QString::number(worldObj->getCollisionFlags()));
 }
 
@@ -391,13 +412,26 @@ void PropertiesTrackObj::elevPromEnabled(QString val){
         return;
     }
     bool ok = false;
+    //prom
     float prom = val.toFloat(&ok);
     if(!ok) return;
-    if(fabs(prom) > 700)
+    if(fabs(prom) > Game::trackElevationMaxPm + 0.000001) {   
+        this->elevProm.setText(QString::number(Game::trackElevationMaxPm));
         return;
+    }
+    //oneInXm
     float oneInXm = 1000.0/prom;
-    qDebug () << "prom" << prom;
+    qDebug () << "oneInXm" << oneInXm;
+    qDebug () << "Game::trackElevationMaxPm" << Game::trackElevationMaxPm;
     this->elev1inXm.setText(QString::number(oneInXm));
+    //prog 
+    float prog = 2.0*qRadiansToDegrees(qAtan(prom/1000.0));
+    qDebug () << "prog" << prog;
+    this->elevProg.setText(QString::number(prog));
+    //prop 
+    float prop = prom/10.0;
+    qDebug () << "prop" << prop;
+    this->elevProp.setText(QString::number(prop));  
     
     Undo::SinglePushWorldObjData(worldObj);
     trackObj->setElevation(prom);
@@ -408,14 +442,86 @@ void PropertiesTrackObj::elev1inXmEnabled(QString val){
         return;
     }
     bool ok = false;
+    //oneInXm
     float oneInXm = val.toFloat(&ok);
     if(!ok) return;
     //qDebug () << "oneInXm" << oneInXm;
+    //prom
     float prom = 1000.0/oneInXm;
-    if(fabs(prom) > 700)
+    if(fabs(prom) > Game::trackElevationMaxPm + 0.000001) { 
         return;
+    }
+    
+    qDebug () << "Game::trackElevationMaxPm: " << Game::trackElevationMaxPm;
+    this->elevProm.setText(QString::number(prom));  
+    //prop 
+    float prop = prom/10.0;
+    qDebug () << "prop" << prop;
+    this->elevProp.setText(QString::number(prop));
+    //prog 
+    float prog = 2.0*qRadiansToDegrees(qAtan(prom/1000.0));
+    qDebug () << "prog" << prog;
+    this->elevProg.setText(QString::number(prog));
+    
+    Undo::SinglePushWorldObjData(worldObj);
+    trackObj->setElevation(prom);
+}
+
+void PropertiesTrackObj::elevProgEnabled(QString val){
+    if(trackObj == NULL){
+         return;
+    }
+    bool ok = false;
+    //prog
+    float prog = val.toFloat(&ok);
+    if(!ok) return;
+    if(fabs(prog) > 2.0*qRadiansToDegrees(qAtan(Game::trackElevationMaxPm/1000.0))+ 0.000001) {   
+        this->elevProg.setText(QString::number(qRadiansToDegrees(qAtan(Game::trackElevationMaxPm/1000.0))));
+        return;
+    }
+    //prop 
+    float prop = qTan(0.5*qDegreesToRadians(prog))*100.0;
+    qDebug () << "prop" << prop;
+    qDebug () << "prog" << prog;
+    this->elevProp.setText(QString::number(prop));
+    //prom
+    float prom = prop*10.0;
     qDebug () << "prom" << prom;
     this->elevProm.setText(QString::number(prom));
+    //oneInXm
+    float oneInXm = 1000.0/prom;
+    qDebug () << "oneInXm" << oneInXm;
+    this->elev1inXm.setText(QString::number(oneInXm));
+     
+    Undo::SinglePushWorldObjData(worldObj);
+    trackObj->setElevation(prom);
+}
+ 
+void PropertiesTrackObj::elevPropEnabled(QString val){
+    if(trackObj == NULL){
+        return;
+    }
+    bool ok = false;
+    //prop
+    float prop = val.toFloat(&ok);
+    if(!ok) return;
+    if(fabs(prop) > (Game::trackElevationMaxPm/10.0)+ 0.000001)
+    {    this->elevProp.setText(QString::number(Game::trackElevationMaxPm/10.0));
+        return;}
+    //prom    
+    float prom = prop*10.0;
+    qDebug () << "prop" << prop;
+    qDebug () << "prom" << prom;
+    qDebug () << "Game::trackElevationMaxPm/10.0: " << Game::trackElevationMaxPm/10.0;
+    this->elevProm.setText(QString::number(prom));
+    //prog 
+    float prog = 2.0*qRadiansToDegrees(qAtan(prom/1000.0));
+    qDebug () << "prog" << prog;
+    this->elevProg.setText(QString::number(prog));
+    //oneInXm
+    float oneInXm = 1000.0/prom;
+    qDebug () << "oneInXm" << oneInXm;
+    this->elev1inXm.setText(QString::number(oneInXm));
     
     Undo::SinglePushWorldObjData(worldObj);
     trackObj->setElevation(prom);

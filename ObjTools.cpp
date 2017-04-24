@@ -594,8 +594,17 @@ void ObjTools::itemSelected(Ref::RefItem* item){
     QString text;
     if(item->description.length() > 1) 
         text = item->description;
-    else
+    else if (item->filename.length() > 1)
         text = item->filename;
+    else
+        text = item->type;
+    
+    //Avoid duplicates
+    QList<QListWidgetItem*> found = lastItems.findItems(text, Qt::MatchExactly);
+        qDebug() << "found : "<< found.length();
+    
+    if (found.length() == 0){
+
     lastItemsPtr.push_back(item);
     
     new QListWidgetItem ( text, &lastItems, lastItemsPtr.size() - 1 );
@@ -613,6 +622,7 @@ void ObjTools::itemSelected(Ref::RefItem* item){
     }
     
     lastItems.sortItems();
+	}
 }
 
 void ObjTools::stickToTDBEnabled(int state){

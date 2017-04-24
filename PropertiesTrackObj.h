@@ -30,6 +30,8 @@ public slots:
     void fixJNodePosnEnabled();
     void hacksButtonEnabled();
     void elevPromEnabled(QString val);
+    void elevProgEnabled(QString val);
+    void elevPropEnabled(QString val);
     void elev1inXmEnabled(QString val);
     void editFileNameEnabled();
     void cCollisionTypeEdited(int val);
@@ -41,6 +43,8 @@ signals:
 private:
     TrackObj* trackObj;
     QLineEdit elevProm;
+    QLineEdit elevProg;
+    QLineEdit elevProp;
     QLineEdit elev1inXm;
     QComboBox cCollisionType;
     QLineEdit eCollisionFlags;

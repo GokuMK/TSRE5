@@ -103,7 +103,7 @@ public:
     static int textureQuality;
     static float snapableRadius;
     static bool snapableOnlyRot;
-    
+    static float trackElevationMaxPm;    
     static QString StyleMainLabel;
     static QString StyleGreenButton;
     static QString StyleRedButton;

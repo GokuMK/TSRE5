@@ -82,6 +82,7 @@ float Game::sunLightDirection[] = {-1.0,2.0,1.0};
 int Game::textureQuality = 1;
 float Game::snapableRadius = 20;
 bool Game::snapableOnlyRot = false;
+float Game::trackElevationMaxPm = 700.0;
 
 QString Game::geoPath = "hgst";
 
@@ -296,6 +297,9 @@ void Game::load() {
         }
         if(val == "cameraSpeedMax"){
             cameraSpeedMax = args[1].trimmed().toFloat();
+        }
+        if(val == "trackElevationMaxPm"){
+            trackElevationMaxPm = args[1].trimmed().toFloat();
         }
     }
 }
