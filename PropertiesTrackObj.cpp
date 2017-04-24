@@ -381,7 +381,7 @@ void PropertiesTrackObj::updateObj(GameObj* obj){
      
     float oneInXm = 0.0;
     oneInXm = 1000.0/vect[1];
-    float prog = 2*qRadiansToDegrees(qAtan(vect[1]/1000.0));
+    float prog = qRadiansToDegrees(qAtan(vect[1]/1000.0));
     float prop = vect[1]/10.0;
        
     if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
@@ -425,7 +425,7 @@ void PropertiesTrackObj::elevPromEnabled(QString val){
     qDebug () << "Game::trackElevationMaxPm" << Game::trackElevationMaxPm;
     this->elev1inXm.setText(QString::number(oneInXm));
     //prog 
-    float prog = 2.0*qRadiansToDegrees(qAtan(prom/1000.0));
+    float prog = qRadiansToDegrees(qAtan(prom/1000.0));
     qDebug () << "prog" << prog;
     this->elevProg.setText(QString::number(prog));
     //prop 
@@ -459,7 +459,7 @@ void PropertiesTrackObj::elev1inXmEnabled(QString val){
     qDebug () << "prop" << prop;
     this->elevProp.setText(QString::number(prop));
     //prog 
-    float prog = 2.0*qRadiansToDegrees(qAtan(prom/1000.0));
+    float prog = qRadiansToDegrees(qAtan(prom/1000.0));
     qDebug () << "prog" << prog;
     this->elevProg.setText(QString::number(prog));
     
@@ -480,7 +480,7 @@ void PropertiesTrackObj::elevProgEnabled(QString val){
         return;
     }
     //prop 
-    float prop = qTan(0.5*qDegreesToRadians(prog))*100.0;
+    float prop = qTan(qDegreesToRadians(prog))*100.0;
     qDebug () << "prop" << prop;
     qDebug () << "prog" << prog;
     this->elevProp.setText(QString::number(prop));
@@ -515,7 +515,7 @@ void PropertiesTrackObj::elevPropEnabled(QString val){
     qDebug () << "Game::trackElevationMaxPm/10.0: " << Game::trackElevationMaxPm/10.0;
     this->elevProm.setText(QString::number(prom));
     //prog 
-    float prog = 2.0*qRadiansToDegrees(qAtan(prom/1000.0));
+    float prog = qRadiansToDegrees(qAtan(prom/1000.0));
     qDebug () << "prog" << prog;
     this->elevProg.setText(QString::number(prog));
     //oneInXm
