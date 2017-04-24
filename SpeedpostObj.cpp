@@ -446,12 +446,12 @@ void SpeedpostObj::set(QString sh, long long int val){
                 speedSignShape[i+1] = speedPost->milepostShape[i];
         }
         
-        if(speedPostType == 0 || speedPostType == 1 || speedPostType == 2){
+        if(speedPostType == TRitem::SIGN || speedPostType == TRitem::RESUME || speedPostType == TRitem::WARNING){
             speedDigitTex = speedPost->speedDigitTex;
             speedTextSize[0] = speedPost->speedTextSize[0];
             speedTextSize[1] = speedPost->speedTextSize[1];
             speedTextSize[2] = speedPost->speedTextSize[2];
-        } else if(speedPostType == 3) {
+        } else if(speedPostType == TRitem::MILEPOST) {
             speedDigitTex = speedPost->milepostDigitTex;
             speedTextSize[0] = speedPost->milepostTextSize[0];
             speedTextSize[1] = speedPost->milepostTextSize[1];
