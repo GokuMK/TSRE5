@@ -475,7 +475,7 @@ void PropertiesTrackObj::elevProgEnabled(QString val){
     //prog
     float prog = val.toFloat(&ok);
     if(!ok) return;
-    if(fabs(prog) > 2.0*qRadiansToDegrees(qAtan(Game::trackElevationMaxPm/1000.0))+ 0.000001) {   
+    if(fabs(prog) > qRadiansToDegrees(qAtan(Game::trackElevationMaxPm/1000.0))+ 0.000001) {   
         this->elevProg.setText(QString::number(qRadiansToDegrees(qAtan(Game::trackElevationMaxPm/1000.0))));
         return;
     }
