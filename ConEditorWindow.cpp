@@ -279,6 +279,12 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     sLoadEngSetsByDefault = GuiFunct::newMenuCheckAction(tr("&Auto load Eng Sets"), this);
     QObject::connect(sLoadEngSetsByDefault, SIGNAL(triggered(bool)), this, SLOT(sLoadEngSetsByDefaultSelected(bool)));
     settingsMenu->addAction(sLoadEngSetsByDefault);
+    sRefreshEngList = new QAction(tr("&Refresh Eng Data"), this);
+    QObject::connect(sRefreshEngList, SIGNAL(triggered()), this, SLOT(sRefreshEngListSelected()));
+    settingsMenu->addAction(sRefreshEngList);
+    sForceReloadEngList = new QAction(tr("&Force Reload Eng Data"), this);
+    QObject::connect(sForceReloadEngList, SIGNAL(triggered()), this, SLOT(sForceReloadEngListSelected()));
+    settingsMenu->addAction(sForceReloadEngList);
     helpMenu = menuBar()->addMenu(tr("&Help"));
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -739,6 +745,22 @@ void ConEditorWindow::cSaveAsEngSetSelected(){
 
 void ConEditorWindow::sLoadEngSetsByDefaultSelected(bool show){
     loadEngSetsByDefault = show;
+}
+
+void ConEditorWindow::sRefreshEngListSelected(){
+    Game::currentEngLib->removeBroken();
+    Game::currentEngLib->loadAll(Game::root);
+    ConLib::refreshEngDataAll();
+    eng1->fillEngList();
+    eng2->fillEngList();
+}
+
+void ConEditorWindow::sForceReloadEngListSelected(){
+    Game::currentEngLib->removeAll();
+    Game::currentEngLib->loadAll(Game::root);
+    ConLib::refreshEngDataAll();
+    eng1->fillEngList();
+    eng2->fillEngList();
 }
 
 void ConEditorWindow::engListSelected(int id){

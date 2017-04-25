@@ -245,6 +245,21 @@ bool Consist::load(FileBuffer* data){
     return true;
 }
 
+void Consist::refreshEngData(){
+    QString fext;
+    QString wext = ".wag";
+    QString eext = ".eng";
+    
+    for(int i = 0; i < engItems.size(); i++){
+        if(engItems[i].type == 0)
+            fext = wext;
+        else
+            fext = eext;
+        engItems[i].eng = Game::currentEngLib->addEng(Game::root + "/TRAINS/TRAINSET/" + engItems[i].epath, engItems[i].ename + fext);
+    }
+    initPos();
+}
+
 void Consist::initPos(){
     float length = 0;
     conLength = 0;

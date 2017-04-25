@@ -25,6 +25,8 @@ public:
     int addEng(QString path, QString name);
     int getEngByPathid(QString pathid);
     int loadAll(QString gameRoot);
+    int removeBroken();
+    void removeAll();
 private:
 
 };

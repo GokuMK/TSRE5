@@ -73,6 +73,8 @@ public slots:
     void vSetColorShapeViewSelected();
     void vSetColorConViewSelected(); 
     void sLoadEngSetsByDefaultSelected(bool show);
+    void sRefreshEngListSelected();
+    void sForceReloadEngListSelected();
     void engSetAddSelected();
     void engSetFlipAndAddSelected();
     void engSetShowSelected();
@@ -136,6 +138,8 @@ private:
     QAction *vSetColorShapeView;
     QAction *vSetColorConView;
     QAction *sLoadEngSetsByDefault;
+    QAction *sRefreshEngList;
+    QAction *sForceReloadEngList;
     QAction *aboutAction;
     
     QWidget *conInfo;

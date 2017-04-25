@@ -44,6 +44,18 @@ int EngLib::addEng(QString path, QString name) {
     return jesteng++;
 }
 
+int EngLib::removeBroken() {
+    for (int i = 0; i < jesteng; i++){
+        if(eng[i] == NULL) continue;
+        if (eng[i]->loaded != 1)
+            eng[i] = NULL;
+    }
+}
+
+void EngLib::removeAll(){
+    eng.clear();
+    jesteng = 0;
+}
 
 int EngLib::getEngByPathid(QString pathid) {
     for ( auto it = eng.begin(); it != eng.end(); ++it ){

@@ -73,6 +73,7 @@ public:
     Consist(QString src, QString p, QString n);
     void load();
     bool load(FileBuffer* data);
+    void refreshEngData();
     void save();
     void save(QString woff, QTextStream *out);
     bool select(int idx);

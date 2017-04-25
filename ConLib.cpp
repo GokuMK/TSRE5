@@ -45,6 +45,13 @@ int ConLib::addCon(QString path, QString name) {
     return jestcon++;
 }
 
+int ConLib::refreshEngDataAll(){
+    for ( auto it = con.begin(); it != con.end(); ++it ){
+        if(it->second == NULL) continue;
+        (it->second)->refreshEngData();
+    }
+}
+
 int ConLib::loadAll(QString gameRoot){
     QString path;
     path = gameRoot + "/trains/consists/";

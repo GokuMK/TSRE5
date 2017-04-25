@@ -25,6 +25,7 @@ public:
     virtual ~ConLib();
     static int addCon(QString path, QString name);
     static int loadAll(QString gameRoot);
+    static int refreshEngDataAll();
     static int loadSimpleList(QString gameRoot, bool reload = false);
 private:
 
