@@ -118,6 +118,7 @@ Eng::Eng(QString src, QString p, QString n) {
 
 void Eng::load(){
     filePaths.clear();
+    QString mstsincpath = path.toLower();
     QString incpath = orpath.toLower();
     QString sh;
     QFile *file = new QFile(orpathid);
@@ -141,6 +142,7 @@ void Eng::load(){
     data->toUtf16();
     data->skipBOM();
     //ParserX::NextLine(data);
+    QString loadedPath;
     
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         //qDebug() << sh;
@@ -150,8 +152,8 @@ void Eng::load(){
         if (sh == ("include")) {
             QString incPath = ParserX::GetStringInside(data).toLower();
             ParserX::SkipToken(data);
-            data->insertFile(incpath + "/" + incPath);
-            addToFileList(incpath + "/" + incPath);
+            if(data->insertFile(incpath + "/" + incPath, mstsincpath + "/" + incPath, &loadedPath))
+                addToFileList(loadedPath);
             continue;
         }
         if (sh == ("wagon")) {
@@ -164,8 +166,8 @@ void Eng::load(){
                 if (sh == ("include")) {
                     QString incPath = ParserX::GetStringInside(data).toLower();
                     ParserX::SkipToken(data);
-                    data->insertFile(incpath + "/" + incPath);
-                    addToFileList(incpath + "/" + incPath);
+                    if(data->insertFile(incpath + "/" + incPath, mstsincpath + "/" + incPath, &loadedPath))
+                        addToFileList(loadedPath);
                     continue;
                 }
                 if (sh == ("name")) {
@@ -315,8 +317,8 @@ void Eng::load(){
                 if (sh == ("include")) {
                     QString incPath = ParserX::GetStringInside(data).toLower();
                     ParserX::SkipToken(data);
-                    data->insertFile(incpath + "/" + incPath);
-                    addToFileList(incpath + "/" + incPath);
+                    if(data->insertFile(incpath + "/" + incPath, mstsincpath + "/" + incPath, &loadedPath))
+                        addToFileList(loadedPath);
                     continue;
                 }
                 if (sh == ("type")) {

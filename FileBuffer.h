@@ -30,7 +30,7 @@ public:
     void findToken(int id);
     int getToken();
     void setTokenOffset(int val);
-    void insertFile(QString incPath);
+    bool insertFile(QString incPath, QString alternativePath = "", QString* loaded = NULL);
     bool isBOM();
     void skipBOM();
     void toUtf16();
