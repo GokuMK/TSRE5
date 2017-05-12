@@ -1539,12 +1539,12 @@ void Terrain::save() {
     if(this->tfile->sampleYbuffer == NULL)
         this->tfile->sampleYbuffer = new QString(filename + "_y.raw");
     saveRAW(path + *this->tfile->sampleYbuffer );
-    this->tfile->save(path + filename + ".t");
     if(jestF && modifiedF){
         if(this->tfile->sampleFbuffer == NULL)
             this->tfile->sampleFbuffer = new QString(filename + "_f.raw");
         saveF(path + *this->tfile->sampleFbuffer);
     }
+    this->tfile->save(path + filename + ".t");
     
     for (int u = 0; u < 16; u++)
         for (int y = 0; y < 16; y++) {
