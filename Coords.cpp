@@ -122,3 +122,33 @@ void Coords::render(GLUU* gluu, float * playerT, float* playerW, float playerRot
         gluu->mvPopMatrix();*/
     }
 };
+
+void Coords::getTileList(QMap<int, QPair<int, int>*> &tileList, int radius){
+    if (!loaded) return;
+    
+    QMap<int, QPair<int, int>*> tileList2;
+    for (int i = 0; i < markerList.size(); i++ ) {
+        for(int j = 0; j < markerList[i].tileX.size(); j++ ){
+            if(tileList2[markerList[i].tileX[j]*10000 + markerList[i].tileZ[j]] == NULL)
+                tileList2[markerList[i].tileX[j]*10000 + markerList[i].tileZ[j]] = new QPair<int, int>(markerList[i].tileX[j], markerList[i].tileZ[j]);
+            }
+        }
+    
+    QMapIterator<int, QPair<int, int>*> i(tileList2);
+    int x, z;
+    qDebug() << "radius" << radius;
+    while (i.hasNext()) {
+        i.next();
+        if(i.value() == NULL)
+            continue;
+        x = i.value()->first;
+        z = i.value()->second;
+        for(int i = -radius; i <= radius; i++)
+            for(int j = -radius; j <= radius; j++){
+                if(tileList[(x+i)*10000+(z+j)] == NULL){
+                    tileList[(x+i)*10000+(z+j)] = new QPair<int, int>(x+i, z+j);
+                    //qDebug() << i.value()->first << i.value()->second;
+                }
+            }
+    }
+}

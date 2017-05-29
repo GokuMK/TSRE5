@@ -11,7 +11,15 @@
 #ifndef GAMEOBJ_H
 #define	GAMEOBJ_H
 
-class GameObj {
+#include <QString>
+#include <QMap>
+#include <QObject>
+
+class QMenu;
+class QAction;
+
+class GameObj : public QObject {
+
 public:
     enum TypeObj {
         none = 0,
@@ -39,9 +47,11 @@ public:
     virtual void setPosition(int x, int z, float* p);
     virtual void setPosition(float* p);
     virtual void setMartix();
+    virtual void pushContextMenuActions(QMenu *menu);
 
 protected:
     bool selected = false;
+    QMap<QString, QAction*> contextMenuActions;
 };
 
 #endif	/* GAMEOBJ_H */

@@ -90,7 +90,25 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
     update();
 }
 
+void RouteEditorGLWidget::DefaultMenuActions::init(RouteEditorGLWidget *widget){
+    undo = new QAction(tr("&Undo"), widget); 
+    QObject::connect(undo, SIGNAL(triggered()), widget, SLOT(editUndo()));
+    copy = new QAction(tr("&Copy"), widget); 
+    QObject::connect(copy, SIGNAL(triggered()), widget, SLOT(editCopy()));
+    paste = new QAction(tr("&Paste"), widget); 
+    QObject::connect(paste, SIGNAL(triggered()), widget, SLOT(editPaste()));
+    find1x1 = new QAction(tr("&Select Similar 1x1"), widget); 
+    QObject::connect(find1x1, SIGNAL(triggered()), widget, SLOT(editFind1x1()));
+    find3x3 = new QAction(tr("&Select Similar 3x3"), widget); 
+    QObject::connect(find3x3, SIGNAL(triggered()), widget, SLOT(editFind3x3()));
+}
+
 void RouteEditorGLWidget::initializeGL() {
+    //this->setContextMenuPolicy(Qt::CustomContextMenu);
+    //connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), 
+    //        this, SLOT(showContextMenu(const QPoint &)));
+    this->defaultMenuActions.init(this);
+    
     currentShapeLib = new ShapeLib();
     Game::currentShapeLib = currentShapeLib;
     //qDebug() << "GLUU::get();";
@@ -419,7 +437,8 @@ void RouteEditorGLWidget::handleSelection() {
             }
         }
 
-        selection = !selection;
+        //qDebug() << "selection" << selection;
+        selection = false;// !selection;
         paintGL();
     }
 }
@@ -746,6 +765,7 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
     if (!route->loaded) return;
     m_lastPos = event->pos();
     m_lastPos *= Game::PixelRatio;
+    mouseClick = true;
     if ((event->button()) == Qt::RightButton) {
         mouseRPressed = true;
         camera->MouseDown(event);
@@ -921,14 +941,18 @@ void RouteEditorGLWidget::mouseReleaseEvent(QMouseEvent* event) {
     camera->MouseUp(event);
     if ((event->button()) == Qt::RightButton) {
         mouseRPressed = false;
+        if(mouseClick)
+            showContextMenu(event->pos());
     }
     if ((event->button()) == Qt::LeftButton) {
         mouseLPressed = false;
         Undo::StateEnd();
     }
+    mouseClick = false;
 }
 
 void RouteEditorGLWidget::mouseMoveEvent(QMouseEvent *event) {
+    mouseClick = false;
     Game::currentShapeLib = currentShapeLib;
     if (!route->loaded) return;
     /*int dx = event->x() - m_lastPos.x();
@@ -1088,8 +1112,11 @@ void RouteEditorGLWidget::editCopy() {
 }
 
 void RouteEditorGLWidget::editPaste() {
+    qDebug() << "EditPaste Start";
+    Undo::StateBeginIfNotExist();
     if (toolEnabled == "selectTool" || toolEnabled == "placeTool") {
         if (copyPasteObj != NULL) {
+            //qDebug() << "EditPaste selectedObj->unselect";
             if (selectedObj != NULL)
                 selectedObj->unselect();
             lastNewObjPosT[0] = camera->pozT[0];
@@ -1097,18 +1124,48 @@ void RouteEditorGLWidget::editPaste() {
             lastNewObjPos[0] = aktPointerPos[0];
             lastNewObjPos[1] = aktPointerPos[1];
             lastNewObjPos[2] = aktPointerPos[2];
-            if (copyPasteObj->typeID == WorldObj::groupobject) {
-                groupObj->fromNewObjects((GroupObj*) copyPasteObj, route, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
-                setSelectedObj(groupObj);
-            } else {
-                float *q = Quat::create();
-                Quat::copy(q, copyPasteObj->qDirection);
-                setSelectedObj(route->placeObject((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, q, copyPasteObj->getRefInfo()));
-                if (selectedObj != NULL)
-                    selectedObj->select();
+            //qDebug() << "EditPaste copyPasteObj->typeObj";
+            if(copyPasteObj->typeObj == GameObj::worldobj) {
+               // qDebug() << "EditPaste copyPasteObj->typeID";
+                if (copyPasteObj->typeID == WorldObj::groupobject) {
+                    //qDebug() << "EditPaste groupobject";
+                    groupObj->fromNewObjects((GroupObj*) copyPasteObj, route, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+                    //qDebug() << "EditPaste setSelectedObj";
+                    setSelectedObj(groupObj);
+                } else {
+                    //qDebug() << "EditPaste object";
+                    float *q = Quat::create();
+                    Quat::copy(q, copyPasteObj->qDirection);
+                    setSelectedObj(route->placeObject((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, q, copyPasteObj->getRefInfo()));
+                    //qDebug() << "EditPaste setSelectedObj";
+                    if (selectedObj != NULL)
+                        selectedObj->select();
+                }
             }
         }
     }
+    qDebug() << "EditPaste End";
+}
+
+void RouteEditorGLWidget::editFind1x1() {
+    editFind(0);
+}
+
+void RouteEditorGLWidget::editFind3x3() {
+    editFind(1);
+}
+
+void RouteEditorGLWidget::editFind(int radius) {
+    if (selectedObj != NULL)
+        if (selectedObj->typeObj == GameObj::worldobj){
+            selectedObj->unselect();
+            route->findSimilar((WorldObj*)selectedObj, groupObj, camera->pozT, radius);
+            setSelectedObj(groupObj);
+            if (groupObj->count() == 0) {
+                groupObj->unselect();
+                setSelectedObj(NULL);
+            }
+        }
 }
 
 void RouteEditorGLWidget::editUndo() {
@@ -1118,6 +1175,39 @@ void RouteEditorGLWidget::editUndo() {
 void RouteEditorGLWidget::showTrkEditr() {
     if (route != NULL)
         route->showTrkEditr();
+}
+
+void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
+    QMenu menu;
+    if(selectedObj != NULL){
+        if(selectedObj->typeObj == selectedObj->worldobj){
+            menu.addSection("Object");
+            selectedObj->pushContextMenuActions(&menu);
+            menu.addAction(defaultMenuActions.find1x1);
+            menu.addAction(defaultMenuActions.find3x3);
+        }
+    }
+    //menu.addSeparator();
+    menu.addSection("Edit");
+    menu.addAction(defaultMenuActions.undo);
+    menu.addAction(defaultMenuActions.copy);
+    menu.addAction(defaultMenuActions.paste);
+    menu.exec(mapToGlobal(point));
+}
+
+void RouteEditorGLWidget::createNewTiles(QMap<int, QPair<int, int>*> list){
+    int x, z;
+    QMapIterator<int, QPair<int, int>*> i2(list);
+    while (i2.hasNext()) {
+        i2.next();
+        if(i2.value() == NULL)
+            continue;
+        x = i2.value()->first;
+        z = i2.value()->second;
+        qDebug() << x << z;
+        route->newTile(x, -z);
+    }
+    
 }
 
 void RouteEditorGLWidget::getUnsavedInfo(std::vector<QString> &items) {

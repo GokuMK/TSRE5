@@ -37,6 +37,7 @@ class MapWindow;
 class ShapeLib;
 class EngLib;
 class QOpenGLFunctions_3_3_Core;
+class QAction;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -70,8 +71,13 @@ public slots:
     
     void editCopy();
     void editPaste();
+    void editFind1x1();
+    void editFind3x3();
+    void editFind(int radius = 0);
     void editUndo();
     void showTrkEditr();
+    void showContextMenu(const QPoint & point);
+    void createNewTiles(QMap<int, QPair<int, int>*> list);
     
 signals:
     void routeLoaded(Route * a);
@@ -139,6 +145,7 @@ private:
     float aktPointerPos[3];
     bool mouseLPressed = false;
     bool mouseRPressed = false;
+    bool mouseClick = false;
     QString toolEnabled = "";
     float moveStep = 0.25;
     float moveUltraStep = 2.0;
@@ -164,6 +171,16 @@ private:
     MapWindow* mapWindow;
     ShapeLib *currentShapeLib = NULL;
     EngLib *engLib = NULL;
+    
+    struct DefaultMenuActions {
+        QAction *undo;
+        QAction *copy;
+        QAction *paste;
+        QAction *find1x1;
+        QAction *find3x3;
+        void init(RouteEditorGLWidget *widget);
+    };
+    DefaultMenuActions defaultMenuActions;
 };
 
 #endif

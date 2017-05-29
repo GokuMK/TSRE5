@@ -41,6 +41,7 @@ public slots:
     void createPaths();
     void about();
     void terrainCamera(bool val);
+    void mstsShadows(bool val);
     void setToolbox(QString name);
     void showProperties(GameObj* obj);
     void updateProperties(GameObj* obj);
@@ -107,6 +108,7 @@ private:
     QAction *pasteAction;
     QAction *aboutAction;
     QAction *terrainCameraAction;
+    QAction *mstsShadowsAction;
     QAction *propertiesAction;
     QAction *naviAction;
     QAction *shapeViewAction;

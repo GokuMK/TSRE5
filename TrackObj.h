@@ -33,7 +33,8 @@ public:
     void save(QTextStream* out);
     QString getShapePath();
     int getDefaultDetailLevel();
-    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
+    bool isSimilar(WorldObj* obj);
+    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
     QVector<std::array<float, 5>> jNodePosn;
     void fillJNodePosn();
     void setElevation(float prom);

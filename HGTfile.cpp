@@ -47,12 +47,12 @@ bool HGTfile::load(int lat, int lon){
     this->pathid.replace("//", "/");
     qDebug() << this->pathid;
     //qDebug() << "Wczytam teren RAW: " << fSfile;
-    QFile *file = new QFile(this->pathid);
-    if (!file->open(QIODevice::ReadOnly)){
+    QFile file(this->pathid);
+    if (!file.open(QIODevice::ReadOnly)){
         qDebug() <<"HGT not found: "<< this->pathid;
         return false;
     }
-    FileBuffer* data = ReadFile::readRAW(file);
+    FileBuffer* data = ReadFile::readRAW(&file);
     this->rowSize = sqrt(data->length/2);
     qDebug() << this->rowSize;
     terrainData = new short int*[rowSize];

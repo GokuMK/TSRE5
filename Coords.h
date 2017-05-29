@@ -13,6 +13,8 @@
 
 #include <QString>
 #include <unordered_map>
+#include <QMap>
+#include <QPair>
 
 class OglObj;
 class GLUU;
@@ -46,6 +48,7 @@ public:
     Coords(QString path);
     virtual ~Coords();
     virtual void render(GLUU* gluu, float * playerT, float* playerW, float playerRot);
+    virtual void getTileList(QMap<int, QPair<int, int>*> &tileList, int radius = 0);
 protected:
     OglObj* simpleMarkerObjP = NULL;
     OglObj* simpleMarkerObjL = NULL;

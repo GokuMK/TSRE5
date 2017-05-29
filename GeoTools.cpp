@@ -15,13 +15,15 @@
 #include "GuiFunct.h"
 #include "TransferObj.h"
 #include "Game.h"
+#include "Coords.h"
+#include "HeightWindow.h"
 
 GeoTools::GeoTools(QString name)
     : QWidget(){
     
     int row = 0;
     
-    buttonTools["mapTileShowTool"] = new QPushButton("Show/H Map", this);
+    buttonTools["mapTileShowTool"] = new QPushButton("Show/Hide Map", this);
     buttonTools["mapTileLoadTool"] = new QPushButton("Load Map", this);
     buttonTools["heightTileLoadTool"] = new QPushButton("Load Height", this);
     buttonTools["makeTileTextureTool"] = new QPushButton("Make Tile Texture from Map", this);
@@ -31,27 +33,61 @@ GeoTools::GeoTools(QString name)
         i.next();
         i.value()->setCheckable(true);
     }
-    
-    QGridLayout *vlist3 = new QGridLayout;
-    vlist3->setSpacing(2);
-    vlist3->setContentsMargins(3,0,1,0);    
-    row = 0;
-    vlist3->addWidget(buttonTools["mapTileShowTool"],row,0);
-    vlist3->addWidget(buttonTools["mapTileLoadTool"],row,1);
-    vlist3->addWidget(buttonTools["heightTileLoadTool"],row++,2);
 
     QLabel *label0;
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
-    
-    label0 = new QLabel("World Tile:");
+        
+    label0 = new QLabel("Map Layers:");
     label0->setContentsMargins(3,0,0,0);
     label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
-    vbox->addItem(vlist3);
+    vbox->addWidget(buttonTools["mapTileShowTool"]);
+    vbox->addWidget(buttonTools["mapTileLoadTool"]);
     vbox->addWidget(buttonTools["makeTileTextureTool"]);
     vbox->addWidget(buttonTools["removeTileTextureTool"]);
+    
+    label0 = new QLabel("Terrain Heightmap:");
+    label0->setContentsMargins(3,0,0,0);
+    label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    vbox->addWidget(label0);
+    vbox->addWidget(buttonTools["heightTileLoadTool"]);
+    
+    label0 = new QLabel("Auto tile generation:");
+    label0->setContentsMargins(3,0,0,0);
+    label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    vbox->addWidget(label0);
+    QCheckBox *chAutoCreateTile = new QCheckBox("Create new tiles if not exist.");
+    chAutoCreateTile->setChecked(Game::autoNewTiles);
+    QCheckBox *chAutoGeoTerrain = new QCheckBox("Create terrain from Geodata. ");
+    chAutoCreateTile->setChecked(Game::autoGeoTerrain);
+    vbox->addWidget(chAutoCreateTile);
+    vbox->addWidget(chAutoGeoTerrain);
+    
+    label0 = new QLabel("Tiles from marker file:");
+    label0->setContentsMargins(3,0,0,0);
+    //label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    vbox->addWidget(label0);
+    vbox->addWidget(&markerFiles);
+    markerFiles.setStyleSheet("combobox-popup: 0;");
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("Radius:",&this->eRadius);
+    eRadius.setRange(0,2);
+    eRadius.setValue(0);
+    vbox->addItem(vlist);
+    QPushButton * checkGeodataFiles = new QPushButton("Check if geodata files available.", this);
+    QObject::connect(checkGeodataFiles, SIGNAL(released()),
+                      this, SLOT(checkGeodataFilesEnabled()));
+    vbox->addWidget(checkGeodataFiles);
+    
+    QPushButton * generateTiles = new QPushButton("Generate tiles.", this);
+    QObject::connect(generateTiles, SIGNAL(released()),
+                      this, SLOT(generateTilesEnabled()));
+    vbox->addWidget(generateTiles);
+    
     vbox->addStretch(1);
     this->setLayout(vbox);
     
@@ -72,7 +108,76 @@ GeoTools::GeoTools(QString name)
     QObject::connect(buttonTools["removeTileTextureTool"], SIGNAL(toggled(bool)),
                       this, SLOT(removeTileTextureToolEnabled(bool)));
     
+    QObject::connect(chAutoCreateTile, SIGNAL(stateChanged(int)),
+                      this, SLOT(chAutoCreateTileEnabled(int)));
     
+    QObject::connect(chAutoGeoTerrain, SIGNAL(stateChanged(int)),
+                      this, SLOT(chAutoGeoTerrainEnabled(int)));
+    
+}
+
+void GeoTools::mkrList(std::unordered_map<std::string, Coords*> list){
+    mkrFiles = list;
+    for (auto it = list.begin(); it != list.end(); ++it ){
+        if(it->second == NULL)
+            continue;
+        if(!it->second->loaded)
+            continue;
+        markerFiles.addItem(QString::fromStdString(it->first));
+    }
+    //    mkrFilesSelected(markerFiles.itemText(0));
+}
+
+void GeoTools::checkGeodataFilesEnabled(){
+    if(markerFiles.count() == 0)
+        return;
+    Coords* c = mkrFiles[markerFiles.currentText().toStdString()];
+    if(c == NULL) 
+        return;
+    
+    QMap<int, QPair<int, int>*> tileList;
+    int radius = eRadius.value();
+    c->getTileList(tileList, radius);
+
+    /*int x, z;
+    QMapIterator<int, QPair<int, int>*> i2(tileList);
+    while (i2.hasNext()) {
+        i2.next();
+        if(i2.value() == NULL)
+            continue;
+        x = i2.value()->first;
+        z = i2.value()->second;
+        qDebug() << x << z;
+    }*/
+    HeightWindow::CheckForMissingGeodataFiles(tileList);
+}
+
+void GeoTools::generateTilesEnabled(){
+    if(markerFiles.count() == 0)
+        return;
+    Coords* c = mkrFiles[markerFiles.currentText().toStdString()];
+    if(c == NULL) 
+        return;
+    
+    QMap<int, QPair<int, int>*> tileList;
+    int radius = eRadius.value();
+    c->getTileList(tileList, radius);
+    
+    createNewTiles(tileList);
+}
+
+void GeoTools::chAutoCreateTileEnabled(int state){
+    if(state == Qt::Checked)
+        Game::autoNewTiles = true;
+    else
+        Game::autoNewTiles = false;
+}
+
+void GeoTools::chAutoGeoTerrainEnabled(int state){
+    if(state == Qt::Checked)
+        Game::autoGeoTerrain = true;
+    else
+        Game::autoGeoTerrain = false;
 }
 
 void GeoTools::mapTileShowToolEnabled(bool val){

@@ -36,6 +36,7 @@ public:
     static int setHeight256(int x, int z, int posx, int posz, float h);
     static int setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE);
     static void setHeightFromGeoGui(int x, int z, float* p);
+    static void setHeightFromGeo(int x, int z, float* p);
     static bool isLoaded(int x, int z);
     static QSet<int> paintHeightMap(Brush* brush, int x, int z, float* p);
     static void paintTexture(Brush* brush, int x, int z, float* p);

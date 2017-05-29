@@ -57,6 +57,7 @@ public:
     int getDefaultDetailLevel();
     void checkFlags(QStringList &list);
     void fixFlags();
+    bool isSimilar(WorldObj* obj);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
     int subObjSelected = 0;
 private:

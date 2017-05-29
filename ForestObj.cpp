@@ -265,7 +265,7 @@ void ForestObj::resize(float x, float y, float z){
     deleteVBO();
 }
 
-void ForestObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
+void ForestObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     if (!loaded) return;
     //if (jestPQ < 2) return;
     //GLUU* gluu = GLUU::get();

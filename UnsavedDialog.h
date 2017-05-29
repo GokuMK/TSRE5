@@ -20,6 +20,7 @@ public:
     virtual ~UnsavedDialog();
     QListWidget items;
     void setMsg(QString msg);
+    void hideButtons();
     int changed = 0;
     
 public slots:
@@ -29,6 +30,9 @@ public slots:
     
 private:
     QLabel infoLabel;
+    QPushButton* bok;
+    QPushButton* bexit;
+    QPushButton* bcancel;
 };
 
 #endif	/* UNSAVEDDIALOG_H */

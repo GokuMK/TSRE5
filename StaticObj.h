@@ -16,6 +16,7 @@
 #include "FileBuffer.h"
 
 class StaticObj : public WorldObj  {
+    Q_OBJECT
 public:
     StaticObj();
     StaticObj(const StaticObj& o);
@@ -37,7 +38,13 @@ public:
     bool hasLinePoints();
     void getLinePoints(float *&punkty);
     void reload();
-    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
+    bool isSimilar(WorldObj *obj);
+    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
+    void pushContextMenuActions(QMenu *menu);
+    
+public slots:
+    void menuRot();
+    
 private:
     void loadSnapablePoints();
     bool getSimpleBorder(float* border);

@@ -13,6 +13,10 @@
 
 #include <QtWidgets>
 #include "Route.h"
+#include <QMap>
+#include <QPair>
+
+class Coords;
 
 class GeoTools : public QWidget{
     Q_OBJECT
@@ -27,12 +31,21 @@ public slots:
     void makeTileTextureToolEnabled(bool val);
     void removeTileTextureToolEnabled(bool val);
     void msg(QString text, QString val);
+    void chAutoCreateTileEnabled(int state);
+    void chAutoGeoTerrainEnabled(int state);
+    void mkrList(std::unordered_map<std::string, Coords*> list);
+    void checkGeodataFilesEnabled();
+    void generateTilesEnabled();
     
 signals:
     void enableTool(QString name);
+    void createNewTiles(QMap<int, QPair<int, int>*> list);
     
 private:
     QMap<QString, QPushButton*> buttonTools;
+    std::unordered_map<std::string, Coords*> mkrFiles;
+    QComboBox markerFiles;
+    QSpinBox eRadius;
 };
 
 #endif	/* GEOTOOLS_H */

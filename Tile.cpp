@@ -33,6 +33,7 @@
 #include "GLMatrix.h"
 #include "TS.h"
 #include "IghCoords.h"
+#include "GroupObj.h"
 
 Tile::Tile() {
     modified = false;
@@ -624,6 +625,15 @@ void Tile::setModified(bool value){
             if(obiekty[i] == NULL) continue;
             obiekty[i]->modified = false;
         }
+    }
+}
+
+void Tile::findSimilar(WorldObj* obj, GroupObj* group){
+    for (int i = 0; i < jestObiektow; i++) {
+        if(obiekty[i] == NULL) continue;
+        if (obiekty[i]->loaded)
+            if(obiekty[i]->isSimilar(obj))
+                group->addObject(obiekty[i]);
     }
 }
 

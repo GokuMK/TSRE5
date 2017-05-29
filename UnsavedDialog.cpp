@@ -16,12 +16,12 @@ UnsavedDialog::UnsavedDialog() : QDialog(){
     //this->setFixedSize(300,300);
 
     //QLabel *label = new QLabel("Save changes in consists?");
-    QPushButton* ok = new QPushButton("Save and Quit");
-    QPushButton* exit = new QPushButton("Discard and Quit");
-    QPushButton* cancel = new QPushButton("Cancel");
-    connect(ok, SIGNAL (released()), this, SLOT (ok()));
-    connect(cancel, SIGNAL (released()), this, SLOT (cancel()));
-    connect(exit, SIGNAL (released()), this, SLOT (exit()));
+    bok = new QPushButton("Save and Quit");
+    bexit = new QPushButton("Discard and Quit");
+    bcancel = new QPushButton("Cancel");
+    connect(bok, SIGNAL (released()), this, SLOT (ok()));
+    connect(bcancel, SIGNAL (released()), this, SLOT (cancel()));
+    connect(bexit, SIGNAL (released()), this, SLOT (exit()));
     
     QGridLayout *vlist = new QGridLayout;
     vlist->setSpacing(2);
@@ -30,9 +30,9 @@ UnsavedDialog::UnsavedDialog() : QDialog(){
     //vlist->addWidget(&name, 1, 1, 1, 1, Qt::AlignLeft);
     //QHBoxLayout *vlist1 = new QHBoxLayout;
     vlist->addWidget(&items, 1, 0, 1, 3, Qt::AlignCenter);
-    vlist->addWidget(ok, 2, 0);
-    vlist->addWidget(exit, 2, 1);
-    vlist->addWidget(cancel, 2, 2);
+    vlist->addWidget(bok, 2, 0);
+    vlist->addWidget(bexit, 2, 1);
+    vlist->addWidget(bcancel, 2, 2);
     
 //    mainLayout->setAlignment(browse, Qt::AlignBottom);
     vlist->setContentsMargins(1,1,1,1);
@@ -43,6 +43,12 @@ UnsavedDialog::UnsavedDialog() : QDialog(){
 
 void UnsavedDialog::setMsg(QString msg){
     infoLabel.setText(msg);
+}
+
+void UnsavedDialog::hideButtons(){
+    bok->hide();
+    bcancel->hide();
+    bexit->hide();
 }
 
 void UnsavedDialog::cancel(){

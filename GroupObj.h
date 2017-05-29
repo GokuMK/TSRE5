@@ -62,7 +62,7 @@ public:
     bool isIndividualRotation();
     unsigned int count();
     void fromNewObjects(GroupObj *objList, Route *route, int x, int z, float *p);
-    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
+    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
     virtual ~GroupObj();
 private:
     Pivot pivot;

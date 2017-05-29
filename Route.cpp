@@ -285,6 +285,12 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
             }
             tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
             //tTile->inUse = true;
+            if(Game::autoNewTiles)
+                if (i == 0 && j == 0)
+                    if (tTile->loaded == -2) {
+                        Route::newTile((int)playerT[0] + i, (int)playerT[1] + j);
+                        tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
+                    }
             if (tTile->loaded == 1) {
                 gluu->mvPushMatrix();
                 Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * i, 0, 2048 * j);
@@ -847,6 +853,25 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p, int mode) {
     
 }
 
+void Route::findSimilar(WorldObj* obj, GroupObj* group, float *playerT, int tileRadius){
+    if(obj->typeID == WorldObj::groupobject)
+        return;
+    int mintile = -tileRadius;
+    int maxtile = tileRadius;
+    
+    Tile *tTile;
+    for (int i = mintile; i <= maxtile; i++) {
+        for (int j = maxtile; j >= mintile; j--) {
+            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
+            if (tTile == NULL)
+                continue;
+            if (tTile->loaded == 1) {
+                tTile->findSimilar(obj, group);
+            }
+        }
+    }
+}
+
 void Route::autoPlacementDeleteLast(){
     for(int i = 0; i < autoPlacementLastPlaced.length(); i++){
         deleteObj(autoPlacementLastPlaced[i]);
@@ -1369,11 +1394,23 @@ void Route::reloadTile(int x, int z) {
 
 void Route::newTile(int x, int z) {
     if (!Game::writeEnabled) return;
+    
+    if (tile[x*10000 + z] == NULL)
+        tile[x*10000 + z] = new Tile(x, z);
+    if (tile[x*10000 + z]->loaded == 1)
+        return;
+            
     Tile::saveEmpty(x, -z);
     //Terrain::saveEmpty(x, -z);
     TerrainLib::saveEmpty(x, -z);
     TerrainLib::reload(x, z);
     reloadTile(x, z);
+
+    if(Game::autoGeoTerrain){
+        float pos[3];
+        Vec3::set(pos, 0, 0, 0);
+        TerrainLib::setHeightFromGeo(x, z, (float*)&pos);
+    }
 }
 
 void Route::showTrkEditr(Trk * val){

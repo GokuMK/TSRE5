@@ -18,6 +18,7 @@
 #include "TrackItemObj.h"
 #include <QDebug>
 #include "Game.h"
+#include <QMenu>
 
 StaticObj::StaticObj() {
     this->shape = -1;
@@ -94,10 +95,14 @@ void StaticObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
-void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
+void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     if (!loaded) return;
     if (shape < 0) return;
     if (jestPQ < 2) return;
+    if (renderMode == gluu->RENDER_SHADOWMAP && Game::mstsShadows) {
+        if(this->getShadowType() != WorldObj::ShadowDynamic )
+            return;
+    }
     //GLUU* gluu = GLUU::get();
     //if((this.position===undefined)||this.qDirection===undefined) return;
     
@@ -358,4 +363,25 @@ if(this->staticFlags != 0)
 if(this->staticDetailLevel > -1)
 *(out) << "		StaticDetailLevel ( "<<this->staticDetailLevel<<" )\n";
 *(out) << "	)\n";
+}
+
+bool StaticObj::isSimilar(WorldObj* obj){
+    if(obj->typeID != this->typeID)
+        return false;
+    if(obj->fileName == this->fileName)
+        return true;
+    return false;
+}
+
+void StaticObj::pushContextMenuActions(QMenu *menu){
+    /*if(contextMenuActions["Rot"] == NULL){
+        contextMenuActions["Rot"] = new QAction(tr("&Rot")); 
+        QObject::connect(contextMenuActions["Rot"], SIGNAL(triggered()), this, SLOT(menuRot()));
+    }
+    menu->addAction(contextMenuActions["Rot"]);*/
+
+}
+
+void StaticObj::menuRot(){
+    qDebug() << "aaa";
 }

@@ -9,6 +9,7 @@
  */
 
 #include "GameObj.h"
+#include <QMenu.h>
 
 GameObj::GameObj() {
 }
@@ -62,5 +63,9 @@ void GameObj::setPosition(float* p){
 }
 
 void GameObj::setMartix(){
+    
+}
+
+void GameObj::pushContextMenuActions(QMenu *menu){
     
 }

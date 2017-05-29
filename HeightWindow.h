@@ -13,6 +13,8 @@
 
 #include <QtWidgets>
 #include <unordered_map>
+#include <QMap>
+#include <QPair>
 
 class QNetworkReply;
 class QImage;
@@ -32,11 +34,12 @@ public:
     bool ok = false;
     float** terrainData = NULL;
     
+    static void CheckForMissingGeodataFiles(QMap<int, QPair<int, int>*> &tileList);
     static std::unordered_map<int, HGTfile*> hqtFiles;
     int exec();
     
 public slots:
-    void load();
+    void load(bool gui = true);
     
 private:
     QLabel* imageLabel;
@@ -48,7 +51,7 @@ private:
     LatitudeLongitudeCoordinate* mLatlon = NULL;
     PreciseTileCoordinate* aCoords = NULL;
     
-    void drawTile(QImage* &image);
+    void drawTile(QImage* &image, bool gui);
 };
 
 #endif	/* HEIGHTWINDOW_H */

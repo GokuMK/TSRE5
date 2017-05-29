@@ -16,6 +16,8 @@
 #include "WorldObj.h"
 #include "Ref.h"
 
+class GroupObj;
+
 class Tile {
 public:
     struct ViewDbSphere {
@@ -60,6 +62,7 @@ public:
     void updateTerrainObjects();
     float getNearestSnapablePosition(float *pos, float *quat, int uid = -1);
     void updateSim(float deltaTime);
+    void findSimilar(WorldObj* obj, GroupObj* group);
     void render();
     void render(float *  playerT, float* playerW, float* target, float fov, int renderMode);
     //void renderWS(float *  playerT, float* playerW, float* target, float fov, int renderMode);

@@ -30,6 +30,7 @@ class Traffic;
 class Path;
 class TRitem;
 class Environment;
+class GroupObj;
 
 class Route : public QObject {
     Q_OBJECT
@@ -71,6 +72,7 @@ public:
     void deleteObj(WorldObj* obj);
     void undoPlaceObj(int x, int y, int UiD);
     void removeTrackFromTDB(WorldObj* obj);
+    void findSimilar(WorldObj* obj, GroupObj* group, float *playerT, int tileRadius = 0);
     void nextDefaultEnd();
     void flipObject(WorldObj *obj);
     void setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, WorldObj* obj = NULL);

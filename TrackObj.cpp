@@ -262,10 +262,22 @@ QString TrackObj::getShapePath(){
     return shapePointer->pathid+"|"+shapePointer->texPath;
 }
 
-void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor) {
+bool TrackObj::isSimilar(WorldObj* obj){
+    if(obj->typeID != this->typeID)
+        return false;
+    if(obj->fileName == this->fileName)
+        return true;
+    return false;
+}
+
+void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     if (!loaded) return;
     if (shape < 0) return;
     if (jestPQ < 2) return;
+    if (renderMode == gluu->RENDER_SHADOWMAP && Game::mstsShadows) {
+        if(this->getShadowType() != WorldObj::ShadowDynamic )
+            return;
+    }
     //GLUU* gluu = GLUU::get();
     //if((this.position===undefined)||this.qDirection===undefined) return;
 

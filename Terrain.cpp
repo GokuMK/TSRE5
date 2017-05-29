@@ -167,7 +167,8 @@ QString Terrain::getTileName(int x, int y) {
 void Terrain::refresh() {
     if (!loaded) return;
     isOgl = false;
-    reloadLines();
+    lines.loaded = false;
+    //reloadLines();
 }
 
 void Terrain::toggleGaps(int x, int z, float posx, float posz){

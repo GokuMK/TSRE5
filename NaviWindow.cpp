@@ -193,6 +193,10 @@ void NaviWindow::posInfo(PreciseTileCoordinate* coords){
 void NaviWindow::mkrList(std::unordered_map<std::string, Coords*> list){
     mkrFiles = list;
     for (auto it = list.begin(); it != list.end(); ++it ){
+        if(it->second == NULL)
+            continue;
+        if(!it->second->loaded)
+            continue;
         markerFiles.addItem(QString::fromStdString(it->first));
     }
     if(markerFiles.count() > 0)

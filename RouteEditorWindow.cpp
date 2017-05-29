@@ -248,8 +248,12 @@ RouteEditorWindow::RouteEditorWindow() {
     terrainCameraAction->setChecked(Game::cameraStickToTerrain);
     terrainCameraAction->setShortcut(QKeySequence("/"));
     QObject::connect(terrainCameraAction, SIGNAL(triggered(bool)), this, SLOT(terrainCamera(bool)));
+    mstsShadowsAction = GuiFunct::newMenuCheckAction(tr("&MSTS Shadows"), this); 
+    mstsShadowsAction->setChecked(Game::mstsShadows);
+    QObject::connect(mstsShadowsAction, SIGNAL(triggered(bool)), this, SLOT(mstsShadows(bool)));
     settingsMenu = menuBar()->addMenu(tr("&Settings"));
     settingsMenu->addAction(terrainCameraAction);
+    settingsMenu->addAction(mstsShadowsAction);
     // Help
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -310,6 +314,12 @@ RouteEditorWindow::RouteEditorWindow() {
     
     QObject::connect(glWidget, SIGNAL(mkrList(std::unordered_map<std::string, Coords*>)),
                       naviWindow, SLOT(mkrList(std::unordered_map<std::string, Coords*>)));
+    
+    QObject::connect(glWidget, SIGNAL(mkrList(std::unordered_map<std::string, Coords*>)),
+                      geoTools, SLOT(mkrList(std::unordered_map<std::string, Coords*>)));
+    
+    QObject::connect(geoTools, SIGNAL(createNewTiles(QMap<int, QPair<int, int>*>)),
+                      glWidget, SLOT(createNewTiles(QMap<int, QPair<int, int>*>)));
     
     QObject::connect(glWidget, SIGNAL(routeLoaded(Route*)),
                       objTools, SLOT(routeLoaded(Route*)));
@@ -441,6 +451,10 @@ void RouteEditorWindow::createPaths(){
 
 void RouteEditorWindow::terrainCamera(bool val){
     Game::cameraStickToTerrain = val;
+}
+
+void RouteEditorWindow::mstsShadows(bool val){
+    Game::mstsShadows = val;
 }
 
 void RouteEditorWindow::about(){

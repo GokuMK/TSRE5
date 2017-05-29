@@ -23,6 +23,7 @@
 #include "CoordsMkr.h"
 #include "IghCoords.h"
 #include "HGTfile.h"
+#include "UnsavedDialog.h"
 
 std::unordered_map<int, HGTfile*> HeightWindow::hqtFiles;
 
@@ -41,6 +42,9 @@ HeightWindow::HeightWindow() : QDialog() {
     
     QObject::connect(loadButton, SIGNAL(released()),
                       this, SLOT(load()));
+    
+    igh = new IghCoordinate();
+    mLatlon = new LatitudeLongitudeCoordinate();
 }
 
 int HeightWindow::exec() {
@@ -48,8 +52,59 @@ int HeightWindow::exec() {
     return QDialog::exec();
 } 
 
-void HeightWindow::load(){
-if(aCoords == NULL) aCoords = new PreciseTileCoordinate();
+void HeightWindow::CheckForMissingGeodataFiles(QMap<int,QPair<int,int>*>& tileList){
+    PreciseTileCoordinate *tCoords = new PreciseTileCoordinate();
+    IghCoordinate *tigh = new IghCoordinate();
+    LatitudeLongitudeCoordinate *tLatlon = new LatitudeLongitudeCoordinate();
+    QMapIterator<int, QPair<int, int>*> i(tileList);
+    
+    QMap<QString, bool> missingFiles;
+    bool fail;
+    
+    while (i.hasNext()) {
+        i.next();
+        if(i.value() == NULL)
+            continue;
+
+        tCoords->TileX = i.value()->first;
+        tCoords->TileZ = i.value()->second;
+        tCoords->setWxyz(0, 0, 0);
+        tigh = MstsCoordinates::ConvertToIgh(tCoords, tigh);
+        tLatlon = MstsCoordinates::ConvertToLatLon(tigh, tLatlon);
+
+        //qDebug() << "lat " << itlat->first << " lon " << itlon->first;
+        if(hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude] == NULL){
+            hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude] = new HGTfile();
+            fail = hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude]->load(tLatlon->Latitude, tLatlon->Longitude);
+        }
+        if(!hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude]->isLoaded())
+            fail = false;
+        //qDebug() << hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude]->pathid;
+        if(!fail) {
+            missingFiles[hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude]->pathid] = true;
+        }
+    }
+    
+    if(missingFiles.count() > 0){
+        QMapIterator<QString, bool> i2(missingFiles);
+        UnsavedDialog missingDialog;
+        missingDialog.setWindowTitle("Missing files?");
+        missingDialog.setMsg("Missing terrain heightmap files. ");
+        missingDialog.hideButtons();
+
+        while (i2.hasNext()) {
+            i2.next();
+            missingDialog.items.addItem(i2.key());
+            qDebug() << i2.key();
+        }
+        missingDialog.exec();
+    }
+    
+}
+
+void HeightWindow::load(bool gui){
+    if(aCoords == NULL) 
+        aCoords = new PreciseTileCoordinate();
     aCoords->TileX = this->tileX;
     aCoords->TileZ = this->tileZ;
     qDebug() << this->tileX << " " << this->tileZ;;
@@ -62,8 +117,8 @@ if(aCoords == NULL) aCoords = new PreciseTileCoordinate();
     for(int i = -1024; i <= 1024; i+=1024)
         for(int j = -1024; j <=1024; j+=1024){
             aCoords->setWxyz(i, 0, j);
-            igh = MstsCoordinates::ConvertToIgh(aCoords);
-            mLatlon = MstsCoordinates::ConvertToLatLon(igh);
+            igh = MstsCoordinates::ConvertToIgh(aCoords, igh);
+            mLatlon = MstsCoordinates::ConvertToLatLon(igh, mLatlon);
             fileLat[(int)floor(mLatlon->Latitude)] = true;
             fileLon[(int)floor(mLatlon->Longitude)] = true;
         }
@@ -80,25 +135,45 @@ if(aCoords == NULL) aCoords = new PreciseTileCoordinate();
             if(!this->hqtFiles[itlat->first*1000+itlon->first]->isLoaded())
                 fail = false;
             if(!fail) {
-                QMessageBox msgBox;
-                msgBox.setText("Failed to load "+this->hqtFiles[itlat->first*1000+itlon->first]->pathid);
-                msgBox.exec();
+                if(gui){
+                    QMessageBox msgBox;
+                    msgBox.setText("Failed to load "+this->hqtFiles[itlat->first*1000+itlon->first]->pathid);
+                    msgBox.exec();
+                }
                 return;
             }
         }
     }
-    drawTile(image);
-    imageLabel->setPixmap(QPixmap::fromImage(*image).scaled(800,800,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+    
+    drawTile(image, gui);
+    
+    if(gui){
+        imageLabel->setPixmap(QPixmap::fromImage(*image).scaled(800,800,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+    }
+    delete image;
 
     //qDebug() << "lat " << minLatlon->Latitude << " " << maxLatlon->Latitude;
     //qDebug() << "lon " << minLatlon->Longitude << " " << maxLatlon->Longitude;
 }
 
-void HeightWindow::drawTile(QImage* &image){
+void HeightWindow::drawTile(QImage* &image, bool gui){
     qDebug() << "draw tile";
-    image = new QImage(terrainResolution, terrainResolution, QImage::Format_RGB888);
-    //float val;
+    if(gui)
+        image = new QImage(terrainResolution, terrainResolution, QImage::Format_RGB888);
     int step = 2048/terrainResolution;
+    
+    if(terrainData != NULL){
+        for (int i = 0; i < terrainResolution; i++) {
+            delete[] terrainData[i];
+        }
+        delete[] terrainData;
+    }
+    /*if(terrainData == NULL){
+        terrainData = new float*[terrainResolution];
+        for (int i = 0; i < terrainResolution; i++) {
+            terrainData[i] = new float[terrainResolution];
+        }
+    }*/
     
     terrainData = new float*[terrainResolution];
     minVal = 999;
@@ -107,8 +182,8 @@ void HeightWindow::drawTile(QImage* &image){
         terrainData[i] = new float[terrainResolution];
         for (int j = 0; j < terrainResolution; j++) {
             aCoords->setWxyz(-1024 + i*step, 0, -1024 + j*step);
-            igh = MstsCoordinates::ConvertToIgh(aCoords);
-            mLatlon = MstsCoordinates::ConvertToLatLon(igh);
+            igh = MstsCoordinates::ConvertToIgh(aCoords, igh);
+            mLatlon = MstsCoordinates::ConvertToLatLon(igh, mLatlon);
             if(hqtFiles[(int)floor(mLatlon->Latitude)*1000+(int)floor(mLatlon->Longitude)] == NULL){
                 qDebug() << "fail";
                 continue;
@@ -121,15 +196,18 @@ void HeightWindow::drawTile(QImage* &image){
         }
     }
     qDebug() << "minmax" << minVal << " "<<maxVal;
-    int val;
-    float s = (maxVal - minVal) / 255;
-    for (int i = 0; i < terrainResolution; i++) {
-        for (int j = 0; j < terrainResolution; j++) {
-            val = (this->terrainData[i][j] - minVal)/s;
-            //val = (this->terrainData[i][j])*10+50;
-            if(val < 0) val = 0;
-            if(val > 255) val = 255;
-            image->setPixel(i, j, qRgb(val,val,val));
+    
+    if(gui){
+        int val;
+        float s = (maxVal - minVal) / 255;
+        for (int i = 0; i < terrainResolution; i++) {
+            for (int j = 0; j < terrainResolution; j++) {
+                val = (this->terrainData[i][j] - minVal)/s;
+                //val = (this->terrainData[i][j])*10+50;
+                if(val < 0) val = 0;
+                if(val > 255) val = 255;
+                image->setPixel(i, j, qRgb(val,val,val));
+            }
         }
     }
     this->ok = true;

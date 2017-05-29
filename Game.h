@@ -70,6 +70,7 @@ public:
     static float cameraSpeedStd;
     static float cameraSpeedMax;
     static bool cameraStickToTerrain;
+    static bool mstsShadows;
     static bool viewWorldGrid;
     static bool viewTileGrid;
     static bool viewTerrainGrid;
@@ -112,6 +113,8 @@ public:
     static QString StyleRedText;
     static QString imageMapsUrl;
     static int mapImageResolution;
+    static bool autoNewTiles;
+    static bool autoGeoTerrain;
     
     static int AASamples;
     static float PixelRatio;

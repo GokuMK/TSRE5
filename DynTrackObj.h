@@ -40,7 +40,7 @@ public:
     void removedFromTDB();
     void deleteVBO();
     int getDefaultDetailLevel();
-    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
+    void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
     int tex1;
     int tex2;
