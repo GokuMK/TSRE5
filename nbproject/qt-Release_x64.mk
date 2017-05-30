@@ -254,6 +254,7 @@ SOURCES       = AboutWindow.cpp \
 		moc_SignalWindow.cpp \
 		moc_SignalWindowLink.cpp \
 		moc_StaticObj.cpp \
+		moc_Terrain.cpp \
 		moc_TerrainTools.cpp \
 		moc_TerrainTreeWindow.cpp \
 		moc_TerrainWaterWindow.cpp \
@@ -472,6 +473,7 @@ OBJECTS       = build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/AboutWindow.
 		build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindow.o \
 		build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindowLink.o \
 		build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_StaticObj.o \
+		build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_Terrain.o \
 		build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTools.o \
 		build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTreeWindow.o \
 		build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainWaterWindow.o \
@@ -1227,7 +1229,7 @@ clean: compiler_clean
 	-$(DEL_FILE) build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TRitem.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TRnode.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TS.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TSection.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TSectionDAT.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Terrain.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainLib.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainTools.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainTreeWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainWaterWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TexLib.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TextEditDialog.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TextObj.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Texture.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Tile.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrWatermarkObj.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackItemObj.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackObj.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackShape.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Traffic.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TransferObj.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TransformWorldObjDialog.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Trk.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrkWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Undo.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/UnsavedDialog.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Vector2f.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Vector2i.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Vector3f.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Vector4f.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/WorldObj.o
 	-$(DEL_FILE) build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/main.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/tsre5_plugin_import.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AboutWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AceLib.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityServiceTools.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityTools.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_CELoadWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ChooseFileDialog.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ClickableLabel.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ConEditorWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ConListWidget.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ConUnitsWidget.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_EditFileNameDialog.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_EngListWidget.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_GeoTools.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_HeightWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ImageLib.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_LoadWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_MapData.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_MapDataOSM.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_MapDataUrlImage.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_MapLib.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_MapWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_NaviBox.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_NaviWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_NewRouteWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ObjTools.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_OverwriteDialog.o
 	-$(DEL_FILE) build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesAbstract.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesCarspawner.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesConsist.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesDyntrack.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesForest.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesGroup.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesLevelCr.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesPickup.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesPlatform.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesRuler.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSiding.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSignal.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSoundRegion.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSoundSource.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesSpeedpost.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesStatic.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesTerrain.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesTrackItem.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesTrackObj.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesTransfer.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesUndefined.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_RandomConsist.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_Route.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_RouteEditorGLWidget.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_RouteEditorWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ShapeViewWindow.o
-	-$(DEL_FILE) build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ShapeViewerGLWidget.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindowLink.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_StaticObj.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTools.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTreeWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainWaterWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TextEditDialog.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TransformWorldObjDialog.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TrkWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_UnsavedDialog.o
+	-$(DEL_FILE) build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ShapeViewerGLWidget.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindowLink.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_StaticObj.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_Terrain.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTools.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTreeWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainWaterWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TextEditDialog.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TransformWorldObjDialog.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TrkWindow.o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_UnsavedDialog.o
 	-$(DEL_FILE) build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TSRE5_resource_res.o
 
 distclean: clean 
@@ -1247,9 +1249,9 @@ compiler_no_pch_compiler_make_all:
 compiler_no_pch_compiler_clean:
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityServiceTools.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ClickableLabel.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapData.cpp moc_MapDataOSM.cpp moc_MapDataUrlImage.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesConsist.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTerrain.cpp moc_PropertiesTrackItem.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_Route.cpp moc_RouteEditorGLWidget.cpp moc_RouteEditorWindow.cpp moc_ShapeViewWindow.cpp moc_ShapeViewerGLWidget.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_StaticObj.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TextEditDialog.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp
+compiler_moc_header_make_all: moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityServiceTools.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ClickableLabel.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapData.cpp moc_MapDataOSM.cpp moc_MapDataUrlImage.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesConsist.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTerrain.cpp moc_PropertiesTrackItem.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_Route.cpp moc_RouteEditorGLWidget.cpp moc_RouteEditorWindow.cpp moc_ShapeViewWindow.cpp moc_ShapeViewerGLWidget.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_StaticObj.cpp moc_Terrain.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TextEditDialog.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityServiceTools.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ClickableLabel.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapData.cpp moc_MapDataOSM.cpp moc_MapDataUrlImage.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesConsist.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTerrain.cpp moc_PropertiesTrackItem.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_Route.cpp moc_RouteEditorGLWidget.cpp moc_RouteEditorWindow.cpp moc_ShapeViewWindow.cpp moc_ShapeViewerGLWidget.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_StaticObj.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TextEditDialog.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp
+	-$(DEL_FILE) moc_AboutWindow.cpp moc_AceLib.cpp moc_ActivityServiceTools.cpp moc_ActivityTools.cpp moc_CELoadWindow.cpp moc_ChooseFileDialog.cpp moc_ClickableLabel.cpp moc_ConEditorWindow.cpp moc_ConListWidget.cpp moc_ConUnitsWidget.cpp moc_EditFileNameDialog.cpp moc_EngListWidget.cpp moc_GeoTools.cpp moc_HeightWindow.cpp moc_ImageLib.cpp moc_LoadWindow.cpp moc_MapData.cpp moc_MapDataOSM.cpp moc_MapDataUrlImage.cpp moc_MapLib.cpp moc_MapWindow.cpp moc_NaviBox.cpp moc_NaviWindow.cpp moc_NewRouteWindow.cpp moc_ObjTools.cpp moc_OverwriteDialog.cpp moc_PropertiesAbstract.cpp moc_PropertiesCarspawner.cpp moc_PropertiesConsist.cpp moc_PropertiesDyntrack.cpp moc_PropertiesForest.cpp moc_PropertiesGroup.cpp moc_PropertiesLevelCr.cpp moc_PropertiesPickup.cpp moc_PropertiesPlatform.cpp moc_PropertiesRuler.cpp moc_PropertiesSiding.cpp moc_PropertiesSignal.cpp moc_PropertiesSoundRegion.cpp moc_PropertiesSoundSource.cpp moc_PropertiesSpeedpost.cpp moc_PropertiesStatic.cpp moc_PropertiesTerrain.cpp moc_PropertiesTrackItem.cpp moc_PropertiesTrackObj.cpp moc_PropertiesTransfer.cpp moc_PropertiesUndefined.cpp moc_RandomConsist.cpp moc_Route.cpp moc_RouteEditorGLWidget.cpp moc_RouteEditorWindow.cpp moc_ShapeViewWindow.cpp moc_ShapeViewerGLWidget.cpp moc_SignalWindow.cpp moc_SignalWindowLink.cpp moc_StaticObj.cpp moc_Terrain.cpp moc_TerrainTools.cpp moc_TerrainTreeWindow.cpp moc_TerrainWaterWindow.cpp moc_TextEditDialog.cpp moc_TransformWorldObjDialog.cpp moc_TrkWindow.cpp moc_UnsavedDialog.cpp
 moc_AboutWindow.cpp: c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgets \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgetsDepends \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QtCore \
@@ -22276,6 +22278,110 @@ moc_StaticObj.cpp: WorldObj.h \
 		StaticObj.h \
 		c:/OT/Static/5.7.0_x64/bin/moc.exe
 	'c:\OT\Static\5.7.0_x64\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -Ic:/OT/Static/5.7.0_x64/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -Ic:/OT/Static/5.7.0_x64/include -Ic:/OT/Static/5.7.0_x64/include/QtOpenGL -Ic:/OT/Static/5.7.0_x64/include/QtWidgets -Ic:/OT/Static/5.7.0_x64/include/QtGui -Ic:/OT/Static/5.7.0_x64/include/QtNetwork -Ic:/OT/Static/5.7.0_x64/include/QtCore -I. StaticObj.h -o moc_StaticObj.cpp
+
+moc_Terrain.cpp: c:/OT/Static/5.7.0_x64/include/QtCore/QString \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstring.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qchar.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qglobal.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qconfig.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfeatures.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsystemdetection.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qprocessordetection.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcompilerdetection.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtypeinfo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtypetraits.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qisenum.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsysinfo.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlogging.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qflags.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbasicatomic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic_bootstrap.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qgenericatomic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic_cxx11.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qatomic_msvc.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qglobalstatic.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmutex.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qnumeric.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qversiontagging.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbytearray.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qrefcount.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qnamespace.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qarraydata.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstringbuilder.h \
+		GLUU.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLFunctions \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopengl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qt_windows.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopengles2ext.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglext.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglcontext.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QObject \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qalgorithms.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qiterator.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhashfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpair.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qbytearraylist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstringlist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qregexp.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qstringmatcher.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcoreevent.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qscopedpointer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmetatype.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvarlengtharray.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcontainerfwd.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobject_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QScopedPointer \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QSurfaceFormat \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qsurfaceformat.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglversionfunctions.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvariant.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlocale.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qshareddata.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qvector.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qset.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcontiguouscache.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer_impl.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLVertexArrayObject \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglvertexarrayobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLBuffer \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglbuffer.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QMatrix4x4 \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qmatrix4x4.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector3d.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector4d.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qquaternion.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qgenericmatrix.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdatastream.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qrect.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmargins.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qsize.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLShaderProgram \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglshaderprogram.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qvector2d.h \
+		Vector4f.h \
+		Vector3f.h \
+		Shader.h \
+		TFile.h \
+		FileBuffer.h \
+		OglObj.h \
+		GameObj.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
+		Terrain.h \
+		c:/OT/Static/5.7.0_x64/bin/moc.exe
+	'c:\OT\Static\5.7.0_x64\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -Ic:/OT/Static/5.7.0_x64/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -Ic:/OT/Static/5.7.0_x64/include -Ic:/OT/Static/5.7.0_x64/include/QtOpenGL -Ic:/OT/Static/5.7.0_x64/include/QtWidgets -Ic:/OT/Static/5.7.0_x64/include/QtGui -Ic:/OT/Static/5.7.0_x64/include/QtNetwork -Ic:/OT/Static/5.7.0_x64/include/QtCore -I. Terrain.h -o moc_Terrain.cpp
 
 moc_TerrainTools.cpp: c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgets \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgetsDepends \
@@ -55277,7 +55383,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RouteEditorGLWidget.o: Route
 		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglfunctions_3_3_core.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/QOpenGLVersionFunctions \
 		Undo.h \
-		Environment.h
+		Environment.h \
+		Terrain.h \
+		TFile.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RouteEditorGLWidget.o RouteEditorGLWidget.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RouteEditorWindow.o: RouteEditorWindow.cpp c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgets \
@@ -67828,6 +67936,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindowLink.o: moc_
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_StaticObj.o: moc_StaticObj.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_StaticObj.o moc_StaticObj.cpp
+
+build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_Terrain.o: moc_Terrain.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_Terrain.o moc_Terrain.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTools.o: moc_TerrainTools.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTools.o moc_TerrainTools.cpp

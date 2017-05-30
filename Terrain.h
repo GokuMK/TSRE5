@@ -20,6 +20,7 @@
 class Brush;
 
 class Terrain : public GameObj {
+    Q_OBJECT
 public:
     int loaded;
     float **terrainData;
@@ -59,9 +60,14 @@ public:
     int getSelectedPathId();
     int getSelectedShaderId();
     bool select(int value);
+    bool unselect();
+    void pushContextMenuActions(QMenu *menu);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int selectionColor);
     void renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int layer, int selectionColor = 0);
 
+public slots:
+    void menuToggleWater();
+    
 private:
     unsigned char **fData;
     bool jestF = false;
@@ -77,6 +83,7 @@ private:
     int texid2[256];
     bool texModified[256];
     bool texLocked[256];
+    bool selectedPatchs[256];
     QOpenGLBuffer *VBO = NULL;
     QOpenGLVertexArrayObject *VAO = NULL;
 
@@ -85,6 +92,7 @@ private:
     OglObj slines;
     OglObj ulines;
     OglObj lockedlines;
+    OglObj selectedlines;
     
     struct WaterTile {
         OglObj w[256];
@@ -100,7 +108,7 @@ private:
     int wTexid = -1;
     TFile* tfile;
         
-    int selectedPathId = -1;
+    //int selectedPathId = -1;
     
     void saveRAW(QString name);
     bool readRAW(QString fSfile);

@@ -210,6 +210,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_SignalWindowLink.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_StaticObj.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_Terrain.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTreeWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainWaterWindow.o

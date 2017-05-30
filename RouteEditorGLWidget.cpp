@@ -35,6 +35,7 @@
 #include "QOpenGLFunctions_3_3_Core"
 #include "Undo.h"
 #include "Environment.h"
+#include "Terrain.h"
 
 RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -380,16 +381,26 @@ void RouteEditorGLWidget::handleSelection() {
                 }
             }
         } else if( ww == 10 ){
-            if (selectedObj != NULL) {
-                selectedObj->unselect();
-                if (autoAddToTDB)
-                    route->addToTDBIfNotExist((WorldObj*)selectedObj);
-                setSelectedObj(NULL);
-            }
             int wx = camera->pozT[0] - 1 + ((colorHash >> 10) & 0x3);
             int wz = camera->pozT[1] - 1 + ((colorHash >> 8) & 0x3);
             int UiD = (colorHash) & 0xFF;
             qDebug() << wx << wz << UiD;
+            if (selectedObj != NULL) {
+                if (keyControlEnabled && selectedObj->typeObj == GameObj::terrainobj ) {
+                    Terrain * tt = (Terrain*) selectedObj;
+                    if(tt->mojex != wx || tt->mojez != wz){
+                        selectedObj->unselect();
+                        if (autoAddToTDB)
+                            route->addToTDBIfNotExist((WorldObj*)selectedObj);
+                        setSelectedObj(NULL);
+                    }
+                } else {
+                    selectedObj->unselect();
+                    if (autoAddToTDB)
+                        route->addToTDBIfNotExist((WorldObj*)selectedObj);
+                    setSelectedObj(NULL);
+                }
+            }
             setSelectedObj((GameObj*)TerrainLib::terrain[wx*10000+wz]);
             if (selectedObj == NULL) {
                 qDebug() << "brak obiektu";
@@ -1180,9 +1191,10 @@ void RouteEditorGLWidget::showTrkEditr() {
 void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
     QMenu menu;
     if(selectedObj != NULL){
+        menu.addSection("Object");
+        selectedObj->pushContextMenuActions(&menu);
+        
         if(selectedObj->typeObj == selectedObj->worldobj){
-            menu.addSection("Object");
-            selectedObj->pushContextMenuActions(&menu);
             menu.addAction(defaultMenuActions.find1x1);
             menu.addAction(defaultMenuActions.find3x3);
         }

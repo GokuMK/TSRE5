@@ -107,7 +107,7 @@ void PropertiesAbstract::pasteREnabled(){
     float nq[4];
     nq[0] = args[0].toFloat();
     nq[1] = args[1].toFloat();
-    nq[2] = args[2].toFloat();
+    nq[2] = -args[2].toFloat();
     nq[3] = args[3].toFloat();
     
     Undo::SinglePushWorldObjData(worldObj);

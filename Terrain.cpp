@@ -35,6 +35,7 @@ Terrain::Terrain(float x, float y) {
         texModified[i] = false;
         texLocked[i] = false;
         uniqueTex[i] = false;
+        selectedPatchs[i] = false;
     }
     VBO = new QOpenGLBuffer();
     VAO = new QOpenGLVertexArrayObject();
@@ -357,14 +358,15 @@ void Terrain::removeTextureFromMap(){
 }
 
 void Terrain::setWaterDraw() {
-    if(selectedPathId < 0)
-        return;
-    tfile->flags[selectedPathId] = tfile->flags[selectedPathId] ^ 0x10000c0;
-    this->setModified(true);
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            tfile->flags[uu] = tfile->flags[uu] ^ 0x10000c0;
+            this->setModified(true);
+        }
+    }
 }
 
 void Terrain::setWaterDraw(int x, int z, float posx, float posz) {
-
     int u = (posx + 1024) / 128;
     int y = (posz + 1024) / 128;
     //hidden[y*16 + u] = true;
@@ -377,47 +379,56 @@ void Terrain::setWaterDraw(int x, int z, float posx, float posz) {
     tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x10000c0;
     this->setModified(true);
 }
+
 void Terrain::setDrawAdjacent(){
-    if(selectedPathId < 0)
-        return;
-    int u = selectedPathId / 16;
-    int y = selectedPathId - u*16;
-    for(int i = u - 1; i <= u+1; i++)
-        for(int j = y - 1; j <= y+1; j++){
-            if(i < 0 || j < 0 || i > 15 || j > 15)
-                continue;
-            tfile->flags[i*16+j] = tfile->flags[i*16+j] & ~(0x1);
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            int u = uu / 16;
+            int y = uu - u*16;
+            for(int i = u - 1; i <= u+1; i++)
+                for(int j = y - 1; j <= y+1; j++){
+                    if(i < 0 || j < 0 || i > 15 || j > 15)
+                        continue;
+                    tfile->flags[i*16+j] = tfile->flags[i*16+j] & ~(0x1);
+                }
+                this->setModified(true);
         }
-    this->setModified(true);
+    }
 }
 
 void Terrain::rotatePatchTexture(){
-    if(selectedPathId < 0)
-        return;
-    rotateTex(selectedPathId);
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            rotateTex(uu);
+        }
+    }
 }
 
 void Terrain::removeAllGaps(){
-    if(selectedPathId < 0)
-        return;
     if(!jestF)
         return;
-    int u = selectedPathId / 16;
-    int y = selectedPathId - u*16;
-    
-    for(int i = 0; i < 16; i++)
-        for(int j = 0; j < 16; j++)
-            fData[u*16+i][y*16+j] &= ~(0x04);
-    modifiedF = true;
-    modified = true;
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            int u = uu / 16;
+            int y = uu - u*16;
+
+            for(int i = 0; i < 16; i++)
+                for(int j = 0; j < 16; j++)
+                    fData[u*16+i][y*16+j] &= ~(0x04);
+            modifiedF = true;
+            modified = true;
+        }
+    }
     refresh();
 }
     
 void Terrain::setDraw() {
-    if(selectedPathId < 0)
-        return;
-    tfile->flags[selectedPathId] = tfile->flags[selectedPathId] ^ 0x1;
-    this->setModified(true);
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            tfile->flags[uu] = tfile->flags[uu] ^ 0x1;
+            this->setModified(true);
+        }
+    }
 }
 
 void Terrain::setDraw(int x, int z, float posx, float posz) {
@@ -436,17 +447,22 @@ void Terrain::setDraw(int x, int z, float posx, float posz) {
 }
 
 float Terrain::getErrorBias(){
-    if(selectedPathId < 0)
-        return -1;
-    return tfile->erroeBias[selectedPathId];
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            return tfile->erroeBias[uu];
+        }
+    }
+    return -1;
 }
 
 
 void Terrain::setErrorBias(float val){
-    if(selectedPathId < 0)
-        return;
-    tfile->erroeBias[selectedPathId] = val;
-    this->setModified(true);
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            tfile->erroeBias[uu] = val;
+            this->setModified(true);
+        }
+    }
 }
 
 void Terrain::setErrorBias(int x, int z, float val){
@@ -648,6 +664,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
         slines.render();
         ulines.render();
         lockedlines.render();
+        selectedlines.render();
     }
 
     gluu->enableTextures();  
@@ -1078,6 +1095,59 @@ void Terrain::reloadLines() {
     
     lockedlines.setMaterial(0.1, 0.1, 0.1);
     lockedlines.init(punkty, ptr, lines.V, GL_LINES);
+    delete[] punkty;
+    
+    //////////////////////
+    
+    ui = 0;
+    for (int uu = 0; uu < 16; uu++)
+        for (int yy = 0; yy < 16; yy++)
+            if(this->selectedPatchs[uu*16+yy]) ui++;
+    
+    punkty = new float[256 * 128 * 6];
+    ptr = 0;
+    i = 0;
+    
+    for (int uu = 0; uu < 16; uu++)
+        for (int yy = 0; yy < 16; yy++){
+            if(!this->selectedPatchs[yy*16+uu]) continue;
+            
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+i][uu*16+0];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8;
+                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+ i + 1][uu*16+0];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+            }
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+0][uu*16+i];
+                 punkty[ptr++] = -1024 + yy*128;
+                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+0][uu*16+i + 1];
+                 punkty[ptr++] = -1024 + yy*128;
+            }
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+i][uu*16+16];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8;
+                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+ i + 1][uu*16+16];
+                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+            }
+            for (i = 0; i < 16; i++) {
+                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+16][uu*16+i];
+                 punkty[ptr++] = -1024 + yy*128+128;
+                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = 0.99 + terrainData[yy*16+16][uu*16+i + 1];
+                 punkty[ptr++] = -1024 + yy*128+128;
+            }
+        }
+    
+    selectedlines.setMaterial(0.0, 0.0, 0.8);
+    selectedlines.init(punkty, ptr, lines.V, GL_LINES);
     delete[] punkty;
 }
 
@@ -1654,17 +1724,78 @@ void Terrain::saveF(QString name) {
 }
 
 int Terrain::getSelectedPathId(){
-    return selectedPathId;
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            return uu;
+        }
+    }
+    return -1;
 }
 
 int Terrain::getSelectedShaderId(){
-    if(selectedPathId < 0)
-        return -1;
-    return tfile->tdata[(selectedPathId)*13 + 0 + 6];
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            return tfile->tdata[(uu)*13 + 0 + 6];
+        }
+    }
+    return -1;
 }
 
 bool Terrain::select(int value){
-    this->selected = true;
-    selectedPathId = value;
+    if(selected){
+        int selectedId = 0;
+        for (int uu = 0; uu < 256; uu++) {
+            if(selectedPatchs[uu]){
+                selectedId = uu;
+                break;
+            }
+        }
+        int u1 = selectedId / 16;
+        int y1 = selectedId - u1*16;
+        int u2 = value / 16;
+        int y2 = value - u2*16;
+        if(u1 > u2){
+            int temp = u2;
+            u2 = u1;
+            u1 = temp;
+        }
+        if(y1 > y2){
+            int temp = y2;
+            y2 = y1;
+            y1 = temp;
+        }
+        for(int i = u1; i <= u2; i++)
+            for(int j = y1; j <= y2; j++){
+                if(i < 0 || j < 0 || i > 15 || j > 15)
+                    continue;
+                selectedPatchs[i*16+j] = true;
+            }
+    } else {
+        selected = true;
+        selectedPatchs[value] = true;
+    }
+    reloadLines();
     return true;
+}
+
+bool Terrain::unselect(){
+    for (int i = 0; i < 256; i++) {
+        selectedPatchs[i] = false;
+    }
+    reloadLines();
+    this->selected = false;
+    return false;
+}
+
+void Terrain::pushContextMenuActions(QMenu *menu){
+    if(contextMenuActions["ToggleWater"] == NULL){
+        contextMenuActions["ToggleWater"] = new QAction(tr("&Toggle Water")); 
+        QObject::connect(contextMenuActions["ToggleWater"], SIGNAL(triggered()), this, SLOT(menuToggleWater()));
+    }
+    menu->addAction(contextMenuActions["ToggleWater"]);
+
+}
+
+void Terrain::menuToggleWater(){
+    setWaterDraw();
 }
