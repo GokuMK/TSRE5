@@ -64,7 +64,7 @@ QString ParserX::SplitToMultiline(QString n, QString woff){
     return n;
 }
 //-----------------------------------
-//Next line
+// Next line
 //-----------------------------------
 int ParserX::NextLine(FileBuffer* bufor){
     unsigned short int b;
@@ -77,7 +77,7 @@ int ParserX::NextLine(FileBuffer* bufor){
     return 0;
 }
 //-----------------------------------
-//Szukanie sekcji
+// Szukanie sekcji
 // DEPRECATED - DO NOT USE
 //-----------------------------------
 int ParserX::FindTokenDomIgnore(QString sh, FileBuffer* bufor){
@@ -129,7 +129,7 @@ int ParserX::FindTokenDomIgnore(QString sh, FileBuffer* bufor){
     return 0;
 }
 //-----------------------------------
-//Szukanie sekcji
+// Szukanie sekcji
 // DEPRECATED - DO NOT USE
 //-----------------------------------
 QString ParserX::NextTokenDomIgnore(FileBuffer* bufor){
@@ -173,7 +173,7 @@ QString ParserX::NextTokenDomIgnore(FileBuffer* bufor){
     return "";
 }
 //-----------------------------------
-//Szukanie sekcji
+// Szukanie sekcji
 //-----------------------------------
 QString ParserX::NextTokenInside(FileBuffer* bufor){
     unsigned short int b;
@@ -230,7 +230,7 @@ QString ParserX::NextTokenInside(FileBuffer* bufor){
     return "";
 }
 //-----------------------------------
-//Parsowanie stringa
+// Parsowanie stringa
 //-----------------------------------
 QString ParserX::GetString(FileBuffer* bufor){
     QString sciezka = "";
@@ -264,7 +264,7 @@ QString ParserX::GetString(FileBuffer* bufor){
     return sciezka;
 }
 //-----------------------------------
-//Parsowanie stringa
+// Parsowanie stringa
 //-----------------------------------
 QString ParserX::GetStringInside(FileBuffer* bufor){
     QString sciezka = "";
@@ -312,7 +312,7 @@ QString ParserX::GetStringInside(FileBuffer* bufor){
     return "";
 }
 //-----------------------------------
-//Parsowanie liczby rzeczywistej
+// Parsowanie liczby rzeczywistej
 //-----------------------------------
 float ParserX::GetNumber(FileBuffer* bufor){
     unsigned short int b = 0;
@@ -383,7 +383,7 @@ float ParserX::GetNumber(FileBuffer* bufor){
     return x;
 }
 //-----------------------------------
-//Parsowanie liczby rzeczywistej
+// Parsowanie liczby rzeczywistej
 //-----------------------------------
 float ParserX::GetNumberInside(FileBuffer* bufor, bool *ok){
     unsigned short int b = 0;
@@ -521,7 +521,7 @@ float ParserX::NumberUnit(float x, unsigned short int &b, FileBuffer* bufor){
     return x;
 }
 //-----------------------------------
-//Parsowanie liczby uint
+// Parsowanie liczby uint
 //-----------------------------------
 unsigned int ParserX::GetUInt(FileBuffer* bufor){
     unsigned short int b = 0;
@@ -541,7 +541,7 @@ unsigned int ParserX::GetUInt(FileBuffer* bufor){
     return x;
 }
 //-----------------------------------
-//Parsowanie liczby szesnastkowej
+// Parsowanie liczby szesnastkowej
 //-----------------------------------
 unsigned int ParserX::GetHex(FileBuffer* bufor){
     unsigned short int b = 0, sb = 0;
@@ -566,7 +566,7 @@ unsigned int ParserX::GetHex(FileBuffer* bufor){
     return x;
 }
 //-----------------------------------
-//Pominiecie sekcji
+// Pominiecie sekcji
 //-----------------------------------
 int ParserX::SkipToken(FileBuffer* bufor){
     unsigned short int b;

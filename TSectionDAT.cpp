@@ -13,6 +13,8 @@
 #include "ParserX.h"
 #include "FileBuffer.h"
 #include "ReadFile.h"
+#include <QFile>
+#include <QTextStream>
 
 TSectionDAT::TSectionDAT() {
     loadGlobal();
@@ -248,67 +250,70 @@ bool TSectionDAT::loadRoute() {
     if (!file.open(QIODevice::ReadOnly))
         return false;
     FileBuffer* bufor = ReadFile::read(&file);
-
-    //szukanie TrackSections
-    sh = "TrackSections";
-    ParserX::FindTokenDomIgnore(sh, bufor);
-
+    ParserX::NextLine(bufor);
+    
     int index = 0;
-
-    //for (;;) {
-    //this->routeMaxIdx = 0;
-    //this->routeShapes = 0;
     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-        //qDebug() << sh;
-        //if (sh.toLower() =="sectionidx") break;
-        if (sh.toLower() == "tracksection") {
-            //    bufor->get();
-            //    bufor->get();
-            //    continue;
-            //}
-            //if (sh.toLower() =="sectioncurve") {
-            int typ = (int) ParserX::GetNumber(bufor);
-            index = (int) ParserX::GetNumber(bufor);
-            if (index > this->routeMaxIdx)
-                this->routeMaxIdx = index;
-            sekcja[index] = new TSection(index);
-            sekcja[index]->type = typ;
-            if (typ == 0) {
-                sekcja[index]->size = ParserX::GetNumber(bufor);
-                sekcja[index]->val1 = ParserX::GetNumber(bufor);
-                //System.out.println(sekcja.get(index).id+" "+sekcja.get(index).size);
-            } else {
-                sekcja[index]->angle = ParserX::GetNumber(bufor);
-                sekcja[index]->radius = ParserX::GetNumber(bufor);
-                //System.out.println(sekcja.get(index).id+" "+sekcja.get(index).radius+""+sekcja.get(index).angle);
+        if (sh == "tracksections") {
+            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                //qDebug() << sh;
+                //if (sh.toLower() =="sectionidx") break;
+                if (sh.toLower() == "tracksection") {
+                    //    bufor->get();
+                    //    bufor->get();
+                    //    continue;
+                    //}
+                    //if (sh.toLower() =="sectioncurve") {
+                    int typ = (int) ParserX::GetNumber(bufor);
+                    index = (int) ParserX::GetNumber(bufor);
+                    if (index > this->routeMaxIdx)
+                        this->routeMaxIdx = index;
+                    sekcja[index] = new TSection(index);
+                    sekcja[index]->type = typ;
+                    if (typ == 0) {
+                        sekcja[index]->size = ParserX::GetNumber(bufor);
+                        sekcja[index]->val1 = ParserX::GetNumber(bufor);
+                        //System.out.println(sekcja.get(index).id+" "+sekcja.get(index).size);
+                    } else {
+                        sekcja[index]->angle = ParserX::GetNumber(bufor);
+                        sekcja[index]->radius = ParserX::GetNumber(bufor);
+                        //System.out.println(sekcja.get(index).id+" "+sekcja.get(index).radius+""+sekcja.get(index).angle);
+                    }
+                }
+                ParserX::SkipToken(bufor);
             }
+            ParserX::SkipToken(bufor);
+            continue;
         }
+        if (sh == "sectionidx") {
+            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                if (sh.toLower() == "trackpath") {
+                    //   qDebug() << (int) ParserX::GetNumber(bufor);
+                    index = (int) ParserX::GetNumber(bufor);
+                    if (index > this->routeShapes)
+                        this->routeShapes = index;
+                    shape[index] = new TrackShape(index);
+                    shape[index]->dyntrack = true;
+                    shape[index]->numpaths = 1;
+                    shape[index]->path = new TrackShape::SectionIdx[1];
+                    //this->routeShape[index] = new TrackShape::SectionIdx;
+                    shape[index]->path[0].n = ParserX::GetNumber(bufor);
+                    shape[index]->path[0].pos[0] = 0;
+                    shape[index]->path[0].pos[1] = 0;
+                    shape[index]->path[0].pos[2] = 0;
+                    for (int i = 0; i < shape[index]->path[0].n; i++)
+                        shape[index]->path[0].sect[i] = ParserX::GetNumber(bufor);
+                }
+                ParserX::SkipToken(bufor);
+            }
+            ParserX::SkipToken(bufor);
+            continue;
+        }
+        qDebug() << "#RouteTsectionDat - undefined token " << sh;
         ParserX::SkipToken(bufor);
     }
+    
     this->routeMaxIdx += 2 - this->routeMaxIdx % 2;
-
-    sh = "SectionIdx";
-    ParserX::FindTokenDomIgnore(sh, bufor);
-    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-        if (sh.toLower() == "trackpath") {
-            //   qDebug() << (int) ParserX::GetNumber(bufor);
-            index = (int) ParserX::GetNumber(bufor);
-            if (index > this->routeShapes)
-                this->routeShapes = index;
-            shape[index] = new TrackShape(index);
-            shape[index]->dyntrack = true;
-            shape[index]->numpaths = 1;
-            shape[index]->path = new TrackShape::SectionIdx[1];
-            //this->routeShape[index] = new TrackShape::SectionIdx;
-            shape[index]->path[0].n = ParserX::GetNumber(bufor);
-            shape[index]->path[0].pos[0] = 0;
-            shape[index]->path[0].pos[1] = 0;
-            shape[index]->path[0].pos[2] = 0;
-            for (int i = 0; i < shape[index]->path[0].n; i++)
-                shape[index]->path[0].sect[i] = ParserX::GetNumber(bufor);
-        }
-        ParserX::SkipToken(bufor);
-    }
     this->routeShapes++;
     //saveRoute();
     return true;

@@ -71,141 +71,141 @@ void TDB::loadTdb(){
     if (!file.open(QIODevice::ReadOnly))
         return;
     FileBuffer* bufor = ReadFile::read(&file);
-
-    //szukanie trackdb
-    sh = "TrackDB";
-    ParserX::FindTokenDomIgnore(sh, bufor);
-    qDebug() << "znaleziono sekcje na " << bufor->off;
+    file.close();
+    bufor->toUtf16();
+    bufor->skipBOM();
+    ParserX::NextLine(bufor);
     iTRnodes = 0;
+    
     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-        qDebug() << "sh " << sh;
-        if(sh == "tracknodes"){
-            iTRnodes = (int) ParserX::GetNumber(bufor); //odczytanie ilosci sciezek
-            //trackNodes = new TRnode[iTRnodes + 100]; //przydzielenie pamieci
-            qDebug() << "N" << iTRnodes;
-            //zapisanie x tracknodes
-            for (i = 0; i < iTRnodes; i++) {
-                sh = "TrackNode";
-                ParserX::FindTokenDomIgnore(sh, bufor);
-                t = (int) ParserX::GetNumber(bufor); // odczytanie numeru sciezki
-                sh = ParserX::NextTokenDomIgnore(bufor);
-                //System.out.println("----"+sh);
-                trackNodes[t] = new TRnode();
-                switch (sh.length()) {// wybranie typu sciezki ^^
-                    case 9:
-                        trackNodes[t]->typ = 0; //typ endnode
-                        sh = "UiD";
-                        ParserX::FindTokenDomIgnore(sh, bufor);
-                        for (ii = 0; ii < 12; ii++) {
-                            trackNodes[t]->UiD[ii] = ParserX::GetNumber(bufor);
-                        }
-                        sh = "TrPins";
-                        ParserX::FindTokenDomIgnore(sh, bufor);
-                        trpin(trackNodes[t], bufor);
-                        ParserX::SkipToken(bufor);
-                        ParserX::SkipToken(bufor);
-                        break;
-                    case 12:
-                        trackNodes[t]->typ = 1; //typ vector 
+        if (sh == "trackdb") {
+            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                if(sh == "tracknodes"){
+                    iTRnodes = (int) ParserX::GetNumber(bufor); //odczytanie ilosci sciezek
+                    qDebug() << "TDB TrackNodes count " << iTRnodes;
 
-                        while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-                            if(sh == "trvectorsections"){
-                                uu = (int) ParserX::GetNumber(bufor);
-                                trackNodes[t]->iTrv = uu;
-                                trackNodes[t]->trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
-
-                                for (j = 0; j < uu; j++) {
-                                    for (ii = 0; ii < 16; ii++) {
-                                        xx = ParserX::GetNumber(bufor);
-                                        trackNodes[t]->trVectorSection[j].param[ii] = xx;
-                                    }
-                                    //System.out.println(
-                                    //this.TrackNodes[t].TrVectorSection[j].param[13]+" "+
-                                    //this.TrackNodes[t].TrVectorSection[j].param[14]+" "+
-                                    //this.TrackNodes[t].TrVectorSection[j].param[15]);
+                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                        if(sh == "tracknode"){
+                            t = (int) ParserX::GetNumber(bufor); // odczytanie numeru sciezki
+                            trackNodes[t] = new TRnode();
+                            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                                if(sh == "trendnode"){
+                                    trackNodes[t]->typ = 0; //typ endnode
+                                    ParserX::SkipToken(bufor);
+                                    continue;
                                 }
-                            }
-                            if(sh == "tritemrefs"){
-                                uu = (int) ParserX::GetNumber(bufor);
-                                trackNodes[t]->iTri = uu;
-                                trackNodes[t]->trItemRef = new int[uu]; // przydzielenie pamieci dla sciezki
-                                if(uu > 0){
-                                    for (j = 0; j < uu; j++) {
-                                        trackNodes[t]->trItemRef[j] = ParserX::GetNumber(bufor);
+                                if(sh == "trvectornode"){
+                                    trackNodes[t]->typ = 1; //typ vector 
+                                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                                        if(sh == "trvectorsections"){
+                                            uu = (int) ParserX::GetNumber(bufor);
+                                            trackNodes[t]->iTrv = uu;
+                                            trackNodes[t]->trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
+                                            for (j = 0; j < uu; j++) {
+                                                for (ii = 0; ii < 16; ii++) {
+                                                    xx = ParserX::GetNumber(bufor);
+                                                    trackNodes[t]->trVectorSection[j].param[ii] = xx;
+                                                }
+                                            }
+                                            ParserX::SkipToken(bufor);
+                                            continue;
+                                        }
+                                        if(sh == "tritemrefs"){
+                                            uu = (int) ParserX::GetNumber(bufor);
+                                            trackNodes[t]->iTri = uu;
+                                            trackNodes[t]->trItemRef = new int[uu]; // przydzielenie pamieci dla sciezki
+                                            if(uu > 0){
+                                                for (j = 0; j < uu; j++) {
+                                                    trackNodes[t]->trItemRef[j] = ParserX::GetNumber(bufor);
+                                                }
+                                                ParserX::SkipToken(bufor);
+                                            }
+                                            ParserX::SkipToken(bufor);
+                                            continue;
+                                        }
+                                        qDebug() << "#TDB TrVectorNode - undefined token " << sh;
+                                        ParserX::SkipToken(bufor);
                                     }
+                                    ParserX::SkipToken(bufor);
+                                    continue;
+                                }
+                                if(sh == "trjunctionnode"){
+                                    trackNodes[t]->typ = 2; //typ rozjazd
+                                    trackNodes[t]->args[0] = ParserX::GetNumber(bufor);
+                                    trackNodes[t]->args[1] = ParserX::GetNumber(bufor);
+                                    trackNodes[t]->args[2] = ParserX::GetNumber(bufor);
+                                    ParserX::SkipToken(bufor);
+                                    continue;
+                                }
+                                if(sh == "trpins"){
+                                    trackNodes[t]->TrP1 = (int) ParserX::GetNumber(bufor);
+                                    trackNodes[t]->TrP2 = (int) ParserX::GetNumber(bufor);
+
+                                    for (int i = 0; i < (trackNodes[t]->TrP1 + trackNodes[t]->TrP2); i++) {
+                                        trackNodes[t]->TrPinS[i] = (int) ParserX::GetNumber(bufor);
+                                        trackNodes[t]->TrPinK[i] = (int) ParserX::GetNumber(bufor);
+                                    }
+                                    ParserX::SkipToken(bufor);
+                                    ParserX::SkipToken(bufor);
+                                    continue;
+                                }
+                                if(sh == "uid"){
+                                    for (ii = 0; ii < 12; ii++) {
+                                        trackNodes[t]->UiD[ii] = ParserX::GetNumber(bufor);
+                                    }
+                                    ParserX::SkipToken(bufor);
+                                    continue;              
+                                }
+                                qDebug() << "#TDB TrackNode - undefined token " << sh;
+                                //trackNodes[t] = NULL;
                                 ParserX::SkipToken(bufor);
-                                }
                             }
                             ParserX::SkipToken(bufor);
+                            continue;
                         }
-                        sh = "TrPins";
-                        ParserX::FindTokenDomIgnore(sh, bufor);
-                        trpin(trackNodes[t], bufor);
+                        qDebug() << "#TDB TrackNodes - undefined token " << sh;
                         ParserX::SkipToken(bufor);
-                        ParserX::SkipToken(bufor);
-                        break;
-                    case 14:
-                        trackNodes[t]->typ = 2; //typ rozjazd
-                        trackNodes[t]->args[0] = ParserX::GetNumber(bufor);
-                        trackNodes[t]->args[1] = ParserX::GetNumber(bufor);
-                        trackNodes[t]->args[2] = ParserX::GetNumber(bufor);
-                        sh = "UiD";
-                        ParserX::FindTokenDomIgnore(sh, bufor);
-                        for (ii = 0; ii < 12; ii++) {
-                            trackNodes[t]->UiD[ii] = ParserX::GetNumber(bufor);
-                        }
-                        sh = "TrPins";
-                        ParserX::FindTokenDomIgnore(sh, bufor);
-                        trpin(trackNodes[t], bufor);
-                        ParserX::SkipToken(bufor);
-                        ParserX::SkipToken(bufor);
-                        break;
-                    default:
-                        qDebug() << "Nieprawidlowa sciezka -> ERROR";
-                        trackNodes[t] = NULL;
-                        break;
-                }
-                ParserX::SkipToken(bufor);
-            }
-            ParserX::SkipToken(bufor);
-        }
-        if(sh == "serial"){
-            this->serial = (int) ParserX::GetNumber(bufor);
-            ParserX::SkipToken(bufor);
-        }
-        if(sh == "tritemtable"){
-            iTRitems = (int) ParserX::GetNumber(bufor); //odczytanie ilosci sciezek
-            
-            TRitem* nowy;// = new TRitem();
-            
-            for (int i = 0; i < iTRitems; i++) {
-                sh = ParserX::NextTokenDomIgnore(bufor).toLower();
-
-                if (sh == "") {
-                    qDebug() << "tritemtable Fail";
+                    }
                     ParserX::SkipToken(bufor);
-                    break;
-                }
-                
-                nowy = new TRitem();
-                if(!nowy->init(sh)){
-                    ParserX::SkipToken(bufor);
-                    qDebug() << "-" << sh;
                     continue;
                 }
-
-                while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-                    nowy->set(sh, bufor);
+                if(sh == "serial"){
+                    this->serial = (int) ParserX::GetNumber(bufor);
                     ParserX::SkipToken(bufor);
+                    continue;
                 }
-                this->trackItems[nowy->trItemId] = nowy;
+                if(sh == "tritemtable"){
+                    iTRitems = (int) ParserX::GetNumber(bufor); //odczytanie ilosci sciezek
+                    TRitem* nowy;
+                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                        //qDebug() <<"ssh1 "<< sh;
+                        nowy = new TRitem();
+                        if(!nowy->init(sh)){
+                            qDebug() << "#TDB TrItemTable undefined token " << sh;
+                            ParserX::SkipToken(bufor);
+                            continue;
+                        }
 
+                        while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                            nowy->set(sh, bufor);
+                            ParserX::SkipToken(bufor);
+                        }
+
+                        this->trackItems[nowy->trItemId] = nowy;
+                        ParserX::SkipToken(bufor);
+                        continue;
+                    }
+                    ParserX::SkipToken(bufor);
+                    continue;
+                }
+                qDebug() << "#TDB trackdb undefined token " << sh;
                 ParserX::SkipToken(bufor);
-                continue;
             }
-            
             ParserX::SkipToken(bufor);
+            continue;
         }
+        qDebug() << "#TDB undefined token " << sh;
+        ParserX::SkipToken(bufor);
     }
     /*for(int i = 1; i <= iTRnodes; i++){
         int old;
@@ -229,30 +229,22 @@ void TDB::loadTit(){
     if (!file.open(QIODevice::ReadOnly))
         return;
     FileBuffer* bufor = ReadFile::read(&file);
-
-    //szukanie trackdb
-    sh = "TrItemTable";
-    ParserX::FindTokenDomIgnore(sh, bufor);
-    qDebug() << "znaleziono sekcje TrItemTable na " << bufor->off;
+    file.close();
+    bufor->toUtf16();
+    bufor->skipBOM();
+    ParserX::NextLine(bufor);
     
+    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+        if(sh == "tritemtable"){
             int iiTRitems = (int) ParserX::GetNumber(bufor); //odczytanie ilosci sciezek
-            
-            TRitem* nowy;// = new TRitem();
-            nowy = new TRitem();
+            TRitem* nowy = new TRitem();
             nowy->titLoading = true;
             
-            for (int i = 0; i < iiTRitems; i++) {
-                sh = ParserX::NextTokenDomIgnore(bufor).toLower();
-
-                if (sh == "") {
-                    qDebug() << "tritemtable Fail";
-                    ParserX::SkipToken(bufor);
-                    break;
-                }
-                
+            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                //qDebug() <<"ssh2 "<< sh;
                 if(!nowy->init(sh)){
+                    qDebug() << "#TIT TrItemTable undefined token " << sh;
                     ParserX::SkipToken(bufor);
-                    qDebug() << "-" << sh;
                     continue;
                 }
 
@@ -262,27 +254,20 @@ void TDB::loadTit(){
                 }
                 
                 if(this->trackItems[nowy->trItemId] == NULL){
-                    qDebug() << "tit tdb fail" << nowy->trItemId;
+                    qDebug() << "#TIT tdb fail" << nowy->trItemId;
                 } else {
                     this->trackItems[nowy->trItemId]->trSignalRDir = new float[nowy->trSignalDirs * 6];
                     memcpy(this->trackItems[nowy->trItemId]->trSignalRDir, nowy->trSignalRDir, sizeof(float[nowy->trSignalDirs * 6]));
                 }
                 ParserX::SkipToken(bufor);
-                continue;
             }
-
-    return;
-}
-
-void TDB::trpin(TRnode *tr, FileBuffer* bufor) {
-
-    tr->TrP1 = (int) ParserX::GetNumber(bufor);
-    tr->TrP2 = (int) ParserX::GetNumber(bufor);
-
-    for (int i = 0; i < (tr->TrP1 + tr->TrP2); i++) {
-        tr->TrPinS[i] = (int) ParserX::GetNumber(bufor);
-        tr->TrPinK[i] = (int) ParserX::GetNumber(bufor);
+            ParserX::SkipToken(bufor);
+            continue;
+        }
+        qDebug() << "#TIT undefined token " << sh;
+        ParserX::SkipToken(bufor);
     }
+    return;
 }
 
 int TDB::getNewTRitemId(){

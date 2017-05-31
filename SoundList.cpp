@@ -39,17 +39,27 @@ void SoundList::loadSoundSources(QString path){
         //qDebug() << sh;
         if (sh == ("sound")) {
             s = new SoundListItem();
-            ParserX::FindTokenDomIgnore("name", data);
-            s->name = ParserX::GetString(data);
-            ParserX::FindTokenDomIgnore("filename", data);
-            s->file1 = ParserX::GetString(data);
-            s->type = SoundListItem::Source;
-            s->id = id++;
-            sources[s->name] = s;
-            ParserX::SkipToken(data);
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                if(sh == "name"){
+                    s->name = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if(sh == "filename"){
+                    s->file1 = ParserX::GetString(data);
+                    s->type = SoundListItem::Source;
+                    s->id = id++;
+                    sources[s->name] = s;
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                qDebug() << "#sound - undefined token " << sh;
+                ParserX::SkipToken(data);
+            }
             ParserX::SkipToken(data);
             continue;
         }
+        qDebug() << "#SoundSources - undefined token " << sh;
         ParserX::SkipToken(data);
     }
 

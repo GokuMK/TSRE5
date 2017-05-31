@@ -107,65 +107,58 @@ void Tile::load() {
         return;
     }
     FileBuffer* data = ReadFile::read(file);
-    //qDebug() << "Date:" << data->length;
-    //data->off = 0;
-    //for(int i = 0; i < 64; i++){
-    //    data->off = i;
-    //    qDebug() << (char)data->get()<<"-"<<data->get();
-    //}
+
     data->setTokenOffset(261844);
     data->off = 32;
     if (data->getToken() != 375){
         qDebug() << "w file uncompressed " << path;
         data->off = 0;
-        sh = "Tr_Worldfile";
-        ParserX::FindTokenDomIgnore(sh, data);
-
-        for (int tt = 0;; tt++) {
-            sh = ParserX::NextTokenDomIgnore(data).toLower();
-            //qDebug() << "= " << sh;
-
-            WorldObj* nowy;
-            if (sh == "") {
-                qDebug() << obiekty.size();
-                loaded = 0;
-                wczytajObiekty();
-                loadWS();
-                file->close();
-                delete data;
-                return;
-            } else if (sh == "tr_watermark") {
-                nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::GetNumber(data)));
-                obiekty[jestObiektow++] = nowy;
-                ParserX::SkipToken(data);
-                continue;
-            } else if (sh == "vdbidcount") {
-                vDbIdCount = ParserX::GetNumber(data);
-                //viewDbSphere = new ViewDbSphere[vDbIdCount];
-                ParserX::SkipToken(data);
-                continue;
-            } else if (sh == "viewdbsphere") {
-                viewDbSphere.push_back(ViewDbSphere());
+        ParserX::NextLine(data);
+    
+        QString sh = "";
+        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+            if(sh == "tr_worldfile"){
+                WorldObj* nowy;
                 while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-                    viewDbSphere.back().set(sh, data);
+                    if (sh == "tr_watermark") {
+                        nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::GetNumber(data)));
+                        obiekty[jestObiektow++] = nowy;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if (sh == "vdbidcount") {
+                        vDbIdCount = ParserX::GetNumber(data);
+                        //viewDbSphere = new ViewDbSphere[vDbIdCount];
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if (sh == "viewdbsphere") {
+                        viewDbSphere.push_back(ViewDbSphere());
+                        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                            viewDbSphere.back().set(sh, data);
+                            ParserX::SkipToken(data);
+                        }
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if ((nowy = WorldObj::createObj(sh)) != NULL) {
+                        //qDebug() << nowy->type;
+                        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                            nowy->set(sh, data);
+                            ParserX::SkipToken(data);
+                        }
+                        obiekty[jestObiektow++] = nowy;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    qDebug() << "#tr_worldfile - undefined token " << sh;
                     ParserX::SkipToken(data);
                 }
                 ParserX::SkipToken(data);
                 continue;
-            } 
-            if ((nowy = WorldObj::createObj(sh)) == NULL) {
-                ParserX::SkipToken(data);
-                continue;
             }
-            //qDebug() << nowy->type;
-            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-                nowy->set(sh, data);
-                ParserX::SkipToken(data);
-            }
-            obiekty[jestObiektow++] = nowy;
-
+            qDebug() << "#Tile - undefined token" << sh;
             ParserX::SkipToken(data);
-            continue;
         }
     } else {
         qDebug() << "w file compressed   " << path;
@@ -215,11 +208,11 @@ void Tile::load() {
             obiekty[jestObiektow++] = nowy;
             data->off = offset;
        }
-       qDebug() << obiekty.size();
-       loaded = 0;
-       wczytajObiekty();
-       loadWS();
     }
+    qDebug() << obiekty.size();
+    loaded = 0;
+    wczytajObiekty();
+    loadWS();
     file->close();
     delete data;
 }
@@ -246,40 +239,38 @@ void Tile::loadWS() {
     data->setTokenOffset(261844);
     data->off = 32;
     if (data->getToken() != 375){
-        qDebug() << "w file uncompressed " << path;
-        data->off = 0;
-        sh = "Tr_Worldsoundfile";
-        ParserX::FindTokenDomIgnore(sh, data);
-
-        for (int tt = 0;; tt++) {
-            sh = ParserX::NextTokenDomIgnore(data).toLower();
-            //qDebug() << "= " << sh;
-
-            WorldObj* nowy;
-            if (sh == "") {
-                qDebug() <<"WS size: "<< obiekty.size();
-                //loaded = 0;
-                return;
-            }
-            if ((nowy = WorldObj::createObj(sh)) == NULL) {
+        qDebug() << "ws file uncompressed " << path;
+        ParserX::NextLine(data);
+    
+        QString sh = "";
+        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+            if(sh == "tr_worldsoundfile"){
+                WorldObj* nowy;
+                while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                    if ((nowy = WorldObj::createObj(sh)) != NULL) {
+                        //qDebug() << nowy->type;
+                        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                            nowy->set(sh, data);
+                            ParserX::SkipToken(data);
+                        }
+                        nowy->load(x, z);
+                        if(nowy->UiD < 1000000)
+                            if(nowy->UiD > maxUiDWS) maxUiDWS = nowy->UiD;
+                        obiekty[jestObiektow++] = nowy;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    qDebug() << "#tr_wrldsoundfile - undefined token " << sh;
+                    ParserX::SkipToken(data);
+                }
                 ParserX::SkipToken(data);
                 continue;
             }
-            //qDebug() << nowy->type;
-            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-                nowy->set(sh, data);
-                ParserX::SkipToken(data);
-            }
-            nowy->load(x, z);
-            if(nowy->UiD < 1000000)
-                if(nowy->UiD > maxUiDWS) maxUiDWS = nowy->UiD;
-            obiekty[jestObiektow++] = nowy;
-
+            qDebug() << "#TileWS - undefined token" << sh;
             ParserX::SkipToken(data);
-            continue;
         }
     } else {
-        qDebug() << "w file compressed   " << path;
+        qDebug() << "ws file compressed   " << path;
         data->off+=5;
         int offset, offsetO;
         int idx, idxO;
@@ -306,9 +297,8 @@ void Tile::loadWS() {
             obiekty[jestObiektow++] = nowy;
             data->off = offset;
        }
-       qDebug() << obiekty.size();
-       //loaded = 0;
     }
+    qDebug() <<"WS size: "<< obiekty.size();
 }
 
 WorldObj* Tile::getObj(int id) {

@@ -78,185 +78,194 @@ void Trk::load(QString path){
     if (!file.open(QIODevice::ReadOnly))
         return;
     FileBuffer* data = ReadFile::read(&file);
+    data->toUtf16();
     ParserX::NextLine(data);
-
-    QString sh = "Tr_RouteFile";
-    ParserX::FindTokenDomIgnore(sh, data);
+    
     this->milepostUnitsKilometers = false;
+    QString sh = "";
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-        if (sh == ("routeid")) {
-            this->idName = ParserX::GetString(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("name")) {
-            this->displayName = ParserX::GetString(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("description")) {
-            this->description = ParserX::GetStringInside(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("graphic")) {
-            this->graphic = ParserX::GetString(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("loadingscreen")) {
-            this->loadingScreen = ParserX::GetString(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("filename")) {
-            this->routeName = ParserX::GetString(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("electrified")) {
-            this->electrified = ParserX::GetHex(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("mountains")) {
-            this->mountains = ParserX::GetHex(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("overheadwireheight")) {
-            this->overheadWireHeight = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("passengerruleset")) {
-            this->passengerRuleSet = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("freightruleset")) {
-            this->freightRuleSet = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("signalset")) {
-            this->signalSet = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("gantryset")) {
-            this->gantrySet = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("trackgauge")) {
-            this->trackGauge = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("era")) {
-            this->era = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("speedlimit")) {
-            this->speedLimit = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("terrainerrorscale")) {
-            this->terrainErrorScale = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("routestart")) {
-            startTileX = ParserX::GetNumber(data);
-            startTileZ = ParserX::GetNumber(data);
-            //qDebug() << startTileX << startTileY;
-            //break;
-            startpX = ParserX::GetNumber(data);
-            startpZ = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("milepostunitskilometers")) {
-            this->milepostUnitsKilometers = true;
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("milepostunitsmiles")) {
-            this->milepostUnitsKilometers = false;
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("maxlinevoltage")) {
-            this->maxLineVoltage = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("defaultsignalsms")) {
-            this->defaultSignalSMS = ParserX::GetString(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("defaultcrossingsms")) {
-            this->defaultCrossingSMS = ParserX::GetString(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("defaultwatertowersms")) {
-            this->defaultWaterTowerSMS = ParserX::GetString(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("defaultcoaltowersms")) {
-            this->defaultCoalTowerSMS = ParserX::GetString(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("defaultdieseltowersms")) {
-            this->defaultDieselTowerSMS = ParserX::GetString(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("temprestrictedspeed")) {
-            this->tempRestrictedSpeed = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("gravityscale")) {
-            this->gravityScale = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("environment")) {
-            this->environment.clear();
-            while (!((sh = ParserX::NextTokenInside(data)) == "")) {
-                this->environment[sh.toStdString()] = ParserX::GetString(data);
+        if(sh == "tr_routefile"){
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                if (sh == ("routeid")) {
+                    this->idName = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("name")) {
+                    this->displayName = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("description")) {
+                    this->description = ParserX::GetStringInside(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("graphic")) {
+                    this->graphic = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("loadingscreen")) {
+                    this->loadingScreen = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("filename")) {
+                    this->routeName = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("electrified")) {
+                    this->electrified = ParserX::GetHex(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("mountains")) {
+                    this->mountains = ParserX::GetHex(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("overheadwireheight")) {
+                    this->overheadWireHeight = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("passengerruleset")) {
+                    this->passengerRuleSet = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("freightruleset")) {
+                    this->freightRuleSet = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("signalset")) {
+                    this->signalSet = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("gantryset")) {
+                    this->gantrySet = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("trackgauge")) {
+                    this->trackGauge = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("era")) {
+                    this->era = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("speedlimit")) {
+                    this->speedLimit = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("terrainerrorscale")) {
+                    this->terrainErrorScale = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("routestart")) {
+                    startTileX = ParserX::GetNumber(data);
+                    startTileZ = ParserX::GetNumber(data);
+                    //qDebug() << startTileX << startTileY;
+                    //break;
+                    startpX = ParserX::GetNumber(data);
+                    startpZ = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("milepostunitskilometers")) {
+                    this->milepostUnitsKilometers = true;
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("milepostunitsmiles")) {
+                    this->milepostUnitsKilometers = false;
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("maxlinevoltage")) {
+                    this->maxLineVoltage = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("defaultsignalsms")) {
+                    this->defaultSignalSMS = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("defaultcrossingsms")) {
+                    this->defaultCrossingSMS = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("defaultwatertowersms")) {
+                    this->defaultWaterTowerSMS = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("defaultcoaltowersms")) {
+                    this->defaultCoalTowerSMS = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("defaultdieseltowersms")) {
+                    this->defaultDieselTowerSMS = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("temprestrictedspeed")) {
+                    this->tempRestrictedSpeed = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("gravityscale")) {
+                    this->gravityScale = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("environment")) {
+                    this->environment.clear();
+                    while (!((sh = ParserX::NextTokenInside(data)) == "")) {
+                        this->environment[sh.toStdString()] = ParserX::GetString(data);
+                        ParserX::SkipToken(data);
+                    }
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("derailscale")) {
+                    this->derailScale = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("timetabletollerance")) {
+                    this->timetableTollerance = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("ortsuserpreferenceforestcleardistance")) {
+                    this->forestClearDistance = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+
+                qDebug() << "#TRK tr_routefile - undefined token: " << sh;
                 ParserX::SkipToken(data);
             }
             ParserX::SkipToken(data);
             continue;
         }
-        if (sh == ("derailscale")) {
-            this->derailScale = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("timetabletollerance")) {
-            this->timetableTollerance = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("ortsuserpreferenceforestcleardistance")) {
-            this->forestClearDistance = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        
-        qDebug() << "TRK undefined: " << sh;
+        qDebug() << "#TRK - undefined token: " << sh;
         ParserX::SkipToken(data);
     }
+
     imageLoadId = TexLib::addTex(Game::root+"/routes/"+idName+"/load.ace");
     imageDetailsId = TexLib::addTex(Game::root+"/routes/"+idName+"/details.ace");
     modified = false;

@@ -39,34 +39,43 @@ void QuadTree::load() {
     //    data->off = i;
     //    qDebug() << (char)data->get()<<"-"<<data->get();
     //}
-    data->off = 32;
-    sh = "terrain_desc";
-    ParserX::FindTokenDomIgnore(sh, data);
+    data->toUtf16();
+    ParserX::NextLine(data);
+    
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-        qDebug() << sh;
-        if (sh == "terrain_desc_size") {
-            terrainDescSize = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        } else if (sh == "depth") {
-            depth = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        } else if (sh == "terrain_desc_tiles") {
+        if(sh == "terrain_desc"){
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-                if (sh == "tdfile") {
-                    int x = ParserX::GetNumber(data);
-                    int y = ParserX::GetNumber(data);
-                    qDebug() << sh << " "<<x<<" "<<y;
-                    loadTD(x, y);
+                //qDebug() << sh;
+                if (sh == "terrain_desc_size") {
+                    terrainDescSize = ParserX::GetNumber(data);
                     ParserX::SkipToken(data);
+                    continue;
+                } else if (sh == "depth") {
+                    depth = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                } else if (sh == "terrain_desc_tiles") {
+                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                        if (sh == "tdfile") {
+                            int x = ParserX::GetNumber(data);
+                            int y = ParserX::GetNumber(data);
+                            qDebug() << sh << " "<<x<<" "<<y;
+                            loadTD(x, y);
+                            ParserX::SkipToken(data);
+                        }
+                    }
+                    ParserX::SkipToken(data);
+                    continue;
                 }
+                ParserX::SkipToken(data);
             }
             ParserX::SkipToken(data);
             continue;
         }
+        qDebug() << "#QuadTree - undefined token " << sh;
         ParserX::SkipToken(data);
     }
+
 }
 
 void QuadTree::createNew(int tileX, int tileY){

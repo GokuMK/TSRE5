@@ -1039,7 +1039,7 @@ void Activity::ActivityObject::load(FileBuffer* data) {
                 con->setMaxVelocityFixed(true);
                 con->initPos();
             }
-            ParserX::SkipToken(data);
+            //ParserX::SkipToken(data);
             ParserX::SkipToken(data);
             continue;
         }

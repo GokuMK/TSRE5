@@ -61382,7 +61382,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TSectionDAT.o: TSectionDAT.c
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtimezone.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qversionnumber.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qxmlstream.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QFile
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TSectionDAT.o TSectionDAT.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Terrain.o: Terrain.cpp Terrain.h \

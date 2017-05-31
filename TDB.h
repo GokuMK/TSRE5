@@ -54,7 +54,6 @@ public:
     TDB(const TDB& o);
     virtual ~TDB();
     void refresh();
-    void trpin(TRnode* tr, FileBuffer* bufor );
     void save();
     void saveTit();
     void loadTdb();

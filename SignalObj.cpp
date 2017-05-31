@@ -210,6 +210,8 @@ void SignalObj::set(QString sh, FileBuffer* data) {
             signalUnit[sUnitId].tdbId = ParserX::GetNumber(data);
             signalUnit[sUnitId].itemId = ParserX::GetNumber(data);
         }
+        ParserX::SkipToken(data);
+        ParserX::SkipToken(data);
         return;
     }
     WorldObj::set(sh, data);
