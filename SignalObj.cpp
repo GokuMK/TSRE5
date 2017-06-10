@@ -76,16 +76,12 @@ void SignalObj::load(int x, int y) {
     
     if(shapePointer != NULL && signalShape != NULL){
         shapeState = shapePointer->newState();
-        if(shapePointer->loaded == 0){
-            shapePointer->loaded = 2;
-            shapePointer->load();
+        for(int j = 0; j < 32; j++){
+            if(j < signalShape->iSubObj)
+                shapePointer->enableSubObjByNameQueue(shapeState, signalShape->subObj[j].type, ((this->signalSubObj >> j) & 1));
+                //shapePointer->enableSubObjByName(shapeState, signalShape->subObj[j].type, ((this->signalSubObj >> j) & 1));
         }
-        if(shapePointer->loaded == 1)
-            for(int j = 0; j < 32; j++){
-                if(j < signalShape->iSubObj)
-                    shapePointer->enableSubObjByName(shapeState, signalShape->subObj[j].type, ((this->signalSubObj >> j) & 1));
-            }
-        }
+    }
     // chec flags
     //QStringList list;
     //checkFlags(list);

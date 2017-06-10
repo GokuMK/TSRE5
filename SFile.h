@@ -205,12 +205,14 @@ public:
     void setAnimated(unsigned int stateId, bool animated);
     void setEnabledSubObjs(unsigned int stateId, unsigned int enabledSubObjs);
     void enableSubObjByName(unsigned int stateId, QString name, bool val);
+    void enableSubObjByNameQueue(unsigned int stateId, QString name, bool val);
 private:
     struct State {
         bool animated = false; 
         int enabledSubObjs = 0xFFFFFFFF;
         float frameCount = 0;
         unsigned long long int lastTime = 0;
+        QMap<QString, bool> enableSubObjQueue;
     };
     QVector<State> state;
     

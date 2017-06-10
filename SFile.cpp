@@ -829,6 +829,12 @@ void SFile::setEnabledSubObjs(unsigned int stateId, unsigned int enabledSubObjs)
     state[stateId].enabledSubObjs = enabledSubObjs;
 }
 
+void SFile::enableSubObjByNameQueue(unsigned int stateId, QString name, bool val){
+    if(stateId > state.size() - 1) 
+        return;
+    state[stateId].enableSubObjQueue[name] = val;
+}
+
 void SFile::enableSubObjByName(unsigned int stateId, QString name, bool val){
     // Find matrix id
     int matrixId = -1;
@@ -892,6 +898,14 @@ void SFile::render(unsigned int stateId) {
         loaded = 2;
         load();
         return;
+    }
+    
+    if(state[stateId].enableSubObjQueue.size() > 0){
+        qDebug() << "queue"<<state[stateId].enableSubObjQueue.size();
+        for (auto it = state[stateId].enableSubObjQueue.begin(); it != state[stateId].enableSubObjQueue.end();){
+            enableSubObjByName(stateId, it.key(), it.value());
+            it = state[stateId].enableSubObjQueue.erase(it);
+        }
     }
 
     int oldmatrix = -2;
