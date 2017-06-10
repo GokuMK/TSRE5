@@ -820,7 +820,7 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p, int mode) {
 
         int someval = (((drawPosition2[2]-drawPosition1[2])+0.00001f)/fabs((drawPosition2[2]-drawPosition1[2])+0.00001f));
         float rotY = ((float)someval+1.0)*(M_PI/2)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
-        float rotX = -(float)(atan((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
+        float rotX = -(float)(asin((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
 
         if(placementAutoTwoPointRot){
             Quat::fill(quat);

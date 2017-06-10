@@ -88,8 +88,8 @@ public:
 class Vec4 {
 public:
     static float* create();
+    static float* lerp(float* out, float* a, float* b, float t);
     static float* normalize(float* out, float* a);
-
 };
 
 class Quat {
@@ -101,6 +101,8 @@ public:
     static float* fromRotationXYZ(float *out, float *a);
     static float* multiply(float *out, float *a, float *b);
     static float* invert(float* out, float* a);
+    static float* lerp(float* out, float* a, float* b, float t);
+    static float* slerp(float* out, float* a, float* b, float t);
     static float* setAxisAngle(float *out, float *axis, float rad);
     static float getAxisAngle(float *out_axis, float *q);
     static float* rotateX(float *out, float *a, float rad);
@@ -114,6 +116,7 @@ public:
     static float* clone(float* a);
     static float* create();
     static float* identity(float *out);
+    static float* fromQuat(float *out, float *q);
     static float* fromRotationTranslation(float* out, float* q, float* v);
     static float* lookAt(float *out, float *eye, float *center, float *up);
     static float* multiply(float *out, float *a, float *b);

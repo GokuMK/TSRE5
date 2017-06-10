@@ -45,6 +45,8 @@ StaticObj::~StaticObj() {
 void StaticObj::load(int x, int y) {
     this->shape = Game::currentShapeLib->addShape(resPath +"/"+ fileName);
     this->shapePointer = Game::currentShapeLib->shape[this->shape];
+    this->shapeState = shapePointer->newState();
+    shapePointer->setAnimated(shapeState, isAnimated());
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
@@ -93,6 +95,15 @@ void StaticObj::set(QString sh, FileBuffer* data) {
     }
     WorldObj::set(sh, data);
     return;
+}
+
+void StaticObj::updateSim(float deltaTime){
+    if (!loaded) return;
+    if (shape < 0) return;
+    if (jestPQ < 2) return;
+    
+    if(shapePointer != NULL)
+        shapePointer->updateSim(deltaTime, shapeState);
 }
 
 void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
@@ -153,7 +164,9 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
         gluu->enableTextures();
     }
     
-    Game::currentShapeLib->shape[shape]->render();
+    if(shapePointer != NULL)
+        shapePointer->render(shapeState);
+    //Game::currentShapeLib->shape[shape]->render(isAnimated());
     
     if(selected){
         drawBox();

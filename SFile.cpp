@@ -22,6 +22,7 @@
 #include "GLMatrix.h"
 #include <QString>
 #include "Game.h"
+#include "TS.h"
 
 SFile::SFile() {
     pathid = "";
@@ -34,6 +35,7 @@ SFile::SFile(QString pathid, QString name, QString texp ) {
     this->isinit = 1;
     this->loaded = 0;
     this->texPath = texp;
+    state.push_back(State());
 }
 
 SFile::SFile(const SFile& orig) {
@@ -50,120 +52,441 @@ void SFile::load() {
         file->close();
         return;
     }
-    FileBuffer* bufor = ReadFile::read(file);
+    FileBuffer* data = ReadFile::read(file);
+    int loadingCount = 0;
     //qDebug() << "--" << path << "--" << bufor->length;
-    
-    bufor->off = 32;
-    //qDebug() << bufor->getInt() << " - ";
-    bufor->off = 32;
-    if (bufor->getInt() == 71) {
-        bufor->off = 32;
-        int val = bufor->getInt();
+
+    data->off = 32;
+    if (data->getInt() == 71) {
+        int pozycja, offset, akto;
+        data->off = 32;
+        int val = data->getInt();
+        
         //qDebug() << val << " plik binarny ";
         //wczytanie binarnego
-        bufor->off += 5;
-        bufor->findToken(72);
-        SFileC::odczytajshaders(bufor, this);
-        
-        bufor->findToken(7);
-        //qDebug() << "znaleziono sekcje 7 na " << bufor->off;
-        SFileC::odczytajpunktyc(bufor, this);
-        getSize();
-        
-        bufor->findToken(9);
-        //qDebug() << "znaleziono sekcje 9 na " << bufor->off;
-        SFileC::odczytajuvpunktyc(bufor, this);
+        data->off += 5;
+        for (;;) {
+            pozycja = data->getInt();
+            offset = data->getInt();
+            akto = data->off;
 
-        bufor->findToken(5);
-        //qDebug() << "znaleziono sekcje 5 na " << bufor->off;
-        SFileC::odczytajnormalnec(bufor, this);
-
-        bufor->findToken(66);
-        //qDebug() << "znaleziono sekcje 66 na " << bufor->off;
-        SFileC::odczytajmatricesc(bufor, this);
-
-        bufor->findToken(14);
-        //qDebug() << "znaleziono sekcje 14 na " << bufor->off;
-        SFileC::odczytajimagesc(bufor, this);
-
-        bufor->findToken(16);
-        //qDebug() << "znaleziono sekcje 16 na " << bufor->off;
-        SFileC::odczytajtexturesc(bufor, this);
-
-        bufor->findToken(47);
-        //qDebug() << "znaleziono sekcje 47 na " << bufor->off;
-        SFileC::odczytajvtx_statesc(bufor, this);
-
-        bufor->findToken(55);
-        //qDebug() << "znaleziono sekcje 55 na " << bufor->off;
-        SFileC::odczytajprim_statesc(bufor, this);
-
-        bufor->findToken(31);
-        //qDebug() << "znaleziono sekcje 31 na " << bufor->off;
-        SFileC::odczytajloddc(bufor, this);
-        this->loaded = 1;
+            switch (pozycja) {
+                case 70:
+                    break;
+                case 68:
+                    break;
+                case 72:
+                    loadingCount++;
+                    SFileC::odczytajshaders(data, this);
+                    break;
+                case 7:
+                    loadingCount++;
+                    SFileC::odczytajpunktyc(data, this);
+                    getSize();
+                    break;
+                case 9:
+                    loadingCount++;
+                    SFileC::odczytajuvpunktyc(data, this);
+                    break;
+                case 5:
+                    loadingCount++;
+                    SFileC::odczytajnormalnec(data, this);
+                    break;
+                case 66:
+                    loadingCount++;
+                    SFileC::odczytajmatricesc(data, this);
+                    break;
+                case 14:
+                    loadingCount++;
+                    SFileC::odczytajimagesc(data, this);
+                    break;
+                case 16:
+                    loadingCount++;
+                    SFileC::odczytajtexturesc(data, this);
+                    break;
+                case 47:
+                    loadingCount++;
+                    SFileC::odczytajvtx_statesc(data, this);
+                    break;
+                case 55:
+                    loadingCount++;
+                    SFileC::odczytajprim_statesc(data, this);
+                    break;
+                case 74:
+                    break;
+                case 76:
+                    break;
+                case 11:
+                    break;
+                case 18:
+                    break;
+                case 79:
+                    break;
+                case 31:
+                    if(loadingCount < 9){
+                        qDebug() << "#shape - loading error" << 31 << TS::IdName[31];
+                        return;
+                    }
+                    SFileC::odczytajloddc(data, this);
+                    loaded = 1;
+                    break;
+                case 29:
+                    int pozycja1,offset1,akto1;
+                    data->off++;
+                    data->off+=4;
+                    for (;;) {
+                        pozycja1 = data->getInt();
+                        offset1 = data->getInt();
+                        akto1 = data->off;
+                        switch (pozycja1) {
+                            case 28:
+                                animations.push_back(Animation());
+                                animations.back().loadC(data, akto1 + offset1);
+                                if(animations.size() > 0){
+                                    //qDebug() << animations[0].node.size();
+                                }
+                                break;
+                            default:
+                                qDebug() << "#SFile Animations - unknown token: "<< pozycja1 << TS::IdName[pozycja1];
+                                break;
+                        }
+                        data->off = akto1 + offset1;
+                        if(data->off >= akto + offset) break;
+                    }
+                    break;
+                default:
+                    qDebug() << "#SFile - unknown token: "<< pozycja << TS::IdName[pozycja];
+                    break;
+            }
+            data->off = akto + offset;
+            if(data->off >= data->length) break;
+        }
     } else {
         //qDebug() << "plik xml:";
         //wczytanie plku xml
-        //for (int i = 0; i < 100; i++)
-        //qDebug() << ":" << (char)bufor->data[i];
-        QString sh = "shape";
-        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
-        //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
-        sh = "shader_names";
-        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
-        SFileX::odczytajshaders(bufor, this);
-        
-        sh = "points";
-        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
-        //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
-        SFileX::odczytajpunkty(bufor, this);
-        getSize();
-        
-        sh = "uv_points";
-        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
-        //qDebug() << "znaleziono sekcje "<< sh <<" na " << bufor->off;
-        SFileX::odczytajuvpunkty(bufor, this);
-
-        sh = "normals";
-        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
-        //qDebug() << "znaleziono sekcje "<< sh <<" na " << bufor->off;
-        SFileX::odczytajnormalne(bufor, this);
-
-        sh = "matrices";
-        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
-        //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
-        SFileX::odczytajmatrices(bufor, this);
-
-        sh = "images";
-        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
-        //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
-        SFileX::odczytajimages(bufor, this);
-
-        sh = "textures";
-        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
-        //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
-        SFileX::odczytajtextures(bufor, this);
-
-        sh = "vtx_states";
-        if(!ParserX::FindTokenDomIgnore(sh, bufor)) return;
-        //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
-        SFileX::odczytajvtx_states(bufor, this);
-
-        sh = "prim_states";
-        //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
-        SFileX::odczytajprim_states(bufor, this);
-        
-        sh = "lod_controls";
-        //qDebug() << "znaleziono sekcje " << sh << " na " << bufor->off;
-        SFileX::odczytajlodd(bufor, this);
-        this->loaded = 1;
+        data->off = 0;
+        ParserX::NextLine(data);
+    
+        QString sh = "";
+        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+            if(sh == "shape"){
+                while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                    //qDebug() << sh;
+                    if(sh == "shader_names"){
+                        SFileX::odczytajshaders(data, this);
+                        loadingCount++;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "points"){
+                        SFileX::odczytajpunkty(data, this);
+                        getSize();
+                        loadingCount++;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "uv_points"){
+                        SFileX::odczytajuvpunkty(data, this);
+                        loadingCount++;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "normals"){
+                        SFileX::odczytajnormalne(data, this);
+                        loadingCount++;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "matrices"){
+                        SFileX::odczytajmatrices(data, this);
+                        loadingCount++;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "images"){
+                        SFileX::odczytajimages(data, this);
+                        loadingCount++;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "textures"){
+                        SFileX::odczytajtextures(data, this);
+                        loadingCount++;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "vtx_states"){
+                        SFileX::odczytajvtx_states(data, this);
+                        loadingCount++;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "prim_states"){
+                        SFileX::odczytajprim_states(data, this);
+                        loadingCount++;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "shape_header"){
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "volumes"){
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "texture_filter_names"){
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "sort_vectors"){
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "colours"){
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "light_materials"){
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "light_model_cfgs"){
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "lod_controls"){
+                        if(loadingCount < 9){
+                            qDebug() << "#shape - loading error" << sh;
+                            return;
+                        }
+                        SFileX::odczytajlodd(data, this);
+                        loaded = 1;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if(sh == "animations"){
+                        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                            if(sh == "animation"){
+                                animations.push_back(Animation());
+                                animations.back().loadX(data);
+                                if(animations.size() > 0){
+                                    qDebug() << animations[0].node.size();
+                                    /*for(int i = 0; i < animations[0].node.size(); i++){
+                                        qDebug() << animations[0].node[i].linearKey.size();
+                                        qDebug() << animations[0].node[i].slerpRot.size();
+                                        qDebug() << animations[0].node[i].tcbKey.size();
+                                    }*/
+                                }
+                                ParserX::SkipToken(data);
+                                continue;
+                            }
+                            ParserX::SkipToken(data);
+                        }
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    qDebug() << "#shape - undefined token" << sh;
+                    ParserX::SkipToken(data);
+                }
+                
+                ParserX::SkipToken(data);
+                continue;
+            }
+            qDebug() << "#SFile - undefined token" << sh;
+            ParserX::SkipToken(data);
+        }
     }
-    delete bufor;
-
+    delete data;
     file->close();
+    if(loaded == 1)
+        buildFrameIds();
     loadSd();
     return;
+}
+
+void SFile::Animation::loadC(FileBuffer* data, int length){
+    data->off++;
+    frames = data->getInt();
+    fps = data->getInt();
+    int pozycja, offset, akto;
+    int pozycja1, offset1, akto1;
+    int pozycja2, offset2, akto2;
+    int nodeCount, cCount, kCount;
+    
+    for (;;) {
+        pozycja = data->getInt();
+        offset = data->getInt();
+        akto = data->off;
+
+        switch (pozycja) {
+            case 27:
+                data->off++;
+                nodeCount = data->getInt();
+                for(int i = 0; i < nodeCount; i++){
+                    node.push_back(AnimNode());
+                    pozycja1 = data->getInt();
+                    offset1 = data->getInt();
+                    akto1 = data->off;
+                    int temp = data->get();
+                    data->off += temp*2;
+                    data->off++;
+                    data->off += 8;
+                    cCount = data->getInt();
+                    //qDebug() << cCount;
+                    for(int j = 0; j < cCount; j++){
+                        pozycja2 = data->getInt();
+                        offset2 = data->getInt();
+                        akto2 = data->off;
+                        switch(pozycja2){
+                            case 24:
+                                data->off++;
+                                kCount = data->getInt();
+                                //qDebug() << "kCount"<<kCount;
+                                for(int ii = 0; ii < kCount; ii++){
+                                    int tcbid = data->getInt();
+                                    data->getInt();
+                                    data->off++;
+                                    if(tcbid == 20){
+                                        node.back().tcbKey.push_back(AnimNode::TcbKey());
+                                        node.back().tcbKey.back().frame = data->getUint();
+                                        node.back().tcbKey.back().quat[0] = -data->getFloat();
+                                        node.back().tcbKey.back().quat[1] = data->getFloat();
+                                        node.back().tcbKey.back().quat[2] = -data->getFloat();
+                                        node.back().tcbKey.back().quat[3] = data->getFloat();
+                                        for(int i = 0; i < 5; i++){
+                                            node.back().tcbKey.back().param[i] = data->getFloat();
+                                        }
+                                    }
+                                    if(tcbid == 23){
+                                        node.back().slerpRot.push_back(AnimNode::SlerpRot());
+                                        node.back().slerpRot.back().frame = data->getUint();
+                                        node.back().slerpRot.back().quat[0] = -data->getFloat();
+                                        node.back().slerpRot.back().quat[1] = data->getFloat();
+                                        node.back().slerpRot.back().quat[2] = -data->getFloat();
+                                        node.back().slerpRot.back().quat[3] = data->getFloat();
+                                    }
+                                }
+                                break;
+                            case 21:
+                                data->off++;
+                                kCount = data->getInt();
+                                //qDebug() << "kCount"<<kCount;
+                                for(int ii = 0; ii < kCount; ii++){
+                                    //qDebug() << 
+                                    data->getInt();
+                                    data->getInt();
+                                    data->off++;
+                                    node.back().linearKey.push_back(AnimNode::LinearKey());
+                                    node.back().linearKey.back().frame = data->getUint();
+                                    for(int i = 0; i < 3; i++){
+                                        node.back().linearKey.back().pos[i] = data->getFloat();
+                                    }
+                                }
+                                break;
+                            default:
+                                qDebug() << "#controller" << pozycja2 << TS::IdName[pozycja2];
+                                break;
+                        }
+                        data->off = akto2 + offset2;
+                        if(data->off >= akto1+offset1) break;
+                    }
+                    //qDebug() << "pozycja" << pozycja1 << TS::IdName[pozycja1];
+                    data->off = akto1+offset1;
+                }
+                break;
+            default:
+                qDebug() << "#SFile Animation - unknown token: "<< pozycja << TS::IdName[pozycja];
+                break;
+        }
+        data->off = akto + offset;
+        if(data->off >= length) break;
+    }
+}
+
+void SFile::Animation::loadX(FileBuffer* data){
+    frames = ParserX::GetNumber(data);
+    fps = ParserX::GetNumber(data);
+    
+    QString sh;
+    int count;
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        if(sh == "anim_nodes"){
+            count = ParserX::GetNumber(data);
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                if(sh == "anim_node"){
+                    //qDebug() << 
+                    ParserX::NextTokenInside(data);
+                    node.push_back(AnimNode());
+                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                        if(sh == "controllers"){
+                            count = ParserX::GetNumber(data);
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                                if(sh == "tcb_rot"){
+                                    count =  ParserX::GetNumber(data);
+                                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                                        if(sh == "tcb_key"){
+                                            node.back().tcbKey.push_back(AnimNode::TcbKey());
+                                            node.back().tcbKey.back().frame = ParserX::GetUInt(data);
+                                            node.back().tcbKey.back().quat[0] = -ParserX::GetNumber(data);
+                                            node.back().tcbKey.back().quat[1] = ParserX::GetNumber(data);
+                                            node.back().tcbKey.back().quat[2] = -ParserX::GetNumber(data);
+                                            node.back().tcbKey.back().quat[3] = ParserX::GetNumber(data);
+                                            for(int i = 0; i < 5; i++){
+                                                node.back().tcbKey.back().param[i] = ParserX::GetNumber(data);
+                                            }
+                                            ParserX::SkipToken(data);
+                                            continue;
+                                        }
+                                        if(sh == "slerp_rot"){
+                                            node.back().slerpRot.push_back(AnimNode::SlerpRot());
+                                            node.back().slerpRot.back().frame = ParserX::GetUInt(data);
+                                            node.back().slerpRot.back().quat[0] = -ParserX::GetNumber(data);
+                                            node.back().slerpRot.back().quat[1] = ParserX::GetNumber(data);
+                                            node.back().slerpRot.back().quat[2] = -ParserX::GetNumber(data);
+                                            node.back().slerpRot.back().quat[3] = ParserX::GetNumber(data);
+                                            ParserX::SkipToken(data);
+                                            continue;
+                                        }
+                                        ParserX::SkipToken(data);
+                                    }
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if(sh == "linear_pos"){
+                                    count = ParserX::GetNumber(data);
+                                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                                        if(sh == "linear_key"){
+                                            node.back().linearKey.push_back(AnimNode::LinearKey());
+                                            node.back().linearKey.back().frame = ParserX::GetUInt(data);
+                                            for(int i = 0; i < 3; i++){
+                                                node.back().linearKey.back().pos[i] = ParserX::GetNumber(data);
+                                            }
+                                            ParserX::SkipToken(data);
+                                            continue;
+                                        }
+                                        ParserX::SkipToken(data);
+                                    }
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                ParserX::SkipToken(data);
+                            }
+                            ParserX::SkipToken(data);
+                            continue;
+                        }
+                        ParserX::SkipToken(data);
+                    }
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                ParserX::SkipToken(data);
+            }
+            ParserX::SkipToken(data);
+            continue;
+        }
+        ParserX::SkipToken(data);
+    }
 }
 
 void SFile::loadSd() {
@@ -493,7 +816,72 @@ void SFile::reload() {
     }
 }
 
-void SFile::render() {
+unsigned int SFile::newState(){
+    state.push_back(State());
+    return state.size() - 1;
+}
+
+void SFile::setAnimated(unsigned int stateId, bool animated){
+    state[stateId].animated = animated;
+}
+
+void SFile::setEnabledSubObjs(unsigned int stateId, unsigned int enabledSubObjs){
+    state[stateId].enabledSubObjs = enabledSubObjs;
+}
+
+void SFile::enableSubObjByName(unsigned int stateId, QString name, bool val){
+    // Find matrix id
+    int matrixId = -1;
+    for(int i = 0; i < iloscm; i++) {
+        if(macierz[i].name == name) {
+            matrixId = i;
+            break;
+        }
+    }
+    if(matrixId < 0)
+        return;
+    
+    // check if can be disabled/enabled
+    if(distancelevel[0].iloscs < 2)
+        return;
+    //qDebug() << matrixId << distancelevel[0].subobiekty[0].header.geometryNodeMap.size() ;
+    if(matrixId >= distancelevel[0].subobiekty[0].header.geometryNodeMap.size())
+        return;
+    if(distancelevel[0].subobiekty[0].header.geometryNodeMap[matrixId] > 0 )
+        return;
+    
+    // enable / disable subobjs
+    for(int j = 1; j < distancelevel[0].iloscs; j++){
+        if(distancelevel[0].subobiekty[j].header.geometryNodeMap[matrixId] == 0){
+            if(val)
+                state[stateId].enabledSubObjs = state[stateId].enabledSubObjs | (1 << j);
+            else
+                state[stateId].enabledSubObjs = state[stateId].enabledSubObjs & ~(1 << j);
+        }
+    }
+}
+
+void SFile::updateSim(float deltaTime, unsigned int stateId){
+    if (isinit != 1 || loaded == 2)
+        return;
+    
+    animated = false;
+
+    if(state[stateId].animated && animations.size() > 0){
+        animated = true;
+        if(deltaTime <= 0){
+            state[stateId].frameCount = 0;
+        } else {
+            state[stateId].frameCount += animations[0].fps * deltaTime;
+            if(state[stateId].frameCount > animations[0].frames)
+                while(state[stateId].frameCount > animations[0].frames)
+                    state[stateId].frameCount -= animations[0].frames;
+            if(state[stateId].frameCount < 0)
+                state[stateId].frameCount = 0;
+        }
+    }
+}
+void SFile::render(unsigned int stateId) {
 
     if (isinit != 1 || loaded == 2)
         return;
@@ -516,26 +904,38 @@ void SFile::render() {
     //for(int iii = 0; iii < 200; iii++)
     //float talpha = gluu->alpha;
     //float talphatest = gluu->alphaTest;
+
     for (int i = 0; i < distancelevel[0].iloscs; i++) {
         QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].VAO);
 
+        if(((state[stateId].enabledSubObjs >> i) & 1) == 0)
+            continue;
+        
         for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {
 
             int prim_state = distancelevel[0].subobiekty[i].czesci[j].prim_state_idx;
             int vtx_state = primstate[prim_state].vtx_state;
             int matrix = vtxstate[vtx_state].matrix;
-
-            if (oldmatrix != matrix) {
-                oldmatrix = matrix;
-                if (!macierz[matrix].isFixed) {
-                    Mat4::identity(m);
-                    memcpy(macierz[matrix].fixed, getPmatrix(m, matrix), sizeof (float) * 16);
-                    macierz[matrix].isFixed = true;
-                    macierz[matrix].hash = gluu->getMatrixHash(macierz[matrix].fixed);
-                }
-                if(macierz[matrix].hash != gluu->currentMsMatrinxHash){
-                    gluu->currentMsMatrinxHash = macierz[matrix].hash;
-                    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(&macierz[matrix].fixed));
+            
+            if(animated){
+                Mat4::identity(m);
+                getPmatrixAnimated(m, matrix, state[stateId].frameCount);
+                oldmatrix = -1;
+                gluu->currentMsMatrinxHash = 0;
+                gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(&m));
+            } else {
+                if (oldmatrix != matrix) {
+                    oldmatrix = matrix;
+                    if (!macierz[matrix].isFixed) {
+                        Mat4::identity(m);
+                        memcpy(macierz[matrix].fixed, getPmatrix(m, matrix), sizeof (float) * 16);
+                        macierz[matrix].isFixed = true;
+                        macierz[matrix].hash = gluu->getMatrixHash(macierz[matrix].fixed);
+                    }
+                    if(macierz[matrix].hash != gluu->currentMsMatrinxHash){
+                        gluu->currentMsMatrinxHash = macierz[matrix].hash;
+                        gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(&macierz[matrix].fixed));
+                    }
                 }
             }
             
@@ -617,4 +1017,106 @@ float* SFile::getPmatrix(float* pmatrix, int matrix) {
     return pmatrix;
 }
 
+float* SFile::getPmatrixAnimated(float* pmatrix, int matrix, float frame){
+    if (matrix == -1 || matrix == 0) {
+        Mat4::identity(pmatrix);
+        pmatrix[0] = -1;
+        return pmatrix;
+    } else {
+        pmatrix = getPmatrixAnimated(pmatrix, distancelevel[0].hierarchia[matrix], frame);
+    }
+    float m[16];
+    memcpy(m, macierz[matrix].param, sizeof (float) * 16);
+    if(animations[0].node.size() > matrix){
+        AnimNode *n = &animations[0].node[matrix];
+        if(frame + 1 < n->tcbId.size()){
+            float m1[16];
+            float q1[4];
+            float q2[4];
+            float q3[4];
+            Quat::slerp(q1, n->tcbKey[n->tcbId[(int)frame].id1].quat, n->tcbKey[n->tcbId[(int)frame].id2].quat, n->tcbId[(int)frame].offset);
+            Quat::slerp(q2, n->tcbKey[n->tcbId[(int)frame+1].id1].quat, n->tcbKey[n->tcbId[(int)frame+1].id2].quat, n->tcbId[(int)frame+1].offset);
+            Quat::slerp(q3, q1, q2, frame - (int)frame);
+            Mat4::fromQuat(m1, q3);
+            Mat4::multiply(m, m, m1);
+        }
+        if(frame + 1 < n->linearId.size()){
+            float v1[3], v2[3], v3[3];
+            Vec3::lerp(v1, n->linearKey[n->linearId[(int)frame].id1].pos, n->linearKey[n->linearId[(int)frame].id2].pos, n->linearId[(int)frame].offset);
+            Vec3::lerp(v2, n->linearKey[n->linearId[(int)frame+1].id1].pos, n->linearKey[n->linearId[(int)frame+1].id2].pos, n->linearId[(int)frame+1].offset);
+            Vec3::lerp(v3, v1, v2, frame - (int)frame);
+            
+            m[12] = v3[0];
+            m[13] = v3[1];
+            m[14] = v3[2];
+        }
+        //slerprot
+    }
+    Mat4::multiply(pmatrix, pmatrix, m);
+    return pmatrix;
+}
 
+void SFile::buildFrameIds(){
+    for(int i = 0; i < animations.size(); i++){
+        for(int j = 0; j < animations[i].node.size(); j++){
+            int frameCount = animations[i].frames;
+            AnimNode *n = &animations[i].node[j];
+
+            for(int y = 0; y < frameCount + 1; y++){
+                if(n->tcbKey.size() > 0){
+                    n->tcbId.push_back(AnimFrameId());
+                    n->tcbId.back().id1 = 0;
+                    n->tcbId.back().id2 = 0;
+                    n->tcbId.back().offset = 0;
+                    //qDebug() << "n->tcbKey.size()"<< n->tcbKey.size();
+                    for(int u = 0; u < n->tcbKey.size() - 1; u++){
+                        if(n->tcbKey[u+1].frame > y){
+                            n->tcbId.back().id1 = u;
+                            n->tcbId.back().id2 = u+1;
+                            n->tcbId.back().offset = ((float)y - (float)n->tcbKey[u].frame)/((float)n->tcbKey[u+1].frame - (float)n->tcbKey[u].frame);
+                            break;
+                        }
+                    }
+                }
+                if(n->linearKey.size() > 0){
+                    n->linearId.push_back(AnimFrameId());
+                    n->linearId.back().id1 = 0;
+                    n->linearId.back().id2 = 0;
+                    n->linearId.back().offset = 0;
+                    //qDebug() << "n->tcbKey.size()"<< n->tcbKey.size();
+                    for(int u = 0; u < n->linearKey.size() - 1; u++){
+                        if(n->linearKey[u+1].frame > y){
+                            n->linearId.back().id1 = u;
+                            n->linearId.back().id2 = u+1;
+                            n->linearId.back().offset = ((float)y - (float)n->linearKey[u].frame)/((float)n->linearKey[u+1].frame - (float)n->linearKey[u].frame);
+                            break;
+                        }
+                    }
+                }
+                //qDebug() << y << n->tcbId.back().id1 << n->tcbId.back().id2 << n->tcbId.back().offset;
+/*
+                n->linearId.push_back(AnimFrameId());
+                n->linearId.back().id = 0;
+                n->linearId.back().offset = 0;
+                for(int u = 0; u < n->linearKey.size() - 1; u++){
+                    if(n->linearKey[u+1].frame > y){
+                        n->linearId.back().id = u;
+                        n->linearId.back().offset = (n->linearKey[u+1].frame - n->linearKey[u].frame)/(y - n->linearKey[u].frame);
+                        break;
+                    }
+                }
+
+                n->slerpbId.push_back(AnimFrameId());
+                n->slerpbId.back().id = 0;
+                n->slerpbId.back().offset = 0;
+                for(int u = 0; u < n->slerpRot.size() - 1; u++){
+                    if(n->slerpRot[u+1].frame > y){
+                        n->slerpbId.back().id = u;
+                        n->slerpbId.back().offset = (n->slerpRot[u+1].frame - n->slerpRot[u].frame)/(y - n->slerpRot[u].frame);
+                        break;
+                    }
+                }*/
+            }
+        }
+    }
+}

@@ -744,6 +744,10 @@ void WorldObj::setAnimated(bool val){
         staticFlags = staticFlags | 0x80000;
     else
         staticFlags = staticFlags & (~0x80000);
+    
+    if(shapePointer != NULL && shapeState > 0)
+        shapePointer->setAnimated(shapeState, isAnimated());
+    
     this->modified = true;
 }
 

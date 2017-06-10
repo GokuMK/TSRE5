@@ -19,9 +19,15 @@
 #include <QMatrix4x4>
 #include <QString>
 
+class FileBuffer;
+
 class SFile {
 public:
 
+    struct SObjHeader {
+        QVector<int> geometryNodeMap;
+    };
+    
     struct fshader {
         QString name;
         float alpha;
@@ -38,6 +44,7 @@ public:
 
     struct sub {
         int iloscc;
+        SObjHeader header;
         czes* czesci;
         QOpenGLBuffer VBO;
         QOpenGLVertexArrayObject VAO;
@@ -51,6 +58,7 @@ public:
     };
 
     struct matrt {
+        QString name;
         float param[16];
         float fixed[16];
         bool isFixed = false;
@@ -106,6 +114,45 @@ public:
         }
     };
     
+    struct AnimFrameId {
+        unsigned int id1 = 0;
+        unsigned int id2 = 0;
+        float offset = 0;
+    };
+    
+    struct AnimNode {
+        struct TcbKey {
+            int frame;
+            float quat[4];
+            float param[5];
+        };
+        struct SlerpRot {
+            int frame;
+            float quat[4];
+        };
+        struct LinearKey {
+            int frame;
+            float pos[3];
+        };
+        QVector<TcbKey> tcbKey;
+        QVector<AnimFrameId> tcbId;
+        QVector<SlerpRot> slerpRot;
+        QVector<AnimFrameId> slerpbId;
+        QVector<LinearKey> linearKey;
+        QVector<AnimFrameId> linearId;
+    };
+    
+    struct Animation {
+        int frames;
+        float fps;
+        QVector<AnimNode> node;
+        void loadC(FileBuffer* data, int length);
+        void loadX(FileBuffer* data);
+    };
+    
+    QVector<Animation> animations;
+    bool animated = false;
+    
     QString pathid;
     QString sciezka;
     QString nazwa;
@@ -124,7 +171,7 @@ public:
     punlist tpoints;
     // zmienne
     int iloscd;
-    int iloscm;
+    int iloscm = 0;
     matrt* macierz;
     int ilosci;
     imgs* image;
@@ -146,16 +193,31 @@ public:
     SFile(const SFile& orig);
     virtual ~SFile();
     void load();
-    void render();
+    void updateSim(float deltaTime, unsigned int stateId = 0);
+    void render(unsigned int stateId = 0);
     void getSize();
     bool getBoxPoints(QVector<float> &points);
     void getFloorBorderLinePoints(float *&punkty);
     bool isSnapable();
     void addSnapablePoints(QVector<float> &out);
     void reload();
+    unsigned int newState();
+    void setAnimated(unsigned int stateId, bool animated);
+    void setEnabledSubObjs(unsigned int stateId, unsigned int enabledSubObjs);
+    void enableSubObjByName(unsigned int stateId, QString name, bool val);
 private:
+    struct State {
+        bool animated = false; 
+        int enabledSubObjs = 0xFFFFFFFF;
+        float frameCount = 0;
+        unsigned long long int lastTime = 0;
+    };
+    QVector<State> state;
+    
     void loadSd();
     float* getPmatrix(float* pmatrix, int matrix);
+    float* getPmatrixAnimated(float* pmatrix, int matrix, float frame);
+    void buildFrameIds();
     bool snapable = false;
 };
 

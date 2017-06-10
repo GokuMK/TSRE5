@@ -82,6 +82,11 @@ void CarSpawnerObj::parseCarList(FileBuffer* data){
             ParserX::SkipToken(data);
             continue;
         }
+        if (sh == ("ignorexrotation")) {
+            carSpawnerList.back().ignoreXRot = true;
+            ParserX::SkipToken(data);
+            continue;
+        }
         if (sh == ("carspawneritem")) {
             carSpawnerList.back().carName.push_back(ParserX::GetString(data));
             carSpawnerList.back().val.push_back(ParserX::GetNumber(data));
@@ -166,6 +171,8 @@ CarSpawnerObj::SimpleCar::SimpleCar(QString name){
     QString resPath = Game::root + "/routes/" + Game::route + "/shapes";
     shapeId = Game::currentShapeLib->addShape(resPath +"/"+ name);
     shapePointer = Game::currentShapeLib->shape[shapeId];
+    shapeState = shapePointer->newState();
+    shapePointer->setAnimated(shapeState, true);
 }
 
 void CarSpawnerObj::SimpleCar::updateSim(float deltaTime){
@@ -174,6 +181,9 @@ void CarSpawnerObj::SimpleCar::updateSim(float deltaTime){
         loaded = false;
     if(trPosMb < 0)
         loaded = false;
+    if(shapePointer != NULL){
+        shapePointer->updateSim(deltaTime, shapeState);
+    }
 }
 
 void CarSpawnerObj::SimpleCar::render(GLUU *gluu, int selectionColor){
@@ -192,10 +202,15 @@ void CarSpawnerObj::SimpleCar::render(GLUU *gluu, int selectionColor){
 
     gluu->mvPushMatrix();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0], drawPosition[1], -drawPosition[2]);
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3] + M_PI*1.5 + M_PI*0.5*direction);
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3] + M_PI);
+    if(!ignoreXRot)
+        Mat4::rotateX(gluu->mvMatrix, gluu->mvMatrix, drawPosition[4] );
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, M_PI*0.5 + M_PI*0.5*direction);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-    Game::currentShapeLib->shape[shapeId]->render();
+    if(shapePointer != NULL){
+        shapePointer->render(shapeState);
+    }
     //this->shapePointer->render();
     gluu->mvPopMatrix();
 }
@@ -342,20 +357,20 @@ float CarSpawnerObj::getLength(){
     return fabs(p2->getTrackPosition() - p1->getTrackPosition());
 }
 
-int CarSpawnerObj::getCarNumber(){
+float CarSpawnerObj::getCarNumber(){
     return this->carFrequency;
 }
 
-int CarSpawnerObj::getCarSpeed(){
+float CarSpawnerObj::getCarSpeed(){
     return this->carAvSpeed;
 }
 
-void CarSpawnerObj::setCarNumber(int val){
+void CarSpawnerObj::setCarNumber(float val){
     this->carFrequency = val;
     this->modified = true;
 }
 
-void CarSpawnerObj::setCarSpeed(int val){
+void CarSpawnerObj::setCarSpeed(float val){
     this->carAvSpeed = val;
     this->modified = true;
 }
@@ -373,7 +388,10 @@ void CarSpawnerObj::updateSim(float deltaTime){
         int carRnd = std::rand()%carSpawnerList[carListId].carName.size();
         
         cars.push_back(SimpleCar(carSpawnerList[carListId].carName[carRnd]));
+        cars.back().ignoreXRot = carSpawnerList[carListId].ignoreXRot;
         cars.back().trNodeId = tdb->findTrItemNodeId(this->trItemId[1]);
+        //qDebug() << "this->trItemId[1]"<<this->trItemId[1];
+        //qDebug() << "this->trItemId[3]"<<this->trItemId[3];
         cars.back().trPosMb = tdb->trackItems[this->trItemId[1]]->getTrackPosition();
         cars.back().trPosMe = tdb->trackItems[this->trItemId[3]]->getTrackPosition();
         if(cars.back().trPosMe > cars.back().trPosMb)
@@ -385,7 +403,7 @@ void CarSpawnerObj::updateSim(float deltaTime){
         cars.back().y = y;
         cars.back().loaded = true;
         //carFreq = (float)(std::rand()%(100)+10)/1000.0;
-        carFreq = (float)(std::rand()%(carFrequency*1000+1)+500)/1000.0;
+        carFreq = (float)(std::rand()%((int)carFrequency*1000+1)+500)/1000.0;
         carsNewTime = 0;
     }
     for(int i = 0; i < cars.size(); i++){

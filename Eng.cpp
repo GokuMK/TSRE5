@@ -638,7 +638,7 @@ void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
     
     int someval = (((drawPosition1[2]-drawPosition2[2])+0.00001f)/fabs((drawPosition1[2]-drawPosition2[2])+0.00001f));
     float rotY = ((float)someval+1.0)*(M_PI/2.0)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
-    float rotX = -(float)(atan((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
+    float rotX = -(float)(asin((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
             
      if(selectionColor != 0){
         gluu->disableTextures(selectionColor);

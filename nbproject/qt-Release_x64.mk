@@ -56144,7 +56144,34 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RulerObj.o: RulerObj.cpp Rul
 		TrackItemObj.h \
 		ParserX.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
-		Game.h
+		Game.h \
+		DynTrackObj.h \
+		TDB.h \
+		TextObj.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/QPainter \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpainter.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpixmap.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpaintdevice.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qwindowdefs.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qwindowdefs_win.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qcolor.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qrgb.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qrgba64.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qimage.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpixelformat.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qtransform.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qmatrix.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpolygon.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qregion.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qline.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpainterpath.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qtextoption.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qpen.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qbrush.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qfontinfo.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qfont.h \
+		c:/OT/Static/5.7.0_x64/include/QtGui/qfontmetrics.h \
+		SignalObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RulerObj.o RulerObj.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFile.o: SFile.cpp SFile.h \
@@ -56393,7 +56420,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFile.o: SFile.cpp SFile.h \
 		Vector3f.h \
 		Shader.h \
 		GLMatrix.h \
-		Game.h
+		Game.h \
+		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFile.o SFile.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileC.o: SFileC.cpp SFileC.h \
@@ -56527,7 +56555,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileC.o: SFileC.cpp SFileC.
 		GLUU.h \
 		Vector4f.h \
 		Vector3f.h \
-		Shader.h
+		Shader.h \
+		TS.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileC.o SFileC.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SFileX.o: SFileX.cpp SFileX.h \
@@ -61383,7 +61412,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TSectionDAT.o: TSectionDAT.c
 		c:/OT/Static/5.7.0_x64/include/QtCore/qversionnumber.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qxmlstream.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtcoreversion.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QFile
+		c:/OT/Static/5.7.0_x64/include/QtCore/QFile \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QTextStream
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TSectionDAT.o TSectionDAT.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Terrain.o: Terrain.cpp Terrain.h \

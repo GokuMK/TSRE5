@@ -37,6 +37,7 @@ void SFileX::odczytajshaders(FileBuffer* bufor, SFile* pliks) {
         //qDebug() << pliks->shaderName[i];
         //console.log(pliks->image[i].name);
     }
+    ParserX::SkipToken(bufor);
 }
 
 //-----------------------------------
@@ -52,6 +53,7 @@ void SFileX::odczytajpunkty(FileBuffer* bufor, SFile* pliks) {
         pliks->tpoints.points[i].y = ParserX::GetNumber(bufor);
         pliks->tpoints.points[i].z = ParserX::GetNumber(bufor);
     }
+    ParserX::SkipToken(bufor);
     return;
 };
 //-----------------------------------
@@ -65,6 +67,7 @@ void SFileX::odczytajuvpunkty(FileBuffer* bufor, SFile* pliks) {
         pliks->tpoints.uv_points[i].x = ParserX::GetNumber(bufor);
         pliks->tpoints.uv_points[i].y = ParserX::GetNumber(bufor);
     }
+    ParserX::SkipToken(bufor);
     return;
 };
 //-----------------------------------
@@ -79,6 +82,7 @@ void SFileX::odczytajnormalne(FileBuffer* bufor, SFile* pliks) {
         pliks->tpoints.normals[i].y = ParserX::GetNumber(bufor);
         pliks->tpoints.normals[i].z = ParserX::GetNumber(bufor);
     }
+    ParserX::SkipToken(bufor);
     return;
 };
 //-----------------------------------
@@ -91,6 +95,9 @@ void SFileX::odczytajmatrices(FileBuffer* bufor, SFile* pliks) {
 
     //System.out.println("iloscm: "+pliks->iloscm);
     for (int i = 0; i < pliks->iloscm; i++) {
+        ParserX::NextTokenInside(bufor);
+        pliks->macierz[i].name = ParserX::GetString(bufor);
+        //qDebug() << pliks->macierz[i].name;
         while (bufor->get() != 40) {
             bufor->off++;
         }
@@ -107,6 +114,7 @@ void SFileX::odczytajmatrices(FileBuffer* bufor, SFile* pliks) {
             }
             pliks->macierz[i].param[j] = ParserX::GetNumber(bufor);
         }
+        ParserX::SkipToken(bufor);
     }
     return;
 };
@@ -128,6 +136,7 @@ void SFileX::odczytajimages(FileBuffer* bufor, SFile* pliks) {
         pliks->image[i].tex = -1;
         //console.log(pliks->image[i].name);
     }
+    ParserX::SkipToken(bufor);
     return;
 };
 //-----------------------------------
@@ -148,6 +157,7 @@ void SFileX::odczytajtextures(FileBuffer* bufor, SFile* pliks) {
         pliks->texture[i].arg2 = ParserX::GetNumber(bufor);
         pliks->texture[i].arg3 = ParserX::GetNumber(bufor);
     }
+    ParserX::SkipToken(bufor);
     return;
 };
 //-----------------------------------
@@ -174,6 +184,7 @@ void SFileX::odczytajvtx_states(FileBuffer* bufor, SFile* pliks) {
         bufor->off++;
         pliks->vtxstate[i].arg4 = 0;
     }
+    //ParserX::SkipToken(bufor);
     return;
 };
 //-----------------------------------
@@ -203,6 +214,7 @@ void SFileX::odczytajprim_states(FileBuffer* bufor, SFile* pliks) {
         pliks->primstate[i].arg7 = ParserX::GetNumber(bufor);
         pliks->primstate[i].arg8 = ParserX::GetNumber(bufor);
     }
+    ParserX::SkipToken(bufor);
     return;
 };
 //-----------------------------------
@@ -262,204 +274,246 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
         //wczytujemy subobjekty
         iloscs = pliks->distancelevel[j].iloscs;
         for (ii = 0; ii < iloscs; ii++) {
-
-            //szukanie itego subobjekta
             sh = "sub_object";
             ParserX::FindTokenDomIgnore(sh, bufor);
-            //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
-            //szukaj sekcji wierzcholki
-            sh = "vertices";
-            ParserX::FindTokenDomIgnore(sh, bufor);
-            //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
-            //ilosc wierzcholkow
-            v_ilosc = ParserX::GetNumber(bufor);
-            //wczytanie wierzholkow
-            //System.out.println(v_ilosc); 
 
-            iloscv = v_ilosc;
-            //console.log("iloscv "+v_ilosc);
-            for (jj = 0; jj < iloscv; jj++) {
-                //vert[jj].arg1 = 
-                vert[jj].arg1 = (short) ParserX::GetHex(bufor);
-                vert[jj].point = (unsigned int) ParserX::GetNumber(bufor);
-                vert[jj].normal = (unsigned int) ParserX::GetNumber(bufor);
-                vert[jj].arg2 = (short) ParserX::GetHex(bufor);
-                vert[jj].arg3 = (short) ParserX::GetHex(bufor);
-
-                //if (jj < 20) Console.WriteLine("tu jest :" + bufor[ibufor]);
-                //if (jj < 20) Console.WriteLine("tu jest :" + bufor[ibufor]);
-                //vert[jj].arg2 = 
-                //if (jj < 20) Console.WriteLine("tu jest :" + bufor[ibufor]);
-                //vert[jj].arg3 = 
-                vert[jj].material = (short) ParserX::GetNumber(bufor);
-
-                for (int jjjj = 0; jjjj < vert[jj].material; jjjj++) {
-                    if (jjjj == 0) vert[jj].uvpoint = (unsigned int) ParserX::GetNumber(bufor);
-                }
-
-                //if (jj < 100) 
-                //Console.WriteLine("vert " + vert[jj].arg1 + " " + vert[jj].point + " " + vert[jj].normal + " " + vert[jj].arg2 + " " + vert[jj].arg3 + " " + vert[jj].material + " " + vert[jj].uvpoint);
-            }
-            //Console.Write("\n");
-            //for(int yyy=0; yyy<500; yyy+=2) Console.Write((char)bufor[ibufor+yyy]);
-            //Console.Write("\n");
-            //szukaj sekcji z czesciami
-
-            sh = "vertex_sets";
-            ParserX::FindTokenDomIgnore(sh, bufor);
-            //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
-            sh = "primitives";
-            ParserX::FindTokenDomIgnore(sh, bufor);
-            //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
-            pliks->distancelevel[j].subobiekty[ii].iloscc = ParserX::GetNumber(bufor);
-            //console.log("wczytam p " + iloscc);
-            // przydzielenie im pamieci
-            pliks->distancelevel[j].subobiekty[ii].czesci = new SFile::czes[pliks->distancelevel[j].subobiekty[ii].iloscc + 1];
-
-            //wczytaj czesci
-            czilosc = 0;
-            aktidx = 0;
-
-            for (jj = 0; jj < pliks->distancelevel[j].subobiekty[ii].iloscc; jj++) {
-                //pliks->distancelevel[j].subobiekty[ii][czilosc] = new pliks->Czesc();
-                //qDebug() << "cc " << pliks->distancelevel[j].subobiekty[ii].iloscc;
-                //wybor sekcji lista czy indeks
-                //w = ParserX::sekcjap(bufor);
-                sh = ParserX::NextTokenDomIgnore(bufor).toLower();
-                //w = 
-                //console.log("ww " + w);
-                if (sh == "indexed_trilist") {
-                    //jesli lista
-                    pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].prim_state_idx = aktidx;
-                    //wczytanie indeksow wierzcholkow
-                    sh = "vertex_idxs";
-                    ParserX::FindTokenDomIgnore(sh, bufor);
-                    //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
-                    pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv = ParserX::GetNumber(bufor);
-
-                    //pliks->distancelevel[j].subobiekty[ii][czilosc].pwierzcholki = new Float32Array(pliks->distancelevel[j].subobiekty[ii][czilosc].iloscv*8);
-                    //float *wierzcholki = new float[pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv * 8];
-                    //var nwierzcholki = new Float32Array(pliks->distancelevel[j].subobiekty[ii][czilosc].iloscv*3);
-                    //var twierzcholki = new Float32Array(pliks->distancelevel[j].subobiekty[ii][czilosc].iloscv*2);
-                    pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].idx = new int[pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv];
-                    //lista wierzcholkow
-                    //pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].wierzcholki = new Sfile.wie[pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv];
-                    for (int iii = pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv - 1; iii >= 0; iii--) {
-                        //pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].wierzcholki[iii] = new Sfile.wie();
-                        //qDebug() << "cc " << pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv;
-                        //w = ParserX::GetNumber(bufor);
-                        pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].idx[iii] = ParserX::GetNumber(bufor);
-                        /*n = vert[w].normal;
-                        txt = vert[w].uvpoint;
-                        p = vert[w].point;
-
-                        wierzcholki[iii * 8 + 0] = pliks->tpoints.points[p].x;
-                        wierzcholki[iii * 8 + 1] = pliks->tpoints.points[p].y;
-                        wierzcholki[iii * 8 + 2] = pliks->tpoints.points[p].z;
-                        wierzcholki[iii * 8 + 3] = pliks->tpoints.normals[n].x;
-                        wierzcholki[iii * 8 + 4] = pliks->tpoints.normals[n].y;
-                        wierzcholki[iii * 8 + 5] = pliks->tpoints.normals[n].z;
-                        wierzcholki[iii * 8 + 6] = pliks->tpoints.uv_points[txt].x;
-                        wierzcholki[iii * 8 + 7] = pliks->tpoints.uv_points[txt].y;*/
+            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                if(sh == "sub_object_header"){
+                    ParserX::GetHex(bufor);
+                    ParserX::GetNumber(bufor);
+                    ParserX::GetNumber(bufor);
+                    ParserX::GetHex(bufor);
+                    ParserX::GetHex(bufor);
+                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                        if(sh == "geometry_info"){
+                            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                                if(sh == "geometry_nodes"){
+                                    ParserX::SkipToken(bufor);
+                                    continue;
+                                }
+                                if(sh == "geometry_node_map"){
+                                    int count = ParserX::GetNumber(bufor);
+                                    for(int ignm = 0; ignm < count; ignm++ ){
+                                        pliks->distancelevel[j].subobiekty[ii].header.geometryNodeMap.push_back(ParserX::GetNumber(bufor));
+                                    }
+                                    ParserX::SkipToken(bufor);
+                                    continue;
+                                }
+                                qDebug() << "#SFile geometry_info - undefined token: " << sh;
+                                ParserX::SkipToken(bufor);
+                            }
+                            ParserX::SkipToken(bufor);
+                            continue;
+                        }
+                        if(sh == "subobject_shaders"){
+                            ParserX::SkipToken(bufor);
+                            continue;
+                        }
+                        if(sh == "subobject_light_cfgs"){
+                            ParserX::SkipToken(bufor);
+                            continue;
+                        }
+                        qDebug() << "#SFile sub_object_header - undefined token: " << sh;
+                        ParserX::SkipToken(bufor);
                     }
-                    /*QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-                    pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VAO.create();
-                    QOpenGLVertexArrayObject::Binder vaoBinder(&pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VAO);
+                    ParserX::SkipToken(bufor);
+                    continue;
+                }
+                if(sh == "vertices"){
+                    v_ilosc = ParserX::GetNumber(bufor);
+                    iloscv = v_ilosc;
 
-                    pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VBO.create();
-                    pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VBO.bind();
-                    pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VBO.allocate(wierzcholki, pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv * 8 * sizeof (GLfloat));
+                    for (jj = 0; jj < iloscv; jj++) {
+                        vert[jj].arg1 = (short) ParserX::GetHex(bufor);
+                        vert[jj].point = (unsigned int) ParserX::GetNumber(bufor);
+                        vert[jj].normal = (unsigned int) ParserX::GetNumber(bufor);
+                        vert[jj].arg2 = (short) ParserX::GetHex(bufor);
+                        vert[jj].arg3 = (short) ParserX::GetHex(bufor);
+
+                        //if (jj < 20) Console.WriteLine("tu jest :" + bufor[ibufor]);
+                        //if (jj < 20) Console.WriteLine("tu jest :" + bufor[ibufor]);
+                        //vert[jj].arg2 = 
+                        //if (jj < 20) Console.WriteLine("tu jest :" + bufor[ibufor]);
+                        //vert[jj].arg3 = 
+                        vert[jj].material = (short) ParserX::GetNumber(bufor);
+
+                        for (int jjjj = 0; jjjj < vert[jj].material; jjjj++) {
+                            if (jjjj == 0) vert[jj].uvpoint = (unsigned int) ParserX::GetNumber(bufor);
+                        }
+                    }
+                    ParserX::SkipToken(bufor);
+                    ParserX::SkipToken(bufor);
+                    ParserX::SkipToken(bufor);
+                    continue;
+                }
+                if(sh == "vertex_sets"){
+                    ParserX::SkipToken(bufor);
+                    continue;
+                }
+                if(sh == "primitives"){
+                    pliks->distancelevel[j].subobiekty[ii].iloscc = ParserX::GetNumber(bufor);
+                    // przydzielenie im pamieci
+                    pliks->distancelevel[j].subobiekty[ii].czesci = new SFile::czes[pliks->distancelevel[j].subobiekty[ii].iloscc + 1];
+
+                    //wczytaj czesci
+                    czilosc = 0;
+                    aktidx = 0;
+
+                    for (jj = 0; jj < pliks->distancelevel[j].subobiekty[ii].iloscc; jj++) {
+                        //pliks->distancelevel[j].subobiekty[ii][czilosc] = new pliks->Czesc();
+                        //qDebug() << "cc " << pliks->distancelevel[j].subobiekty[ii].iloscc;
+                        //wybor sekcji lista czy indeks
+                        //w = ParserX::sekcjap(bufor);
+                        sh = ParserX::NextTokenDomIgnore(bufor).toLower();
+                        //w = 
+                        //console.log("ww " + w);
+                        if (sh == "indexed_trilist") {
+                            //jesli lista
+                            pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].prim_state_idx = aktidx;
+                            //wczytanie indeksow wierzcholkow
+                            sh = "vertex_idxs";
+                            ParserX::FindTokenDomIgnore(sh, bufor);
+                            //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
+                            pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv = ParserX::GetNumber(bufor);
+
+                            //pliks->distancelevel[j].subobiekty[ii][czilosc].pwierzcholki = new Float32Array(pliks->distancelevel[j].subobiekty[ii][czilosc].iloscv*8);
+                            //float *wierzcholki = new float[pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv * 8];
+                            //var nwierzcholki = new Float32Array(pliks->distancelevel[j].subobiekty[ii][czilosc].iloscv*3);
+                            //var twierzcholki = new Float32Array(pliks->distancelevel[j].subobiekty[ii][czilosc].iloscv*2);
+                            pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].idx = new int[pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv];
+                            //lista wierzcholkow
+                            //pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].wierzcholki = new Sfile.wie[pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv];
+                            for (int iii = pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv - 1; iii >= 0; iii--) {
+                                //pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].wierzcholki[iii] = new Sfile.wie();
+                                //qDebug() << "cc " << pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv;
+                                //w = ParserX::GetNumber(bufor);
+                                pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].idx[iii] = ParserX::GetNumber(bufor);
+                                /*n = vert[w].normal;
+                                txt = vert[w].uvpoint;
+                                p = vert[w].point;
+
+                                wierzcholki[iii * 8 + 0] = pliks->tpoints.points[p].x;
+                                wierzcholki[iii * 8 + 1] = pliks->tpoints.points[p].y;
+                                wierzcholki[iii * 8 + 2] = pliks->tpoints.points[p].z;
+                                wierzcholki[iii * 8 + 3] = pliks->tpoints.normals[n].x;
+                                wierzcholki[iii * 8 + 4] = pliks->tpoints.normals[n].y;
+                                wierzcholki[iii * 8 + 5] = pliks->tpoints.normals[n].z;
+                                wierzcholki[iii * 8 + 6] = pliks->tpoints.uv_points[txt].x;
+                                wierzcholki[iii * 8 + 7] = pliks->tpoints.uv_points[txt].y;*/
+                            }
+                            /*QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+                            pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VAO.create();
+                            QOpenGLVertexArrayObject::Binder vaoBinder(&pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VAO);
+
+                            pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VBO.create();
+                            pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VBO.bind();
+                            pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VBO.allocate(wierzcholki, pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].iloscv * 8 * sizeof (GLfloat));
+                            f->glEnableVertexAttribArray(0);
+                            f->glEnableVertexAttribArray(1);
+                            f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), 0);
+                            f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
+                            pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VBO.release();
+
+                            delete[] wierzcholki;*/
+                            //nwierzcholki = null;
+                            //twierzcholki = null;
+                            //pliks->distancelevel[j].subobiekty[ii][czilosc].pwierzcholki = pwierzcholki;
+                            //pominiecie normals i flags 
+                            sh = "normal_idxs";
+                            ParserX::FindTokenDomIgnore(sh, bufor);
+                            sh = "flags";
+                            ParserX::FindTokenDomIgnore(sh, bufor);
+                            ParserX::SkipToken(bufor);
+                            czilosc++;
+                        } else {
+                            aktidx = ParserX::GetNumber(bufor);
+                        }
+                    }
+                    pliks->distancelevel[j].subobiekty[ii].iloscc = czilosc;
+                    //Console.WriteLine("wczytano cz " + czilosc);
+                    /////////////////////////
+                    int iloscv = 0;
+                    int offset = 0;
+                    for (int jj = 0; jj < pliks->distancelevel[j].subobiekty[ii].iloscc; jj++) {
+                        iloscv += pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv;
+                    }
+
+                    pliks->distancelevel[j].subobiekty[ii].VAO.create();
+                    QOpenGLVertexArrayObject::Binder vaoBinder(&pliks->distancelevel[j].subobiekty[ii].VAO);
+
+                    pliks->distancelevel[j].subobiekty[ii].VBO.create();
+                    pliks->distancelevel[j].subobiekty[ii].VBO.bind();
+                    pliks->distancelevel[j].subobiekty[ii].VBO.allocate(iloscv * 9 * sizeof(GLfloat));
                     f->glEnableVertexAttribArray(0);
                     f->glEnableVertexAttribArray(1);
-                    f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), 0);
-                    f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
-                    pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].VBO.release();
-                    
-                    delete[] wierzcholki;*/
-                    //nwierzcholki = null;
-                    //twierzcholki = null;
-                    //pliks->distancelevel[j].subobiekty[ii][czilosc].pwierzcholki = pwierzcholki;
-                    //pominiecie normals i flags 
-                    sh = "normal_idxs";
-                    ParserX::FindTokenDomIgnore(sh, bufor);
-                    sh = "flags";
-                    ParserX::FindTokenDomIgnore(sh, bufor);
-                    czilosc++;
-                } else {
-                    aktidx = ParserX::GetNumber(bufor);
-                }
-            }
-            pliks->distancelevel[j].subobiekty[ii].iloscc = czilosc;
-            //Console.WriteLine("wczytano cz " + czilosc);
-            /////////////////////////
-           int iloscv = 0;
-                int offset = 0;
-                for (int jj = 0; jj < pliks->distancelevel[j].subobiekty[ii].iloscc; jj++) {
-                    iloscv += pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv;
-                }
+                    f->glEnableVertexAttribArray(2);
+                    f->glEnableVertexAttribArray(3);
+                    f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), 0);
+                    f->glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), reinterpret_cast<void *>(3 * sizeof(GLfloat)));
+                    f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), reinterpret_cast<void *>(6 * sizeof(GLfloat)));
+                    f->glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), reinterpret_cast<void *>(8 * sizeof(GLfloat)));
 
-                pliks->distancelevel[j].subobiekty[ii].VAO.create();
-                QOpenGLVertexArrayObject::Binder vaoBinder(&pliks->distancelevel[j].subobiekty[ii].VAO);
-                        
-                pliks->distancelevel[j].subobiekty[ii].VBO.create();
-                pliks->distancelevel[j].subobiekty[ii].VBO.bind();
-                pliks->distancelevel[j].subobiekty[ii].VBO.allocate(iloscv * 9 * sizeof(GLfloat));
-                f->glEnableVertexAttribArray(0);
-                f->glEnableVertexAttribArray(1);
-                f->glEnableVertexAttribArray(2);
-                f->glEnableVertexAttribArray(3);
-                f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), 0);
-                f->glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), reinterpret_cast<void *>(3 * sizeof(GLfloat)));
-                f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), reinterpret_cast<void *>(6 * sizeof(GLfloat)));
-                f->glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), reinterpret_cast<void *>(8 * sizeof(GLfloat)));
+                    for (int jj = 0; jj < pliks->distancelevel[j].subobiekty[ii].iloscc; jj++) {
+                        float *wierzcholki = new float[pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv*9];
 
-                for (int jj = 0; jj < pliks->distancelevel[j].subobiekty[ii].iloscc; jj++) {
-                    float *wierzcholki = new float[pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv*9];
+                        for (int iii = pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv - 1; iii >= 0; iii--) {
+                                //pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].wierzcholki[iii] = new SFile::wie();
 
-                    for (int iii = pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv - 1; iii >= 0; iii--) {
-                            //pliks->distancelevel[j].subobiekty[ii].czesci[czilosc].wierzcholki[iii] = new SFile::wie();
+                            w = pliks->distancelevel[j].subobiekty[ii].czesci[jj].idx[iii];
+                            int prim_state = pliks->distancelevel[j].subobiekty[ii].czesci[jj].prim_state_idx;
+                            float alpha = 0;
+                            float alphaTest = 0;
+                            if(pliks->primstate[prim_state].arg2 < pliks->ishaders)
+                                alpha = pliks->shader[pliks->primstate[prim_state].arg2].alpha;
+                            else 
+                                alpha = 0;
+                            if(pliks->primstate[prim_state].arg6 == 1)
+                                alphaTest = -0.51f;
+                            else 
+                                alphaTest = -gluu->alphaTest;
+                            if(alpha == 1)
+                                alphaTest = 1.0;
+                                //System.out.println("----v "+w);
+                            n = vert[w].normal;
+                            txt = vert[w].uvpoint;
+                            p = vert[w].point;
 
-                        w = pliks->distancelevel[j].subobiekty[ii].czesci[jj].idx[iii];
-                        int prim_state = pliks->distancelevel[j].subobiekty[ii].czesci[jj].prim_state_idx;
-                        float alpha = 0;
-                        float alphaTest = 0;
-                        if(pliks->primstate[prim_state].arg2 < pliks->ishaders)
-                            alpha = pliks->shader[pliks->primstate[prim_state].arg2].alpha;
-                        else 
-                            alpha = 0;
-                        if(pliks->primstate[prim_state].arg6 == 1)
-                            alphaTest = -0.51f;
-                        else 
-                            alphaTest = -gluu->alphaTest;
-                        if(alpha == 1)
-                            alphaTest = 1.0;
-                            //System.out.println("----v "+w);
-                        n = vert[w].normal;
-                        txt = vert[w].uvpoint;
-                        p = vert[w].point;
-
-                        wierzcholki[iii*9+0] = pliks->tpoints.points[p].x;
-                        wierzcholki[iii*9+1] = pliks->tpoints.points[p].y;
-                        wierzcholki[iii*9+2] = pliks->tpoints.points[p].z;
-                        wierzcholki[iii*9+3] = pliks->tpoints.normals[n].x;
-                        wierzcholki[iii*9+4] = pliks->tpoints.normals[n].y;
-                        wierzcholki[iii*9+5] = pliks->tpoints.normals[n].z;
-                        wierzcholki[iii*9+6] = pliks->tpoints.uv_points[txt].x;
-                        wierzcholki[iii*9+7] = pliks->tpoints.uv_points[txt].y;
-                        wierzcholki[iii*9+8] = alphaTest;
-                            //directxSmierdzi-=2;
-                            //if(directxSmierdzi<-2) directxSmierdzi = 2;
+                            wierzcholki[iii*9+0] = pliks->tpoints.points[p].x;
+                            wierzcholki[iii*9+1] = pliks->tpoints.points[p].y;
+                            wierzcholki[iii*9+2] = pliks->tpoints.points[p].z;
+                            wierzcholki[iii*9+3] = pliks->tpoints.normals[n].x;
+                            wierzcholki[iii*9+4] = pliks->tpoints.normals[n].y;
+                            wierzcholki[iii*9+5] = pliks->tpoints.normals[n].z;
+                            wierzcholki[iii*9+6] = pliks->tpoints.uv_points[txt].x;
+                            wierzcholki[iii*9+7] = pliks->tpoints.uv_points[txt].y;
+                            wierzcholki[iii*9+8] = alphaTest;
+                                //directxSmierdzi-=2;
+                                //if(directxSmierdzi<-2) directxSmierdzi = 2;
+                        }
+                        pliks->distancelevel[j].subobiekty[ii].VBO.write(offset * 9 * sizeof(GLfloat), wierzcholki, pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv * 9 * sizeof(GLfloat));
+                        delete[] wierzcholki;
+                        pliks->distancelevel[j].subobiekty[ii].czesci[jj].offset = offset;
+                        offset += pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv;
+                        delete[] pliks->distancelevel[j].subobiekty[ii].czesci[jj].idx;
                     }
-                    pliks->distancelevel[j].subobiekty[ii].VBO.write(offset * 9 * sizeof(GLfloat), wierzcholki, pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv * 9 * sizeof(GLfloat));
-                    delete[] wierzcholki;
-                    pliks->distancelevel[j].subobiekty[ii].czesci[jj].offset = offset;
-                    offset += pliks->distancelevel[j].subobiekty[ii].czesci[jj].iloscv;
-                    delete[] pliks->distancelevel[j].subobiekty[ii].czesci[jj].idx;
+                    pliks->distancelevel[j].subobiekty[ii].VBO.release();
+                
+                    ParserX::SkipToken(bufor);
+                    ParserX::SkipToken(bufor);
+                    continue;
                 }
-                pliks->distancelevel[j].subobiekty[ii].VBO.release();
+                qDebug() << "#SFile subobject - undefined token: " << sh;
+                ParserX::SkipToken(bufor);
+            }
         }
     }
-
+    ParserX::SkipToken(bufor);
+    ParserX::SkipToken(bufor);
+    ParserX::SkipToken(bufor);
+    ParserX::SkipToken(bufor);
+    ParserX::SkipToken(bufor);
+    ParserX::SkipToken(bufor);
+    ParserX::SkipToken(bufor);
     delete[] vert;
     delete[] pliks->tpoints.normals;
     delete[] pliks->tpoints.points;

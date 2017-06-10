@@ -675,7 +675,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
 
     QOpenGLVertexArrayObject::Binder vaoBinder(VAO);
         
-    if(Game::viewTerrainShape && !(showBlob && MapWindow::isAlpha == 0)){
+    if(Game::viewTerrainShape && (!(showBlob && MapWindow::isAlpha == 0) || selectionColor != 0)){
         float shaderSecondTexUV = 0;
         for (int uu = 0; uu < 16; uu++) {
             for (int yy = 0; yy < 16; yy++) {
@@ -781,7 +781,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
         glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
     }
     
-    if(showBlob){
+    if(showBlob && selectionColor == 0){
         if(MapWindow::isAlpha == 0){
             gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
             terrainBlob.render();

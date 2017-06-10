@@ -20,6 +20,7 @@ class OglObj;
 class RulerObj : public WorldObj {
 public:
     static bool TwoPointRuler;
+    static bool DrawPoints;
     RulerObj();
     RulerObj(const RulerObj& o);
     WorldObj* clone();
@@ -35,6 +36,8 @@ public:
     void getLinePoints(float *&punkty);
     void getPosition(float len, float* pos);
     float getLength();
+    void createRoadPaths();
+    void removeRoadPaths();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 
 private:

@@ -46,11 +46,28 @@ PropertiesRuler::PropertiesRuler() {
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
-        checkboxTwoPoint.setText("Only Two-Point Ruler");
+    checkboxTwoPoint.setText("Only Two-Point Ruler");
     checkboxTwoPoint.setChecked(false);
     vbox->addWidget(&checkboxTwoPoint);
     QObject::connect(&checkboxTwoPoint, SIGNAL(stateChanged(int)),
                       this, SLOT(checkboxTwoPointEdited(int)));
+    checkboxDrawPoints.setText("Render points");
+    checkboxDrawPoints.setChecked(false);
+    vbox->addWidget(&checkboxDrawPoints);
+    QObject::connect(&checkboxDrawPoints, SIGNAL(stateChanged(int)),
+                      this, SLOT(checkboxDrawPointsEdited(int)));
+    label = new QLabel("Experimental:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QPushButton *button = new QPushButton("Create Road Paths");
+    vbox->addWidget(button);
+    QObject::connect(button, SIGNAL(released()),
+                      this, SLOT(createRoadPathsEdited()));
+    button = new QPushButton("Remove Road Paths");
+    vbox->addWidget(button);
+    QObject::connect(button, SIGNAL(released()),
+                      this, SLOT(removeRoadPathsEdited()));
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -88,7 +105,6 @@ void PropertiesRuler::checkboxTwoPointEdited(int val){
     if(worldObj == NULL)
         return;
     RulerObj* robj = (RulerObj*)worldObj;
-    Undo::SinglePushWorldObjData(worldObj);
     if(val == 2){
         robj->TwoPointRuler = true;
     } else {
@@ -96,6 +112,32 @@ void PropertiesRuler::checkboxTwoPointEdited(int val){
     }
 }
 
+void PropertiesRuler::checkboxDrawPointsEdited(int val){
+    if(worldObj == NULL)
+        return;
+    RulerObj* robj = (RulerObj*)worldObj;
+    if(val == 2){
+        robj->DrawPoints = true;
+    } else {
+        robj->DrawPoints = false;
+    }
+}
+
+void PropertiesRuler::createRoadPathsEdited(){
+    if(worldObj == NULL)
+        return;
+    RulerObj* robj = (RulerObj*)worldObj;
+    //Undo::SinglePushWorldObjData(worldObj);
+    robj->createRoadPaths();
+}
+
+void PropertiesRuler::removeRoadPathsEdited(){
+    if(worldObj == NULL)
+        return;
+    RulerObj* robj = (RulerObj*)worldObj;
+    //Undo::SinglePushWorldObjData(worldObj);
+    robj->removeRoadPaths();
+}
 bool PropertiesRuler::support(GameObj* obj){
     if(obj == NULL)
         return false;

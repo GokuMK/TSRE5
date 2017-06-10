@@ -17,8 +17,11 @@
 #include "ParserX.h"
 #include <QDebug>
 #include "Game.h"
+#include "DynTrackObj.h"
+#include "TDB.h"
 
 bool RulerObj::TwoPointRuler = false;
+bool RulerObj::DrawPoints = false;
 
 RulerObj::RulerObj() {
     this->shape = -1;
@@ -95,6 +98,7 @@ void RulerObj::set(QString sh, FileBuffer* data) {
             point.position[2] = -ParserX::GetNumber(data);
             points.push_back(point);
         }
+        ParserX::SkipToken(data);
         return;
     }
     WorldObj::set(sh, data);
@@ -111,9 +115,10 @@ void RulerObj::setPosition(int x, int z, float* p){
         point.position[0] = -2048*(this->x-x) + p[0];
         point.position[1] = p[1];
         point.position[2] = -2048*(this->y-z) + p[2];
-        this->points.push_back(point);
+        if(Vec3::dist(points.back().position, point.position) > 1)
+            points.push_back(point);
     }
-    this->modified = true;
+    modified = true;
     if(line3d != NULL)
         line3d->deleteVBO();
 }
@@ -129,11 +134,42 @@ float RulerObj::getLength(){
     return length;
 }
 
+void RulerObj::createRoadPaths(){
+    float tlength = 0;
+    DynTrackObj* dobj = new DynTrackObj();
+    dobj->load(x, y);
+    float p[3];
+    float q[4];
+    for(int i = 0; i < points.size() - 1; i++){
+        tlength = Vec3::distance(points[i].position, points[i+1].position);
+        Vec3::copy(p, points[i].position);
+        
+        int someval = (((points[i+1].position[2]-points[i].position[2])+0.00001f)/fabs((points[i+1].position[2]-points[i].position[2])+0.00001f));
+        float rotY = ((float)someval+1.0)*(M_PI/2)+(float)(atan((points[i].position[0]-points[i+1].position[0])/(points[i].position[2]-points[i+1].position[2]))); 
+        float rotX = -(float)(asin((points[i].position[1]-points[i+1].position[1])/(tlength))); 
+
+        Quat::fill(q);
+        Quat::rotateY(q, q, rotY);
+        Quat::rotateX(q, q, rotX);
+
+        dobj->sections[0].a = floor((tlength * 10 ) + 0.5) / 10;
+        Game::roadDB->fillDynTrack(dobj);
+        Game::roadDB->placeTrack(x, y, (float*) &p, (float*) &q, dobj->sectionIdx, UiD);
+        
+    }
+}
+
+void RulerObj::removeRoadPaths(){
+    bool ok;
+    ok = Game::roadDB->removeTrackFromTDB(x, y, UiD);
+    //if(ok)
+}
+
 void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
     if (renderMode == GLUU::RENDER_SHADOWMAP) return;
     if (!loaded) return;
     if (jestPQ < 2) return;
-
+    
     if(Game::showWorldObjPivotPoints){
         if(pointer3d == NULL){
             pointer3d = new TrackItemObj(1);
@@ -141,6 +177,8 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         }
         pointer3d->render(selectionColor);
     }
+    if(!Game::viewInteractives) 
+        return;
     
     if(point3d == NULL){
         point3d = new OglObj();
@@ -199,10 +237,11 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, points[i].position[0], points[i].position[1], points[i].position[2]);
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         int useSC = (float)selectionColor/(float)(selectionColor+0.000001);
-        if(this->selected && this->selectionValue == i) 
-            point3dSelected->render(selectionColor | (i&0xF)*useSC);
-        else
-            point3d->render(selectionColor | (i&0xF)*useSC);
+        if(i == 0 || i == points.size() - 1 || DrawPoints)
+            if(this->selected && this->selectionValue == i) 
+                point3dSelected->render(selectionColor | (i&0xF)*useSC);
+            else
+                point3d->render(selectionColor | (i&0xF)*useSC);
         //    pointer3d->render(selectionColor + (i+1)*131072*8*useSC);
         gluu->mvPopMatrix();
     }

@@ -16,11 +16,12 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLBuffer>
 #include "GLUU.h"
+#include "TS.h"
 
     void SFileC::odczytajshaders(FileBuffer* bufor, SFile* pliks) {
         int temp;
 
-        bufor->off += 5;
+        bufor->off += 1;
         pliks->ishaders = bufor->getInt();
 
         pliks->shader = new SFile::fshader[pliks->ishaders];
@@ -66,7 +67,7 @@
     //-----------------------------------
 
     void SFileC::odczytajpunktyc(FileBuffer* bufor, SFile* pliks) {
-        bufor->off += 5;
+        bufor->off += 1;
         pliks->tpoints.ipoints = bufor->getInt();
 
         pliks->tpoints.points = new SFile::fpoint[ pliks->tpoints.ipoints + 1];
@@ -86,7 +87,7 @@
     void SFileC::odczytajuvpunktyc(FileBuffer* bufor, SFile* pliks) {
         int ilosc;
 
-        bufor->off += 5;
+        bufor->off += 1;
         ilosc = bufor->getInt();
         
         pliks->tpoints.uv_points = new SFile::fpoint[ilosc + 1];
@@ -105,7 +106,7 @@
     void SFileC::odczytajnormalnec(FileBuffer* bufor, SFile* pliks) {
         int ilosc;
 
-        bufor->off += 5;
+        bufor->off += 1;
         ilosc = bufor->getInt();
         pliks->tpoints.normals = new SFile::fpoint[ilosc + 1];
         for (int i = 0; i < ilosc; i++) {
@@ -124,15 +125,16 @@
     void SFileC::odczytajmatricesc(FileBuffer* bufor, SFile* pliks) {
         int temp;
 
-        bufor->off += 5;
+        bufor->off += 1;
         pliks->iloscm = bufor->getInt();
 
         pliks->macierz = new SFile::matrt[pliks->iloscm + 1];
         for (int i = 0; i < pliks->iloscm; i++) {
             bufor->off += 8;
             temp = bufor->get();
+            pliks->macierz[i].name = *bufor->getString(bufor->off, bufor->off + temp*2);
+            //qDebug() << pliks->macierz[i].name;
             bufor->off += temp*2;
-
             //pliks->macierz[i] = new SFile::matrt();
             for (int j = 0; j < 16; j++) {
                 if(j==3 || j==7 || j==11) {
@@ -155,7 +157,7 @@
     void SFileC::odczytajimagesc(FileBuffer* bufor, SFile* pliks) {
         int temp;
 
-        bufor->off += 5;
+        bufor->off += 1;
         pliks->ilosci = bufor->getInt();
 
         pliks->image = new SFile::imgs[pliks->ilosci + 1];
@@ -179,7 +181,7 @@
 
     void SFileC::odczytajtexturesc(FileBuffer* bufor, SFile* pliks) {
 
-        bufor->off += 5;
+        bufor->off += 1;
 
         pliks->ilosct = bufor->getInt();
 
@@ -201,7 +203,7 @@
 
     void SFileC::odczytajvtx_statesc(FileBuffer* bufor, SFile* pliks) {
 
-        bufor->off += 5;
+        bufor->off += 1;
         pliks->iloscv = bufor->getInt();
 
         pliks->vtxstate = new SFile::vtxs[pliks->iloscv];
@@ -224,7 +226,7 @@
     void SFileC::odczytajprim_statesc(FileBuffer* bufor, SFile* pliks) {
         int temp;
 
-        bufor->off += 5;
+        bufor->off += 1;
         pliks->iloscps = bufor->getInt();
 
         pliks->primstate = new SFile::primst[pliks->iloscps];
@@ -271,7 +273,7 @@
         GLUU* gluu = GLUU::get();
         fvertex* vert = new fvertex[120000];
 
-        bufor->off += 9; // pominiecie ilosci lodcontrols;
+        bufor->off += 5; // pominiecie ilosci lodcontrols;
 
         //Odczytanie jednego LOD_Control=0;
         i = 0;
@@ -316,9 +318,62 @@
             for (int ii = 0; ii < pliks->distancelevel[j].iloscs; ii++) {
                 //pliks->distancelevel[j].subobiekty[ii] = new SFile::sub();
 
-                // Wczytanie wierzcholkow
+                
                 bufor->off += 9;
-                bufor->findToken(50);
+                bufor->findToken(TS::sub_object_header);
+                //qDebug() << "sub_object_header";
+                int offset1 = bufor->getInt();
+                int akto1 = bufor->off;
+                bufor->off++;
+                bufor->off += 20;
+                for (;;) {
+                    int pozycja2,offset2,akto2;
+                    pozycja2 = bufor->getInt();
+                    offset2 = bufor->getInt();
+                    akto2 = bufor->off;
+                    switch (pozycja2) {
+                        case TS::subobject_shaders:
+                            break;
+                        case TS::subobject_light_cfgs:
+                            break;
+                        case TS::geometry_info:
+                            int pozycja3,offset3,akto3;
+                            bufor->off++;
+                            bufor->off+=40;
+                            for (;;) {
+                                pozycja3 = bufor->getInt();
+                                offset3 = bufor->getInt();
+                                akto3 = bufor->off;
+                                int count;
+                                switch (pozycja3) {
+                                    case TS::geometry_nodes:
+                                        break;
+                                    case TS::geometry_node_map:
+                                        bufor->off++;
+                                        count = bufor->getInt();
+                                        for(int ignm = 0; ignm < count; ignm++ ){
+                                            pliks->distancelevel[j].subobiekty[ii].header.geometryNodeMap.push_back(bufor->getInt());
+                                        }
+                                        break;
+                                    default:
+                                        qDebug() << "#SFile geometry_info - unknown token: "<< pozycja3 << TS::IdName[pozycja3];
+                                        break;
+                                }
+                                bufor->off = akto3 + offset3;
+                                if(bufor->off >= akto2 + offset2) break;
+                            }
+                            break;
+                        default:
+                            //qDebug() << "#SFile sub_object_header - unknown token: "<< pozycja2 << TS::IdName[pozycja2];
+                            break;
+                    }
+                    bufor->off = akto2 + offset2;
+                    if(bufor->off >= akto1 + offset1) break;
+                }
+                bufor->off = akto1 + offset1;
+                
+                // Wczytanie wierzcholkow
+                bufor->findToken(TS::vertices);
                 bufor->off += 5;
                 v_ilosc = bufor->getInt();
                 

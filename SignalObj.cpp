@@ -61,6 +61,8 @@ SignalObj::~SignalObj() {
 
 void SignalObj::load(int x, int y) {
     this->shape = Game::currentShapeLib->addShape(resPath +"/"+ fileName);
+    this->shapePointer = Game::currentShapeLib->shape[this->shape];
+        
     this->x = x;
     this->y = y;
     this->position[2] = -this->position[2];
@@ -72,6 +74,18 @@ void SignalObj::load(int x, int y) {
     this->signalShape = Game::trackDB->sigCfg->signalShape[fileName.toStdString()];
     setMartix();
     
+    if(shapePointer != NULL && signalShape != NULL){
+        shapeState = shapePointer->newState();
+        if(shapePointer->loaded == 0){
+            shapePointer->loaded = 2;
+            shapePointer->load();
+        }
+        if(shapePointer->loaded == 1)
+            for(int j = 0; j < 32; j++){
+                if(j < signalShape->iSubObj)
+                    shapePointer->enableSubObjByName(shapeState, signalShape->subObj[j].type, ((this->signalSubObj >> j) & 1));
+            }
+        }
     // chec flags
     //QStringList list;
     //checkFlags(list);
@@ -327,6 +341,8 @@ void SignalObj::enableSubObj(int i){
                 tdb->trackItems[this->signalUnit[j].itemId]->enableSignalSubObjFlag(signalShape->subObj[i].sigSubType);
         }
     this->modified = true;
+    if(shapePointer != NULL)
+        shapePointer->enableSubObjByName(shapeState, signalShape->subObj[i].type, true);
     return;
 }
 
@@ -359,6 +375,8 @@ void SignalObj::disableSubObj(int i){
                 tdb->trackItems[this->signalUnit[j].itemId]->disableSignalSubObjFlag(signalShape->subObj[i].sigSubType);
         }
     this->modified = true; 
+    if(shapePointer != NULL)
+        shapePointer->enableSubObjByName(shapeState, signalShape->subObj[i].type, false);
 }
 
 void SignalObj::checkFlags(QStringList &list){
@@ -531,8 +549,9 @@ void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     } else {
         gluu->enableTextures();
     }
-        
-    Game::currentShapeLib->shape[shape]->render();
+    if(shapePointer != NULL)
+        shapePointer->render(shapeState);
+    //Game::currentShapeLib->shape[shape]->render(false, signalSubObj);
     
     if(selected){
         drawBox();

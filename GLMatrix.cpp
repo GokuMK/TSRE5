@@ -785,6 +785,29 @@ float* Vec4::create() {
     return out; 
 };
 /**
+ * Performs a linear interpolation between two vec4's
+ *
+ * @param {vec4} out the receiving vector
+ * @param {vec4} a the first operand
+ * @param {vec4} b the second operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {vec4} out
+ */
+float* Vec4::lerp(float *out, float *a, float *b, float t) {
+    float ax = a[0],
+        ay = a[1],
+        az = a[2],
+        aw = a[3];
+    
+    out[0] = ax + t * (b[0] - ax);
+    out[1] = ay + t * (b[1] - ay);
+    out[2] = az + t * (b[2] - az);
+    out[3] = aw + t * (b[3] - aw);
+
+    return out;
+};
+
+/**
  * Normalize a vec4
  *
  * @param {vec4} out the receiving vector
@@ -916,6 +939,56 @@ float* Quat::invert(float *out, float *a){
     out[3] = a3*invDot;
     return out;
 };
+
+float* Quat::lerp(float* out, float* a, float* b, float t){
+    return Vec4::lerp(out,a,b,t);
+}
+/**
+ * Performs a spherical linear interpolation between two quat
+ *
+ * @param {quat} out the receiving quaternion
+ * @param {quat} a the first operand
+ * @param {quat} b the second operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {quat} out
+ */
+float* Quat::slerp(float* out, float* a, float* b, float t){
+
+    float ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        bx = b[0], by = b[1], bz = b[2], bw = b[3];
+    float        omega, cosom, sinom, scale0, scale1;
+    // calc cosine
+    cosom = ax * bx + ay * by + az * bz + aw * bw;
+    // adjust signs (if necessary)
+    if ( cosom < 0.0 ) {
+        cosom = -cosom;
+        bx = - bx;
+        by = - by;
+        bz = - bz;
+        bw = - bw;
+    }
+    // calculate coefficients
+    if ( (1.0 - cosom) > 0.000001 ) {
+        // standard case (slerp)
+        omega  = acos(cosom);
+        sinom  = sin(omega);
+        scale0 = sin((1.0 - t) * omega) / sinom;
+        scale1 = sin(t * omega) / sinom;
+    } else {        
+        // "from" and "to" quaternions are very close 
+        //  ... so we can do a linear interpolation
+        scale0 = 1.0 - t;
+        scale1 = t;
+    }
+    // calculate final values
+    out[0] = scale0 * ax + scale1 * bx;
+    out[1] = scale0 * ay + scale1 * by;
+    out[2] = scale0 * az + scale1 * bz;
+    out[3] = scale0 * aw + scale1 * bw;
+    
+    return out;
+};
+
 /**
  * Sets a quat from the given angle and rotation axis,
  * then returns it.
@@ -1075,6 +1148,50 @@ float* Mat4::identity(float *out) {
     out[15] = 1;
     return out;
 }
+
+/**
+ * Calculates a 4x4 matrix from the given quaternion
+ *
+ * @param {mat4} out mat4 receiving operation result
+ * @param {quat} q Quaternion to create matrix from
+ *
+ * @returns {mat4} out
+ */
+
+float* Mat4::fromQuat (float *out, float *q) {
+    float x = q[0], y = q[1], z = q[2], w = q[3],
+        x2 = x + x,
+        y2 = y + y,
+        z2 = z + z,
+        xx = x * x2,
+        yx = y * x2,
+        yy = y * y2,
+        zx = z * x2,
+        zy = z * y2,
+        zz = z * z2,
+        wx = w * x2,
+        wy = w * y2,
+        wz = w * z2;
+
+    out[0] = 1 - yy - zz;
+    out[1] = yx + wz;
+    out[2] = zx - wy;
+    out[3] = 0;
+    out[4] = yx - wz;
+    out[5] = 1 - xx - zz;
+    out[6] = zy + wx;
+    out[7] = 0;
+    out[8] = zx + wy;
+    out[9] = zy - wx;
+    out[10] = 1 - xx - yy;
+    out[11] = 0;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = 0;
+    out[15] = 1;
+
+    return out;
+};
 
 float* Mat4::fromRotationTranslation(float* out, float* q, float* v) {
     // Quaternion math

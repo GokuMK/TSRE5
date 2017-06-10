@@ -23,6 +23,7 @@ class CarSpawnerObj : public WorldObj  {
 public:
     struct CarSpawnerList {
         QString name;
+        bool ignoreXRot = false;
         QVector<QString> carName;
         QVector<int> val;
     };
@@ -34,6 +35,8 @@ public:
         QString carName;
         int shapeId = -1;
         SFile* shapePointer;
+        unsigned int shapeState;
+        bool ignoreXRot = false;
         int trNodeId;
         float trPosMb;
         float trPosMe;
@@ -64,13 +67,13 @@ public:
     bool isTrackItem();
     void initTrItems(float* tpos);
     void translate(float px, float py, float pz);
-    int getCarNumber();
-    int getCarSpeed();
+    float getCarNumber();
+    float getCarSpeed();
     QString getCarListName();
     void setCarListName(QString val);
     float getLength();
-    void setCarNumber(int val);
-    void setCarSpeed(int val);
+    void setCarNumber(float val);
+    void setCarSpeed(float val);
     void deleteTrItems();
     void expand();
     int getDefaultDetailLevel();
@@ -79,8 +82,8 @@ public:
 private:
     int trItemId[4];
     int trItemIdCount = 0;
-    int carFrequency = 5;
-    int	carAvSpeed = 20;
+    float carFrequency = 5;
+    float carAvSpeed = 20;
     TrackItemObj* spointer3d = NULL;
     TrackItemObj* spointer3dSelected = NULL;
     OglObj* line = NULL;

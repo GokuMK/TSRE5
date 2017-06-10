@@ -80,6 +80,7 @@ public:
     int y;
     int shape = -1;
     SFile* shapePointer = NULL;
+    unsigned int shapeState = 0;
     bool loaded;
     float size;
     int jestPQ = 0;

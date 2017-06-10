@@ -24,11 +24,16 @@ public:
     
 public slots:
     void checkboxTwoPointEdited(int val);
+    void checkboxDrawPointsEdited(int val);
+    void createRoadPathsEdited();
+    void removeRoadPathsEdited();
+    
 signals:
     
 private:
     QLineEdit lengthM;
     QCheckBox checkboxTwoPoint;
+    QCheckBox checkboxDrawPoints;
 };
 
 #endif	/* PROPERTIESRULER_H */

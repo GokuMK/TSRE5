@@ -114,13 +114,13 @@ void PropertiesCarspawner::showObj(GameObj* obj){
 void PropertiesCarspawner::carNumberEnabled(QString val){
     if(cobj == NULL) return;
     Undo::SinglePushWorldObjData(worldObj);
-    cobj->setCarNumber(val.toInt());
+    cobj->setCarNumber(val.toFloat());
 }
 
 void PropertiesCarspawner::carSpeedEnabled(QString val){
     if(cobj == NULL) return;
     Undo::SinglePushWorldObjData(worldObj);
-    cobj->setCarSpeed(val.toInt());
+    cobj->setCarSpeed(val.toFloat());
 }
 
 bool PropertiesCarspawner::support(GameObj* obj){

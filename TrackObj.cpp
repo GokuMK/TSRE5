@@ -118,7 +118,7 @@ void TrackObj::rotate(float x, float y, float z){
     
     vect[0] = 0; vect[1] = 0; vect [2] = 10;
     Vec3::transformQuat(vect, vect, this->qDirection);
-    float elevation = tan((vect[1]/10.0));
+    //float elevation = tan((vect[1]/10.0));
     //Quat::rotateX(quat, quat, elevation);
     //Vec3::transformQuat(reinterpret_cast<float*>(&vect), this->endp, this->qDirection);
     //Vec3::transformQuat(reinterpret_cast<float*>(&vect), this->endp, this->qDirection);
