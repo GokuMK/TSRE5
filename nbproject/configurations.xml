@@ -68,6 +68,11 @@
         <itemPath>TextObj.h</itemPath>
         <itemPath>TrackItemObj.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f2" displayName="ProceduralShapes" projectFiles="true">
+        <itemPath>ObjFile.h</itemPath>
+        <itemPath>ProceduralMstsDyntrack.h</itemPath>
+        <itemPath>ProceduralShape.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f11" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
           <itemPath>EditFileNameDialog.h</itemPath>
@@ -264,6 +269,11 @@
         <itemPath>Shader.cpp</itemPath>
         <itemPath>TextObj.cpp</itemPath>
         <itemPath>TrackItemObj.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f11" displayName="ProceduralShapes" projectFiles="true">
+        <itemPath>ObjFile.cpp</itemPath>
+        <itemPath>ProceduralMstsDyntrack.cpp</itemPath>
+        <itemPath>ProceduralShape.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
@@ -660,6 +670,10 @@
       </item>
       <item path="OSMFeatures.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ObjFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ObjFile.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ObjTools.h" ex="false" tool="3" flavor2="0">
@@ -699,6 +713,14 @@
       <item path="PoleObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PoleObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ProceduralMstsDyntrack.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ProceduralMstsDyntrack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ProceduralShape.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ProceduralShape.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1313,6 +1335,10 @@
       </item>
       <item path="OSMFeatures.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ObjFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ObjFile.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ObjTools.h" ex="false" tool="3" flavor2="0">
@@ -1352,6 +1378,14 @@
       <item path="PoleObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PoleObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ProceduralMstsDyntrack.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ProceduralMstsDyntrack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ProceduralShape.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ProceduralShape.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1959,6 +1993,10 @@
       </item>
       <item path="OSMFeatures.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ObjFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ObjFile.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ObjTools.h" ex="false" tool="3" flavor2="0">
@@ -1998,6 +2036,14 @@
       <item path="PoleObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PoleObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ProceduralMstsDyntrack.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ProceduralMstsDyntrack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ProceduralShape.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ProceduralShape.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2612,6 +2658,10 @@
       </item>
       <item path="OSMFeatures.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ObjFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ObjFile.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ObjTools.h" ex="false" tool="3" flavor2="0">
@@ -2651,6 +2701,14 @@
       <item path="PoleObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PoleObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ProceduralMstsDyntrack.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ProceduralMstsDyntrack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ProceduralShape.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ProceduralShape.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3253,6 +3311,10 @@
       </item>
       <item path="OSMFeatures.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ObjFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ObjFile.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ObjTools.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ObjTools.h" ex="false" tool="3" flavor2="0">
@@ -3292,6 +3354,14 @@
       <item path="PoleObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PoleObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ProceduralMstsDyntrack.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ProceduralMstsDyntrack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ProceduralShape.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ProceduralShape.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="8">
       </item>

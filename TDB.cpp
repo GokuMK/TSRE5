@@ -457,7 +457,7 @@ int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
         float dlugosc = this->tsection->sekcja[sect]->getDlugosc();
         //qDebug() <<"dlugosc"<< dlugosc;
         Vector3f aa;
-        this->tsection->sekcja[sect]->getDrawPosition(aa, dlugosc);
+        this->tsection->sekcja[sect]->getDrawPosition(&aa, dlugosc);
         aa.rotateX(endNode->UiD[9], 0);  
         aa.rotateY(M_PI + endNode->UiD[10], 0);
         float angle = this->tsection->sekcja[sect]->getAngle();
@@ -601,7 +601,7 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     float dlugosc = this->tsection->sekcja[sect]->getDlugosc();
     qDebug() << dlugosc;
     Vector3f aa;
-    this->tsection->sekcja[sect]->getDrawPosition(aa, dlugosc);
+    this->tsection->sekcja[sect]->getDrawPosition(&aa, dlugosc);
     //if(qe[1] > M_PI)
     //    aa->rotateX(-qe[0], 0);
     //else
@@ -1335,13 +1335,13 @@ bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sect
         //for (int i = 0; i < shp->path[startEnd].n; i++) {
             dlugosc = this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDlugosc();
             //qDebug() << dlugosc;
-            this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(aa2, dlugosc);
+            this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(&aa2, dlugosc);
             aa2.rotateY(angle, 0);
             //qDebug() << "aa " << aa2->x << " "<<aa2->z;
             aa.x+=aa2.x;
             aa.z+=aa2.z;
             angle += this->tsection->sekcja[shp->path[startEnd].sect[i]]->getAngle();
-            this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(aa2, dlugosc);
+            this->tsection->sekcja[shp->path[startEnd].sect[i]]->getDrawPosition(&aa2, dlugosc);
             aa2.rotateY(angle2, 0);
             aa3.x+=aa2.x;
             aa3.z+=aa2.z;
@@ -1968,7 +1968,7 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
         if(length < metry)
             continue;
         
-        tsection->sekcja.at(idx)->getDrawPosition(position, metry - length + sectionLength);
+        tsection->sekcja.at(idx)->getDrawPosition(&position, metry - length + sectionLength);
         //qDebug() << "position"<<position.x<<position.y<<position.z;
 
         float matrix[16];

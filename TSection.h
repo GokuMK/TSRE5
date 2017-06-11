@@ -10,7 +10,8 @@
 
 #ifndef TSECTION_H
 #define	TSECTION_H
-#include "Vector3f.h"
+
+class Vector3f;
 
 class TSection {
 public:
@@ -21,7 +22,9 @@ public:
     float radius;
     float angle;
     
+    TSection();
     TSection(int index);
+    TSection(int index, int t, float a, float r);
     TSection(const TSection& orig);
     virtual ~TSection();
     float getDlugosc();
@@ -32,7 +35,7 @@ public:
     void getPoints(float* &ptr, float* matrix);
     void setDrawPosition(float metry);
     float getAngle();
-    void getDrawPosition(Vector3f &out, float metry);
+    void getDrawPosition(Vector3f *out, float metry);
     void setCamPosition(float metry, float ob);
     void setCamRotation(float metry, float ob);
     float getDrawAngle(float metry);

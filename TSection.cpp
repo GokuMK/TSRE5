@@ -13,13 +13,34 @@
 #include "GLMatrix.h"
 #include <QDebug>
 #include "Vector2f.h"
+#include "Vector3f.h"
+
+TSection::TSection() {
+    id = 0;
+    type = 0;
+}
 
 TSection::TSection(int index) {
     id = index;
     type = 0;
 }
 
+TSection::TSection(int index, int t, float a, float r) {
+    id = index;
+    type = t;
+    angle = a;
+    radius = r;
+    val1 = 0;
+    size = angle;
+}
+
 TSection::TSection(const TSection& orig) {
+    id = orig.id;
+    type = orig.type;
+    angle = orig.angle;
+    radius = orig.radius;
+    val1 = orig.val1;
+    size = orig.size;
 }
 
 TSection::~TSection() {
@@ -262,15 +283,15 @@ void TSection::setDrawPosition(float metry) {
          }*/
 }
 
-void TSection::getDrawPosition(Vector3f &out, float metry) {
+void TSection::getDrawPosition(Vector3f *out, float metry) {
 
     if (metry > this->getDlugosc())
         metry = this->getDlugosc();
     //prosta
     if (type == 0) {
-        out.x = 0;
-        out.y = 0;
-        out.z = metry;
+        out->x = 0;
+        out->y = 0;
+        out->z = metry;
         return;// (new Vector3f(0, 0, metry));
     }        //krzywa
     else if (type == 1) {
@@ -282,9 +303,9 @@ void TSection::getDrawPosition(Vector3f &out, float metry) {
         Vector2f a;
         a.rotate(aa, radius);
 
-        out.x = kierunek * a.x;
-        out.y = 0;
-        out.z = kierunek * a.y;
+        out->x = kierunek * a.x;
+        out->y = 0;
+        out->z = kierunek * a.y;
         return;// (new Vector3f(kierunek * a.x, 0, kierunek * a.y));
     }
     return;

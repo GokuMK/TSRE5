@@ -839,7 +839,7 @@ void SFile::enableSubObjByName(unsigned int stateId, QString name, bool val){
     // Find matrix id
     int matrixId = -1;
     for(int i = 0; i < iloscm; i++) {
-        if(macierz[i].name == name) {
+        if(macierz[i].name.toLower() == name.toLower() ) {
             matrixId = i;
             break;
         }
@@ -901,7 +901,7 @@ void SFile::render(unsigned int stateId) {
     }
     
     if(state[stateId].enableSubObjQueue.size() > 0){
-        qDebug() << "queue"<<state[stateId].enableSubObjQueue.size();
+        //qDebug() << "queue"<<state[stateId].enableSubObjQueue.size();
         for (auto it = state[stateId].enableSubObjQueue.begin(); it != state[stateId].enableSubObjQueue.end();){
             enableSubObjByName(stateId, it.key(), it.value());
             it = state[stateId].enableSubObjQueue.erase(it);

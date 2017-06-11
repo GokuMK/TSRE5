@@ -58,6 +58,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NaviWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/NewRouteWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OSMFeatures.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ObjFile.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ObjTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OglObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OverwriteDialog.o
@@ -68,6 +69,8 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PlatformObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Pointer3d.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PoleObj.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ProceduralMstsDyntrack.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ProceduralShape.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesAbstract.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesCarspawner.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesConsist.o

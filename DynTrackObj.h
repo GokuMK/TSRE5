@@ -13,7 +13,8 @@
 
 #include "WorldObj.h"
 #include <QString>
-#include "OglObj.h"
+
+class OglObj;
 
 class DynTrackObj : public WorldObj{
 public:
@@ -25,7 +26,7 @@ public:
     };
     
     Section* sections = NULL;
-    OglObj shape[2];
+    QVector<OglObj*> shape;
     DynTrackObj();
     DynTrackObj(const DynTrackObj& o);
     WorldObj* clone();
@@ -47,10 +48,7 @@ private:
     bool init;
     float elevation;
     float* jNodePosn = NULL;
-    float bound[6];
     int sidxSelected = 0;
-    void drawShape(int selectionColor);
-    void genShape();
     bool getSimpleBorder(float* border);
     bool getBoxPoints(QVector<float> &points);
 };

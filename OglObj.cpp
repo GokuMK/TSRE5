@@ -17,6 +17,8 @@ OglObj::OglObj() {
     loaded = false;
     texId = -1;
     materialType = NONE;
+    for(int i = 0; i < 6; i++)
+        bound[i] = 0;   
 }
 
 OglObj::OglObj(const OglObj& orig) {
@@ -155,4 +157,23 @@ void OglObj::render(int selectionColor) {
 
 int OglObj::getTexId(){
     return this->texId;
+}
+
+bool OglObj::getSimpleBorder(float* border){
+    border[0] = bound[0];
+    border[1] = bound[1];
+    border[2] = bound[2];
+    border[3] = bound[3];
+    border[4] = bound[4];
+    border[5] = bound[5];
+    return true;
+}
+
+void OglObj::setBound(float *b){
+    bound[0] = b[0];
+    bound[1] = b[1];
+    bound[2] = b[2];
+    bound[3] = b[3];
+    bound[4] = b[4];
+    bound[5] = b[5];
 }
