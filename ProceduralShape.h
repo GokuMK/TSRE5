@@ -23,9 +23,19 @@ class ProceduralShape {
 public:
     static QMap<QString, ObjFile*> Files;
     static void GenShape(QVector<OglObj*> &shape, QVector<TSection> &sections);
+
+    struct ComplexLine {
+        QVector<TSection> sections;
+        float length;
+        void init(QVector<TSection> s);
+        float getLength();
+        void getDrawPosition(float* posRot, float distance);
+    };
+    
 private:
     static float Alpha;
-    static void PushShapePart(float* &ptr, ObjFile* tFile, float* matrix);
+    static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix);
+    static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix1, float* matrix2, float dist1, float dist2);
 };
 
 #endif	/* PROCEDURALSHAPE_H */

@@ -30,7 +30,6 @@ ObjFile::ObjFile(QString path) {
     QVector<Vector2f> vt;
     QVector<Vector3f> vn;
     
-    
     while (!in.atEnd()) {
         line = in.readLine();
         if(line.startsWith("#", Qt::CaseInsensitive)) 
@@ -43,6 +42,10 @@ ObjFile::ObjFile(QString path) {
             v.push_back(Vector3f(args[1].toFloat(), args[2].toFloat(), args[3].toFloat() ));
         }
         if(args[0] == "vt" && args.size() == 3){
+            if(args[2].toFloat() < texYmin)
+                texYmin = args[2].toFloat();
+            if(args[2].toFloat() > texYmax)
+                texYmax = args[2].toFloat();
             vt.push_back(Vector2f(args[1].toFloat(), args[2].toFloat()));
         }
         if(args[0] == "vn" && args.size() == 4){

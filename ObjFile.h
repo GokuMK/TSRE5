@@ -20,6 +20,8 @@ public:
     ObjFile(QString path);
     QVector<float> points;
     int count = 0;
+    float texYmin = 999;
+    float texYmax = -1;
 private:
 
 };
