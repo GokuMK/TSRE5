@@ -12,6 +12,7 @@
 #include "ObjFile.h"
 #include "Game.h"
 #include "GLMatrix.h"
+#include <QDateTime>
 
 QMap<QString, ObjFile*> ProceduralShape::Files;
 float ProceduralShape::Alpha = 0;
@@ -27,6 +28,7 @@ void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &secti
     if(Files[path3] == NULL)
         Files[path3] = new ObjFile(path3);
     
+    //unsigned long long int timeNow = QDateTime::currentMSecsSinceEpoch();
     GLUU *gluu = GLUU::get();
     Alpha = -gluu->alphaTest;
     
@@ -89,6 +91,8 @@ void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &secti
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES );
+    
+    //qDebug() << "shapeTimeGen" << QDateTime::currentMSecsSinceEpoch() - timeNow;
 }
 
 void ProceduralShape::PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix){

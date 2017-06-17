@@ -43933,7 +43933,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ProceduralShape.o: Procedura
 		ObjFile.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
 		Game.h \
-		GLMatrix.h
+		GLMatrix.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QDateTime \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ProceduralShape.o ProceduralShape.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PropertiesAbstract.o: PropertiesAbstract.cpp PropertiesAbstract.h \

@@ -290,8 +290,10 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
                 continue;
             tsections.push_back(TSection(0, sections[i].type, sections[i].a, sections[i].r));
         }
-        //ProceduralMstsDyntrack::GenShape(shape, tsections);
-        ProceduralShape::GenShape(shape, tsections);
+        if(Game::proceduralTracks)
+            ProceduralShape::GenShape(shape, tsections);
+        else
+            ProceduralMstsDyntrack::GenShape(shape, tsections);
         init = true;
     } else {
         for(int i = 0; i < shape.size(); i++){

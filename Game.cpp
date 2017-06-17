@@ -84,6 +84,7 @@ int Game::textureQuality = 1;
 float Game::snapableRadius = 20;
 bool Game::snapableOnlyRot = false;
 float Game::trackElevationMaxPm = 700.0;
+bool Game::proceduralTracks = false;
 
 QString Game::geoPath = "hgst";
 
@@ -294,6 +295,13 @@ void Game::load() {
             else
                 cameraStickToTerrain = false; 
         }
+        if(val == "proceduralTracks"){
+            if(args[1].trimmed().toLower() == "true")
+                proceduralTracks = true;
+            else
+                proceduralTracks = false; 
+        }
+        
         if(val == "cameraSpeedMin"){
             cameraSpeedMin = args[1].trimmed().toFloat();
         }

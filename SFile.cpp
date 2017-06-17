@@ -45,7 +45,7 @@ SFile::~SFile() {
 }
 
 void SFile::load() {
-    
+    //unsigned long long int timeNow = QDateTime::currentMSecsSinceEpoch();
     QFile *file = new QFile(pathid);
     if (!file->open(QIODevice::ReadOnly)){
         qDebug() << "S Shape: not exist "<<pathid;
@@ -302,6 +302,7 @@ void SFile::load() {
     if(loaded == 1)
         buildFrameIds();
     loadSd();
+    //qDebug() <<this->pathid << QDateTime::currentMSecsSinceEpoch() - timeNow;
     return;
 }
 

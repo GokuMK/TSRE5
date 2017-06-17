@@ -105,6 +105,7 @@ public:
     static float snapableRadius;
     static bool snapableOnlyRot;
     static float trackElevationMaxPm;    
+    static bool proceduralTracks;
     static QString StyleMainLabel;
     static QString StyleGreenButton;
     static QString StyleRedButton;
