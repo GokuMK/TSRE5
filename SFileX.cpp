@@ -512,8 +512,8 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
     ParserX::SkipToken(bufor);
     ParserX::SkipToken(bufor);
     ParserX::SkipToken(bufor);
-    ParserX::SkipToken(bufor);
-    ParserX::SkipToken(bufor);
+    //ParserX::SkipToken(bufor);
+    //ParserX::SkipToken(bufor);
     delete[] vert;
     delete[] pliks->tpoints.normals;
     delete[] pliks->tpoints.points;

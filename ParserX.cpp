@@ -312,6 +312,63 @@ QString ParserX::GetStringInside(FileBuffer* bufor){
     return "";
 }
 //-----------------------------------
+// Parsowanie stringa
+//-----------------------------------
+QString ParserX::GetAlternativeTokenName(FileBuffer* bufor){
+    QString sciezka = "";
+    if(bufor->data[bufor->off - 2] == 40)
+        return sciezka;
+    unsigned short int b = 0;
+    while ((b < 46) && (b != 34) && (b!=33)&&(b!=35)&&(b!=36)&&(b!=37)&&(b!=38)) {
+        b = bufor->getShort();
+        if (b == 40){
+            return "";
+        }
+    }
+
+    if (b == 34) {
+        bool specialChar = false;
+        while ((b = bufor->getShort()) != 34 || specialChar) {
+            if(!specialChar){
+                if(b == '\\') specialChar = true;
+            } else {
+                specialChar = false;
+            }
+            sciezka += QChar(b);
+        }
+        b = bufor->getShort();
+        if(b == '+'){
+            sciezka += ParserX::GetStringInside(bufor);
+            return sciezka;
+        } else {
+            bufor->off-=2;
+        }
+        for (;;) {
+            if(bufor->length <= bufor->off + 2)
+                return "";
+            b = bufor->getShort();
+            if (b == 40)
+                return sciezka;
+        }
+        return sciezka;
+    } else {
+        bufor->off -= 2;
+        while (((b = bufor->getShort()) > 32) && (b != 40)) {
+            sciezka += QChar(b);
+        }
+        bufor->off -= 2;
+        for (;;) {
+            if(bufor->length <= bufor->off + 2)
+                return "";
+            b = bufor->getShort();
+            if (b == 40)
+                return sciezka;
+        }
+        return sciezka;
+    }
+    return "";
+}
+//-----------------------------------
 // Parsowanie liczby rzeczywistej
 //-----------------------------------
 float ParserX::GetNumber(FileBuffer* bufor){

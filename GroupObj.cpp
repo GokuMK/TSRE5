@@ -40,7 +40,7 @@ void GroupObj::fromNewObjects(GroupObj* objList, Route* route, int x, int z, flo
     this->unselect();
     objects.clear();
     float *q;
-    WorldObj * wobj;
+    WorldObj * wobj = NULL;
     
     pivot.set = objList->pivot.set;
     Vec3::copy(pivot.position, (float*)objList->pivot.position);
@@ -54,6 +54,7 @@ void GroupObj::fromNewObjects(GroupObj* objList, Route* route, int x, int z, flo
     int pid = -1;
     float oldQrot[4];
     float newQrot[4];
+    Quat::fill(newQrot);
     if (pivot.set == -2 ) {
         Vec3::copy(tp, pivot.position);
         Quat::copy(oldQrot, pivot.qDirection);
@@ -74,12 +75,13 @@ void GroupObj::fromNewObjects(GroupObj* objList, Route* route, int x, int z, flo
             q = Quat::create();
             Quat::copy(q, objList->objects[pid]->qDirection);
             wobj = route->placeObject(x, z, p, q, objList->objects[pid]->getRefInfo());
-            if(wobj != NULL)
+            if(wobj != NULL){
                 this->addObject(wobj);
-            Vec3::add(tp, tp, Vec3::sub(tpos, p, wobj->position));
-            tp[0] += (x-wobj->x)*2048;
-            tp[2] += (z-wobj->y)*2048;
-            Quat::copy(newQrot, wobj->qDirection);
+                Vec3::add(tp, tp, Vec3::sub(tpos, p, wobj->position));
+                tp[0] += (x-wobj->x)*2048;
+                tp[2] += (z-wobj->y)*2048;
+                Quat::copy(newQrot, wobj->qDirection);
+            }
         }
     }
     float tQrot[4];

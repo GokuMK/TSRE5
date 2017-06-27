@@ -20,7 +20,8 @@ float ProceduralShape::Alpha = 0;
 void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &sections) {
     QString path1 = "resources/tracks/inbk3.obj";
     QString path2 = "resources/tracks/uic60.obj";
-    QString path3 = "resources/tracks/ballast1.obj";
+    //QString path3 = "resources/tracks/ballast1.obj";
+    QString path3 = "resources/tracks/ballast2.obj";
     if(Files[path1] == NULL)
         Files[path1] = new ObjFile(path1);
     if(Files[path2] == NULL)
@@ -68,10 +69,10 @@ void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &secti
         PushShapePart(ptr, tFile, 0.325, matrix1, matrix2, i, i+step);
     }    
     
-    texturePath = new QString(resPath.toLower()+"/rails1.png");
-    shape.push_back(new OglObj());
-    shape.back()->setMaterial(texturePath);
-    shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES );
+    //texturePath = new QString(resPath.toLower()+"/rails1.png");
+    //shape.push_back(new OglObj());
+    //shape.back()->setMaterial(texturePath);
+    //shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES );
     
     ptr = p;
     
@@ -87,7 +88,8 @@ void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &secti
         PushShapePart(ptr, tFile, 0.05, matrix1, matrix2, i, i+step);
     }   
 
-    texturePath = new QString(resPath.toLower()+"/ballast1.png");
+    //texturePath = new QString(resPath.toLower()+"/ballast1.png");
+    texturePath = new QString(resPath.toLower()+"/linijka.png");
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES );

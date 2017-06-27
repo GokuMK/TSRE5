@@ -228,6 +228,8 @@ void SFile::load() {
                         continue;
                     }
                     if(sh == "shape_header"){
+                        //qDebug() << "shape_header" << 
+                        ParserX::GetAlternativeTokenName(data);
                         ParserX::SkipToken(data);
                         continue;
                     }
@@ -875,6 +877,8 @@ void SFile::updateSim(float deltaTime, unsigned int stateId){
     animated = false;
 
     if(state[stateId].animated && animations.size() > 0){
+        if(animations[0].frames == 0)
+            return;
         animated = true;
         if(deltaTime <= 0){
             state[stateId].frameCount = 0;

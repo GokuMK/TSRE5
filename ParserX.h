@@ -24,6 +24,7 @@ public:
     static int FindTokenDomIgnore(QString sh, FileBuffer* bufor);
     static QString NextTokenDomIgnore(FileBuffer* bufor);
     static QString NextTokenInside(FileBuffer* bufor);
+    static QString GetAlternativeTokenName(FileBuffer* bufor);
     static QString GetString(FileBuffer* bufor);
     static QString GetStringInside(FileBuffer* bufor);
     static float GetNumber(FileBuffer* bufor);
