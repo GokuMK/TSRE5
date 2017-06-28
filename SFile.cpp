@@ -54,7 +54,7 @@ void SFile::load() {
     }
     FileBuffer* data = ReadFile::read(file);
     int loadingCount = 0;
-    //qDebug() << "--" << path << "--" << bufor->length;
+    //qDebug() << "--" << pathid << "--" << data->length;
 
     data->off = 32;
     if (data->getInt() == 71) {
@@ -166,7 +166,7 @@ void SFile::load() {
         //wczytanie plku xml
         data->off = 0;
         ParserX::NextLine(data);
-    
+
         QString sh = "";
         while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
             if(sh == "shape"){

@@ -23,41 +23,11 @@ FileBuffer* ReadFile::read(QFile* file) {
     unsigned char* data = NULL;
     //int maxSize = 25000000;
     int nLength = 0;
+    unsigned short bom = *((unsigned short int*) & in[0]);
     //for (int i = 0; i < 100; i++)
     //   qDebug() << ":" << (char)in[i];
-
-    if (in[7] == 'F') {
-        /*out = new unsigned char[maxSize];
-        //System.out.println("plik skompresowany");
-        int aLength =  fileData.length() - 16;
-        int ret;
-        z_stream strm;
-        //unsigned char* in = (unsigned char*)buffer.data() + 7;
-        strm.zalloc = Z_NULL;
-        strm.zfree = Z_NULL;
-        strm.opaque = Z_NULL;
-        strm.avail_in = aLength;
-        strm.next_in = in + 16;
-        ret = inflateInit(&strm);
-        if (ret != Z_OK) {
-            qDebug() << "fail2";
-        } else {
-            //qDebug() << "inflate";
-            strm.avail_out = maxSize;
-            strm.next_out = out;
-            ret = inflate(&strm, Z_NO_FLUSH);
-            //cout << 1000000 - strm.avail_out << endl;
-
-            (void) inflateEnd(&strm);
-
-            nLength = maxSize - strm.avail_out;
-            data = new unsigned char[nLength];
-            //for(int i = 0; i < chunkData->length; i++)
-            //    chunkData->data[i] = Global::out[i];
-            std::copy(out, out + nLength, data);
-            //for (int i = 0; i < 128; i++)
-            //    std::cout << ":" << (int)data[i];
-        }*/
+    
+    if (bom != 65279 && in[7] == 'F') {
         in[12] = in[11];
         in[13] = in[10];
         in[14] = in[9];
@@ -68,7 +38,17 @@ FileBuffer* ReadFile::read(QFile* file) {
         std::copy(in, in + 16, data);
         std::copy(out.data(), out.data() + nLength - 16, data + 16);
         delete[] in;
-        //delete[] out;
+    } else if (bom == 65279 && in[16] == 'F') {
+        in[30] = in[19];
+        in[31] = in[18];
+        in[32] = in[17];
+        in[33] = in[13];
+        QByteArray out = qUncompress(QByteArray::fromRawData((const char*)(in+30), size-30));
+        nLength = out.length() + 34;
+        data = new unsigned char[nLength];
+        std::copy(in, in + 34, data);
+        std::copy(out.data(), out.data() + nLength - 34, data + 34);
+        delete[] in;
     } else {
         //data = in + 16;// new unsigned char[fileData.length() - 16];
         nLength = size;
