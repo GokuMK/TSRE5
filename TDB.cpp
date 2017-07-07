@@ -1545,7 +1545,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
             cPos.z = - cPos.z;
             cPos.add(p);
             
-            this->findNearestPositionsOnTDB(posT, (float*)&cPos, cPoints, 0.5);
+            this->findNearestPositionsOnTDB(posT, (float*)&cPos, cPoints, 0.2);
             qDebug() << "crossover";
             qDebug() << cPos.x<<cPos.y<<cPos.z;
             if(cPoints.size() != 2)
