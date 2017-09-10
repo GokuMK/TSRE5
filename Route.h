@@ -42,7 +42,7 @@ public:
     QVector<Path*> path;
     bool loaded = false;
     TSectionDAT *tsection; 
-    SoundList* soundList;
+    SoundList *soundList;
     Ref *ref;
     Environment *env;
     bool placementStickToTarget = false;

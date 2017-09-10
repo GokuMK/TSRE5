@@ -14,6 +14,7 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/StaticObj.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TSection.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ParserX.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TexLib.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SpeedPostDAT.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GLUU.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EditFileNameDialog.cpp</file>
@@ -27,6 +28,8 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundRegionObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Game.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TSectionDAT.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ReadFile.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ParserX.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/QuadTree.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TransferObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Coords.h</file>
@@ -70,6 +73,7 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ProceduralMstsDyntrack.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/IghCoords.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GroupObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/FileFunctions.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/HazardObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityTools.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConEditorWindow.cpp</file>
@@ -112,6 +116,7 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ImageLib.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Route.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/LevelCrObj.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/RouteEditorWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesSoundRegion.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TRitem.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainLib.h</file>

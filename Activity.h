@@ -13,6 +13,8 @@
 
 #include <QString>
 #include <unordered_map>
+#include <QVector>
+#include "ActivityEvent.h"
 
 class FileBuffer;
 class Consist;
@@ -77,52 +79,6 @@ public:
         void save(QTextStream* out);
     };
     
-    struct Outcome {
-        QString displayMessage;
-        QString *activitysuccess = NULL;
-        std::vector<int> incactlevel;
-        std::vector<int> decactlevel;
-        std::vector<int> activateevent;
-        QString *activityfail = NULL;
-        QString *startignoringspeedlimits = NULL;
-    };
-    
-    struct Event {
-        enum EventType {
-            EventTypeNone = 0,
-            EventTypeTime = 1,
-            EventTypeLocation = 2,
-            EventTypeAllstops = 3,
-            EventTypePickupWagons = 4,
-            EventTypeAssembleTrain = 5,
-            EventTypeAssembleTrainAtLocation = 6,
-            EventTypeDropoffWagonsAtLocation = 7,
-            EventTypePickupPassengers = 8,
-            EventTypeReachSpeed = 9
-        };
-        int category = -99999;
-        EventType eventType = Event::EventTypeNone;
-        std::vector<unsigned int> wagonListId;
-        std::vector<unsigned int> wagonListSidingItem;
-        std::vector<std::string> wagonListDescription;
-        
-        int id = -99999;
-        bool reversableEvent = false;
-        int activationLevel = -99999;
-        QString name;
-        int time = -99999;
-        int stationStop = -99999;
-        float* location = NULL;
-        int sidingItem = -99999;
-        float speed = -99999;
-        int triggerOnStop = -99999;
-        QString textToDisplayOnCompletionIfTriggered;
-        QString textToDisplayOnCompletionIfNotTriggered;
-        Outcome* outcome = NULL;
-        void load(FileBuffer* data);
-        void save(QTextStream* out);
-    };
-    
     struct ActivityHeader {
         QString routeid;
         QString name;
@@ -166,7 +122,7 @@ public:
     std::vector<std::pair<int, int>> platformNumPassengersWaiting;
     std::vector<RestrictedSpeedZone> restrictedSpeedZone;
     std::vector<int> activityFailedSignal;
-    std::vector<Event> event;
+    std::vector<ActivityEvent> event;
     int serial = -1;
     
     void load();

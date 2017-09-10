@@ -15,6 +15,8 @@
 #include <QString>
 
 class Route;
+class GameObj;
+class Activity;
 
 class ActivityTools : public QWidget{
     Q_OBJECT
@@ -28,6 +30,7 @@ public slots:
     void conFilesShowEnabled(QString);
     void routeLoaded(Route* r);
     void actNewLooseConsistToolEnabled(bool val);
+    void actPathsEditToolEnabled();
     void newActButtonEnabled();
     void cServiceEnabled(QString val);
     void cTrafficEnabled(QString val);
@@ -52,8 +55,13 @@ public slots:
     void sHazardPeopleEnabled();
     void descriptionOpenEnabled();
     void briefingOpenEnabled();
+    void actEventsOpenEnabled();
+    
 signals:
     void enableTool(QString name);
+    void objectSelected(GameObj* obj);
+    void showActivityEventEditor();
+    void showEvents(Activity *a);
 
 private:
     Route *route = NULL;

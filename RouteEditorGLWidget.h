@@ -78,6 +78,7 @@ public slots:
     void showTrkEditr();
     void showContextMenu(const QPoint & point);
     void createNewTiles(QMap<int, QPair<int, int>*> list);
+    void objectSelected(GameObj* obj);
     
 signals:
     void routeLoaded(Route * a);

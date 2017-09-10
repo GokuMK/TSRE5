@@ -77,6 +77,7 @@
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
           <itemPath>EditFileNameDialog.h</itemPath>
           <itemPath>PropertiesAbstract.h</itemPath>
+          <itemPath>PropertiesActivityPath.h</itemPath>
           <itemPath>PropertiesCarspawner.h</itemPath>
           <itemPath>PropertiesConsist.h</itemPath>
           <itemPath>PropertiesDyntrack.h</itemPath>
@@ -102,6 +103,10 @@
           <itemPath>TransformWorldObjDialog.h</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
+        <itemPath>ActivityEventActionProperties.h</itemPath>
+        <itemPath>ActivityEventLocationProperties.h</itemPath>
+        <itemPath>ActivityEventTimeProperties.h</itemPath>
+        <itemPath>ActivityEventWindow.h</itemPath>
         <itemPath>ActivityServiceTools.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
         <itemPath>GeoTools.h</itemPath>
@@ -155,6 +160,7 @@
       <logicalFolder name="f7" displayName="trains" projectFiles="true">
         <itemPath>ActLib.h</itemPath>
         <itemPath>Activity.h</itemPath>
+        <itemPath>ActivityEvent.h</itemPath>
         <itemPath>ConLib.h</itemPath>
         <itemPath>Consist.h</itemPath>
         <itemPath>Eng.h</itemPath>
@@ -279,6 +285,7 @@
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
           <itemPath>EditFileNameDialog.cpp</itemPath>
           <itemPath>PropertiesAbstract.cpp</itemPath>
+          <itemPath>PropertiesActivityPath.cpp</itemPath>
           <itemPath>PropertiesCarspawner.cpp</itemPath>
           <itemPath>PropertiesConsist.cpp</itemPath>
           <itemPath>PropertiesDyntrack.cpp</itemPath>
@@ -304,6 +311,10 @@
           <itemPath>TransformWorldObjDialog.cpp</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
+        <itemPath>ActivityEventActionProperties.cpp</itemPath>
+        <itemPath>ActivityEventLocationProperties.cpp</itemPath>
+        <itemPath>ActivityEventTimeProperties.cpp</itemPath>
+        <itemPath>ActivityEventWindow.cpp</itemPath>
         <itemPath>ActivityServiceTools.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
         <itemPath>GeoTools.cpp</itemPath>
@@ -357,6 +368,7 @@
       <logicalFolder name="f6" displayName="trains" projectFiles="true">
         <itemPath>ActLib.cpp</itemPath>
         <itemPath>Activity.cpp</itemPath>
+        <itemPath>ActivityEvent.cpp</itemPath>
         <itemPath>ConLib.cpp</itemPath>
         <itemPath>Consist.cpp</itemPath>
         <itemPath>Eng.cpp</itemPath>
@@ -447,6 +459,29 @@
       <item path="Activity.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEvent.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEvent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventActionProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventActionProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventLocationProperties.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ActivityEventLocationProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventTimeProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventTimeProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -725,6 +760,10 @@
       <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesActivityPath.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesActivityPath.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1113,6 +1152,29 @@
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityEvent.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEvent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventActionProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventActionProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventLocationProperties.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ActivityEventLocationProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventTimeProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventTimeProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
@@ -1390,6 +1452,10 @@
       <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesActivityPath.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesActivityPath.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1771,6 +1837,29 @@
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityEvent.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEvent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventActionProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventActionProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventLocationProperties.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ActivityEventLocationProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventTimeProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventTimeProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
@@ -2048,6 +2137,10 @@
       <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesActivityPath.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesActivityPath.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2436,6 +2529,29 @@
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityEvent.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEvent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventActionProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventActionProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventLocationProperties.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ActivityEventLocationProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventTimeProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventTimeProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
@@ -2713,6 +2829,10 @@
       <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesActivityPath.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesActivityPath.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3089,6 +3209,29 @@
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityEvent.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEvent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventActionProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventActionProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventLocationProperties.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="ActivityEventLocationProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventTimeProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventTimeProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityEventWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
@@ -3366,6 +3509,10 @@
       <item path="PropertiesAbstract.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesActivityPath.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesActivityPath.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="8">
       </item>

@@ -395,10 +395,19 @@ void TDB::fillDynTrack(DynTrackObj* track){
     }
 }
 
-int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
+int TDB::findVectorNodeBetweenTwoNodes(int first, int second){
+    for(int i = 0; i < trackNodes[first]->TrP1 + trackNodes[first]->TrP2; i++)
+        for(int j = 0; j < trackNodes[second]->TrP1 + trackNodes[second]->TrP2; j++){
+            if(trackNodes[first]->TrPinS[i] == trackNodes[second]->TrPinS[j])
+                return trackNodes[first]->TrPinS[i];
+        }
+    
+    return -1;
+}
+
+int TDB::findNearestNode(int &x, int &z, float* p, float* q, float maxD, bool updatePosition) {
     int nearestID = -1;
     float nearestD = 999;
-    float maxD = 4;
     for (int j = 1; j <= iTRnodes; j++) {
         TRnode* n = trackNodes[j];
         if(n == NULL) continue;
@@ -413,7 +422,7 @@ int TDB::findNearestNode(int &x, int &z, float* p, float* q) {
             }
         }
     }
-    if (nearestD < maxD) {
+    if ((nearestD < maxD) && updatePosition) {
         //qDebug() << ":"<<len;
         x = trackNodes[nearestID]->UiD[4];
         z = -trackNodes[nearestID]->UiD[5];

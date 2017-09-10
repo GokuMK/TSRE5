@@ -71,6 +71,8 @@ Route::Route() {
     this->tsection = new TSectionDAT();
     this->trackDB = new TDB(tsection, false);
     this->roadDB = new TDB(tsection, true);
+    Game::trackDB = this->trackDB;
+    Game::roadDB = this->roadDB;
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
 
     loadMkrList();
@@ -89,8 +91,6 @@ Route::Route() {
     ForestObj::ForestClearDistance = trk->forestClearDistance;
     CarSpawnerObj::LoadCarSpawnerList();
     
-    Game::trackDB = this->trackDB;
-    Game::roadDB = this->roadDB;
     loaded = true;
     
     Vec3::set(placementAutoTranslationOffset, 0, 0, 0);
@@ -317,8 +317,14 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         roadDB->renderItems(gluu, playerT, playerRot, renderMode);
     }
     
-    if(currentActivity != NULL)
+    if(currentActivity != NULL){
         currentActivity->render(gluu, playerT, renderMode);
+    }
+    
+    for(int i = 0; i < path.size(); i++){
+        if(path[i]->isSelected())
+            path[i]->render(gluu, playerT, renderMode);
+    }
     //trackDB->renderItems(gluu, playerT, playerRot);
     /*
     for (var key in this.tile){

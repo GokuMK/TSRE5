@@ -27,7 +27,8 @@ public:
         worldobj = 2,
         terrainobj = 3,
         consistobj = 4,
-        tritemobj = 5
+        tritemobj = 5,
+        activitypath = 6
     };
     
     TypeObj typeObj = this->undefined;

@@ -62,7 +62,8 @@ public:
     static void saveEmpty(bool road);
     bool ifTrackExist(int x, int y, int UiD);
     bool removeTrackFromTDB(int x, int y, int UiD);
-    int findNearestNode(int &x, int &z, float* p, float* q);
+    int findNearestNode(int &x, int &z, float* p, float* q, float maxD = 4, bool updatePosition = true);
+    int findVectorNodeBetweenTwoNodes(int first, int second);
     int joinTracks(int iendp);
     int joinVectorSections(int id1, int id2);
     void deleteJunction(int id);

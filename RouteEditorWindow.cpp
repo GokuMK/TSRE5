@@ -43,8 +43,10 @@
 #include "PropertiesTerrain.h"
 #include "PropertiesConsist.h"
 #include "PropertiesTrackItem.h"
+#include "PropertiesActivityPath.h"
 #include "NaviWindow.h"
 #include "UnsavedDialog.h"
+#include "ActivityEventWindow.h"
 
 RouteEditorWindow::RouteEditorWindow() {
     
@@ -57,6 +59,7 @@ RouteEditorWindow::RouteEditorWindow() {
     shapeViewWindow = new ShapeViewWindow(this);
     aboutWindow = new AboutWindow(this);
     naviWindow = new NaviWindow(this);
+    activityEventWindow = new ActivityEventWindow(this);
     
     objProperties.push_back(new PropertiesStatic);
     objProperties.push_back(new PropertiesTransfer);
@@ -78,6 +81,7 @@ RouteEditorWindow::RouteEditorWindow() {
     objProperties.push_back(new PropertiesTerrain);
     objProperties.push_back(new PropertiesConsist);
     objProperties.push_back(new PropertiesTrackItem);
+    objProperties.push_back(new PropertiesActivityPath);
     // last 
     objProperties.push_back(new PropertiesUndefined);
     
@@ -323,7 +327,7 @@ RouteEditorWindow::RouteEditorWindow() {
     
     QObject::connect(glWidget, SIGNAL(routeLoaded(Route*)),
                       objTools, SLOT(routeLoaded(Route*)));
-    
+
     QObject::connect(glWidget, SIGNAL(routeLoaded(Route*)),
                       activityTools, SLOT(routeLoaded(Route*)));
     
@@ -383,6 +387,14 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(glWidget, SIGNAL(setToolbox(QString)),
                       this, SLOT(setToolbox(QString)));
     
+    QObject::connect(activityTools, SIGNAL(objectSelected(GameObj*)),
+                      glWidget, SLOT(objectSelected(GameObj*)));
+    
+    QObject::connect(activityTools, SIGNAL(showActivityEventEditor()),
+                      this, SLOT(showActivityEventEditor()));
+    
+    QObject::connect(activityTools, SIGNAL(showEvents(Activity*)),
+                      activityEventWindow, SLOT(showEvents(Activity*)));
 }
 
 void RouteEditorWindow::keyPressEvent(QKeyEvent *e) {
@@ -499,6 +511,10 @@ void RouteEditorWindow::showToolsActivity(bool show){
     } else {
         hideShowToolWidget(false);
     }
+}
+
+void RouteEditorWindow::showActivityEventEditor(){
+    activityEventWindow->show();
 }
 
 void RouteEditorWindow::setToolbox(QString name){

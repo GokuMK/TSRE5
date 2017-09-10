@@ -454,6 +454,20 @@ void RouteEditorGLWidget::handleSelection() {
     }
 }
 
+void RouteEditorGLWidget::objectSelected(GameObj* obj){
+    if (selectedObj != NULL) {
+        selectedObj->unselect();
+        if (autoAddToTDB)
+            route->addToTDBIfNotExist((WorldObj*)selectedObj);
+        setSelectedObj(NULL);
+    }
+    if(obj == NULL)
+        return;
+    obj->select();
+    setSelectedObj(obj);
+    
+}
+
 void RouteEditorGLWidget::drawPointer() {
     int x = mousex;
     int y = mousey;

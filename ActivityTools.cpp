@@ -117,6 +117,7 @@ ActivityTools::ActivityTools(QString name)
     vlist1->setContentsMargins(0,0,1,0);
     QPushButton *actPathsNew = new QPushButton("New");
     QPushButton *actPathsEdit = new QPushButton("Edit");
+    QObject::connect(actPathsEdit, SIGNAL(released()), this, SLOT(actPathsEditToolEnabled()));
     QPushButton *actPathsClone = new QPushButton("Clone");
     QPushButton *actPathsDelete = new QPushButton("Delete");
     vlist1->addWidget(actPathsNew,0,0);
@@ -156,6 +157,7 @@ ActivityTools::ActivityTools(QString name)
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     QPushButton *actEventsOpen = new QPushButton("Open Event Editor");
+    QObject::connect(actEventsOpen, SIGNAL(released()), this, SLOT(actEventsOpenEnabled()));
     vbox->addWidget(actEventsOpen);
     
     label = new QLabel("Activity Info:");
@@ -251,6 +253,14 @@ ActivityTools::ActivityTools(QString name)
                       this, SLOT(cTrafficEnabled(QString)));
     //QObject::connect(loadActFilesButton, SIGNAL(released()),
     //                  this, SLOT(loadActFiles()));
+}
+
+void ActivityTools::actEventsOpenEnabled(){
+    emit showActivityEventEditor();
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    emit showEvents(a);
 }
 
 void ActivityTools::routeLoaded(Route* r){
@@ -397,6 +407,16 @@ void ActivityTools::actNewLooseConsistToolEnabled(bool val){
     } else {
         emit enableTool("");
     }
+}
+
+void ActivityTools::actPathsEditToolEnabled(){
+    int currentPathId = cPath.currentData().toInt();
+    for(int i = 0; i < route->path.size(); i++){
+        route->path[i]->unselect();
+    }
+    qDebug() << "aa";
+    //route->path[currentPathId]->select();
+    emit objectSelected(route->path[currentPathId]);
 }
 
 void ActivityTools::msg(QString text, QString val){
