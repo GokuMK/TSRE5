@@ -10,6 +10,7 @@
 
 #include <QString>
 #include <QVector>
+#include <QVariant>
 
 #ifndef ACTIVITYEVENT_H
 #define	ACTIVITYEVENT_H
@@ -20,14 +21,42 @@ class QTextStream;
 class ActivityEvent {
 
 public:
-    struct Outcome {
-        QString displayMessage;
-        QString *activitysuccess = NULL;
-        std::vector<int> incactlevel;
-        std::vector<int> decactlevel;
-        std::vector<int> activateevent;
-        QString *activityfail = NULL;
-        QString *startignoringspeedlimits = NULL;
+    class Outcome {
+    public:
+        enum OutcomeCategory {
+            CategoryNone = 0,
+            CategoryEvent = 1,
+            CategoryInfo = 2
+        };
+        
+        enum OutcomeType {
+            TypeNone = 0,
+            TypeDisplayMessage = 1,
+            TypeActivitySuccess = 2,
+            TypeActivityFail = 3,
+            TypeIncActLevel = 4,
+            TypeDecActLevel = 5,
+            TypeRestorAactLevel = 6,
+            TypeActivateEvent = 7,
+            TypeStartIgnoringSpeedLimits = 8,
+            TypeStopIgnoringSpeedLimits = 9
+        };
+        
+        static QMap<OutcomeType, QString> OutcomeTypeDescription;
+        static QMap<QString, OutcomeType> OutcomeNameType;
+        static QMap<OutcomeType, QString> OutcomeTypeName;
+        static QMap<OutcomeType, OutcomeCategory> OutcomeTypeCategory;
+        
+        OutcomeType type;
+        OutcomeCategory category;
+        QVariant value;
+        
+        Outcome(OutcomeType t){
+            this->type = t;
+        }
+        
+        void load(FileBuffer* data);
+        void save(QTextStream* out);
     };
 
     enum EventType {
@@ -43,7 +72,11 @@ public:
         EventTypeReachSpeed = 9,
         EventTypePickUp = 10
     };
-
+    
+    static QMap<EventType, QString> EventTypeDescription;
+    static QMap<QString, EventType> EventNameType;
+    static QMap<EventType, QString> EventTypeName;
+    
     enum EventCategory {
         CategoryUndefined = 0,
         CategoryAction = 1,
@@ -71,7 +104,8 @@ public:
     QString textToDisplayOnCompletionIfTriggered;
     QString textToDisplayOnCompletionIfNotTriggered;
     QString textToDisplayDescriptionOfTask;
-    Outcome* outcome = NULL;
+    QVector<Outcome*> outcomes;
+    //Outcome* outcome = NULL;
     
     ActivityEvent();
     ~ActivityEvent();

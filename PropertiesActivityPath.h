@@ -29,6 +29,8 @@ private:
     QLineEdit eName;
     QLineEdit ePathStart;
     QLineEdit ePathEnd;
+    
+    QListWidget nodeList;
 };
 
 #endif	/* PROPERTIESACTIVITYPATH_H */

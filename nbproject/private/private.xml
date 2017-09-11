@@ -20,11 +20,12 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EditFileNameDialog.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Consist.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Shader.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TrkWindow.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFile.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Terrain.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/NaviWindow.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesCarspawner.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesTerrain.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainTools.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundRegionObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Game.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TSectionDAT.cpp</file>
@@ -36,6 +37,7 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Trk.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/HeightWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PlatformObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEventWindow.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesStatic.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFile.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/WorldObj.cpp</file>
@@ -43,22 +45,24 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SignalShape.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainWaterWindow.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesStatic.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEventActionProperties.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SpeedpostObj.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/StaticObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/AceLib.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/LoadWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesLevelCr.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/OglObj.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/CameraRot.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFileC.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEventActionProperties.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TS.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/RouteEditorGLWidget.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityServiceTools.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Undo.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ObjFile.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Ref.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/RouteEditorWindow.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConLib.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TFile.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEvent.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainWaterWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PlatformObj.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TextEditDialog.h</file>
@@ -74,12 +78,15 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/IghCoords.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GroupObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/FileFunctions.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEventLocationProperties.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ObjTools.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/HazardObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityTools.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConEditorWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesAbstract.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/OglObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesSignal.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TRnode.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MapDataUrlImage.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GameObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesTerrain.h</file>
@@ -88,11 +95,10 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SignalObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Vector2f.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesPlatform.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Service.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TDB.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GLMatrix.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEventTimeProperties.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Consist.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityServiceTools.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Vector3f.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Tile.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GeoTools.cpp</file>
@@ -104,7 +110,6 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GameObj.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UnsavedDialog.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Vector3f.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Ruch.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Game.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SignalShape.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Route.h</file>
@@ -112,6 +117,8 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ObjFile.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/NewRouteWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TrackObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesActivityPath.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEvent.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PickupObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ImageLib.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Route.cpp</file>
@@ -126,14 +133,15 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/RouteEditorGLWidget.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/DynTrackObj.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/main.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesActivityPath.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TDB.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityTools.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSourceObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/AboutWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TrackObj.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/shaders/StandardFog.fs</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TSection.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Activity.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngLib.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFileX.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesTrackObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesRuler.h</file>
@@ -146,15 +154,16 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TransformWorldObjDialog.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/HGTfile.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Eng.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Ruch.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/CameraFree.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SignalObj.h</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Traffic.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ProceduralMstsDyntrack.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/HeightWindow.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Path.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEventLocationProperties.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GeoTools.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Activity.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Tile.cpp</file>
-            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngLib.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/FileBuffer.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TFile.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/LevelCrObj.cpp</file>
@@ -166,13 +175,16 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundList.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ForestObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ChooseFileDialog.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/PropertiesAbstract.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MapData.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Coords.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UnsavedDialog.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEventTimeProperties.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ObjTools.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Path.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/shaders/StandardBloom.vs</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/RulerObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEventWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/FileBuffer.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActLib.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TrWatermarkObj.cpp</file>

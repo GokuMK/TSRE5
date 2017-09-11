@@ -13,9 +13,7 @@
 
 #include <QtWidgets>
 
-class ActivityEventActionProperties;
-class ActivityEventLocationProperties;
-class ActivityEventTimeProperties;
+class ActivityEventProperties;
 class Activity;
 
 class ActivityEventWindow : public QWidget {
@@ -26,7 +24,7 @@ public:
     
 public slots:
     void showEvents(Activity* act);
-    void actionListSelected(QListWidgetItem * item);
+    void eventListSelected(QListWidgetItem * item);
         
 signals:
     
@@ -40,11 +38,13 @@ private:
     QListWidget locationList;
     QListWidget timeList;
     
-    ActivityEventActionProperties *eventActionProperties;
-    ActivityEventLocationProperties *eventLocationProperties;
-    ActivityEventTimeProperties *eventTimeProperties;
+    ActivityEventProperties *eventProperties;
     
     Activity *activity;
+    
+    QComboBox *cActionTypes;
+    QComboBox *cOutcomeTypes;
+    QComboBox *cEventNames;
 };
 
 #endif	/* ACTIVITYEVENTWINDOW_H */

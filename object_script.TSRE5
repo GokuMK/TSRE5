@@ -4,9 +4,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Activity.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEvent.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventActionProperties.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventLocationProperties.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventTimeProperties.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventProperties.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityServiceTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityTools.o
@@ -165,9 +163,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/tsre5_plugin_import.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AboutWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_AceLib.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityEventActionProperties.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityEventLocationProperties.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityEventTimeProperties.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityEventProperties.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityEventWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityServiceTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ActivityTools.o

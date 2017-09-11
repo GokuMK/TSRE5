@@ -941,3 +941,13 @@ void Activity::setBriefing(QString val){
     header->briefing = val;
     modified = true;
 }
+
+QMap<int, QString> Activity::getEventIdNameList(){
+    QMap<int, QString> data;
+            
+    for(int i = 0; i < event.size(); i++){
+        data[event[i].id] = event[i].name;
+    }
+    
+    return data;
+}

@@ -17,6 +17,100 @@
 #include "GLUU.h"
 #include "TDB.h"
 
+QMap<ActivityEvent::EventType, QString> ActivityEvent::EventTypeDescription = {
+    { ActivityEvent::EventTypeNone ,"None." },
+    { ActivityEvent::EventTypeTime ,"Time Event." },
+    { ActivityEvent::EventTypeLocation ,"Location Event." },
+    { ActivityEvent::EventTypeAllstops ,"Stop at final station." },
+    { ActivityEvent::EventTypePickupWagons ,"Pick up Wagons." },
+    { ActivityEvent::EventTypeAssembleTrain ,"Assemble Train" },
+    { ActivityEvent::EventTypeAssembleTrainAtLocation ,"Assemble Train at location." },
+    { ActivityEvent::EventTypeDropoffWagonsAtLocation ,"Drop off cars at location." },
+    { ActivityEvent::EventTypePickupPassengers ,"Pick up Passengers." },
+    { ActivityEvent::EventTypeReachSpeed ,"Reach Speed." },
+    { ActivityEvent::EventTypePickUp ,"Make a pickup." }
+};
+
+QMap<ActivityEvent::EventType, QString> ActivityEvent::EventTypeName = {
+    { ActivityEvent::EventTypeNone ,"" },
+    { ActivityEvent::EventTypeTime ,"EventTypeTime" },
+    { ActivityEvent::EventTypeLocation ,"EventTypeLocation" },
+    { ActivityEvent::EventTypeAllstops ,"EventTypeAllStops" },
+    { ActivityEvent::EventTypePickupWagons ,"EventTypePickUpWagons" },
+    { ActivityEvent::EventTypeAssembleTrain ,"EventTypeAssembleTrain" },
+    { ActivityEvent::EventTypeAssembleTrainAtLocation ,"EventTypeAssembleTrainAtLocation" },
+    { ActivityEvent::EventTypeDropoffWagonsAtLocation ,"EventTypeDropOffWagonsAtLocation" },
+    { ActivityEvent::EventTypePickupPassengers ,"EventTypePickUpPassengers" },
+    { ActivityEvent::EventTypeReachSpeed ,"EventTypeReachSpeed" },
+    { ActivityEvent::EventTypePickUp ,"EventTypePickUp" }
+};
+
+QMap<QString, ActivityEvent::EventType> ActivityEvent::EventNameType = {
+    { "", ActivityEvent::EventTypeNone },
+    { "eventtypetime", ActivityEvent::EventTypeTime },
+    { "eventtypelocation", ActivityEvent::EventTypeLocation },
+    { "eventtypeallstops", ActivityEvent::EventTypeAllstops },
+    { "eventtypepickupwagons", ActivityEvent::EventTypePickupWagons },
+    { "eventtypeassembletrain", ActivityEvent::EventTypeAssembleTrain },
+    { "eventtypeassembletrainatlocation", ActivityEvent::EventTypeAssembleTrainAtLocation },
+    { "eventtypedropoffwagonsatlocation", ActivityEvent::EventTypeDropoffWagonsAtLocation },
+    { "eventtypepickuppassengers", ActivityEvent::EventTypePickupPassengers },
+    { "eventtypereachspeed", ActivityEvent::EventTypeReachSpeed },
+    { "eventtypepickup", ActivityEvent::EventTypePickUp }
+};
+
+QMap<ActivityEvent::Outcome::OutcomeType, QString> ActivityEvent::Outcome::OutcomeTypeDescription = {
+    { ActivityEvent::Outcome::TypeNone ,"None." },
+    { ActivityEvent::Outcome::TypeDisplayMessage ,"Display a message." },
+    { ActivityEvent::Outcome::TypeActivitySuccess ,"Complete Activity succesfully." },
+    { ActivityEvent::Outcome::TypeActivityFail ,"End Activity without success." },
+    { ActivityEvent::Outcome::TypeIncActLevel ,"Increase an event's activation level." },
+    { ActivityEvent::Outcome::TypeDecActLevel ,"Decrease an event's activation level." },
+    { ActivityEvent::Outcome::TypeRestorAactLevel ,"Restore an event's activation level." },
+    { ActivityEvent::Outcome::TypeActivateEvent ,"Activate an event." },
+    { ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits ,"Start ignoring speed limits." },
+    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits ,"Stop ignoring speed limits." }
+};
+
+QMap<ActivityEvent::Outcome::OutcomeType, QString> ActivityEvent::Outcome::OutcomeTypeName = {
+    { ActivityEvent::Outcome::TypeNone ,"" },
+    { ActivityEvent::Outcome::TypeDisplayMessage ,"DisplayMessage" },
+    { ActivityEvent::Outcome::TypeActivitySuccess ,"ActivitySuccess" },
+    { ActivityEvent::Outcome::TypeActivityFail ,"ActivityFail" },
+    { ActivityEvent::Outcome::TypeIncActLevel ,"IncActLevel" },
+    { ActivityEvent::Outcome::TypeDecActLevel ,"DecActLevel" },
+    { ActivityEvent::Outcome::TypeRestorAactLevel ,"RestoreActLevel" },
+    { ActivityEvent::Outcome::TypeActivateEvent ,"Activate an event." },
+    { ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits ,"StartIgnoringSpeedLimits" },
+    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits ,"StopIgnoringSpeedLimits" }
+};
+
+QMap<ActivityEvent::Outcome::OutcomeType, ActivityEvent::Outcome::OutcomeCategory> ActivityEvent::Outcome::OutcomeTypeCategory = {
+    { ActivityEvent::Outcome::TypeNone , ActivityEvent::Outcome::CategoryNone },
+    { ActivityEvent::Outcome::TypeDisplayMessage, ActivityEvent::Outcome::CategoryInfo },
+    { ActivityEvent::Outcome::TypeActivitySuccess, ActivityEvent::Outcome::CategoryInfo },
+    { ActivityEvent::Outcome::TypeActivityFail, ActivityEvent::Outcome::CategoryInfo },
+    { ActivityEvent::Outcome::TypeIncActLevel, ActivityEvent::Outcome::CategoryEvent },
+    { ActivityEvent::Outcome::TypeDecActLevel, ActivityEvent::Outcome::CategoryEvent },
+    { ActivityEvent::Outcome::TypeRestorAactLevel, ActivityEvent::Outcome::CategoryEvent },
+    { ActivityEvent::Outcome::TypeActivateEvent, ActivityEvent::Outcome::CategoryEvent },
+    { ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits, ActivityEvent::Outcome::CategoryInfo },
+    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits, ActivityEvent::Outcome::CategoryInfo }
+};
+
+QMap<QString, ActivityEvent::Outcome::OutcomeType> ActivityEvent::Outcome::OutcomeNameType = {
+    { "", ActivityEvent::Outcome::TypeNone },
+    { "displaymessage", ActivityEvent::Outcome::TypeDisplayMessage },
+    { "activitysuccess", ActivityEvent::Outcome::TypeActivitySuccess },
+    { "activityfail", ActivityEvent::Outcome::TypeActivityFail },
+    { "incactlevel", ActivityEvent::Outcome::TypeIncActLevel },
+    { "decactlevel", ActivityEvent::Outcome::TypeDecActLevel },
+    { "restoreactlevel", ActivityEvent::Outcome::TypeRestorAactLevel },
+    { "activateevent", ActivityEvent::Outcome::TypeActivateEvent },
+    { "startignoringspeedlimits", ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits },
+    { "stopignoringspeedlimits", ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits }
+};
+
 ActivityEvent::ActivityEvent() {
 }
 
@@ -26,56 +120,12 @@ ActivityEvent::~ActivityEvent() {
 void ActivityEvent::load(FileBuffer* data) {
     QString sh;
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-        if (sh == ("eventtypetime")) {
-            eventType = EventTypeTime;
+        if(EventNameType[sh] != EventTypeNone){
+            eventType = EventNameType[sh];
             ParserX::SkipToken(data);
             continue;
         }
-        if (sh == ("eventtypelocation")) {
-            eventType = EventTypeLocation;
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("eventtypeallstops")) {
-            eventType = EventTypeAllstops;
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("eventtypepickupwagons")) {
-            eventType = EventTypePickupWagons;
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("eventtypeassembletrain")) {
-            eventType = EventTypeAssembleTrain;
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("eventtypeassembletrainatlocation")) {
-            eventType = EventTypeAssembleTrainAtLocation;
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("eventtypedropoffwagonsatlocation")) {
-            eventType = EventTypeDropoffWagonsAtLocation;
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("eventtypepickuppassengers")) {
-            eventType = EventTypePickupPassengers;
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("eventtypereachspeed")) {
-            eventType = EventTypeReachSpeed;
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("eventtypepickup")) {
-            eventType = EventTypePickUp;
-            ParserX::SkipToken(data);
-            continue;
-        }
+        
         if (sh == ("reversable_event")) {
             reversableEvent = true;
             ParserX::SkipToken(data);
@@ -92,46 +142,14 @@ void ActivityEvent::load(FileBuffer* data) {
             continue;
         }
         if (sh == ("outcomes")) {
-            outcome = new Outcome();
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-                if (sh == ("activitysuccess")) {
-                    outcome->activitysuccess = new QString();
-                    *outcome->activitysuccess = ParserX::GetStringInside(data);
+                if(Outcome::OutcomeNameType[sh] != Outcome::TypeNone){
+                    outcomes.push_back(new Outcome(Outcome::OutcomeNameType[sh]));
+                    outcomes.back()->load(data);
                     ParserX::SkipToken(data);
                     continue;
                 }
-                if (sh == ("displaymessage")) {
-                    outcome->displayMessage = ParserX::GetStringInside(data);
-                    ParserX::SkipToken(data);
-                    continue;
-                }
-                if (sh == ("incactlevel")) {
-                    outcome->incactlevel.push_back(ParserX::GetNumber(data));
-                    ParserX::SkipToken(data);
-                    continue;
-                }
-                if (sh == ("decactlevel")) {
-                    outcome->decactlevel.push_back(ParserX::GetNumber(data));
-                    ParserX::SkipToken(data);
-                    continue;
-                }
-                if (sh == ("activateevent")) {
-                    outcome->activateevent.push_back(ParserX::GetNumber(data));
-                    ParserX::SkipToken(data);
-                    continue;
-                }
-                if (sh == ("activityfail")) {
-                    outcome->activityfail = new QString();
-                    *outcome->activityfail = ParserX::GetStringInside(data);
-                    ParserX::SkipToken(data);
-                    continue;
-                }
-                if (sh == ("startignoringspeedlimits")) {
-                    outcome->startignoringspeedlimits = new QString();
-                    *outcome->startignoringspeedlimits = ParserX::GetStringInside(data);
-                    ParserX::SkipToken(data);
-                    continue;
-                }
+
                 qDebug() << "#event outcomes - undefined token: " << sh;
                 ParserX::SkipToken(data);
                 continue;
@@ -233,6 +251,9 @@ void ActivityEvent::load(FileBuffer* data) {
 }
 
 void ActivityEvent::save(QTextStream* out) {
+    if(EventTypeName[eventType] == "")
+        return;
+    
     if(category == CategoryAction)
         *out << "			EventCategoryAction (\n";
     else if(category == CategoryLocation)
@@ -242,63 +263,18 @@ void ActivityEvent::save(QTextStream* out) {
     else 
         return;
 
-    if(eventType == EventTypeTime)
-        *out << "				EventTypeTime ( )\n";
-    if(eventType == EventTypeLocation)
-        *out << "				EventTypeLocation ( )\n";
-    if(eventType == EventTypeAllstops)
-        *out << "				EventTypeAllStops ( )\n";
-    if(eventType == EventTypePickupWagons)
-        *out << "				EventTypePickUpWagons ( )\n";
-    if(eventType == EventTypeAssembleTrain)
-        *out << "				EventTypeAssembleTrain ( )\n";
-    if(eventType == EventTypeAssembleTrainAtLocation)
-        *out << "				EventTypeAssembleTrainAtLocation ( )\n";
-    if(eventType == EventTypeDropoffWagonsAtLocation)
-        *out << "				EventTypeDropOffWagonsAtLocation ( )\n";
-    if(eventType == EventTypePickupPassengers)
-        *out << "				EventTypePickUpPassengers ( )\n";
-    if(eventType == EventTypeReachSpeed)
-        *out << "				EventTypeReachSpeed ( )\n";
-    if(eventType == EventTypePickUp)
-        *out << "				EventTypePickUp ( )\n";
+    *out << "				" << EventTypeName[eventType] << " ( )\n";
     
     if(id != -99999)
         *out << "				ID ( "<<id<<" )\n";
     if(activationLevel != -99999)
         *out << "				Activation_Level ( "<<activationLevel<<" )\n";
 
-    if(outcome != NULL){
+    if(outcomes.size() > 0){
         *out << "				Outcomes (\n";
-            if(outcome->activitysuccess != NULL)
-                if(outcome->activitysuccess->length() == 0)
-                    *out << "					ActivitySuccess ( )\n";
-                else
-                    *out << "					ActivitySuccess ( "<<ParserX::SplitToMultiline(*outcome->activitysuccess)<<" )\n";
-            if(outcome->activityfail != NULL)
-                if(outcome->activityfail->length() == 0)
-                    *out << "					ActivityFail ( )\n";
-                else
-                    *out << "					ActivityFail ( "<<ParserX::SplitToMultiline(*outcome->activityfail)<<" )\n";
-            if(outcome->activateevent.size() > 0)
-                for(int i = 0; i < outcome->activateevent.size(); i++)
-                    *out << "					ActivateEvent ( "<<outcome->activateevent[i]<<" )\n";
-            if (outcome->displayMessage.length() > 0){
-                *out << "					DisplayMessage ( ";
-                *out << ParserX::SplitToMultiline(outcome->displayMessage, "						 ");
-                *out << " )\n";
-            }
-            if(outcome->startignoringspeedlimits != NULL)
-                if(outcome->startignoringspeedlimits->length() == 0)
-                    *out << "					StartIgnoringSpeedLimits ( )\n";
-                else
-                    *out << "					StartIgnoringSpeedLimits ( "<<ParserX::SplitToMultiline(*outcome->startignoringspeedlimits)<<" )\n";
-            if(outcome->decactlevel.size() > 0)
-                for(int i = 0; i < outcome->decactlevel.size(); i++)
-                    *out << "					DecActLevel ( "<<outcome->decactlevel[i]<<" )\n";
-            if(outcome->incactlevel.size() > 0)
-                for(int i = 0; i < outcome->incactlevel.size(); i++)
-                    *out << "					IncActLevel ( "<<outcome->incactlevel[i]<<" )\n";
+        for(int i = 0; i < outcomes.size(); i++){
+            outcomes[i]->save(out);
+        }
 
         *out << "				)\n";
     }
@@ -351,4 +327,28 @@ void ActivityEvent::save(QTextStream* out) {
     }
     
     *out << "			)\n";
+}
+
+void ActivityEvent::Outcome::load(FileBuffer* data){
+    category = OutcomeTypeCategory[type];
+    if(category == CategoryInfo)
+        value.setValue(ParserX::GetStringInside(data));
+    if(category == CategoryEvent)
+        value.setValue(ParserX::GetNumber(data));
+}
+
+void ActivityEvent::Outcome::save(QTextStream* out) {
+    if(type == TypeNone)
+        return;
+    if(category == CategoryInfo){
+        QString val = value.toString();
+        if(val.length() < 1)
+            *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( )\n";
+        else
+            *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<ParserX::SplitToMultiline(val, "					")<<" )\n";
+    } 
+    if(category == CategoryEvent)
+        *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<value.toInt()<<" )\n";
+    else
+        *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( )\n";
 }

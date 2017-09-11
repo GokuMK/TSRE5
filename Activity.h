@@ -152,6 +152,7 @@ public:
     void setHazardAnimals(int val);
     void setDescription(QString val);
     void setBriefing(QString val);
+    QMap<int, QString> getEventIdNameList();
     
 private:
     bool modified = false;

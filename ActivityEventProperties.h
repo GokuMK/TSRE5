@@ -12,17 +12,28 @@
 #define	ACTIVITYEVENTACTIONPROPERTIES_H
 
 #include <QtWidgets>
+#include <QMap>
 
 class ActivityEvent;
 
-class ActivityEventActionProperties : public QWidget {
+class ActivityEventProperties : public QWidget {
     Q_OBJECT
 public:
-    ActivityEventActionProperties(QWidget* parent);
-    virtual ~ActivityEventActionProperties();
+    ActivityEventProperties(QWidget* parent);
+    virtual ~ActivityEventProperties();
     void showEvent(ActivityEvent *e);
+    void setEventList(QMap<int, QString> eventNames);
+    
+public slots:
+    void outcomeListSelected(QListWidgetItem* item);
+        
+signals:
     
 private:
+    QWidget actionWidget;
+    QWidget locationWidget;
+    QWidget timeWidget;
+    
     QLineEdit eName;
     QLineEdit eActivationLevel;
     QLineEdit eTriggeredText;
@@ -30,10 +41,15 @@ private:
     QLineEdit eNotes;
     QPlainTextEdit eOutcomeMessage;
     QComboBox cOutcome;
-    QLineEdit eOutcomeEvent;
-    QCheckBox cReversable;
+    QComboBox cOutcomeEvent;
     QComboBox cActionType;
+    QTimeEdit eTime;
+    //QLineEdit eOutcomeEvent;
+    QCheckBox cReversable;
     QLineEdit eActionInfo;
+    QLineEdit eLocationPosition;
+    QLineEdit eLocationRadius;
+    QCheckBox cLocationStop;
     QListWidget outcomeList;
     
     ActivityEvent* event = NULL;

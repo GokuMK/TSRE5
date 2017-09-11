@@ -103,9 +103,7 @@
           <itemPath>TransformWorldObjDialog.h</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
-        <itemPath>ActivityEventActionProperties.h</itemPath>
-        <itemPath>ActivityEventLocationProperties.h</itemPath>
-        <itemPath>ActivityEventTimeProperties.h</itemPath>
+        <itemPath>ActivityEventProperties.h</itemPath>
         <itemPath>ActivityEventWindow.h</itemPath>
         <itemPath>ActivityServiceTools.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
@@ -311,9 +309,7 @@
           <itemPath>TransformWorldObjDialog.cpp</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
-        <itemPath>ActivityEventActionProperties.cpp</itemPath>
-        <itemPath>ActivityEventLocationProperties.cpp</itemPath>
-        <itemPath>ActivityEventTimeProperties.cpp</itemPath>
+        <itemPath>ActivityEventProperties.cpp</itemPath>
         <itemPath>ActivityEventWindow.cpp</itemPath>
         <itemPath>ActivityServiceTools.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
@@ -464,20 +460,9 @@
       </item>
       <item path="ActivityEvent.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ActivityEventActionProperties.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ActivityEventProperties.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ActivityEventActionProperties.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ActivityEventLocationProperties.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="ActivityEventLocationProperties.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ActivityEventTimeProperties.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ActivityEventTimeProperties.h" ex="false" tool="3" flavor2="0">
+      <item path="ActivityEventProperties.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1156,20 +1141,9 @@
       </item>
       <item path="ActivityEvent.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ActivityEventActionProperties.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ActivityEventProperties.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ActivityEventActionProperties.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ActivityEventLocationProperties.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="ActivityEventLocationProperties.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ActivityEventTimeProperties.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ActivityEventTimeProperties.h" ex="false" tool="3" flavor2="0">
+      <item path="ActivityEventProperties.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1841,20 +1815,9 @@
       </item>
       <item path="ActivityEvent.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ActivityEventActionProperties.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ActivityEventProperties.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ActivityEventActionProperties.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ActivityEventLocationProperties.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="ActivityEventLocationProperties.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ActivityEventTimeProperties.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ActivityEventTimeProperties.h" ex="false" tool="3" flavor2="0">
+      <item path="ActivityEventProperties.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2533,20 +2496,9 @@
       </item>
       <item path="ActivityEvent.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ActivityEventActionProperties.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ActivityEventProperties.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ActivityEventActionProperties.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ActivityEventLocationProperties.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="ActivityEventLocationProperties.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ActivityEventTimeProperties.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ActivityEventTimeProperties.h" ex="false" tool="3" flavor2="0">
+      <item path="ActivityEventProperties.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3213,20 +3165,9 @@
       </item>
       <item path="ActivityEvent.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ActivityEventActionProperties.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ActivityEventProperties.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ActivityEventActionProperties.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ActivityEventLocationProperties.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="ActivityEventLocationProperties.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ActivityEventTimeProperties.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="ActivityEventTimeProperties.h" ex="false" tool="3" flavor2="0">
+      <item path="ActivityEventProperties.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>

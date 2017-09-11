@@ -30,6 +30,13 @@ QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(&this->ePathStart);
     vbox->addWidget(new QLabel("End Location"));
     vbox->addWidget(&this->ePathEnd);
+    
+    QLabel *label = new QLabel("Main route nodes:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    
+    vbox->addWidget(&nodeList);
     //vlist->setSpacing(2);
     //vlist->setContentsMargins(3,0,3,0);
     //vbox->addItem(vlist);
