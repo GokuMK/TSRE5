@@ -170,6 +170,9 @@ void Path::initRoute(){
         node.back().flag2 = trackPdp[trackPdpId][6];
         //qDebug() << trackPdp;
     }
+}
+
+void Path::init3dShapes(){
     
     lines.clear();
     int fail = 0;
@@ -302,23 +305,6 @@ void Path::initRoute(){
         lines.push_back(line);
         linesX.push_back(node[i].tilex);
         linesZ.push_back(node[i].tilez);
-        
-        /*if(node[i+1].flag1 == 1){
-            qDebug() << "point";
-            posT[0] = node[i+1].tilex;
-            posT[1] = node[i+1].tilez;
-            Vec3::copy(posW, node[i+1].pos);
-            tdb->findNearestPositionOnTDB(posT, posW, NULL, tpos1);
-        } else if(node[i+1].flag1 == 2){
-            qDebug() << "junction";
-            int nodeId2 = tdb->findNearestNode(node[i+1].tilex, node[i+1].tilez, node[i+1].pos, NULL, -1);
-        } else {
-            qDebug() << "fail";
-            fail++;
-        }*/
-        
-
-        
         ////////////
         fail = 0;
         
@@ -329,6 +315,11 @@ void Path::render(GLUU* gluu, float * playerT, int renderMode){
     if(pointer3d == NULL){
         pointer3d = new TrackItemObj(1);
         pointer3d->setMaterial(0.0,1.0,0.0);
+    }
+    
+    if(!isinit){
+        init3dShapes();
+        isinit = true;
     }
 
     for(int i = 0; i < node.size(); i++){

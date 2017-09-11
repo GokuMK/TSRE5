@@ -24,7 +24,9 @@ NaviWindow::NaviWindow(QWidget* parent) : QWidget(parent) {
     this->setFixedHeight(180);
     this->setWindowTitle(tr("Navi Window"));
     markerFiles.setStyleSheet("combobox-popup: 0;");
+    markerFiles.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     markerList.setStyleSheet("combobox-popup: 0;");
+    markerList.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     
     QPushButton *jumpButton = new QPushButton("Jump", this);
     QLabel *cameraPosLabel = new QLabel("Camera:", this);

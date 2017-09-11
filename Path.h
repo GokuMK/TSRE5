@@ -56,11 +56,13 @@ public:
     virtual ~Path();
     void load();
     void initRoute();
+    void init3dShapes();
     bool isModified();
     void render(GLUU* gluu, float * playerT, int renderMode);
 private:
     int loaded;
     bool modified = false;
+    bool isinit = false;
     int serial = -1;
     TrackItemObj* pointer3d = NULL;
     QVector<OglObj*> lines;
