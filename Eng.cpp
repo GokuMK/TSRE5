@@ -685,7 +685,7 @@ void Eng::initOnTrack(float *tpos, int direction){
     ruch1->set(tpos[0], tpos[1], direction);
     ruch2 = new Ruch();
     ruch2->set(tpos[0], tpos[1], direction);
-    ruch2->next(getFullWidth());
+    ruch2->next(-getFullWidth());
     //ruch1->getCurrentPosition();
     
     //qDebug() << drawPosition[0] << drawPosition[1] << drawPosition[2];

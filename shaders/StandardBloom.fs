@@ -71,12 +71,12 @@ void main() {
             //gl_FragColor.a = max(gl_FragColor.a, isAlpha);  
 
             // discard if transparent
-            if(gl_FragColor.a < alphaTest)
-                discard;    
+            //if(gl_FragColor.a < alphaTest)
+            //    discard;    
             gl_FragColor.a = max(gl_FragColor.a, vAlpha);  
             // discard if transparent 
-            //if(gl_FragColor.a < -vAlpha)
-            //    discard;    
+            if(gl_FragColor.a < -vAlpha)
+                discard;    
             //gl_FragColor.a = 1.0;
 
             // calculate normals

@@ -80,7 +80,7 @@ QMap<ActivityEvent::Outcome::OutcomeType, QString> ActivityEvent::Outcome::Outco
     { ActivityEvent::Outcome::TypeIncActLevel ,"IncActLevel" },
     { ActivityEvent::Outcome::TypeDecActLevel ,"DecActLevel" },
     { ActivityEvent::Outcome::TypeRestorAactLevel ,"RestoreActLevel" },
-    { ActivityEvent::Outcome::TypeActivateEvent ,"Activate an event." },
+    { ActivityEvent::Outcome::TypeActivateEvent ,"ActivateEvent" },
     { ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits ,"StartIgnoringSpeedLimits" },
     { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits ,"StopIgnoringSpeedLimits" }
 };
@@ -275,9 +275,11 @@ void ActivityEvent::save(QTextStream* out) {
         for(int i = 0; i < outcomes.size(); i++){
             outcomes[i]->save(out);
         }
-
         *out << "				)\n";
+    } else {
+        *out << "				Outcomes ( )\n";
     }
+        
 
     if(reversableEvent)
         *out << "				Reversable_Event ( )\n";
@@ -292,6 +294,12 @@ void ActivityEvent::save(QTextStream* out) {
         *out << ParserX::SplitToMultiline(textToDisplayOnCompletionIfNotTriggered, "					 ");
         *out << " )\n";
     }
+    if (textToDisplayDescriptionOfTask.length() > 0){
+        *out << "				TextToDisplayDescriptionOfTask ( ";
+        *out << ParserX::SplitToMultiline(textToDisplayDescriptionOfTask, "					 ");
+        *out << " )\n";
+    }
+    
     
     if(name.length() > 0)
         *out << "				Name ( "<<ParserX::AddComIfReq(name)<<" )\n";
@@ -340,15 +348,19 @@ void ActivityEvent::Outcome::load(FileBuffer* data){
 void ActivityEvent::Outcome::save(QTextStream* out) {
     if(type == TypeNone)
         return;
+    
+    QString tabOffset = "						 ";
+    
     if(category == CategoryInfo){
         QString val = value.toString();
         if(val.length() < 1)
             *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( )\n";
         else
-            *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<ParserX::SplitToMultiline(val, "					")<<" )\n";
+            *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<ParserX::SplitToMultiline(val, tabOffset)<<" )\n";
     } 
-    if(category == CategoryEvent)
+    if(category == CategoryEvent){
         *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<value.toInt()<<" )\n";
-    else
-        *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( )\n";
+        //else
+        //    *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( )\n";
+    }
 }

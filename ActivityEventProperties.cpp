@@ -20,6 +20,12 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     QMapIterator<ActivityEvent::EventType, QString> i1(ActivityEvent::EventTypeDescription);
     while (i1.hasNext()) {
         i1.next();
+        if(i1.key() == ActivityEvent::EventTypeNone)
+            continue;
+        if(i1.key() == ActivityEvent::EventTypeLocation)
+            continue;
+        if(i1.key() == ActivityEvent::EventTypeTime)
+            continue;
         cActionType.addItem(i1.value(), i1.key());
     }
 
@@ -28,6 +34,16 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
         i2.next();
         cOutcome.addItem(i2.value(), i2.key());
     }
+    
+    cActionType.setStyleSheet("combobox-popup: 0;");
+    cActionType.setMaxVisibleItems(30);
+    cActionType.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    cOutcome.setStyleSheet("combobox-popup: 0;");
+    cOutcome.setMaxVisibleItems(30);
+    cOutcome.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    cOutcomeEvent.setStyleSheet("combobox-popup: 0;");
+    cOutcomeEvent.setMaxVisibleItems(30);
+    cOutcomeEvent.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     
     eOutcomeMessage.setMinimumHeight(100);
     //eOutcomeMessage.setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -73,14 +89,15 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     label = new QLabel("Position:");
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
-    vlist->addWidget(&eLocationPosition, row++, 1);
-    vlist->addWidget(new QPushButton("Pick new location"), row++, 1);
+    vlist->addWidget(&eLocationPosition, row++, 1, 1, 2);
+    vlist->addWidget(new QPushButton("Jump to location"), row, 1);
+    vlist->addWidget(new QPushButton("Pick new location"), row++, 2);
     vlist->addWidget(new QLabel("Radius:"), row, 0);
-    vlist->addWidget(&eLocationRadius, row++, 1);
+    vlist->addWidget(&eLocationRadius, row++, 1, 1, 2);
     label = new QLabel("Train must stop:");
     label->setMinimumHeight(25);
     vlist->addWidget(label, row, 0);
-    vlist->addWidget(&cLocationStop, row++, 1);
+    vlist->addWidget(&cLocationStop, row++, 1, 1, 2);
     
     locationWidget.setLayout(vlist);
     
@@ -184,24 +201,33 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
     timeWidget.hide();
     if(event->category == ActivityEvent::CategoryAction){
         actionWidget.show();
-        this->cActionType.setCurrentIndex((int)event->eventType);
+        cActionType.setCurrentIndex((int)event->eventType);
     }
     if(event->category == ActivityEvent::CategoryLocation){
         locationWidget.show();
+        if(event->location != NULL){
+            eLocationRadius.setText(QString::number(event->location[4]));
+            eLocationPosition.setText(QString::number(event->location[0]) +" "+ QString::number(event->location[1]) +" "+ QString::number(event->location[1]) +" "+ QString::number(event->location[3]));
+        }
     }
     if(event->category == ActivityEvent::CategoryTime){
         timeWidget.show();
         QTime time(0, 0);
-        this->eTime.setTime(time.addSecs(event->time));
+        eTime.setTime(time.addSecs(event->time));
     }
     
-    this->eName.setText(event->name);
-    this->eActivationLevel.setText(QString::number(event->activationLevel));
-    this->eTriggeredText.setText(event->textToDisplayOnCompletionIfTriggered);
-    this->eUntriggeredText.setText(event->textToDisplayOnCompletionIfNotTriggered);
-    this->eNotes.setText(event->textToDisplayDescriptionOfTask);
+    eName.setText(event->name);
+    eName.setCursorPosition(0);
+    eActivationLevel.setText(QString::number(event->activationLevel));
+    eActivationLevel.setCursorPosition(0);
+    eTriggeredText.setText(event->textToDisplayOnCompletionIfTriggered);
+    eTriggeredText.setCursorPosition(0);
+    eUntriggeredText.setText(event->textToDisplayOnCompletionIfNotTriggered);
+    eUntriggeredText.setCursorPosition(0);
+    eNotes.setText(event->textToDisplayDescriptionOfTask);
+    eNotes.setCursorPosition(0);
     
-    this->outcomeList.clear();
+    outcomeList.clear();
     for(int i = 0; i < event->outcomes.size(); i++){
        new QListWidgetItem ( ActivityEvent::Outcome::OutcomeTypeDescription[event->outcomes[i]->type], &outcomeList, i );
     }

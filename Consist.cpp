@@ -656,7 +656,7 @@ void Consist::initOnTrack(float *posTXZ, int direction){
         engItems[i].engPointer->flip = engItems[i].flip;
         //engItems[i].engPointer->move(26.5*i);
         //engItems[i].engPointer->move(engItems[i].conLength);
-        engItems[i].engPointer->move(engItems[i].conLength-conLen);
+        engItems[i].engPointer->move(-(engItems[i].conLength-conLen));
     }
     this->isOnTrack = true;
 }

@@ -21,7 +21,7 @@ void Ruch::set(int nid, int m, int tdirection) {
     nodeIdx = nid;
     nodeDist = m;
     kierunek = tdirection;
-    direction = (kierunek - 0.5)*2;
+    direction = -(kierunek - 0.5)*2;
 
     TDB *tdb = Game::trackDB;
     if (tdb->trackNodes[nodeIdx]->typ == 0 || tdb->trackNodes[nodeIdx]->typ == 2) {
@@ -33,7 +33,7 @@ void Ruch::set(int nid, int m, int tdirection) {
         } else {
             nodeDist = nodeLength;
         }
-        direction = (kierunek - 0.5)*2;
+        direction = -(kierunek - 0.5)*2;
     } else {
         nodeLength = nodeLength = Game::trackDB->getVectorSectionLength(nodeIdx);
     }
