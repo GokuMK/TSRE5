@@ -932,7 +932,7 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if (toolEnabled == "actNewLooseConsistTool") {
             route->actNewLooseConsist((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
-            TerrainLib::removeTileTextureFromMap((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            //TerrainLib::removeTileTextureFromMap((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "") {
             camera->MouseDown(event);
@@ -1023,7 +1023,10 @@ void RouteEditorGLWidget::mouseMoveEvent(QMouseEvent *event) {
                             float val = mousex - m_lastPos.x();
                             selectedObj->rotate(0, val * moveStep * 0.1, 0);
                         } else {
-                            route->dragWorldObject((WorldObj*)selectedObj, camera->pozT[0], camera->pozT[1], aktPointerPos);
+                            if(selectedObj->typeObj == GameObj::worldobj)
+                                route->dragWorldObject((WorldObj*)selectedObj, camera->pozT[0], camera->pozT[1], aktPointerPos);
+                            if(selectedObj->typeObj != GameObj::consistobj)
+                                selectedObj->setPosition((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
                         }
                     }
                 }

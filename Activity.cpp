@@ -876,6 +876,7 @@ void Activity::newLooseConsist(float *tdbPos){
     ao->tile[3] = drawPosition[2];
     int conId = ConLib::addCon(editorConListSelected.section("/", 0, -2), editorConListSelected.section("/", -1));
     ao->con = new Consist(ConLib::con[conId]);
+    //ao->con->setParentActivity(this, ao->id);
     
     modified = true;
 }

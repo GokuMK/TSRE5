@@ -700,6 +700,27 @@ void Consist::setDurability(float val){
     modified = true;
 }
 
+void Consist::setPosition(int x, int z, float* p){
+    if(Game::trackDB == NULL)
+        return;
+    
+    if(parentActivity == NULL)
+        return;
+    
+    float tp[3];
+    float tpos[3];
+    float posT[2];
+    
+    Vec3::copy(tp, p);
+    Game::check_coords(x, z, tp);
+    posT[0] = x;
+    posT[1] = z;            
+    int ok = Game::trackDB->findNearestPositionOnTDB(posT, tp, NULL, tpos);
+    if(ok >= 0){
+        parentActivity->updateLooseConsistPosition(nextActivityObjectUID, tpos);
+    }
+}
+
 void Consist::save(){
     QString sh;
     QString spath;

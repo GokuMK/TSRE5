@@ -143,6 +143,7 @@ public:
     void setSeason(int val);
     void setWeather(int val);
     void newLooseConsist(float *tdbPos);
+    void updateLooseConsistPosition(int nextActivityObjectUID, float *tpos);
     void createNewPlayerService(QString sName, int sTime );
     void createNewTrafficService(Traffic *t);
     void setFuelCoal(int val);
