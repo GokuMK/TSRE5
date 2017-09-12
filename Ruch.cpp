@@ -125,7 +125,7 @@ void Ruch::checkNode() {
     } else {
         nodeDist = nodeLength;
     }
-    direction = (kierunek - 0.5)*2;
+    direction = -(kierunek - 0.5)*2;
 }
 
 float * Ruch::getCurrentPosition() {

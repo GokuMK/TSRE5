@@ -28,7 +28,8 @@ public:
         terrainobj = 3,
         consistobj = 4,
         tritemobj = 5,
-        activitypath = 6
+        activitypath = 6,
+        activityobj = 7
     };
     
     TypeObj typeObj = this->undefined;
@@ -41,6 +42,7 @@ public:
     virtual bool select(int value);
     virtual bool unselect();
     virtual bool isSelected();
+    virtual void remove();
     virtual void updateSim(float deltaTime);
     virtual void translate(float px, float py, float pz);
     virtual void rotate(float x, float y, float z);

@@ -469,11 +469,11 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
     
 }
 
-Consist* Route::getActivityConsist(int id){
+ActivityObject* Route::getActivityObject(int id){
     if(currentActivity == NULL)
         return NULL;
     if(currentActivity->activityObjects.size() > id)
-        return currentActivity->activityObjects[id].con;
+        return &currentActivity->activityObjects[id];
     return NULL;
 }
 

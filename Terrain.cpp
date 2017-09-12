@@ -1793,7 +1793,6 @@ void Terrain::pushContextMenuActions(QMenu *menu){
         QObject::connect(contextMenuActions["ToggleWater"], SIGNAL(triggered()), this, SLOT(menuToggleWater()));
     }
     menu->addAction(contextMenuActions["ToggleWater"]);
-
 }
 
 void Terrain::menuToggleWater(){

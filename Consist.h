@@ -23,7 +23,7 @@ class QTextStream;
 class GLUU;
 class Activity;
 
-class Consist : GameObj {
+class Consist : public GameObj {
 public:
     static std::unordered_map<int, TextObj*> txtNumbers;
     static int lastTxtNumbersColor;
@@ -102,14 +102,12 @@ public:
     void setMaxVelocityFixed(bool val);
     bool isMaxVelocityFixed();
     QString getFirstEngName();
-    void setPosition(int x, int z, float* p);
+
 private:
     bool newConsist = false;
     bool modified = false;
     bool defaultValue = false;
     bool maxVelocityFixed = false;
-    
-    Activity *parentActivity = NULL;
 };
 
 #endif	/* CONSIST_H */

@@ -681,9 +681,11 @@ void Eng::move(float m){
 void Eng::initOnTrack(float *tpos, int direction){
     TDB* tdb = Game::trackDB;
     
-    ruch1 = new Ruch();
+    if(ruch1 == NULL)
+        ruch1 = new Ruch();
     ruch1->set(tpos[0], tpos[1], direction);
-    ruch2 = new Ruch();
+    if(ruch2 == NULL)
+        ruch2 = new Ruch();
     ruch2->set(tpos[0], tpos[1], direction);
     ruch2->next(-getFullWidth());
     //ruch1->getCurrentPosition();

@@ -13,19 +13,22 @@
 
 #include "PropertiesAbstract.h"
 
-class Consist;
+class ActivityObject;
 
-class PropertiesConsist : public PropertiesAbstract {
+class PropertiesActivityObject : public PropertiesAbstract {
     Q_OBJECT
 public:
-    PropertiesConsist();
-    virtual ~PropertiesConsist();
+    PropertiesActivityObject();
+    virtual ~PropertiesActivityObject();
     bool support(GameObj* obj);
     void showObj(GameObj* obj);
     void updateObj(GameObj* obj);
     
 private:
-    Consist* consistObj = NULL;
+    QLineEdit eObjectType;
+    QLineEdit eId;
+    QLineEdit eActivityName;
+    ActivityObject* actObj = NULL;
 };
 
 #endif	/* PROPERTIESCONSIST_H */

@@ -77,9 +77,9 @@
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
           <itemPath>EditFileNameDialog.h</itemPath>
           <itemPath>PropertiesAbstract.h</itemPath>
+          <itemPath>PropertiesActivityObject.h</itemPath>
           <itemPath>PropertiesActivityPath.h</itemPath>
           <itemPath>PropertiesCarspawner.h</itemPath>
-          <itemPath>PropertiesConsist.h</itemPath>
           <itemPath>PropertiesDyntrack.h</itemPath>
           <itemPath>PropertiesForest.h</itemPath>
           <itemPath>PropertiesGroup.h</itemPath>
@@ -159,6 +159,7 @@
         <itemPath>ActLib.h</itemPath>
         <itemPath>Activity.h</itemPath>
         <itemPath>ActivityEvent.h</itemPath>
+        <itemPath>ActivityObject.h</itemPath>
         <itemPath>ConLib.h</itemPath>
         <itemPath>Consist.h</itemPath>
         <itemPath>Eng.h</itemPath>
@@ -283,9 +284,9 @@
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
           <itemPath>EditFileNameDialog.cpp</itemPath>
           <itemPath>PropertiesAbstract.cpp</itemPath>
+          <itemPath>PropertiesActivityObject.cpp</itemPath>
           <itemPath>PropertiesActivityPath.cpp</itemPath>
           <itemPath>PropertiesCarspawner.cpp</itemPath>
-          <itemPath>PropertiesConsist.cpp</itemPath>
           <itemPath>PropertiesDyntrack.cpp</itemPath>
           <itemPath>PropertiesForest.cpp</itemPath>
           <itemPath>PropertiesGroup.cpp</itemPath>
@@ -365,6 +366,7 @@
         <itemPath>ActLib.cpp</itemPath>
         <itemPath>Activity.cpp</itemPath>
         <itemPath>ActivityEvent.cpp</itemPath>
+        <itemPath>ActivityObject.cpp</itemPath>
         <itemPath>ConLib.cpp</itemPath>
         <itemPath>Consist.cpp</itemPath>
         <itemPath>Eng.cpp</itemPath>
@@ -467,6 +469,10 @@
       <item path="ActivityEventWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityEventWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityObject.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -746,6 +752,10 @@
       </item>
       <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesActivityObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesActivityObject.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesActivityPath.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesActivityPath.h" ex="false" tool="3" flavor2="0">
@@ -753,10 +763,6 @@
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1149,6 +1155,10 @@
       </item>
       <item path="ActivityEventWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityObject.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
@@ -1427,6 +1437,10 @@
       </item>
       <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesActivityObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesActivityObject.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesActivityPath.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesActivityPath.h" ex="false" tool="3" flavor2="0">
@@ -1434,10 +1448,6 @@
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1823,6 +1833,10 @@
       </item>
       <item path="ActivityEventWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityObject.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
@@ -2101,6 +2115,10 @@
       </item>
       <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesActivityObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesActivityObject.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesActivityPath.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesActivityPath.h" ex="false" tool="3" flavor2="0">
@@ -2108,10 +2126,6 @@
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2504,6 +2518,10 @@
       </item>
       <item path="ActivityEventWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityObject.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
@@ -2782,6 +2800,10 @@
       </item>
       <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesActivityObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesActivityObject.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesActivityPath.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesActivityPath.h" ex="false" tool="3" flavor2="0">
@@ -2789,10 +2811,6 @@
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3173,6 +3191,10 @@
       </item>
       <item path="ActivityEventWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActivityObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityObject.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
@@ -3451,6 +3473,10 @@
       </item>
       <item path="PropertiesAbstract.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesActivityObject.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesActivityObject.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesActivityPath.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesActivityPath.h" ex="false" tool="3" flavor2="0">
@@ -3458,10 +3484,6 @@
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="8">
       </item>

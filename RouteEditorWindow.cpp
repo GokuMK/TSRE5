@@ -41,7 +41,7 @@
 #include "PropertiesLevelCr.h"
 #include "PropertiesSoundRegion.h"
 #include "PropertiesTerrain.h"
-#include "PropertiesConsist.h"
+#include "PropertiesActivityObject.h"
 #include "PropertiesTrackItem.h"
 #include "PropertiesActivityPath.h"
 #include "NaviWindow.h"
@@ -79,7 +79,7 @@ RouteEditorWindow::RouteEditorWindow() {
     objProperties.push_back(new PropertiesSoundRegion);
     objProperties.push_back(new PropertiesLevelCr);
     objProperties.push_back(new PropertiesTerrain);
-    objProperties.push_back(new PropertiesConsist);
+    objProperties.push_back(new PropertiesActivityObject);
     objProperties.push_back(new PropertiesTrackItem);
     objProperties.push_back(new PropertiesActivityPath);
     // last 

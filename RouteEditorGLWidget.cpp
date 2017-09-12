@@ -36,6 +36,7 @@
 #include "Undo.h"
 #include "Environment.h"
 #include "Terrain.h"
+#include "ActivityObject.h"
 
 RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -417,7 +418,7 @@ void RouteEditorGLWidget::handleSelection() {
             int CID = ((colorHash) >> 8) & 0xFF;
             int EID = ((colorHash)) & 0xFF;
             qDebug() << CID << EID;
-            setSelectedObj((GameObj*)route->getActivityConsist(CID));
+            setSelectedObj((GameObj*)route->getActivityObject(CID));
             if (selectedObj == NULL) {
                 qDebug() << "brak obiektu";
             } else {
@@ -703,8 +704,13 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
                 break;
             case Qt::Key_Delete:
                 if (selectedObj != NULL) {
-                    route->deleteObj((WorldObj*)selectedObj);
-                    selectedObj->unselect();
+                    if(selectedObj->typeObj == GameObj::worldobj){
+                        route->deleteObj((WorldObj*)selectedObj);
+                        selectedObj->unselect();
+                    }
+                    if(selectedObj->typeObj == GameObj::activityobj){
+                        selectedObj->remove();
+                    }
                     setSelectedObj(NULL);
                     lastSelectedObj = NULL;
                 }
@@ -1025,7 +1031,7 @@ void RouteEditorGLWidget::mouseMoveEvent(QMouseEvent *event) {
                         } else {
                             if(selectedObj->typeObj == GameObj::worldobj)
                                 route->dragWorldObject((WorldObj*)selectedObj, camera->pozT[0], camera->pozT[1], aktPointerPos);
-                            if(selectedObj->typeObj != GameObj::consistobj)
+                            if(selectedObj->typeObj == GameObj::activityobj)
                                 selectedObj->setPosition((int)camera->pozT[0], (int)camera->pozT[1], aktPointerPos);
                         }
                     }

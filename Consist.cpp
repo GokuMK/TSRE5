@@ -651,7 +651,8 @@ void Consist::initOnTrack(float *posTXZ, int direction){
     if(engItems.size() > 0)
         conLen = engItems[0].pos;
     for(int i = 0; i < engItems.size(); i++){
-        engItems[i].engPointer = new Eng(Game::currentEngLib->eng[engItems[i].eng]);
+        if(engItems[i].engPointer == NULL)
+            engItems[i].engPointer = new Eng(Game::currentEngLib->eng[engItems[i].eng]);
         engItems[i].engPointer->initOnTrack(tpos, direction);
         engItems[i].engPointer->flip = engItems[i].flip;
         //engItems[i].engPointer->move(26.5*i);
@@ -698,27 +699,6 @@ void Consist::setDurability(float val){
     if(val > 1) val = 1;
     this->durability = val;
     modified = true;
-}
-
-void Consist::setPosition(int x, int z, float* p){
-    if(Game::trackDB == NULL)
-        return;
-    
-    if(parentActivity == NULL)
-        return;
-    
-    float tp[3];
-    float tpos[3];
-    float posT[2];
-    
-    Vec3::copy(tp, p);
-    Game::check_coords(x, z, tp);
-    posT[0] = x;
-    posT[1] = z;            
-    int ok = Game::trackDB->findNearestPositionOnTDB(posT, tp, NULL, tpos);
-    if(ok >= 0){
-        parentActivity->updateLooseConsistPosition(nextActivityObjectUID, tpos);
-    }
 }
 
 void Consist::save(){

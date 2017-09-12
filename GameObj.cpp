@@ -38,6 +38,10 @@ bool GameObj::isSelected(){
     return this->selected;
 }
 
+void GameObj::remove(){
+    
+}
+
 void GameObj::updateSim(float deltaTime){
     return;
 }

@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <QVector>
 #include "ActivityEvent.h"
+#include "ActivityObject.h"
 
 class FileBuffer;
 class Consist;
@@ -28,18 +29,6 @@ public:
     virtual ~Activity();
     Activity(QString p, QString n, bool isnew = false);
     Activity(QString src, QString p, QString n, bool nowe = false);
-    
-    struct ActivityObject {
-        Consist* con = NULL;
-        QString objectType;
-        float direction = 0;
-        int id = 0;
-        float tile[4];
-        ActivityObject();
-        ActivityObject(int tid);
-        void load(FileBuffer* data);
-        void save(QTextStream* out);
-    };
     
     struct PlayerTrafficDefinition {
         int id = 0;
@@ -118,7 +107,7 @@ public:
     TrafficDefinition *traffic = NULL;
     int nextServiceUID = -1;
     int nextActivityObjectUID = -1;
-    std::vector<ActivityObject> activityObjects;
+    QVector<ActivityObject> activityObjects;
     std::vector<std::pair<int, int>> platformNumPassengersWaiting;
     std::vector<RestrictedSpeedZone> restrictedSpeedZone;
     std::vector<int> activityFailedSignal;
@@ -143,7 +132,6 @@ public:
     void setSeason(int val);
     void setWeather(int val);
     void newLooseConsist(float *tdbPos);
-    void updateLooseConsistPosition(int nextActivityObjectUID, float *tpos);
     void createNewPlayerService(QString sName, int sTime );
     void createNewTrafficService(Traffic *t);
     void setFuelCoal(int val);
@@ -153,6 +141,7 @@ public:
     void setHazardAnimals(int val);
     void setDescription(QString val);
     void setBriefing(QString val);
+    void deleteObject(int id);
     QMap<int, QString> getEventIdNameList();
     
 private:

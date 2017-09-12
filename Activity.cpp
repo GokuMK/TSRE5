@@ -228,8 +228,9 @@ void Activity::load() {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                                 if (sh == ("activityobject")) {
-                                    activityObjects.emplace_back();
+                                    activityObjects.push_back(ActivityObject());
                                     activityObjects.back().load(data);
+                                    activityObjects.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -372,8 +373,7 @@ void Activity::save() {
     modified = false;
     nowe = false;
     for(int i = 0; i < activityObjects.size(); i++){
-        if(activityObjects[i].con != NULL)
-            activityObjects[i].con->setModified(false);
+        activityObjects[i].setModified(false);
     }
     
     path = pathid.remove(pathid.length()-4, 4);
@@ -713,72 +713,6 @@ void Activity::ActivityHeader::save(QTextStream* out) {
     *out << "	)\n";
 }
 
-Activity::ActivityObject::ActivityObject(){
-    id = -1;
-}
-
-Activity::ActivityObject::ActivityObject(int tid){
-    id = tid;
-}
-
-void Activity::ActivityObject::load(FileBuffer* data) {
-    QString sh;
-    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-
-        if (sh == ("objecttype")) {
-            objectType = ParserX::GetStringInside(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("train_config")) {
-            con = new Consist();
-            if (con->load(data)) {
-                con->loaded = 1;
-                con->setMaxVelocityFixed(true);
-                con->initPos();
-            }
-            //ParserX::SkipToken(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("direction")) {
-            direction = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("id")) {
-            id = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("tile")) {
-            tile[0] = ParserX::GetNumber(data);
-            tile[1] = ParserX::GetNumber(data);
-            tile[2] = ParserX::GetNumber(data);
-            tile[3] = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        qDebug() << "#activityObject - undefined token: " << sh;
-        ParserX::SkipToken(data);
-        continue;
-    }
-}
-
-void Activity::ActivityObject::save(QTextStream* out) {
-    *out << "			ActivityObject (\n";
-    *out << "				ObjectType ( "<<ParserX::AddComIfReq(objectType)<<" )\n";
-    if(con != NULL){
-        *out << "				Train_Config (\n";
-        con->save("				", out);
-        *out << "				)\n";
-    }
-    *out << "				Direction ( "<<direction<<" )\n";
-    *out << "				ID ( "<<id<<" )\n";
-    *out << "				Tile ( "<<tile[0]<<" "<<tile[1]<<" "<<tile[2]<<" "<<tile[3]<<" )\n";
-    *out << "			)\n";
-}
-
 bool Activity::isNew(){
     return nowe;
 }
@@ -786,7 +720,7 @@ bool Activity::isNew(){
 bool Activity::isUnSaved(){
     for(int i = 0; i < activityObjects.size(); i++){
         if(activityObjects[i].con != NULL)
-            if(activityObjects[i].con->isUnSaved())
+            if(activityObjects[i].isUnSaved())
                 return true;
     }
     return modified;
@@ -833,18 +767,8 @@ void Activity::setWeather(int val){
 }
     
 void Activity::render(GLUU* gluu, float * playerT, int renderMode){
-    Consist *e;
-    int selectionColor = 0;
     for (int i = 0; i < activityObjects.size(); i++){
-        e = activityObjects[i].con;
-        if(e == NULL) continue;
-        if (!e->isOnTrack)
-            e->initOnTrack(activityObjects[i].tile, activityObjects[i].direction);
-        if(renderMode == gluu->RENDER_SELECTION){
-            selectionColor = 11 << 20;
-            selectionColor |= i << 8;
-        }
-        e->renderOnTrack(gluu, playerT, selectionColor);
+        activityObjects[i].render(gluu, playerT, renderMode, i);
     }
 }
 /*
@@ -876,7 +800,7 @@ void Activity::newLooseConsist(float *tdbPos){
     ao->tile[3] = drawPosition[2];
     int conId = ConLib::addCon(editorConListSelected.section("/", 0, -2), editorConListSelected.section("/", -1));
     ao->con = new Consist(ConLib::con[conId]);
-    //ao->con->setParentActivity(this, ao->id);
+    ao->setParentActivity(this);
     
     modified = true;
 }
@@ -951,4 +875,12 @@ QMap<int, QString> Activity::getEventIdNameList(){
     }
     
     return data;
+}
+
+void Activity::deleteObject(int id){
+    for(int i = 0; i < activityObjects.size(); i++){
+        if(activityObjects[i].id == id)
+            activityObjects.remove(i);
+    }
+    modified = true;
 }
