@@ -103,6 +103,7 @@ public:
     int sidingItem = -99999;
     float speed = -99999;
     int triggerOnStop = -99999;
+    int ortsContinue = -99999;
     QVector<int> pickupIdAndAmount;
     QString textToDisplayOnCompletionIfTriggered;
     QString textToDisplayOnCompletionIfNotTriggered;

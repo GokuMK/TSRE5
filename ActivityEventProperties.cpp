@@ -111,7 +111,7 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     label->setContentsMargins(3,0,0,0);
     vlist->addWidget(label, row++, 0, 1, 2);
     
-    label = new QLabel("Activation time:");
+    label = new QLabel("Activation Time:");
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
     vlist->addWidget(&eTime, row++, 1);
@@ -137,14 +137,17 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
     vlist->addWidget(&eName, row++, 1);
-    vlist->addWidget(new QLabel("ActivationLevel:"), row, 0);
+    vlist->addWidget(new QLabel("Activation Level:"), row, 0);
     vlist->addWidget(&eActivationLevel, row++, 1);
-    vlist->addWidget(new QLabel("TriggeredText:"), row, 0);
+    vlist->addWidget(new QLabel("Triggered Text:"), row, 0);
     vlist->addWidget(&eTriggeredText, row++, 1);
-    vlist->addWidget(new QLabel("UntriggeredText:"), row, 0);
+    vlist->addWidget(new QLabel("Untriggered Text:"), row, 0);
     vlist->addWidget(&eUntriggeredText, row++, 1);
     vlist->addWidget(new QLabel("Notes:"), row, 0);
     vlist->addWidget(&eNotes, row++, 1);
+    cAutoContinueLabel.setText("Auto Continue:");
+    vlist->addWidget(&cAutoContinueLabel, row, 0);
+    vlist->addWidget(&eAutoContinue, row++, 1);
     lReversable.setText("Reversable:");
     lReversable.setMinimumHeight(25);
     vlist->addWidget(&lReversable, row, 0);

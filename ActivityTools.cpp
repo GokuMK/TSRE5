@@ -65,6 +65,8 @@ ActivityTools::ActivityTools(QString name)
     vbox->addWidget(label);
     vbox->addWidget(&actShow);
     actShow.setStyleSheet("combobox-popup: 0;");
+    actShow.setMaxVisibleItems(35);
+    actShow.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     vbox->addWidget(newActButton);
     
     label = new QLabel("Player:");
@@ -73,6 +75,8 @@ ActivityTools::ActivityTools(QString name)
     vbox->addWidget(label);
     vbox->addWidget(&cService);
     cService.setStyleSheet("combobox-popup: 0;");
+    cService.setMaxVisibleItems(35);
+    cService.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     QGridLayout *vlist1 = new QGridLayout;
     vlist1->setSpacing(2);
     vlist1->setContentsMargins(0,0,1,0);
@@ -93,6 +97,8 @@ ActivityTools::ActivityTools(QString name)
     vbox->addWidget(label);
     vbox->addWidget(&cTraffic);
     cTraffic.setStyleSheet("combobox-popup: 0;");
+    cTraffic.setMaxVisibleItems(35);
+    cTraffic.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     vlist1 = new QGridLayout;
     vlist1->setSpacing(2);
     vlist1->setContentsMargins(0,0,1,0);
@@ -112,6 +118,8 @@ ActivityTools::ActivityTools(QString name)
     vbox->addWidget(label);
     vbox->addWidget(&cPath);
     cPath.setStyleSheet("combobox-popup: 0;");
+    cPath.setMaxVisibleItems(35);
+    cPath.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     vlist1 = new QGridLayout;
     vlist1->setSpacing(2);
     vlist1->setContentsMargins(0,0,1,0);
@@ -132,6 +140,8 @@ ActivityTools::ActivityTools(QString name)
     vbox->addWidget(label);
     vbox->addWidget(&consists);
     consists.setStyleSheet("combobox-popup: 0;");
+    consists.setMaxVisibleItems(35);
+    consists.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     vlist1 = new QGridLayout;
     vlist1->setSpacing(2);
     vlist1->setContentsMargins(0,0,1,0);

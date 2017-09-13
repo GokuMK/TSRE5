@@ -50,6 +50,8 @@ private:
     QTimeEdit eTime;
     //QLineEdit eOutcomeEvent;
     QCheckBox cReversable;
+    QCheckBox cAutoContinueLabel;
+    QLineEdit eAutoContinue;
     QLabel lReversable;
     QLineEdit eActionInfo;
     QLineEdit eLocationPosition;

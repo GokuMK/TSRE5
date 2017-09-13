@@ -232,6 +232,11 @@ void ActivityEvent::load(FileBuffer* data) {
             ParserX::SkipToken(data);
             continue;
         }
+        if (sh == ("ortscontinue")) {
+            ortsContinue = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
         if (sh == ("sidingitem")) {
             sidingItem = ParserX::GetNumber(data);
             ParserX::SkipToken(data);
@@ -359,6 +364,8 @@ void ActivityEvent::save(QTextStream* out) {
         *out << "				Time ( "<<time<<" )\n";
     if(triggerOnStop != -99999)
         *out << "				TriggerOnStop ( "<<triggerOnStop<<" )\n";
+    if(ortsContinue  != -99999)
+        *out << "				ORTSContinue ( "<<ortsContinue<<" )\n";
     if(speed != -99999)
         *out << "				Speed ( "<<speed<<" )\n";
     if(stationStop != -99999)
