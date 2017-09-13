@@ -766,9 +766,13 @@ void Activity::setWeather(int val){
     modified = true;
 }
     
-void Activity::render(GLUU* gluu, float * playerT, int renderMode){
+void Activity::render(GLUU* gluu, float * playerT, float playerRot, int renderMode){
     for (int i = 0; i < activityObjects.size(); i++){
         activityObjects[i].render(gluu, playerT, renderMode, i);
+    }
+    
+    for (int i = 0; i < event.size(); i++){
+        event[i].render(gluu, playerT, playerRot, renderMode);
     }
 }
 /*

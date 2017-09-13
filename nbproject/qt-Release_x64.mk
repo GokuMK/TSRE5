@@ -2232,6 +2232,9 @@ moc_ActivityEventProperties.cpp: c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidg
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
+		ActivityEvent.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
 		ActivityEventProperties.h \
 		c:/OT/Static/5.7.0_x64/bin/moc.exe
 	'c:\OT\Static\5.7.0_x64\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -Ic:/OT/Static/5.7.0_x64/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -Ic:/OT/Static/5.7.0_x64/include -Ic:/OT/Static/5.7.0_x64/include/QtOpenGL -Ic:/OT/Static/5.7.0_x64/include/QtWidgets -Ic:/OT/Static/5.7.0_x64/include/QtGui -Ic:/OT/Static/5.7.0_x64/include/QtNetwork -Ic:/OT/Static/5.7.0_x64/include/QtCore -I. ActivityEventProperties.h -o moc_ActivityEventProperties.cpp
@@ -28322,7 +28325,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEvent.o: ActivityEve
 		WorldObj.h \
 		GameObj.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
-		Ref.h
+		Ref.h \
+		TerrainLib.h \
+		GLMatrix.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEvent.o ActivityEvent.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventProperties.o: ActivityEventProperties.cpp ActivityEventProperties.h \
@@ -28766,10 +28771,10 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventProperties.o: A
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
-		Game.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		ActivityEvent.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QVector
+		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventProperties.o ActivityEventProperties.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventWindow.o: ActivityEventWindow.cpp ActivityEventWindow.h \
@@ -29214,10 +29219,10 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventWindow.o: Activ
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
 		ActivityEventProperties.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
-		Activity.h \
+		ActivityEvent.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
-		ActivityEvent.h \
+		Activity.h \
 		ActivityObject.h \
 		GameObj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventWindow.o ActivityEventWindow.cpp

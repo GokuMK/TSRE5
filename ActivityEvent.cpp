@@ -16,6 +16,12 @@
 #include <QDebug>
 #include "GLUU.h"
 #include "TDB.h"
+#include "OglObj.h"
+#include "TextObj.h"
+#include "TerrainLib.h"
+#include "GLMatrix.h"
+
+OglObj *ActivityEvent::simpleMarkerObj = NULL;
 
 QMap<ActivityEvent::EventType, QString> ActivityEvent::EventTypeDescription = {
     { ActivityEvent::EventTypeNone ,"None." },
@@ -117,6 +123,51 @@ ActivityEvent::ActivityEvent() {
 ActivityEvent::~ActivityEvent() {
 }
 
+void ActivityEvent::render(GLUU* gluu, float * playerT, float playerRot, int renderMode){
+    if(category == EventTypeLocation){
+        if(!Game::viewInteractives)
+            return;
+        gluu->setMatrixUniforms();
+
+        if (simpleMarkerObj == NULL) {
+            simpleMarkerObj = new OglObj();
+            float *punkty = new float[3 * 2];
+            int ptr = 0;
+            int i = 0;
+
+            punkty[ptr++] = 0;
+            punkty[ptr++] = 0;
+            punkty[ptr++] = 0;
+            punkty[ptr++] = 0;
+            punkty[ptr++] = 30;
+            punkty[ptr++] = 0;
+
+            simpleMarkerObj->setMaterial(1.0, 0.0, 0.0);
+            simpleMarkerObj->setLineWidth(4);
+            simpleMarkerObj->init(punkty, ptr, simpleMarkerObj->V, GL_LINES);
+            delete[] punkty;
+        }
+        
+        if (txtMarkerObj == NULL) {
+            txtMarkerObj = new TextObj(name, 16, 2.0);
+            txtMarkerObj->setColor(0,0,0);
+        }
+
+        //if (fabs(markerList[i].tileX[j] - playerT[0]) + fabs(-markerList[i].tileZ[j] - playerT[1]) > 2) {
+        //    continue;
+        //}
+        gluu->mvPushMatrix();
+        float h = TerrainLib::getHeight(location[0], -location[1], location[2], -location[3]);
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, location[2] + 2048 * (location[0] - playerT[0]), h, -location[3] + 2048 * (-location[1] - playerT[1]));
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        simpleMarkerObj->render();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 30, 0);
+        gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        txtMarkerObj->render(playerRot);
+        gluu->mvPopMatrix();
+    }
+}
+
 void ActivityEvent::load(FileBuffer* data) {
     QString sh;
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
@@ -125,7 +176,6 @@ void ActivityEvent::load(FileBuffer* data) {
             ParserX::SkipToken(data);
             continue;
         }
-        
         if (sh == ("reversable_event")) {
             reversableEvent = true;
             ParserX::SkipToken(data);
@@ -357,7 +407,7 @@ void ActivityEvent::Outcome::save(QTextStream* out) {
             *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( )\n";
         else
             *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<ParserX::SplitToMultiline(val, tabOffset)<<" )\n";
-    } 
+    }
     if(category == CategoryEvent){
         *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<value.toInt()<<" )\n";
         //else

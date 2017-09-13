@@ -318,7 +318,7 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     }
     
     if(currentActivity != NULL){
-        currentActivity->render(gluu, playerT, renderMode);
+        currentActivity->render(gluu, playerT, playerRot, renderMode);
     }
     
     for(int i = 0; i < path.size(); i++){
@@ -363,7 +363,7 @@ void Route::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, float* 
         }
     }
     if(currentActivity != NULL)
-        currentActivity->render(gluu, playerT, 0);
+        currentActivity->render(gluu, playerT, playerRot, 0);
 }
 
 void Route::setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, WorldObj* obj){

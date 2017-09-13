@@ -17,6 +17,9 @@
 
 class FileBuffer;
 class QTextStream;
+class GLUU;
+class OglObj;
+class TextObj;
 
 class ActivityEvent {
 
@@ -111,6 +114,12 @@ public:
     ~ActivityEvent();
     void load(FileBuffer* data);
     void save(QTextStream* out);
+    void render(GLUU* gluu, float * playerT, float playerRot, int renderMode);
+    
+protected:
+    static OglObj *simpleMarkerObj;
+    TextObj* txtMarkerObj = NULL;
+    
 };
 
 #endif	/* ACTIVITYEVENT_H */

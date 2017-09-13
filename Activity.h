@@ -118,7 +118,7 @@ public:
     void save();
     bool isInitActivityObjects = false;
     //void initActivityObjects();
-    void render(GLUU* gluu, float * playerT, int renderMode);
+    void render(GLUU* gluu, float * playerT, float playerRot, int renderMode);
     
     QString editorConListSelected;
     void init(QString route, QString name);

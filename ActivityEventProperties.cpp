@@ -47,14 +47,13 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     
     eOutcomeMessage.setMinimumHeight(100);
     //eOutcomeMessage.setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    outcomeList.setMinimumHeight(70);
+    outcomeList.setFixedHeight(100);
     outcomeList.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
-    
-    // action event
+    //vbox->setAlignment(Qt::AlignTop);
     
     QGridLayout *vlist = new QGridLayout;
     vlist->setSpacing(2);
@@ -117,7 +116,7 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->addWidget(label, row, 0);
     vlist->addWidget(&eTime, row++, 1);
     eTime.setDisplayFormat("HH:mm:ss");
-    eTime.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    eTime.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     
     timeWidget.setLayout(vlist);
     vbox->addWidget(&actionWidget);
@@ -146,9 +145,9 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->addWidget(&eUntriggeredText, row++, 1);
     vlist->addWidget(new QLabel("Notes:"), row, 0);
     vlist->addWidget(&eNotes, row++, 1);
-    label = new QLabel("Reversable:");
-    label->setMinimumHeight(25);
-    vlist->addWidget(label, row, 0);
+    lReversable.setText("Reversable:");
+    lReversable.setMinimumHeight(25);
+    vlist->addWidget(&lReversable, row, 0);
     vlist->addWidget(&cReversable, row++, 1);
     
     label = new QLabel("Outcomes:");
@@ -169,14 +168,37 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     
     vlist->addWidget(new QLabel("Action:"), row, 0);
     vlist->addWidget(&cOutcome, row++, 1);
-    vlist->addWidget(new QLabel("Event:"), row, 0);
-    vlist->addWidget(&cOutcomeEvent, row++, 1);
-    vlist->addWidget(new QLabel("Message:"), row++, 0, 1, 2);
-    vlist->addWidget(&eOutcomeMessage, row++, 0, 1, 2);
-    
     vbox->addItem(vlist);
     
-    //vbox->addStretch(1);
+    // Outcome Event
+    
+    vlist = new QGridLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    row = 0;
+    label = new QLabel("Event:");
+    label->setMinimumWidth(100);
+    vlist->addWidget(label, row, 0);
+    cOutcomeEvent.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    vlist->addWidget(&cOutcomeEvent, row++, 1);
+    outcomeProperties[(int)ActivityEvent::Outcome::CategoryEvent] = new QWidget(this);
+    outcomeProperties[(int)ActivityEvent::Outcome::CategoryEvent]->setLayout(vlist);
+    vbox->addWidget(outcomeProperties[(int)ActivityEvent::Outcome::CategoryEvent]);
+    
+    // Outcome info
+    
+    vlist = new QGridLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    row = 0;
+    vlist->addWidget(new QLabel("Message:"), row++, 0, 1, 2);
+    vlist->addWidget(&eOutcomeMessage, row++, 0, 1, 2);
+    outcomeProperties[(int)ActivityEvent::Outcome::CategoryInfo] = new QWidget(this);
+    outcomeProperties[(int)ActivityEvent::Outcome::CategoryInfo]->setLayout(vlist);
+    vbox->addWidget(outcomeProperties[(int)ActivityEvent::Outcome::CategoryInfo]);
+    
+    
+    vbox->addStretch(1);
     this->setLayout(vbox);
     
     QObject::connect(&outcomeList, SIGNAL(itemClicked(QListWidgetItem*)),
@@ -185,6 +207,12 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     actionWidget.hide();
     locationWidget.hide();
     timeWidget.hide();
+    
+    foreach(QWidget *w, outcomeProperties){
+        if(w == NULL)
+            continue;
+        w->hide();
+    }
 }
 
 ActivityEventProperties::~ActivityEventProperties() {
@@ -199,9 +227,15 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
     actionWidget.hide();
     locationWidget.hide();
     timeWidget.hide();
+    cReversable.hide();
+    lReversable.hide();
+        
     if(event->category == ActivityEvent::CategoryAction){
         actionWidget.show();
-        cActionType.setCurrentIndex((int)event->eventType);
+        cActionType.setCurrentIndex(cActionType.findData((int)event->eventType));
+        cReversable.setChecked(event->reversableEvent);
+        cReversable.show();
+        lReversable.show();
     }
     if(event->category == ActivityEvent::CategoryLocation){
         locationWidget.show();
@@ -243,23 +277,26 @@ void ActivityEventProperties::outcomeListSelected(QListWidgetItem* item){
     if(outcome == NULL)
         return;
     
-    this->cOutcome.setCurrentIndex((int)outcome->type);
+    foreach(QWidget *w, outcomeProperties){
+        if(w == NULL)
+            continue;
+        w->hide();
+    }
+        
+    cOutcome.setCurrentIndex(cOutcome.findData((int)outcome->type));
+    
+    outcomeProperties[(int)outcome->category]->show();
     
     if(outcome->category == ActivityEvent::Outcome::CategoryInfo){
         QString txt = outcome->value.toString();
         txt.replace("\\n","\n");
         this->eOutcomeMessage.setPlainText(txt);
-    } else {
-        this->eOutcomeMessage.clear();
     }
     
     if(outcome->category == ActivityEvent::Outcome::CategoryEvent){
         this->cOutcomeEvent.setDisabled(false);
         int index = this->cOutcomeEvent.findData((int)outcome->value.toInt());
         this->cOutcomeEvent.setCurrentIndex(index);
-    } else {
-        this->cOutcomeEvent.setCurrentIndex(-1);
-        this->cOutcomeEvent.setDisabled(true);
     }
     
 }

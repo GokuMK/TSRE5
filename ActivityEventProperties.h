@@ -14,6 +14,8 @@
 #include <QtWidgets>
 #include <QMap>
 
+#include "ActivityEvent.h"
+
 class ActivityEvent;
 
 class ActivityEventProperties : public QWidget {
@@ -34,6 +36,8 @@ private:
     QWidget locationWidget;
     QWidget timeWidget;
     
+    QMap<int, QWidget*> outcomeProperties;
+    
     QLineEdit eName;
     QLineEdit eActivationLevel;
     QLineEdit eTriggeredText;
@@ -46,6 +50,7 @@ private:
     QTimeEdit eTime;
     //QLineEdit eOutcomeEvent;
     QCheckBox cReversable;
+    QLabel lReversable;
     QLineEdit eActionInfo;
     QLineEdit eLocationPosition;
     QLineEdit eLocationRadius;

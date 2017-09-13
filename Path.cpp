@@ -321,6 +321,9 @@ void Path::render(GLUU* gluu, float * playerT, int renderMode){
         init3dShapes();
         isinit = true;
     }
+    
+    if(!Game::viewInteractives)
+        return;
 
     for(int i = 0; i < node.size(); i++){
         gluu->mvPushMatrix();
