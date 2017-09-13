@@ -162,6 +162,11 @@ void Activity::load() {
                             ParserX::SkipToken(data);
                             continue;
                         }
+                        if (sh == ("ortsaihornatcrossings")) {
+                            ortsAIHornAtCrossings = ParserX::GetNumber(data);
+                            ParserX::SkipToken(data);
+                            continue;
+                        }
                         if (sh == ("traffic_definition")) {
                             traffic = new TrafficDefinition();
                             traffic->name = ParserX::GetStringInside(data);
@@ -325,6 +330,8 @@ void Activity::save() {
         out << "		NextServiceUID ( " << nextServiceUID << " )\n";
     if (nextActivityObjectUID != -1)
         out << "		NextActivityObjectUID ( " << nextActivityObjectUID << " )\n";
+    if (ortsAIHornAtCrossings != -9999)
+        out << "		ORTSAIHornAtCrossings ( " << ortsAIHornAtCrossings << " )\n";
     if (traffic != NULL){
         out << "		Traffic_Definition ( " << ParserX::AddComIfReq(traffic->name) <<"\n";
         for(int i = 0; i<traffic->service.size(); i++)

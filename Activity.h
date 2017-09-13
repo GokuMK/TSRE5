@@ -107,6 +107,7 @@ public:
     TrafficDefinition *traffic = NULL;
     int nextServiceUID = -1;
     int nextActivityObjectUID = -1;
+    int ortsAIHornAtCrossings = -9999;
     QVector<ActivityObject> activityObjects;
     std::vector<std::pair<int, int>> platformNumPassengersWaiting;
     std::vector<RestrictedSpeedZone> restrictedSpeedZone;

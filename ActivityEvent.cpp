@@ -20,6 +20,7 @@
 #include "TextObj.h"
 #include "TerrainLib.h"
 #include "GLMatrix.h"
+#include "OrtsWeatherChange.h"
 
 OglObj *ActivityEvent::simpleMarkerObj = NULL;
 
@@ -75,7 +76,9 @@ QMap<ActivityEvent::Outcome::OutcomeType, QString> ActivityEvent::Outcome::Outco
     { ActivityEvent::Outcome::TypeRestorAactLevel ,"Restore an event's activation level." },
     { ActivityEvent::Outcome::TypeActivateEvent ,"Activate an event." },
     { ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits ,"Start ignoring speed limits." },
-    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits ,"Stop ignoring speed limits." }
+    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits ,"Stop ignoring speed limits." },
+    { ActivityEvent::Outcome::TypeORTSActSoundFile , "Play sound from file." },
+    { ActivityEvent::Outcome::TypeORTSWeatherChange , "Change the Weather." }
 };
 
 QMap<ActivityEvent::Outcome::OutcomeType, QString> ActivityEvent::Outcome::OutcomeTypeName = {
@@ -88,7 +91,9 @@ QMap<ActivityEvent::Outcome::OutcomeType, QString> ActivityEvent::Outcome::Outco
     { ActivityEvent::Outcome::TypeRestorAactLevel ,"RestoreActLevel" },
     { ActivityEvent::Outcome::TypeActivateEvent ,"ActivateEvent" },
     { ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits ,"StartIgnoringSpeedLimits" },
-    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits ,"StopIgnoringSpeedLimits" }
+    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits ,"StopIgnoringSpeedLimits" },
+    { ActivityEvent::Outcome::TypeORTSActSoundFile , "ORTSActSoundFile" },
+    { ActivityEvent::Outcome::TypeORTSWeatherChange , "ORTSWeatherChange" }
 };
 
 QMap<ActivityEvent::Outcome::OutcomeType, ActivityEvent::Outcome::OutcomeCategory> ActivityEvent::Outcome::OutcomeTypeCategory = {
@@ -101,7 +106,9 @@ QMap<ActivityEvent::Outcome::OutcomeType, ActivityEvent::Outcome::OutcomeCategor
     { ActivityEvent::Outcome::TypeRestorAactLevel, ActivityEvent::Outcome::CategoryEvent },
     { ActivityEvent::Outcome::TypeActivateEvent, ActivityEvent::Outcome::CategoryEvent },
     { ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits, ActivityEvent::Outcome::CategoryInfo },
-    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits, ActivityEvent::Outcome::CategoryInfo }
+    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits, ActivityEvent::Outcome::CategoryInfo },
+    { ActivityEvent::Outcome::TypeORTSActSoundFile , ActivityEvent::Outcome::CategorySoundFile },
+    { ActivityEvent::Outcome::TypeORTSWeatherChange , ActivityEvent::Outcome::CategoryWeatherChange }
 };
 
 QMap<QString, ActivityEvent::Outcome::OutcomeType> ActivityEvent::Outcome::OutcomeNameType = {
@@ -114,7 +121,9 @@ QMap<QString, ActivityEvent::Outcome::OutcomeType> ActivityEvent::Outcome::Outco
     { "restoreactlevel", ActivityEvent::Outcome::TypeRestorAactLevel },
     { "activateevent", ActivityEvent::Outcome::TypeActivateEvent },
     { "startignoringspeedlimits", ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits },
-    { "stopignoringspeedlimits", ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits }
+    { "stopignoringspeedlimits", ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits },
+    { "ortsactsoundfile", ActivityEvent::Outcome::TypeORTSActSoundFile },
+    { "ortsweatherchange", ActivityEvent::Outcome::TypeORTSWeatherChange }
 };
 
 ActivityEvent::ActivityEvent() {
@@ -298,6 +307,16 @@ void ActivityEvent::load(FileBuffer* data) {
             ParserX::SkipToken(data);
             continue;
         }
+        if (sh == "ortsactsoundfile"){
+            ortsActSoundFileDeprecated.push_back(ParserX::GetStringInside(data));
+            ortsActSoundFileDeprecated.push_back(ParserX::GetStringInside(data));
+        }
+        if (sh == "ortsweatherchange"){
+            ortsWeatherChangeDeprecated = new OrtsWeatherChange();
+            ortsWeatherChangeDeprecated->load(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
         
         qDebug() << "#event - undefined token: " << sh;
         ParserX::SkipToken(data);
@@ -390,16 +409,34 @@ void ActivityEvent::save(QTextStream* out) {
         *out << "					TrItemId ( "<< pickupIdAndAmount[0] << " "<< pickupIdAndAmount[1] <<" ) "<< pickupIdAndAmount[2] << "\n";
         *out << "				)\n";
     }
+    if (ortsActSoundFileDeprecated.size() > 0){
+        *out << "				ORTSActSoundFile ( "<< ParserX::AddComIfReq(ortsActSoundFileDeprecated[0]) <<" "<< ParserX::AddComIfReq(ortsActSoundFileDeprecated[1]) <<" )\n";
+    }
+    if (ortsWeatherChangeDeprecated != NULL){
+        QString off = "				";
+        ortsWeatherChangeDeprecated->save(out, off);
+    }
     
     *out << "			)\n";
 }
 
 void ActivityEvent::Outcome::load(FileBuffer* data){
     category = OutcomeTypeCategory[type];
-    if(category == CategoryInfo)
+    if(category == CategoryInfo){
         value.setValue(ParserX::GetStringInside(data));
-    if(category == CategoryEvent)
+    }
+    if(category == CategoryEvent){
         value.setValue(ParserX::GetNumber(data));
+    }
+    if(category == CategorySoundFile){
+        QStringList values;
+        values.push_back(ParserX::GetStringInside(data));
+        values.push_back(ParserX::GetStringInside(data));
+        value.setValue(values);
+    }
+    if(category == CategoryWeatherChange){
+        value.setValue(ParserX::GetStringInside(data));
+    }
 }
 
 void ActivityEvent::Outcome::save(QTextStream* out) {
@@ -417,7 +454,12 @@ void ActivityEvent::Outcome::save(QTextStream* out) {
     }
     if(category == CategoryEvent){
         *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<value.toInt()<<" )\n";
-        //else
-        //    *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( )\n";
+    }
+    if(category == CategorySoundFile){
+        *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<ParserX::AddComIfReq((value.toStringList())[0])<< " "<<(value.toStringList())[1]<< " )\n";
+    }
+    if(category == CategoryWeatherChange){
+        *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<ParserX::AddComIfReq(value.toString())<<" )\n";
+
     }
 }

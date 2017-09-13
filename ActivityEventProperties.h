@@ -46,6 +46,9 @@ private:
     QPlainTextEdit eOutcomeMessage;
     QComboBox cOutcome;
     QComboBox cOutcomeEvent;
+    QLineEdit eSoundFileName;
+    QComboBox cSoundType;
+    QLineEdit cWeatherChange;
     QComboBox cActionType;
     QTimeEdit eTime;
     //QLineEdit eOutcomeEvent;

@@ -190,6 +190,7 @@
           <itemPath>WorldObj.h</itemPath>
         </logicalFolder>
         <itemPath>Environment.h</itemPath>
+        <itemPath>OrtsWeatherChange.h</itemPath>
         <itemPath>QuadTree.h</itemPath>
         <itemPath>Ref.h</itemPath>
         <itemPath>Route.h</itemPath>
@@ -397,6 +398,7 @@
           <itemPath>WorldObj.cpp</itemPath>
         </logicalFolder>
         <itemPath>Environment.cpp</itemPath>
+        <itemPath>OrtsWeatherChange.cpp</itemPath>
         <itemPath>QuadTree.cpp</itemPath>
         <itemPath>Ref.cpp</itemPath>
         <itemPath>Route.cpp</itemPath>
@@ -707,6 +709,10 @@
       <item path="OglObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="OverwriteDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1393,6 +1399,10 @@
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="OverwriteDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OverwriteDialog.h" ex="false" tool="3" flavor2="0">
@@ -2070,6 +2080,10 @@
       <item path="OglObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="OverwriteDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2756,6 +2770,10 @@
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="OverwriteDialog.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="OverwriteDialog.h" ex="false" tool="3" flavor2="0">
@@ -3428,6 +3446,10 @@
       <item path="OglObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="OverwriteDialog.cpp" ex="false" tool="1" flavor2="8">
       </item>

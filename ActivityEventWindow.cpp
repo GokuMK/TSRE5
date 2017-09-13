@@ -23,8 +23,10 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     actionListLayout->setContentsMargins(0,0,0,0);
     actionListLayout->setSpacing(0);
     QPushButton *bNewActionEvent = new QPushButton("New Action Event");
+    QPushButton *bDeleteActionEvent = new QPushButton("Delete");
     actionListLayout->addWidget(&actionList);
     actionListLayout->addWidget(bNewActionEvent);
+    actionListLayout->addWidget(bDeleteActionEvent);
     actionList.setFixedWidth(200);
     actionList.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -32,8 +34,10 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     locationListLayout->setContentsMargins(0,0,0,0);
     locationListLayout->setSpacing(0);
     QPushButton *bNewLocationEvent = new QPushButton("New Location Event");
+    QPushButton *bDeleteLocationEvent = new QPushButton("Delete");
     locationListLayout->addWidget(&locationList);
     locationListLayout->addWidget(bNewLocationEvent);
+    locationListLayout->addWidget(bDeleteLocationEvent);
     locationList.setFixedWidth(200);
     locationList.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     
@@ -41,8 +45,10 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     timeListLayout->setContentsMargins(0,0,0,0);
     timeListLayout->setSpacing(0);
     QPushButton *bNewTimeEvent = new QPushButton("New Time Event");
+    QPushButton *bDeleteTimeEvent = new QPushButton("Delete");
     timeListLayout->addWidget(&timeList);
     timeListLayout->addWidget(bNewTimeEvent);
+    timeListLayout->addWidget(bDeleteTimeEvent);
     timeList.setFixedWidth(200);
     timeList.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     

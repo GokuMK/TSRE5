@@ -20,6 +20,7 @@ class QTextStream;
 class GLUU;
 class OglObj;
 class TextObj;
+class OrtsWeatherChange;
 
 class ActivityEvent {
 
@@ -29,7 +30,9 @@ public:
         enum OutcomeCategory {
             CategoryNone = 0,
             CategoryEvent = 1,
-            CategoryInfo = 2
+            CategoryInfo = 2,
+            CategorySoundFile = 3,
+            CategoryWeatherChange = 4
         };
         
         enum OutcomeType {
@@ -42,7 +45,9 @@ public:
             TypeRestorAactLevel = 6,
             TypeActivateEvent = 7,
             TypeStartIgnoringSpeedLimits = 8,
-            TypeStopIgnoringSpeedLimits = 9
+            TypeStopIgnoringSpeedLimits = 9,
+            TypeORTSActSoundFile = 10,
+            TypeORTSWeatherChange = 11
         };
         
         static QMap<OutcomeType, QString> OutcomeTypeDescription;
@@ -109,6 +114,9 @@ public:
     QString textToDisplayOnCompletionIfNotTriggered;
     QString textToDisplayDescriptionOfTask;
     QVector<Outcome*> outcomes;
+    // deprecated - use only for OpenRails 1.2;
+    OrtsWeatherChange* ortsWeatherChangeDeprecated = NULL;
+    QVector<QString> ortsActSoundFileDeprecated;
     //Outcome* outcome = NULL;
     
     ActivityEvent();

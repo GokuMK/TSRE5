@@ -35,6 +35,12 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
         cOutcome.addItem(i2.value(), i2.key());
     }
     
+    cSoundType.addItem("Everywhere", QString("Everywhere"));
+    cSoundType.addItem("Cab", QString("Cab"));
+    cSoundType.addItem("Pass", QString("Pass"));
+    cSoundType.addItem("Ground", QString("Ground"));
+    
+    
     cActionType.setStyleSheet("combobox-popup: 0;");
     cActionType.setMaxVisibleItems(30);
     cActionType.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -172,7 +178,7 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->addWidget(new QLabel("Action:"), row, 0);
     vlist->addWidget(&cOutcome, row++, 1);
     vbox->addItem(vlist);
-    
+
     // Outcome Event
     
     vlist = new QGridLayout;
@@ -200,6 +206,35 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     outcomeProperties[(int)ActivityEvent::Outcome::CategoryInfo]->setLayout(vlist);
     vbox->addWidget(outcomeProperties[(int)ActivityEvent::Outcome::CategoryInfo]);
     
+    // Outcome Sound File
+    
+    vlist = new QGridLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    row = 0;
+    label = new QLabel("Sound File:");
+    label->setMinimumWidth(100);
+    vlist->addWidget(label, row, 0);
+    eSoundFileName.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    vlist->addWidget(&eSoundFileName, row++, 1);
+    vlist->addWidget(new QLabel("Sound Type:"), row, 0);
+    vlist->addWidget(&cSoundType, row++, 1);
+    outcomeProperties[(int)ActivityEvent::Outcome::CategorySoundFile] = new QWidget(this);
+    outcomeProperties[(int)ActivityEvent::Outcome::CategorySoundFile]->setLayout(vlist);
+    vbox->addWidget(outcomeProperties[(int)ActivityEvent::Outcome::CategorySoundFile]);
+    
+    vlist = new QGridLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    row = 0;
+    label = new QLabel("Weather Change:");
+    label->setMinimumWidth(100);
+    vlist->addWidget(label, row, 0);
+    cWeatherChange.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    vlist->addWidget(&cWeatherChange, row++, 1);
+    outcomeProperties[(int)ActivityEvent::Outcome::CategoryWeatherChange] = new QWidget(this);
+    outcomeProperties[(int)ActivityEvent::Outcome::CategoryWeatherChange]->setLayout(vlist);
+    vbox->addWidget(outcomeProperties[(int)ActivityEvent::Outcome::CategoryWeatherChange]);
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -244,7 +279,7 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
         locationWidget.show();
         if(event->location != NULL){
             eLocationRadius.setText(QString::number(event->location[4]));
-            eLocationPosition.setText(QString::number(event->location[0]) +" "+ QString::number(event->location[1]) +" "+ QString::number(event->location[1]) +" "+ QString::number(event->location[3]));
+            eLocationPosition.setText(QString::number(event->location[0]) +" "+ QString::number(event->location[1]) +" "+ QString::number(event->location[2]) +" "+ QString::number(event->location[3]));
         }
     }
     if(event->category == ActivityEvent::CategoryTime){
@@ -288,20 +323,29 @@ void ActivityEventProperties::outcomeListSelected(QListWidgetItem* item){
         
     cOutcome.setCurrentIndex(cOutcome.findData((int)outcome->type));
     
+    if(outcomeProperties[(int)outcome->category] == NULL)
+        return;
     outcomeProperties[(int)outcome->category]->show();
     
     if(outcome->category == ActivityEvent::Outcome::CategoryInfo){
         QString txt = outcome->value.toString();
         txt.replace("\\n","\n");
-        this->eOutcomeMessage.setPlainText(txt);
+        eOutcomeMessage.setPlainText(txt);
     }
     
     if(outcome->category == ActivityEvent::Outcome::CategoryEvent){
-        this->cOutcomeEvent.setDisabled(false);
         int index = this->cOutcomeEvent.findData((int)outcome->value.toInt());
-        this->cOutcomeEvent.setCurrentIndex(index);
+        cOutcomeEvent.setCurrentIndex(index);
     }
     
+    if(outcome->category == ActivityEvent::Outcome::CategorySoundFile){
+        eSoundFileName.setText(outcome->value.toStringList()[0]);
+        cSoundType.setCurrentIndex(cSoundType.findData(outcome->value.toStringList()[1]));
+    }
+    
+    if(outcome->category == ActivityEvent::Outcome::CategoryWeatherChange){
+        cWeatherChange.setText(outcome->value.toString());
+    }
 }
 
 void ActivityEventProperties::setEventList(QMap<int, QString> eventNames){

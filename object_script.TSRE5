@@ -65,6 +65,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ObjFile.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ObjTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OglObj.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OrtsWeatherChange.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/OverwriteDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PaintTexLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ParserX.o
