@@ -52,7 +52,11 @@ ConListWidget::ConListWidget() : QWidget(){
     this->setLayout(vbox);
 
     routeShow.setStyleSheet("combobox-popup: 0;");
+    routeShow.setMaxVisibleItems(20);
+    routeShow.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     actShow.setStyleSheet("combobox-popup: 0;");
+    actShow.setMaxVisibleItems(20);
+    actShow.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     conShow.setStyleSheet("combobox-popup: 0;");
     conShow.addItem("Consists");
     conShow.addItem("Activity Consists");

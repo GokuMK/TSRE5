@@ -121,6 +121,8 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
     vlist->addWidget(&eTime, row++, 1);
+    QObject::connect(&eTime, SIGNAL(timeChanged(QTime)),
+                      this, SLOT(eTimeSelected(QTime)));
     eTime.setDisplayFormat("HH:mm:ss");
     eTime.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     
@@ -143,14 +145,25 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
     vlist->addWidget(&eName, row++, 1);
+    QObject::connect(&eName, SIGNAL(editingFinished()),
+                      this, SLOT(eNameSelected()));
     vlist->addWidget(new QLabel("Activation Level:"), row, 0);
     vlist->addWidget(&eActivationLevel, row++, 1);
+    eActivationLevel.setRange(-100,100);
+    QObject::connect(&eActivationLevel, SIGNAL(editingFinished()),
+                      this, SLOT(eActivationLevelSelected()));
     vlist->addWidget(new QLabel("Triggered Text:"), row, 0);
     vlist->addWidget(&eTriggeredText, row++, 1);
+    QObject::connect(&eTriggeredText, SIGNAL(textEdited(QString)),
+                      this, SLOT(eTriggeredTextSelected(QString)));
     vlist->addWidget(new QLabel("Untriggered Text:"), row, 0);
     vlist->addWidget(&eUntriggeredText, row++, 1);
+    QObject::connect(&eUntriggeredText, SIGNAL(textEdited(QString)),
+                      this, SLOT(eUntriggeredTextSelected(QString)));
     vlist->addWidget(new QLabel("Notes:"), row, 0);
     vlist->addWidget(&eNotes, row++, 1);
+    QObject::connect(&eNotes, SIGNAL(textEdited(QString)),
+                      this, SLOT(eNotesSelected(QString)));
     cAutoContinueLabel.setText("Auto Continue:");
     vlist->addWidget(&cAutoContinueLabel, row, 0);
     vlist->addWidget(&eAutoContinue, row++, 1);
@@ -208,6 +221,8 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     row = 0;
     vlist->addWidget(new QLabel("Message:"), row++, 0, 1, 2);
     vlist->addWidget(&eOutcomeMessage, row++, 0, 1, 2);
+    QObject::connect(&eOutcomeMessage, SIGNAL(textChanged()),
+                      this, SLOT(eOutcomeMessageSelected()));
     outcomeProperties[(int)ActivityEvent::Outcome::CategoryInfo] = new QWidget(this);
     outcomeProperties[(int)ActivityEvent::Outcome::CategoryInfo]->setLayout(vlist);
     vbox->addWidget(outcomeProperties[(int)ActivityEvent::Outcome::CategoryInfo]);
@@ -290,14 +305,15 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
     }
     if(event->category == ActivityEvent::CategoryTime){
         timeWidget.show();
-        QTime time(0, 0);
-        eTime.setTime(time.addSecs(event->time));
+        //QTime time(0, 0);
+        eTime.blockSignals(true);
+        eTime.setTime(QTime::fromMSecsSinceStartOfDay(event->time*1000));
+        eTime.blockSignals(false);
     }
     
     eName.setText(event->name);
     eName.setCursorPosition(0);
-    eActivationLevel.setText(QString::number(event->activationLevel));
-    eActivationLevel.setCursorPosition(0);
+    eActivationLevel.setValue(event->activationLevel);
     eTriggeredText.setText(event->textToDisplayOnCompletionIfTriggered);
     eTriggeredText.setCursorPosition(0);
     eUntriggeredText.setText(event->textToDisplayOnCompletionIfNotTriggered);
@@ -361,7 +377,9 @@ void ActivityEventProperties::outcomeListSelected(QListWidgetItem* item){
     if(outcome->category == ActivityEvent::Outcome::CategoryInfo){
         QString txt = outcome->value.toString();
         txt.replace("\\n","\n");
+        eOutcomeMessage.blockSignals(true);
         eOutcomeMessage.setPlainText(txt);
+        eOutcomeMessage.blockSignals(false);
     }
     
     if(outcome->category == ActivityEvent::Outcome::CategoryEvent){
@@ -407,4 +425,46 @@ void ActivityEventProperties::selctOutcomeOnList(int id){
         outcomeList.setCurrentRow(id);
         outcomeListSelected(outcomeList.item(id));
     }
+}
+
+void ActivityEventProperties::eOutcomeMessageSelected(){
+    if(outcome == NULL)
+        return;
+    outcome->setMessage(eOutcomeMessage.toPlainText());
+}
+
+void ActivityEventProperties::eActivationLevelSelected(){
+    if(event == NULL)
+        return;
+    event->setActivationLevel(eActivationLevel.value());
+}
+
+void ActivityEventProperties::eNameSelected(){
+    if(event == NULL)
+        return;
+    event->setName(eName.text());
+}
+
+void ActivityEventProperties::eTriggeredTextSelected(QString val){
+    if(event == NULL)
+        return;
+    event->setTriggeredText(val);
+}
+
+void ActivityEventProperties::eUntriggeredTextSelected(QString val){
+    if(event == NULL)
+        return;
+    event->setUntriggeredText(val);
+}
+
+void ActivityEventProperties::eNotesSelected(QString val){
+    if(event == NULL)
+        return;
+    event->setNotes(val);
+}
+
+void ActivityEventProperties::eTimeSelected(QTime val){
+    if(event == NULL)
+        return;
+    event->setTime(val.msecsSinceStartOfDay()/1000);
 }

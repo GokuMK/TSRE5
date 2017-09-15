@@ -13,6 +13,7 @@
 
 #include <QWidget>
 #include <QMainWindow>
+#include <QMap>
 
 class QSlider;
 class RouteEditorGLWidget;
@@ -93,8 +94,7 @@ private:
     ActivityTools *activityTools;
     //NaviBox *naviBox;
     
-    std::vector<PropertiesAbstract*> objProperties;
-    //PropertiesUndefined * propertiesUndefined;
+    QMap<QString, PropertiesAbstract*> objProperties;
     
     QMenu *routeMenu;
     QMenu *editMenu;

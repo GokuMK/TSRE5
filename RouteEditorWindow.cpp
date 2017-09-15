@@ -61,29 +61,28 @@ RouteEditorWindow::RouteEditorWindow() {
     naviWindow = new NaviWindow(this);
     activityEventWindow = new ActivityEventWindow(this);
     
-    objProperties.push_back(new PropertiesStatic);
-    objProperties.push_back(new PropertiesTransfer);
-    objProperties.push_back(new PropertiesPlatform);
-    objProperties.push_back(new PropertiesSiding);
-    objProperties.push_back(new PropertiesCarspawner);
-    PropertiesDyntrack * propertiesDyntrack = new PropertiesDyntrack();
-    objProperties.push_back(propertiesDyntrack);
-    objProperties.push_back(new PropertiesSignal);
-    objProperties.push_back(new PropertiesPickup);
-    objProperties.push_back(new PropertiesForest);
-    objProperties.push_back(new PropertiesSpeedpost);
-    objProperties.push_back(new PropertiesSoundSource);
-    objProperties.push_back(new PropertiesTrackObj);
-    objProperties.push_back(new PropertiesGroup);
-    objProperties.push_back(new PropertiesRuler);
-    objProperties.push_back(new PropertiesSoundRegion);
-    objProperties.push_back(new PropertiesLevelCr);
-    objProperties.push_back(new PropertiesTerrain);
-    objProperties.push_back(new PropertiesActivityObject);
-    objProperties.push_back(new PropertiesTrackItem);
-    objProperties.push_back(new PropertiesActivityPath);
+    objProperties["Static"] = new PropertiesStatic;
+    objProperties["Transfer"] = new PropertiesTransfer;
+    objProperties["Platform"] = new PropertiesPlatform;
+    objProperties["Siding"] = new PropertiesSiding;
+    objProperties["Carspawner"] = new PropertiesCarspawner;
+    objProperties["Dyntrack"] = new PropertiesDyntrack;
+    objProperties["Signal"] = new PropertiesSignal;
+    objProperties["Pickup"] = new PropertiesPickup;
+    objProperties["Forest"] = new PropertiesForest;
+    objProperties["Speedpost"] = new PropertiesSpeedpost;
+    objProperties["SoundSource"] = new PropertiesSoundSource;
+    objProperties["TrackObj"] = new PropertiesTrackObj;
+    objProperties["Group"] = new PropertiesGroup;
+    objProperties["Ruler"] = new PropertiesRuler;
+    objProperties["SoundRegion"] = new PropertiesSoundRegion;
+    objProperties["LevelCr"] = new PropertiesLevelCr;
+    objProperties["Terrain"] = new PropertiesTerrain;
+    objProperties["ActivityObject"] = new PropertiesActivityObject;
+    objProperties["TrackItem"] = new PropertiesTrackItem;
+    objProperties["ActivityPath"] = new PropertiesActivityPath;
     // last 
-    objProperties.push_back(new PropertiesUndefined);
+    objProperties["Undefined"] = new PropertiesUndefined;
     
     QWidget* main = new QWidget();
     box = new QWidget();
@@ -112,11 +111,12 @@ RouteEditorWindow::RouteEditorWindow() {
     mainLayout2->setSpacing(0);
     //mainLayout3->addWidget(propertiesUndefined);
     
-    for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
-        if(*it == NULL) continue;
-        (*it)->hide();
+    //for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
+    foreach (PropertiesAbstract *it, objProperties){
+        if(it == NULL) continue;
+        it->hide();
         //console.log(obj.type);
-        mainLayout3->addWidget(*it);
+        mainLayout3->addWidget(it);
     }
     
     //mainLayout3->addWidget(terrainTools);
@@ -268,7 +268,6 @@ RouteEditorWindow::RouteEditorWindow() {
     
     hideAllTools();
     objTools->show();
-    terrainTools->show();
     
     if(Game::toolsHidden){
         box->hide();
@@ -346,19 +345,20 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(activityTools, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));   
     
-    for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
-        if(*it == NULL) continue;
-        QObject::connect((*it), SIGNAL(enableTool(QString)),
+    //for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
+    foreach (PropertiesAbstract *it, objProperties){
+        if(it == NULL) continue;
+        QObject::connect(it, SIGNAL(enableTool(QString)),
             glWidget, SLOT(enableTool(QString)));   
         QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), 
-                (*it), SLOT(msg(QString, QString)));
+                it, SLOT(msg(QString, QString)));
     }
     
-    QObject::connect(propertiesDyntrack, SIGNAL(enableTool(QString)),
+    QObject::connect(objProperties["Dyntrack"], SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));
     
     QObject::connect(glWidget, SIGNAL(flexData(int, int, float*)),
-                      propertiesDyntrack, SLOT(flexData(int, int, float*)));
+                      objProperties["Dyntrack"], SLOT(flexData(int, int, float*)));
     
     QObject::connect(terrainTools, SIGNAL(setPaintBrush(Brush*)),
                       glWidget, SLOT(setPaintBrush(Brush*)));   
@@ -569,19 +569,21 @@ void RouteEditorWindow::hideAllTools(){
 
 void RouteEditorWindow::showProperties(GameObj* obj){
     // hide all
-    for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
-        if(*it == NULL) continue;
-        (*it)->hide();
+    //for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
+    foreach (PropertiesAbstract *it, objProperties){
+        if(it == NULL) continue;
+        it->hide();
     }
     if(obj == NULL) return;
     // show 
     //qDebug() << obj->typeObj;
 
-    for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
-        if(*it == NULL) continue;
-        if(!(*it)->support(obj)) continue;
-        (*it)->show();
-        (*it)->showObj(obj);
+    //for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
+    foreach (PropertiesAbstract *it, objProperties){
+        if(it == NULL) continue;
+        if(!it->support(obj)) continue;
+        it->show();
+        it->showObj(obj);
         return;
     }
 }
@@ -590,12 +592,13 @@ void RouteEditorWindow::updateProperties(GameObj* obj){
     if(obj == NULL) return;
     // show 
 
-    for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
-        if(*it == NULL) continue;
-            if((*it)->isVisible() && (*it)->support(obj)){
-                (*it)->updateObj(obj);
-                return;
-            }
+    //for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
+    foreach (PropertiesAbstract *it, objProperties){
+        if(it == NULL) continue;
+        if(it->isVisible() && it->support(obj)){
+            it->updateObj(obj);
+            return;
+        }
     }
 }
 

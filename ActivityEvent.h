@@ -67,6 +67,11 @@ public:
         void load(FileBuffer* data);
         void save(QTextStream* out);
         void setToNewType(OutcomeType newType);
+        void setMessage(QString val);
+        void setModified(bool val);
+        bool isModified();
+    protected:
+        bool modified = false;
     };
 
     enum EventType {
@@ -126,7 +131,14 @@ public:
     
     int newOutcome();
     void removeOutcome(int id);
-    
+    void setModified(bool val);
+    void setActivationLevel(int val);
+    void setName(QString val);
+    void setTriggeredText(QString val);
+    void setUntriggeredText(QString val);
+    void setNotes(QString val);
+    void setTime(int val);
+    bool isModified();
     void load(FileBuffer* data);
     void save(QTextStream* out);
     void render(GLUU* gluu, float * playerT, float playerRot, int renderMode);
@@ -134,7 +146,8 @@ public:
 protected:
     static OglObj *simpleMarkerObj;
     TextObj* txtMarkerObj = NULL;
-    
+    bool modified = false;
+    bool isWagonList = false;
 };
 
 #endif	/* ACTIVITYEVENT_H */

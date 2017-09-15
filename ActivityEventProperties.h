@@ -32,6 +32,13 @@ public slots:
     void outcomeActoionListSelected(QString item);
     void bAddOutcomeSelected();
     void bRemoveOutcomeSelected();
+    void eOutcomeMessageSelected();
+    void eActivationLevelSelected();
+    void eNameSelected();
+    void eTriggeredTextSelected(QString val);
+    void eUntriggeredTextSelected(QString val);
+    void eNotesSelected(QString val);
+    void eTimeSelected(QTime val);
         
 signals:
     
@@ -43,7 +50,7 @@ private:
     QMap<int, QWidget*> outcomeProperties;
     
     QLineEdit eName;
-    QLineEdit eActivationLevel;
+    QSpinBox eActivationLevel;
     QLineEdit eTriggeredText;
     QLineEdit eUntriggeredText;
     QLineEdit eNotes;

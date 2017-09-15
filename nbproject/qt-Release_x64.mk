@@ -22302,6 +22302,7 @@ moc_RouteEditorWindow.cpp: c:/OT/Static/5.7.0_x64/include/QtWidgets/QWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qmainwindow.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtabwidget.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qicon.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		RouteEditorWindow.h \
 		c:/OT/Static/5.7.0_x64/bin/moc.exe
 	'c:\OT\Static\5.7.0_x64\bin\moc.exe' $(DEFINES) -D__GNUC__ -DWIN32 -Ic:/OT/Static/5.7.0_x64/mkspecs/win32-g++ -IC:/Users/Goku/Documents/NetBeansProjects/TSRE5/nbproject -Ic:/OT/Static/5.7.0_x64/include -Ic:/OT/Static/5.7.0_x64/include/QtOpenGL -Ic:/OT/Static/5.7.0_x64/include/QtWidgets -Ic:/OT/Static/5.7.0_x64/include/QtGui -Ic:/OT/Static/5.7.0_x64/include/QtNetwork -Ic:/OT/Static/5.7.0_x64/include/QtCore -I. RouteEditorWindow.h -o moc_RouteEditorWindow.cpp
@@ -38076,6 +38077,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Game.o: Game.cpp Game.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qmainwindow.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtabwidget.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qicon.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		LoadWindow.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgets \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgetsDepends \
@@ -39577,6 +39579,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GuiFunct.o: GuiFunct.cpp Gui
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
 		RouteEditorWindow.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QMainWindow \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GuiFunct.o GuiFunct.cpp
 
@@ -71445,6 +71448,7 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/main.o: main.cpp c:/OT/Stati
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qmainwindow.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtabwidget.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qicon.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMap \
 		LoadWindow.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgets \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QtWidgetsDepends \

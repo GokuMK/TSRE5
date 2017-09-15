@@ -134,9 +134,8 @@ ActivityEvent::~ActivityEvent() {
 
 int ActivityEvent::newOutcome(){
     Outcome *o = new Outcome(Outcome::TypeNone);
-    
     outcomes.push_back(o);
-    
+    modified = true;
     return outcomes.size() - 1;
 }
 
@@ -145,7 +144,61 @@ void ActivityEvent::removeOutcome(int id){
         return;
     if(outcomes.size() <= id)
         return;
+    modified = true;
     outcomes.remove(id);
+}
+
+bool ActivityEvent::isModified(){
+    for(int i = 0; i < outcomes.size(); i++)
+        if(outcomes[i]->isModified())
+            return true;
+    return modified;
+}
+
+void ActivityEvent::setModified(bool val){
+    for(int i = 0; i < outcomes.size(); i++)
+        outcomes[i]->setModified(val);
+    modified = val;
+}
+
+void ActivityEvent::setActivationLevel(int val){
+    activationLevel = val;
+    modified = true;
+}
+
+void ActivityEvent::setName(QString val){
+    name = val;
+    modified = true;
+}
+
+void ActivityEvent::setTriggeredText(QString val){
+    textToDisplayOnCompletionIfTriggered = val;
+    modified = true;
+}
+
+void ActivityEvent::setUntriggeredText(QString val){
+    textToDisplayOnCompletionIfNotTriggered = val;
+    modified = true;
+}
+
+void ActivityEvent::setNotes(QString val){
+    textToDisplayDescriptionOfTask = val;
+    modified = true;
+}
+
+void ActivityEvent::setTime(int val){
+    if(category != CategoryTime)
+        return;
+    time = val;
+    modified = true;
+}
+
+bool ActivityEvent::Outcome::isModified(){
+    return modified;
+}
+
+void ActivityEvent::Outcome::setModified(bool val){
+    modified = val;
 }
 
 void ActivityEvent::render(GLUU* gluu, float * playerT, float playerRot, int renderMode){
@@ -278,6 +331,7 @@ void ActivityEvent::load(FileBuffer* data) {
             continue;
         }
         if (sh == ("wagon_list")) {
+            isWagonList = true;
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 if (sh == ("uid")) {
                     wagonListId.emplace_back(ParserX::GetUInt(data));
@@ -406,7 +460,7 @@ void ActivityEvent::save(QTextStream* out) {
     if(stationStop != -99999)
         *out << "				StationStop ( "<<stationStop<<" )\n";
 
-    if(wagonListId.size() > 0){
+    if(isWagonList || wagonListId.size() > 0){
         *out << "				Wagon_List (\n";
         for(int i=0; i < wagonListId.size(); i++){
             *out << "					UiD ( "<<wagonListId[i]<<" )\n";
@@ -478,6 +532,13 @@ void ActivityEvent::Outcome::save(QTextStream* out) {
     }
 }
 
+void ActivityEvent::Outcome::setMessage(QString val){
+    if(category != CategoryInfo)
+        return;
+    value.setValue(val);
+    modified = true;
+}
+
 void ActivityEvent::Outcome::setToNewType(OutcomeType newType){
     type = newType;
     category = OutcomeTypeCategory[type];
@@ -501,4 +562,5 @@ void ActivityEvent::Outcome::setToNewType(OutcomeType newType){
         value.clear();
         value.setValue(QString(""));
     }
+    modified = true;
 }

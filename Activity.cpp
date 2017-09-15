@@ -382,6 +382,9 @@ void Activity::save() {
     for(int i = 0; i < activityObjects.size(); i++){
         activityObjects[i].setModified(false);
     }
+    for(int i = 0; i < event.size(); i++){
+        event[i].setModified(false);
+    }
     
     path = pathid.remove(pathid.length()-4, 4);
     path += ".asv";
@@ -726,9 +729,12 @@ bool Activity::isNew(){
 
 bool Activity::isUnSaved(){
     for(int i = 0; i < activityObjects.size(); i++){
-        if(activityObjects[i].con != NULL)
-            if(activityObjects[i].isUnSaved())
-                return true;
+        if(activityObjects[i].isUnSaved())
+            return true;
+    }
+    for(int i = 0; i < event.size(); i++){
+        if(event[i].isModified())
+            return true;
     }
     return modified;
 }
