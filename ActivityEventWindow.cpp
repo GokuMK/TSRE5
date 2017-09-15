@@ -78,6 +78,36 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     QObject::connect(&timeList, SIGNAL(itemClicked(QListWidgetItem*)),
                       this, SLOT(eventListSelected(QListWidgetItem*)));
     
+    QObject::connect(eventProperties, SIGNAL(eventNameChanged(int)),
+                      this, SLOT(eventNameChanged(int)));
+}
+
+void ActivityEventWindow::eventNameChanged(int id){
+    if(activity == NULL)
+        return;
+    int j = -1;
+    for(int i = 0; i < activity->event.size(); i++ ){
+        if(activity->event[i].id == id){
+            j = i;
+            break;
+        }
+    }
+    if(j == -1){
+        showEvents(activity);
+    }
+    QListWidget *list = NULL;
+    if(activity->event[j].category == ActivityEvent::CategoryAction)
+        list = &actionList;
+    if(activity->event[j].category == ActivityEvent::CategoryLocation)
+        list = &locationList;
+    if(activity->event[j].category == ActivityEvent::CategoryTime)
+        list = &timeList;
+
+    int idxR = list->currentRow();
+    showEvents(activity);
+    list->item(idxR)->setSelected(true);
+    list->setCurrentRow(idxR);
+    eventListSelected(list->item(idxR));
 }
 
 void ActivityEventWindow::showEvents(Activity* act){

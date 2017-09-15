@@ -41,6 +41,7 @@ public slots:
     void eTimeSelected(QTime val);
         
 signals:
+    void eventNameChanged(int id);
     
 private:
     QWidget actionWidget;

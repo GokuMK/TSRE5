@@ -443,6 +443,7 @@ void ActivityEventProperties::eNameSelected(){
     if(event == NULL)
         return;
     event->setName(eName.text());
+    emit eventNameChanged(event->id);
 }
 
 void ActivityEventProperties::eTriggeredTextSelected(QString val){
