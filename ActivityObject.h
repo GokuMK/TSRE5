@@ -38,6 +38,8 @@ public:
     void load(FileBuffer* data);
     void save(QTextStream* out);
     void remove();
+    bool select(int value);
+    bool unselect();
     void setPosition(int x, int z, float* p);
     void toggleDirection();
     void setParentActivity(Activity *a);
@@ -55,6 +57,7 @@ signals:
 private:
     Activity *parentActivity = NULL;
     bool modified = false;
+    int selectionValue = 0;
 };
 
 #endif	/* ACTIVITYOBJECT_H */

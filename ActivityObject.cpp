@@ -94,6 +94,24 @@ QString ActivityObject::getParentName(){
     return parentActivity->header->name;
 }
 
+bool ActivityObject::select(int value){
+    selected = true;
+    selectionValue = value;
+    if(con != NULL){
+        con->select(value);
+    }
+    return true;
+}
+
+bool ActivityObject::unselect(){
+    selected = false;
+    selectionValue = -1;
+    if(con != NULL){
+        con->unselect();
+    }
+    return false;
+}
+
 void ActivityObject::remove(){
     if(parentActivity == NULL)
         return;

@@ -76,6 +76,7 @@ public:
     void unselect();
     bool isSelected();
     void drawBorder();
+    void drawBorder3d();
     bool engFilter(QString q);
     bool couplingFilter(QString q);
     bool searchFilter(QString q);
@@ -88,6 +89,7 @@ public:
 private:
     bool selected = false;
     OglObj *borderObj = NULL;
+    OglObj *borderObj3d = NULL;
     OglObj *ruchPoint = NULL;
     Ruch *ruch1 = NULL;
     Ruch *ruch2 = NULL;

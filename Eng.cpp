@@ -494,6 +494,52 @@ void Eng::drawBorder(){
     borderObj->render();
 };
 
+void Eng::drawBorder3d(){
+
+    if (borderObj3d == NULL) {
+        borderObj3d = new OglObj();
+        
+        float width = this->getFullWidth() / 2;
+        
+        float* punkty = new float[96];
+        float* ptr = punkty;
+        
+        float sizexx = sizex / 2.0;
+        for(int j = 0; j <= 1; j++)
+            for(int i = -1; i <= 1; i+=2){
+                *ptr++ = sizexx*i;
+                *ptr++ = sizey*j;
+                *ptr++ = -width;
+                *ptr++ = sizexx*i;
+                *ptr++ = sizey*j;
+                *ptr++ = width;
+            }
+        for(int j = 0; j <=1; j++)
+            for(int i = -1; i <= 1; i+=2){
+                *ptr++ = sizexx;
+                *ptr++ = sizey*j;
+                *ptr++ = width*i;
+                *ptr++ = -sizexx;
+                *ptr++ = sizey*j;
+                *ptr++ = width*i;
+        }
+        for(int j = -1; j <=1; j+=2)
+            for(int i = -1; i <= 1; i+=2){
+                *ptr++ = sizexx*j;
+                *ptr++ = 0;
+                *ptr++ = width*i;
+                *ptr++ = sizexx*j;
+                *ptr++ = sizey;
+                *ptr++ = width*i;
+        }
+        borderObj3d->setMaterial(1.0, 0.0, 0.0);
+        borderObj3d->init(punkty, ptr-punkty, borderObj3d->V, GL_LINES);
+        delete[] punkty;
+    }
+
+    borderObj3d->render();
+};
+
 void Eng::render(int selectionColor) {
     render(0, 0, selectionColor);
 }

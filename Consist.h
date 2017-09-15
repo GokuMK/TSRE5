@@ -78,6 +78,7 @@ public:
     void save();
     void save(QString woff, QTextStream *out);
     bool select(int idx);
+    bool unselect();
     void appendEngItem(int id);
     void appendEngItem(int id, int pos = 2, bool flip = false);
     void deteleSelected();

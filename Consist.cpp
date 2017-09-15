@@ -342,6 +342,11 @@ bool Consist::select(int idx){
     return true;
 }
 
+bool Consist::unselect(){
+    selectedIdx = -1;
+    return false;
+}
+
 void Consist::deteleSelected(){
     if(selectedIdx < 0)
         return;
@@ -673,9 +678,11 @@ void Consist::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
         //    Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI, 0, 1, 0);
         //gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         if(selectionColor != 0){
-            selectionColor |= i;
+            scolor = selectionColor | i;
         }
-        engItems[i].engPointer->renderOnTrack(gluu, playerT, selectionColor);
+        engItems[i].engPointer->renderOnTrack(gluu, playerT, scolor);
+        if(selectedIdx == i)
+            engItems[i].engPointer->drawBorder3d();
         gluu->mvPopMatrix();
     }
 }

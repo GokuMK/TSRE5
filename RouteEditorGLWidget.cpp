@@ -422,7 +422,8 @@ void RouteEditorGLWidget::handleSelection() {
             if (selectedObj == NULL) {
                 qDebug() << "brak obiektu";
             } else {
-                //selectedObj->select(EID);
+                //qDebug() << "eid"<<EID;
+                selectedObj->select(EID);
             }
         } else if( ww == 12 ){
             if (selectedObj != NULL) {
