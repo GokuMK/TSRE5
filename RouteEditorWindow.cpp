@@ -88,13 +88,12 @@ RouteEditorWindow::RouteEditorWindow() {
     QWidget* main = new QWidget();
     box = new QWidget();
     box2 = new QWidget();
-    box->setMaximumWidth(250);
-    box->setMinimumWidth(250);
+    //box->setFixedWidth(500);
     box2->setMaximumWidth(160);
     box2->setMinimumWidth(160);
     //box2->setMaximumWidth(250);
     //box2->setMinimumWidth(250);
-    QVBoxLayout *mainLayout2 = new QVBoxLayout;
+    QHBoxLayout *mainLayout2 = new QHBoxLayout;
     mainLayout2->setMargin(0);
     mainLayout2->setSpacing(0);
     mainLayout2->setContentsMargins(0,0,0,0);
@@ -228,6 +227,9 @@ RouteEditorWindow::RouteEditorWindow() {
     toolsMenu->addAction(shapeViewAction);
     QObject::connect(shapeViewAction, SIGNAL(triggered(bool)), this, SLOT(hideShowShapeViewWidget(bool)));
     toolsMenu->addSeparator();
+    objectsAndTerrainAction = GuiFunct::newMenuCheckAction(tr("&Objects and Terrain"), this); 
+    toolsMenu->addAction(objectsAndTerrainAction);
+    QObject::connect(objectsAndTerrainAction, SIGNAL(triggered(bool)), this, SLOT(showToolsObjectAndTerrain(bool)));
     objectsAction = GuiFunct::newMenuCheckAction(tr("&Objects"), this); 
     objectsAction->setShortcut(QKeySequence("F1"));
     toolsMenu->addAction(objectsAction);
@@ -266,6 +268,7 @@ RouteEditorWindow::RouteEditorWindow() {
     
     hideAllTools();
     objTools->show();
+    terrainTools->show();
     
     if(Game::toolsHidden){
         box->hide();
@@ -486,6 +489,18 @@ void RouteEditorWindow::showToolsObject(bool show){
     }
 }
 
+void RouteEditorWindow::showToolsObjectAndTerrain(bool show){
+    if(show){
+        hideShowToolWidget(true);
+        hideAllTools();
+        objTools->show();
+        objectsAndTerrainAction->setChecked(true);
+        terrainTools->show();
+    } else {
+        hideShowToolWidget(false);
+    }
+}
+
 void RouteEditorWindow::showToolsTerrain(bool show){
     if(show){
         hideShowToolWidget(true);
@@ -549,6 +564,7 @@ void RouteEditorWindow::hideAllTools(){
     terrainAction->setChecked(false);     
     geoAction->setChecked(false);
     activityAction->setChecked(false);
+    objectsAndTerrainAction->setChecked(false);
 }
 
 void RouteEditorWindow::showProperties(GameObj* obj){

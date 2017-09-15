@@ -166,6 +166,10 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->addWidget(&outcomeList, row++, 0, 1, 2);
     QPushButton *bAddOutcome = new QPushButton("Add New");
     QPushButton *bRemoveOutcome = new QPushButton("Remove Selected");
+    QObject::connect(bAddOutcome, SIGNAL(released()),
+                      this, SLOT(bAddOutcomeSelected()));
+    QObject::connect(bRemoveOutcome, SIGNAL(released()),
+                      this, SLOT(bRemoveOutcomeSelected()));
     
     vlist->addWidget(bAddOutcome, row++, 0, 1, 2);
     vlist->addWidget(bRemoveOutcome, row++, 0, 1, 2);
@@ -177,6 +181,8 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     
     vlist->addWidget(new QLabel("Action:"), row, 0);
     vlist->addWidget(&cOutcome, row++, 1);
+    QObject::connect(&cOutcome, SIGNAL(activated(QString)),
+                      this, SLOT(outcomeActoionListSelected(QString)));
     vbox->addItem(vlist);
 
     // Outcome Event
@@ -306,12 +312,37 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
     
     if(outcomeList.count() > 0){
         outcomeList.item(0)->setSelected(true);
+        outcomeList.setCurrentRow(0);
         outcomeListSelected(outcomeList.item(0));
     }
 }
 
+void ActivityEventProperties::bAddOutcomeSelected(){
+    if(event == NULL)
+        return;
+    int id = event->newOutcome();
+    this->showEvent(event);   
+    selctOutcomeOnList(id);
+}
+
+void ActivityEventProperties::bRemoveOutcomeSelected(){
+    if(event == NULL)
+        return;
+    int id = outcomeList.currentRow();
+    if(id < 0)
+        return;
+    event->removeOutcome(id);
+    this->showEvent(event);
+    id--;
+    if(id < 0)
+        id = 0;
+    selctOutcomeOnList(id);
+}
+
 void ActivityEventProperties::outcomeListSelected(QListWidgetItem* item){
-    ActivityEvent::Outcome *outcome = event->outcomes[item->type()];
+    if(event == NULL)
+        return;
+    outcome = event->outcomes[item->type()];
     if(outcome == NULL)
         return;
     
@@ -348,6 +379,18 @@ void ActivityEventProperties::outcomeListSelected(QListWidgetItem* item){
     }
 }
 
+void ActivityEventProperties::outcomeActoionListSelected(QString item){
+    if(outcome == NULL)
+        return;
+    
+    qDebug() << "aa";
+    outcome->setToNewType((ActivityEvent::Outcome::OutcomeType)cOutcome.currentData().toInt());
+    
+    int id = outcomeList.currentRow();
+    this->showEvent(event);
+    selctOutcomeOnList(id);
+}
+
 void ActivityEventProperties::setEventList(QMap<int, QString> eventNames){
     this->cOutcomeEvent.clear();
     QMapIterator<int, QString> i1(eventNames);
@@ -355,5 +398,13 @@ void ActivityEventProperties::setEventList(QMap<int, QString> eventNames){
         i1.next();
         //qDebug() << "item"<< i1.key() << i1.value();
         cOutcomeEvent.addItem(i1.value(), i1.key());
+    }
+}
+
+void ActivityEventProperties::selctOutcomeOnList(int id){
+    if(outcomeList.count() > id){
+        outcomeList.item(id)->setSelected(true);
+        outcomeList.setCurrentRow(id);
+        outcomeListSelected(outcomeList.item(id));
     }
 }

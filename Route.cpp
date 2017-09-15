@@ -32,6 +32,7 @@
 #include "CoordsMkr.h"
 #include "CoordsKml.h"
 #include "CoordsGpx.h"
+#include "CoordsRoutePlaces.h"
 #include "SoundList.h"
 #include "ActLib.h"
 #include "Trk.h"
@@ -76,6 +77,7 @@ Route::Route() {
     this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
 
     loadMkrList();
+    createMkrPlaces();
     loadActivities();
     loadServices();
     loadTraffic();
@@ -127,6 +129,11 @@ float Route::getStartpZ(){
     return this->trk->startpZ;
 }
 
+void Route::createMkrPlaces(){
+    std::string key = "Route: Stations";
+    mkrList[key] = new CoordsRoutePlaces(trackDB);
+}
+
 void Route::loadMkrList(){
     //this->mkr = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + Game::routeName +".mkr");
     QDir dir(Game::root + "/routes/" + Game::route);
@@ -144,7 +151,8 @@ void Route::loadMkrList(){
             if(mkrList[(Game::routeName+".mkr").toLower().toStdString()]->loaded)
                 mkr = mkrList[(Game::routeName+".mkr").toLower().toStdString()];
             else
-                mkr = mkrList[(Game::routeName+".mkr").toLower().toStdString()];
+                mkr = mkrList.begin()->second;
+                //mkr = mkrList[(Game::routeName+".mkr").toLower().toStdString()];
         } else {
             mkr = mkrList.begin()->second;
         }

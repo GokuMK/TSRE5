@@ -20,7 +20,7 @@
 
 GeoTools::GeoTools(QString name)
     : QWidget(){
-    
+    setFixedWidth(250);
     int row = 0;
     
     buttonTools["mapTileShowTool"] = new QPushButton("Show/Hide Map", this);

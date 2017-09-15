@@ -24,6 +24,11 @@ public:
     void showObj(GameObj* obj);
     void updateObj(GameObj* obj);
     
+public slots:
+    void bDeleteEnabled();
+    
+signals:
+    
 private:
     QLineEdit eObjectType;
     QLineEdit eId;

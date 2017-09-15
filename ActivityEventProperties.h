@@ -17,6 +17,7 @@
 #include "ActivityEvent.h"
 
 class ActivityEvent;
+class ActivityEvent::Outcome;
 
 class ActivityEventProperties : public QWidget {
     Q_OBJECT
@@ -28,6 +29,9 @@ public:
     
 public slots:
     void outcomeListSelected(QListWidgetItem* item);
+    void outcomeActoionListSelected(QString item);
+    void bAddOutcomeSelected();
+    void bRemoveOutcomeSelected();
         
 signals:
     
@@ -63,6 +67,9 @@ private:
     QListWidget outcomeList;
     
     ActivityEvent* event = NULL;
+    ActivityEvent::Outcome* outcome = NULL;
+    
+    void selctOutcomeOnList(int id);
 };
 
 #endif	/* ACTIVITYEVENTACTIONPROPERTIES_H */

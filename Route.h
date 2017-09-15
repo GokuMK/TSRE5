@@ -64,6 +64,7 @@ public:
     void createNewPaths();
     void createNew();
     void loadMkrList();
+    void createMkrPlaces();
     void loadActivities();
     void loadServices();
     void loadTraffic();

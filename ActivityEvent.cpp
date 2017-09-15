@@ -132,6 +132,22 @@ ActivityEvent::ActivityEvent() {
 ActivityEvent::~ActivityEvent() {
 }
 
+int ActivityEvent::newOutcome(){
+    Outcome *o = new Outcome(Outcome::TypeNone);
+    
+    outcomes.push_back(o);
+    
+    return outcomes.size() - 1;
+}
+
+void ActivityEvent::removeOutcome(int id){
+    if(id < 0)
+        return;
+    if(outcomes.size() <= id)
+        return;
+    outcomes.remove(id);
+}
+
 void ActivityEvent::render(GLUU* gluu, float * playerT, float playerRot, int renderMode){
     if(category == EventTypeLocation){
         if(!Game::viewInteractives)
@@ -421,7 +437,6 @@ void ActivityEvent::save(QTextStream* out) {
 }
 
 void ActivityEvent::Outcome::load(FileBuffer* data){
-    category = OutcomeTypeCategory[type];
     if(category == CategoryInfo){
         value.setValue(ParserX::GetStringInside(data));
     }
@@ -460,6 +475,30 @@ void ActivityEvent::Outcome::save(QTextStream* out) {
     }
     if(category == CategoryWeatherChange){
         *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( "<<ParserX::AddComIfReq(value.toString())<<" )\n";
+    }
+}
 
+void ActivityEvent::Outcome::setToNewType(OutcomeType newType){
+    type = newType;
+    category = OutcomeTypeCategory[type];
+    
+    if(category == CategoryInfo){
+        value.clear();
+        value.setValue(QString(""));
+    }
+    if(category == CategoryEvent){
+        value.clear();
+        value.setValue(0);
+    }
+    if(category == CategorySoundFile){
+        value.clear();
+        QStringList v;
+        v.push_back("");
+        v.push_back("Everywhere");
+        value.setValue(v);
+    }
+    if(category == CategoryWeatherChange){
+        value.clear();
+        value.setValue(QString(""));
     }
 }

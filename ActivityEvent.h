@@ -60,11 +60,13 @@ public:
         QVariant value;
         
         Outcome(OutcomeType t){
-            this->type = t;
+            type = t;
+            category = OutcomeTypeCategory[type];
         }
         
         void load(FileBuffer* data);
         void save(QTextStream* out);
+        void setToNewType(OutcomeType newType);
     };
 
     enum EventType {
@@ -121,6 +123,10 @@ public:
     
     ActivityEvent();
     ~ActivityEvent();
+    
+    int newOutcome();
+    void removeOutcome(int id);
+    
     void load(FileBuffer* data);
     void save(QTextStream* out);
     void render(GLUU* gluu, float * playerT, float playerRot, int renderMode);

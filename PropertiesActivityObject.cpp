@@ -32,6 +32,7 @@ PropertiesActivityObject::PropertiesActivityObject() {
     vbox->addItem(vlist);
     
     QPushButton *bDelete = new QPushButton("Delete");
+    QObject::connect(bDelete, SIGNAL(released()), this, SLOT(bDeleteEnabled()));
     vbox->addWidget(bDelete);
     
     QLabel *label = new QLabel("Owned by:");
@@ -67,6 +68,13 @@ void PropertiesActivityObject::updateObj(GameObj* obj){
     }
     actObj = (ActivityObject*)obj;
 
+}
+
+void PropertiesActivityObject::bDeleteEnabled(){
+    if(actObj == NULL){
+        return;
+    }
+    actObj->remove();
 }
 
 bool PropertiesActivityObject::support(GameObj* obj){

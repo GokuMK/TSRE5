@@ -859,12 +859,12 @@ void Activity::setFuelDiesel(int val){
 }
 
 void Activity::setHazardWorkers(int val){
-    header->animals = val;
+    header->workers = val;
     modified = true;
 }
 
 void Activity::setHazardAnimals(int val){
-    header->workers = val;
+    header->animals = val;
     modified = true;
 }
 

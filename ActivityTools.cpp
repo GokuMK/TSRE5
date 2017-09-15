@@ -26,7 +26,7 @@
 
 ActivityTools::ActivityTools(QString name)
     : QWidget(){
-
+    setFixedWidth(250);
     cSeason.setStyleSheet("combobox-popup: 0;");
     cSeason.addItem("Spring",0);
     cSeason.addItem("Summer",1);
