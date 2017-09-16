@@ -68,6 +68,7 @@ public:
         void save(QTextStream* out);
         void setToNewType(OutcomeType newType);
         void setMessage(QString val);
+        void setEventLinkId(int id);
         void setModified(bool val);
         bool isModified();
     protected:
@@ -136,9 +137,18 @@ public:
     void setName(QString val);
     void setTriggeredText(QString val);
     void setUntriggeredText(QString val);
+    void setLocation(int X, int Z, float x, float z);
     void setNotes(QString val);
+    void setLocationRadius(int val);
+    void setLocationStop(bool val);
+    void setReversable(bool val);
+    void setAutoContinue(int val);
     void setTime(int val);
     bool isModified();
+    bool isSelected();
+    bool setSelected(bool val);
+    bool unselect();
+    bool select();
     void load(FileBuffer* data);
     void save(QTextStream* out);
     void render(GLUU* gluu, float * playerT, float playerRot, int renderMode);
@@ -148,6 +158,7 @@ protected:
     TextObj* txtMarkerObj = NULL;
     bool modified = false;
     bool isWagonList = false;
+    bool selected = false;
 };
 
 #endif	/* ACTIVITYEVENT_H */

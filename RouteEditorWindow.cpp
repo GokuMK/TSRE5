@@ -47,6 +47,7 @@
 #include "NaviWindow.h"
 #include "UnsavedDialog.h"
 #include "ActivityEventWindow.h"
+#include "ActivityEventProperties.h"
 
 RouteEditorWindow::RouteEditorWindow() {
     
@@ -296,6 +297,7 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), terrainTools, SLOT(msg(QString, QString)));
     QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), geoTools, SLOT(msg(QString, QString)));
     QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), activityTools, SLOT(msg(QString, QString)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), activityEventWindow->eventProperties, SLOT(msg(QString, QString)));
     
     QObject::connect(naviWindow, SIGNAL(sendMsg(QString)), glWidget, SLOT(msg(QString)));
     QObject::connect(naviWindow, SIGNAL(sendMsg(QString, bool)), glWidget, SLOT(msg(QString, bool)));
@@ -344,6 +346,10 @@ RouteEditorWindow::RouteEditorWindow() {
     
     QObject::connect(activityTools, SIGNAL(enableTool(QString)),
                       glWidget, SLOT(enableTool(QString)));   
+    
+    QObject::connect(activityEventWindow->eventProperties, SIGNAL(enableTool(QString)),
+                      glWidget, SLOT(enableTool(QString)));   
+    
     
     //for (std::vector<PropertiesAbstract*>::iterator it = objProperties.begin(); it != objProperties.end(); ++it) {
     foreach (PropertiesAbstract *it, objProperties){
@@ -398,6 +404,9 @@ RouteEditorWindow::RouteEditorWindow() {
     
     QObject::connect(activityTools, SIGNAL(showEvents(Activity*)),
                       activityEventWindow, SLOT(showEvents(Activity*)));
+    
+    QObject::connect(activityEventWindow->eventProperties, SIGNAL(jumpTo(PreciseTileCoordinate*)),
+                      glWidget, SLOT(jumpTo(PreciseTileCoordinate*)));
 }
 
 void RouteEditorWindow::keyPressEvent(QKeyEvent *e) {

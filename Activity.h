@@ -122,6 +122,7 @@ public:
     void render(GLUU* gluu, float * playerT, float playerRot, int renderMode);
     
     QString editorConListSelected;
+    ActivityEvent *currentEventSelected = NULL;
     void init(QString route, QString name);
     bool isNew();
     bool isUnSaved();
@@ -132,6 +133,7 @@ public:
     void setStartTime(int h, int m, int s);
     void setSeason(int val);
     void setWeather(int val);
+    void pickNewEventLocation(float *tdbPos);
     void newLooseConsist(float *tdbPos);
     void createNewPlayerService(QString sName, int sTime );
     void createNewTrafficService(Traffic *t);
@@ -148,6 +150,7 @@ public:
 private:
     bool modified = false;
     bool nowe = false;
+    
 };
 
 #endif	/* ACTIVITY_H */

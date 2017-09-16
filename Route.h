@@ -108,6 +108,7 @@ public:
     void addToTDB(WorldObj* obj);
     void newPositionTDB(WorldObj* obj);
     void linkSignal(int x, int z, float* p, WorldObj* obj);
+    void actPickNewEventLocation(int x, int z, float* p);
     void actNewLooseConsist(int x, int z, float* p);
     void transalteObj(int x, int z, float px, float py, float pz, int uid);
     void setTDB(TDB* tdb, bool road);

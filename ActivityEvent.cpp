@@ -155,6 +155,25 @@ bool ActivityEvent::isModified(){
     return modified;
 }
 
+bool ActivityEvent::isSelected(){
+    return selected;
+}
+
+bool ActivityEvent::setSelected(bool val){
+    selected = val;
+    return selected;
+}
+
+bool ActivityEvent::select(){
+    selected = true;
+    return true;
+}
+
+bool ActivityEvent::unselect(){
+    selected = false;
+    return false;
+}
+
 void ActivityEvent::setModified(bool val){
     for(int i = 0; i < outcomes.size(); i++)
         outcomes[i]->setModified(val);
@@ -181,8 +200,51 @@ void ActivityEvent::setUntriggeredText(QString val){
     modified = true;
 }
 
+void ActivityEvent::setLocation(int X, int Z, float x, float z){
+    if(category != CategoryLocation)
+        return;
+    location[0] = X;
+    location[1] = Z;
+    location[2] = x;
+    location[3] = z;
+    modified = true;
+}
+
 void ActivityEvent::setNotes(QString val){
     textToDisplayDescriptionOfTask = val;
+    modified = true;
+}
+
+void ActivityEvent::setLocationRadius(int val){
+    if(category != CategoryLocation)
+        return;
+    location[4] = val;
+    modified = true;
+}
+
+void ActivityEvent::setLocationStop(bool val){
+    if(category != CategoryLocation)
+        return;
+    if(val)
+        triggerOnStop = 1;
+    else 
+        triggerOnStop = 0;
+    modified = true;
+}
+
+void ActivityEvent::setReversable(bool val){
+    if(category != CategoryAction)
+        return;
+    if(val)
+        reversableEvent = true;
+    else 
+        reversableEvent = false;
+    modified = true;
+}
+
+void ActivityEvent::setAutoContinue(int val){
+    //if(val >= 0)
+    ortsContinue = val;
     modified = true;
 }
 
@@ -536,6 +598,11 @@ void ActivityEvent::Outcome::setMessage(QString val){
     if(category != CategoryInfo)
         return;
     value.setValue(val);
+    modified = true;
+}
+
+void ActivityEvent::Outcome::setEventLinkId(int id){
+    value.setValue(id);
     modified = true;
 }
 

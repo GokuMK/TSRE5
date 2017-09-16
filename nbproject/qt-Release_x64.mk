@@ -28784,7 +28784,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventProperties.o: A
 		ActivityEvent.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
-		Game.h
+		Game.h \
+		IghCoords.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventProperties.o ActivityEventProperties.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventWindow.o: ActivityEventWindow.cpp ActivityEventWindow.h \
@@ -59777,7 +59778,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RouteEditorWindow.o: RouteEd
 		PropertiesActivityPath.h \
 		NaviWindow.h \
 		UnsavedDialog.h \
-		ActivityEventWindow.h
+		ActivityEventWindow.h \
+		ActivityEventProperties.h \
+		ActivityEvent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/RouteEditorWindow.o RouteEditorWindow.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Ruch.o: Ruch.cpp Ruch.h \

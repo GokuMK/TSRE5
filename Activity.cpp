@@ -799,6 +799,20 @@ void Activity::initActivityObjects(){
     }
 }*/
 
+void Activity::pickNewEventLocation(float* tdbPos){
+    float *drawPosition = new float[7];
+    TDB *tdb = Game::trackDB;
+    bool ok = tdb->getDrawPositionOnTrNode(drawPosition, tdbPos[0], tdbPos[1]);
+    if(!ok)
+        return;
+    
+    if(currentEventSelected == NULL)
+        return;
+    
+    currentEventSelected->setLocation(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[2]);
+
+}
+
 void Activity::newLooseConsist(float *tdbPos){
     float *drawPosition = new float[7];
     TDB *tdb = Game::trackDB;

@@ -80,6 +80,7 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     
     QObject::connect(eventProperties, SIGNAL(eventNameChanged(int)),
                       this, SLOT(eventNameChanged(int)));
+    
 }
 
 void ActivityEventWindow::eventNameChanged(int id){
@@ -132,13 +133,12 @@ void ActivityEventWindow::showEvents(Activity* act){
     }
     
     eventProperties->setEventList(act->getEventIdNameList());
-    
 }
 
 void ActivityEventWindow::eventListSelected(QListWidgetItem * item){
     eventProperties->showEvent(&activity->event[item->type()]);
+    activity->currentEventSelected = &activity->event[item->type()];
 }
 
 ActivityEventWindow::~ActivityEventWindow() {
 }
-

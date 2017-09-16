@@ -939,7 +939,10 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if (toolEnabled == "actNewLooseConsistTool") {
             route->actNewLooseConsist((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
-            //TerrainLib::removeTileTextureFromMap((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+        }
+        if (toolEnabled == "pickNewEventLocationTool") {
+            route->actPickNewEventLocation((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            enableTool("");
         }
         if (toolEnabled == "") {
             camera->MouseDown(event);

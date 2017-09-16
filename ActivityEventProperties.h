@@ -18,6 +18,7 @@
 
 class ActivityEvent;
 class ActivityEvent::Outcome;
+class PreciseTileCoordinate;
 
 class ActivityEventProperties : public QWidget {
     Q_OBJECT
@@ -30,6 +31,7 @@ public:
 public slots:
     void outcomeListSelected(QListWidgetItem* item);
     void outcomeActoionListSelected(QString item);
+    void cOutcomeEventSelected(QString val);
     void bAddOutcomeSelected();
     void bRemoveOutcomeSelected();
     void eOutcomeMessageSelected();
@@ -39,9 +41,19 @@ public slots:
     void eUntriggeredTextSelected(QString val);
     void eNotesSelected(QString val);
     void eTimeSelected(QTime val);
+    void bJumpToEventLocationSelected();
+    void bPickEventLocationSelected(bool val);
+    void msg(QString text, QString val);
+    void eLocationRadiusSelected();
+    void cLocationStopSelected(int val);
+    void cReversableSelected(int val);
+    void cAutoContinueLabelSelected(int val);
+    void eAutoContinueSelected();
         
 signals:
     void eventNameChanged(int id);
+    void enableTool(QString val);
+    void jumpTo(PreciseTileCoordinate* val);
     
 private:
     QWidget actionWidget;
@@ -66,16 +78,19 @@ private:
     //QLineEdit eOutcomeEvent;
     QCheckBox cReversable;
     QCheckBox cAutoContinueLabel;
-    QLineEdit eAutoContinue;
-    QLabel lReversable;
+    QSpinBox eAutoContinue;
+    //QLabel lReversable;
     QLineEdit eActionInfo;
     QLineEdit eLocationPosition;
-    QLineEdit eLocationRadius;
+    QSpinBox eLocationRadius;
     QCheckBox cLocationStop;
     QListWidget outcomeList;
     
     ActivityEvent* event = NULL;
     ActivityEvent::Outcome* outcome = NULL;
+    
+    QMap<QString, QPushButton*> buttonTools;
+    PreciseTileCoordinate* coordinate = NULL;
     
     void selctOutcomeOnList(int id);
 };

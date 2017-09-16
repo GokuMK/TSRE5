@@ -22,6 +22,7 @@ public:
     ActivityEventWindow(QWidget* parent);
     virtual ~ActivityEventWindow();
     
+    ActivityEventProperties *eventProperties;
 public slots:
     void showEvents(Activity* act);
     void eventListSelected(QListWidgetItem * item);
@@ -39,7 +40,7 @@ private:
     QListWidget locationList;
     QListWidget timeList;
     
-    ActivityEventProperties *eventProperties;
+    
     
     Activity *activity;
     

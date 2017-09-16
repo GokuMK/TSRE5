@@ -11,6 +11,7 @@
 #include "ActivityEventProperties.h"
 #include "Game.h"
 #include "ActivityEvent.h"
+#include "IghCoords.h"
 
 ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(parent) {
     this->setMaximumHeight(600);
@@ -33,6 +34,13 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     while (i2.hasNext()) {
         i2.next();
         cOutcome.addItem(i2.value(), i2.key());
+    }
+    
+    buttonTools["pickNewEventLocationTool"] = new QPushButton("Pick new location");
+    QMapIterator<QString, QPushButton*> i(buttonTools);
+    while (i.hasNext()) {
+        i.next();
+        i.value()->setCheckable(true);
     }
     
     cSoundType.addItem("Everywhere", QString("Everywhere"));
@@ -95,14 +103,24 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
     vlist->addWidget(&eLocationPosition, row++, 1, 1, 2);
-    vlist->addWidget(new QPushButton("Jump to location"), row, 1);
-    vlist->addWidget(new QPushButton("Pick new location"), row++, 2);
+    QPushButton *button = new QPushButton("Jump to location");
+    QObject::connect(button, SIGNAL(released()),
+                      this, SLOT(bJumpToEventLocationSelected()));
+    vlist->addWidget(button, row, 1);
+    QObject::connect(buttonTools["pickNewEventLocationTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(bPickEventLocationSelected(bool)));
+    vlist->addWidget(buttonTools["pickNewEventLocationTool"], row++, 2);
     vlist->addWidget(new QLabel("Radius:"), row, 0);
     vlist->addWidget(&eLocationRadius, row++, 1, 1, 2);
+    eLocationRadius.setRange(0,100);
+    QObject::connect(&eLocationRadius, SIGNAL(editingFinished()),
+                      this, SLOT(eLocationRadiusSelected()));
     label = new QLabel("Train must stop:");
     label->setMinimumHeight(25);
     vlist->addWidget(label, row, 0);
     vlist->addWidget(&cLocationStop, row++, 1, 1, 2);
+    QObject::connect(&cLocationStop, SIGNAL(stateChanged(int)),
+                      this, SLOT(cLocationStopSelected(int)));
     
     locationWidget.setLayout(vlist);
     
@@ -164,13 +182,21 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->addWidget(&eNotes, row++, 1);
     QObject::connect(&eNotes, SIGNAL(textEdited(QString)),
                       this, SLOT(eNotesSelected(QString)));
-    cAutoContinueLabel.setText("Auto Continue:");
+    cAutoContinueLabel.setText("Disable pause:");
+    cAutoContinueLabel.setMinimumHeight(22);
     vlist->addWidget(&cAutoContinueLabel, row, 0);
+    QObject::connect(&cAutoContinueLabel, SIGNAL(stateChanged(int)),
+                      this, SLOT(cAutoContinueLabelSelected(int)));
     vlist->addWidget(&eAutoContinue, row++, 1);
-    lReversable.setText("Reversable:");
-    lReversable.setMinimumHeight(25);
-    vlist->addWidget(&lReversable, row, 0);
-    vlist->addWidget(&cReversable, row++, 1);
+    QObject::connect(&eAutoContinue, SIGNAL(editingFinished()),
+                      this, SLOT(eAutoContinueSelected()));
+    //lReversable.setText("Reversable:");
+    cReversable.setMinimumHeight(22);
+    cReversable.setText("Reversable.");
+    //vlist->addWidget(&lReversable, row, 0);
+    vlist->addWidget(&cReversable, row++, 0);
+    QObject::connect(&cReversable, SIGNAL(stateChanged(int)),
+                      this, SLOT(cReversableSelected(int)));
     
     label = new QLabel("Outcomes:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -209,6 +235,8 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->addWidget(label, row, 0);
     cOutcomeEvent.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     vlist->addWidget(&cOutcomeEvent, row++, 1);
+    QObject::connect(&cOutcomeEvent, SIGNAL(activated(QString)),
+                      this, SLOT(cOutcomeEventSelected(QString)));
     outcomeProperties[(int)ActivityEvent::Outcome::CategoryEvent] = new QWidget(this);
     outcomeProperties[(int)ActivityEvent::Outcome::CategoryEvent]->setLayout(vlist);
     vbox->addWidget(outcomeProperties[(int)ActivityEvent::Outcome::CategoryEvent]);
@@ -278,28 +306,40 @@ ActivityEventProperties::~ActivityEventProperties() {
 }
 
 void ActivityEventProperties::showEvent(ActivityEvent *e){
-    if(e == NULL)
+    if(e == NULL){
+        event = NULL;
         return;
+    }
+    
+    if(event != NULL)
+        event->unselect();
     
     event = e;
+    event->select();
     
     actionWidget.hide();
     locationWidget.hide();
     timeWidget.hide();
     cReversable.hide();
-    lReversable.hide();
         
     if(event->category == ActivityEvent::CategoryAction){
         actionWidget.show();
         cActionType.setCurrentIndex(cActionType.findData((int)event->eventType));
         cReversable.setChecked(event->reversableEvent);
         cReversable.show();
-        lReversable.show();
     }
     if(event->category == ActivityEvent::CategoryLocation){
         locationWidget.show();
         if(event->location != NULL){
-            eLocationRadius.setText(QString::number(event->location[4]));
+            eLocationRadius.setValue(event->location[4]);
+            cLocationStop.blockSignals(true);
+            if(event->triggerOnStop != 1){
+                cLocationStop.setChecked(false);
+            } else {
+                cLocationStop.setChecked(true);
+            }
+            cLocationStop.blockSignals(false);
+                
             eLocationPosition.setText(QString::number(event->location[0]) +" "+ QString::number(event->location[1]) +" "+ QString::number(event->location[2]) +" "+ QString::number(event->location[3]));
         }
     }
@@ -320,6 +360,17 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
     eUntriggeredText.setCursorPosition(0);
     eNotes.setText(event->textToDisplayDescriptionOfTask);
     eNotes.setCursorPosition(0);
+    cAutoContinueLabel.blockSignals(true);
+    if(event->ortsContinue != -99999){
+        cAutoContinueLabel.setChecked(true);
+        eAutoContinue.show();
+        eAutoContinue.setValue(event->ortsContinue);
+    } else {
+        cAutoContinueLabel.setChecked(false);
+        eAutoContinue.hide();
+    }
+    cAutoContinueLabel.blockSignals(false);
+
     
     outcomeList.clear();
     for(int i = 0; i < event->outcomes.size(); i++){
@@ -394,19 +445,25 @@ void ActivityEventProperties::outcomeListSelected(QListWidgetItem* item){
     
     if(outcome->category == ActivityEvent::Outcome::CategoryWeatherChange){
         cWeatherChange.setText(outcome->value.toString());
+        cWeatherChange.setText("Not supported yet!");
     }
 }
 
 void ActivityEventProperties::outcomeActoionListSelected(QString item){
     if(outcome == NULL)
         return;
-    
-    qDebug() << "aa";
+
     outcome->setToNewType((ActivityEvent::Outcome::OutcomeType)cOutcome.currentData().toInt());
     
     int id = outcomeList.currentRow();
     this->showEvent(event);
     selctOutcomeOnList(id);
+}
+
+void ActivityEventProperties::cOutcomeEventSelected(QString val){
+    if(outcome == NULL)
+        return;
+    outcome->setEventLinkId(cOutcomeEvent.currentData().toInt());
 }
 
 void ActivityEventProperties::setEventList(QMap<int, QString> eventNames){
@@ -464,8 +521,95 @@ void ActivityEventProperties::eNotesSelected(QString val){
     event->setNotes(val);
 }
 
+void ActivityEventProperties::eLocationRadiusSelected(){
+    if(event == NULL)
+        return;
+    event->setLocationRadius(eLocationRadius.value());
+}
+
+void ActivityEventProperties::cLocationStopSelected(int val){
+    if(event == NULL)
+        return;
+    if(val == Qt::Checked)
+        event->setLocationStop(true);
+    else
+        event->setLocationStop(false);
+}
+
+void ActivityEventProperties::cReversableSelected(int val){
+    if(event == NULL)
+        return;
+    if(val == Qt::Checked)
+        event->setReversable(true);
+    else
+        event->setReversable(false);
+}
+
+void ActivityEventProperties::eAutoContinueSelected(){
+    if(event == NULL)
+        return;
+    event->setAutoContinue(eAutoContinue.value());
+}
+
+void ActivityEventProperties::cAutoContinueLabelSelected(int val){
+    if(event == NULL)
+        return;
+    if(val == Qt::Checked){
+        event->setAutoContinue(0);
+        eAutoContinue.show();
+        eAutoContinue.setValue(0);
+    } else { 
+        event->setAutoContinue(-99999);
+        eAutoContinue.hide();
+    }
+}
+
 void ActivityEventProperties::eTimeSelected(QTime val){
     if(event == NULL)
         return;
     event->setTime(val.msecsSinceStartOfDay()/1000);
+}
+
+void ActivityEventProperties::bJumpToEventLocationSelected(){
+    if(event == NULL)
+        return;
+    if(coordinate == NULL)
+        coordinate = new PreciseTileCoordinate();
+    
+    coordinate->TileX = event->location[0];
+    coordinate->TileZ = event->location[1];
+    coordinate->setWxyz(event->location[2], 0, event->location[3]);
+    
+    emit jumpTo(coordinate);
+}
+
+void ActivityEventProperties::bPickEventLocationSelected(bool val){
+    if(event == NULL)
+        return;
+    if(val)
+        emit enableTool("pickNewEventLocationTool");
+    else
+        emit enableTool("");
+}
+
+void ActivityEventProperties::msg(QString text, QString val){
+    if(text == "toolEnabled"){
+        QMapIterator<QString, QPushButton*> i(buttonTools);
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(true);
+            i.value()->setChecked(false);
+        }
+        if(buttonTools[val] != NULL)
+            buttonTools[val]->setChecked(true);
+        i.toFront();
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            i.value()->blockSignals(false);
+        }
+    }
 }
