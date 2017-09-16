@@ -32,6 +32,7 @@ signals:
 private:
     QLineEdit eObjectType;
     QLineEdit eId;
+    QLineEdit eEid;
     QLineEdit eActivityName;
     ActivityObject* actObj = NULL;
 };

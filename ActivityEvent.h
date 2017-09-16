@@ -100,11 +100,23 @@ public:
         CategoryTime = 3
     };
     
+    struct WagonList {
+        unsigned int uid;
+        unsigned int sidingItem = -1;
+        QString description;
+        
+        WagonList(){
+        }
+        WagonList(WagonList *o){
+            uid = o->uid;
+            sidingItem = o->sidingItem;
+            description = o->description;
+        }
+    };
+    
     EventCategory category = CategoryUndefined;
     EventType eventType = EventTypeNone;
-    std::vector<unsigned int> wagonListId;
-    std::vector<unsigned int> wagonListSidingItem;
-    std::vector<std::string> wagonListDescription;
+    QVector<WagonList> wagonList;
 
     int id = -99999;
     bool reversableEvent = false;
@@ -144,6 +156,8 @@ public:
     void setReversable(bool val);
     void setAutoContinue(int val);
     void setTime(int val);
+    int getWagonListSize();
+    QString getWagonListDescription(int i);
     bool isModified();
     bool isSelected();
     bool setSelected(bool val);

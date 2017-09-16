@@ -129,15 +129,17 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     // action wagon list
     vlist = new QGridLayout;
     vlist->setSpacing(2);
-    vlist->setContentsMargins(3,0,3,0);
+    vlist->setContentsMargins(1,0,1,0);
     QPushButton *bRemoveCar = new QPushButton("Remove Selected");
     QPushButton *bJumpToCar = new QPushButton("Jump To Selected");
+    QPushButton *bDescCar = new QPushButton("Edit description");
     bJumpToCar->setMinimumWidth(100);
     vlist->addWidget(new QLabel("Wagon List:"), 0, 0);
     vlist->addWidget(buttonTools["pickNewEventWagonTool"], 1, 0);
     vlist->addWidget(bJumpToCar, 2, 0);
     vlist->addWidget(bRemoveCar, 3, 0);
-    vlist->addWidget(&wagonList, 1, 1, 3, 1);
+    vlist->addWidget(bDescCar, 4, 0);
+    vlist->addWidget(&wagonList, 1, 1, 4, 1);
 
     actionWidgetWagonList.setLayout(vlist);
     
@@ -409,6 +411,10 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
                 || (event->eventType == ActivityEvent::EventTypeDropoffWagonsAtLocation)
                 || (event->eventType == ActivityEvent::EventTypeAssembleTrainAtLocation) ){
             actionWidgetWagonList.show();
+            wagonList.clear();
+            for(int i = 0; i < event->getWagonListSize(); i++ ){
+                new QListWidgetItem ( event->getWagonListDescription(i), &wagonList, i );
+            }  
         }
     }
     if(event->category == ActivityEvent::CategoryLocation){

@@ -424,6 +424,7 @@ void RouteEditorGLWidget::handleSelection() {
             } else {
                 //qDebug() << "eid"<<EID;
                 selectedObj->select(EID);
+                setSelectedObj(selectedObj);
             }
         } else if( ww == 12 ){
             if (selectedObj != NULL) {

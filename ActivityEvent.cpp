@@ -21,6 +21,7 @@
 #include "TerrainLib.h"
 #include "GLMatrix.h"
 #include "OrtsWeatherChange.h"
+#include "TRitem.h"
 
 OglObj *ActivityEvent::simpleMarkerObj = NULL;
 
@@ -255,6 +256,24 @@ void ActivityEvent::setTime(int val){
     modified = true;
 }
 
+int ActivityEvent::getWagonListSize(){
+    return wagonList.size();
+}
+
+QString ActivityEvent::getWagonListDescription(int i){
+    int consistId = wagonList[i].uid / 65536;
+    int wagonId = wagonList[i].uid - consistId*65536;
+    QString desc = QString::number(consistId) + "-" + QString::number(wagonId);
+    if(wagonList[i].sidingItem > 1000000){
+        desc += " | " + wagonList[i].description;
+    } else if(Game::trackDB != NULL){
+        if(Game::trackDB->trackItems[wagonList[i].sidingItem] != NULL)
+            desc += " | Siding: " + Game::trackDB->trackItems[wagonList[i].sidingItem]->platformName;
+    }
+        
+    return desc;
+}
+
 bool ActivityEvent::Outcome::isModified(){
     return modified;
 }
@@ -396,17 +415,18 @@ void ActivityEvent::load(FileBuffer* data) {
             isWagonList = true;
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 if (sh == ("uid")) {
-                    wagonListId.emplace_back(ParserX::GetUInt(data));
+                    wagonList.push_back(WagonList());
+                    wagonList.back().uid = ParserX::GetUInt(data);
                     ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("sidingitem")) {
-                    wagonListSidingItem.emplace_back(ParserX::GetUInt(data));
+                    wagonList.back().sidingItem = ParserX::GetUInt(data);
                     ParserX::SkipToken(data);
                     continue;
                 }
                 if (sh == ("description")) {
-                    wagonListDescription.emplace_back(ParserX::GetStringInside(data).toStdString());
+                    wagonList.back().description = ParserX::GetStringInside(data);
                     ParserX::SkipToken(data);
                     continue;
                 }
@@ -522,14 +542,13 @@ void ActivityEvent::save(QTextStream* out) {
     if(stationStop != -99999)
         *out << "				StationStop ( "<<stationStop<<" )\n";
 
-    if(isWagonList || wagonListId.size() > 0){
+    if(isWagonList || wagonList.size() > 0){
         *out << "				Wagon_List (\n";
-        for(int i=0; i < wagonListId.size(); i++){
-            *out << "					UiD ( "<<wagonListId[i]<<" )\n";
-            if(i < wagonListSidingItem.size())
-            *out << "					SidingItem ( "<<wagonListSidingItem[i]<<" )\n";
-            if(i < wagonListDescription.size())
-            *out << "					Description ( "<<ParserX::AddComIfReq(QString::fromStdString(wagonListDescription[i]))<<" )\n";
+        for(int i=0; i < wagonList.size(); i++){
+            *out << "					UiD ( "<<wagonList[i].uid<<" )\n";
+            *out << "					SidingItem ( "<<wagonList[i].sidingItem<<" )\n";
+            if(wagonList[i].sidingItem > 1000000)
+            *out << "					Description ( "<<ParserX::AddComIfReq(wagonList[i].description)<<" )\n";
         }
         *out << "				)\n";
     }

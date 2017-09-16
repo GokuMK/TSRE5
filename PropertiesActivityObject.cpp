@@ -27,8 +27,10 @@ PropertiesActivityObject::PropertiesActivityObject() {
     vlist->setContentsMargins(3,0,3,0);
     vlist->addRow("Type:",&eObjectType);
     vlist->addRow("Id:",&eId);
+    vlist->addRow("eId:",&eEid);
     eObjectType.setDisabled(true);
     eId.setDisabled(true);
+    eEid.setDisabled(true);
     vbox->addItem(vlist);
     
     QPushButton *bDelete = new QPushButton("Delete");
@@ -58,6 +60,7 @@ void PropertiesActivityObject::showObj(GameObj* obj){
     infoLabel->setText("Object: ActivityObject");
     eObjectType.setText(actObj->objectType);
     eId.setText(QString::number(actObj->id));
+    eEid.setText(QString::number(actObj->getSelectedElementId()));
     eActivityName.setText(actObj->getParentName());
 
 }

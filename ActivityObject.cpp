@@ -103,6 +103,13 @@ bool ActivityObject::select(int value){
     return true;
 }
 
+int ActivityObject::getSelectedElementId(){
+    if(con != NULL){
+        return con->selectedIdx;
+    }
+    return 0;
+}
+
 bool ActivityObject::unselect(){
     selected = false;
     selectionValue = -1;

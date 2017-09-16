@@ -28337,7 +28337,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEvent.o: ActivityEve
 		Ref.h \
 		TerrainLib.h \
 		GLMatrix.h \
-		OrtsWeatherChange.h
+		OrtsWeatherChange.h \
+		TRitem.h \
+		Pointer3d.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEvent.o ActivityEvent.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventProperties.o: ActivityEventProperties.cpp ActivityEventProperties.h \

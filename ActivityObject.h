@@ -45,6 +45,7 @@ public:
     void setParentActivity(Activity *a);
     void setModified(bool val);
     bool isUnSaved();
+    int getSelectedElementId();
     void pushContextMenuActions(QMenu *menu);
     QString getParentName();
     void render(GLUU* gluu, float * playerT, int renderMode, int index);
