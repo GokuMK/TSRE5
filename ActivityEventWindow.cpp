@@ -138,6 +138,8 @@ void ActivityEventWindow::showEvents(Activity* act){
 void ActivityEventWindow::eventListSelected(QListWidgetItem * item){
     eventProperties->showEvent(&activity->event[item->type()]);
     activity->currentEventSelected = &activity->event[item->type()];
+    
+    this->resize(this->width(), this->minimumHeight());
 }
 
 ActivityEventWindow::~ActivityEventWindow() {

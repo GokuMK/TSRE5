@@ -14,7 +14,7 @@
 #include "IghCoords.h"
 
 ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(parent) {
-    this->setMaximumHeight(600);
+    //this->setMinimumHeight(400);
     this->setMinimumWidth(350);
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         
@@ -37,6 +37,7 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     }
     
     buttonTools["pickNewEventLocationTool"] = new QPushButton("Pick new location");
+    buttonTools["pickNewEventWagonTool"] = new QPushButton("Pick new Car");
     QMapIterator<QString, QPushButton*> i(buttonTools);
     while (i.hasNext()) {
         i.next();
@@ -59,7 +60,7 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     cOutcomeEvent.setMaxVisibleItems(30);
     cOutcomeEvent.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     
-    eOutcomeMessage.setMinimumHeight(100);
+    eOutcomeMessage.setFixedHeight(100);
     //eOutcomeMessage.setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     outcomeList.setFixedHeight(100);
     outcomeList.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -69,6 +70,7 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vbox->setContentsMargins(0,1,1,1);
     //vbox->setAlignment(Qt::AlignTop);
     
+    // action event
     QGridLayout *vlist = new QGridLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
@@ -82,11 +84,62 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     label = new QLabel("Type:");
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
+    cActionType.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     vlist->addWidget(&cActionType, row++, 1);
-    vlist->addWidget(new QLabel("Info:"), row, 0);
-    vlist->addWidget(&eActionInfo, row++, 1);
-    
+    //vlist->addWidget(new QLabel("Info:"), row, 0);
+    //vlist->addWidget(&eActionInfo, row++, 1);
     actionWidget.setLayout(vlist);
+    
+    // action station
+    vlist = new QGridLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    row = 0;
+    label = new QLabel("Station:");
+    label->setMinimumWidth(100);
+    vlist->addWidget(label, row, 0);
+    bActionStationId.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    vlist->addWidget(&bActionStationId, row++, 1);
+    actionWidgetStation.setLayout(vlist);
+    
+    // action siding
+    vlist = new QGridLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    row = 0;
+    label = new QLabel("Siding:");
+    label->setMinimumWidth(100);
+    vlist->addWidget(label, row, 0);
+    bActionSiding.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    vlist->addWidget(&bActionSiding, row++, 1);
+    actionWidgetSiding.setLayout(vlist);
+    
+    // action speed
+    vlist = new QGridLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    row = 0;
+    label = new QLabel("Speed:");
+    label->setMinimumWidth(100);
+    vlist->addWidget(label, row, 0);
+    eActionSpeed.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    vlist->addWidget(&eActionSpeed, row++, 1);
+    actionWidgetSpeed.setLayout(vlist);
+    
+    // action wagon list
+    vlist = new QGridLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    QPushButton *bRemoveCar = new QPushButton("Remove Selected");
+    QPushButton *bJumpToCar = new QPushButton("Jump To Selected");
+    bJumpToCar->setMinimumWidth(100);
+    vlist->addWidget(new QLabel("Wagon List:"), 0, 0);
+    vlist->addWidget(buttonTools["pickNewEventWagonTool"], 1, 0);
+    vlist->addWidget(bJumpToCar, 2, 0);
+    vlist->addWidget(bRemoveCar, 3, 0);
+    vlist->addWidget(&wagonList, 1, 1, 3, 1);
+
+    actionWidgetWagonList.setLayout(vlist);
     
     // location event
     vlist = new QGridLayout;
@@ -146,6 +199,10 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     
     timeWidget.setLayout(vlist);
     vbox->addWidget(&actionWidget);
+    vbox->addWidget(&actionWidgetSpeed);
+    vbox->addWidget(&actionWidgetStation);
+    vbox->addWidget(&actionWidgetSiding);
+    vbox->addWidget(&actionWidgetWagonList);
     vbox->addWidget(&locationWidget);
     vbox->addWidget(&timeWidget);
     //
@@ -292,6 +349,10 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
                       this, SLOT(outcomeListSelected(QListWidgetItem*)));
     
     actionWidget.hide();
+    actionWidgetSpeed.hide();
+    actionWidgetStation.hide();
+    actionWidgetSiding.hide();
+    actionWidgetWagonList.hide();
     locationWidget.hide();
     timeWidget.hide();
     
@@ -318,6 +379,10 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
     event->select();
     
     actionWidget.hide();
+    actionWidgetSpeed.hide();
+    actionWidgetStation.hide();
+    actionWidgetSiding.hide();
+    actionWidgetWagonList.hide();
     locationWidget.hide();
     timeWidget.hide();
     cReversable.hide();
@@ -327,6 +392,24 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
         cActionType.setCurrentIndex(cActionType.findData((int)event->eventType));
         cReversable.setChecked(event->reversableEvent);
         cReversable.show();
+        
+        if(event->eventType == ActivityEvent::EventTypeReachSpeed){
+            actionWidgetSpeed.show();
+            eActionSpeed.setValue(event->speed);
+        }
+        if(event->eventType == ActivityEvent::EventTypePickupPassengers){
+            actionWidgetStation.show();
+        }
+        if((event->eventType == ActivityEvent::EventTypeAssembleTrainAtLocation)
+                || (event->eventType == ActivityEvent::EventTypeDropoffWagonsAtLocation) ){
+            actionWidgetSiding.show();
+        }
+        if((event->eventType == ActivityEvent::EventTypeAssembleTrain)
+                || (event->eventType == ActivityEvent::EventTypePickupWagons)
+                || (event->eventType == ActivityEvent::EventTypeDropoffWagonsAtLocation)
+                || (event->eventType == ActivityEvent::EventTypeAssembleTrainAtLocation) ){
+            actionWidgetWagonList.show();
+        }
     }
     if(event->category == ActivityEvent::CategoryLocation){
         locationWidget.show();

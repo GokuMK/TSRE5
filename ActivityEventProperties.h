@@ -57,8 +57,13 @@ signals:
     
 private:
     QWidget actionWidget;
+    QWidget actionWidgetSpeed;
+    QWidget actionWidgetStation;
+    QWidget actionWidgetSiding;
+    QWidget actionWidgetWagonList;
     QWidget locationWidget;
     QWidget timeWidget;
+    QListWidget wagonList;
     
     QMap<int, QWidget*> outcomeProperties;
     
@@ -74,6 +79,9 @@ private:
     QComboBox cSoundType;
     QLineEdit cWeatherChange;
     QComboBox cActionType;
+    QPushButton bActionStationId;
+    QPushButton bActionSiding;
+    QSpinBox eActionSpeed;
     QTimeEdit eTime;
     //QLineEdit eOutcomeEvent;
     QCheckBox cReversable;

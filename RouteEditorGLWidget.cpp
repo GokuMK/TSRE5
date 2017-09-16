@@ -1104,8 +1104,8 @@ void RouteEditorGLWidget::jumpTo(float *posT, float *pos) {
 void RouteEditorGLWidget::jumpTo(int X, int Z, float x, float y, float z) {
     qDebug() << "jump: " << X << " " << Z;
     TerrainLib::load(X, Z);
-    float h = TerrainLib::getHeight(X, Z, x, y, z);
-    if (y < h || y > h + 100) y = h + 20;
+    float h = TerrainLib::getHeight(X, Z, x, z);
+    if ((y < h) || (y > h + 100)) y = h + 20;
     camera->setPozT(X, Z);
     camera->setPos(x, y, z);
 
