@@ -93,6 +93,7 @@ LoadWindow* Game::loadWindow = NULL;
 ShapeLib *Game::currentShapeLib = NULL;
 EngLib *Game::currentEngLib = NULL;
 Route *Game::currentRoute = NULL;
+GameObj *Game::currentSelectedGameObj = NULL;
 QColor *Game::colorConView = NULL;
 QColor *Game::colorShapeView = NULL;
 

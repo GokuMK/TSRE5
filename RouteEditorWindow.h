@@ -109,6 +109,7 @@ private:
     QAction *copyAction;
     QAction *undoAction;
     QAction *pasteAction;
+    QAction *selectAction;
     QAction *aboutAction;
     QAction *terrainCameraAction;
     QAction *mstsShadowsAction;

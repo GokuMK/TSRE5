@@ -152,6 +152,7 @@ public:
     void setUntriggeredText(QString val);
     void setLocation(int X, int Z, float x, float z);
     void setNotes(QString val);
+    void setSpeed(int val);
     void setLocationRadius(int val);
     void setLocationStop(bool val);
     void setReversable(bool val);
@@ -172,6 +173,8 @@ public:
     QString getWagonListItemDescription(int id);
     void setWagonListItemDescription(int id, QString val);
     bool getWagonListItemPosition(int id, float *posTW);
+    QString getSidingDescription();
+    bool setSidingFromSelected();
     void setParentActivity(Activity* a);
     void render(GLUU* gluu, float * playerT, float playerRot, int renderMode);
     

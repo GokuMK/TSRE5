@@ -30,6 +30,7 @@ public slots:
     void outcomeActoionListSelected(QString item);
     void cOutcomeEventSelected(QString val);
     void cActionTypeSelected(QString item);
+    void bActionSidingSelected();
     void bAddOutcomeSelected();
     void bRemoveOutcomeSelected();
     void eOutcomeMessageSelected();
@@ -51,6 +52,7 @@ public slots:
     void bRemoveCarSelected();
     void bDescCarSelected();
     void bPickNewEventWagonToolSelected();
+    void eActionSpeedSelected();
         
 signals:
     void eventNameChanged(int id);
@@ -82,6 +84,7 @@ private:
     QLineEdit cWeatherChange;
     QComboBox cActionType;
     QPushButton bActionStationId;
+    QLineEdit eActionSiding;
     QPushButton bActionSiding;
     QSpinBox eActionSpeed;
     QTimeEdit eTime;

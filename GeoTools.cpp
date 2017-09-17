@@ -116,14 +116,16 @@ GeoTools::GeoTools(QString name)
     
 }
 
-void GeoTools::mkrList(std::unordered_map<std::string, Coords*> list){
+void GeoTools::mkrList(QMap<QString, Coords*> list){
     mkrFiles = list;
     for (auto it = list.begin(); it != list.end(); ++it ){
-        if(it->second == NULL)
+        if(it.value() == NULL)
             continue;
-        if(!it->second->loaded)
+        if(!it.value()->loaded)
             continue;
-        markerFiles.addItem(QString::fromStdString(it->first));
+        if(it.key().startsWith("|"))
+            continue;
+        markerFiles.addItem(it.key());
     }
     //    mkrFilesSelected(markerFiles.itemText(0));
 }
@@ -131,7 +133,7 @@ void GeoTools::mkrList(std::unordered_map<std::string, Coords*> list){
 void GeoTools::checkGeodataFilesEnabled(){
     if(markerFiles.count() == 0)
         return;
-    Coords* c = mkrFiles[markerFiles.currentText().toStdString()];
+    Coords* c = mkrFiles[markerFiles.currentText()];
     if(c == NULL) 
         return;
     
@@ -155,7 +157,7 @@ void GeoTools::checkGeodataFilesEnabled(){
 void GeoTools::generateTilesEnabled(){
     if(markerFiles.count() == 0)
         return;
-    Coords* c = mkrFiles[markerFiles.currentText().toStdString()];
+    Coords* c = mkrFiles[markerFiles.currentText()];
     if(c == NULL) 
         return;
     

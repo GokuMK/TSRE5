@@ -130,8 +130,12 @@ float Route::getStartpZ(){
 }
 
 void Route::createMkrPlaces(){
-    std::string key = "Route: Stations";
-    mkrList[key] = new CoordsRoutePlaces(trackDB);
+    QString key;
+    key = "| Route: Stations";
+    mkrList[key] = new CoordsRoutePlaces(trackDB, "stations");
+    
+    key = "| Route: Sidings";
+    mkrList[key] = new CoordsRoutePlaces(trackDB, "sidings");
 }
 
 void Route::loadMkrList(){
@@ -140,27 +144,27 @@ void Route::loadMkrList(){
     dir.setFilter(QDir::Files);
     foreach(QString dirFile, dir.entryList()){
         if(dirFile.endsWith(".mkr", Qt::CaseInsensitive))
-            mkrList[(dirFile).toLower().toStdString()] = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + dirFile);
+            mkrList[(dirFile).toLower()] = new CoordsMkr(Game::root + "/routes/" + Game::route + "/" + dirFile);
         if(dirFile.endsWith(".kml", Qt::CaseInsensitive))
-            mkrList[(dirFile).toLower().toStdString()] = new CoordsKml(Game::root + "/routes/" + Game::route + "/" + dirFile);
+            mkrList[(dirFile).toLower()] = new CoordsKml(Game::root + "/routes/" + Game::route + "/" + dirFile);
         if(dirFile.endsWith(".gpx", Qt::CaseInsensitive))
-            mkrList[(dirFile).toLower().toStdString()] = new CoordsGpx(Game::root + "/routes/" + Game::route + "/" + dirFile);
+            mkrList[(dirFile).toLower()] = new CoordsGpx(Game::root + "/routes/" + Game::route + "/" + dirFile);
     }
     if(mkrList.size() > 0)
-        if(mkrList[(Game::routeName+".mkr").toLower().toStdString()] != NULL){
-            if(mkrList[(Game::routeName+".mkr").toLower().toStdString()]->loaded)
-                mkr = mkrList[(Game::routeName+".mkr").toLower().toStdString()];
+        if(mkrList[(Game::routeName+".mkr").toLower()] != NULL){
+            if(mkrList[(Game::routeName+".mkr").toLower()]->loaded)
+                mkr = mkrList[(Game::routeName+".mkr").toLower()];
             else
-                mkr = mkrList.begin()->second;
+                mkr = mkrList.begin().value();
                 //mkr = mkrList[(Game::routeName+".mkr").toLower().toStdString()];
         } else {
-            mkr = mkrList.begin()->second;
+            mkr = mkrList.begin().value();
         }
 }
 
 void Route::setMkrFile(QString name){
-    if(mkrList[name.toStdString()] != NULL)
-        this->mkr = mkrList[name.toStdString()];
+    if(mkrList[name] != NULL)
+        this->mkr = mkrList[name];
 }
 
 void Route::loadActivities(){
@@ -1322,7 +1326,7 @@ void Route::createNewPaths() {
     Path::CreatePaths(this->trackDB);
 }
 
-std::unordered_map<std::string, Coords*> Route::getMkrList(){
+QMap<QString, Coords*> Route::getMkrList(){
     return this->mkrList;
 }
 

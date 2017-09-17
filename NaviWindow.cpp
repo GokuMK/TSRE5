@@ -148,8 +148,8 @@ void NaviWindow::jumpTileSelected(){
         emit jumpTo(aCoords);
     }
     if(this->jumpType == "marker"){
-        if(mkrPlaces[markerList.currentText().toStdString()] == NULL) return;
-        igh = MstsCoordinates::ConvertToIgh(mkrPlaces[markerList.currentText().toStdString()]->Latitude, mkrPlaces[markerList.currentText().toStdString()]->Longitude, igh);
+        if(mkrPlaces[markerList.currentText()] == NULL) return;
+        igh = MstsCoordinates::ConvertToIgh(mkrPlaces[markerList.currentText()]->Latitude, mkrPlaces[markerList.currentText()]->Longitude, igh);
         aCoords = MstsCoordinates::ConvertToTile(igh, aCoords);
         aCoords->setWxyz();
         aCoords->wZ = -aCoords->wZ;
@@ -192,21 +192,21 @@ void NaviWindow::posInfo(PreciseTileCoordinate* coords){
     }
 }
 
-void NaviWindow::mkrList(std::unordered_map<std::string, Coords*> list){
+void NaviWindow::mkrList(QMap<QString, Coords*> list){
     mkrFiles = list;
     for (auto it = list.begin(); it != list.end(); ++it ){
-        if(it->second == NULL)
+        if(it.value() == NULL)
             continue;
-        if(!it->second->loaded)
+        if(!it.value()->loaded)
             continue;
-        markerFiles.addItem(QString::fromStdString(it->first));
+        markerFiles.addItem(it.key());
     }
     if(markerFiles.count() > 0)
         mkrFilesSelected(markerFiles.itemText(0));
 }
 
 void NaviWindow::mkrFilesSelected(QString item){
-    Coords* c = mkrFiles[item.toStdString()];
+    Coords* c = mkrFiles[item];
     if(c == NULL) return;
     this->sendMsg("mkrFile", item);
     this->mkrPlaces.clear();
@@ -214,10 +214,10 @@ void NaviWindow::mkrFilesSelected(QString item){
     QStringList hash;
 
     for(int i = 0; i < c->markerList.size(); i++){
-        if(this->mkrPlaces[c->markerList[i].name.toStdString()] == NULL)
-            this->mkrPlaces[c->markerList[i].name.toStdString()] = new LatitudeLongitudeCoordinate();
-        this->mkrPlaces[c->markerList[i].name.toStdString()]->Latitude = c->markerList[i].lat;
-        this->mkrPlaces[c->markerList[i].name.toStdString()]->Longitude = c->markerList[i].lon;
+        if(this->mkrPlaces[c->markerList[i].name] == NULL)
+            this->mkrPlaces[c->markerList[i].name] = new LatitudeLongitudeCoordinate();
+        this->mkrPlaces[c->markerList[i].name]->Latitude = c->markerList[i].lat;
+        this->mkrPlaces[c->markerList[i].name]->Longitude = c->markerList[i].lon;
         hash.append(c->markerList[i].name);
     }
     hash.sort(Qt::CaseInsensitive);

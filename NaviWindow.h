@@ -12,7 +12,7 @@
 #define	NAVIWINDOW_H
 
 #include <QtWidgets>
-#include <unordered_map>
+#include <QMap>
 
 class PreciseTileCoordinate;
 class IghCoordinate;
@@ -32,7 +32,7 @@ public slots:
     void pointerInfo(float* coords);
     void latLonChanged(QString val);
     void xyChanged(QString val);
-    void mkrList(std::unordered_map<std::string, Coords*> list);
+    void mkrList(QMap<QString, Coords*> list);
     void mkrFilesSelected(QString item);
     void mkrListSelected(QString item);
 
@@ -75,8 +75,8 @@ private:
     IghCoordinate* igh = NULL;
     LatitudeLongitudeCoordinate* latlon = NULL;
     PreciseTileCoordinate* aCoords = NULL;
-    std::unordered_map<std::string, Coords*> mkrFiles;
-    std::unordered_map<std::string, LatitudeLongitudeCoordinate*> mkrPlaces;
+    QMap<QString, Coords*> mkrFiles;
+    QMap<QString, LatitudeLongitudeCoordinate*> mkrPlaces;
     QString jumpType = "";
 };
 

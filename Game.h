@@ -25,6 +25,7 @@ class ShapeLib;
 class EngLib;
 class QColor;
 class Route;
+class GameObj;
 
 class Game {
 public:
@@ -90,6 +91,7 @@ public:
     static ShapeLib *currentShapeLib;
     static EngLib *currentEngLib;
     static Route *currentRoute;
+    static GameObj *currentSelectedGameObj;
     static QColor *colorConView;
     static QColor *colorShapeView;
     static bool consoleOutput;

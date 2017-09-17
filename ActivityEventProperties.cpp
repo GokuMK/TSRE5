@@ -13,6 +13,8 @@
 #include "ActivityEvent.h"
 #include "IghCoords.h"
 #include "EditFileNameDialog.h"
+#include "GameObj.h"
+#include "WorldObj.h"
 
 ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(parent) {
     //this->setMinimumHeight(400);
@@ -113,8 +115,12 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     label = new QLabel("Siding:");
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
-    bActionSiding.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    vlist->addWidget(&bActionSiding, row++, 1);
+    vlist->addWidget(&eActionSiding, row, 1);
+    eActionSiding.setDisabled(true);
+    bActionSiding.setText("Link Selected");
+    QObject::connect(&bActionSiding, SIGNAL(released()),
+                      this, SLOT(bActionSidingSelected()));
+    vlist->addWidget(&bActionSiding, row++, 2);
     actionWidgetSiding.setLayout(vlist);
     
     // action speed
@@ -127,6 +133,9 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->addWidget(label, row, 0);
     eActionSpeed.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     vlist->addWidget(&eActionSpeed, row++, 1);
+    eActionSpeed.setRange(0,1000);
+    QObject::connect(&eActionSpeed, SIGNAL(editingFinished()),
+                      this, SLOT(eActionSpeedSelected()));
     actionWidgetSpeed.setLayout(vlist);
     
     // action wagon list
@@ -144,6 +153,7 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
                       this, SLOT(bDescCarSelected()));
     bJumpToCar->setMinimumWidth(100);
     vlist->addWidget(new QLabel("Wagon List:"), 0, 0);
+    vlist->addWidget(new QLabel("  ID:            Description:  "), 0, 1);
     QPushButton *pickNewEventWagon = new QPushButton("Pick Selected");
     vlist->addWidget(pickNewEventWagon, 1, 0);
     QObject::connect(pickNewEventWagon, SIGNAL(released()),
@@ -417,6 +427,13 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
         if((event->eventType == ActivityEvent::EventTypeAssembleTrainAtLocation)
                 || (event->eventType == ActivityEvent::EventTypeDropoffWagonsAtLocation) ){
             actionWidgetSiding.show();
+            if(event->sidingItem > 0) {
+                eActionSiding.setStyleSheet("color: green");
+                eActionSiding.setText(QString("[")+QString::number(event->sidingItem)+"] "+event->getSidingDescription());
+            } else {
+                eActionSiding.setStyleSheet("color: red");
+                eActionSiding.setText("Not Linked.");
+            }
         }
         if((event->eventType == ActivityEvent::EventTypeAssembleTrain)
                 || (event->eventType == ActivityEvent::EventTypePickupWagons)
@@ -483,6 +500,22 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
         outcomeList.setCurrentRow(0);
         outcomeListSelected(outcomeList.item(0));
     }
+}
+
+void ActivityEventProperties::bActionSidingSelected(){
+    if(event == NULL)
+        return;
+    bool ok = event->setSidingFromSelected();
+    if(!ok){
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Siding not linked!");
+        msgBox.setText("Select siding before using this button.");
+        msgBox.exec();
+        return;
+    }
+    int id = outcomeList.currentRow();
+    this->showEvent(event);   
+    selctOutcomeOnList(id);
 }
 
 void ActivityEventProperties::bAddOutcomeSelected(){
@@ -626,6 +659,13 @@ void ActivityEventProperties::eUntriggeredTextSelected(QString val){
     if(event == NULL)
         return;
     event->setUntriggeredText(val);
+}
+
+void ActivityEventProperties::eActionSpeedSelected(){
+    if(event == NULL)
+        return;
+    
+    event->setSpeed(eActionSpeed.value());
 }
 
 void ActivityEventProperties::eNotesSelected(QString val){

@@ -20,7 +20,7 @@
 CoordsRoutePlaces::~CoordsRoutePlaces() {
 }
 
-CoordsRoutePlaces::CoordsRoutePlaces(TDB *tdb) {
+CoordsRoutePlaces::CoordsRoutePlaces(TDB *tdb, QString place) {
     QMap<QString, bool> stations;
     IghCoordinate igh;
     PreciseTileCoordinate coords;
@@ -32,11 +32,31 @@ CoordsRoutePlaces::CoordsRoutePlaces(TDB *tdb) {
             continue;
         if (n->trItemRData == NULL)
             continue;
-        if (n->stationName.length() > 0){
+        if (n->stationName.length() > 0 && place == "stations"){
             if(stations[n->stationName] == false){
                 stations[n->stationName] = true;
                 markerList.emplace_back();
                 markerList.back().name = n->stationName;
+                markerList.back().type = 0;
+                markerList.back().tileX.push_back(n->trItemRData[3]);
+                markerList.back().tileZ.push_back(n->trItemRData[4]);
+                markerList.back().x.push_back(n->trItemRData[0]);
+                markerList.back().z.push_back(n->trItemRData[2]);
+                
+                coords.TileX = n->trItemRData[3];
+                coords.TileZ = n->trItemRData[4];
+                coords.setWxyz(n->trItemRData[0], 0, -n->trItemRData[2]);
+                MstsCoordinates::ConvertToIgh(&coords, &igh);
+                MstsCoordinates::ConvertToLatLon(&igh, &latlon);
+                markerList.back().lat = latlon.Latitude;
+                markerList.back().lon = latlon.Longitude;
+            }
+        }
+        if (n->type == "sidingitem" && n->platformName.length() > 0 && place == "sidings"){
+            if(stations[n->platformName] == false){
+                stations[n->platformName] = true;
+                markerList.emplace_back();
+                markerList.back().name = n->platformName;
                 markerList.back().type = 0;
                 markerList.back().tileX.push_back(n->trItemRData[3]);
                 markerList.back().tileZ.push_back(n->trItemRData[4]);

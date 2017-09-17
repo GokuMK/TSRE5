@@ -170,6 +170,10 @@ RouteEditorWindow::RouteEditorWindow() {
     pasteAction->setShortcut(QKeySequence("Ctrl+V"));
     QObject::connect(pasteAction, SIGNAL(triggered()), glWidget, SLOT(editPaste()));
     editMenu->addAction(pasteAction);
+    selectAction = new QAction(tr("&Select"), this); 
+    selectAction->setShortcut(QKeySequence("E"));
+    QObject::connect(selectAction, SIGNAL(triggered()), glWidget, SLOT(editSelect()));
+    editMenu->addAction(selectAction);
     // View
     viewMenu = menuBar()->addMenu(tr("&View"));
     //toolsAction = GuiFunct::newMenuCheckAction(tr("&Tools"), this); 
@@ -320,11 +324,11 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(glWidget, SIGNAL(pointerInfo(float*)),
                       naviWindow, SLOT(pointerInfo(float*)));
     
-    QObject::connect(glWidget, SIGNAL(mkrList(std::unordered_map<std::string, Coords*>)),
-                      naviWindow, SLOT(mkrList(std::unordered_map<std::string, Coords*>)));
+    QObject::connect(glWidget, SIGNAL(mkrList(QMap<QString, Coords*>)),
+                      naviWindow, SLOT(mkrList(QMap<QString, Coords*>)));
     
-    QObject::connect(glWidget, SIGNAL(mkrList(std::unordered_map<std::string, Coords*>)),
-                      geoTools, SLOT(mkrList(std::unordered_map<std::string, Coords*>)));
+    QObject::connect(glWidget, SIGNAL(mkrList(QMap<QString, Coords*>)),
+                      geoTools, SLOT(mkrList(QMap<QString, Coords*>)));
     
     QObject::connect(geoTools, SIGNAL(createNewTiles(QMap<int, QPair<int, int>*>)),
                       glWidget, SLOT(createNewTiles(QMap<int, QPair<int, int>*>)));

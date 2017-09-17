@@ -27,7 +27,7 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     actionListLayout->addWidget(&actionList);
     actionListLayout->addWidget(bNewActionEvent);
     actionListLayout->addWidget(bDeleteActionEvent);
-    actionList.setFixedWidth(200);
+    actionList.setFixedWidth(170);
     actionList.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     QVBoxLayout *locationListLayout = new QVBoxLayout;
@@ -38,7 +38,7 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     locationListLayout->addWidget(&locationList);
     locationListLayout->addWidget(bNewLocationEvent);
     locationListLayout->addWidget(bDeleteLocationEvent);
-    locationList.setFixedWidth(200);
+    locationList.setFixedWidth(170);
     locationList.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     
     QVBoxLayout *timeListLayout = new QVBoxLayout;
@@ -49,7 +49,7 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     timeListLayout->addWidget(&timeList);
     timeListLayout->addWidget(bNewTimeEvent);
     timeListLayout->addWidget(bDeleteTimeEvent);
-    timeList.setFixedWidth(200);
+    timeList.setFixedWidth(170);
     timeList.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     
     actionWidget.setLayout(actionListLayout);

@@ -49,6 +49,7 @@ public:
     void setDisabled(bool val);
     float getLength();
     void deleteTrItems();
+    int getTrackBegItemId();
     int getDefaultDetailLevel();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:

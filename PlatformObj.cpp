@@ -191,6 +191,12 @@ void PlatformObj::deleteTrItems(){
     }
 }
 
+int PlatformObj::getTrackBegItemId(){
+    if(this->trItemIdCount < 2)
+        return -1;
+    return this->trItemId[1];
+}
+
 QString PlatformObj::getStationName(){
     TDB* tdb = Game::trackDB;
     int id = this->trItemId[1];

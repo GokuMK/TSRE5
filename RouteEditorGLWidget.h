@@ -71,6 +71,7 @@ public slots:
     
     void editCopy();
     void editPaste();
+    void editSelect();
     void editFind1x1();
     void editFind3x3();
     void editFind(int radius = 0);
@@ -91,7 +92,7 @@ signals:
     void showProperties(GameObj* obj);
     void updateProperties(GameObj* obj);
     void flexData(int x, int z, float* p);
-    void mkrList(std::unordered_map<std::string, Coords*> list);
+    void mkrList(QMap<QString, Coords*> list);
     
     void sendMsg(QString name);
     void sendMsg(QString name, bool val);
@@ -179,6 +180,7 @@ private:
         QAction *paste;
         QAction *find1x1;
         QAction *find3x3;
+        QAction *select;
         void init(RouteEditorGLWidget *widget);
     };
     DefaultMenuActions defaultMenuActions;

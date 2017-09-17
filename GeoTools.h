@@ -33,7 +33,7 @@ public slots:
     void msg(QString text, QString val);
     void chAutoCreateTileEnabled(int state);
     void chAutoGeoTerrainEnabled(int state);
-    void mkrList(std::unordered_map<std::string, Coords*> list);
+    void mkrList(QMap<QString, Coords*> list);
     void checkGeodataFilesEnabled();
     void generateTilesEnabled();
     
@@ -43,7 +43,7 @@ signals:
     
 private:
     QMap<QString, QPushButton*> buttonTools;
-    std::unordered_map<std::string, Coords*> mkrFiles;
+    QMap<QString, Coords*> mkrFiles;
     QComboBox markerFiles;
     QSpinBox eRadius;
 };

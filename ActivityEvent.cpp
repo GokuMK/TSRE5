@@ -23,6 +23,7 @@
 #include "OrtsWeatherChange.h"
 #include "TRitem.h"
 #include "Activity.h"
+#include "PlatformObj.h"
 
 OglObj *ActivityEvent::simpleMarkerObj = NULL;
 
@@ -214,6 +215,11 @@ void ActivityEvent::setLocation(int X, int Z, float x, float z){
 
 void ActivityEvent::setNotes(QString val){
     textToDisplayDescriptionOfTask = val;
+    modified = true;
+}
+
+void ActivityEvent::setSpeed(int val){
+    speed = val;
     modified = true;
 }
 
@@ -732,4 +738,30 @@ bool ActivityEvent::getWagonListItemPosition(int id, float *posTW){
     int eid = wagonList[id].uid - oid*65536;
     
     return parentActivity->getCarPosition(oid, eid, posTW);
+}
+
+QString ActivityEvent::getSidingDescription(){
+    if(sidingItem < 0)
+        return "";
+    if(Game::trackDB == NULL)
+        return "";
+    if(Game::trackDB->trackItems[sidingItem] == NULL)
+        return "";
+    return Game::trackDB->trackItems[sidingItem]->platformName;
+}
+
+bool ActivityEvent::setSidingFromSelected(){
+    if(Game::currentSelectedGameObj == NULL)
+        return false;
+    if(Game::currentSelectedGameObj->typeObj != GameObj::worldobj)
+        return false;
+    WorldObj *w = (WorldObj*)Game::currentSelectedGameObj;
+    if(w->typeID != WorldObj::siding)
+        return false;
+    int tid = ((PlatformObj*)w)->getTrackBegItemId();
+    if(tid < 0)
+        return false;
+    sidingItem = tid;
+    
+    return true;
 }

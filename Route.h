@@ -10,7 +10,7 @@
 
 #ifndef ROUTE_H
 #define	ROUTE_H
-#include <unordered_map>
+#include <QMap>
 #include <QString>
 #include "GLUU.h"
 #include "TDB.h"
@@ -87,7 +87,7 @@ public:
     float getStartpZ();
     Trk *getTrk();
     TRitem *getTrackItem(int TID, int UID);
-    std::unordered_map<std::string, Coords*> getMkrList();
+    QMap<QString, Coords*> getMkrList();
     void dragWorldObject(WorldObj* obj, int x, int z, float* pos);
     void setMkrFile(QString name);
     void getUnsavedInfo(std::vector<QString> &items);
@@ -124,7 +124,7 @@ private:
     void loadTrk();
     TDB *trackDB;
     TDB *roadDB; 
-    std::unordered_map<std::string, Coords*> mkrList;
+    QMap<QString, Coords*> mkrList;
     Coords * mkr = NULL;
     Trk * trk = NULL;
     QVector<WorldObj*> autoPlacementLastPlaced;

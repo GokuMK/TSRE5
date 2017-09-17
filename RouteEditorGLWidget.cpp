@@ -103,6 +103,8 @@ void RouteEditorGLWidget::DefaultMenuActions::init(RouteEditorGLWidget *widget){
     QObject::connect(find1x1, SIGNAL(triggered()), widget, SLOT(editFind1x1()));
     find3x3 = new QAction(tr("&Select Similar 3x3"), widget); 
     QObject::connect(find3x3, SIGNAL(triggered()), widget, SLOT(editFind3x3()));
+    select = new QAction(tr("&Select"), widget); 
+    QObject::connect(select, SIGNAL(triggered()), widget, SLOT(editSelect()));
 }
 
 void RouteEditorGLWidget::initializeGL() {
@@ -553,9 +555,9 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
                 route->newTile((int) camera->pozT[0], (int) camera->pozT[1]);
         }
             break;
-        case Qt::Key_E:
-            enableTool("selectTool");
-            break;
+        //case Qt::Key_E:
+        //    enableTool("selectTool");
+        //    break;
         case Qt::Key_R:
             enableTool("selectTool");
             rotateTool = true;
@@ -1126,7 +1128,8 @@ void RouteEditorGLWidget::setPaintBrush(Brush* brush) {
 }
 
 void RouteEditorGLWidget::setSelectedObj(GameObj* o) {
-    this->selectedObj = o;
+    selectedObj = o;
+    Game::currentSelectedGameObj = selectedObj;
     emit showProperties(selectedObj);
     if (o != NULL)
         if (o->typeObj == o->worldobj)
@@ -1186,6 +1189,10 @@ void RouteEditorGLWidget::editPaste() {
     qDebug() << "EditPaste End";
 }
 
+void RouteEditorGLWidget::editSelect() {
+    enableTool("selectTool");
+}
+
 void RouteEditorGLWidget::editFind1x1() {
     editFind(0);
 }
@@ -1230,8 +1237,11 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
     //menu.addSeparator();
     menu.addSection("Edit");
     menu.addAction(defaultMenuActions.undo);
-    menu.addAction(defaultMenuActions.copy);
+    menu.addAction(defaultMenuActions.copy); 
     menu.addAction(defaultMenuActions.paste);
+    menu.addAction(defaultMenuActions.select);
+    
+    
     menu.exec(mapToGlobal(point));
 }
 

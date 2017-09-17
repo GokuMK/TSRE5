@@ -16,7 +16,7 @@ class TDB;
 
 class CoordsRoutePlaces : public Coords {
 public:
-    CoordsRoutePlaces(TDB *tdb);
+    CoordsRoutePlaces(TDB *tdb, QString place);
     virtual ~CoordsRoutePlaces();
 private:
 
