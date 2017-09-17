@@ -191,6 +191,7 @@ void Activity::load() {
                                     event.emplace_back();
                                     event.back().category = ActivityEvent::CategoryAction;
                                     event.back().load(data);
+                                    event.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -198,6 +199,7 @@ void Activity::load() {
                                     event.emplace_back();
                                     event.back().category = ActivityEvent::CategoryLocation;
                                     event.back().load(data);
+                                    event.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -205,6 +207,7 @@ void Activity::load() {
                                     event.emplace_back();
                                     event.back().category = ActivityEvent::CategoryTime;
                                     event.back().load(data);
+                                    event.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -834,6 +837,27 @@ void Activity::newLooseConsist(float *tdbPos){
     ao->setParentActivity(this);
     
     modified = true;
+}
+
+unsigned int Activity::getSelectedCarId(){
+    for(int i = 0; i < activityObjects.size(); i++){
+        if(activityObjects[i].isSelected()){
+            if(activityObjects[i].con != NULL){
+                return activityObjects[i].id*65536 + activityObjects[i].con->selectedIdx;
+            }
+        }
+    }
+    return -1;
+}
+
+bool Activity::getCarPosition(int oid, int eid, float *posTW){
+    int uid = -1;
+    for(int i = 0; i < activityObjects.size(); i++)
+        if(oid == activityObjects[i].id )
+            uid = i;
+    if(uid < 0)
+        return false;
+    return activityObjects[uid].getElementPosition(eid, posTW);
 }
 
 void Activity::createNewPlayerService(QString sName, int sTime ){

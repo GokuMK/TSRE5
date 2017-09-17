@@ -86,6 +86,7 @@ public:
     void reload();
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);
+    float *getCurrentPositionOnTrack();
 private:
     bool selected = false;
     OglObj *borderObj = NULL;

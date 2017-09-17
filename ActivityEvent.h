@@ -21,6 +21,7 @@ class GLUU;
 class OglObj;
 class TextObj;
 class OrtsWeatherChange;
+class Activity;
 
 class ActivityEvent {
 
@@ -155,6 +156,7 @@ public:
     void setLocationStop(bool val);
     void setReversable(bool val);
     void setAutoContinue(int val);
+    void setActionToNewType(EventType newType);
     void setTime(int val);
     int getWagonListSize();
     QString getWagonListDescription(int i);
@@ -165,9 +167,16 @@ public:
     bool select();
     void load(FileBuffer* data);
     void save(QTextStream* out);
+    void addSelectedWagonToList();
+    void removeWagonListItem(int id);
+    QString getWagonListItemDescription(int id);
+    void setWagonListItemDescription(int id, QString val);
+    bool getWagonListItemPosition(int id, float *posTW);
+    void setParentActivity(Activity* a);
     void render(GLUU* gluu, float * playerT, float playerRot, int renderMode);
     
 protected:
+    Activity *parentActivity = NULL;
     static OglObj *simpleMarkerObj;
     TextObj* txtMarkerObj = NULL;
     bool modified = false;

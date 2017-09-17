@@ -110,6 +110,13 @@ int ActivityObject::getSelectedElementId(){
     return 0;
 }
 
+bool ActivityObject::getElementPosition(int id, float *posTW){
+    if(con != NULL){
+        return con->getWagonWorldPosition(id, posTW);
+    }
+    return false;
+}
+
 bool ActivityObject::unselect(){
     selected = false;
     selectionValue = -1;

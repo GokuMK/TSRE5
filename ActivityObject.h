@@ -29,7 +29,7 @@ public:
     Consist* con = NULL;
     QString objectType;
     float direction = 0;
-    int id = 0;
+    unsigned int id = 0;
     float tile[4];
     ActivityObject();
     ActivityObject(const ActivityObject& orig);
@@ -46,6 +46,7 @@ public:
     void setModified(bool val);
     bool isUnSaved();
     int getSelectedElementId();
+    bool getElementPosition(int id, float *posTW);
     void pushContextMenuActions(QMenu *menu);
     QString getParentName();
     void render(GLUU* gluu, float * playerT, int renderMode, int index);

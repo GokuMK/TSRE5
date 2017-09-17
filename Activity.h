@@ -145,6 +145,8 @@ public:
     void setDescription(QString val);
     void setBriefing(QString val);
     void deleteObject(int id);
+    unsigned int getSelectedCarId();
+    bool getCarPosition(int oid, int eid, float *posTW);
     QMap<int, QString> getEventIdNameList();
     
 private:

@@ -687,6 +687,25 @@ void Consist::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
     }
 }
 
+bool Consist::getWagonWorldPosition(int id, float *posTW){
+    if (loaded != 1) return false;
+    
+    if(id >= engItems.size())
+        return false;
+    
+    float *drawPosition = engItems[id].engPointer->getCurrentPositionOnTrack();
+    if(drawPosition == NULL)
+        return false;
+    
+    posTW[0] = drawPosition[5];
+    posTW[1] = drawPosition[6];
+    posTW[2] = drawPosition[0];
+    posTW[3] = 0;
+    posTW[4] = drawPosition[2];
+    
+    return true;
+}
+
 bool Consist::isNewConsist(){
     return newConsist;
 }

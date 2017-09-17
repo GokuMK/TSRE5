@@ -12,6 +12,7 @@
 #include "Game.h"
 #include "ActivityEvent.h"
 #include "IghCoords.h"
+#include "EditFileNameDialog.h"
 
 ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(parent) {
     //this->setMinimumHeight(400);
@@ -37,7 +38,7 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     }
     
     buttonTools["pickNewEventLocationTool"] = new QPushButton("Pick new location");
-    buttonTools["pickNewEventWagonTool"] = new QPushButton("Pick new Car");
+    //buttonTools["pickNewEventWagonTool"] = new QPushButton("Pick new Car");
     QMapIterator<QString, QPushButton*> i(buttonTools);
     while (i.hasNext()) {
         i.next();
@@ -86,6 +87,8 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->addWidget(label, row, 0);
     cActionType.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     vlist->addWidget(&cActionType, row++, 1);
+    QObject::connect(&cActionType, SIGNAL(activated(QString)),
+                      this, SLOT(cActionTypeSelected(QString)));
     //vlist->addWidget(new QLabel("Info:"), row, 0);
     //vlist->addWidget(&eActionInfo, row++, 1);
     actionWidget.setLayout(vlist);
@@ -131,11 +134,20 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->setSpacing(2);
     vlist->setContentsMargins(1,0,1,0);
     QPushButton *bRemoveCar = new QPushButton("Remove Selected");
+    QObject::connect(bRemoveCar, SIGNAL(released()),
+                      this, SLOT(bRemoveCarSelected()));
     QPushButton *bJumpToCar = new QPushButton("Jump To Selected");
+    QObject::connect(bJumpToCar, SIGNAL(released()),
+                      this, SLOT(bJumpToCarSelected()));
     QPushButton *bDescCar = new QPushButton("Edit description");
+    QObject::connect(bDescCar, SIGNAL(released()),
+                      this, SLOT(bDescCarSelected()));
     bJumpToCar->setMinimumWidth(100);
     vlist->addWidget(new QLabel("Wagon List:"), 0, 0);
-    vlist->addWidget(buttonTools["pickNewEventWagonTool"], 1, 0);
+    QPushButton *pickNewEventWagon = new QPushButton("Pick Selected");
+    vlist->addWidget(pickNewEventWagon, 1, 0);
+    QObject::connect(pickNewEventWagon, SIGNAL(released()),
+                      this, SLOT(bPickNewEventWagonToolSelected()));
     vlist->addWidget(bJumpToCar, 2, 0);
     vlist->addWidget(bRemoveCar, 3, 0);
     vlist->addWidget(bDescCar, 4, 0);
@@ -538,6 +550,16 @@ void ActivityEventProperties::outcomeListSelected(QListWidgetItem* item){
     }
 }
 
+void ActivityEventProperties::cActionTypeSelected(QString item){
+    if(event == NULL)
+        return;
+
+    event->setActionToNewType((ActivityEvent::EventType)cActionType.currentData().toInt());
+    int id = outcomeList.currentRow();
+    showEvent(event);
+    selctOutcomeOnList(id);
+}
+
 void ActivityEventProperties::outcomeActoionListSelected(QString item){
     if(outcome == NULL)
         return;
@@ -545,7 +567,7 @@ void ActivityEventProperties::outcomeActoionListSelected(QString item){
     outcome->setToNewType((ActivityEvent::Outcome::OutcomeType)cOutcome.currentData().toInt());
     
     int id = outcomeList.currentRow();
-    this->showEvent(event);
+    showEvent(event);
     selctOutcomeOnList(id);
 }
 
@@ -587,6 +609,8 @@ void ActivityEventProperties::eActivationLevelSelected(){
 
 void ActivityEventProperties::eNameSelected(){
     if(event == NULL)
+        return;
+    if(eName.text() == event->name)
         return;
     event->setName(eName.text());
     emit eventNameChanged(event->id);
@@ -681,6 +705,16 @@ void ActivityEventProperties::bPickEventLocationSelected(bool val){
         emit enableTool("");
 }
 
+void ActivityEventProperties::bPickNewEventWagonToolSelected(){
+    if(event == NULL)
+        return;
+    event->addSelectedWagonToList();
+    
+    int id = outcomeList.currentRow();
+    showEvent(event);
+    selctOutcomeOnList(id);
+}
+
 void ActivityEventProperties::msg(QString text, QString val){
     if(text == "toolEnabled"){
         QMapIterator<QString, QPushButton*> i(buttonTools);
@@ -701,4 +735,47 @@ void ActivityEventProperties::msg(QString text, QString val){
             i.value()->blockSignals(false);
         }
     }
+}
+
+void ActivityEventProperties::bJumpToCarSelected(){
+    if(event == NULL)
+        return;
+    float position[5];
+    bool ok = event->getWagonListItemPosition(wagonList.currentRow(), position);
+    if(!ok)
+        return;
+    
+    if(coordinate == NULL)
+        coordinate = new PreciseTileCoordinate();
+    
+    coordinate->TileX = position[0];
+    coordinate->TileZ = position[1];
+    coordinate->setWxyz(position[2], 0, position[4]);
+    
+    emit jumpTo(coordinate);
+}
+
+void ActivityEventProperties::bRemoveCarSelected(){
+    if(event == NULL)
+        return;
+    event->removeWagonListItem(wagonList.currentRow());
+    
+    int id = outcomeList.currentRow();
+    showEvent(event);
+    selctOutcomeOnList(id);
+}
+
+void ActivityEventProperties::bDescCarSelected(){
+    if(event == NULL)
+        return;
+    EditFileNameDialog dialog;
+    dialog.setWindowTitle("Wagon Item Description.");
+    dialog.name.setText(event->getWagonListItemDescription(wagonList.currentRow()));
+    dialog.exec();
+    if(dialog.isOk)
+        event->setWagonListItemDescription(wagonList.currentRow(), dialog.name.text());
+    
+    int id = outcomeList.currentRow();
+    showEvent(event);
+    selctOutcomeOnList(id);
 }

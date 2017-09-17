@@ -625,6 +625,11 @@ void Eng::reload(){
     }
 }
 
+float *Eng::getCurrentPositionOnTrack(){
+    if (loaded != 1) return NULL;
+    return ruch1->getCurrentPosition();
+}
+
 void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
     if (loaded != 1) return;
 

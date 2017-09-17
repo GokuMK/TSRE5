@@ -13,11 +13,8 @@
 
 #include <QtWidgets>
 #include <QMap>
-
 #include "ActivityEvent.h"
 
-class ActivityEvent;
-class ActivityEvent::Outcome;
 class PreciseTileCoordinate;
 
 class ActivityEventProperties : public QWidget {
@@ -32,6 +29,7 @@ public slots:
     void outcomeListSelected(QListWidgetItem* item);
     void outcomeActoionListSelected(QString item);
     void cOutcomeEventSelected(QString val);
+    void cActionTypeSelected(QString item);
     void bAddOutcomeSelected();
     void bRemoveOutcomeSelected();
     void eOutcomeMessageSelected();
@@ -49,6 +47,10 @@ public slots:
     void cReversableSelected(int val);
     void cAutoContinueLabelSelected(int val);
     void eAutoContinueSelected();
+    void bJumpToCarSelected();
+    void bRemoveCarSelected();
+    void bDescCarSelected();
+    void bPickNewEventWagonToolSelected();
         
 signals:
     void eventNameChanged(int id);

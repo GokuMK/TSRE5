@@ -28339,7 +28339,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEvent.o: ActivityEve
 		GLMatrix.h \
 		OrtsWeatherChange.h \
 		TRitem.h \
-		Pointer3d.h
+		Pointer3d.h \
+		Activity.h \
+		ActivityObject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEvent.o ActivityEvent.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventProperties.o: ActivityEventProperties.cpp ActivityEventProperties.h \
@@ -28787,7 +28789,8 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventProperties.o: A
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QVector \
 		Game.h \
-		IghCoords.h
+		IghCoords.h \
+		EditFileNameDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventProperties.o ActivityEventProperties.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEventWindow.o: ActivityEventWindow.cpp ActivityEventWindow.h \

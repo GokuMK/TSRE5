@@ -22,6 +22,7 @@
 #include "GLMatrix.h"
 #include "OrtsWeatherChange.h"
 #include "TRitem.h"
+#include "Activity.h"
 
 OglObj *ActivityEvent::simpleMarkerObj = NULL;
 
@@ -625,6 +626,29 @@ void ActivityEvent::Outcome::setEventLinkId(int id){
     modified = true;
 }
 
+void ActivityEvent::setActionToNewType(EventType newType){
+    eventType = newType;
+    speed = -99999;
+    stationStop = -99999;
+    wagonList.clear();
+    sidingItem = -99999;
+    pickupIdAndAmount.clear();
+    isWagonList = false;
+    
+    if(eventType == EventTypeReachSpeed)
+        speed = 0;
+    if(eventType == EventTypePickupPassengers)
+        stationStop = 0;
+    if(eventType == EventTypeAssembleTrainAtLocation
+    || eventType == EventTypeDropoffWagonsAtLocation)
+        sidingItem = 0;
+    if(eventType == EventTypeAssembleTrain
+    || eventType == EventTypeAssembleTrainAtLocation
+    || eventType == EventTypeDropoffWagonsAtLocation
+    || eventType == EventTypePickupWagons)
+        isWagonList = true;
+}
+
 void ActivityEvent::Outcome::setToNewType(OutcomeType newType){
     type = newType;
     category = OutcomeTypeCategory[type];
@@ -649,4 +673,63 @@ void ActivityEvent::Outcome::setToNewType(OutcomeType newType){
         value.setValue(QString(""));
     }
     modified = true;
+}
+
+void ActivityEvent::setParentActivity(Activity* a){
+    parentActivity = a;
+}
+
+void ActivityEvent::removeWagonListItem(int id){
+    if(id >= wagonList.size())
+        return;
+    if(id < 0)
+        return;
+    wagonList.remove(id);
+}
+
+QString ActivityEvent::getWagonListItemDescription(int id){
+    if(id >= wagonList.size())
+        return "";
+    if(id < 0)
+        return ""; 
+    return wagonList[id].description;
+}
+
+void ActivityEvent::setWagonListItemDescription(int id, QString val){
+    if(id >= wagonList.size())
+        return;
+    if(id < 0)
+        return;
+    wagonList[id].description = val;
+}
+
+void ActivityEvent::addSelectedWagonToList(){
+    if(parentActivity == NULL)
+        return;
+    
+    unsigned int uid = parentActivity->getSelectedCarId();
+    if(uid == -1)
+        return;
+    
+    for(int i = 0; i < wagonList.size(); i++)
+        if(wagonList[i].uid == uid)
+            return;
+    
+    wagonList.push_back(WagonList());
+    wagonList.back().uid = uid;
+    wagonList.back().sidingItem = 4294967295;
+}
+
+bool ActivityEvent::getWagonListItemPosition(int id, float *posTW){
+    if(id >= wagonList.size())
+        return false;
+    if(id < 0)
+        return false;
+    if(parentActivity == NULL)
+        return false;
+    
+    int oid = wagonList[id].uid / 65536;
+    int eid = wagonList[id].uid - oid*65536;
+    
+    return parentActivity->getCarPosition(oid, eid, posTW);
 }

@@ -96,6 +96,7 @@ public:
     void setTextColor(float *bgColor);
     void setDurability(float val);
     void initOnTrack(float *posTXZ, int direction);
+    bool getWagonWorldPosition(int id, float *posTW);
     void renderOnTrack(GLUU* gluu, float * playerT, int selectionColor);
     void render(int selectionColor = 0, bool renderText = false);
     void render(int aktwx, int aktwz, int selectionColor, bool renderText);
