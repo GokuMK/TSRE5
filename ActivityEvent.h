@@ -161,6 +161,7 @@ public:
     void setTime(int val);
     int getWagonListSize();
     QString getWagonListDescription(int i);
+    QString getWagonListIdDescription(int i);
     bool isModified();
     bool isSelected();
     bool setSelected(bool val);

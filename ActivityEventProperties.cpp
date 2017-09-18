@@ -152,8 +152,10 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     QObject::connect(bDescCar, SIGNAL(released()),
                       this, SLOT(bDescCarSelected()));
     bJumpToCar->setMinimumWidth(100);
-    vlist->addWidget(new QLabel("Wagon List:"), 0, 0);
-    vlist->addWidget(new QLabel("  ID:            Description:  "), 0, 1);
+    label = new QLabel("Wagon List:");
+    label->setMaximumHeight(25);
+    vlist->addWidget(label, 0, 0);
+    vlist->addWidget(&wagonList, 0, 1, 5, 1);
     QPushButton *pickNewEventWagon = new QPushButton("Pick Selected");
     vlist->addWidget(pickNewEventWagon, 1, 0);
     QObject::connect(pickNewEventWagon, SIGNAL(released()),
@@ -161,8 +163,12 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->addWidget(bJumpToCar, 2, 0);
     vlist->addWidget(bRemoveCar, 3, 0);
     vlist->addWidget(bDescCar, 4, 0);
-    vlist->addWidget(&wagonList, 1, 1, 4, 1);
-
+    QStringList list;
+    list.append("ID:");
+    list.append("Description:");
+    wagonList.setColumnCount(2);
+    wagonList.setHeaderLabels(list);
+    //wagonList.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     actionWidgetWagonList.setLayout(vlist);
     
     // location event
@@ -441,9 +447,15 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
                 || (event->eventType == ActivityEvent::EventTypeAssembleTrainAtLocation) ){
             actionWidgetWagonList.show();
             wagonList.clear();
+            QStringList list;
+            QList<QTreeWidgetItem *> items;
             for(int i = 0; i < event->getWagonListSize(); i++ ){
-                new QListWidgetItem ( event->getWagonListDescription(i), &wagonList, i );
+                list.clear();
+                list.append(event->getWagonListIdDescription(i));
+                list.append(event->getWagonListDescription(i));
+                items.append(new QTreeWidgetItem((QTreeWidget*)0, list, i ));
             }  
+            wagonList.insertTopLevelItems(0, items);
         }
     }
     if(event->category == ActivityEvent::CategoryLocation){
@@ -781,7 +793,7 @@ void ActivityEventProperties::bJumpToCarSelected(){
     if(event == NULL)
         return;
     float position[5];
-    bool ok = event->getWagonListItemPosition(wagonList.currentRow(), position);
+    bool ok = event->getWagonListItemPosition(wagonList.currentItem()->type(), position);
     if(!ok)
         return;
     
@@ -798,7 +810,7 @@ void ActivityEventProperties::bJumpToCarSelected(){
 void ActivityEventProperties::bRemoveCarSelected(){
     if(event == NULL)
         return;
-    event->removeWagonListItem(wagonList.currentRow());
+    event->removeWagonListItem(wagonList.currentItem()->type());
     
     int id = outcomeList.currentRow();
     showEvent(event);
@@ -810,10 +822,11 @@ void ActivityEventProperties::bDescCarSelected(){
         return;
     EditFileNameDialog dialog;
     dialog.setWindowTitle("Wagon Item Description.");
-    dialog.name.setText(event->getWagonListItemDescription(wagonList.currentRow()));
+    qDebug() << wagonList.currentItem()->type();
+    dialog.name.setText(event->getWagonListItemDescription(wagonList.currentItem()->type()));
     dialog.exec();
     if(dialog.isOk)
-        event->setWagonListItemDescription(wagonList.currentRow(), dialog.name.text());
+        event->setWagonListItemDescription(wagonList.currentItem()->type(), dialog.name.text());
     
     int id = outcomeList.currentRow();
     showEvent(event);

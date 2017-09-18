@@ -67,7 +67,8 @@ private:
     QWidget actionWidgetWagonList;
     QWidget locationWidget;
     QWidget timeWidget;
-    QListWidget wagonList;
+    //QListWidget wagonList;
+    QTreeWidget wagonList;
     
     QMap<int, QWidget*> outcomeProperties;
     

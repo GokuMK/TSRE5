@@ -268,16 +268,21 @@ int ActivityEvent::getWagonListSize(){
 }
 
 QString ActivityEvent::getWagonListDescription(int i){
+    QString desc;
+    if(wagonList[i].sidingItem > 1000000){
+        desc += wagonList[i].description;
+    } else if(Game::trackDB != NULL){
+        if(Game::trackDB->trackItems[wagonList[i].sidingItem] != NULL)
+            desc += "Siding: " + Game::trackDB->trackItems[wagonList[i].sidingItem]->platformName;
+    }
+        
+    return desc;
+}
+
+QString ActivityEvent::getWagonListIdDescription(int i){
     int consistId = wagonList[i].uid / 65536;
     int wagonId = wagonList[i].uid - consistId*65536;
     QString desc = QString::number(consistId) + "-" + QString::number(wagonId);
-    if(wagonList[i].sidingItem > 1000000){
-        desc += " | " + wagonList[i].description;
-    } else if(Game::trackDB != NULL){
-        if(Game::trackDB->trackItems[wagonList[i].sidingItem] != NULL)
-            desc += " | Siding: " + Game::trackDB->trackItems[wagonList[i].sidingItem]->platformName;
-    }
-        
     return desc;
 }
 
