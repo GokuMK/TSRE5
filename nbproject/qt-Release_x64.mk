@@ -46237,7 +46237,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Path.o: Path.cpp Path.h \
 		Vector2f.h \
 		ParserX.h \
 		TrackItemObj.h \
-		GLMatrix.h
+		GLMatrix.h \
+		TRitem.h \
+		Pointer3d.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Path.o Path.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PickupObj.o: PickupObj.cpp PickupObj.h \

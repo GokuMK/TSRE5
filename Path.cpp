@@ -23,6 +23,7 @@
 #include "OglObj.h"
 #include "TrackItemObj.h"
 #include "GLMatrix.h"
+#include "TRitem.h"
 
 Path::Path() {
     typeObj = activitypath;
@@ -170,6 +171,7 @@ void Path::initRoute(){
         node.back().flag2 = trackPdp[trackPdpId][6];
         //qDebug() << trackPdp;
     }
+    init3dShapes();
 }
 
 void Path::init3dShapes(){
@@ -181,7 +183,7 @@ void Path::init3dShapes(){
     float posW[3];
     float tpos1[3];
     float tpos2[3];
-    int nodeId1, nodeId2;
+    int nodeId1, currentDistance;
     int currentNodeId;
     int lastNodeId = -1;
     float lastDistance = 0;
@@ -189,6 +191,7 @@ void Path::init3dShapes(){
     float distance2 = 0;
     float tp1[3], tp2[3];
     
+    float distanceDownPath = 0;
     for(int i = 0; i < node.size(); i++){
         if(node[i].flag1 == 1){
             qDebug() << "point";
@@ -197,12 +200,12 @@ void Path::init3dShapes(){
             Vec3::copy(posW, node[i].pos);
             tdb->findNearestPositionOnTDB(posT, posW, NULL, tpos1);
             nodeId1 = tpos1[0];
-            nodeId2 = tpos1[1];
+            currentDistance = tpos1[1];
             currentNodeId = nodeId1;
 
             if(lastNodeId < 0){
                 lastNodeId = nodeId1;
-                lastDistance = nodeId2;
+                lastDistance = currentDistance;
                 continue;
             }
             
@@ -212,13 +215,13 @@ void Path::init3dShapes(){
                 } else {
                     distance1 = tdb->getVectorSectionLength(currentNodeId);
                 }
-                distance2 = nodeId2;
+                distance2 = currentDistance;
             } else {
                 distance1 = lastDistance;
-                distance2 = nodeId2;
+                distance2 = currentDistance;
             }
             lastNodeId = nodeId1;
-            lastDistance = nodeId2;
+            lastDistance = currentDistance;
         } else if(node[i].flag1 == 2){
             qDebug() << "junction";
             //qDebug() << node[i].tilex, node[i].tilez, node[i].pos[0], node[i].pos[1], node[i].pos[2];
@@ -235,13 +238,13 @@ void Path::init3dShapes(){
                 distance2 = tdb->getVectorSectionLength(currentNodeId);
             } else {
                 currentNodeId = lastNodeId;
-                if(tdb->trackNodes[currentNodeId]->TrPinS[0] == nodeId1 &&
-                    tdb->trackNodes[currentNodeId]->TrPinK[0] == 1){
-                        distance1 = 0;
+                if(tdb->trackNodes[currentNodeId]->TrPinS[0] == nodeId1
+                    /*&& tdb->trackNodes[currentNodeId]->TrPinK[0] == 1*/){
+                        distance2 = 0;
                 } else {
-                    distance1 = tdb->getVectorSectionLength(currentNodeId);
+                    distance2 = tdb->getVectorSectionLength(currentNodeId);
                 }
-                distance2 = lastDistance;
+                distance1 = lastDistance;
             }
 
             lastNodeId = nodeId1;
@@ -253,14 +256,53 @@ void Path::init3dShapes(){
         if(fail > 0)
             return;
         
+        qDebug() << "currentNodeId" << currentNodeId << distance1 << distance2 ;
+        
+        for(int ti = 0; ti < tdb->trackNodes[currentNodeId]->iTri; ti++){
+            int trid1 = tdb->trackNodes[currentNodeId]->trItemRef[ti];
+            if(tdb->trackItems[trid1] != NULL){
+                if(tdb->trackItems[trid1]->type != "platformitem")
+                    continue;
+                int trid2 = tdb->trackItems[trid1]->platformTrItemData[1];
+                if(tdb->trackItems[trid2] != NULL){
+                    float ddd1 = tdb->trackItems[trid1]->getTrackPosition();
+                    if(distance1 > distance2)
+                        ddd1 = 2*tdb->getVectorSectionLength(currentNodeId) - ddd1 - distance1;
+                    else 
+                        ddd1 = ddd1 - distance1;
+                    float ddd2 = tdb->trackItems[trid2]->getTrackPosition();
+                    if(distance1 > distance2)
+                        ddd2 = 2*tdb->getVectorSectionLength(currentNodeId) - ddd2 - distance1;
+                    else 
+                        ddd2 = ddd2 - distance1;
+                    
+                    float dist = 0;
+                    int trid = 0;
+                    if(ddd1 > ddd2){
+                        dist = ddd1;
+                        trid = trid1;
+                    }else{
+                        dist = ddd2;
+                        trid = trid2;
+                    }
+                    pathObjects[distanceDownPath + dist].name = tdb->trackItems[trid]->stationName;
+                    pathObjects[distanceDownPath + dist].trItemId = trid;
+                    pathObjects[distanceDownPath + dist].distanceDownPath = distanceDownPath + dist;
+                    qDebug() << "="<<tdb->trackItems[trid]->stationName << distanceDownPath + dist;
+                }
+            }
+        }
+        
+        
         if(distance1 > distance2){
             float temp = distance2;
             distance2 = distance1;
             distance1 = temp;
         }
+        distanceDownPath += distance2 - distance1;
         
         OglObj *line = new OglObj();
-        float *ptr, *punkty;// = new float[6];
+        float *ptr, *punkty;
         int length, len = 0;
 
         qDebug() << "currentNodeId" << currentNodeId << distance1 << distance2 ;
@@ -268,22 +310,19 @@ void Path::init3dShapes(){
         
         punkty = new float[length+6];
 
-        //float tp[3], tp1[3], tp2[3], tp3[3];
         bool endd = false;
         
         for(int ii = 0; ii < length; ii+=12){
             if(ptr[ii+5] < distance1) continue;
             if(ptr[ii+5+12] > distance2)
                 endd = true;
-            
             //if(len == 0)
             //    Vec3::set(tp1, posB[0], posB[1]+1, -posB[2]);
             //else 
                 Vec3::set(tp1, ptr[ii+0], ptr[ii+1], ptr[ii+2]);
-                
             //if(endd)
             //    Vec3::set(tp2, posE[0], posE[1]+1, -posE[2]); 
-           // else
+            // else
                 Vec3::set(tp2, ptr[ii+6], ptr[ii+7], ptr[ii+8]);
             
             punkty[len++] = tp1[0];
@@ -309,6 +348,7 @@ void Path::init3dShapes(){
         fail = 0;
         
     }
+    isinit = true;
 }
 
 void Path::render(GLUU* gluu, float * playerT, int renderMode){
@@ -319,7 +359,6 @@ void Path::render(GLUU* gluu, float * playerT, int renderMode){
     
     if(!isinit){
         init3dShapes();
-        isinit = true;
     }
     
     if(!Game::viewInteractives)

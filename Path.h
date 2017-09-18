@@ -35,6 +35,13 @@ public:
         unsigned int flag2;
     };
     
+    struct PathObject {
+        QString name;
+        int trItemId = -1;
+        float distanceDownPath;
+    };
+    QMap<float, PathObject> pathObjects;
+    
     QString displayName;
     QString name;
     QString nameId;
