@@ -40,7 +40,7 @@ public:
         int trItemId = -1;
         float distanceDownPath;
     };
-    QMap<float, PathObject> pathObjects;
+    QMap<float, PathObject*> pathObjects;
     
     QString displayName;
     QString name;
@@ -63,7 +63,7 @@ public:
     virtual ~Path();
     void load();
     void initRoute();
-    void init3dShapes();
+    void init3dShapes(bool initShapes = true);
     bool isModified();
     void render(GLUU* gluu, float * playerT, int renderMode);
 private:

@@ -35,6 +35,7 @@ public slots:
     void cServiceEnabled(QString val);
     void cTrafficEnabled(QString val);
     void actServiceNewEnabled();
+    void actServiceEditEnabled();
     void msg(QString text, QString val);
     void eFileNameEnabled(QString val);
     void eDisplayNameEnabled(QString val);

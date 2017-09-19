@@ -41,8 +41,12 @@ private:
     QLineEdit eEndSpeed;
     QComboBox cConFiles;
     QComboBox cPath;
+    QTreeWidget stationList;
     
     Service *service;
+    QVector<Path*> paths;
+    
+    void setStationList();
 };
 
 #endif	/* ACTIVITYSERVICETOOLS_H */

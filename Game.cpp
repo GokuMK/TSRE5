@@ -53,6 +53,7 @@ float Game::cameraFov = 55.0f;
 float Game::cameraSpeedMin = 1.0;
 float Game::cameraSpeedStd = 3.0;
 float Game::cameraSpeedMax = 40.0;
+float Game::mouseSpeed = 1.0;
 bool Game::cameraStickToTerrain = false;
 bool Game::mstsShadows = false;
 
@@ -311,6 +312,9 @@ void Game::load() {
         }
         if(val == "cameraSpeedMax"){
             cameraSpeedMax = args[1].trimmed().toFloat();
+        }
+        if(val == "mouseSpeed"){
+            mouseSpeed = args[1].trimmed().toFloat();
         }
         if(val == "trackElevationMaxPm"){
             trackElevationMaxPm = args[1].trimmed().toFloat();

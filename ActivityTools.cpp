@@ -83,6 +83,7 @@ ActivityTools::ActivityTools(QString name)
     QPushButton *actServiceNew = new QPushButton("New");
     QObject::connect(actServiceNew, SIGNAL(released()), this, SLOT(actServiceNewEnabled()));
     QPushButton *actServiceEdit = new QPushButton("Edit");
+    QObject::connect(actServiceEdit, SIGNAL(released()), this, SLOT(actServiceEditEnabled()));
     QPushButton *actServiceClone = new QPushButton("Clone");
     QPushButton *actServiceDelete = new QPushButton("Delete");
     vlist1->addWidget(actServiceNew,0,0);
@@ -504,6 +505,30 @@ void ActivityTools::actServiceNewEnabled(){
     }
 }
 
+void ActivityTools::actServiceEditEnabled(){
+    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    ActivityServiceTools sTools;
+    //QString pathid = Game::root + "/routes/" + Game::route + "/services/";
+    //QString name = "aaaaa1";
+    Service *s = NULL;
+    for(int i = 0; i < route->service.size(); i++){
+        qDebug() << route->service[i]->pathId << a->playerServiceDefinition->name;
+        if(route->service[i]->pathId.toLower() == a->playerServiceDefinition->name.toLower()){
+            s = route->service[i];
+            break;
+        }
+    }
+    if(s == NULL)
+        return;
+    sTools.setData(s, route->path);
+    sTools.exec();
+    if(sTools.changed) {
+        //route->service.push_back(s);
+        //reloadServicesList();
+    }
+}
 void ActivityTools::eFileNameEnabled(QString val){
     Activity *a = ActLib::act[actShow.currentData().toInt()];
     if(a == NULL)

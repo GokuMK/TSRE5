@@ -28087,7 +28087,9 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Activity.o: Activity.cpp Act
 		c:/OT/Static/5.7.0_x64/include/QtGui/qfontmetrics.h \
 		SignalObj.h \
 		WorldObj.h \
-		Ref.h
+		Ref.h \
+		TRitem.h \
+		Pointer3d.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Activity.o Activity.cpp
 
 build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityEvent.o: ActivityEvent.cpp ActivityEvent.h \

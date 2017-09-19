@@ -54,6 +54,7 @@ public:
         PlayerTrafficDefinition *trafficDefinition = NULL;
         void load(FileBuffer* data);
         void save(QTextStream* out);
+        QMap<int, QString> getStationStopNameList();
     };
     
     struct TrafficDefinition {
@@ -148,6 +149,7 @@ public:
     unsigned int getSelectedCarId();
     bool getCarPosition(int oid, int eid, float *posTW);
     QMap<int, QString> getEventIdNameList();
+    QMap<int, QString> getServiceStationStopNameList();
     
 private:
     bool modified = false;

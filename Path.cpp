@@ -171,18 +171,18 @@ void Path::initRoute(){
         node.back().flag2 = trackPdp[trackPdpId][6];
         //qDebug() << trackPdp;
     }
-    init3dShapes();
+    //init3dShapes();
 }
 
-void Path::init3dShapes(){
-    
+void Path::init3dShapes(bool initShapes){
+    if(isinit)
+        return;
     lines.clear();
     int fail = 0;
     TDB* tdb = Game::trackDB;
     float posT[2];
     float posW[3];
     float tpos1[3];
-    float tpos2[3];
     int nodeId1, currentDistance;
     int currentNodeId;
     int lastNodeId = -1;
@@ -285,14 +285,18 @@ void Path::init3dShapes(){
                         dist = ddd2;
                         trid = trid2;
                     }
-                    pathObjects[distanceDownPath + dist].name = tdb->trackItems[trid]->stationName;
-                    pathObjects[distanceDownPath + dist].trItemId = trid;
-                    pathObjects[distanceDownPath + dist].distanceDownPath = distanceDownPath + dist;
+                    if(pathObjects[distanceDownPath + dist] == NULL)
+                        pathObjects[distanceDownPath + dist] = new PathObject();
+                    pathObjects[distanceDownPath + dist]->name = tdb->trackItems[trid]->stationName;
+                    pathObjects[distanceDownPath + dist]->trItemId = trid;
+                    pathObjects[distanceDownPath + dist]->distanceDownPath = distanceDownPath + dist;
                     qDebug() << "="<<tdb->trackItems[trid]->stationName << distanceDownPath + dist;
                 }
             }
         }
         
+        if(!initShapes)
+             continue;
         
         if(distance1 > distance2){
             float temp = distance2;
@@ -304,12 +308,9 @@ void Path::init3dShapes(){
         OglObj *line = new OglObj();
         float *ptr, *punkty;
         int length, len = 0;
-
-        qDebug() << "currentNodeId" << currentNodeId << distance1 << distance2 ;
+        //qDebug() << "currentNodeId" << currentNodeId << distance1 << distance2 ;
         tdb->getVectorSectionLine(ptr, length, node[i].tilex, node[i].tilez, currentNodeId, true);
-        
         punkty = new float[length+6];
-
         bool endd = false;
         
         for(int ii = 0; ii < length; ii+=12){
@@ -344,11 +345,10 @@ void Path::init3dShapes(){
         lines.push_back(line);
         linesX.push_back(node[i].tilex);
         linesZ.push_back(node[i].tilez);
-        ////////////
-        fail = 0;
-        
     }
-    isinit = true;
+    
+    if(initShapes)
+        isinit = true;
 }
 
 void Path::render(GLUU* gluu, float * playerT, int renderMode){

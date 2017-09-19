@@ -70,6 +70,7 @@ public:
     static float cameraSpeedMin;
     static float cameraSpeedStd;
     static float cameraSpeedMax;
+    static float mouseSpeed;
     static bool cameraStickToTerrain;
     static bool mstsShadows;
     static bool viewWorldGrid;

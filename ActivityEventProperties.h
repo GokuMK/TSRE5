@@ -24,6 +24,7 @@ public:
     virtual ~ActivityEventProperties();
     void showEvent(ActivityEvent *e);
     void setEventList(QMap<int, QString> eventNames);
+    void setStationStopList(QMap<int, QString> stationNames);
     
 public slots:
     void outcomeListSelected(QListWidgetItem* item);
@@ -80,11 +81,12 @@ private:
     QPlainTextEdit eOutcomeMessage;
     QComboBox cOutcome;
     QComboBox cOutcomeEvent;
+    QComboBox cStationStopAction;
     QLineEdit eSoundFileName;
     QComboBox cSoundType;
     QLineEdit cWeatherChange;
     QComboBox cActionType;
-    QPushButton bActionStationId;
+    //QPushButton bActionStationId;
     QLineEdit eActionSiding;
     QPushButton bActionSiding;
     QSpinBox eActionSpeed;

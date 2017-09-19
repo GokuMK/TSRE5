@@ -133,6 +133,7 @@ void ActivityEventWindow::showEvents(Activity* act){
     }
     
     eventProperties->setEventList(act->getEventIdNameList());
+    eventProperties->setStationStopList(act->getServiceStationStopNameList());
 }
 
 void ActivityEventWindow::eventListSelected(QListWidgetItem * item){

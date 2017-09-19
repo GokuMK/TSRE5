@@ -265,8 +265,8 @@ void CameraFree::check_coords() {
 
 void CameraFree::MouseMove(QMouseEvent* e) {
     if (lpm != 0 || rpm != 0) {
-        patrzX((float) (float) (starex - e->x()) / 30*(fov/45.0));
-        patrzY((float) (float) (starey - e->y()) / 30*(fov/45.0));
+        patrzX(Game::mouseSpeed*(float)(starex - e->x())/30.0*(fov/45.0));
+        patrzY(Game::mouseSpeed*(float)(starey - e->y())/30.0*(fov/45.0));
     }
     starex = e->x();
     starey = e->y();

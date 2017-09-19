@@ -103,8 +103,11 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     label = new QLabel("Station:");
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
-    bActionStationId.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    vlist->addWidget(&bActionStationId, row++, 1);
+    cStationStopAction.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    cStationStopAction.setStyleSheet("combobox-popup: 0;");
+    cStationStopAction.setMaxVisibleItems(30);
+    cStationStopAction.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    vlist->addWidget(&cStationStopAction, row++, 1);
     actionWidgetStation.setLayout(vlist);
     
     // action siding
@@ -429,6 +432,7 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
         }
         if(event->eventType == ActivityEvent::EventTypePickupPassengers){
             actionWidgetStation.show();
+            cStationStopAction.setCurrentIndex(event->stationStop);
         }
         if((event->eventType == ActivityEvent::EventTypeAssembleTrainAtLocation)
                 || (event->eventType == ActivityEvent::EventTypeDropoffWagonsAtLocation) ){
@@ -453,7 +457,9 @@ void ActivityEventProperties::showEvent(ActivityEvent *e){
                 list.clear();
                 list.append(event->getWagonListIdDescription(i));
                 list.append(event->getWagonListDescription(i));
-                items.append(new QTreeWidgetItem((QTreeWidget*)0, list, i ));
+                QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, i );
+                //item->setCheckState(0, Qt::Unchecked);
+                items.append(item);
             }  
             wagonList.insertTopLevelItems(0, items);
         }
@@ -623,12 +629,22 @@ void ActivityEventProperties::cOutcomeEventSelected(QString val){
 }
 
 void ActivityEventProperties::setEventList(QMap<int, QString> eventNames){
-    this->cOutcomeEvent.clear();
+    cOutcomeEvent.clear();
     QMapIterator<int, QString> i1(eventNames);
     while (i1.hasNext()) {
         i1.next();
         //qDebug() << "item"<< i1.key() << i1.value();
         cOutcomeEvent.addItem(i1.value(), i1.key());
+    }
+}
+
+void ActivityEventProperties::setStationStopList(QMap<int, QString> eventNames){
+    cStationStopAction.clear();
+    QMapIterator<int, QString> i1(eventNames);
+    while (i1.hasNext()) {
+        i1.next();
+        //qDebug() << "item"<< i1.key() << i1.value();
+        cStationStopAction.addItem(i1.value(), i1.key());
     }
 }
 

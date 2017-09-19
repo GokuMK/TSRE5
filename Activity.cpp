@@ -20,6 +20,7 @@
 #include "ConLib.h"
 #include "Traffic.h"
 #include "TDB.h"
+#include "TRitem.h"
 
 Activity::Activity() {
 }
@@ -929,6 +930,30 @@ QMap<int, QString> Activity::getEventIdNameList(){
         data[event[i].id] = event[i].name;
     }
     
+    return data;
+}
+
+QMap<int, QString> Activity::getServiceStationStopNameList(){
+    QMap<int, QString> data; 
+    if(playerServiceDefinition == NULL)
+        return data;
+    
+    return playerServiceDefinition->getStationStopNameList();
+}
+
+QMap<int, QString> Activity::ServiceDefinition::getStationStopNameList(){
+    QMap<int, QString> data;
+            
+    TDB *tdb = Game::trackDB;
+    if(tdb == NULL)
+        return data;
+    
+    for(int i = 0; i < platformStartId.size(); i++){
+        int trid = platformStartId[i];
+        if(tdb->trackItems[trid] == NULL)
+            return data;
+        data[i] = tdb->trackItems[trid]->platformName;
+    }
     return data;
 }
 
