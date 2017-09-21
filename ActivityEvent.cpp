@@ -132,6 +132,31 @@ QMap<QString, ActivityEvent::Outcome::OutcomeType> ActivityEvent::Outcome::Outco
 ActivityEvent::ActivityEvent() {
 }
 
+ActivityEvent::ActivityEvent(int uid, EventCategory c){
+    category = c;
+    id = uid;
+    activationLevel = 1;
+    if(category == CategoryAction){
+        eventType = EventTypeAllstops;
+        reversableEvent = false;
+    }
+    if(category == CategoryLocation){
+        eventType = EventTypeLocation;
+        location = new float[5];
+        location[0] = 0;
+        location[1] = 0;
+        location[2] = 0;
+        location[3] = 0;
+        location[4] = 10;
+    }
+    if(category == CategoryTime){
+        eventType = EventTypeTime;
+        time = 0;
+    }
+    
+    modified = true;
+}
+
 ActivityEvent::~ActivityEvent() {
 }
 

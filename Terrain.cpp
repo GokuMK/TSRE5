@@ -120,10 +120,10 @@ void Terrain::saveEmpty(int x, int y) {
     qDebug() << "New terrain tile";
     QFile file(Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw");
     if (!file.exists())
-        QFile::copy("resources/templateRoute/tiles/template_y.raw", Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw");
+        QFile::copy("tsre_assets/templateroute_0.6/tiles/template_y.raw", Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw");
     file.setFileName(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
     if (!file.exists())
-        QFile::copy("resources/templateRoute/tiles/template.t", Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
+        QFile::copy("tsre_assets/templateroute_0.6/tiles/template.t", Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
     TFile *tfile = new TFile();
     tfile->readT(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
     tfile->setBufferNames(name);

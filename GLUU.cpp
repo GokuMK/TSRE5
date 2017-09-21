@@ -43,7 +43,7 @@ GLUU::~GLUU() {
 }
 
 const char* GLUU::getShader(QString shaderScript, QString type) {
-    QFile* shaderData = new QFile("shaders/"+shaderScript+"."+type);
+    QFile* shaderData = new QFile(QString("tsre_appdata/")+Game::AppDataVersion+"/shaders/"+shaderScript+"."+type);
     if (!shaderData->open(QIODevice::ReadOnly))
         return "";
     return (const char*) ReadFile::readRAW(shaderData)->data;

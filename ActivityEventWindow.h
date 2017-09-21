@@ -27,7 +27,8 @@ public slots:
     void showEvents(Activity* act);
     void eventListSelected(QListWidgetItem * item);
     void eventNameChanged(int id);
-        
+    void bNewEventSelected();
+    void bDeleteEventSelected();
 signals:
     
         

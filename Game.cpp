@@ -9,9 +9,15 @@
  */
 
 #include "Game.h"
-#include <QFile>
-#include <QTextStream>
 #include <QDebug>
+#include <QFile>
+#include <QString>
+//#include <QCoreApplication>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+//#include <QUrl>
+//#include <QUrlQuery>
 #include "RouteEditorWindow.h"
 #include "LoadWindow.h"
 #include "CELoadWindow.h"
@@ -26,6 +32,7 @@ SoundList *Game::soundList = NULL;
 
 QString Game::AppName = "TSRE5";
 QString Game::AppVersion = "v0.692";
+QString Game::AppDataVersion = "0.69";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -114,14 +121,53 @@ bool Game::autoGeoTerrain = false;
 int Game::AASamples = 0;
 float Game::PixelRatio = 1.0;
 
+void Game::InitAssets() {
+    QString path;
+    
+    path = "./tsre_assets/";
+    QFile appFile3(path);
+    if (!appFile3.exists()){
+        QDir().mkdir(path);
+    }
+    
+    path = "./tsre_appdata/";
+    
+    QFile appFile1(path);
+    if (!appFile1.exists()){
+        QDir().mkdir(path);
+    }
+        
+    path += Game::AppDataVersion;
+    
+    QFile appFile2(path);
+    if (!appFile2.exists()){
+        qDebug() << "no appdata";
+        DownloadAppData(path);
+    }
+    if (!appFile2.exists()){
+        qDebug() << "appdata failed to load";
+        return;
+    }
+}
+
 void Game::load() {
     
     QString sh;
     QString path;
+    
     path = "settings.txt";
     QFile file(path);
-    if (!file.open(QIODevice::ReadOnly))
+    
+    if (!file.exists()){
+        qDebug() << "creating new settings file";
+        CreateNewSettingsFile();
+    }
+    
+    if (!file.open(QIODevice::ReadOnly)){
+        qDebug() << "settings file fails to open";
         return;
+    }
+    
     qDebug() << path;
 
     QTextStream in(&file);
@@ -481,3 +527,112 @@ void Game::check_coords(T&& x, T&& z, K&& px, K&& pz) {
 template void Game::check_coords(int& x, int& z, int& px, int& pz);
 template void Game::check_coords(int& x, int& z, float& px, float& pz);
 template void Game::check_coords(float& x, float& z, float& px, float& pz);
+
+void Game::CreateNewSettingsFile(){
+    QFile file;
+    QTextStream out;
+    QString filepath;
+
+    filepath = "./settings.txt";
+    file.setFileName(filepath);
+    //qDebug() << filepath;
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    out.setDevice(&file);
+    out << "consoleOutput = false\n";
+    out << "\n";
+    out << "# main directory of your game data\n";
+    out << "gameRoot = F:/train simulator\n";
+    out << "\n";
+    out << "# route directory name to load on startup by default\n";
+    out << "routeName = asdasasdasd1233\n";
+    out << "\n";
+    out << "# optional start tile\n";
+    out << "#startTileX = -5306\n";
+    out << "#startTileY = 14961\n";
+    out << "\n";
+    out << "# route edit\n";
+    out << "#createNewIfNotExist = true\n";
+    out << "writeEnabled = true\n";
+    out << "writeTDB = true\n";
+    out << "#deleteTrWatermarks = true\n";
+    out << "#deleteViewDbSpheres = true\n";
+    out << "\n";
+    out << "# geo data\n";
+    out << "geoPath = F:/hgst\n";
+    out << "\n";
+    out << "# misc\n";
+    out << "#systemTheme = true\n";
+    out << "#colorConView = #FF0000\n";
+    out << "#colorShapeView = #00FF00\n";
+    out << "#toolsHidden = true\n";
+    out << "usenNumPad = true\n";
+    out << "tileLod = 2\n";
+    out << "objectLod = 4000\n";
+    out << "maxObjLag = 10\n";
+    out << "allowObjLag = 1000\n";
+    out << "#cameraFov = 20.0\n";
+    out << "warningBox = true\n";
+    out << "leaveTrackShapeAfterDelete = false\n";
+    out << "#renderTrItems = true\n";
+    out << "#useImperial = false\n";
+    out << "#ortsEngEnable = false\n";
+    out << "#oglDefaultLineWidth = 2\n";
+    out << "shadowsEnabled = 1\n";
+    out << "ignoreMissingGlobalShapes = true\n";
+    out << "snapableOnlyRot = false\n";
+    out << "imageMapsUrl = \n";
+    out << "#AASamples = 16\n";
+    out << "#mapImageResolution = 2048\n";
+    out << "#cameraStickToTerrain = true\n";
+    out << "#proceduralTracks = true\n";
+    out << "#mouseSpeed = 0.1\n";
+    out.flush();
+    file.close();
+}
+
+void Game::DownloadAppData(QString path){
+    QDir().mkdir(path);
+    QNetworkAccessManager* mgr = new QNetworkAccessManager();
+    //connect(mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(isData(QNetworkReply*)));
+    qDebug() << "Wait ..";
+    
+    QString Url = "http://koniec.org/tsre5/data/appdata/appdata_"+ Game::AppDataVersion + ".cab";
+    qDebug() << Url;
+    QNetworkRequest req;//(QUrl(Url));
+    req.setUrl(QUrl(Url));
+    qDebug() << req.url();
+    QNetworkReply* r = mgr->get(req);
+    QEventLoop loop;
+    QObject::connect(r, SIGNAL(finished()), &loop, SLOT(quit()));
+    //connect(r, SIGNAL(error(QNetworkReply::NetworkError)), &loop, SLOT(quit()));
+    //connect(r, SIGNAL(finished()), this, SLOT(downloadFinished()));
+    loop.exec();
+    qDebug() << "Network Reply Loop End";
+    QByteArray data = r->readAll();
+
+    QFile file("./temp.cab");
+    file.open(QIODevice::WriteOnly);
+    file.write(data);
+    file.close();
+    
+    QProcess proc;
+    QString command = "expand .\\temp.cab .\\tsre_appdata\\0.69 -F:*";
+    proc.start(command);
+    if(proc.waitForStarted()){
+        qDebug() << "Windows .cab Epand Started";
+    }
+    proc.waitForFinished(-1);
+        qDebug() << "Finished";
+        
+    qDebug() << file.remove();
+    
+    QString conBatFile = QFileInfo(QCoreApplication::applicationFilePath()).fileName()+" --conedit";
+    
+    QFile file1("./ConsistEditor.bat");
+    file1.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out;
+    out.setDevice(&file1);
+    out << conBatFile;
+    out.flush();
+    file1.close();
+}

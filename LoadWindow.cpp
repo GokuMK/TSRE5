@@ -10,6 +10,9 @@
 
 #include "LoadWindow.h"
 #include <QtWidgets>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 #include "Game.h"
 #include <QDebug>
 #include "NewRouteWindow.h"
@@ -20,7 +23,7 @@ LoadWindow::LoadWindow() {
     setWindowTitle(Game::AppName+" "+Game::AppVersion+" Route Editor");
     this->setFixedSize(600, 700);
     QImage* myImage = new QImage();
-    myImage->load("resources/load.png");
+    myImage->load(QString("tsre_appdata/")+Game::AppDataVersion+"/load.png");
 
     QLabel* myLabel = new QLabel("");
     myLabel->setContentsMargins(0,0,0,0);
@@ -183,6 +186,14 @@ void LoadWindow::setLoadRoute(){
 void LoadWindow::setNewRoute(){
     //qDebug() << "new";
     //this->load->setText("New");
+    
+    //Check if template route available.
+    QString path = "./tsre_assets/templateRoute_0.6";
+    QFile appFile(path);
+    if (!appFile.exists()){
+        downloadTemplateRoute(path);
+    }
+    
     NewRouteWindow newWindow;
     newWindow.setWindowTitle("New route");
     newWindow.name.setText("");
@@ -209,3 +220,38 @@ void LoadWindow::exitNow(){
     this->hide();
 }
 
+void LoadWindow::downloadTemplateRoute(QString path){
+    QDir().mkdir(path);
+    QNetworkAccessManager* mgr = new QNetworkAccessManager();
+    qDebug() << "Wait ..";
+    
+    QString Url = "http://koniec.org/tsre5/data/appdata/templateroute_0.6.cab";
+    qDebug() << Url;
+    QNetworkRequest req;//(QUrl(Url));
+    req.setUrl(QUrl(Url));
+    qDebug() << req.url();
+    QNetworkReply* r = mgr->get(req);
+    QEventLoop loop;
+    QObject::connect(r, SIGNAL(finished()), &loop, SLOT(quit()));
+    //connect(r, SIGNAL(error(QNetworkReply::NetworkError)), &loop, SLOT(quit()));
+    //connect(r, SIGNAL(finished()), this, SLOT(downloadFinished()));
+    loop.exec();
+    qDebug() << "Network Reply Loop End";
+    QByteArray data = r->readAll();
+
+    QFile file("./temp.cab");
+    file.open(QIODevice::WriteOnly);
+    file.write(data);
+    file.close();
+    
+    QProcess proc;
+    QString command = "expand .\\temp.cab .\\tsre_assets\\templateroute_0.6 -F:*";
+    proc.start(command);
+    if(proc.waitForStarted()){
+        qDebug() << "Windows .cab Epand Started";
+    }
+    proc.waitForFinished(-1);
+        qDebug() << "Finished";
+        
+    qDebug() << file.remove();
+}

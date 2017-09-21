@@ -44,6 +44,7 @@ private:
     IghCoordinate* igh = NULL;
     LatitudeLongitudeCoordinate* latlon = NULL;
     PreciseTileCoordinate* aCoords = NULL;
+    void downloadTemplateRoute(QString path);
 };
 
 #endif	/* LOADWINDOW_H */

@@ -12,7 +12,6 @@
 #define	ACTIVITY_H
 
 #include <QString>
-#include <unordered_map>
 #include <QVector>
 #include "ActivityEvent.h"
 #include "ActivityObject.h"
@@ -32,11 +31,11 @@ public:
     
     struct PlayerTrafficDefinition {
         int id = 0;
-        std::vector<int> arrivalTime;
-        std::vector<int> departTime;
-        std::vector<int> skipCount;
-        std::vector<float> distanceDownPath;
-        std::vector<int> platformStartID;
+        QVector<int> arrivalTime;
+        QVector<int> departTime;
+        QVector<int> skipCount;
+        QVector<float> distanceDownPath;
+        QVector<int> platformStartID;
         void load(FileBuffer* data);
         void save(QTextStream* out);
     };
@@ -47,10 +46,10 @@ public:
         int uid = -1;
         bool player = false;
         bool empty = true;
-        std::vector<float> efficiency;
-        std::vector<int> skipCount;
-        std::vector<float> distanceDownPath;
-        std::vector<int> platformStartId;
+        QVector<float> efficiency;
+        QVector<int> skipCount;
+        QVector<float> distanceDownPath;
+        QVector<int> platformStartId;
         PlayerTrafficDefinition *trafficDefinition = NULL;
         void load(FileBuffer* data);
         void save(QTextStream* out);
@@ -59,7 +58,7 @@ public:
     
     struct TrafficDefinition {
         QString name;
-        std::vector<ServiceDefinition> service;
+        QVector<ServiceDefinition> service;
     };
     
     struct RestrictedSpeedZone {
@@ -108,12 +107,13 @@ public:
     TrafficDefinition *traffic = NULL;
     int nextServiceUID = -1;
     int nextActivityObjectUID = -1;
+    int nextEventUID = 0;
     int ortsAIHornAtCrossings = -9999;
     QVector<ActivityObject> activityObjects;
-    std::vector<std::pair<int, int>> platformNumPassengersWaiting;
-    std::vector<RestrictedSpeedZone> restrictedSpeedZone;
-    std::vector<int> activityFailedSignal;
-    std::vector<ActivityEvent> event;
+    QVector<QPair<int, int>> platformNumPassengersWaiting;
+    QVector<RestrictedSpeedZone> restrictedSpeedZone;
+    QVector<int> activityFailedSignal;
+    QVector<ActivityEvent> event;
     int serial = -1;
     
     void load();
@@ -146,6 +146,8 @@ public:
     void setDescription(QString val);
     void setBriefing(QString val);
     void deleteObject(int id);
+    void deleteCurrentEvent();
+    void newEvent(ActivityEvent::EventCategory category);
     unsigned int getSelectedCarId();
     bool getCarPosition(int oid, int eid, float *posTW);
     QMap<int, QString> getEventIdNameList();

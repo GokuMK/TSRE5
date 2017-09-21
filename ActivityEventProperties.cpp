@@ -649,6 +649,8 @@ void ActivityEventProperties::setStationStopList(QMap<int, QString> eventNames){
 }
 
 void ActivityEventProperties::selctOutcomeOnList(int id){
+    if(id < 0)
+        return;
     if(outcomeList.count() > id){
         outcomeList.item(id)->setSelected(true);
         outcomeList.setCurrentRow(id);

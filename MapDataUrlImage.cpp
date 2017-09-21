@@ -183,7 +183,6 @@ void MapDataUrlImage::get(LatitudeLongitudeCoordinate* center) {
     r->setProperty("centerLat", QVariant(center->Latitude));
     r->setProperty("centerLon", QVariant(center->Longitude));
     r->setProperty("zoom", zoom);
-
 }
 
 void MapDataUrlImage::isData(QNetworkReply* r) {

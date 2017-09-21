@@ -1400,7 +1400,8 @@ void Route::createNew() {
     Tile::saveEmpty(x, z);
     //Terrain::saveEmpty(x, z);
 
-    QString res = "resources/templateRoute/";
+    QString templateDir = "templateroute_0.6/";
+    QString res = QString("tsre_assets/templateroute_0.6/");//+templateDir;
     path += "/";
 
     QFile::copy(res + "sigcfg.dat", path + "sigcfg.dat");

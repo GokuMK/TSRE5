@@ -42,11 +42,11 @@ TerrainTools::TerrainTools(QString name)
 
     paintBrush = new Brush();
 
-    QDir dir("resources/brush/");
+    QDir dir(QString("tsre_appdata/")+Game::AppDataVersion+"/brush/");
     dir.setFilter(QDir::Files);
     dir.setNameFilters(QStringList()<<"*.png");
     foreach(QString bfile, dir.entryList())
-        brushShapes.push_back(QImage("resources/brush/"+bfile).convertToFormat(QImage::Format_Grayscale8));
+        brushShapes.push_back(QImage(QString("tsre_appdata/")+Game::AppDataVersion+"/brush/"+bfile).convertToFormat(QImage::Format_Grayscale8));
     nextBrushShape();
     
     buttonTools["heightTool"] = new QPushButton("HeightMap +", this);

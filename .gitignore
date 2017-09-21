@@ -4,3 +4,6 @@
 /resources/
 moc_*.cpp
 /log.txt
+/template_routes/
+/tsre_assets/
+/tsre_appdata/0.691/

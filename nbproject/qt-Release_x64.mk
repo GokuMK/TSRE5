@@ -38024,43 +38024,70 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Game.o: Game.cpp Game.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qnamespace.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qarraydata.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringbuilder.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QFile \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qfile.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qfiledevice.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qobject.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs_impl.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qlist.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qalgorithms.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qiterator.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qlist.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qhashfunctions.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qpair.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qbytearraylist.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringlist.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qregexp.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qstringmatcher.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qiodevice.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobject.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qobjectdefs_impl.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcoreevent.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qscopedpointer.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qmetatype.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qvarlengtharray.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcontainerfwd.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qobject_impl.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QTextStream \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qtextstream.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qlocale.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qvariant.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qmap.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qdebug.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qhash.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qshareddata.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qvector.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qpoint.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qset.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcontiguouscache.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qshareddata.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qsharedpointer_impl.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QFile \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfile.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qfiledevice.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/QNetworkAccessManager \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qnetworkaccessmanager.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QObject \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/QSslConfiguration \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qsslconfiguration.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qsslsocket.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qtcpsocket.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qabstractsocket.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qsslerror.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qsslcertificate.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qcryptographichash.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qdatetime.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qssl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QFlags \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QtGlobal \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QSharedDataPointer \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QMetaType \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/QNetworkRequest \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qnetworkrequest.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QUrl \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qurl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/qurlquery.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QVariant \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/QNetworkReply \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qnetworkreply.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QIODevice \
 		RouteEditorWindow.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QWidget \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qwidget.h \
@@ -38092,8 +38119,6 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Game.o: Game.cpp Game.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qcursor.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qkeysequence.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qevent.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qurl.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qurlquery.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qvector2d.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qtouchdevice.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QMainWindow \
@@ -38117,13 +38142,11 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Game.o: Game.cpp Game.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qtextcodec.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qendian.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qlibraryinfo.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qdatetime.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qbuffer.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qdir.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qfileinfo.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qdiriterator.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qfileselector.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QObject \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QStringList \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qfilesystemwatcher.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qlockfile.h \
@@ -38200,7 +38223,6 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Game.o: Game.cpp Game.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcollator.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcommandlineoption.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qcommandlineparser.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/qcryptographichash.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qelapsedtimer.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qlinkedlist.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/qmessageauthenticationcode.h \
@@ -38278,7 +38300,6 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Game.o: Game.cpp Game.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglframebufferobject.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglpaintdevice.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglpixeltransferoptions.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QSharedDataPointer \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qopenglshaderprogram.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qopengltexture.h \
 		c:/OT/Static/5.7.0_x64/include/QtGui/qopengltimerquery.h \
@@ -38398,8 +38419,6 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Game.o: Game.cpp Game.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QPointF \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/QScrollerProperties \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qscrollerproperties.h \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QMetaType \
-		c:/OT/Static/5.7.0_x64/include/QtCore/QVariant \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qsystemtrayicon.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qundogroup.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qundostack.h \
@@ -41211,8 +41230,28 @@ build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/LoadWindow.o: LoadWindow.cpp
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbox.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtoolbutton.h \
 		c:/OT/Static/5.7.0_x64/include/QtWidgets/qtwidgetsversion.h \
-		Game.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/QNetworkAccessManager \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qnetworkaccessmanager.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/QSslConfiguration \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qsslconfiguration.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qsslsocket.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qtcpsocket.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qabstractsocket.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qsslerror.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qsslcertificate.h \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qssl.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QFlags \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QtGlobal \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QString \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/QNetworkRequest \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qnetworkrequest.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QUrl \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/QNetworkReply \
+		c:/OT/Static/5.7.0_x64/include/QtNetwork/qnetworkreply.h \
+		c:/OT/Static/5.7.0_x64/include/QtCore/QIODevice \
+		Game.h \
 		c:/OT/Static/5.7.0_x64/include/QtCore/QDebug \
 		NewRouteWindow.h \
 		IghCoords.h

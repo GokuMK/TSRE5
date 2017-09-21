@@ -103,6 +103,8 @@ int main(int argc, char *argv[]){
         app.setStyleSheet("QPushButton:checked{background-color: #e0c0a4;} ");
     }
     
+    Game::InitAssets();
+    
     //Game::window.resize(1280, 720);
     //window.resize(window.sizeHint());
      

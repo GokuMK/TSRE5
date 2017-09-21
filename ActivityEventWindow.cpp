@@ -23,7 +23,11 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     actionListLayout->setContentsMargins(0,0,0,0);
     actionListLayout->setSpacing(0);
     QPushButton *bNewActionEvent = new QPushButton("New Action Event");
+    QObject::connect(bNewActionEvent, SIGNAL(released()),
+                      this, SLOT(bNewEventSelected()));
     QPushButton *bDeleteActionEvent = new QPushButton("Delete");
+    QObject::connect(bDeleteActionEvent, SIGNAL(released()),
+                      this, SLOT(bDeleteEventSelected()));
     actionListLayout->addWidget(&actionList);
     actionListLayout->addWidget(bNewActionEvent);
     actionListLayout->addWidget(bDeleteActionEvent);
@@ -34,7 +38,11 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     locationListLayout->setContentsMargins(0,0,0,0);
     locationListLayout->setSpacing(0);
     QPushButton *bNewLocationEvent = new QPushButton("New Location Event");
+    QObject::connect(bNewLocationEvent, SIGNAL(released()),
+                      this, SLOT(bNewEventSelected()));
     QPushButton *bDeleteLocationEvent = new QPushButton("Delete");
+    QObject::connect(bDeleteLocationEvent, SIGNAL(released()),
+                      this, SLOT(bDeleteEventSelected()));
     locationListLayout->addWidget(&locationList);
     locationListLayout->addWidget(bNewLocationEvent);
     locationListLayout->addWidget(bDeleteLocationEvent);
@@ -45,7 +53,11 @@ ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
     timeListLayout->setContentsMargins(0,0,0,0);
     timeListLayout->setSpacing(0);
     QPushButton *bNewTimeEvent = new QPushButton("New Time Event");
+    QObject::connect(bNewTimeEvent, SIGNAL(released()),
+                      this, SLOT(bNewEventSelected()));
     QPushButton *bDeleteTimeEvent = new QPushButton("Delete");
+    QObject::connect(bDeleteTimeEvent, SIGNAL(released()),
+                      this, SLOT(bDeleteEventSelected()));
     timeListLayout->addWidget(&timeList);
     timeListLayout->addWidget(bNewTimeEvent);
     timeListLayout->addWidget(bDeleteTimeEvent);
@@ -87,21 +99,23 @@ void ActivityEventWindow::eventNameChanged(int id){
     if(activity == NULL)
         return;
     int j = -1;
-    for(int i = 0; i < activity->event.size(); i++ ){
+    /*for(int i = 0; i < activity->event.size(); i++ ){
         if(activity->event[i].id == id){
             j = i;
             break;
         }
     }
-    if(j == -1){
+    if(j == -1){*/
+    if(activity->currentEventSelected == NULL){
         showEvents(activity);
     }
+
     QListWidget *list = NULL;
-    if(activity->event[j].category == ActivityEvent::CategoryAction)
+    if(activity->currentEventSelected->category == ActivityEvent::CategoryAction)
         list = &actionList;
-    if(activity->event[j].category == ActivityEvent::CategoryLocation)
+    if(activity->currentEventSelected->category == ActivityEvent::CategoryLocation)
         list = &locationList;
-    if(activity->event[j].category == ActivityEvent::CategoryTime)
+    if(activity->currentEventSelected->category == ActivityEvent::CategoryTime)
         list = &timeList;
 
     int idxR = list->currentRow();
@@ -137,10 +151,36 @@ void ActivityEventWindow::showEvents(Activity* act){
 }
 
 void ActivityEventWindow::eventListSelected(QListWidgetItem * item){
+    if(activity == NULL)
+        return;
     eventProperties->showEvent(&activity->event[item->type()]);
     activity->currentEventSelected = &activity->event[item->type()];
     
     this->resize(this->width(), this->minimumHeight());
+}
+
+void ActivityEventWindow::bNewEventSelected(){
+    if(activity == NULL)
+        return;
+    ActivityEvent::EventCategory category = ActivityEvent::CategoryUndefined;
+
+    if(actionWidget.isVisible())
+        category = ActivityEvent::CategoryAction;
+    if(timeWidget.isVisible())
+        category = ActivityEvent::CategoryTime;
+    if(locationWidget.isVisible())
+        category = ActivityEvent::CategoryLocation;
+    
+    activity->newEvent(category);
+    
+    showEvents(activity);
+}
+
+void ActivityEventWindow::bDeleteEventSelected(){
+    if(activity == NULL)
+        return;
+    activity->deleteCurrentEvent();
+    showEvents(activity);
 }
 
 ActivityEventWindow::~ActivityEventWindow() {

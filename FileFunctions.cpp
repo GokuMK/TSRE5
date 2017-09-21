@@ -15,7 +15,7 @@
 
 void FileFunctions::copyFiles(QString dirIn, QString dirOut){
     QDir dir(dirIn);
-    qDebug() << dirIn;
+    qDebug() << dirIn << dirOut;
     dir.setNameFilters(QStringList() << "*.*");
     dir.setFilter(QDir::Files);
     foreach(QString dirFile, dir.entryList())

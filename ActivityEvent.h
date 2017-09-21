@@ -141,6 +141,8 @@ public:
     //Outcome* outcome = NULL;
     
     ActivityEvent();
+    ActivityEvent(int uid, EventCategory c);
+    
     ~ActivityEvent();
     
     int newOutcome();

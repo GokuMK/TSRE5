@@ -174,7 +174,7 @@ void Activity::load() {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                                 if (sh == ("service_definition")) {
-                                    traffic->service.emplace_back();
+                                    traffic->service.push_back(ServiceDefinition());
                                     traffic->service.back().load(data);
                                     ParserX::SkipToken(data);
                                     continue;
@@ -189,25 +189,31 @@ void Activity::load() {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                                 if (sh == ("eventcategoryaction")) {
-                                    event.emplace_back();
+                                    event.push_back(ActivityEvent());
                                     event.back().category = ActivityEvent::CategoryAction;
                                     event.back().load(data);
+                                    if(event.back().id > nextEventUID)
+                                        nextEventUID = event.back().id;
                                     event.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
                                 if (sh == ("eventcategorylocation")) {
-                                    event.emplace_back();
+                                    event.push_back(ActivityEvent());
                                     event.back().category = ActivityEvent::CategoryLocation;
                                     event.back().load(data);
+                                    if(event.back().id > nextEventUID)
+                                        nextEventUID = event.back().id;
                                     event.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
                                 if (sh == ("eventcategorytime")) {
-                                    event.emplace_back();
+                                    event.push_back(ActivityEvent());
                                     event.back().category = ActivityEvent::CategoryTime;
                                     event.back().load(data);
+                                    if(event.back().id > nextEventUID)
+                                        nextEventUID = event.back().id;
                                     event.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
@@ -222,7 +228,7 @@ void Activity::load() {
                         if (sh == ("platformnumpassengerswaiting")) {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("platformdata")) {
-                                    platformNumPassengersWaiting.emplace_back(std::make_pair(ParserX::GetNumber(data), ParserX::GetNumber(data)));
+                                    platformNumPassengersWaiting.push_back(qMakePair(ParserX::GetNumber(data), ParserX::GetNumber(data)));
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -253,7 +259,7 @@ void Activity::load() {
                         if (sh == ("activityrestrictedspeedzones")) {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("activityrestrictedspeedzone")) {
-                                    restrictedSpeedZone.emplace_back();
+                                    restrictedSpeedZone.push_back(RestrictedSpeedZone());
                                     restrictedSpeedZone.back().load(data);
                                     ParserX::SkipToken(data);
                                     continue;
@@ -268,7 +274,7 @@ void Activity::load() {
                         if (sh == ("activityfailedsignals")) {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("activityfailedsignal")) {
-                                    activityFailedSignal.emplace_back(ParserX::GetNumber(data));
+                                    activityFailedSignal.push_back(ParserX::GetNumber(data));
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -403,27 +409,27 @@ void Activity::PlayerTrafficDefinition::load(FileBuffer* data) {
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
         if (sh == ("arrivaltime")) {
-            arrivalTime.emplace_back(ParserX::GetNumber(data));
+            arrivalTime.push_back(ParserX::GetNumber(data));
             ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("departtime")) {
-            departTime.emplace_back(ParserX::GetNumber(data));
+            departTime.push_back(ParserX::GetNumber(data));
             ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("skipcount")) {
-            skipCount.emplace_back(ParserX::GetNumber(data));
+            skipCount.push_back(ParserX::GetNumber(data));
             ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("distancedownpath")) {
-            distanceDownPath.emplace_back(ParserX::GetNumber(data));
+            distanceDownPath.push_back(ParserX::GetNumber(data));
             ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("platformstartid")) {
-            platformStartID.emplace_back(ParserX::GetNumber(data));
+            platformStartID.push_back(ParserX::GetNumber(data));
             ParserX::SkipToken(data);
             continue;
         }
@@ -500,22 +506,22 @@ void Activity::ServiceDefinition::load(FileBuffer* data) {
             continue;
         }
         if (sh == ("efficiency")) {
-            this->efficiency.emplace_back(ParserX::GetNumber(data));
+            this->efficiency.push_back(ParserX::GetNumber(data));
             ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("skipcount")) {
-            this->skipCount.emplace_back(ParserX::GetNumber(data));
+            this->skipCount.push_back(ParserX::GetNumber(data));
             ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("distancedownpath")) {
-            this->distanceDownPath.emplace_back(ParserX::GetNumber(data));
+            this->distanceDownPath.push_back(ParserX::GetNumber(data));
             ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("platformstartid")) {
-            this->platformStartId.emplace_back(ParserX::GetNumber(data));
+            this->platformStartId.push_back(ParserX::GetNumber(data));
             ParserX::SkipToken(data);
             continue;
         }
@@ -962,5 +968,22 @@ void Activity::deleteObject(int id){
         if(activityObjects[i].id == id)
             activityObjects.remove(i);
     }
+    modified = true;
+}
+
+void Activity::deleteCurrentEvent(){
+    for(int i = 0; i < event.size(); i++){
+        if(event[i].id == currentEventSelected->id){
+            event.remove(i);
+            modified = true;
+            return;
+        }
+    }
+}
+    
+void Activity::newEvent(ActivityEvent::EventCategory category){
+    event.push_back(ActivityEvent(++nextEventUID, category));
+    event.back().name = "New Event";
+    event.back().setParentActivity(this);
     modified = true;
 }

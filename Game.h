@@ -34,6 +34,7 @@ public:
     static SoundList *soundList;
     
     static QString AppVersion;
+    static QString AppDataVersion;
     static QString AppName;
     static QString root;
     static QString route;
@@ -45,6 +46,7 @@ public:
     static int maxObjLag;
     static bool ignoreLoadLimits;
     static void load();
+    static void InitAssets();
     static bool loadRouteEditor();
     static bool loadConEditor();
     static bool checkRoot(QString dir);
@@ -125,6 +127,8 @@ public:
 private:
     static RouteEditorWindow* window;
     static LoadWindow* loadWindow;
+    static void CreateNewSettingsFile();
+    static void DownloadAppData(QString path);
 };
 
 #endif	/* GAMESETTINGS_H */

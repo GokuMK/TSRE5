@@ -18,10 +18,10 @@ QMap<QString, ObjFile*> ProceduralShape::Files;
 float ProceduralShape::Alpha = 0;
 
 void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &sections) {
-    QString path1 = "resources/tracks/inbk3.obj";
-    QString path2 = "resources/tracks/uic60.obj";
-    //QString path3 = "resources/tracks/ballast1.obj";
-    QString path3 = "resources/tracks/ballast2.obj";
+    QString path1 = QString("tsre_appdata/")+Game::AppDataVersion+"/tracks/inbk3.obj";
+    QString path2 = QString("tsre_appdata/")+Game::AppDataVersion+"/tracks/uic60.obj";
+    //QString path3 = QString("tsre_appdata/")+Game::AppDataVersion+"/tracks/ballast1.obj";
+    QString path3 = QString("tsre_appdata/")+Game::AppDataVersion+"/tracks/ballast2.obj";
     if(Files[path1] == NULL)
         Files[path1] = new ObjFile(path1);
     if(Files[path2] == NULL)
