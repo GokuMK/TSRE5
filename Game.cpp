@@ -596,7 +596,7 @@ void Game::DownloadAppData(QString path){
     //connect(mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(isData(QNetworkReply*)));
     qDebug() << "Wait ..";
     
-    QString Url = "http://koniec.org/tsre5/data/appdata/appdata_"+ Game::AppDataVersion + ".cab";
+    QString Url = "http://koniec.org/tsre5/data/appdata/"+ Game::AppDataVersion + ".cab";
     qDebug() << Url;
     QNetworkRequest req;//(QUrl(Url));
     req.setUrl(QUrl(Url));

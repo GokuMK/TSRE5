@@ -29,6 +29,9 @@ class PropertiesAbstract;
 class GameObj;
 class PreciseTileCoordinate;
 class ActivityEventWindow;
+class ActivityServiceWindow;
+class ActivityTrafficWindow;
+class ActivityTimetableWindow;
 
 class RouteEditorWindow : public QMainWindow
 {
@@ -73,6 +76,9 @@ public slots:
     void shapeVeiwWindowClosed();
     void viewUnselectAll();
     void showActivityEventEditor();
+    void showActivityServiceEditor();
+    void showActivityTrafficEditor();
+    void showActivityTimetableEditor();
 
 signals:
     void exitNow();
@@ -141,6 +147,9 @@ private:
     AboutWindow* aboutWindow;
     NaviWindow* naviWindow;
     ActivityEventWindow* activityEventWindow;
+    ActivityServiceWindow* activityServiceWindow;
+    ActivityTrafficWindow* activityTrafficWindow;
+    ActivityTimetableWindow* activityTimetableWindow;
     ShapeViewWindow* shapeViewWindow;
 };
 //! [0]

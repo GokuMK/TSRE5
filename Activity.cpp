@@ -403,58 +403,6 @@ void Activity::save() {
     QFile::remove(path);
 }
 
-void Activity::PlayerTrafficDefinition::load(FileBuffer* data) {
-    QString sh;
-    id = ParserX::GetNumber(data);
-    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-
-        if (sh == ("arrivaltime")) {
-            arrivalTime.push_back(ParserX::GetNumber(data));
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("departtime")) {
-            departTime.push_back(ParserX::GetNumber(data));
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("skipcount")) {
-            skipCount.push_back(ParserX::GetNumber(data));
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("distancedownpath")) {
-            distanceDownPath.push_back(ParserX::GetNumber(data));
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("platformstartid")) {
-            platformStartID.push_back(ParserX::GetNumber(data));
-            ParserX::SkipToken(data);
-            continue;
-        }
-        qDebug() << "#trafficDefinition - undefined token: " << sh;
-        ParserX::SkipToken(data);
-        continue;
-    }
-}
-
-void Activity::PlayerTrafficDefinition::save(QTextStream* out) {
-
-    *out << "			Player_Traffic_Definition ( "<< id <<"\n";
-
-    for(int i = 0; i<arrivalTime.size(); i++){
-        *out << "				ArrivalTime ( "<<arrivalTime[i]<<" )\n";
-        *out << "				DepartTime ( "<<departTime[i]<<" )\n";
-        *out << "				SkipCount ( "<<skipCount[i]<<" )\n";
-        *out << "				DistanceDownPath ( "<<distanceDownPath[i]<<" )\n";
-        *out << "				PlatformStartID ( "<<platformStartID[i]<<" )\n";
-    }
-    *out << "			)\n";
-}
-
-
-
 void Activity::RestrictedSpeedZone::load(FileBuffer* data) {
     QString sh;
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
@@ -495,7 +443,8 @@ void Activity::ServiceDefinition::load(FileBuffer* data) {
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         empty = false;
         if (sh == ("player_traffic_definition")) {
-            trafficDefinition = new PlayerTrafficDefinition();
+            trafficDefinition = new ActivityTimetable();
+            trafficDefinition->actTimetable = true;
             trafficDefinition->load(data);
             ParserX::SkipToken(data);
             continue;
@@ -552,8 +501,10 @@ void Activity::ServiceDefinition::save(QTextStream* out) {
         woff = "	";
         *out << woff << "		Service_Definition ( "<< ParserX::AddComIfReq(name) <<" "<<path<<"\n";
     }
-    if(trafficDefinition != NULL)
-        trafficDefinition->save(out);
+    if(trafficDefinition != NULL && player){
+        QString off = "			";
+        trafficDefinition->save(out, off);
+    }
     
     if(uid != -1)
         *out << woff << "			UiD ( "<<uid<<" )\n";
@@ -873,8 +824,8 @@ void Activity::createNewPlayerService(QString sName, int sTime ){
     playerServiceDefinition->empty = false;
     playerServiceDefinition->name = sName;
     playerServiceDefinition->uid = 0;
-    playerServiceDefinition->trafficDefinition = new PlayerTrafficDefinition();
-    playerServiceDefinition->trafficDefinition->id = sTime;
+    playerServiceDefinition->trafficDefinition = new ActivityTimetable();
+    playerServiceDefinition->trafficDefinition->time = sTime;
     modified = true;
 }
 

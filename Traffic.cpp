@@ -17,6 +17,7 @@
 #include <QFile>
 #include "GLUU.h"
 #include "TDB.h"
+#include "ActivityTimetable.h"
 
 Traffic::Traffic(QString p, QString n, bool nowe) {
     pathid = p + "/" + n;
@@ -68,9 +69,8 @@ void Traffic::load(){
                     continue;
                 }
                 if (sh == ("service_definition")) {
-                    service.push_back(ServiceDefinition());
-                    service.back().name = ParserX::GetString(data);
-                    service.back().time = ParserX::GetNumber(data);
+                    service.push_back(new ActivityTimetable());
+                    service.back()->load(data);
                     ParserX::SkipToken(data);
                     continue;
                 }

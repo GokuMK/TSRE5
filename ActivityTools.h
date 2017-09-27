@@ -34,8 +34,8 @@ public slots:
     void newActButtonEnabled();
     void cServiceEnabled(QString val);
     void cTrafficEnabled(QString val);
-    void actServiceNewEnabled();
-    void actServiceEditEnabled();
+    //void actServiceNewEnabled();
+    //void actServiceEditEnabled();
     void msg(QString text, QString val);
     void eFileNameEnabled(QString val);
     void eDisplayNameEnabled(QString val);
@@ -57,13 +57,23 @@ public slots:
     void descriptionOpenEnabled();
     void briefingOpenEnabled();
     void actEventsOpenEnabled();
+    void actServiceOpenEnabled();
+    void actTrafficOpenEnabled();
+    void actTimetableOpenEnabled();
+    void actSettingsOpenEnabled();
     
 signals:
     void enableTool(QString name);
     void objectSelected(GameObj* obj);
     void showActivityEventEditor();
+    void showActivityServiceEditor();
     void showEvents(Activity *a);
-
+    void showServices(Route *r);
+    void showActivityTrafficEditor();
+    void showTraffic(Route *r);
+    void showActivityTimetableEditor();
+    void showTimetable(Route *r);
+    
 private:
     Route *route = NULL;
     QComboBox consists;
@@ -91,10 +101,15 @@ private:
     QComboBox cDifficulty;
     QComboBox cSeason;
     QComboBox cWeather;
+    QCheckBox cHornAtCrossings;
 
     QComboBox cService;
     QComboBox cTraffic;
     QComboBox cPath;
+    
+    QWidget settingsWidget;
+    QPlainTextEdit eDescription;
+    QPlainTextEdit eBriefing;
     
     void reloadServicesList();
 };

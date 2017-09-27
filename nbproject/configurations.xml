@@ -75,6 +75,16 @@
         <itemPath>ProceduralShape.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="routeEditor" projectFiles="true">
+        <logicalFolder name="f2" displayName="activity" projectFiles="true">
+          <itemPath>ActivityEventProperties.h</itemPath>
+          <itemPath>ActivityEventWindow.h</itemPath>
+          <itemPath>ActivityServiceProperties.h</itemPath>
+          <itemPath>ActivityServiceWindow.h</itemPath>
+          <itemPath>ActivityTimetableProperties.h</itemPath>
+          <itemPath>ActivityTimetableWindow.h</itemPath>
+          <itemPath>ActivityTrafficProperties.h</itemPath>
+          <itemPath>ActivityTrafficWindow.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
           <itemPath>EditFileNameDialog.h</itemPath>
           <itemPath>PropertiesAbstract.h</itemPath>
@@ -104,9 +114,6 @@
           <itemPath>TransformWorldObjDialog.h</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
-        <itemPath>ActivityEventProperties.h</itemPath>
-        <itemPath>ActivityEventWindow.h</itemPath>
-        <itemPath>ActivityServiceTools.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
         <itemPath>GeoTools.h</itemPath>
         <itemPath>LoadWindow.h</itemPath>
@@ -161,6 +168,7 @@
         <itemPath>Activity.h</itemPath>
         <itemPath>ActivityEvent.h</itemPath>
         <itemPath>ActivityObject.h</itemPath>
+        <itemPath>ActivityTimetable.h</itemPath>
         <itemPath>ConLib.h</itemPath>
         <itemPath>Consist.h</itemPath>
         <itemPath>Eng.h</itemPath>
@@ -284,6 +292,16 @@
         <itemPath>ProceduralShape.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="routeEditor" projectFiles="true">
+        <logicalFolder name="f2" displayName="activity" projectFiles="true">
+          <itemPath>ActivityEventProperties.cpp</itemPath>
+          <itemPath>ActivityEventWindow.cpp</itemPath>
+          <itemPath>ActivityServiceProperties.cpp</itemPath>
+          <itemPath>ActivityServiceWindow.cpp</itemPath>
+          <itemPath>ActivityTimetableProperties.cpp</itemPath>
+          <itemPath>ActivityTimetableWindow.cpp</itemPath>
+          <itemPath>ActivityTrafficProperties.cpp</itemPath>
+          <itemPath>ActivityTrafficWindow.cpp</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="properties" projectFiles="true">
           <itemPath>EditFileNameDialog.cpp</itemPath>
           <itemPath>PropertiesAbstract.cpp</itemPath>
@@ -313,9 +331,6 @@
           <itemPath>TransformWorldObjDialog.cpp</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
-        <itemPath>ActivityEventProperties.cpp</itemPath>
-        <itemPath>ActivityEventWindow.cpp</itemPath>
-        <itemPath>ActivityServiceTools.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
         <itemPath>GeoTools.cpp</itemPath>
         <itemPath>LoadWindow.cpp</itemPath>
@@ -370,6 +385,7 @@
         <itemPath>Activity.cpp</itemPath>
         <itemPath>ActivityEvent.cpp</itemPath>
         <itemPath>ActivityObject.cpp</itemPath>
+        <itemPath>ActivityTimetable.cpp</itemPath>
         <itemPath>ConLib.cpp</itemPath>
         <itemPath>Consist.cpp</itemPath>
         <itemPath>Eng.cpp</itemPath>
@@ -478,13 +494,37 @@
       </item>
       <item path="ActivityObject.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ActivityServiceProperties.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
+      <item path="ActivityServiceProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityServiceWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityServiceWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetableProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetableProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetableWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetableWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTrafficProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTrafficProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTrafficWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTrafficWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1171,13 +1211,37 @@
       </item>
       <item path="ActivityObject.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ActivityServiceProperties.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
+      <item path="ActivityServiceProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityServiceWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityServiceWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetableProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetableProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetableWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetableWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTrafficProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTrafficProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTrafficWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTrafficWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1857,13 +1921,37 @@
       </item>
       <item path="ActivityObject.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ActivityServiceProperties.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
+      <item path="ActivityServiceProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityServiceWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityServiceWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetableProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetableProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetableWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetableWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTrafficProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTrafficProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTrafficWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTrafficWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2550,13 +2638,37 @@
       </item>
       <item path="ActivityObject.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ActivityServiceProperties.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
+      <item path="ActivityServiceProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityServiceWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityServiceWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetableProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetableProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetableWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetableWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTrafficProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTrafficProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTrafficWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTrafficWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Brush.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3231,13 +3343,37 @@
       </item>
       <item path="ActivityObject.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ActivityServiceTools.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ActivityServiceProperties.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ActivityServiceTools.h" ex="false" tool="3" flavor2="0">
+      <item path="ActivityServiceProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityServiceWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityServiceWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetableProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetableProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTimetableWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTimetableWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ActivityTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActivityTools.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTrafficProperties.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTrafficProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActivityTrafficWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActivityTrafficWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Brush.cpp" ex="false" tool="1" flavor2="8">
       </item>

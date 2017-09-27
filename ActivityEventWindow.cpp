@@ -14,8 +14,8 @@
 #include "ActivityEvent.h"
 
 ActivityEventWindow::ActivityEventWindow(QWidget* parent) : QWidget(parent) {
-    this->setWindowFlags(Qt::WindowType::Tool);
-    this->setWindowTitle(tr("Activity Events"));
+    setWindowFlags(Qt::WindowType::Tool);
+    setWindowTitle(tr("Activity Events"));
     
     eventProperties = new ActivityEventProperties(this);
     

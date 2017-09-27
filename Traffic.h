@@ -14,14 +14,12 @@
 #include <QString>
 #include <QVector>
 
+class ActivityTimetable;
+
 class Traffic {
 public:
-    struct ServiceDefinition {
-        QString name;
-        int time;
-    };
     
-    QVector<ServiceDefinition> service;
+    QVector<ActivityTimetable*> service;
     QString displayName;
     QString name;
     QString nameId;

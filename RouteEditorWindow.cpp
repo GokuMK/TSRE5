@@ -48,6 +48,12 @@
 #include "UnsavedDialog.h"
 #include "ActivityEventWindow.h"
 #include "ActivityEventProperties.h"
+#include "ActivityServiceWindow.h"
+#include "ActivityServiceProperties.h"
+#include "ActivityTrafficWindow.h"
+#include "ActivityTrafficProperties.h"
+#include "ActivityTimetableWindow.h"
+#include "ActivityTimetableProperties.h"
 
 RouteEditorWindow::RouteEditorWindow() {
     
@@ -61,6 +67,9 @@ RouteEditorWindow::RouteEditorWindow() {
     aboutWindow = new AboutWindow(this);
     naviWindow = new NaviWindow(this);
     activityEventWindow = new ActivityEventWindow(this);
+    activityServiceWindow = new ActivityServiceWindow(this);
+    activityTrafficWindow = new ActivityTrafficWindow(this);
+    activityTimetableWindow = new ActivityTimetableWindow(this);
     
     objProperties["Static"] = new PropertiesStatic;
     objProperties["Transfer"] = new PropertiesTransfer;
@@ -406,8 +415,20 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(activityTools, SIGNAL(showActivityEventEditor()),
                       this, SLOT(showActivityEventEditor()));
     
+    QObject::connect(activityTools, SIGNAL(showActivityServiceEditor()),
+                      this, SLOT(showActivityServiceEditor()));
+    
+    QObject::connect(activityTools, SIGNAL(showActivityTrafficEditor()),
+                      this, SLOT(showActivityTrafficEditor()));
+    
     QObject::connect(activityTools, SIGNAL(showEvents(Activity*)),
                       activityEventWindow, SLOT(showEvents(Activity*)));
+    
+    QObject::connect(activityTools, SIGNAL(showServices(Route*)),
+                      activityServiceWindow, SLOT(showServices(Route*)));
+    
+    QObject::connect(activityTools, SIGNAL(showTraffic(Route*)),
+                      activityTrafficWindow, SLOT(showTraffic(Route*)));
     
     QObject::connect(activityEventWindow->eventProperties, SIGNAL(jumpTo(PreciseTileCoordinate*)),
                       glWidget, SLOT(jumpTo(PreciseTileCoordinate*)));
@@ -543,6 +564,18 @@ void RouteEditorWindow::showToolsActivity(bool show){
 
 void RouteEditorWindow::showActivityEventEditor(){
     activityEventWindow->show();
+}
+
+void RouteEditorWindow::showActivityServiceEditor(){
+    activityServiceWindow->show();
+}
+
+void RouteEditorWindow::showActivityTrafficEditor(){
+    activityTrafficWindow->show();
+}
+
+void RouteEditorWindow::showActivityTimetableEditor(){
+    activityTimetableWindow->show();
 }
 
 void RouteEditorWindow::setToolbox(QString name){

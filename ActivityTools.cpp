@@ -21,7 +21,7 @@
 #include "Service.h"
 #include "Traffic.h"
 #include "Path.h"
-#include "ActivityServiceTools.h"
+#include "ActivityServiceProperties.h"
 #include "TextEditDialog.h"
 
 ActivityTools::ActivityTools(QString name)
@@ -55,6 +55,7 @@ ActivityTools::ActivityTools(QString name)
     QObject::connect(newActButton, SIGNAL(released()), this, SLOT(newActButtonEnabled()));
 
     //radio1->setChecked(true);
+    QGridLayout *vlist1 = NULL;
     
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
@@ -77,20 +78,9 @@ ActivityTools::ActivityTools(QString name)
     cService.setStyleSheet("combobox-popup: 0;");
     cService.setMaxVisibleItems(35);
     cService.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    QGridLayout *vlist1 = new QGridLayout;
-    vlist1->setSpacing(2);
-    vlist1->setContentsMargins(0,0,1,0);
-    QPushButton *actServiceNew = new QPushButton("New");
-    QObject::connect(actServiceNew, SIGNAL(released()), this, SLOT(actServiceNewEnabled()));
-    QPushButton *actServiceEdit = new QPushButton("Edit");
-    QObject::connect(actServiceEdit, SIGNAL(released()), this, SLOT(actServiceEditEnabled()));
-    QPushButton *actServiceClone = new QPushButton("Clone");
-    QPushButton *actServiceDelete = new QPushButton("Delete");
-    vlist1->addWidget(actServiceNew,0,0);
-    vlist1->addWidget(actServiceEdit,0,1);
-    vlist1->addWidget(actServiceClone,0,2);
-    vlist1->addWidget(actServiceDelete,0,3);
-    vbox->addItem(vlist1);
+    QPushButton *actServiceOpen = new QPushButton("Open Service Editor");
+    QObject::connect(actServiceOpen, SIGNAL(released()), this, SLOT(actServiceOpenEnabled()));
+    vbox->addWidget(actServiceOpen);
     
     label = new QLabel("Traffic:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -100,18 +90,17 @@ ActivityTools::ActivityTools(QString name)
     cTraffic.setStyleSheet("combobox-popup: 0;");
     cTraffic.setMaxVisibleItems(35);
     cTraffic.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    vlist1 = new QGridLayout;
-    vlist1->setSpacing(2);
-    vlist1->setContentsMargins(0,0,1,0);
-    QPushButton *actTrafficNew = new QPushButton("New");
-    QPushButton *actTrafficEdit = new QPushButton("Edit");
-    QPushButton *actTrafficClone = new QPushButton("Clone");
-    QPushButton *actTrafficDelete = new QPushButton("Delete");
-    vlist1->addWidget(actTrafficNew,0,0);
-    vlist1->addWidget(actTrafficEdit,0,1);
-    vlist1->addWidget(actTrafficClone,0,2);
-    vlist1->addWidget(actTrafficDelete,0,3);
-    vbox->addItem(vlist1);
+    QPushButton *actTrafficOpen = new QPushButton("Open Traffic Editor");
+    QObject::connect(actTrafficOpen, SIGNAL(released()), this, SLOT(actTrafficOpenEnabled()));
+    vbox->addWidget(actTrafficOpen);
+    
+    label = new QLabel("Timetable:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QPushButton *actTimetableOpen = new QPushButton("Open Timetable Editor");
+    QObject::connect(actTimetableOpen, SIGNAL(released()), this, SLOT(actTimetableOpenEnabled()));
+    vbox->addWidget(actTimetableOpen);
     
     label = new QLabel("Paths:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -150,18 +139,17 @@ ActivityTools::ActivityTools(QString name)
     QPushButton *actConsistFlip = new QPushButton("Flip");
     QPushButton *actConsistDelete = new QPushButton("Delete");
     vlist1->addWidget(actConsistJump,0,0);
-    vlist1->addWidget(actConsistFlip,0,1);
-    vlist1->addWidget(actConsistDelete,0,2);
-    vlist1->addWidget(buttonTools["actNewLooseConsistTool"],0,3,1,2);
-    vbox->addItem(vlist1);
-    label = new QLabel("Consist List:");
-    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    vlist1->addWidget(actConsistDelete,0,1);
+    vlist1->addWidget(buttonTools["actNewLooseConsistTool"],0,2,1,2);
+    label = new QLabel("Consist:");
+    //label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label);
-    vbox->addWidget(&conFilesShow);
+    vlist1->addWidget(label,1,0);
+    vlist1->addWidget(&conFilesShow,1,1,1,3);
     conFilesShow.setStyleSheet("combobox-popup: 0;");
     conFilesShow.setMaxVisibleItems(35);
     conFilesShow.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    vbox->addItem(vlist1);
     
     label = new QLabel("Events:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -175,85 +163,111 @@ ActivityTools::ActivityTools(QString name)
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
-    QFormLayout *vlist = new QFormLayout;
-    vlist->setSpacing(2);
-    vlist->setContentsMargins(3,0,3,0);
-    vlist->addRow("File Name:",&eFileName);
-    QObject::connect(&eFileName, SIGNAL(textEdited(QString)), this, SLOT(eFileNameEnabled(QString)));
-    vlist->addRow("Display Name:",&eDisplayName);
-    QObject::connect(&eDisplayName, SIGNAL(textEdited(QString)), this, SLOT(eDisplayNameEnabled(QString)));
-    vlist->addRow("Difficulty:",&cDifficulty);
-    QObject::connect(&cDifficulty, SIGNAL(activated(int)), this, SLOT(cDifficultyEnabled(int)));
-    vlist->addRow("Duration:",&eDuration);
-    QObject::connect(&eDuration, SIGNAL(editingFinished()), this, SLOT(eDurationEnabled()));
-    eDuration.setDisplayFormat("HH:mm");
-    vlist->addRow("Start Time:",&eStartTime);
-    QObject::connect(&eStartTime, SIGNAL(editingFinished()), this, SLOT(eStartTimeEnabled()));
-    eStartTime.setDisplayFormat("HH:mm:ss");
-    vlist->addRow("Season:",&cSeason);
-    QObject::connect(&cSeason, SIGNAL(activated(int)), this, SLOT(cSeasonEnabled(int)));
-    vlist->addRow("Weather:",&cWeather);
-    QObject::connect(&cWeather, SIGNAL(activated(int)), this, SLOT(cWeatherEnabled(int)));
-    vbox->addItem(vlist);
+    QPushButton *actSettingsOpen = new QPushButton("Open Settings ...");
+    QObject::connect(actSettingsOpen, SIGNAL(released()), this, SLOT(actSettingsOpenEnabled()));
+    vbox->addWidget(actSettingsOpen);
+    
+    QHBoxLayout *vbox1 = new QHBoxLayout;
     int row = 0;
     int labelWidth = 70;
-    vlist1 = new QGridLayout;
-    vlist1->setSpacing(2);
-    vlist1->setContentsMargins(0,0,1,0);
-
+    QGridLayout *vlist = new QGridLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(0,0,1,0);
+    vlist->addWidget(new QLabel("File Name:"), row, 0);
+    vlist->addWidget(&eFileName, row++, 1, 1, 2);
+    QObject::connect(&eFileName, SIGNAL(textEdited(QString)), this, SLOT(eFileNameEnabled(QString)));
+    vlist->addWidget(new QLabel("Display Name:"), row, 0);
+    vlist->addWidget(&eDisplayName, row++, 1, 1, 2);
+    QObject::connect(&eDisplayName, SIGNAL(textEdited(QString)), this, SLOT(eDisplayNameEnabled(QString)));
+    vlist->addWidget(new QLabel("Difficulty:"), row, 0);
+    vlist->addWidget(&cDifficulty, row++, 1, 1, 2);
+    QObject::connect(&cDifficulty, SIGNAL(activated(int)), this, SLOT(cDifficultyEnabled(int)));
+    vlist->addWidget(new QLabel("Duration:"), row, 0);
+    vlist->addWidget(&eDuration, row++, 1, 1, 2);
+    QObject::connect(&eDuration, SIGNAL(editingFinished()), this, SLOT(eDurationEnabled()));
+    eDuration.setDisplayFormat("HH:mm");
+    vlist->addWidget(new QLabel("Start Time:"), row, 0);
+    vlist->addWidget(&eStartTime, row++, 1, 1, 2);
+    QObject::connect(&eStartTime, SIGNAL(editingFinished()), this, SLOT(eStartTimeEnabled()));
+    eStartTime.setDisplayFormat("HH:mm:ss");
+    vlist->addWidget(new QLabel("Season:"), row, 0);
+    vlist->addWidget(&cSeason, row++, 1, 1, 2);
+    QObject::connect(&cSeason, SIGNAL(activated(int)), this, SLOT(cSeasonEnabled(int)));
+    vlist->addWidget(new QLabel("Weather:"), row, 0);
+    vlist->addWidget(&cWeather, row++, 1, 1, 2);
+    QObject::connect(&cWeather, SIGNAL(activated(int)), this, SLOT(cWeatherEnabled(int)));
+    vlist->addWidget(new QLabel("Horn At Crossings: "), row, 0);
+    cHornAtCrossings.setMinimumHeight(25);
+    vlist->addWidget(&cHornAtCrossings, row++, 1, 1, 2);
+    //QObject::connect(&cHornAtCrossings, SIGNAL(editingFinished()), this, SLOT(eStartTimeEnabled()));
+    
     eFuelCoal = GuiFunct::newQLineEdit(25,3);
     eFuelDiesel = GuiFunct::newQLineEdit(25,3);
     eFuelWater = GuiFunct::newQLineEdit(25,3);
     eHazardAnimal = GuiFunct::newQLineEdit(25,3);  
     eHazardPeople = GuiFunct::newQLineEdit(25,3);  
             
-    vlist1->addWidget(GuiFunct::newQLabel("Fuel Coal:", labelWidth), row, 0);
-    vlist1->addWidget(eFuelCoal, row, 1);
-    vlist1->addWidget(&sFuelCoal, row++, 2);
+    vlist->addWidget(new QLabel("Fuel Coal:"), row, 0);
+    vlist->addWidget(eFuelCoal, row, 1);
+    vlist->addWidget(&sFuelCoal, row++, 2);
     QObject::connect(eFuelCoal, SIGNAL(textEdited(QString)), this, SLOT(eFuelCoalEnabled(QString)));
     QObject::connect(&sFuelCoal, SIGNAL(sliderReleased()), this, SLOT(sFuelCoalEnabled()));
     sFuelCoal.setRange(0, 100);
     sFuelCoal.setOrientation(Qt::Horizontal);
-    vlist1->addWidget(GuiFunct::newQLabel("Fuel Diesel:", labelWidth), row, 0);
-    vlist1->addWidget(eFuelDiesel, row, 1);
-    vlist1->addWidget(&sFuelDiesel, row++, 2);
+    vlist->addWidget(new QLabel("Fuel Diesel:"), row, 0);
+    vlist->addWidget(eFuelDiesel, row, 1);
+    vlist->addWidget(&sFuelDiesel, row++, 2);
     QObject::connect(eFuelDiesel, SIGNAL(textEdited(QString)), this, SLOT(eFuelDieselEnabled(QString)));
     QObject::connect(&sFuelDiesel, SIGNAL(sliderReleased()), this, SLOT(sFuelDieselEnabled()));
     sFuelDiesel.setRange(0, 100);
     sFuelDiesel.setOrientation(Qt::Horizontal);
-    vlist1->addWidget(GuiFunct::newQLabel("Fuel Water:", labelWidth), row, 0);
-    vlist1->addWidget(eFuelWater, row, 1);
-    vlist1->addWidget(&sFuelWater, row++, 2);
+    vlist->addWidget(new QLabel("Fuel Water:"), row, 0);
+    vlist->addWidget(eFuelWater, row, 1);
+    vlist->addWidget(&sFuelWater, row++, 2);
     QObject::connect(eFuelWater, SIGNAL(textEdited(QString)), this, SLOT(eFuelWaterEnabled(QString)));
     QObject::connect(&sFuelWater, SIGNAL(sliderReleased()), this, SLOT(sFuelWaterEnabled()));
     sFuelWater.setRange(0, 100);
     sFuelWater.setOrientation(Qt::Horizontal);
-    vlist1->addWidget(GuiFunct::newQLabel("Hazard Animal:", labelWidth), row, 0);
-    vlist1->addWidget(eHazardAnimal, row, 1);
-    vlist1->addWidget(&sHazardAnimal, row++, 2);
+    vlist->addWidget(new QLabel("Hazard Animal:"), row, 0);
+    vlist->addWidget(eHazardAnimal, row, 1);
+    vlist->addWidget(&sHazardAnimal, row++, 2);
     QObject::connect(eHazardAnimal, SIGNAL(textEdited(QString)), this, SLOT(eHazardAnimalEnabled(QString)));
     QObject::connect(&sHazardAnimal, SIGNAL(sliderReleased()), this, SLOT(sHazardAnimalEnabled()));
     sHazardAnimal.setRange(0, 100);
     sHazardAnimal.setOrientation(Qt::Horizontal);
-    vlist1->addWidget(GuiFunct::newQLabel("Hazard People:", labelWidth), row, 0);
-    vlist1->addWidget(eHazardPeople, row, 1);
-    vlist1->addWidget(&sHazardPeople, row++, 2);
+    vlist->addWidget(new QLabel("Hazard People:"), row, 0);
+    vlist->addWidget(eHazardPeople, row, 1);
+    vlist->addWidget(&sHazardPeople, row++, 2);
     QObject::connect(eHazardPeople, SIGNAL(textEdited(QString)), this, SLOT(eHazardPeopleEnabled(QString)));
     QObject::connect(&sHazardPeople, SIGNAL(sliderReleased()), this, SLOT(sHazardPeopleEnabled()));
     sHazardPeople.setRange(0, 100);
     sHazardPeople.setOrientation(Qt::Horizontal);
-    vbox->addItem(vlist1);
-    QPushButton *descriptionOpen = new QPushButton("Edit Description");
-    QObject::connect(descriptionOpen, SIGNAL(released()), this, SLOT(descriptionOpenEnabled()));
-    vbox->addWidget(descriptionOpen);
-    QPushButton *briefingOpen = new QPushButton("Edit Briefing");
-    vbox->addWidget(briefingOpen);
-    QObject::connect(briefingOpen, SIGNAL(released()), this, SLOT(briefingOpenEnabled()));
-    vbox->addStretch(1);
-    this->setLayout(vbox);
+    QVBoxLayout *vbox2 = new QVBoxLayout;
+    vbox2->setContentsMargins(0,0,0,0);
+    vbox2->addItem(vlist);
+    vbox2->addStretch(1);
+    vbox1->addItem(vbox2);
+
+    vbox2 = new QVBoxLayout;
+    vbox2->setContentsMargins(0,0,0,0);
+    vbox2->addWidget(new QLabel("Description:"));
+    vbox2->addWidget(&eDescription);
+    eDescription.setMinimumWidth(350);
+    vbox2->addWidget(new QLabel("Briefing:"));
+    vbox2->addWidget(&eBriefing);
+    eBriefing.setMinimumWidth(350);
+    vbox1->addItem(vbox2);
+    settingsWidget.setParent(this);
+    settingsWidget.setLayout(vbox1);
+    settingsWidget.setWindowFlags(Qt::WindowType::Tool);
+    settingsWidget.setWindowTitle("Activity Settings.");
+    settingsWidget.setMinimumWidth(650);
     
-    QObject::connect(&consists, SIGNAL(itemClicked(QListWidgetItem*)),
-                      this, SLOT(itemsSelected(QListWidgetItem*)));
+    vbox->addStretch(1);
+    this->setLayout(vbox);    
+    
+    //QObject::connect(&consists, SIGNAL(itemClicked(QListWidgetItem*)),
+    //                  this, SLOT(itemsSelected(QListWidgetItem*)));
     QObject::connect(&actShow, SIGNAL(activated(QString)),
                       this, SLOT(activitySelected(QString)));
     QObject::connect(&conFilesShow, SIGNAL(activated(QString)),
@@ -266,12 +280,31 @@ ActivityTools::ActivityTools(QString name)
     //                  this, SLOT(loadActFiles()));
 }
 
+void ActivityTools::actSettingsOpenEnabled(){
+    settingsWidget.show();
+}
+
 void ActivityTools::actEventsOpenEnabled(){
     emit showActivityEventEditor();
     Activity *a = ActLib::act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     emit showEvents(a);
+}
+
+void ActivityTools::actServiceOpenEnabled(){
+    emit showActivityServiceEditor();
+    emit showServices(route);
+}
+
+void ActivityTools::actTimetableOpenEnabled(){
+    emit showActivityTimetableEditor();
+    emit showTimetable(route);
+}
+
+void ActivityTools::actTrafficOpenEnabled(){
+    emit showActivityTrafficEditor();
+    emit showTraffic(route);
 }
 
 void ActivityTools::routeLoaded(Route* r){
@@ -404,6 +437,13 @@ void ActivityTools::activitySelected(QString n){
         //    ActLib::act[id]->initActivityObjects();
         route->activitySelected(ActLib::act[id]);
     }
+    
+    QString txt = a->header->briefing;
+    txt.replace("\\n","\n");
+    eBriefing.setPlainText(txt);
+    txt = a->header->description;
+    txt.replace("\\n","\n");
+    eDescription.setPlainText(txt);
 }
 
 void ActivityTools::loadActFiles(){
@@ -491,7 +531,7 @@ void ActivityTools::newActButtonEnabled(){
     
     ActLib::jestact++;
 }
-
+/*
 void ActivityTools::actServiceNewEnabled(){
     ActivityServiceTools sTools;
     QString pathid = Game::root + "/routes/" + Game::route + "/services/";
@@ -528,7 +568,8 @@ void ActivityTools::actServiceEditEnabled(){
         //route->service.push_back(s);
         //reloadServicesList();
     }
-}
+}*/
+
 void ActivityTools::eFileNameEnabled(QString val){
     Activity *a = ActLib::act[actShow.currentData().toInt()];
     if(a == NULL)

@@ -18,8 +18,8 @@
 
 ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(parent) {
     //this->setMinimumHeight(400);
-    this->setMinimumWidth(350);
-    this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    setMinimumWidth(350);
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         
     QMapIterator<ActivityEvent::EventType, QString> i1(ActivityEvent::EventTypeDescription);
     while (i1.hasNext()) {

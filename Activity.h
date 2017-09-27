@@ -15,6 +15,7 @@
 #include <QVector>
 #include "ActivityEvent.h"
 #include "ActivityObject.h"
+#include "ActivityTimetable.h"
 
 class FileBuffer;
 class Consist;
@@ -29,17 +30,6 @@ public:
     Activity(QString p, QString n, bool isnew = false);
     Activity(QString src, QString p, QString n, bool nowe = false);
     
-    struct PlayerTrafficDefinition {
-        int id = 0;
-        QVector<int> arrivalTime;
-        QVector<int> departTime;
-        QVector<int> skipCount;
-        QVector<float> distanceDownPath;
-        QVector<int> platformStartID;
-        void load(FileBuffer* data);
-        void save(QTextStream* out);
-    };
-    
     struct ServiceDefinition {
         QString name;
         int path = -1;
@@ -50,7 +40,7 @@ public:
         QVector<int> skipCount;
         QVector<float> distanceDownPath;
         QVector<int> platformStartId;
-        PlayerTrafficDefinition *trafficDefinition = NULL;
+        ActivityTimetable *trafficDefinition = NULL;
         void load(FileBuffer* data);
         void save(QTextStream* out);
         QMap<int, QString> getStationStopNameList();
