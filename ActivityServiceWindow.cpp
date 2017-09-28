@@ -36,14 +36,14 @@ ActivityServiceWindow::ActivityServiceWindow(QWidget* parent) : QWidget(parent) 
     list.append("Name:");
     list.append("This:");
     list.append("Any:");
-    serviceList.setFixedWidth(240);
+    serviceList.setFixedWidth(250);
     serviceList.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     serviceList.setColumnCount(3);
     serviceList.setHeaderLabels(list);
     serviceList.setRootIsDecorated(false);
     serviceList.header()->resizeSection(0,170);    
-    serviceList.header()->resizeSection(1,25);    
-    serviceList.header()->resizeSection(2,25);    
+    serviceList.header()->resizeSection(1,30);    
+    serviceList.header()->resizeSection(2,30);    
     QHBoxLayout *v = new QHBoxLayout;
     v->setSpacing(2);
     v->setContentsMargins(1,1,1,1);

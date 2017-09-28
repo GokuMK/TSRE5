@@ -421,6 +421,9 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(activityTools, SIGNAL(showActivityTrafficEditor()),
                       this, SLOT(showActivityTrafficEditor()));
     
+    QObject::connect(activityTools, SIGNAL(showActivityTimetableEditor()),
+                      this, SLOT(showActivityTimetableEditor()));
+    
     QObject::connect(activityTools, SIGNAL(showEvents(Activity*)),
                       activityEventWindow, SLOT(showEvents(Activity*)));
     

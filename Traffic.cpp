@@ -61,7 +61,7 @@ void Traffic::load(){
             continue;
         }
         if (sh == ("traffic_definition")) {
-            displayName = ParserX::GetString(data);
+            nameId = ParserX::GetString(data);
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 if (sh == ("serial")) {
                     serial = ParserX::GetNumber(data);

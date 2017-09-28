@@ -20,7 +20,7 @@ public:
     ActivityTimetableProperties(QWidget* parent);
     virtual ~ActivityTimetableProperties();
 private:
-
+    QTreeWidget lTimetable;
 };
 
 #endif	/* ACTIVITYTIMETABLEPROPERTIES_H */

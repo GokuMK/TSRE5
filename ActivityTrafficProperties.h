@@ -14,13 +14,28 @@
 #include <QtWidgets>
 #include <QString>
 
+class Traffic;
+
 class ActivityTrafficProperties : public QWidget {
     Q_OBJECT
 public:
     ActivityTrafficProperties(QWidget* parent);
     virtual ~ActivityTrafficProperties();
+    void showTraffic(Traffic* t);
+public slots:
+    void lServciesSelected(QTreeWidgetItem* item, int column);
+signals:
+    
 private:
-
+    Traffic *traffic = NULL;
+    
+    QLineEdit eFileName;
+    QLineEdit eDisplayName;
+    QTreeWidget lServcies;
+    QComboBox cServiceList;
+    QTimeEdit eTime;
+    
+    
 };
 
 #endif	/* ACTIVITYTRAFFICPROPERTIES_H */

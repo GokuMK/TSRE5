@@ -326,7 +326,7 @@ void ActivityTools::routeLoaded(Route* r){
     cTraffic.clear();
     cTraffic.addItem("UNDEFINED", QVariant(-1));
     for(int i = 0; i < route->traffic.size(); i++ )
-        cTraffic.addItem(route->traffic[i]->displayName, QVariant(i));
+        cTraffic.addItem(route->traffic[i]->nameId, QVariant(i));
 
     cPath.clear();
     for(int i = 0; i < route->path.size(); i++ )
@@ -410,7 +410,7 @@ void ActivityTools::activitySelected(QString n){
         cTraffic.setCurrentIndex(0);
     } else {
         cTraffic.setCurrentIndex(0);
-        QString cname = a->traffic->name.toLower();
+        QString cname = a->traffic->name;
         for(int i = 0; i < cTraffic.count() ; i++ ){
             int id = cTraffic.itemData(i).toInt();
             if(id < 0)

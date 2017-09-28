@@ -24,10 +24,15 @@ class ActivityTrafficWindow : public QWidget {
 public:
     ActivityTrafficWindow(QWidget* parent);
     virtual ~ActivityTrafficWindow();
-    
     ActivityTrafficProperties* trafficProperties = NULL;
+    
+public slots:
+    void lTrafficSelected(QTreeWidgetItem * item, int column);
+    void showTraffic(Route* r);
+    
 private:
-    QListWidget list;
+    Route *route = NULL;
+    QTreeWidget lTraffic;
 };
 
 #endif	/* ACTIVITYTRAFFICWINDOW_H */

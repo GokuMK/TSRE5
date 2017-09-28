@@ -27,7 +27,7 @@ public:
     
     ActivityTimetableProperties *timetableProperties;
 private:
-
+    QListWidget list;
 };
 
 #endif	/* ACTIVITYTIMETABLEWINDOW_H */

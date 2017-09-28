@@ -17,7 +17,7 @@
 
 ActivityServiceProperties::ActivityServiceProperties(QWidget* parent) : QWidget(parent) {
     //this->setMinimumHeight(400);
-    setMinimumWidth(250);
+    setMinimumWidth(280);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     
     QVBoxLayout *vbox = new QVBoxLayout;
