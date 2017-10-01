@@ -90,6 +90,7 @@ public:
     static float* create();
     static float* lerp(float* out, float* a, float* b, float t);
     static float* normalize(float* out, float* a);
+    static float* copy(float* out, float* a);
 };
 
 class Quat {

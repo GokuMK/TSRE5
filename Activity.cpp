@@ -9,6 +9,7 @@
  */
 
 #include "Activity.h"
+#include "ActLib.h"
 #include "Consist.h"
 #include "ParserX.h"
 #include "FileBuffer.h"
@@ -21,6 +22,8 @@
 #include "Traffic.h"
 #include "TDB.h"
 #include "TRitem.h"
+#include "Service.h"
+#include "Path.h"
 
 Activity::Activity() {
 }
@@ -30,9 +33,15 @@ void Activity::init(QString route, QString name) {
     header = new ActivityHeader(route, name);
     nextServiceUID = 1;
     nextActivityObjectUID = 32768;
-    playerServiceDefinition = new ServiceDefinition();
+    playerServiceDefinition = new ActivityServiceDefinition();
     playerServiceDefinition->player = true;
 }
+
+/*void Activity::setRouteContent(QVector<Path*>* p, QVector<Service*>* s, QVector<Traffic*>* t){
+    Paths = p;
+    Services = s;
+    Traffics = t;
+}*/
 
 Activity::ActivityHeader::ActivityHeader(){
     
@@ -92,6 +101,7 @@ Activity::Activity(QString src, QString p, QString n, bool nowe) {
         load();
     } else {
         loaded = 1;
+        name = "New Activity";
         modified = true;
     }
 }
@@ -147,7 +157,7 @@ void Activity::load() {
                     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                         if (sh == ("player_service_definition")) {
-                            playerServiceDefinition = new ServiceDefinition();
+                            playerServiceDefinition = new ActivityServiceDefinition();
                             playerServiceDefinition->player = true;
                             playerServiceDefinition->load(data);
                             ParserX::SkipToken(data);
@@ -174,7 +184,7 @@ void Activity::load() {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                                 if (sh == ("service_definition")) {
-                                    traffic->service.push_back(ServiceDefinition());
+                                    traffic->service.push_back(ActivityServiceDefinition());
                                     traffic->service.back().load(data);
                                     ParserX::SkipToken(data);
                                     continue;
@@ -259,8 +269,12 @@ void Activity::load() {
                         if (sh == ("activityrestrictedspeedzones")) {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("activityrestrictedspeedzone")) {
-                                    restrictedSpeedZone.push_back(RestrictedSpeedZone());
+                                    //restrictedSpeedZone.push_back(RestrictedSpeedZone());
+                                    restrictedSpeedZone.push_back(ActivityObject());
                                     restrictedSpeedZone.back().load(data);
+                                    restrictedSpeedZone.back().objectType = "RestrictedZone";
+                                    restrictedSpeedZone.back().objectTypeId = ActivityObject::RESTRICTEDSPEEDZONE;
+                                    restrictedSpeedZone.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -274,7 +288,11 @@ void Activity::load() {
                         if (sh == ("activityfailedsignals")) {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("activityfailedsignal")) {
-                                    activityFailedSignal.push_back(ParserX::GetNumber(data));
+                                    activityFailedSignal.push_back(ActivityObject());
+                                    activityFailedSignal.back().objectType = "FailedSignal";
+                                    activityFailedSignal.back().failedSignal = ParserX::GetNumber(data);
+                                    activityFailedSignal.back().objectTypeId = ActivityObject::FAILEDSIGNAL;
+                                    activityFailedSignal.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -372,7 +390,7 @@ void Activity::save() {
     if (activityFailedSignal.size() > 0 ){
         out << "		ActivityFailedSignals (\n";
         for(int i = 0; i<activityFailedSignal.size(); i++)
-            out << "			ActivityFailedSignal ( " << activityFailedSignal[i] << " )\n";
+            activityFailedSignal[i].save(&out);
         out << "		)\n";
     }
     if (platformNumPassengersWaiting.size() > 0 ){
@@ -403,49 +421,43 @@ void Activity::save() {
     QFile::remove(path);
 }
 
-void Activity::RestrictedSpeedZone::load(FileBuffer* data) {
-    QString sh;
-    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-        if (sh == ("startposition")) {
-            startPosition[0] = ParserX::GetNumber(data);
-            startPosition[1] = ParserX::GetNumber(data);
-            startPosition[2] = ParserX::GetNumber(data);
-            startPosition[3] = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        if (sh == ("endposition")) {
-            endPosition[0] = ParserX::GetNumber(data);
-            endPosition[1] = ParserX::GetNumber(data);
-            endPosition[2] = ParserX::GetNumber(data);
-            endPosition[3] = ParserX::GetNumber(data);
-            ParserX::SkipToken(data);
-            continue;
-        }
-        qDebug() << "#restrictedSpeedZone - undefined token: " << sh;
-        ParserX::SkipToken(data);
-        continue;
+void ActivityServiceDefinition::reloadTimetable(){
+    if(trafficDefinition == NULL)
+        return;
+    trafficDefinition->reloadTimetable();
+    
+    reloadDefinition();
+}
+
+void ActivityServiceDefinition::reloadDefinition(){
+    Service *s = ActLib::GetServiceByName(name);
+    if(s == NULL)
+        return;
+    ActivityTimetable *t = trafficDefinition;
+    efficiency.clear();
+    skipCount.clear();
+    distanceDownPath.clear();
+    platformStartId.clear();
+    for(int i = 0; i < t->platformStartID.size(); i++){
+        efficiency.push_back(s->efficiency);
+        skipCount.push_back(t->skipCount[i]);
+        distanceDownPath.push_back(t->distanceDownPath[i]);
+        platformStartId.push_back(t->platformStartID[i]);
     }
 }
 
-void Activity::RestrictedSpeedZone::save(QTextStream* out) {
-    *out << "			ActivityRestrictedSpeedZone (\n";
-    *out << "				StartPosition ( "<<startPosition[0]<<" "<<startPosition[1]<<" "<<startPosition[2]<<" "<<startPosition[3]<<" )\n";
-    *out << "				EndPosition ( "<<endPosition[0]<<" "<<endPosition[1]<<" "<<endPosition[2]<<" "<<endPosition[3]<<" )\n";
-    *out << "			)\n";
-}
-
-void Activity::ServiceDefinition::load(FileBuffer* data) {
+void ActivityServiceDefinition::load(FileBuffer* data) {
     QString sh;
     name = ParserX::GetStringInside(data);
     if(!player)
-        path = ParserX::GetNumber(data);
+        time = ParserX::GetNumber(data);
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         empty = false;
         if (sh == ("player_traffic_definition")) {
             trafficDefinition = new ActivityTimetable();
             trafficDefinition->actTimetable = true;
             trafficDefinition->load(data);
+            trafficDefinition->name = name;
             ParserX::SkipToken(data);
             continue;
         }
@@ -480,7 +492,7 @@ void Activity::ServiceDefinition::load(FileBuffer* data) {
     }
 }
 
-void Activity::ServiceDefinition::save(QTextStream* out) {
+void ActivityServiceDefinition::save(QTextStream* out) {
     QString woff;
     
     if(empty){
@@ -499,7 +511,7 @@ void Activity::ServiceDefinition::save(QTextStream* out) {
         *out << "		Player_Service_Definition ( "<< ParserX::AddComIfReq(name) <<"\n";
     } else {
         woff = "	";
-        *out << woff << "		Service_Definition ( "<< ParserX::AddComIfReq(name) <<" "<<path<<"\n";
+        *out << woff << "		Service_Definition ( "<< ParserX::AddComIfReq(name) <<" "<<time<<"\n";
     }
     if(trafficDefinition != NULL && player){
         QString off = "			";
@@ -819,30 +831,30 @@ bool Activity::getCarPosition(int oid, int eid, float *posTW){
 }
 
 void Activity::createNewPlayerService(QString sName, int sTime ){
-    playerServiceDefinition = new ServiceDefinition();
+    playerServiceDefinition = new ActivityServiceDefinition();
     playerServiceDefinition->player = true;
     playerServiceDefinition->empty = false;
     playerServiceDefinition->name = sName;
+    playerServiceDefinition->time = sTime;
     playerServiceDefinition->uid = 0;
-    playerServiceDefinition->trafficDefinition = new ActivityTimetable();
-    playerServiceDefinition->trafficDefinition->time = sTime;
+    playerServiceDefinition->trafficDefinition = new ActivityTimetable(sName, sTime);
+    playerServiceDefinition->trafficDefinition->actTimetable = true;
+    playerServiceDefinition->reloadTimetable();
     modified = true;
 }
 
 void Activity::createNewTrafficService(Traffic *t){
-    /*traffic = new TrafficDefinition();
+    traffic = new TrafficDefinition();
     traffic->name = t->nameId;
     for(int i = 0; i < t->service.size(); i++){
-        traffic->service.emplace_back();
+        traffic->service.push_back(ActivityServiceDefinition());
         traffic->service[i].empty = false;
+        traffic->service[i].name = t->service[i]->name;
+        traffic->service[i].time = t->service[i]->time;
         traffic->service[i].uid = nextServiceUID++;
-        for(int j = 0; j < 0; j++){
-            traffic->service[i].efficiency[j] = 0.75;
-            traffic->service[i].skipCount[j] = 0;
-            traffic->service[i].distanceDownPath[j] = 0;
-            traffic->service[i].platformStartId[j] = 0;
-        }
-    }*/
+        traffic->service[i].trafficDefinition = t->service[i];
+        traffic->service[i].reloadDefinition();
+    }
 }
 
 void Activity::setFuelCoal(int val){
@@ -880,6 +892,24 @@ void Activity::setBriefing(QString val){
     modified = true;
 }
 
+ActivityObject* Activity::getObjectById(int id){
+    if(id < 3000){
+        if(activityObjects.size() > id)
+            return &activityObjects[id];
+    }
+    id -= 3000;
+    if(id < 500){
+        if(restrictedSpeedZone.size() > id)
+            return &restrictedSpeedZone[id];
+    }
+    id -= 500;
+    if(id < 500){
+        if(activityFailedSignal.size() > id)
+            return &activityFailedSignal[id];
+    }
+    return NULL;
+}
+
 QMap<int, QString> Activity::getEventIdNameList(){
     QMap<int, QString> data;
             
@@ -898,7 +928,7 @@ QMap<int, QString> Activity::getServiceStationStopNameList(){
     return playerServiceDefinition->getStationStopNameList();
 }
 
-QMap<int, QString> Activity::ServiceDefinition::getStationStopNameList(){
+QMap<int, QString> ActivityServiceDefinition::getStationStopNameList(){
     QMap<int, QString> data;
             
     TDB *tdb = Game::trackDB;
@@ -937,4 +967,50 @@ void Activity::newEvent(ActivityEvent::EventCategory category){
     event.back().name = "New Event";
     event.back().setParentActivity(this);
     modified = true;
+}
+
+QVector<ActivityServiceDefinition*> Activity::getServiceList(){
+    QVector<ActivityServiceDefinition*> s;
+    if(playerServiceDefinition != NULL)
+        s.push_back(playerServiceDefinition);
+    if(traffic == NULL)
+        return s;
+    Traffic *t = ActLib::GetTrafficByName(traffic->name);
+    if(t == NULL){
+        qDebug() << "t == NULL";
+        return s;
+    }
+    for(int i = 0; i < traffic->service.size(); i++){
+        if(traffic->service[i].trafficDefinition == NULL){
+            qDebug() << "trafficDefinition == NULL";
+            traffic->service[i].trafficDefinition = t->getTimetableByServiceName(traffic->service[i].name+QString::number(traffic->service[i].time));
+        }
+        if(traffic->service[i].trafficDefinition != NULL){
+            qDebug() << "s.push_back";
+            s.push_back(&traffic->service[i]);
+        }
+    }
+    return s;
+}
+
+void Activity::updateService(QString serviceName){
+    if(playerServiceDefinition != NULL)
+        if(playerServiceDefinition->name == serviceName){
+            playerServiceDefinition->reloadTimetable();
+        }
+    
+    if(traffic == NULL)
+        return;
+    
+    Traffic *t = ActLib::GetTrafficByName(traffic->name);
+    if(t == NULL){
+        return;
+    }
+    for(int i = 0; i < traffic->service.size(); i++){
+        if(traffic->service[i].trafficDefinition != NULL){
+            if(traffic->service[i].name == serviceName){
+                traffic->service[i].reloadTimetable();
+            }
+        }
+    }
 }

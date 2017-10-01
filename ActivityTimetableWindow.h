@@ -17,6 +17,7 @@
 class Route;
 class ActivityTimetable;
 class Service;
+class ActivityServiceDefinition;
 class ActivityTimetableProperties;
 
 class ActivityTimetableWindow : public QWidget {
@@ -24,10 +25,18 @@ class ActivityTimetableWindow : public QWidget {
 public:
     ActivityTimetableWindow(QWidget* parent);
     virtual ~ActivityTimetableWindow();
-    
     ActivityTimetableProperties *timetableProperties;
+    
+public slots:
+    void showTimetable(QVector<ActivityServiceDefinition*> s);
+    void listSelected(QListWidgetItem *item);
+    
+signals:
+    
 private:
     QListWidget list;
+    //Route *route = NULL;
+    QVector<ActivityServiceDefinition*> services;
 };
 
 #endif	/* ACTIVITYTIMETABLEWINDOW_H */

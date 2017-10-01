@@ -17,6 +17,7 @@
 class Route;
 class GameObj;
 class Activity;
+class ActivityServiceDefinition;
 
 class ActivityTools : public QWidget{
     Q_OBJECT
@@ -72,11 +73,13 @@ signals:
     void showActivityTrafficEditor();
     void showTraffic(Route *r);
     void showActivityTimetableEditor();
-    void showTimetable(Route *r);
+    void showTimetable(QVector<ActivityServiceDefinition*> s);
     
 private:
     Route *route = NULL;
     QComboBox consists;
+    QComboBox speedZones;
+    QComboBox failedSignals;
     QComboBox actShow;
     QComboBox conFilesShow;
     QMap<QString, QPushButton*> buttonTools;

@@ -9,9 +9,15 @@
  */
 
 #include "ActivityTimetableProperties.h"
+#include "Service.h"
+#include "Activity.h"
+#include "ActivityTimetable.h"
+#include "Game.h"
+#include "TDB.h"
+#include "TRitem.h"
 
 ActivityTimetableProperties::ActivityTimetableProperties(QWidget* parent) : QWidget(parent) {
-    setMinimumWidth(300);
+    setMinimumWidth(450);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -30,12 +36,23 @@ ActivityTimetableProperties::ActivityTimetableProperties(QWidget* parent) : QWid
     list.append("Arrive:");
     list.append("Depart:");
     list.append("Performance:");
-    lTimetable.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    lTimetable.setColumnCount(4);
-    lTimetable.setHeaderLabels(list);
-    lTimetable.setRootIsDecorated(false);
+    //lTimetable.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //lTimetable.setColumnCount(4);
+    //lTimetable.setHeaderLabels(list);
+    //lTimetable.setRootIsDecorated(false);
     //lTimetable.header()->resizeSection(0,200);    
     //lTimetable.header()->resizeSection(1,100);    
+    //tableWidget->setRowCount(10);
+    lTimetable.setColumnCount(4);
+    lTimetable.setHorizontalHeaderLabels(list);
+    lTimetable.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    lTimetable.verticalHeader()->hide();
+    lTimetable.verticalHeader()->setDefaultSectionSize(25);
+    lTimetable.horizontalHeader()->resizeSection(0,220);
+    lTimetable.horizontalHeader()->resizeSection(1,60);
+    lTimetable.horizontalHeader()->resizeSection(2,60);
+    lTimetable.horizontalHeader()->resizeSection(3,100);
+    lTimetable.horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     vlist->addWidget(&lTimetable, row++, 0, 1, 2);
     QPushButton *bAddOutcome = new QPushButton("Calculate");
     QObject::connect(bAddOutcome, SIGNAL(released()),
@@ -44,14 +61,50 @@ ActivityTimetableProperties::ActivityTimetableProperties(QWidget* parent) : QWid
     vlist->addWidget(bAddOutcome, row++, 0, 1, 2);
         vbox->addItem(vlist);
 
-    vbox->addStretch(1);
+    //vbox->addStretch(1);
     this->setLayout(vbox);
     
     QObject::connect(&lTimetable, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
                       this, SLOT(lServciesSelected(QTreeWidgetItem*, int)));
-
 }
 
 ActivityTimetableProperties::~ActivityTimetableProperties() {
 }
 
+void ActivityTimetableProperties::showTimetable(ActivityServiceDefinition* s){
+    ActivityTimetable *t = s->trafficDefinition;
+    if(t == NULL)
+        return;
+    
+    QTableWidgetItem *newItem;
+
+    //newItem = new QTableWidgetItem("15:00:30");
+    //lTimetable.insertRow( lTimetable.rowCount() );
+    //lTimetable.setItem(1, 1, newItem);
+    QTime time;
+    lTimetable.clearContents();
+    lTimetable.setRowCount(0);
+    TDB *tdb = Game::trackDB;
+    if(tdb == NULL)
+        return;
+    QString name = "";
+    for(int i = 0; i < t->platformStartID.size(); i++){
+        TRitem *trit = tdb->trackItems[t->platformStartID[i]];
+        if(trit != NULL){
+            name = trit->stationName;
+        } else {
+            name = "Platform ID: "+QString::number(t->platformStartID[i]);
+        }
+        newItem = new QTableWidgetItem(name);
+        lTimetable.insertRow(lTimetable.rowCount());
+        lTimetable.setItem(i, 0, newItem);
+        time = QTime::fromMSecsSinceStartOfDay(t->arrivalTime[i]*1000);
+        newItem = new QTableWidgetItem(time.toString("HH:mm:ss"));
+        lTimetable.setItem(i, 1, newItem);
+        time = QTime::fromMSecsSinceStartOfDay(t->departTime[i]*1000);
+        newItem = new QTableWidgetItem(time.toString("HH:mm:ss"));
+        lTimetable.setItem(i, 2, newItem);
+        newItem = new QTableWidgetItem(QString::number(s->efficiency[i]));
+        lTimetable.setItem(i, 3, newItem);
+    }
+}

@@ -78,10 +78,10 @@ Route::Route() {
 
     loadMkrList();
     createMkrPlaces();
-    loadActivities();
     loadServices();
     loadTraffic();
     loadPaths();
+    loadActivities();
     
     soundList = new SoundList();
     soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
@@ -174,8 +174,12 @@ void Route::loadActivities(){
     dir.setFilter(QDir::Files);
     dir.setNameFilters(QStringList()<<"*.act");
     foreach(QString actfile, dir.entryList()){
-        activityId.push_back(ActLib::addAct(dir.path(), actfile));
+        activityId.push_back(ActLib::AddAct(dir.path(), actfile));
     }
+    
+    //for(int i = 0; i < ActLib::jestact; i++){
+    //    ActLib::Act[i]->setRouteContent(&path, &service, &traffic);
+    //}
 
     qDebug() << "activity loaded";
     return;
@@ -188,7 +192,8 @@ void Route::loadServices(){
     dir.setFilter(QDir::Files);
     dir.setNameFilters(QStringList()<<"*.srv");
     foreach(QString actfile, dir.entryList()){
-        service.push_back(new Service(dir.path(), actfile));
+        int id = ActLib::AddService(dir.path(), actfile);
+        //service.push_back(ActLib::Services[id]);
     }
 
     qDebug() << "service loaded";
@@ -202,7 +207,8 @@ void Route::loadTraffic(){
     dir.setFilter(QDir::Files);
     dir.setNameFilters(QStringList()<<"*.trf");
     foreach(QString actfile, dir.entryList()){
-        traffic.push_back(new Traffic(dir.path(), actfile));
+        int id = ActLib::AddTraffic(dir.path(), actfile);
+        //traffic.push_back(ActLib::Traffics[id]);
     }
 
     qDebug() << "traffic loaded";
@@ -216,7 +222,8 @@ void Route::loadPaths(){
     dir.setFilter(QDir::Files);
     dir.setNameFilters(QStringList()<<"*.pat");
     foreach(QString actfile, dir.entryList()){
-        path.push_back(new Path(dir.path(), actfile));
+        int id = ActLib::AddPath(dir.path(), actfile);
+        path.push_back(ActLib::Paths[id]);
     }
 
     qDebug() << "paths loaded";
@@ -484,8 +491,7 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
 ActivityObject* Route::getActivityObject(int id){
     if(currentActivity == NULL)
         return NULL;
-    if(currentActivity->activityObjects.size() > id)
-        return &currentActivity->activityObjects[id];
+    return currentActivity->getObjectById(id);
     return NULL;
 }
 
@@ -1271,14 +1277,14 @@ void Route::getUnsavedInfo(std::vector<QString> &items){
     if(this->trk->isModified())
         items.push_back("[S] Route Settings - TRK File");
     
-    ActLib::getUnsavedInfo(items);
+    ActLib::GetUnsavedInfo(items);
     
-    foreach(Service *s, service){
+    /*foreach(Service *s, service){
         if(s == NULL)
             continue;
         if(s->isModified())
             items.push_back("[S] "+s->name);
-    }
+    }*/
     foreach(Path *p, path){
         if(p == NULL)
             continue;
@@ -1306,14 +1312,14 @@ void Route::save() {
     this->trackDB->save();
     this->roadDB->save();
     this->trk->save();
-    ActLib::save();
-    foreach(Service *s, service){
+    ActLib::SaveAll();
+    /*foreach(Service *s, service){
         if(s == NULL)
             continue;
         if(s->isModified())
             s->save();
     }
-    /*foreach(Path *p, path){
+    foreach(Path *p, path){
         if(p == NULL)
             continue;
         if(p->isModified())

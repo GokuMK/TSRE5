@@ -84,3 +84,16 @@ void Traffic::load(){
         ParserX::SkipToken(data);
     }
 }
+
+ActivityTimetable* Traffic::getTimetableByServiceName(QString nameTime){
+    for(int i = 0; i < service.size(); i++){
+        //qDebug() << nameTime << service[i]->nameTime;
+        if(service[i]->nameTime == nameTime)
+            return service[i];
+    }
+    return NULL;
+}
+
+bool Traffic::isModified(){
+    return modified;
+}

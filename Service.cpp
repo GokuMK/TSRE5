@@ -19,6 +19,8 @@
 #include "GLUU.h"
 #include "TDB.h"
 #include "AboutWindow.h"
+#include "ActLib.h"
+#include "Path.h"
 
 Service::Service(QString p, QString n, bool nowe) {
     pathid = p + "/" + n;
@@ -37,6 +39,7 @@ Service::Service(QString p, QString n, bool nowe) {
         startInWorld = 0;
         endInWorld = 0;
         loaded = 1;
+        displayName = nameId;
         modified = true;
     }
 }
@@ -204,4 +207,69 @@ bool Service::isModified(){
 void Service::setNameId(QString val){
     nameId = val;
     name = val+".srv";
+}
+
+void Service::setNewPath(QString pathName){
+    stationStop.clear();
+    pathId = pathName;
+    if(pathId.length() <= 0)
+        return;
+    qDebug() << pathId;
+    Path *p = ActLib::GetPathByName(pathId);
+    if(p == NULL){
+        return;
+    }
+    p->init3dShapes(false);
+
+    int ii = 0;
+    foreach(Path::PathObject* i, p->pathObjects){
+        if(i == NULL)
+            continue;
+        stationStop.push_back(StationStop());
+        stationStop.back().platformStartID = i->trItemId;
+        stationStop.back().distanceDownPath = i->distanceDownPath;
+        stationStop.back().skipCount = ii++;
+    }
+    
+    ActLib::UpdateServiceChanges(nameId);
+}
+
+void Service::disableStationStop(int count){
+    for(int ii = 0; ii < stationStop.size(); ii++ ){
+        if(stationStop[ii].skipCount == count){
+            stationStop.remove(ii);
+            ActLib::UpdateServiceChanges(nameId);
+            return;
+        }
+    }
+    
+}
+
+void Service::enableStationStop(int count){
+    for(int i = 0; i < stationStop.size(); i++ ){
+        if(stationStop[i].skipCount == count){
+            return;            
+        }
+    }
+    Path *p = ActLib::GetPathByName(pathId);
+    if(p == NULL){
+        return;
+    }
+    p->init3dShapes(false);
+    if(p->pathObjects.size() < count)
+        return;
+    
+    float dist = p->pathObjects[count]->distanceDownPath;
+    int i;
+    for(i = 0; i < stationStop.size(); i++ ){
+        if(stationStop[i].distanceDownPath > dist){
+            break;            
+        }
+    }
+    stationStop.insert(i, StationStop());
+    stationStop[i].distanceDownPath = p->pathObjects[count]->distanceDownPath;
+    stationStop[i].platformStartID = p->pathObjects[count]->trItemId;
+    stationStop[i].skipCount = count;
+    
+    ActLib::UpdateServiceChanges(nameId);
 }

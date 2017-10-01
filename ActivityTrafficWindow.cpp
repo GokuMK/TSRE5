@@ -12,6 +12,7 @@
 #include "ActivityTrafficProperties.h"
 #include "Route.h"
 #include "Traffic.h"
+#include "ActLib.h"
 
 ActivityTrafficWindow::ActivityTrafficWindow(QWidget* parent) : QWidget(parent) {
     setWindowFlags(Qt::WindowType::Tool);
@@ -67,12 +68,12 @@ void ActivityTrafficWindow::showTraffic(Route* r){
     lTraffic.clear();
     QList<QTreeWidgetItem *> items;
     QStringList list;
-    for(int i = 0; i < route->traffic.size(); i++ ){
-        if(route->traffic[i] == NULL)
+    for(int i = 0; i < ActLib::jesttraffic; i++ ){
+        if(ActLib::Traffics[i] == NULL)
             continue;
         //new QListWidgetItem ( route->service[i]->displayName, &serviceList, i );
         list.clear();
-        list.append(route->traffic[i]->nameId);
+        list.append(ActLib::Traffics[i]->nameId);
         list.append("");
         list.append("");
         QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, i );
@@ -91,5 +92,5 @@ void ActivityTrafficWindow::showTraffic(Route* r){
 void ActivityTrafficWindow::lTrafficSelected(QTreeWidgetItem *item, int column){
     if(route == NULL)
         return;
-    trafficProperties->showTraffic(route->traffic[item->type()]);
+    trafficProperties->showTraffic(ActLib::Traffics[item->type()]);
 }

@@ -40,7 +40,8 @@ public:
         int trItemId = -1;
         float distanceDownPath;
     };
-    QMap<float, PathObject*> pathObjects;
+
+    QVector<PathObject*> pathObjects;
     
     QString displayName;
     QString name;
@@ -52,6 +53,7 @@ public:
     QString trPathStart;
     QString trPathEnd;
     unsigned int trPathFlags;
+    int ref = 0;
     
     QVector<float*> trackPdp;
     QVector<unsigned int*> trPathNode;
@@ -69,12 +71,14 @@ public:
 private:
     int loaded;
     bool modified = false;
-    bool isinit = false;
+    bool isinit1 = false;
+    bool isinit2 = false;
     int serial = -1;
     TrackItemObj* pointer3d = NULL;
     QVector<OglObj*> lines;
     QVector<float> linesX;
     QVector<float> linesZ;
+    QMap<float, PathObject*> pathObjectsMap;
 };
 
 #endif	/* PATH_H */

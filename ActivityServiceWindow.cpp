@@ -10,9 +10,12 @@
 
 #include "ActivityServiceWindow.h"
 #include "ActivityServiceProperties.h"
+#include "Game.h"
 #include "Activity.h"
 #include "Route.h"
 #include "Service.h"
+#include "ActLib.h"
+#include "EditFileNameDialog.h"
 
 ActivityServiceWindow::ActivityServiceWindow(QWidget* parent) : QWidget(parent) {
     setWindowFlags(Qt::WindowType::Tool);
@@ -25,10 +28,10 @@ ActivityServiceWindow::ActivityServiceWindow(QWidget* parent) : QWidget(parent) 
     actionListLayout->setSpacing(0);
     QPushButton *bNewActionEvent = new QPushButton("New Service");
     QObject::connect(bNewActionEvent, SIGNAL(released()),
-                      this, SLOT(bNewEventSelected()));
+                      this, SLOT(bNewServiceSelected()));
     QPushButton *bDeleteActionEvent = new QPushButton("Delete");
     QObject::connect(bDeleteActionEvent, SIGNAL(released()),
-                      this, SLOT(bDeleteEventSelected()));
+                      this, SLOT(bDeleteServiceSelected()));
     actionListLayout->addWidget(&serviceList);
     actionListLayout->addWidget(bNewActionEvent);
     actionListLayout->addWidget(bDeleteActionEvent);
@@ -68,12 +71,12 @@ void ActivityServiceWindow::showServices(Route* r){
     serviceList.clear();
     QList<QTreeWidgetItem *> items;
     QStringList list;
-    for(int i = 0; i < route->service.size(); i++ ){
-        if(route->service[i] == NULL)
+    for(int i = 0; i < ActLib::jestservice; i++ ){
+        if(ActLib::Services[i] == NULL)
             continue;
         //new QListWidgetItem ( route->service[i]->displayName, &serviceList, i );
         list.clear();
-        list.append(route->service[i]->displayName);
+        list.append(ActLib::Services[i]->displayName);
         list.append("");
         list.append("");
         QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, i );
@@ -94,7 +97,7 @@ void ActivityServiceWindow::showServices(Route* r){
 void ActivityServiceWindow::serviceListSelected(QTreeWidgetItem * item, int column){
     if(route == NULL)
         return;
-    serviceProperties->showService(route->service[item->type()]);
+    serviceProperties->showService(ActLib::Services[item->type()]);
 }
 
 void ActivityServiceWindow::serviceNameChanged(int id){
@@ -102,7 +105,12 @@ void ActivityServiceWindow::serviceNameChanged(int id){
 }
 
 void ActivityServiceWindow::bNewServiceSelected(){
-    
+    EditFileNameDialog eWindow;
+    eWindow.exec();
+    if(eWindow.isOk && eWindow.name.text().length() > 0){
+        ActLib::AddService(Game::root + "/routes/" + Game::route + "/services/", eWindow.name.text()+".srv", true);
+    }
+    showServices(route);
 }
 
 void ActivityServiceWindow::bDeleteServiceSelected(){

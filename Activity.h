@@ -19,9 +19,30 @@
 
 class FileBuffer;
 class Consist;
+class Path;
+class Service;
 class Traffic;
 class QTextStream;
 class GLUU;
+
+class ActivityServiceDefinition {
+public:
+    QString name;
+    int time = -1;
+    int uid = -1;
+    bool player = false;
+    bool empty = true;
+    QVector<float> efficiency;
+    QVector<int> skipCount;
+    QVector<float> distanceDownPath;
+    QVector<int> platformStartId;
+    ActivityTimetable *trafficDefinition = NULL;
+    void load(FileBuffer* data);
+    void save(QTextStream* out);
+    void reloadTimetable();
+    void reloadDefinition();
+    QMap<int, QString> getStationStopNameList();
+};
 
 class Activity {
 public:
@@ -29,35 +50,12 @@ public:
     virtual ~Activity();
     Activity(QString p, QString n, bool isnew = false);
     Activity(QString src, QString p, QString n, bool nowe = false);
-    
-    struct ServiceDefinition {
-        QString name;
-        int path = -1;
-        int uid = -1;
-        bool player = false;
-        bool empty = true;
-        QVector<float> efficiency;
-        QVector<int> skipCount;
-        QVector<float> distanceDownPath;
-        QVector<int> platformStartId;
-        ActivityTimetable *trafficDefinition = NULL;
-        void load(FileBuffer* data);
-        void save(QTextStream* out);
-        QMap<int, QString> getStationStopNameList();
-    };
-    
+
     struct TrafficDefinition {
         QString name;
-        QVector<ServiceDefinition> service;
+        QVector<ActivityServiceDefinition> service;
     };
-    
-    struct RestrictedSpeedZone {
-        float startPosition[4];
-        float endPosition[4];
-        void load(FileBuffer* data);
-        void save(QTextStream* out);
-    };
-    
+
     struct ActivityHeader {
         QString routeid;
         QString name;
@@ -84,15 +82,15 @@ public:
         ActivityHeader();
         ActivityHeader(QString route, QString hname);
     };
-    
+
     QString name;
     QString nameid;
     QString path;
-    QString pathid;  
+    QString pathid;
     int loaded = -1;
     int ref = 0;
-    
-    ServiceDefinition *playerServiceDefinition = NULL;
+
+    ActivityServiceDefinition *playerServiceDefinition = NULL;
     ActivityHeader *header = NULL;
     TrafficDefinition *traffic = NULL;
     int nextServiceUID = -1;
@@ -101,20 +99,22 @@ public:
     int ortsAIHornAtCrossings = -9999;
     QVector<ActivityObject> activityObjects;
     QVector<QPair<int, int>> platformNumPassengersWaiting;
-    QVector<RestrictedSpeedZone> restrictedSpeedZone;
-    QVector<int> activityFailedSignal;
+    QVector<ActivityObject> restrictedSpeedZone;
+    QVector<ActivityObject> activityFailedSignal;
     QVector<ActivityEvent> event;
     int serial = -1;
-    
+
     void load();
     void save();
     bool isInitActivityObjects = false;
     //void initActivityObjects();
     void render(GLUU* gluu, float * playerT, float playerRot, int renderMode);
-    
+
     QString editorConListSelected;
     ActivityEvent *currentEventSelected = NULL;
     void init(QString route, QString name);
+    //void setRouteContent(QVector<Path*>* p, QVector<Service*>* s, QVector<Traffic*>* t);
+    //Traffic *getTrafficByName(QString name);
     bool isNew();
     bool isUnSaved();
     void setFileName(QString val);
@@ -126,7 +126,7 @@ public:
     void setWeather(int val);
     void pickNewEventLocation(float *tdbPos);
     void newLooseConsist(float *tdbPos);
-    void createNewPlayerService(QString sName, int sTime );
+    void createNewPlayerService(QString sName, int sTime);
     void createNewTrafficService(Traffic *t);
     void setFuelCoal(int val);
     void setFuelWater(int val);
@@ -138,15 +138,20 @@ public:
     void deleteObject(int id);
     void deleteCurrentEvent();
     void newEvent(ActivityEvent::EventCategory category);
+    QVector<ActivityServiceDefinition*> getServiceList();
     unsigned int getSelectedCarId();
     bool getCarPosition(int oid, int eid, float *posTW);
     QMap<int, QString> getEventIdNameList();
     QMap<int, QString> getServiceStationStopNameList();
-    
+    ActivityObject* getObjectById(int id);
+    void updateService(QString serviceName);
+
 private:
     bool modified = false;
     bool nowe = false;
-    
+    //QVector<Service*>* Services;
+    //QVector<Traffic*>* Traffics;
+    //QVector<Path*>* Paths;
 };
 
 #endif	/* ACTIVITY_H */

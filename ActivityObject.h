@@ -26,11 +26,21 @@ class QMenu;
 class ActivityObject : public GameObj {
     Q_OBJECT
 public:
+    enum TypeActivityObject {
+        NONE = 0,
+        WAGONLIST = 1,
+        RESTRICTEDSPEEDZONE = 2,
+        FAILEDSIGNAL = 3
+    };
     Consist* con = NULL;
     QString objectType;
+    TypeActivityObject objectTypeId = NONE;
     float direction = 0;
     unsigned int id = 0;
     float tile[4];
+    float restrictedSpeedZoneStart[4];
+    float restrictedSpeedZoneEnd[4];
+    int failedSignal = -1;
     ActivityObject();
     ActivityObject(const ActivityObject& orig);
     ActivityObject(int tid);

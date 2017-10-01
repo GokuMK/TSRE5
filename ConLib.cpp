@@ -83,7 +83,7 @@ int ConLib::loadSimpleList(QString gameRoot, bool reload){
         qDebug() << "not exist";
     qDebug() << dir.count() <<" con files";
     foreach(QString engfile, dir.entryList())
-        ConLib::conFileList.push_back(path+engfile);
+        ConLib::conFileList.push_back(path.toLower()+engfile.toLower());
     qDebug() << "loaded";
     return 0;
 }

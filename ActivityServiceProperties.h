@@ -28,7 +28,7 @@ public:
 public slots:
     void cPathEnabled(int val);
     void cConFilesEnabled(int val);
-    
+    void stationListSelected(QTreeWidgetItem* item, int column);
 signals:
 
 private:

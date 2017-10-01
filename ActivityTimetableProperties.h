@@ -14,13 +14,18 @@
 #include <QtWidgets>
 #include <QString>
 
+class Activity;
+class ActivityServiceDefinition;
+
 class ActivityTimetableProperties : public QWidget {
     Q_OBJECT
 public:
     ActivityTimetableProperties(QWidget* parent);
     virtual ~ActivityTimetableProperties();
+    void showTimetable(ActivityServiceDefinition* s);
 private:
-    QTreeWidget lTimetable;
+    ActivityServiceDefinition *s = NULL;
+    QTableWidget lTimetable;
 };
 
 #endif	/* ACTIVITYTIMETABLEPROPERTIES_H */

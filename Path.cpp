@@ -175,7 +175,9 @@ void Path::initRoute(){
 }
 
 void Path::init3dShapes(bool initShapes){
-    if(isinit)
+    if(isinit1 && !initShapes)
+        return;
+    if(isinit2 && initShapes)
         return;
     lines.clear();
     int fail = 0;
@@ -285,18 +287,15 @@ void Path::init3dShapes(bool initShapes){
                         dist = ddd2;
                         trid = trid2;
                     }
-                    if(pathObjects[distanceDownPath + dist] == NULL)
-                        pathObjects[distanceDownPath + dist] = new PathObject();
-                    pathObjects[distanceDownPath + dist]->name = tdb->trackItems[trid]->stationName;
-                    pathObjects[distanceDownPath + dist]->trItemId = trid;
-                    pathObjects[distanceDownPath + dist]->distanceDownPath = distanceDownPath + dist;
+                    if(pathObjectsMap[distanceDownPath + dist] == NULL)
+                        pathObjectsMap[distanceDownPath + dist] = new PathObject();
+                    pathObjectsMap[distanceDownPath + dist]->name = tdb->trackItems[trid]->stationName;
+                    pathObjectsMap[distanceDownPath + dist]->trItemId = trid;
+                    pathObjectsMap[distanceDownPath + dist]->distanceDownPath = distanceDownPath + dist;
                     qDebug() << "="<<tdb->trackItems[trid]->stationName << distanceDownPath + dist;
                 }
             }
         }
-        
-        if(!initShapes)
-             continue;
         
         if(distance1 > distance2){
             float temp = distance2;
@@ -304,6 +303,17 @@ void Path::init3dShapes(bool initShapes){
             distance1 = temp;
         }
         distanceDownPath += distance2 - distance1;
+        
+        QMapIterator<float, Path::PathObject*> it(pathObjectsMap);
+        pathObjects.clear();
+        while (it.hasNext()) {
+            it.next();
+            pathObjects.push_back(it.value());
+        }
+        
+        if(!initShapes){
+            continue;
+        }
         
         OglObj *line = new OglObj();
         float *ptr, *punkty;
@@ -346,9 +356,9 @@ void Path::init3dShapes(bool initShapes){
         linesX.push_back(node[i].tilex);
         linesZ.push_back(node[i].tilez);
     }
-    
+    isinit1 = true;
     if(initShapes)
-        isinit = true;
+        isinit2 = true;
 }
 
 void Path::render(GLUU* gluu, float * playerT, int renderMode){
@@ -357,7 +367,7 @@ void Path::render(GLUU* gluu, float * playerT, int renderMode){
         pointer3d->setMaterial(0.0,1.0,0.0);
     }
     
-    if(!isinit){
+    if(!isinit2){
         init3dShapes();
     }
     

@@ -13,14 +13,49 @@
 #include "FileBuffer.h"
 #include <qDebug>
 #include <QTextStream>
+#include "ActLib.h"
+#include "Service.h"
+#include "Path.h"
 
 ActivityTimetable::ActivityTimetable() {
+}
+
+ActivityTimetable::ActivityTimetable(QString n, int t){
+    name = n;
+    time = t;
+    nameTime = name+QString::number(time);
 }
 
 ActivityTimetable::ActivityTimetable(const ActivityTimetable& orig) {
 }
 
 ActivityTimetable::~ActivityTimetable() {
+}
+
+void ActivityTimetable::reloadTimetable(){
+    clear();
+
+    Service *s = ActLib::GetServiceByName(name);
+    if(s == NULL){
+        qDebug() << "s == NILL " << name;
+        return;
+    }
+    
+    for(int i = 0; i < s->stationStop.size(); i++ ){
+        arrivalTime.push_back(time);
+        departTime.push_back(time);
+        skipCount.push_back(s->stationStop[i].skipCount);
+        distanceDownPath.push_back(s->stationStop[i].distanceDownPath);
+        platformStartID.push_back(s->stationStop[i].platformStartID);
+    }
+}
+
+void ActivityTimetable::clear(){
+    arrivalTime.clear();
+    departTime.clear();
+    skipCount.clear();
+    distanceDownPath.clear();
+    platformStartID.clear();
 }
 
 void ActivityTimetable::load(FileBuffer* data) {
@@ -32,6 +67,7 @@ void ActivityTimetable::load(FileBuffer* data) {
         name = ParserX::GetStringInside(data);
         time = ParserX::GetNumber(data);
     } 
+    nameTime = name+QString::number(time);
     
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
@@ -68,7 +104,7 @@ void ActivityTimetable::load(FileBuffer* data) {
 
 void ActivityTimetable::save(QTextStream* out, QString off) {
 
-    if(name.length() < 2)
+    if(actTimetable)
         *out << off << "Player_Traffic_Definition ( "<< time <<"\n";
     else
         *out << off << "Service_Definition ( "<< ParserX::AddComIfReq(name) << " "<< time <<"\n";

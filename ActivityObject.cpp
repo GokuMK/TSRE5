@@ -15,6 +15,7 @@
 #include <QDebug>
 #include <QMenu>
 #include "TDB.h"
+#include "GLMatrix.h"
 #include "ParserX.h"
 #include "FileBuffer.h"
 #include "GLMatrix.h"
@@ -42,10 +43,10 @@ ActivityObject::ActivityObject(const ActivityObject& orig){
     objectType = orig.objectType;
     parentActivity = orig.parentActivity;
     selected = orig.selected;
-    tile[0] = orig.tile[0];
-    tile[1] = orig.tile[1];
-    tile[2] = orig.tile[2];
-    tile[3] = orig.tile[3];
+    failedSignal = orig.failedSignal;
+    Vec4::copy((float*)tile, (float*)orig.tile);
+    Vec4::copy((float*)restrictedSpeedZoneStart, (float*)orig.restrictedSpeedZoneStart);
+    Vec4::copy((float*)restrictedSpeedZoneEnd, (float*)orig.restrictedSpeedZoneEnd);
 }
 
 void ActivityObject::setPosition(int x, int z, float* p){
@@ -152,10 +153,18 @@ void ActivityObject::render(GLUU* gluu, float* playerT, int renderMode, int inde
         selectionColor |= index << 8;
     }
     
-    if(con != NULL){
-        if (!con->isOnTrack)
-            con->initOnTrack(tile, direction);
-        con->renderOnTrack(gluu, playerT, selectionColor);
+    if(objectTypeId == ActivityObject::WAGONLIST ){
+        if(con != NULL){
+            if (!con->isOnTrack)
+                con->initOnTrack(tile, direction);
+            con->renderOnTrack(gluu, playerT, selectionColor);
+        }
+    }
+    if(objectTypeId == ActivityObject::RESTRICTEDSPEEDZONE ){
+        
+    }
+    if(objectTypeId == ActivityObject::FAILEDSIGNAL ){
+        
     }
 }
 
@@ -181,6 +190,7 @@ void ActivityObject::load(FileBuffer* data) {
             continue;
         }
         if (sh == ("train_config")) {
+            objectTypeId = WAGONLIST;
             con = new Consist();
             if (con->load(data)) {
                 con->loaded = 1;
@@ -209,6 +219,22 @@ void ActivityObject::load(FileBuffer* data) {
             ParserX::SkipToken(data);
             continue;
         }
+        if (sh == ("startposition")) {
+            restrictedSpeedZoneStart[0] = ParserX::GetNumber(data);
+            restrictedSpeedZoneStart[1] = ParserX::GetNumber(data);
+            restrictedSpeedZoneStart[2] = ParserX::GetNumber(data);
+            restrictedSpeedZoneStart[3] = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("endposition")) {
+            restrictedSpeedZoneEnd[0] = ParserX::GetNumber(data);
+            restrictedSpeedZoneEnd[1] = ParserX::GetNumber(data);
+            restrictedSpeedZoneEnd[2] = ParserX::GetNumber(data);
+            restrictedSpeedZoneEnd[3] = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
         qDebug() << "#activityObject - undefined token: " << sh;
         ParserX::SkipToken(data);
         continue;
@@ -216,6 +242,18 @@ void ActivityObject::load(FileBuffer* data) {
 }
 
 void ActivityObject::save(QTextStream* out) {
+    if(objectTypeId == RESTRICTEDSPEEDZONE){
+        *out << "			ActivityRestrictedSpeedZone (\n";
+        *out << "				StartPosition ( "<<restrictedSpeedZoneStart[0]<<" "<<restrictedSpeedZoneStart[1]<<" "<<restrictedSpeedZoneStart[2]<<" "<<restrictedSpeedZoneStart[3]<<" )\n";
+        *out << "				EndPosition ( "<<restrictedSpeedZoneEnd[0]<<" "<<restrictedSpeedZoneEnd[1]<<" "<<restrictedSpeedZoneEnd[2]<<" "<<restrictedSpeedZoneEnd[3]<<" )\n";
+        *out << "			)\n";
+        return;
+    }
+    if(objectTypeId == FAILEDSIGNAL){
+        *out << "			ActivityFailedSignal ( " << failedSignal << " )\n";
+        return;
+    }
+    
     *out << "			ActivityObject (\n";
     *out << "				ObjectType ( "<<ParserX::AddComIfReq(objectType)<<" )\n";
     if(con != NULL){

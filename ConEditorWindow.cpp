@@ -42,7 +42,7 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     englib->loadAll(Game::root);
     Game::currentEngLib = englib;
     ConLib::loadAll(Game::root);
-    ActLib::loadAll(Game::root);
+    ActLib::LoadAllAct(Game::root);
     glShapeWidget = new ShapeViewerGLWidget(this);
     if(Game::colorShapeView != NULL)
         glShapeWidget->setBackgroundGlColor(Game::colorShapeView->redF(), Game::colorShapeView->greenF(), Game::colorShapeView->blueF());
@@ -478,9 +478,9 @@ void ConEditorWindow::save(){
 
 void ConEditorWindow::saveCurrentActivity(){
     int id = con1->getCurrentActivityId();
-    if(ActLib::act[id] == NULL)
+    if(ActLib::Act[id] == NULL)
         return;
-    ActLib::act[id]->save();
+    ActLib::Act[id]->save();
 }
 
 void ConEditorWindow::saveCurrentConsist(){
@@ -802,7 +802,7 @@ void ConEditorWindow::conListSelected(int id){
 }
 
 void ConEditorWindow::conListSelected(int aid, int id){
-    currentCon = ActLib::act[aid]->activityObjects[id].con;
+    currentCon = ActLib::Act[aid]->activityObjects[id].con;
     qDebug() << currentCon->showName;
     refreshCurrentCon();
     conSlider->setValue(0);
@@ -860,8 +860,8 @@ void ConEditorWindow::closeEvent( QCloseEvent *event )
         unsavedDialog.items.addItem("[C] "+ConLib::con[unsavedConIds[i]]->showName);
     }
     for(int i = 0; i < unsavedActIds.size(); i++){
-        if(ActLib::act[unsavedActIds[i]] == NULL) continue;
-        unsavedDialog.items.addItem("[A] "+ActLib::act[unsavedActIds[i]]->header->name);
+        if(ActLib::Act[unsavedActIds[i]] == NULL) continue;
+        unsavedDialog.items.addItem("[A] "+ActLib::Act[unsavedActIds[i]]->header->name);
     }
     unsavedDialog.exec();
     if(unsavedDialog.changed == 0){
@@ -880,9 +880,9 @@ void ConEditorWindow::closeEvent( QCloseEvent *event )
             this->saveCurrentConsist();
     }
     for(int i = 0; i < unsavedActIds.size(); i++){
-        if(ActLib::act[unsavedActIds[i]] == NULL) continue;
-        if(ActLib::act[unsavedActIds[i]]->isUnSaved())
-            ActLib::act[unsavedActIds[i]]->save();
+        if(ActLib::Act[unsavedActIds[i]] == NULL) continue;
+        if(ActLib::Act[unsavedActIds[i]]->isUnSaved())
+            ActLib::Act[unsavedActIds[i]]->save();
     }
     //qDebug() << "aaa2";
     event->accept();

@@ -76,17 +76,8 @@ ActivityServiceProperties::ActivityServiceProperties(QWidget* parent) : QWidget(
     stationList.header()->resizeSection(1,150);    
     stationList.header()->resizeSection(2,50);    
     vbox->addWidget(&stationList);
-    
-    //QPushButton * bOk = new QPushButton("OK");
-    //QObject::connect(bOk, SIGNAL(released()), this, SLOT(bOkEnabled()));
-    //QPushButton * bCancel = new QPushButton("Cancel");
-    //QObject::connect(bCancel, SIGNAL(released()), this, SLOT(bCancelEnabled()));
-    //QGridLayout *vlist1 = new QGridLayout;
-    //vlist1->setSpacing(2);
-    //vlist1->setContentsMargins(1,0,3,0);
-    //vlist1->addWidget(bOk, 0, 0);
-    //vlist1->addWidget(bCancel, 0, 1);
-    //vbox->addItem(vlist1);
+    QObject::connect(&stationList, SIGNAL(itemChanged(QTreeWidgetItem*, int)),
+                      this, SLOT(stationListSelected(QTreeWidgetItem*, int)));
 
     label = new QLabel("Used by:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -119,15 +110,24 @@ void ActivityServiceProperties::showService(Service *s){
     service = s;
     cConFiles.clear();
     ConLib::loadSimpleList(Game::root);
+    cConFiles.addItem("UNDEFINED", "#");
     foreach(QString name, ConLib::conFileList){
         cConFiles.addItem(name.section('/', -1), QVariant(name.section('/', -1)));
     }
+    if(s->trainConfig.length() > 0){ 
+        cConFiles.setCurrentIndex(cConFiles.findData(s->trainConfig.toLower()+".con"));
+    } else {
+        cConFiles.setCurrentIndex(0);
+    }
     
     cPath.clear();
+    cPath.addItem("UNDEFINED", "#");
     for(int i = 0; i < paths.size(); i++ )
         cPath.addItem(paths[i]->displayName, /*QVariant(i)*/QVariant(paths[i]->trPathName));
     if(s->pathId.length() > 0){
         cPath.setCurrentIndex(cPath.findData(s->pathId));
+    } else {
+        cPath.setCurrentIndex(0);
     }
     
     eFileName.setText(s->nameId);
@@ -142,11 +142,28 @@ void ActivityServiceProperties::showService(Service *s){
 }
 
 void ActivityServiceProperties::cPathEnabled(int val){
+    if(cPath.currentIndex() <= 0){
+        service->setNewPath("");
+        setStationList();
+        return;
+    }
+    Path *p = paths[cPath.currentIndex()-1];
+    if(p == NULL){
+        qDebug() << "p = null 1";
+        service->setNewPath("");
+        setStationList();
+        return;
+    }
+    service->setNewPath(p->trPathName);
     setStationList();
 }
 
 void ActivityServiceProperties::cConFilesEnabled(int val){
-
+    if(cConFiles.currentIndex() <= 0){
+        service->trainConfig = "";
+        return;
+    }
+    service->trainConfig = cConFiles.currentData().toString().section(".", 0, -2);
 }
 /*
 void ActivityServiceProperties::bOkEnabled(){
@@ -165,37 +182,43 @@ void ActivityServiceProperties::setStationList(){
     stationList.clear();
     QStringList list;
     QList<QTreeWidgetItem *> items;
-    Path *p = paths[cPath.currentIndex()];
+    if(cPath.currentIndex() <= 0){
+        return;
+    }
+    Path *p = paths[cPath.currentIndex()-1];
     if(p == NULL)
         return;
     p->init3dShapes(false);
-    qDebug() << cPath.currentIndex();
+    qDebug() << cPath.currentIndex()-1;
     qDebug() << p->pathid;
     qDebug() << p->displayName;
     qDebug() << p->nameId;
     qDebug() << p->pathObjects.size();
-    QMapIterator<float, Path::PathObject*> i(p->pathObjects);
-    
-    
-    while (i.hasNext()) {
-        i.next();
-        if(i.value() == NULL)
+
+    int count = -1;
+    foreach(Path::PathObject* i, p->pathObjects){
+        count++;
+        if(i == NULL)
             continue;
-        qDebug() << i.key();
-        qDebug() << i.value();
-        qDebug() << i.value()->name;
-        qDebug() << i.value()->distanceDownPath;
+        qDebug() << i->name;
+        qDebug() << i->distanceDownPath;
         list.clear();
         list.append(QString(""));
-        list.append(i.value()->name);
-        float dist = i.value()->distanceDownPath;
+        list.append(i->name);
+        float dist = i->distanceDownPath;
         dist = 0.01*((int)(dist/10));
         list.append(QString::number(dist));
-        QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, i.key() );
-        item->setCheckState(0, Qt::Checked);
+        QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, count );
+        item->setCheckState(0, Qt::Unchecked);
+        for(int ii = 0; ii < service->stationStop.size(); ii++ ){
+            if(service->stationStop[ii].skipCount == count)
+                item->setCheckState(0, Qt::Checked);
+        }
         items.append(item);
-    }  
+    }
+    stationList.blockSignals(true);
     stationList.insertTopLevelItems(0, items);
+    stationList.blockSignals(false);
 }
 
 void ActivityServiceProperties::setUsedByList(){
@@ -211,4 +234,14 @@ void ActivityServiceProperties::setUsedByList(){
         items.append(item);
     }  
     lUsedBy.insertTopLevelItems(0, items);
+}
+
+void ActivityServiceProperties::stationListSelected(QTreeWidgetItem* item, int column){
+    if(item->checkState(0) == Qt::Checked){
+        qDebug() << "item->checkState(0) == Qt::Checked";
+        service->enableStationStop(item->type());
+    }else{
+        qDebug() << "item->checkState(0) ! Qt::Checked";
+        service->disableStationStop(item->type());
+    }
 }

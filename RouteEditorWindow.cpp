@@ -433,6 +433,9 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(activityTools, SIGNAL(showTraffic(Route*)),
                       activityTrafficWindow, SLOT(showTraffic(Route*)));
     
+    QObject::connect(activityTools, SIGNAL(showTimetable(QVector<ActivityServiceDefinition*>)),
+                      activityTimetableWindow, SLOT(showTimetable(QVector<ActivityServiceDefinition*>)));
+    
     QObject::connect(activityEventWindow->eventProperties, SIGNAL(jumpTo(PreciseTileCoordinate*)),
                       glWidget, SLOT(jumpTo(PreciseTileCoordinate*)));
 }

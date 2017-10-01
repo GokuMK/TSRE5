@@ -37,12 +37,16 @@ public:
     float endInWorld;
     QVector<StationStop> stationStop;
     int loaded = -1;
+    int ref = 0;
     
     Service(QString p, QString n, bool nowe = false);
     Service(const Service& orig);
     virtual ~Service();
     bool isModified();
     void setNameId(QString val);
+    void setNewPath(QString pathName);
+    void disableStationStop(int count);
+    void enableStationStop(int count);
     void load();
     void save();
 private:

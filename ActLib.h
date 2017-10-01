@@ -11,22 +11,38 @@
 #ifndef ACTLIB_H
 #define	ACTLIB_H
 
-#include <unordered_map>
+#include <QHash>
 #include <QString>
 
 class Activity;
+class Service;
+class Traffic;
+class Path;
 
 class ActLib {
 public:
     static int jestact;
-    static std::unordered_map<int, Activity*> act;
-    static std::unordered_map<std::string, std::vector<int>> route;
+    static int jestservice;
+    static int jesttraffic;
+    static int jestpath;
+    static QHash<int, Activity*> Act;
+    static QHash<int, Service*> Services;
+    static QHash<int, Traffic*> Traffics;
+    static QHash<int, Path*> Paths;
+    static QHash<QString, QVector<int>> route;
     ActLib();
     virtual ~ActLib();
-    static int addAct(QString path, QString name);
-    static int loadAll(QString gameRoot);
-    static void getUnsavedInfo(std::vector<QString> &items);
-    static void save();
+    static int AddAct(QString path, QString name, bool nowe = false, QString routeid = "");
+    static int AddService(QString path, QString name, bool nowe = false);
+    static int AddTraffic(QString path, QString name, bool nowe = false);
+    static Service* GetServiceByName(QString name);
+    static Traffic* GetTrafficByName(QString name);
+    static Path* GetPathByName(QString name);
+    static int AddPath(QString path, QString name);
+    static int LoadAllAct(QString gameRoot);
+    static void GetUnsavedInfo(std::vector<QString> &items);
+    static void UpdateServiceChanges(QString serviceNameId);
+    static void SaveAll();
 private:
 
 };

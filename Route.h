@@ -38,8 +38,8 @@ class Route : public QObject {
 public:
     std::unordered_map<int, Tile*> tile;
     QVector<int> activityId;
-    QVector<Service*> service;
-    QVector<Traffic*> traffic;
+    //QVector<Service*> service;
+    //QVector<Traffic*> traffic;
     QVector<Path*> path;
     bool loaded = false;
     TSectionDAT *tsection; 

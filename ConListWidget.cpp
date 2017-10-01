@@ -135,19 +135,18 @@ void ConListWidget::conTChan(QString n){
 void ConListWidget::routeFill(){
     routeShow.clear();
     items.clear();
-    //foreach(int id, ActLib::route){
-    //    routeShow.addItem(ActLib::act[id]->hname);
-    //}
-    for ( auto it = ActLib::route.begin(); it != ActLib::route.end(); ++it ){
-        routeShow.addItem(QString::fromStdString(it->first));
+    QHashIterator<QString, QVector<int>> i(ActLib::route);
+    while (i.hasNext()) {
+        i.next();
+        routeShow.addItem(i.key());
     }
 }
 
 void ConListWidget::routeTChan(QString n){
     actShow.clear();
     items.clear();
-    foreach(int id, ActLib::route[n.toStdString()]){
-        actShow.addItem(ActLib::act[id]->header->name, QVariant(id));
+    foreach(int id, ActLib::route[n]){
+        actShow.addItem(ActLib::Act[id]->header->name, QVariant(id));
     }
 }
 
@@ -193,8 +192,8 @@ void ConListWidget::fillConListAct(){
     Consist * e;
     
     
-    for (int i = 0; i < ActLib::act[id]->activityObjects.size(); i++){
-        e = ActLib::act[id]->activityObjects[i].con;
+    for (int i = 0; i < ActLib::Act[id]->activityObjects.size(); i++){
+        e = ActLib::Act[id]->activityObjects[i].con;
         if(e == NULL) continue;
         new QListWidgetItem ( e->showName, &items, i);
     }
@@ -287,7 +286,7 @@ void ConListWidget::getUnsaedAct(std::vector<int>& unsavedActIds){
     //Game::currentEngLib = englib;
     Activity * e;
     for (int i = 0; i < ActLib::jestact; i++){
-        e = ActLib::act[i];
+        e = ActLib::Act[i];
         if(e == NULL) continue;
         if(e->loaded != 1) continue;
         if(e->isUnSaved()){

@@ -32,6 +32,8 @@ public:
     Traffic(const Traffic& orig);
     virtual ~Traffic();
     void load();
+    bool isModified();
+    ActivityTimetable* getTimetableByServiceName(QString nameTime);
 private:
     bool modified = false;
     int serial = -1;

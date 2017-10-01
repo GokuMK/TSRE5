@@ -830,6 +830,13 @@ float* Vec4::normalize(float* out, float* a) {
     return out;
 };
 
+float* Vec4::copy(float* out, float* a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out[3] = a[3];
+    return out; 
+};
 /**
  * Creates a new, empty quaternion
  * @returns {vec4} 

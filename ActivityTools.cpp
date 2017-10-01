@@ -151,6 +151,48 @@ ActivityTools::ActivityTools(QString name)
     conFilesShow.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     vbox->addItem(vlist1);
     
+    label = new QLabel("Reduced Speed Zones List:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(&speedZones);
+    speedZones.setStyleSheet("combobox-popup: 0;");
+    speedZones.setMaxVisibleItems(35);
+    speedZones.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    vlist1 = new QGridLayout;
+    vlist1->setSpacing(2);
+    vlist1->setContentsMargins(0,0,1,0);
+    QPushButton *actZoneJump = new QPushButton("Jump To");
+    QPushButton *actZoneNew = new QPushButton("New");
+    QPushButton *actZoneDelete = new QPushButton("Delete");
+    QPushButton *actZoneDeleteAll = new QPushButton("Delete All");
+    vlist1->addWidget(actZoneJump,0,0);
+    vlist1->addWidget(actZoneNew,0,1);
+    vlist1->addWidget(actZoneDelete,0,2);
+    vlist1->addWidget(actZoneDeleteAll,0,3);
+    vbox->addItem(vlist1);
+    
+    label = new QLabel("Failed Signals List:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(&failedSignals);
+    failedSignals.setStyleSheet("combobox-popup: 0;");
+    failedSignals.setMaxVisibleItems(35);
+    failedSignals.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    vlist1 = new QGridLayout;
+    vlist1->setSpacing(2);
+    vlist1->setContentsMargins(0,0,1,0);
+    QPushButton *actFailedSignalJump = new QPushButton("Jump To");
+    QPushButton *actFailedSignalNew = new QPushButton("Disable");
+    QPushButton *actFailedSignalDelete = new QPushButton("Delete");
+    QPushButton *actFailedSignalDeleteAll = new QPushButton("Delete All");
+    vlist1->addWidget(actFailedSignalJump,0,0);
+    vlist1->addWidget(actFailedSignalNew,0,1);
+    vlist1->addWidget(actFailedSignalDelete,0,2);
+    vlist1->addWidget(actFailedSignalDeleteAll,0,3);
+    vbox->addItem(vlist1);
+    
     label = new QLabel("Events:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
@@ -286,7 +328,7 @@ void ActivityTools::actSettingsOpenEnabled(){
 
 void ActivityTools::actEventsOpenEnabled(){
     emit showActivityEventEditor();
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     emit showEvents(a);
@@ -299,7 +341,8 @@ void ActivityTools::actServiceOpenEnabled(){
 
 void ActivityTools::actTimetableOpenEnabled(){
     emit showActivityTimetableEditor();
-    emit showTimetable(route);
+    QVector<ActivityServiceDefinition*> s = ActLib::Act[actShow.currentData().toInt()]->getServiceList();
+    emit showTimetable(s);
 }
 
 void ActivityTools::actTrafficOpenEnabled(){
@@ -312,7 +355,7 @@ void ActivityTools::routeLoaded(Route* r){
     actShow.clear();
     consists.clear();
     foreach(int id, route->activityId){
-        actShow.addItem(ActLib::act[id]->header->name, QVariant(id));
+        actShow.addItem(ActLib::Act[id]->header->name, QVariant(id));
     }
     actShow.setCurrentIndex(-1);
     
@@ -325,8 +368,11 @@ void ActivityTools::routeLoaded(Route* r){
 
     cTraffic.clear();
     cTraffic.addItem("UNDEFINED", QVariant(-1));
-    for(int i = 0; i < route->traffic.size(); i++ )
-        cTraffic.addItem(route->traffic[i]->nameId, QVariant(i));
+    for(int i = 0; i < ActLib::jesttraffic; i++ ){
+        if(ActLib::Traffics[i] == NULL)
+            continue;
+        cTraffic.addItem(ActLib::Traffics[i]->nameId, QVariant(i));
+    }
 
     cPath.clear();
     for(int i = 0; i < route->path.size(); i++ )
@@ -338,8 +384,11 @@ void ActivityTools::reloadServicesList(){
     int idx = cService.currentIndex();
 
     cService.addItem("UNDEFINED", QVariant(-1));
-    for(int i = 0; i < route->service.size(); i++ )
-        cService.addItem(route->service[i]->displayName, QVariant(i));
+    for(int i = 0; i < ActLib::jestservice; i++ ){
+        if(ActLib::Services[i] == NULL)
+            continue;
+        cService.addItem(ActLib::Services[i]->displayName, QVariant(i));
+    }
     
     if(idx >= 0)
         cService.setCurrentIndex(idx);
@@ -349,17 +398,17 @@ void ActivityTools::conFilesShowEnabled(QString val){
     QString file = conFilesShow.currentData().toString();
     qDebug() << file;
     int id = actShow.currentData().toInt();
-    if(ActLib::act[id] == NULL)
+    if(ActLib::Act[id] == NULL)
         return;
-    ActLib::act[id]->editorConListSelected = file;
+    ActLib::Act[id]->editorConListSelected = file;
 }
 
 void ActivityTools::activitySelected(QString n){
     int id = actShow.currentData().toInt();
     Consist *e;
-    Activity *a = ActLib::act[id];
+    Activity *a = ActLib::Act[id];
     
-    if(ActLib::act[id] == NULL)
+    if(ActLib::Act[id] == NULL)
         return;
 
     eFileName.setText(a->nameid);
@@ -396,10 +445,10 @@ void ActivityTools::activitySelected(QString n){
             int id = cService.itemData(i).toInt();
             if(id < 0)
                 continue;
-            if(route->service[id] == NULL)
+            if(ActLib::Services[id] == NULL)
                 continue;
             //qDebug() << cname << route->service[id]->name;
-            if(cname == route->service[id]->nameId){
+            if(cname == ActLib::Services[id]->nameId){
                 cService.setCurrentIndex(i);
                 break;
             }
@@ -415,10 +464,10 @@ void ActivityTools::activitySelected(QString n){
             int id = cTraffic.itemData(i).toInt();
             if(id < 0)
                 continue;
-            if(route->traffic[id] == NULL)
+            if(ActLib::Traffics[id] == NULL)
                 continue;
             //qDebug() << cname << route->service[id]->name;
-            if(cname == route->traffic[id]->nameId){
+            if(cname == ActLib::Traffics[id]->nameId){
                 cTraffic.setCurrentIndex(i);
                 break;
             }
@@ -426,16 +475,31 @@ void ActivityTools::activitySelected(QString n){
     }
     
     consists.clear();
-    for (int i = 0; i < ActLib::act[id]->activityObjects.size(); i++){
-        e = ActLib::act[id]->activityObjects[i].con;
+    for (int i = 0; i < ActLib::Act[id]->activityObjects.size(); i++){
+        e = ActLib::Act[id]->activityObjects[i].con;
         if(e == NULL) continue;
         consists.addItem(e->showName, QVariant(i));
     }
+    
+    speedZones.clear();
+    ActivityObject *rz;
+    for (int i = 0; i < ActLib::Act[id]->restrictedSpeedZone.size(); i++){
+        rz = &ActLib::Act[id]->restrictedSpeedZone[i];
+        if(rz == NULL) continue;
+        speedZones.addItem(QString::number(rz->restrictedSpeedZoneStart[0])+" "+QString::number(rz->restrictedSpeedZoneStart[1])+" "+QString::number(rz->restrictedSpeedZoneStart[2])+" "+QString::number(rz->restrictedSpeedZoneStart[3]), QVariant(i));
+    }
 
+    failedSignals.clear();
+    for (int i = 0; i < ActLib::Act[id]->activityFailedSignal.size(); i++){
+        rz = &ActLib::Act[id]->activityFailedSignal[i];
+        if(rz == NULL) continue;
+        failedSignals.addItem(QString("Signal ID: ")+QString::number(rz->failedSignal), QVariant(i));
+    }
+    
     if(route != NULL){
         //if(!ActLib::act[id]->isInitActivityObjects)
         //    ActLib::act[id]->initActivityObjects();
-        route->activitySelected(ActLib::act[id]);
+        route->activitySelected(ActLib::Act[id]);
     }
     
     QString txt = a->header->briefing;
@@ -495,44 +559,42 @@ void ActivityTools::msg(QString text, QString val){
 void ActivityTools::cServiceEnabled(QString val){
     int id = cService.currentData().toInt();
     int aid = actShow.currentData().toInt();
-    Activity *a = ActLib::act[aid];
+    Activity *a = ActLib::Act[aid];
     
     if(id == -1){
         a->playerServiceDefinition = NULL;
     } else {
-        int startTime = a->header->startTime[0]*60*60 + a->header->startTime[0]*60;
-        a->createNewPlayerService(route->service[id]->nameId, startTime);
+        int startTime = a->header->startTime[0]*60*60 + a->header->startTime[1]*60;
+        a->createNewPlayerService(ActLib::Services[id]->nameId, startTime);
     }
 }
 
 void ActivityTools::cTrafficEnabled(QString val){
     int id = cTraffic.currentData().toInt();
     int aid = actShow.currentData().toInt();
-    Activity *a = ActLib::act[aid];
+    Activity *a = ActLib::Act[aid];
     
     if(id == -1){
         a->traffic = NULL;
     } else {
-        a->createNewTrafficService(route->traffic[id]);
+        a->createNewTrafficService(ActLib::Traffics[id]);
     }
 }
 
 void ActivityTools::newActButtonEnabled(){
     QString pathid = Game::root + "/routes/" + Game::route + "/activities/";
-    QString name = "New Activity";
-    ActLib::act[ActLib::jestact] = new Activity(pathid, "file.act", true);
-    ActLib::act[ActLib::jestact]->init(Game::route, name);
-    route->activityId.push_back(ActLib::jestact);
-    
-    qDebug()<< ActLib::act[ActLib::jestact]->header->name;
-    actShow.addItem(ActLib::act[ActLib::jestact]->header->name, QVariant(ActLib::jestact));
+    //ActLib::Act[ActLib::jestact] = new Activity(pathid, "file.act", true);
+    int id = ActLib::AddAct(pathid, "file.act", true, Game::route);
+    ActLib::Act[id]->init(Game::route, "New Activity");
+    qDebug()<< ActLib::Act[id]->header->name;
+    route->activityId.push_back(id);
+    actShow.addItem(ActLib::Act[id]->header->name, QVariant(ActLib::jestact));
     actShow.setCurrentIndex(actShow.count()-1); 
     activitySelected("");
-    
-    ActLib::jestact++;
+    //ActLib::jestact++;
 }
-/*
-void ActivityTools::actServiceNewEnabled(){
+
+/*void ActivityTools::actServiceNewEnabled(){
     ActivityServiceTools sTools;
     QString pathid = Game::root + "/routes/" + Game::route + "/services/";
     QString name = "aaaaa1";
@@ -543,84 +605,59 @@ void ActivityTools::actServiceNewEnabled(){
         route->service.push_back(s);
         reloadServicesList();
     }
-}
-
-void ActivityTools::actServiceEditEnabled(){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
-    if(a == NULL)
-        return;
-    ActivityServiceTools sTools;
-    //QString pathid = Game::root + "/routes/" + Game::route + "/services/";
-    //QString name = "aaaaa1";
-    Service *s = NULL;
-    for(int i = 0; i < route->service.size(); i++){
-        qDebug() << route->service[i]->pathId << a->playerServiceDefinition->name;
-        if(route->service[i]->pathId.toLower() == a->playerServiceDefinition->name.toLower()){
-            s = route->service[i];
-            break;
-        }
-    }
-    if(s == NULL)
-        return;
-    sTools.setData(s, route->path);
-    sTools.exec();
-    if(sTools.changed) {
-        //route->service.push_back(s);
-        //reloadServicesList();
-    }
 }*/
 
 void ActivityTools::eFileNameEnabled(QString val){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     a->setFileName(val);
 }
 
 void ActivityTools::eDisplayNameEnabled(QString val){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     a->setDisplayName(val);
 }
 
 void ActivityTools::cDifficultyEnabled(int val){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     a->setDifficulty(val);
 }
 
 void ActivityTools::eDurationEnabled(){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     a->setDuration(eDuration.time().hour(),  eDuration.time().minute());
 }
 
 void ActivityTools::eStartTimeEnabled(){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     a->setStartTime(eStartTime.time().hour(), eStartTime.time().minute(), eStartTime.time().second());
 }
 
 void ActivityTools::cSeasonEnabled(int val){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     a->setSeason(val);
 }
 
 void ActivityTools::cWeatherEnabled(int val){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     a->setWeather(val);
 }
 
 void ActivityTools::eFuelCoalEnabled(QString val){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     bool ok = false;
@@ -632,7 +669,7 @@ void ActivityTools::eFuelCoalEnabled(QString val){
 }
 
 void ActivityTools::sFuelCoalEnabled(){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     eFuelCoal->setText(QString::number(sFuelCoal.value()));
@@ -640,7 +677,7 @@ void ActivityTools::sFuelCoalEnabled(){
 }
 
 void ActivityTools::eFuelDieselEnabled(QString val){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     bool ok = false;
@@ -652,7 +689,7 @@ void ActivityTools::eFuelDieselEnabled(QString val){
 }
 
 void ActivityTools::sFuelDieselEnabled(){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     eFuelDiesel->setText(QString::number(sFuelDiesel.value()));
@@ -660,7 +697,7 @@ void ActivityTools::sFuelDieselEnabled(){
 }
 
 void ActivityTools::eFuelWaterEnabled(QString val){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     bool ok = false;
@@ -672,7 +709,7 @@ void ActivityTools::eFuelWaterEnabled(QString val){
 }
 
 void ActivityTools::sFuelWaterEnabled(){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     eFuelWater->setText(QString::number(sFuelWater.value()));
@@ -680,7 +717,7 @@ void ActivityTools::sFuelWaterEnabled(){
 }
 
 void ActivityTools::eHazardAnimalEnabled(QString val){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     bool ok = false;
@@ -692,7 +729,7 @@ void ActivityTools::eHazardAnimalEnabled(QString val){
 }
 
 void ActivityTools::sHazardAnimalEnabled(){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     eHazardAnimal->setText(QString::number(sHazardAnimal.value()));
@@ -700,7 +737,7 @@ void ActivityTools::sHazardAnimalEnabled(){
 }
 
 void ActivityTools::eHazardPeopleEnabled(QString val){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     bool ok = false;
@@ -712,7 +749,7 @@ void ActivityTools::eHazardPeopleEnabled(QString val){
 }
 
 void ActivityTools::sHazardPeopleEnabled(){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     eHazardPeople->setText(QString::number(sHazardPeople.value()));
@@ -720,7 +757,7 @@ void ActivityTools::sHazardPeopleEnabled(){
 }
 
 void ActivityTools::descriptionOpenEnabled(){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     TextEditDialog dialog;
@@ -737,7 +774,7 @@ void ActivityTools::descriptionOpenEnabled(){
 }
 
 void ActivityTools::briefingOpenEnabled(){
-    Activity *a = ActLib::act[actShow.currentData().toInt()];
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
         return;
     TextEditDialog dialog;

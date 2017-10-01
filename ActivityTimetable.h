@@ -20,10 +20,12 @@ class QTextStream;
 class ActivityTimetable {
 public:
     ActivityTimetable();
+    ActivityTimetable(QString n, int t);
     ActivityTimetable(const ActivityTimetable& orig);
     virtual ~ActivityTimetable();
     int time = 0;
     QString name;
+    QString nameTime;
     bool actTimetable = false;
     QVector<int> arrivalTime;
     QVector<int> departTime;
@@ -32,6 +34,8 @@ public:
     QVector<int> platformStartID;
     void load(FileBuffer* data);
     void save(QTextStream* out, QString off = "");
+    void reloadTimetable();
+    void clear();
 private:
 
 };
