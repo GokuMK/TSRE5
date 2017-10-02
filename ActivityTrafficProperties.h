@@ -24,6 +24,9 @@ public:
     void showTraffic(Traffic* t);
 public slots:
     void lServciesSelected(QTreeWidgetItem* item, int column);
+    void bAddServiceSelected();
+    void bRemoveServiceSelected();
+    
 signals:
     
 private:

@@ -29,6 +29,7 @@ public:
 public slots:
     void lTrafficSelected(QTreeWidgetItem * item, int column);
     void showTraffic(Route* r);
+    void bNewTrafficSelected();
     
 private:
     Route *route = NULL;

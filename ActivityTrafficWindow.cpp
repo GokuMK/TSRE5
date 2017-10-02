@@ -13,6 +13,8 @@
 #include "Route.h"
 #include "Traffic.h"
 #include "ActLib.h"
+#include "Game.h"
+#include "EditFileNameDialog.h"
 
 ActivityTrafficWindow::ActivityTrafficWindow(QWidget* parent) : QWidget(parent) {
     setWindowFlags(Qt::WindowType::Tool);
@@ -25,10 +27,10 @@ ActivityTrafficWindow::ActivityTrafficWindow(QWidget* parent) : QWidget(parent) 
     actionListLayout->setSpacing(0);
     QPushButton *bNew = new QPushButton("New Traffic");
     QObject::connect(bNew, SIGNAL(released()),
-                      this, SLOT(bNewSelected()));
+                      this, SLOT(bNewTrafficSelected()));
     QPushButton *bDelete = new QPushButton("Delete");
     QObject::connect(bDelete, SIGNAL(released()),
-                      this, SLOT(bDeleteSelected()));
+                      this, SLOT(bDeleteTrafficSelected()));
     QStringList list;
     list.append("Name:");
     list.append("This:");
@@ -93,4 +95,13 @@ void ActivityTrafficWindow::lTrafficSelected(QTreeWidgetItem *item, int column){
     if(route == NULL)
         return;
     trafficProperties->showTraffic(ActLib::Traffics[item->type()]);
+}
+
+void ActivityTrafficWindow::bNewTrafficSelected(){
+    EditFileNameDialog eWindow;
+    eWindow.exec();
+    if(eWindow.isOk && eWindow.name.text().length() > 0){
+        ActLib::AddTraffic(Game::root + "/routes/" + Game::route + "/services/", eWindow.name.text()+".srv", true);
+    }
+    showTraffic(route);
 }

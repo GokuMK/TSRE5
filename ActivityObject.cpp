@@ -39,11 +39,13 @@ ActivityObject::ActivityObject(const ActivityObject& orig){
     id = orig.id;
     con = orig.con;
     direction = orig.direction;
-    id = orig.id;
     objectType = orig.objectType;
+    objectTypeId = orig.objectTypeId;
     parentActivity = orig.parentActivity;
     selected = orig.selected;
+    selectionValue = orig.selectionValue;
     failedSignal = orig.failedSignal;
+    modified = orig.modified;
     Vec4::copy((float*)tile, (float*)orig.tile);
     Vec4::copy((float*)restrictedSpeedZoneStart, (float*)orig.restrictedSpeedZoneStart);
     Vec4::copy((float*)restrictedSpeedZoneEnd, (float*)orig.restrictedSpeedZoneEnd);

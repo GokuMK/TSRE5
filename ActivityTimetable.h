@@ -26,6 +26,7 @@ public:
     int time = 0;
     QString name;
     QString nameTime;
+    bool empty = true;
     bool actTimetable = false;
     QVector<int> arrivalTime;
     QVector<int> departTime;

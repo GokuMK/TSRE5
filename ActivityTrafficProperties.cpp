@@ -14,6 +14,7 @@
 #include "Service.h"
 #include "Traffic.h"
 #include "ActivityTimetable.h"
+#include "ActLib.h"
 
 ActivityTrafficProperties::ActivityTrafficProperties(QWidget* parent) : QWidget(parent) {
     setMinimumWidth(350);
@@ -60,9 +61,9 @@ ActivityTrafficProperties::ActivityTrafficProperties(QWidget* parent) : QWidget(
     QPushButton *bAddOutcome = new QPushButton("Add New");
     QPushButton *bRemoveOutcome = new QPushButton("Remove Selected");
     QObject::connect(bAddOutcome, SIGNAL(released()),
-                      this, SLOT(bAddOutcomeSelected()));
+                      this, SLOT(bAddServiceSelected()));
     QObject::connect(bRemoveOutcome, SIGNAL(released()),
-                      this, SLOT(bRemoveOutcomeSelected()));
+                      this, SLOT(bRemoveServiceSelected()));
     
     vlist->addWidget(bAddOutcome, row++, 0, 1, 2);
     vlist->addWidget(bRemoveOutcome, row++, 0, 1, 2);
@@ -73,6 +74,9 @@ ActivityTrafficProperties::ActivityTrafficProperties(QWidget* parent) : QWidget(
     vlist->addWidget(label, row++, 0, 1, 2);
     
     vlist->addWidget(new QLabel("Service:"), row, 0);
+    cServiceList.setStyleSheet("combobox-popup: 0;");
+    cServiceList.setMaxVisibleItems(30);
+    cServiceList.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     vlist->addWidget(&cServiceList, row++, 1);
     QObject::connect(&cServiceList, SIGNAL(activated(QString)),
                       this, SLOT(outcomeActoionListSelected(QString)));
@@ -120,8 +124,31 @@ void ActivityTrafficProperties::lServciesSelected(QTreeWidgetItem* item, int col
     ActivityTimetable* s = traffic->service[item->type()];
     if(s == NULL)
         return;
-        
+    
+    cServiceList.clear();
+    cServiceList.addItem("UNDEFINED", "");
+    for(int i = 0; i < ActLib::jestservice; i++){
+        if(ActLib::Services[i] == NULL)
+            continue;
+        cServiceList.addItem(ActLib::Services[i]->displayName, ActLib::Services[i]->nameId.toLower() );
+    }
+    int index = cServiceList.findData(s->name.toLower());
+    if(index < 0)
+        index = 0;
+    cServiceList.setCurrentIndex(index);
+    
     //cOutcome.setCurrentIndex(cOutcome.findData((int)outcome->type));
     //cWeatherChange.setText(outcome->value.toString());
     eTime.setTime(QTime::fromMSecsSinceStartOfDay((s->time*1000)));
+}
+
+void ActivityTrafficProperties::bAddServiceSelected(){
+    if(traffic == NULL)
+        return;
+    traffic->service.push_back(new ActivityTimetable());
+    showTraffic(traffic);
+}
+
+void ActivityTrafficProperties::bRemoveServiceSelected(){
+    
 }

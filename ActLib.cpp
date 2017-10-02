@@ -103,7 +103,7 @@ int ActLib::AddTraffic(QString path, QString name, bool nowe) {
             }
     }
     qDebug() << "Nowy " << jesttraffic << " traffic: " << pathid;
-    Traffics[jesttraffic] = new Traffic(path, name);
+    Traffics[jesttraffic] = new Traffic(path, name, nowe);
     return jesttraffic++;
 }
 

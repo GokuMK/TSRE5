@@ -797,6 +797,7 @@ void Activity::newLooseConsist(float *tdbPos){
     ActivityObject *ao = &activityObjects.back();
 
     ao->objectType = "WagonsList";
+    ao->objectTypeId = ao->WAGONLIST;
     ao->direction = 1;
     ao->tile[0] = drawPosition[5];
     ao->tile[1] = drawPosition[6];
@@ -805,7 +806,6 @@ void Activity::newLooseConsist(float *tdbPos){
     int conId = ConLib::addCon(editorConListSelected.section("/", 0, -2), editorConListSelected.section("/", -1));
     ao->con = new Consist(ConLib::con[conId]);
     ao->setParentActivity(this);
-    
     modified = true;
 }
 

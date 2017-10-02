@@ -24,6 +24,7 @@ ActivityTimetable::ActivityTimetable(QString n, int t){
     name = n;
     time = t;
     nameTime = name+QString::number(time);
+    empty = false;
 }
 
 ActivityTimetable::ActivityTimetable(const ActivityTimetable& orig) {
@@ -68,6 +69,7 @@ void ActivityTimetable::load(FileBuffer* data) {
         time = ParserX::GetNumber(data);
     } 
     nameTime = name+QString::number(time);
+    empty = false;
     
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
@@ -103,7 +105,8 @@ void ActivityTimetable::load(FileBuffer* data) {
 }
 
 void ActivityTimetable::save(QTextStream* out, QString off) {
-
+    if(empty)
+        return;
     if(actTimetable)
         *out << off << "Player_Traffic_Definition ( "<< time <<"\n";
     else
