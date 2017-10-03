@@ -23,7 +23,7 @@ ActivityTimetable::ActivityTimetable() {
 ActivityTimetable::ActivityTimetable(QString n, int t){
     name = n;
     time = t;
-    nameTime = name+QString::number(time);
+    nameTime = name + QString::number(time);
     empty = false;
 }
 
@@ -31,6 +31,38 @@ ActivityTimetable::ActivityTimetable(const ActivityTimetable& orig) {
 }
 
 ActivityTimetable::~ActivityTimetable() {
+}
+
+void ActivityTimetable::setService(QString sn){
+    name = sn;
+    nameTime = name + QString::number(time);
+    reloadTimetable();
+    modified = true;
+}
+
+void ActivityTimetable::setTime(int t){
+    time = t;
+    nameTime = name + QString::number(time);
+    reloadTimetable();
+    modified = true;
+}
+
+void ActivityTimetable::setArrival(int id, int t){
+    if(id < 0)
+        return;
+    if(arrivalTime.size() <= id)
+        return;
+    arrivalTime[id] = t;
+    modified = true;
+}
+
+void ActivityTimetable::setDepart(int id, int t){
+    if(id < 0)
+        return;
+    if(departTime.size() <= id)
+        return;
+    departTime[id] = t;
+    modified = true;
 }
 
 void ActivityTimetable::reloadTimetable(){
@@ -41,7 +73,7 @@ void ActivityTimetable::reloadTimetable(){
         qDebug() << "s == NILL " << name;
         return;
     }
-    
+    empty = false;
     for(int i = 0; i < s->stationStop.size(); i++ ){
         arrivalTime.push_back(time);
         departTime.push_back(time);
@@ -49,14 +81,21 @@ void ActivityTimetable::reloadTimetable(){
         distanceDownPath.push_back(s->stationStop[i].distanceDownPath);
         platformStartID.push_back(s->stationStop[i].platformStartID);
     }
+    modified = true;
 }
 
 void ActivityTimetable::clear(){
+    empty = true;
     arrivalTime.clear();
     departTime.clear();
     skipCount.clear();
     distanceDownPath.clear();
     platformStartID.clear();
+    modified = true;
+}
+
+bool ActivityTimetable::isModified(){
+    return modified;
 }
 
 void ActivityTimetable::load(FileBuffer* data) {
@@ -105,8 +144,10 @@ void ActivityTimetable::load(FileBuffer* data) {
 }
 
 void ActivityTimetable::save(QTextStream* out, QString off) {
-    if(empty)
+    if(empty){
+        modified = false;
         return;
+    }
     if(actTimetable)
         *out << off << "Player_Traffic_Definition ( "<< time <<"\n";
     else
@@ -120,4 +161,6 @@ void ActivityTimetable::save(QTextStream* out, QString off) {
         *out << off << "	PlatformStartID ( "<<platformStartID[i]<<" )\n";
     }
     *out << off << ")\n";
+    
+    modified = false;
 }

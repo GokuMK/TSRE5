@@ -64,29 +64,28 @@ ActivityTimetableProperties::ActivityTimetableProperties(QWidget* parent) : QWid
     //vbox->addStretch(1);
     this->setLayout(vbox);
     
-    QObject::connect(&lTimetable, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
-                      this, SLOT(lServciesSelected(QTreeWidgetItem*, int)));
+    QObject::connect(&lTimetable, SIGNAL(cellChanged(int, int)),
+                      this, SLOT(lTimetableSelected(int, int)));
 }
 
 ActivityTimetableProperties::~ActivityTimetableProperties() {
 }
 
 void ActivityTimetableProperties::showTimetable(ActivityServiceDefinition* s){
-    ActivityTimetable *t = s->trafficDefinition;
+    service = s;
+    ActivityTimetable *t = service->trafficDefinition;
     if(t == NULL)
         return;
     
     QTableWidgetItem *newItem;
-
-    //newItem = new QTableWidgetItem("15:00:30");
-    //lTimetable.insertRow( lTimetable.rowCount() );
-    //lTimetable.setItem(1, 1, newItem);
     QTime time;
-    lTimetable.clearContents();
-    lTimetable.setRowCount(0);
     TDB *tdb = Game::trackDB;
     if(tdb == NULL)
         return;
+    
+    lTimetable.blockSignals(true);
+    lTimetable.clearContents();
+    lTimetable.setRowCount(0);
     QString name = "";
     for(int i = 0; i < t->platformStartID.size(); i++){
         TRitem *trit = tdb->trackItems[t->platformStartID[i]];
@@ -106,5 +105,29 @@ void ActivityTimetableProperties::showTimetable(ActivityServiceDefinition* s){
         lTimetable.setItem(i, 2, newItem);
         newItem = new QTableWidgetItem(QString::number(s->efficiency[i]));
         lTimetable.setItem(i, 3, newItem);
+    }
+    lTimetable.blockSignals(false);
+}
+
+void ActivityTimetableProperties::lTimetableSelected(int row, int column){
+     qDebug() << "column" << column;
+    
+    if(service == NULL)
+        return;
+    ActivityTimetable *t = service->trafficDefinition;
+    
+    if(column < 1)
+        return;
+    QTime time;
+    if(column == 1){
+        time = QTime::fromString(lTimetable.item(row, column)->text(), "HH:mm:ss");
+        t->setArrival(row, time.msecsSinceStartOfDay()/1000);
+    }
+    if(column == 2){
+        time = QTime::fromString(lTimetable.item(row, column)->text(), "HH:mm:ss");
+        t->setDepart(row, time.msecsSinceStartOfDay()/1000);
+    }
+    if(column == 3){
+        service->setTimetableEfficiency(row, lTimetable.item(row, column)->text().toFloat());
     }
 }

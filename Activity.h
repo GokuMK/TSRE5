@@ -41,7 +41,11 @@ public:
     void save(QTextStream* out);
     void reloadTimetable();
     void reloadDefinition();
+    bool isModified();
+    void setTimetableEfficiency(int id, float val);
     QMap<int, QString> getStationStopNameList();
+private:
+    bool modified = false;
 };
 
 class Activity {

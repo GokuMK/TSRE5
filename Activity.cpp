@@ -429,6 +429,22 @@ void ActivityServiceDefinition::reloadTimetable(){
     reloadDefinition();
 }
 
+bool ActivityServiceDefinition::isModified(){
+    if(trafficDefinition != NULL)
+        if(trafficDefinition->isModified())
+            return true;
+    return modified;
+}
+
+void ActivityServiceDefinition::setTimetableEfficiency(int id, float val){
+    if(id < 0)
+        return;
+    if(efficiency.size() <= id)
+        return;
+    efficiency[id] = val;
+    modified = true;
+}
+
 void ActivityServiceDefinition::reloadDefinition(){
     Service *s = ActLib::GetServiceByName(name);
     if(s == NULL)
@@ -503,6 +519,7 @@ void ActivityServiceDefinition::save(QTextStream* out) {
             woff = "	";
             *out << woff << "		Service_Definition ( )\n";
         }
+        modified = false;
         return;
     }
     
@@ -527,6 +544,8 @@ void ActivityServiceDefinition::save(QTextStream* out) {
         *out << woff << "			PlatformStartID ( "<<platformStartId[i]<<" )\n";
     }
     *out << woff << "		)\n";
+    
+    modified = false;
 }
 
 void Activity::ActivityHeader::load(FileBuffer* data) {
@@ -709,6 +728,14 @@ bool Activity::isUnSaved(){
         if(event[i].isModified())
             return true;
     }
+    if(playerServiceDefinition != NULL)
+        if(playerServiceDefinition->isModified())
+            return true;
+    if(traffic != NULL)
+        for(int i = 0; i < traffic->service.size(); i++){
+            if(traffic->service[i].isModified())
+                return true;
+        }
     return modified;
 }
 void Activity::setFileName(QString val){

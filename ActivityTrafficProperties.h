@@ -22,10 +22,13 @@ public:
     ActivityTrafficProperties(QWidget* parent);
     virtual ~ActivityTrafficProperties();
     void showTraffic(Traffic* t);
+    
 public slots:
     void lServciesSelected(QTreeWidgetItem* item, int column);
     void bAddServiceSelected();
     void bRemoveServiceSelected();
+    void serviceActoionListSelected(QString val);
+    void eTimeSelected(QTime val);
     
 signals:
     

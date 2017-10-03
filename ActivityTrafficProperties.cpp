@@ -79,10 +79,12 @@ ActivityTrafficProperties::ActivityTrafficProperties(QWidget* parent) : QWidget(
     cServiceList.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     vlist->addWidget(&cServiceList, row++, 1);
     QObject::connect(&cServiceList, SIGNAL(activated(QString)),
-                      this, SLOT(outcomeActoionListSelected(QString)));
+                      this, SLOT(serviceActoionListSelected(QString)));
     vlist->addWidget(new QLabel("Start Time:"), row, 0);
     eTime.setDisplayFormat("HH:mm:ss");
     vlist->addWidget(&eTime, row++, 1);
+    QObject::connect(&eTime, SIGNAL(timeChanged(QTime)),
+                      this, SLOT(eTimeSelected(QTime)));
     vbox->addItem(vlist);
 
     //vbox->addStretch(1);
@@ -130,9 +132,9 @@ void ActivityTrafficProperties::lServciesSelected(QTreeWidgetItem* item, int col
     for(int i = 0; i < ActLib::jestservice; i++){
         if(ActLib::Services[i] == NULL)
             continue;
-        cServiceList.addItem(ActLib::Services[i]->displayName, ActLib::Services[i]->nameId.toLower() );
+        cServiceList.addItem(ActLib::Services[i]->displayName, ActLib::Services[i]->nameId );
     }
-    int index = cServiceList.findData(s->name.toLower());
+    int index = cServiceList.findData(s->name.toLower(), Qt::UserRole, static_cast<Qt::MatchFlags>(Qt::CaseInsensitive));
     if(index < 0)
         index = 0;
     cServiceList.setCurrentIndex(index);
@@ -146,9 +148,39 @@ void ActivityTrafficProperties::bAddServiceSelected(){
     if(traffic == NULL)
         return;
     traffic->service.push_back(new ActivityTimetable());
+    //QModelIndex row = lServcies.currentIndex();
     showTraffic(traffic);
+    //lServcies.setCurrentIndex(row);
+    //serviceActoionListSelected();
 }
 
 void ActivityTrafficProperties::bRemoveServiceSelected(){
     
+}
+
+void ActivityTrafficProperties::serviceActoionListSelected(QString val){
+    QString index = "";
+    if(cServiceList.currentIndex() > 0)
+        index = cServiceList.currentData().toString();
+    
+    ActivityTimetable* s = traffic->service[lServcies.currentItem()->type()];
+    if(s == NULL)
+        return;
+    
+    if(index == "")
+        s->clear();
+    else
+        s->setService(index);
+    
+    lServcies.currentItem()->setText(0, s->name);
+}
+
+void ActivityTrafficProperties::eTimeSelected(QTime val){
+    if(traffic == NULL)
+        return;
+    ActivityTimetable* s = traffic->service[lServcies.currentItem()->type()];
+    if(s == NULL)
+        return;
+    s->setTime(val.msecsSinceStartOfDay()/1000);
+    lServcies.currentItem()->setText(1, val.toString("HH:mm:ss"));
 }

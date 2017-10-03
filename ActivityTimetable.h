@@ -36,9 +36,14 @@ public:
     void load(FileBuffer* data);
     void save(QTextStream* out, QString off = "");
     void reloadTimetable();
+    void setService(QString sn);
+    void setTime(int t);
+    void setArrival(int id, int t);
+    void setDepart(int id, int t);
     void clear();
+    bool isModified();
 private:
-
+    bool modified = false;
 };
 
 #endif	/* ACTIVITYTIMETABLE_H */

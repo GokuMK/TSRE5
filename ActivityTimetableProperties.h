@@ -23,8 +23,15 @@ public:
     ActivityTimetableProperties(QWidget* parent);
     virtual ~ActivityTimetableProperties();
     void showTimetable(ActivityServiceDefinition* s);
+    
+public slots:
+    void lTimetableSelected(int row, int column);
+    
+signals:
+    
+    
 private:
-    ActivityServiceDefinition *s = NULL;
+    ActivityServiceDefinition *service = NULL;
     QTableWidget lTimetable;
 };
 

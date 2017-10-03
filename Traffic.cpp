@@ -95,5 +95,9 @@ ActivityTimetable* Traffic::getTimetableByServiceName(QString nameTime){
 }
 
 bool Traffic::isModified(){
+    for(int i = 0; i < service.size(); i++){
+        if(service[i]->isModified())
+            return true;
+    }
     return modified;
 }
