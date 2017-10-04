@@ -242,7 +242,7 @@ void ActLib::SaveAll(){
         if(t == NULL) continue;
         if(t->loaded != 1) continue;
         if(t->isModified()){
-            //t->save();
+            t->save();
         }
     }
 }

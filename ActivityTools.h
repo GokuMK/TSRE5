@@ -63,6 +63,11 @@ public slots:
     void actTimetableOpenEnabled();
     void actSettingsOpenEnabled();
     
+    void reloadServicesList();
+    void reloadTrafficsList();
+    void reloadPathsList();
+    void conFilesRefreshSelected();
+    
 signals:
     void enableTool(QString name);
     void objectSelected(GameObj* obj);
@@ -113,8 +118,6 @@ private:
     QWidget settingsWidget;
     QPlainTextEdit eDescription;
     QPlainTextEdit eBriefing;
-    
-    void reloadServicesList();
 };
 
 #endif	/* ACTIVITYTOOLS_H */

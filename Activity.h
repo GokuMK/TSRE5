@@ -53,7 +53,7 @@ public:
     Activity();
     virtual ~Activity();
     Activity(QString p, QString n, bool isnew = false);
-    Activity(QString src, QString p, QString n, bool nowe = false);
+    Activity(QString src, QString p, QString n, bool isnew = false);
 
     struct TrafficDefinition {
         QString name;

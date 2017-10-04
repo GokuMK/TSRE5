@@ -90,17 +90,19 @@ Activity::Activity(QString p, QString n, bool isnew) {
     }
 }
 
-Activity::Activity(QString src, QString p, QString n, bool nowe) {
+Activity::Activity(QString src, QString p, QString n, bool isnew) {
     pathid = src;
     path = p;
     name = n;
     nameid = n.section(".",0,-2);
     loaded = -1;
-    if(!nowe){
+    if(!isnew){
         loaded = -1;
         load();
     } else {
+        nowe = true;
         loaded = 1;
+        serial = 1;
         name = "New Activity";
         modified = true;
     }
@@ -840,7 +842,7 @@ unsigned int Activity::getSelectedCarId(){
     for(int i = 0; i < activityObjects.size(); i++){
         if(activityObjects[i].isSelected()){
             if(activityObjects[i].con != NULL){
-                return activityObjects[i].id*65536 + activityObjects[i].con->selectedIdx;
+                return activityObjects[i].id*65536 + activityObjects[i].con->engItems[activityObjects[i].con->selectedIdx].uid;
             }
         }
     }

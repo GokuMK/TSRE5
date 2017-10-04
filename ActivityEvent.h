@@ -160,6 +160,7 @@ public:
     void setReversable(bool val);
     void setAutoContinue(int val);
     void setActionToNewType(EventType newType);
+    void setStationStop(int tid);
     void setTime(int val);
     int getWagonListSize();
     QString getWagonListDescription(int i);

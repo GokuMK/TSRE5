@@ -111,6 +111,7 @@ void ActivityServiceWindow::bNewServiceSelected(){
         ActLib::AddService(Game::root + "/routes/" + Game::route + "/services/", eWindow.name.text()+".srv", true);
     }
     showServices(route);
+    reloadServicesList();
 }
 
 void ActivityServiceWindow::bDeleteServiceSelected(){

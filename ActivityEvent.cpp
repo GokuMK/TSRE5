@@ -662,6 +662,11 @@ void ActivityEvent::Outcome::setEventLinkId(int id){
     modified = true;
 }
 
+void ActivityEvent::setStationStop(int tid){
+    stationStop = tid;
+    modified = true;
+}
+
 void ActivityEvent::setActionToNewType(EventType newType){
     eventType = newType;
     speed = -99999;

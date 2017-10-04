@@ -33,7 +33,10 @@ public slots:
     void serviceNameChanged(int id);
     void bNewServiceSelected();
     void bDeleteServiceSelected();
-    
+
+signals:
+    void reloadServicesList();
+
 private:
     QTreeWidget serviceList;
     

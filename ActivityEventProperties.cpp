@@ -108,6 +108,8 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     cStationStopAction.setMaxVisibleItems(30);
     cStationStopAction.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     vlist->addWidget(&cStationStopAction, row++, 1);
+    QObject::connect(&cStationStopAction, SIGNAL(activated(QString)),
+                      this, SLOT(cStationStopActionSelected(QString)));
     actionWidgetStation.setLayout(vlist);
     
     // action siding
@@ -609,6 +611,12 @@ void ActivityEventProperties::cActionTypeSelected(QString item){
     int id = outcomeList.currentRow();
     showEvent(event);
     selctOutcomeOnList(id);
+}
+
+void ActivityEventProperties::cStationStopActionSelected(QString item){
+    if(event == NULL)
+        return;
+    event->setStationStop(cStationStopAction.currentData().toInt());
 }
 
 void ActivityEventProperties::outcomeActoionListSelected(QString item){

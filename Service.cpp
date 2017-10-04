@@ -39,6 +39,7 @@ Service::Service(QString p, QString n, bool nowe) {
         startInWorld = 0;
         endInWorld = 0;
         loaded = 1;
+        serial = 1;
         displayName = nameId;
         modified = true;
     }
@@ -162,7 +163,7 @@ void Service::load(){
         qDebug() << "#SRV - undefined token: " << sh;
         ParserX::SkipToken(data);
     }
-    
+    loaded = 1;
 }
 
 void Service::save(){
@@ -193,6 +194,13 @@ void Service::save(){
     out << "		EndingSpeed ( "<<this->endingSpeed<<" )\n";
     out << "		StartInWorld ( "<<this->startInWorld<<" )\n";
     out << "		EndInWorld ( "<<this->endInWorld<<" )\n";
+    for(int i = 0; i < stationStop.size(); i++){
+        out << "		StationStop (\n";
+        out << "			PlatformStartID ( "<<stationStop[i].platformStartID<<" )\n";
+        out << "			DistanceDownPath ( "<<stationStop[i].distanceDownPath<<" )\n";
+        out << "			SkipCount ( "<<stationStop[i].skipCount<<" )\n";
+        out << "		)\n";
+    }
     out << "	)\n";
     out << ")\n";
     
@@ -207,6 +215,7 @@ bool Service::isModified(){
 void Service::setNameId(QString val){
     nameId = val;
     name = val+".srv";
+    modified = true;
 }
 
 void Service::setNewPath(QString pathName){
@@ -214,9 +223,10 @@ void Service::setNewPath(QString pathName){
     pathId = pathName;
     if(pathId.length() <= 0)
         return;
-    qDebug() << pathId;
+    qDebug() << "new path:" << pathId;
     Path *p = ActLib::GetPathByName(pathId);
     if(p == NULL){
+        qDebug() << "null path";
         return;
     }
     p->init3dShapes(false);
@@ -230,7 +240,7 @@ void Service::setNewPath(QString pathName){
         stationStop.back().distanceDownPath = i->distanceDownPath;
         stationStop.back().skipCount = ii++;
     }
-    
+    modified = true;
     ActLib::UpdateServiceChanges(nameId);
 }
 
@@ -242,7 +252,7 @@ void Service::disableStationStop(int count){
             return;
         }
     }
-    
+    modified = true;
 }
 
 void Service::enableStationStop(int count){
@@ -272,4 +282,5 @@ void Service::enableStationStop(int count){
     stationStop[i].skipCount = count;
     
     ActLib::UpdateServiceChanges(nameId);
+    modified = true;
 }

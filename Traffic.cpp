@@ -30,6 +30,7 @@ Traffic::Traffic(QString p, QString n, bool nowe) {
         load();
     } else {
         loaded = 1;
+        serial = 1;
         modified = true;
     }
 }
@@ -83,6 +84,7 @@ void Traffic::load(){
         qDebug() << "#TRF - undefined token: " << sh;
         ParserX::SkipToken(data);
     }
+    loaded = 1;
 }
 
 ActivityTimetable* Traffic::getTimetableByServiceName(QString nameTime){
@@ -100,4 +102,33 @@ bool Traffic::isModified(){
             return true;
     }
     return modified;
+}
+
+void Traffic::save(){
+    QString tpath;
+    tpath = path+"/"+name;
+    tpath.replace("//", "/");
+    qDebug() << tpath;
+    QFile file(tpath);
+
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out.setCodec("UTF-16");
+    out.setGenerateByteOrderMark(true);
+    
+    out << "SIMISA@@@@@@@@@@JINX0f0t______\n";
+    out << "\n";
+    out << "Traffic_Definition ( " << nameId << "\n";
+    if (serial >= 0) {
+        out << "	Serial ( " << serial << " )\n";
+    }
+    QString off = "	";
+    for(int i = 0; i < service.size(); i++){
+        if(!service[i]->empty)
+            service[i]->save(&out, off);
+    }
+    out << ")\n";
+    
+    file.close();
+    modified = false;
 }

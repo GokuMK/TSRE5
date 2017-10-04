@@ -57,6 +57,7 @@ Consist::Consist(Consist * con, bool fullCopy) {
         engItems.back().epath = con->engItems[i].epath;
         engItems.back().eng = con->engItems[i].eng;
         engItems.back().flip = con->engItems[i].flip;
+        engItems.back().uid = con->engItems[i].uid;
     }
     
     if(fullCopy){

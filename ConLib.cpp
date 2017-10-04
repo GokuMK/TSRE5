@@ -72,6 +72,7 @@ int ConLib::loadAll(QString gameRoot){
 int ConLib::loadSimpleList(QString gameRoot, bool reload){
     if(ConLib::conFileList.size() > 0 && reload == false)
         return 0;
+    ConLib::conFileList.clear();
     QString path;
     path = gameRoot + "/trains/consists/";
     QDir dir(path);

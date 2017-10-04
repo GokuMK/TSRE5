@@ -149,6 +149,9 @@ ActivityTools::ActivityTools(QString name)
     conFilesShow.setStyleSheet("combobox-popup: 0;");
     conFilesShow.setMaxVisibleItems(35);
     conFilesShow.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    QPushButton *conFilesRefresh = new QPushButton("Refresh List");
+    QObject::connect(conFilesRefresh, SIGNAL(released()), this, SLOT(conFilesRefreshSelected()));
+    vlist1->addWidget(conFilesRefresh,2,1,1,3);
     vbox->addItem(vlist1);
     
     label = new QLabel("Reduced Speed Zones List:");
@@ -365,24 +368,21 @@ void ActivityTools::routeLoaded(Route* r){
     }
     
     reloadServicesList();
+    reloadTrafficsList();
+    reloadPathsList();
+}
 
-    cTraffic.clear();
-    cTraffic.addItem("UNDEFINED", QVariant(-1));
-    for(int i = 0; i < ActLib::jesttraffic; i++ ){
-        if(ActLib::Traffics[i] == NULL)
-            continue;
-        cTraffic.addItem(ActLib::Traffics[i]->nameId, QVariant(i));
+void ActivityTools::conFilesRefreshSelected(){
+    conFilesShow.clear();
+    ConLib::loadSimpleList(Game::root, true);
+    foreach(QString name, ConLib::conFileList){
+        conFilesShow.addItem(name.section('/', -1), QVariant(name));
     }
-
-    cPath.clear();
-    for(int i = 0; i < route->path.size(); i++ )
-        cPath.addItem(route->path[i]->displayName, QVariant(i));
 }
 
 void ActivityTools::reloadServicesList(){
-    cService.clear();
     int idx = cService.currentIndex();
-
+    cService.clear();
     cService.addItem("UNDEFINED", QVariant(-1));
     for(int i = 0; i < ActLib::jestservice; i++ ){
         if(ActLib::Services[i] == NULL)
@@ -394,6 +394,30 @@ void ActivityTools::reloadServicesList(){
         cService.setCurrentIndex(idx);
 }
 
+void ActivityTools::reloadTrafficsList(){
+    int idx = cTraffic.currentIndex();
+    cTraffic.clear();
+    cTraffic.addItem("UNDEFINED", QVariant(-1));
+    for(int i = 0; i < ActLib::jesttraffic; i++ ){
+        if(ActLib::Traffics[i] == NULL)
+            continue;
+        cTraffic.addItem(ActLib::Traffics[i]->nameId, QVariant(i));
+    }
+    
+    if(idx >= 0)
+        cTraffic.setCurrentIndex(idx);
+}
+
+void ActivityTools::reloadPathsList(){
+    int idx = cPath.currentIndex();
+    cPath.clear();
+    
+    for(int i = 0; i < route->path.size(); i++ )
+        cPath.addItem(route->path[i]->displayName, QVariant(i));
+    
+    if(idx >= 0)
+        cPath.setCurrentIndex(idx);
+}
 void ActivityTools::conFilesShowEnabled(QString val){
     QString file = conFilesShow.currentData().toString();
     qDebug() << file;
@@ -405,6 +429,7 @@ void ActivityTools::conFilesShowEnabled(QString val){
 
 void ActivityTools::activitySelected(QString n){
     int id = actShow.currentData().toInt();
+    qDebug() << "id" << id;
     Consist *e;
     Activity *a = ActLib::Act[id];
     
@@ -440,7 +465,7 @@ void ActivityTools::activitySelected(QString n){
         cService.setCurrentIndex(0);
     } else {
         cService.setCurrentIndex(0);
-        QString cname = a->playerServiceDefinition->name.toLower();
+        QString cname = a->playerServiceDefinition->name;
         for(int i = 0; i < cService.count() ; i++ ){
             int id = cService.itemData(i).toInt();
             if(id < 0)
@@ -517,6 +542,7 @@ void ActivityTools::loadActFiles(){
 }
 
 void ActivityTools::actNewLooseConsistToolEnabled(bool val){
+    conFilesShowEnabled("");
     if(val){
         emit enableTool("actNewLooseConsistTool");
     } else {
@@ -588,7 +614,7 @@ void ActivityTools::newActButtonEnabled(){
     ActLib::Act[id]->init(Game::route, "New Activity");
     qDebug()<< ActLib::Act[id]->header->name;
     route->activityId.push_back(id);
-    actShow.addItem(ActLib::Act[id]->header->name, QVariant(ActLib::jestact));
+    actShow.addItem(ActLib::Act[id]->header->name, id);
     actShow.setCurrentIndex(actShow.count()-1); 
     activitySelected("");
     //ActLib::jestact++;

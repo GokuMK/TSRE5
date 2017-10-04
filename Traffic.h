@@ -32,6 +32,7 @@ public:
     Traffic(const Traffic& orig);
     virtual ~Traffic();
     void load();
+    void save();
     bool isModified();
     ActivityTimetable* getTimetableByServiceName(QString nameTime);
 private:

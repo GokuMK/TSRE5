@@ -433,6 +433,12 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(activityTools, SIGNAL(showTraffic(Route*)),
                       activityTrafficWindow, SLOT(showTraffic(Route*)));
     
+    QObject::connect(activityServiceWindow, SIGNAL(reloadServicesList()),
+                      activityTools, SLOT(reloadServicesList()));
+    
+    QObject::connect(activityTrafficWindow, SIGNAL(reloadTrafficsList()),
+                       activityTools, SLOT(reloadTrafficsList()));
+
     QObject::connect(activityTools, SIGNAL(showTimetable(QVector<ActivityServiceDefinition*>)),
                       activityTimetableWindow, SLOT(showTimetable(QVector<ActivityServiceDefinition*>)));
     

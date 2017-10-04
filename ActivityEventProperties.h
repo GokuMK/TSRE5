@@ -31,6 +31,7 @@ public slots:
     void outcomeActoionListSelected(QString item);
     void cOutcomeEventSelected(QString val);
     void cActionTypeSelected(QString item);
+    void cStationStopActionSelected(QString item);
     void bActionSidingSelected();
     void bAddOutcomeSelected();
     void bRemoveOutcomeSelected();

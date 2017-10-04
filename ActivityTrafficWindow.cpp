@@ -101,7 +101,8 @@ void ActivityTrafficWindow::bNewTrafficSelected(){
     EditFileNameDialog eWindow;
     eWindow.exec();
     if(eWindow.isOk && eWindow.name.text().length() > 0){
-        ActLib::AddTraffic(Game::root + "/routes/" + Game::route + "/services/", eWindow.name.text()+".srv", true);
+        ActLib::AddTraffic(Game::root + "/routes/" + Game::route + "/traffic/", eWindow.name.text()+".trf", true);
     }
     showTraffic(route);
+    reloadTrafficsList();
 }

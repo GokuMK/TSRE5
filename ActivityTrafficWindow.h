@@ -31,6 +31,9 @@ public slots:
     void showTraffic(Route* r);
     void bNewTrafficSelected();
     
+signals:
+    void reloadTrafficsList();
+    
 private:
     Route *route = NULL;
     QTreeWidget lTraffic;
