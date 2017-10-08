@@ -11,13 +11,14 @@
 #include "AboutWindow.h"
 #include <QtWidgets>
 #include <QDebug>
+#include "Game.h"
 
 AboutWindow::AboutWindow(QWidget* parent) : QWidget(parent) {
     this->setWindowFlags( Qt::CustomizeWindowHint );
     this->setWindowFlags(Qt::WindowType::Tool);
     this->setFixedSize(600, 300);
     QImage* myImage = new QImage();
-    myImage->load("resources/load.png");
+    myImage->load(QString("tsre_appdata/")+Game::AppDataVersion+"/load.png");
 
     QLabel* myLabel = new QLabel("");
     myLabel->setContentsMargins(0,0,0,0);   

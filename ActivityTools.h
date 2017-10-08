@@ -18,6 +18,7 @@ class Route;
 class GameObj;
 class Activity;
 class ActivityServiceDefinition;
+class PreciseTileCoordinate;
 
 class ActivityTools : public QWidget{
     Q_OBJECT
@@ -32,6 +33,7 @@ public slots:
     void routeLoaded(Route* r);
     void actNewLooseConsistToolEnabled(bool val);
     void actPathsEditToolEnabled();
+    void actConsistJumpEnabled();
     void newActButtonEnabled();
     void cServiceEnabled(QString val);
     void cTrafficEnabled(QString val);
@@ -79,6 +81,7 @@ signals:
     void showTraffic(Route *r);
     void showActivityTimetableEditor();
     void showTimetable(QVector<ActivityServiceDefinition*> s);
+    void jumpTo(PreciseTileCoordinate* c);
     
 private:
     Route *route = NULL;
@@ -118,6 +121,8 @@ private:
     QWidget settingsWidget;
     QPlainTextEdit eDescription;
     QPlainTextEdit eBriefing;
+    
+    PreciseTileCoordinate* coordinate;
 };
 
 #endif	/* ACTIVITYTOOLS_H */

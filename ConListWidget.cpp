@@ -195,7 +195,7 @@ void ConListWidget::fillConListAct(){
     for (int i = 0; i < ActLib::Act[id]->activityObjects.size(); i++){
         e = ActLib::Act[id]->activityObjects[i].con;
         if(e == NULL) continue;
-        new QListWidgetItem ( e->showName, &items, i);
+        new QListWidgetItem ( QString::number(ActLib::Act[id]->activityObjects[i].id) + " : " + e->showName, &items, i);
     }
 }
 

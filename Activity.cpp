@@ -849,6 +849,32 @@ unsigned int Activity::getSelectedCarId(){
     return -1;
 }
 
+bool Activity::isPlayerServiceInUse(QString n){
+    if(playerServiceDefinition != NULL)
+        if(playerServiceDefinition->name == n)
+            return true;
+    return false;
+}
+
+bool Activity::isServiceInUse(QString n){
+    if(playerServiceDefinition != NULL)
+        if(playerServiceDefinition->name == n)
+            return true;
+    if(traffic != NULL)
+        for(int i = 0; i < traffic->service.size(); i++){
+            if(traffic->service[i].name == n)
+                return true;
+        }
+    return false;
+}
+
+bool Activity::isTrafficInUse(QString n){
+    if(traffic != NULL)
+        if(traffic->name == n)
+                return true;
+    return false;
+}
+
 bool Activity::getCarPosition(int oid, int eid, float *posTW){
     int uid = -1;
     for(int i = 0; i < activityObjects.size(); i++)

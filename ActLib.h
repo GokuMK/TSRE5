@@ -32,12 +32,15 @@ public:
     static QHash<QString, QVector<int>> route;
     ActLib();
     virtual ~ActLib();
-    static int AddAct(QString path, QString name, bool nowe = false, QString routeid = "");
+    static int AddAct(QString path, QString name, bool nowe = false);
     static int AddService(QString path, QString name, bool nowe = false);
     static int AddTraffic(QString path, QString name, bool nowe = false);
     static Service* GetServiceByName(QString name);
     static Traffic* GetTrafficByName(QString name);
     static Path* GetPathByName(QString name);
+    static bool IsServiceInUse(QString n);
+    static bool IsTrafficInUse(QString n);
+    static QVector<QString> GetServiceInUseList(QString n);
     static int AddPath(QString path, QString name);
     static int LoadAllAct(QString gameRoot);
     static void GetUnsavedInfo(std::vector<QString> &items);

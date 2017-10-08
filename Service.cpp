@@ -255,6 +255,25 @@ void Service::disableStationStop(int count){
     modified = true;
 }
 
+void Service::setDisplayName(QString val){
+    displayName = val;
+    modified = true;
+}
+void Service::setEfficiency(float val){
+    efficiency = val;
+    modified = true;
+}
+
+void Service::setStartSpeed(float val){
+    startingSpeed = val;
+    modified = true;
+}
+    
+void Service::setEndSpeed(float val){
+    endingSpeed = val;
+    modified = true;
+}
+    
 void Service::enableStationStop(int count){
     for(int i = 0; i < stationStop.size(); i++ ){
         if(stationStop[i].skipCount == count){

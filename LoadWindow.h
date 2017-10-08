@@ -25,15 +25,17 @@ public:
     
 public slots:
     void exitNow();
-    void handleBrowseButton();
+    void handleBrowseButton(QString directory = "");
     void routeLoad();
     void setNewRoute();
     void setLoadRoute();
+    void cRecentEnabled(QString val);
 signals:
     void showMainWindow();
 private:
     void listRoutes();
     QListWidget routeList;
+    QComboBox cRecent;
     QPushButton *browse;
     QPushButton *load;
     QPushButton *neww;
@@ -45,6 +47,7 @@ private:
     LatitudeLongitudeCoordinate* latlon = NULL;
     PreciseTileCoordinate* aCoords = NULL;
     void downloadTemplateRoute(QString path);
+    void listRoots();
 };
 
 #endif	/* LOADWINDOW_H */

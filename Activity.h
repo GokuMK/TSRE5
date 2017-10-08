@@ -142,6 +142,9 @@ public:
     void deleteObject(int id);
     void deleteCurrentEvent();
     void newEvent(ActivityEvent::EventCategory category);
+    bool isServiceInUse(QString n);
+    bool isTrafficInUse(QString n);
+    bool isPlayerServiceInUse(QString n);
     QVector<ActivityServiceDefinition*> getServiceList();
     unsigned int getSelectedCarId();
     bool getCarPosition(int oid, int eid, float *posTW);

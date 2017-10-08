@@ -47,6 +47,10 @@ public:
     void setNewPath(QString pathName);
     void disableStationStop(int count);
     void enableStationStop(int count);
+    void setDisplayName(QString val);
+    void setEfficiency(float val);
+    void setStartSpeed(float val);
+    void setEndSpeed(float val);
     void load();
     void save();
 private:

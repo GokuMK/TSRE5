@@ -12,6 +12,7 @@
 #include "ActivityTrafficProperties.h"
 #include "Route.h"
 #include "Traffic.h"
+#include "Activity.h"
 #include "ActLib.h"
 #include "Game.h"
 #include "EditFileNameDialog.h"
@@ -64,6 +65,7 @@ void ActivityTrafficWindow::showTraffic(Route* r){
     if(this->isHidden())
         return;
     route = r;
+    Activity *activity = route->getCurrentActivity();
     //serviceProperties->setPaths(route->path);
     //activity = r->s
     
@@ -79,11 +81,19 @@ void ActivityTrafficWindow::showTraffic(Route* r){
         list.append("");
         list.append("");
         QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, i );
-        if(i == 0){
-            item->setCheckState(1, Qt::Checked);
-        }else{
-            item->setCheckState(1, Qt::Unchecked);
+        //if(i == 0){
+        //    item->setCheckState(1, Qt::Checked);
+        //}else{
+        item->setCheckState(1, Qt::Unchecked);
+        if(activity != NULL){
+            if(activity->isTrafficInUse(ActLib::Traffics[i]->nameId))
+                item->setCheckState(1, Qt::Checked);
         }
+        if(ActLib::IsTrafficInUse(ActLib::Traffics[i]->nameId))
+            item->setCheckState(2, Qt::Checked);
+        else
+            item->setCheckState(2, Qt::Unchecked);
+        //}
         item->setCheckState(2, Qt::Checked);
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         items.append(item);

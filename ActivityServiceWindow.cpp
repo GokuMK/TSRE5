@@ -66,7 +66,7 @@ void ActivityServiceWindow::showServices(Route* r){
         return;
     route = r;
     serviceProperties->setPaths(route->path);
-    //activity = r->s
+    activity = route->getCurrentActivity();
     
     serviceList.clear();
     QList<QTreeWidgetItem *> items;
@@ -80,13 +80,20 @@ void ActivityServiceWindow::showServices(Route* r){
         list.append("");
         list.append("");
         QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, i );
-        if(i == 0){
-            item->setCheckState(0, Qt::Checked);
-            item->setCheckState(1, Qt::Checked);
-        }else{
-            item->setCheckState(0, Qt::Unchecked);
-            item->setCheckState(1, Qt::Unchecked);
+        item->setCheckState(0, Qt::Unchecked);
+        item->setCheckState(1, Qt::Unchecked);
+        if(activity != NULL){
+            if(activity->isPlayerServiceInUse(ActLib::Services[i]->nameId))
+                item->setCheckState(0, Qt::Checked);
+            if(activity->isServiceInUse(ActLib::Services[i]->nameId))
+                item->setCheckState(1, Qt::Checked);
         }
+        
+        if(ActLib::IsServiceInUse(ActLib::Services[i]->nameId))
+            item->setCheckState(2, Qt::Checked);
+        else
+            item->setCheckState(2, Qt::Unchecked);
+
         item->setCheckState(2, Qt::Checked);
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         items.append(item);

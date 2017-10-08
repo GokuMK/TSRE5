@@ -56,6 +56,15 @@ LoadWindow::LoadWindow() {
     mainLayout->addWidget(myLabel);
     mainLayout->addWidget(myLabel2);
     mainLayout->addWidget(browse);
+    QFormLayout *recentLayout = new QFormLayout;
+    recentLayout->setContentsMargins(0,0,0,0);
+    cRecent.setMaxVisibleItems(10);
+    cRecent.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    cRecent.setStyleSheet("combobox-popup: 0;");
+    QObject::connect(&cRecent, SIGNAL(activated(QString)),
+                      this, SLOT(cRecentEnabled(QString)));
+    recentLayout->addRow("Recent: ", &cRecent);
+    mainLayout->addItem(recentLayout);
     mainLayout->addWidget(&routeList);
     
     /*nowa = new QWidget();
@@ -94,6 +103,8 @@ LoadWindow::LoadWindow() {
     //QObject::connect(nowaTrasa, SIGNAL(textChanged(QString)),
     //                  this, SLOT(setNewRoute()));
     
+    listRoots();
+    
     if(Game::checkRoot(Game::root)){
         qDebug()<<"ok";
         load->show();
@@ -111,20 +122,21 @@ LoadWindow::LoadWindow() {
     }
 }
 
-void LoadWindow::handleBrowseButton(){
-    QFileDialog *fd = new QFileDialog;
-    //QTreeView *tree = fd->findChild <QTreeView*>();
-    //tree->setRootIsDecorated(true);
-    //tree->setItemsExpandable(true);
-    fd->setFileMode(QFileDialog::Directory);
-    fd->setOption(QFileDialog::ShowDirsOnly);
-    //fd->setViewMode(QFileDialog::Detail);
-    int result = fd->exec();
-    QString directory;
-    if (result)
-    {
-        directory = fd->selectedFiles()[0];
-        qDebug()<<directory;
+void LoadWindow::handleBrowseButton(QString directory){
+    if(directory == ""){
+        QFileDialog *fd = new QFileDialog;
+        //QTreeView *tree = fd->findChild <QTreeView*>();
+        //tree->setRootIsDecorated(true);
+        //tree->setItemsExpandable(true);
+        fd->setFileMode(QFileDialog::Directory);
+        fd->setOption(QFileDialog::ShowDirsOnly);
+        //fd->setViewMode(QFileDialog::Detail);
+        int result = fd->exec();
+        if (result)
+        {
+            directory = fd->selectedFiles()[0];
+            qDebug()<<directory;
+        }
     }
     //Game::root = directory;
     browse->setText(directory);
@@ -143,6 +155,27 @@ void LoadWindow::handleBrowseButton(){
         browse->setStyleSheet(QString("color: ")+Game::StyleGreenText);
         Game::root = directory;
         this->listRoutes();
+        
+        int i = 0;
+        for(i = 0; i < cRecent.count(); i++){
+            if(cRecent.itemText(i) == directory.toLower())
+                break;
+        }
+        if(i == cRecent.count())
+            cRecent.addItem(directory.toLower());
+        
+        QString path;
+        path = "cerecent.txt";
+        QFile file(path);
+        if (!file.open(QIODevice::WriteOnly))
+            return;
+        QTextStream in(&file);
+        QString line;
+        for(int i = 0; i < cRecent.count(); i++){
+            in << cRecent.itemText(i) << "\n";
+        }
+        in.flush();
+        file.close();
     }
 }
 
@@ -181,6 +214,10 @@ void LoadWindow::setLoadRoute(){
     //qDebug() << "load";
     this->load->setText("Load");
     this->newRoute = false;
+}
+
+void LoadWindow::cRecentEnabled(QString val){
+    handleBrowseButton(val);
 }
 
 void LoadWindow::setNewRoute(){
@@ -255,3 +292,21 @@ void LoadWindow::downloadTemplateRoute(QString path){
         
     qDebug() << file.remove();
 }
+
+void LoadWindow::listRoots(){
+    QString sh;
+    QString path;
+    path = "cerecent.txt";
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
+        return;
+    qDebug() << path;
+
+    QTextStream in(&file);
+    QString line;
+    while (!in.atEnd()) {
+        line = in.readLine().toLower();
+        cRecent.addItem(line);
+    }
+    file.close();
+} 

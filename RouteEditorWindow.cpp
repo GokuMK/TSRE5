@@ -97,12 +97,12 @@ RouteEditorWindow::RouteEditorWindow() {
     QWidget* main = new QWidget();
     box = new QWidget();
     box2 = new QWidget();
-    //box->setFixedWidth(500);
+    box->setFixedWidth(250);
     box2->setMaximumWidth(160);
     box2->setMinimumWidth(160);
     //box2->setMaximumWidth(250);
     //box2->setMinimumWidth(250);
-    QHBoxLayout *mainLayout2 = new QHBoxLayout;
+    QHBoxLayout *mainLayout2 = new QHBoxLayout; 
     mainLayout2->setMargin(0);
     mainLayout2->setSpacing(0);
     mainLayout2->setContentsMargins(0,0,0,0);
@@ -138,6 +138,7 @@ RouteEditorWindow::RouteEditorWindow() {
     mainLayout->setSpacing(3);
     mainLayout->addWidget(box2);
     mainLayout->addWidget(glWidget);
+    glWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     mainLayout->addWidget(box);
     //mainLayout->addWidget(box2);
     //terrainTools->hide();
@@ -444,6 +445,9 @@ RouteEditorWindow::RouteEditorWindow() {
     
     QObject::connect(activityEventWindow->eventProperties, SIGNAL(jumpTo(PreciseTileCoordinate*)),
                       glWidget, SLOT(jumpTo(PreciseTileCoordinate*)));
+    
+    QObject::connect(activityTools, SIGNAL(jumpTo(PreciseTileCoordinate*)),
+                      glWidget, SLOT(jumpTo(PreciseTileCoordinate*)));
 }
 
 void RouteEditorWindow::keyPressEvent(QKeyEvent *e) {
@@ -542,6 +546,7 @@ void RouteEditorWindow::showToolsObjectAndTerrain(bool show){
         objTools->show();
         objectsAndTerrainAction->setChecked(true);
         terrainTools->show();
+        box->setFixedWidth(500);
     } else {
         hideShowToolWidget(false);
     }
@@ -623,6 +628,7 @@ void RouteEditorWindow::hideAllTools(){
     geoAction->setChecked(false);
     activityAction->setChecked(false);
     objectsAndTerrainAction->setChecked(false);
+    box->setFixedWidth(250);
 }
 
 void RouteEditorWindow::showProperties(GameObj* obj){

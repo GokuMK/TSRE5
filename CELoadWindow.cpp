@@ -163,7 +163,7 @@ void CELoadWindow::handleBrowseButton(){
         //this->listRoutes();
         recentDirs.addItem(directory.toLower());
         for(int i = 0; i < recentDirs.count() - 1; i++){
-            if(recentDirs.item(i)->text() == directory){
+            if(recentDirs.item(i)->text() == directory.toLower()){
                 recentDirs.removeItemWidget(recentDirs.item(i));
                 i--;
             }

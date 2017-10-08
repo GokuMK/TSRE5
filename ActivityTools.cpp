@@ -23,6 +23,7 @@
 #include "Path.h"
 #include "ActivityServiceProperties.h"
 #include "TextEditDialog.h"
+#include "IghCoords.h"
 
 ActivityTools::ActivityTools(QString name)
     : QWidget(){
@@ -136,7 +137,7 @@ ActivityTools::ActivityTools(QString name)
     vlist1->setSpacing(2);
     vlist1->setContentsMargins(0,0,1,0);
     QPushButton *actConsistJump = new QPushButton("Jump To");
-    QPushButton *actConsistFlip = new QPushButton("Flip");
+    QObject::connect(actConsistJump, SIGNAL(released()), this, SLOT(actConsistJumpEnabled()));
     QPushButton *actConsistDelete = new QPushButton("Delete");
     vlist1->addWidget(actConsistJump,0,0);
     vlist1->addWidget(actConsistDelete,0,1);
@@ -610,7 +611,7 @@ void ActivityTools::cTrafficEnabled(QString val){
 void ActivityTools::newActButtonEnabled(){
     QString pathid = Game::root + "/routes/" + Game::route + "/activities/";
     //ActLib::Act[ActLib::jestact] = new Activity(pathid, "file.act", true);
-    int id = ActLib::AddAct(pathid, "file.act", true, Game::route);
+    int id = ActLib::AddAct(pathid, "file.act", true);
     ActLib::Act[id]->init(Game::route, "New Activity");
     qDebug()<< ActLib::Act[id]->header->name;
     route->activityId.push_back(id);
@@ -618,6 +619,33 @@ void ActivityTools::newActButtonEnabled(){
     actShow.setCurrentIndex(actShow.count()-1); 
     activitySelected("");
     //ActLib::jestact++;
+}
+
+void ActivityTools::actConsistJumpEnabled(){
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::Act[aid];
+    if(a == NULL)
+        return;
+    int i = consists.currentIndex();
+    if(i >= a->activityObjects.size())
+        return;
+    Consist *e = a->activityObjects[i].con;
+    if(e == NULL) 
+        return;
+    
+    float posTW[5];
+    bool ok = a->activityObjects[i].getElementPosition(0, posTW);
+    if(!ok)
+        return;
+    
+    if(coordinate == NULL)
+        coordinate = new PreciseTileCoordinate();
+    
+    coordinate->TileX = posTW[0];
+    coordinate->TileZ = posTW[1];
+    coordinate->setWxyz(posTW[2], 0, posTW[4]);
+    
+    emit jumpTo(coordinate);
 }
 
 /*void ActivityTools::actServiceNewEnabled(){

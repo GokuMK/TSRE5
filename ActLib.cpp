@@ -34,7 +34,7 @@ ActLib::ActLib() {
 ActLib::~ActLib() {
 }
 
-int ActLib::AddAct(QString path, QString name, bool nowe, QString routeid) {
+int ActLib::AddAct(QString path, QString name, bool nowe) {
     QString pathid = (path + "/" + name).toLower();
     pathid.replace("\\", "/");
     pathid.replace("//", "/");
@@ -52,7 +52,8 @@ int ActLib::AddAct(QString path, QString name, bool nowe, QString routeid) {
     }
     qDebug() << "Nowy " << jestact << " act: " << pathid;
     Act[jestact] = new Activity(pathid, path, name, nowe);
-    route[routeid].push_back(jestact);
+    if(!nowe)
+        route[Act[jestact]->header->routeid].push_back(jestact);
     return jestact++;
 }
 
@@ -107,6 +108,40 @@ int ActLib::AddTraffic(QString path, QString name, bool nowe) {
     return jesttraffic++;
 }
 
+bool ActLib::IsServiceInUse(QString n){
+    QHashIterator<int, Activity*> i(Act);
+    while (i.hasNext()) {
+        i.next();
+        if(i.value() == NULL) continue;
+        if(i.value()->isServiceInUse(n))
+            return true;
+    }
+    return false;
+}
+
+bool ActLib::IsTrafficInUse(QString name){
+    QHashIterator<int, Traffic*> i(Traffics);
+    while (i.hasNext()) {
+        i.next();
+        if(i.value() == NULL) continue;
+        if(i.value()->nameId.toLower() == name.toLower())
+            return true;
+    }
+    return false;
+}
+
+QVector<QString> ActLib::GetServiceInUseList(QString n){
+    QVector<QString> list;
+    QHashIterator<int, Activity*> i(Act);
+    while (i.hasNext()) {
+        i.next();
+        if(i.value() == NULL) continue;
+        if(i.value()->isServiceInUse(n)){
+            list.push_back(QString("Activity:") + i.value()->header->name);
+        }
+    }
+    return list;
+}
 Service* ActLib::GetServiceByName(QString name){
     QHashIterator<int, Service*> i(Services);
     while (i.hasNext()) {

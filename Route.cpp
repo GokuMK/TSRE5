@@ -210,7 +210,6 @@ void Route::loadTraffic(){
         int id = ActLib::AddTraffic(dir.path(), actfile);
         //traffic.push_back(ActLib::Traffics[id]);
     }
-
     qDebug() << "traffic loaded";
     return;
 }
@@ -495,6 +494,12 @@ ActivityObject* Route::getActivityObject(int id){
     return NULL;
 }
 
+Activity* Route::getCurrentActivity(){
+    if(currentActivity == NULL)
+        return NULL;
+    return currentActivity;
+}
+
 WorldObj* Route::placeObject(int x, int z, float* p) {
     float* q = new float[4];
     Quat::fill((float*)q);
@@ -599,6 +604,10 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     endp[3] = 1;
     float firstPos[3];
     if ((r->type == "trackobj" || r->type == "dyntrack" )) {
+        if(r->type == "dyntrack"){
+            this->roadDB->setDefaultEnd(0);
+            this->trackDB->setDefaultEnd(0);
+        }
         qDebug() <<"1: "<< x <<" "<<z<<" "<<p[0]<<" "<<p[1]<<" "<<p[2]; 
         int oldx = x;
         int oldz = z;

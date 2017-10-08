@@ -14,6 +14,7 @@
 #include "ConLib.h"
 #include "Consist.h"
 #include "Path.h"
+#include "ActLib.h"
 
 ActivityServiceProperties::ActivityServiceProperties(QWidget* parent) : QWidget(parent) {
     //this->setMinimumHeight(400);
@@ -33,14 +34,22 @@ ActivityServiceProperties::ActivityServiceProperties(QWidget* parent) : QWidget(
     vlist->setContentsMargins(3,0,3,0);
     vlist->addRow("File Name:",&eFileName);
     vlist->addRow("Display Name:",&eDisplayName);
+    QObject::connect(&eDisplayName, SIGNAL(textEdited(QString)),
+                      this, SLOT(eDisplayNameEnabled(QString)));
     vbox->addItem(vlist);
     
     vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
     vlist->addRow("Expected Player Performance:",&ePlayerPerformance);
+    QObject::connect(&ePlayerPerformance, SIGNAL(textEdited(QString)),
+                      this, SLOT(ePlayerPerformanceEnabled(QString)));
     vlist->addRow("Start Speed:",&eStartSpeed);
+    QObject::connect(&eStartSpeed, SIGNAL(textEdited(QString)),
+                      this, SLOT(eStartSpeedEnabled(QString)));
     vlist->addRow("End Speed:",&eEndSpeed);
+    QObject::connect(&eEndSpeed, SIGNAL(textEdited(QString)),
+                      this, SLOT(eEndSpeedEnabled(QString)));
     vbox->addItem(vlist);
     
     label = new QLabel("Consist:");
@@ -158,7 +167,32 @@ void ActivityServiceProperties::cPathEnabled(int val){
     setStationList();
 }
 
+void ActivityServiceProperties::eDisplayNameEnabled(QString val){
+    if(service == NULL)
+        return;
+    service->setDisplayName(val);
+}
+void ActivityServiceProperties::ePlayerPerformanceEnabled(QString val){
+    if(service == NULL)
+        return;
+    service->setEfficiency(val.toFloat());
+}
+
+void ActivityServiceProperties::eStartSpeedEnabled(QString val){
+    if(service == NULL)
+        return;
+    service->setStartSpeed(val.toFloat());
+}
+
+void ActivityServiceProperties::eEndSpeedEnabled(QString val){
+    if(service == NULL)
+        return;
+    service->setEndSpeed(val.toFloat());
+}
+    
 void ActivityServiceProperties::cConFilesEnabled(int val){
+    if(service == NULL)
+        return;
     if(cConFiles.currentIndex() <= 0){
         service->trainConfig = "";
         return;
@@ -226,10 +260,11 @@ void ActivityServiceProperties::setUsedByList(){
     QStringList list;
     QList<QTreeWidgetItem *> items;
     
-    for(int i = 0; i < 1; i++){
+    QVector<QString> list2 = ActLib::GetServiceInUseList(service->nameId);
+    for(int i = 0; i < list2.size(); i++){
         list.clear();
-        list.append(QString("Activity"));
-        list.append(QString("ActivityName"));
+        list.append(list2[i].split(":").first());
+        list.append(list2[i].split(":").last());
         QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, i );
         items.append(item);
     }  
@@ -237,6 +272,8 @@ void ActivityServiceProperties::setUsedByList(){
 }
 
 void ActivityServiceProperties::stationListSelected(QTreeWidgetItem* item, int column){
+    if(service == NULL)
+        return;
     if(item->checkState(0) == Qt::Checked){
         qDebug() << "item->checkState(0) == Qt::Checked";
         service->enableStationStop(item->type());

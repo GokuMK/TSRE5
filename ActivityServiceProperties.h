@@ -28,6 +28,10 @@ public:
 public slots:
     void cPathEnabled(int val);
     void cConFilesEnabled(int val);
+    void eDisplayNameEnabled(QString val);
+    void ePlayerPerformanceEnabled(QString val);
+    void eStartSpeedEnabled(QString val);
+    void eEndSpeedEnabled(QString val);
     void stationListSelected(QTreeWidgetItem* item, int column);
 signals:
 

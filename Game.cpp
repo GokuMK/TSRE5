@@ -31,7 +31,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.692";
+QString Game::AppVersion = "v0.6921";
 QString Game::AppDataVersion = "0.69";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
@@ -123,7 +123,7 @@ float Game::PixelRatio = 1.0;
 
 void Game::InitAssets() {
     QString path;
-    
+    bool newInstallation = false;
     path = "./tsre_assets/";
     QFile appFile3(path);
     if (!appFile3.exists()){
@@ -134,6 +134,13 @@ void Game::InitAssets() {
     
     QFile appFile1(path);
     if (!appFile1.exists()){
+        newInstallation = true;
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("TSRE");
+        msgBox.setText("Welcome in TSRE!\n\nThis is experimental version.\nUsing it may seriously damage your data."
+                       "\nMake backup first!\n\n\nNow TSRE will download app data.");
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
         QDir().mkdir(path);
     }
         
@@ -369,13 +376,13 @@ void Game::load() {
 }
 
 bool Game::loadRouteEditor(){
-    if(Game::warningBox){
+    /*if(Game::warningBox){
         QMessageBox msgBox;
         msgBox.setText("This is experimental version.\nUsing it may seriously damage your routes."
                        "\nMake backup first!\n\nTo disable this window, set 'warningBox = false' in settings.txt.");
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
-    }
+    }*/
     
     window = new RouteEditorWindow();
     window->resize(1280, 800);
@@ -394,13 +401,13 @@ bool Game::loadRouteEditor(){
 }
 
 bool Game::loadConEditor(){
-    if(Game::warningBox){
-        QMessageBox msgBox;
-        msgBox.setText("This is experimental version.\nUsing it may seriously damage your consists."
-                       "\nMake backup first!\n\nTo disable this window, set 'warningBox = false' in settings.txt.");
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.exec();
-    }
+    //if(Game::warningBox){
+    //    QMessageBox msgBox;
+    //    msgBox.setText("This is experimental version.\nUsing it may seriously damage your consists."
+    //                   "\nMake backup first!\n\nTo disable this window, set 'warningBox = false' in settings.txt.");
+    //    msgBox.setIcon(QMessageBox::Warning);
+    //    msgBox.exec();
+    //}
     CELoadWindow* ceLoadWindow = new CELoadWindow();
     ceLoadWindow->show();
     //ConEditorWindow* cwindow = new ConEditorWindow();
@@ -571,7 +578,6 @@ void Game::CreateNewSettingsFile(){
     out << "maxObjLag = 10\n";
     out << "allowObjLag = 1000\n";
     out << "#cameraFov = 20.0\n";
-    out << "warningBox = true\n";
     out << "leaveTrackShapeAfterDelete = false\n";
     out << "#renderTrItems = true\n";
     out << "#useImperial = false\n";
@@ -584,7 +590,6 @@ void Game::CreateNewSettingsFile(){
     out << "#AASamples = 16\n";
     out << "#mapImageResolution = 2048\n";
     out << "#cameraStickToTerrain = true\n";
-    out << "#proceduralTracks = true\n";
     out << "#mouseSpeed = 0.1\n";
     out.flush();
     file.close();
