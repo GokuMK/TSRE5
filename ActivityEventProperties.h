@@ -30,6 +30,9 @@ public slots:
     void outcomeListSelected(QListWidgetItem* item);
     void outcomeActoionListSelected(QString item);
     void cOutcomeEventSelected(QString val);
+    void eSoundFileNameEdited(QString val);
+    void cSoundTypeSelected(QString val);
+    void cWeatherChangeSelected(QString va);
     void cActionTypeSelected(QString item);
     void cStationStopActionSelected(QString item);
     void bActionSidingSelected();
@@ -85,7 +88,7 @@ private:
     QComboBox cStationStopAction;
     QLineEdit eSoundFileName;
     QComboBox cSoundType;
-    QLineEdit cWeatherChange;
+    QComboBox cWeatherChange;
     QComboBox cActionType;
     //QPushButton bActionStationId;
     QLineEdit eActionSiding;

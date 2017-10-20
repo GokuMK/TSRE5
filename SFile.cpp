@@ -69,7 +69,7 @@ void SFile::load() {
             pozycja = data->getInt();
             offset = data->getInt();
             akto = data->off;
-
+            //qDebug() << "#SFile - token: "<< pozycja << TS::IdName[pozycja];
             switch (pozycja) {
                 case 70:
                     break;
@@ -935,7 +935,7 @@ void SFile::render(unsigned int stateId) {
             int prim_state = distancelevel[0].subobiekty[i].czesci[j].prim_state_idx;
             int vtx_state = primstate[prim_state].vtx_state;
             int matrix = vtxstate[vtx_state].matrix;
-            
+
             if(animated){
                 Mat4::identity(m);
                 getPmatrixAnimated(m, matrix, state[stateId].frameCount);

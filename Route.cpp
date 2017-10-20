@@ -46,6 +46,7 @@
 #include "Traffic.h"
 #include "Path.h"
 #include "Environment.h"
+#include "OrtsWeatherChange.h"
 
 Route::Route() {
     Game::currentRoute = this;
@@ -89,6 +90,7 @@ Route::Route() {
     Game::soundList = soundList;
     
     TerrainLib::LoadQuadTree();
+    OrtsWeatherChange::LoadList();
     ForestObj::LoadForestList();
     ForestObj::ForestClearDistance = trk->forestClearDistance;
     CarSpawnerObj::LoadCarSpawnerList();

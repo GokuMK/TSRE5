@@ -245,7 +245,7 @@ ActivityTools::ActivityTools(QString name)
     vlist->addWidget(new QLabel("Horn At Crossings: "), row, 0);
     cHornAtCrossings.setMinimumHeight(25);
     vlist->addWidget(&cHornAtCrossings, row++, 1, 1, 2);
-    //QObject::connect(&cHornAtCrossings, SIGNAL(editingFinished()), this, SLOT(eStartTimeEnabled()));
+    QObject::connect(&cHornAtCrossings, SIGNAL(stateChanged(int)), this, SLOT(cHornAtCrossingsEnabled(int)));
     
     eFuelCoal = GuiFunct::newQLineEdit(25,3);
     eFuelDiesel = GuiFunct::newQLineEdit(25,3);
@@ -298,9 +298,11 @@ ActivityTools::ActivityTools(QString name)
     vbox2->setContentsMargins(0,0,0,0);
     vbox2->addWidget(new QLabel("Description:"));
     vbox2->addWidget(&eDescription);
+    QObject::connect(&eDescription, SIGNAL(textChanged()), this, SLOT(eDescriptionEnabled()));
     eDescription.setMinimumWidth(350);
     vbox2->addWidget(new QLabel("Briefing:"));
     vbox2->addWidget(&eBriefing);
+    QObject::connect(&eBriefing, SIGNAL(textChanged()), this, SLOT(eBriefingEnabled()));
     eBriefing.setMinimumWidth(350);
     vbox1->addItem(vbox2);
     settingsWidget.setParent(this);
@@ -461,6 +463,12 @@ void ActivityTools::activitySelected(QString n){
     cSeason.setCurrentIndex(a->header->season);
     cWeather.setCurrentIndex(a->header->weather);
     
+    cHornAtCrossings.blockSignals(true);
+    if(a->isOrtsHornAtCrossigns())
+        cHornAtCrossings.setChecked(true);
+    else
+        cHornAtCrossings.setChecked(false);
+    cHornAtCrossings.blockSignals(false);
    
     if(a->playerServiceDefinition == NULL){
         cService.setCurrentIndex(0);
@@ -528,12 +536,16 @@ void ActivityTools::activitySelected(QString n){
         route->activitySelected(ActLib::Act[id]);
     }
     
+    eBriefing.blockSignals(true);
+    eDescription.blockSignals(true);
     QString txt = a->header->briefing;
     txt.replace("\\n","\n");
     eBriefing.setPlainText(txt);
     txt = a->header->description;
     txt.replace("\\n","\n");
     eDescription.setPlainText(txt);
+    eBriefing.blockSignals(false);
+    eDescription.blockSignals(false);
 }
 
 void ActivityTools::loadActFiles(){
@@ -710,6 +722,16 @@ void ActivityTools::cWeatherEnabled(int val){
     a->setWeather(val);
 }
 
+void ActivityTools::cHornAtCrossingsEnabled(int val){
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    if(val == Qt::Checked)
+        a->setOrtsHornAtCrossigns(true);
+    else
+        a->setOrtsHornAtCrossigns(false);
+}
+
 void ActivityTools::eFuelCoalEnabled(QString val){
     Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
@@ -808,6 +830,24 @@ void ActivityTools::sHazardPeopleEnabled(){
         return;
     eHazardPeople->setText(QString::number(sHazardPeople.value()));
     a->setHazardWorkers(sHazardPeople.value());
+}
+
+void ActivityTools::eDescriptionEnabled(){
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    QString txt = eDescription.toPlainText();
+    txt.replace("\n","\\n");
+    a->setDescription(txt);
+}
+
+void ActivityTools::eBriefingEnabled(){
+    Activity *a = ActLib::Act[actShow.currentData().toInt()];
+    if(a == NULL)
+        return;
+    QString txt = eBriefing.toPlainText();
+    txt.replace("\n","\\n");
+    a->setBriefing(txt);
 }
 
 void ActivityTools::descriptionOpenEnabled(){

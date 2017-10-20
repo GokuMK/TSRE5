@@ -322,7 +322,10 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
                 if(sh == "vertices"){
                     v_ilosc = ParserX::GetNumber(bufor);
                     iloscv = v_ilosc;
-
+                    if(v_ilosc > 120000){
+                        delete[] vert;
+                        vert = new fvertex[v_ilosc];
+                    }
                     for (jj = 0; jj < iloscv; jj++) {
                         vert[jj].arg1 = (short) ParserX::GetHex(bufor);
                         vert[jj].point = (unsigned int) ParserX::GetNumber(bufor);

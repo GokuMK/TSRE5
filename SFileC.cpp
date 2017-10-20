@@ -376,6 +376,10 @@
                 bufor->findToken(TS::vertices);
                 bufor->off += 5;
                 v_ilosc = bufor->getInt();
+                if(v_ilosc > 120000){
+                    delete[] vert;
+                    vert = new fvertex[v_ilosc];
+                }
                 
                 //qDebug () << "iloscv " << v_ilosc;
                 

@@ -123,6 +123,8 @@ public:
     bool isUnSaved();
     void setFileName(QString val);
     void setDisplayName(QString val);
+    void setOrtsHornAtCrossigns(bool val);
+    bool isOrtsHornAtCrossigns();
     void setDifficulty(int val);
     void setDuration(int h, int m);
     void setStartTime(int h, int m, int s);

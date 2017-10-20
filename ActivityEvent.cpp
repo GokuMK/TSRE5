@@ -72,7 +72,7 @@ QMap<QString, ActivityEvent::EventType> ActivityEvent::EventNameType = {
 QMap<ActivityEvent::Outcome::OutcomeType, QString> ActivityEvent::Outcome::OutcomeTypeDescription = {
     { ActivityEvent::Outcome::TypeNone ,"None." },
     { ActivityEvent::Outcome::TypeDisplayMessage ,"Display a message." },
-    { ActivityEvent::Outcome::TypeActivitySuccess ,"Complete Activity succesfully." },
+    { ActivityEvent::Outcome::TypeActivitySuccess ,"Complete Activity successfully." },
     { ActivityEvent::Outcome::TypeActivityFail ,"End Activity without success." },
     { ActivityEvent::Outcome::TypeIncActLevel ,"Increase an event's activation level." },
     { ActivityEvent::Outcome::TypeDecActLevel ,"Decrease an event's activation level." },
@@ -102,14 +102,14 @@ QMap<ActivityEvent::Outcome::OutcomeType, QString> ActivityEvent::Outcome::Outco
 QMap<ActivityEvent::Outcome::OutcomeType, ActivityEvent::Outcome::OutcomeCategory> ActivityEvent::Outcome::OutcomeTypeCategory = {
     { ActivityEvent::Outcome::TypeNone , ActivityEvent::Outcome::CategoryNone },
     { ActivityEvent::Outcome::TypeDisplayMessage, ActivityEvent::Outcome::CategoryInfo },
-    { ActivityEvent::Outcome::TypeActivitySuccess, ActivityEvent::Outcome::CategoryInfo },
+    { ActivityEvent::Outcome::TypeActivitySuccess, ActivityEvent::Outcome::CategoryNone },
     { ActivityEvent::Outcome::TypeActivityFail, ActivityEvent::Outcome::CategoryInfo },
     { ActivityEvent::Outcome::TypeIncActLevel, ActivityEvent::Outcome::CategoryEvent },
     { ActivityEvent::Outcome::TypeDecActLevel, ActivityEvent::Outcome::CategoryEvent },
     { ActivityEvent::Outcome::TypeRestorAactLevel, ActivityEvent::Outcome::CategoryEvent },
     { ActivityEvent::Outcome::TypeActivateEvent, ActivityEvent::Outcome::CategoryEvent },
-    { ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits, ActivityEvent::Outcome::CategoryInfo },
-    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits, ActivityEvent::Outcome::CategoryInfo },
+    { ActivityEvent::Outcome::TypeStartIgnoringSpeedLimits, ActivityEvent::Outcome::CategoryNone },
+    { ActivityEvent::Outcome::TypeStopIgnoringSpeedLimits, ActivityEvent::Outcome::CategoryNone },
     { ActivityEvent::Outcome::TypeORTSActSoundFile , ActivityEvent::Outcome::CategorySoundFile },
     { ActivityEvent::Outcome::TypeORTSWeatherChange , ActivityEvent::Outcome::CategoryWeatherChange }
 };
@@ -173,6 +173,13 @@ void ActivityEvent::removeOutcome(int id){
     if(outcomes.size() <= id)
         return;
     modified = true;
+    
+    // Support for OR features.
+    if(outcomes[id]->category == Outcome::CategorySoundFile)
+        ortsActSoundFileDeprecated.clear();
+    if(outcomes[id]->category == Outcome::CategoryWeatherChange)
+        ortsWeatherChangeDeprecated = NULL;
+    
     outcomes.remove(id);
 }
 
@@ -517,6 +524,26 @@ void ActivityEvent::save(QTextStream* out) {
     if(EventTypeName[eventType] == "")
         return;
     
+    // Support for Orts features.
+    if(outcomes.size() > 0){
+        // Sound File.
+        for(int i = 0; i < outcomes.size(); i++){
+            if(outcomes[i]->category == Outcome::CategorySoundFile){
+                ortsActSoundFileDeprecated.clear();
+                ortsActSoundFileDeprecated.push_back(outcomes[i]->value.toStringList()[0]);
+                ortsActSoundFileDeprecated.push_back(outcomes[i]->value.toStringList()[1]);
+                break;
+            }
+        }
+        // Weather.
+        for(int i = 0; i < outcomes.size(); i++){
+            if(outcomes[i]->category == Outcome::CategoryWeatherChange){
+                ortsWeatherChangeDeprecated = OrtsWeatherChange::OrtsWeatherChanges[outcomes[i]->value.toString()];
+                break;
+            }
+        }
+    }
+    
     if(category == CategoryAction)
         *out << "			EventCategoryAction (\n";
     else if(category == CategoryLocation)
@@ -632,6 +659,9 @@ void ActivityEvent::Outcome::save(QTextStream* out) {
     
     QString tabOffset = "						 ";
     
+    if(category == CategoryNone){
+        *out << "					"<< Outcome::OutcomeTypeName[type] <<" ( )\n";
+    }
     if(category == CategoryInfo){
         QString val = value.toString();
         if(val.length() < 1)
@@ -662,6 +692,31 @@ void ActivityEvent::Outcome::setEventLinkId(int id){
     modified = true;
 }
 
+void ActivityEvent::Outcome::setSoundFileName(QString val){
+    if(category != CategorySoundFile)
+        return;
+    QStringList l = value.toStringList();
+    l[0] = val;
+    value.setValue(l);
+    modified = true;
+}
+
+void ActivityEvent::Outcome::setSoundType(QString val){
+    if(category != CategorySoundFile)
+        return;
+    QStringList l = value.toStringList();
+    l[1] = val;
+    value.setValue(l);
+    modified = true;
+}
+
+void ActivityEvent::Outcome::setWeatherName(QString val){
+    if(category != CategoryWeatherChange)
+        return;
+    value.setValue(val);
+    modified = true;
+}
+       
 void ActivityEvent::setStationStop(int tid){
     stationStop = tid;
     modified = true;

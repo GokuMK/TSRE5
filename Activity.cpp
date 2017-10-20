@@ -86,6 +86,7 @@ Activity::Activity(QString p, QString n, bool isnew) {
     } else {
         nowe = true;
         loaded = 1;
+        serial = 1;
         modified = true;
     }
 }
@@ -103,7 +104,6 @@ Activity::Activity(QString src, QString p, QString n, bool isnew) {
         nowe = true;
         loaded = 1;
         serial = 1;
-        name = "New Activity";
         modified = true;
     }
 }
@@ -751,6 +751,20 @@ void Activity::setFileName(QString val){
 void Activity::setDisplayName(QString val){
     header->name = val;
     modified = true;
+}
+
+void Activity::setOrtsHornAtCrossigns(bool val){
+    if(val)
+        ortsAIHornAtCrossings = 1;
+    else 
+        ortsAIHornAtCrossings = -9999;
+    modified = true;
+}
+
+bool Activity::isOrtsHornAtCrossigns(){
+    if(ortsAIHornAtCrossings == 1)
+        return true;
+    return false;
 }
 
 void Activity::setDifficulty(int val){

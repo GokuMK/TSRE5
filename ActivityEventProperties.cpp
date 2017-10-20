@@ -15,6 +15,7 @@
 #include "EditFileNameDialog.h"
 #include "GameObj.h"
 #include "WorldObj.h"
+#include "OrtsWeatherChange.h"
 
 ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(parent) {
     //this->setMinimumHeight(400);
@@ -51,7 +52,7 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     cSoundType.addItem("Cab", QString("Cab"));
     cSoundType.addItem("Pass", QString("Pass"));
     cSoundType.addItem("Ground", QString("Ground"));
-    
+
     
     cActionType.setStyleSheet("combobox-popup: 0;");
     cActionType.setMaxVisibleItems(30);
@@ -358,8 +359,10 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     vlist->addWidget(label, row, 0);
     eSoundFileName.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     vlist->addWidget(&eSoundFileName, row++, 1);
+    QObject::connect(&eSoundFileName, SIGNAL(textEdited(QString)), this, SLOT(eSoundFileNameEdited(QString)));
     vlist->addWidget(new QLabel("Sound Type:"), row, 0);
     vlist->addWidget(&cSoundType, row++, 1);
+    QObject::connect(&cSoundType, SIGNAL(activated(QString)), this, SLOT(cSoundTypeSelected(QString)));
     outcomeProperties[(int)ActivityEvent::Outcome::CategorySoundFile] = new QWidget(this);
     outcomeProperties[(int)ActivityEvent::Outcome::CategorySoundFile]->setLayout(vlist);
     vbox->addWidget(outcomeProperties[(int)ActivityEvent::Outcome::CategorySoundFile]);
@@ -372,7 +375,11 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
     cWeatherChange.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    cWeatherChange.setStyleSheet("combobox-popup: 0;");
+    cWeatherChange.setMaxVisibleItems(30);
+    cWeatherChange.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     vlist->addWidget(&cWeatherChange, row++, 1);
+    QObject::connect(&cWeatherChange, SIGNAL(activated(QString)), this, SLOT(cWeatherChangeSelected(QString)));
     outcomeProperties[(int)ActivityEvent::Outcome::CategoryWeatherChange] = new QWidget(this);
     outcomeProperties[(int)ActivityEvent::Outcome::CategoryWeatherChange]->setLayout(vlist);
     vbox->addWidget(outcomeProperties[(int)ActivityEvent::Outcome::CategoryWeatherChange]);
@@ -588,7 +595,7 @@ void ActivityEventProperties::outcomeListSelected(QListWidgetItem* item){
     }
     
     if(outcome->category == ActivityEvent::Outcome::CategoryEvent){
-        int index = this->cOutcomeEvent.findData((int)outcome->value.toInt());
+        int index = cOutcomeEvent.findData((int)outcome->value.toInt());
         cOutcomeEvent.setCurrentIndex(index);
     }
     
@@ -598,8 +605,14 @@ void ActivityEventProperties::outcomeListSelected(QListWidgetItem* item){
     }
     
     if(outcome->category == ActivityEvent::Outcome::CategoryWeatherChange){
-        cWeatherChange.setText(outcome->value.toString());
-        cWeatherChange.setText("Not supported yet!");
+        cWeatherChange.clear();
+        QMapIterator<QString, OrtsWeatherChange*> i3(OrtsWeatherChange::OrtsWeatherChanges);
+        while (i3.hasNext()) {
+            i3.next();
+            cWeatherChange.addItem(i3.key(), i3.key());
+        }
+        int index = cWeatherChange.findData(outcome->value.toString());
+        cWeatherChange.setCurrentIndex(index);
     }
 }
 
@@ -634,6 +647,24 @@ void ActivityEventProperties::cOutcomeEventSelected(QString val){
     if(outcome == NULL)
         return;
     outcome->setEventLinkId(cOutcomeEvent.currentData().toInt());
+}
+
+void ActivityEventProperties::eSoundFileNameEdited(QString val){
+    if(outcome == NULL)
+        return;
+    outcome->setSoundFileName(val);
+}
+
+void ActivityEventProperties::cSoundTypeSelected(QString val){
+    if(outcome == NULL)
+        return;
+    outcome->setSoundType(val);
+}
+
+void ActivityEventProperties::cWeatherChangeSelected(QString val){
+    if(outcome == NULL)
+        return;
+    outcome->setWeatherName(val);
 }
 
 void ActivityEventProperties::setEventList(QMap<int, QString> eventNames){

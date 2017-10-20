@@ -70,6 +70,9 @@ public:
         void setToNewType(OutcomeType newType);
         void setMessage(QString val);
         void setEventLinkId(int id);
+        void setSoundFileName(QString val);
+        void setSoundType(QString val);
+        void setWeatherName(QString val);
         void setModified(bool val);
         bool isModified();
     protected:

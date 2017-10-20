@@ -40,6 +40,8 @@ void AceLib::run() {
         //return false;
         return;
     }
+    //if(!IsThread)
+    //    qDebug() << "ACE: "<<texture->pathid;
     FileBuffer* data = ReadFile::read(&file);
     //qDebug() << "Date:" << data->length;
     unsigned char* bufor = data->data;
@@ -169,6 +171,8 @@ void AceLib::run() {
                         tempt = (unsigned char)(bufor[ptr] << ite);
                         texture->imageData[texture->bytesPerPixel * texture->width * ih + iw * texture->bytesPerPixel + 3] = (unsigned char)(tempt >> 7)*255;
                         iw = iw + 1;
+                        if(iw == texture->width)
+                            break;
                     }
                 }
             }

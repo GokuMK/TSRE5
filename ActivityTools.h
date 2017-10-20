@@ -47,6 +47,7 @@ public slots:
     void eStartTimeEnabled();
     void cSeasonEnabled(int val);
     void cWeatherEnabled(int val);
+    void cHornAtCrossingsEnabled(int val);
     void eFuelCoalEnabled(QString val);
     void sFuelCoalEnabled();
     void eFuelDieselEnabled(QString val);
@@ -59,6 +60,8 @@ public slots:
     void sHazardPeopleEnabled();
     void descriptionOpenEnabled();
     void briefingOpenEnabled();
+    void eDescriptionEnabled();
+    void eBriefingEnabled();
     void actEventsOpenEnabled();
     void actServiceOpenEnabled();
     void actTrafficOpenEnabled();

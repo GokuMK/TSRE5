@@ -31133,7 +31133,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/ActivityEventProperties.o: ActivityE
 		Shader.h \
 		FileBuffer.h \
 		OglObj.h \
-		Ref.h
+		Ref.h \
+		OrtsWeatherChange.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/ActivityEventProperties.o ActivityEventProperties.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/ActivityEventWindow.o: ActivityEventWindow.cpp ActivityEventWindow.h \
@@ -49983,21 +49984,24 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/OrtsWeatherChange.o: OrtsWeatherChan
 		C:/QT/Static/5.7.0/include/QtCore/qnamespace.h \
 		C:/QT/Static/5.7.0/include/QtCore/qarraydata.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringbuilder.h \
-		C:/QT/Static/5.7.0/include/QtCore/QTextStream \
-		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
-		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
-		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
-		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
-		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QMap \
+		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
 		C:/QT/Static/5.7.0/include/QtCore/qlist.h \
 		C:/QT/Static/5.7.0/include/QtCore/qalgorithms.h \
-		C:/QT/Static/5.7.0/include/QtCore/qiterator.h \
 		C:/QT/Static/5.7.0/include/QtCore/qhashfunctions.h \
 		C:/QT/Static/5.7.0/include/QtCore/qpair.h \
 		C:/QT/Static/5.7.0/include/QtCore/qbytearraylist.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringlist.h \
 		C:/QT/Static/5.7.0/include/QtCore/qregexp.h \
 		C:/QT/Static/5.7.0/include/QtCore/qstringmatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qiodevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectdefs_impl.h \
 		C:/QT/Static/5.7.0/include/QtCore/qcoreevent.h \
 		C:/QT/Static/5.7.0/include/QtCore/qscopedpointer.h \
 		C:/QT/Static/5.7.0/include/QtCore/qmetatype.h \
@@ -50006,19 +50010,139 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/OrtsWeatherChange.o: OrtsWeatherChan
 		C:/QT/Static/5.7.0/include/QtCore/qobject_impl.h \
 		C:/QT/Static/5.7.0/include/QtCore/qlocale.h \
 		C:/QT/Static/5.7.0/include/QtCore/qvariant.h \
-		C:/QT/Static/5.7.0/include/QtCore/qmap.h \
-		C:/QT/Static/5.7.0/include/QtCore/qdebug.h \
-		C:/QT/Static/5.7.0/include/QtCore/qhash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
 		C:/QT/Static/5.7.0/include/QtCore/qvector.h \
 		C:/QT/Static/5.7.0/include/QtCore/qpoint.h \
 		C:/QT/Static/5.7.0/include/QtCore/qset.h \
 		C:/QT/Static/5.7.0/include/QtCore/qcontiguouscache.h \
 		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer.h \
-		C:/QT/Static/5.7.0/include/QtCore/qshareddata.h \
 		C:/QT/Static/5.7.0/include/QtCore/qsharedpointer_impl.h \
+		C:/QT/Static/5.7.0/include/QtCore/QTextStream \
 		C:/QT/Static/5.7.0/include/QtCore/qDebug \
 		FileBuffer.h \
-		ParserX.h
+		ParserX.h \
+		ReadFile.h \
+		C:/QT/Static/5.7.0/include/QtCore/QtCore \
+		C:/QT/Static/5.7.0/include/QtCore/QtCoreDepends \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qparallelanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpauseanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpropertyanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qvariantanimation.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeasingcurve.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsequentialanimationgroup.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextcodec.h \
+		C:/QT/Static/5.7.0/include/QtCore/qendian.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibraryinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatetime.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbuffer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdatastream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdir.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfiledevice.h \
+		C:/QT/Static/5.7.0/include/QtCore/qdiriterator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfileselector.h \
+		C:/QT/Static/5.7.0/include/QtCore/QObject \
+		C:/QT/Static/5.7.0/include/QtCore/QStringList \
+		C:/QT/Static/5.7.0/include/QtCore/qfilesystemwatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlockfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qloggingcategory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qprocess.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresource.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsavefile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsettings.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstandardpaths.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstorageinfo.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporarydir.h \
+		C:/QT/Static/5.7.0/include/QtCore/QScopedPointer \
+		C:/QT/Static/5.7.0/include/QtCore/qtemporaryfile.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurl.h \
+		C:/QT/Static/5.7.0/include/QtCore/qurlquery.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractitemmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qidentityproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qitemselectionmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsortfilterproxymodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstringlistmodel.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonvalue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsondocument.h \
+		C:/QT/Static/5.7.0/include/QtCore/qjsonobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracteventdispatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventloop.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractnativeeventfilter.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbasictimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcoreapplication.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmath.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmetaobject.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedata.h \
+		C:/QT/Static/5.7.0/include/QtCore/qobjectcleanuphandler.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsharedmemory.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignalmapper.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsocketnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsystemsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtranslator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwineventnotifier.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimedatabase.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmimetype.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfactoryinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlibrary.h \
+		C:/QT/Static/5.7.0/include/QtCore/qplugin.h \
+		C:/QT/Static/5.7.0/include/QtCore/qpluginloader.h \
+		C:/QT/Static/5.7.0/include/QtCore/quuid.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstractstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qabstracttransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qeventtransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfinalstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qhistorystate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsignaltransition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstate.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstatemachine.h \
+		C:/QT/Static/5.7.0/include/QtCore/qexception.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuture.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfutureinterface.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrunnable.h \
+		C:/QT/Static/5.7.0/include/QtCore/qresultstore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturesynchronizer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qfuturewatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qreadwritelock.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsemaphore.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthread.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadpool.h \
+		C:/QT/Static/5.7.0/include/QtCore/qthreadstorage.h \
+		C:/QT/Static/5.7.0/include/QtCore/qwaitcondition.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydataops.h \
+		C:/QT/Static/5.7.0/include/QtCore/qarraydatapointer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbitarray.h \
+		C:/QT/Static/5.7.0/include/QtCore/qbytearraymatcher.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcache.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcollator.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineoption.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcommandlineparser.h \
+		C:/QT/Static/5.7.0/include/QtCore/qcryptographichash.h \
+		C:/QT/Static/5.7.0/include/QtCore/qelapsedtimer.h \
+		C:/QT/Static/5.7.0/include/QtCore/qline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qlinkedlist.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmargins.h \
+		C:/QT/Static/5.7.0/include/QtCore/qmessageauthenticationcode.h \
+		C:/QT/Static/5.7.0/include/QtCore/qqueue.h \
+		C:/QT/Static/5.7.0/include/QtCore/qrect.h \
+		C:/QT/Static/5.7.0/include/QtCore/qsize.h \
+		C:/QT/Static/5.7.0/include/QtCore/qregularexpression.h \
+		C:/QT/Static/5.7.0/include/QtCore/qscopedvaluerollback.h \
+		C:/QT/Static/5.7.0/include/QtCore/qstack.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtextboundaryfinder.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimeline.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtimezone.h \
+		C:/QT/Static/5.7.0/include/QtCore/qversionnumber.h \
+		C:/QT/Static/5.7.0/include/QtCore/qxmlstream.h \
+		C:/QT/Static/5.7.0/include/QtCore/qtcoreversion.h \
+		C:/QT/Static/5.7.0/include/QtCore/QFile \
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/OrtsWeatherChange.o OrtsWeatherChange.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/OverwriteDialog.o: OverwriteDialog.cpp OverwriteDialog.h \
@@ -63622,7 +63746,8 @@ build/Release/MinGW_QT_5.7.0_Static-Windows/Route.o: Route.cpp C:/QT/Static/5.7.
 		ActivityTimetable.h \
 		Service.h \
 		Traffic.h \
-		Environment.h
+		Environment.h \
+		OrtsWeatherChange.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Release/MinGW_QT_5.7.0_Static-Windows/Route.o Route.cpp
 
 build/Release/MinGW_QT_5.7.0_Static-Windows/RouteEditorGLWidget.o: RouteEditorGLWidget.cpp RouteEditorGLWidget.h \

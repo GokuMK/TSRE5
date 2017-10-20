@@ -12,16 +12,21 @@
 #define	ORTSWEATHERCHANGE_H
 
 #include <QString>
+#include <QMap>
 
 class FileBuffer;
 class QTextStream;
 
 class OrtsWeatherChange {
 public:
+    static QMap<QString, OrtsWeatherChange*> OrtsWeatherChanges;
+    static void LoadList();
+    
     OrtsWeatherChange();
     OrtsWeatherChange(const OrtsWeatherChange& o);
     virtual ~OrtsWeatherChange();
     
+    QString name;
     float finalOvercastFactor;
     int overcastTransitionTime;
     float finalFogDistance;
