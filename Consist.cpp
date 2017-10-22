@@ -23,6 +23,7 @@
 #include "GLMatrix.h"
 #include "TextObj.h"
 #include "TDB.h"
+#include "TerrainLib.h"
 
 std::unordered_map<int, TextObj*> Consist::txtNumbers;
 int Consist::lastTxtNumbersColor = 0;
@@ -640,7 +641,8 @@ void Consist::initOnTrack(float *posTXZ, int direction){
     Vec2::set(posT, posTXZ[0], -posTXZ[1]);
     float pos[3];
     float tpos[3];
-    Vec3::set(pos, posTXZ[2], 0, -posTXZ[3]);
+    float h = TerrainLib::getHeight(posTXZ[0], -posTXZ[1], posTXZ[2], posTXZ[3]);
+    Vec3::set(pos, posTXZ[2], h, -posTXZ[3]);
     
     qDebug() << posT[0]<< posT[1];
     qDebug() << pos[0]<< pos[1]<< pos[2];
@@ -650,8 +652,7 @@ void Consist::initOnTrack(float *posTXZ, int direction){
         qDebug() << "coninit fail";
         return;
     }
-    qDebug() << "coninit init";
-    qDebug() << tpos[0];
+    qDebug() << "coninit init" << tpos[0] << tpos[1];
     
     float conLen = 0;
     if(engItems.size() > 0)

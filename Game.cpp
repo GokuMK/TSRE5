@@ -31,7 +31,7 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.6924";
+QString Game::AppVersion = "v0.6925";
 QString Game::AppDataVersion = "0.69";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
@@ -39,6 +39,7 @@ QString Game::routeName = "bbb";
 QString Game::trkName = "bbb";
 //QString Game::route = "traska";
 //QString Game::route = "cmk";
+QString Game::mainWindowLayout = "PWT";
 int Game::allowObjLag = 1000;
 int Game::maxObjLag = 10;
 bool Game::ignoreLoadLimits = false;
@@ -371,6 +372,9 @@ void Game::load() {
         }
         if(val == "trackElevationMaxPm"){
             trackElevationMaxPm = args[1].trimmed().toFloat();
+        }
+        if(val == "mainWindowLayout"){
+            mainWindowLayout = args[1].trimmed();
         }
     }
 }

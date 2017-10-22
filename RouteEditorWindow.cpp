@@ -95,9 +95,11 @@ RouteEditorWindow::RouteEditorWindow() {
     objProperties["Undefined"] = new PropertiesUndefined;
     
     QWidget* main = new QWidget();
-    box = new QWidget();
-    box2 = new QWidget();
+    box = new QWidget(this);
+    box2 = new QWidget(this);
     box->setFixedWidth(250);
+    box->setWindowTitle("Tools Window");
+    box2->setWindowFilePath("Properties Window");
     box2->setMaximumWidth(160);
     box2->setMinimumWidth(160);
     //box2->setMaximumWidth(250);
@@ -132,17 +134,34 @@ RouteEditorWindow::RouteEditorWindow() {
     //mainLayout3->addWidget(terrainTools);
     //mainLayout3->setAlignment(naviBox, Qt::AlignBottom);
     box2->setLayout(mainLayout3);
+
+    glWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(3);
     mainLayout->setSpacing(3);
-    mainLayout->addWidget(box2);
-    mainLayout->addWidget(glWidget);
-    glWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    mainLayout->addWidget(box);
-    //mainLayout->addWidget(box2);
-    //terrainTools->hide();
-    //mainLayout->addWidget(naviBox);
+    
+    QString mainWindowLayout = Game::mainWindowLayout;
+    if(!mainWindowLayout.contains('W')){
+        mainWindowLayout += 'W';
+    }
+    for(int i = 0; i < mainWindowLayout.length(); i++){
+        if(mainWindowLayout[i] == 'P')
+            mainLayout->addWidget(box2);
+        if(mainWindowLayout[i] == 'T')
+            mainLayout->addWidget(box);
+        if(mainWindowLayout[i] == 'W')
+            mainLayout->addWidget(glWidget);
+    }
+    if(!mainWindowLayout.contains('T')){
+        box->move(this->pos());
+        box->setWindowFlags(Qt::WindowType::Tool);
+    }
+    if(!mainWindowLayout.contains('P')){
+        box2->move(this->pos());
+        box2->setWindowFlags(Qt::WindowType::Tool);
+    }
+    
     main->setLayout(mainLayout);
     mainLayout->setContentsMargins(0,0,0,0);
     
@@ -284,10 +303,14 @@ RouteEditorWindow::RouteEditorWindow() {
     hideAllTools();
     objTools->show();
     
+    
     if(Game::toolsHidden){
         box->hide();
         box2->hide();
         menuBar()->hide();
+    } else {
+        //box->show();
+        //box2->show();
     }
     //box2->hide();
     

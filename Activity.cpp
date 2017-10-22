@@ -832,6 +832,7 @@ void Activity::pickNewEventLocation(float* tdbPos){
 void Activity::newLooseConsist(float *tdbPos){
     float *drawPosition = new float[7];
     TDB *tdb = Game::trackDB;
+    //qDebug() << "tdbPos[0], tdbPos[1]" << tdbPos[0] << tdbPos[1];
     bool ok = tdb->getDrawPositionOnTrNode(drawPosition, tdbPos[0], tdbPos[1]);
     if(!ok)
         return;

@@ -24,6 +24,11 @@ public:
         int itex[2][4];
         int count153 = 0;
         int count155 = 0;
+        
+        Mat(){
+            tex[0] = NULL;
+            tex[1] = NULL;
+        }
     };
     bool loaded = false;
     bool used = false;

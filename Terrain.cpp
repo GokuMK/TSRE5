@@ -67,6 +67,9 @@ Terrain::Terrain(float x, float y) {
     for (int u = 0; u < 16; u++)
         for (int y = 0; y < 16; y++) {
             name2 = name + "_" + QString::number(y) + "_" + QString::number(u) + ".ace";
+            //qDebug() << name2 << (int) tfile->tdata[(y * 16 + u)*13 + 0 + 6];
+            //qDebug() << tfile->materialsCount;
+            //qDebug() << tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0];
             if (name2 == *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0])
                 this->uniqueTex[y*16+u] = true;
         }

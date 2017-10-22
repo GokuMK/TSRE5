@@ -40,6 +40,7 @@ public:
     static QString route;
     static QString routeName;
     static QString trkName;
+    static QString mainWindowLayout;
     static float objectLod;
     static int tileLod;
     static int allowObjLag;

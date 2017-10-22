@@ -359,6 +359,8 @@ void TFile::get163(FileBuffer* data, int n) {
             tdata[j*13+4] = data->getFloat();
             tdata[j*13+5] = data->getFloat();
             tdata[j*13+6] = (float)data->getInt();
+            if(tdata[j*13+6] >= materialsCount)
+                tdata[j*13+6] -= materialsCount;
             tdata[j*13+7] = data->getFloat();
             tdata[j*13+8] = data->getFloat();
             tdata[j*13+9] = data->getFloat();
