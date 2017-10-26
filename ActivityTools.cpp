@@ -188,6 +188,7 @@ ActivityTools::ActivityTools(QString name)
     vlist1->setSpacing(2);
     vlist1->setContentsMargins(0,0,1,0);
     QPushButton *actFailedSignalJump = new QPushButton("Jump To");
+    QObject::connect(actFailedSignalJump, SIGNAL(released()), this, SLOT(actFailedSignalsJumpEnabled()));
     QPushButton *actFailedSignalNew = new QPushButton("Disable");
     QPushButton *actFailedSignalDelete = new QPushButton("Delete");
     QPushButton *actFailedSignalDeleteAll = new QPushButton("Delete All");
@@ -507,28 +508,8 @@ void ActivityTools::activitySelected(QString n){
             }
         }
     }
-    
-    consists.clear();
-    for (int i = 0; i < ActLib::Act[id]->activityObjects.size(); i++){
-        e = ActLib::Act[id]->activityObjects[i].con;
-        if(e == NULL) continue;
-        consists.addItem(e->showName, QVariant(i));
-    }
-    
-    speedZones.clear();
-    ActivityObject *rz;
-    for (int i = 0; i < ActLib::Act[id]->restrictedSpeedZone.size(); i++){
-        rz = &ActLib::Act[id]->restrictedSpeedZone[i];
-        if(rz == NULL) continue;
-        speedZones.addItem(QString::number(rz->restrictedSpeedZoneStart[0])+" "+QString::number(rz->restrictedSpeedZoneStart[1])+" "+QString::number(rz->restrictedSpeedZoneStart[2])+" "+QString::number(rz->restrictedSpeedZoneStart[3]), QVariant(i));
-    }
 
-    failedSignals.clear();
-    for (int i = 0; i < ActLib::Act[id]->activityFailedSignal.size(); i++){
-        rz = &ActLib::Act[id]->activityFailedSignal[i];
-        if(rz == NULL) continue;
-        failedSignals.addItem(QString("Signal ID: ")+QString::number(rz->failedSignal), QVariant(i));
-    }
+    reloadActivityObjectLists();
     
     if(route != NULL){
         //if(!ActLib::act[id]->isInitActivityObjects)
@@ -546,6 +527,35 @@ void ActivityTools::activitySelected(QString n){
     eDescription.setPlainText(txt);
     eBriefing.blockSignals(false);
     eDescription.blockSignals(false);
+}
+
+void ActivityTools::reloadActivityObjectLists(){
+    int id = actShow.currentData().toInt();
+    if(ActLib::Act[id] == NULL)
+        return;
+    
+    Consist *e;
+    consists.clear();
+    for (int i = 0; i < ActLib::Act[id]->activityObjects.size(); i++){
+        e = ActLib::Act[id]->activityObjects[i].con;
+        if(e == NULL) continue;
+        consists.addItem(e->showName, QVariant(i));
+    }
+        
+    speedZones.clear();
+    ActivityObject *rz;
+    for (int i = 0; i < ActLib::Act[id]->restrictedSpeedZone.size(); i++){
+        rz = &ActLib::Act[id]->restrictedSpeedZone[i];
+        if(rz == NULL) continue;
+        speedZones.addItem(rz->getSpeedZoneName(), QVariant(i));
+    }
+
+    failedSignals.clear();
+    for (int i = 0; i < ActLib::Act[id]->activityFailedSignal.size(); i++){
+        rz = &ActLib::Act[id]->activityFailedSignal[i];
+        if(rz == NULL) continue;
+        failedSignals.addItem(QString("Signal ID: ")+QString::number(rz->getFailedSignalId()), QVariant(i));
+    }
 }
 
 void ActivityTools::loadActFiles(){
@@ -573,6 +583,13 @@ void ActivityTools::actPathsEditToolEnabled(){
     emit objectSelected(route->path[currentPathId]);
 }
 
+
+void ActivityTools::msg(QString text){
+    if(text == "refreshActivityTools"){
+        reloadActivityObjectLists();
+    }
+}
+    
 void ActivityTools::msg(QString text, QString val){
     if(text == "toolEnabled"){
         QMapIterator<QString, QPushButton*> i(buttonTools);
@@ -623,14 +640,19 @@ void ActivityTools::cTrafficEnabled(QString val){
 void ActivityTools::newActButtonEnabled(){
     QString pathid = Game::root + "/routes/" + Game::route + "/activities/";
     //ActLib::Act[ActLib::jestact] = new Activity(pathid, "file.act", true);
-    int id = ActLib::AddAct(pathid, "file.act", true);
-    ActLib::Act[id]->init(Game::route, "New Activity");
-    qDebug()<< ActLib::Act[id]->header->name;
-    route->activityId.push_back(id);
-    actShow.addItem(ActLib::Act[id]->header->name, id);
-    actShow.setCurrentIndex(actShow.count()-1); 
-    activitySelected("");
-    //ActLib::jestact++;
+    for(int i = 0; i < 1000; i++){
+        QString name = QString("file")+QString::number(i)+QString(".act");
+        if(ActLib::GetAct(pathid, name) > 0)
+            continue;
+        int id = ActLib::AddAct(pathid, name, true);
+        ActLib::Act[id]->init(Game::route, "New Activity"+QString::number(i));
+        qDebug()<< ActLib::Act[id]->header->name;
+        route->activityId.push_back(id);
+        actShow.addItem(ActLib::Act[id]->header->name, id);
+        actShow.setCurrentIndex(actShow.count()-1); 
+        activitySelected("");
+        return;
+    }
 }
 
 void ActivityTools::actConsistJumpEnabled(){
@@ -660,6 +682,49 @@ void ActivityTools::actConsistJumpEnabled(){
     emit jumpTo(coordinate);
 }
 
+void ActivityTools::actFailedSignalsJumpEnabled(){
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::Act[aid];
+    if(a == NULL)
+        return;
+    int i = failedSignals.currentIndex();
+    if(i >= a->activityFailedSignal.size())
+        return;
+    float posTW[5];
+    bool ok = a->activityFailedSignal[i].getElementPosition(0, posTW);
+    if(!ok)
+        return;
+    if(coordinate == NULL)
+        coordinate = new PreciseTileCoordinate();
+    
+    coordinate->TileX = posTW[0];
+    coordinate->TileZ = posTW[1];
+    coordinate->setWxyz(posTW[2], 0, posTW[4]);
+    
+    emit jumpTo(coordinate);
+}
+
+void ActivityTools::actReducedSpeedZonesEnabled(){
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::Act[aid];
+    if(a == NULL)
+        return;
+    int i = speedZones.currentIndex();
+    if(i >= a->restrictedSpeedZone.size())
+        return;
+    float posTW[5];
+    bool ok = a->restrictedSpeedZone[i].getElementPosition(0, posTW);
+    if(!ok)
+        return;
+    if(coordinate == NULL)
+        coordinate = new PreciseTileCoordinate();
+    
+    coordinate->TileX = posTW[0];
+    coordinate->TileZ = posTW[1];
+    coordinate->setWxyz(posTW[2], 0, posTW[4]);
+    
+    emit jumpTo(coordinate);
+}
 /*void ActivityTools::actServiceNewEnabled(){
     ActivityServiceTools sTools;
     QString pathid = Game::root + "/routes/" + Game::route + "/services/";

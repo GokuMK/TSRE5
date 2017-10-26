@@ -78,6 +78,7 @@ void PropertiesActivityObject::bDeleteEnabled(){
         return;
     }
     actObj->remove();
+    emit sendMsg(QString("unselect"));
 }
 
 bool PropertiesActivityObject::support(GameObj* obj){

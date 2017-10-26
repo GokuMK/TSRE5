@@ -92,26 +92,10 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
     update();
 }
 
-void RouteEditorGLWidget::DefaultMenuActions::init(RouteEditorGLWidget *widget){
-    undo = new QAction(tr("&Undo"), widget); 
-    QObject::connect(undo, SIGNAL(triggered()), widget, SLOT(editUndo()));
-    copy = new QAction(tr("&Copy"), widget); 
-    QObject::connect(copy, SIGNAL(triggered()), widget, SLOT(editCopy()));
-    paste = new QAction(tr("&Paste"), widget); 
-    QObject::connect(paste, SIGNAL(triggered()), widget, SLOT(editPaste()));
-    find1x1 = new QAction(tr("&Select Similar 1x1"), widget); 
-    QObject::connect(find1x1, SIGNAL(triggered()), widget, SLOT(editFind1x1()));
-    find3x3 = new QAction(tr("&Select Similar 3x3"), widget); 
-    QObject::connect(find3x3, SIGNAL(triggered()), widget, SLOT(editFind3x3()));
-    select = new QAction(tr("&Select"), widget); 
-    QObject::connect(select, SIGNAL(triggered()), widget, SLOT(editSelect()));
-}
-
 void RouteEditorGLWidget::initializeGL() {
     //this->setContextMenuPolicy(Qt::CustomContextMenu);
     //connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), 
     //        this, SLOT(showContextMenu(const QPoint &)));
-    this->defaultMenuActions.init(this);
     
     currentShapeLib = new ShapeLib();
     Game::currentShapeLib = currentShapeLib;
@@ -229,9 +213,9 @@ void RouteEditorGLWidget::paintGL() {
 
     route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, renderMode);
     
-    if (!selection)
-        for(int i = 0; i < route->env->waterCount; i++)
-            TerrainLib::renderWater(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
+    //if (!selection)
+    for(int i = 0; i < route->env->waterCount; i++)
+        TerrainLib::renderWater(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
     
     if (!stickPointerToTerrain || !Game::viewTerrainShape)
         if (!selection) drawPointer();
@@ -351,13 +335,13 @@ void RouteEditorGLWidget::handleSelection() {
             qDebug() << wx << " " << wz << " " << UiD;
             WorldObj *selectedWorldObj = (WorldObj*) selectedObj;
             if (keyControlEnabled) {
-                if (selectedWorldObj == NULL)
+                if (selectedWorldObj == NULL){
                     setSelectedObj(groupObj);
-                if (selectedWorldObj->typeObj != GameObj::worldobj){
+                    selectedWorldObj = (WorldObj*) selectedObj;
+                } else if (selectedWorldObj->typeObj != GameObj::worldobj){
                     selectedWorldObj->unselect();
                     setSelectedObj(groupObj);
-                }
-                if (selectedWorldObj->typeObj == GameObj::worldobj) {
+                } else if (selectedWorldObj->typeObj == GameObj::worldobj) {
                     groupObj->addObject(selectedWorldObj);
                     setSelectedObj(groupObj);
                 }
@@ -389,12 +373,10 @@ void RouteEditorGLWidget::handleSelection() {
             int UiD = (colorHash) & 0xFF;
             qDebug() << wx << wz << UiD;
             if (selectedObj != NULL) {
-                if (keyControlEnabled && selectedObj->typeObj == GameObj::terrainobj ) {
+                if ((keyControlEnabled || keyShiftEnabled) && selectedObj->typeObj == GameObj::terrainobj ) {
                     Terrain * tt = (Terrain*) selectedObj;
                     if(tt->mojex != wx || tt->mojez != wz){
                         selectedObj->unselect();
-                        if (autoAddToTDB)
-                            route->addToTDBIfNotExist((WorldObj*)selectedObj);
                         setSelectedObj(NULL);
                     }
                 } else {
@@ -408,7 +390,7 @@ void RouteEditorGLWidget::handleSelection() {
             if (selectedObj == NULL) {
                 qDebug() << "brak obiektu";
             } else {
-                selectedObj->select(UiD);
+                ((Terrain*)selectedObj)->select(UiD, keyControlEnabled);
             }
         } else if( ww == 11 ){
             if (selectedObj != NULL) {
@@ -417,7 +399,7 @@ void RouteEditorGLWidget::handleSelection() {
                     route->addToTDBIfNotExist((WorldObj*)selectedObj);
                 setSelectedObj(NULL);
             }
-            int CID = ((colorHash) >> 8) & 0xFF;
+            int CID = ((colorHash) >> 8) & 0xFFF;
             int EID = ((colorHash)) & 0xFF;
             qDebug() << CID << EID;
             setSelectedObj((GameObj*)route->getActivityObject(CID));
@@ -714,6 +696,7 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
                     }
                     if(selectedObj->typeObj == GameObj::activityobj){
                         selectedObj->remove();
+                        emit sendMsg("refreshActivityTools");
                     }
                     setSelectedObj(NULL);
                     lastSelectedObj = NULL;
@@ -901,10 +884,10 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
             lastPointerPos[2] = aktPointerPos[2];
         }
         if (toolEnabled == "waterTerrTool") {
-            TerrainLib::setWaterDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            TerrainLib::toggleWaterDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "drawTerrTool") {
-            TerrainLib::setDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            TerrainLib::toggleDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "waterHeightTileTool") {
             TerrainLib::setWaterLevelGui((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
@@ -1125,6 +1108,7 @@ void RouteEditorGLWidget::objSelected(GameObj* o) {
 
 void RouteEditorGLWidget::setPaintBrush(Brush* brush) {
     this->defaultPaintBrush = brush;
+    Terrain::DefaultBrush = brush;
 }
 
 void RouteEditorGLWidget::setSelectedObj(GameObj* o) {
@@ -1224,22 +1208,48 @@ void RouteEditorGLWidget::showTrkEditr() {
 }
 
 void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
+    if(defaultMenuActions["undo"] == NULL){
+        defaultMenuActions["undo"] = new QAction(tr("&Undo"), this); 
+        QObject::connect(defaultMenuActions["undo"], SIGNAL(triggered()), this, SLOT(editUndo()));
+    }
+    if(defaultMenuActions["copy"] == NULL){
+        defaultMenuActions["copy"] = new QAction(tr("&Copy"), this); 
+        QObject::connect(defaultMenuActions["copy"], SIGNAL(triggered()), this, SLOT(editCopy()));
+    }
+    if(defaultMenuActions["paste"] == NULL){
+        defaultMenuActions["paste"] = new QAction(tr("&Paste"), this); 
+        QObject::connect(defaultMenuActions["paste"], SIGNAL(triggered()), this, SLOT(editPaste()));
+    }
+    if(defaultMenuActions["find1x1"] == NULL){
+        defaultMenuActions["find1x1"] = new QAction(tr("&Select Similar 1x1"), this); 
+        QObject::connect(defaultMenuActions["find1x1"], SIGNAL(triggered()), this, SLOT(editFind1x1()));
+    }
+    if(defaultMenuActions["find3x3"] == NULL){
+        defaultMenuActions["find3x3"] = new QAction(tr("&Select Similar 3x3"), this); 
+        QObject::connect(defaultMenuActions["find3x3"], SIGNAL(triggered()), this, SLOT(editFind3x3()));
+    }
+    if(defaultMenuActions["select"] == NULL){
+        defaultMenuActions["select"] = new QAction(tr("&Select"), this); 
+        QObject::connect(defaultMenuActions["select"], SIGNAL(triggered()), this, SLOT(editSelect()));
+    }
+
+    
     QMenu menu;
     if(selectedObj != NULL){
         menu.addSection("Object");
         selectedObj->pushContextMenuActions(&menu);
         
         if(selectedObj->typeObj == selectedObj->worldobj){
-            menu.addAction(defaultMenuActions.find1x1);
-            menu.addAction(defaultMenuActions.find3x3);
+            menu.addAction(defaultMenuActions["find1x1"]);
+            menu.addAction(defaultMenuActions["find3x3"]);
         }
     }
     //menu.addSeparator();
     menu.addSection("Edit");
-    menu.addAction(defaultMenuActions.undo);
-    menu.addAction(defaultMenuActions.copy); 
-    menu.addAction(defaultMenuActions.paste);
-    menu.addAction(defaultMenuActions.select);
+    menu.addAction(defaultMenuActions["undo"]);
+    menu.addAction(defaultMenuActions["copy"]); 
+    menu.addAction(defaultMenuActions["paste"]);
+    menu.addAction(defaultMenuActions["select"]);
     
     
     menu.exec(mapToGlobal(point));
@@ -1270,6 +1280,11 @@ void RouteEditorGLWidget::msg(QString text) {
     qDebug() << text;
     if (text == "save") {
         route->save();
+        return;
+    }
+    if (text == "unselect") {
+        setSelectedObj(NULL);
+        lastSelectedObj = NULL;
         return;
     }
     if (text == "createPaths") {

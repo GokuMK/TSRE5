@@ -11,7 +11,7 @@
 #include "TerrainWaterWindow.h"
 
 TerrainWaterWindow::TerrainWaterWindow() : QDialog(){
-    this->setFixedSize(200, 100);
+    this->setFixedSize(200, 130);
 
     QPushButton* ok = new QPushButton("OK");
     QPushButton* cancel = new QPushButton("Cancel");
@@ -21,11 +21,12 @@ TerrainWaterWindow::TerrainWaterWindow() : QDialog(){
     QFormLayout *vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("ALL:",&this->eALL);
     vlist->addRow("WSW:",&this->eWSW);
     vlist->addRow("WSE:",&this->eWSE);
     vlist->addRow("WNE:",&this->eWNE);
     vlist->addRow("WNW:",&this->eWNW);
-    connect(&this->eWSW, SIGNAL (textEdited(QString)), this, SLOT (eWSWtextEdited(QString)));
+    connect(&this->eALL, SIGNAL (textEdited(QString)), this, SLOT (eWSWtextEdited(QString)));
     vlist->addRow(ok,cancel);
 //    mainLayout->setAlignment(browse, Qt::AlignBottom);
     vlist->setContentsMargins(1,1,1,1);
@@ -34,6 +35,9 @@ TerrainWaterWindow::TerrainWaterWindow() : QDialog(){
 }
 
 void TerrainWaterWindow::setWater(){
+    float v = this->WNE + this->WSE + this->WNW + this->WSW;
+    v /= 4.0;
+    this->eALL.setText(QString::number(v));
     this->eWNE.setText(QString::number(this->WNE));
     this->eWSE.setText(QString::number(this->WSE));
     this->eWNW.setText(QString::number(this->WNW));
@@ -57,6 +61,7 @@ TerrainWaterWindow::~TerrainWaterWindow() {
 }
 
 void TerrainWaterWindow::eWSWtextEdited(QString val){
+    this->eWSW.setText(val);
     this->eWNE.setText(val);
     this->eWSE.setText(val);
     this->eWNW.setText(val);

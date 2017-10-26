@@ -105,6 +105,44 @@ void PlatformObj::set(QString sh, FileBuffer* data) {
     return;
 }
 
+void PlatformObj::setPosition(int x, int z, float* p){
+    TDB* tdb = Game::trackDB;
+    if(this->typeID == this->carspawner)
+        tdb = Game::roadDB;
+    
+    int nodeId[4];
+    nodeId[1] = tdb->findTrItemNodeId(trItemId[1]);
+    nodeId[3] = tdb->findTrItemNodeId(trItemId[3]);
+    /*if (nodeId[1] < 0 || nodeId[3] < 0) {
+        qDebug() << "fail id";
+        return;
+    }*/
+    float playerT[2];
+    playerT[0] = x;
+    playerT[1] = z;
+    float tpos[3];
+
+    if(tdb->findNearestPositionOnTDB(playerT, p, NULL, tpos) < 0)
+        return;
+
+    //tdb- >trackItems[trItemId[selectionValue]]-
+    if(nodeId[selectionValue] == tpos[0])
+        tdb->trackItems[trItemId[selectionValue]]->setTrackPosition(tpos[1]);
+    //if(tpos[0] != nodeId[1])
+    //    return;
+
+    if(this->selectionValue == 1){
+        delete[] drawPositionB;
+        drawPositionB = NULL;   
+    } else if(this->selectionValue == 3){
+        delete[] drawPositionE;
+        drawPositionE = NULL;
+    }
+    delete line;
+    line = NULL;
+    this->modified = true;
+}
+
 void PlatformObj::translate(float px, float py, float pz){
     if(pz == 0) 
         return;

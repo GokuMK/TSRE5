@@ -34,11 +34,14 @@ public slots:
     void actNewLooseConsistToolEnabled(bool val);
     void actPathsEditToolEnabled();
     void actConsistJumpEnabled();
+    void actFailedSignalsJumpEnabled();
+    void actReducedSpeedZonesEnabled();
     void newActButtonEnabled();
     void cServiceEnabled(QString val);
     void cTrafficEnabled(QString val);
     //void actServiceNewEnabled();
     //void actServiceEditEnabled();
+    void msg(QString text);
     void msg(QString text, QString val);
     void eFileNameEnabled(QString val);
     void eDisplayNameEnabled(QString val);
@@ -126,6 +129,8 @@ private:
     QPlainTextEdit eBriefing;
     
     PreciseTileCoordinate* coordinate;
+    
+    void reloadActivityObjectLists();
 };
 
 #endif	/* ACTIVITYTOOLS_H */

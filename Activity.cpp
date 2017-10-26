@@ -273,9 +273,8 @@ void Activity::load() {
                                 if (sh == ("activityrestrictedspeedzone")) {
                                     //restrictedSpeedZone.push_back(RestrictedSpeedZone());
                                     restrictedSpeedZone.push_back(ActivityObject());
+                                    restrictedSpeedZone.back().setSpeedZoneData();
                                     restrictedSpeedZone.back().load(data);
-                                    restrictedSpeedZone.back().objectType = "RestrictedZone";
-                                    restrictedSpeedZone.back().objectTypeId = ActivityObject::RESTRICTEDSPEEDZONE;
                                     restrictedSpeedZone.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
@@ -291,9 +290,8 @@ void Activity::load() {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("activityfailedsignal")) {
                                     activityFailedSignal.push_back(ActivityObject());
-                                    activityFailedSignal.back().objectType = "FailedSignal";
-                                    activityFailedSignal.back().failedSignal = ParserX::GetNumber(data);
-                                    activityFailedSignal.back().objectTypeId = ActivityObject::FAILEDSIGNAL;
+                                    activityFailedSignal.back().setFailedSignalData(ParserX::GetNumber(data));
+                                    activityFailedSignal.back().id = activityFailedSignal.size()-1;
                                     activityFailedSignal.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
@@ -800,6 +798,10 @@ void Activity::render(GLUU* gluu, float * playerT, float playerRot, int renderMo
         activityObjects[i].render(gluu, playerT, renderMode, i);
     }
     
+    for (int i = 0; i < activityFailedSignal.size(); i++){
+        activityFailedSignal[i].render(gluu, playerT, renderMode, i+3500);
+    }
+    
     for (int i = 0; i < event.size(); i++){
         event[i].render(gluu, playerT, playerRot, renderMode);
     }
@@ -1020,6 +1022,22 @@ void Activity::deleteObject(int id){
             activityObjects.remove(i);
     }
     modified = true;
+}
+
+void Activity::deleteObjectFailedSignal(int id){
+    for(int i = 0; i < activityFailedSignal.size(); i++){
+        if(activityFailedSignal[i].id == id)
+            activityFailedSignal.remove(i);
+    }
+    modified = true;
+}
+
+void Activity::deleteObjectSpeedZone(int id){
+    //for(int i = 0; i < this-.size(); i++){
+     //   if(activityObjects[i].id == id)
+    //        activityObjects.remove(i);
+    //}
+    //modified = true;
 }
 
 void Activity::deleteCurrentEvent(){

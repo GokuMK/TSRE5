@@ -33,6 +33,7 @@ public:
     bool isTrackItem();
     void initTrItems(float* tpos);
     void translate(float px, float py, float pz);
+    void setPosition(int x, int z, float* p);
     QString getStationName();
     QString getPlatformName();
     int getPlatformMinWaitingTime();

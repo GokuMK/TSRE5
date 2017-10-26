@@ -66,6 +66,7 @@ public:
     bool select(int value);
     bool isTrackItem();
     void initTrItems(float* tpos);
+    void setPosition(int x, int z, float* p);
     void translate(float px, float py, float pz);
     float getCarNumber();
     float getCarSpeed();

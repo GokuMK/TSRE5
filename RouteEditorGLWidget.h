@@ -174,7 +174,7 @@ private:
     ShapeLib *currentShapeLib = NULL;
     EngLib *engLib = NULL;
     
-    struct DefaultMenuActions {
+    /*struct DefaultMenuActions {
         QAction *undo;
         QAction *copy;
         QAction *paste;
@@ -182,8 +182,9 @@ private:
         QAction *find3x3;
         QAction *select;
         void init(RouteEditorGLWidget *widget);
-    };
-    DefaultMenuActions defaultMenuActions;
+    };*/
+    //DefaultMenuActions defaultMenuActions;
+    QMap<QString, QAction*> defaultMenuActions;
 };
 
 #endif

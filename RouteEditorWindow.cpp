@@ -173,7 +173,7 @@ RouteEditorWindow::RouteEditorWindow() {
     saveAction = new QAction(tr("&Save"), this);
     saveAction->setShortcut(QKeySequence("Shift+Ctrl+S"));
     QObject::connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
-    createPathsAction = new QAction(tr("&Create Paths"), this);
+    createPathsAction = new QAction(tr("&Create Debug Paths"), this);
     QObject::connect(createPathsAction, SIGNAL(triggered()), this, SLOT(createPaths()));
     exitAction = new QAction(tr("&Exit"), this);
     exitAction->setShortcut(QKeySequence("Alt+F4"));
@@ -334,6 +334,7 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), terrainTools, SLOT(msg(QString, QString)));
     QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), geoTools, SLOT(msg(QString, QString)));
     QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), activityTools, SLOT(msg(QString, QString)));
+    QObject::connect(glWidget, SIGNAL(sendMsg(QString)), activityTools, SLOT(msg(QString)));
     QObject::connect(glWidget, SIGNAL(sendMsg(QString, QString)), activityEventWindow->eventProperties, SLOT(msg(QString, QString)));
     
     QObject::connect(naviWindow, SIGNAL(sendMsg(QString)), glWidget, SLOT(msg(QString)));
@@ -402,6 +403,12 @@ RouteEditorWindow::RouteEditorWindow() {
     
     QObject::connect(glWidget, SIGNAL(flexData(int, int, float*)),
                       objProperties["Dyntrack"], SLOT(flexData(int, int, float*)));
+    
+    QObject::connect(objProperties["Dyntrack"], SIGNAL(enableTool(QString)),
+                      glWidget, SLOT(enableTool(QString)));
+    
+    QObject::connect(objProperties["ActivityObject"], SIGNAL(sendMsg(QString)),
+                      glWidget, SLOT(msg(QString)));
     
     QObject::connect(terrainTools, SIGNAL(setPaintBrush(Brush*)),
                       glWidget, SLOT(setPaintBrush(Brush*)));   
@@ -523,7 +530,7 @@ void RouteEditorWindow::save(){
 
 void RouteEditorWindow::createPaths(){
     QMessageBox msgBox;
-    msgBox.setText("This will delete all your existing paths and create new simple paths! Continue?");
+    msgBox.setText("This action will delete all your existing activity paths and create new simple paths! Continue?");
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::No);
     switch (msgBox.exec()) {

@@ -20,6 +20,7 @@ public:
     float WSE;
     float WNE;
     float WNW;
+    QLineEdit eALL;
     QLineEdit eWSW;
     QLineEdit eWSE;
     QLineEdit eWNE;

@@ -34,6 +34,25 @@ ActLib::ActLib() {
 ActLib::~ActLib() {
 }
 
+int ActLib::GetAct(QString path, QString name){
+    QString pathid = (path + "/" + name).toLower();
+    pathid.replace("\\", "/");
+    pathid.replace("//", "/");
+    //qDebug() << pathid;
+    QHashIterator<int, Activity*> i(Act);
+    while (i.hasNext()) {
+        i.next();
+        if(i.value() == NULL) continue;
+        if (i.value()->pathid.length() == pathid.length())
+            if (i.value()->pathid == pathid) {
+                i.value()->ref++;
+                qDebug() <<"actid "<< pathid;
+                return (int)i.key();
+            }
+    }
+    return -1;
+}
+
 int ActLib::AddAct(QString path, QString name, bool nowe) {
     QString pathid = (path + "/" + name).toLower();
     pathid.replace("\\", "/");

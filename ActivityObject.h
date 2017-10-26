@@ -22,6 +22,7 @@ class QTextStream;
 class GLUU;
 class Activity;
 class QMenu;
+class OglObj;
 
 class ActivityObject : public GameObj {
     Q_OBJECT
@@ -38,9 +39,6 @@ public:
     float direction = 0;
     unsigned int id = 0;
     float tile[4];
-    float restrictedSpeedZoneStart[4];
-    float restrictedSpeedZoneEnd[4];
-    int failedSignal = -1;
     ActivityObject();
     ActivityObject(const ActivityObject& orig);
     ActivityObject(int tid);
@@ -53,9 +51,13 @@ public:
     void setPosition(int x, int z, float* p);
     void toggleDirection();
     void setParentActivity(Activity *a);
+    void setFailedSignalData(int id);
+    void setSpeedZoneData();
+    QString getSpeedZoneName();
     void setModified(bool val);
     bool isUnSaved();
     int getSelectedElementId();
+    int getFailedSignalId();
     bool getElementPosition(int id, float *posTW);
     void pushContextMenuActions(QMenu *menu);
     QString getParentName();
@@ -70,6 +72,28 @@ private:
     Activity *parentActivity = NULL;
     bool modified = false;
     int selectionValue = 0;
+    
+    struct FailedSignalData {
+        float* drawPosition = NULL;
+        OglObj* pointer3d = NULL;
+        OglObj* pointer3dSelected = NULL;
+        int init = 0;
+        int failedSignal = -1;
+        bool getWorldPosition(float *posTW);
+        void render(GLUU* gluu, float * playerT, int selectionColor, bool selected = false);
+    };
+    
+    struct SpeedZone {
+        float start[4];
+        float end[4];
+        int init = 0;
+        bool getWorldPosition(float *posTW);
+        void render(GLUU* gluu, float * playerT, int selectionColor, bool selected = false);
+    };
+    
+    //void renderZone(GLUU* gluu, float * playerT, int selectionColor);
+    SpeedZone* speedZoneData = NULL;
+    FailedSignalData* failedSignalData = NULL;
 };
 
 #endif	/* ACTIVITYOBJECT_H */

@@ -28,9 +28,17 @@ public slots:
     void bShaderEditorEnabled();
     void bWaterEditorEnabled();
     void bRotateEnabled();
+    void bCopyEnabled();
+    void bPasteEnabled();
+    void bScaleEnabled();
+    void bResetEnabled();
+    void bMirrorXEnabled();
+    void bMirrorYEnabled();
     void bRemoveAllGapsEnabled();
-    void bToggleWaterEnabled();
-    void bToggleDrawEnabled();
+    void bShowWaterEnabled();
+    void bShowDrawEnabled();
+    void bHideWaterEnabled();
+    void bHideDrawEnabled();
     void bShowAdjacentEnabled();
     void eBiasEnabled(QString val);
 

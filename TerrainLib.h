@@ -43,12 +43,12 @@ public:
     static void lockTexture(Brush* brush, int x, int z, float* p);
     static void setTerrainTexture(Brush* brush, int x, int z, float* p);
     static void toggleGaps(int x, int z, float* p);
-    static void setWaterDraw(int x, int z, float* p);
+    static void toggleWaterDraw(int x, int z, float* p);
     static void setWaterLevelGui(int x, int z, float* p);
     static void makeTextureFromMap(int x, int z, float* p);
     static void removeTileTextureFromMap(int x, int z, float* p);
     static void setFixedTileHeight(Brush* brush, int x, int z, float* p);
-    static void setDraw(int x, int z, float* p);
+    static void toggleDraw(int x, int z, float* p);
     static void setTileBlob(int x, int z, float* p);
     static void setTextureToTrackObj(Brush* brush, float* punkty, int length, int x, int z);
     static void setTerrainToTrackObj(Brush* brush, float* punkty, int length, int x, int z, float* matrix);

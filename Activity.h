@@ -142,6 +142,8 @@ public:
     void setDescription(QString val);
     void setBriefing(QString val);
     void deleteObject(int id);
+    void deleteObjectFailedSignal(int id);
+    void deleteObjectSpeedZone(int id);
     void deleteCurrentEvent();
     void newEvent(ActivityEvent::EventCategory category);
     bool isServiceInUse(QString n);

@@ -21,6 +21,9 @@
 #include "MapWindow.h"
 #include "Route.h"
 #include "Environment.h"
+#include "AboutWindow.h"
+
+Brush* Terrain::DefaultBrush = NULL;
 
 Terrain::Terrain(float x, float y) {
     typeObj = this->terrainobj;
@@ -141,6 +144,10 @@ void Terrain::saveEmpty(int x, int y) {
     tfile->save(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
 }
 
+QString Terrain::getTileName(){
+    return getTileName(mojex, -mojez);
+}
+
 QString Terrain::getTileName(int x, int y) {
     int offset = 16384;
     int xs = offset;
@@ -227,6 +234,18 @@ void Terrain::convertTexToDefaultCoords(int idx) {
         TexLib::mtex[texid[idx]]->crop(x11, y11, x22, y22);
         TexLib::mtex[texid[idx]]->advancedCrop((float*)&tfile->tdata[(idx)*13 + 6]);
     }*/
+    if((fabs(tfile->tdata[(idx)*13 + 1 + 6] - 0.001)
+      +fabs(tfile->tdata[(idx)*13 + 2 + 6] - 0.001)
+      +fabs(tfile->tdata[(idx)*13 + 3 + 6] - 0.062375)
+      +fabs(tfile->tdata[(idx)*13 + 4 + 6] - 0.0)
+      +fabs(tfile->tdata[(idx)*13 + 5 + 6] - 0.0)
+      +fabs(tfile->tdata[(idx)*13 + 6 + 6] - 0.062375)
+      ) < 0.01){
+        qDebug() << "rot ok";
+        return;
+    }
+    qDebug() << "rot ->";
+    
     TexLib::mtex[texid[idx]]->advancedCrop((float*)&tfile->tdata[(idx)*13 + 6], 512, 512);
     tfile->tdata[(idx)*13 + 1 + 6] = 0.001;
     tfile->tdata[(idx)*13 + 2 + 6] = 0.001;
@@ -234,6 +253,21 @@ void Terrain::convertTexToDefaultCoords(int idx) {
     tfile->tdata[(idx)*13 + 4 + 6] = 0.0;
     tfile->tdata[(idx)*13 + 5 + 6] = 0.0;
     tfile->tdata[(idx)*13 + 6 + 6] = 0.062375;
+    this->refresh();
+}
+
+void Terrain::resetPatchTexCoords(){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            tfile->tdata[(uu)*13 + 1 + 6] = 0.001;
+            tfile->tdata[(uu)*13 + 2 + 6] = 0.001;
+            tfile->tdata[(uu)*13 + 3 + 6] = 0.062375;
+            tfile->tdata[(uu)*13 + 4 + 6] = 0.0;
+            tfile->tdata[(uu)*13 + 5 + 6] = 0.0;
+            tfile->tdata[(uu)*13 + 6 + 6] = 0.062375;
+        }
+    }
+    modified = true;
     this->refresh();
 }
 
@@ -289,6 +323,43 @@ void Terrain::rotateTex(int idx) {
         tfile->tdata[(idx)*13 + 5 + 6] = -tfile->tdata[(idx)*13 + 6 + 6];
         tfile->tdata[(idx)*13 + 6 + 6] = -t;
     }
+    this->refresh();
+}
+
+void Terrain::mirrorXTex(int idx){
+    float x21 = (16) * tfile->tdata[(idx)*13 + 3 + 6] + (0) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    float y21 = (16) * tfile->tdata[(idx)*13 + 5 + 6] + (0) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+    tfile->tdata[(idx)*13 + 1 + 6] = x21;
+    tfile->tdata[(idx)*13 + 2 + 6] = y21;
+    tfile->tdata[(idx)*13 + 3 + 6] = -tfile->tdata[(idx)*13 + 3 + 6];
+    tfile->tdata[(idx)*13 + 5 + 6] = -tfile->tdata[(idx)*13 + 5 + 6];
+    modified = true;
+    this->refresh();
+}
+
+void Terrain::mirrorYTex(int idx){
+    float x12 = (0) * tfile->tdata[(idx)*13 + 3 + 6] + (16) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+    float y12 = (0) * tfile->tdata[(idx)*13 + 5 + 6] + (16) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+    tfile->tdata[(idx)*13 + 1 + 6] = x12;
+    tfile->tdata[(idx)*13 + 2 + 6] = y12;
+    tfile->tdata[(idx)*13 + 4 + 6] = -tfile->tdata[(idx)*13 + 4 + 6];
+    tfile->tdata[(idx)*13 + 6 + 6] = -tfile->tdata[(idx)*13 + 6 + 6];
+    modified = true;
+    this->refresh();
+}
+
+float Terrain::getScaleTex(int idx){
+    return (tfile->tdata[(idx)*13 + 3 + 6] + tfile->tdata[(idx)*13 + 4 + 6])/0.062375;
+}
+
+void Terrain::scaleTex(int idx, float val){
+    float s = getScaleTex(idx);
+    val = val/s;
+    tfile->tdata[(idx)*13 + 3 + 6] *= val;
+    tfile->tdata[(idx)*13 + 5 + 6] *= val;
+    tfile->tdata[(idx)*13 + 4 + 6] *= val;
+    tfile->tdata[(idx)*13 + 6 + 6] *= val;
+    modified = true;
     this->refresh();
 }
 
@@ -371,13 +442,31 @@ void Terrain::removeTextureFromMap(){
 void Terrain::setWaterDraw() {
     for (int uu = 0; uu < 256; uu++) {
         if(selectedPatchs[uu]){
+            tfile->flags[uu] = tfile->flags[uu] | 0x10000c0;
+            this->setModified(true);
+        }
+    }
+}
+
+void Terrain::toggleWaterDraw() {
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
             tfile->flags[uu] = tfile->flags[uu] ^ 0x10000c0;
             this->setModified(true);
         }
     }
 }
 
-void Terrain::setWaterDraw(int x, int z, float posx, float posz) {
+void Terrain::hideWaterDraw() {
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            tfile->flags[uu] = tfile->flags[uu] & ~0x10000c0;
+            this->setModified(true);
+        }
+    }
+}
+
+void Terrain::toggleWaterDraw(int x, int z, float posx, float posz) {
     int u = (posx + 1024) / 128;
     int y = (posz + 1024) / 128;
     //hidden[y*16 + u] = true;
@@ -415,6 +504,76 @@ void Terrain::rotatePatchTexture(){
     }
 }
 
+void Terrain::mirrorXPatchTexture(){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            mirrorXTex(uu);
+        }
+    }
+}
+
+void Terrain::mirrorYPatchTexture(){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            mirrorYTex(uu);
+        }
+    }
+}
+
+float Terrain::getPatchScaleTex(){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            return getScaleTex(uu);
+        }
+    }
+    return 1;
+}
+
+void Terrain::scalePatchTexCoords(float val){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            scaleTex(uu, val);
+        }
+    }
+}
+
+QString Terrain::getPatchTexTransformString(){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            return QString::number(tfile->tdata[(uu)*13 + 1 + 6]) + " "+
+                   QString::number(tfile->tdata[(uu)*13 + 2 + 6]) + " "+
+                   QString::number(tfile->tdata[(uu)*13 + 3 + 6]) + " "+
+                   QString::number(tfile->tdata[(uu)*13 + 4 + 6]) + " "+
+                   QString::number(tfile->tdata[(uu)*13 + 5 + 6]) + " "+
+                   QString::number(tfile->tdata[(uu)*13 + 6 + 6]);
+        }
+    }
+    return "";
+}
+
+void Terrain::setPatchTexTransform(QString val){
+    QStringList list = val.split(" ");
+    if(list.size() != 6)
+        return;
+    
+    float t[6];
+    bool ok;
+    for (int i = 0; i < 6; i++){
+        t[i] = list[i].toFloat(&ok);
+        if(!ok)
+            return;
+    }
+    
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            for (int i = 0; i < 6; i++)
+                tfile->tdata[(uu)*13 + i + 1 + 6] = t[i];
+        }
+    }
+    modified = true;
+    this->refresh();
+}
+    
 void Terrain::removeAllGaps(){
     if(!jestF)
         return;
@@ -436,13 +595,31 @@ void Terrain::removeAllGaps(){
 void Terrain::setDraw() {
     for (int uu = 0; uu < 256; uu++) {
         if(selectedPatchs[uu]){
+            tfile->flags[uu] = tfile->flags[uu] & ~0x1;
+            this->setModified(true);
+        }
+    }
+}
+
+void Terrain::toggleDraw() {
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
             tfile->flags[uu] = tfile->flags[uu] ^ 0x1;
             this->setModified(true);
         }
     }
 }
 
-void Terrain::setDraw(int x, int z, float posx, float posz) {
+void Terrain::hideDraw() {
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            tfile->flags[uu] = tfile->flags[uu] | 0x1;
+            this->setModified(true);
+        }
+    }
+}
+
+void Terrain::toggleDraw(int x, int z, float posx, float posz) {
 
     int u = (posx + 1024) / 128;
     int y = (posz + 1024) / 128;
@@ -511,23 +688,27 @@ void Terrain::setWaterLevelGui(){
     }
 }
 
-void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
+void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz, bool autoRot) {
 
     int u = (posx + 1024) / 128;
     int y = (posz + 1024) / 128;
     //hidden[y*16 + u] = true;
-    float tx = posx + 1024 - u * 128;
-    float tz = posz + 1024 - y * 128;
-    tx /= 128;
-    tz /= 128;
-    qDebug() << tx << " " << tz;
-    
+    //float tx = posx + 1024 - u * 128;
+    //float tz = posz + 1024 - y * 128;
+    //tx /= 128;
+    //tz /= 128;
+    //qDebug() << tx << " " << tz;
+    setTexture(brush, y*16 + u, autoRot);
+}
+
+void Terrain::setTexture(Brush* brush, int u, bool autoRot) {
     if (brush->texId < 0)
         return;
     
-    if (brush->texId == texid[y * 16 + u]) {
+    if (brush->texId == texid[u]) {
         qDebug() << "same tex";
-        rotateTex(y * 16 + u);
+        if(autoRot)
+            rotateTex(u);
     } else {
         QString path = texturepath + brush->tex->pathid.section("/", -1);
         qDebug() << path;
@@ -535,31 +716,31 @@ void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
             int newTidx = TexLib::getTex(path);
             if(newTidx >= 0){
                 qDebug() << "ref tex";
-                texid[y * 16 + u] = newTidx;
+                texid[u] = newTidx;
             } else {
                 qDebug() << "new tex";
-                texid[y * 16 + u] = TexLib::cloneTex(brush->texId);
+                texid[u] = TexLib::cloneTex(brush->texId);
                 path = path.section(".", 0, -2) + ".ace";
-                TexLib::mtex[texid[y * 16 + u]]->pathid = path;
-                texModified[y * 16 + u] = true;
+                TexLib::mtex[texid[u]]->pathid = path;
+                texModified[u] = true;
             }
-            brush->texId = texid[y * 16 + u];
-            brush->tex = TexLib::mtex[texid[y * 16 + u]];
+            brush->texId = texid[u];
+            brush->tex = TexLib::mtex[texid[u]];
         }
-        texid[y * 16 + u] = brush->texId;
-        uniqueTex[y * 16 + u] = false;
+        texid[u] = brush->texId;
+        uniqueTex[u] = false;
         QString tname = TexLib::mtex[brush->texId]->pathid.section("/", -1);
         qDebug() << TexLib::mtex[brush->texId]->pathid;
         qDebug() << tname;
         int mid = tfile->getMatByTexture(tname);
         if(mid < 0){
-            tfile->tdata[(y * 16 + u)*13 + 0 + 6] = tfile->cloneMat(tfile->tdata[(y * 16 + u)*13 + 0 + 6]);
-            *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0] = tname;
-            *tfile->amaterials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0] = tname;
-            qDebug() << *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0];
+            tfile->tdata[(u)*13 + 0 + 6] = tfile->cloneMat(tfile->tdata[(u)*13 + 0 + 6]);
+            *tfile->materials[(int) tfile->tdata[(u)*13 + 0 + 6]].tex[0] = tname;
+            *tfile->amaterials[(int) tfile->tdata[(u)*13 + 0 + 6]].tex[0] = tname;
+            qDebug() << *tfile->materials[(int) tfile->tdata[(u)*13 + 0 + 6]].tex[0];
             qDebug() << "new material";
         } else {
-            tfile->tdata[(y * 16 + u)*13 + 0 + 6] = mid;
+            tfile->tdata[(u)*13 + 0 + 6] = mid;
             qDebug() << "existed material";
         }
         reloadLines();
@@ -636,12 +817,12 @@ void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
         qDebug() << *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0];
         texid[y * 16 + u] = TexLib::cloneTex(texid[y * 16 + u]);
         TexLib::mtex[texid[y * 16 + u]]->pathid = texturepath + name;
-        convertTexToDefaultCoords(y * 16 + u);
         uniqueTex[y * 16 + u] = true;
         reloadLines();
         //TexLib::save("ace", texturepath+name, texid[y * 16 + u]);
         //TexLib::mtex[texid[y * 16 + u]]->GLTextures();
     }
+    convertTexToDefaultCoords(y * 16 + u);
 
     TexLib::mtex[texid[y * 16 + u]]->sendToUndo(texid[y * 16 + u]);
     TexLib::mtex[texid[y * 16 + u]]->paint(brush, z, x);
@@ -813,7 +994,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
 
 void Terrain::renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int layer, int selectionColor) {
     float lod;
-    if(showBlob || selectionColor != 0)
+    if(showBlob)
         return;
     float alpha = 0;
     
@@ -821,6 +1002,7 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
         water[layer] = new WaterTile();
     OglObj *w = water[layer]->w;
     
+    int tselectionColor = 0;
     for (int uu = 0; uu < 16; uu++) {
         for (int yy = 0; yy < 16; yy++) {
             if (hidden[yy * 16 + uu]) continue;
@@ -923,7 +1105,9 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     w[uu * 16 + yy].init(punkty, ptr, w[uu * 16 + yy].VNT, GL_TRIANGLES);
                     delete punkty;
                 }
-                w[uu * 16 + yy].render();
+                if(selectionColor != 0)
+                    tselectionColor = selectionColor | (yy * 16 + uu);
+                w[uu * 16 + yy].render(tselectionColor);
             }
         }
     }
@@ -1752,6 +1936,16 @@ int Terrain::getSelectedShaderId(){
     return -1;
 }
 
+bool Terrain::select(int value, bool oneMore){
+    if(oneMore){
+        selected = true;
+        selectedPatchs[value] = !selectedPatchs[value];
+        reloadLines();
+        return true;
+    }
+    return select(value);
+}
+
 bool Terrain::select(int value){
     if(selected){
         int selectedId = 0;
@@ -1799,13 +1993,37 @@ bool Terrain::unselect(){
 }
 
 void Terrain::pushContextMenuActions(QMenu *menu){
-    if(contextMenuActions["ToggleWater"] == NULL){
-        contextMenuActions["ToggleWater"] = new QAction(tr("&Toggle Water")); 
-        QObject::connect(contextMenuActions["ToggleWater"], SIGNAL(triggered()), this, SLOT(menuToggleWater()));
+    if(contextMenuActions["togglewater"] == NULL){
+        contextMenuActions["togglewater"] = new QAction(tr("&Toggle Water")); 
+        QObject::connect(contextMenuActions["togglewater"], SIGNAL(triggered()), this, SLOT(menuToggleWater()));
     }
-    menu->addAction(contextMenuActions["ToggleWater"]);
+    if(contextMenuActions["puttexture"] == NULL){
+        contextMenuActions["puttexture"] = new QAction(tr("&Put Texture")); 
+        QObject::connect(contextMenuActions["puttexture"], SIGNAL(triggered()), this, SLOT(menuPutTexture()));
+    }
+    if(contextMenuActions["toggledraw"] == NULL){
+        contextMenuActions["toggledraw"] = new QAction(tr("&Toggle Draw")); 
+        QObject::connect(contextMenuActions["toggledraw"], SIGNAL(triggered()), this, SLOT(menuToggleDraw()));
+    }
+    menu->addAction(contextMenuActions["puttexture"]);
+    menu->addAction(contextMenuActions["togglewater"]);
+    menu->addAction(contextMenuActions["toggledraw"]);
 }
 
 void Terrain::menuToggleWater(){
-    setWaterDraw();
+    toggleWaterDraw();
+}
+
+void Terrain::menuToggleDraw(){
+    toggleDraw();
+}
+
+void Terrain::menuPutTexture(){
+    if(DefaultBrush == NULL)
+        return;
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            setTexture(DefaultBrush, uu);
+        }
+    }
 }

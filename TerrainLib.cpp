@@ -486,7 +486,7 @@ void TerrainLib::setTerrainTexture(Brush* brush, int x, int z, float* p){
     terr->setTexture(brush, x, z, posx, posz);
 }
 
-void TerrainLib::setWaterDraw(int x, int z, float* p){
+void TerrainLib::toggleWaterDraw(int x, int z, float* p){
     float posx = p[0];
     float posz = p[2];
     Game::check_coords(x, z, posx, posz);
@@ -496,7 +496,7 @@ void TerrainLib::setWaterDraw(int x, int z, float* p){
     terr = terrain[(x * 10000 + z)];
     if (terr == NULL) return;
     if (terr->loaded == false) return;
-    terr->setWaterDraw(x, z, posx, posz);
+    terr->toggleWaterDraw(x, z, posx, posz);
 }
 
 void TerrainLib::makeTextureFromMap(int x, int z, float* p){
@@ -551,7 +551,7 @@ void TerrainLib::setWaterLevelGui(int x, int z, float* p){
     terr->setWaterLevelGui();
 }
 
-void TerrainLib::setDraw(int x, int z, float* p){
+void TerrainLib::toggleDraw(int x, int z, float* p){
     float posx = p[0];
     float posz = p[2];
     Game::check_coords(x, z, posx, posz);
@@ -561,7 +561,7 @@ void TerrainLib::setDraw(int x, int z, float* p){
     terr = terrain[(x * 10000 + z)];
     if (terr == NULL) return;
     if (terr->loaded == false) return;
-    terr->setDraw(x, z, posx, posz);
+    terr->toggleDraw(x, z, posx, posz);
 }
 
 int TerrainLib::getTexture(int x, int z, float* p){

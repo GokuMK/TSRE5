@@ -28,6 +28,7 @@ public slots:
     void bDeleteEnabled();
     
 signals:
+    void sendMsg(QString val);
     
 private:
     QLineEdit eObjectType;

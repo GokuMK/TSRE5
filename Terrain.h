@@ -22,6 +22,8 @@ class Brush;
 class Terrain : public GameObj {
     Q_OBJECT
 public:
+    static Brush* DefaultBrush;
+    
     int loaded;
     float **terrainData;
     bool inUse = true;
@@ -33,20 +35,32 @@ public:
     virtual ~Terrain();
     static void saveEmpty(int x, int y);
     static QString getTileName(int x, int y);
+    QString getTileName();
     void save();
     void refresh();
     bool isModified();
     void setModified(bool value);
     void paintTexture(Brush* brush, int x, int z, float posx, float posz);
     void lockTexture(Brush* brush, int x, int z, float posx, float posz);
-    void setTexture(Brush* brush, int x, int z, float posx, float posz);
-    void setWaterDraw(int x, int z, float posx, float posz);
+    void setTexture(Brush* brush, int x, int z, float posx, float posz, bool autoRot = true);
+    void setTexture(Brush* brush, int u, bool autoRot = false);
+    void toggleWaterDraw(int x, int z, float posx, float posz);
     void setWaterLevelGui();
-    void setDraw(int x, int z, float posx, float posz);
+    void toggleDraw(int x, int z, float posx, float posz);
     void setWaterDraw();
     void setDraw();
+    void hideWaterDraw();
+    void hideDraw();
+    void toggleDraw();
+    void toggleWaterDraw();
     void setDrawAdjacent();
     void rotatePatchTexture();
+    void mirrorXPatchTexture();
+    void mirrorYPatchTexture();
+    float getPatchScaleTex();
+    void scalePatchTexCoords(float val);
+    QString getPatchTexTransformString();
+    void setPatchTexTransform(QString val);
     void removeAllGaps();
     void toggleGaps(int x, int z, float posx, float posz);
     void setErrorBias(int x, int z, float val);
@@ -60,13 +74,17 @@ public:
     int getSelectedPathId();
     int getSelectedShaderId();
     bool select(int value);
+    bool select(int value, bool oneMore);
     bool unselect();
+    void resetPatchTexCoords();
     void pushContextMenuActions(QMenu *menu);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int selectionColor);
     void renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int layer, int selectionColor = 0);
 
 public slots:
     void menuToggleWater();
+    void menuToggleDraw();
+    void menuPutTexture();
     
 private:
     unsigned char **fData;
@@ -107,7 +125,6 @@ private:
     //bool jestW[256];
     int wTexid = -1;
     TFile* tfile;
-        
     //int selectedPathId = -1;
     
     void saveRAW(QString name);
@@ -120,6 +137,10 @@ private:
     void oglInit();
     void initBlob();
     void rotateTex(int idx);
+    void mirrorXTex(int idx);
+    void mirrorYTex(int idx);
+    void scaleTex(int idx, float val);
+    float getScaleTex(int idx);
     void convertTexToDefaultCoords(int idx);
     void paintTextureOnTile(Brush* brush, int y, int u, float x, float z);
     void reloadLines();
