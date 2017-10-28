@@ -43,6 +43,8 @@ ActivityTools::ActivityTools(QString name)
     cDifficulty.addItem("Hard",2);
     
     buttonTools["actNewLooseConsistTool"] = new QPushButton("Place Consist", this);
+    buttonTools["actNewSpeedZoneTool"] = new QPushButton("New", this);
+
     QMapIterator<QString, QPushButton*> i(buttonTools);
     while (i.hasNext()) {
         i.next();
@@ -155,7 +157,7 @@ ActivityTools::ActivityTools(QString name)
     vlist1->addWidget(conFilesRefresh,2,1,1,3);
     vbox->addItem(vlist1);
     
-    label = new QLabel("Reduced Speed Zones List:");
+    label = new QLabel("Restricted Speed Zones List:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
@@ -167,11 +169,14 @@ ActivityTools::ActivityTools(QString name)
     vlist1->setSpacing(2);
     vlist1->setContentsMargins(0,0,1,0);
     QPushButton *actZoneJump = new QPushButton("Jump To");
-    QPushButton *actZoneNew = new QPushButton("New");
+    QObject::connect(actZoneJump, SIGNAL(released()), this, SLOT(actReducedSpeedZonesEnabled()));
+    QObject::connect(buttonTools["actNewSpeedZoneTool"], SIGNAL(toggled(bool)), this, SLOT(actZoneNewToolEnabled(bool)));
     QPushButton *actZoneDelete = new QPushButton("Delete");
+    QObject::connect(actZoneDelete, SIGNAL(released()), this, SLOT(actZoneDeleteEnabled()));
     QPushButton *actZoneDeleteAll = new QPushButton("Delete All");
+    QObject::connect(actZoneDeleteAll, SIGNAL(released()), this, SLOT(actZoneDeleteAllEnabled()));
     vlist1->addWidget(actZoneJump,0,0);
-    vlist1->addWidget(actZoneNew,0,1);
+    vlist1->addWidget(buttonTools["actNewSpeedZoneTool"],0,1);
     vlist1->addWidget(actZoneDelete,0,2);
     vlist1->addWidget(actZoneDeleteAll,0,3);
     vbox->addItem(vlist1);
@@ -189,11 +194,14 @@ ActivityTools::ActivityTools(QString name)
     vlist1->setContentsMargins(0,0,1,0);
     QPushButton *actFailedSignalJump = new QPushButton("Jump To");
     QObject::connect(actFailedSignalJump, SIGNAL(released()), this, SLOT(actFailedSignalsJumpEnabled()));
-    QPushButton *actFailedSignalNew = new QPushButton("Disable");
+    QPushButton *actFailedSignalTool = new QPushButton("Disable");
+    QObject::connect(actFailedSignalTool, SIGNAL(released()), this, SLOT(actFailedSignalNewToolEnabled()));
     QPushButton *actFailedSignalDelete = new QPushButton("Delete");
+    QObject::connect(actFailedSignalJump, SIGNAL(released()), this, SLOT(actFailedSignalDeleteEnabled()));
     QPushButton *actFailedSignalDeleteAll = new QPushButton("Delete All");
+    QObject::connect(actFailedSignalJump, SIGNAL(released()), this, SLOT(actFailedSignalDeleteAllEnabled()));
     vlist1->addWidget(actFailedSignalJump,0,0);
-    vlist1->addWidget(actFailedSignalNew,0,1);
+    vlist1->addWidget(actFailedSignalTool,0,1);
     vlist1->addWidget(actFailedSignalDelete,0,2);
     vlist1->addWidget(actFailedSignalDeleteAll,0,3);
     vbox->addItem(vlist1);
@@ -704,6 +712,38 @@ void ActivityTools::actFailedSignalsJumpEnabled(){
     emit jumpTo(coordinate);
 }
 
+void ActivityTools::actFailedSignalNewToolEnabled(){
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::Act[aid];
+    if(a == NULL)
+        return;
+    bool ok = a->newFailedSignalFromSelected();
+    if(!ok){
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Signal not disabled!");
+        msgBox.setText("Select signal before using this button.");
+        msgBox.exec();
+        return;
+    }
+    reloadActivityObjectLists();
+}
+
+void ActivityTools::actFailedSignalDeleteEnabled(){
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::Act[aid];
+    if(a == NULL)
+        return;
+    
+}
+
+void ActivityTools::actFailedSignalDeleteAllEnabled(){
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::Act[aid];
+    if(a == NULL)
+        return;
+    
+}
+
 void ActivityTools::actReducedSpeedZonesEnabled(){
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
@@ -725,6 +765,31 @@ void ActivityTools::actReducedSpeedZonesEnabled(){
     
     emit jumpTo(coordinate);
 }
+
+void ActivityTools::actZoneNewToolEnabled(bool val){
+    if(val){
+        emit enableTool("actNewSpeedZoneTool");
+    } else {
+        emit enableTool("");
+    }
+}
+
+void ActivityTools::actZoneDeleteEnabled(){
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::Act[aid];
+    if(a == NULL)
+        return;
+    
+}
+
+void ActivityTools::actZoneDeleteAllEnabled(){
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::Act[aid];
+    if(a == NULL)
+        return;
+    
+}
+
 /*void ActivityTools::actServiceNewEnabled(){
     ActivityServiceTools sTools;
     QString pathid = Game::root + "/routes/" + Game::route + "/services/";

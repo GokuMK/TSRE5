@@ -630,6 +630,14 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
     //}
 };
 
+int SignalObj::getTrItemId(){
+    for(int i=0; i<32; i++){
+        if(signalUnit[i].enabled && signalUnit[i].head)
+            return signalUnit[i].itemId;
+    }
+    return -1;
+}
+
 int SignalObj::getBaseSignalItemId(){
     int i = -1;
     for(int j = 0; j < 32; j++){

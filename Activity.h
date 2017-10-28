@@ -132,6 +132,8 @@ public:
     void setWeather(int val);
     void pickNewEventLocation(float *tdbPos);
     void newLooseConsist(float *tdbPos);
+    void newSpeedZone(float *tdbPos);
+    bool newFailedSignalFromSelected();
     void createNewPlayerService(QString sName, int sTime);
     void createNewTrafficService(Traffic *t);
     void setFuelCoal(int val);

@@ -275,6 +275,7 @@ void Activity::load() {
                                     restrictedSpeedZone.push_back(ActivityObject());
                                     restrictedSpeedZone.back().setSpeedZoneData();
                                     restrictedSpeedZone.back().load(data);
+                                    restrictedSpeedZone.back().id = restrictedSpeedZone.size()-1;
                                     restrictedSpeedZone.back().setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
@@ -802,6 +803,10 @@ void Activity::render(GLUU* gluu, float * playerT, float playerRot, int renderMo
         activityFailedSignal[i].render(gluu, playerT, renderMode, i+3500);
     }
     
+    for (int i = 0; i < restrictedSpeedZone.size(); i++){
+        restrictedSpeedZone[i].render(gluu, playerT, renderMode, i+3000);
+    }
+    
     for (int i = 0; i < event.size(); i++){
         event[i].render(gluu, playerT, playerRot, renderMode);
     }
@@ -829,6 +834,38 @@ void Activity::pickNewEventLocation(float* tdbPos){
     
     currentEventSelected->setLocation(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[2]);
 
+}
+
+bool Activity::newFailedSignalFromSelected(){
+    if(Game::currentSelectedGameObj == NULL)
+        return false;
+    if(Game::currentSelectedGameObj->typeObj != GameObj::worldobj)
+        return false;
+    WorldObj *w = (WorldObj*)Game::currentSelectedGameObj;
+    if(w->typeID != WorldObj::signal)
+        return false;
+    int tid = ((SignalObj*)w)->getTrItemId();
+    if(tid < 0)
+        return false;
+    activityFailedSignal.push_back(ActivityObject());
+    activityFailedSignal.back().setFailedSignalData(tid);
+    activityFailedSignal.back().id = activityFailedSignal.size()-1;
+    activityFailedSignal.back().setParentActivity(this);
+    
+    return true;
+}
+
+void Activity::newSpeedZone(float *tdbPos){
+    float *drawPosition = new float[7];
+    TDB *tdb = Game::trackDB;
+    bool ok = tdb->getDrawPositionOnTrNode(drawPosition, tdbPos[0], tdbPos[1]);
+    if(!ok)
+        return;
+    
+    restrictedSpeedZone.push_back(ActivityObject());
+    restrictedSpeedZone.back().setSpeedZoneData(drawPosition);
+    restrictedSpeedZone.back().id = restrictedSpeedZone.size()-1;
+    restrictedSpeedZone.back().setParentActivity(this);
 }
 
 void Activity::newLooseConsist(float *tdbPos){
@@ -1033,11 +1070,11 @@ void Activity::deleteObjectFailedSignal(int id){
 }
 
 void Activity::deleteObjectSpeedZone(int id){
-    //for(int i = 0; i < this-.size(); i++){
-     //   if(activityObjects[i].id == id)
-    //        activityObjects.remove(i);
-    //}
-    //modified = true;
+    for(int i = 0; i < restrictedSpeedZone.size(); i++){
+        if(restrictedSpeedZone[i].id == id)
+            restrictedSpeedZone.remove(i);
+    }
+    modified = true;
 }
 
 void Activity::deleteCurrentEvent(){

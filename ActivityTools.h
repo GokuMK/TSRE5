@@ -35,7 +35,13 @@ public slots:
     void actPathsEditToolEnabled();
     void actConsistJumpEnabled();
     void actFailedSignalsJumpEnabled();
+    void actFailedSignalNewToolEnabled();
+    void actFailedSignalDeleteEnabled();
+    void actFailedSignalDeleteAllEnabled();
     void actReducedSpeedZonesEnabled();
+    void actZoneNewToolEnabled(bool val);
+    void actZoneDeleteEnabled();
+    void actZoneDeleteAllEnabled();
     void newActButtonEnabled();
     void cServiceEnabled(QString val);
     void cTrafficEnabled(QString val);

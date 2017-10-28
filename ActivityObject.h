@@ -52,10 +52,11 @@ public:
     void toggleDirection();
     void setParentActivity(Activity *a);
     void setFailedSignalData(int id);
-    void setSpeedZoneData();
+    void setSpeedZoneData(float* drawposition = NULL);
     QString getSpeedZoneName();
     void setModified(bool val);
     bool isUnSaved();
+    int getId();
     int getSelectedElementId();
     int getFailedSignalId();
     bool getElementPosition(int id, float *posTW);
@@ -84,11 +85,20 @@ private:
     };
     
     struct SpeedZone {
+        float* drawPositionB = NULL;
+        float* drawPositionE = NULL;
+        OglObj* lineShape = NULL;
+        OglObj* pointer3d = NULL;
+        OglObj* pointer3dSelected = NULL;
+        int selectionValue = 0;
         float start[4];
         float end[4];
+        float rotB, rotE;
         int init = 0;
+        float trid[6];
         bool getWorldPosition(float *posTW);
         void render(GLUU* gluu, float * playerT, int selectionColor, bool selected = false);
+        void makelineShape();
     };
     
     //void renderZone(GLUU* gluu, float * playerT, int selectionColor);

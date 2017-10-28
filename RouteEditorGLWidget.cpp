@@ -925,6 +925,11 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
         }
         if (toolEnabled == "actNewLooseConsistTool") {
             route->actNewLooseConsist((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            emit sendMsg("refreshActivityTools");
+        }
+        if (toolEnabled == "actNewSpeedZoneTool") {
+            route->actNewNewSpeedZone((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            emit sendMsg("refreshActivityTools");
         }
         if (toolEnabled == "pickNewEventLocationTool") {
             route->actPickNewEventLocation((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);

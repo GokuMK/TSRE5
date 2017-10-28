@@ -59,7 +59,7 @@ void PropertiesActivityObject::showObj(GameObj* obj){
     
     infoLabel->setText("Object: ActivityObject");
     eObjectType.setText(actObj->objectType);
-    eId.setText(QString::number(actObj->id));
+    eId.setText(QString::number(actObj->getId()));
     eEid.setText(QString::number(actObj->getSelectedElementId()));
     eActivityName.setText(actObj->getParentName());
 

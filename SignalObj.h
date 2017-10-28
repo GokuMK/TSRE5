@@ -38,6 +38,7 @@ public:
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     bool select(int value);
+    int getTrItemId();
     int getBaseSignalItemId();
     int getLinkedJunctionValue(int i);
     void getLinkInfo(int *ids);
