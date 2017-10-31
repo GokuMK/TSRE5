@@ -61,7 +61,6 @@ public slots:
     void jumpTo(PreciseTileCoordinate*);
     void jumpTo(float *posT, float *pos);
     void jumpTo(int X, int Z, float x, float y, float z);
-    void objSelected(GameObj* o);
     
     void msg(QString text);
     void msg(QString name, bool val);

@@ -147,6 +147,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainTreeWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainWaterWindow.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainWaterWindow2.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TexLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TextEditDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TextObj.o
@@ -240,6 +241,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainTreeWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainWaterWindow.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainWaterWindow2.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TextEditDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TransformWorldObjDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TrkWindow.o

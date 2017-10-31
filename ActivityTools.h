@@ -33,6 +33,7 @@ public slots:
     void routeLoaded(Route* r);
     void actNewLooseConsistToolEnabled(bool val);
     void actPathsEditToolEnabled();
+    void actConsistDeleteEnabled();
     void actConsistJumpEnabled();
     void actFailedSignalsJumpEnabled();
     void actFailedSignalNewToolEnabled();
@@ -84,6 +85,7 @@ public slots:
     
 signals:
     void enableTool(QString name);
+    void sendMsg(QString);
     void objectSelected(GameObj* obj);
     void showActivityEventEditor();
     void showActivityServiceEditor();

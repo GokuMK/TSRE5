@@ -982,7 +982,7 @@ void Route::replaceWorldObjPointer(WorldObj* o, WorldObj* n){
         if(tTile->obiekty[i] == NULL) continue;
         if(tTile->obiekty[i]->UiD == o->UiD){
             tTile->obiekty[i] = n;
-            emit objSelected((GameObj*)n);
+            emit objectSelected((GameObj*)n);
             return;
         }
     }
@@ -1239,7 +1239,7 @@ void Route::undoPlaceObj(int x, int y, int UiD){
             tTile->obiekty[i]->loaded = false;
             tTile->obiekty[i]->modified = false;
             tTile->obiekty[i]->UiD = -1;
-            emit objSelected(NULL);
+            emit sendMsg("unselect");
             return;
         }
     }

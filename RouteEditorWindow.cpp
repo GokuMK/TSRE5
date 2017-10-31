@@ -478,6 +478,8 @@ RouteEditorWindow::RouteEditorWindow() {
     
     QObject::connect(activityTools, SIGNAL(jumpTo(PreciseTileCoordinate*)),
                       glWidget, SLOT(jumpTo(PreciseTileCoordinate*)));
+    
+    QObject::connect(activityTools, SIGNAL(sendMsg(QString)), glWidget, SLOT(msg(QString)));
 }
 
 void RouteEditorWindow::keyPressEvent(QKeyEvent *e) {

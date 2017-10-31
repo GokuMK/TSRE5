@@ -55,11 +55,10 @@ ActivityTimetableProperties::ActivityTimetableProperties(QWidget* parent) : QWid
     lTimetable.horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     vlist->addWidget(&lTimetable, row++, 0, 1, 2);
     QPushButton *bAddOutcome = new QPushButton("Calculate");
-    QObject::connect(bAddOutcome, SIGNAL(released()),
-                      this, SLOT(bAddOutcomeSelected()));
+    //QObject::connect(bAddOutcome, SIGNAL(released()), this, SLOT(bAddOutcomeSelected()));
     
     vlist->addWidget(bAddOutcome, row++, 0, 1, 2);
-        vbox->addItem(vlist);
+    vbox->addItem(vlist);
 
     //vbox->addStretch(1);
     this->setLayout(vbox);

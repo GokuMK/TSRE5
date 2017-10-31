@@ -132,7 +132,8 @@ void RouteEditorGLWidget::initializeGL() {
 
     route = new Route();
     if (!route->loaded) return;
-    QObject::connect(route, SIGNAL(objSelected(GameObj*)), this, SLOT(objSelected(GameObj*)));
+    QObject::connect(route, SIGNAL(objectSelected(GameObj*)), this, SLOT(objectSelected(GameObj*)));
+    QObject::connect(route, SIGNAL(sendMsg(QString)), this, SLOT(msg(QString)));
 
     float * aaa = new float[2] {
         0, 0
@@ -386,12 +387,13 @@ void RouteEditorGLWidget::handleSelection() {
                     setSelectedObj(NULL);
                 }
             }
-            setSelectedObj((GameObj*)TerrainLib::terrain[wx*10000+wz]);
-            if (selectedObj == NULL) {
+            Terrain *t = TerrainLib::terrain[wx*10000+wz];
+            if (t == NULL) {
                 qDebug() << "brak obiektu";
             } else {
-                ((Terrain*)selectedObj)->select(UiD, keyControlEnabled);
+                t->select(UiD, keyControlEnabled);
             }
+            setSelectedObj((GameObj*)t);
         } else if( ww == 11 ){
             if (selectedObj != NULL) {
                 selectedObj->unselect();
@@ -439,20 +441,6 @@ void RouteEditorGLWidget::handleSelection() {
         selection = false;// !selection;
         paintGL();
     }
-}
-
-void RouteEditorGLWidget::objectSelected(GameObj* obj){
-    if (selectedObj != NULL) {
-        selectedObj->unselect();
-        if (autoAddToTDB)
-            route->addToTDBIfNotExist((WorldObj*)selectedObj);
-        setSelectedObj(NULL);
-    }
-    if(obj == NULL)
-        return;
-    obj->select();
-    setSelectedObj(obj);
-    
 }
 
 void RouteEditorGLWidget::drawPointer() {
@@ -1102,13 +1090,16 @@ void RouteEditorGLWidget::jumpTo(int X, int Z, float x, float y, float z) {
 
 }
 
-void RouteEditorGLWidget::objSelected(GameObj* o) {
-    if (selectedObj == NULL)
+void RouteEditorGLWidget::objectSelected(GameObj* obj){
+    if (selectedObj != NULL) {
+        selectedObj->unselect();
+        setSelectedObj(NULL);
+    }
+    if(obj == NULL)
         return;
-    selectedObj->unselect();
-    setSelectedObj(o);
-    if (selectedObj != NULL)
-        selectedObj->select();
+    obj->select();
+    setSelectedObj(obj);
+    
 }
 
 void RouteEditorGLWidget::setPaintBrush(Brush* brush) {

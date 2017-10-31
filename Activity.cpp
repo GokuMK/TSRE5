@@ -737,6 +737,14 @@ bool Activity::isUnSaved(){
             if(traffic->service[i].isModified())
                 return true;
         }
+    for(int i = 0; i < activityFailedSignal.size(); i++){
+        if(activityFailedSignal[i].isUnSaved())
+            return true;
+    }
+    for(int i = 0; i < restrictedSpeedZone.size(); i++){
+        if(restrictedSpeedZone[i].isUnSaved())
+            return true;
+    }
     return modified;
 }
 void Activity::setFileName(QString val){
@@ -1075,6 +1083,16 @@ void Activity::deleteObjectSpeedZone(int id){
             restrictedSpeedZone.remove(i);
     }
     modified = true;
+}
+
+void Activity::removeAllFailedSignals(){
+    activityFailedSignal.clear();
+    modified = true;
+}
+
+void Activity::removeAllSpeedZones(){
+     restrictedSpeedZone.clear();
+     modified = true;
 }
 
 void Activity::deleteCurrentEvent(){

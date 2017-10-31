@@ -111,6 +111,7 @@
           <itemPath>PropertiesUndefined.h</itemPath>
           <itemPath>SignalWindow.h</itemPath>
           <itemPath>SignalWindowLink.h</itemPath>
+          <itemPath>TerrainWaterWindow2.h</itemPath>
           <itemPath>TransformWorldObjDialog.h</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
@@ -328,6 +329,7 @@
           <itemPath>PropertiesUndefined.cpp</itemPath>
           <itemPath>SignalWindow.cpp</itemPath>
           <itemPath>SignalWindowLink.cpp</itemPath>
+          <itemPath>TerrainWaterWindow2.cpp</itemPath>
           <itemPath>TransformWorldObjDialog.cpp</itemPath>
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
@@ -1058,6 +1060,10 @@
       </item>
       <item path="TerrainWaterWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainWaterWindow2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow2.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
@@ -1775,6 +1781,10 @@
       </item>
       <item path="TerrainWaterWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainWaterWindow2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow2.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
@@ -2484,6 +2494,10 @@
       <item path="TerrainWaterWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainWaterWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow2.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3202,6 +3216,10 @@
       </item>
       <item path="TerrainWaterWindow.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainWaterWindow2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow2.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TexLib.h" ex="false" tool="3" flavor2="0">
@@ -3906,6 +3924,10 @@
       <item path="TerrainWaterWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TerrainWaterWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainWaterWindow2.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TexLib.cpp" ex="false" tool="1" flavor2="8">
       </item>

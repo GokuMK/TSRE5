@@ -141,6 +141,7 @@ ActivityTools::ActivityTools(QString name)
     QPushButton *actConsistJump = new QPushButton("Jump To");
     QObject::connect(actConsistJump, SIGNAL(released()), this, SLOT(actConsistJumpEnabled()));
     QPushButton *actConsistDelete = new QPushButton("Delete");
+    QObject::connect(actConsistDelete, SIGNAL(released()), this, SLOT(actConsistDeleteEnabled()));
     vlist1->addWidget(actConsistJump,0,0);
     vlist1->addWidget(actConsistDelete,0,1);
     vlist1->addWidget(buttonTools["actNewLooseConsistTool"],0,2,1,2);
@@ -197,9 +198,9 @@ ActivityTools::ActivityTools(QString name)
     QPushButton *actFailedSignalTool = new QPushButton("Disable");
     QObject::connect(actFailedSignalTool, SIGNAL(released()), this, SLOT(actFailedSignalNewToolEnabled()));
     QPushButton *actFailedSignalDelete = new QPushButton("Delete");
-    QObject::connect(actFailedSignalJump, SIGNAL(released()), this, SLOT(actFailedSignalDeleteEnabled()));
+    QObject::connect(actFailedSignalDelete, SIGNAL(released()), this, SLOT(actFailedSignalDeleteEnabled()));
     QPushButton *actFailedSignalDeleteAll = new QPushButton("Delete All");
-    QObject::connect(actFailedSignalJump, SIGNAL(released()), this, SLOT(actFailedSignalDeleteAllEnabled()));
+    QObject::connect(actFailedSignalDeleteAll, SIGNAL(released()), this, SLOT(actFailedSignalDeleteAllEnabled()));
     vlist1->addWidget(actFailedSignalJump,0,0);
     vlist1->addWidget(actFailedSignalTool,0,1);
     vlist1->addWidget(actFailedSignalDelete,0,2);
@@ -338,10 +339,14 @@ ActivityTools::ActivityTools(QString name)
 }
 
 void ActivityTools::actSettingsOpenEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     settingsWidget.show();
 }
 
 void ActivityTools::actEventsOpenEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     emit showActivityEventEditor();
     Activity *a = ActLib::Act[actShow.currentData().toInt()];
     if(a == NULL)
@@ -355,6 +360,8 @@ void ActivityTools::actServiceOpenEnabled(){
 }
 
 void ActivityTools::actTimetableOpenEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     emit showActivityTimetableEditor();
     QVector<ActivityServiceDefinition*> s = ActLib::Act[actShow.currentData().toInt()]->getServiceList();
     emit showTimetable(s);
@@ -431,6 +438,8 @@ void ActivityTools::reloadPathsList(){
         cPath.setCurrentIndex(idx);
 }
 void ActivityTools::conFilesShowEnabled(QString val){
+    if(actShow.currentIndex() < 0)
+        return;
     QString file = conFilesShow.currentData().toString();
     qDebug() << file;
     int id = actShow.currentData().toInt();
@@ -440,6 +449,8 @@ void ActivityTools::conFilesShowEnabled(QString val){
 }
 
 void ActivityTools::activitySelected(QString n){
+    if(actShow.currentIndex() < 0)
+        return;
     int id = actShow.currentData().toInt();
     qDebug() << "id" << id;
     Consist *e;
@@ -538,6 +549,8 @@ void ActivityTools::activitySelected(QString n){
 }
 
 void ActivityTools::reloadActivityObjectLists(){
+    if(actShow.currentIndex() < 0)
+        return;
     int id = actShow.currentData().toInt();
     if(ActLib::Act[id] == NULL)
         return;
@@ -621,9 +634,13 @@ void ActivityTools::msg(QString text, QString val){
 }
 
 void ActivityTools::cServiceEnabled(QString val){
+    if(actShow.currentIndex() < 0)
+        return;
     int id = cService.currentData().toInt();
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
+    if(a == NULL)
+        return;
     
     if(id == -1){
         a->playerServiceDefinition = NULL;
@@ -634,6 +651,8 @@ void ActivityTools::cServiceEnabled(QString val){
 }
 
 void ActivityTools::cTrafficEnabled(QString val){
+    if(actShow.currentIndex() < 0)
+        return;
     int id = cTraffic.currentData().toInt();
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
@@ -662,8 +681,27 @@ void ActivityTools::newActButtonEnabled(){
         return;
     }
 }
+void ActivityTools::actConsistDeleteEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
+    int aid = actShow.currentData().toInt();
+    Activity *a = ActLib::Act[aid];
+    if(a == NULL)
+        return;
+    int i = consists.currentIndex();
+    if(i >= a->activityObjects.size())
+        return;
+    if(i < 0)
+        return;
+    
+    a->activityObjects[i].remove();
+    reloadActivityObjectLists();
+    emit sendMsg("unselect");
+}
 
 void ActivityTools::actConsistJumpEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
     if(a == NULL)
@@ -691,6 +729,8 @@ void ActivityTools::actConsistJumpEnabled(){
 }
 
 void ActivityTools::actFailedSignalsJumpEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
     if(a == NULL)
@@ -713,6 +753,8 @@ void ActivityTools::actFailedSignalsJumpEnabled(){
 }
 
 void ActivityTools::actFailedSignalNewToolEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
     if(a == NULL)
@@ -729,22 +771,40 @@ void ActivityTools::actFailedSignalNewToolEnabled(){
 }
 
 void ActivityTools::actFailedSignalDeleteEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
     if(a == NULL)
         return;
-    
+
+    int i = failedSignals.currentIndex();
+        qDebug() << i << a->activityFailedSignal.size();
+    if(i >= a->activityFailedSignal.size())
+        return;
+    if(i < 0)
+        return;
+    a->activityFailedSignal[i].remove();
+    reloadActivityObjectLists();
+    emit sendMsg("unselect");
 }
 
 void ActivityTools::actFailedSignalDeleteAllEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
     if(a == NULL)
         return;
     
+    a->removeAllFailedSignals();
+    reloadActivityObjectLists();
+    emit sendMsg("unselect");
 }
 
 void ActivityTools::actReducedSpeedZonesEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
     if(a == NULL)
@@ -775,19 +835,35 @@ void ActivityTools::actZoneNewToolEnabled(bool val){
 }
 
 void ActivityTools::actZoneDeleteEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
     if(a == NULL)
         return;
     
+    int i = speedZones.currentIndex();
+    if(i >= a->restrictedSpeedZone.size())
+        return;
+    if(i < 0)
+        return;
+    a->restrictedSpeedZone[i].remove();
+    
+    reloadActivityObjectLists();
+    emit sendMsg("unselect");
 }
 
 void ActivityTools::actZoneDeleteAllEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
     int aid = actShow.currentData().toInt();
     Activity *a = ActLib::Act[aid];
     if(a == NULL)
         return;
     
+    a->removeAllSpeedZones();
+    reloadActivityObjectLists();
+    emit sendMsg("unselect");
 }
 
 /*void ActivityTools::actServiceNewEnabled(){

@@ -35,14 +35,12 @@ ActivityTrafficProperties::ActivityTrafficProperties(QWidget* parent) : QWidget(
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
     vlist->addWidget(&eFileName, row++, 1);
-    QObject::connect(&eFileName, SIGNAL(editingFinished(QString)),
-                      this, SLOT(eFileNameSelected(QString)));
+    //QObject::connect(&eFileName, SIGNAL(textEdited(QString)), this, SLOT(eFileNameSelected(QString)));
     label = new QLabel("Display Name:");
     label->setMinimumWidth(100);
     vlist->addWidget(label, row, 0);
     vlist->addWidget(&eDisplayName, row++, 1);
-    QObject::connect(&eDisplayName, SIGNAL(editingFinished(QString)),
-                      this, SLOT(eDisplayNameSelected(QString)));
+    //QObject::connect(&eDisplayName, SIGNAL(textEdited(QString)), this, SLOT(eDisplayNameSelected(QString)));
         
     label = new QLabel("Services:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");

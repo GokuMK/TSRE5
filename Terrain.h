@@ -46,6 +46,10 @@ public:
     void setTexture(Brush* brush, int u, bool autoRot = false);
     void toggleWaterDraw(int x, int z, float posx, float posz);
     void setWaterLevelGui();
+    void setWaterLevel(float nw, float ne, float sw, float se);
+    float getAvgVaterLevel();
+    void getWaterLevels(float *w);
+    void setAvgWaterLevel(float val);
     void toggleDraw(int x, int z, float posx, float posz);
     void setWaterDraw();
     void setDraw();
@@ -58,7 +62,12 @@ public:
     void mirrorXPatchTexture();
     void mirrorYPatchTexture();
     float getPatchScaleTex();
+    float getPatchScaleTexX();
+    float getPatchScaleTexY();
+    QString getPatchRotationName();
     void scalePatchTexCoords(float val);
+    void scalePatchTexCoordsX(float val);
+    void scalePatchTexCoordsY(float val);
     QString getPatchTexTransformString();
     void setPatchTexTransform(QString val);
     void removeAllGaps();
@@ -73,6 +82,7 @@ public:
     int getTexture(int x, int z, float posx, float posz);
     int getSelectedPathId();
     int getSelectedShaderId();
+    QString getPatchMainTextureName();
     bool select(int value);
     bool select(int value, bool oneMore);
     bool unselect();
@@ -140,10 +150,15 @@ private:
     void mirrorXTex(int idx);
     void mirrorYTex(int idx);
     void scaleTex(int idx, float val);
+    void scaleTexX(int idx, float val);
+    void scaleTexY(int idx, float val);
+    float getScaleTexY(int idx);
+    float getScaleTexX(int idx);
     float getScaleTex(int idx);
     void convertTexToDefaultCoords(int idx);
     void paintTextureOnTile(Brush* brush, int y, int u, float x, float z);
     void reloadLines();
+    void refreshWaterShapes();
 };
 
 #endif	/* TERRAIN_H */

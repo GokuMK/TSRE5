@@ -14,6 +14,7 @@
 #include "PropertiesAbstract.h"
 
 class Terrain;
+class TerrainWaterWindow2;
 
 class PropertiesTerrain : public PropertiesAbstract{
     Q_OBJECT
@@ -31,6 +32,8 @@ public slots:
     void bCopyEnabled();
     void bPasteEnabled();
     void bScaleEnabled();
+    void bScaleXEnabled();
+    void bScaleYEnabled();
     void bResetEnabled();
     void bMirrorXEnabled();
     void bMirrorYEnabled();
@@ -41,12 +44,21 @@ public slots:
     void bHideDrawEnabled();
     void bShowAdjacentEnabled();
     void eBiasEnabled(QString val);
+    void eAvgWaterEnabled(QString val);
 
 private:
     Terrain* terrainObj = NULL;
     QLineEdit tP;
     QLineEdit tS;
+    QLineEdit tTex;
+    QLineEdit eAvgWater;
     QLineEdit eBias;
+    
+    QDoubleSpinBox eScalexy;
+    QDoubleSpinBox eScalex;
+    QDoubleSpinBox eScaley;
+    QLineEdit eRotation;
+    TerrainWaterWindow2* waterWindow;
 };
 
 #endif	/* PROPERTIESTERRAIN_H */

@@ -146,6 +146,8 @@ public:
     void deleteObject(int id);
     void deleteObjectFailedSignal(int id);
     void deleteObjectSpeedZone(int id);
+    void removeAllFailedSignals();
+    void removeAllSpeedZones();
     void deleteCurrentEvent();
     void newEvent(ActivityEvent::EventCategory category);
     bool isServiceInUse(QString n);

@@ -348,16 +348,44 @@ void Terrain::mirrorYTex(int idx){
     this->refresh();
 }
 
+float Terrain::getScaleTexX(int idx){
+    return fabs(tfile->tdata[(idx)*13 + 3 + 6] + tfile->tdata[(idx)*13 + 4 + 6])/0.062375;
+}
+
+float Terrain::getScaleTexY(int idx){
+    return fabs(tfile->tdata[(idx)*13 + 5 + 6] + tfile->tdata[(idx)*13 + 6 + 6])/0.062375;
+}
+
 float Terrain::getScaleTex(int idx){
-    return (tfile->tdata[(idx)*13 + 3 + 6] + tfile->tdata[(idx)*13 + 4 + 6])/0.062375;
+    return (getScaleTexX(idx) + getScaleTexY(idx)) / 2.0;
 }
 
 void Terrain::scaleTex(int idx, float val){
-    float s = getScaleTex(idx);
+    float s = getScaleTexX(idx);
+    float val1 = val/s;
+    tfile->tdata[(idx)*13 + 3 + 6] *= val1;
+    tfile->tdata[(idx)*13 + 4 + 6] *= val1;
+    s = getScaleTexY(idx);
+    val1 = val/s;
+    tfile->tdata[(idx)*13 + 5 + 6] *= val1;
+    tfile->tdata[(idx)*13 + 6 + 6] *= val1;
+    modified = true;
+    this->refresh();
+}
+
+void Terrain::scaleTexX(int idx, float val){
+    float s = getScaleTexX(idx);
     val = val/s;
     tfile->tdata[(idx)*13 + 3 + 6] *= val;
-    tfile->tdata[(idx)*13 + 5 + 6] *= val;
     tfile->tdata[(idx)*13 + 4 + 6] *= val;
+    modified = true;
+    this->refresh();
+}
+
+void Terrain::scaleTexY(int idx, float val){
+    float s = getScaleTexY(idx);
+    val = val/s;
+    tfile->tdata[(idx)*13 + 5 + 6] *= val;
     tfile->tdata[(idx)*13 + 6 + 6] *= val;
     modified = true;
     this->refresh();
@@ -526,13 +554,73 @@ float Terrain::getPatchScaleTex(){
             return getScaleTex(uu);
         }
     }
-    return 1;
+    return 0;
+}
+
+float Terrain::getPatchScaleTexX(){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            return getScaleTexX(uu);
+        }
+    }
+    return 0;
+}
+
+float Terrain::getPatchScaleTexY(){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            return getScaleTexY(uu);
+        }
+    }
+    return 0;
+}
+
+QString Terrain::getPatchRotationName(){
+    for (int idx = 0; idx < 256; idx++)
+        if(selectedPatchs[idx]){
+            float x11 = (0) * tfile->tdata[(idx)*13 + 3 + 6] + (0) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+            float y11 = (0) * tfile->tdata[(idx)*13 + 5 + 6] + (0) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+            float x21 = (16) * tfile->tdata[(idx)*13 + 3 + 6] + (0) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+            float y21 = (16) * tfile->tdata[(idx)*13 + 5 + 6] + (0) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+            float x12 = (0) * tfile->tdata[(idx)*13 + 3 + 6] + (16) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+            float y12 = (0) * tfile->tdata[(idx)*13 + 5 + 6] + (16) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+            float x22 = (16) * tfile->tdata[(idx)*13 + 3 + 6] + (16) * tfile->tdata[(idx)*13 + 4 + 6] + tfile->tdata[(idx)*13 + 1 + 6];
+            float y22 = (16) * tfile->tdata[(idx)*13 + 5 + 6] + (16) * tfile->tdata[(idx)*13 + 6 + 6] + tfile->tdata[(idx)*13 + 2 + 6];
+            if ((x11 < x21) && (y11 == y21)) {
+                return QString("0°");
+            } else if ((x11 == x21) && (y11 < y21)) {
+                return QString("270°");
+            } else if ((x11 > x21) && (y11 == y21)) {
+                return QString("180°");
+            } else if ((x11 == x21) && (y11 > y21)) {
+                return QString("90°");
+            } else {
+                return QString("UNDEFINED");
+            }
+        }
+    return QString("UNDEFINED");
 }
 
 void Terrain::scalePatchTexCoords(float val){
     for (int uu = 0; uu < 256; uu++) {
         if(selectedPatchs[uu]){
             scaleTex(uu, val);
+        }
+    }
+}
+
+void Terrain::scalePatchTexCoordsX(float val){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            scaleTexX(uu, val);
+        }
+    }
+}
+
+void Terrain::scalePatchTexCoordsY(float val){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            scaleTexY(uu, val);
         }
     }
 }
@@ -659,6 +747,25 @@ void Terrain::setErrorBias(int x, int z, float val){
     tfile->erroeBias[y * 16 + u] = val;
 }
 
+float Terrain::getAvgVaterLevel(){
+    return (tfile->WNE + tfile->WSE + tfile->WNW + tfile->WSW)/4.0;
+}
+
+void Terrain::getWaterLevels(float* w){
+    w[0] = tfile->WNW;
+    w[1] = tfile->WNE;
+    w[2] = tfile->WSW;
+    w[3] = tfile->WSE;
+}
+
+void Terrain::setAvgWaterLevel(float val){
+    tfile->WNE = val;
+    tfile->WSE = val;
+    tfile->WNW = val;
+    tfile->WSW = val;    
+    refreshWaterShapes();
+}
+
 void Terrain::setWaterLevelGui(){
     TerrainWaterWindow waterWindow;
     waterWindow.setWindowTitle("Water Level");
@@ -675,17 +782,30 @@ void Terrain::setWaterLevelGui(){
         tfile->WSE = waterWindow.WSE;
         tfile->WNW = waterWindow.WNW;
         tfile->WSW = waterWindow.WSW;
-        for (WaterTile* wt : water){
-            if(wt == NULL)
-                continue;
-            for (int uu = 0; uu < 16; uu++) {
-                for (int yy = 0; yy < 16; yy++) {
-                    wt->w[uu * 16 + yy].loaded = false;
-                }
+        refreshWaterShapes();
+    }
+}
+
+void Terrain::setWaterLevel(float nw, float ne, float sw, float se){
+    tfile->waterLevel = true;
+    tfile->WNE = ne;
+    tfile->WSE = se;
+    tfile->WNW = nw;
+    tfile->WSW = sw;
+    refreshWaterShapes();
+}
+
+void Terrain::refreshWaterShapes(){
+    for (WaterTile* wt : water){
+        if(wt == NULL)
+            continue;
+        for (int uu = 0; uu < 16; uu++) {
+            for (int yy = 0; yy < 16; yy++) {
+                wt->w[uu * 16 + yy].loaded = false;
             }
         }
-        this->setModified(true);
     }
+    this->setModified(true);
 }
 
 void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz, bool autoRot) {
@@ -1934,6 +2054,15 @@ int Terrain::getSelectedShaderId(){
         }
     }
     return -1;
+}
+
+QString Terrain::getPatchMainTextureName(){
+    for (int uu = 0; uu < 256; uu++) {
+        if(selectedPatchs[uu]){
+            return *tfile->materials[(int) tfile->tdata[(uu)*13 + 0 + 6]].tex[0];
+        }
+    }
+    return "UNDEFINED";
 }
 
 bool Terrain::select(int value, bool oneMore){
