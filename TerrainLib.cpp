@@ -771,6 +771,112 @@ QSet<int> TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
     return uterr;
 }
 
+void TerrainLib::fillWaterLevels(float *w, int mojex, int mojez){
+    Terrain *tTile;
+    
+    tTile = terrain[((mojex - 1)*10000 + mojez - 1)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            w[0] = tTile->getWaterLevelSE();
+        }
+    tTile = terrain[((mojex)*10000 + mojez - 1)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            w[1] = tTile->getWaterLevelSW();
+            w[2] = tTile->getWaterLevelSE();
+        }
+    tTile = terrain[((mojex + 1)*10000 + mojez - 1)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            w[3] = tTile->getWaterLevelSW();
+        }
+    tTile = terrain[((mojex - 1)*10000 + mojez)];
+    if (tTile != NULL) 
+        if(tTile->loaded){
+            w[4] = tTile->getWaterLevelNE();
+            w[6] = tTile->getWaterLevelSE();
+        }
+    tTile = terrain[((mojex + 1)*10000 + mojez)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            w[5] = tTile->getWaterLevelNW();
+            w[7] = tTile->getWaterLevelSW();
+        }
+    tTile = terrain[((mojex - 1)*10000 + mojez + 1)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            w[8] = tTile->getWaterLevelNE();
+        }
+    tTile = terrain[((mojex)*10000 + mojez + 1)];
+    if (tTile != NULL) 
+        if(tTile->loaded){
+            w[9] = tTile->getWaterLevelNW();
+            w[10] = tTile->getWaterLevelNE();
+        }
+    tTile = terrain[((mojex + 1)*10000 + mojez + 1)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            w[11] = tTile->getWaterLevelNW();
+        }
+}
+
+void TerrainLib::setWaterLevels(float *w, int mojex, int mojez){
+    Terrain *tTile;
+    
+    tTile = terrain[((mojex - 1)*10000 + mojez - 1)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            tTile->setWaterLevelSE(w[0]);
+            tTile->refreshWaterShapes();
+        }
+    tTile = terrain[((mojex)*10000 + mojez - 1)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            tTile->setWaterLevelSW(w[1]);
+            tTile->setWaterLevelSE(w[2]);
+            tTile->refreshWaterShapes();
+        }
+    tTile = terrain[((mojex + 1)*10000 + mojez - 1)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            tTile->setWaterLevelSW(w[3]);
+            tTile->refreshWaterShapes();
+        }
+    tTile = terrain[((mojex - 1)*10000 + mojez)];
+    if (tTile != NULL) 
+        if(tTile->loaded){
+            tTile->setWaterLevelNE(w[4]);
+            tTile->setWaterLevelSE(w[6]);
+            tTile->refreshWaterShapes();
+        }
+    tTile = terrain[((mojex + 1)*10000 + mojez)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            tTile->setWaterLevelNW(w[5]);
+            tTile->setWaterLevelSW(w[7]);
+            tTile->refreshWaterShapes();
+        }
+    tTile = terrain[((mojex - 1)*10000 + mojez + 1)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            tTile->setWaterLevelNE(w[8]);
+            tTile->refreshWaterShapes();
+        }
+    tTile = terrain[((mojex)*10000 + mojez + 1)];
+    if (tTile != NULL) 
+        if(tTile->loaded){
+            tTile->setWaterLevelNW(w[9]);
+            tTile->setWaterLevelNE(w[10]);
+            tTile->refreshWaterShapes();
+        }
+    tTile = terrain[((mojex + 1)*10000 + mojez + 1)];
+    if (tTile != NULL)
+        if(tTile->loaded){
+            tTile->setWaterLevelNW(w[11]);
+            tTile->refreshWaterShapes();
+        }
+}
+
 void TerrainLib::fillRAW(float** terrainData, int mojex, int mojez) {
     Terrain *tTile;
     //try {

@@ -49,7 +49,17 @@ public:
     void setWaterLevel(float nw, float ne, float sw, float se);
     float getAvgVaterLevel();
     void getWaterLevels(float *w);
+    float getWaterLevelNW();
+    float getWaterLevelNE();
+    float getWaterLevelSW();
+    float getWaterLevelSE();
+    void setWaterLevelNW(float val);
+    void setWaterLevelNE(float val);
+    void setWaterLevelSW(float val);
+    void setWaterLevelSE(float val);
     void setAvgWaterLevel(float val);
+    void getAdjacentWaterLevels(float *w);
+    void setAdjacentWaterLevels(float *w);
     void toggleDraw(int x, int z, float posx, float posz);
     void setWaterDraw();
     void setDraw();
@@ -90,7 +100,8 @@ public:
     void pushContextMenuActions(QMenu *menu);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int selectionColor);
     void renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int layer, int selectionColor = 0);
-
+    void refreshWaterShapes();
+    
 public slots:
     void menuToggleWater();
     void menuToggleDraw();
@@ -158,7 +169,6 @@ private:
     void convertTexToDefaultCoords(int idx);
     void paintTextureOnTile(Brush* brush, int y, int u, float x, float z);
     void reloadLines();
-    void refreshWaterShapes();
 };
 
 #endif	/* TERRAIN_H */

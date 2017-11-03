@@ -26,10 +26,12 @@ public:
 public slots:
     void eAvgTextEdited(QString val);   
     void eWaterEdited(QString val);    
+    void bAdjustEdited();
     
 private:
     Terrain *terrain;
-    QLineEdit e[17];
+    QLineEdit e[12];
+    float we[12];
     QLineEdit eAvg;
     QLineEdit eSW;
     QLineEdit eSE;

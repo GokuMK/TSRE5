@@ -758,12 +758,52 @@ void Terrain::getWaterLevels(float* w){
     w[3] = tfile->WSE;
 }
 
+float Terrain::getWaterLevelNW(){
+    return tfile->WNW;
+}
+
+float Terrain::getWaterLevelNE(){
+    return tfile->WNE;
+}
+
+float Terrain::getWaterLevelSW(){
+    return tfile->WSW;
+}
+
+float Terrain::getWaterLevelSE(){
+    return tfile->WSE;
+}
+
+void Terrain::setWaterLevelNW(float val){
+    tfile->WNW = val;
+}
+
+void Terrain::setWaterLevelNE(float val){
+    tfile->WNE = val;
+}
+
+void Terrain::setWaterLevelSW(float val){
+    tfile->WSW = val;
+}
+
+void Terrain::setWaterLevelSE(float val){
+    tfile->WSE = val;
+}
+
 void Terrain::setAvgWaterLevel(float val){
     tfile->WNE = val;
     tfile->WSE = val;
     tfile->WNW = val;
     tfile->WSW = val;    
     refreshWaterShapes();
+}
+
+void Terrain::getAdjacentWaterLevels(float* w){
+    TerrainLib::fillWaterLevels(w, mojex, mojez);
+}
+
+void Terrain::setAdjacentWaterLevels(float* w){
+    TerrainLib::setWaterLevels(w, mojex, mojez);
 }
 
 void Terrain::setWaterLevelGui(){

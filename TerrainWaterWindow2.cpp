@@ -18,15 +18,10 @@ TerrainWaterWindow2::TerrainWaterWindow2(QWidget* parent) : QWidget(parent) {
     this->setWindowFlags(Qt::WindowType::Tool | Qt::MSWindowsFixedSizeDialogHint);
     this->setWindowTitle(tr("Water Level"));
     
-    for(int i = 0; i < 17; i++)
+    for(int i = 0; i < 12; i++){
         e[i].setFixedWidth(50);
-    for(int i = 0; i < 17; i++)
-        e[i].setText("10");
-    for(int i = 0; i < 4; i++)
-        for(int j = 0; j < 4; j++){
-            if(i == 0 || j == 0 || i == 3 || j == 3)
-                e[i*4+j].setDisabled(true);
-        }
+        e[i].setDisabled(true);
+    }
     eAvg.setFixedWidth(50);
     eNW.setFixedWidth(50);
     eNE.setFixedWidth(50);
@@ -53,27 +48,28 @@ TerrainWaterWindow2::TerrainWaterWindow2(QWidget* parent) : QWidget(parent) {
     vlist1->addWidget(new QLabel(" Average:"), 2, 3);
     vlist1->addWidget(&eNE, 2, 4);
     vlist1->addWidget(new QLabel("|"), 2, 5);
-    vlist1->addWidget(&e[7], 2, 6);
+    vlist1->addWidget(&e[5], 2, 6);
     vlist1->addWidget(new QLabel("|"), 3, 1);
     vlist1->addWidget(&eAvg, 3, 3);
     //vlist1->addWidget(new QLabel("TILE"), 3, 3);
     vlist1->addWidget(new QLabel("|"), 3, 5);
-    vlist1->addWidget(&e[8], 4, 0);
+    vlist1->addWidget(&e[6], 4, 0);
     vlist1->addWidget(new QLabel("|"), 4, 1);
     vlist1->addWidget(&eSW, 4, 2);
     vlist1->addWidget(&eSE, 4, 4);
     vlist1->addWidget(new QLabel("|"), 4, 5);
-    vlist1->addWidget(&e[11], 4, 6);
+    vlist1->addWidget(&e[7], 4, 6);
     vlist1->addWidget(new QLabel("SW"), 5, 1);
     vlist1->addWidget(new QLabel("  ---------"), 5, 2);
     vlist1->addWidget(new QLabel("  ---------"), 5, 3);
     vlist1->addWidget(new QLabel("  ---------"), 5, 4);
     vlist1->addWidget(new QLabel("SE"), 5, 5);
-    vlist1->addWidget(&e[12], 6, 0);
-    vlist1->addWidget(&e[13], 6, 2);
-    vlist1->addWidget(&e[14], 6, 4);
-    vlist1->addWidget(&e[15], 6, 6);
+    vlist1->addWidget(&e[8], 6, 0);
+    vlist1->addWidget(&e[9], 6, 2);
+    vlist1->addWidget(&e[10], 6, 4);
+    vlist1->addWidget(&e[11], 6, 6);
     QPushButton *bAdjust = new QPushButton("Adjust Adjacent Tiles");
+    connect(bAdjust, SIGNAL (released()), this, SLOT (bAdjustEdited()));
     vlist1->addWidget(bAdjust, 7, 0, 1, 7);
     this->setLayout(vlist1);
     
@@ -103,6 +99,9 @@ void TerrainWaterWindow2::setTerrain(Terrain* t){
     eNE.setText(QString::number(waterLevels[1]));
     eSW.setText(QString::number(waterLevels[2]));
     eSE.setText(QString::number(waterLevels[3]));
+    terrain->getAdjacentWaterLevels(we);
+    for(int i = 0; i < 12; i++)
+        e[i].setText(QString::number(we[i]));
 }
 
 void TerrainWaterWindow2::eAvgTextEdited(QString val){
@@ -132,4 +131,30 @@ void TerrainWaterWindow2::eWaterEdited(QString val){
     if(!ok)
         return;    
     terrain->setWaterLevel(nw, ne, sw, se);
+}
+
+void TerrainWaterWindow2::bAdjustEdited(){
+    if(terrain == NULL)
+        return;
+    
+    we[0] = eNW.text().toFloat();
+    we[1] = eNW.text().toFloat();
+    we[4] = eNW.text().toFloat();
+    
+    we[2] = eNE.text().toFloat();
+    we[3] = eNE.text().toFloat();
+    we[5] = eNE.text().toFloat();
+    
+    we[6] = eSW.text().toFloat();
+    we[8] = eSW.text().toFloat();
+    we[9] = eSW.text().toFloat();
+    
+    we[7] = eSE.text().toFloat();
+    we[10] = eSE.text().toFloat();
+    we[11] = eSE.text().toFloat();
+    
+    for(int i = 0; i < 12; i++)
+        e[i].setText(QString::number(we[i]));
+    
+    terrain->setAdjacentWaterLevels(we);
 }
