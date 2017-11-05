@@ -11,6 +11,17 @@
 #include "GameObj.h"
 #include <QMenu.h>
 
+QMap<GameObj::TypeObj, QString> GameObj::Names = {
+    { GameObj::none , "None" },
+    { GameObj::undefined , "Undefined" },
+    { GameObj::worldobj , "WorldObj" },
+    { GameObj::terrainobj , "TerrainObj" },
+    { GameObj::consistobj , "ConsistObj" },
+    { GameObj::tritemobj , "TrItemObj" },
+    { GameObj::activitypath , "ActivityPath" },
+    { GameObj::activityobj ,"ActivityObj" }
+};
+
 GameObj::GameObj() {
 }
 
@@ -72,4 +83,8 @@ void GameObj::setMartix(){
 
 void GameObj::pushContextMenuActions(QMenu *menu){
     
+}
+
+QString GameObj::getName(){
+    return Names[this->typeObj];
 }

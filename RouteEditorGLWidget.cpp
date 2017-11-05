@@ -1232,7 +1232,7 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
     
     QMenu menu;
     if(selectedObj != NULL){
-        menu.addSection("Object");
+        menu.addSection("Object: " + selectedObj->getName());
         selectedObj->pushContextMenuActions(&menu);
         
         if(selectedObj->typeObj == selectedObj->worldobj){

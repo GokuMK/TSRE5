@@ -51,10 +51,12 @@ public:
     virtual void setPosition(float* p);
     virtual void setMartix();
     virtual void pushContextMenuActions(QMenu *menu);
+    virtual QString getName();
 
 protected:
     bool selected = false;
     QMap<QString, QAction*> contextMenuActions;
+    static QMap<TypeObj, QString> Names;
 };
 
 #endif	/* GAMEOBJ_H */

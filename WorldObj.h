@@ -149,6 +149,7 @@ public:
     virtual void setCollisionType(int val);
     virtual int getCollisionFlags();
     virtual void insertSnapablePoints(QVector<float> &points);
+    virtual QString getName();
     virtual void snapped(int side);
     virtual void flip(bool flipShape = true);
     virtual void updateSim(float deltaTime);

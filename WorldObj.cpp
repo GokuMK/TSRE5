@@ -828,3 +828,7 @@ int WorldObj::getCollisionFlags(){
 void WorldObj::insertSnapablePoints(QVector<float>& points){
     return;
 }
+
+QString WorldObj::getName(){
+    return this->type;
+}

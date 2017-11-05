@@ -49,6 +49,7 @@ Terrain::Terrain(float x, float y) {
     tfile = new TFile();
 
     QString filename = getTileName((int) x, (int) -y);
+    //QString filename = getTileNameExperimental2((int) x, (int) -y);
     //qDebug() << filename << x << -y;
     if (!tfile->readT((path + filename + ".t"))) {
         //qDebug() << " t fail";
@@ -148,6 +149,39 @@ QString Terrain::getTileName(){
     return getTileName(mojex, -mojez);
 }
 
+QString Terrain::getTileNameExperimental(int x, int y){
+    int offset = 16384;
+    x += offset;
+    y += offset;
+    unsigned int numer = 0;
+    for (int tx = offset, ty = tx, i = tx, sign_xs, sign_ys; i > 0; i /= 2, tx += i, ty += i, numer <<= 2) {
+        sign_xs = ((unsigned)(x-tx)>>31);
+        sign_ys = ((unsigned)(y-ty)>>31);
+        numer |= (sign_ys*2+!(sign_xs^sign_ys));
+        tx -= sign_xs*i;
+        ty -= sign_ys*i;
+    }
+    QString name = QString::number(numer, 16);
+    int len = 8 - name.length();
+    for (int i = 0; i < len; i++)
+        name = "0" + name;
+    //qDebug() << name;
+    return "-" + name;
+}
+
+QString Terrain::getTileNameExperimental2(int x, int y){
+    int o = 16384;
+    x += o;
+    y += o;
+    unsigned int n = 0;
+    for (int tx=o, ty=tx, i=tx, sx, sy; i>0; sx=((unsigned)(x-tx)>>31), sy=((unsigned)(y-ty)>>31), n|=(sy*2+!(sx^sy)), tx-=sx*i-i/2, ty-=sy*i-i/2, i/=2, n<<=2);
+    QString name = QString::number(n, 16);
+    int len = 8 - name.length();
+    for (int i = 0; i < len; i++)
+        name = "0" + name;
+    return "-" + name;
+}
+
 QString Terrain::getTileName(int x, int y) {
     int offset = 16384;
     int xs = offset;
@@ -155,7 +189,7 @@ QString Terrain::getTileName(int x, int y) {
     x += offset;
     y += offset;
     unsigned int numer = 0;
-
+    
     for (int i = offset / 2, j = 30; j > 0; i /= 2, j -= 2) {
         if (x < xs && y < ys) {
             numer = numer | (3 << j);

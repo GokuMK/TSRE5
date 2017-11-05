@@ -35,6 +35,8 @@ public:
     virtual ~Terrain();
     static void saveEmpty(int x, int y);
     static QString getTileName(int x, int y);
+    static QString getTileNameExperimental(int x, int y);
+    static QString getTileNameExperimental2(int x, int y);
     QString getTileName();
     void save();
     void refresh();
