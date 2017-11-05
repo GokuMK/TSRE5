@@ -14,7 +14,6 @@
 #include <QtWidgets>
 #include <QString>
 
-class Activity;
 class ActivityServiceDefinition;
 
 class ActivityTimetableProperties : public QWidget {
@@ -26,6 +25,7 @@ public:
     
 public slots:
     void lTimetableSelected(int row, int column);
+    void bCalculateSelected();
     
 signals:
     
@@ -33,6 +33,9 @@ signals:
 private:
     ActivityServiceDefinition *service = NULL;
     QTableWidget lTimetable;
+    QTimeEdit eTime;
+    QLineEdit eMainEng;
+    QLineEdit eMaxSpeed;
 };
 
 #endif	/* ACTIVITYTIMETABLEPROPERTIES_H */

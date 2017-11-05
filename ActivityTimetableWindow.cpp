@@ -38,10 +38,13 @@ ActivityTimetableWindow::ActivityTimetableWindow(QWidget* parent) : QWidget(pare
 ActivityTimetableWindow::~ActivityTimetableWindow() {
 }
 
-void ActivityTimetableWindow::showTimetable(QVector<ActivityServiceDefinition*> s){
+void ActivityTimetableWindow::showTimetable(Activity *a){
     if(this->isHidden())
         return;
-    services = s;
+    if(a == NULL)
+        return;
+    activity = a;
+    services = a->getServiceList();
     //serviceProperties->setPaths(route->path);
     //activity = r->s
     

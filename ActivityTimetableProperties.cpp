@@ -15,6 +15,10 @@
 #include "Game.h"
 #include "TDB.h"
 #include "TRitem.h"
+#include "Route.h"
+#include "ActLib.h"
+#include "ConLib.h"
+#include "Consist.h"
 
 ActivityTimetableProperties::ActivityTimetableProperties(QWidget* parent) : QWidget(parent) {
     setMinimumWidth(450);
@@ -54,10 +58,19 @@ ActivityTimetableProperties::ActivityTimetableProperties(QWidget* parent) : QWid
     lTimetable.horizontalHeader()->resizeSection(3,100);
     lTimetable.horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     vlist->addWidget(&lTimetable, row++, 0, 1, 2);
-    QPushButton *bAddOutcome = new QPushButton("Calculate");
-    //QObject::connect(bAddOutcome, SIGNAL(released()), this, SLOT(bAddOutcomeSelected()));
-    
-    vlist->addWidget(bAddOutcome, row++, 0, 1, 2);
+    QPushButton *bCalculate = new QPushButton("Calculate");
+    QObject::connect(bCalculate, SIGNAL(released()), this, SLOT(bCalculateSelected()));
+    vlist->addWidget(bCalculate, row++, 0, 1, 2);
+    vlist->addWidget(new QLabel("Start Time:"), row, 0);
+    vlist->addWidget(&eTime, row++, 1);
+    eTime.setDisplayFormat("HH:mm:ss");
+    eTime.setDisabled(true);
+    vlist->addWidget(new QLabel("Consist main ENG:"), row, 0);
+    vlist->addWidget(&eMainEng, row++, 1);
+    eMainEng.setDisabled(true);
+    vlist->addWidget(new QLabel("Max Speed:"), row, 0);
+    vlist->addWidget(&eMaxSpeed, row++, 1);
+    eMaxSpeed.setDisabled(true);
     vbox->addItem(vlist);
 
     //vbox->addStretch(1);
@@ -75,7 +88,7 @@ void ActivityTimetableProperties::showTimetable(ActivityServiceDefinition* s){
     ActivityTimetable *t = service->trafficDefinition;
     if(t == NULL)
         return;
-    
+
     QTableWidgetItem *newItem;
     QTime time;
     TDB *tdb = Game::trackDB;
@@ -106,6 +119,25 @@ void ActivityTimetableProperties::showTimetable(ActivityServiceDefinition* s){
         lTimetable.setItem(i, 3, newItem);
     }
     lTimetable.blockSignals(false);
+    
+    Service *srv = ActLib::GetServiceByName(service->name);
+    if(srv == NULL)
+        return;
+    Consist *con = ConLib::con[ConLib::addCon(Game::root+"/trains/consists/", srv->trainConfig+".con")];
+    if(con == NULL)
+        return;
+    eMainEng.setText(con->engItems[0].ename);
+    eMaxSpeed.setText(QString::number((int)(con->maxVelocity[0]*3.6)) + " km/h");
+    eTime.setTime(QTime::fromMSecsSinceStartOfDay((t->time*1000)));
+}
+
+void ActivityTimetableProperties::bCalculateSelected(){
+    if(service == NULL)
+        return;
+    
+    service->calculateTimetable();
+
+    showTimetable(service);
 }
 
 void ActivityTimetableProperties::lTimetableSelected(int row, int column){

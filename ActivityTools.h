@@ -94,7 +94,7 @@ signals:
     void showActivityTrafficEditor();
     void showTraffic(Route *r);
     void showActivityTimetableEditor();
-    void showTimetable(QVector<ActivityServiceDefinition*> s);
+    void showTimetable(Activity *a);
     void jumpTo(PreciseTileCoordinate* c);
     
 private:

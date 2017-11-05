@@ -1231,6 +1231,11 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
 
     
     QMenu menu;
+    QString menuStyle = QString(
+        "QMenu::separator {\
+          color: ")+Game::StyleMainLabel+";\
+        }";
+    menu.setStyleSheet(menuStyle);
     if(selectedObj != NULL){
         menu.addSection("Object: " + selectedObj->getName());
         selectedObj->pushContextMenuActions(&menu);

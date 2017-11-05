@@ -14,7 +14,7 @@
 #include <QWidget>
 #include <QtWidgets>
 
-class Route;
+class Activity;
 class ActivityTimetable;
 class Service;
 class ActivityServiceDefinition;
@@ -28,14 +28,14 @@ public:
     ActivityTimetableProperties *timetableProperties;
     
 public slots:
-    void showTimetable(QVector<ActivityServiceDefinition*> s);
+    void showTimetable(Activity *a);
     void listSelected(QListWidgetItem *item);
     
 signals:
     
 private:
     QListWidget list;
-    //Route *route = NULL;
+    Activity *activity = NULL;
     QVector<ActivityServiceDefinition*> services;
 };
 

@@ -363,8 +363,7 @@ void ActivityTools::actTimetableOpenEnabled(){
     if(actShow.currentIndex() < 0)
         return;
     emit showActivityTimetableEditor();
-    QVector<ActivityServiceDefinition*> s = ActLib::Act[actShow.currentData().toInt()]->getServiceList();
-    emit showTimetable(s);
+    emit showTimetable(ActLib::Act[actShow.currentData().toInt()]);
 }
 
 void ActivityTools::actTrafficOpenEnabled(){

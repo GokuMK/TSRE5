@@ -437,6 +437,35 @@ bool ActivityServiceDefinition::isModified(){
     return modified;
 }
 
+void ActivityServiceDefinition::calculateTimetable(){
+    ActivityTimetable *t = trafficDefinition;
+
+    Service *srv = ActLib::GetServiceByName(name);
+    if(srv == NULL)
+        return;
+    Consist *con = ConLib::con[ConLib::addCon(Game::root+"/trains/consists/", srv->trainConfig+".con")];
+    if(con == NULL)
+        return;
+    qDebug() << con->maxVelocity[0] << con->maxVelocity[1];
+    float speed = con->maxVelocity[0];
+    float tdist = 0, ldist = 0, performance = 1;
+    unsigned int sTime = t->time;
+    for(int i = 0; i < t->platformStartID.size(); i++){
+        tdist = t->distanceDownPath[i] - ldist;
+        ldist = t->distanceDownPath[i];
+        performance = efficiency[i];
+        sTime += tdist/(speed*performance);
+        if(t->arrivalTime[i] > sTime)
+            sTime = t->arrivalTime[i];
+        t->setArrival(i, sTime);
+        if(t->departTime[i] > sTime)
+            sTime = t->departTime[i];
+        t->setDepart(i, sTime);
+        
+    }
+    modified = true;
+}
+
 void ActivityServiceDefinition::setTimetableEfficiency(int id, float val){
     if(id < 0)
         return;

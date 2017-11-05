@@ -42,6 +42,7 @@ public:
     void reloadTimetable();
     void reloadDefinition();
     bool isModified();
+    void calculateTimetable();
     void setTimetableEfficiency(int id, float val);
     QMap<int, QString> getStationStopNameList();
 private:
