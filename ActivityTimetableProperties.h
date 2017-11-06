@@ -36,6 +36,7 @@ private:
     QTimeEdit eTime;
     QLineEdit eMainEng;
     QLineEdit eMaxSpeed;
+    QLineEdit eAvgSpeed;
 };
 
 #endif	/* ACTIVITYTIMETABLEPROPERTIES_H */

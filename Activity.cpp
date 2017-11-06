@@ -448,13 +448,26 @@ void ActivityServiceDefinition::calculateTimetable(){
         return;
     qDebug() << con->maxVelocity[0] << con->maxVelocity[1];
     float speed = con->maxVelocity[0];
+    float acceleration = con->maxVelocity[1];
     float tdist = 0, ldist = 0, performance = 1;
     unsigned int sTime = t->time;
+    
     for(int i = 0; i < t->platformStartID.size(); i++){
         tdist = t->distanceDownPath[i] - ldist;
         ldist = t->distanceDownPath[i];
         performance = efficiency[i];
-        sTime += tdist/(speed*performance);
+        
+        float accelerationTime = speed/(acceleration*performance);
+        float accelerationDistance = 0.5*accelerationTime*accelerationTime*acceleration*performance;
+        tdist /= 2.0;
+        
+        if(tdist <= accelerationDistance){
+            sTime += 2*sqrt((2*tdist)/(acceleration*performance));
+        } else {
+            sTime += 2*accelerationTime + 2*(tdist-accelerationDistance)/(speed);
+        }
+        
+        //sTime += tdist/(speed*performance);
         if(t->arrivalTime[i] > sTime)
             sTime = t->arrivalTime[i];
         t->setArrival(i, sTime);

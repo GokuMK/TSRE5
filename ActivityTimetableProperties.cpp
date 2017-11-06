@@ -68,9 +68,12 @@ ActivityTimetableProperties::ActivityTimetableProperties(QWidget* parent) : QWid
     vlist->addWidget(new QLabel("Consist main ENG:"), row, 0);
     vlist->addWidget(&eMainEng, row++, 1);
     eMainEng.setDisabled(true);
-    vlist->addWidget(new QLabel("Max Speed:"), row, 0);
+    vlist->addWidget(new QLabel("Max ENG Speed:"), row, 0);
     vlist->addWidget(&eMaxSpeed, row++, 1);
     eMaxSpeed.setDisabled(true);
+    vlist->addWidget(new QLabel("Timetable Avg Speed:"), row, 0);
+    vlist->addWidget(&eAvgSpeed, row++, 1);
+    eAvgSpeed.setDisabled(true);
     vbox->addItem(vlist);
 
     //vbox->addStretch(1);
@@ -129,6 +132,10 @@ void ActivityTimetableProperties::showTimetable(ActivityServiceDefinition* s){
     eMainEng.setText(con->engItems[0].ename);
     eMaxSpeed.setText(QString::number((int)(con->maxVelocity[0]*3.6)) + " km/h");
     eTime.setTime(QTime::fromMSecsSinceStartOfDay((t->time*1000)));
+    if(t->platformStartID.size() > 1)
+        eAvgSpeed.setText(QString::number(3.6*(t->distanceDownPath[t->distanceDownPath.size()-1]/(t->arrivalTime[t->arrivalTime.size()-1]-t->time))) + " km/h");
+    else
+        eAvgSpeed.setText("NONE");
 }
 
 void ActivityTimetableProperties::bCalculateSelected(){
