@@ -53,7 +53,7 @@ TerrainTools::TerrainTools(QString name)
     buttonTools["pickTerrainTexTool"] = new QPushButton("Pick", this);
     buttonTools["putTerrainTexTool"] = new QPushButton("Put", this);
     buttonTools["lockTexTool"] = new QPushButton("Lock", this);
-    buttonTools["waterTerrTool"] = new QPushButton("Paint Water +", this);
+    buttonTools["waterTerrTool"] = new QPushButton("Water +", this);
     //buttonTools["drawTerrTool"] = new QPushButton("Show/H Tile", this);
     buttonTools["gapsTerrainTool"] = new QPushButton("Gaps +", this);
     //buttonTools["waterHeightTileTool"] = new QPushButton("Water level", this);
@@ -113,7 +113,7 @@ TerrainTools::TerrainTools(QString name)
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     
-    label0 = new QLabel("Edit Tile Terrain:");
+    label0 = new QLabel("Edit Terrain Layers:");
     label0->setContentsMargins(3,0,0,0);
     label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
