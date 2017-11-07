@@ -53,11 +53,12 @@ TerrainTools::TerrainTools(QString name)
     buttonTools["pickTerrainTexTool"] = new QPushButton("Pick", this);
     buttonTools["putTerrainTexTool"] = new QPushButton("Put", this);
     buttonTools["lockTexTool"] = new QPushButton("Lock", this);
-    //buttonTools["waterTerrTool"] = new QPushButton("Show/H Water", this);
+    buttonTools["waterTerrTool"] = new QPushButton("Paint Water +", this);
     //buttonTools["drawTerrTool"] = new QPushButton("Show/H Tile", this);
-    buttonTools["gapsTerrainTool"] = new QPushButton("Gaps", this);
+    buttonTools["gapsTerrainTool"] = new QPushButton("Gaps +", this);
     //buttonTools["waterHeightTileTool"] = new QPushButton("Water level", this);
-    buttonTools["fixedTileTool"] = new QPushButton("Fixed Height", this);
+    //buttonTools["fixedTileTool"] = new QPushButton("Fixed Height", this);
+    //buttonTools["waTileTool"] = new QPushButton("Fixed Height", this);
     buttonTools["paintToolColor"] = new QPushButton("Color", this);
     buttonTools["paintToolTexture"] = new QPushButton("Texture", this);
     QMapIterator<QString, QPushButton*> i(buttonTools);
@@ -73,7 +74,7 @@ TerrainTools::TerrainTools(QString name)
     vlist3->setContentsMargins(3,0,1,0);    
     row = 0;
     vlist3->addWidget(buttonTools["heightTool"],row,0);
-    vlist3->addWidget(buttonTools["fixedTileTool"],row,1);
+    vlist3->addWidget(buttonTools["waterTerrTool"],row,1);
     vlist3->addWidget(buttonTools["gapsTerrainTool"],row++,2);
     //vlist3->addWidget(buttonTools["waterHeightTileTool"],row,2);
     //vlist3->addWidget(mapTileShowTool,row,0);
@@ -112,7 +113,7 @@ TerrainTools::TerrainTools(QString name)
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     
-    label0 = new QLabel("Edit Heightmap:");
+    label0 = new QLabel("Edit Tile Terrain:");
     label0->setContentsMargins(3,0,0,0);
     label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
@@ -268,8 +269,8 @@ TerrainTools::TerrainTools(QString name)
     QObject::connect(buttonTools["pickTerrainTexTool"], SIGNAL(toggled(bool)),
                       this, SLOT(pickTexToolEnabled(bool)));
     
-    //QObject::connect(buttonTools["waterTerrTool"], SIGNAL(toggled(bool)),
-    //                  this, SLOT(waterTerrToolEnabled(bool)));
+    QObject::connect(buttonTools["waterTerrTool"], SIGNAL(toggled(bool)),
+                      this, SLOT(waterTerrToolEnabled(bool)));
     
     //QObject::connect(buttonTools["waterHeightTileTool"], SIGNAL(toggled(bool)),
     //                  this, SLOT(waterHeightTileToolEnabled(bool)));
@@ -695,6 +696,9 @@ void TerrainTools::msg(QString text, QString val){
     } else if(text == "brushDirection"){
         QString t = buttonTools["heightTool"]->text().left(buttonTools["heightTool"]->text().length() - 1);
         buttonTools["heightTool"]->setText(t+val);
+        t = buttonTools["waterTerrTool"]->text().left(buttonTools["waterTerrTool"]->text().length() - 1);
+        buttonTools["waterTerrTool"]->setText(t+val);
+        t = buttonTools["gapsTerrainTool"]->text().left(buttonTools["gapsTerrainTool"]->text().length() - 1);
+        buttonTools["gapsTerrainTool"]->setText(t+val);
     }
-
 }

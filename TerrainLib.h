@@ -44,8 +44,8 @@ public:
     static void paintTexture(Brush* brush, int x, int z, float* p);
     static void lockTexture(Brush* brush, int x, int z, float* p);
     static void setTerrainTexture(Brush* brush, int x, int z, float* p);
-    static void toggleGaps(int x, int z, float* p);
-    static void toggleWaterDraw(int x, int z, float* p);
+    static void toggleGaps(int x, int z, float* p, float direction);
+    static void toggleWaterDraw(int x, int z, float* p, float direction);
     static void setWaterLevelGui(int x, int z, float* p);
     static void makeTextureFromMap(int x, int z, float* p);
     static void removeTileTextureFromMap(int x, int z, float* p);

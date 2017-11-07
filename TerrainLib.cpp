@@ -486,7 +486,7 @@ void TerrainLib::setTerrainTexture(Brush* brush, int x, int z, float* p){
     terr->setTexture(brush, x, z, posx, posz);
 }
 
-void TerrainLib::toggleWaterDraw(int x, int z, float* p){
+void TerrainLib::toggleWaterDraw(int x, int z, float* p, float direction){
     float posx = p[0];
     float posz = p[2];
     Game::check_coords(x, z, posx, posz);
@@ -496,7 +496,7 @@ void TerrainLib::toggleWaterDraw(int x, int z, float* p){
     terr = terrain[(x * 10000 + z)];
     if (terr == NULL) return;
     if (terr->loaded == false) return;
-    terr->toggleWaterDraw(x, z, posx, posz);
+    terr->toggleWaterDraw(x, z, posx, posz, direction);
 }
 
 void TerrainLib::makeTextureFromMap(int x, int z, float* p){
@@ -603,7 +603,7 @@ void TerrainLib::lockTexture(Brush* brush, int x, int z, float* p){
     terr->lockTexture(brush, x, z, posx, posz);
 }
 
-void TerrainLib::toggleGaps(int x, int z, float* p){
+void TerrainLib::toggleGaps(int x, int z, float* p, float direction){
     float posx = p[0];
     float posz = p[2];
     Game::check_coords(x, z, posx, posz);
@@ -613,7 +613,7 @@ void TerrainLib::toggleGaps(int x, int z, float* p){
     terr = terrain[(x * 10000 + z)];
     if (terr == NULL) return;
     if (terr->loaded == false) return;
-    terr->toggleGaps(x, z, posx, posz);
+    terr->toggleGaps(x, z, posx, posz, direction);
 }
 
 void TerrainLib::setFixedTileHeight(Brush* brush, int x, int z, float* p){

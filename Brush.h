@@ -16,9 +16,19 @@ class QImage;
 
 class Brush {
 public:
+    enum Transformation {
+        RANDOM = 0,
+        ROT0 = 1,
+        ROT90 = 2,
+        ROT180 = 3,
+        ROT270 = 4,
+        PRESENT = 5
+    };
+    
     Brush();
     // texture
     Texture* tex = 0;
+    Transformation texTransformation = RANDOM;
     bool useTexture = false;
     int color[3];
     int texId = -1;

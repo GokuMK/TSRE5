@@ -9,9 +9,7 @@
  */
 
 #include "GuiFunct.h"
-#include "AboutWindow.h"
 #include <QtWidgets>
-#include "RouteEditorWindow.h"
 #include "Game.h"
 
 QLabel* GuiFunct::newQLabel(QString text, int width){
@@ -36,7 +34,7 @@ QLineEdit* GuiFunct::newQLineEdit(int width, int length){
     return edit;
 }
 
-QAction* GuiFunct::newMenuCheckAction(QString desc, QMainWindow* window, bool checked){
+QAction* GuiFunct::newMenuCheckAction(QString desc, QWidget* window, bool checked){
     QAction *action = new QAction(desc, window);
     action->setCheckable(true);
     action->setChecked(checked);

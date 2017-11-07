@@ -28,6 +28,7 @@ public:
 public slots:
     void bShaderEditorEnabled();
     void bWaterEditorEnabled();
+    void bHeightMapResetEnabled();
     void bRotateEnabled();
     void bCopyEnabled();
     void bPasteEnabled();

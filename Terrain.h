@@ -42,11 +42,12 @@ public:
     void refresh();
     bool isModified();
     void setModified(bool value);
+    void setFixedHeight(float val);
     void paintTexture(Brush* brush, int x, int z, float posx, float posz);
     void lockTexture(Brush* brush, int x, int z, float posx, float posz);
-    void setTexture(Brush* brush, int x, int z, float posx, float posz, bool autoRot = true);
-    void setTexture(Brush* brush, int u, bool autoRot = false);
-    void toggleWaterDraw(int x, int z, float posx, float posz);
+    void setTexture(Brush* brush, int x, int z, float posx, float posz);
+    void setTexture(Brush* brush, int u);
+    void toggleWaterDraw(int x, int z, float posx, float posz, float direction);
     void setWaterLevelGui();
     void setWaterLevel(float nw, float ne, float sw, float se);
     float getAvgVaterLevel();
@@ -83,7 +84,7 @@ public:
     QString getPatchTexTransformString();
     void setPatchTexTransform(QString val);
     void removeAllGaps();
-    void toggleGaps(int x, int z, float posx, float posz);
+    void toggleGaps(int x, int z, float posx, float posz, float direction);
     void setErrorBias(int x, int z, float val);
     float getErrorBias();
     void setErrorBias(float val);
@@ -98,7 +99,7 @@ public:
     bool select(int value);
     bool select(int value, bool oneMore);
     bool unselect();
-    void resetPatchTexCoords();
+    void resetPatchTexCoords(int uu = -1);
     void pushContextMenuActions(QMenu *menu);
     void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int selectionColor);
     void renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int layer, int selectionColor = 0);

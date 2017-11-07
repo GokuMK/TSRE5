@@ -38,10 +38,8 @@ PropertiesTerrain::PropertiesTerrain() {
     QPushButton *bShaderEditor = new QPushButton("Shader Editor...", this);
     QObject::connect(bShaderEditor, SIGNAL(released()),
                       this, SLOT(bShaderEditorEnabled()));
-    QPushButton *bWaterEditor = new QPushButton("Advanced ...", this);
-    QObject::connect(bWaterEditor, SIGNAL(released()),
-                      this, SLOT(bWaterEditorEnabled()));
     vbox->addWidget(bShaderEditor);
+    
     QLabel* label = new QLabel("Water Level:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
@@ -52,8 +50,19 @@ PropertiesTerrain::PropertiesTerrain() {
     vlist->addRow("Average:",&this->eAvgWater);
     QObject::connect(&eAvgWater, SIGNAL(textEdited(QString)),
                       this, SLOT(eAvgWaterEnabled(QString)));
-    vbox->addItem(vlist);
+    QPushButton *bWaterEditor = new QPushButton("Advanced ...", this);
+    QObject::connect(bWaterEditor, SIGNAL(released()),
+                      this, SLOT(bWaterEditorEnabled()));
     vbox->addWidget(bWaterEditor);
+    
+    label = new QLabel("Height Map:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QPushButton *bHeightMapReset = new QPushButton("Reset Height ...", this);
+    QObject::connect(bHeightMapReset, SIGNAL(released()),
+                      this, SLOT(bHeightMapResetEnabled()));
+    vbox->addWidget(bHeightMapReset);
     
     label = new QLabel("Selected Terrain Patch(s):");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -238,6 +247,18 @@ void PropertiesTerrain::bWaterEditorEnabled(){
         return;
     }
     waterWindow->show();
+}
+
+void PropertiesTerrain::bHeightMapResetEnabled(){
+    if(terrainObj == NULL){
+        return;
+    }
+    Undo::PushTerrainHeightMap(terrainObj->mojex, terrainObj->mojez, terrainObj->terrainData);
+    bool ok;
+    float val = QInputDialog::getDouble(this, tr("Reset Tile Height Map."),
+                                       tr("Height:"), 0, -10000, 10000, 2, &ok);
+    if(ok)
+        terrainObj->setFixedHeight(val);
 }
 
 void PropertiesTerrain::bRotateEnabled(){

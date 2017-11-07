@@ -80,6 +80,21 @@ public slots:
     void createNewTiles(QMap<int, QPair<int, int>*> list);
     void objectSelected(GameObj* obj);
     
+    void selectToolSelect();
+    void selectToolRotate();
+    void selectToolTranslate();
+    void selectToolScale();
+    void toolBrushDirectionUp();
+    void toolBrushDirectionDown();
+    void putTerrainTexToolSelectRandom();
+    void putTerrainTexToolSelectPresent();
+    void putTerrainTexToolSelect0();
+    void putTerrainTexToolSelect90();
+    void putTerrainTexToolSelect180();
+    void putTerrainTexToolSelect270();
+    void placeToolStickTerrain();
+    void placeToolStickAll();
+    
 signals:
     void routeLoaded(Route * a);
     void itemSelected(Ref::RefItem* pointer);

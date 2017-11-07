@@ -90,6 +90,17 @@ void Terrain::setModified(bool value) {
     this->modified = value;
 }
 
+void Terrain::setFixedHeight(float val){
+    if (loaded == false) 
+        return;
+    for (int i = 0; i < 256; i++)
+        for (int j = 0; j < 256; j++) {
+            terrainData[i][j] = val;
+        }
+    refresh();
+    setModified(true);
+}
+
 Terrain::Terrain(const Terrain& orig) {
 }
 
@@ -224,10 +235,29 @@ void Terrain::refresh() {
     //reloadLines();
 }
 
-void Terrain::toggleGaps(int x, int z, float posx, float posz){
+void Terrain::toggleGaps(int x, int z, float posx, float posz, float direction){
     if(!jestF)
         newF();
-    fData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] ^= 0x04;
+    int tx = (posz + 1024) / 8;
+    int tz = (posx + 1024) / 8;
+    if(tx > 256 || tx < 0)
+        return;
+    if(tz > 256 || tz < 0)
+        return;
+    if(direction == 0)
+        fData[tx][tz] ^= 0x04;
+    if(direction == 1)
+        fData[tx][tz] |= 0x04;
+    if(direction == -1){
+        for(int j = -1; j <= 1; j++)
+            for(int i = -1; i <= 1; i++){
+                if(tx+j > 256 || tx+j < 0)
+                    return;
+                if(tz+i > 256 || tz+i < 0)
+                    return;
+                fData[tx+j][tz+i] &= ~0x04;
+            }
+    }
     modifiedF = true;
     modified = true;
     refresh();
@@ -290,15 +320,24 @@ void Terrain::convertTexToDefaultCoords(int idx) {
     this->refresh();
 }
 
-void Terrain::resetPatchTexCoords(){
-    for (int uu = 0; uu < 256; uu++) {
-        if(selectedPatchs[uu]){
-            tfile->tdata[(uu)*13 + 1 + 6] = 0.001;
-            tfile->tdata[(uu)*13 + 2 + 6] = 0.001;
-            tfile->tdata[(uu)*13 + 3 + 6] = 0.062375;
-            tfile->tdata[(uu)*13 + 4 + 6] = 0.0;
-            tfile->tdata[(uu)*13 + 5 + 6] = 0.0;
-            tfile->tdata[(uu)*13 + 6 + 6] = 0.062375;
+void Terrain::resetPatchTexCoords(int uu){
+    if( uu >= 0 && uu < 256){
+        tfile->tdata[(uu)*13 + 1 + 6] = 0.001;
+        tfile->tdata[(uu)*13 + 2 + 6] = 0.001;
+        tfile->tdata[(uu)*13 + 3 + 6] = 0.062375;
+        tfile->tdata[(uu)*13 + 4 + 6] = 0.0;
+        tfile->tdata[(uu)*13 + 5 + 6] = 0.0;
+        tfile->tdata[(uu)*13 + 6 + 6] = 0.062375;
+    } else {
+        for (uu = 0; uu < 256; uu++) {
+            if(selectedPatchs[uu]){
+                tfile->tdata[(uu)*13 + 1 + 6] = 0.001;
+                tfile->tdata[(uu)*13 + 2 + 6] = 0.001;
+                tfile->tdata[(uu)*13 + 3 + 6] = 0.062375;
+                tfile->tdata[(uu)*13 + 4 + 6] = 0.0;
+                tfile->tdata[(uu)*13 + 5 + 6] = 0.0;
+                tfile->tdata[(uu)*13 + 6 + 6] = 0.062375;
+            }
         }
     }
     modified = true;
@@ -322,40 +361,40 @@ void Terrain::rotateTex(int idx) {
     float t;
     if ((x11 < x21) && (y11 == y21)) {
         qDebug() << "rot1";
-        tfile->tdata[(idx)*13 + 1 + 6] = x21;
-        t = tfile->tdata[(idx)*13 + 4 + 6];
-        tfile->tdata[(idx)*13 + 4 + 6] = -tfile->tdata[(idx)*13 + 3 + 6];
-        tfile->tdata[(idx)*13 + 3 + 6] = t;
-        t = tfile->tdata[(idx)*13 + 5 + 6];
-        tfile->tdata[(idx)*13 + 5 + 6] = tfile->tdata[(idx)*13 + 6 + 6];
-        tfile->tdata[(idx)*13 + 6 + 6] = t;
-    } else if ((x11 == x21) && (y11 < y21)) {
-        qDebug() << "rot2";
-        tfile->tdata[(idx)*13 + 2 + 6] = y21;
-        t = tfile->tdata[(idx)*13 + 4 + 6];
-        tfile->tdata[(idx)*13 + 4 + 6] = -tfile->tdata[(idx)*13 + 3 + 6];
-        tfile->tdata[(idx)*13 + 3 + 6] = t;
-        t = tfile->tdata[(idx)*13 + 5 + 6];
-        tfile->tdata[(idx)*13 + 5 + 6] = tfile->tdata[(idx)*13 + 6 + 6];
-        tfile->tdata[(idx)*13 + 6 + 6] = -t;
-    } else if ((x11 > x21) && (y11 == y21)) {
-        qDebug() << "rot3";
-        tfile->tdata[(idx)*13 + 1 + 6] = x21;
-        t = tfile->tdata[(idx)*13 + 4 + 6];
-        tfile->tdata[(idx)*13 + 4 + 6] = -tfile->tdata[(idx)*13 + 3 + 6];
-        tfile->tdata[(idx)*13 + 3 + 6] = t;
-        t = tfile->tdata[(idx)*13 + 5 + 6];
-        tfile->tdata[(idx)*13 + 5 + 6] = tfile->tdata[(idx)*13 + 6 + 6];
-        tfile->tdata[(idx)*13 + 6 + 6] = t;
-    } else if ((x11 == x21) && (y11 > y21)) {
-        qDebug() << "rot4";
-        tfile->tdata[(idx)*13 + 2 + 6] = y21;
+        tfile->tdata[(idx)*13 + 1 + 6] = x12;
         t = tfile->tdata[(idx)*13 + 4 + 6];
         tfile->tdata[(idx)*13 + 4 + 6] = tfile->tdata[(idx)*13 + 3 + 6];
         tfile->tdata[(idx)*13 + 3 + 6] = t;
         t = tfile->tdata[(idx)*13 + 5 + 6];
         tfile->tdata[(idx)*13 + 5 + 6] = -tfile->tdata[(idx)*13 + 6 + 6];
         tfile->tdata[(idx)*13 + 6 + 6] = -t;
+    } else if ((x11 == x21) && (y11 < y21)) {
+        qDebug() << "rot2";
+        tfile->tdata[(idx)*13 + 2 + 6] = y21;
+        t = tfile->tdata[(idx)*13 + 4 + 6];
+        tfile->tdata[(idx)*13 + 4 + 6] = -tfile->tdata[(idx)*13 + 3 + 6];
+        tfile->tdata[(idx)*13 + 3 + 6] = -t;
+        t = tfile->tdata[(idx)*13 + 5 + 6];
+        tfile->tdata[(idx)*13 + 5 + 6] = tfile->tdata[(idx)*13 + 6 + 6];
+        tfile->tdata[(idx)*13 + 6 + 6] = t;
+    } else if ((x11 > x21) && (y11 == y21)) {
+        qDebug() << "rot3";
+        tfile->tdata[(idx)*13 + 1 + 6] = x12;
+        t = tfile->tdata[(idx)*13 + 4 + 6];
+        tfile->tdata[(idx)*13 + 4 + 6] = tfile->tdata[(idx)*13 + 3 + 6];
+        tfile->tdata[(idx)*13 + 3 + 6] = t;
+        t = tfile->tdata[(idx)*13 + 5 + 6];
+        tfile->tdata[(idx)*13 + 5 + 6] = -tfile->tdata[(idx)*13 + 6 + 6];
+        tfile->tdata[(idx)*13 + 6 + 6] = -t;
+    } else if ((x11 == x21) && (y11 > y21)) {
+        qDebug() << "rot4";
+        tfile->tdata[(idx)*13 + 2 + 6] = y21;
+        t = tfile->tdata[(idx)*13 + 4 + 6];
+        tfile->tdata[(idx)*13 + 4 + 6] = -tfile->tdata[(idx)*13 + 3 + 6];
+        tfile->tdata[(idx)*13 + 3 + 6] = -t;
+        t = tfile->tdata[(idx)*13 + 5 + 6];
+        tfile->tdata[(idx)*13 + 5 + 6] = tfile->tdata[(idx)*13 + 6 + 6];
+        tfile->tdata[(idx)*13 + 6 + 6] = t;
     }
     this->refresh();
 }
@@ -528,7 +567,7 @@ void Terrain::hideWaterDraw() {
     }
 }
 
-void Terrain::toggleWaterDraw(int x, int z, float posx, float posz) {
+void Terrain::toggleWaterDraw(int x, int z, float posx, float posz, float direction) {
     int u = (posx + 1024) / 128;
     int y = (posz + 1024) / 128;
     //hidden[y*16 + u] = true;
@@ -538,7 +577,12 @@ void Terrain::toggleWaterDraw(int x, int z, float posx, float posz) {
     tz /= 128;
     qDebug() << tx << " " << tz;
     //qDebug() << tfile->erroeBias[y * 16 + u];
-    tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x10000c0;
+    if(direction == 0)
+        tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x10000c0;
+    if(direction == 1)
+        tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] | 0x10000c0;
+    if(direction == -1)
+        tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] & ~0x10000c0;
     this->setModified(true);
 }
 
@@ -882,7 +926,7 @@ void Terrain::refreshWaterShapes(){
     this->setModified(true);
 }
 
-void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz, bool autoRot) {
+void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
 
     int u = (posx + 1024) / 128;
     int y = (posz + 1024) / 128;
@@ -892,17 +936,18 @@ void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz, boo
     //tx /= 128;
     //tz /= 128;
     //qDebug() << tx << " " << tz;
-    setTexture(brush, y*16 + u, autoRot);
+    setTexture(brush, y*16 + u);
 }
 
-void Terrain::setTexture(Brush* brush, int u, bool autoRot) {
+void Terrain::setTexture(Brush* brush, int u) {
     if (brush->texId < 0)
         return;
-    
+    bool autoRot = false;
     if (brush->texId == texid[u]) {
         qDebug() << "same tex";
-        if(autoRot)
-            rotateTex(u);
+        //this->getPatchRotationName()
+        //rotateTex(u);
+        autoRot = true;
     } else {
         QString path = texturepath + brush->tex->pathid.section("/", -1);
         qDebug() << path;
@@ -939,6 +984,24 @@ void Terrain::setTexture(Brush* brush, int u, bool autoRot) {
         }
         reloadLines();
     }
+    if(brush->texTransformation == brush->RANDOM && autoRot){
+        rotateTex(u);
+    } else if(brush->texTransformation == brush->PRESENT){
+        
+    } else {
+        int count = 0;
+        resetPatchTexCoords(u);
+        if(brush->texTransformation == brush->ROT90)
+            count = 1;
+        if(brush->texTransformation == brush->ROT180)
+            count = 2;
+        if(brush->texTransformation == brush->ROT270)
+            count = 3;
+        qDebug() << count;
+        for(int i = 0; i < count; i++)
+            rotateTex(u);
+    }    
+    
     /*QString name = this->getTileName(mojex, -mojez)+"_"+QString::number(y)+"_"+QString::number(u)+".ace";
     
     if(name != *tfile->materials[(int)tfile->tdata[(y * 16 + u)*13+0+6]].tex[0]){

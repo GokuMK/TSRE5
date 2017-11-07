@@ -16,14 +16,14 @@
 class QLabel;
 class QLineEdit;
 class QAction;
-class QMainWindow;
+class QWidget;
 
 class GuiFunct {
 public:
     static QLabel* newQLabel(QString text, int width);
     static QLabel* newTQLabel(QString text, int width = -1);
     static QLineEdit* newQLineEdit(int width, int length);
-    static QAction* newMenuCheckAction(QString desc, QMainWindow* window, bool checked = true);
+    static QAction* newMenuCheckAction(QString desc, QWidget* window, bool checked = true);
 private:
 
 };

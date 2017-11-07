@@ -37,6 +37,7 @@
 #include "Environment.h"
 #include "Terrain.h"
 #include "ActivityObject.h"
+#include "GuiFunct.h"
 
 RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -556,7 +557,7 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
         default:
             break;
     }
-    if (toolEnabled == "heightTool") {
+    if (toolEnabled == "heightTool" || toolEnabled == "waterTerrTool" || toolEnabled == "gapsTerrainTool") {
         switch (event->key()) {
             case Qt::Key_Z:
                 if (!keyControlEnabled) {
@@ -872,7 +873,7 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
             lastPointerPos[2] = aktPointerPos[2];
         }
         if (toolEnabled == "waterTerrTool") {
-            TerrainLib::toggleWaterDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            TerrainLib::toggleWaterDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush->direction);
         }
         if (toolEnabled == "drawTerrTool") {
             TerrainLib::toggleDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
@@ -903,7 +904,7 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
             TerrainLib::lockTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "gapsTerrainTool") {
-            TerrainLib::toggleGaps((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            TerrainLib::toggleGaps((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush->direction);
         }
         if (toolEnabled == "makeTileTextureTool") {
             TerrainLib::makeTextureFromMap((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
@@ -992,6 +993,11 @@ void RouteEditorGLWidget::mouseMoveEvent(QMouseEvent *event) {
         if (toolEnabled == "heightTool" && mouseLPressed == true) {
             if (mousex != m_lastPos.x() || mousey != m_lastPos.y()) {
                 route->paintHeightMap(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            }
+        }
+        if (toolEnabled == "waterTerrTool") {
+            if (mousex != m_lastPos.x() || mousey != m_lastPos.y()) {
+                TerrainLib::toggleWaterDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush->direction);
             }
         }
         if (toolEnabled == "putTerrainTexTool" && mouseLPressed == true) {
@@ -1173,6 +1179,70 @@ void RouteEditorGLWidget::editSelect() {
     enableTool("selectTool");
 }
 
+void RouteEditorGLWidget::selectToolSelect(){
+    resizeTool = false;
+    translateTool = false;
+    rotateTool = false;
+}
+
+void RouteEditorGLWidget::selectToolRotate(){
+    resizeTool = false;
+    translateTool = false;
+    rotateTool = true;
+}
+
+void RouteEditorGLWidget::selectToolTranslate(){
+    resizeTool = false;
+    translateTool = true;
+    rotateTool = false;
+}
+
+void RouteEditorGLWidget::selectToolScale(){
+    resizeTool = true;
+    translateTool = false;
+    rotateTool = false;
+}
+
+void RouteEditorGLWidget::toolBrushDirectionUp(){
+    defaultPaintBrush->direction = 1;
+    emit sendMsg(QString("brushDirection"), QString("+"));
+}
+
+void RouteEditorGLWidget::toolBrushDirectionDown(){
+    defaultPaintBrush->direction = -1;
+    emit sendMsg(QString("brushDirection"), QString("-"));
+}
+void RouteEditorGLWidget::putTerrainTexToolSelectRandom(){
+    defaultPaintBrush->texTransformation = defaultPaintBrush->RANDOM;
+}
+
+void RouteEditorGLWidget::putTerrainTexToolSelectPresent(){
+    defaultPaintBrush->texTransformation = defaultPaintBrush->PRESENT;
+}
+
+void RouteEditorGLWidget::putTerrainTexToolSelect0(){
+    defaultPaintBrush->texTransformation = defaultPaintBrush->ROT0;
+}
+
+void RouteEditorGLWidget::putTerrainTexToolSelect90(){
+    defaultPaintBrush->texTransformation = defaultPaintBrush->ROT90;
+}
+
+void RouteEditorGLWidget::putTerrainTexToolSelect180(){
+    defaultPaintBrush->texTransformation = defaultPaintBrush->ROT180;
+}
+
+void RouteEditorGLWidget::putTerrainTexToolSelect270(){
+    defaultPaintBrush->texTransformation = defaultPaintBrush->ROT270;
+}
+
+void RouteEditorGLWidget::placeToolStickTerrain(){
+    stickPointerToTerrain = true;
+}
+
+void RouteEditorGLWidget::placeToolStickAll(){
+    stickPointerToTerrain = false;
+}
 void RouteEditorGLWidget::editFind1x1() {
     editFind(0);
 }
@@ -1231,6 +1301,8 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
 
     
     QMenu menu;
+    QMenu menuTool;
+    QMenu menuPointer;
     QString menuStyle = QString(
         "QMenu::separator {\
           color: ")+Game::StyleMainLabel+";\
@@ -1245,6 +1317,129 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
             menu.addAction(defaultMenuActions["find3x3"]);
         }
     }
+    if(toolEnabled == ""){
+        menu.addSection("No Tool");
+    } else {
+        QString toolName = toolEnabled;
+        toolName[0] = toolName[0].toUpper();
+        menu.addSection(toolName);
+        if (toolEnabled == "selectTool"){
+            menuTool.setTitle("Mode");
+            menu.addMenu(&menuTool);
+            if(defaultMenuActions["selectToolSelect"] == NULL){
+                defaultMenuActions["selectToolSelect"] = GuiFunct::newMenuCheckAction(tr("&Select"), this, !resizeTool|!rotateTool|!translateTool); 
+                QObject::connect(defaultMenuActions["selectToolSelect"], SIGNAL(triggered()), this, SLOT(selectToolSelect()));
+            }
+            defaultMenuActions["selectToolSelect"]->setChecked(!resizeTool&!rotateTool&!translateTool);
+            if(defaultMenuActions["selectToolRotate"] == NULL){
+                defaultMenuActions["selectToolRotate"] = GuiFunct::newMenuCheckAction(tr("&Rotate"), this, rotateTool); 
+                QObject::connect(defaultMenuActions["selectToolRotate"], SIGNAL(triggered()), this, SLOT(selectToolRotate()));
+            }
+            defaultMenuActions["selectToolRotate"]->setChecked(rotateTool);
+            if(defaultMenuActions["selectToolTranslate"] == NULL){
+                defaultMenuActions["selectToolTranslate"] = GuiFunct::newMenuCheckAction(tr("&Translate"), this, translateTool); 
+                QObject::connect(defaultMenuActions["selectToolTranslate"], SIGNAL(triggered()), this, SLOT(selectToolTranslate()));
+            }
+            defaultMenuActions["selectToolTranslate"]->setChecked(translateTool);
+            if(defaultMenuActions["selectToolScale"] == NULL){
+                defaultMenuActions["selectToolScale"] = GuiFunct::newMenuCheckAction(tr("&Custom"), this, resizeTool); 
+                QObject::connect(defaultMenuActions["selectToolScale"], SIGNAL(triggered()), this, SLOT(selectToolScale()));
+            }
+            defaultMenuActions["selectToolScale"]->setChecked(resizeTool);
+            menuTool.addAction(defaultMenuActions["selectToolSelect"]);
+            menuTool.addAction(defaultMenuActions["selectToolRotate"]);
+            menuTool.addAction(defaultMenuActions["selectToolTranslate"]); 
+            menuTool.addAction(defaultMenuActions["selectToolScale"]);
+        }
+        if (toolEnabled == "placeTool" || toolEnabled == "selectTool"){
+            menuPointer.setTitle("Pointer");
+            menu.addMenu(&menuPointer);
+            if(defaultMenuActions["placeToolStickToTerrain"] == NULL){
+                defaultMenuActions["placeToolStickToTerrain"] = GuiFunct::newMenuCheckAction(tr("&Stick to Terrain"), this, stickPointerToTerrain); 
+                QObject::connect(defaultMenuActions["placeToolStickToTerrain"], SIGNAL(triggered()), this, SLOT(placeToolStickTerrain()));
+            }
+            defaultMenuActions["placeToolStickToTerrain"]->setChecked(stickPointerToTerrain);
+            if(defaultMenuActions["placeToolStickToAll"] == NULL){
+                defaultMenuActions["placeToolStickToAll"] = GuiFunct::newMenuCheckAction(tr("&Stick to All"), this, !stickPointerToTerrain); 
+                QObject::connect(defaultMenuActions["placeToolStickToAll"], SIGNAL(triggered()), this, SLOT(placeToolStickAll()));
+            }
+            defaultMenuActions["placeToolStickToAll"]->setChecked(!stickPointerToTerrain);
+            menuPointer.addAction(defaultMenuActions["placeToolStickToTerrain"]);
+            menuPointer.addAction(defaultMenuActions["placeToolStickToAll"]);
+        }
+        if (toolEnabled == "heightTool" || toolEnabled == "waterTerrTool" || toolEnabled == "gapsTerrainTool"){
+            menu.addMenu(&menuTool);
+            if(defaultMenuActions["toolDirectionUp"] == NULL){
+                defaultMenuActions["toolDirectionUp"] = GuiFunct::newMenuCheckAction(tr("&Up"), this, (defaultPaintBrush->direction+1)); 
+                QObject::connect(defaultMenuActions["toolDirectionUp"], SIGNAL(triggered()), this, SLOT(toolBrushDirectionUp()));
+            }
+            defaultMenuActions["toolDirectionUp"]->setChecked((defaultPaintBrush->direction+1)); 
+            if(defaultMenuActions["toolDirectionDown"] == NULL){
+                defaultMenuActions["toolDirectionDown"] = GuiFunct::newMenuCheckAction(tr("&Down"), this, !((defaultPaintBrush->direction+1))); 
+                QObject::connect(defaultMenuActions["toolDirectionDown"], SIGNAL(triggered()), this, SLOT(toolBrushDirectionDown()));
+            }
+            defaultMenuActions["toolDirectionDown"]->setChecked(!((defaultPaintBrush->direction+1))); 
+            menuTool.addAction(defaultMenuActions["toolDirectionUp"]); 
+            menuTool.addAction(defaultMenuActions["toolDirectionDown"]);
+            
+            if (toolEnabled == "heightTool"){
+                menuTool.setTitle("Paint Direction");
+                defaultMenuActions["toolDirectionUp"]->setText("Up");
+                defaultMenuActions["toolDirectionDown"]->setText("Down");
+            }
+            if (toolEnabled == "waterTerrTool"){
+                menuTool.setTitle("Water");
+                defaultMenuActions["toolDirectionUp"]->setText("Show");
+                defaultMenuActions["toolDirectionDown"]->setText("Hide");
+            }
+            if (toolEnabled == "gapsTerrainTool"){
+                menuTool.setTitle("Gaps");
+                defaultMenuActions["toolDirectionUp"]->setText("Show");
+                defaultMenuActions["toolDirectionDown"]->setText("Hide");
+            }
+        }
+        if (toolEnabled == "putTerrainTexTool"){
+            menuTool.setTitle("Default");
+            menu.addMenu(&menuTool);
+            if(defaultMenuActions["putTerrainTexRandom"] == NULL){
+                defaultMenuActions["putTerrainTexRandom"] = GuiFunct::newMenuCheckAction(tr("&Random"), this, defaultPaintBrush->texTransformation == defaultPaintBrush->RANDOM); 
+                QObject::connect(defaultMenuActions["putTerrainTexRandom"], SIGNAL(triggered()), this, SLOT(putTerrainTexToolSelectRandom()));
+            }
+            defaultMenuActions["putTerrainTexRandom"]->setChecked(defaultPaintBrush->texTransformation == defaultPaintBrush->RANDOM);
+            if(defaultMenuActions["putTerrainTexPresent"] == NULL){
+                defaultMenuActions["putTerrainTexPresent"] = GuiFunct::newMenuCheckAction(tr("&Present"), this, defaultPaintBrush->texTransformation == defaultPaintBrush->PRESENT); 
+                QObject::connect(defaultMenuActions["putTerrainTexPresent"], SIGNAL(triggered()), this, SLOT(putTerrainTexToolSelectPresent()));
+            }
+            defaultMenuActions["putTerrainTexPresent"]->setChecked(defaultPaintBrush->texTransformation == defaultPaintBrush->PRESENT);
+            if(defaultMenuActions["putTerrainTex0"] == NULL){
+                defaultMenuActions["putTerrainTex0"] = GuiFunct::newMenuCheckAction(tr("&Rotate 0°"), this, defaultPaintBrush->texTransformation == defaultPaintBrush->ROT0); 
+                QObject::connect(defaultMenuActions["putTerrainTex0"], SIGNAL(triggered()), this, SLOT(putTerrainTexToolSelect0()));
+            }
+            defaultMenuActions["putTerrainTex0"]->setChecked(defaultPaintBrush->texTransformation == defaultPaintBrush->ROT0);
+            if(defaultMenuActions["putTerrainTex90"] == NULL){
+                defaultMenuActions["putTerrainTex90"] = GuiFunct::newMenuCheckAction(tr("&Rotate 90°"), this, defaultPaintBrush->texTransformation == defaultPaintBrush->ROT90); 
+                QObject::connect(defaultMenuActions["putTerrainTex90"], SIGNAL(triggered()), this, SLOT(putTerrainTexToolSelect90()));
+            }
+            defaultMenuActions["putTerrainTex90"]->setChecked(defaultPaintBrush->texTransformation == defaultPaintBrush->ROT90);
+            if(defaultMenuActions["putTerrainTex180"] == NULL){
+                defaultMenuActions["putTerrainTex180"] = GuiFunct::newMenuCheckAction(tr("&Rotate 180°"), this, defaultPaintBrush->texTransformation == defaultPaintBrush->ROT180); 
+                QObject::connect(defaultMenuActions["putTerrainTex180"], SIGNAL(triggered()), this, SLOT(putTerrainTexToolSelect180()));
+            }
+            defaultMenuActions["putTerrainTex180"]->setChecked(defaultPaintBrush->texTransformation == defaultPaintBrush->ROT180);
+            if(defaultMenuActions["putTerrainTex270"] == NULL){
+                defaultMenuActions["putTerrainTex270"] = GuiFunct::newMenuCheckAction(tr("&Rotate 270°"), this, defaultPaintBrush->texTransformation == defaultPaintBrush->ROT270); 
+                QObject::connect(defaultMenuActions["putTerrainTex270"], SIGNAL(triggered()), this, SLOT(putTerrainTexToolSelect270()));
+            }
+            defaultMenuActions["putTerrainTex270"]->setChecked(defaultPaintBrush->texTransformation == defaultPaintBrush->ROT270);
+            menuTool.addAction(defaultMenuActions["putTerrainTexRandom"]);
+            menuTool.addAction(defaultMenuActions["putTerrainTexPresent"]);
+            menuTool.addAction(defaultMenuActions["putTerrainTex0"]);
+            menuTool.addAction(defaultMenuActions["putTerrainTex90"]); 
+            menuTool.addAction(defaultMenuActions["putTerrainTex180"]);
+            menuTool.addAction(defaultMenuActions["putTerrainTex270"]);
+        }
+    }
+    
     //menu.addSeparator();
     menu.addSection("Edit");
     menu.addAction(defaultMenuActions["undo"]);
