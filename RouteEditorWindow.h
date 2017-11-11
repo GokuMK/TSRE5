@@ -44,6 +44,7 @@ public slots:
     void save();
     void show();
     void createPaths();
+    void reloadRef();
     void about();
     void terrainCamera(bool val);
     void mstsShadows(bool val);
@@ -83,7 +84,8 @@ public slots:
 signals:
     void exitNow();
     void sendMsg(QString text);
-
+    void reloadRefFile();
+    
 protected:
     void keyPressEvent(QKeyEvent *event);
     virtual void closeEvent(QCloseEvent * event );
@@ -111,6 +113,7 @@ private:
     
     QAction *saveAction;
     QAction *createPathsAction;
+    QAction *reloadRefAction;
     QAction *exitAction;
     QAction *copyAction;
     QAction *undoAction;

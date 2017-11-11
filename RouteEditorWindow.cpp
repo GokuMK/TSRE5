@@ -175,6 +175,8 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
     createPathsAction = new QAction(tr("&Create Debug Paths"), this);
     QObject::connect(createPathsAction, SIGNAL(triggered()), this, SLOT(createPaths()));
+    reloadRefAction = new QAction(tr("&Reload Ref File"), this);
+    QObject::connect(reloadRefAction, SIGNAL(triggered()), this, SLOT(reloadRef()));
     exitAction = new QAction(tr("&Exit"), this);
     exitAction->setShortcut(QKeySequence("Alt+F4"));
     QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
@@ -182,6 +184,7 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(trkEditr, SIGNAL(triggered()), glWidget, SLOT(showTrkEditr()));
     routeMenu = menuBar()->addMenu(tr("&Route"));
     routeMenu->addAction(saveAction);
+    routeMenu->addAction(reloadRefAction);
     routeMenu->addAction(createPathsAction);
     routeMenu->addAction(trkEditr);
     routeMenu->addAction(exitAction);
@@ -480,6 +483,12 @@ RouteEditorWindow::RouteEditorWindow() {
                       glWidget, SLOT(jumpTo(PreciseTileCoordinate*)));
     
     QObject::connect(activityTools, SIGNAL(sendMsg(QString)), glWidget, SLOT(msg(QString)));
+    
+    QObject::connect(this, SIGNAL(reloadRefFile()),
+                      glWidget, SLOT(reloadRefFile()));
+    
+    QObject::connect(glWidget, SIGNAL(refreshObjLists()),
+                      objTools, SLOT(refreshObjLists()));
 }
 
 void RouteEditorWindow::keyPressEvent(QKeyEvent *e) {
@@ -528,6 +537,10 @@ void RouteEditorWindow::closeEvent(QCloseEvent * event ){
 
 void RouteEditorWindow::save(){
     emit sendMsg(QString("save"));
+}
+
+void RouteEditorWindow::reloadRef(){
+    emit reloadRefFile();
 }
 
 void RouteEditorWindow::createPaths(){

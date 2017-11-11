@@ -222,6 +222,22 @@ ObjTools::ObjTools(QString name)
 ObjTools::~ObjTools() {
 }
 
+void ObjTools::refreshObjLists(){
+    if(route == NULL)
+        return;
+    
+    refList.clear();
+    lastItems.clear();
+    refClass.clear();
+    refTrack.clear();
+    refRoad.clear();
+    refOther.clear();
+    lastItemsPtr.clear();
+    currentItemList.clear();
+    
+    routeLoaded(route);
+}
+
 void ObjTools::routeLoaded(Route* a){
     this->route = a;
             

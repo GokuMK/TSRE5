@@ -94,6 +94,7 @@ public slots:
     void putTerrainTexToolSelect270();
     void placeToolStickTerrain();
     void placeToolStickAll();
+    void reloadRefFile();
     
 signals:
     void routeLoaded(Route * a);
@@ -107,6 +108,7 @@ signals:
     void updateProperties(GameObj* obj);
     void flexData(int x, int z, float* p);
     void mkrList(QMap<QString, Coords*> list);
+    void refreshObjLists();
     
     void sendMsg(QString name);
     void sendMsg(QString name, bool val);

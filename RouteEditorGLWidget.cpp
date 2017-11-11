@@ -180,6 +180,11 @@ void RouteEditorGLWidget::initializeGL() {
     glActiveTexture(GL_TEXTURE0);
 }
 
+void RouteEditorGLWidget::reloadRefFile(){
+    route->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
+    emit refreshObjLists();
+}
+
 void RouteEditorGLWidget::paintGL() {
     Game::currentShapeLib = currentShapeLib;
     if (route == NULL) return;
@@ -1243,6 +1248,7 @@ void RouteEditorGLWidget::placeToolStickTerrain(){
 void RouteEditorGLWidget::placeToolStickAll(){
     stickPointerToTerrain = false;
 }
+
 void RouteEditorGLWidget::editFind1x1() {
     editFind(0);
 }

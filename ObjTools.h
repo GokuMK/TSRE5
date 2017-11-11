@@ -49,11 +49,14 @@ public slots:
     void showLastItemsContextMenu(QPoint val);
     void lastItemsMenuFindSimilar();
     
+    void refreshObjLists();
+    
     void msg(QString name);
     void msg(QString name, bool val);
     void msg(QString name, int val);
     void msg(QString name, float val);
     void msg(QString name, QString val);
+    
 signals:
     void enableTool(QString name);
 
@@ -64,7 +67,7 @@ signals:
     void sendMsg(QString name, QString val);
     
 private:
-    Route* route;
+    Route* route = NULL;
     QListWidget refList;
     QListWidget lastItems;
     QComboBox refClass;

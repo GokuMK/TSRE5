@@ -53,6 +53,7 @@ PropertiesTerrain::PropertiesTerrain() {
     QPushButton *bWaterEditor = new QPushButton("Advanced ...", this);
     QObject::connect(bWaterEditor, SIGNAL(released()),
                       this, SLOT(bWaterEditorEnabled()));
+    vbox->addItem(vlist);
     vbox->addWidget(bWaterEditor);
     
     label = new QLabel("Height Map:");
