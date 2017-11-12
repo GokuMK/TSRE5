@@ -148,8 +148,8 @@ void RouteEditorGLWidget::initializeGL() {
         spos[0] = route->getStartpX();
         spos[2] = -route->getStartpZ();
     }
-    if (TerrainLib::load(route->getStartTileX(), -route->getStartTileZ())) {
-        spos[1] = 20 + TerrainLib::getHeight(route->getStartTileX(), -route->getStartTileZ(), route->getStartpX(), -route->getStartpZ());
+    if (Game::terrainLib->load(route->getStartTileX(), -route->getStartTileZ())) {
+        spos[1] = 20 + Game::terrainLib->getHeight(route->getStartTileX(), -route->getStartTileZ(), route->getStartpX(), -route->getStartpZ());
     } else {
         spos[1] = 0;
     }
@@ -206,15 +206,28 @@ void RouteEditorGLWidget::paintGL() {
         renderMode = GLUU::RENDER_SELECTION;
 
     glClearColor(gluu->skyc[0], gluu->skyc[1], gluu->skyc[2], 1.0);
-
     glViewport(0, 0, (float) this->width() * Game::PixelRatio, (float) this->height() * Game::PixelRatio);
+    Mat4::identity(gluu->mvMatrix);
+    
+    // Render Low Resolution Terrain
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 20.0f, 50000.0f);
+    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
+    gluu->setMatrixUniforms();
+    //gluu->currentShader->setUniformValue(gluu->currentShader->lod, -0.5f);
+    Game::terrainLib->renderLo(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode);
+    glClear(GL_DEPTH_BUFFER_BIT);
+
+    // Render High Resolution Terrain
     Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
-    Mat4::identity(gluu->mvMatrix);
+    gluu->setMatrixUniforms();
+    Game::terrainLib->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode);
+    
+    // Render World
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
+    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
     gluu->setMatrixUniforms();
     
-    TerrainLib::render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode);
-
     if (stickPointerToTerrain && Game::viewTerrainShape)
         if (!selection) drawPointer();
 
@@ -222,7 +235,7 @@ void RouteEditorGLWidget::paintGL() {
     
     //if (!selection)
     for(int i = 0; i < route->env->waterCount; i++)
-        TerrainLib::renderWater(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
+        Game::terrainLib->renderWater(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
     
     if (!stickPointerToTerrain || !Game::viewTerrainShape)
         if (!selection) drawPointer();
@@ -273,7 +286,7 @@ void RouteEditorGLWidget::renderShadowMaps() {
     glViewport(0, 0, Game::shadowMapSize, Game::shadowMapSize);
     int tempLod = Game::objectLod;
     Game::objectLod = 600;
-    TerrainLib::renderEmpty(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
+    Game::terrainLib->renderEmpty(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3);
     route->renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
 
     Mat4::identity(gluu->mvMatrix);
@@ -382,7 +395,7 @@ void RouteEditorGLWidget::handleSelection() {
             if (selectedObj != NULL) {
                 if ((keyControlEnabled || keyShiftEnabled) && selectedObj->typeObj == GameObj::terrainobj ) {
                     Terrain * tt = (Terrain*) selectedObj;
-                    if(tt->mojex != wx || tt->mojez != wz){
+                    if(!tt->isXYinside(wx, wz)){// >mojex != wx || tt->mojez != wz){
                         selectedObj->unselect();
                         setSelectedObj(NULL);
                     }
@@ -393,7 +406,7 @@ void RouteEditorGLWidget::handleSelection() {
                     setSelectedObj(NULL);
                 }
             }
-            Terrain *t = TerrainLib::terrain[wx*10000+wz];
+            Terrain *t = Game::terrainLib->getTerrainByXY(wx, wz);
             if (t == NULL) {
                 qDebug() << "brak obiektu";
             } else {
@@ -864,33 +877,33 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
             if (keyControlEnabled)
                 route->setTerrainTextureToObj((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush, (WorldObj*) selectedObj);
             else
-                TerrainLib::paintTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+                Game::terrainLib->paintTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "pickTerrainTexTool") {
             // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
-            int textureId = TerrainLib::getTexture((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            int textureId = Game::terrainLib->getTexture((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
             emit setBrushTextureId(textureId);
         }
         if (toolEnabled == "putTerrainTexTool") {
-            TerrainLib::setTerrainTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            Game::terrainLib->setTerrainTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
             lastPointerPos[0] = aktPointerPos[0];
             lastPointerPos[1] = aktPointerPos[1];
             lastPointerPos[2] = aktPointerPos[2];
         }
         if (toolEnabled == "waterTerrTool") {
-            TerrainLib::toggleWaterDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush->direction);
+            Game::terrainLib->toggleWaterDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush->direction);
         }
         if (toolEnabled == "drawTerrTool") {
-            TerrainLib::toggleDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            Game::terrainLib->toggleDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "waterHeightTileTool") {
-            TerrainLib::setWaterLevelGui((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            Game::terrainLib->setWaterLevelGui((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "fixedTileTool") {
-            TerrainLib::setFixedTileHeight(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            Game::terrainLib->setFixedTileHeight(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "mapTileShowTool") {
-            TerrainLib::setTileBlob((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            Game::terrainLib->setTileBlob((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "mapTileLoadTool") {
             int x = (int) camera->pozT[0];
@@ -903,19 +916,19 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
             mapWindow->exec();
         }
         if (toolEnabled == "heightTileLoadTool") {
-            TerrainLib::setHeightFromGeoGui((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            Game::terrainLib->setHeightFromGeoGui((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "lockTexTool") {
-            TerrainLib::lockTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            Game::terrainLib->lockTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "gapsTerrainTool") {
-            TerrainLib::toggleGaps((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush->direction);
+            Game::terrainLib->toggleGaps((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush->direction);
         }
         if (toolEnabled == "makeTileTextureTool") {
-            TerrainLib::makeTextureFromMap((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            Game::terrainLib->makeTextureFromMap((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "removeTileTextureTool") {
-            TerrainLib::removeTileTextureFromMap((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+            Game::terrainLib->removeTileTextureFromMap((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
         if (toolEnabled == "actNewLooseConsistTool") {
             route->actNewLooseConsist((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
@@ -992,7 +1005,7 @@ void RouteEditorGLWidget::mouseMoveEvent(QMouseEvent *event) {
     if ((event->buttons() & 1) == Qt::LeftButton) {
         if (toolEnabled.startsWith("paintTool") && mouseLPressed == true) {
             if (mousex != m_lastPos.x() || mousey != m_lastPos.y()) {
-                TerrainLib::paintTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+                Game::terrainLib->paintTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
             }
         }
         if (toolEnabled == "heightTool" && mouseLPressed == true) {
@@ -1002,12 +1015,12 @@ void RouteEditorGLWidget::mouseMoveEvent(QMouseEvent *event) {
         }
         if (toolEnabled == "waterTerrTool") {
             if (mousex != m_lastPos.x() || mousey != m_lastPos.y()) {
-                TerrainLib::toggleWaterDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush->direction);
+                Game::terrainLib->toggleWaterDraw((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush->direction);
             }
         }
         if (toolEnabled == "putTerrainTexTool" && mouseLPressed == true) {
             if (fabs(lastPointerPos[0] - aktPointerPos[0]) > 32 || fabs(lastPointerPos[2] - aktPointerPos[2]) > 32) {
-                TerrainLib::setTerrainTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
+                Game::terrainLib->setTerrainTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
                 lastPointerPos[0] = aktPointerPos[0];
                 lastPointerPos[1] = aktPointerPos[1];
                 lastPointerPos[2] = aktPointerPos[2];
@@ -1093,8 +1106,8 @@ void RouteEditorGLWidget::jumpTo(float *posT, float *pos) {
 
 void RouteEditorGLWidget::jumpTo(int X, int Z, float x, float y, float z) {
     qDebug() << "jump: " << X << " " << Z;
-    TerrainLib::load(X, Z);
-    float h = TerrainLib::getHeight(X, Z, x, z);
+    Game::terrainLib->load(X, Z);
+    float h = Game::terrainLib->getHeight(X, Z, x, z);
     if ((y < h) || (y > h + 100)) y = h + 20;
     camera->setPozT(X, Z);
     camera->setPos(x, y, z);

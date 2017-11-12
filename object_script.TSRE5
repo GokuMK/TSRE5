@@ -143,7 +143,10 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TSection.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TSectionDAT.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Terrain.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainInfo.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainLib.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainLibQt.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainLibSimple.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainTreeWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TerrainWaterWindow.o

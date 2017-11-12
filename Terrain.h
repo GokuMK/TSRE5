@@ -18,6 +18,7 @@
 #include "GameObj.h"
 
 class Brush;
+class TerrainInfo;
 
 class Terrain : public GameObj {
     Q_OBJECT
@@ -30,6 +31,9 @@ public:
     bool showBlob = false;
     float mojex;
     float mojez;
+    QString name;
+    bool lowTile = false;
+    Terrain(TerrainInfo *ti);
     Terrain(float x, float y);
     Terrain(const Terrain& orig);
     virtual ~Terrain();
@@ -38,6 +42,9 @@ public:
     static QString getTileNameExperimental(int x, int y);
     static QString getTileNameExperimental2(int x, int y);
     QString getTileName();
+    bool isXYinside(int x, int y);
+    void getLocalCoords(int x, int z, float &posx, float &posz);
+    void getPatchCoords(int &x, int &z, float &posx, float &posz);
     void save();
     void refresh();
     bool isModified();
@@ -101,9 +108,10 @@ public:
     bool unselect();
     void resetPatchTexCoords(int uu = -1);
     void pushContextMenuActions(QMenu *menu);
-    void render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int selectionColor);
-    void renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int layer, int selectionColor = 0);
+    void render(float lodx, float lodz, int tileX, int tileY, float* playerW, float* target, float fov, int selectionColor);
+    void renderWater(float lodx, float lodz, float tileX, float tileY, float* playerW, float* target, float fov, int layer, int selectionColor = 0);
     void refreshWaterShapes();
+    float getHeight(int x, int z, float posx, float posz, bool addR);
     
 public slots:
     void menuToggleWater();
@@ -111,6 +119,8 @@ public slots:
     void menuPutTexture();
     
 private:
+    static QString TileDir[2];
+    
     unsigned char **fData;
     bool jestF = false;
     bool modifiedF;
@@ -172,6 +182,8 @@ private:
     void convertTexToDefaultCoords(int idx);
     void paintTextureOnTile(Brush* brush, int y, int u, float x, float z);
     void reloadLines();
+    
+    void load();
 };
 
 #endif	/* TERRAIN_H */

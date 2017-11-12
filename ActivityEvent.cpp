@@ -360,7 +360,7 @@ void ActivityEvent::render(GLUU* gluu, float * playerT, float playerRot, int ren
         //    continue;
         //}
         gluu->mvPushMatrix();
-        float h = TerrainLib::getHeight(location[0], -location[1], location[2], -location[3]);
+        float h = Game::terrainLib->getHeight(location[0], -location[1], location[2], -location[3]);
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, location[2] + 2048 * (location[0] - playerT[0]), h, -location[3] + 2048 * (-location[1] - playerT[1]));
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         simpleMarkerObj->render();

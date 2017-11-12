@@ -786,14 +786,14 @@ void WorldObj::setCollisionType(int val){
 }
 
 void WorldObj::adjustPositionToTerrain(){
-    position[1] = TerrainLib::getHeight(x, y, position[0], position[2]);
+    position[1] = Game::terrainLib->getHeight(x, y, position[0], position[2]);
     this->modified = true;
     setMartix();
 }
 
 void WorldObj::adjustRotationToTerrain(){
     float rot[2];
-    TerrainLib::getRotation((float*)&rot, x, y, position[0], position[2]);
+    Game::terrainLib->getRotation((float*)&rot, x, y, position[0], position[2]);
     this->tRotation[0] += rot[0];
     this->tRotation[1] += rot[1];
     if(matrix3x3 != NULL) matrix3x3 = NULL;

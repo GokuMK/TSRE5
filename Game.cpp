@@ -29,9 +29,10 @@
 TDB *Game::trackDB = NULL;
 TDB *Game::roadDB = NULL;    
 SoundList *Game::soundList = NULL;    
+TerrainLib *Game::terrainLib = NULL;   
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.6932";
+QString Game::AppVersion = "v0.6933";
 QString Game::AppDataVersion = "0.69";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
@@ -40,6 +41,7 @@ QString Game::trkName = "bbb";
 //QString Game::route = "traska";
 //QString Game::route = "cmk";
 QString Game::mainWindowLayout = "PWT";
+bool Game::useQuadTree = false;
 int Game::allowObjLag = 1000;
 int Game::maxObjLag = 10;
 bool Game::ignoreLoadLimits = false;
@@ -376,6 +378,13 @@ void Game::load() {
         if(val == "mainWindowLayout"){
             mainWindowLayout = args[1].trimmed();
         }
+        if(val == "useQuadTree"){
+            if(args[1].trimmed().toLower() == "true")
+                useQuadTree = true;
+            else
+                useQuadTree = false; 
+        }
+        
     }
 }
 

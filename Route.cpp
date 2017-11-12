@@ -16,6 +16,8 @@
 #include "Tile.h"
 #include "GLMatrix.h"
 #include "TerrainLib.h"
+#include "TerrainLibSimple.h"
+#include "TerrainLibQt.h"
 #include "Game.h"
 #include "TrackObj.h"
 #include "Path.h"
@@ -50,6 +52,12 @@
 
 Route::Route() {
     Game::currentRoute = this;
+    
+    if(!Game::useQuadTree)
+        Game::terrainLib = new TerrainLibSimple();
+    else
+        Game::terrainLib = new TerrainLibQt();
+    
     QFile file(Game::root + "/routes");
     if (!file.exists()) return;
     file.setFileName(Game::root + "/global");
@@ -89,7 +97,7 @@ Route::Route() {
     soundList->loadSoundRegions(Game::root + "/routes/" + Game::route + "/ttype.dat");
     Game::soundList = soundList;
     
-    TerrainLib::LoadQuadTree();
+    Game::terrainLib->loadQuadTree();
     OrtsWeatherChange::LoadList();
     ForestObj::LoadForestList();
     ForestObj::ForestClearDistance = trk->forestClearDistance;
@@ -400,7 +408,7 @@ void Route::setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, World
         obj->getLinePoints(ptr);
         int length = ptr - punkty;
         qDebug() << "lo "<<length;
-        TerrainLib::setTextureToTrackObj(brush, punkty, length, obj->x, obj->y);
+        Game::terrainLib->setTextureToTrackObj(brush, punkty, length, obj->x, obj->y);
     } else {
         Game::check_coords(x, y, pos);
         float* ptr = punkty;
@@ -430,7 +438,7 @@ void Route::setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, World
         }
         int length = ptr - punkty;
         qDebug() << "l "<<length;
-        TerrainLib::setTextureToTrackObj(brush, punkty, length, x, y);
+        Game::terrainLib->setTextureToTrackObj(brush, punkty, length, x, y);
     }
     delete[] punkty;
 }
@@ -475,7 +483,7 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
         }
         
         if(length > 0)
-            TerrainLib::setTerrainToTrackObj(brush, punkty, length, obj->x, obj->y, obj->matrix);
+            Game::terrainLib->setTerrainToTrackObj(brush, punkty, length, obj->x, obj->y, obj->matrix);
         delete[] punkty;
     } else if(obj->hasLinePoints()) {
         float* punkty = new float[10000];
@@ -483,7 +491,7 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
         obj->getLinePoints(ptr);
         int length = ptr - punkty;
         qDebug() << "l "<<length;
-        TerrainLib::setTerrainToTrackObj(brush, punkty, length, obj->x, obj->y, obj->matrix);
+        Game::terrainLib->setTerrainToTrackObj(brush, punkty, length, obj->x, obj->y, obj->matrix);
         delete[] punkty;
     }
     
@@ -773,7 +781,7 @@ Tile * Route::requestTile(int x, int z){
         tile[(x)*10000 + z] = new Tile(x, z);
     tTile = tile[((x)*10000 + z)];
     if (tTile->loaded == -2) {
-        if (TerrainLib::isLoaded(x, z)) {
+        if (Game::terrainLib->isLoaded(x, z)) {
             tTile->initNew();
         } else {
             return NULL;
@@ -1316,7 +1324,7 @@ void Route::getUnsavedInfo(std::vector<QString> &items){
             items.push_back("[W] "+QString::number(tTile->x)+" "+QString::number(-tTile->z));
         }
     }
-    TerrainLib::getUnsavedInfo(items);
+    Game::terrainLib->getUnsavedInfo(items);
     if(this->trk->isModified())
         items.push_back("[S] Route Settings - TRK File");
     
@@ -1351,7 +1359,7 @@ void Route::save() {
             tTile->setModified(false);
         }
     }
-    TerrainLib::save();
+    Game::terrainLib->save();
     this->trackDB->save();
     this->roadDB->save();
     this->trk->save();
@@ -1400,7 +1408,7 @@ void Route::flipObject(WorldObj *obj){
 
 void Route::paintHeightMap(Brush* brush, int x, int z, float* p){
     Game::ignoreLoadLimits = true;
-    QSet<int> modifiedTiles = TerrainLib::paintHeightMap(brush, x, z, p);
+    QSet<int> modifiedTiles = Game::terrainLib->paintHeightMap(brush, x, z, p);
     Tile *ttile;
     foreach (int value, modifiedTiles){
         ttile = tile[value];
@@ -1445,7 +1453,7 @@ void Route::createNew() {
     
     TDB::saveEmpty(false);
     TDB::saveEmpty(true);
-    TerrainLib::createNewRouteTerrain(x, z);
+    Game::terrainLib->createNewRouteTerrain(x, z);
     Tile::saveEmpty(x, z);
     //Terrain::saveEmpty(x, z);
 
@@ -1488,14 +1496,14 @@ void Route::newTile(int x, int z) {
             
     Tile::saveEmpty(x, -z);
     //Terrain::saveEmpty(x, -z);
-    TerrainLib::saveEmpty(x, -z);
-    TerrainLib::reload(x, z);
+    Game::terrainLib->saveEmpty(x, -z);
+    Game::terrainLib->reload(x, z);
     reloadTile(x, z);
 
     if(Game::autoGeoTerrain){
         float pos[3];
         Vec3::set(pos, 0, 0, 0);
-        TerrainLib::setHeightFromGeo(x, z, (float*)&pos);
+        Game::terrainLib->setHeightFromGeo(x, z, (float*)&pos);
     }
 }
 

@@ -287,7 +287,7 @@ void TransferObj::drawShape(int selectionColor){
                         float ii = i+step;
                         if(ii>x1y12d) ii = x1y12d;
                         
-                        wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]), addR);
+                        wysokosc = Game::terrainLib->getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x;
                         punkty[ptr++] = wysokosc+0.05f;
                         punkty[ptr++] = x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y;
@@ -296,7 +296,7 @@ void TransferObj::drawShape(int selectionColor){
                         punkty[ptr++] = i/x1y12d;
                         punkty[ptr++] = alpha;
 
-                        wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/j).y + position[2]), addR);
+                        wysokosc = Game::terrainLib->getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/j).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/j).x;
                         punkty[ptr++] = wysokosc+0.05f;
                         punkty[ptr++] = x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/j).y;
@@ -305,7 +305,7 @@ void TransferObj::drawShape(int selectionColor){
                         punkty[ptr++] = ii/x1y12d;
                         punkty[ptr++] = alpha;
                         
-                        wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/jj).y + position[2]), addR);
+                        wysokosc = Game::terrainLib->getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/jj).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/jj).x;
                         punkty[ptr++] = wysokosc+0.05f;
                         punkty[ptr++] = x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/jj).y;
@@ -314,7 +314,7 @@ void TransferObj::drawShape(int selectionColor){
                         punkty[ptr++] = ii/x1y12d;
                         punkty[ptr++] = alpha;
 
-                        wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]), addR);
+                        wysokosc = Game::terrainLib->getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x;
                         punkty[ptr++] = wysokosc+0.05f;
                         punkty[ptr++] = x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y;
@@ -323,7 +323,7 @@ void TransferObj::drawShape(int selectionColor){
                         punkty[ptr++] = i/x1y12d;
                         punkty[ptr++] = alpha;
 
-                        wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/jj).y + position[2]), addR);
+                        wysokosc = Game::terrainLib->getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/jj).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/jj).x;
                         punkty[ptr++] = wysokosc+0.05f;
                         punkty[ptr++] = x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/jj).y;
@@ -332,7 +332,7 @@ void TransferObj::drawShape(int selectionColor){
                         punkty[ptr++] = ii/x1y12d;
                         punkty[ptr++] = alpha;
                         
-                        wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/jj).y + position[2]), addR);
+                        wysokosc = Game::terrainLib->getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/jj).y + position[2]), addR);
                         punkty[ptr++] = x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/jj).x;
                         punkty[ptr++] = wysokosc+0.05f;
                         punkty[ptr++] = x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/jj).y;
@@ -374,11 +374,11 @@ bool TransferObj::getBoxPoints(QVector<float>& points){
                     float jj = j+step;
                     if(jj>x12y1d) jj = x12y1d;          
 
-                    wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]));
+                    wysokosc = Game::terrainLib->getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]));
                     points << x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x;
                     points << wysokosc+0.5f;
                     points << x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y;
-                    wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/jj).y + position[2]));
+                    wysokosc = Game::terrainLib->getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/jj).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/jj).y + position[2]));
                     points << x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/jj).x;
                     points << wysokosc+0.5f;
                     points << x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/jj).y;
@@ -389,11 +389,11 @@ bool TransferObj::getBoxPoints(QVector<float>& points){
                     float ii = i+step;
                     if(ii>x1y12d) ii = x1y12d;          
 
-                    wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]));
+                    wysokosc = Game::terrainLib->getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y + position[2]));
                     points << x1y1.x + x1y12.divf(x1y12d/i).x + x12y1.divf(x12y1d/j).x;
                     points << wysokosc+0.5f;
                     points << x1y1.y + x1y12.divf(x1y12d/i).y + x12y1.divf(x12y1d/j).y;
-                    wysokosc = TerrainLib::getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/j).y + position[2]));
+                    wysokosc = Game::terrainLib->getHeight(x, y, x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/j).x + position[0], ( x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/j).y + position[2]));
                     points << x1y1.x + x1y12.divf(x1y12d/ii).x + x12y1.divf(x12y1d/j).x;
                     points << wysokosc+0.5f;
                     points << x1y1.y + x1y12.divf(x1y12d/ii).y + x12y1.divf(x12y1d/j).y;

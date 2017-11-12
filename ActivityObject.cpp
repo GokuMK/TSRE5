@@ -279,7 +279,7 @@ void ActivityObject::SpeedZone::render(GLUU* gluu, float* playerT, int selection
     if (drawPositionB == NULL) {
         TDB* tdb = Game::trackDB;
         Vec2::set(posT, start[0], -start[1]);
-        float h = TerrainLib::getHeight(start[0], -start[1], start[2], start[3]);
+        float h = Game::terrainLib->getHeight(start[0], -start[1], start[2], start[3]);
         Vec3::set(pos, start[2], h, -start[3]);
         qDebug() << posT[0]<< posT[1];
         qDebug() << pos[0]<< pos[1]<< pos[2];
@@ -307,7 +307,7 @@ void ActivityObject::SpeedZone::render(GLUU* gluu, float* playerT, int selection
     if (drawPositionE == NULL) {
         TDB* tdb = Game::trackDB;
         Vec2::set(posT, end[0], -end[1]);
-        float h = TerrainLib::getHeight(end[0], -end[1], end[2], end[3]);
+        float h = Game::terrainLib->getHeight(end[0], -end[1], end[2], end[3]);
         Vec3::set(pos, end[2], h, -end[3]);
 
         qDebug() << posT[0]<< posT[1];

@@ -73,7 +73,7 @@ void Coords::render(GLUU* gluu, float * playerT, float* playerW, float playerRot
             }
             gluu->mvPushMatrix();
             //if(pos == NULL) return;
-            float h = TerrainLib::getHeight(markerList[i].tileX[j], -markerList[i].tileZ[j], markerList[i].x[j], markerList[i].z[j]);
+            float h = Game::terrainLib->getHeight(markerList[i].tileX[j], -markerList[i].tileZ[j], markerList[i].x[j], markerList[i].z[j]);
             Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, markerList[i].x[j] + 2048 * (markerList[i].tileX[j] - playerT[0]), h, markerList[i].z[j] + 2048 * (-markerList[i].tileZ[j] - playerT[1]));
             //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
             //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
@@ -103,10 +103,10 @@ void Coords::render(GLUU* gluu, float * playerT, float* playerW, float playerRot
             int j = 0;
             for (j = 0; j < markerList[i].pointsX.size() - 1; j++) {
                 punkty[ptr++] = markerList[i].pointsX[j];
-                punkty[ptr++] = TerrainLib::getHeight(markerList[i].tileX, -markerList[i].tileZ, markerList[i].pointsX[j], markerList[i].pointsZ[j]);
+                punkty[ptr++] = Game::terrainLib->getHeight(markerList[i].tileX, -markerList[i].tileZ, markerList[i].pointsX[j], markerList[i].pointsZ[j]);
                 punkty[ptr++] = markerList[i].pointsZ[j];
                 punkty[ptr++] = markerList[i].pointsX[j+1];
-                punkty[ptr++] = TerrainLib::getHeight(markerList[i].tileX, -markerList[i].tileZ, markerList[i].pointsX[j], markerList[i].pointsZ[j]);
+                punkty[ptr++] = Game::terrainLib->getHeight(markerList[i].tileX, -markerList[i].tileZ, markerList[i].pointsX[j], markerList[i].pointsZ[j]);
                 punkty[ptr++] = markerList[i].pointsZ[j+1];
             }
 

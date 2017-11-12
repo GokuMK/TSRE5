@@ -641,7 +641,7 @@ void Consist::initOnTrack(float *posTXZ, int direction){
     Vec2::set(posT, posTXZ[0], -posTXZ[1]);
     float pos[3];
     float tpos[3];
-    float h = TerrainLib::getHeight(posTXZ[0], -posTXZ[1], posTXZ[2], posTXZ[3]);
+    float h = Game::terrainLib->getHeight(posTXZ[0], -posTXZ[1], posTXZ[2], posTXZ[3]);
     Vec3::set(pos, posTXZ[2], h, -posTXZ[3]);
     
     qDebug() << posT[0]<< posT[1];

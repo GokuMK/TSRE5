@@ -25,9 +25,12 @@ void main() {
     gl_Position = uPMatrix * uMVMatrix * uMSMatrix * vertex;
     vTextureCoord = aTextureCoord;
 
+    //fogFactor = 0.0;
     fogFactor = sqrt((gl_Position.x)*(gl_Position.x) + (gl_Position.z)*(gl_Position.z))/(lod*1.4);
-    if(fogFactor<0.0) fogFactor = 0.0;
-    if(fogFactor>1.0) fogFactor = 1.0;
+    fogFactor = clamp(fogFactor, 0.0, 0.5);
+    fogFactor = min(fogFactor, lod);
+    fogFactor = abs(fogFactor);
+
 
     vNormal = normal;
     vAlpha = alpha;

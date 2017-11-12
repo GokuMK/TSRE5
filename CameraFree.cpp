@@ -257,7 +257,7 @@ void CameraFree::check_coords() {
     }
     
     if(Game::cameraStickToTerrain){
-        float h = TerrainLib::getHeight(pozT[0], pozT[1], playerPos[0], playerPos[2]);
+        float h = Game::terrainLib->getHeight(pozT[0], pozT[1], playerPos[0], playerPos[2]);
         if(h + 2 > playerPos[1])
             playerPos[1] = h + 2;
     }

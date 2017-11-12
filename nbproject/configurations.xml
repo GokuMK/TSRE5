@@ -207,7 +207,10 @@
         <itemPath>SoundList.h</itemPath>
         <itemPath>TFile.h</itemPath>
         <itemPath>Terrain.h</itemPath>
+        <itemPath>TerrainInfo.h</itemPath>
         <itemPath>TerrainLib.h</itemPath>
+        <itemPath>TerrainLibQt.h</itemPath>
+        <itemPath>TerrainLibSimple.h</itemPath>
         <itemPath>Tile.h</itemPath>
         <itemPath>Trk.h</itemPath>
       </logicalFolder>
@@ -425,7 +428,10 @@
         <itemPath>SoundList.cpp</itemPath>
         <itemPath>TFile.cpp</itemPath>
         <itemPath>Terrain.cpp</itemPath>
+        <itemPath>TerrainInfo.cpp</itemPath>
         <itemPath>TerrainLib.cpp</itemPath>
+        <itemPath>TerrainLibQt.cpp</itemPath>
+        <itemPath>TerrainLibSimple.cpp</itemPath>
         <itemPath>Tile.cpp</itemPath>
         <itemPath>Trk.cpp</itemPath>
       </logicalFolder>
@@ -1044,9 +1050,21 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLibSimple.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1765,9 +1783,21 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLibSimple.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1883,7 +1913,6 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <qt>
-        <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>
           <Elem>"CONFIG += console"</Elem>
@@ -2479,9 +2508,21 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLibSimple.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3200,9 +3241,21 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLibSimple.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3909,9 +3962,21 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TerrainLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainLibSimple.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TerrainTools.cpp" ex="false" tool="1" flavor2="8">
       </item>

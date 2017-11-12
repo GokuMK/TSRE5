@@ -84,7 +84,7 @@ void Undo::UndoLast(){
         i.next();
         UndoState::TerrainData* tdata = i.value();
         if(tdata != NULL)
-            TerrainLib::fillHeightMap(tdata->x, tdata->z, tdata->data);
+            Game::terrainLib->fillHeightMap(tdata->x, tdata->z, tdata->data);
     }
     QMapIterator<int, unsigned char *> i1(state->texData);
     while (i1.hasNext()) {

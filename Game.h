@@ -26,12 +26,14 @@ class EngLib;
 class QColor;
 class Route;
 class GameObj;
+class TerrainLib;
 
 class Game {
 public:
     static TDB *trackDB;
     static TDB *roadDB;
     static SoundList *soundList;
+    static TerrainLib *terrainLib;
     
     static QString AppVersion;
     static QString AppDataVersion;
@@ -41,6 +43,7 @@ public:
     static QString routeName;
     static QString trkName;
     static QString mainWindowLayout;
+    static bool useQuadTree;
     static float objectLod;
     static int tileLod;
     static int allowObjLag;

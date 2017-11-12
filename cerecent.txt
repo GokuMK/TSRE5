@@ -1,3 +1,4 @@
 c:/ts
 f:/train simulator
 f:/tst
+f:/train simulator bernina

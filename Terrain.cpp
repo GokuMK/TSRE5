@@ -22,10 +22,27 @@
 #include "Route.h"
 #include "Environment.h"
 #include "AboutWindow.h"
+#include "TerrainInfo.h"
 
+QString Terrain::TileDir[2] = {"tiles", "lo_tiles"};
 Brush* Terrain::DefaultBrush = NULL;
 
+Terrain::Terrain(TerrainInfo *ti){
+    mojex = ti->cx;
+    mojez = -ti->cy;
+    name = ti->name;
+    lowTile = ti->low;
+    load();
+}
+
 Terrain::Terrain(float x, float y) {
+    mojex = x;
+    mojez = y;
+    name = getTileName((int) x, (int) -y);
+    load();
+}
+
+void Terrain::load(){
     typeObj = this->terrainobj;
     loaded = false;
     isOgl = false;
@@ -42,23 +59,22 @@ Terrain::Terrain(float x, float y) {
     }
     VBO = new QOpenGLBuffer();
     VAO = new QOpenGLVertexArrayObject();
-    mojex = x;
-    mojez = y;
+
     texturepath = Game::root + "/routes/" + Game::route + "/terrtex/";
-    QString path = Game::root + "/routes/" + Game::route + "/tiles/";
+    QString path = Game::root + "/routes/" + Game::route + "/" + TileDir[(int)lowTile] + "/";
     tfile = new TFile();
 
-    QString filename = getTileName((int) x, (int) -y);
+    //QString filename = getTileName((int) x, (int) -y);
     //QString filename = getTileNameExperimental2((int) x, (int) -y);
     //qDebug() << filename << x << -y;
-    if (!tfile->readT((path + filename + ".t"))) {
-        //qDebug() << " t fail";
+    if (!tfile->readT((path + name + ".t"))) {
+        qDebug() << " t fail" << name;
         return;
     }
     if(tfile->sampleYbuffer == NULL)
         return;
     if (!readRAW((path + *tfile->sampleYbuffer/* + "_y.raw"*/))) {
-        //qDebug() << " y fail";
+        //qDebug() << " y fail" << name;
         return;
     }
     if(tfile->sampleFbuffer != NULL)
@@ -66,16 +82,22 @@ Terrain::Terrain(float x, float y) {
     modifiedF = false;
     //qDebug() << " ok";
     
-    QString name = this->getTileName(mojex, -mojez);
+    //QString name = this->getTileName(mojex, -mojez);
     QString name2;
-    for (int u = 0; u < 16; u++)
-        for (int y = 0; y < 16; y++) {
+    //int samples = 
+    int patches = tfile->patchsetNpatches;
+    for (int u = 0; u < patches; u++)
+        for (int y = 0; y < patches; y++) {
             name2 = name + "_" + QString::number(y) + "_" + QString::number(u) + ".ace";
             //qDebug() << name2 << (int) tfile->tdata[(y * 16 + u)*13 + 0 + 6];
             //qDebug() << tfile->materialsCount;
             //qDebug() << tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0];
-            if (name2 == *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0])
-                this->uniqueTex[y*16+u] = true;
+            //qDebug() << name << patches << tfile->materialsCount << (int) tfile->tdata[(y * patches + u)*13 + 0 + 6];
+            if (tfile->materialsCount <= (int) tfile->tdata[(y * patches + u)*13 + 0 + 6])
+                continue;
+            
+            if (name2 == *tfile->materials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0])
+                this->uniqueTex[y*patches+u] = true;
         }
     
     loaded = true;
@@ -157,7 +179,8 @@ void Terrain::saveEmpty(int x, int y) {
 }
 
 QString Terrain::getTileName(){
-    return getTileName(mojex, -mojez);
+    return name;
+    //return getTileName(mojex, -mojez);
 }
 
 QString Terrain::getTileNameExperimental(int x, int y){
@@ -264,17 +287,10 @@ void Terrain::toggleGaps(int x, int z, float posx, float posz, float direction){
 }
 
 int Terrain::getTexture(int x, int z, float posx, float posz) {
+    getPatchCoords(x, z, posx, posz);
+    int patches = tfile->patchsetNpatches;
 
-    int u = (posx + 1024) / 128;
-    int y = (posz + 1024) / 128;
-    //hidden[y*16 + u] = true;
-    float tx = posx + 1024 - u * 128;
-    float tz = posz + 1024 - y * 128;
-    tx /= 128;
-    tz /= 128;
-    qDebug() << tx << " " << tz;
-
-    return texid[y * 16 + u];
+    return texid[z * patches + x];
 }
 
 void Terrain::convertTexToDefaultCoords(int idx) {
@@ -541,7 +557,8 @@ void Terrain::removeTextureFromMap(){
 }
 
 void Terrain::setWaterDraw() {
-    for (int uu = 0; uu < 256; uu++) {
+    int patches = tfile->patchsetNpatches;
+    for (int uu = 0; uu < patches*patches; uu++) {
         if(selectedPatchs[uu]){
             tfile->flags[uu] = tfile->flags[uu] | 0x10000c0;
             this->setModified(true);
@@ -550,7 +567,8 @@ void Terrain::setWaterDraw() {
 }
 
 void Terrain::toggleWaterDraw() {
-    for (int uu = 0; uu < 256; uu++) {
+    int patches = tfile->patchsetNpatches;
+    for (int uu = 0; uu < patches*patches; uu++) {
         if(selectedPatchs[uu]){
             tfile->flags[uu] = tfile->flags[uu] ^ 0x10000c0;
             this->setModified(true);
@@ -559,7 +577,8 @@ void Terrain::toggleWaterDraw() {
 }
 
 void Terrain::hideWaterDraw() {
-    for (int uu = 0; uu < 256; uu++) {
+    int patches = tfile->patchsetNpatches;
+    for (int uu = 0; uu < patches*patches; uu++) {
         if(selectedPatchs[uu]){
             tfile->flags[uu] = tfile->flags[uu] & ~0x10000c0;
             this->setModified(true);
@@ -568,21 +587,14 @@ void Terrain::hideWaterDraw() {
 }
 
 void Terrain::toggleWaterDraw(int x, int z, float posx, float posz, float direction) {
-    int u = (posx + 1024) / 128;
-    int y = (posz + 1024) / 128;
-    //hidden[y*16 + u] = true;
-    float tx = posx + 1024 - u * 128;
-    float tz = posz + 1024 - y * 128;
-    tx /= 128;
-    tz /= 128;
-    qDebug() << tx << " " << tz;
-    //qDebug() << tfile->erroeBias[y * 16 + u];
+    getPatchCoords(x, z, posx, posz);
+    int patches = tfile->patchsetNpatches;
     if(direction == 0)
-        tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x10000c0;
+        tfile->flags[z * patches + x] = tfile->flags[z * patches + x] ^ 0x10000c0;
     if(direction == 1)
-        tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] | 0x10000c0;
+        tfile->flags[z * patches + x] = tfile->flags[z * patches + x] | 0x10000c0;
     if(direction == -1)
-        tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] & ~0x10000c0;
+        tfile->flags[z * patches + x] = tfile->flags[z * patches + x] & ~0x10000c0;
     this->setModified(true);
 }
 
@@ -743,11 +755,12 @@ void Terrain::setPatchTexTransform(QString val){
 void Terrain::removeAllGaps(){
     if(!jestF)
         return;
-    for (int uu = 0; uu < 256; uu++) {
+    int patches = tfile->patchsetNpatches;
+    for (int uu = 0; uu < patches*patches; uu++) {
         if(selectedPatchs[uu]){
-            int u = uu / 16;
-            int y = uu - u*16;
-
+            int u = uu / patches;
+            int y = uu - u*patches;
+            // to do qt
             for(int i = 0; i < 16; i++)
                 for(int j = 0; j < 16; j++)
                     fData[u*16+i][y*16+j] &= ~(0x04);
@@ -759,7 +772,8 @@ void Terrain::removeAllGaps(){
 }
     
 void Terrain::setDraw() {
-    for (int uu = 0; uu < 256; uu++) {
+    int patches = tfile->patchsetNpatches;
+    for (int uu = 0; uu < patches*patches; uu++) {
         if(selectedPatchs[uu]){
             tfile->flags[uu] = tfile->flags[uu] & ~0x1;
             this->setModified(true);
@@ -768,7 +782,8 @@ void Terrain::setDraw() {
 }
 
 void Terrain::toggleDraw() {
-    for (int uu = 0; uu < 256; uu++) {
+    int patches = tfile->patchsetNpatches;
+    for (int uu = 0; uu < patches*patches; uu++) {
         if(selectedPatchs[uu]){
             tfile->flags[uu] = tfile->flags[uu] ^ 0x1;
             this->setModified(true);
@@ -777,7 +792,8 @@ void Terrain::toggleDraw() {
 }
 
 void Terrain::hideDraw() {
-    for (int uu = 0; uu < 256; uu++) {
+    int patches = tfile->patchsetNpatches;
+    for (int uu = 0; uu < patches*patches; uu++) {
         if(selectedPatchs[uu]){
             tfile->flags[uu] = tfile->flags[uu] | 0x1;
             this->setModified(true);
@@ -786,17 +802,9 @@ void Terrain::hideDraw() {
 }
 
 void Terrain::toggleDraw(int x, int z, float posx, float posz) {
-
-    int u = (posx + 1024) / 128;
-    int y = (posz + 1024) / 128;
-    //hidden[y*16 + u] = true;
-    float tx = posx + 1024 - u * 128;
-    float tz = posz + 1024 - y * 128;
-    tx /= 128;
-    tz /= 128;
-    qDebug() << tx << " " << tz;
-    qDebug() << tfile->flags[y * 16 + u];
-    tfile->flags[y * 16 + u] = tfile->flags[y * 16 + u] ^ 0x1;
+    getPatchCoords(x, z, posx, posz);
+    int patches = tfile->patchsetNpatches;
+    tfile->flags[z * patches + x] = tfile->flags[z * patches + x] ^ 0x1;
     this->setModified(true);
 }
 
@@ -877,11 +885,11 @@ void Terrain::setAvgWaterLevel(float val){
 }
 
 void Terrain::getAdjacentWaterLevels(float* w){
-    TerrainLib::fillWaterLevels(w, mojex, mojez);
+    Game::terrainLib->fillWaterLevels(w, mojex, mojez);
 }
 
 void Terrain::setAdjacentWaterLevels(float* w){
-    TerrainLib::setWaterLevels(w, mojex, mojez);
+    Game::terrainLib->setWaterLevels(w, mojex, mojez);
 }
 
 void Terrain::setWaterLevelGui(){
@@ -913,6 +921,40 @@ void Terrain::setWaterLevel(float nw, float ne, float sw, float se){
     refreshWaterShapes();
 }
 
+float Terrain::getHeight(int x, int z, float posx, float posz, bool addR){
+    if ((posx + 1024) / 8 + 1 > 256 || (posz + 1024) / 8 + 1 > 256)
+        return terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
+    
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    float tileSize = sampleSize*samples;
+
+    posx -= 2048 * (mojex-x) - 1024;
+    posz -= 2048 * (mojez-z) + 1024;
+    posz = tileSize + posz;
+
+    float tx = (posx / sampleSize) - (float) floor(posx / sampleSize);
+    float tz = (posz / sampleSize) - (float) floor(posz / sampleSize);
+    
+    float roznica = 0;
+    //return 0;
+
+    if (addR) {
+        roznica = 0.25 * (terrainData[(int) (posz) / sampleSize][(int) (posx) / sampleSize] +
+                terrainData[(int) (posz) / sampleSize + 1][(int) (posx) / sampleSize + 1] +
+                terrainData[(int) (posz) / sampleSize + 1][(int) (posx) / sampleSize] +
+                terrainData[(int) (posz) / sampleSize][(int) (posx) / sampleSize + 1]) -
+                0.5f * (terrainData[(int) (posz) / sampleSize][(int) (posx) / sampleSize] +
+                terrainData[(int) (posz) / sampleSize + 1][(int) (posx) / sampleSize + 1]);
+    }
+    return (
+            terrainData[(int) (posz) / sampleSize][(int) (posx) / sampleSize]*(1.0 - tx)*(1.0 - tz) +
+            terrainData[(int) (posz) / sampleSize][(int) (posx) / sampleSize + 1]*(tx)*(1.0 - tz) +
+            terrainData[(int) (posz) / sampleSize + 1][(int) (posx) / sampleSize]*(1.0 - tx)*(tz) +
+            terrainData[(int) (posz) / sampleSize + 1][(int) (posx) / sampleSize + 1]*(tx)*(tz)
+            + fabs(roznica));
+}
+
 void Terrain::refreshWaterShapes(){
     for (WaterTile* wt : water){
         if(wt == NULL)
@@ -926,17 +968,52 @@ void Terrain::refreshWaterShapes(){
     this->setModified(true);
 }
 
-void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
+bool Terrain::isXYinside(int x, int y){
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    float tileSize = sampleSize*samples;
+    int patches = tfile->patchsetNpatches;
+    int patchSize = tileSize/patches;
+    float posx = 0, posz = 0;
+    posx -= 2048 * (mojex-x) - 1024;
+    posz -= 2048 * (mojez-y) + 1024;
+    posz = tileSize + posz;
 
-    int u = (posx + 1024) / 128;
-    int y = (posz + 1024) / 128;
-    //hidden[y*16 + u] = true;
-    //float tx = posx + 1024 - u * 128;
-    //float tz = posz + 1024 - y * 128;
-    //tx /= 128;
-    //tz /= 128;
-    //qDebug() << tx << " " << tz;
-    setTexture(brush, y*16 + u);
+    if(posx < 0 || posz < 0 || posx > tileSize || posz > tileSize )
+        return false;
+    return true;
+}
+
+void Terrain::getLocalCoords(int x, int z, float &posx, float &posz){
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    float tileSize = sampleSize*samples;
+    int patches = tfile->patchsetNpatches;
+    int patchSize = tileSize/patches;
+    posx -= 2048 * (mojex-x) - 1024;
+    posz -= 2048 * (mojez-z) + 1024;
+    posz = tileSize + posz;
+}
+
+void Terrain::getPatchCoords(int &x, int &z, float &posx, float &posz){
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    float tileSize = sampleSize*samples;
+    int patches = tfile->patchsetNpatches;
+    int patchSize = tileSize/patches;
+    posx -= 2048 * (mojex-x) - 1024;
+    posz -= 2048 * (mojez-z) + 1024;
+    posz = tileSize + posz;
+    
+    x = posx / patchSize;
+    z = posz / patchSize;
+}
+
+void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
+    getPatchCoords(x, z, posx, posz);
+
+    int patches = tfile->patchsetNpatches;
+    setTexture(brush, z*patches + x);
 }
 
 void Terrain::setTexture(Brush* brush, int u) {
@@ -1046,15 +1123,9 @@ void Terrain::paintTexture(Brush* brush, int x, int z, float posx, float posz) {
 }
 
 void Terrain::lockTexture(Brush* brush, int x, int z, float posx, float posz) {
-
-    int u = (posx + 1024) / 128;
-    int y = (posz + 1024) / 128;
-    //hidden[y*16 + u] = true;
-    float tx = posx + 1024 - u * 128;
-    float tz = posz + 1024 - y * 128;
-    //tx/= 128;
-    //tz/= 128;
-    texLocked[y * 16 + u] = !texLocked[y * 16 + u];
+    getPatchCoords(x, z, posx, posz);
+    int patches = tfile->patchsetNpatches;
+    texLocked[z * patches + x] = !texLocked[z * patches + x];
     reloadLines();
 }
 
@@ -1088,11 +1159,11 @@ void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
     this->modified = true;
 }
 
-void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int selectionColor) {
+void Terrain::render(float lodx, float lodz, int tileX, int tileY, float* playerW, float* target, float fov, int selectionColor) {
     if (!loaded)
         return;
     if (!isOgl) {
-        TerrainLib::fillRAW(terrainData, (int) mojex, (int) mojez);
+        Game::terrainLib->fillRaw(terrainData, (int) mojex, (int) mojez);
         vertexInit();
         normalInit();
         oglInit();
@@ -1104,7 +1175,20 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     if (!lines.loaded) {
         reloadLines();
     }
-
+    
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    int patches = tfile->patchsetNpatches;
+    int patchRes = samples/patches;
+    
+    //qDebug() << 2048 * (mojex-tileX) << 2048 * (mojez-tileY);
+    if(mojex-tileX != 0 || mojez-tileY != 0){
+        //qDebug() << mojex << mojez;
+        //qDebug() << mojex-tileX << mojez-tileY;
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * (mojex-tileX) , 0, 2048 * (mojez-tileY) );
+    }
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, -1024, 0, 1024-sampleSize*samples);
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
     gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
     gluu->currentMsMatrinxHash = 0;//gluu->getMatrixHash(gluu->objStrMatrix);
     if(Game::viewWorldGrid && selectionColor == 0)
@@ -1126,11 +1210,11 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
         
     if(Game::viewTerrainShape && (!(showBlob && MapWindow::isAlpha == 0) || selectionColor != 0)){
         float shaderSecondTexUV = 0;
-        for (int uu = 0; uu < 16; uu++) {
-            for (int yy = 0; yy < 16; yy++) {
-                if (hidden[yy * 16 + uu]) continue;
-                if ((tfile->flags[yy * 16 + uu] & 1) != 0) continue;
-                float lodxx = lodx + uu * 128 - 1024;
+        for (int uu = 0; uu < patches; uu++) {
+            for (int yy = 0; yy < patches; yy++) {
+                if (hidden[yy * patches + uu]) continue;
+                if ((tfile->flags[yy * patches + uu] & 1) != 0) continue;
+                /*float lodxx = lodx + uu * 128 - 1024;
                 float lodzz = lodz + yy * 128 - 1024;
                 lod = sqrt(lodxx * lodxx + lodzz * lodzz);
                 //System.out.println("-- "+lodxx+" "+lodzz);
@@ -1152,48 +1236,55 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                     float ccos = cos(fov) + zz;
                     float xxx = sqrt(2 * d2 * d2 * (1 - ccos));
                     if ((ccos > 0) && (xxx > size)) continue;
-                }
+                }*/
 
                 if(selectionColor != 0){
-                    int tselectionColor = selectionColor | (yy * 16 + uu);
+                    int tselectionColor = selectionColor | (yy * patches + uu);
                     int wColor = (int)(tselectionColor/65536);
                     int sColor = (int)(tselectionColor - wColor*65536)/256;
                     int bColor = (int)(tselectionColor - wColor*65536 - sColor*256);
                     gluu->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
                 } else {
-                    if (texid[yy * 16 + uu] == -2) {
+                    if (texid[yy * patches + uu] == -2) {
                     } else {
-                        if (texid[yy * 16 + uu] == -1) {
+                        if (texid[yy * patches + uu] == -1) {
                             //texid[uu*16+yy] = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
                             //qDebug() << texturepath << " "<<tfile->tdata[(yy * 16 + uu)*7+0] <<" "<< tfile->materials[(int)tfile->tdata[(yy * 16 + uu)*7+0]].tex[0];
-                            texid[yy * 16 + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].tex[0]);
-                            //System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
+                            if (tfile->materialsCount <= (int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]){
+                                texid[yy * patches + uu] = -2;
+                                return;
+                            } else {
+                                texid[yy * patches + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]].tex[0]);
+                            }//System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
                             //texid = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
                             //    gl.glDisable(GL2.GL_TEXTURE_2D);
                         }
-                        if (TexLib::mtex[texid[yy * 16 + uu]]->loaded) {
-                            if (!TexLib::mtex[texid[yy * 16 + uu]]->glLoaded)
-                                TexLib::mtex[texid[yy * 16 + uu]]->GLTextures();
+                        if (TexLib::mtex[texid[yy * patches + uu]]->loaded) {
+                            if (!TexLib::mtex[texid[yy * patches + uu]]->glLoaded)
+                                TexLib::mtex[texid[yy * patches + uu]]->GLTextures();
                             f->glActiveTexture(GL_TEXTURE0);
                             //f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
-                            gluu->bindTexture(f, TexLib::mtex[texid[yy * 16 + uu]]->tex[0]);
+                            gluu->bindTexture(f, TexLib::mtex[texid[yy * patches + uu]]->tex[0]);
                         } else {
                         }
                     }
-                    if (texid2[yy * 16 + uu] == -2) {
-                    } else if (tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].count153 < 2){
-                            texid2[yy * 16 + uu] = -2;
+                    if (texid2[yy * patches + uu] == -2) {
+                    } else if (tfile->materials[(int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]].count153 < 2){
+                            texid2[yy * patches + uu] = -2;
                     } else {
-                        if (texid2[yy * 16 + uu] == -1) {
-                            texid2[yy * 16 + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].tex[1]);
+                        if (texid2[yy * patches + uu] == -1) {
+                            if (tfile->materialsCount <= (int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6])
+                                texid[yy * patches + uu] = -2;
+                            else
+                                texid2[yy * patches + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]].tex[1]);
                         }
-                        if (TexLib::mtex[texid2[yy * 16 + uu]]->loaded) {
-                            if (!TexLib::mtex[texid2[yy * 16 + uu]]->glLoaded)
-                                TexLib::mtex[texid2[yy * 16 + uu]]->GLTextures(true);
+                        if (TexLib::mtex[texid2[yy * patches + uu]]->loaded) {
+                            if (!TexLib::mtex[texid2[yy * patches + uu]]->glLoaded)
+                                TexLib::mtex[texid2[yy * patches + uu]]->GLTextures(true);
                             f->glActiveTexture(GL_TEXTURE1);
-                            f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid2[yy * 16 + uu]]->tex[0]);
-                            if(shaderSecondTexUV != *(float*)&tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].itex[1][3]){
-                                shaderSecondTexUV = *(float*)&tfile->materials[(int) tfile->tdata[(yy * 16 + uu)*13 + 0 + 6]].itex[1][3];
+                            f->glBindTexture(GL_TEXTURE_2D, TexLib::mtex[texid2[yy * patches + uu]]->tex[0]);
+                            if(shaderSecondTexUV != *(float*)&tfile->materials[(int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]].itex[1][3]){
+                                shaderSecondTexUV = *(float*)&tfile->materials[(int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]].itex[1][3];
                                 gluu->currentShader->setUniformValue(gluu->currentShader->shaderSecondTexEnabled, shaderSecondTexUV);
                             }
                         } else {
@@ -1201,7 +1292,7 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
                     }
                 }
                 
-                f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
+                f->glDrawArrays(GL_TRIANGLES, (uu * patches + yy) * patchRes * patchRes * 6, patchRes * patchRes * 6);
             }
         }
         f->glActiveTexture(GL_TEXTURE0);
@@ -1214,16 +1305,16 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0.05, 0);
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-        for (int uu = 0; uu < 16; uu++) {
-            for (int yy = 0; yy < 16; yy++) {
-                if (hidden[yy * 16 + uu]) continue;
-                if ((tfile->flags[yy * 16 + uu] & 1) != 0) continue;
+        for (int uu = 0; uu < patches; uu++) {
+            for (int yy = 0; yy < patches; yy++) {
+                if (hidden[yy * patches + uu]) continue;
+                if ((tfile->flags[yy * patches + uu] & 1) != 0) continue;
                 float lodxx = lodx + uu * 128 - 1024;
                 float lodzz = lodz + yy * 128 - 1024;
                 lod = sqrt(lodxx * lodxx + lodzz * lodzz);
                 if(Game::viewTerrainShape)
                     if (lod > 300) continue;
-                f->glDrawArrays(GL_TRIANGLES, (uu * 16 + yy) * 16 * 16 * 6, 16 * 16 * 6);
+                f->glDrawArrays(GL_TRIANGLES, (uu * patches + yy) * patchRes * patchRes * 6, patchRes * patchRes * 6);
             }
         }
         gluu->mvPopMatrix();
@@ -1249,50 +1340,67 @@ void Terrain::render(float lodx, float lodz, float * playerT, float* playerW, fl
     //    renderWater(lodx, lodz, playerT, playerW, target, fov);
 }
 
-void Terrain::renderWater(float lodx, float lodz, float * playerT, float* playerW, float* target, float fov, int layer, int selectionColor) {
+void Terrain::renderWater(float lodx, float lodz, float tileX, float tileY, float* playerW, float* target, float fov, int layer, int selectionColor) {
     float lod;
     if(showBlob)
         return;
     float alpha = 0;
+    
+    GLUU* gluu = GLUU::get();
+    
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    int patches = tfile->patchsetNpatches;
+    int patchRes = samples/patches;
+    int tileSize = (sampleSize*samples);
+    int patchSize = tileSize/patches;
+    
+    if(mojex-tileX != 0 || mojez-tileY != 0){
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * (mojex-tileX) , 0, 2048 * (mojez-tileY) );
+    }
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, -1024, 0, 1024-sampleSize*samples);
+    gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+    gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->objStrMatrix));
+
     
     if(water[layer] == NULL)
         water[layer] = new WaterTile();
     OglObj *w = water[layer]->w;
     
     int tselectionColor = 0;
-    for (int uu = 0; uu < 16; uu++) {
-        for (int yy = 0; yy < 16; yy++) {
-            if (hidden[yy * 16 + uu]) continue;
-            float lodxx = lodx + uu * 128 - 1024;
+    for (int uu = 0; uu < patches; uu++) {
+        for (int yy = 0; yy < patches; yy++) {
+            if (hidden[yy * patches + uu]) continue;
+            /*float lodxx = lodx + uu * 128 - 1024;
             float lodzz = lodz + yy * 128 - 1024;
             lod = sqrt(lodxx * lodxx + lodzz * lodzz);
             //System.out.println("-- "+lodxx+" "+lodzz);
-            if (lod > Game::objectLod) continue;
+            if (lod > Game::objectLod) continue;*/
             
-            if ((tfile->flags[yy * 16 + uu] & 0xc0) != 0) {
+            if ((tfile->flags[yy * patches + uu] & 0xc0) != 0) {
 
-                if (!w[uu * 16 + yy].loaded) {
+                if (!w[uu * patches + yy].loaded) {
 
-                    float x1 = (uu)*128 - 1024;
-                    float x2 = (uu + 1)*128 - 1024;
-                    float z1 = (yy)*128 - 1024;
-                    float z2 = (yy + 1)*128 - 1024;
-                    float x1z1 = (((x1 + 1024)*(z1 + 1024)) / (2048 * 2048)) * tfile->WSE +
-                            (((1024 - x1)*(z1 + 1024)) / (2048 * 2048)) * tfile->WSW +
-                            (((1024 - x1)*(1024 - z1)) / (2048 * 2048)) * tfile->WNW +
-                            (((x1 + 1024)*(1024 - z1)) / (2048 * 2048)) * tfile->WNE;
-                    float x2z1 = (((x2 + 1024)*(z1 + 1024)) / (2048 * 2048)) * tfile->WSE +
-                            (((1024 - x2)*(z1 + 1024)) / (2048 * 2048)) * tfile->WSW +
-                            (((1024 - x2)*(1024 - z1)) / (2048 * 2048)) * tfile->WNW +
-                            (((x2 + 1024)*(1024 - z1)) / (2048 * 2048)) * tfile->WNE;
-                    float x1z2 = (((x1 + 1024)*(z2 + 1024)) / (2048 * 2048)) * tfile->WSE +
-                            (((1024 - x1)*(z2 + 1024)) / (2048 * 2048)) * tfile->WSW +
-                            (((1024 - x1)*(1024 - z2)) / (2048 * 2048)) * tfile->WNW +
-                            (((x1 + 1024)*(1024 - z2)) / (2048 * 2048)) * tfile->WNE;
-                    float x2z2 = (((x2 + 1024)*(z2 + 1024)) / (2048 * 2048)) * tfile->WSE +
-                            (((1024 - x2)*(z2 + 1024)) / (2048 * 2048)) * tfile->WSW +
-                            (((1024 - x2)*(1024 - z2)) / (2048 * 2048)) * tfile->WNW +
-                            (((x2 + 1024)*(1024 - z2)) / (2048 * 2048)) * tfile->WNE;
+                    float x1 = (uu)*patchSize;
+                    float x2 = (uu + 1)*patchSize;
+                    float z1 = (yy)*patchSize;
+                    float z2 = (yy + 1)*patchSize;
+                    float x1z1 = (((x1)*(z1)) / (tileSize * tileSize)) * tfile->WSE +
+                            (((tileSize - x1)*(z1)) / (tileSize * tileSize)) * tfile->WSW +
+                            (((tileSize - x1)*(tileSize - z1)) / (tileSize * tileSize)) * tfile->WNW +
+                            (((x1)*(tileSize - z1)) / (tileSize * tileSize)) * tfile->WNE;
+                    float x2z1 = (((x2)*(z1 )) / (tileSize * tileSize)) * tfile->WSE +
+                            (((tileSize - x2)*(z1 )) / (tileSize * tileSize)) * tfile->WSW +
+                            (((tileSize - x2)*(tileSize - z1)) / (tileSize * tileSize)) * tfile->WNW +
+                            (((x2)*(tileSize - z1)) / (tileSize * tileSize)) * tfile->WNE;
+                    float x1z2 = (((x1 )*(z2 )) / (tileSize * tileSize)) * tfile->WSE +
+                            (((tileSize - x1)*(z2)) / (tileSize * tileSize)) * tfile->WSW +
+                            (((tileSize - x1)*(tileSize - z2)) / (tileSize * tileSize)) * tfile->WNW +
+                            (((x1)*(tileSize - z2)) / (tileSize * tileSize)) * tfile->WNE;
+                    float x2z2 = (((x2)*(z2)) / (tileSize * tileSize)) * tfile->WSE +
+                            (((tileSize - x2)*(z2)) / (tileSize * tileSize)) * tfile->WSW +
+                            (((tileSize - x2)*(tileSize - z2)) / (tileSize * tileSize)) * tfile->WNW +
+                            (((x2)*(tileSize - z2)) / (tileSize * tileSize)) * tfile->WNE;
 
                     float *punkty = new float[54];
                     int ptr = 0;
@@ -1358,13 +1466,13 @@ void Terrain::renderWater(float lodx, float lodz, float * playerT, float* player
                     punkty[ptr++] = alpha;
                     //QString *texturePath = new QString("resources/woda.ace");
                     //water[uu * 16 + yy].setMaterial(texturePath);
-                    w[uu * 16 + yy].setMaterial(&Game::currentRoute->env->water[layer].tex);
-                    w[uu * 16 + yy].init(punkty, ptr, w[uu * 16 + yy].VNT, GL_TRIANGLES);
+                    w[uu * patches + yy].setMaterial(&Game::currentRoute->env->water[layer].tex);
+                    w[uu * patches + yy].init(punkty, ptr, w[uu * patches + yy].VNT, GL_TRIANGLES);
                     delete punkty;
                 }
                 if(selectionColor != 0)
-                    tselectionColor = selectionColor | (yy * 16 + uu);
-                w[uu * 16 + yy].render(tselectionColor);
+                    tselectionColor = selectionColor | (yy * patches + uu);
+                w[uu * patches + yy].render(tselectionColor);
             }
         }
     }
@@ -1376,67 +1484,74 @@ void Terrain::reloadLines() {
     int ptr = 0;
     int i = 0;
 
-    for (i = 0; i < 256; i++) {
-        punkty[ptr++] = -1024;
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    int patches = tfile->patchsetNpatches;
+    int patchSize = (samples*sampleSize)/patches;
+    int min = 0;
+    int max = sampleSize * samples;
+    
+    for (i = 0; i < samples; i++) {
+        punkty[ptr++] = min;
         punkty[ptr++] = 1 + terrainData[i][0];
-        punkty[ptr++] = -1024 + i * 8;
-        punkty[ptr++] = -1024;
+        punkty[ptr++] = min + i *sampleSize;
+        punkty[ptr++] = min;
         punkty[ptr++] = 1 + terrainData[i + 1][0];
-        punkty[ptr++] = -1024 + i * 8 + 8;
+        punkty[ptr++] = min + i *sampleSize +sampleSize;
     }
 
-    for (i = 0; i < 256; i++) {
-        punkty[ptr++] = -1024 + i * 8;
+    for (i = 0; i < samples; i++) {
+        punkty[ptr++] = min + i *sampleSize;
         punkty[ptr++] = 1 + terrainData[0][i];
-        punkty[ptr++] = -1024;
-        punkty[ptr++] = -1024 + i * 8 + 8;
+        punkty[ptr++] = min;
+        punkty[ptr++] = min + i *sampleSize +sampleSize;
         punkty[ptr++] = 1 + terrainData[0][i + 1];
-        punkty[ptr++] = -1024;
+        punkty[ptr++] = min;
     }
 
-    for (i = 0; i < 256; i++) {
-        punkty[ptr++] = 1024;
-        punkty[ptr++] = 1 + terrainData[i][256];
-        punkty[ptr++] = -1024 + i * 8;
-        punkty[ptr++] = 1024;
-        punkty[ptr++] = 1 + terrainData[i + 1][256];
-        punkty[ptr++] = -1024 + i * 8 + 8;
+    for (i = 0; i < samples; i++) {
+        punkty[ptr++] = max;
+        punkty[ptr++] = 1 + terrainData[i][samples];
+        punkty[ptr++] = min + i *sampleSize;
+        punkty[ptr++] = max;
+        punkty[ptr++] = 1 + terrainData[i + 1][samples];
+        punkty[ptr++] = min + i *sampleSize +sampleSize;
     }
 
-    for (i = 0; i < 256; i++) {
-        punkty[ptr++] = -1024 + i * 8;
-        punkty[ptr++] = 1 + terrainData[256][i];
-        punkty[ptr++] = 1024;
-        punkty[ptr++] = -1024 + i * 8 + 8;
-        punkty[ptr++] = 1 + terrainData[256][i + 1];
-        punkty[ptr++] = 1024;
+    for (i = 0; i < samples; i++) {
+        punkty[ptr++] = min + i *sampleSize;
+        punkty[ptr++] = 1 + terrainData[samples][i];
+        punkty[ptr++] = max;
+        punkty[ptr++] = min + i *sampleSize +sampleSize;
+        punkty[ptr++] = 1 + terrainData[samples][i + 1];
+        punkty[ptr++] = max;
     }
 
     lines.setMaterial(1.0, 0.0, 0.0);
     lines.init(punkty, ptr, lines.V, GL_LINES);
     delete[] punkty;
     //s tile lines
-    punkty = new float[256 * 32 * 6];
+    punkty = new float[samples * 32 * 6];
     ptr = 0;
     i = 0;
 
-    for (int j = 0; j < 256; j += 16) {
-        for (i = 0; i < 256; i++) {
-            punkty[ptr++] = -1024 + j * 8;
+    for (int j = 0; j < samples; j += 16) {
+        for (i = 0; i < samples; i++) {
+            punkty[ptr++] = min + j *sampleSize;
             punkty[ptr++] = 0.9 + terrainData[i][j];
-            punkty[ptr++] = -1024 + i * 8;
-            punkty[ptr++] = -1024 + j * 8;
+            punkty[ptr++] = min + i *sampleSize;
+            punkty[ptr++] = min + j *sampleSize;
             punkty[ptr++] = 0.9 + terrainData[i + 1][j];
-            punkty[ptr++] = -1024 + i * 8 + 8;
+            punkty[ptr++] = min + i *sampleSize +sampleSize;
         }
 
-        for (i = 0; i < 256; i++) {
-            punkty[ptr++] = -1024 + i * 8;
+        for (i = 0; i < samples; i++) {
+            punkty[ptr++] = min + i *sampleSize;
             punkty[ptr++] = 0.9 + terrainData[j][i];
-            punkty[ptr++] = -1024 + j * 8;
-            punkty[ptr++] = -1024 + i * 8 + 8;
+            punkty[ptr++] = min + j *sampleSize;
+            punkty[ptr++] = min + i *sampleSize +sampleSize;
             punkty[ptr++] = 0.9 + terrainData[j][i + 1];
-            punkty[ptr++] = -1024 + j * 8;
+            punkty[ptr++] = min + j *sampleSize;
         }
     }
     slines.setMaterial(0.5, 0.5, 0.5);
@@ -1450,7 +1565,7 @@ void Terrain::reloadLines() {
         for (int yy = 0; yy < 16; yy++)
             if(this->uniqueTex[uu*16+yy]) ui++;
     
-    punkty = new float[256 * 128 * 6];
+    punkty = new float[samples * 128 * 6];
     ptr = 0;
     i = 0;
     
@@ -1459,36 +1574,36 @@ void Terrain::reloadLines() {
             if(!this->uniqueTex[yy*16+uu]) continue;
             
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = min + uu*patchSize;
                  punkty[ptr++] = 0.95 + terrainData[yy*16+i][uu*16+0];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8;
-                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize;
+                 punkty[ptr++] = min + uu*patchSize;
                  punkty[ptr++] = 0.95 + terrainData[yy*16+ i + 1][uu*16+0];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize +sampleSize;
             }
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize;
                  punkty[ptr++] = 0.95 + terrainData[yy*16+0][uu*16+i];
-                 punkty[ptr++] = -1024 + yy*128;
-                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize +sampleSize;
                  punkty[ptr++] = 0.95 + terrainData[yy*16+0][uu*16+i + 1];
-                 punkty[ptr++] = -1024 + yy*128;
+                 punkty[ptr++] = min + yy*patchSize;
             }
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = min + uu*patchSize+patchSize;
                  punkty[ptr++] = 0.95 + terrainData[yy*16+i][uu*16+16];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8;
-                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize;
+                 punkty[ptr++] = min + uu*patchSize+patchSize;
                  punkty[ptr++] = 0.95 + terrainData[yy*16+ i + 1][uu*16+16];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize +sampleSize;
             }
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize;
                  punkty[ptr++] = 0.95 + terrainData[yy*16+16][uu*16+i];
-                 punkty[ptr++] = -1024 + yy*128+128;
-                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize+patchSize;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize +sampleSize;
                  punkty[ptr++] = 0.95 + terrainData[yy*16+16][uu*16+i + 1];
-                 punkty[ptr++] = -1024 + yy*128+128;
+                 punkty[ptr++] = min + yy*patchSize+patchSize;
             }
         }
     
@@ -1503,7 +1618,7 @@ void Terrain::reloadLines() {
         for (int yy = 0; yy < 16; yy++)
             if(this->texLocked[uu*16+yy]) ui++;
     
-    punkty = new float[256 * 128 * 6];
+    punkty = new float[samples * 128 * 6];
     ptr = 0;
     i = 0;
     
@@ -1512,36 +1627,36 @@ void Terrain::reloadLines() {
             if(!this->texLocked[yy*16+uu]) continue;
             
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = min + uu*patchSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+i][uu*16+0];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8;
-                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize;
+                 punkty[ptr++] = min + uu*patchSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+ i + 1][uu*16+0];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize +sampleSize;
             }
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+0][uu*16+i];
-                 punkty[ptr++] = -1024 + yy*128;
-                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize +sampleSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+0][uu*16+i + 1];
-                 punkty[ptr++] = -1024 + yy*128;
+                 punkty[ptr++] = min + yy*patchSize;
             }
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = min + uu*patchSize+patchSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+i][uu*16+16];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8;
-                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize;
+                 punkty[ptr++] = min + uu*patchSize+patchSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+ i + 1][uu*16+16];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize +sampleSize;
             }
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+16][uu*16+i];
-                 punkty[ptr++] = -1024 + yy*128+128;
-                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize+patchSize;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize +sampleSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+16][uu*16+i + 1];
-                 punkty[ptr++] = -1024 + yy*128+128;
+                 punkty[ptr++] = min + yy*patchSize+patchSize;
             }
         }
     
@@ -1556,7 +1671,7 @@ void Terrain::reloadLines() {
         for (int yy = 0; yy < 16; yy++)
             if(this->selectedPatchs[uu*16+yy]) ui++;
     
-    punkty = new float[256 * 128 * 6];
+    punkty = new float[samples * 128 * 6];
     ptr = 0;
     i = 0;
     
@@ -1565,36 +1680,36 @@ void Terrain::reloadLines() {
             if(!this->selectedPatchs[yy*16+uu]) continue;
             
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = min + uu*patchSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+i][uu*16+0];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8;
-                 punkty[ptr++] = -1024 + uu*128;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize;
+                 punkty[ptr++] = min + uu*patchSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+ i + 1][uu*16+0];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize +sampleSize;
             }
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+0][uu*16+i];
-                 punkty[ptr++] = -1024 + yy*128;
-                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize +sampleSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+0][uu*16+i + 1];
-                 punkty[ptr++] = -1024 + yy*128;
+                 punkty[ptr++] = min + yy*patchSize;
             }
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = min + uu*patchSize+patchSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+i][uu*16+16];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8;
-                 punkty[ptr++] = -1024 + uu*128+128;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize;
+                 punkty[ptr++] = min + uu*patchSize+patchSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+ i + 1][uu*16+16];
-                 punkty[ptr++] = -1024 + yy*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize + i *sampleSize +sampleSize;
             }
             for (i = 0; i < 16; i++) {
-                 punkty[ptr++] = -1024 + uu*128 + i * 8;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+16][uu*16+i];
-                 punkty[ptr++] = -1024 + yy*128+128;
-                 punkty[ptr++] = -1024 + uu*128 + i * 8 + 8;
+                 punkty[ptr++] = min + yy*patchSize+patchSize;
+                 punkty[ptr++] = min + uu*patchSize + i *sampleSize +sampleSize;
                  punkty[ptr++] = 0.99 + terrainData[yy*16+16][uu*16+i + 1];
-                 punkty[ptr++] = -1024 + yy*128+128;
+                 punkty[ptr++] = min + yy*patchSize+patchSize;
             }
         }
     
@@ -1605,27 +1720,33 @@ void Terrain::reloadLines() {
 
 void Terrain::vertexInit() {
     // this.vertexData[0] = new Array();
-    vertexData = new Vector3f*[257];
-    for (int i = 0; i < 257; i++)
-        vertexData[i] = new Vector3f[257];
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
 
-    for (int j = -1024, jj = 0; jj < 256; j += 8, jj++) {
-        for (int i = -1024, ii = 0; ii < 256; i += 8, ii++) {
+    vertexData = new Vector3f*[samples+1];
+    for (int i = 0; i < samples+1; i++)
+        vertexData[i] = new Vector3f[samples+1];
+
+    qDebug() << "min" << sampleSize << samples;
+    for (int j = 0, jj = 0; jj < samples; j += sampleSize, jj++) {
+        for (int i = 0, ii = 0; ii < samples; i += sampleSize, ii++) {
             vertexData[jj][ii].set(j, terrainData[ii][jj], i);
-            vertexData[jj][ii + 1].set(j, terrainData[ii + 1][jj], (i + 8));
-            vertexData[(jj + 1)][ii + 1].set((j + 8), terrainData[(ii + 1)][jj + 1], (i + 8));
-            vertexData[(jj + 1)][ii].set((j + 8), terrainData[(ii)][jj + 1], i);
+            vertexData[jj][ii + 1].set(j, terrainData[ii + 1][jj], (i + sampleSize));
+            vertexData[(jj + 1)][ii + 1].set((j + sampleSize), terrainData[(ii + 1)][jj + 1], (i + sampleSize));
+            vertexData[(jj + 1)][ii].set((j + sampleSize), terrainData[(ii)][jj + 1], i);
         }
     }
 }
 
 void Terrain::normalInit() {
-    normalData = new Vector3f*[257];
-    for (int i = 0; i < 257; i++)
-        normalData[i] = new Vector3f[257];
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    normalData = new Vector3f*[samples+1];
+    for (int i = 0; i < samples+1; i++)
+        normalData[i] = new Vector3f[samples+1];
     Vector3f U, V, O;
-    for (int jj = 0; jj < 256; jj++) {
-        for (int ii = 0; ii < 256; ii++) {
+    for (int jj = 0; jj < samples; jj++) {
+        for (int ii = 0; ii < samples; ii++) {
             U.setFromSub( vertexData[jj][ii], vertexData[jj + 1][ii]);
             V.setFromSub( vertexData[jj][ii], vertexData[jj][ii + 1]);
             O.setFromCross(V, U);
@@ -1641,8 +1762,8 @@ void Terrain::normalInit() {
         }
     }
 
-    for (int jj = 0; jj < 257; jj++) {
-        for (int ii = 0; ii < 257; ii++) {
+    for (int jj = 0; jj < samples+1; jj++) {
+        for (int ii = 0; ii < samples+1; ii++) {
             normalData[jj][ii].normalize();
         }
     }
@@ -1750,22 +1871,27 @@ void Terrain::oglInit() {
     f->glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
     f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (GLfloat), reinterpret_cast<void *> (6 * sizeof (GLfloat)));
     
-    int ilosc = 16 * 16;
-    int suma;
+    //int ilosc = 16 * 16;
+    //int suma;
     float * punkty = new float[16 * 16 * 48];
     //  var punkty = Terrain.punkty;
-    for (int uu = 0; uu < 16; uu++) {
-        for (int yy = 0; yy < 16; yy++) {
+    int samples = *tfile->nsamples;
+    int patches = tfile->patchsetNpatches;
+    int patchRes = samples/patches;
+    float texRes = 1.0;// (float)16.0/patchRes;
+    
+    for (int uu = 0; uu < patches; uu++) {
+        for (int yy = 0; yy < patches; yy++) {
             int ptr = 0;
             bool fi0j0 = true, fi1j0 = true, fi0j1 = true, fi1j1 = true;
 
-            for (int ii = 0; ii < 16; ii++) {
-                for (int jj = 0; jj < 16; jj++) {
+            for (int ii = 0; ii < patchRes; ii++) {
+                for (int jj = 0; jj < patchRes; jj++) {
                     if (jestF) {
-                        fi0j0 = !(((fData[yy * 16 + ii][uu * 16 + jj]) & 0x04) >> 2);
-                        fi0j1 = !(((fData[yy * 16 + ii][uu * 16 + jj + 1]) & 0x04) >> 2);
-                        fi1j1 = !(((fData[yy * 16 + ii + 1][uu * 16 + jj + 1]) &0x04) >> 2);
-                        fi1j0 = !(((fData[yy * 16 + ii + 1][uu * 16 + jj]) & 0x04) >> 2);
+                        fi0j0 = !(((fData[yy * patchRes + ii][uu * patchRes + jj]) & 0x04) >> 2);
+                        fi0j1 = !(((fData[yy * patchRes + ii][uu * patchRes + jj + 1]) & 0x04) >> 2);
+                        fi1j1 = !(((fData[yy * patchRes + ii + 1][uu * patchRes + jj + 1]) &0x04) >> 2);
+                        fi1j0 = !(((fData[yy * patchRes + ii + 1][uu * patchRes + jj]) & 0x04) >> 2);
                     }
                     /*if (jestF) {
                         suma = ((fData[yy * 16 + ii][uu * 16 + jj]) & 0x04);
@@ -1777,120 +1903,120 @@ void Terrain::oglInit() {
                     //if (!jestF || (suma < 4)) {
                         if(((ii+jj) % 2 == 0)){
                             if(fi0j0 && fi1j0 && fi1j1){
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].z;
-                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii].z;
+                            punkty[ptr++] = texRes * (jj * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * (jj * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
 
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = texRes * ((jj) * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * ((jj) * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
 
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
                             }
                             ///////////////////////////////////////////////////////////
                             if(fi0j0 && fi0j1 && fi1j1){
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].z;
-                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii].z;
+                            punkty[ptr++] = texRes * (jj * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * (jj * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
 
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
 
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii].z;
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
                             }
                         }
                         if(((ii+jj) % 2 == 1)){
                             if(fi0j1 && fi1j1 && fi1j0){
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = texRes * ((jj) * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * ((jj) * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
                             
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
 
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii].z;
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
                             }
                             ///////////////////////////////////////////////////////////
                             if(fi0j0 && fi0j1 && fi1j0){
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii].z;
-                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = jj * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii].z;
+                            punkty[ptr++] = texRes * (jj * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + ii * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * (jj * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + ii * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
 
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj)][yy * 16 + ii + 1].z;
-                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = (jj) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii + 1].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii + 1].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj)][yy * patchRes + ii + 1].z;
+                            punkty[ptr++] = texRes * ((jj) * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * ((jj) * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + (ii + 1) * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
 
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
-                            punkty[ptr++] = vertexData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].x;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].y;
-                            punkty[ptr++] = normalData[(uu * 16 + jj + 1)][yy * 16 + ii].z;
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 4 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 1 + 6];
-                            punkty[ptr++] = (jj + 1) * tfile->tdata[(yy * 16 + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * 16 + uu)*13 + 6 + 6] + tfile->tdata[(yy * 16 + uu)*13 + 2 + 6];
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii].x;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii].y;
+                            punkty[ptr++] = vertexData[(uu * patchRes + jj + 1)][yy * patchRes + ii].z;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii].x;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii].y;
+                            punkty[ptr++] = normalData[(uu * patchRes + jj + 1)][yy * patchRes + ii].z;
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 3 + 6] + (ii) * tfile->tdata[(yy * patches + uu)*13 + 4 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 1 + 6];
+                            punkty[ptr++] = texRes * ((jj + 1) * tfile->tdata[(yy * patches + uu)*13 + 5 + 6] + (ii) * tfile->tdata[(yy * patches + uu)*13 + 6 + 6]) + tfile->tdata[(yy * patches + uu)*13 + 2 + 6];
                             }
                         }
                     //}
@@ -1918,7 +2044,7 @@ void Terrain::oglInit() {
             
             //VBO[0]->bind();
             //VBO[0]->
-            VBO->write((uu * 16 + yy) * 16 * 16 * 6 * 8 * sizeof (GLfloat), punkty, 16 * 16 * 6 * 8 * sizeof (GLfloat));
+            VBO->write((uu * patches + yy) * patchRes * patchRes * 6 * 8 * sizeof (GLfloat), punkty, patchRes * patchRes * 6 * 8 * sizeof (GLfloat));
             //VBO[0]->allocate(punkty, 16 * 16 * 6 * 5 * sizeof (GLfloat));
             //f->glEnableVertexAttribArray(0);
             //f->glEnableVertexAttribArray(1);
@@ -1935,7 +2061,8 @@ void Terrain::oglInit() {
     //for (int i = 0; i < 257; i++)
     //    delete normalData[i];
     //delete normalData;
-    for (int i = 0; i < 257; i++){
+
+    for (int i = 0; i < samples+1; i++){
         delete[] vertexData[i];
         delete[] normalData[i];
     }
@@ -1947,12 +2074,14 @@ void Terrain::initBlob(){
     
     GLUU* gluu = GLUU::get();
     float alpha = -0.01;
-    
+    int samples = *tfile->nsamples;
+    int patches = tfile->patchsetNpatches;
+    int patchRes = samples/patches;
     float *punkty = new float[65536 * 54];
     int ptr = 0;
-    float step = 1.0/256;
-    for (int jj = 0; jj < 256; jj++) {
-        for (int ii = 0; ii < 256; ii++) {
+    float step = 1.0/samples;
+    for (int jj = 0; jj < samples; jj++) {
+        for (int ii = 0; ii < samples; ii++) {
             punkty[ptr++] = vertexData[jj][ii].x;
             punkty[ptr++] = vertexData[jj][ii].y+0.00;
             punkty[ptr++] = vertexData[jj][ii].z;
@@ -2026,17 +2155,18 @@ bool Terrain::readRAW(QString fSfile) {
         return false;
     FileBuffer* data = ReadFile::readRAW(&file);
 
+    int samples = *tfile->nsamples;
     //qDebug() << data->length;
-    terrainData = new float*[257];
+    terrainData = new float*[samples+1];
     //int u = 0;
-    for (int i = 0; i < 257; i++) {
-        terrainData[i] = new float[257];
-        for (int j = 0; j < 257; j++) {
-            if (i == 256 && j == 256) {
+    for (int i = 0; i < samples+1; i++) {
+        terrainData[i] = new float[samples+1];
+        for (int j = 0; j < samples+1; j++) {
+            if (i == samples && j == samples) {
                 terrainData[i][j] = terrainData[(i - 1)][j - 1];
-            } else if (i == 256) {
+            } else if (i == samples) {
                 terrainData[i][j] = terrainData[(i - 1)][j];
-            } else if (j == 256) {
+            } else if (j == samples) {
                 terrainData[i][j] = terrainData[i][j - 1];
             } else {
                 terrainData[i][j] = tfile->floor + tfile->scale * (data->get() + 256 * data->get());
@@ -2057,7 +2187,7 @@ void Terrain::fillHeightMap(float* data){
 }
 
 void Terrain::save() {
-    QString path = Game::root + "/routes/" + Game::route + "/tiles/";
+    QString path = Game::root + "/routes/" + Game::route + "/" + TileDir[(int)lowTile] + "/";
     QString filename = getTileName((int) this->mojex, (int) - this->mojez);
     if(this->tfile->sampleYbuffer == NULL)
         this->tfile->sampleYbuffer = new QString(filename + "_y.raw");
@@ -2140,12 +2270,13 @@ bool Terrain::readF(QString fSfile) {
 
     //qDebug() << "Wczytam teren F: " << fSfile << data->length;
 
+    int samples = *tfile->nsamples;
     int u = 0;
-    fData = new unsigned char*[257];
-    for (int j = 0; j < 257; j++) {
-        fData[j] = new unsigned char[257];
-        for (int i = 0; i < 257; i++) {
-            if (i == 256 || j == 256)
+    fData = new unsigned char*[samples+1];
+    for (int j = 0; j < samples+1; j++) {
+        fData[j] = new unsigned char[samples+1];
+        for (int i = 0; i < samples+1; i++) {
+            if (i == samples || j == samples)
                 fData[j][i] = 0;
             else
                 fData[j][i] = data->data[u++];
