@@ -49,6 +49,8 @@ public:
     void refresh();
     bool isModified();
     void setModified(bool value);
+    int getSampleCount();
+    void setHeight(int x, int z, float posx, float posz, float val);
     void setFixedHeight(float val);
     void paintTexture(Brush* brush, int x, int z, float posx, float posz);
     void lockTexture(Brush* brush, int x, int z, float posx, float posz);
@@ -92,7 +94,7 @@ public:
     void setPatchTexTransform(QString val);
     void removeAllGaps();
     void toggleGaps(int x, int z, float posx, float posz, float direction);
-    void setErrorBias(int x, int z, float val);
+    void setErrorBias(int x, int z, float posx, float posz, float val);
     float getErrorBias();
     void setErrorBias(float val);
     void setTileBlob();
@@ -111,6 +113,7 @@ public:
     void render(float lodx, float lodz, int tileX, int tileY, float* playerW, float* target, float fov, int selectionColor);
     void renderWater(float lodx, float lodz, float tileX, float tileY, float* playerW, float* target, float fov, int layer, int selectionColor = 0);
     void refreshWaterShapes();
+    void getRotation(float *rot, int x, int z, int posx, int posz);
     float getHeight(int x, int z, float posx, float posz, bool addR);
     
 public slots:

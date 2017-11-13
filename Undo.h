@@ -49,7 +49,7 @@ public:
     static void StateBeginIfNotExist();
     static void StateEnd();
     static void StateEndIfLongTime();
-    static void PushTerrainHeightMap(int x, int z, float **data);
+    static void PushTerrainHeightMap(int x, int z, float **data, int samples);
     static void PushTextureData(int id, unsigned char *data, unsigned int size);
     static void PushGameObjData(GameObj* obj);
     static void PushWorldObjData(WorldObj* obj);

@@ -185,19 +185,20 @@ void Undo::StateEnd(){
     //qDebug() << "undo end";
 }
 
-void Undo::PushTerrainHeightMap(int x, int z, float** data){
+void Undo::PushTerrainHeightMap(int x, int z, float** data, int samples){
     if(currentState == NULL)
         return;
     
+    samples += 1;
     UndoState::TerrainData * tdata = currentState->terrainData[x*10000+z];
     if(tdata == NULL){
         currentState->terrainData[x*10000+z] = new UndoState::TerrainData();
         tdata = currentState->terrainData[x*10000+z];
         tdata->x = x;
         tdata->z = z;
-        for (int i = 0; i < 257; i++)
-            for (int j = 0; j < 257; j++) {
-                    tdata->data[i*257+j] = data[i][j];
+        for (int i = 0; i < samples; i++)
+            for (int j = 0; j < samples; j++) {
+                    tdata->data[i*samples+j] = data[i][j];
             }
         currentState->modified = true;
     }

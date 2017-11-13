@@ -143,7 +143,7 @@ void TerrainLibSimple::setHeight(int x, int z, float posx, float posz, float h) 
     
     //float value = terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
     terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8] = h;
-    terr->setErrorBias(posx, posz, 0);
+    terr->setErrorBias(x, z, posx, posz, 0);
     terr->setModified(true);
 }
 
@@ -170,7 +170,7 @@ int TerrainLibSimple::setHeight256(int x, int z, int posx, int posz, float h, fl
             if(terr->terrainData[(posz+1024)/8][(posx+1024)/8] > h + diffC) 
                 terr->terrainData[(posz+1024)/8][(posx+1024)/8] = h + diffC;
     }
-    terr->setErrorBias(posx, posz, 0);
+    terr->setErrorBias(x, z, posx, posz, 0);
     terr->setModified(true);
     
     return x * 10000 + z;
@@ -383,7 +383,7 @@ void TerrainLibSimple::setTerrainToTrackObj(Brush* brush, float* punkty, int len
                     terr = terrain[(ttx * 10000 + ttz)];
                     if (terr == NULL) continue;
                     if (terr->loaded == false) continue;
-                    Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData);
+                    Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData, terr->getSampleCount());
                 }
             }
         }
@@ -599,7 +599,7 @@ void TerrainLibSimple::setFixedTileHeight(Brush* brush, int x, int z, float* p){
 
     if (terr == NULL) return;
     if (terr->loaded == false) return;
-    Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData);
+    Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData, terr->getSampleCount());
     for (int i = 0; i < 256; i++)
         for (int j = 0; j < 256; j++) {
             terr->terrainData[i][j] = brush->hFixed;
@@ -637,7 +637,7 @@ QSet<int> TerrainLibSimple::paintHeightMap(Brush* brush, int x, int z, float* p)
     int count = 0;
     
     // add tiles that can be modified to undo;
-    Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData);
+    Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData, terr->getSampleCount());
     for(int i = -size; i < size; i++)
         for(int j = -size; j < size; j++){
             tpx = px+i*8;
@@ -649,7 +649,7 @@ QSet<int> TerrainLibSimple::paintHeightMap(Brush* brush, int x, int z, float* p)
                 terr = terrain[(tx * 10000 + tz)];
                 if (terr == NULL) continue;
                 if (!terr->loaded) continue;
-                Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData);
+                Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData, terr->getSampleCount());
             }
         }
     //
@@ -705,7 +705,7 @@ QSet<int> TerrainLibSimple::paintHeightMap(Brush* brush, int x, int z, float* p)
             h = (float)(size - (sqrt(i*i + j*j)))/size;
             h = h*brush->alpha*brush->direction*10.0;
             
-            terr->setErrorBias(tpx, tpz, 0);
+            terr->setErrorBias(tx, tz, tpx, tpz, 0);
             tpz = (tpz + 1024)/8;
             tpx = (tpx + 1024)/8;
             if(brush->hType == 0){

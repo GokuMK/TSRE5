@@ -254,7 +254,7 @@ void PropertiesTerrain::bHeightMapResetEnabled(){
     if(terrainObj == NULL){
         return;
     }
-    Undo::PushTerrainHeightMap(terrainObj->mojex, terrainObj->mojez, terrainObj->terrainData);
+    Undo::PushTerrainHeightMap(terrainObj->mojex, terrainObj->mojez, terrainObj->terrainData, terrainObj->getSampleCount());
     bool ok;
     float val = QInputDialog::getDouble(this, tr("Reset Tile Height Map."),
                                        tr("Height:"), 0, -10000, 10000, 2, &ok);

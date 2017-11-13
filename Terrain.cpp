@@ -112,11 +112,30 @@ void Terrain::setModified(bool value) {
     this->modified = value;
 }
 
+void Terrain::setHeight(int x, int z, float posx, float posz, float val){
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    float tileSize = sampleSize*samples;
+
+    posx -= 2048 * (mojex-x) - 1024;
+    posz -= 2048 * (mojez-z) + 1024;
+    posz = tileSize + posz;
+    
+    terrainData[(int) (posz) / sampleSize][(int) (posx) / sampleSize] = h;
+    setErrorBias(x, z, posx, posz, 0);
+    setModified(true);
+}
+
+int Terrain::getSampleCount(){
+    return *tfile->nsamples;
+}
+
 void Terrain::setFixedHeight(float val){
     if (loaded == false) 
         return;
-    for (int i = 0; i < 256; i++)
-        for (int j = 0; j < 256; j++) {
+    int samples = *tfile->nsamples;
+    for (int i = 0; i < samples; i++)
+        for (int j = 0; j < samples; j++) {
             terrainData[i][j] = val;
         }
     refresh();
@@ -827,10 +846,12 @@ void Terrain::setErrorBias(float val){
     }
 }
 
-void Terrain::setErrorBias(int x, int z, float val){
-    int u = (x + 1024) / 128;
-    int y = (z + 1024) / 128;
-    tfile->erroeBias[y * 16 + u] = val;
+void Terrain::setErrorBias(int x, int z, float posx, float posz, float val){
+    this->getPatchCoords(x, z, posx, posz);
+    int patches = tfile->patchsetNpatches;
+    int u = x;
+    int y = z;
+    tfile->erroeBias[y * patches + u] = val;
 }
 
 float Terrain::getAvgVaterLevel(){
@@ -919,6 +940,24 @@ void Terrain::setWaterLevel(float nw, float ne, float sw, float se){
     tfile->WNW = nw;
     tfile->WSW = sw;
     refreshWaterShapes();
+}
+
+void Terrain::getRotation(float* rot, int x, int z, int posx, int posz){
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    float tileSize = sampleSize*samples;
+
+    posx -= 2048 * (mojex-x) - 1024;
+    posz -= 2048 * (mojez-z) + 1024;
+    posz = tileSize + posz;
+    
+    float tx = terrainData[(int) (posz ) / sampleSize + 1][(int) (posx) / sampleSize]
+        - terrainData[(int) (posz ) / sampleSize][(int) (posx) / sampleSize];
+    float tz = terrainData[(int) (posz ) / sampleSize][(int) (posx) / sampleSize + 1]
+        - terrainData[(int) (posz) / sampleSize][(int) (posx) / sampleSize];
+    
+    rot[0] = atan(tx/sampleSize);
+    rot[1] = atan(tz/sampleSize);
 }
 
 float Terrain::getHeight(int x, int z, float posx, float posz, bool addR){
@@ -1095,28 +1134,30 @@ void Terrain::setTexture(Brush* brush, int u) {
 }
 
 void Terrain::paintTexture(Brush* brush, int x, int z, float posx, float posz) {
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    float tileSize = sampleSize*samples;
+    int patches = tfile->patchsetNpatches;
+    int patchSize = tileSize/patches;
+    getPatchCoords(x, z, posx, posz);
+    
+    int u = x;
+    int y = z;
 
-    int u = (posx + 1024) / 128;
-    int y = (posz + 1024) / 128;
-    //hidden[y*16 + u] = true;
-    float tx = posx + 1024 - u * 128;
-    float tz = posz + 1024 - y * 128;
-    //tx/= 128;
-    //tz/= 128;
 
     float size = (float) (brush->size) / (512);
     //qDebug() << "size " << size << " " << tx / 128 << " " << tz / 128;
 
     for (int i = u - 1; i < u + 2; i++)
         for (int j = y - 1; j < y + 2; j++) {
-            float tx = posx + 1024 - i * 128;
-            float tz = posz + 1024 - j * 128;
-            tx /= 128;
-            tz /= 128;
+            float tx = posx - i * patchSize;
+            float tz = posz - j * patchSize;
+            tx /= patchSize;
+            tz /= patchSize;
             //qDebug() << tx << " " << tz;
             if ((tx < 0.0 - size) || (tx > 1.0 + size) || (tz < 0.0 - size) || (tz > 1.0 + size))
                 continue;
-            if(!texLocked[j * 16 + i])
+            if(!texLocked[j * patches + i])
                 this->paintTextureOnTile(brush, j, i, tx, tz);
         }
 
@@ -1131,31 +1172,32 @@ void Terrain::lockTexture(Brush* brush, int x, int z, float posx, float posz) {
 
 void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
     //qDebug() << "painttile " << x << " " << z;
-    if (y > 15 || u > 15 || y < 0 || u < 0) return;
+    int patches = tfile->patchsetNpatches;
+    if (y > patches-1 || u > patches-1 || y < 0 || u < 0) return;
     //qDebug() << "painttile " << y << " " << u;
     QString name = this->getTileName(mojex, -mojez) + "_" + QString::number(y) + "_" + QString::number(u) + ".ace";
-    if (texid[y * 16 + u] < 0)
+    if (texid[y * patches + u] < 0)
         return;
     
-    if (name != *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0]) {
-        tfile->tdata[(y * 16 + u)*13 + 0 + 6] = tfile->cloneMat(tfile->tdata[(y * 16 + u)*13 + 0 + 6]);
-        tfile->materials[tfile->tdata[(y * 16 + u)*13 + 0 + 6]].itex[1][3] = 1107296256;
-        *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0] = name;
-        *tfile->amaterials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0] = name;
-        qDebug() << *tfile->materials[(int) tfile->tdata[(y * 16 + u)*13 + 0 + 6]].tex[0];
-        texid[y * 16 + u] = TexLib::cloneTex(texid[y * 16 + u]);
-        TexLib::mtex[texid[y * 16 + u]]->pathid = texturepath + name;
-        uniqueTex[y * 16 + u] = true;
+    if (name != *tfile->materials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0]) {
+        tfile->tdata[(y * patches + u)*13 + 0 + 6] = tfile->cloneMat(tfile->tdata[(y * patches + u)*13 + 0 + 6]);
+        tfile->materials[tfile->tdata[(y * patches + u)*13 + 0 + 6]].itex[1][3] = 1107296256;
+        *tfile->materials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0] = name;
+        *tfile->amaterials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0] = name;
+        qDebug() << *tfile->materials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0];
+        texid[y * patches + u] = TexLib::cloneTex(texid[y * patches + u]);
+        TexLib::mtex[texid[y * patches + u]]->pathid = texturepath + name;
+        uniqueTex[y * patches + u] = true;
         reloadLines();
         //TexLib::save("ace", texturepath+name, texid[y * 16 + u]);
         //TexLib::mtex[texid[y * 16 + u]]->GLTextures();
     }
-    convertTexToDefaultCoords(y * 16 + u);
+    convertTexToDefaultCoords(y * patches + u);
 
-    TexLib::mtex[texid[y * 16 + u]]->sendToUndo(texid[y * 16 + u]);
-    TexLib::mtex[texid[y * 16 + u]]->paint(brush, z, x);
-    TexLib::mtex[texid[y * 16 + u]]->update();
-    this->texModified[y * 16 + u] = true;
+    TexLib::mtex[texid[y * patches + u]]->sendToUndo(texid[y * patches + u]);
+    TexLib::mtex[texid[y * patches + u]]->paint(brush, z, x);
+    TexLib::mtex[texid[y * patches + u]]->update();
+    this->texModified[y * patches + u] = true;
     this->modified = true;
 }
 
@@ -2179,9 +2221,10 @@ bool Terrain::readRAW(QString fSfile) {
 }
 
 void Terrain::fillHeightMap(float* data){
-    for (int i = 0; i < 257; i++)
-        for (int j = 0; j < 257; j++) {
-            terrainData[i][j] = data[i*257+j];
+    int samples = *tfile->nsamples + 1;
+    for (int i = 0; i < samples; i++)
+        for (int j = 0; j < samples; j++) {
+            terrainData[i][j] = data[i*samples+j];
         }
     this->refresh();
 }
@@ -2199,12 +2242,13 @@ void Terrain::save() {
     }
     this->tfile->save(path + filename + ".t");
     
-    for (int u = 0; u < 16; u++)
-        for (int y = 0; y < 16; y++) {
-            if (this->texModified[y * 16 + u] == false) continue;
+    int patches = tfile->patchsetNpatches;
+    for (int u = 0; u < patches; u++)
+        for (int y = 0; y < patches; y++) {
+            if (this->texModified[y * patches + u] == false) continue;
             QString name = this->getTileName(mojex, -mojez) + "_" + QString::number(y) + "_" + QString::number(u) + ".ace";
-            TexLib::save("ace", TexLib::mtex[texid[y * 16 + u]]->pathid, texid[y * 16 + u]);
-            this->texModified[y * 16 + u] = false;
+            TexLib::save("ace", TexLib::mtex[texid[y * patches + u]]->pathid, texid[y * patches + u]);
+            this->texModified[y * patches + u] = false;
         }
 }
 
@@ -2218,9 +2262,10 @@ void Terrain::saveRAW(QString name) {
     QDataStream write(file);
     write.setByteOrder(QDataStream::LittleEndian);
 
+    int samples = *tfile->nsamples;
     float min = 999999, max = -999999;
-    for (int i = 0; i < 256; i++) {
-        for (int j = 0; j < 256; j++) {
+    for (int i = 0; i < samples; i++) {
+        for (int j = 0; j < samples; j++) {
             if(terrainData[i][j] < min) min = terrainData[i][j];
             if(terrainData[i][j] > max) max = terrainData[i][j];
             //terrainData[i][j] = tfile->floor + tfile->scale * (data->get() + 256*data->get());
@@ -2234,8 +2279,8 @@ void Terrain::saveRAW(QString name) {
     
     float fvalue;
     unsigned short value;
-    for (int i = 0; i < 256; i++) {
-        for (int j = 0; j < 256; j++) {
+    for (int i = 0; i < samples; i++) {
+        for (int j = 0; j < samples; j++) {
             fvalue = (terrainData[i][j] - tfile->floor) / tfile->scale;
             if (fvalue > 65535) value = 65535;
             else if(fvalue < 0) value = 0;
@@ -2296,8 +2341,9 @@ void Terrain::saveF(QString name) {
     QDataStream write(file);
     write.setByteOrder(QDataStream::LittleEndian);
 
-    for (int i = 0; i < 256; i++) {
-        for (int j = 0; j < 256; j++) {
+    int samples = *tfile->nsamples;
+    for (int i = 0; i < samples; i++) {
+        for (int j = 0; j < samples; j++) {
             write << fData[i][j];
         }
     }
