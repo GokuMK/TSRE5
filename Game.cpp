@@ -33,7 +33,7 @@ TerrainLib *Game::terrainLib = NULL;
 
 QString Game::AppName = "TSRE5";
 QString Game::AppVersion = "v0.6933";
-QString Game::AppDataVersion = "0.69";
+QString Game::AppDataVersion = "0.693";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -41,7 +41,7 @@ QString Game::trkName = "bbb";
 //QString Game::route = "traska";
 //QString Game::route = "cmk";
 QString Game::mainWindowLayout = "PWT";
-bool Game::useQuadTree = false;
+bool Game::useQuadTree = true;
 int Game::allowObjLag = 1000;
 int Game::maxObjLag = 10;
 bool Game::ignoreLoadLimits = false;
@@ -123,6 +123,11 @@ bool Game::autoGeoTerrain = false;
 
 int Game::AASamples = 0;
 float Game::PixelRatio = 1.0;
+
+float Game::fogDensity = 0.7;
+//float fogColor[4]{0.5, 0.75, 1.0, 1.0};
+float Game::fogColor[4] = {230.0/255.0,248.0/255,255.0/255.0, 1.0};
+float Game::skyColor[4] = {230.0/255.0,248.0/255,255.0/255.0, 1.0};
 
 void Game::InitAssets() {
     QString path;
@@ -384,7 +389,21 @@ void Game::load() {
             else
                 useQuadTree = false; 
         }
-        
+        if(val == "fogDensity"){
+            fogDensity = args[1].trimmed().toFloat();
+        }
+        if(val == "fogColor"){
+            QColor tcolor(args[1].trimmed());
+            fogColor[0] = tcolor.redF();
+            fogColor[1] = tcolor.greenF();
+            fogColor[2] = tcolor.blueF();
+        }
+        if(val == "skyColor"){
+            QColor tcolor(args[1].trimmed());
+            skyColor[0] = tcolor.redF();
+            skyColor[1] = tcolor.greenF();
+            skyColor[2] = tcolor.blueF();
+        }
     }
 }
 
@@ -634,7 +653,8 @@ void Game::DownloadAppData(QString path){
     file.close();
     
     QProcess proc;
-    QString command = "expand .\\temp.cab .\\tsre_appdata\\0.69 -F:*";
+    QString command = "expand .\\temp.cab .\\tsre_appdata\\";
+    command += Game::AppDataVersion + " -F:*";
     proc.start(command);
     if(proc.waitForStarted()){
         qDebug() << "Windows .cab Epand Started";

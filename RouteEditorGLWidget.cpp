@@ -205,12 +205,12 @@ void RouteEditorGLWidget::paintGL() {
     if (selection)
         renderMode = GLUU::RENDER_SELECTION;
 
-    glClearColor(gluu->skyc[0], gluu->skyc[1], gluu->skyc[2], 1.0);
+    glClearColor(gluu->skyColor[0], gluu->skyColor[1], gluu->skyColor[2], 1.0);
     glViewport(0, 0, (float) this->width() * Game::PixelRatio, (float) this->height() * Game::PixelRatio);
     Mat4::identity(gluu->mvMatrix);
     
     // Render Low Resolution Terrain
-    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 20.0f, 50000.0f);
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 20.0f, 100000.0f);
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
     gluu->setMatrixUniforms();
     //gluu->currentShader->setUniformValue(gluu->currentShader->lod, -0.5f);
@@ -911,8 +911,11 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
             float posx = aktPointerPos[0];
             float posz = aktPointerPos[2];
             Game::check_coords(x, z, posx, posz);
-            mapWindow->tileX = x;
-            mapWindow->tileZ = z;
+            Terrain *t = Game::terrainLib->getTerrainByXY(x, z);
+            if(t == NULL)
+                return;
+            t->getLowCornerTileXY(mapWindow->tileX, mapWindow->tileZ);
+            mapWindow->tileSize = t->getSampleCount()*t->getSampleSize();
             mapWindow->exec();
         }
         if (toolEnabled == "heightTileLoadTool") {

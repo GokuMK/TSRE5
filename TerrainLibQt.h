@@ -18,7 +18,7 @@ public:
     TerrainLibQt(const TerrainLibQt& orig);
     Terrain* getTerrainByXY(int x, int y, bool load = false);
     virtual ~TerrainLibQt();
-    void fillRaw(float** terrainData, int mojex, int mojez);
+    void fillRaw(Terrain *cTerr, int mojex, int mojez);
     float getHeight(int x, int z, float posx, float posz);
     float getHeight(int x, int z, float posx, float posz, bool addR);
     void getRotation(float *rot, int x, int z, float posx, float posz);
@@ -26,12 +26,12 @@ public:
     void fillHeightMap(int x, int z, float *data);
     void fillWaterLevels(float *w, int mojex, int mojez);
     void setWaterLevels(float *w, int mojex, int mojez);
-    int setHeight256(int x, int z, int posx, int posz, float h);
-    int setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE);
+    Terrain* setHeight256(int x, int z, int posx, int posz, float h);
+    Terrain* setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE);
     void setHeightFromGeoGui(int x, int z, float* p);
     void setHeightFromGeo(int x, int z, float* p);
     bool isLoaded(int x, int z);
-    QSet<int> paintHeightMap(Brush* brush, int x, int z, float* p);
+    QSet<Terrain*> paintHeightMap(Brush* brush, int x, int z, float* p);
     void paintTexture(Brush* brush, int x, int z, float* p);
     void lockTexture(Brush* brush, int x, int z, float* p);
     void setTerrainTexture(Brush* brush, int x, int z, float* p);
@@ -62,8 +62,10 @@ public:
 private:
     QuadTree* quadTree;
     QuadTree* quadTreeLo;
+    QuadTree* currentQuadTree = NULL;
     QHash<QString, TerrainInfo*> terrainQt;
     QHash<QString, TerrainInfo*> terrainQtLo;
+    QHash<QString, TerrainInfo*> *currentQt = NULL;
     
     void spiralLoop(int n, int &x, int &y);
 };

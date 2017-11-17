@@ -43,6 +43,7 @@ public:
     unsigned int shaderSecondTexEnabled;
     unsigned int shaderShadowsEnabled;
     unsigned int shaderBrightness;
+    unsigned int shaderFogDensity;
 private:
 
 };

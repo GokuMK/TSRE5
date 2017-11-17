@@ -81,7 +81,7 @@ private:
     int requestCout;
     int totalRequestCout;
 
-    void get(LatitudeLongitudeCoordinate* center);
+    void get(LatitudeLongitudeCoordinate* center, double tzoom);
 };
 
 #endif	/* MAPDATAURLIMAGE_H */

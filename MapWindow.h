@@ -28,6 +28,7 @@ class MapWindow : public QDialog {
 public:
     int tileX;
     int tileZ;
+    int tileSize;
     
     static std::unordered_map<int, QImage*> mapTileImages;
     static int isAlpha;

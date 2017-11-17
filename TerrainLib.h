@@ -27,7 +27,7 @@ public:
     TerrainLib(const TerrainLib& orig);
     virtual ~TerrainLib();
     virtual Terrain* getTerrainByXY(int x, int y, bool load = false);
-    virtual void fillRaw(float** terrainData, int mojex, int mojez);
+    virtual void fillRaw(Terrain *cTerr, int mojex, int mojez);
     virtual float getHeight(int x, int z, float posx, float posz);
     virtual float getHeight(int x, int z, float posx, float posz, bool addR);
     virtual void getRotation(float *rot, int x, int z, float posx, float posz);
@@ -35,12 +35,12 @@ public:
     virtual void fillHeightMap(int x, int z, float *data);
     virtual void fillWaterLevels(float *w, int mojex, int mojez);
     virtual void setWaterLevels(float *w, int mojex, int mojez);
-    virtual int setHeight256(int x, int z, int posx, int posz, float h);
-    virtual int setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE);
+    virtual Terrain* setHeight256(int x, int z, int posx, int posz, float h);
+    virtual Terrain* setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE);
     virtual void setHeightFromGeoGui(int x, int z, float* p);
     virtual void setHeightFromGeo(int x, int z, float* p);
     virtual bool isLoaded(int x, int z);
-    virtual QSet<int> paintHeightMap(Brush* brush, int x, int z, float* p);
+    virtual QSet<Terrain*> paintHeightMap(Brush* brush, int x, int z, float* p);
     virtual void paintTexture(Brush* brush, int x, int z, float* p);
     virtual void lockTexture(Brush* brush, int x, int z, float* p);
     virtual void setTerrainTexture(Brush* brush, int x, int z, float* p);

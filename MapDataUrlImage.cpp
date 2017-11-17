@@ -48,23 +48,21 @@ bool MapDataUrlImage::draw(QImage* myImage) {
 
     PreciseTileCoordinate *aCoords = new PreciseTileCoordinate();
     IghCoordinate* igh = new IghCoordinate();
-    aCoords->TileX = this->tileX;
-    aCoords->TileZ = this->tileZ;
     qDebug() << this->tileX << " " << this->tileZ;;
     LatitudeLongitudeCoordinate llpoint00;
     LatitudeLongitudeCoordinate llpoint01;
     LatitudeLongitudeCoordinate llpoint10;
     LatitudeLongitudeCoordinate llpoint11;
-    aCoords->setWxyz(-1024, 0, -1024);
+    aCoords->setTWxyzU(this->tileX, this->tileZ, 0, 0, 0);
     igh = MstsCoordinates::ConvertToIgh(aCoords);
     MstsCoordinates::ConvertToLatLon(igh, &llpoint00);
-    aCoords->setWxyz(1024, 0, 1024);
+    aCoords->setTWxyzU(this->tileX, this->tileZ, tileSize, 0, tileSize);
     igh = MstsCoordinates::ConvertToIgh(aCoords);
     MstsCoordinates::ConvertToLatLon(igh, &llpoint11);
-    aCoords->setWxyz(-1024, 0, 1024);
+    aCoords->setTWxyzU(this->tileX, this->tileZ, 0, 0, tileSize);
     igh = MstsCoordinates::ConvertToIgh(aCoords);
     MstsCoordinates::ConvertToLatLon(igh, &llpoint10);
-    aCoords->setWxyz(1024, 0, -1024);
+    aCoords->setTWxyzU(this->tileX, this->tileZ, tileSize, 0, 0);
     igh = MstsCoordinates::ConvertToIgh(aCoords);
     MstsCoordinates::ConvertToLatLon(igh, &llpoint01);
 
@@ -121,7 +119,7 @@ bool MapDataUrlImage::draw(QImage* myImage) {
             
         }
     }
-
+    qDebug() << "image draw end";
     return true;
 }
 
@@ -142,11 +140,20 @@ void MapDataUrlImage::load() {
     double jsteps = 6;
     if(maxlat > 53.4)
         isteps = 7;
-    
-    if(zoom == 18){
+    double tzoom = zoom;
+    if(tzoom == 18){
         isteps *= 2;
         jsteps *= 2;
     }
+    tzoom -= floor(1.0/level);
+    //if(level == 0.5)
+    //    zoom = 16;
+    //if(level == 0.25)
+    //    zoom = 15;
+    //if(zoom == 16){
+   //     isteps *= 0.5;
+    //    jsteps *= 0.5;
+    //}
     
     totalRequestCout = (jsteps+1)*(isteps+1);
     
@@ -160,12 +167,12 @@ void MapDataUrlImage::load() {
             p00.Longitude = minlon + j*lonstep;
             p00.Latitude = floor(p00.Latitude*10000)/10000;
             p00.Longitude = floor(p00.Longitude*10000)/10000;
-            get(&p00);
+            get(&p00, tzoom);
         }
 
 }
 
-void MapDataUrlImage::get(LatitudeLongitudeCoordinate* center) {
+void MapDataUrlImage::get(LatitudeLongitudeCoordinate* center, double tzoom) {
     QNetworkAccessManager* mgr = new QNetworkAccessManager();
     connect(mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(isData(QNetworkReply*)));
     // the HTTP request
@@ -174,7 +181,7 @@ void MapDataUrlImage::get(LatitudeLongitudeCoordinate* center) {
     QString imageMapsUrl = Game::imageMapsUrl;
     imageMapsUrl.replace("{lat}", QString::number(center->Latitude));
     imageMapsUrl.replace("{lon}", QString::number(center->Longitude));
-    imageMapsUrl.replace("{zoom}", QString::number(zoom));
+    imageMapsUrl.replace("{zoom}", QString::number(tzoom));
     imageMapsUrl.replace("{res}", QString::number(Resolution));
     QNetworkRequest req(QUrl(QString("")+imageMapsUrl));
     qDebug() << req.url();
@@ -182,7 +189,7 @@ void MapDataUrlImage::get(LatitudeLongitudeCoordinate* center) {
     QNetworkReply* r = mgr->get(req);
     r->setProperty("centerLat", QVariant(center->Latitude));
     r->setProperty("centerLon", QVariant(center->Longitude));
-    r->setProperty("zoom", zoom);
+    r->setProperty("zoom", tzoom);
 }
 
 void MapDataUrlImage::isData(QNetworkReply* r) {

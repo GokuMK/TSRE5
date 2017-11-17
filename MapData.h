@@ -20,6 +20,8 @@ class MapData : public QObject {
 public:
     float maxlat, minlat, maxlon, minlon;
     int tileX, tileZ;
+    float level;
+    int tileSize;
     
     MapData();
     MapData(const MapData& orig);

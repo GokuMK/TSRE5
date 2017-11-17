@@ -83,11 +83,11 @@ void TerrainLib::setHeight(int x, int z, float posx, float posz, float h) {
 
 }
 
-int TerrainLib::setHeight256(int x, int z, int posx, int posz, float h){
+Terrain* TerrainLib::setHeight256(int x, int z, int posx, int posz, float h){
     return 0;
 }
 
-int TerrainLib::setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE) {
+Terrain* TerrainLib::setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE) {
     return 0;
 }
 
@@ -167,8 +167,8 @@ void TerrainLib::setFixedTileHeight(Brush* brush, int x, int z, float* p){
 
 }
 
-QSet<int> TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
-    QSet<int> uterr;
+QSet<Terrain*> TerrainLib::paintHeightMap(Brush* brush, int x, int z, float* p){
+    QSet<Terrain*> uterr;
     return uterr;
 }
 
@@ -180,7 +180,7 @@ void TerrainLib::setWaterLevels(float *w, int mojex, int mojez){
 
 }
 
-void TerrainLib::fillRaw(float** terrainData, int mojex, int mojez) {
+void TerrainLib::fillRaw(Terrain *cTerr, int mojex, int mojez) {
 
 }
 

@@ -114,9 +114,9 @@ void HeightWindow::load(bool gui){
     std::unordered_map<int, bool> fileLat;
     std::unordered_map<int, bool> fileLon;
     
-    for(int i = -1024; i <= 1024; i+=1024)
-        for(int j = -1024; j <=1024; j+=1024){
-            aCoords->setWxyz(i, 0, j);
+    for(int i = 0; i <= terrainSize; i+= 0.5*terrainSize)
+        for(int j = 0; j <=terrainSize; j+= 0.5*terrainSize){
+            aCoords->setWxyzU(i, 0, j);
             igh = MstsCoordinates::ConvertToIgh(aCoords, igh);
             mLatlon = MstsCoordinates::ConvertToLatLon(igh, mLatlon);
             fileLat[(int)floor(mLatlon->Latitude)] = true;
@@ -160,7 +160,7 @@ void HeightWindow::drawTile(QImage* &image, bool gui){
     qDebug() << "draw tile";
     if(gui)
         image = new QImage(terrainResolution, terrainResolution, QImage::Format_RGB888);
-    int step = 2048/terrainResolution;
+    int step = (terrainSize)/terrainResolution;
     
     if(terrainData != NULL){
         for (int i = 0; i < terrainResolution; i++) {
@@ -181,7 +181,7 @@ void HeightWindow::drawTile(QImage* &image, bool gui){
     for (int i = 0; i < terrainResolution; i++) {
         terrainData[i] = new float[terrainResolution];
         for (int j = 0; j < terrainResolution; j++) {
-            aCoords->setWxyz(-1024 + i*step, 0, -1024 + j*step);
+            aCoords->setWxyzU(i*step, 0, j*step);
             igh = MstsCoordinates::ConvertToIgh(aCoords, igh);
             mLatlon = MstsCoordinates::ConvertToLatLon(igh, mLatlon);
             if(hqtFiles[(int)floor(mLatlon->Latitude)*1000+(int)floor(mLatlon->Longitude)] == NULL){

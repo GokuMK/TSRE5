@@ -31,6 +31,7 @@ public:
     int tileX;
     int tileZ;
     int terrainResolution;
+    int terrainSize;
     bool ok = false;
     float** terrainData = NULL;
     

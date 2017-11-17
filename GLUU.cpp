@@ -89,6 +89,7 @@ void GLUU::initShader() {
         currentShader->shaderSecondTexEnabled = currentShader->uniformLocation("secondTexEnabled");
         currentShader->shaderShadowsEnabled = currentShader->uniformLocation("shadowsEnabled");
         currentShader->shaderBrightness = currentShader->uniformLocation("colorBrightness");
+        currentShader->shaderFogDensity = currentShader->uniformLocation("fogDensity");
         
         unsigned int tex1 = currentShader->uniformLocation("uSampler");
         currentShader->setUniformValue(tex1, 0);
@@ -100,7 +101,7 @@ void GLUU::initShader() {
         currentShader->setUniformValue(tex4, 3);
         currentShader->release();
     }
-        //currentShader = shaders["StandardFog"];
+    //currentShader = shaders["StandardFog"];
     currentShader = shaders["StandardBloom"];
 }
 
@@ -124,7 +125,7 @@ void GLUU::setMatrixUniforms() {
     currentTexture = -1;
     
     currentShader->setUniformValue(currentShader->lod, Game::objectLod);
-    currentShader->setUniformValue(currentShader->skyColor, skyc[0],skyc[1],skyc[2],skyc[3]);
+    currentShader->setUniformValue(currentShader->skyColor, fogColor[0],fogColor[1],fogColor[2],fogColor[3]);
     currentShader->setUniformValue(currentShader->shaderDiffuseColor, 0.7,0.7,0.7,0.7);
     currentShader->setUniformValue(currentShader->shaderAmbientColor, 0.3,0.3,0.3,0.3);
     currentShader->setUniformValue(currentShader->shaderSpecularColor, 1.0,1.0,1.0,1.0);
@@ -138,6 +139,7 @@ void GLUU::setMatrixUniforms() {
     currentShader->setUniformValue(currentShader->shaderSecondTexEnabled, 0.0f);
     currentShader->setUniformValue(currentShader->shaderShadowsEnabled, Game::shadowsEnabled);
     currentShader->setUniformValue(currentShader->shaderBrightness, currentBrightness);
+    currentShader->setUniformValue(currentShader->shaderFogDensity, fogDensity);
 };
 
 float GLUU::degToRad(float degrees) {

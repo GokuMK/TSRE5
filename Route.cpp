@@ -1408,9 +1408,14 @@ void Route::flipObject(WorldObj *obj){
 
 void Route::paintHeightMap(Brush* brush, int x, int z, float* p){
     Game::ignoreLoadLimits = true;
-    QSet<int> modifiedTiles = Game::terrainLib->paintHeightMap(brush, x, z, p);
+    QSet<Terrain*> modifiedTiles = Game::terrainLib->paintHeightMap(brush, x, z, p);
     Tile *ttile;
-    foreach (int value, modifiedTiles){
+    // fix !!
+    QSet<int> tileIds;
+    foreach (Terrain *value, modifiedTiles){
+        value->getWTileIds(tileIds);
+    }
+    foreach (int value, tileIds){
         ttile = tile[value];
         if(ttile != NULL)
             ttile->updateTerrainObjects();

@@ -13,6 +13,8 @@
 
 #include <math.h>
 
+#include "Game.h"
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -60,9 +62,59 @@ struct PreciseTileCoordinate {
         this->wX = x;
         this->wY = y;
         this->wZ = z;
+        //checkCoords();
         this->X = (x + 1024.0)/2048.0;
         this->Y = y;
         this->Z = (z + 1024.0)/2048.0;
+    }
+    void setTWxyz(int tx, int ty, float x, float y, float z){
+        this->TileX = tx;
+        this->TileZ = ty;
+        this->wX = x;
+        this->wY = y;
+        this->wZ = z;
+        //checkCoords();
+        this->X = (wX + 1024.0)/2048.0;
+        this->Y = wY;
+        this->Z = (wZ + 1024.0)/2048.0;
+    }
+    void setTWxyzU(int tx, int ty, float x, float y, float z){
+        this->TileX = tx;
+        this->TileZ = ty;
+        this->wX = x;
+        this->wY = y;
+        this->wZ = z;
+        //checkCoords();
+        this->X = (wX)/2048.0;
+        this->Y = wY;
+        this->Z = (wZ)/2048.0;
+    }
+    void setWxyzU(float x, float y, float z){
+        this->wX = x;
+        this->wY = y;
+        this->wZ = z;
+        //checkCoords();
+        this->X = (wX)/2048.0;
+        this->Y = wY;
+        this->Z = (wZ)/2048.0;
+    }
+    void checkCoords(){
+        if (wX >= 1024) {
+            wX -= 2048;
+            TileX++;
+        }
+        if (wX < -1024) {
+            wX += 2048;
+            TileX--;
+        }
+        if (wZ >= 1024) {
+            wZ -= 2048;
+            TileZ--;
+        }
+        if (wZ < -1024) {
+            wZ += 2048;
+            TileZ++;
+        }
     }
     void setXYZ(double x, double y, double z){
         this->X = x;

@@ -117,20 +117,26 @@ void MapWindow::colorComboActivated(QString val){
 
 void MapWindow::load(){
     if(aCoords == NULL) aCoords = new PreciseTileCoordinate();
-    aCoords->TileX = this->tileX;
-    aCoords->TileZ = -this->tileZ;
-    qDebug() << this->tileX << " " << -this->tileZ;;
+    qDebug() << "MapLoad" << this->tileX << " " << -this->tileZ;;
     LatitudeLongitudeCoordinate llpoint[4];
-    aCoords->setWxyz(-1024, 0, -1024);
+    qDebug() << this->tileX << -this->tileZ << 0 << 0 << 0;
+    aCoords->setTWxyzU(this->tileX, -this->tileZ, 0, 0, 0);
+    qDebug() << aCoords->TileX << aCoords->TileZ << aCoords->wX << 0 << aCoords->wZ;
     igh = MstsCoordinates::ConvertToIgh(aCoords);
     MstsCoordinates::ConvertToLatLon(igh, &llpoint[0]);
-    aCoords->setWxyz(1024, 0, 1024);
+    qDebug() << this->tileX << -this->tileZ << tileSize << 0 << tileSize;
+    aCoords->setTWxyzU(this->tileX, -this->tileZ, tileSize, 0, tileSize);
+    qDebug() << aCoords->TileX << aCoords->TileZ << aCoords->wX << 0 << aCoords->wZ;
     igh = MstsCoordinates::ConvertToIgh(aCoords);
     MstsCoordinates::ConvertToLatLon(igh, &llpoint[1]);
-    aCoords->setWxyz(-1024, 0, 1024);
+    qDebug() << this->tileX << -this->tileZ << 0 << 0 << tileSize;
+    aCoords->setTWxyzU(this->tileX, -this->tileZ, 0, 0, tileSize);
+    qDebug() << aCoords->TileX << aCoords->TileZ << aCoords->wX << 0 << aCoords->wZ;
     igh = MstsCoordinates::ConvertToIgh(aCoords);
     MstsCoordinates::ConvertToLatLon(igh, &llpoint[2]);
-    aCoords->setWxyz(1024, 0, -1024);
+    qDebug() << this->tileX << -this->tileZ << tileSize << 0 << 0;
+    aCoords->setTWxyzU(this->tileX, -this->tileZ, tileSize, 0, 0);
+    qDebug() << aCoords->TileX << aCoords->TileZ << aCoords->wX << 0 << aCoords->wZ;
     igh = MstsCoordinates::ConvertToIgh(aCoords);
     MstsCoordinates::ConvertToLatLon(igh, &llpoint[3]);
     
@@ -151,6 +157,8 @@ void MapWindow::load(){
     
     dane->tileX = this->tileX;
     dane->tileZ = -this->tileZ;
+    dane->level = 2048.0/tileSize;
+    dane->tileSize = tileSize;
     dane->minlon = minLatlon->Longitude;
     dane->minlat = minLatlon->Latitude;
     dane->maxlon = maxLatlon->Longitude;

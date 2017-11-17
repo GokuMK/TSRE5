@@ -147,17 +147,17 @@ void TerrainLibSimple::setHeight(int x, int z, float posx, float posz, float h) 
     terr->setModified(true);
 }
 
-int TerrainLibSimple::setHeight256(int x, int z, int posx, int posz, float h){
+Terrain* TerrainLibSimple::setHeight256(int x, int z, int posx, int posz, float h){
     return setHeight256(x, z, posx, posz, h, 0, 0);
 }
 
-int TerrainLibSimple::setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE) {
+Terrain* TerrainLibSimple::setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE) {
     Game::check_coords(x, z, posx, posz);
     Terrain *terr;
     terr = terrain[(x * 10000 + z)];
 
-    if (terr == NULL) return -1;
-    if (terr->loaded == false) return -1;
+    if (terr == NULL) return NULL;
+    if (terr->loaded == false) return NULL;
     
     //float value = terr->terrainData[(int) (posz + 1024) / 8][(int) (posx + 1024) / 8];
     if(diffC == 0 && diffE == 0){
@@ -173,7 +173,7 @@ int TerrainLibSimple::setHeight256(int x, int z, int posx, int posz, float h, fl
     terr->setErrorBias(x, z, posx, posz, 0);
     terr->setModified(true);
     
-    return x * 10000 + z;
+    return terr;
 }
 
 float TerrainLibSimple::getHeight(int x, int z, float posx, float posz, bool addR) {
@@ -231,6 +231,7 @@ void TerrainLibSimple::setHeightFromGeoGui(int x, int z, float* p){
     heightWindow->tileZ = -z;
     heightWindow->ok = false;
     heightWindow->terrainResolution = 256;
+    heightWindow->terrainSize = terr->getSampleCount()*terr->getSampleSize()*0.5;
     heightWindow->exec();
     if(heightWindow->ok){
         qDebug() << "ok";
@@ -310,7 +311,8 @@ void TerrainLibSimple::setTextureToTrackObj(Brush* brush, float* punkty, int len
 }
 
 void TerrainLibSimple::setTerrainToTrackObj(Brush* brush, float* punkty, int length, int tx, int tz, float* matrix){
-    std::set<int> uterr;
+    QSet<Terrain*> uterr;
+
     // calculating plane equation
     float p1[3];
     float p2[3];
@@ -438,12 +440,11 @@ void TerrainLibSimple::setTerrainToTrackObj(Brush* brush, float* punkty, int len
         }*/
     
     //Terrain *terr;
-    for (std::set<int>::iterator it = uterr.begin(); it != uterr.end(); ++it) {
-        if(*it == -1) continue;
-        //console.log(obj.type);
-        terr = terrain[(int)*it];
-        terr->setModified(true);
-        terr->refresh();
+    foreach (Terrain *value, uterr){
+        if(value == NULL)
+            continue;
+        value->setModified(true);
+        value->refresh();
     }
 }
 
@@ -608,9 +609,9 @@ void TerrainLibSimple::setFixedTileHeight(Brush* brush, int x, int z, float* p){
     terr->setModified(true);
 }
 
-QSet<int> TerrainLibSimple::paintHeightMap(Brush* brush, int x, int z, float* p){
+QSet<Terrain*> TerrainLibSimple::paintHeightMap(Brush* brush, int x, int z, float* p){
     
-    QSet<int> uterr;
+    QSet<Terrain*> uterr;
     
     float posx = round(p[0]/8.0)*8.0;
     float posz = round(p[2]/8.0)*8.0;
@@ -699,7 +700,7 @@ QSet<int> TerrainLibSimple::paintHeightMap(Brush* brush, int x, int z, float* p)
             terr = terrain[(tx * 10000 + tz)];
             if (terr == NULL) continue;
             if (!terr->loaded) continue;
-            uterr.insert(tx * 10000 + tz);
+            uterr.insert(terr);
             
             if(sqrt(i*i + j*j) > size) continue;
             h = (float)(size - (sqrt(i*i + j*j)))/size;
@@ -733,12 +734,11 @@ QSet<int> TerrainLibSimple::paintHeightMap(Brush* brush, int x, int z, float* p)
             }
         }
     
-    foreach (int value, uterr){
+    foreach (Terrain* value, uterr){
     //for (std::set<int>::iterator it = uterr.begin(); it != uterr.end(); ++it) {
         //console.log(obj.type);
-        terr = terrain[value];
-        terr->setModified(true);
-        terr->refresh();
+        value->setModified(true);
+        value->refresh();
     }
     //terr->setModified(true);
     //terr->refresh();
@@ -851,7 +851,7 @@ void TerrainLibSimple::setWaterLevels(float *w, int mojex, int mojez){
         }
 }
 
-void TerrainLibSimple::fillRaw(float** terrainData, int mojex, int mojez) {
+void TerrainLibSimple::fillRaw(Terrain *cTerr, int mojex, int mojez) {
     Terrain *tTile;
     //try {
     tTile = terrain[((mojex + 1)*10000 + mojez)];
@@ -861,9 +861,11 @@ void TerrainLibSimple::fillRaw(float** terrainData, int mojex, int mojez) {
     }
     tTile = terrain[(mojex + 1)*10000 + mojez];
     if (tTile->loaded) {
-        for (int i = 0; i < 256; i++) {
-            terrainData[i][256] = tTile->terrainData[i][0];
-        }
+        if(cTerr->getSampleSize() == tTile->getSampleSize())
+        if(cTerr->getSampleCount() == tTile->getSampleCount())
+            for (int i = 0; i < 256; i++) {
+                cTerr->terrainData[i][256] = tTile->terrainData[i][0];
+            }
     }
 
     //try {
@@ -874,9 +876,11 @@ void TerrainLibSimple::fillRaw(float** terrainData, int mojex, int mojez) {
     }
     tTile = terrain[(mojex)*10000 + mojez + 1];
     if (tTile->loaded) {
-        for (int i = 0; i < 256; i++) {
-            terrainData[256][i] = tTile->terrainData[0][i];
-        }
+        if(cTerr->getSampleSize() == tTile->getSampleSize())
+        if(cTerr->getSampleCount() == tTile->getSampleCount())
+            for (int i = 0; i < 256; i++) {
+                cTerr->terrainData[256][i] = tTile->terrainData[0][i];
+            }
     }
 
     //try {
@@ -887,7 +891,9 @@ void TerrainLibSimple::fillRaw(float** terrainData, int mojex, int mojez) {
     }
     tTile = terrain[(mojex + 1)*10000 + mojez + 1];
     if (tTile->loaded) {
-        terrainData[256][256] = tTile->terrainData[0][0];
+        if(cTerr->getSampleSize() == tTile->getSampleSize())
+        if(cTerr->getSampleCount() == tTile->getSampleCount())
+            cTerr->terrainData[256][256] = tTile->terrainData[0][0];
     }/**/
 }
 

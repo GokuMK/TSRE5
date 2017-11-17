@@ -126,6 +126,11 @@ public:
     static bool autoNewTiles;
     static bool autoGeoTerrain;
     
+    static float fogDensity;// = 0.7;
+    //float fogColor[4]{0.5, 0.75, 1.0, 1.0};
+    static float fogColor[4];//{230.0/255.0,248.0/255,255.0/255.0, 1.0};
+    static float skyColor[4];//{230.0/255.0,248.0/255,255.0/255.0, 1.0};
+    
     static int AASamples;
     static float PixelRatio;
 private:

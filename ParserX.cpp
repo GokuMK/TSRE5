@@ -604,7 +604,7 @@ unsigned int ParserX::GetHex(FileBuffer* bufor){
     unsigned short int b = 0, sb = 0;
     unsigned int x;
 
-    while (((b < 48) || (b > 57 && b < 65) || (b > 70 && b < 97) || (b > 102)) || sb != 32) {
+    while (((b < 48) || (b > 57 && b < 65) || (b > 70 && b < 97) || (b > 102)) || (sb != 32 && sb != 40 && sb != 0 )) {
         sb = b;
         b = bufor->getShort();
         //bufor->off++;
