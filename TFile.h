@@ -72,6 +72,7 @@ public:
     int getMatByTexture(QString tname);
     void removeMat(int id);
     void setBufferNames(QString name);
+    void initNew(QString name, int samples, int sampleS, int patches);
     
 private:
     void get139(FileBuffer* data, int length);

@@ -67,14 +67,16 @@ void TerrainLibQt::loadQuadTree() {
 }
 
 void TerrainLibQt::createNewRouteTerrain(int x, int z) {
-    Terrain::saveEmpty(x, z);
     quadTree = new QuadTree();
     quadTree->createNew(x, z);
+    QString name = quadTree->getMyName(x, z);
+    Terrain::saveEmpty(name);
 }
 
 void TerrainLibQt::saveEmpty(int x, int z) {
-    Terrain::saveEmpty(x, z);
     quadTree->addTile(x, z);
+    QString name = quadTree->getMyName(x, z);
+    Terrain::saveEmpty(name);
 }
 
 bool TerrainLibQt::isLoaded(int x, int z) {
@@ -1043,6 +1045,9 @@ void TerrainLibQt::render(GLUU *gluu, float * playerT, float* playerW, float* ta
             gluu->mvPopMatrix();
         }
     }
+    
+    if(renderMode == gluu->RENDER_SELECTION)
+        return;
     
     QHashIterator<QString, TerrainInfo*> i(terrainQt);
     while (i.hasNext()) {

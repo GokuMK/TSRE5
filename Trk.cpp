@@ -69,7 +69,7 @@ Trk::~Trk() {
 void Trk::load(){
     QString path = Game::root + "/routes/" + Game::route + "/" + Game::trkName + ".trk";
     path.replace("//", "/");
-    qDebug() << path;
+    qDebug() << "# TRK file: " <<path;
     load(path);
 }
 

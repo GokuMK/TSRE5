@@ -44,8 +44,10 @@ GLUU::~GLUU() {
 
 const char* GLUU::getShader(QString shaderScript, QString type) {
     QFile* shaderData = new QFile(QString("tsre_appdata/")+Game::AppDataVersion+"/shaders/"+shaderScript+"."+type);
-    if (!shaderData->open(QIODevice::ReadOnly))
+    if (!shaderData->open(QIODevice::ReadOnly)){
+        qDebug() << "Shader file not found " << shaderData->fileName();
         return "";
+    }
     return (const char*) ReadFile::readRAW(shaderData)->data;
 }
 
@@ -57,16 +59,23 @@ void GLUU::initShader() {
     
     for(int i = 0; i < shaderNames.size(); i++ ){
         shaders[shaderNames[i]] = new Shader();
-        shaders[shaderNames[i]]->addShaderFromSourceCode(QOpenGLShader::Vertex, getShader(shaderNames[i], "vs"));
-        shaders[shaderNames[i]]->addShaderFromSourceCode(QOpenGLShader::Fragment, getShader(shaderNames[i], "fs"));
+        if(!shaders[shaderNames[i]]->addShaderFromSourceCode(QOpenGLShader::Vertex, getShader(shaderNames[i], "vs"))){
+            qDebug() << "Loading shader .vs file failed.";
+        }
+        if(!shaders[shaderNames[i]]->addShaderFromSourceCode(QOpenGLShader::Fragment, getShader(shaderNames[i], "fs"))){
+            qDebug() << "Loading shader .fs file failed.";
+        }
         currentShader = shaders[shaderNames[i]];
         currentShader->bindAttributeLocation("vertex", 0);
         currentShader->bindAttributeLocation("aTextureCoord", 1);
         currentShader->bindAttributeLocation("normal", 2);
         currentShader->bindAttributeLocation("alpha", 3);
-        currentShader->link();
-
-        currentShader->bind();
+        if(!currentShader->link()){
+            qDebug() << "Shader link failed.";
+        }
+        if(!currentShader->bind()){
+            qDebug() << "Shader bind failed.";
+        }
         currentShader->pMatrixUniform = currentShader->uniformLocation("uPMatrix");
         currentShader->pShadowMatrixUniform = currentShader->uniformLocation("uShadowPMatrix");
         currentShader->pShadow2MatrixUniform = currentShader->uniformLocation("uShadow2PMatrix");
@@ -90,7 +99,7 @@ void GLUU::initShader() {
         currentShader->shaderShadowsEnabled = currentShader->uniformLocation("shadowsEnabled");
         currentShader->shaderBrightness = currentShader->uniformLocation("colorBrightness");
         currentShader->shaderFogDensity = currentShader->uniformLocation("fogDensity");
-        
+
         unsigned int tex1 = currentShader->uniformLocation("uSampler");
         currentShader->setUniformValue(tex1, 0);
         unsigned int tex2 = currentShader->uniformLocation("uSampler2");

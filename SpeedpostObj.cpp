@@ -329,6 +329,8 @@ void SpeedpostObj::expandTrItems(){
 
         tdb->newSpeedPostObject(tdb->trackItems[this->trItemId[1]]->getSpeedpostType(), trItemId, trNodeId, metry, this->typeID);
         tdb->trackItems[this->trItemId.last()]->setSpeedpostRot(tdb->trackItems[this->trItemId[1]]->getSpeedpostRot());
+        tdb->trackItems[this->trItemId.last()]->setSpeedpostNumber(tdb->trackItems[this->trItemId[1]]->getSpeedpostNumber());
+        tdb->trackItems[this->trItemId.last()]->setSpeedpostSpeed(tdb->trackItems[this->trItemId[1]]->getSpeedpostSpeed());
     }
     drawPositions.clear();
     modified = true;

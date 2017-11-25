@@ -37,7 +37,7 @@ public:
     Terrain(float x, float y);
     Terrain(const Terrain& orig);
     virtual ~Terrain();
-    static void saveEmpty(int x, int y);
+    static void saveEmpty(QString name);
     static QString getTileName(int x, int y);
     static QString getTileNameExperimental(int x, int y);
     static QString getTileNameExperimental2(int x, int y);

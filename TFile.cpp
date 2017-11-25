@@ -25,10 +25,66 @@ TFile::TFile(const TFile& orig) {
 TFile::~TFile() {
 }
 
+void TFile::initNew(QString name, int samples, int sampleS, int patches){
+    sampleEbuffer = new QString(name + "_e.raw");
+    sampleNbuffer = new QString(name + "_n.raw");
+    sampleYbuffer = new QString(name + "_y.raw");
+    
+    waterLevel = true;
+    WSW = 0;
+    WSE = 0;
+    WNE = 0;
+    WNW = 0;
+    
+    errthresholdScale = new float();
+    *errthresholdScale = 1;
+    alwaysselectMaxdist = new float();
+    *alwaysselectMaxdist = 0;
+    nsamples = new int(samples);
+    sampleRotation = new float();
+    *sampleRotation = 0;
+    sampleSize = new float(sampleS);
+    floor = -63.0;
+    scale = 0.00195312;
+
+    patchsetDistance = 0;
+    patchsetNpatches = patches;
+    flags = new int[patches*patches];
+    tdata = new float[patches*patches*13];
+    erroeBias = new float[patches*patches];
+    int tileSize = samples*sampleS;
+    float patchSize = tileSize/patches;
+    float patchPosZ = -0.5*patchSize;
+    float patchPosX = 0.5*patchSize;
+    for(int j = 0; j < patches; j++, patchPosZ -= patchSize){
+        patchPosX = 0.5*patchSize;
+        for(int i = 0; i < patches; i++, patchPosX += patchSize){
+            flags[(j*patches+i)] = 0;
+            tdata[(j*patches+i)*13+0] = patchPosX;
+            tdata[(j*patches+i)*13+1] = 1;
+            tdata[(j*patches+i)*13+2] = patchPosZ;
+            tdata[(j*patches+i)*13+3] = 99.48125458;
+            tdata[(j*patches+i)*13+4] = 0;
+            tdata[(j*patches+i)*13+5] = 0.5*patchSize;
+            tdata[(j*patches+i)*13+6] = 0;
+            tdata[(j*patches+i)*13+7] = 0.0001;
+            tdata[(j*patches+i)*13+8] = 0.0001;
+            tdata[(j*patches+i)*13+9] = 0.0625;
+            tdata[(j*patches+i)*13+10] = 0;
+            tdata[(j*patches+i)*13+11] = 0;
+            tdata[(j*patches+i)*13+12] = 0.0625;
+            erroeBias[(j*patches+i)] = 1;
+        }
+    }
+        
+    newMat();
+    loaded = true;
+}
+
 void TFile::setBufferNames(QString name){
-    this->sampleEbuffer = new QString(name + "_e.raw");
-    this->sampleNbuffer = new QString(name + "_n.raw");
-    this->sampleYbuffer = new QString(name + "_y.raw");
+    sampleEbuffer = new QString(name + "_e.raw");
+    sampleNbuffer = new QString(name + "_n.raw");
+    sampleYbuffer = new QString(name + "_y.raw");
 }
 
 bool TFile::readT(QString fSfile) {

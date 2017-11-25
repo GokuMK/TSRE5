@@ -637,6 +637,7 @@ void ConEditorWindow::fillCurrentEng(int engSetId){
         emit showEng(currentEng);
     }
     engCamera->setPos(pos,2.5,0);
+    //engCamera->setPos(-30,2.5,0);
     engCamera->setPlayerRot(M_PI/2.0,0);
     
     eName.setText(currentEng->displayName);

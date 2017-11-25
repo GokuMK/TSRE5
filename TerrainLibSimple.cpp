@@ -42,14 +42,16 @@ void TerrainLibSimple::loadQuadTree(){
 }
 
 void TerrainLibSimple::createNewRouteTerrain(int x, int z){
-    Terrain::saveEmpty(x, z);
     quadTree = new QuadTree();
     quadTree->createNew(x, z);
+    QString name = Terrain::getTileName(x, z);
+    Terrain::saveEmpty(name);
 }
 
 void TerrainLibSimple::saveEmpty(int x, int z){
-    Terrain::saveEmpty(x, z);
     quadTree->addTile(x, z);
+    QString name = Terrain::getTileName(x, z);
+    Terrain::saveEmpty(name);
 }
 
 bool TerrainLibSimple::isLoaded(int x, int z) {
@@ -954,6 +956,9 @@ void TerrainLibSimple::render(GLUU *gluu, float * playerT, float* playerW, float
             }
         }
     }
+    
+    if(renderMode == gluu->RENDER_SELECTION)
+        return;
     
     mintile = -3;
     maxtile = 3;

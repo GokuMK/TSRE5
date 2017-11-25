@@ -52,6 +52,7 @@
 
 Route::Route() {
     Game::currentRoute = this;
+    qDebug() << "# Load Route";
     
     if(!Game::useQuadTree)
         Game::terrainLib = new TerrainLibSimple();
@@ -59,13 +60,19 @@ Route::Route() {
         Game::terrainLib = new TerrainLibQt();
     
     QFile file(Game::root + "/routes");
-    if (!file.exists()) return;
+    if (!file.exists()){ 
+        qDebug() << "Route dir not exist " << file.fileName();
+        return;
+    }
     file.setFileName(Game::root + "/global");
-    if (!file.exists()) return;
+    if (!file.exists()){ 
+        qDebug() << "Global dir not exist " << file.fileName();
+        return;
+    }
 
     file.setFileName(Game::root + "/routes/" + Game::route);
     if (!file.exists()) {
-        qDebug() << "route does not exist";
+        qDebug() << "Route does not exist.";
         if (Game::createNewRoutes) {
             qDebug() << "new Route";
             Route::createNew();

@@ -256,8 +256,10 @@ Terrain::~Terrain() {
     qDebug() << "= release terrain "<< timeNow2 - timeNow1;
 }
 
-void Terrain::saveEmpty(int x, int y) {
-    QString name = getTileName(x, y);
+void Terrain::saveEmpty(QString name) {
+    int samples = 256;
+    int sampleSize = 8;
+    int patches = 16;
     qDebug() << "New terrain tile";
     QFile file(Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw");
     if (!file.exists()){
@@ -265,17 +267,14 @@ void Terrain::saveEmpty(int x, int y) {
         QDataStream write(&file);
         write.setByteOrder(QDataStream::BigEndian);
         unsigned short value = 128;
-        for (int i = 0; i < 256; i++)
-            for (int j = 0; j < 256; j++)
+        for (int i = 0; i < samples; i++)
+            for (int j = 0; j < samples; j++)
                 write << value;
         file.close();
     }
-    QFile file1(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
-    if (!file1.exists())
-        QFile::copy(QString("tsre_appdata/")+Game::AppDataVersion+"/template.t", Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
+    
     TFile *tfile = new TFile();
-    tfile->readT(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
-    tfile->setBufferNames(name);
+    tfile->initNew(name, samples, sampleSize, patches);
     tfile->save(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
 }
 

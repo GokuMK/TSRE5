@@ -103,7 +103,8 @@ void RouteEditorGLWidget::initializeGL() {
     //qDebug() << "GLUU::get();";
     gluu = GLUU::get();
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &RouteEditorGLWidget::cleanup);
-    //qDebug() << "initializeOpenGLFunctions();";
+    qDebug() << "# InitializeOpenGLFunctions";
+    //this->ope
     initializeOpenGLFunctions();
     //funcs = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
     //if (!funcs) {
@@ -113,8 +114,9 @@ void RouteEditorGLWidget::initializeGL() {
     //funcs->initializeOpenGLFunctions();/**/
     glClearColor(0, 0, 0, 1);
     //qDebug() << "gluu->initShader();";
+    qDebug() << "# InitShaders";
     gluu->initShader();
-    
+    qDebug() << "# InitShaders finished";
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
