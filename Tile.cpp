@@ -634,7 +634,7 @@ void Tile::render() {
 void Tile::updateTerrainObjects(){
     for (int i = 0; i < jestObiektow; i++) {
         if(obiekty[i] == NULL) continue;
-        if (obiekty[i]->loaded) 
+        if (obiekty[i]->loaded)
             if(obiekty[i]->typeID == WorldObj::forest || obiekty[i]->typeID == WorldObj::transfer)
                obiekty[i]->deleteVBO();
     }

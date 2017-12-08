@@ -32,6 +32,8 @@ public slots:
     void eGateAnimLengthEnabled(QString val);
     void eCrashProbabilityEnabled(QString val);
     void eMaxPlacingDistanceEnabled(QString val);
+    void eSoundNameEnabled(QString val);
+    void cSoundTypeEnabled(int val);
     void chInvisibleEnabled(int val);
     void chSilentHaxEnabled(int val);
     void bDeleteSelectedEnabled();
@@ -48,6 +50,9 @@ private:
     QLineEdit eMoreWarning;
     QLineEdit eCrashProbability;
     QLineEdit eMaxPlacingDistance;
+    
+    QComboBox cSoundType;
+    QLineEdit eSoundName;
     
     QCheckBox chInvisible;
     QCheckBox chSilentHax;

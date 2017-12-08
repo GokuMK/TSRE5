@@ -50,6 +50,7 @@ public:
     bool unselect();
     void setPosition(int x, int z, float* p);
     void toggleDirection();
+    void reverseWagonListUnit();
     void setParentActivity(Activity *a);
     void setFailedSignalData(int id);
     void setSpeedZoneData(float* drawposition = NULL);
@@ -66,6 +67,7 @@ public:
     
 public slots:
     void menuToggleDirection();
+    void menuToggleReverse();
     
 signals:
         

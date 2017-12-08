@@ -63,9 +63,9 @@ private:
     QuadTree* quadTree;
     QuadTree* quadTreeLo;
     QuadTree* currentQuadTree = NULL;
-    QHash<QString, TerrainInfo*> terrainQt;
-    QHash<QString, TerrainInfo*> terrainQtLo;
-    QHash<QString, TerrainInfo*> *currentQt = NULL;
+    QHash<unsigned int, TerrainInfo*> terrainQt;
+    QHash<unsigned int, TerrainInfo*> terrainQtLo;
+    QHash<unsigned int, TerrainInfo*> *currentQt = NULL;
     
     void spiralLoop(int n, int &x, int &y);
 };

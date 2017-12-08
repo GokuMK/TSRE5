@@ -114,6 +114,18 @@ QString QuadTree::getMyName(int tileX, int tileY) {
     return td[tx * 100000 + ty]->qt->getMyName(tileX, tileY);
 }
 
+unsigned int QuadTree::getMyNameId(int tileX, int tileY) {
+    int qx = floor((float) tileX / 512.0);
+    int qy = floor((float) tileY / 512.0);
+    int tx = qx * 512;
+    int ty = qy * 512;
+
+    if (td[tx * 100000 + ty] == NULL) {
+        return 0;
+    }
+    return td[tx * 100000 + ty]->qt->getMyNameId(tileX, tileY);
+}
+
 void QuadTree::fillTerrainInfo(int tileX, int tileY, TerrainInfo* info) {
     int qx = floor((float) tileX / 512.0);
     int qy = floor((float) tileY / 512.0);
@@ -181,9 +193,30 @@ QString QuadTree::QuadTile::getMyName(int tileX, int tileY){
         //qDebug() << len << val;
         return PrefixString[prefix]+val;
     } else if (tile[px][py] != NULL) {
-            return tile[px][py]->getMyName(tileX, tileY);
+        return tile[px][py]->getMyName(tileX, tileY);
     }
     return "";
+}
+
+unsigned int QuadTree::QuadTile::getMyNameId(int tileX, int tileY){
+    int px = 0;
+    int py = 0;
+    if (tileX >= x + level) px = 1;
+    if (tileY >= y + level) py = 1;
+    
+    int pow = 0;
+    for(pow = 0; pow < 32; pow++){
+        if((level >> pow)&1 == 1)
+            break;
+    }
+    pow = (pow+1) / 2;
+
+    if(populated[px][py] == true){
+        return (nameId << 2*prefix | !py << (1 + 2*prefix) | !(py^px) << (0 + 2*prefix));
+    } else if (tile[px][py] != NULL) {
+        return tile[px][py]->getMyNameId(tileX, tileY);
+    }
+    return 0;
 }
 
 void QuadTree::QuadTile::fillTerrainInfo(int tileX, int tileY, TerrainInfo* info){

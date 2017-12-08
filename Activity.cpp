@@ -405,6 +405,7 @@ void Activity::save() {
 
     out << ")";
 
+    out.flush();
     file.close();
     modified = false;
     nowe = false;
@@ -415,11 +416,12 @@ void Activity::save() {
         event[i].setModified(false);
     }
     
-    path = pathid.remove(pathid.length()-4, 4);
-    path += ".asv";
-    path.replace("//", "/");
-    qDebug() << path;
-    QFile::remove(path);
+    tpath = pathid;
+    tpath.remove(tpath.length()-4, 4);
+    tpath += ".asv";
+    tpath.replace("//", "/");
+    qDebug() << tpath;
+    QFile::remove(tpath);
 }
 
 void ActivityServiceDefinition::reloadTimetable(){

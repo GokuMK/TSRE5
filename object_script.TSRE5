@@ -49,10 +49,12 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GLUU.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Game.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GameObj.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GeoHgtFile.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GeoTerrainFile.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GeoTiffFile.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GeoTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GroupObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GuiFunct.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/HGTfile.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/HazardObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/HeightWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/IghCoords.o

@@ -21,7 +21,7 @@ class QImage;
 class IghCoordinate;
 class LatitudeLongitudeCoordinate;
 class PreciseTileCoordinate;
-class HGTfile;
+class GeoTerrainFile;
 
 class HeightWindow : public QDialog {
     Q_OBJECT
@@ -36,7 +36,7 @@ public:
     float** terrainData = NULL;
     
     static void CheckForMissingGeodataFiles(QMap<int, QPair<int, int>*> &tileList);
-    static std::unordered_map<int, HGTfile*> hqtFiles;
+    static std::unordered_map<int, GeoTerrainFile*> hqtFiles;
     int exec();
     
 public slots:

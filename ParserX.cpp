@@ -379,7 +379,15 @@ float ParserX::GetNumber(FileBuffer* bufor){
 
     while (b < 45 || (b > 46 && b < 48) || b > 57) {
         b = bufor->getShort();
-        //bufor->off++;
+        if(b == 110){
+            b = bufor->getShort();
+            if(b == 97){
+                b = bufor->getShort();
+                if(b == 110){
+                    return NAN;
+                }
+            }
+        }
     }
     x = 0;
     liczba = 1;

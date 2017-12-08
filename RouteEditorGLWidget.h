@@ -117,6 +117,7 @@ signals:
     void sendMsg(QString name, QString val);
 
 protected:
+    bool eventFilter(QObject *object, QEvent *event);
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;
     void renderShadowMaps();
@@ -201,6 +202,7 @@ private:
     };*/
     //DefaultMenuActions defaultMenuActions;
     QMap<QString, QAction*> defaultMenuActions;
+    bool bolckContextMenu = false;
 };
 
 #endif

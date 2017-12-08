@@ -44,7 +44,16 @@ RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 m_xRot(0),
 m_yRot(0),
 m_zRot(0) {
+    this->installEventFilter(this);
+}
 
+
+bool RouteEditorGLWidget::eventFilter(QObject *object, QEvent *event){
+    if (event->type() == QEvent::FocusIn){
+        //qDebug() << "aaaaa";
+        bolckContextMenu = true;
+    }
+    return false;
 }
 
 RouteEditorGLWidget::~RouteEditorGLWidget() {
@@ -789,6 +798,7 @@ void RouteEditorGLWidget::keyReleaseEvent(QKeyEvent * event) {
 
 void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
     Game::currentShapeLib = currentShapeLib;
+    bolckContextMenu = false;
     if (!route->loaded) return;
     m_lastPos = event->pos();
     m_lastPos *= Game::PixelRatio;
@@ -979,7 +989,7 @@ void RouteEditorGLWidget::mouseReleaseEvent(QMouseEvent* event) {
     camera->MouseUp(event);
     if ((event->button()) == Qt::RightButton) {
         mouseRPressed = false;
-        if(mouseClick)
+        if(mouseClick && !bolckContextMenu)
             showContextMenu(event->pos());
     }
     if ((event->button()) == Qt::LeftButton) {
@@ -987,10 +997,12 @@ void RouteEditorGLWidget::mouseReleaseEvent(QMouseEvent* event) {
         Undo::StateEnd();
     }
     mouseClick = false;
+    bolckContextMenu = false;
 }
 
 void RouteEditorGLWidget::mouseMoveEvent(QMouseEvent *event) {
     mouseClick = false;
+    bolckContextMenu = false;
     Game::currentShapeLib = currentShapeLib;
     if (!route->loaded) return;
     /*int dx = event->x() - m_lastPos.x();

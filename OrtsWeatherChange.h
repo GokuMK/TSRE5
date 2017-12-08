@@ -39,6 +39,10 @@ public:
     void load(FileBuffer* data);
     void save(QTextStream* out, QString off);
 private:
+    bool isOvercast = false;
+    bool isFog = false;
+    bool isIntensity = false;
+    bool isLiquidity = false;
 
 };
 

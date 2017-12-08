@@ -38,6 +38,8 @@ public:
     void setCrashProbability(float val);
     void setInvisible(bool val);
     void setSilentMstsHax(bool val);
+    void setSoundFileName(QString val);
+    QString getSoundFileName();
     float getSensitivityActivateLevel();
     float getSensitivityMinimunDistance();
     float getTimingInitialWarning();
@@ -68,6 +70,7 @@ private:
     TrackItemObj* pointer3dSelected = NULL;
     std::vector<float*> drawPositions;
     float* drawPosition = NULL;
+    QString ORTSSoundFileName;
     void renderTritems(GLUU* gluu, int selectionColor);
     bool getSimpleBorder(float* border);
     bool getBoxPoints(QVector<float> &points);

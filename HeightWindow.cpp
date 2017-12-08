@@ -22,10 +22,11 @@
 #include <QUrlQuery>
 #include "CoordsMkr.h"
 #include "IghCoords.h"
-#include "HGTfile.h"
+#include "GeoHgtFile.h"
+#include "GeoTiffFile.h"
 #include "UnsavedDialog.h"
 
-std::unordered_map<int, HGTfile*> HeightWindow::hqtFiles;
+std::unordered_map<int, GeoTerrainFile*> HeightWindow::hqtFiles;
 
 HeightWindow::HeightWindow() : QDialog() {
     QPushButton *loadButton = new QPushButton("Load", this);
@@ -73,15 +74,16 @@ void HeightWindow::CheckForMissingGeodataFiles(QMap<int,QPair<int,int>*>& tileLi
         tLatlon = MstsCoordinates::ConvertToLatLon(tigh, tLatlon);
 
         //qDebug() << "lat " << itlat->first << " lon " << itlon->first;
-        if(hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude] == NULL){
-            hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude] = new HGTfile();
-            fail = hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude]->load(tLatlon->Latitude, tLatlon->Longitude);
+        if(hqtFiles[(int)floor(tLatlon->Latitude)*1000+(int)floor(tLatlon->Longitude)] == NULL){
+            hqtFiles[(int)floor(tLatlon->Latitude)*1000+(int)floor(tLatlon->Longitude)] = new GeoHgtFile();
+            //hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude] = new GeoTiffFile();
+            fail = hqtFiles[(int)floor(tLatlon->Latitude)*1000+(int)floor(tLatlon->Longitude)]->load((int)floor(tLatlon->Latitude), (int)floor(tLatlon->Longitude));
         }
-        if(!hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude]->isLoaded())
+        if(!hqtFiles[(int)floor(tLatlon->Latitude)*1000+(int)floor(tLatlon->Longitude)]->isLoaded())
             fail = false;
         //qDebug() << hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude]->pathid;
         if(!fail) {
-            missingFiles[hqtFiles[tLatlon->Latitude*1000+tLatlon->Longitude]->pathid] = true;
+            missingFiles[hqtFiles[(int)floor(tLatlon->Latitude)*1000+(int)floor(tLatlon->Longitude)]->pathid] = true;
         }
     }
     
@@ -129,7 +131,8 @@ void HeightWindow::load(bool gui){
         for (auto itlon = fileLon.begin(); itlon != fileLon.end(); ++itlon ){
             qDebug() << "lat " << itlat->first << " lon " << itlon->first;
             if(this->hqtFiles[itlat->first*1000+itlon->first] == NULL){
-                this->hqtFiles[itlat->first*1000+itlon->first] = new HGTfile();
+                this->hqtFiles[itlat->first*1000+itlon->first] = new GeoHgtFile();
+                //this->hqtFiles[itlat->first*1000+itlon->first] = new GeoTiffFile();
                 fail = this->hqtFiles[itlat->first*1000+itlon->first]->load(itlat->first, itlon->first);
             }
             if(!this->hqtFiles[itlat->first*1000+itlon->first]->isLoaded())

@@ -104,6 +104,9 @@ void TDB::loadTdb(){
                                             for (j = 0; j < uu; j++) {
                                                 for (ii = 0; ii < 16; ii++) {
                                                     xx = ParserX::GetNumber(bufor);
+                                                    if(std::isnan(xx)){
+                                                        qDebug() << "#TrackDB: NAN found in tracknode: "<<t;
+                                                    }
                                                     trackNodes[t]->trVectorSection[j].param[ii] = xx;
                                                 }
                                             }
@@ -151,7 +154,11 @@ void TDB::loadTdb(){
                                 }
                                 if(sh == "uid"){
                                     for (ii = 0; ii < 12; ii++) {
-                                        trackNodes[t]->UiD[ii] = ParserX::GetNumber(bufor);
+                                        xx = ParserX::GetNumber(bufor);
+                                        if(std::isnan(xx)){
+                                            qDebug() << "#TrackDB: NAN found in tracknode: "<<t;
+                                        }
+                                        trackNodes[t]->UiD[ii] = xx;
                                     }
                                     ParserX::SkipToken(bufor);
                                     continue;              
@@ -1442,7 +1449,12 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     Vec3::transformQuat(vect, vect, q);
     
     //float roll = atan2((2*(q[0]*q[1] + q[2]*q[3])),(1-((q[0]*q[0])+(q[1]*q[1]))));
-    float pitch = asin(2*(q[0]*q[2] - q[1]*q[3]));
+    float sinv = 2*(q[0]*q[2] - q[1]*q[3]);
+    if(sinv > 1.0f)
+        sinv = 1.0f;
+    if(sinv < -1.0f)
+        sinv = -1.0f;
+    float pitch = asin(sinv);
     //float yaw = atan2((2*(q[0]*q[3] + q[1]*q[2])),(1-((q[2]*q[2])+(q[3]*q[3]))));
     
     if(vect[2] < 0)
@@ -1452,7 +1464,12 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     if(vect[2] == 0 && vect[0] > 0)
         pitch = -M_PI/2;
 
-    qe[0] = asin((vect[1]/10.0));
+    sinv = (vect[1]/10.0);
+    if(sinv > 1.0f)
+        sinv = 1.0f;
+    if(sinv < -1.0f)
+        sinv = -1.0f;
+    qe[0] = asin(sinv);
     qe[1] = pitch;
     qe[2] = 0;
     

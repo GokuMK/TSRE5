@@ -528,7 +528,7 @@ void RouteEditorWindow::closeEvent(QCloseEvent * event ){
         return;
     }
     
-    emit save();
+    save();
 
     emit exitNow();
     event->accept();

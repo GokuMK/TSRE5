@@ -921,7 +921,7 @@ float Terrain::getErrorBias(){
 }
 
 void Terrain::getWTileIds(QSet<int> &ids){
-    ids.insert(mojex*10000+mojez);
+    ids.insert((int)mojex*(int)10000+(int)mojez);
 }
 
 void Terrain::setErrorBias(float val){

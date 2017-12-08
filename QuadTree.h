@@ -49,6 +49,7 @@ public:
         void load(FileBuffer* data);
         void addTile(int tileX, int tileY);
         QString getMyName(int tileX, int tileY);
+        unsigned int getMyNameId(int tileX, int tileY);
         void fillTerrainInfo(int tileX, int tileY, TerrainInfo* info);
         void listNames();
     };
@@ -68,6 +69,7 @@ public:
     void addTile(int tileX, int tileY);
     void fillTerrainInfo(int tileX, int tileY, TerrainInfo* info);
     QString getMyName(int tileX, int tileY);
+    unsigned int getMyNameId(int tileX, int tileY);
     void listNames();
 private:
     int terrainDescSize = 67108864;

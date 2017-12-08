@@ -32,6 +32,10 @@ OrtsWeatherChange::OrtsWeatherChange(const OrtsWeatherChange& o) {
     precipitationIntensityTransitionTime = o.precipitationIntensityTransitionTime;
     finalPrecipitationLiquidity = o.finalPrecipitationLiquidity;
     precipitationLiquidityTransitionTime = o.precipitationLiquidityTransitionTime;
+    isOvercast = o.isOvercast;
+    isFog = o.isFog;
+    isIntensity = o.isIntensity;
+    isLiquidity = o.isLiquidity;
 }
 
 OrtsWeatherChange::~OrtsWeatherChange() {
@@ -83,24 +87,28 @@ void OrtsWeatherChange::load(FileBuffer* data) {
             continue;
         }
         if (sh == ("ortsovercast")) {
+            isOvercast = true;
             finalOvercastFactor = ParserX::GetNumber(data);
             overcastTransitionTime = ParserX::GetNumber(data);
             ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("ortsfog")) {
+            isFog = true;
             finalFogDistance = ParserX::GetNumber(data);
             fogTransitionTime = ParserX::GetNumber(data);
             ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("ortsprecipitationintensity")) {
+            isIntensity = true;
             finalPrecipitationIntensity = ParserX::GetNumber(data);
             precipitationIntensityTransitionTime = ParserX::GetNumber(data);
             ParserX::SkipToken(data);
             continue;
         }
         if (sh == ("ortsprecipitationliquidity")) {
+            isLiquidity = true;
             finalPrecipitationLiquidity = ParserX::GetNumber(data);
             precipitationLiquidityTransitionTime = ParserX::GetNumber(data);
             ParserX::SkipToken(data);
@@ -117,9 +125,13 @@ void OrtsWeatherChange::save(QTextStream* out, QString off) {
     *out << off << "ORTSWeatherChange (\n";
     if(name.length() > 0)
         *out << off << "	Name ( " << ParserX::AddComIfReq(name) << " )\n";
+    if(isOvercast)
     *out << off << "	ORTSOvercast ( " << finalOvercastFactor << " " << overcastTransitionTime << " )\n";
+    if(isFog)
     *out << off << "	ORTSFog ( " << finalFogDistance << " " << fogTransitionTime << " )\n";
+    if(isIntensity)
     *out << off << "	ORTSPrecipitationIntensity ( " << finalPrecipitationIntensity << " " << precipitationIntensityTransitionTime << " )\n";
+    if(isLiquidity)
     *out << off << "	ORTSPrecipitationLiquidity ( " << finalPrecipitationLiquidity << " " << precipitationLiquidityTransitionTime << " )\n";
     *out << off << ")\n";
 

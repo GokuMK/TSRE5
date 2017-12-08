@@ -22,6 +22,7 @@ Texture::Texture() {
 }
 
 Texture::Texture(const Texture* orig) {
+    qDebug() << "clone tex" << orig->pathid;
     //QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()->functions();
     width = orig->width;
     height = orig->height;
@@ -109,6 +110,9 @@ unsigned char * Texture::getImageData(int width, int height){
 }
 
 void Texture::advancedCrop(float* texCoords, int w, int h){
+    if(!editable)
+        setEditable();
+    
     if(w == 0) 
         w = width;
     if(h == 0) 
@@ -121,7 +125,7 @@ void Texture::advancedCrop(float* texCoords, int w, int h){
     texCoords2[5] = texCoords[5]*16.0;//*width;
     texCoords2[6] = texCoords[6]*16.0;//*height;
     
-    qDebug() << w << h;
+    qDebug() << width << height << bytesPerPixel << "--" << w << h;
     qDebug() << texCoords2[1] << texCoords2[2] << texCoords2[3] << texCoords2[4] << texCoords2[5] << texCoords2[6];
     qDebug() << texCoords[1] << texCoords[2] << texCoords[3] << texCoords[4] << texCoords[5] << texCoords[6];
     
@@ -136,12 +140,16 @@ void Texture::advancedCrop(float* texCoords, int w, int h){
             ii = texCoords2[2] + texCoords2[5]*j + texCoords2[6]*i;
             ii *= widthRatio;
             jj *= heightTatio;
-            if(ii >= width)
-                ii = width - 1;
-            if(jj >= height)
-                jj = height - 1;
-            //ii = ii % width;
-            //jj = jj % height;
+
+            while(ii >= width)
+                ii -= width;
+            while(jj >= height)
+                jj -= height;
+            
+            while(ii < 0)
+                ii += width;
+            while(jj < 0)
+                jj += height;
                             
             newData[i*w*bytesPerPixel+j*bytesPerPixel+0] = imageData[(int)ii*width*bytesPerPixel+(int)jj*bytesPerPixel+0];
             newData[i*w*bytesPerPixel+j*bytesPerPixel+1] = imageData[(int)ii*width*bytesPerPixel+(int)jj*bytesPerPixel+1];
@@ -150,6 +158,7 @@ void Texture::advancedCrop(float* texCoords, int w, int h){
                 newData[i*width*bytesPerPixel+j*bytesPerPixel+3] = imageData[(int)ii*width*bytesPerPixel+(int)jj*bytesPerPixel+3];            
         }
         
+    qDebug() << "advanced rot finished";
     delete[] this->imageData;
     this->imageData = newData;
     this->width = w;

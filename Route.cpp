@@ -920,7 +920,12 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p, int mode) {
 
         int someval = (((drawPosition2[2]-drawPosition1[2])+0.00001f)/fabs((drawPosition2[2]-drawPosition1[2])+0.00001f));
         float rotY = ((float)someval+1.0)*(M_PI/2)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
-        float rotX = -(float)(asin((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
+        float sinv = (drawPosition1[1]-drawPosition2[1])/(dlugosc);
+        if(sinv > 1.0f)
+            sinv = 1.0f;
+        if(sinv < -1.0f)
+            sinv = -1.0f;
+        float rotX = -(float)asin(sinv); 
 
         if(placementAutoTwoPointRot){
             Quat::fill(quat);
@@ -1417,15 +1422,16 @@ void Route::paintHeightMap(Brush* brush, int x, int z, float* p){
     Game::ignoreLoadLimits = true;
     QSet<Terrain*> modifiedTiles = Game::terrainLib->paintHeightMap(brush, x, z, p);
     Tile *ttile;
-    // fix !!
+
     QSet<int> tileIds;
     foreach (Terrain *value, modifiedTiles){
         value->getWTileIds(tileIds);
     }
     foreach (int value, tileIds){
         ttile = tile[value];
-        if(ttile != NULL)
+        if(ttile != NULL){
             ttile->updateTerrainObjects();
+        }
     }
 }
 

@@ -124,6 +124,20 @@ PropertiesLevelCr::PropertiesLevelCr() {
     QObject::connect(bDeleteSelected, SIGNAL(released()),
                       this, SLOT(bDeleteSelectedEnabled()));
     
+    label = new QLabel("Sound File:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    cSoundType.addItem("DEFAULT");
+    cSoundType.addItem("CUSTOM");
+    cSoundType.setStyleSheet("combobox-popup: 0;");
+    QObject::connect(&cSoundType, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(cSoundTypeEnabled(int)));
+    vbox->addWidget(&cSoundType);
+    vbox->addWidget(&eSoundName);
+    QObject::connect(&eSoundName, SIGNAL(textEdited(QString)), this, SLOT(eSoundNameEnabled(QString)));
+
+    
     label = new QLabel("Global settings:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
@@ -178,6 +192,18 @@ void PropertiesLevelCr::showObj(GameObj* obj){
     this->chSilentHax.blockSignals(true);
     this->chSilentHax.setChecked(lobj->isSilentMstsHaxEnabled());
     this->chSilentHax.blockSignals(false);
+    
+    QString sname = lobj->getSoundFileName();
+    cSoundType.blockSignals(true);
+    if(sname.length() < 1){
+        cSoundType.setCurrentIndex(0);
+        eSoundName.hide();
+    } else {
+        cSoundType.setCurrentIndex(1);
+        eSoundName.show();
+        eSoundName.setText(sname);
+    }
+    cSoundType.blockSignals(false);
 }
 
 void PropertiesLevelCr::updateObj(GameObj* obj){
@@ -213,6 +239,28 @@ void PropertiesLevelCr::eActivateLevelCrossingEnabled(QString val){
     }
 }
 
+void PropertiesLevelCr::eSoundNameEnabled(QString val){
+    if(lobj == NULL){
+        return;
+    }
+    if(val.endsWith(".sms", Qt::CaseInsensitive))
+        lobj->setSoundFileName(val);
+}
+
+void PropertiesLevelCr::cSoundTypeEnabled(int val){
+    if(lobj == NULL){
+        return;
+    }  
+    if(val == 0){
+        lobj->setSoundFileName("");
+        eSoundName.hide();
+    } else {
+        eSoundName.show();
+        if(eSoundName.text().endsWith(".sms", Qt::CaseInsensitive))
+        lobj->setSoundFileName(eSoundName.text());
+    }
+}
+    
 void PropertiesLevelCr::eMaxPlacingDistanceEnabled(QString val){
     if(lobj == NULL){
         return;

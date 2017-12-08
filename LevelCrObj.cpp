@@ -226,6 +226,10 @@ void LevelCrObj::set(QString sh, FileBuffer* data) {
         fileName = ParserX::GetString(data);
         return;
     }
+    if (sh == ("ortssoundfilename")) {
+        ORTSSoundFileName = ParserX::GetString(data);
+        return;
+    }
     WorldObj::set(sh, data);
     return;
 }
@@ -479,6 +483,15 @@ void LevelCrObj::setSilentMstsHax(bool val){
     this->modified = true;
 }
 
+void LevelCrObj::setSoundFileName(QString val){
+    ORTSSoundFileName = val;
+    modified = true;
+}
+
+QString LevelCrObj::getSoundFileName(){
+    return ORTSSoundFileName;
+}
+
 float LevelCrObj::getSensitivityActivateLevel(){
     return this->levelCrParameters[0];
 }
@@ -562,6 +575,8 @@ for(int i = 0; i < trItemIdCount; i+=2){
 *(out) << "		TrItemId ( "<<this->trItemId[i]<<" "<<this->trItemId[i+1]<<" )\n";
 }
 *(out) << "		FileName ( "<<this->fileName<<" )\n";
+if(ORTSSoundFileName.length() > 0)
+    *(out) << "		ORTSSoundFileName ( "<<this->ORTSSoundFileName<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";

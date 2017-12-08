@@ -112,6 +112,15 @@ void ActivityObject::setPosition(int x, int z, float* p){
     }
 }
 
+void ActivityObject::reverseWagonListUnit(){
+    if(con == NULL)
+        return;
+    
+    con->flipSelected();
+    con->isOnTrack = false;
+    modified = true;
+}
+
 void ActivityObject::toggleDirection(){
     if(con == NULL)
         return;
@@ -531,11 +540,22 @@ void ActivityObject::pushContextMenuActions(QMenu *menu){
         contextMenuActions["ToggleDirection"] = new QAction(tr("&Toggle Direction")); 
         QObject::connect(contextMenuActions["ToggleDirection"], SIGNAL(triggered()), this, SLOT(menuToggleDirection()));
     }
-    menu->addAction(contextMenuActions["ToggleDirection"]);
+    if(contextMenuActions["Reverse"] == NULL){
+        contextMenuActions["Reverse"] = new QAction(tr("&Reverse Selected")); 
+        QObject::connect(contextMenuActions["Reverse"], SIGNAL(triggered()), this, SLOT(menuToggleReverse()));
+    }
+    if(objectTypeId == WAGONLIST){
+        menu->addAction(contextMenuActions["ToggleDirection"]);
+        menu->addAction(contextMenuActions["Reverse"]);
+    }
 }
 
 void ActivityObject::menuToggleDirection(){
     toggleDirection();
+}
+
+void ActivityObject::menuToggleReverse(){
+    reverseWagonListUnit();
 }
 
 void ActivityObject::load(FileBuffer* data) {

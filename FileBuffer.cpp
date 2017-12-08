@@ -129,7 +129,8 @@ bool FileBuffer::insertFile(QString incPath, QString alternativePath, QString* l
     QString sh;
     incPath.replace("\\","/");
     incPath.replace("//","/");
-    //qDebug() << pathid;
+    alternativePath.replace("\\","/");
+    alternativePath.replace("//","/");
     QFile file(incPath);
     if (!file.open(QIODevice::ReadOnly)){
         if(alternativePath.length() > 0){

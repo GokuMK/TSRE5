@@ -34,7 +34,9 @@
         <itemPath>TS.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f14" displayName="GEO" projectFiles="true">
-        <itemPath>HGTfile.h</itemPath>
+        <itemPath>GeoHgtFile.h</itemPath>
+        <itemPath>GeoTerrainFile.h</itemPath>
+        <itemPath>GeoTiffFile.h</itemPath>
         <itemPath>HeightWindow.h</itemPath>
         <itemPath>MapData.h</itemPath>
         <itemPath>MapDataOSM.h</itemPath>
@@ -255,7 +257,9 @@
         <itemPath>TS.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f12" displayName="GEO" projectFiles="true">
-        <itemPath>HGTfile.cpp</itemPath>
+        <itemPath>GeoHgtFile.cpp</itemPath>
+        <itemPath>GeoTerrainFile.cpp</itemPath>
+        <itemPath>GeoTiffFile.cpp</itemPath>
         <itemPath>HeightWindow.cpp</itemPath>
         <itemPath>MapData.cpp</itemPath>
         <itemPath>MapDataOSM.cpp</itemPath>
@@ -670,6 +674,18 @@
       </item>
       <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoHgtFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoHgtFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTerrainFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTerrainFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTiffFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTiffFile.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
@@ -681,10 +697,6 @@
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="HGTfile.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="HGTfile.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HazardObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1403,6 +1415,18 @@
       </item>
       <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoHgtFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoHgtFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTerrainFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTerrainFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTiffFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTiffFile.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
@@ -1414,10 +1438,6 @@
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="HGTfile.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="HGTfile.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HazardObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2128,6 +2148,18 @@
       </item>
       <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoHgtFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoHgtFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTerrainFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTerrainFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTiffFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTiffFile.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
@@ -2139,10 +2171,6 @@
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="HGTfile.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="HGTfile.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HazardObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2861,6 +2889,18 @@
       </item>
       <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoHgtFile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GeoHgtFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTerrainFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTerrainFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTiffFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTiffFile.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
@@ -2872,10 +2912,6 @@
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="HGTfile.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="HGTfile.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HazardObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3582,6 +3618,18 @@
       </item>
       <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoHgtFile.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GeoHgtFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTerrainFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTerrainFile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeoTiffFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoTiffFile.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoTools.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
@@ -3593,10 +3641,6 @@
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="HGTfile.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="HGTfile.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HazardObj.cpp" ex="false" tool="1" flavor2="8">
       </item>

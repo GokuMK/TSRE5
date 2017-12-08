@@ -38,19 +38,22 @@ Terrain* TerrainLibQt::getTerrainByXY(int x, int y, bool load) {
     if(currentQt == NULL)
         currentQt = &terrainQt;
     
-    QString terrainName = currentQuadTree->getMyName((int) x, -y);
-    if (terrainName == "")
+    
+    //QString terrainName = currentQuadTree->getMyName((int) x, -y);
+    unsigned int terrainNameId = currentQuadTree->getMyNameId((int) x, -y);
+
+    if (terrainNameId == 0)
         return NULL;
-    if ((*currentQt)[terrainName] != NULL) {
-        if((*currentQt)[terrainName]->t != NULL)
-            return (*currentQt)[terrainName]->t;
+    if ((*currentQt)[terrainNameId] != NULL) {
+        if((*currentQt)[terrainNameId]->t != NULL)
+            return (*currentQt)[terrainNameId]->t;
     }
     if (load) {
-        (*currentQt)[terrainName] = new TerrainInfo();
-        currentQuadTree->fillTerrainInfo(x, -y, (*currentQt)[terrainName]);
-        qDebug() << terrainName;
-        (*currentQt)[terrainName]->t = new Terrain((*currentQt)[terrainName]);
-        return (*currentQt)[terrainName]->t;
+        (*currentQt)[terrainNameId] = new TerrainInfo();
+        currentQuadTree->fillTerrainInfo(x, -y, (*currentQt)[terrainNameId]);
+        qDebug() << terrainNameId;
+        (*currentQt)[terrainNameId]->t = new Terrain((*currentQt)[terrainNameId]);
+        return (*currentQt)[terrainNameId]->t;
     }
 
     return NULL;
@@ -80,14 +83,14 @@ void TerrainLibQt::saveEmpty(int x, int z) {
 }
 
 bool TerrainLibQt::isLoaded(int x, int z) {
-    QString terrainName = quadTree->getMyName((int) x, -z);
-    if (terrainName == "")
+    unsigned int terrainNameId = quadTree->getMyNameId((int) x, -z);
+    if (terrainNameId == 0)
         return false;
-    if (terrainQt[terrainName] == NULL)
+    if (terrainQt[terrainNameId] == NULL)
         return false;
-    if (terrainQt[terrainName]->t == NULL)
+    if (terrainQt[terrainNameId]->t == NULL)
         return false;
-    if (terrainQt[terrainName]->t->loaded == false)
+    if (terrainQt[terrainNameId]->t->loaded == false)
         return false;
     return true;
 }
@@ -103,7 +106,7 @@ bool TerrainLibQt::load(int x, int z) {
 
 void TerrainLibQt::getUnsavedInfo(std::vector<QString> &items) {
     if (!Game::writeEnabled) return;
-    QHashIterator<QString, TerrainInfo*> i(terrainQt);
+    QHashIterator<unsigned int, TerrainInfo*> i(terrainQt);
     while (i.hasNext()) {
         i.next();
         if (i.value() == NULL) continue;
@@ -118,7 +121,7 @@ void TerrainLibQt::getUnsavedInfo(std::vector<QString> &items) {
 void TerrainLibQt::save() {
     if (!Game::writeEnabled) return;
     qDebug() << "save terrain";
-    QHashIterator<QString, TerrainInfo*> i(terrainQt);
+    QHashIterator<unsigned int, TerrainInfo*> i(terrainQt);
     while (i.hasNext()) {
         i.next();
         if (i.value() == NULL) continue;
@@ -132,14 +135,14 @@ void TerrainLibQt::save() {
 }
 
 bool TerrainLibQt::reload(int x, int z) {
-    QString terrainName = quadTree->getMyName((int) x, -z);
-    if (terrainName == "")
+    unsigned int terrainNameId = quadTree->getMyNameId((int) x, -z);
+    if (terrainNameId == 0)
         return false;
 
-    terrainQt[terrainName] = new TerrainInfo();
-    quadTree->fillTerrainInfo(x, -z, terrainQt[terrainName]);
-    terrainQt[terrainName]->t = new Terrain(terrainQt[terrainName]);
-    if (terrainQt[terrainName]->t->loaded)
+    terrainQt[terrainNameId] = new TerrainInfo();
+    quadTree->fillTerrainInfo(x, -z, terrainQt[terrainNameId]);
+    terrainQt[terrainNameId]->t = new Terrain(terrainQt[terrainNameId]);
+    if (terrainQt[terrainNameId]->t->loaded)
         return true;
     return false;
 }
@@ -201,7 +204,7 @@ Terrain* TerrainLibQt::setHeight256(int x, int z, int posx, int posz, float h, f
 
 float TerrainLibQt::getHeight(int x, int z, float posx, float posz, bool addR) {
     Game::check_coords(x, z, posx, posz);
-
+    
     Terrain *terr = getTerrainByXY(x, z, false);
 
     if (terr == NULL) return -1;
@@ -880,7 +883,7 @@ void TerrainLibQt::setWaterLevels(float *w, int mojex, int mojez) {
 
 void TerrainLibQt::fillRaw(Terrain *cTerr, int mojex, int mojez) {
     QuadTree* tQuadTree = currentQuadTree;
-    QHash<QString, TerrainInfo*> *tterrainQt = currentQt;
+    QHash<unsigned int, TerrainInfo*> *tterrainQt = currentQt;
     
     if(cTerr->lowTile){
         currentQuadTree = quadTreeLo;
@@ -1049,7 +1052,7 @@ void TerrainLibQt::render(GLUU *gluu, float * playerT, float* playerW, float* ta
     if(renderMode == gluu->RENDER_SELECTION)
         return;
     
-    QHashIterator<QString, TerrainInfo*> i(terrainQt);
+    QHashIterator<unsigned int, TerrainInfo*> i(terrainQt);
     while (i.hasNext()) {
         i.next();
         if (i.value() == NULL) continue;
@@ -1076,24 +1079,24 @@ void TerrainLibQt::renderLo(GLUU *gluu, float * playerT, float* playerW, float* 
 
     Terrain *tTile;
     int selectionColor = 0;
-    QString terrainName;
+    unsigned int terrainNameId;
     for (int n = -1, i = 0, j = 0; n < renderCount; n+=16) {
         if (n != -1)
             spiralLoop(n, i, j);
 
-            terrainName = quadTreeLo->getMyName((int) playerT[0] + i, -(int) playerT[1] - j);
-            if (terrainName == "")
+            terrainNameId = quadTreeLo->getMyNameId((int) playerT[0] + i, -(int) playerT[1] - j);
+            if (terrainNameId == 0)
                 continue;
-            if (terrainQtLo[terrainName] == NULL) {
-                terrainQtLo[terrainName] = new TerrainInfo();
-                quadTreeLo->fillTerrainInfo((int) playerT[0] + i, -(int) playerT[1] - j, terrainQtLo[terrainName]);
-                qDebug() << terrainName;
-                terrainQtLo[terrainName]->t = new Terrain(terrainQtLo[terrainName]);
+            if (terrainQtLo[terrainNameId] == NULL) {
+                terrainQtLo[terrainNameId] = new TerrainInfo();
+                quadTreeLo->fillTerrainInfo((int) playerT[0] + i, -(int) playerT[1] - j, terrainQtLo[terrainNameId]);
+                qDebug() << terrainNameId;
+                terrainQtLo[terrainNameId]->t = new Terrain(terrainQtLo[terrainNameId]);
             }
-            if (terrainQtLo[terrainName]->rendered)
+            if (terrainQtLo[terrainNameId]->rendered)
                 continue;
-            terrainQtLo[terrainName]->rendered = true;
-            tTile = terrainQtLo[terrainName]->t;
+            terrainQtLo[terrainNameId]->rendered = true;
+            tTile = terrainQtLo[terrainNameId]->t;
 
             if (tTile->loaded == false)
                 continue;
@@ -1113,7 +1116,7 @@ void TerrainLibQt::renderLo(GLUU *gluu, float * playerT, float* playerW, float* 
             }
         }
 
-    QHashIterator<QString, TerrainInfo*> i(terrainQtLo);
+    QHashIterator<unsigned int, TerrainInfo*> i(terrainQtLo);
     while (i.hasNext()) {
         i.next();
         if (i.value() == NULL) continue;
