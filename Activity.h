@@ -102,10 +102,10 @@ public:
     int nextActivityObjectUID = -1;
     int nextEventUID = 0;
     int ortsAIHornAtCrossings = -9999;
-    QVector<ActivityObject> activityObjects;
+    QVector<ActivityObject*> activityObjects;
     QVector<QPair<int, int>> platformNumPassengersWaiting;
-    QVector<ActivityObject> restrictedSpeedZone;
-    QVector<ActivityObject> activityFailedSignal;
+    QVector<ActivityObject*> restrictedSpeedZone;
+    QVector<ActivityObject*> activityFailedSignal;
     QVector<ActivityEvent> event;
     int serial = -1;
 

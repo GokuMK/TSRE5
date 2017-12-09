@@ -255,9 +255,9 @@ void Activity::load() {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
 
                                 if (sh == ("activityobject")) {
-                                    activityObjects.push_back(ActivityObject());
-                                    activityObjects.back().load(data);
-                                    activityObjects.back().setParentActivity(this);
+                                    activityObjects.push_back(new ActivityObject());
+                                    activityObjects.back()->load(data);
+                                    activityObjects.back()->setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -272,11 +272,11 @@ void Activity::load() {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("activityrestrictedspeedzone")) {
                                     //restrictedSpeedZone.push_back(RestrictedSpeedZone());
-                                    restrictedSpeedZone.push_back(ActivityObject());
-                                    restrictedSpeedZone.back().setSpeedZoneData();
-                                    restrictedSpeedZone.back().load(data);
-                                    restrictedSpeedZone.back().id = restrictedSpeedZone.size()-1;
-                                    restrictedSpeedZone.back().setParentActivity(this);
+                                    restrictedSpeedZone.push_back(new ActivityObject());
+                                    restrictedSpeedZone.back()->setSpeedZoneData();
+                                    restrictedSpeedZone.back()->load(data);
+                                    restrictedSpeedZone.back()->id = restrictedSpeedZone.size()-1;
+                                    restrictedSpeedZone.back()->setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -290,10 +290,10 @@ void Activity::load() {
                         if (sh == ("activityfailedsignals")) {
                             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                                 if (sh == ("activityfailedsignal")) {
-                                    activityFailedSignal.push_back(ActivityObject());
-                                    activityFailedSignal.back().setFailedSignalData(ParserX::GetNumber(data));
-                                    activityFailedSignal.back().id = activityFailedSignal.size()-1;
-                                    activityFailedSignal.back().setParentActivity(this);
+                                    activityFailedSignal.push_back(new ActivityObject());
+                                    activityFailedSignal.back()->setFailedSignalData(ParserX::GetNumber(data));
+                                    activityFailedSignal.back()->id = activityFailedSignal.size()-1;
+                                    activityFailedSignal.back()->setParentActivity(this);
                                     ParserX::SkipToken(data);
                                     continue;
                                 }
@@ -378,20 +378,20 @@ void Activity::save() {
     if (activityObjects.size() > 0 ){
         out << "		ActivityObjects (\n";
         for(int i = 0; i<activityObjects.size(); i++)
-            activityObjects[i].save(&out);
+            activityObjects[i]->save(&out);
         out << "		)\n";
     }
 
     if (restrictedSpeedZone.size() > 0 ){
         out << "		ActivityRestrictedSpeedZones (\n";
         for(int i = 0; i<restrictedSpeedZone.size(); i++)
-            restrictedSpeedZone[i].save(&out);
+            restrictedSpeedZone[i]->save(&out);
         out << "		)\n";
     }
     if (activityFailedSignal.size() > 0 ){
         out << "		ActivityFailedSignals (\n";
         for(int i = 0; i<activityFailedSignal.size(); i++)
-            activityFailedSignal[i].save(&out);
+            activityFailedSignal[i]->save(&out);
         out << "		)\n";
     }
     if (platformNumPassengersWaiting.size() > 0 ){
@@ -410,7 +410,7 @@ void Activity::save() {
     modified = false;
     nowe = false;
     for(int i = 0; i < activityObjects.size(); i++){
-        activityObjects[i].setModified(false);
+        activityObjects[i]->setModified(false);
     }
     for(int i = 0; i < event.size(); i++){
         event[i].setModified(false);
@@ -766,7 +766,7 @@ bool Activity::isNew(){
 
 bool Activity::isUnSaved(){
     for(int i = 0; i < activityObjects.size(); i++){
-        if(activityObjects[i].isUnSaved())
+        if(activityObjects[i]->isUnSaved())
             return true;
     }
     for(int i = 0; i < event.size(); i++){
@@ -782,11 +782,11 @@ bool Activity::isUnSaved(){
                 return true;
         }
     for(int i = 0; i < activityFailedSignal.size(); i++){
-        if(activityFailedSignal[i].isUnSaved())
+        if(activityFailedSignal[i]->isUnSaved())
             return true;
     }
     for(int i = 0; i < restrictedSpeedZone.size(); i++){
-        if(restrictedSpeedZone[i].isUnSaved())
+        if(restrictedSpeedZone[i]->isUnSaved())
             return true;
     }
     return modified;
@@ -848,15 +848,15 @@ void Activity::setWeather(int val){
     
 void Activity::render(GLUU* gluu, float * playerT, float playerRot, int renderMode){
     for (int i = 0; i < activityObjects.size(); i++){
-        activityObjects[i].render(gluu, playerT, renderMode, i);
+        activityObjects[i]->render(gluu, playerT, renderMode, i);
     }
     
     for (int i = 0; i < activityFailedSignal.size(); i++){
-        activityFailedSignal[i].render(gluu, playerT, renderMode, i+3500);
+        activityFailedSignal[i]->render(gluu, playerT, renderMode, i+3500);
     }
     
     for (int i = 0; i < restrictedSpeedZone.size(); i++){
-        restrictedSpeedZone[i].render(gluu, playerT, renderMode, i+3000);
+        restrictedSpeedZone[i]->render(gluu, playerT, renderMode, i+3000);
     }
     
     for (int i = 0; i < event.size(); i++){
@@ -899,10 +899,10 @@ bool Activity::newFailedSignalFromSelected(){
     int tid = ((SignalObj*)w)->getTrItemId();
     if(tid < 0)
         return false;
-    activityFailedSignal.push_back(ActivityObject());
-    activityFailedSignal.back().setFailedSignalData(tid);
-    activityFailedSignal.back().id = activityFailedSignal.size()-1;
-    activityFailedSignal.back().setParentActivity(this);
+    activityFailedSignal.push_back(new ActivityObject());
+    activityFailedSignal.back()->setFailedSignalData(tid);
+    activityFailedSignal.back()->id = activityFailedSignal.size()-1;
+    activityFailedSignal.back()->setParentActivity(this);
     
     return true;
 }
@@ -914,10 +914,10 @@ void Activity::newSpeedZone(float *tdbPos){
     if(!ok)
         return;
     
-    restrictedSpeedZone.push_back(ActivityObject());
-    restrictedSpeedZone.back().setSpeedZoneData(drawPosition);
-    restrictedSpeedZone.back().id = restrictedSpeedZone.size()-1;
-    restrictedSpeedZone.back().setParentActivity(this);
+    restrictedSpeedZone.push_back(new ActivityObject());
+    restrictedSpeedZone.back()->setSpeedZoneData(drawPosition);
+    restrictedSpeedZone.back()->id = restrictedSpeedZone.size()-1;
+    restrictedSpeedZone.back()->setParentActivity(this);
 }
 
 void Activity::newLooseConsist(float *tdbPos){
@@ -928,8 +928,8 @@ void Activity::newLooseConsist(float *tdbPos){
     if(!ok)
         return;
     
-    activityObjects.push_back(ActivityObject(nextActivityObjectUID++));
-    ActivityObject *ao = &activityObjects.back();
+    activityObjects.push_back(new ActivityObject(nextActivityObjectUID++));
+    ActivityObject *ao = activityObjects.back();
 
     ao->objectType = "WagonsList";
     ao->objectTypeId = ao->WAGONLIST;
@@ -946,9 +946,9 @@ void Activity::newLooseConsist(float *tdbPos){
 
 unsigned int Activity::getSelectedCarId(){
     for(int i = 0; i < activityObjects.size(); i++){
-        if(activityObjects[i].isSelected()){
-            if(activityObjects[i].con != NULL){
-                return activityObjects[i].id*65536 + activityObjects[i].con->engItems[activityObjects[i].con->selectedIdx].uid;
+        if(activityObjects[i]->isSelected()){
+            if(activityObjects[i]->con != NULL){
+                return activityObjects[i]->id*65536 + activityObjects[i]->con->engItems[activityObjects[i]->con->selectedIdx].uid;
             }
         }
     }
@@ -984,11 +984,11 @@ bool Activity::isTrafficInUse(QString n){
 bool Activity::getCarPosition(int oid, int eid, float *posTW){
     int uid = -1;
     for(int i = 0; i < activityObjects.size(); i++)
-        if(oid == activityObjects[i].id )
+        if(oid == activityObjects[i]->id )
             uid = i;
     if(uid < 0)
         return false;
-    return activityObjects[uid].getElementPosition(eid, posTW);
+    return activityObjects[uid]->getElementPosition(eid, posTW);
 }
 
 void Activity::createNewPlayerService(QString sName, int sTime ){
@@ -1056,17 +1056,17 @@ void Activity::setBriefing(QString val){
 ActivityObject* Activity::getObjectById(int id){
     if(id < 3000){
         if(activityObjects.size() > id)
-            return &activityObjects[id];
+            return activityObjects[id];
     }
     id -= 3000;
     if(id < 500){
         if(restrictedSpeedZone.size() > id)
-            return &restrictedSpeedZone[id];
+            return restrictedSpeedZone[id];
     }
     id -= 500;
     if(id < 500){
         if(activityFailedSignal.size() > id)
-            return &activityFailedSignal[id];
+            return activityFailedSignal[id];
     }
     return NULL;
 }
@@ -1107,7 +1107,7 @@ QMap<int, QString> ActivityServiceDefinition::getStationStopNameList(){
 
 void Activity::deleteObject(int id){
     for(int i = 0; i < activityObjects.size(); i++){
-        if(activityObjects[i].id == id)
+        if(activityObjects[i]->id == id)
             activityObjects.remove(i);
     }
     modified = true;
@@ -1115,7 +1115,7 @@ void Activity::deleteObject(int id){
 
 void Activity::deleteObjectFailedSignal(int id){
     for(int i = 0; i < activityFailedSignal.size(); i++){
-        if(activityFailedSignal[i].id == id)
+        if(activityFailedSignal[i]->id == id)
             activityFailedSignal.remove(i);
     }
     modified = true;
@@ -1123,7 +1123,7 @@ void Activity::deleteObjectFailedSignal(int id){
 
 void Activity::deleteObjectSpeedZone(int id){
     for(int i = 0; i < restrictedSpeedZone.size(); i++){
-        if(restrictedSpeedZone[i].id == id)
+        if(restrictedSpeedZone[i]->id == id)
             restrictedSpeedZone.remove(i);
     }
     modified = true;

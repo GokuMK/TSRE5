@@ -803,7 +803,7 @@ void ConEditorWindow::conListSelected(int id){
 }
 
 void ConEditorWindow::conListSelected(int aid, int id){
-    currentCon = ActLib::Act[aid]->activityObjects[id].con;
+    currentCon = ActLib::Act[aid]->activityObjects[id]->con;
     qDebug() << currentCon->showName;
     refreshCurrentCon();
     conSlider->setValue(0);

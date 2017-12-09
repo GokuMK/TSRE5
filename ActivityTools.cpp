@@ -557,7 +557,7 @@ void ActivityTools::reloadActivityObjectLists(){
     Consist *e;
     consists.clear();
     for (int i = 0; i < ActLib::Act[id]->activityObjects.size(); i++){
-        e = ActLib::Act[id]->activityObjects[i].con;
+        e = ActLib::Act[id]->activityObjects[i]->con;
         if(e == NULL) continue;
         consists.addItem(e->showName, QVariant(i));
     }
@@ -565,14 +565,14 @@ void ActivityTools::reloadActivityObjectLists(){
     speedZones.clear();
     ActivityObject *rz;
     for (int i = 0; i < ActLib::Act[id]->restrictedSpeedZone.size(); i++){
-        rz = &ActLib::Act[id]->restrictedSpeedZone[i];
+        rz = ActLib::Act[id]->restrictedSpeedZone[i];
         if(rz == NULL) continue;
         speedZones.addItem(rz->getSpeedZoneName(), QVariant(i));
     }
 
     failedSignals.clear();
     for (int i = 0; i < ActLib::Act[id]->activityFailedSignal.size(); i++){
-        rz = &ActLib::Act[id]->activityFailedSignal[i];
+        rz = ActLib::Act[id]->activityFailedSignal[i];
         if(rz == NULL) continue;
         failedSignals.addItem(QString("Signal ID: ")+QString::number(rz->getFailedSignalId()), QVariant(i));
     }
@@ -693,7 +693,7 @@ void ActivityTools::actConsistDeleteEnabled(){
     if(i < 0)
         return;
     
-    a->activityObjects[i].remove();
+    a->activityObjects[i]->remove();
     reloadActivityObjectLists();
     emit sendMsg("unselect");
 }
@@ -708,12 +708,12 @@ void ActivityTools::actConsistJumpEnabled(){
     int i = consists.currentIndex();
     if(i >= a->activityObjects.size())
         return;
-    Consist *e = a->activityObjects[i].con;
+    Consist *e = a->activityObjects[i]->con;
     if(e == NULL) 
         return;
     
     float posTW[5];
-    bool ok = a->activityObjects[i].getElementPosition(0, posTW);
+    bool ok = a->activityObjects[i]->getElementPosition(0, posTW);
     if(!ok)
         return;
     
@@ -738,7 +738,7 @@ void ActivityTools::actFailedSignalsJumpEnabled(){
     if(i >= a->activityFailedSignal.size())
         return;
     float posTW[5];
-    bool ok = a->activityFailedSignal[i].getElementPosition(0, posTW);
+    bool ok = a->activityFailedSignal[i]->getElementPosition(0, posTW);
     if(!ok)
         return;
     if(coordinate == NULL)
@@ -783,7 +783,7 @@ void ActivityTools::actFailedSignalDeleteEnabled(){
         return;
     if(i < 0)
         return;
-    a->activityFailedSignal[i].remove();
+    a->activityFailedSignal[i]->remove();
     reloadActivityObjectLists();
     emit sendMsg("unselect");
 }
@@ -812,7 +812,7 @@ void ActivityTools::actReducedSpeedZonesEnabled(){
     if(i >= a->restrictedSpeedZone.size())
         return;
     float posTW[5];
-    bool ok = a->restrictedSpeedZone[i].getElementPosition(0, posTW);
+    bool ok = a->restrictedSpeedZone[i]->getElementPosition(0, posTW);
     if(!ok)
         return;
     if(coordinate == NULL)
@@ -846,7 +846,7 @@ void ActivityTools::actZoneDeleteEnabled(){
         return;
     if(i < 0)
         return;
-    a->restrictedSpeedZone[i].remove();
+    a->restrictedSpeedZone[i]->remove();
     
     reloadActivityObjectLists();
     emit sendMsg("unselect");

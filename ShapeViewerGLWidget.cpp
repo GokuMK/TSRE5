@@ -381,7 +381,7 @@ void ShapeViewerGLWidget::showCon(int id){
 
 void ShapeViewerGLWidget::showCon(int aid, int id){
     qDebug() << "con aid "<< aid<< " con id "<< id;
-    con = ActLib::Act[aid]->activityObjects[id].con;
+    con = ActLib::Act[aid]->activityObjects[id]->con;
     con->setTextColor(backgroundGlColor);
     renderItem = 3;
 }
