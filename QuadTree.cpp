@@ -25,12 +25,15 @@ QuadTree::QuadTree(bool l) {
 void QuadTree::load() {
     QString sh;
     QString path;
-    path = Game::root + "/routes/" + Game::route + "/td/td_idx.dat";
+    if(low)
+        path = Game::root + "/routes/" + Game::route + "/td/lo_td_idx.dat";
+    else
+        path = Game::root + "/routes/" + Game::route + "/td/td_idx.dat";
     path.replace("//", "/");
 
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "w file not exist    " << path;
+        qDebug() << "quad tree file not exist    " << path;
         return;
     }
     FileBuffer* data = ReadFile::read(&file);
@@ -89,7 +92,10 @@ void QuadTree::createNew(int tileX, int tileY) {
     ttd->y = ty;
     td[ttd->x * 100000 + ttd->y] = ttd;
     ttd->qt = new QuadTile(256, 1, tx, ty);
-    ttd->qt->addTile(tileX, tileY);
+    int dLevel = 1;
+    if(low)
+        dLevel = 16;
+    ttd->qt->addTile(tileX, tileY, dLevel);
     ttd->modified = true;
     save();
 }
@@ -100,6 +106,10 @@ void QuadTree::listNames() {
         i2.next();
         i2.value()->qt->listNames();
     }
+}
+
+bool QuadTree::isLow(){
+    return low;
 }
 
 QString QuadTree::getMyName(int tileX, int tileY) {
@@ -152,7 +162,11 @@ void QuadTree::addTile(int tileX, int tileY) {
         td[tx * 100000 + ty]->y = ty;
         td[tx * 100000 + ty]->qt = new QuadTile(256, 1, tx, ty);
     }
-    td[tx * 100000 + ty]->qt->addTile(tileX, tileY);
+    int dLevel = 1;
+    if(low)
+        dLevel = 16;
+    qDebug() << "dLevel" << dLevel;
+    td[tx * 100000 + ty]->qt->addTile(tileX, tileY, dLevel);
     td[tx * 100000 + ty]->modified = true;
     save();
 }
@@ -248,18 +262,18 @@ void QuadTree::QuadTile::fillTerrainInfo(int tileX, int tileY, TerrainInfo* info
     return;
 }
 
-void QuadTree::QuadTile::addTile(int tileX, int tileY) {
+void QuadTree::QuadTile::addTile(int tileX, int tileY, int dLevel) {
     int px = 0;
     int py = 0;
     if (tileX >= x + level) px = 1;
     if (tileY >= y + level) py = 1;
-    if (level == 1) {
+    if (level == dLevel) {
         populated[px][py] = true;
     } else {
         if (tile[px][py] == NULL) {
             tile[px][py] = new QuadTile(level / 2, 1-prefix, x + px*level, y + py*level );
         }
-        tile[px][py]->addTile(tileX, tileY);
+        tile[px][py]->addTile(tileX, tileY, dLevel);
     }
 }
 
@@ -357,7 +371,10 @@ void QuadTree::QuadTile::addTile(int tileX, int tileY) {
 void QuadTree::save() {
     QString sh;
     QString path;
-    path = Game::root + "/routes/" + Game::route + "/td/td_idx.dat";
+    if(!low)
+        path = Game::root + "/routes/" + Game::route + "/td/td_idx.dat";
+    else
+        path = Game::root + "/routes/" + Game::route + "/td/lo_td_idx.dat";
     path.replace("//", "/");
     QFile file(path);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
@@ -373,6 +390,8 @@ void QuadTree::save() {
     QHashIterator<int, TdFile*> i(td);
     while (i.hasNext()) {
         i.next();
+        if(i.value() == NULL)
+            continue;
         out << "		TdFile ( " << (i.value()->x / 512) << " " << (i.value()->y / 512) << " )\n";
     }
     out << "	) \n";
@@ -382,6 +401,8 @@ void QuadTree::save() {
     QHashIterator<int, TdFile*> i2(td);
     while (i2.hasNext()) {
         i2.next();
+        if(i2.value() == NULL)
+            continue;
         if (i2.value()->modified)
             saveTD((float) i2.value()->x / 512.0, (float) i2.value()->y / 512.0);
     }
@@ -419,7 +440,10 @@ void QuadTree::loadTD(int x, int y) {
 void QuadTree::saveTD(int x, int y) {
     QString sh;
     QString path;
-    path = Game::root + "/routes/" + Game::route + "/td/" + getNameXY(x) + "" + getNameXY(y) + ".td";
+    if(low)
+        path = Game::root + "/routes/" + Game::route + "/td/" + getNameXY(x) + "" + getNameXY(y) + ".tdl";
+    else
+        path = Game::root + "/routes/" + Game::route + "/td/" + getNameXY(x) + "" + getNameXY(y) + ".td";
     path.replace("//", "/");
     QFile *file = new QFile(path);
     qDebug() << "zapis .td " << path;

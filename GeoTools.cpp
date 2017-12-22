@@ -87,6 +87,23 @@ GeoTools::GeoTools(QString name)
     QObject::connect(generateTiles, SIGNAL(released()),
                       this, SLOT(generateTilesEnabled()));
     vbox->addWidget(generateTiles);
+
+    label0 = new QLabel("Distant Terrain:");
+    label0->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label0);
+    QPushButton * checkGeodataLoFiles = new QPushButton("Check if geodata files available.", this);
+    //QObject::connect(checkGeodataFiles, SIGNAL(released()),
+    //                  this, SLOT(checkGeodataFilesEnabled()));
+    vbox->addWidget(checkGeodataLoFiles);
+    
+    QPushButton * generateLoTiles = new QPushButton("Generate tiles using MKR.", this);
+    QObject::connect(generateLoTiles, SIGNAL(released()),
+                      this, SLOT(generateLoTilesEnabled()));
+    vbox->addWidget(generateLoTiles);
+    QPushButton * generateLoTilesFromTDB = new QPushButton("Generate tiles using TDB.", this);
+    QObject::connect(generateLoTilesFromTDB, SIGNAL(released()),
+                      this, SLOT(generateLoTilesFromTDBEnabled()));
+    vbox->addWidget(generateLoTilesFromTDB);
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -165,7 +182,34 @@ void GeoTools::generateTilesEnabled(){
     int radius = eRadius.value();
     c->getTileList(tileList, radius);
     
-    createNewTiles(tileList);
+    emit createNewTiles(tileList);
+}
+
+void GeoTools::generateLoTilesEnabled(){
+    if(markerFiles.count() == 0)
+        return;
+    Coords* c = mkrFiles[markerFiles.currentText()];
+    if(c == NULL) 
+        return;
+    
+    QMap<int, QPair<int, int>*> tileList;
+    int radius = eRadius.value();
+    c->getTileList(tileList, radius, 8);
+    
+    emit createNewLoTiles(tileList);
+}
+
+void GeoTools::generateLoTilesFromTDBEnabled(){
+
+    TDB* tdb = Game::trackDB;
+    if(tdb == NULL) 
+        return;
+    
+    QMap<int, QPair<int, int>*> tileList;
+    int radius = eRadius.value();
+    tdb->getUsedTileList(tileList, radius, 8);
+    
+    emit createNewLoTiles(tileList);
 }
 
 void GeoTools::chAutoCreateTileEnabled(int state){

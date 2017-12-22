@@ -47,7 +47,7 @@ public:
         QuadTile(int l, int p, int xx, int yy);
         void save(std::vector<unsigned char> &data);
         void load(FileBuffer* data);
-        void addTile(int tileX, int tileY);
+        void addTile(int tileX, int tileY, int dLevel);
         QString getMyName(int tileX, int tileY);
         unsigned int getMyNameId(int tileX, int tileY);
         void fillTerrainInfo(int tileX, int tileY, TerrainInfo* info);
@@ -71,6 +71,7 @@ public:
     QString getMyName(int tileX, int tileY);
     unsigned int getMyNameId(int tileX, int tileY);
     void listNames();
+    bool isLow();
 private:
     int terrainDescSize = 67108864;
     int depth = 6;

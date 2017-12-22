@@ -157,7 +157,7 @@ void MapWindow::load(){
     
     dane->tileX = this->tileX;
     dane->tileZ = -this->tileZ;
-    dane->level = 2048.0/tileSize;
+    dane->level = tileSize/2048.0;
     dane->tileSize = tileSize;
     dane->minlon = minLatlon->Longitude;
     dane->minlat = minLatlon->Latitude;

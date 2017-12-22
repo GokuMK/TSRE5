@@ -106,6 +106,7 @@ public:
     void deleteTree(int d);
     int getEndpointType(int trid, int endp);
     bool isRoad();
+    void getUsedTileList(QMap<int, QPair<int, int>*> &tileList, int radius = 0, int step = 1);
     void updateTrItemRData(TRitem* tr);
     void newPlatformObject(int* itemId, int trNodeId, float metry, int type);
     void newPickupObject(int* &itemId, int trNodeId, float metry, int type);

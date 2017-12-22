@@ -18,6 +18,8 @@ public:
     TerrainLibQt(const TerrainLibQt& orig);
     Terrain* getTerrainByXY(int x, int y, bool load = false);
     virtual ~TerrainLibQt();
+    void setDetailedTerrainAsCurrent();
+    void setLowTerrainAsCurrent();
     void fillRaw(Terrain *cTerr, int mojex, int mojez);
     float getHeight(int x, int z, float posx, float posz);
     float getHeight(int x, int z, float posx, float posz, bool addR);
@@ -57,6 +59,7 @@ public:
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode);
     void renderLo(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode);
     void renderWater(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode, int layer);
+    void renderWaterLo(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode, int layer);
     void renderEmpty(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
     void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
 private:

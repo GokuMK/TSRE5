@@ -370,6 +370,9 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(geoTools, SIGNAL(createNewTiles(QMap<int, QPair<int, int>*>)),
                       glWidget, SLOT(createNewTiles(QMap<int, QPair<int, int>*>)));
     
+    QObject::connect(geoTools, SIGNAL(createNewLoTiles(QMap<int, QPair<int, int>*>)),
+                      glWidget, SLOT(createNewLoTiles(QMap<int, QPair<int, int>*>)));
+    
     QObject::connect(glWidget, SIGNAL(routeLoaded(Route*)),
                       objTools, SLOT(routeLoaded(Route*)));
 

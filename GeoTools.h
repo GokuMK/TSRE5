@@ -36,10 +36,13 @@ public slots:
     void mkrList(QMap<QString, Coords*> list);
     void checkGeodataFilesEnabled();
     void generateTilesEnabled();
+    void generateLoTilesEnabled();
+    void generateLoTilesFromTDBEnabled();
     
 signals:
     void enableTool(QString name);
     void createNewTiles(QMap<int, QPair<int, int>*> list);
+    void createNewLoTiles(QMap<int, QPair<int, int>*> list);
     
 private:
     QMap<QString, QPushButton*> buttonTools;

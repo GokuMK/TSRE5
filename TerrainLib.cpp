@@ -111,6 +111,14 @@ void TerrainLib::setHeightFromGeo(int x, int z, float* p){
 
 }
 
+void TerrainLib::setDetailedTerrainAsCurrent(){
+    
+}
+
+void TerrainLib::setLowTerrainAsCurrent(){
+        
+}
+    
 void TerrainLib::setTextureToTrackObj(Brush* brush, float* punkty, int length, int tx, int tz){
 
 }
@@ -193,6 +201,10 @@ void TerrainLib::renderLo(GLUU *gluu, float * playerT, float* playerW, float* ta
 }
 
 void TerrainLib::renderWater(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, int renderMode, int layer) {
+
+}
+
+void TerrainLib::renderWaterLo(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, int renderMode, int layer) {
 
 }
 

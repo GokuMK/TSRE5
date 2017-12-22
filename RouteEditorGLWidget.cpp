@@ -226,6 +226,9 @@ void RouteEditorGLWidget::paintGL() {
     gluu->setMatrixUniforms();
     //gluu->currentShader->setUniformValue(gluu->currentShader->lod, -0.5f);
     Game::terrainLib->renderLo(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode);
+    for(int i = 0; i < route->env->waterCount; i++)
+        Game::terrainLib->renderWaterLo(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
+
     glClear(GL_DEPTH_BUFFER_BIT);
 
     // Render High Resolution Terrain
@@ -1499,7 +1502,29 @@ void RouteEditorGLWidget::createNewTiles(QMap<int, QPair<int, int>*> list){
         qDebug() << x << z;
         route->newTile(x, -z);
     }
-    
+}
+
+void RouteEditorGLWidget::createNewLoTiles(QMap<int, QPair<int, int>*> list){
+    int x, z;
+    QMapIterator<int, QPair<int, int>*> i2(list);
+    if (!Game::writeEnabled) return;
+    while (i2.hasNext()) {
+        i2.next();
+        if(i2.value() == NULL)
+            continue;
+        x = i2.value()->first;
+        z = i2.value()->second;
+        qDebug() << x << z;
+        Game::terrainLib->setLowTerrainAsCurrent();
+        Game::terrainLib->saveEmpty(x, z);
+        Game::terrainLib->reload(x, -z);
+        if(Game::autoGeoTerrain){
+            float pos[3];
+            Vec3::set(pos, 0, 0, 0);
+            Game::terrainLib->setHeightFromGeo(x, -z, (float*)&pos);
+        }
+        Game::terrainLib->setDetailedTerrainAsCurrent();
+    }
 }
 
 void RouteEditorGLWidget::getUnsavedInfo(std::vector<QString> &items) {

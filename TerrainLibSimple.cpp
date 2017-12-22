@@ -45,13 +45,13 @@ void TerrainLibSimple::createNewRouteTerrain(int x, int z){
     quadTree = new QuadTree();
     quadTree->createNew(x, z);
     QString name = Terrain::getTileName(x, z);
-    Terrain::saveEmpty(name);
+    Terrain::SaveEmpty(name);
 }
 
 void TerrainLibSimple::saveEmpty(int x, int z){
     quadTree->addTile(x, z);
     QString name = Terrain::getTileName(x, z);
-    Terrain::saveEmpty(name);
+    Terrain::SaveEmpty(name);
 }
 
 bool TerrainLibSimple::isLoaded(int x, int z) {
@@ -897,10 +897,6 @@ void TerrainLibSimple::fillRaw(Terrain *cTerr, int mojex, int mojez) {
         if(cTerr->getSampleCount() == tTile->getSampleCount())
             cTerr->terrainData[256][256] = tTile->terrainData[0][0];
     }/**/
-}
-
-void TerrainLibSimple::renderLo(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, int renderMode) {
-
 }
 
 void TerrainLibSimple::render(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, int renderMode) {

@@ -145,7 +145,9 @@ void MapDataUrlImage::load() {
         isteps *= 2;
         jsteps *= 2;
     }
-    tzoom -= floor(1.0/level);
+    qDebug() << "level"<<level;
+    tzoom -= log2(level);
+    qDebug() << tzoom;
     //if(level == 0.5)
     //    zoom = 16;
     //if(level == 0.25)

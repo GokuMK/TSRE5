@@ -614,10 +614,14 @@ void TRitem::linkSignal(int trackId, int dist) {
 }
 
 void TRitem::setSpeedpostRot(float rot) {
+    if(this->speedpostTrItemData == NULL)
+        return;
     this->speedpostTrItemData[this->speedpostTrItemDataLength - 1] = rot;
 }
 
 float TRitem::getSpeedpostRot() {
+    if(this->speedpostTrItemData == NULL)
+        return 0;
     return this->speedpostTrItemData[this->speedpostTrItemDataLength - 1];
 }
 

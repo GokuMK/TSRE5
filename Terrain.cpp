@@ -68,7 +68,7 @@ void Terrain::load(){
     //QString filename = getTileNameExperimental2((int) x, (int) -y);
     //qDebug() << filename << x << -y;
     if (!tfile->readT((path + name + ".t"))) {
-        qDebug() << " t fail" << name;
+        //qDebug() << " t fail" << name;
         return;
     }
     if(tfile->sampleYbuffer == NULL)
@@ -256,12 +256,14 @@ Terrain::~Terrain() {
     qDebug() << "= release terrain "<< timeNow2 - timeNow1;
 }
 
-void Terrain::saveEmpty(QString name) {
-    int samples = 256;
-    int sampleSize = 8;
-    int patches = 16;
+void Terrain::SaveEmpty(QString name, int samples, int sampleSize, int patches, bool low) {
     qDebug() << "New terrain tile";
-    QFile file(Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw");
+    QString path;
+    if(low)
+        path = Game::root + "/routes/" + Game::route + "/lo_tiles/" + name + "_y.raw";
+    else
+        path = Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw";
+    QFile file(path);
     if (!file.exists()){
         file.open(QIODevice::WriteOnly);
         QDataStream write(&file);
@@ -275,7 +277,13 @@ void Terrain::saveEmpty(QString name) {
     
     TFile *tfile = new TFile();
     tfile->initNew(name, samples, sampleSize, patches);
-    tfile->save(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
+    if(low){
+        if(!QDir(Game::root + "/routes/" + Game::route + "/lo_tiles/").exists())
+            QDir().mkdir(Game::root + "/routes/" + Game::route + "/lo_tiles/");
+        tfile->save(Game::root + "/routes/" + Game::route + "/lo_tiles/" + name + ".t");
+    } else {
+        tfile->save(Game::root + "/routes/" + Game::route + "/tiles/" + name + ".t");
+    }
 }
 
 QString Terrain::getTileName(){
@@ -601,31 +609,36 @@ void Terrain::setTileBlob(){
 }
 
 void Terrain::makeTextureFromMap(){
-    int hash = (int)(this->mojex)*10000+(int)(this->mojez);
+    int X, Y;
+    getLowCornerTileXY(X, Y);
+    int hash = (X*10000+Y);
     qDebug() << hash;
     if(MapWindow::mapTileImages[hash] == NULL){
+        qDebug() << "mat tex not found";
         return;
     }
-    QString path = QString::number((int)(this->mojex)*10000+(int)(this->mojez))+".:maptex";
-    QString name = this->getTileName(mojex, -mojez) + "_map.ace";
+    QString path = QString::number(hash)+".:maptex";
+    QString tname = name + "_map.ace";
     int mapTexid = TexLib::addTex(path);
-    if(!TexLib::mtex[mapTexid]->loaded)
+    if(!TexLib::mtex[mapTexid]->loaded){
+        qDebug() << "mat tex not loaded";
         return;
+    }
     
-    int newMat = tfile->getMatByTexture(name);
+    int newMat = tfile->getMatByTexture(tname);
     if(newMat >= 0){
         qDebug() << "material already exist";
     } else {
         newMat = tfile->newMat();
     }
-    *tfile->materials[newMat].tex[0] = name;
-    *tfile->amaterials[newMat].tex[0] = name;
+    *tfile->materials[newMat].tex[0] = tname;
+    *tfile->amaterials[newMat].tex[0] = tname;
     float *texmult = (float*)&tfile->materials[newMat].itex[1][3];
     *texmult = 32*16;
 
     int newTexture = TexLib::cloneTex(mapTexid);
-    TexLib::mtex[newTexture]->pathid = name;
-    TexLib::save("ace", texturepath + name, newTexture);
+    TexLib::mtex[newTexture]->pathid = tname;
+    TexLib::save("ace", texturepath + tname, newTexture);
     int patches = tfile->patchsetNpatches;
     float texstep = 1.0/patches;
     for(int i = 0; i < patches; i++)

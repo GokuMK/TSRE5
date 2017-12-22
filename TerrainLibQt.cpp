@@ -66,31 +66,40 @@ void TerrainLibQt::loadQuadTree() {
     quadTreeLo = new QuadTree(true);
     quadTreeLo->load();
 
+    //currentQt = &terrainQtLo;
+    //currentQuadTree = quadTreeLo;
+    
     //quadTree->listNames();
 }
 
 void TerrainLibQt::createNewRouteTerrain(int x, int z) {
-    quadTree = new QuadTree();
-    quadTree->createNew(x, z);
-    QString name = quadTree->getMyName(x, z);
-    Terrain::saveEmpty(name);
+    currentQuadTree = new QuadTree();
+    currentQuadTree->createNew(x, z);
+    QString name = currentQuadTree->getMyName(x, z);
+    Terrain::SaveEmpty(name);
 }
 
 void TerrainLibQt::saveEmpty(int x, int z) {
-    quadTree->addTile(x, z);
-    QString name = quadTree->getMyName(x, z);
-    Terrain::saveEmpty(name);
+    qDebug() << "#new tile add to QT ";
+    currentQuadTree->addTile(x, z);
+    qDebug() << "#new tile get name ";
+    QString name = currentQuadTree->getMyName(x, z);
+    qDebug() << "#new tile Gen "<<name;
+    if(currentQuadTree->isLow())
+        Terrain::SaveEmpty(name, 256, 128, 16, true);
+    else
+        Terrain::SaveEmpty(name);
 }
 
 bool TerrainLibQt::isLoaded(int x, int z) {
     unsigned int terrainNameId = quadTree->getMyNameId((int) x, -z);
     if (terrainNameId == 0)
         return false;
-    if (terrainQt[terrainNameId] == NULL)
+    if ((*currentQt)[terrainNameId] == NULL)
         return false;
-    if (terrainQt[terrainNameId]->t == NULL)
+    if ((*currentQt)[terrainNameId]->t == NULL)
         return false;
-    if (terrainQt[terrainNameId]->t->loaded == false)
+    if ((*currentQt)[terrainNameId]->t->loaded == false)
         return false;
     return true;
 }
@@ -116,6 +125,16 @@ void TerrainLibQt::getUnsavedInfo(std::vector<QString> &items) {
             items.push_back("[T] "+QString::number(tTile->mojex)+" "+QString::number(-tTile->mojez));
         }
     }
+    QHashIterator<unsigned int, TerrainInfo*> i2(terrainQtLo);
+    while (i2.hasNext()) {
+        i2.next();
+        if (i2.value() == NULL) continue;
+        Terrain* tTile = (Terrain*) i2.value()->t;
+        if (tTile == NULL) continue;
+        if (tTile->loaded && tTile->isModified()) {
+            items.push_back("[T] "+QString::number(tTile->mojex)+" "+QString::number(-tTile->mojez));
+        }
+    }
 }
 
 void TerrainLibQt::save() {
@@ -132,17 +151,29 @@ void TerrainLibQt::save() {
             tTile->setModified(false);
         }
     }
+    qDebug() << "save lo terrain";
+    QHashIterator<unsigned int, TerrainInfo*> i2(terrainQtLo);
+    while (i2.hasNext()) {
+        i2.next();
+        if (i2.value() == NULL) continue;
+        Terrain* tTile = (Terrain*) i2.value()->t;
+        if (tTile == NULL) continue;
+        if (tTile->loaded && tTile->isModified()) {
+            tTile->save();
+            tTile->setModified(false);
+        }
+    }
 }
 
 bool TerrainLibQt::reload(int x, int z) {
-    unsigned int terrainNameId = quadTree->getMyNameId((int) x, -z);
+    unsigned int terrainNameId = currentQuadTree->getMyNameId((int) x, -z);
     if (terrainNameId == 0)
         return false;
 
-    terrainQt[terrainNameId] = new TerrainInfo();
-    quadTree->fillTerrainInfo(x, -z, terrainQt[terrainNameId]);
-    terrainQt[terrainNameId]->t = new Terrain(terrainQt[terrainNameId]);
-    if (terrainQt[terrainNameId]->t->loaded)
+    (*currentQt)[terrainNameId] = new TerrainInfo();
+    currentQuadTree->fillTerrainInfo(x, -z, (*currentQt)[terrainNameId]);
+    (*currentQt)[terrainNameId]->t = new Terrain((*currentQt)[terrainNameId]);
+    if ((*currentQt)[terrainNameId]->t->loaded)
         return true;
     return false;
 }
@@ -881,6 +912,17 @@ void TerrainLibQt::setWaterLevels(float *w, int mojex, int mojez) {
         }
 }
 
+
+void TerrainLibQt::setDetailedTerrainAsCurrent(){
+    currentQuadTree = quadTree;
+    currentQt = &terrainQt;
+}
+
+void TerrainLibQt::setLowTerrainAsCurrent(){
+    currentQuadTree = quadTreeLo;
+    currentQt = &terrainQtLo;
+}
+
 void TerrainLibQt::fillRaw(Terrain *cTerr, int mojex, int mojez) {
     QuadTree* tQuadTree = currentQuadTree;
     QHash<unsigned int, TerrainInfo*> *tterrainQt = currentQt;
@@ -963,6 +1005,63 @@ void TerrainLibQt::renderWater(GLUU* gluu, float* playerT, float* playerW, float
             tTile->renderWater(lodx, lodz, playerT[0] + i, playerT[1] + j, playerW, target, fov, layer, selectionColor);
             gluu->mvPopMatrix();
         }
+    }
+}
+
+void TerrainLibQt::renderWaterLo(GLUU* gluu, float* playerT, float* playerW, float* target, float fov, int renderMode, int layer) {
+    int renderCount = 90*90 ;
+    if (renderMode == gluu->RENDER_SELECTION) {
+        renderCount = 9;
+    }
+
+    gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, 0.0f);
+    gluu->enableNormals();
+
+    Terrain *tTile;
+    int selectionColor = 0;
+    unsigned int terrainNameId;
+    for (int n = -1, i = 0, j = 0; n < renderCount; n+=16) {
+        if (n != -1)
+            spiralLoop(n, i, j);
+
+            terrainNameId = quadTreeLo->getMyNameId((int) playerT[0] + i, -(int) playerT[1] - j);
+            if (terrainNameId == 0)
+                continue;
+            if (terrainQtLo[terrainNameId] == NULL) {
+                terrainQtLo[terrainNameId] = new TerrainInfo();
+                quadTreeLo->fillTerrainInfo((int) playerT[0] + i, -(int) playerT[1] - j, terrainQtLo[terrainNameId]);
+                qDebug() << terrainNameId;
+                terrainQtLo[terrainNameId]->t = new Terrain(terrainQtLo[terrainNameId]);
+            }
+            if (terrainQtLo[terrainNameId]->rendered)
+                continue;
+            terrainQtLo[terrainNameId]->rendered = true;
+            tTile = terrainQtLo[terrainNameId]->t;
+
+            if (tTile->loaded == false)
+                continue;
+
+            if (tTile->loaded) {
+                float lodx = 2048 * i - playerW[0];
+                float lodz = 2048 * j - playerW[2];
+                gluu->mvPushMatrix();
+                Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * i, Game::currentRoute->env->water[layer].height, 2048 * j);
+                gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+                if (renderMode == gluu->RENDER_SELECTION) {
+                    selectionColor = 10 << 20;
+                    selectionColor |= ((i + 1) << 10);
+                    selectionColor |= ((j + 1) << 8);
+                }
+                tTile->renderWater(lodx, lodz, playerT[0] + i, playerT[1] + j, playerW, target, fov, layer, selectionColor);
+                gluu->mvPopMatrix();
+            }
+        }
+
+    QHashIterator<unsigned int, TerrainInfo*> i(terrainQtLo);
+    while (i.hasNext()) {
+        i.next();
+        if (i.value() == NULL) continue;
+        i.value()->rendered = false;
     }
 }
 

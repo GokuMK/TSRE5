@@ -32,6 +32,7 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TRitem.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainLib.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Game.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/IghCoords.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ReadFile.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/QuadTree.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConEditorWindow.cpp</file>
@@ -45,9 +46,11 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainInfo.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Coords.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainLibQt.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SignalObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerGLWidget.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/WorldObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Consist.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/FileBuffer.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeLib.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainLibSimple.h</file>
         </group>

@@ -39,6 +39,8 @@ public:
     virtual Terrain* setHeight256(int x, int z, int posx, int posz, float h, float diffC, float diffE);
     virtual void setHeightFromGeoGui(int x, int z, float* p);
     virtual void setHeightFromGeo(int x, int z, float* p);
+    virtual void setDetailedTerrainAsCurrent();
+    virtual void setLowTerrainAsCurrent();
     virtual bool isLoaded(int x, int z);
     virtual QSet<Terrain*> paintHeightMap(Brush* brush, int x, int z, float* p);
     virtual void paintTexture(Brush* brush, int x, int z, float* p);
@@ -66,6 +68,7 @@ public:
     virtual void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode);
     virtual void renderLo(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode);
     virtual void renderWater(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode, int layer);
+    virtual void renderWaterLo(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode, int layer);
     virtual void renderEmpty(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
     virtual void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
     

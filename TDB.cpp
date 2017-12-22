@@ -3195,3 +3195,34 @@ TDB::~TDB() {
     }
 }
 
+void TDB::getUsedTileList(QMap<int, QPair<int, int>*> &tileList, int radius, int step){
+    if (!loaded) return;
+    
+    QMap<int, QPair<int, int>*> tileList2;
+    for (int i = 0; i < trackNodes.size(); i++ ) {
+        if(trackNodes[i] == NULL)
+            continue;
+        if(trackNodes[i]->typ == 1)
+            continue;
+        if(tileList2[trackNodes[i]->UiD[4]*10000 + trackNodes[i]->UiD[5]] == NULL)
+            tileList2[trackNodes[i]->UiD[4]*10000 + trackNodes[i]->UiD[5]] = new QPair<int, int>(trackNodes[i]->UiD[4], trackNodes[i]->UiD[5]);
+        }
+    
+    QMapIterator<int, QPair<int, int>*> i(tileList2);
+    int x, z;
+    radius *= step;
+    qDebug() << "radius" << radius;
+    while (i.hasNext()) {
+        i.next();
+        if(i.value() == NULL)
+            continue;
+        x = i.value()->first;
+        z = i.value()->second;
+        for(int i = -radius; i <= radius; i+=step)
+            for(int j = -radius; j <= radius; j+=step){
+                if(tileList[(x+i)*10000+(z+j)] == NULL){
+                    tileList[(x+i)*10000+(z+j)] = new QPair<int, int>(x+i, z+j);
+                }
+            }
+    }
+}
