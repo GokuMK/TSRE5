@@ -21,7 +21,7 @@
 #include "Game.h"
 #include "FileFunctions.h"
 #include "ReadFile.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 
 CoordsGpx::CoordsGpx(QString path) {
     qDebug() << "gpx!";
@@ -66,8 +66,8 @@ CoordsGpx::CoordsGpx(QString path) {
                         lat = attr[1].value().toFloat();
                     if(attr[1].name().toString().toUpper() == "LON")
                         lon = attr[1].value().toFloat();
-                    igh = MstsCoordinates::ConvertToIgh(lat, lon);
-                    ppp = MstsCoordinates::ConvertToTile(igh);
+                    igh = Game::GeoCoordConverter->ConvertToInternal(lat, lon);
+                    ppp = Game::GeoCoordConverter->ConvertToTile(igh);
                     markerList.back().lat = lat;
                     markerList.back().lon = lon;
                     markerList.back().type = 0;
@@ -92,8 +92,8 @@ CoordsGpx::CoordsGpx(QString path) {
                         lat = attr[1].value().toFloat();
                     if(attr[1].name().toString().toUpper() == "LON")
                         lon = attr[1].value().toFloat();
-                    igh = MstsCoordinates::ConvertToIgh(lat, lon);
-                    ppp = MstsCoordinates::ConvertToTile(igh);
+                    igh = Game::GeoCoordConverter->ConvertToInternal(lat, lon);
+                    ppp = Game::GeoCoordConverter->ConvertToTile(igh);
                     if(markerList.back().tileX.size() == 0){
                         markerList.back().lat = lat;
                         markerList.back().lon = lon;

@@ -27,9 +27,12 @@ class QColor;
 class Route;
 class GameObj;
 class TerrainLib;
+class GeoWorldCoordinateConverter;
 
 class Game {
 public:
+    static GeoWorldCoordinateConverter *GeoCoordConverter;
+    
     static TDB *trackDB;
     static TDB *roadDB;
     static SoundList *soundList;

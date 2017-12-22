@@ -49,6 +49,7 @@
 #include "Path.h"
 #include "Environment.h"
 #include "OrtsWeatherChange.h"
+#include "GeoCoordinates.h"
 
 Route::Route() {
     Game::currentRoute = this;
@@ -81,6 +82,14 @@ Route::Route() {
 
     trk = new Trk();
     trk->load();
+    
+    if(trk->tsreProjection != NULL){
+        qDebug() << "TSRE Geo Projection";
+        Game::GeoCoordConverter = new GeoTsreCoordinateConverter(trk->tsreProjection);
+    } else {
+        qDebug() << "MSTS Geo Projection";
+        Game::GeoCoordConverter = new GeoMstsCoordinateConverter();
+    }
     env = new Environment(Game::root + "/routes/" + Game::route + "/ENVFILES/editor.env");
     Game::routeName = trk->routeName.toLower();
     qDebug() << Game::routeName;

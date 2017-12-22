@@ -15,7 +15,7 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include "CoordsMkr.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include "OSMFeatures.h"
 #include "MapDataOSM.h"
 #include "MapDataUrlImage.h"
@@ -122,23 +122,23 @@ void MapWindow::load(){
     qDebug() << this->tileX << -this->tileZ << 0 << 0 << 0;
     aCoords->setTWxyzU(this->tileX, -this->tileZ, 0, 0, 0);
     qDebug() << aCoords->TileX << aCoords->TileZ << aCoords->wX << 0 << aCoords->wZ;
-    igh = MstsCoordinates::ConvertToIgh(aCoords);
-    MstsCoordinates::ConvertToLatLon(igh, &llpoint[0]);
+    igh = Game::GeoCoordConverter->ConvertToInternal(aCoords);
+    Game::GeoCoordConverter->ConvertToLatLon(igh, &llpoint[0]);
     qDebug() << this->tileX << -this->tileZ << tileSize << 0 << tileSize;
     aCoords->setTWxyzU(this->tileX, -this->tileZ, tileSize, 0, tileSize);
     qDebug() << aCoords->TileX << aCoords->TileZ << aCoords->wX << 0 << aCoords->wZ;
-    igh = MstsCoordinates::ConvertToIgh(aCoords);
-    MstsCoordinates::ConvertToLatLon(igh, &llpoint[1]);
+    igh = Game::GeoCoordConverter->ConvertToInternal(aCoords);
+    Game::GeoCoordConverter->ConvertToLatLon(igh, &llpoint[1]);
     qDebug() << this->tileX << -this->tileZ << 0 << 0 << tileSize;
     aCoords->setTWxyzU(this->tileX, -this->tileZ, 0, 0, tileSize);
     qDebug() << aCoords->TileX << aCoords->TileZ << aCoords->wX << 0 << aCoords->wZ;
-    igh = MstsCoordinates::ConvertToIgh(aCoords);
-    MstsCoordinates::ConvertToLatLon(igh, &llpoint[2]);
+    igh = Game::GeoCoordConverter->ConvertToInternal(aCoords);
+    Game::GeoCoordConverter->ConvertToLatLon(igh, &llpoint[2]);
     qDebug() << this->tileX << -this->tileZ << tileSize << 0 << 0;
     aCoords->setTWxyzU(this->tileX, -this->tileZ, tileSize, 0, 0);
     qDebug() << aCoords->TileX << aCoords->TileZ << aCoords->wX << 0 << aCoords->wZ;
-    igh = MstsCoordinates::ConvertToIgh(aCoords);
-    MstsCoordinates::ConvertToLatLon(igh, &llpoint[3]);
+    igh = Game::GeoCoordConverter->ConvertToInternal(aCoords);
+    Game::GeoCoordConverter->ConvertToLatLon(igh, &llpoint[3]);
     
     minLatlon = new LatitudeLongitudeCoordinate(999,999);
     maxLatlon = new LatitudeLongitudeCoordinate(-999,-999);

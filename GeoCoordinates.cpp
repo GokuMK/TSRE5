@@ -12,18 +12,18 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include <QDebug>
 
-constexpr double MstsCoordinates::IghLongitudeCenter[12];
+constexpr double GeoMstsCoordinateConverter::IghLongitudeCenter[12];
 
-IghCoordinate* MstsCoordinates::ConvertToIgh(PreciseTileCoordinate* coordinates, IghCoordinate* out) {
-    return ConvertToIgh(coordinates->TileX, coordinates->TileZ, coordinates->X, coordinates->Z, out);
+IghCoordinate* GeoMstsCoordinateConverter::ConvertToInternal(PreciseTileCoordinate* coordinates, IghCoordinate* out) {
+    return ConvertToInternal(coordinates->TileX, coordinates->TileZ, coordinates->X, coordinates->Z, out);
 }
 
 // MSTS Tile -> IGH
 
-IghCoordinate* MstsCoordinates::ConvertToIgh(int tilex, int tilez, double x, double z, IghCoordinate* out) {
+IghCoordinate* GeoMstsCoordinateConverter::ConvertToInternal(int tilex, int tilez, double x, double z, IghCoordinate* out) {
     //Debug.Assert(z >= 0, "tileZ is off the top");
     //Debug.Assert(z <= 1, "tileZ is off the bottom");
     //Debug.Assert(x >= 0, "tileX is off the left");
@@ -36,7 +36,7 @@ IghCoordinate* MstsCoordinates::ConvertToIgh(int tilex, int tilez, double x, dou
 
 // IGH -> MSTS Precise Tile
 
-PreciseTileCoordinate* MstsCoordinates::ConvertToTile(IghCoordinate* coordinates, PreciseTileCoordinate* out) {
+PreciseTileCoordinate* GeoMstsCoordinateConverter::ConvertToTile(IghCoordinate* coordinates, PreciseTileCoordinate* out) {
     double tileX = coordinates->Sample / 2048;
     double tileZ = coordinates->Line / 2048;
     double x = tileX - floor(tileX);
@@ -53,7 +53,7 @@ PreciseTileCoordinate* MstsCoordinates::ConvertToTile(IghCoordinate* coordinates
     return out;
 }
 
-LatitudeLongitudeCoordinate* MstsCoordinates::ConvertToLatLon(IghCoordinate* coordinates, LatitudeLongitudeCoordinate* out) {
+LatitudeLongitudeCoordinate* GeoMstsCoordinateConverter::ConvertToLatLon(IghCoordinate* coordinates, LatitudeLongitudeCoordinate* out) {
     // Line/Sample -> Latitude/Longitude Algorithm
     // Based on C code provided by the USGS, available at ftp://edcftp.cr.usgs.gov/pub/software/misc/gihll2ls.c.
     // By D. Steinwand, HSTX/EROS Data Center, June, 1993.
@@ -147,11 +147,11 @@ LatitudeLongitudeCoordinate* MstsCoordinates::ConvertToLatLon(IghCoordinate* coo
 }
 
 // Lat/Lon -> MSTS IGH
-IghCoordinate* MstsCoordinates::ConvertToIgh(LatitudeLongitudeCoordinate* coordinates, IghCoordinate* out) {
-    MstsCoordinates::ConvertToIgh(coordinates->Latitude, coordinates->Longitude, out);
+IghCoordinate* GeoMstsCoordinateConverter::ConvertToInternal(LatitudeLongitudeCoordinate* coordinates, IghCoordinate* out) {
+    return ConvertToInternal(coordinates->Latitude, coordinates->Longitude, out);
 }
 
-IghCoordinate* MstsCoordinates::ConvertToIgh(double lat, double lon, IghCoordinate* out) {
+IghCoordinate* GeoMstsCoordinateConverter::ConvertToInternal(double lat, double lon, IghCoordinate* out) {
     // Latitude/Longitude -> Line/Sample Algorithm
     // Based on C code provided by the USGS, available at ftp://edcftp.cr.usgs.gov/pub/software/misc/gihll2ls.c.
     // By D. Steinwand, HSTX/EROS Data Center, June, 1993.
@@ -244,7 +244,7 @@ IghCoordinate* MstsCoordinates::ConvertToIgh(double lat, double lon, IghCoordina
     return out;
 }
 
-double MstsCoordinates::adjust_lon(double temp) {
+double GeoMstsCoordinateConverter::adjust_lon(double temp) {
     if (fabs(temp) >= M_PI) {
         if (temp > 0)
             return temp - 2 * M_PI;
@@ -254,7 +254,65 @@ double MstsCoordinates::adjust_lon(double temp) {
     return temp;
 }
 
-double MstsCoordinates::sign(double a) {
+double GeoMstsCoordinateConverter::sign(double a) {
     if (a < 0) return -1;
     return 1;
+}
+
+GeoTsreCoordinateConverter::GeoTsreCoordinateConverter(double *latLonXY){
+    centerLat = latLonXY[0];
+    centerLon = latLonXY[1];
+    centerX = latLonXY[2];
+    centerZ = latLonXY[3];
+    
+    double centerLatRad = (centerLat*M_PI)/180.0;
+    stepLat = 111132.92 - 559.82 * cos( 2 * centerLatRad ) + 1.175 * cos( 4 * centerLatRad) - 0.0023 * cos( 6 * centerLatRad);
+    stepLon = 111412.84 * cos ( centerLatRad ) - 93.5 * cos ( 3*centerLatRad ) ;
+    qDebug() << "Projection "<<centerLat << centerLon;
+    qDebug() << "Projection step "<<stepLat << stepLon;
+}
+
+IghCoordinate* GeoTsreCoordinateConverter::ConvertToInternal(PreciseTileCoordinate* coordinates, IghCoordinate* out){
+    return ConvertToInternal(coordinates->TileX, coordinates->TileZ, coordinates->X, coordinates->Z, out);
+}
+
+IghCoordinate* GeoTsreCoordinateConverter::ConvertToInternal(int tilex, int tilez, double x, double z, IghCoordinate* out){
+    //qDebug() << "tile to internal" <<centerX << centerZ << tilex << tilez << x << z;
+    if(out == 0)
+        return new IghCoordinate(2048.0 * (tilez + (1.0 - z)) - centerZ, 2048.0 * (tilex + x) - centerX);
+    out->set(2048.0 * (tilez + (1.0 - z)) - centerZ, 2048.0 * (tilex + x) - centerX);
+    return out;
+}
+
+PreciseTileCoordinate* GeoTsreCoordinateConverter::ConvertToTile(IghCoordinate* coordinates, PreciseTileCoordinate* out){
+    double tileX = (coordinates->Sample + centerX) / 2048;
+    double tileZ = (coordinates->Line + centerZ) / 2048;
+    double x = tileX - floor(tileX);
+    double z = tileZ - floor(tileZ);
+    if(out == 0)
+        return new PreciseTileCoordinate((int) floor(tileX), (int) floor(tileZ), x, 1.0 - z);
+    out->set((int) floor(tileX), (int) floor(tileZ), x, 1.0 - z);
+    return out;
+}
+
+LatitudeLongitudeCoordinate* GeoTsreCoordinateConverter::ConvertToLatLon(IghCoordinate* coordinates, LatitudeLongitudeCoordinate* out){
+    double lat = centerLat + coordinates->Line / stepLat;
+    double lon = centerLon + coordinates->Sample / stepLon;
+    if(out == 0)
+        return new LatitudeLongitudeCoordinate(lat, lon);
+    out->set(lat, lon);
+    return out;
+}
+
+IghCoordinate* GeoTsreCoordinateConverter::ConvertToInternal(LatitudeLongitudeCoordinate* coordinates, IghCoordinate* out){
+    return ConvertToInternal(coordinates->Latitude, coordinates->Longitude, out);
+}
+
+IghCoordinate* GeoTsreCoordinateConverter::ConvertToInternal(double lat, double lon, IghCoordinate* out){
+    double line = (lat - centerLat) * stepLat;
+    double sample = (lon - centerLon) * stepLon;
+    if(out == 0)
+        return new IghCoordinate(line, sample);
+    out->set(line, sample);
+    return out;
 }

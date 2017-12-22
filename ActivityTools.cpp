@@ -23,7 +23,7 @@
 #include "Path.h"
 #include "ActivityServiceProperties.h"
 #include "TextEditDialog.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 
 ActivityTools::ActivityTools(QString name)
     : QWidget(){

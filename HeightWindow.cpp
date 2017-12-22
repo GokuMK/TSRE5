@@ -21,7 +21,7 @@
 #include <QUrl>
 #include <QUrlQuery>
 #include "CoordsMkr.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include "GeoHgtFile.h"
 #include "GeoTiffFile.h"
 #include "UnsavedDialog.h"
@@ -70,8 +70,8 @@ void HeightWindow::CheckForMissingGeodataFiles(QMap<int,QPair<int,int>*>& tileLi
         tCoords->TileX = i.value()->first;
         tCoords->TileZ = i.value()->second;
         tCoords->setWxyz(0, 0, 0);
-        tigh = MstsCoordinates::ConvertToIgh(tCoords, tigh);
-        tLatlon = MstsCoordinates::ConvertToLatLon(tigh, tLatlon);
+        tigh = Game::GeoCoordConverter->ConvertToInternal(tCoords, tigh);
+        tLatlon = Game::GeoCoordConverter->ConvertToLatLon(tigh, tLatlon);
 
         //qDebug() << "lat " << itlat->first << " lon " << itlon->first;
         if(hqtFiles[(int)floor(tLatlon->Latitude)*1000+(int)floor(tLatlon->Longitude)] == NULL){
@@ -119,8 +119,8 @@ void HeightWindow::load(bool gui){
     for(int i = 0; i <= terrainSize; i+= 0.5*terrainSize)
         for(int j = 0; j <=terrainSize; j+= 0.5*terrainSize){
             aCoords->setWxyzU(i, 0, j);
-            igh = MstsCoordinates::ConvertToIgh(aCoords, igh);
-            mLatlon = MstsCoordinates::ConvertToLatLon(igh, mLatlon);
+            igh = Game::GeoCoordConverter->ConvertToInternal(aCoords, igh);
+            mLatlon = Game::GeoCoordConverter->ConvertToLatLon(igh, mLatlon);
             fileLat[(int)floor(mLatlon->Latitude)] = true;
             fileLon[(int)floor(mLatlon->Longitude)] = true;
         }
@@ -185,8 +185,8 @@ void HeightWindow::drawTile(QImage* &image, bool gui){
         terrainData[i] = new float[terrainResolution];
         for (int j = 0; j < terrainResolution; j++) {
             aCoords->setWxyzU(i*step, 0, j*step);
-            igh = MstsCoordinates::ConvertToIgh(aCoords, igh);
-            mLatlon = MstsCoordinates::ConvertToLatLon(igh, mLatlon);
+            igh = Game::GeoCoordConverter->ConvertToInternal(aCoords, igh);
+            mLatlon = Game::GeoCoordConverter->ConvertToLatLon(igh, mLatlon);
             if(hqtFiles[(int)floor(mLatlon->Latitude)*1000+(int)floor(mLatlon->Longitude)] == NULL){
                 qDebug() << "fail";
                 continue;

@@ -15,7 +15,7 @@
 #include <QString>
 #include <QImage>
 #include <QPainter>
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -23,7 +23,7 @@
 #include <QUrl>
 #include <QUrlQuery>
 #include "CoordsMkr.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include "OSMFeatures.h"
 #include <QTime>
 #include "MapWindow.h"
@@ -484,8 +484,8 @@ bool MapDataOSM::draw(QImage* myImage) {
 }
 
 void MapDataOSM::r(int& x, int& y, float lat, float lon){
-    igh = MstsCoordinates::ConvertToIgh(lat, lon, igh);
-    aCoords = MstsCoordinates::ConvertToTile(igh, aCoords);
+    igh = Game::GeoCoordConverter->ConvertToInternal(lat, lon, igh);
+    aCoords = Game::GeoCoordConverter->ConvertToTile(igh, aCoords);
     x = (aCoords->X+1.0*(aCoords->TileX-this->tileX))*height*level;
     y = (aCoords->Z-1.0*(aCoords->TileZ-this->tileZ))*height*level;
 }
@@ -560,7 +560,7 @@ void MapDataOSM::isData(QNetworkReply* r){
     QByteArray data = r->readAll();
     qDebug() << "data " << data.length();    
 
-    if(data.length()==0){
+    if(data.length()< 100){
         //"No data from the network..." label
         emit statusInfo(QString("No data from the network..."));
         // 5 seconds, warning time.

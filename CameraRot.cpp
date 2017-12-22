@@ -12,7 +12,7 @@
 #include <math.h>
 #include "GLMatrix.h"
 #include "Game.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 
 CameraRot::CameraRot(float* pt) {
     pozT = pt;

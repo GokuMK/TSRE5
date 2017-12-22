@@ -15,7 +15,7 @@
 #include "Game.h"
 #include "TDB.h"
 #include "TRitem.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 
 CoordsRoutePlaces::~CoordsRoutePlaces() {
 }
@@ -46,8 +46,8 @@ CoordsRoutePlaces::CoordsRoutePlaces(TDB *tdb, QString place) {
                 coords.TileX = n->trItemRData[3];
                 coords.TileZ = n->trItemRData[4];
                 coords.setWxyz(n->trItemRData[0], 0, -n->trItemRData[2]);
-                MstsCoordinates::ConvertToIgh(&coords, &igh);
-                MstsCoordinates::ConvertToLatLon(&igh, &latlon);
+                Game::GeoCoordConverter->ConvertToInternal(&coords, &igh);
+                Game::GeoCoordConverter->ConvertToLatLon(&igh, &latlon);
                 markerList.back().lat = latlon.Latitude;
                 markerList.back().lon = latlon.Longitude;
             }
@@ -66,8 +66,8 @@ CoordsRoutePlaces::CoordsRoutePlaces(TDB *tdb, QString place) {
                 coords.TileX = n->trItemRData[3];
                 coords.TileZ = n->trItemRData[4];
                 coords.setWxyz(n->trItemRData[0], 0, -n->trItemRData[2]);
-                MstsCoordinates::ConvertToIgh(&coords, &igh);
-                MstsCoordinates::ConvertToLatLon(&igh, &latlon);
+                Game::GeoCoordConverter->ConvertToInternal(&coords, &igh);
+                Game::GeoCoordConverter->ConvertToLatLon(&igh, &latlon);
                 markerList.back().lat = latlon.Latitude;
                 markerList.back().lon = latlon.Longitude;
             }

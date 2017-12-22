@@ -12,7 +12,7 @@
 #include <math.h>
 #include "GLMatrix.h"
 #include "Game.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include "TerrainLib.h"
 
 CameraFree::CameraFree(float* pt) {

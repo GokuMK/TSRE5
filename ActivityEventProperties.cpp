@@ -11,7 +11,7 @@
 #include "ActivityEventProperties.h"
 #include "Game.h"
 #include "ActivityEvent.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include "EditFileNameDialog.h"
 #include "GameObj.h"
 #include "WorldObj.h"

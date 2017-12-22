@@ -49,6 +49,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GLUU.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Game.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GameObj.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GeoCoordinates.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GeoHgtFile.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GeoTerrainFile.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GeoTiffFile.o
@@ -57,7 +58,6 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GuiFunct.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/HazardObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/HeightWindow.o
-./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/IghCoords.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ImageLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Intersections.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/LevelCrObj.o

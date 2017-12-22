@@ -16,7 +16,7 @@
 #include "Game.h"
 #include <QDebug>
 #include "NewRouteWindow.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 
 LoadWindow::LoadWindow() {
     //this->setWindowFlags( Qt::CustomizeWindowHint );
@@ -242,8 +242,11 @@ void LoadWindow::setNewRoute(){
         Game::route = newWindow.name.text();
         double lat = newWindow.lat.text().toDouble();
         double lon = newWindow.lon.text().toDouble();
-        igh = MstsCoordinates::ConvertToIgh(lat, lon, igh);
-        aCoords = MstsCoordinates::ConvertToTile(igh, aCoords);
+        
+        Game::GeoCoordConverter = new GeoMstsCoordinateConverter();
+        
+        igh = Game::GeoCoordConverter->ConvertToInternal(lat, lon, igh);
+        aCoords = Game::GeoCoordConverter->ConvertToTile(igh, aCoords);
         aCoords->setWxyz();
         Game::newRouteX = aCoords->TileX;
         Game::newRouteZ = aCoords->TileZ;

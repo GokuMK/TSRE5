@@ -27,7 +27,7 @@
 #include "Vector2f.h"
 #include "TerrainLib.h"
 #include "Brush.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include "MapWindow.h"
 #include "TerrainTreeWindow.h"
 #include "ShapeLib.h"

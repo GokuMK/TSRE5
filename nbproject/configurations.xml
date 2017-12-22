@@ -34,6 +34,7 @@
         <itemPath>TS.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f14" displayName="GEO" projectFiles="true">
+        <itemPath>GeoCoordinates.h</itemPath>
         <itemPath>GeoHgtFile.h</itemPath>
         <itemPath>GeoTerrainFile.h</itemPath>
         <itemPath>GeoTiffFile.h</itemPath>
@@ -54,7 +55,6 @@
       <logicalFolder name="f6" displayName="math3d" projectFiles="true">
         <itemPath>Flex.h</itemPath>
         <itemPath>GLMatrix.h</itemPath>
-        <itemPath>IghCoords.h</itemPath>
         <itemPath>Intersections.h</itemPath>
         <itemPath>Vector2f.h</itemPath>
         <itemPath>Vector2i.h</itemPath>
@@ -257,6 +257,7 @@
         <itemPath>TS.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f12" displayName="GEO" projectFiles="true">
+        <itemPath>GeoCoordinates.cpp</itemPath>
         <itemPath>GeoHgtFile.cpp</itemPath>
         <itemPath>GeoTerrainFile.cpp</itemPath>
         <itemPath>GeoTiffFile.cpp</itemPath>
@@ -277,7 +278,6 @@
       <logicalFolder name="f5" displayName="math3d" projectFiles="true">
         <itemPath>Flex.cpp</itemPath>
         <itemPath>GLMatrix.cpp</itemPath>
-        <itemPath>IghCoords.cpp</itemPath>
         <itemPath>Intersections.cpp</itemPath>
         <itemPath>Vector2f.cpp</itemPath>
         <itemPath>Vector2i.cpp</itemPath>
@@ -674,6 +674,10 @@
       </item>
       <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoCoordinates.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoCoordinates.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoHgtFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GeoHgtFile.h" ex="false" tool="3" flavor2="0">
@@ -705,10 +709,6 @@
       <item path="HeightWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="HeightWindow.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="IghCoords.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="IghCoords.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ImageLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1415,6 +1415,10 @@
       </item>
       <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoCoordinates.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoCoordinates.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoHgtFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GeoHgtFile.h" ex="false" tool="3" flavor2="0">
@@ -1446,10 +1450,6 @@
       <item path="HeightWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="HeightWindow.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="IghCoords.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="IghCoords.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ImageLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2148,6 +2148,10 @@
       </item>
       <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoCoordinates.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GeoCoordinates.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoHgtFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GeoHgtFile.h" ex="false" tool="3" flavor2="0">
@@ -2179,10 +2183,6 @@
       <item path="HeightWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="HeightWindow.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="IghCoords.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="IghCoords.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ImageLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2889,6 +2889,10 @@
       </item>
       <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoCoordinates.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GeoCoordinates.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoHgtFile.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="GeoHgtFile.h" ex="false" tool="3" flavor2="0">
@@ -2920,10 +2924,6 @@
       <item path="HeightWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="HeightWindow.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="IghCoords.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="IghCoords.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ImageLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3618,6 +3618,10 @@
       </item>
       <item path="GameObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GeoCoordinates.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="GeoCoordinates.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GeoHgtFile.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="GeoHgtFile.h" ex="false" tool="3" flavor2="0">
@@ -3649,10 +3653,6 @@
       <item path="HeightWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="HeightWindow.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="IghCoords.cpp" ex="false" tool="1" flavor2="8">
-      </item>
-      <item path="IghCoords.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ImageLib.cpp" ex="false" tool="1" flavor2="8">
       </item>

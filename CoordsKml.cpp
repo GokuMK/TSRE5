@@ -21,7 +21,7 @@
 #include "Game.h"
 #include "FileFunctions.h"
 #include "ReadFile.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 
 CoordsKml::CoordsKml(QString path) {
     qDebug() << "kml!";
@@ -100,8 +100,8 @@ CoordsKml::CoordsKml(QString path) {
                             if(c.length() < 2) continue;
                             lat = c[1].toFloat();
                             lon = c[0].toFloat();
-                            igh = MstsCoordinates::ConvertToIgh(lat, lon);
-                            ppp = MstsCoordinates::ConvertToTile(igh);
+                            igh = Game::GeoCoordConverter->ConvertToInternal(lat, lon);
+                            ppp = Game::GeoCoordConverter->ConvertToTile(igh);
                             markerList.back().tileX.push_back(ppp->TileX);
                             markerList.back().tileZ.push_back(ppp->TileZ);
                             markerList.back().x.push_back(ppp->X*2048-1024);

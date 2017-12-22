@@ -16,7 +16,7 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include "CoordsMkr.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 
 TerrainTreeWindow::TerrainTreeWindow() : QDialog() {
     QImage myImage(512, 512, QImage::Format_RGB888);

@@ -178,7 +178,17 @@ struct LatitudeLongitudeCoordinate {
     }
 };  
 
-class MstsCoordinates {
+class GeoWorldCoordinateConverter {
+public:
+    virtual IghCoordinate* ConvertToInternal(PreciseTileCoordinate* coordinates, IghCoordinate* out = 0);
+    virtual IghCoordinate* ConvertToInternal(int tilex, int tilez, double x, double z, IghCoordinate* out = 0);
+    virtual PreciseTileCoordinate* ConvertToTile(IghCoordinate* coordinates, PreciseTileCoordinate* out = 0);
+    virtual LatitudeLongitudeCoordinate* ConvertToLatLon(IghCoordinate* coordinates, LatitudeLongitudeCoordinate* out = 0);
+    virtual IghCoordinate* ConvertToInternal(LatitudeLongitudeCoordinate* coordinates, IghCoordinate* out = 0);
+    virtual IghCoordinate* ConvertToInternal(double lat, double lon, IghCoordinate* out = 0);
+};
+
+class GeoMstsCoordinateConverter : public GeoWorldCoordinateConverter {
 
 public:
         // Original calculations:
@@ -211,20 +221,37 @@ public:
     static constexpr double IghMeridian100 = 100.0 / 180 * M_PI; // 100deg
     
     
-    static IghCoordinate* ConvertToIgh(PreciseTileCoordinate* coordinates, IghCoordinate* out = 0);
+    IghCoordinate* ConvertToInternal(PreciseTileCoordinate* coordinates, IghCoordinate* out = 0);
     // MSTS Tile -> IGH
-    static IghCoordinate* ConvertToIgh(int tilex, int tilez, double x, double z, IghCoordinate* out = 0);
+    IghCoordinate* ConvertToInternal(int tilex, int tilez, double x, double z, IghCoordinate* out = 0);
     // IGH -> MSTS Precise Tile
-    static PreciseTileCoordinate* ConvertToTile(IghCoordinate* coordinates, PreciseTileCoordinate* out = 0);
+    PreciseTileCoordinate* ConvertToTile(IghCoordinate* coordinates, PreciseTileCoordinate* out = 0);
     // IGH -> Lat/Lon
-    static LatitudeLongitudeCoordinate* ConvertToLatLon(IghCoordinate* coordinates, LatitudeLongitudeCoordinate* out = 0);
+    LatitudeLongitudeCoordinate* ConvertToLatLon(IghCoordinate* coordinates, LatitudeLongitudeCoordinate* out = 0);
     // Lat/Lon -> MSTS IGH
-    static IghCoordinate* ConvertToIgh(LatitudeLongitudeCoordinate* coordinates, IghCoordinate* out = 0);
-    static IghCoordinate* ConvertToIgh(double lat, double lon, IghCoordinate* out = 0);
-    static double adjust_lon(double temp);
-    static double sign(double a);
+    IghCoordinate* ConvertToInternal(LatitudeLongitudeCoordinate* coordinates, IghCoordinate* out = 0);
+    IghCoordinate* ConvertToInternal(double lat, double lon, IghCoordinate* out = 0);
+private:
+    double adjust_lon(double temp);
+    double sign(double a);
 };
 
-
+class GeoTsreCoordinateConverter : public GeoWorldCoordinateConverter {
+public:
+    GeoTsreCoordinateConverter(double *latLonXY);
+    IghCoordinate* ConvertToInternal(PreciseTileCoordinate* coordinates, IghCoordinate* out = 0);
+    IghCoordinate* ConvertToInternal(int tilex, int tilez, double x, double z, IghCoordinate* out = 0);
+    PreciseTileCoordinate* ConvertToTile(IghCoordinate* coordinates, PreciseTileCoordinate* out = 0);
+    LatitudeLongitudeCoordinate* ConvertToLatLon(IghCoordinate* coordinates, LatitudeLongitudeCoordinate* out = 0);
+    IghCoordinate* ConvertToInternal(LatitudeLongitudeCoordinate* coordinates, IghCoordinate* out = 0);
+    IghCoordinate* ConvertToInternal(double lat, double lon, IghCoordinate* out = 0);
+private:
+    double centerLat;
+    double centerLon;
+    double centerX;
+    double centerZ;
+    double stepLat;
+    double stepLon;
+};
 #endif	/* IGHCOORDS_H */
 

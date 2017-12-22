@@ -26,6 +26,7 @@
 #include "EngLib.h"
 #include <QColor>
 
+GeoWorldCoordinateConverter *Game::GeoCoordConverter = NULL;
 TDB *Game::trackDB = NULL;
 TDB *Game::roadDB = NULL;    
 SoundList *Game::soundList = NULL;    

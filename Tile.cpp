@@ -32,7 +32,7 @@
 #include "GLUU.h"
 #include "GLMatrix.h"
 #include "TS.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include "GroupObj.h"
 
 Tile::Tile() {

@@ -181,6 +181,15 @@ void Trk::load(QString path){
                     ParserX::SkipToken(data);
                     continue;
                 }
+                if (sh == ("tsregeoprojection")) {
+                    tsreProjection = new double[4];
+                    tsreProjection[0] = ParserX::GetNumber(data);
+                    tsreProjection[1] = ParserX::GetNumber(data);
+                    tsreProjection[2] = ParserX::GetNumber(data);
+                    tsreProjection[3] = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
                 if (sh == ("milepostunitskilometers")) {
                     this->milepostUnitsKilometers = true;
                     ParserX::SkipToken(data);

@@ -23,7 +23,7 @@
 #include "Game.h"
 #include "FileFunctions.h"
 #include "ReadFile.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include "OglObj.h"
 #include "TextObj.h"
 

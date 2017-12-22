@@ -15,7 +15,7 @@
 #include <QString>
 #include <QImage>
 #include <QPainter>
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -23,7 +23,7 @@
 #include <QUrl>
 #include <QUrlQuery>
 #include "CoordsMkr.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include "GLMatrix.h"
 #include <QTime>
 #include <algorithm>
@@ -54,17 +54,17 @@ bool MapDataUrlImage::draw(QImage* myImage) {
     LatitudeLongitudeCoordinate llpoint10;
     LatitudeLongitudeCoordinate llpoint11;
     aCoords->setTWxyzU(this->tileX, this->tileZ, 0, 0, 0);
-    igh = MstsCoordinates::ConvertToIgh(aCoords);
-    MstsCoordinates::ConvertToLatLon(igh, &llpoint00);
+    igh = Game::GeoCoordConverter->ConvertToInternal(aCoords);
+    Game::GeoCoordConverter->ConvertToLatLon(igh, &llpoint00);
     aCoords->setTWxyzU(this->tileX, this->tileZ, tileSize, 0, tileSize);
-    igh = MstsCoordinates::ConvertToIgh(aCoords);
-    MstsCoordinates::ConvertToLatLon(igh, &llpoint11);
+    igh = Game::GeoCoordConverter->ConvertToInternal(aCoords);
+    Game::GeoCoordConverter->ConvertToLatLon(igh, &llpoint11);
     aCoords->setTWxyzU(this->tileX, this->tileZ, 0, 0, tileSize);
-    igh = MstsCoordinates::ConvertToIgh(aCoords);
-    MstsCoordinates::ConvertToLatLon(igh, &llpoint10);
+    igh = Game::GeoCoordConverter->ConvertToInternal(aCoords);
+    Game::GeoCoordConverter->ConvertToLatLon(igh, &llpoint10);
     aCoords->setTWxyzU(this->tileX, this->tileZ, tileSize, 0, 0);
-    igh = MstsCoordinates::ConvertToIgh(aCoords);
-    MstsCoordinates::ConvertToLatLon(igh, &llpoint01);
+    igh = Game::GeoCoordConverter->ConvertToInternal(aCoords);
+    Game::GeoCoordConverter->ConvertToLatLon(igh, &llpoint01);
 
     double tx, tz;
     double tlat, tlon;

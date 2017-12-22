@@ -21,7 +21,7 @@
 #include "Game.h"
 #include "FileFunctions.h"
 #include "ReadFile.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 
 CoordsMkr::CoordsMkr(QString path) {
     path.replace("//", "/");
@@ -48,17 +48,17 @@ CoordsMkr::CoordsMkr(QString path) {
             markerList.back().name = ParserX::GetString(data);
             markerList.back().type = ParserX::GetNumber(data);
 
-            //IghCoordinate* igh = MstsCoordinates::ConvertToIgh(x, -z, 0, 0);
+            //IghCoordinate* igh = Game::GeoCoordConverter->ConvertToIgh(x, -z, 0, 0);
             //qDebug() << igh->Line << " === " << igh->Sample;
-            //LatitudeLongitudeCoordinate* latlon = MstsCoordinates::ConvertToLatLon(igh);
+            //LatitudeLongitudeCoordinate* latlon = Game::GeoCoordConverter->ConvertToLatLon(igh);
             //qDebug() << latlon->Latitude << " === " << latlon->Longitude;
-            igh = MstsCoordinates::ConvertToIgh(markerList.back().lat, markerList.back().lon);
+            igh = Game::GeoCoordConverter->ConvertToInternal(markerList.back().lat, markerList.back().lon);
             //qDebug() << igh->Line << " === " << igh->Sample;
-            ppp = MstsCoordinates::ConvertToTile(igh);
+            ppp = Game::GeoCoordConverter->ConvertToTile(igh);
             //qDebug() << ppp->TileX << " === " << ppp->TileZ << " " << ppp->X << " === " << ppp->Z;
-            //igh = MstsCoordinates::ConvertToIgh(ppp);
+            //igh = Game::GeoCoordConverter->ConvertToIgh(ppp);
             //qDebug() << igh->Line << " === " << igh->Sample;
-            //latlon = MstsCoordinates::ConvertToLatLon(igh);
+            //latlon = Game::GeoCoordConverter->ConvertToLatLon(igh);
             //qDebug() << latlon->Latitude << " === " << latlon->Longitude;
             markerList.back().tileX.push_back(ppp->TileX);
             markerList.back().tileZ.push_back(ppp->TileZ);

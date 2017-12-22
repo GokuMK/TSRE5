@@ -9,7 +9,7 @@
  */
 
 #include "NaviWindow.h"
-#include "IghCoords.h"
+#include "GeoCoordinates.h"
 #include <QtWidgets>
 #include <QDebug>
 #include "Coords.h"
@@ -141,16 +141,16 @@ void NaviWindow::jumpTileSelected(){
         emit jumpTo(aCoords);
     }
     if(this->jumpType == "latlon"){
-        igh = MstsCoordinates::ConvertToIgh(latBox.text().toDouble(), lonBox.text().toDouble(), igh);
-        aCoords = MstsCoordinates::ConvertToTile(igh, aCoords);
+        igh = Game::GeoCoordConverter->ConvertToInternal(latBox.text().toDouble(), lonBox.text().toDouble(), igh);
+        aCoords = Game::GeoCoordConverter->ConvertToTile(igh, aCoords);
         aCoords->setWxyz();
         aCoords->wZ = -aCoords->wZ;
         emit jumpTo(aCoords);
     }
     if(this->jumpType == "marker"){
         if(mkrPlaces[markerList.currentText()] == NULL) return;
-        igh = MstsCoordinates::ConvertToIgh(mkrPlaces[markerList.currentText()]->Latitude, mkrPlaces[markerList.currentText()]->Longitude, igh);
-        aCoords = MstsCoordinates::ConvertToTile(igh, aCoords);
+        igh = Game::GeoCoordConverter->ConvertToInternal(mkrPlaces[markerList.currentText()]->Latitude, mkrPlaces[markerList.currentText()]->Longitude, igh);
+        aCoords = Game::GeoCoordConverter->ConvertToTile(igh, aCoords);
         aCoords->setWxyz();
         aCoords->wZ = -aCoords->wZ;
         emit jumpTo(aCoords);
@@ -184,9 +184,9 @@ void NaviWindow::posInfo(PreciseTileCoordinate* coords){
         this->xBox.setText(QString::number(lastX, 10));
         this->yBox.setText(QString::number(lastY, 10));
         this->zBox.setText(QString::number(-lastZ, 10));
-        igh = MstsCoordinates::ConvertToIgh(coords);
+        igh = Game::GeoCoordConverter->ConvertToInternal(coords);
         
-        latlon = MstsCoordinates::ConvertToLatLon(igh);
+        latlon = Game::GeoCoordConverter->ConvertToLatLon(igh);
         this->latBox.setText(QString::number(latlon->Latitude));
         this->lonBox.setText(QString::number(latlon->Longitude));
     }
