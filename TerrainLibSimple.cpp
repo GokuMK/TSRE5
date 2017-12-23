@@ -233,7 +233,7 @@ void TerrainLibSimple::setHeightFromGeoGui(int x, int z, float* p){
     heightWindow->tileZ = -z;
     heightWindow->ok = false;
     heightWindow->terrainResolution = 256;
-    heightWindow->terrainSize = terr->getSampleCount()*terr->getSampleSize()*0.5;
+    heightWindow->terrainSize = 2048;
     heightWindow->exec();
     if(heightWindow->ok){
         qDebug() << "ok";
@@ -273,6 +273,7 @@ void TerrainLibSimple::setHeightFromGeo(int x, int z, float* p){
     heightWindow->tileZ = -z;
     heightWindow->ok = false;
     heightWindow->terrainResolution = 256;
+    heightWindow->terrainSize = 2048;
     heightWindow->load(false);
     if(heightWindow->ok){
         qDebug() << "ok";
