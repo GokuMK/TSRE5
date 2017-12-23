@@ -36,6 +36,7 @@ public:
     void getLinePoints(float *&punkty);
     void getPosition(float len, float* pos);
     float getLength();
+    float getGeoLength();
     void createRoadPaths();
     void removeRoadPaths();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
@@ -51,6 +52,7 @@ private:
     OglObj* point3dSelected = NULL;
     int selectionValue = 0;
     float length = 0;
+    float geoLength = 0;
     
     void refreshLength();
 };

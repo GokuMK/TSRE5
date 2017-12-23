@@ -31,7 +31,7 @@ PropertiesRuler::PropertiesRuler() {
     vlist->addRow("Tile X:",&this->tX);
     vlist->addRow("Tile Z:",&this->tY);
     vbox->addItem(vlist);
-    QLabel *label = new QLabel("Length:");
+    QLabel *label = new QLabel("Game Length:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
@@ -42,6 +42,16 @@ PropertiesRuler::PropertiesRuler() {
     vlist->addRow("Meters: ",&this->lengthM);
     vbox->addItem(vlist);
     
+    label = new QLabel("Geo Length:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+
+    vlist->addRow("Meters: ",&this->lengthGM);
+    vbox->addItem(vlist);
     label = new QLabel("Default Settings:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
@@ -87,6 +97,7 @@ void PropertiesRuler::showObj(GameObj* obj){
     this->tX.setText(QString::number(robj->x, 10));
     this->tY.setText(QString::number(-robj->y, 10));
     lengthM.setText(QString::number(robj->getLength(), 'G', 4));
+    lengthGM.setText(QString::number(robj->getGeoLength(), 'G', 4));
 }
 
 void PropertiesRuler::updateObj(GameObj* obj){

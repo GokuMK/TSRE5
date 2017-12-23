@@ -127,11 +127,18 @@ void RulerObj::refreshLength(){
     length = 0;
     for(int i = 0; i < points.size() - 1; i++){
         length += Vec3::distance(points[i].position, points[i+1].position);
+        
+        
     }
+    
+    
 }
 
 float RulerObj::getLength(){
     return length;
+    
+}float RulerObj::getGeoLength(){
+    return geoLength;
 }
 
 void RulerObj::createRoadPaths(){

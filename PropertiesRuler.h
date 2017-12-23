@@ -32,6 +32,7 @@ signals:
     
 private:
     QLineEdit lengthM;
+    QLineEdit lengthGM;
     QCheckBox checkboxTwoPoint;
     QCheckBox checkboxDrawPoints;
 };
