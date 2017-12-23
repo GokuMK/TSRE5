@@ -486,8 +486,8 @@ bool MapDataOSM::draw(QImage* myImage) {
 void MapDataOSM::r(int& x, int& y, float lat, float lon){
     igh = Game::GeoCoordConverter->ConvertToInternal(lat, lon, igh);
     aCoords = Game::GeoCoordConverter->ConvertToTile(igh, aCoords);
-    x = (aCoords->X+1.0*(aCoords->TileX-this->tileX))*height*level;
-    y = (aCoords->Z-1.0*(aCoords->TileZ-this->tileZ))*height*level;
+    x = (aCoords->X+1.0*(aCoords->TileX-this->tileX))*height/level;
+    y = (aCoords->Z-1.0*(aCoords->TileZ-this->tileZ))*height/level;
 }
 
 int MapDataOSM::rX(float tlon) {
