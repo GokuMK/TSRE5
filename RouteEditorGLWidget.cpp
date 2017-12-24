@@ -221,7 +221,7 @@ void RouteEditorGLWidget::paintGL() {
     Mat4::identity(gluu->mvMatrix);
     
     // Render Low Resolution Terrain
-    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 20.0f, 100000.0f);
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 100.0f, 100000.0f);
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
     gluu->setMatrixUniforms();
     //gluu->currentShader->setUniformValue(gluu->currentShader->lod, -0.5f);

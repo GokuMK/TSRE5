@@ -19,6 +19,7 @@
 #include "Game.h"
 #include "DynTrackObj.h"
 #include "TDB.h"
+#include "GeoCoordinates.h"
 
 bool RulerObj::TwoPointRuler = false;
 bool RulerObj::DrawPoints = false;
@@ -125,9 +126,22 @@ void RulerObj::setPosition(int x, int z, float* p){
 
 void RulerObj::refreshLength(){
     length = 0;
+    geoLength = 0;
+    
+    IghCoordinate igh1, igh2;
+    LatitudeLongitudeCoordinate latlon1, latlon2;
+    PreciseTileCoordinate coords1, coords2;
+    
     for(int i = 0; i < points.size() - 1; i++){
         length += Vec3::distance(points[i].position, points[i+1].position);
         
+        coords1.setTWxyz(x, -y, points[i].position[0], points[i].position[1], points[i].position[2]);
+        coords2.setTWxyz(x, -y, points[i+1].position[0], points[i+1].position[1], points[i+1].position[2]);
+        Game::GeoCoordConverter->ConvertToInternal(&coords1, &igh1);
+        Game::GeoCoordConverter->ConvertToInternal(&coords2, &igh2);
+        Game::GeoCoordConverter->ConvertToLatLon(&igh1, &latlon1);
+        Game::GeoCoordConverter->ConvertToLatLon(&igh2, &latlon2);
+        geoLength += latlon1.distanceTo(&latlon2);
         
     }
     

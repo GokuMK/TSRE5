@@ -109,7 +109,8 @@ void PropertiesRuler::updateObj(GameObj* obj){
 
     if(!lengthM.hasFocus())
         lengthM.setText(QString::number(robj->getLength(), 'G', 4));
-
+    if(!lengthGM.hasFocus())
+        lengthGM.setText(QString::number(robj->getGeoLength(), 'G', 4));
 }
 
 void PropertiesRuler::checkboxTwoPointEdited(int val){

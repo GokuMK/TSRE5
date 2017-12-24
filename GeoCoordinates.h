@@ -81,13 +81,13 @@ struct PreciseTileCoordinate {
     void setTWxyzU(int tx, int ty, float x, float y, float z){
         this->TileX = tx;
         this->TileZ = ty;
-        this->wX = x;
+        this->wX = x-1024.0;
         this->wY = y;
-        this->wZ = z;
+        this->wZ = z-1024.0;
         //checkCoords();
-        this->X = (wX)/2048.0;
+        this->X = (x)/2048.0;
         this->Y = wY;
-        this->Z = (wZ)/2048.0;
+        this->Z = (z)/2048.0;
     }
     void setWxyzU(float x, float y, float z){
         this->wX = x;
@@ -176,6 +176,7 @@ struct LatitudeLongitudeCoordinate {
         Latitude = latitude;
         Longitude = longitude;
     }
+    float distanceTo(LatitudeLongitudeCoordinate *c);
 };  
 
 class GeoWorldCoordinateConverter {

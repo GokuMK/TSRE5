@@ -316,3 +316,19 @@ IghCoordinate* GeoTsreCoordinateConverter::ConvertToInternal(double lat, double 
     out->set(line, sample);
     return out;
 }
+
+float LatitudeLongitudeCoordinate::distanceTo(LatitudeLongitudeCoordinate *c){
+    double centerLat = (Latitude + c->Latitude)/2;
+    double centerLon = (Longitude + c->Longitude)/2;
+    
+    double centerLatRad = (centerLat*M_PI)/180.0;
+    double stepLat = 111132.92 - 559.82 * cos( 2 * centerLatRad ) + 1.175 * cos( 4 * centerLatRad) - 0.0023 * cos( 6 * centerLatRad);
+    double stepLon = 111412.84 * cos ( centerLatRad ) - 93.5 * cos ( 3*centerLatRad ) ;
+    //qDebug() << "Projection "<<Latitude << c->Latitude << Longitude<<c->Longitude;
+    //qDebug() << "Projection "<<centerLat << centerLon;
+    //qDebug() << "Projection step "<<stepLat << stepLon;
+    
+    double deltaLat = fabs(Latitude - c->Latitude);
+    double deltaLon = fabs(Longitude - c->Longitude);
+    return sqrt(pow(deltaLat * stepLat, 2) + pow(deltaLon * stepLon, 2));
+}
