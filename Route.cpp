@@ -296,6 +296,10 @@ void Route::updateSim(float *playerT, float deltaTime){
             }
         }
     }
+    
+    if(currentActivity != NULL){
+        currentActivity->updateSim(playerT, deltaTime);
+    }
 }
 
 void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, int renderMode) {
@@ -518,6 +522,12 @@ ActivityObject* Route::getActivityObject(int id){
         return NULL;
     return currentActivity->getObjectById(id);
     return NULL;
+}
+
+Consist* Route::getActivityConsist(int id){
+    if(currentActivity == NULL)
+        return NULL;
+    return currentActivity->getServiceConsistById(id);
 }
 
 Activity* Route::getCurrentActivity(){

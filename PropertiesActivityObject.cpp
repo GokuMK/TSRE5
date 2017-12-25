@@ -14,7 +14,7 @@
 #include "Activity.h"
 
 PropertiesActivityObject::PropertiesActivityObject() {
-   QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
     infoLabel = new QLabel("ActivityObject:");

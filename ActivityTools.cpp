@@ -503,6 +503,7 @@ void ActivityTools::activitySelected(QString n){
             //qDebug() << cname << route->service[id]->name;
             if(cname == ActLib::Services[id]->nameId){
                 cService.setCurrentIndex(i);
+                a->playerServiceDefinition->servicePointer = ActLib::Services[id];
                 break;
             }
         }

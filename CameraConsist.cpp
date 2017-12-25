@@ -22,7 +22,6 @@ CameraConsist::CameraConsist(float* pt) {
         pozT[0] = 0; 
         pozT[1] = 1;
     }
-        
     
     up[0] = 0;
     up[1] = 1;

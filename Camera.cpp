@@ -86,6 +86,15 @@ float Camera::getRotY() {
 void Camera::update(float fps) {
 }
 
+void Camera::setCameraObject(GameObj* o){
+    cameraObject = o;
+    playerRot[0] = 0.0;
+    playerRot[1] = 0.0;
+    playerPos[0] = 0;
+    playerPos[1] = 10;
+    playerPos[2] = 0;
+}
+
 void Camera::moveForward(float fps) {
 }
 

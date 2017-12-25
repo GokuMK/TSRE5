@@ -593,6 +593,24 @@ void ActivityServiceDefinition::save(QTextStream* out) {
     modified = false;
 }
 
+void ActivityServiceDefinition::render(GLUU* gluu, float* playerT, int renderMode){
+    int selectionColor = 0;
+    if(renderMode == gluu->RENDER_SELECTION){
+        selectionColor = 13 << 20;
+        //selectionColor |= index << 0;
+    }
+    if(servicePointer == NULL)
+        return;
+    servicePointer->render(gluu, playerT, selectionColor);
+
+}
+
+void ActivityServiceDefinition::updateSim(float *playerT, float deltaTime){
+    if(servicePointer == NULL)
+        return;
+    servicePointer->updateSim(playerT, deltaTime);
+}
+
 void Activity::ActivityHeader::load(FileBuffer* data) {
     QString sh;
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
@@ -846,6 +864,12 @@ void Activity::setWeather(int val){
     modified = true;
 }
     
+void Activity::updateSim(float* playerT, float deltaTime){
+    if(playerServiceDefinition != NULL ){
+        playerServiceDefinition->updateSim(playerT, deltaTime);
+    }
+}
+
 void Activity::render(GLUU* gluu, float * playerT, float playerRot, int renderMode){
     for (int i = 0; i < activityObjects.size(); i++){
         activityObjects[i]->render(gluu, playerT, renderMode, i);
@@ -861,6 +885,10 @@ void Activity::render(GLUU* gluu, float * playerT, float playerRot, int renderMo
     
     for (int i = 0; i < event.size(); i++){
         event[i].render(gluu, playerT, playerRot, renderMode);
+    }
+    
+    if(playerServiceDefinition != NULL ){
+        playerServiceDefinition->render(gluu, playerT, renderMode);
     }
 }
 /*
@@ -1067,6 +1095,14 @@ ActivityObject* Activity::getObjectById(int id){
     if(id < 500){
         if(activityFailedSignal.size() > id)
             return activityFailedSignal[id];
+    }
+    return NULL;
+}
+
+Consist* Activity::getServiceConsistById(int id){
+    if(playerServiceDefinition != NULL ){
+        if(playerServiceDefinition->servicePointer != NULL)
+            return playerServiceDefinition->servicePointer->getConsistPointer();
     }
     return NULL;
 }

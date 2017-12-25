@@ -150,7 +150,9 @@ void RouteEditorGLWidget::initializeGL() {
     float * aaa = new float[2] {
         0, 0
     };
-    camera = new CameraFree(aaa);
+    cameraFree = new CameraFree(aaa);
+    //cameraObj = new CameraConsist();
+    camera = cameraFree;
     float spos[3];
     if (Game::start == 2) {
         camera->setPozT(Game::startTileX, -Game::startTileY);
@@ -194,6 +196,10 @@ void RouteEditorGLWidget::initializeGL() {
 void RouteEditorGLWidget::reloadRefFile(){
     route->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
     emit refreshObjLists();
+}
+
+void RouteEditorGLWidget::setCameraObject(GameObj* obj){
+    camera->setCameraObject(obj);
 }
 
 void RouteEditorGLWidget::paintGL() {
@@ -460,6 +466,24 @@ void RouteEditorGLWidget::handleSelection() {
                 qDebug() << "brak obiektu";
             } else {
                 //selectedObj->select(EID);
+            }
+        } else if( ww == 13 ){
+            if (selectedObj != NULL) {
+                selectedObj->unselect();
+                if (autoAddToTDB)
+                    route->addToTDBIfNotExist((WorldObj*)selectedObj);
+                setSelectedObj(NULL);
+            }
+            int CID = ((colorHash) >> 8) & 0xFFF;
+            int EID = ((colorHash)) & 0xFF;
+            qDebug() << CID << EID;
+            setSelectedObj((GameObj*)route->getActivityConsist(CID));
+            if (selectedObj == NULL) {
+                qDebug() << "brak obiektu";
+            } else {
+                //qDebug() << "eid"<<EID;
+                selectedObj->select(EID);
+                setSelectedObj(selectedObj);
             }
         } else {
             if (selectedObj != NULL) {

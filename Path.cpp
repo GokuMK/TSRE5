@@ -148,6 +148,31 @@ void Path::load(){
     loaded = 1;
 }
 
+float* Path::getStartPositionTXZ(float* out){
+    init3dShapes(true);
+    
+    if(out == NULL)
+        out = new float[4];
+        
+    float posT[2];
+    float posW[3];
+    float tpos1[3];
+    TDB* tdb = Game::trackDB;
+    
+    posT[0] = node[0].tilex;
+    posT[1] = node[0].tilez;
+    Vec3::copy(posW, node[0].pos);
+    tdb->findNearestPositionOnTDB(posT, posW, NULL, tpos1);
+    out[0] = posT[0];
+    out[1] = -posT[1];
+    out[2] = posW[0];
+    out[3] = -posW[2];
+    //nodeId1 = tpos1[0];
+    //currentDistance = tpos1[1];
+    //currentNodeId = nodeId1;
+    return out;
+}
+
 void Path::initRoute(){
     if(Game::trackDB == NULL)
         return;
@@ -361,7 +386,7 @@ void Path::init3dShapes(bool initShapes){
         isinit2 = true;
 }
 
-void Path::render(GLUU* gluu, float * playerT, int renderMode){
+void Path::render(GLUU* gluu, float * playerT, int selectionColor){
     if(pointer3d == NULL){
         pointer3d = new TrackItemObj(1);
         pointer3d->setMaterial(0.0,1.0,0.0);

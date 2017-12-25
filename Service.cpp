@@ -20,6 +20,8 @@
 #include "TDB.h"
 #include "AboutWindow.h"
 #include "ActLib.h"
+#include "ConLib.h"
+#include "Consist.h"
 #include "Path.h"
 
 Service::Service(QString p, QString n, bool nowe) {
@@ -206,6 +208,34 @@ void Service::save(){
     
     file.close();
     modified = false;
+}
+
+void Service::render(GLUU* gluu, float* playerT, int selectionColor){
+    if(pathPointer == NULL){
+        QDir dir(Game::root + "/routes/" + Game::route + "/paths");
+        int pathPointerId;
+        qDebug() << "pathid" << (pathPointerId = ActLib::AddPath(dir.path(), pathId+".pat"));
+        pathPointer = ActLib::Paths[pathPointerId];
+    }
+    if(conPointer == NULL){
+        QDir dir(Game::root + "/trains/consists/");
+        int conPointerId;
+        qDebug() << "conid" << (conPointerId =  ConLib::addCon(dir.path(), trainConfig+".con"));
+        conPointer = new Consist(ConLib::con[conPointerId], true);
+        conPointer->initOnTrack(pathPointer->getStartPositionTXZ(), 1);
+    }
+    pathPointer->render(gluu, playerT, selectionColor);
+    
+    conPointer->renderOnTrack(gluu, playerT, selectionColor);
+}
+Consist *Service::getConsistPointer(){
+    return conPointer;
+}
+void Service::updateSim(float* playerT, float deltaTime){
+    if(pathPointer == NULL || conPointer == NULL){
+        return;
+    }
+    conPointer->updateSim(deltaTime);
 }
 
 bool Service::isModified(){

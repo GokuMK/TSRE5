@@ -28,6 +28,7 @@ class GLUU;
 class ActivityServiceDefinition {
 public:
     QString name;
+    Service* servicePointer = NULL;
     int time = -1;
     int uid = -1;
     bool player = false;
@@ -44,6 +45,8 @@ public:
     bool isModified();
     void calculateTimetable();
     void setTimetableEfficiency(int id, float val);
+    void updateSim(float *playerT, float deltaTime);
+    void render(GLUU *gluu, float* playerT, int renderMode);
     QMap<int, QString> getStationStopNameList();
 private:
     bool modified = false;
@@ -113,6 +116,7 @@ public:
     void save();
     bool isInitActivityObjects = false;
     //void initActivityObjects();
+    void updateSim(float *playerT, float deltaTime);
     void render(GLUU* gluu, float * playerT, float playerRot, int renderMode);
 
     QString editorConListSelected;
@@ -160,6 +164,7 @@ public:
     QMap<int, QString> getEventIdNameList();
     QMap<int, QString> getServiceStationStopNameList();
     ActivityObject* getObjectById(int id);
+    Consist* getServiceConsistById(int id);
     void updateService(QString serviceName);
 
 private:

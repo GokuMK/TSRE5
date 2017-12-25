@@ -8,8 +8,8 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#ifndef PROPERTIESCONSIST_H
-#define	PROPERTIESCONSIST_H
+#ifndef PROPERTIESACTIVITYOBJECT_H
+#define	PROPERTIESACTIVITYOBJECT_H
 
 #include "PropertiesAbstract.h"
 
@@ -38,5 +38,5 @@ private:
     ActivityObject* actObj = NULL;
 };
 
-#endif	/* PROPERTIESCONSIST_H */
+#endif	/* PROPERTIESACTIVITYOBJECT_H */
 

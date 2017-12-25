@@ -12,6 +12,7 @@
 #include <math.h>
 #include "GLMatrix.h"
 #include "Game.h"
+#include "GameObj.h"
 #include "GeoCoordinates.h"
 #include "TerrainLib.h"
 
@@ -76,7 +77,7 @@ void Camera::setPlayerRot(float x, float y) {
 }*/
 
 float* CameraFree::getMatrix() {
-    Mat4::lookAt(lookAt, playerPos, getTarget(), up);
+    Mat4::lookAt(lookAt, getPos(), getTarget(), up);
     return lookAt;
 };
 
@@ -92,9 +93,9 @@ float* CameraFree::getTarget() {
     //return new Vector3f(obx+ trasa.ruch1.pozW.x + (float) Math.sin(kato) * 35 , oby + trasa.ruch1.pozW.y + (float) Math.sin(katov) * 20 , obz - trasa.ruch1.pozW.z + (float) Math.cos(kato) * 35 );
     //return new Vector3f(playerPos.x + relativePos.x + (float) Math.sin(playerRot.x + relativeRot.x) * 1 , playerPos.y + relativePos.y + (float) Math.sin(playerRot.y  + relativeRot.y) * 1 , playerPos.z + relativePos.z + (float) Math.cos(playerRot.x + relativeRot.x) * 1 );
     //return new float[3]{getPos().x + (float) sin(playerRot[0] + relativeRot[0]) * 1, playerPos.y + relativePos.y + (float) sin(playerRot.y + relativeRot.y) * 1, getPos().z + (float) cos(playerRot.x + relativeRot.x) * 1};
-    target[0] = playerPos[0] + (float) sin(playerRot[0] + relativeRot[0]) * cos(playerRot[1] + relativeRot[1]); 
-    target[1] = playerPos[1] + (float) sin(playerRot[1] + relativeRot[1]) * 1;
-    target[2] = playerPos[2] + (float) cos(playerRot[0] + relativeRot[0]) * cos(playerRot[1] + relativeRot[1]);
+    target[0] = pos[0] + (float) sin(playerRot[0] + relativeRot[0]) * cos(playerRot[1] + relativeRot[1]); 
+    target[1] = pos[1] + (float) sin(playerRot[1] + relativeRot[1]) * 1;
+    target[2] = pos[2] + (float) cos(playerRot[0] + relativeRot[0]) * cos(playerRot[1] + relativeRot[1]);
     return target;
     //return new float[3]{playerPos[0], playerPos[1],playerPos[2]+1};
 }
@@ -157,6 +158,18 @@ Vector3f Camera::getUp() {
 }*/
 
 void CameraFree::update(float fps) {
+    if(cameraObject != NULL){
+        float cpos[7];
+        cameraObject->getCameraPosition((float*)cpos);
+        pozT[0] = cpos[0];
+        pozT[1] = cpos[1];
+        relativePos[0] = cpos[2];
+        relativePos[1] = cpos[3];
+        relativePos[2] = cpos[4];
+        relativeRot[0] = cpos[5];
+        relativeRot[1] = cpos[6];
+    }
+    
         if(moveF){
             if (jestcontrol == 1) {
                 moveUp();
@@ -180,7 +193,6 @@ void CameraFree::update(float fps) {
         //this.patrzY((this.moveY)/(this.sensitivity));
         //this.moveX = 0;
         //this.moveY = 0;
-
     }
 
 void CameraFree::moveForward(float fps) {
@@ -239,6 +251,8 @@ void CameraFree::patrzY(float f) {
 }
 
 void CameraFree::check_coords() {
+    if(cameraObject != NULL)
+        return;
     if (playerPos[0] > 1024) {
         playerPos[0] -= 2048;
         pozT[0]++;

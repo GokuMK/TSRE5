@@ -81,6 +81,7 @@ public:
     bool couplingFilter(QString q);
     bool searchFilter(QString q);
     void initOnTrack(float *tpos, int direction);
+    void getCameraPosition(float *out = NULL);
     void renderOnTrack(GLUU* gluu, float* playerT, int selectionColor);
     void move(float m);
     void reload();

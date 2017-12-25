@@ -669,6 +669,27 @@ void Consist::initOnTrack(float *posTXZ, int direction){
     this->isOnTrack = true;
 }
 
+void Consist::updateSim(float deltaTime){
+    if (loaded != 1) 
+        return;
+    if(!isOnTrack) 
+        return;
+    
+    for(int i = 0; i < engItems.size(); i++){
+        engItems[i].engPointer->move(-30.0*deltaTime);
+    }
+    
+}
+
+void Consist::getCameraPosition(float *out){
+    if (loaded != 1) 
+        return;
+    if (!isOnTrack) 
+        return;
+    
+    engItems[0].engPointer->getCameraPosition(out);
+}
+
 void Consist::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
     if (loaded != 1) return;
 

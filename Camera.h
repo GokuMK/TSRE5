@@ -19,6 +19,7 @@
 #include <QMouseEvent>
 
 class PreciseTileCoordinate;
+class GameObj;
 
 class Camera {
 public:
@@ -49,6 +50,7 @@ public:
     virtual void keyDown(QKeyEvent * e);
     virtual void keyUp(QKeyEvent * e);
     virtual void update(float fps);
+    virtual void setCameraObject(GameObj* o);
     virtual PreciseTileCoordinate* getCurrentPos();
     float * pozT;
     int starex, starey;
@@ -69,7 +71,7 @@ protected:
     int rpm = 0;
     bool moveF, moveR, moveB, moveL;
     PreciseTileCoordinate* currentPos = 0;
-
+    GameObj* cameraObject = NULL;
 };
 
 #endif	/* CAMERA_H */

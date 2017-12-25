@@ -44,6 +44,7 @@
 #include "PropertiesActivityObject.h"
 #include "PropertiesTrackItem.h"
 #include "PropertiesActivityPath.h"
+#include "PropertiesConsist.h"
 #include "NaviWindow.h"
 #include "UnsavedDialog.h"
 #include "ActivityEventWindow.h"
@@ -91,6 +92,7 @@ RouteEditorWindow::RouteEditorWindow() {
     objProperties["ActivityObject"] = new PropertiesActivityObject;
     objProperties["TrackItem"] = new PropertiesTrackItem;
     objProperties["ActivityPath"] = new PropertiesActivityPath;
+    objProperties["ActivityConsist"] = new PropertiesConsist;
     // last 
     objProperties["Undefined"] = new PropertiesUndefined;
     
@@ -415,6 +417,9 @@ RouteEditorWindow::RouteEditorWindow() {
     
     QObject::connect(objProperties["ActivityObject"], SIGNAL(sendMsg(QString)),
                       glWidget, SLOT(msg(QString)));
+    
+    QObject::connect(objProperties["ActivityConsist"], SIGNAL(cameraObject(GameObj*)),
+                      glWidget, SLOT(setCameraObject(GameObj*)));
     
     QObject::connect(terrainTools, SIGNAL(setPaintBrush(Brush*)),
                       glWidget, SLOT(setPaintBrush(Brush*)));   

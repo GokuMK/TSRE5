@@ -64,10 +64,11 @@ public:
     Path(const Path& orig);
     virtual ~Path();
     void load();
+    float* getStartPositionTXZ(float *out = NULL);
     void initRoute();
     void init3dShapes(bool initShapes = true);
     bool isModified();
-    void render(GLUU* gluu, float * playerT, int renderMode);
+    void render(GLUU* gluu, float * playerT, int selectionColor);
 private:
     int loaded;
     bool modified = false;

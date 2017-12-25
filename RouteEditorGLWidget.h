@@ -19,6 +19,7 @@
 #include <QMatrix4x4>
 #include <QBasicTimer>
 #include "CameraFree.h"
+#include "CameraConsist.h"
 #include "WorldObj.h"
 #include "GroupObj.h"
 #include "Pointer3d.h"
@@ -96,6 +97,7 @@ public slots:
     void placeToolStickTerrain();
     void placeToolStickAll();
     void reloadRefFile();
+    void setCameraObject(GameObj* obj);
     
 signals:
     void routeLoaded(Route * a);
@@ -152,7 +154,9 @@ private:
     QOpenGLFunctions_3_3_Core* funcs = 0;
     unsigned int fbo[3];
     bool m_transparent;
-    Camera* camera;
+    Camera* camera = NULL;
+    CameraFree* cameraFree = NULL;
+    CameraConsist* cameraObj = NULL;
     bool selection = false;
     int mousex, mousey;
     GameObj* selectedObj = NULL;

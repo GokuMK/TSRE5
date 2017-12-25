@@ -35,7 +35,7 @@ void Ruch::set(int nid, int m, int tdirection) {
         }
         direction = -(kierunek - 0.5)*2;
     } else {
-        nodeLength = nodeLength = Game::trackDB->getVectorSectionLength(nodeIdx);
+        nodeLength = Game::trackDB->getVectorSectionLength(nodeIdx);
     }
 }
 
@@ -82,10 +82,14 @@ void Ruch::toNext(float m){
 void Ruch::checkNode() {
     TDB *tdb = Game::trackDB;
     int kier, nodeId;
+    //qDebug() << "modeDist" << nodeDist << nodeLength;
+    float nodeDistLeft = 0;
     if (nodeDist >= nodeLength) {
+        nodeDistLeft = nodeDist - nodeLength;
         kier = tdb->trackNodes[nodeIdx]->TrPinK[1];
         nodeId = tdb->trackNodes[nodeIdx]->TrPinS[1];
     } else if (nodeDist < 0) {
+        nodeDistLeft = -nodeDist;
         kier = tdb->trackNodes[nodeIdx]->TrPinK[0];
         nodeId = tdb->trackNodes[nodeIdx]->TrPinS[0];
     } else {
@@ -121,9 +125,9 @@ void Ruch::checkNode() {
     }
     
     if (kierunek == 1) {
-        nodeDist = 0;
+        nodeDist = nodeDistLeft;
     } else {
-        nodeDist = nodeLength;
+        nodeDist = nodeLength-nodeDistLeft;
     }
     direction = -(kierunek - 0.5)*2;
 }

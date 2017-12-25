@@ -14,6 +14,10 @@
 #include <QString>
 #include <QVector>
 
+class GLUU;
+class Path;
+class Consist;
+
 class Service {
 public:
     struct StationStop{
@@ -53,9 +57,14 @@ public:
     void setEndSpeed(float val);
     void load();
     void save();
+    Consist *getConsistPointer();
+    void updateSim(float *playerT, float deltaTime);
+    void render(GLUU* gluu, float* playerT, int selectionColor);
 private:
     bool modified = false;
     int serial = -1;
+    Path *pathPointer = NULL;
+    Consist *conPointer = NULL;
 };
 
 #endif	/* SERVICE_H */

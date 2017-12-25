@@ -93,6 +93,7 @@
           <itemPath>PropertiesActivityObject.h</itemPath>
           <itemPath>PropertiesActivityPath.h</itemPath>
           <itemPath>PropertiesCarspawner.h</itemPath>
+          <itemPath>PropertiesConsist.h</itemPath>
           <itemPath>PropertiesDyntrack.h</itemPath>
           <itemPath>PropertiesForest.h</itemPath>
           <itemPath>PropertiesGroup.h</itemPath>
@@ -316,6 +317,7 @@
           <itemPath>PropertiesActivityObject.cpp</itemPath>
           <itemPath>PropertiesActivityPath.cpp</itemPath>
           <itemPath>PropertiesCarspawner.cpp</itemPath>
+          <itemPath>PropertiesConsist.cpp</itemPath>
           <itemPath>PropertiesDyntrack.cpp</itemPath>
           <itemPath>PropertiesForest.cpp</itemPath>
           <itemPath>PropertiesGroup.cpp</itemPath>
@@ -835,6 +837,10 @@
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1577,6 +1583,10 @@
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.h" ex="false" tool="3" flavor2="0">
@@ -2309,6 +2319,10 @@
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3051,6 +3065,10 @@
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesDyntrack.h" ex="false" tool="3" flavor2="0">
@@ -3779,6 +3797,10 @@
       <item path="PropertiesCarspawner.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="PropertiesCarspawner.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PropertiesConsist.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="PropertiesDyntrack.cpp" ex="false" tool="1" flavor2="8">
       </item>

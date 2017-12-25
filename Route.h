@@ -116,6 +116,7 @@ public:
     void setTDB(TDB* tdb, bool road);
     void updateSim(float *playerT, float deltaTime);
     ActivityObject* getActivityObject(int id);
+    Consist* getActivityConsist(int id);
     Activity* getCurrentActivity();
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, int renderMode);
     void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, bool selection);

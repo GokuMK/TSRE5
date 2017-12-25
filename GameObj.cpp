@@ -81,6 +81,10 @@ void GameObj::setMartix(){
     
 }
 
+void GameObj::getCameraPosition(float *out){
+    
+}
+
 void GameObj::pushContextMenuActions(QMenu *menu){
     
 }
