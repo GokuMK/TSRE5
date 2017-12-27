@@ -148,6 +148,10 @@ void Path::load(){
     loaded = 1;
 }
 
+QMap<int, int>* Path::getJunctionDirections(){
+    return &junctionDirections;
+}
+
 float* Path::getStartPositionTXZ(float* out){
     init3dShapes(true);
     
@@ -247,6 +251,13 @@ void Path::init3dShapes(bool initShapes){
                 distance1 = lastDistance;
                 distance2 = currentDistance;
             }
+            
+            if(tdb->trackNodes[lastNodeId]->typ == 2)
+                if(tdb->trackNodes[lastNodeId]->TrPinS[1] == currentNodeId)
+                    junctionDirections[lastNodeId] = 0;
+                else
+                    junctionDirections[lastNodeId] = 1;
+            
             lastNodeId = nodeId1;
             lastDistance = currentDistance;
         } else if(node[i].flag1 == 2){
@@ -265,14 +276,20 @@ void Path::init3dShapes(bool initShapes){
                 distance2 = tdb->getVectorSectionLength(currentNodeId);
             } else {
                 currentNodeId = lastNodeId;
-                if(tdb->trackNodes[currentNodeId]->TrPinS[0] == nodeId1
-                    /*&& tdb->trackNodes[currentNodeId]->TrPinK[0] == 1*/){
-                        distance2 = 0;
+                if(tdb->trackNodes[currentNodeId]->TrPinS[0] == nodeId1){
+                    /*&& tdb->trackNodes[currentNodeId]->TrPinK[0] == 1*/
+                    distance2 = 0;
                 } else {
                     distance2 = tdb->getVectorSectionLength(currentNodeId);
                 }
                 distance1 = lastDistance;
             }
+            
+            if(tdb->trackNodes[lastNodeId]->typ == 2)
+                if(tdb->trackNodes[lastNodeId]->TrPinS[1] == currentNodeId)
+                    junctionDirections[lastNodeId] = 0;
+                else
+                    junctionDirections[lastNodeId] = 1;
 
             lastNodeId = nodeId1;
         } else {

@@ -80,7 +80,7 @@ public:
     bool engFilter(QString q);
     bool couplingFilter(QString q);
     bool searchFilter(QString q);
-    void initOnTrack(float *tpos, int direction);
+    void initOnTrack(float *tpos, int direction, QMap<int, int>* junctionDirections);
     void getCameraPosition(float *out = NULL);
     void renderOnTrack(GLUU* gluu, float* playerT, int selectionColor);
     void move(float m);

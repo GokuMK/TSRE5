@@ -26,13 +26,14 @@ public:
     
 public slots:
     void bCamEnabled();
+    void eSpeedEnabled(QString val);
     
 signals:
     void cameraObject(GameObj* obj);
 
 private:
     Consist *conObj = NULL;
-    //QLineEdit ePathFName;
+    QLineEdit eSpeed;
     //QLineEdit eName;
 
 };

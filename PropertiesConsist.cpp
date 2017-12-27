@@ -24,7 +24,9 @@ PropertiesConsist::PropertiesConsist() {
     QFormLayout *vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
-    //vlist->addRow("Type:",&eObjectType);
+    vlist->addRow("Speed:",&eSpeed);
+    QObject::connect(&eSpeed, SIGNAL(textEdited(QString)),
+                      this, SLOT(eSpeedEnabled(QString)));
     //vlist->addRow("Id:",&eId);
     //vlist->addRow("eId:",&eEid);
     //eObjectType.setDisabled(true);
@@ -52,7 +54,7 @@ void PropertiesConsist::showObj(GameObj* obj){
     conObj = (Consist*)obj;
     
     infoLabel->setText("Object: Activity Consist");
-
+    eSpeed.setText(QString::number(conObj->getTrainSpeed()));
 }
 
 void PropertiesConsist::updateObj(GameObj* obj){
@@ -70,6 +72,16 @@ bool PropertiesConsist::support(GameObj* obj){
         return true;
     return false;
 }
+
 void PropertiesConsist::bCamEnabled(){
     emit cameraObject((GameObj*)conObj);
+}
+
+void PropertiesConsist::eSpeedEnabled(QString val){
+    if(conObj == NULL)
+        return;
+    bool ok = false;
+    float speed = val.toFloat(&ok);
+    if(ok)
+        conObj->setTrainSpeed(speed/3.6);
 }

@@ -22,6 +22,7 @@
 #include "TDB.h"
 #include "Vector3f.h"
 #include "Vector2f.h"
+#include <QMap>
 
 class Ruch {
 public:
@@ -29,7 +30,7 @@ public:
     void next(float m);
     void back(float m);
     void toNext(float m);
-    void set(int nid, int m, int tdirection);
+    void set(int nid, int m, int tdirection, QMap<int, int>* jDirections = NULL);
     float *getCurrentPosition();
 
 private:
@@ -40,6 +41,7 @@ private:
     float nodeDist;
     float nodeLength;
     float drawPosition[8];
+    QMap<int, int>* junctionDirections = NULL;
     //bool next();
 };
 

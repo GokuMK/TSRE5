@@ -23,6 +23,7 @@ public:
     unsigned int pShadowMatrixUniform;
     unsigned int pShadow2MatrixUniform;
     unsigned int pMatrixUniform;
+    unsigned int fMatrixUniform;
     unsigned int mvMatrixUniform;
     unsigned int msMatrixUniform;
     unsigned int samplerUniform;

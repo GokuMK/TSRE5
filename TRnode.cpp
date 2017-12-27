@@ -11,6 +11,7 @@
 #include "TRnode.h"
 #include "GLMatrix.h"
 #include <math.h>
+#include "Game.h"
 #include <QString>
 #include <QDebug>
 
@@ -118,3 +119,21 @@ int TRnode::setTrPinK(int id, int nowe) {
                 return j;
             }
     }
+
+float TRnode::getVectorSectionXRot(int id){
+    if(id >= iTrv - 1)
+        return trVectorSection[id].param[13];
+    float pos1[3], pos2[3];
+    pos1[0] = trVectorSection[id].param[10];
+    pos1[1] = trVectorSection[id].param[11];
+    pos1[2] = trVectorSection[id].param[12];
+    pos2[0] = trVectorSection[id+1].param[10];
+    pos2[1] = trVectorSection[id+1].param[11];
+    pos2[2] = trVectorSection[id+1].param[12];
+    
+    pos2[0] += 2048*(trVectorSection[id+1].param[8]-trVectorSection[id].param[8]);
+    pos2[2] += 2048*(trVectorSection[id+1].param[9]-trVectorSection[id].param[9]);
+
+    float dlugosc = Vec3::distance(pos1, pos2);
+    return (float)(asin((pos1[1]-pos2[1])/(dlugosc))); 
+}

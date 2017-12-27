@@ -1938,7 +1938,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
                             (-n->trVectorSection[i].param[9] - playerT[1])*2048 - n->trVectorSection[i].param[12]
                             );
                     o.set(
-                            n->trVectorSection[i].param[13],
+                            /*0n->getVectorSectionXRot(i),*/n->trVectorSection[i].param[13],
                             n->trVectorSection[i].param[14],
                             n->trVectorSection[i].param[15]
                             );
@@ -2003,7 +2003,7 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
         float rot[3];
         rot[0] = M_PI;
         rot[1] = n->trVectorSection[i].param[14];
-        rot[2] = n->trVectorSection[i].param[15];
+        rot[2] = 0;//n->trVectorSection[i].param[15];
 
         float pos[3];
         pos[0] = n->trVectorSection[i].param[10];
@@ -2099,7 +2099,7 @@ void TDB::getLine(float* &ptr, Vector3f p, Vector3f o, int idx, int id, int vid,
     float rot[3];
     rot[0] = M_PI;
     rot[1] = -o.y;
-    rot[2] = o.z;
+    rot[2] = 0;//o.z;
 
     Quat::fromRotationXYZ(q, rot);
     Mat4::fromRotationTranslation(matrix, q, reinterpret_cast<float *> (&p));
@@ -2114,17 +2114,18 @@ void TDB::drawLine(GLUU *gluu, float* &ptr, Vector3f p, Vector3f o, int idx) {
 
     float matrix[16];
     float q[4];
-    q[0] = q[1] = q[2] = 0;
-    q[3] = 1;
+    q[0] = q[1] = q[2] = 0; q[3] = 1;
     float rot[3];
     rot[0] = M_PI;
     rot[1] = -o.y;
-    rot[2] = o.z;
+    rot[2] = 0;
 
     Quat::fromRotationXYZ(q, rot);
     Mat4::fromRotationTranslation(matrix, q, reinterpret_cast<float *> (&p));
+    //Mat4::rotate(matrix, matrix, -o.y+M_PI, 0, 1, 0);
     Mat4::rotate(matrix, matrix, o.x, 1, 0, 0);
-
+    //Mat4::rotate(matrix, matrix, o.z, 0, 0, 1);
+    
     float point1[3];
     point1[0] = 0;
     point1[1] = 0;
@@ -2452,7 +2453,7 @@ void TDB::getVectorSectionPoints(int x, int y, int nId, int sId, float * &ptr){
         
     rot[0] = M_PI;
     rot[1] = -n->trVectorSection[sId].param[14];
-    rot[2] = n->trVectorSection[sId].param[15];
+    rot[2] = 0;//n->trVectorSection[sId].param[15];
     p[0] = (n->trVectorSection[sId].param[8] - x)*2048 + n->trVectorSection[sId].param[10];
     p[1] = n->trVectorSection[sId].param[11];
     p[2] = (-n->trVectorSection[sId].param[9] + y)*2048 - n->trVectorSection[sId].param[12];

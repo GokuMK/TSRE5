@@ -40,6 +40,7 @@ public:
     bool equalsIgnoreType(TRnode* r);
     int podmienTrPin(int stare, int nowe);
     int setTrPinK(int id, int nowe);
+    float getVectorSectionXRot(int id);
 private:
 
 };

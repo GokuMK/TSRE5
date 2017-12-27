@@ -17,11 +17,14 @@ Ruch::Ruch() {
 
 }
 
-void Ruch::set(int nid, int m, int tdirection) {
+void Ruch::set(int nid, int m, int tdirection, QMap<int, int>* jDirections) {
     nodeIdx = nid;
     nodeDist = m;
     kierunek = tdirection;
     direction = -(kierunek - 0.5)*2;
+    junctionDirections = jDirections;
+    if(junctionDirections == NULL)
+        junctionDirections = new QMap<int, int>();
 
     TDB *tdb = Game::trackDB;
     if (tdb->trackNodes[nodeIdx]->typ == 0 || tdb->trackNodes[nodeIdx]->typ == 2) {
@@ -102,7 +105,7 @@ void Ruch::checkNode() {
     if (n->typ == 2) {
         int u = 0;// n->TrP1-1;
         if (kier == 1){
-            u = 1;//n->TrP1;//+n->TrP2-1;
+            u = 1+(*junctionDirections)[nodeId];//n->TrP1;//+n->TrP2-1;
         }
         
         // todo if u > 1 allow junction switch

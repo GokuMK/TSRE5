@@ -95,7 +95,7 @@ public:
     void reverse();
     void setTextColor(float *bgColor);
     void setDurability(float val);
-    void initOnTrack(float *posTXZ, int direction);
+    void initOnTrack(float *posTXZ, int direction, QMap<int, int> *junctionDirections = NULL);
     bool getWagonWorldPosition(int id, float *posTW);
     void updateSim(float deltaTime);
     void getCameraPosition(float *out);
@@ -106,12 +106,15 @@ public:
     void setMaxVelocityFixed(bool val);
     bool isMaxVelocityFixed();
     QString getFirstEngName();
+    void setTrainSpeed(float val);
+    float getTrainSpeed();
 
 private:
     bool newConsist = false;
     bool modified = false;
     bool defaultValue = false;
     bool maxVelocityFixed = false;
+    float trainSpeed = 0.0;
 };
 
 #endif	/* CONSIST_H */

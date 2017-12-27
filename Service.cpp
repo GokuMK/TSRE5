@@ -222,7 +222,7 @@ void Service::render(GLUU* gluu, float* playerT, int selectionColor){
         int conPointerId;
         qDebug() << "conid" << (conPointerId =  ConLib::addCon(dir.path(), trainConfig+".con"));
         conPointer = new Consist(ConLib::con[conPointerId], true);
-        conPointer->initOnTrack(pathPointer->getStartPositionTXZ(), 1);
+        conPointer->initOnTrack(pathPointer->getStartPositionTXZ(), 0, pathPointer->getJunctionDirections());
     }
     pathPointer->render(gluu, playerT, selectionColor);
     

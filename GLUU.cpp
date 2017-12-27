@@ -32,6 +32,7 @@ GLUU::GLUU() {
     alphaTest = 0.3;
     currentAlphaTest = 0.3;
     pMatrix = new float[16];
+    fMatrix = new float[16];
     pShadowMatrix = new float[16];
     pShadowMatrix2 = new float[16];
     mvMatrix = new float[16];
@@ -77,6 +78,7 @@ void GLUU::initShader() {
             qDebug() << "Shader bind failed.";
         }
         currentShader->pMatrixUniform = currentShader->uniformLocation("uPMatrix");
+        currentShader->fMatrixUniform = currentShader->uniformLocation("uFMatrix");
         currentShader->pShadowMatrixUniform = currentShader->uniformLocation("uShadowPMatrix");
         currentShader->pShadow2MatrixUniform = currentShader->uniformLocation("uShadow2PMatrix");
         currentShader->mvMatrixUniform = currentShader->uniformLocation("uMVMatrix");
@@ -126,6 +128,7 @@ void GLUU::mvPopMatrix() {
 
 void GLUU::setMatrixUniforms() {
     currentShader->setUniformValue(currentShader->pMatrixUniform, *reinterpret_cast<float(*)[4][4]> (pMatrix));
+    currentShader->setUniformValue(currentShader->fMatrixUniform, *reinterpret_cast<float(*)[4][4]> (fMatrix));
     currentShader->setUniformValue(currentShader->pShadowMatrixUniform, *reinterpret_cast<float(*)[4][4]> (pShadowMatrix));
     currentShader->setUniformValue(currentShader->pShadow2MatrixUniform, *reinterpret_cast<float(*)[4][4]> (pShadowMatrix2));
     currentShader->setUniformValue(currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (mvMatrix));

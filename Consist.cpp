@@ -633,7 +633,7 @@ void Consist::render(int aktwx, int aktwz, int selectionColor, bool renderText) 
      //
 }
 
-void Consist::initOnTrack(float *posTXZ, int direction){
+void Consist::initOnTrack(float *posTXZ, int direction, QMap<int, int> *junctionDirections){
     if(direction > 0)
         direction = 1;
     
@@ -660,7 +660,7 @@ void Consist::initOnTrack(float *posTXZ, int direction){
     for(int i = 0; i < engItems.size(); i++){
         if(engItems[i].engPointer == NULL)
             engItems[i].engPointer = new Eng(Game::currentEngLib->eng[engItems[i].eng]);
-        engItems[i].engPointer->initOnTrack(tpos, direction);
+        engItems[i].engPointer->initOnTrack(tpos, direction, junctionDirections);
         engItems[i].engPointer->flip = engItems[i].flip;
         //engItems[i].engPointer->move(26.5*i);
         //engItems[i].engPointer->move(engItems[i].conLength);
@@ -669,6 +669,14 @@ void Consist::initOnTrack(float *posTXZ, int direction){
     this->isOnTrack = true;
 }
 
+void Consist::setTrainSpeed(float val){
+    trainSpeed = val;
+}
+
+float Consist::getTrainSpeed(){
+    return trainSpeed;
+}
+    
 void Consist::updateSim(float deltaTime){
     if (loaded != 1) 
         return;
@@ -676,7 +684,8 @@ void Consist::updateSim(float deltaTime){
         return;
     
     for(int i = 0; i < engItems.size(); i++){
-        engItems[i].engPointer->move(-30.0*deltaTime);
+        //engItems[i].engPointer->move(-55.5*deltaTime);
+        engItems[i].engPointer->move(-trainSpeed*deltaTime);
     }
     
 }

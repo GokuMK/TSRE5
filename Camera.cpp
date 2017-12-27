@@ -88,10 +88,10 @@ void Camera::update(float fps) {
 
 void Camera::setCameraObject(GameObj* o){
     cameraObject = o;
-    playerRot[0] = 0.0;
+    playerRot[0] = M_PI;
     playerRot[1] = 0.0;
     playerPos[0] = 0;
-    playerPos[1] = 10;
+    playerPos[1] = 3;
     playerPos[2] = 0;
 }
 
