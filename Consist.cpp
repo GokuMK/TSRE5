@@ -685,7 +685,7 @@ void Consist::updateSim(float deltaTime){
     
     for(int i = 0; i < engItems.size(); i++){
         //engItems[i].engPointer->move(-55.5*deltaTime);
-        engItems[i].engPointer->move(-trainSpeed*deltaTime);
+        engItems[i].engPointer->move(trainSpeed*deltaTime);
     }
     
 }

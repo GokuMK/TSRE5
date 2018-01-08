@@ -106,6 +106,12 @@ bool Traffic::isModified(){
 
 void Traffic::save(){
     QString tpath;
+    
+    QDir dir(path);
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+    
     tpath = path+"/"+name;
     tpath.replace("//", "/");
     qDebug() << tpath;

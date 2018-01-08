@@ -373,18 +373,14 @@ void ActivityTools::actTrafficOpenEnabled(){
 
 void ActivityTools::routeLoaded(Route* r){
     route = r;
-    actShow.clear();
+
     consists.clear();
-    foreach(int id, route->activityId){
-        actShow.addItem(ActLib::Act[id]->header->name, QVariant(id));
-    }
-    actShow.setCurrentIndex(-1);
-    
     ConLib::loadSimpleList(Game::root);
     foreach(QString name, ConLib::conFileList){
         conFilesShow.addItem(name.section('/', -1), QVariant(name));
     }
     
+    reloadActivityList();
     reloadServicesList();
     reloadTrafficsList();
     reloadPathsList();
@@ -396,6 +392,14 @@ void ActivityTools::conFilesRefreshSelected(){
     foreach(QString name, ConLib::conFileList){
         conFilesShow.addItem(name.section('/', -1), QVariant(name));
     }
+}
+
+void ActivityTools::reloadActivityList(){
+    actShow.clear();
+    foreach(int id, route->activityId){
+        actShow.addItem(ActLib::Act[id]->header->name, QVariant(id));
+    }
+    actShow.setCurrentIndex(-1);
 }
 
 void ActivityTools::reloadServicesList(){
@@ -675,8 +679,10 @@ void ActivityTools::newActButtonEnabled(){
         ActLib::Act[id]->init(Game::route, "New Activity"+QString::number(i));
         qDebug()<< ActLib::Act[id]->header->name;
         route->activityId.push_back(id);
-        actShow.addItem(ActLib::Act[id]->header->name, id);
-        actShow.setCurrentIndex(actShow.count()-1); 
+        //actShow.addItem(ActLib::Act[id]->header->name, id);
+        //actShow.setCurrentIndex(actShow.count()-1); 
+        reloadActivityList();
+        actShow.setCurrentIndex(actShow.findData(id));
         activitySelected("");
         return;
     }
@@ -887,10 +893,14 @@ void ActivityTools::eFileNameEnabled(QString val){
 }
 
 void ActivityTools::eDisplayNameEnabled(QString val){
-    Activity *a = ActLib::Act[actShow.currentData().toInt()];
+    int id = actShow.currentData().toInt();
+    Activity *a = ActLib::Act[id];
     if(a == NULL)
         return;
     a->setDisplayName(val);
+    
+    reloadActivityList();
+    actShow.setCurrentIndex(actShow.findData(id));
 }
 
 void ActivityTools::cDifficultyEnabled(int val){

@@ -65,6 +65,7 @@ public:
     virtual ~Path();
     void load();
     float* getStartPositionTXZ(float *out = NULL);
+    int getStartDirection();
     QMap<int, int>* getJunctionDirections();
     void initRoute();
     void init3dShapes(bool initShapes = true);
@@ -82,6 +83,7 @@ private:
     QVector<float> linesZ;
     QMap<float, PathObject*> pathObjectsMap;
     QMap<int, int> junctionDirections;
+    int startDirection = 0;
 };
 
 #endif	/* PATH_H */

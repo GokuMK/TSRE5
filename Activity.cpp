@@ -331,6 +331,12 @@ void Activity::load() {
 
 void Activity::save() {
     QString tpath;
+    
+    QDir dir(path);
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+    
     tpath = path+"/"+name;
     tpath.replace("//", "/");
     qDebug() << tpath;
@@ -814,6 +820,8 @@ void Activity::setFileName(QString val){
         return;
     nameid = val;
     name = val+".act";
+    pathid = path + "/" + name;
+    pathid.replace("//", "/");
     modified = true;
 }
 

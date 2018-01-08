@@ -152,6 +152,12 @@ QMap<int, int>* Path::getJunctionDirections(){
     return &junctionDirections;
 }
 
+int Path::getStartDirection(){
+    init3dShapes(true);
+    
+    return startDirection;
+}
+
 float* Path::getStartPositionTXZ(float* out){
     init3dShapes(true);
     
@@ -284,6 +290,12 @@ void Path::init3dShapes(bool initShapes){
                 }
                 distance1 = lastDistance;
             }
+            
+            if(i == 1)
+                if(tdb->trackNodes[currentNodeId]->TrPinS[0] == nodeId1)
+                    startDirection = 1;
+                else 
+                    startDirection = 0;
             
             if(tdb->trackNodes[lastNodeId]->typ == 2)
                 if(tdb->trackNodes[lastNodeId]->TrPinS[1] == currentNodeId)

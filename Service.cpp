@@ -170,6 +170,12 @@ void Service::load(){
 
 void Service::save(){
     QString tpath;
+    
+    QDir dir(path);
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+    
     tpath = path+"/"+name;
     tpath.replace("//", "/");
     qDebug() << tpath;
@@ -222,7 +228,7 @@ void Service::render(GLUU* gluu, float* playerT, int selectionColor){
         int conPointerId;
         qDebug() << "conid" << (conPointerId =  ConLib::addCon(dir.path(), trainConfig+".con"));
         conPointer = new Consist(ConLib::con[conPointerId], true);
-        conPointer->initOnTrack(pathPointer->getStartPositionTXZ(), 0, pathPointer->getJunctionDirections());
+        conPointer->initOnTrack(pathPointer->getStartPositionTXZ(), pathPointer->getStartDirection(), pathPointer->getJunctionDirections());
     }
     pathPointer->render(gluu, playerT, selectionColor);
     

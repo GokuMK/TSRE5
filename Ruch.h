@@ -34,7 +34,7 @@ public:
     float *getCurrentPosition();
 
 private:
-    void checkNode();
+    void checkNode(int mSign);
     float kierunek = 1;
     float direction = 1;
     int nodeIdx;

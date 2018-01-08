@@ -79,10 +79,13 @@ void Ruch::back(float m) {
 
 void Ruch::toNext(float m){
     nodeDist += m*direction;
-    checkNode();
+    int sign = 1;
+    if(m < 0)
+        sign = -1;
+    checkNode(sign);
 }
 
-void Ruch::checkNode() {
+void Ruch::checkNode(int mSign) {
     TDB *tdb = Game::trackDB;
     int kier, nodeId;
     //qDebug() << "modeDist" << nodeDist << nodeLength;
@@ -132,7 +135,7 @@ void Ruch::checkNode() {
     } else {
         nodeDist = nodeLength-nodeDistLeft;
     }
-    direction = -(kierunek - 0.5)*2;
+    direction = (kierunek - 0.5)*2*mSign;
 }
 
 float * Ruch::getCurrentPosition() {

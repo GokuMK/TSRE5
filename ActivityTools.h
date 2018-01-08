@@ -78,6 +78,7 @@ public slots:
     void actTimetableOpenEnabled();
     void actSettingsOpenEnabled();
     
+    void reloadActivityList();
     void reloadServicesList();
     void reloadTrafficsList();
     void reloadPathsList();

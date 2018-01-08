@@ -647,14 +647,14 @@ void Eng::getCameraPosition(float* out){
     
     int someval = (((drawPosition1[2]-drawPosition2[2])+0.00001f)/fabs((drawPosition1[2]-drawPosition2[2])+0.00001f));
     float rotY = ((float)someval+1.0)*(M_PI/2.0)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
-    float rotX = -(float)(asin((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
+    float rotX = (float)(asin((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
 
     out[0] = pos[3];
     out[1] = -pos[4];
-    out[2] = drawPosition2[0]; // pos?
-    out[3] = drawPosition2[1];
-    out[4] = -drawPosition2[2];
-    out[5] = -rotY;
+    out[2] = drawPosition1[0]; // pos?
+    out[3] = drawPosition1[1];
+    out[4] = -drawPosition1[2];
+    out[5] = -rotY+M_PI;
     out[6] = rotX;
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, pos[0] + 2048 * (pos[3] - playerT[0]), pos[1]+0.28, -pos[2] + 2048 * (-pos[4] - playerT[1]));
     //Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rotY /* + flip*M_PI+ M_PI*/);
