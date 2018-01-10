@@ -1108,7 +1108,7 @@ void Terrain::refreshWaterShapes(){
             }
         }
     }
-    this->setModified(true);
+    setModified(true);
 }
 
 bool Terrain::isXYinside(int x, int y){

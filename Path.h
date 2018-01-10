@@ -54,6 +54,7 @@ public:
     QString trPathEnd;
     unsigned int trPathFlags;
     int ref = 0;
+    int loaded;
     
     QVector<float*> trackPdp;
     QVector<unsigned int*> trPathNode;
@@ -72,7 +73,6 @@ public:
     bool isModified();
     void render(GLUU* gluu, float * playerT, int selectionColor);
 private:
-    int loaded;
     bool modified = false;
     bool isinit1 = false;
     bool isinit2 = false;

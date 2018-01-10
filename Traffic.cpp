@@ -124,7 +124,7 @@ void Traffic::save(){
     
     out << "SIMISA@@@@@@@@@@JINX0f0t______\n";
     out << "\n";
-    out << "Traffic_Definition ( " << nameId << "\n";
+    out << "Traffic_Definition ( " << ParserX::AddComIfReq(nameId) << "\n";
     if (serial >= 0) {
         out << "	Serial ( " << serial << " )\n";
     }

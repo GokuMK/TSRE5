@@ -10,18 +10,34 @@
 
 #include "UnsavedDialog.h"
 
-UnsavedDialog::UnsavedDialog() : QDialog(){
+UnsavedDialog::UnsavedDialog() : UnsavedDialog("SQC") {
+
+}
+
+UnsavedDialog::UnsavedDialog(QString buttonLayout) : QDialog(){
     //this->setFixedWidth(300);
     items.setFixedWidth(300);
     //this->setFixedSize(300,300);
-
+    qDebug() << buttonLayout;
     //QLabel *label = new QLabel("Save changes in consists?");
-    bok = new QPushButton("Save and Quit");
-    bexit = new QPushButton("Discard and Quit");
-    bcancel = new QPushButton("Cancel");
-    connect(bok, SIGNAL (released()), this, SLOT (ok()));
-    connect(bcancel, SIGNAL (released()), this, SLOT (cancel()));
-    connect(bexit, SIGNAL (released()), this, SLOT (exit()));
+    if(buttonLayout == "SQC"){
+        bok = new QPushButton("Save and Quit");
+        bexit = new QPushButton("Discard and Quit");
+        bcancel = new QPushButton("Cancel");
+    } else if(buttonLayout == "SC"){
+        bok = new QPushButton("Save");
+        bcancel = new QPushButton("Cancel");
+    } else { 
+        qDebug() << "#UnsavedDialog: wrong button layout";
+        return;
+    }
+    
+    if(buttonLayout.contains("S"))
+        connect(bok, SIGNAL (released()), this, SLOT (ok()));
+    if(buttonLayout.contains("C"))
+        connect(bcancel, SIGNAL (released()), this, SLOT (cancel()));
+    if(buttonLayout.contains("Q"))
+        connect(bexit, SIGNAL (released()), this, SLOT (exit()));
     
     QGridLayout *vlist = new QGridLayout;
     vlist->setSpacing(2);
@@ -30,9 +46,14 @@ UnsavedDialog::UnsavedDialog() : QDialog(){
     //vlist->addWidget(&name, 1, 1, 1, 1, Qt::AlignLeft);
     //QHBoxLayout *vlist1 = new QHBoxLayout;
     vlist->addWidget(&items, 1, 0, 1, 3, Qt::AlignCenter);
-    vlist->addWidget(bok, 2, 0);
-    vlist->addWidget(bexit, 2, 1);
-    vlist->addWidget(bcancel, 2, 2);
+    if(buttonLayout == "SQC"){
+        vlist->addWidget(bok, 2, 0);
+        vlist->addWidget(bexit, 2, 1);
+        vlist->addWidget(bcancel, 2, 2);
+    } else if(buttonLayout == "SC"){
+        vlist->addWidget(bok, 2, 0, 1, 2);
+        vlist->addWidget(bcancel, 2, 2);
+    }
     
 //    mainLayout->setAlignment(browse, Qt::AlignBottom);
     vlist->setContentsMargins(1,1,1,1);

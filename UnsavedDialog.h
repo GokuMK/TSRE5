@@ -17,9 +17,11 @@ class UnsavedDialog : public QDialog {
     Q_OBJECT
 public:
     UnsavedDialog();
+    UnsavedDialog(QString buttonLayout);
     virtual ~UnsavedDialog();
     QListWidget items;
     void setMsg(QString msg);
+    void hideExitButton();
     void hideButtons();
     int changed = 0;
     

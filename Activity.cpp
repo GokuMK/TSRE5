@@ -790,7 +790,8 @@ bool Activity::isNew(){
 
 void Activity::initToPlay(){
     playerServiceDefinition->servicePointer = ActLib::GetServiceByName(playerServiceDefinition->name);
-    playerServiceDefinition->servicePointer->initToPlay();
+    if(playerServiceDefinition->servicePointer != NULL)
+        playerServiceDefinition->servicePointer->initToPlay();
 }
 
 bool Activity::isUnSaved(){

@@ -203,6 +203,7 @@ int ActLib::AddPath(QString path, QString name) {
     while (i.hasNext()) {
         i.next();
         if(i.value() == NULL) continue;
+        ///qDebug() << i.value()->pathid << pathid; 
         if (i.value()->pathid.length() == pathid.length())
             if (i.value()->pathid == pathid) {
                 i.value()->ref++;
@@ -269,6 +270,15 @@ void ActLib::GetUnsavedInfo(std::vector<QString>& items){
             items.push_back("[T] " + t->name );
         }
     }
+    Path * p;
+    for (int i = 0; i < ActLib::jestpath; i++){
+        p = ActLib::Paths[i];
+        if(p == NULL) continue;
+        if(p->loaded != 1) continue;
+        if(p->isModified()){
+            items.push_back("[P] " + p->name );
+        }
+    }
 }
 
 void ActLib::SaveAll(){
@@ -297,6 +307,15 @@ void ActLib::SaveAll(){
         if(t->loaded != 1) continue;
         if(t->isModified()){
             t->save();
+        }
+    }
+    Path * p;
+    for (int i = 0; i < ActLib::jestpath; i++){
+        p = ActLib::Paths[i];
+        if(p == NULL) continue;
+        if(p->loaded != 1) continue;
+        if(p->isModified()){
+            //p->save();
         }
     }
 }

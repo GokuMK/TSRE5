@@ -31,7 +31,7 @@ Path::Path() {
 
 Path::Path(QString p, QString n, bool nowe) {
     typeObj = activitypath;
-    pathid = p + "/" + n;
+    pathid = p.toLower() + "/" + n.toLower();
     pathid.replace("//", "/");
     path = p;
     name = n;
@@ -153,13 +153,13 @@ QMap<int, int>* Path::getJunctionDirections(){
 }
 
 int Path::getStartDirection(){
-    init3dShapes(true);
+    init3dShapes(false);
     
     return startDirection;
 }
 
 float* Path::getStartPositionTXZ(float* out){
-    init3dShapes(true);
+    init3dShapes(false);
     
     if(out == NULL)
         out = new float[4];

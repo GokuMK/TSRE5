@@ -24,6 +24,7 @@
 #include "ActivityServiceProperties.h"
 #include "TextEditDialog.h"
 #include "GeoCoordinates.h"
+#include "UnsavedDialog.h"
 
 ActivityTools::ActivityTools(QString name)
     : QWidget(){
@@ -222,6 +223,22 @@ ActivityTools::ActivityTools(QString name)
     QPushButton *actSettingsOpen = new QPushButton("Open Settings ...");
     QObject::connect(actSettingsOpen, SIGNAL(released()), this, SLOT(actSettingsOpenEnabled()));
     vbox->addWidget(actSettingsOpen);
+    
+    label = new QLabel("Experimental:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QPushButton *actPlayButton = new QPushButton("Play: Don't use!");
+    QObject::connect(actPlayButton, SIGNAL(released()), this, SLOT(actPlayEnabled()));
+    vbox->addWidget(actPlayButton);
+    
+    label = new QLabel("General:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    QPushButton *actSaveButton = new QPushButton("Save Activities");
+    QObject::connect(actSaveButton, SIGNAL(released()), this, SLOT(actSaveEnabled()));
+    vbox->addWidget(actSaveButton);
     
     QHBoxLayout *vbox1 = new QHBoxLayout;
     int row = 0;
@@ -451,6 +468,41 @@ void ActivityTools::conFilesShowEnabled(QString val){
     ActLib::Act[id]->editorConListSelected = file;
 }
 
+void ActivityTools::actPlayEnabled(){
+    if(actShow.currentIndex() < 0)
+        return;
+    int id = actShow.currentData().toInt();
+    qDebug() << "id" << id;
+    Activity *a = ActLib::Act[id];
+    
+    if(a == NULL)
+        return;
+    
+    a->initToPlay();
+
+}
+
+void ActivityTools::actSaveEnabled(){
+    std::vector<QString> unsavedItems;
+    ActLib::GetUnsavedInfo(unsavedItems);
+    if(unsavedItems.size() == 0){
+        qDebug() << "nic do zapisania";
+        return;
+    }
+    
+    UnsavedDialog unsavedDialog("SC");
+    unsavedDialog.setWindowTitle("Save changes?");
+    unsavedDialog.setMsg("Save changes in activities?");
+    for(int i = 0; i < unsavedItems.size(); i++){
+        unsavedDialog.items.addItem(unsavedItems[i]);
+    }
+    unsavedDialog.exec();
+    if(unsavedDialog.changed == 1){
+        ActLib::SaveAll();
+    }
+    return;
+}
+
 void ActivityTools::activitySelected(QString n){
     if(actShow.currentIndex() < 0)
         return;
@@ -498,19 +550,6 @@ void ActivityTools::activitySelected(QString n){
     } else {
         cService.setCurrentIndex(0);
         QString cname = a->playerServiceDefinition->name;
-        for(int i = 0; i < cService.count() ; i++ ){
-            int id = cService.itemData(i).toInt();
-            if(id < 0)
-                continue;
-            if(ActLib::Services[id] == NULL)
-                continue;
-            //qDebug() << cname << route->service[id]->name;
-            if(cname == ActLib::Services[id]->nameId){
-                cService.setCurrentIndex(i);
-                a->playerServiceDefinition->servicePointer = ActLib::Services[id];
-                break;
-            }
-        }
     }
     
     if(a->traffic == NULL){

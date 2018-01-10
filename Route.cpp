@@ -1371,13 +1371,13 @@ void Route::getUnsavedInfo(std::vector<QString> &items){
             continue;
         if(s->isModified())
             items.push_back("[S] "+s->name);
-    }*/
+    }
     foreach(Path *p, path){
         if(p == NULL)
             continue;
         if(p->isModified())
             items.push_back("[P] "+p->name);
-    }
+    }*/
     //this->trackDB->save();
     //this->roadDB->save();
 }
