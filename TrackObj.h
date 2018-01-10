@@ -16,6 +16,8 @@
 #include "FileBuffer.h"
 #include "Ref.h"
 
+class OglObj;
+
 class TrackObj : public WorldObj  {
 public:
     TrackObj();
@@ -44,6 +46,9 @@ private:
     //unsigned int collideFunction;
     bool getSimpleBorder(float* border);
     bool getBoxPoints(QVector<float> &points);
+    bool proceduralShapeInit = false;
+    QVector<OglObj*> procShape;
+    bool roadShape = false;
 };
 
 #endif	/* TRACKOBJ_H */

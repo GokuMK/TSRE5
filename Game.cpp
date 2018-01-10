@@ -344,6 +344,9 @@ void Game::load() {
         if(val == "shadowsEnabled"){
             shadowsEnabled = args[1].trimmed().toInt();
         }
+        if(val == "shadowMapSize"){
+            shadowMapSize = args[1].trimmed().toInt();
+        }
         if(val == "textureQuality"){
             textureQuality = args[1].trimmed().toInt();
         }

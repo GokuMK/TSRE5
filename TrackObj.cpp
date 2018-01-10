@@ -19,6 +19,8 @@
 #include "Game.h"
 #include "TDB.h"
 #include "TrackItemObj.h"
+#include "TSectionDAT.h"
+#include "ProceduralShape.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -76,6 +78,8 @@ void TrackObj::load(int x, int y) {
     this->firstPosition[0] = this->position[0];
     this->firstPosition[1] = this->position[1];
     this->firstPosition[2] = this->position[2];
+    
+    this->roadShape = Game::trackDB->tsection->isRoadShape(sectionIdx);
     setMartix();
 }
 
@@ -278,8 +282,6 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         if(this->getShadowType() != WorldObj::ShadowDynamic )
             return;
     }
-    //GLUU* gluu = GLUU::get();
-    //if((this.position===undefined)||this.qDirection===undefined) return;
 
     if (size > 0) {
         if ((lod > size + 150)) {
@@ -301,8 +303,9 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
             if ((ccos > 0) && (xxx > size) && (skipLevel == 1)) return;
         }
     } else {
-        if (Game::currentShapeLib->shape[shape]->loaded)
-            size = Game::currentShapeLib->shape[shape]->size;
+        //if (!Game::proceduralTracks)
+            if (Game::currentShapeLib->shape[shape]->loaded)
+                size = Game::currentShapeLib->shape[shape]->size;
     }
 
     Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, matrix);
@@ -321,8 +324,20 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
     } else {
         gluu->enableTextures();
     }
-        
-    Game::currentShapeLib->shape[shape]->render();
+    
+    if(!Game::proceduralTracks || roadShape) {
+        Game::currentShapeLib->shape[shape]->render();
+    } else {
+        if (!proceduralShapeInit) {
+            TrackShape *tsh = Game::trackDB->tsection->shape[sectionIdx];
+            ProceduralShape::GenShape(procShape, tsh);
+            proceduralShapeInit = true;
+        } else {
+            for(int i = 0; i < procShape.size(); i++){
+                procShape[i]->render(selectionColor);
+            }
+        }
+    }
     
     if(selected){
         drawBox();

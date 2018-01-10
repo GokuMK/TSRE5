@@ -17,13 +17,16 @@
 #include "TSection.h"
 
 class ObjFile;
+class TrackShape;
 
 class ProceduralShape {
 
 public:
+    static bool Loaded;
     static QMap<QString, ObjFile*> Files;
     static void GenShape(QVector<OglObj*> &shape, QVector<TSection> &sections);
-
+    static void GenShape(QVector<OglObj*> &shape, TrackShape* tsh);
+    
     struct ComplexLine {
         QVector<TSection> sections;
         float length;
@@ -34,8 +37,10 @@ public:
     
 private:
     static float Alpha;
-    static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix);
-    static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix1, float* matrix2, float dist1, float dist2);
+    static void Load();
+    static ObjFile* GetObjFile(QString name);
+    static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix, float* qrot);
+    static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix1, float* matrix2, float* qrot, float dist1, float dist2);
 };
 
 #endif	/* PROCEDURALSHAPE_H */
