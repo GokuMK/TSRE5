@@ -42,6 +42,9 @@ QString Game::trkName = "bbb";
 //QString Game::route = "traska";
 //QString Game::route = "cmk";
 QString Game::mainWindowLayout = "PWT";
+QString Game::ActivityToPlay = "";
+bool Game::playerMode = false;
+bool Game::useNetworkEng = false;
 bool Game::useQuadTree = true;
 int Game::allowObjLag = 1000;
 int Game::maxObjLag = 10;
@@ -389,6 +392,18 @@ void Game::load() {
                 useQuadTree = true;
             else
                 useQuadTree = false; 
+        }
+        if(val == "playerMode"){
+            if(args[1].trimmed().toLower() == "true")
+                playerMode = true;
+            else
+                playerMode = false; 
+        }
+        if(val == "useNetworkEng"){
+            if(args[1].trimmed().toLower() == "true")
+                useNetworkEng = true;
+            else
+                useNetworkEng = false; 
         }
         if(val == "fogDensity"){
             fogDensity = args[1].trimmed().toFloat();

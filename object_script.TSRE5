@@ -81,6 +81,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Path.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PickupObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PlatformObj.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PlayActivitySelectWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Pointer3d.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/PoleObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ProceduralMstsDyntrack.o
@@ -164,6 +165,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrackShape.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Traffic.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TrainNetworkEng.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TransferObj.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/TransformWorldObjDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Trk.o
@@ -212,6 +214,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_ObjTools.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_OverwriteDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_Path.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PlayActivitySelectWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesAbstract.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesActivityObject.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_PropertiesActivityPath.o
@@ -250,6 +253,7 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainWaterWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TerrainWaterWindow2.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TextEditDialog.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TrainNetworkEng.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TransformWorldObjDialog.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_TrkWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/moc_UnsavedDialog.o

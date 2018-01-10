@@ -722,7 +722,7 @@ void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
     int someval = (((drawPosition1[2]-drawPosition2[2])+0.00001f)/fabs((drawPosition1[2]-drawPosition2[2])+0.00001f));
     float rotY = ((float)someval+1.0)*(M_PI/2.0)+(float)(atan((drawPosition1[0]-drawPosition2[0])/(drawPosition1[2]-drawPosition2[2]))); 
     float rotX = -(float)(asin((drawPosition1[1]-drawPosition2[1])/(dlugosc))); 
-            
+
      if(selectionColor != 0){
         gluu->disableTextures(selectionColor);
     } else {
@@ -759,6 +759,27 @@ void Eng::move(float m){
         ruch1->next(m);
     if(ruch2 != NULL)
         ruch2->next(m);
+}
+
+float Eng::getCurrentElevation(){
+    if(ruch1 == NULL)
+        return 0;
+    if(ruch2 == NULL)
+        return 0;
+    
+    float *drawPosition1 = ruch1->getCurrentPosition();
+    float *drawPosition2 = ruch2->getCurrentPosition();
+    drawPosition2[0] += 2048*(drawPosition2[5]-drawPosition1[5]);
+    drawPosition2[2] += 2048*(drawPosition2[6]-drawPosition1[6]);
+    float d = Vec3::distance(drawPosition1, drawPosition2);
+    float h = drawPosition1[1] - drawPosition2[1];
+    return (h/d)*1000.0;
+}
+
+float Eng::getTotalDistanceDownPath(){
+    if(ruch1 == NULL)
+        return 0;
+    return ruch1->getDistanceDownPath();
 }
 
 void Eng::initOnTrack(float *tpos, int direction, QMap<int, int>* junctionDirections){

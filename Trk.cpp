@@ -190,6 +190,11 @@ void Trk::load(QString path){
                     ParserX::SkipToken(data);
                     continue;
                 }
+                if (sh == ("tsredistantterrainyoffset")) {
+                    distantTerrainYOffset = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
                 if (sh == ("milepostunitskilometers")) {
                     this->milepostUnitsKilometers = true;
                     ParserX::SkipToken(data);

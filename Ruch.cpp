@@ -46,6 +46,7 @@ void Ruch::next(float m) {
     if(m < 0){
         back(m);
     } else {
+        distanceDownPath += m;
         while(m > 0){
             if(m > 0.5){
                 toNext(0.5);
@@ -65,6 +66,7 @@ void Ruch::back(float m) {
         next(m);
     } else {
         m = -m;
+        distanceDownPath += m;
         while(m > 0){
             if(m > 0.5){
                 toNext(-0.5);
@@ -141,6 +143,10 @@ void Ruch::checkNode(int mSign) {
 float * Ruch::getCurrentPosition() {
     Game::trackDB->getDrawPositionOnTrNode(drawPosition, nodeIdx, nodeDist);
     return drawPosition;
+}
+
+float Ruch::getDistanceDownPath(){
+    return distanceDownPath;
 }
 /*
 bool Ruch::next(){

@@ -32,6 +32,7 @@ public:
     void toNext(float m);
     void set(int nid, int m, int tdirection, QMap<int, int>* jDirections = NULL);
     float *getCurrentPosition();
+    float getDistanceDownPath();
 
 private:
     void checkNode(int mSign);
@@ -41,6 +42,7 @@ private:
     float nodeDist;
     float nodeLength;
     float drawPosition[8];
+    float distanceDownPath = 0;
     QMap<int, int>* junctionDirections = NULL;
     //bool next();
 };

@@ -84,6 +84,8 @@ public:
     void getCameraPosition(float *out = NULL);
     void renderOnTrack(GLUU* gluu, float* playerT, int selectionColor);
     void move(float m);
+    float getCurrentElevation();
+    float getTotalDistanceDownPath();
     void reload();
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);

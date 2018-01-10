@@ -13,7 +13,7 @@
 
 #include <QtWidgets>
 
-class TerrainWaterWindow  : public QDialog {
+class TerrainWaterWindow : public QDialog {
     Q_OBJECT
 public:
     float WSW;

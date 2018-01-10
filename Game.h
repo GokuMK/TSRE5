@@ -46,7 +46,10 @@ public:
     static QString routeName;
     static QString trkName;
     static QString mainWindowLayout;
+    static QString ActivityToPlay;
     static bool useQuadTree;
+    static bool playerMode;
+    static bool useNetworkEng;
     static float objectLod;
     static int tileLod;
     static int allowObjLag;

@@ -50,6 +50,7 @@
 #include "Environment.h"
 #include "OrtsWeatherChange.h"
 #include "GeoCoordinates.h"
+#include "Consist.h"
 
 Route::Route() {
     Game::currentRoute = this;
@@ -534,6 +535,10 @@ Activity* Route::getCurrentActivity(){
     if(currentActivity == NULL)
         return NULL;
     return currentActivity;
+}
+
+float Route::getDistantTerrainYOffset(){
+    return trk->distantTerrainYOffset;
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p) {

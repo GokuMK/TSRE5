@@ -788,6 +788,11 @@ bool Activity::isNew(){
     return nowe;
 }
 
+void Activity::initToPlay(){
+    playerServiceDefinition->servicePointer = ActLib::GetServiceByName(playerServiceDefinition->name);
+    playerServiceDefinition->servicePointer->initToPlay();
+}
+
 bool Activity::isUnSaved(){
     for(int i = 0; i < activityObjects.size(); i++){
         if(activityObjects[i]->isUnSaved())

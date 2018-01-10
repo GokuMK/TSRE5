@@ -20,12 +20,14 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Route.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GLUU.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Shader.h</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Consist.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFile.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityEventProperties.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Terrain.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/NaviWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Route.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/RouteEditorWindow.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Camera.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ActivityObject.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TRitem.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MapDataOSM.cpp</file>
@@ -36,6 +38,7 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/RouteEditorGLWidget.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TransferObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/main.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TDB.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Trk.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/HeightWindow.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MapWindow.cpp</file>
@@ -50,10 +53,12 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/tsre_appdata/0.69/shaders/StandardBloom.fs</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SFileC.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Undo.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Eng.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/CameraFree.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TFile.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GeoHgtFile.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainLibQt.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Path.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Trk.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainLib.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/QuadTree.h</file>
@@ -74,11 +79,13 @@
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TerrainInfo.h</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Coords.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SignalObj.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Service.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerGLWidget.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/RulerObj.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Consist.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/FileBuffer.cpp</file>
             <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/NaviBox.cpp</file>
+            <file>file:/C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GeoTools.cpp</file>
         </group>
     </open-files>
 </project-private>

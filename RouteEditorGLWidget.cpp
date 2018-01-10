@@ -38,6 +38,9 @@
 #include "Terrain.h"
 #include "ActivityObject.h"
 #include "GuiFunct.h"
+#include "ActLib.h"
+#include "Activity.h"
+#include "PlayActivitySelectWindow.h"
 
 RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -191,6 +194,24 @@ void RouteEditorGLWidget::initializeGL() {
     gluu->makeShadowFramebuffer(FramebufferName2, depthTexture2, 1024, GL_TEXTURE3);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE0);
+    
+    // Play?
+    if(Game::ActivityToPlay.length() > 0){
+        int actId = ActLib::GetAct(Game::root + "/routes/" + Game::route + "/activities", Game::ActivityToPlay );
+        qDebug() << "======== actId" << actId << Game::ActivityToPlay;
+        if(actId < 0){
+            PlayActivitySelectWindow actWindow;
+            actWindow.setRoute(route);
+            actWindow.exec();
+            actId = actWindow.actId;
+        }        
+        if(actId >= 0){
+            ActLib::Act[actId]->initToPlay();
+            route->activitySelected(ActLib::Act[actId]);
+            setSelectedObj((GameObj*)route->getActivityConsist(0));
+            camera->setCameraObject((GameObj*)route->getActivityConsist(0));
+        }
+    }
 }
 
 void RouteEditorGLWidget::reloadRefFile(){
@@ -234,10 +255,11 @@ void RouteEditorGLWidget::paintGL() {
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
     gluu->setMatrixUniforms();
     //gluu->currentShader->setUniformValue(gluu->currentShader->lod, -0.5f);
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, route->getDistantTerrainYOffset(), 0);
     Game::terrainLib->renderLo(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode);
     for(int i = 0; i < route->env->waterCount; i++)
         Game::terrainLib->renderWaterLo(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
-
+    Mat4::identity(gluu->mvMatrix);
     glClear(GL_DEPTH_BUFFER_BIT);
 
     // Render High Resolution Terrain

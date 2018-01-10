@@ -125,6 +125,7 @@
         <itemPath>NaviWindow.h</itemPath>
         <itemPath>NewRouteWindow.h</itemPath>
         <itemPath>ObjTools.h</itemPath>
+        <itemPath>PlayActivitySelectWindow.h</itemPath>
         <itemPath>RouteEditorGLWidget.h</itemPath>
         <itemPath>RouteEditorWindow.h</itemPath>
         <itemPath>ShapeViewWindow.h</itemPath>
@@ -180,6 +181,7 @@
         <itemPath>Path.h</itemPath>
         <itemPath>Service.h</itemPath>
         <itemPath>Traffic.h</itemPath>
+        <itemPath>TrainNetworkEng.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f9" displayName="world" projectFiles="true">
         <logicalFolder name="f1" displayName="objects" projectFiles="true">
@@ -349,6 +351,7 @@
         <itemPath>NaviWindow.cpp</itemPath>
         <itemPath>NewRouteWindow.cpp</itemPath>
         <itemPath>ObjTools.cpp</itemPath>
+        <itemPath>PlayActivitySelectWindow.cpp</itemPath>
         <itemPath>RouteEditorGLWidget.cpp</itemPath>
         <itemPath>RouteEditorWindow.cpp</itemPath>
         <itemPath>ShapeViewWindow.cpp</itemPath>
@@ -404,6 +407,7 @@
         <itemPath>Path.cpp</itemPath>
         <itemPath>Service.cpp</itemPath>
         <itemPath>Traffic.cpp</itemPath>
+        <itemPath>TrainNetworkEng.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="world" projectFiles="true">
         <logicalFolder name="f1" displayName="objects" projectFiles="true">
@@ -806,6 +810,10 @@
       </item>
       <item path="PlatformObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PlayActivitySelectWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PlayActivitySelectWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
@@ -1139,6 +1147,10 @@
       <item path="Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Traffic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrainNetworkEng.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrainNetworkEng.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1551,6 +1563,10 @@
       </item>
       <item path="PlatformObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PlayActivitySelectWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PlayActivitySelectWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
@@ -1884,6 +1900,10 @@
       <item path="Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Traffic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrainNetworkEng.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrainNetworkEng.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2288,6 +2308,10 @@
       </item>
       <item path="PlatformObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PlayActivitySelectWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PlayActivitySelectWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
@@ -2621,6 +2645,10 @@
       <item path="Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Traffic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrainNetworkEng.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrainNetworkEng.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3033,6 +3061,10 @@
       </item>
       <item path="PlatformObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PlayActivitySelectWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PlayActivitySelectWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
@@ -3366,6 +3398,10 @@
       <item path="Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Traffic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrainNetworkEng.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrainNetworkEng.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3766,6 +3802,10 @@
       </item>
       <item path="PlatformObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="PlayActivitySelectWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PlayActivitySelectWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Pointer3d.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Pointer3d.h" ex="false" tool="3" flavor2="0">
@@ -4099,6 +4139,10 @@
       <item path="Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Traffic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TrainNetworkEng.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TrainNetworkEng.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TransferObj.cpp" ex="false" tool="1" flavor2="8">
       </item>

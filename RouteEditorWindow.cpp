@@ -317,8 +317,14 @@ RouteEditorWindow::RouteEditorWindow() {
         //box->show();
         //box2->show();
     }
-    //box2->hide();
     
+    if(Game::playerMode){
+        naviWindow->hide();
+        box->hide();
+        box2->hide();
+        menuBar()->hide();
+        this->viewUnselectAll();
+    }
     
     QObject::connect(this, SIGNAL(sendMsg(QString)),
                       glWidget, SLOT(msg(QString)));
@@ -771,27 +777,34 @@ void RouteEditorWindow::viewTrackItems(bool show){
 void RouteEditorWindow::viewPointer3d(bool show){
     Game::viewPointer3d = show;
 }
+
 void RouteEditorWindow::viewMarkers(bool show){
     Game::viewMarkers = show;
 }
+
 void RouteEditorWindow::viewSnapable(bool show){
     Game::viewSnapable = show;
 }
+
 void RouteEditorWindow::show(){
     naviWindow->move(0, this->height() - naviWindow->height() );
-    naviWindow->show();
+    if(!Game::playerMode)
+        naviWindow->show();
     QMainWindow::show();
 }
+
 void RouteEditorWindow::naviWindowClosed(){
     naviAction->blockSignals(true);
     naviAction->setChecked(false);
     naviAction->blockSignals(false);
 }
+
 void RouteEditorWindow::shapeVeiwWindowClosed(){
     shapeViewAction->blockSignals(true);
     shapeViewAction->setChecked(false);
     shapeViewAction->blockSignals(false);
 }
+
 void RouteEditorWindow::viewUnselectAll(){
 
     vViewWorldGrid->setChecked(false);

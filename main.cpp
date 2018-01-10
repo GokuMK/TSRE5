@@ -130,6 +130,14 @@ int main(int argc, char *argv[]){
             Game::loadConEditor();
             return app.exec();
         }
+        if(app.arguments().at(1) == "--play"){
+            // Play
+            if(app.arguments().length() > 2)
+                Game::ActivityToPlay = app.arguments().at(2);
+            if(Game::ActivityToPlay.length() < 1)
+                Game::ActivityToPlay = "#";
+            qDebug() << "Play" << Game::ActivityToPlay;
+        }
     }
     // Run route editor
     Game::loadRouteEditor();

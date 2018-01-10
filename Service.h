@@ -60,6 +60,7 @@ public:
     Consist *getConsistPointer();
     void updateSim(float *playerT, float deltaTime);
     void render(GLUU* gluu, float* playerT, int selectionColor);
+    void initToPlay();
 private:
     bool modified = false;
     int serial = -1;
