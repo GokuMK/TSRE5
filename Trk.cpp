@@ -181,20 +181,6 @@ void Trk::load(QString path){
                     ParserX::SkipToken(data);
                     continue;
                 }
-                if (sh == ("tsregeoprojection")) {
-                    tsreProjection = new double[4];
-                    tsreProjection[0] = ParserX::GetNumber(data);
-                    tsreProjection[1] = ParserX::GetNumber(data);
-                    tsreProjection[2] = ParserX::GetNumber(data);
-                    tsreProjection[3] = ParserX::GetNumber(data);
-                    ParserX::SkipToken(data);
-                    continue;
-                }
-                if (sh == ("tsredistantterrainyoffset")) {
-                    distantTerrainYOffset = ParserX::GetNumber(data);
-                    ParserX::SkipToken(data);
-                    continue;
-                }
                 if (sh == ("milepostunitskilometers")) {
                     this->milepostUnitsKilometers = true;
                     ParserX::SkipToken(data);
@@ -266,6 +252,25 @@ void Trk::load(QString path){
                 }
                 if (sh == ("ortsuserpreferenceforestcleardistance")) {
                     this->forestClearDistance = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("tsregeoprojection")) {
+                    tsreProjection = new double[4];
+                    tsreProjection[0] = ParserX::GetNumber(data);
+                    tsreProjection[1] = ParserX::GetNumber(data);
+                    tsreProjection[2] = ParserX::GetNumber(data);
+                    tsreProjection[3] = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("tsresuperelevation")) {
+                    tsreSuperelevation = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if (sh == ("tsredistantterrainyoffset")) {
+                    distantTerrainYOffset = ParserX::GetNumber(data);
                     ParserX::SkipToken(data);
                     continue;
                 }
@@ -363,6 +368,12 @@ void Trk::save() {
     out << "	TimetableTollerance ( " << this->timetableTollerance << " )" << "\n";
     if(this->forestClearDistance >= 0)
     out << "	ORTSUserPreferenceForestClearDistance ( " << this->forestClearDistance << " )" << "\n";
+    if(this->tsreProjection != NULL)
+    out << "	TSRE ( " << this->tsreProjection[0] << " " << this->tsreProjection[1] << " " << this->tsreProjection[2] << " " << this->tsreProjection[3] << " " << " )" << "\n";
+    if(this->distantTerrainYOffset > 0)
+    out << "	tsredistantterrainyoffset ( " << this->distantTerrainYOffset << " )" << "\n";
+    if(this->tsreSuperelevation > 0)
+    out << "	tsresuperelevation ( " << this->tsreSuperelevation << " )" << "\n";
     out << ")" << "\n";
 
     out.flush();

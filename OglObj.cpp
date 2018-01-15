@@ -53,6 +53,20 @@ void OglObj::deleteVBO(){
     loaded = false;
 }
 
+float* OglObj::mapBuffer(){
+    QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
+    VBO.bind();
+    return (float*)VBO.map(QOpenGLBuffer::ReadWrite);
+    VBO.release();
+}
+
+void OglObj::unmapBuffer(){
+    QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
+    VBO.bind();
+    VBO.unmap();
+    VBO.release();
+}
+
 void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
     //if(loaded){
     //    VBO.destroy();
@@ -66,6 +80,7 @@ void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
         VBO.create();
     }
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
+    //VBO.setUsagePattern(QOpenGLBuffer::DynamicDraw);
     VBO.bind();
     VBO.allocate(punkty, ptr * sizeof (GLfloat));
     

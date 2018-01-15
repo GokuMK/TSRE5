@@ -85,10 +85,10 @@ void main() {
             float cosTheta = clamp(dot( normal, lights ), 0, 1);
             float visibility = (1.0-enableNormals) + cosTheta*enableNormals;
             float shadowIntensity = 0.1;
-            //float shadow1Res = 2000.0;
-            //float bias = 0.0025*tan(acos(cosTheta))*enableNormals + 0.0025*(1.0-enableNormals);
-            float shadow1Res = 5000.0;
-            float bias = 0.0005*tan(acos(cosTheta))*enableNormals + 0.0025*(1.0-enableNormals);
+            float shadow1Res = 2000.0;
+            float bias = 0.0025*tan(acos(cosTheta))*enableNormals + 0.0025*(1.0-enableNormals);
+            //float shadow1Res = 5000.0;
+            //float bias = 0.0005*tan(acos(cosTheta))*enableNormals + 0.0025*(1.0-enableNormals);
             bias = clamp(bias, 0, 0.01);
 
             // calculate shadows

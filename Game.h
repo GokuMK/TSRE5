@@ -94,6 +94,7 @@ public:
     static bool viewTsectionLines;
     static bool viewMarkers;
     static bool viewSnapable;
+    static bool viewCompass;
     static bool warningBox;
     static bool viewPointer3d;
     static bool leaveTrackShapeAfterDelete;
@@ -131,6 +132,8 @@ public:
     static int mapImageResolution;
     static bool autoNewTiles;
     static bool autoGeoTerrain;
+    static bool useSuperelevation;
+    static bool soundEnabled;
     
     static float fogDensity;// = 0.7;
     //float fogColor[4]{0.5, 0.75, 1.0, 1.0};

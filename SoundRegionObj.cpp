@@ -384,7 +384,7 @@ for(int i = 0; i < this->trItemId.size(); i+=2){
 *(out) << "		TrItemId ( "<<this->trItemId[i]<<" "<<this->trItemId[i+1]<<" )\n";
 }
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
-*(out) << "		FileName ( "<<this->fileName<<" )\n";
+*(out) << "		FileName ( "<<ParserX::AddComIfReq(this->fileName)<<" )\n";
 if(this->staticFlags != 0)
 *(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";

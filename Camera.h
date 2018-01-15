@@ -27,6 +27,7 @@ public:
     Camera(const Camera& orig);
     virtual ~Camera();
     virtual float* getTarget();
+    virtual float* getUp();
     virtual float* getMatrix();
     virtual float* getPos();
     virtual void setPos(float* pos);
@@ -62,7 +63,7 @@ protected:
     float playerPos[3];
     float playerRot[2];
     float relativePos[3];
-    float relativeRot[2];
+    float relativeRot[3];
     float lookAt[16];
     float przesx = 3, przesy = 1, przesz = 3;
     bool lockYaxis = false;

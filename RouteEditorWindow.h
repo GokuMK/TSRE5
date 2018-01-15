@@ -66,6 +66,7 @@ public slots:
     void viewPointer3d(bool show);
     void viewMarkers(bool show);
     void viewSnapable(bool show);
+    void viewCompass(bool show);
     void showToolsObjectAndTerrain(bool show);
     void showToolsObject(bool show);
     void showToolsTerrain(bool show);

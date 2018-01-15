@@ -288,7 +288,7 @@ void HazardObj::save(QTextStream* out){
 *(out) << "	Hazard (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		TrItemId ( "<<this->trItemId[0]<<" "<<this->trItemId[1]<<" )\n";
-*(out) << "		FileName ( "<<this->fileName<<" )\n";
+*(out) << "		FileName ( "<<ParserX::AddComIfReq(this->fileName)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";

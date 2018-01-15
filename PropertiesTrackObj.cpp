@@ -265,6 +265,11 @@ void PropertiesTrackObj::hacksButtonEnabled(){
     QObject::connect(haxRemoveTDBTree, SIGNAL(released()),
                       this, SLOT(haxRemoveTDBTreeEnabled()));
     vbox->addWidget(haxRemoveTDBTree);
+    
+    QPushButton *haxElevTDBVector = new QPushButton("[Fix sElev] Don't click me!", this);
+    QObject::connect(haxElevTDBVector, SIGNAL(released()),
+                      this, SLOT(haxElevTDBVectorEnabled()));
+    vbox->addWidget(haxElevTDBVector);
 
 
     vbox->setSpacing(2);
@@ -272,6 +277,14 @@ void PropertiesTrackObj::hacksButtonEnabled(){
     vbox->addStretch(1);
     d.setLayout(vbox);
     d.exec();
+}
+
+void PropertiesTrackObj::haxElevTDBVectorEnabled(){
+    if(trackObj == NULL)
+        return;
+    if(Game::currentRoute == NULL)
+        return;
+    Game::currentRoute->fixTDBVectorElevation(trackObj);
 }
 
 void PropertiesTrackObj::haxRemoveTDBVectorEnabled(){

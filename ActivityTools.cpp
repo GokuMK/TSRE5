@@ -25,6 +25,7 @@
 #include "TextEditDialog.h"
 #include "GeoCoordinates.h"
 #include "UnsavedDialog.h"
+#include "Trk.h"
 
 ActivityTools::ActivityTools(QString name)
     : QWidget(){
@@ -550,6 +551,17 @@ void ActivityTools::activitySelected(QString n){
     } else {
         cService.setCurrentIndex(0);
         QString cname = a->playerServiceDefinition->name;
+        for(int i = 0; i < cService.count() ; i++ ){
+            int id = cService.itemData(i).toInt();
+            if(id < 0)
+                continue;
+            if(ActLib::Services[id] == NULL)
+                continue;
+            if(cname == ActLib::Services[id]->nameId){
+                cService.setCurrentIndex(i);
+                break;
+            }
+        }
     }
     
     if(a->traffic == NULL){
@@ -715,7 +727,7 @@ void ActivityTools::newActButtonEnabled(){
         if(ActLib::GetAct(pathid, name) > 0)
             continue;
         int id = ActLib::AddAct(pathid, name, true);
-        ActLib::Act[id]->init(Game::route, "New Activity"+QString::number(i));
+        ActLib::Act[id]->init(route->getTrk()->idName, "New Activity"+QString::number(i));
         qDebug()<< ActLib::Act[id]->header->name;
         route->activityId.push_back(id);
         //actShow.addItem(ActLib::Act[id]->header->name, id);

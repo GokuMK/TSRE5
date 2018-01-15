@@ -120,6 +120,7 @@
         <itemPath>AboutWindow.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
         <itemPath>GeoTools.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h</itemPath>
         <itemPath>LoadWindow.h</itemPath>
         <itemPath>NaviBox.h</itemPath>
         <itemPath>NaviWindow.h</itemPath>
@@ -144,6 +145,12 @@
       </logicalFolder>
       <logicalFolder name="f13" displayName="shapeViewer" projectFiles="true">
         <itemPath>ShapeViewerGLWidget.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f17" displayName="sound" projectFiles="true">
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h</itemPath>
+        <itemPath>SoundManager.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="TDB" projectFiles="true">
         <itemPath>Ruch.h</itemPath>
@@ -346,6 +353,7 @@
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
         <itemPath>GeoTools.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp</itemPath>
         <itemPath>LoadWindow.cpp</itemPath>
         <itemPath>NaviBox.cpp</itemPath>
         <itemPath>NaviWindow.cpp</itemPath>
@@ -370,6 +378,12 @@
       </logicalFolder>
       <logicalFolder name="f14" displayName="shapeViewer" projectFiles="true">
         <itemPath>ShapeViewerGLWidget.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f17" displayName="sound" projectFiles="true">
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp</itemPath>
+        <itemPath>SoundManager.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="TDB" projectFiles="true">
         <itemPath>Ruch.cpp</itemPath>
@@ -547,6 +561,46 @@
       <item path="Brush.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1019,6 +1073,10 @@
       <item path="SoundList.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SoundList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SoundRegionObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1301,6 +1359,46 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
@@ -1772,6 +1870,10 @@
       <item path="SoundList.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SoundList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SoundRegionObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2046,6 +2148,46 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
@@ -2518,6 +2660,10 @@
       </item>
       <item path="SoundList.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="SoundManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundManager.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SoundRegionObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SoundRegionObj.h" ex="false" tool="3" flavor2="0">
@@ -2723,6 +2869,9 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <standard>8</standard>
+          <incDir>
+            <pElem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/include</pElem>
+          </incDir>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -2730,6 +2879,11 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/libs/Win64/libOpenAL32.dll.a</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="AboutWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -2798,6 +2952,46 @@
       <item path="Brush.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3270,6 +3464,10 @@
       <item path="SoundList.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="SoundList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SoundRegionObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3540,6 +3738,46 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
@@ -4011,6 +4249,10 @@
       <item path="SoundList.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="SoundList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SoundRegionObj.cpp" ex="false" tool="1" flavor2="8">
       </item>

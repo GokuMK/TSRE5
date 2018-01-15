@@ -140,9 +140,15 @@ void Ruch::checkNode(int mSign) {
     direction = (kierunek - 0.5)*2*mSign;
 }
 
-float * Ruch::getCurrentPosition() {
-    Game::trackDB->getDrawPositionOnTrNode(drawPosition, nodeIdx, nodeDist);
+float * Ruch::getCurrentPosition(float *sElev) {
+    Game::trackDB->getDrawPositionOnTrNode(drawPosition, nodeIdx, nodeDist, sElev);
+    if(kierunek == 0 && sElev != NULL)
+        *sElev = -*sElev;
     return drawPosition;
+}
+
+int Ruch::getVectorDirection(){
+    return kierunek;
 }
 
 float Ruch::getDistanceDownPath(){

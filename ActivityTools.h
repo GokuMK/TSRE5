@@ -139,7 +139,7 @@ private:
     QPlainTextEdit eDescription;
     QPlainTextEdit eBriefing;
     
-    PreciseTileCoordinate* coordinate;
+    PreciseTileCoordinate* coordinate = NULL;
     
     void reloadActivityObjectLists();
 };

@@ -25,7 +25,7 @@ public:
     static bool Loaded;
     static QMap<QString, ObjFile*> Files;
     static void GenShape(QVector<OglObj*> &shape, QVector<TSection> &sections);
-    static void GenShape(QVector<OglObj*> &shape, TrackShape* tsh);
+    static void GenShape(QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
     
     struct ComplexLine {
         QVector<TSection> sections;

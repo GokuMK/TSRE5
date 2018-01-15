@@ -34,6 +34,8 @@ public:
     void setLineWidth(int val);
     bool getSimpleBorder(float* border);
     void setBound(float *b);
+    float* mapBuffer();
+    void unmapBuffer();
 private:
     QOpenGLBuffer VBO;
     QOpenGLVertexArrayObject VAO;

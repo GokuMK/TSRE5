@@ -28,6 +28,7 @@ Camera::Camera(float* pt) {
     
     relativeRot[0] = 0;
     relativeRot[1] = 0;
+    relativeRot[2] = 0;
     relativePos[0] = 0;
     relativePos[1] = 0;
     relativePos[2] = 0;
@@ -56,6 +57,10 @@ float* Camera::getMatrix() {
 
 float* Camera::getTarget() {
     return target;
+}
+
+float* Camera::getUp() {
+    return up;
 }
 
 void Camera::setPos(float* pos){

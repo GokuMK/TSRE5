@@ -574,9 +574,9 @@ void LevelCrObj::save(QTextStream* out){
 for(int i = 0; i < trItemIdCount; i+=2){
 *(out) << "		TrItemId ( "<<this->trItemId[i]<<" "<<this->trItemId[i+1]<<" )\n";
 }
-*(out) << "		FileName ( "<<this->fileName<<" )\n";
+*(out) << "		FileName ( "<<ParserX::AddComIfReq(this->fileName)<<" )\n";
 if(ORTSSoundFileName.length() > 0)
-    *(out) << "		ORTSSoundFileName ( "<<this->ORTSSoundFileName<<" )\n";
+    *(out) << "		ORTSSoundFileName ( "<<ParserX::AddComIfReq(this->ORTSSoundFileName)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
 *(out) << "		QDirection ( "<<this->qDirection[0]<<" "<<this->qDirection[1]<<" "<<-this->qDirection[2]<<" "<<this->qDirection[3]<<" )\n";
 *(out) << "		VDbId ( "<<this->vDbId<<" )\n";

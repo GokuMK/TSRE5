@@ -30,6 +30,7 @@ CameraFree::CameraFree(float* pt) {
     
     relativeRot[0] = 0;
     relativeRot[1] = 0;
+    relativeRot[2] = 0;
     relativePos[0] = 0;
     relativePos[1] = 0;
     relativePos[2] = 0;
@@ -77,7 +78,7 @@ void Camera::setPlayerRot(float x, float y) {
 }*/
 
 float* CameraFree::getMatrix() {
-    Mat4::lookAt(lookAt, getPos(), getTarget(), up);
+    Mat4::lookAt(lookAt, getPos(), getTarget(), getUp());
     return lookAt;
 };
 
@@ -94,12 +95,28 @@ float* CameraFree::getTarget() {
     //return new Vector3f(playerPos.x + relativePos.x + (float) Math.sin(playerRot.x + relativeRot.x) * 1 , playerPos.y + relativePos.y + (float) Math.sin(playerRot.y  + relativeRot.y) * 1 , playerPos.z + relativePos.z + (float) Math.cos(playerRot.x + relativeRot.x) * 1 );
     //return new float[3]{getPos().x + (float) sin(playerRot[0] + relativeRot[0]) * 1, playerPos.y + relativePos.y + (float) sin(playerRot.y + relativeRot.y) * 1, getPos().z + (float) cos(playerRot.x + relativeRot.x) * 1};
     target[0] = pos[0] + (float) sin(playerRot[0] + relativeRot[0]) * cos(playerRot[1] + relativeRot[1]); 
-    target[1] = pos[1] + (float) sin(playerRot[1] + relativeRot[1]) * 1;
+    target[1] = pos[1] + (float) sin(playerRot[1] + relativeRot[1]) * 1; 
     target[2] = pos[2] + (float) cos(playerRot[0] + relativeRot[0]) * cos(playerRot[1] + relativeRot[1]);
     return target;
     //return new float[3]{playerPos[0], playerPos[1],playerPos[2]+1};
 }
 
+float* CameraFree::getUp() {
+    // + trasa.ruch1.pozW.x
+    //return new Vector3f(obx+ trasa.ruch1.pozW.x + (float) Math.sin(kato) * 35 , oby + trasa.ruch1.pozW.y + (float) Math.sin(katov) * 20 , obz - trasa.ruch1.pozW.z + (float) Math.cos(kato) * 35 );
+    //return new Vector3f(playerPos.x + relativePos.x + (float) Math.sin(playerRot.x + relativeRot.x) * 1 , playerPos.y + relativePos.y + (float) Math.sin(playerRot.y  + relativeRot.y) * 1 , playerPos.z + relativePos.z + (float) Math.cos(playerRot.x + relativeRot.x) * 1 );
+    //return new float[3]{getPos().x + (float) sin(playerRot[0] + relativeRot[0]) * 1, playerPos.y + relativePos.y + (float) sin(playerRot.y + relativeRot.y) * 1, getPos().z + (float) cos(playerRot.x + relativeRot.x) * 1};
+    //up[0] = (float) (float) sin(playerRot[0] + relativeRot[0]) * sin(relativeRot[2]); 
+    //up[1] = 1.0;//(float) cos(relativeRot[2]); 
+    //up[2] = (float) (float) cos(playerRot[0] + relativeRot[0]) * sin(relativeRot[2]); 
+    Vec3::set(up, 0, 1, 0);
+    float q[4];
+    Quat::fill(q);
+    Quat::rotateY(q, q, relativeRot[0]);
+    Quat::rotateZ(q, q, relativeRot[2]);
+    Vec3::transformQuat(up, up, q);
+    return up;
+}
 /*
 Vector3f Camera::getTarget0() {
     return Vector3f((float) sin(playerRot.x + relativeRot.x) * 35, (float) sin(playerRot.y + relativeRot.y) * 20, (float) cos(playerRot.x + relativeRot.x) * 35);
@@ -159,7 +176,7 @@ Vector3f Camera::getUp() {
 
 void CameraFree::update(float fps) {
     if(cameraObject != NULL){
-        float cpos[7];
+        float cpos[8];
         cameraObject->getCameraPosition((float*)cpos);
         pozT[0] = cpos[0];
         pozT[1] = cpos[1];
@@ -168,6 +185,7 @@ void CameraFree::update(float fps) {
         relativePos[2] = cpos[4];
         relativeRot[0] = cpos[5];
         relativeRot[1] = cpos[6];
+        relativeRot[2] = cpos[7];
     }
     
         if(moveF){

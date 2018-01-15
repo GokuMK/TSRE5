@@ -42,7 +42,7 @@ void ProceduralShape::Load(){
     Loaded = true;
 }
 
-void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh){
+void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh, QMap<int, float> &angles){
     if(!Loaded)
         Load();
     float matrixS[16];
@@ -76,11 +76,13 @@ void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh){
         line.init(sections);
         qDebug() << line.length << "length";
         float pp[3];
+        float zangle;
         
         Quat::fill(q);
         Quat::rotateY(q, q, -tsh->path[j].rotDeg*M_PI/180.0);
         Vec3::set(pp, -tsh->path[j].pos[0], tsh->path[j].pos[1], tsh->path[j].pos[2]);
         Mat4::fromRotationTranslation(matrixS, q, pp);
+        
         
         tFile = GetObjFile("inbk3.obj");
         for(float i = 0; i < line.length; i += 0.65){
@@ -88,6 +90,8 @@ void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh){
             Quat::fill(qr);
             Quat::rotateY(qr, qr, -tsh->path[j].rotDeg*M_PI/180.0);
             Quat::fromRotationXYZ(q, (float*)(posRot+3));
+            zangle = angles[j*2]*(1.0-i/line.length) + angles[j*2+1]*(i/line.length);
+            Quat::rotateZ(q, q, zangle);
             Mat4::fromRotationTranslation(matrix1, q, posRot);
             Quat::multiply(qr, qr, q);
             Mat4::multiply(matrix1, matrixS, matrix1);
@@ -101,10 +105,14 @@ void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh){
             Quat::fill(qr);
             Quat::rotateY(qr, qr, -tsh->path[j].rotDeg*M_PI/180.0);
             Quat::fromRotationXYZ(q, (float*)(posRot+3));
+            zangle = angles[j*2]*(1.0-i/line.length) + angles[j*2+1]*(i/line.length);
+            Quat::rotateZ(q, q, zangle);
             Mat4::fromRotationTranslation(matrix1, q, posRot);
             Mat4::multiply(matrix1, matrixS, matrix1);
             line.getDrawPosition(posRot, i + step);
             Quat::fromRotationXYZ(q, (float*)(posRot+3));
+            zangle = angles[j*2]*(1.0-(i+step)/line.length) + angles[j*2+1]*((i+step)/line.length);
+            Quat::rotateZ(q, q, zangle);
             Mat4::fromRotationTranslation(matrix2, q, posRot);
             Mat4::multiply(matrix2, matrixS, matrix2);
             Quat::multiply(qr, qr, q);
@@ -125,10 +133,14 @@ void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh){
             Quat::fill(qr);
             Quat::rotateY(qr, qr, -tsh->path[j].rotDeg*M_PI/180.0);
             Quat::fromRotationXYZ(q, (float*)(posRot+3));
+            zangle = angles[j*2]*(1.0-i/line.length) + angles[j*2+1]*(i/line.length);
+            Quat::rotateZ(q, q, zangle);
             Mat4::fromRotationTranslation(matrix1, q, posRot);
             Mat4::multiply(matrix1, matrixS, matrix1);
             line.getDrawPosition(posRot, i + step);
             Quat::fromRotationXYZ(q, (float*)(posRot+3));
+            zangle = angles[j*2]*(1.0-(i+step)/line.length) + angles[j*2+1]*((i+step)/line.length);
+            Quat::rotateZ(q, q, zangle);
             Mat4::fromRotationTranslation(matrix2, q, posRot);
             Mat4::multiply(matrix2, matrixS, matrix2);
             Quat::multiply(qr, qr, q);

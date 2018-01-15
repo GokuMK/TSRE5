@@ -81,6 +81,7 @@ bool Game::viewTsectionLines = true;
 bool Game::viewPointer3d = true;
 bool Game::viewMarkers = false;
 bool Game::viewSnapable = false;
+bool Game::viewCompass = false;
 bool Game::warningBox = false;
 bool Game::leaveTrackShapeAfterDelete = false;
 bool Game::renderTrItems = false;
@@ -124,6 +125,10 @@ int Game::mapImageResolution = 4096;
 
 bool Game::autoNewTiles = false;
 bool Game::autoGeoTerrain = false;
+
+bool Game::useSuperelevation = false;
+
+bool Game::soundEnabled = false;
 
 int Game::AASamples = 0;
 float Game::PixelRatio = 1.0;
@@ -370,6 +375,18 @@ void Game::load() {
                 proceduralTracks = true;
             else
                 proceduralTracks = false; 
+        }
+        if(val == "useSuperelevation"){
+            if(args[1].trimmed().toLower() == "true")
+                useSuperelevation = true;
+            else
+                useSuperelevation = false; 
+        }
+        if(val == "soundEnabled"){
+            if(args[1].trimmed().toLower() == "true")
+                soundEnabled = true;
+            else
+                soundEnabled = false; 
         }
         
         if(val == "cameraSpeedMin"){

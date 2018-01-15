@@ -83,6 +83,7 @@ Route::Route() {
 
     trk = new Trk();
     trk->load();
+    Game::useSuperelevation = trk->tsreSuperelevation;
     
     if(trk->tsreProjection != NULL){
         qDebug() << "TSRE Geo Projection";
@@ -1255,6 +1256,18 @@ void Route::deleteTDBTree(WorldObj* obj){
     if (obj->type == "trackobj" || obj->type == "dyntrack") {
         this->roadDB->deleteTree(obj->x, obj->y, obj->UiD);
         this->trackDB->deleteTree(obj->x, obj->y, obj->UiD);
+    }
+    Undo::StateEnd();
+}
+
+void Route::fixTDBVectorElevation(WorldObj* obj){
+    Undo::StateBegin();
+    Undo::PushTrackDB(this->trackDB, false);
+    Undo::PushTrackDB(this->roadDB, true);
+    
+    if (obj->type == "trackobj" || obj->type == "dyntrack") {
+        //this->roadDB->fixTDBVectorElevation(obj->x, obj->y, obj->UiD);
+        this->trackDB->fixTDBVectorElevation(obj->x, obj->y, obj->UiD);
     }
     Undo::StateEnd();
 }

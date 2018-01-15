@@ -634,8 +634,12 @@ void Eng::getCameraPosition(float* out){
     if(out == NULL)
         return;
     //qDebug() << "get position";
-    float *drawPosition1 = ruch1->getCurrentPosition();
-    float *drawPosition2 = ruch2->getCurrentPosition();
+    float selev1, selev2;
+    float *drawPosition1 = ruch1->getCurrentPosition(&selev1);
+    float *drawPosition2 = ruch2->getCurrentPosition(&selev2);
+    selev1 = (selev1 + selev2) / 2.0;
+    
+    
     float pos[5];
     pos[3] = drawPosition1[5];
     pos[4] = drawPosition1[6];
@@ -656,6 +660,7 @@ void Eng::getCameraPosition(float* out){
     out[4] = -drawPosition1[2];
     out[5] = -rotY+M_PI;
     out[6] = rotX;
+    out[7] = selev1;
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, pos[0] + 2048 * (pos[3] - playerT[0]), pos[1]+0.28, -pos[2] + 2048 * (-pos[4] - playerT[1]));
     //Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rotY /* + flip*M_PI+ M_PI*/);
     //Mat4::rotateX(gluu->mvMatrix, gluu->mvMatrix, rotX );
@@ -697,8 +702,10 @@ void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
         delete[] punkty;
     }
     
-    float *drawPosition1 = ruch1->getCurrentPosition();
-    float *drawPosition2 = ruch2->getCurrentPosition();
+    float selev1, selev2;
+    float *drawPosition1 = ruch1->getCurrentPosition(&selev1);
+    float *drawPosition2 = ruch2->getCurrentPosition(&selev2);
+    selev1 = (selev1 + selev2) / 2.0;
     /*gluu->mvPushMatrix();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition2[0] + 2048 * (drawPosition2[5] - playerT[0]), drawPosition2[1], -drawPosition2[2] + 2048 * (-drawPosition2[6] - playerT[1]));
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
@@ -734,6 +741,7 @@ void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, pos[0] + 2048 * (pos[3] - playerT[0]), pos[1]+0.28, -pos[2] + 2048 * (-pos[4] - playerT[1]));
     Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rotY /* + flip*M_PI+ M_PI*/);
     Mat4::rotateX(gluu->mvMatrix, gluu->mvMatrix, rotX );
+    Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, -selev1, 0, 0, 1 );
     Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, flip*M_PI /*+ M_PI*/);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
 

@@ -39,6 +39,7 @@ public:
     float startpX;
     float startpZ;
     float distantTerrainYOffset = 0;
+    int tsreSuperelevation = 0;
     bool milepostUnitsKilometers;
     int maxLineVoltage;
     QString defaultSignalSMS;

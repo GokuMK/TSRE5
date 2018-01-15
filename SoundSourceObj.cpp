@@ -16,6 +16,9 @@
 #include "FileBuffer.h"
 #include "SoundList.h"
 #include "Game.h"
+#include "SoundSource.h"
+#include "SoundManager.h"
+#include "MstsSoundDefinition.h"
 
 SoundSourceObj::SoundSourceObj() {
 }
@@ -45,6 +48,17 @@ void SoundSourceObj::load(int x, int y) {
     this->position[2] = -this->position[2];
     Quat::fill(this->qDirection);
     this->loaded = true;
+    
+    QString path = Game::root+"/routes/"+Game::route+"/sound/"+fileName;
+    int sid = MstsSoundDefinition::AddDefinition(path);
+    if(sid != -1){
+        if(MstsSoundDefinition::Definitions[sid]->group.size() > 0){
+            soundSourceId = SoundManager::AddSoundSource(MstsSoundDefinition::Definitions[sid]->group.first());
+            SoundManager::Sources[soundSourceId]->setPosition(x, y, position);
+        }
+    }
+    
+    //MstsSoundDefinition *sms = new MstsSoundDefinition(path);
 
     setMartix();
 }
@@ -134,7 +148,7 @@ void SoundSourceObj::save(QTextStream* out){
     
 *(out) << "	Soundsource (\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";
-*(out) << "		FileName ( "<<this->fileName<<" )\n";
+*(out) << "		FileName ( "<<ParserX::AddComIfReq(this->fileName)<<" )\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "	)\n";
 }

@@ -36,6 +36,7 @@ public slots:
     void editFileNameEnabled();
     void cCollisionTypeEdited(int val);
     void haxRemoveTDBVectorEnabled();
+    void haxElevTDBVectorEnabled();
     void haxRemoveTDBTreeEnabled();
         
 signals:

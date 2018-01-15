@@ -39,6 +39,7 @@ class ShapeLib;
 class EngLib;
 class QOpenGLFunctions_3_3_Core;
 class QAction;
+class GuiGlCompass;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -208,6 +209,8 @@ private:
     //DefaultMenuActions defaultMenuActions;
     QMap<QString, QAction*> defaultMenuActions;
     bool bolckContextMenu = false;
+    
+    GuiGlCompass * compass = NULL;
 };
 
 #endif

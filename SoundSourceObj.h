@@ -8,8 +8,8 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
-#ifndef SOUNDSOURCE_H
-#define	SOUNDSOURCE_H
+#ifndef SOUNDSOURCEOBJ_H
+#define	SOUNDSOURCEOBJ_H
 
 #include "WorldObj.h"
 #include <QString>
@@ -36,7 +36,10 @@ public:
 private:
     PoleObj* pointer3d = NULL;
     PoleObj* pointer3dSelected = NULL;
+    
+    int soundDefinitionId;
+    int soundSourceId;
 };
 
-#endif	/* SOUNDSOURCE_H */
+#endif	/* SOUNDSOURCEOBJ_H */
 

@@ -38,9 +38,11 @@
 #include "Terrain.h"
 #include "ActivityObject.h"
 #include "GuiFunct.h"
+#include "GuiGlCompass.h"
 #include "ActLib.h"
 #include "Activity.h"
 #include "PlayActivitySelectWindow.h"
+#include "SoundManager.h"
 
 RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -93,6 +95,10 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
             emit updateProperties(selectedObj);
         Undo::StateEndIfLongTime();
     }
+    
+    if (timeNow % 200 < lastTime % 200) {
+        SoundManager::UpdateListenerPos((int)camera->pozT[0], (int)camera->pozT[1], camera->getPos(), camera->getTarget(), camera->getUp());
+    }
 
     route->updateSim(camera->pozT, (float) (timeNow - lastTime) / 1000.0);
 
@@ -102,10 +108,13 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
         Game::allowObjLag += 2;
 
     camera->update(fps);
+    
     update();
 }
 
 void RouteEditorGLWidget::initializeGL() {
+    SoundManager::InitAl();
+    
     //this->setContextMenuPolicy(Qt::CustomContextMenu);
     //connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), 
     //        this, SLOT(showContextMenu(const QPoint &)));
@@ -179,6 +188,7 @@ void RouteEditorGLWidget::initializeGL() {
     setFocus();
     setMouseTracking(true);
     pointer3d = new Pointer3d();
+    compass = new GuiGlCompass();
     //selectedObj = NULL;
     setSelectedObj(NULL);
     groupObj = new GroupObj();
@@ -187,6 +197,9 @@ void RouteEditorGLWidget::initializeGL() {
     mapWindow = new MapWindow();
     Quat::fill(this->placeRot);
 
+    SoundManager::listenerX = camera->pozT[0];
+    SoundManager::listenerZ = camera->pozT[1];
+    
     emit routeLoaded(route);
     emit mkrList(route->getMkrList());
 
@@ -285,6 +298,17 @@ void RouteEditorGLWidget::paintGL() {
     if (!stickPointerToTerrain || !Game::viewTerrainShape)
         if (!selection) drawPointer();
     
+    // render compass
+    if (!selection && Game::viewCompass){
+        Mat4::identity(gluu->mvMatrix);
+        Mat4::ortho(gluu->pMatrix, -1.0, 1.0, 1.0 - 2*(float(this->height()) / this->width()), 1.0, 0.0, 1.0);
+        Mat4::identity(gluu->objStrMatrix);
+        gluu->setMatrixUniforms();
+        gluu->currentShader->setUniformValue(gluu->currentShader->lod, 0.0f);
+
+        compass->render(camera->getRotX()+M_PI);
+    }
+    
     gluu->currentShader->release();
 
     // Handle Selection
@@ -303,7 +327,7 @@ void RouteEditorGLWidget::renderShadowMaps() {
     float* out1 = Vec3::create();
     Vec3::set(out1, 0, 1, 0);
     float *ld = Vec3::create();
-    Vec3::set(ld, -1.0, 2.0, 1.0);
+    Vec3::set(ld, -1.0, 1.5, 1.0);
     float *aaa = camera->getPos();
     //float *lt = camera->getTarget();
     //Vec3::sub(lt, lt, aaa);

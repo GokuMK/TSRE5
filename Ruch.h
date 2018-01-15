@@ -31,8 +31,9 @@ public:
     void back(float m);
     void toNext(float m);
     void set(int nid, int m, int tdirection, QMap<int, int>* jDirections = NULL);
-    float *getCurrentPosition();
+    float *getCurrentPosition(float *sElev = NULL);
     float getDistanceDownPath();
+    int getVectorDirection();
 
 private:
     void checkNode(int mSign);

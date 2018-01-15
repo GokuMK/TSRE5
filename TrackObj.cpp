@@ -325,12 +325,15 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         gluu->enableTextures();
     }
     
-    if(!Game::proceduralTracks || roadShape) {
+    if(!Game::proceduralTracks || roadShape ) {
         Game::currentShapeLib->shape[shape]->render();
     } else {
         if (!proceduralShapeInit) {
             TrackShape *tsh = Game::trackDB->tsection->shape[sectionIdx];
-            ProceduralShape::GenShape(procShape, tsh);
+            QMap<int, float> angles;
+            if(Game::useSuperelevation)
+                Game::trackDB->fillTrackAngles(x, -y, UiD, angles);
+            ProceduralShape::GenShape(procShape, tsh, angles);
             proceduralShapeInit = true;
         } else {
             for(int i = 0; i < procShape.size(); i++){

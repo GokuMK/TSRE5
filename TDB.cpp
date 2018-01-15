@@ -1628,6 +1628,30 @@ bool TDB::removeTrackFromTDB(int x, int y, int UiD){
     return ok;
 }
 
+void TDB::fillTrackAngles(int x, int z, int UiD, QMap<int, float>& angles){
+    TRnode *n;
+    for (int i = 1; i <= iTRnodes; i++) {
+            n = trackNodes[i];
+            if (n == NULL) continue;
+            if (n ->typ == -1) continue;
+            if (n->typ == 1) {
+                for(int j = 0; j < n->iTrv; j++)
+                    if(n->trVectorSection[j].param[2] == x)
+                        if(n->trVectorSection[j].param[3] == z)
+                            if(n->trVectorSection[j].param[4] == UiD){
+                                int endp1 = n->trVectorSection[j].param[5];
+                                int endp2 = n->trVectorSection[j].param[6];
+                                angles[endp1] = fabs(n->trVectorSection[j].param[15]);
+                                if(j < n->iTrv - 1)
+                                    angles[endp2] = fabs(n->trVectorSection[j+1].param[15]);
+                                else
+                                    angles[endp2] = 0;
+                            
+                    }
+            }
+        }
+}
+
 bool TDB::ifTrackExist(int x, int y, int UiD){
     y = -y;
     //qDebug() << "is Track? " << x << " " << y << " " << UiD; 
@@ -1972,7 +1996,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
     sectionLines.render();
 }
 
-bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
+bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry, float *sElev){
     TRnode* n = trackNodes[id];
     if (n == NULL) return false;
     if (n->typ != 1) return false;
@@ -1994,7 +2018,8 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
         if(length < metry)
             continue;
         
-        tsection->sekcja.at(idx)->getDrawPosition(&position, metry - length + sectionLength);
+        float sDistance = metry - length + sectionLength;
+        tsection->sekcja.at(idx)->getDrawPosition(&position, sDistance);
         //qDebug() << "position"<<position.x<<position.y<<position.z;
 
         float matrix[16];
@@ -2019,7 +2044,7 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
         pos[2] = -position.z;
         Vec3::transformMat4(pos, pos, matrix);
         
-        out[3] = -n->trVectorSection[i].param[14] - tsection->sekcja.at(idx)->getDrawAngle(metry - length + sectionLength);
+        out[3] = -n->trVectorSection[i].param[14] - tsection->sekcja.at(idx)->getDrawAngle(sDistance);
         out[4] = n->trVectorSection[i].param[13];
         out[5] = n->trVectorSection[i].param[8];
         out[6] = n->trVectorSection[i].param[9];
@@ -2029,6 +2054,17 @@ bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry){
         //position->x += (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10];
         //position->y += n->trVectorSection[i].param[11];
         //position->z += (-n->trVectorSection[i].param[9] - playerT[1])*2048 - n->trVectorSection[i].param[12];
+        
+        if(sElev != NULL)
+            if(Game::useSuperelevation){
+                if(i < n->iTrv - 1)
+                    *sElev = -(n->trVectorSection[i].param[15]*(1.0 - sDistance/sectionLength) + n->trVectorSection[i+1].param[15]*(sDistance/sectionLength));
+                else
+                    *sElev = -(n->trVectorSection[i].param[15]*(1.0 - sDistance/sectionLength));
+            } else {
+                *sElev = 0;
+            }
+            
         return true;
     }
     return false;
@@ -2792,6 +2828,55 @@ void TDB::deleteItemFromTrNode(int tid, int iid){
     n->iTri--;
     delete[] n->trItemRef;
     n->trItemRef = newVec;
+}
+
+void TDB::fixTDBVectorElevation(int x, int y, int UiD){
+    y = -y;
+    
+    TRnode *n;
+    int tid = -1;
+    for (int i = 1; i <= iTRnodes; i++) {
+            n = trackNodes[i];
+            if (n == NULL) continue;
+            if (n ->typ == -1) continue;
+            if (n->typ == 1) {
+                bool found = false;
+                for(int j = 0; j < n->iTrv; j++){
+                    if(n->trVectorSection[j].param[2] == x)
+                        if(n->trVectorSection[j].param[3] == y)
+                            if(n->trVectorSection[j].param[4] == UiD){
+                                found = true;
+                                break;
+                    }
+                }
+                if(found){
+                    fixTDBVectorElevation(n);
+                    continue;
+                }
+            }
+        }
+}
+
+void TDB::fixTDBVectorElevation(TRnode *n){
+    if (n == NULL) return;
+    if (n->typ != 1) return;
+     
+    n->trVectorSection[0].param[15] = 0;
+    n->trVectorSection[n->iTrv - 1].param[15] = 0;
+    int sect;
+    float angle1, angle2;
+    for(int j = 1; j < n->iTrv; j++){
+        sect = n->trVectorSection[j-1].param[0];
+        angle1 = tsection->sekcja[sect]->getAngle();
+        sect = n->trVectorSection[j].param[0];
+        angle2 = tsection->sekcja[sect]->getAngle();
+        if(angle1 < 0 && angle2 < 0)
+            n->trVectorSection[j].param[15] = -0.1;
+        else if(angle1 > 0 && angle2 > 0)
+            n->trVectorSection[j].param[15] = 0.1;
+        else
+            n->trVectorSection[j].param[15] = 0;
+    }
 }
 
 void TDB::deleteVectorSection(int x, int y, int UiD){

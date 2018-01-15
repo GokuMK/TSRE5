@@ -60,6 +60,7 @@ public:
     void loadTit();
     int getNewTRitemId();
     static void saveEmpty(bool road);
+    void fillTrackAngles(int x, int z, int UiD, QMap<int, float>& angles);
     bool ifTrackExist(int x, int y, int UiD);
     bool removeTrackFromTDB(int x, int y, int UiD);
     int findNearestNode(int &x, int &z, float* p, float* q, float maxD = 4, bool updatePosition = true);
@@ -68,6 +69,8 @@ public:
     int joinVectorSections(int id1, int id2);
     void deleteJunction(int id);
     void deleteVectorSection(int id);
+    void fixTDBVectorElevation(int x, int y, int UiD);
+    void fixTDBVectorElevation(TRnode *n);
     void deleteVectorSection(int x, int y, int UiD);
     bool deleteFromVectorSection(int id, int j);
     bool deleteAllTrItemsFromVectorSection(int id);
@@ -96,7 +99,7 @@ public:
     void renderAll(GLUU *gluu, float * playerT, float playerRot);
     void renderLines(GLUU *gluu, float* playerT, float playerRot);
     void renderItems(GLUU *gluu, float* playerT, float playerRot, int renderMode);
-    bool getDrawPositionOnTrNode(float* out, int id, float metry);
+    bool getDrawPositionOnTrNode(float* out, int id, float metry, float *sElev = NULL);
     int findTrItemNodeId(int id);
     int findNearestPositionOnTDB(float* posT, float* pos, float* q = NULL, float* tpos = NULL);
     int findNearestPositionsOnTDB(float* posT, float * pos, std::vector<TDB::IntersectionPoint> &points, float maxDistance = 10.0);

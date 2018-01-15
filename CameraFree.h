@@ -18,6 +18,7 @@ public:
     CameraFree(const CameraFree& orig);
     virtual ~CameraFree();
     float* getTarget();
+    float* getUp();
     /*Vector2i getTilePos();
     void setTilePos(Vector2i s);
     void setPlayerPos(float x, float y, float z);

@@ -102,6 +102,7 @@ public:
     void autoPlacementDeleteLast();
     void moveWorldObjToTile(int x, int z, WorldObj* obj);
     void deleteTDBTree(WorldObj* obj);
+    void fixTDBVectorElevation(WorldObj* obj);
     void deleteTDBVector(WorldObj* obj);
     void toggleToTDB(WorldObj* obj);
     void addToTDBIfNotExist(WorldObj* obj);

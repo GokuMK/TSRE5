@@ -22,6 +22,7 @@
 #include "NaviBox.h"
 #include "ShapeViewWindow.h"
 #include "AboutWindow.h"
+#include "SoundManager.h"
 #include "PropertiesAbstract.h"
 #include "PropertiesUndefined.h"
 #include "PropertiesStatic.h"
@@ -254,6 +255,9 @@ RouteEditorWindow::RouteEditorWindow() {
     vViewSnapable = GuiFunct::newMenuCheckAction(tr("&Snapable Points"), this, false); 
     viewMenu->addAction(vViewSnapable);
     QObject::connect(vViewSnapable, SIGNAL(triggered(bool)), this, SLOT(viewSnapable(bool)));
+    QAction* vViewCompass = GuiFunct::newMenuCheckAction(tr("&Compass"), this, false); 
+    viewMenu->addAction(vViewCompass);
+    QObject::connect(vViewCompass, SIGNAL(triggered(bool)), this, SLOT(viewCompass(bool)));
     // Tools
     toolsMenu = menuBar()->addMenu(tr("&Tools"));
     propertiesAction = GuiFunct::newMenuCheckAction(tr("&Properties"), this); 
@@ -520,6 +524,7 @@ void RouteEditorWindow::closeEvent(QCloseEvent * event ){
         qDebug() << "nic do zapisania";
         emit exitNow();
         event->accept();
+        SoundManager::CloseAl();
         qApp->quit();
         return;
     }
@@ -538,6 +543,7 @@ void RouteEditorWindow::closeEvent(QCloseEvent * event ){
     if(unsavedDialog.changed == 2){
         emit exitNow();
         event->accept();
+        SoundManager::CloseAl();
         qApp->quit();
         return;
     }
@@ -546,6 +552,8 @@ void RouteEditorWindow::closeEvent(QCloseEvent * event ){
 
     emit exitNow();
     event->accept();
+    
+    SoundManager::CloseAl();
     qApp->quit();
 }
 
@@ -784,6 +792,10 @@ void RouteEditorWindow::viewMarkers(bool show){
 
 void RouteEditorWindow::viewSnapable(bool show){
     Game::viewSnapable = show;
+}
+
+void RouteEditorWindow::viewCompass(bool show){
+    Game::viewCompass = show;
 }
 
 void RouteEditorWindow::show(){
