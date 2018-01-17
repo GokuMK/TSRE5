@@ -14,31 +14,22 @@
 #include <QVector>
 #include <QString>
 
-class SoundDefinitionGroup;
+#include "MstsSoundDefinition.h"
 
 class SoundSource {
 public:
-    struct Stream {
-        float X;
-        float Y;
-        float tilePos[3];
-        float distance = 1000;
-        int alSid = -1;
-        int alBid = -1;
-        void setPosition(int x, int y, float *pos);
-        void updatePosition();
-    };
-    
-    QVector<Stream> stream;
+    QVector<SoundDefinitionGroup::Stream*> stream;
     void setPosition(int x, int y, float *pos);
+    void update();
     void updatePosition();
+    void setRelative(bool v);
     
     SoundSource(SoundDefinitionGroup *g);
     virtual ~SoundSource();
     
 private:
     SoundDefinitionGroup *definition;
-    int addNewStream(QString path, bool stereo);
+    int addNewStream(SoundDefinitionGroup::Stream* s, bool stereo);
     int alSourceId = -1;
 };
 

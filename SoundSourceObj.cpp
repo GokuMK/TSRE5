@@ -49,8 +49,8 @@ void SoundSourceObj::load(int x, int y) {
     Quat::fill(this->qDirection);
     this->loaded = true;
     
-    QString path = Game::root+"/routes/"+Game::route+"/sound/"+fileName;
-    int sid = MstsSoundDefinition::AddDefinition(path);
+    QString path = Game::root+"/routes/"+Game::route+"/sound";
+    int sid = MstsSoundDefinition::AddDefinition(path, fileName);
     if(sid != -1){
         if(MstsSoundDefinition::Definitions[sid]->group.size() > 0){
             soundSourceId = SoundManager::AddSoundSource(MstsSoundDefinition::Definitions[sid]->group.first());

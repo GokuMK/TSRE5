@@ -28,6 +28,7 @@ public:
     
     static void InitAl();
     static void CloseAl();
+    static void UpdateAll();
     static void UpdateListenerPos(int x, int y, float *pos, float* target, float* up);
     
     static int AddSoundSource(SoundDefinitionGroup* g);

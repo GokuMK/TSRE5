@@ -98,6 +98,11 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
     
     if (timeNow % 200 < lastTime % 200) {
         SoundManager::UpdateListenerPos((int)camera->pozT[0], (int)camera->pozT[1], camera->getPos(), camera->getTarget(), camera->getUp());
+        SoundManager::UpdateAll();
+    }
+    
+    if (timeNow % 500 < lastTime % 50) {
+        SoundManager::UpdateAll();
     }
 
     route->updateSim(camera->pozT, (float) (timeNow - lastTime) / 1000.0);

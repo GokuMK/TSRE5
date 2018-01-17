@@ -60,6 +60,7 @@ public:
     float maxForce = 0;
     float maxPower = 0;
     float maxCurrent = 0;
+    QString souncCabFile;
     int flip = flip;
     int loaded = -1;
     bool kierunek = false;
@@ -98,6 +99,8 @@ private:
     Ruch *ruch1 = NULL;
     Ruch *ruch2 = NULL;
     void addToFileList(QString val);
+    
+    int camSoundSourceId = -1;
 };
 
 #endif	/* ENG_H */

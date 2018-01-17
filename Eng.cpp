@@ -22,6 +22,9 @@
 #include "GLMatrix.h"
 #include "TDB.h"
 #include "Ruch.h"
+#include "MstsSoundDefinition.h"
+#include "SoundManager.h"
+#include "SoundSource.h"
 
 Eng::Eng() {
     
@@ -59,6 +62,8 @@ Eng::Eng(Eng *o) {
     loaded = o->loaded;
     kierunek = o->kierunek;
     ref = o->ref;
+    
+    souncCabFile = o->souncCabFile;
 }
 
 Eng::~Eng() {
@@ -367,6 +372,11 @@ void Eng::load(){
                     ParserX::SkipToken(data);
                     continue;
                 }
+                if (sh == ("sound")) {
+                    souncCabFile = ParserX::GetStringInside(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
                 ParserX::SkipToken(data);
             }
             ParserX::SkipToken(data);
@@ -631,6 +641,20 @@ float *Eng::getCurrentPositionOnTrack(){
 }
 
 void Eng::getCameraPosition(float* out){
+    if(camSoundSourceId == -1){
+        QString spath = path+"/sound";
+        int sid = MstsSoundDefinition::AddDefinition(spath, souncCabFile);
+        
+        if(sid != -1){
+            if(MstsSoundDefinition::Definitions[sid]->group.size() > 0){
+                camSoundSourceId = SoundManager::AddSoundSource(MstsSoundDefinition::Definitions[sid]->group.first());
+                SoundManager::Sources[camSoundSourceId]->setRelative(true);
+            }
+        } else {
+            camSoundSourceId = -2;
+        }
+    }
+    
     if(out == NULL)
         return;
     //qDebug() << "get position";

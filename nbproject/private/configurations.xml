@@ -138,10 +138,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -aceconv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" --conedit</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" --play dp.act</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" --play</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" --play</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <runcommand>"${OUTPUT_PATH}" --play</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <console-type>2</console-type>

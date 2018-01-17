@@ -78,6 +78,15 @@ void SoundManager::InitAl() {
 	return;
 }
 
+void SoundManager::UpdateAll(){
+    QMapIterator<int, SoundSource*> i(Sources);
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL) continue;
+            i.value()->update();
+        }
+}
+
 void SoundManager::UpdateListenerPos(int x, int y, float* pos, float* target, float* up){
     alListener3f(AL_POSITION, pos[0], pos[1], pos[2]);
     float o[6];
