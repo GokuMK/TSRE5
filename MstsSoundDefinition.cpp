@@ -18,6 +18,7 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 #include "SoundManager.h"
+#include "SoundSource.h"
 
 int MstsSoundDefinition::jestsms = 0;
 QMap<int, MstsSoundDefinition*> MstsSoundDefinition::Definitions;
@@ -91,7 +92,7 @@ void SoundDefinitionGroup::Stream::setRelative(bool v){
         alSourcei(alSid, AL_SOURCE_RELATIVE, AL_FALSE);
 }
 
-bool SoundDefinitionGroup::Stream::Trigger::activate(){
+bool SoundDefinitionGroup::Stream::Trigger::activate(SoundVariables *variables){
     if(type == INITIAL_TRIGGER){
         if(initialtriggeract == false){
             initialtriggeract = true;
@@ -104,6 +105,27 @@ bool SoundDefinitionGroup::Stream::Trigger::activate(){
             return true;
         }
     }
+    if(type == VARIABLE_TRIGGER){
+        if(variables == NULL)
+            return false;
+        if(variabletype == "Variable2_Inc_Past"){
+            float v = variables->value[SoundVariables::VARIABLE2];
+            if(lastvalue <= variablevalue && v > variablevalue){
+                lastvalue = v;
+                return true;
+            }
+        }
+        if(variabletype == "Variable2_Dec_Past"){
+            float v = variables->value[SoundVariables::VARIABLE2];
+            if(lastvalue >= variablevalue && v < variablevalue){
+                lastvalue = v;
+                return true;
+            }
+        }
+        lastvalue = variables->value[SoundVariables::VARIABLE2];
+    }
+    
+    
     return false;
 }
 void SoundDefinitionGroup::Stream::Trigger::load(FileBuffer* data){
@@ -205,8 +227,8 @@ void SoundDefinitionGroup::Stream::load(FileBuffer* data){
                 if (sh == ("variable_trigger")) {
                     trigger.push_back(new Trigger());
                     trigger.back()->type = Trigger::VARIABLE_TRIGGER;
-                    ParserX::GetStringInside(data);
-                    ParserX::GetNumberInside(data);
+                    trigger.back()->variabletype = ParserX::GetStringInside(data);
+                    trigger.back()->variablevalue = ParserX::GetNumberInside(data);
                     trigger.back()->load(data);
                     //priority = ParserX::GetNumber(data);
                     ParserX::SkipToken(data);
@@ -275,11 +297,15 @@ void SoundDefinitionGroup::Stream::load(FileBuffer* data){
     }
 }
 
-float SoundDefinitionGroup::Stream::Curve::getValue(float x){
-    qDebug() << "X" <<x;
+float SoundDefinitionGroup::Stream::Curve::getValue(SoundVariables *variables){
+    if(variables == NULL)
+        return 0;
+    //qDebug() << "X" <<x;
     if(points.size() == 0)
         return 0;
 
+    float x = variables->value[SoundVariables::VARIABLE2];
+    
     if(x <= points.first().x)
         return points.first().y;
     
@@ -291,7 +317,7 @@ float SoundDefinitionGroup::Stream::Curve::getValue(float x){
         if(x > points[i].x && x <= points[i+1].x){
             float distance = points[i+1].x - points[i].x;
             x = (x - points[i].x) / distance;
-            qDebug() << "X Y" << x << points[i].y*(1.0 - x) + points[i+1].y*(x);
+            //qDebug() << "X Y" << x << points[i].y*(1.0 - x) + points[i+1].y*(x);
             return points[i].y*(1.0 - x) + points[i+1].y*(x);
         }
     }
@@ -392,6 +418,10 @@ SoundDefinitionGroup::Stream::Trigger::Trigger(Trigger* o){
     volumeMax = o->volumeMax;		
     selectionMethod = o->selectionMethod;
     alBid = -1;
+    
+    variabletype = o->variabletype;
+    variablevalue = o->variablevalue;
+    lastvalue = -1;
 }
 
 SoundDefinitionGroup::Stream::Stream(){
@@ -423,14 +453,29 @@ void SoundDefinitionGroup::Stream::setPosition(int x, int y, float *pos){
     alSource3f(alSid, AL_POSITION, tilePos[0] - 2048*(SoundManager::listenerX-x), tilePos[1], tilePos[2] - 2048*(SoundManager::listenerZ-y));
 }
 
-void SoundDefinitionGroup::Stream::update(){
-    static float v = 0.0;
+void SoundDefinitionGroup::Stream::update(SoundVariables *variables){
     for(int i = 0; i < trigger.size(); i++){
-        if(trigger[i]->activate()){
-            bindTo(trigger[i]->alBid);
-            qDebug() << alSid << trigger[i]->alBid;
-            alSourcePlay(alSid);
-            isInit = true;
+        if(trigger[i]->activate(variables)){
+            if(trigger[i]->mode == Trigger::ONESHOT_MODE){
+                bindTo(trigger[i]->alBid);
+                qDebug() << "bind" << i << alSid << trigger[i]->alBid;
+                alSourcei(alSid, AL_LOOPING, AL_FALSE);
+                alSourcePlay(alSid);
+                isInit = true;
+            }
+            if(trigger[i]->mode == Trigger::LOOPSTART_MODE){
+                bindTo(trigger[i]->alBid);
+                qDebug() << "bind" << i << alSid << trigger[i]->alBid;
+                alSourcei(alSid, AL_LOOPING, AL_TRUE);
+                alSourcePlay(alSid);
+                isInit = true;
+            }
+            if(trigger[i]->mode == Trigger::LOOPRELEASE_MODE){
+                bindTo(0);
+                qDebug() << "u-bind" << i << alSid << "NULL";
+                alSourceStop(alSid);
+                isInit = true;
+            }
         }
         /*if(gain < 0.5 && i == 2 && isInit){
             alSourceStop(alSid);
@@ -440,14 +485,13 @@ void SoundDefinitionGroup::Stream::update(){
             gain = 1.0;
         }*/
     }
-    
-    v += 0.001;
+
     if(volumeCurve != NULL){
-        float newv = volumeCurve->getValue(v);
+        float newv = volumeCurve->getValue(variables);
         alSourcef(alSid, AL_GAIN, newv);
     }
     if(freqCurve != NULL){
-        float newv = freqCurve->getValue(v);
+        float newv = freqCurve->getValue(variables);
         alSourcef(alSid, AL_PITCH, newv/12025.0);
     }
 }
@@ -461,7 +505,7 @@ void SoundDefinitionGroup::Stream::updatePosition(){
 
 void SoundDefinitionGroup::Stream::bindTo(int i){
     alSourcei(alSid, AL_BUFFER, i);
-    qDebug("buffer binding");
+    //qDebug("buffer binding");
 }
 
 void SoundDefinitionGroup::Stream::init(QString path, bool stereo){
@@ -559,10 +603,10 @@ void SoundDefinitionGroup::Stream::init(QString path, bool stereo){
                 bufferData[ii] = filedata->get();
         if (channels == 2)
             for(int ii = 0; ii < dataChunkSize; ii+=2){
+                filedata->get();
+                filedata->get();
                 bufferData[ii] = filedata->get();
                 bufferData[ii+1] = filedata->get();
-                filedata->get();
-                filedata->get();
             }
 
         float duration = float(dataChunkSize) / byteRate;

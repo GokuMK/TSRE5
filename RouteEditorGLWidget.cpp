@@ -96,13 +96,15 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
         Undo::StateEndIfLongTime();
     }
     
-    if (timeNow % 200 < lastTime % 200) {
-        SoundManager::UpdateListenerPos((int)camera->pozT[0], (int)camera->pozT[1], camera->getPos(), camera->getTarget(), camera->getUp());
-        SoundManager::UpdateAll();
-    }
-    
-    if (timeNow % 500 < lastTime % 50) {
-        SoundManager::UpdateAll();
+    if(Game::soundEnabled){
+        if (timeNow % 200 < lastTime % 200) {
+            SoundManager::UpdateListenerPos((int)camera->pozT[0], (int)camera->pozT[1], camera->getPos(), camera->getTarget(), camera->getUp());
+            SoundManager::UpdateAll();
+        }
+
+        if (timeNow % 50 < lastTime % 50) {
+            SoundManager::UpdateAll();
+        }
     }
 
     route->updateSim(camera->pozT, (float) (timeNow - lastTime) / 1000.0);
@@ -118,7 +120,8 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
 }
 
 void RouteEditorGLWidget::initializeGL() {
-    SoundManager::InitAl();
+    if(Game::soundEnabled)
+        SoundManager::InitAl();
     
     //this->setContextMenuPolicy(Qt::CustomContextMenu);
     //connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), 

@@ -109,7 +109,9 @@ void Ruch::checkNode(int mSign) {
         return;
     if (n->typ == 2) {
         int u = 0;// n->TrP1-1;
+        onJunction = 2; // just info
         if (kier == 1){
+            onJunction = 1; // just info
             u = 1+(*junctionDirections)[nodeId];//n->TrP1;//+n->TrP2-1;
         }
         

@@ -16,19 +16,35 @@
 
 #include "MstsSoundDefinition.h"
 
+class SoundVariables {
+public:
+    enum ValueName {
+        SPEED = 0,
+        DISTANCE = 1,
+        BRAKECYL = 2,
+        CURVEFORCE = 3,
+        VARIABLE1 = 4,
+        VARIABLE2 = 5,
+        VARIABLE3 = 6
+    };
+    QMap<ValueName, float> value;
+};
+
 class SoundSource {
 public:
     QVector<SoundDefinitionGroup::Stream*> stream;
+    SoundVariables *variables = NULL;
     void setPosition(int x, int y, float *pos);
     void update();
     void updatePosition();
     void setRelative(bool v);
     
+    SoundSource(QString resPath, QString name);
     SoundSource(SoundDefinitionGroup *g);
     virtual ~SoundSource();
     
 private:
-    SoundDefinitionGroup *definition;
+    SoundDefinitionGroup *definition = NULL;
     int addNewStream(SoundDefinitionGroup::Stream* s, bool stereo);
     int alSourceId = -1;
 };

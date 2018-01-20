@@ -17,6 +17,8 @@
 class OglObj;
 class GLUU;
 class Ruch;
+class SoundVariables;
+class TrainNetworkEng;
 
 class Eng {
 public:
@@ -88,6 +90,8 @@ public:
     float getCurrentElevation();
     float getTotalDistanceDownPath();
     void reload();
+    void updateSim(float deltaTime);
+    float getCurrentSpeed();
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);
     float *getCurrentPositionOnTrack();
@@ -101,6 +105,10 @@ private:
     void addToFileList(QString val);
     
     int camSoundSourceId = -1;
+    SoundVariables* soundVariables = NULL;
+    float currentSpeed = 0;
+    
+    TrainNetworkEng* networkEng = NULL;
 };
 
 #endif	/* ENG_H */

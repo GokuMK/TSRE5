@@ -17,6 +17,7 @@
 #include "Vector2f.h"
 
 class FileBuffer;
+class SoundVariables;
 
 class SoundDefinitionGroup {
     public:
@@ -47,6 +48,9 @@ class SoundDefinitionGroup {
                 };
                 
                 TriggerType type = EMPTY_TRIGGER;
+                QString variabletype;
+                float variablevalue;
+                float lastvalue = -1;
                 TriggerMode mode = EMPTY_MODE;
                 QVector<QString> files;
                 int delayMin = 500;
@@ -58,9 +62,10 @@ class SoundDefinitionGroup {
                 
                 bool initialtriggeract = false;
                 
+                
                 Trigger();
                 Trigger(Trigger *o);
-                bool activate();
+                bool activate(SoundVariables *variables);
                 void load(FileBuffer* data);
                 QString getFileName();
             };
@@ -69,7 +74,7 @@ class SoundDefinitionGroup {
                 QString type;
                 QVector<Vector2f> points;
                 
-                float getValue(float x);
+                float getValue(SoundVariables *variables);
             };
             
             bool relative = false;
@@ -93,7 +98,7 @@ class SoundDefinitionGroup {
         
             void load(FileBuffer* data);
             void setPosition(int x, int y, float *pos);
-            void update();
+            void update(SoundVariables *variables);
             void updatePosition();
             void setRelative(bool v);
             void init(QString path, bool stereo);

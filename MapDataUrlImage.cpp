@@ -162,7 +162,7 @@ void MapDataUrlImage::load() {
     double latstep = (maxlat - minlat) / isteps;
     double lonstep = (maxlon - minlon) / jsteps;
     qDebug() << "Step" <<latstep <<lonstep;
-
+    
     for(double i = 0; i < isteps+1; i++)
         for(double j = 0; j < jsteps+1; j++){
             p00.Latitude = minlat + i*latstep;

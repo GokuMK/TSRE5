@@ -31,6 +31,7 @@ public:
     static void UpdateAll();
     static void UpdateListenerPos(int x, int y, float *pos, float* target, float* up);
     
+    static int AddSoundSource(QString resPath, QString name);
     static int AddSoundSource(SoundDefinitionGroup* g);
     static int InitSource(QString path);
     

@@ -311,6 +311,11 @@ void Service::setStartSpeed(float val){
     modified = true;
 }
     
+void Service::setTrainConfig(QString val){
+    trainConfig = val;
+    modified = true;
+}
+
 void Service::setEndSpeed(float val){
     endingSpeed = val;
     modified = true;

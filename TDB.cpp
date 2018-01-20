@@ -2860,7 +2860,7 @@ void TDB::fixTDBVectorElevation(int x, int y, int UiD){
 void TDB::fixTDBVectorElevation(TRnode *n){
     if (n == NULL) return;
     if (n->typ != 1) return;
-     
+    
     n->trVectorSection[0].param[15] = 0;
     n->trVectorSection[n->iTrv - 1].param[15] = 0;
     int sect;
@@ -2871,9 +2871,9 @@ void TDB::fixTDBVectorElevation(TRnode *n){
         sect = n->trVectorSection[j].param[0];
         angle2 = tsection->sekcja[sect]->getAngle();
         if(angle1 < 0 && angle2 < 0)
-            n->trVectorSection[j].param[15] = -0.1;
+            n->trVectorSection[j].param[15] = -0.05;
         else if(angle1 > 0 && angle2 > 0)
-            n->trVectorSection[j].param[15] = 0.1;
+            n->trVectorSection[j].param[15] = 0.05;
         else
             n->trVectorSection[j].param[15] = 0;
     }

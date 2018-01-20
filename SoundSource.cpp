@@ -14,6 +14,17 @@
 #include "ReadFile.h"
 #include "FileBuffer.h"
 
+SoundSource::SoundSource(QString resPath, QString name){
+    stream.push_back(new SoundDefinitionGroup::Stream());
+    SoundDefinitionGroup::Stream::Trigger* t = new SoundDefinitionGroup::Stream::Trigger();
+    stream.back()->trigger.push_back(t);
+    t->files.push_back(name);
+    t->type = t->INITIAL_TRIGGER;
+    t->mode = t->ONESHOT_MODE;
+    
+    stream.back()->init(resPath, true);
+}
+
 SoundSource::SoundSource(SoundDefinitionGroup *g) {
     definition = g;
     for(int i = 0; i < g->stream.size(); i++){
@@ -46,10 +57,7 @@ void SoundSource::updatePosition(){
 void SoundSource::update(){
 
     for(int i = 0; i < stream.size(); i++){
-        stream[i]->update();
-        
-        
-        return;
+        stream[i]->update(variables);
     }
 }
 

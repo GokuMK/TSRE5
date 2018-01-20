@@ -197,7 +197,7 @@ void ActivityServiceProperties::cConFilesEnabled(int val){
         service->trainConfig = "";
         return;
     }
-    service->trainConfig = cConFiles.currentData().toString().section(".", 0, -2);
+    service->setTrainConfig(cConFiles.currentData().toString().section(".", 0, -2));
 }
 /*
 void ActivityServiceProperties::bOkEnabled(){

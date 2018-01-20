@@ -111,6 +111,12 @@ void SoundManager::UpdateListenerPos(int x, int y, float* pos, float* target, fl
     }
 }
 
+int SoundManager::AddSoundSource(QString resPath, QString name){
+    // simple source
+    Sources[SourcesCount] = new SoundSource(resPath, name);
+    return SourcesCount++;
+}
+
 int SoundManager::AddSoundSource(SoundDefinitionGroup* g){
     if(g == NULL)
         return -1;

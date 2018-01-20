@@ -74,7 +74,7 @@ void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh, QMap<in
 
         ComplexLine line;
         line.init(sections);
-        qDebug() << line.length << "length";
+        //qDebug() << line.length << "length";
         float pp[3];
         float zangle;
         
@@ -178,7 +178,7 @@ void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &secti
     
     ComplexLine line;
     line.init(sections);
-    qDebug() << line.length << "length";
+    //qDebug() << line.length << "length";
 
     tFile = GetObjFile("inbk3.obj");
     for(float i = 0; i < line.length; i += 0.65){

@@ -25,6 +25,7 @@
 #include "MstsSoundDefinition.h"
 #include "SoundManager.h"
 #include "SoundSource.h"
+#include "TrainNetworkEng.h"
 
 Eng::Eng() {
     
@@ -550,6 +551,51 @@ void Eng::drawBorder3d(){
     borderObj3d->render();
 };
 
+void Eng::updateSim(float deltaTime){
+    static float inc = 0.1;
+    currentSpeed += inc;
+    if(currentSpeed > 55.0)
+        inc = 0.00;
+    //if(currentSpeed < 0.0)
+    //    inc = 0.01;
+    
+    if(Game::useNetworkEng){
+        if(networkEng == NULL){
+            networkEng = new TrainNetworkEng();
+        }
+        currentSpeed = networkEng->getSpeed();
+        
+        float data[2];
+        data[0] = getCurrentElevation();
+        data[1] = getTotalDistanceDownPath();
+        networkEng->writeData(data);
+    }
+    
+    if(soundVariables != NULL){
+        // dash9
+        soundVariables->value[SoundVariables::VARIABLE2] = currentSpeed / 30.0;
+        // acela
+        //soundVariables->value[SoundVariables::VARIABLE2] = currentSpeed * 3.0;
+    }
+    
+    if(Game::soundEnabled){
+        if(ruch1->onJunction > 0){
+            qDebug() << "--------------";
+            int soundSourceId = SoundManager::AddSoundSource(path, "j1.wav");
+            float *pos = ruch1->getCurrentPosition();
+            pos[2] = -pos[2];
+            SoundManager::Sources[soundSourceId]->setPosition(pos[5], -pos[6], pos);
+            //SoundManager::Sources[camSoundSourceId]->setRelative(true);
+            ruch1->onJunction = 0;
+        }
+    }
+    
+}
+
+float Eng::getCurrentSpeed(){
+    return currentSpeed;
+}
+
 void Eng::render(int selectionColor) {
     render(0, 0, selectionColor);
 }
@@ -641,17 +687,21 @@ float *Eng::getCurrentPositionOnTrack(){
 }
 
 void Eng::getCameraPosition(float* out){
-    if(camSoundSourceId == -1){
-        QString spath = path+"/sound";
-        int sid = MstsSoundDefinition::AddDefinition(spath, souncCabFile);
-        
-        if(sid != -1){
-            if(MstsSoundDefinition::Definitions[sid]->group.size() > 0){
-                camSoundSourceId = SoundManager::AddSoundSource(MstsSoundDefinition::Definitions[sid]->group.first());
-                SoundManager::Sources[camSoundSourceId]->setRelative(true);
+    if(Game::soundEnabled){
+        if(camSoundSourceId == -1){
+            QString spath = path+"/sound";
+            int sid = MstsSoundDefinition::AddDefinition(spath, souncCabFile);
+
+            if(sid != -1){
+                if(MstsSoundDefinition::Definitions[sid]->group.size() > 0){
+                    camSoundSourceId = SoundManager::AddSoundSource(MstsSoundDefinition::Definitions[sid]->group.first());
+                    SoundManager::Sources[camSoundSourceId]->setRelative(true);
+                    soundVariables = new SoundVariables();
+                    SoundManager::Sources[camSoundSourceId]->variables = soundVariables;
+                }
+            } else {
+                camSoundSourceId = -2;
             }
-        } else {
-            camSoundSourceId = -2;
         }
     }
     
@@ -684,6 +734,7 @@ void Eng::getCameraPosition(float* out){
     out[4] = -drawPosition1[2];
     out[5] = -rotY+M_PI;
     out[6] = rotX;
+    //out[6] = 0; // distant camera test only
     out[7] = selev1;
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, pos[0] + 2048 * (pos[3] - playerT[0]), pos[1]+0.28, -pos[2] + 2048 * (-pos[4] - playerT[1]));
     //Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, -rotY /* + flip*M_PI+ M_PI*/);

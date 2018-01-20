@@ -24,7 +24,7 @@
 #include "TextObj.h"
 #include "TDB.h"
 #include "TerrainLib.h"
-#include "TrainNetworkEng.h"
+
 
 std::unordered_map<int, TextObj*> Consist::txtNumbers;
 int Consist::lastTxtNumbersColor = 0;
@@ -684,21 +684,15 @@ void Consist::updateSim(float deltaTime){
     if(!isOnTrack) 
         return;
     
-    //TrainNetworkEng;
+    if(engItems.size() < 1)
+        return;
+    if(engItems[0].engPointer == NULL)
+        return;
+    engItems[0].engPointer->updateSim(deltaTime);
+
     
+    trainSpeed = engItems[0].engPointer->getCurrentSpeed();
     float deltaMove = trainSpeed*deltaTime;
-    
-    if(Game::useNetworkEng){
-        if(networkEng == NULL){
-            networkEng = new TrainNetworkEng();
-        }
-        deltaMove = networkEng->getSpeed()*deltaTime;
-        
-        float data[2];
-        data[0] = engItems[0].engPointer->getCurrentElevation();
-        data[1] = engItems[0].engPointer->getTotalDistanceDownPath();
-        networkEng->writeData(data);
-    }
     
     for(int i = 0; i < engItems.size(); i++){
         //engItems[i].engPointer->move(-55.5*deltaTime);

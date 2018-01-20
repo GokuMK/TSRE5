@@ -102,12 +102,12 @@ void main() {
             float t2 = 1.0 - floor(camdist2);
 
             float shadowsEnabled2 = shadowsEnabled;
-
+            float bias2 = 0.002;
             visibility -= shadowsEnabled2*t*shadowIntensity*(1.0-texture( shadow1, vec3(shadowPos2.xy + poissonDisk[0]/shadow1Res, (shadowPos2.z-bias)) ));
-            visibility -= shadowsEnabled2*(1.0-t)*t2*0.4*(1.0-texture( shadow2, vec3(shadow2Pos2.xy + poissonDisk[0]/4000.0, (shadow2Pos2.z-0.002)) ));
+            visibility -= shadowsEnabled2*(1.0-t)*t2*0.4*(1.0-texture( shadow2, vec3(shadow2Pos2.xy + poissonDisk[0]/4000.0, (shadow2Pos2.z-bias2)) ));
 
             visibility -= shadowsEnabled2*t*shadowIntensity*(1.0-texture( shadow1, vec3(shadowPos2.xy + poissonDisk[1]/shadow1Res, (shadowPos2.z-bias)) ));
-            visibility -= shadowsEnabled2*(1.0-t)*t2*0.4*(1.0-texture( shadow2, vec3(shadow2Pos2.xy + poissonDisk[1]/4000.0, (shadow2Pos2.z-0.002)) ));
+            visibility -= shadowsEnabled2*(1.0-t)*t2*0.4*(1.0-texture( shadow2, vec3(shadow2Pos2.xy + poissonDisk[1]/4000.0, (shadow2Pos2.z-bias2)) ));
             
             visibility -= shadowsEnabled2*t*shadowIntensity*(1.0-texture( shadow1, vec3(shadowPos2.xy + poissonDisk[2]/shadow1Res, (shadowPos2.z-bias)) ));
             visibility -= shadowsEnabled2*t*shadowIntensity*(1.0-texture( shadow1, vec3(shadowPos2.xy + poissonDisk[3]/shadow1Res, (shadowPos2.z-bias)) ));

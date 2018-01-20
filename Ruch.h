@@ -26,6 +26,8 @@
 
 class Ruch {
 public:
+    int onJunction = 0;
+    
     Ruch();
     void next(float m);
     void back(float m);

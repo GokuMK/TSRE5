@@ -22,7 +22,6 @@ class FileBuffer;
 class QTextStream;
 class GLUU;
 class Activity;
-class TrainNetworkEng;
 
 class Consist : public GameObj {
 public:
@@ -116,8 +115,6 @@ private:
     bool defaultValue = false;
     bool maxVelocityFixed = false;
     float trainSpeed = 0.0;
-    
-    TrainNetworkEng* networkEng = NULL;
 };
 
 #endif	/* CONSIST_H */

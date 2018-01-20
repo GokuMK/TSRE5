@@ -55,6 +55,7 @@ public:
     void setEfficiency(float val);
     void setStartSpeed(float val);
     void setEndSpeed(float val);
+    void setTrainConfig(QString val);
     void load();
     void save();
     Consist *getConsistPointer();

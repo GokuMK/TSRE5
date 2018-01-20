@@ -33,7 +33,7 @@ SoundList *Game::soundList = NULL;
 TerrainLib *Game::terrainLib = NULL;   
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.69481";
+QString Game::AppVersion = "v0.695";
 QString Game::AppDataVersion = "0.6937";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
@@ -375,12 +375,6 @@ void Game::load() {
                 proceduralTracks = true;
             else
                 proceduralTracks = false; 
-        }
-        if(val == "useSuperelevation"){
-            if(args[1].trimmed().toLower() == "true")
-                useSuperelevation = true;
-            else
-                useSuperelevation = false; 
         }
         if(val == "soundEnabled"){
             if(args[1].trimmed().toLower() == "true")
