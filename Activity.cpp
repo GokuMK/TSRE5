@@ -1043,6 +1043,12 @@ void Activity::createNewPlayerService(QString sName, int sTime ){
     playerServiceDefinition->trafficDefinition = new ActivityTimetable(sName, sTime);
     playerServiceDefinition->trafficDefinition->actTimetable = true;
     playerServiceDefinition->reloadTimetable();
+    
+    // Fill pathid in act header info:
+    Service *s = ActLib::GetServiceByName(playerServiceDefinition->name);
+    if(s != NULL)
+        header->pathid = s->pathId;
+    
     modified = true;
 }
 

@@ -331,12 +331,14 @@ void Eng::load(){
                     engType = ParserX::GetString(data);
                     typeHash+="-"+engType;
                     //qDebug() << engType;
-                    if(engType.toLower() == "electric")
-                        wagonTypeId += 0;
-                    if(engType.toLower() == "diesel")
-                        wagonTypeId += 1;
-                    if(engType.toLower() == "steam")
-                        wagonTypeId += 2;
+                    if(wagonTypeId == 4){
+                        if(engType.toLower() == "electric")
+                            wagonTypeId = wagonTypeId + 0;
+                        if(engType.toLower() == "diesel")
+                            wagonTypeId = wagonTypeId + 1;
+                        if(engType.toLower() == "steam")
+                            wagonTypeId = wagonTypeId + 2;
+                    }
                     ParserX::SkipToken(data);
                     continue;
                 }
