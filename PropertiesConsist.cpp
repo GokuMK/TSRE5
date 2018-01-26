@@ -61,6 +61,9 @@ void PropertiesConsist::updateObj(GameObj* obj){
     if(obj == NULL){
         return;
     }
+    conObj = (Consist*)obj;
+    if(!eSpeed.hasFocus())
+        eSpeed.setText(QString::number(floor(conObj->getTrainSpeed()*3.6)));
     //conObj = (Consist*)obj;
 }
 

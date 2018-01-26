@@ -84,7 +84,7 @@ void GuiGlCompass::render(){
 void GuiGlCompass::render(float a){
     
     float *data = mapBuffer();
-    a = a / (M_PI*2);
+    a = -a / (M_PI*2);
     data[3] = a-0.2;
     data[3+6] = a-0.2;
     data[3+12] = a+0.2;

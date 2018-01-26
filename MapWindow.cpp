@@ -166,8 +166,11 @@ void MapWindow::load(){
     
     loadButton->setText("Wait ...");
     
-    QObject::connect(dane, SIGNAL(loaded()), this, SLOT(reload()));
-    QObject::connect(dane, SIGNAL(statusInfo(QString)), this, SLOT(isStatusInfo(QString)));
+    if(dane->init == false){
+        dane->init = true;
+        QObject::connect(dane, SIGNAL(loaded()), this, SLOT(reload()));
+        QObject::connect(dane, SIGNAL(statusInfo(QString)), this, SLOT(isStatusInfo(QString)));
+    }
     dane->load();
 }
 

@@ -135,11 +135,15 @@ void ConListWidget::conTChan(QString n){
 void ConListWidget::routeFill(){
     routeShow.clear();
     items.clear();
+    QStringList hash;
     QHashIterator<QString, QVector<int>> i(ActLib::route);
     while (i.hasNext()) {
         i.next();
-        routeShow.addItem(i.key());
+        hash.push_back(i.key());
     }
+    hash.sort(Qt::CaseInsensitive);
+    hash.removeDuplicates();
+    routeShow.addItems(hash);
 }
 
 void ConListWidget::routeTChan(QString n){

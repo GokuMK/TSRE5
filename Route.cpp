@@ -250,7 +250,8 @@ void Route::loadPaths(){
     dir.setNameFilters(QStringList()<<"*.pat");
     foreach(QString actfile, dir.entryList()){
         int id = ActLib::AddPath(dir.path(), actfile);
-        path.push_back(ActLib::Paths[id]);
+        if(!path.contains(ActLib::Paths[id]))
+            path.push_back(ActLib::Paths[id]);
     }
 
     qDebug() << "paths loaded";

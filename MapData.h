@@ -22,6 +22,7 @@ public:
     int tileX, tileZ;
     float level;
     int tileSize;
+    bool init = false;
     
     MapData();
     MapData(const MapData& orig);

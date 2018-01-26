@@ -211,6 +211,7 @@ private:
     bool bolckContextMenu = false;
     
     GuiGlCompass * compass = NULL;
+    OglObj * compassPointer = NULL;
 };
 
 #endif

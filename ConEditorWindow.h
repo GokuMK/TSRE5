@@ -65,6 +65,9 @@ public slots:
     void eOpenLegacyInExternalEditor(); 
     void eReloadEnabled();
     void addToRandomConsist(int id); 
+    void replaceOneEnabled();
+    void replaceAllEnabled();
+    void replaceAllAllEnabled();
     void vResetShapeViewSelected(); 
     void vGetImgShapeViewSelected(); 
     void vSaveImgShapeViewSelected();
@@ -109,6 +112,7 @@ private:
     
     QMenu *fileMenu;
     QMenu *viewMenu;
+    QMenu *replaceMenu;
     QMenu *view3dMenu;
     QMenu *engMenu;
     QMenu *settingsMenu;

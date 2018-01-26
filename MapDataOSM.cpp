@@ -578,6 +578,8 @@ void MapDataOSM::isData(QNetworkReply* r){
         if(loadCount == totalLoadCount){
             emit statusInfo(QString("Load"));
             emit loaded(); 
+        } else {
+            emit statusInfo(QString("Wait [")+QString::number(loadCount)+"/"+QString::number(totalLoadCount)+"] ...");
         }
     }
 }

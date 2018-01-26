@@ -54,8 +54,8 @@ void SoundSourceObj::load(int x, int y) {
         int sid = MstsSoundDefinition::AddDefinition(path, fileName);
         if(sid != -1){
             if(MstsSoundDefinition::Definitions[sid]->group.size() > 0){
-                soundSourceId = SoundManager::AddSoundSource(MstsSoundDefinition::Definitions[sid]->group.first());
-                SoundManager::Sources[soundSourceId]->setPosition(x, y, position);
+                //soundSourceId = SoundManager::AddSoundSource(MstsSoundDefinition::Definitions[sid]->group.first());
+                //SoundManager::Sources[soundSourceId]->setPosition(x, y, position);
             }
         }
     }

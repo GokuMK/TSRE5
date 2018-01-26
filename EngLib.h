@@ -24,6 +24,7 @@ public:
     virtual ~EngLib();
     int addEng(QString path, QString name);
     int getEngByPathid(QString pathid);
+    int getEngByPointer(Eng *pointer);
     int loadAll(QString gameRoot);
     int removeBroken();
     void removeAll();

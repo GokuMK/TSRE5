@@ -48,6 +48,8 @@ public slots:
     void about();
     void terrainCamera(bool val);
     void mstsShadows(bool val);
+    void detailedTerrainEnabled();
+    void distantTerrainEnabled();
     void setToolbox(QString name);
     void showProperties(GameObj* obj);
     void updateProperties(GameObj* obj);

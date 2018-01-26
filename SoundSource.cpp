@@ -10,6 +10,7 @@
 
 #include "SoundSource.h"
 #include "SoundManager.h"
+#include "SoundVariables.h"
 #include "MstsSoundDefinition.h"
 #include "ReadFile.h"
 #include "FileBuffer.h"

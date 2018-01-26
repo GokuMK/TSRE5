@@ -300,9 +300,17 @@ RouteEditorWindow::RouteEditorWindow() {
     mstsShadowsAction = GuiFunct::newMenuCheckAction(tr("&MSTS Shadows"), this); 
     mstsShadowsAction->setChecked(Game::mstsShadows);
     QObject::connect(mstsShadowsAction, SIGNAL(triggered(bool)), this, SLOT(mstsShadows(bool)));
+    QMenu *terrainMenu = new QMenu("&Terrain Editing:");
+    QAction *detailTerrainAction = new QAction(tr("&Detailed Terrain"), this);
+    QObject::connect(detailTerrainAction, SIGNAL(triggered()), this, SLOT(detailedTerrainEnabled()));
+    QAction *distantTerrainAction = new QAction(tr("&Distant Terrain"), this);
+    QObject::connect(distantTerrainAction, SIGNAL(triggered()), this, SLOT(distantTerrainEnabled()));
+    terrainMenu->addAction(detailTerrainAction);
+    terrainMenu->addAction(distantTerrainAction);
     settingsMenu = menuBar()->addMenu(tr("&Settings"));
     settingsMenu->addAction(terrainCameraAction);
     settingsMenu->addAction(mstsShadowsAction);
+    settingsMenu->addMenu(terrainMenu);
     // Help
     aboutAction = new QAction(tr("&About"), this);
     QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
@@ -585,6 +593,14 @@ void RouteEditorWindow::terrainCamera(bool val){
     Game::cameraStickToTerrain = val;
 }
 
+void RouteEditorWindow::detailedTerrainEnabled(){
+    emit this->sendMsg("editDetailedTerrain");
+}
+
+void RouteEditorWindow::distantTerrainEnabled(){
+    emit this->sendMsg("editDistantTerrain");
+}
+    
 void RouteEditorWindow::mstsShadows(bool val){
     Game::mstsShadows = val;
 }

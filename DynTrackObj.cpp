@@ -23,6 +23,8 @@
 #include "ProceduralMstsDyntrack.h"
 #include "ProceduralShape.h"
 #include "TSection.h"
+#include "TDB.h"
+#include "TSectionDAT.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -290,10 +292,27 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
                 continue;
             tsections.push_back(TSection(0, sections[i].type, sections[i].a, sections[i].r));
         }
-        if(Game::proceduralTracks)
-            ProceduralShape::GenShape(shape, tsections);
-        else
+        if (Game::proceduralTracks) {
+            TrackShape *tsh = Game::trackDB->tsection->shape[sectionIdx];
+            QMap<int, float> angles;
+            if(Game::useSuperelevation){
+                Game::trackDB->fillTrackAngles(x, -y, UiD, angles);
+                bool positiveAngles = false;
+                for(int i = 0; i < tsections.size(); i++){
+                    if(tsections[i].angle > 0)
+                        positiveAngles = true;
+                }
+                if(positiveAngles){
+                    QList<int> keys = angles.keys();
+                    for(int j = 0; j < keys.size(); j++){
+                        angles[keys[j]] = -angles[keys[j]];
+                    }
+                }
+            }
+            ProceduralShape::GenShape(shape, tsh, angles);
+        } else {
             ProceduralMstsDyntrack::GenShape(shape, tsections);
+        }
         init = true;
     } else {
         for(int i = 0; i < shape.size(); i++){

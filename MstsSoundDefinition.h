@@ -15,9 +15,9 @@
 #include <QVector>
 #include <QMap>
 #include "Vector2f.h"
+#include "SoundVariables.h"
 
 class FileBuffer;
-class SoundVariables;
 
 class SoundDefinitionGroup {
     public:
@@ -40,6 +40,17 @@ class SoundDefinitionGroup {
                     VARIABLE_TRIGGER = 4,
                     INITIAL_TRIGGER = 5
                 };
+                enum TriggerComparator {
+                    EMPTY_COMP = 0,
+                    SPEED_INC_PAST = 1,
+                    SPEED_DEC_PAST = 2,
+                    VARIABLE1_INC_PAST = 3,
+                    VARIABLE1_DEC_PAST = 4,
+                    VARIABLE2_INC_PAST = 5,
+                    VARIABLE2_DEC_PAST = 6,
+                    VARIABLE3_INC_PAST = 7,
+                    VARIABLE3_DEC_PAST = 8
+                };
                 enum TriggerMode {
                     EMPTY_MODE = 0,
                     ONESHOT_MODE = 1,
@@ -48,9 +59,10 @@ class SoundDefinitionGroup {
                 };
                 
                 TriggerType type = EMPTY_TRIGGER;
+                TriggerComparator comparator = EMPTY_COMP;
                 QString variabletype;
                 float variablevalue;
-                float lastvalue = -1;
+                SoundVariables lastvalue;
                 TriggerMode mode = EMPTY_MODE;
                 QVector<QString> files;
                 int delayMin = 500;
@@ -66,6 +78,7 @@ class SoundDefinitionGroup {
                 Trigger();
                 Trigger(Trigger *o);
                 bool activate(SoundVariables *variables);
+                void setComparator(QString val);
                 void load(FileBuffer* data);
                 QString getFileName();
             };
@@ -73,7 +86,9 @@ class SoundDefinitionGroup {
             struct Curve {
                 QString type;
                 QVector<Vector2f> points;
+                SoundVariables::ValueName compareValue = SoundVariables::NOVALUE;
                 
+                Curve(QString type);
                 float getValue(SoundVariables *variables);
             };
             

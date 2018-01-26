@@ -108,26 +108,72 @@ bool SoundDefinitionGroup::Stream::Trigger::activate(SoundVariables *variables){
     if(type == VARIABLE_TRIGGER){
         if(variables == NULL)
             return false;
-        if(variabletype == "Variable2_Inc_Past"){
+        if(comparator == VARIABLE2_INC_PAST){
             float v = variables->value[SoundVariables::VARIABLE2];
-            if(lastvalue <= variablevalue && v > variablevalue){
-                lastvalue = v;
+            float lastv = lastvalue.value[SoundVariables::VARIABLE2];
+            if(lastv <= variablevalue && v > variablevalue){
+                lastvalue.set(variables);
                 return true;
             }
         }
-        if(variabletype == "Variable2_Dec_Past"){
+        if(comparator == VARIABLE2_DEC_PAST){
             float v = variables->value[SoundVariables::VARIABLE2];
-            if(lastvalue >= variablevalue && v < variablevalue){
-                lastvalue = v;
+            float lastv = lastvalue.value[SoundVariables::VARIABLE2];
+            if(lastv >= variablevalue && v < variablevalue){
+                lastvalue.set(variables);
                 return true;
             }
         }
-        lastvalue = variables->value[SoundVariables::VARIABLE2];
+        if(comparator == SPEED_INC_PAST){
+            float v = variables->value[SoundVariables::SPEED];
+            float lastv = lastvalue.value[SoundVariables::SPEED];
+            if(lastv <= variablevalue && v > variablevalue){
+                lastvalue.set(variables);
+                return true;
+            }
+        }
+        if(comparator == SPEED_DEC_PAST){
+            float v = variables->value[SoundVariables::SPEED];
+            float lastv = lastvalue.value[SoundVariables::SPEED];
+            if(lastv >= variablevalue && v < variablevalue){
+                lastvalue.set(variables);
+                return true;
+            }
+        }
+        lastvalue.set(variables);
     }
     
     
     return false;
 }
+void SoundDefinitionGroup::Stream::Trigger::setComparator(QString val){
+    variabletype = val;
+    if(variabletype == "Speed_Inc_Past"){
+        comparator = this->SPEED_INC_PAST;
+    }
+    if(variabletype == "Speed_Dec_Past"){
+        comparator = this->SPEED_DEC_PAST;
+    }
+    if(variabletype == "Variable1_Inc_Past"){
+        comparator = this->VARIABLE1_INC_PAST;
+    }
+    if(variabletype == "Variable1_Dec_Past"){
+        comparator = this->VARIABLE1_DEC_PAST;
+    }
+    if(variabletype == "Variable2_Inc_Past"){
+        comparator = this->VARIABLE2_INC_PAST;
+    }
+    if(variabletype == "Variable2_Dec_Past"){
+        comparator = this->VARIABLE2_DEC_PAST;
+    }
+    if(variabletype == "Variable3_Inc_Past"){
+        comparator = this->VARIABLE3_INC_PAST;
+    }
+    if(variabletype == "Variable3_Dec_Past"){
+        comparator = this->VARIABLE3_DEC_PAST;
+    }
+}
+
 void SoundDefinitionGroup::Stream::Trigger::load(FileBuffer* data){
     QString sh;
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
@@ -190,6 +236,24 @@ void SoundDefinitionGroup::Stream::Trigger::load(FileBuffer* data){
             ParserX::SkipToken(data);
             continue;
         }
+        if (sh == ("startlooprelease")) {
+            mode = LOOPSTART_MODE;
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                if (sh == ("file")) {
+                    files.push_back(ParserX::GetStringInside(data));
+                    qDebug() << files.back();
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+
+                qDebug() << "#triggers - undefined token: " << sh;
+                ParserX::SkipToken(data);
+                continue;
+            }
+            
+            ParserX::SkipToken(data);
+            continue;
+        }
 
         qDebug() << "#Stream - undefined token: " << sh;
         ParserX::SkipToken(data);
@@ -227,7 +291,7 @@ void SoundDefinitionGroup::Stream::load(FileBuffer* data){
                 if (sh == ("variable_trigger")) {
                     trigger.push_back(new Trigger());
                     trigger.back()->type = Trigger::VARIABLE_TRIGGER;
-                    trigger.back()->variabletype = ParserX::GetStringInside(data);
+                    trigger.back()->setComparator(ParserX::GetStringInside(data));
                     trigger.back()->variablevalue = ParserX::GetNumberInside(data);
                     trigger.back()->load(data);
                     //priority = ParserX::GetNumber(data);
@@ -244,8 +308,7 @@ void SoundDefinitionGroup::Stream::load(FileBuffer* data){
             continue;
         }
         if (sh == ("frequencycurve")) {
-            freqCurve = new Curve();
-            freqCurve->type = ParserX::GetString(data);
+            freqCurve = new Curve(ParserX::GetString(data));
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 if (sh == ("curvepoints")) {
                     int count = ParserX::GetNumber(data);
@@ -267,8 +330,7 @@ void SoundDefinitionGroup::Stream::load(FileBuffer* data){
             continue;
         }
         if (sh == ("volumecurve")) {
-            volumeCurve = new Curve();
-            volumeCurve->type = ParserX::GetString(data);
+            volumeCurve = new Curve(ParserX::GetString(data));
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 if (sh == ("curvepoints")) {
                     int count = ParserX::GetNumber(data);
@@ -297,6 +359,22 @@ void SoundDefinitionGroup::Stream::load(FileBuffer* data){
     }
 }
 
+SoundDefinitionGroup::Stream::Curve::Curve(QString type){
+    this->type = type;
+    if(type == "SpeedControlled"){
+        compareValue = SoundVariables::SPEED;
+    }
+    if(type == "Variable1Controlled"){
+        compareValue = SoundVariables::VARIABLE1;
+    }
+    if(type == "Variable2Controlled"){
+        compareValue = SoundVariables::VARIABLE2;
+    }
+    if(type == "Variable3Controlled"){
+        compareValue = SoundVariables::VARIABLE3;
+    }
+}
+
 float SoundDefinitionGroup::Stream::Curve::getValue(SoundVariables *variables){
     if(variables == NULL)
         return 0;
@@ -304,7 +382,7 @@ float SoundDefinitionGroup::Stream::Curve::getValue(SoundVariables *variables){
     if(points.size() == 0)
         return 0;
 
-    float x = variables->value[SoundVariables::VARIABLE2];
+    float x = variables->value[compareValue];
     
     if(x <= points.first().x)
         return points.first().y;
@@ -321,6 +399,7 @@ float SoundDefinitionGroup::Stream::Curve::getValue(SoundVariables *variables){
             return points[i].y*(1.0 - x) + points[i+1].y*(x);
         }
     }
+    
     return 0;    
 }
 
@@ -365,6 +444,9 @@ void SoundDefinitionGroup::load(FileBuffer* data){
                     ParserX::SkipToken(data);
                     continue;
                 }
+                
+                ParserX::SkipToken(data);
+                continue;
             }
             ParserX::SkipToken(data);
             continue;
@@ -421,7 +503,8 @@ SoundDefinitionGroup::Stream::Trigger::Trigger(Trigger* o){
     
     variabletype = o->variabletype;
     variablevalue = o->variablevalue;
-    lastvalue = -1;
+    comparator = o->comparator;
+    lastvalue = o->lastvalue;
 }
 
 SoundDefinitionGroup::Stream::Stream(){
@@ -596,22 +679,22 @@ void SoundDefinitionGroup::Stream::init(QString path, bool stereo){
 
         unsigned int dataChunkSize = filedata->getUint();
         qDebug() << "dataChunkSize" << dataChunkSize;
-        dataChunkSize = dataChunkSize/channels;
+        //dataChunkSize = dataChunkSize/channels;
         unsigned char* bufferData = new unsigned char[dataChunkSize];
-        if (channels == 1)
+        //if (channels == 1)
             for(int ii = 0; ii < dataChunkSize; ii++)
                 bufferData[ii] = filedata->get();
-        if (channels == 2)
+        /*if (channels == 2)
             for(int ii = 0; ii < dataChunkSize; ii+=2){
                 filedata->get();
                 filedata->get();
                 bufferData[ii] = filedata->get();
                 bufferData[ii+1] = filedata->get();
             }
-
+        */
         float duration = float(dataChunkSize) / byteRate;
         ALenum formatinfo = AL_FORMAT_STEREO16;
-        //if (channels == 1)
+        if (channels == 1)
                 formatinfo = AL_FORMAT_MONO16;
         alBufferData(trigger[i]->alBid, formatinfo, bufferData, dataChunkSize, sampleRate);
 

@@ -23,6 +23,14 @@ EngLib::EngLib() {
 EngLib::~EngLib() {
 }
 
+int EngLib::getEngByPointer(Eng* pointer){
+    for ( auto it = eng.begin(); it != eng.end(); ++it ){
+        if(it->second == pointer) 
+            return it->first;
+    }
+    return -1;
+}
+
 int EngLib::addEng(QString path, QString name) {
     QString pathid = (path + "/" + name).toLower();
     pathid.replace("\\", "/");

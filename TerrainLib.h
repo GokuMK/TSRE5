@@ -26,6 +26,8 @@ public:
     TerrainLib();
     TerrainLib(const TerrainLib& orig);
     virtual ~TerrainLib();
+    virtual void setDetailedAsCurrent();
+    virtual void setDistantAsCurrent();
     virtual Terrain* getTerrainByXY(int x, int y, bool load = false);
     virtual void fillRaw(Terrain *cTerr, int mojex, int mojez);
     virtual float getHeight(int x, int z, float posx, float posz);

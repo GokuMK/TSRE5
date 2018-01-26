@@ -35,6 +35,14 @@ TerrainLib::~TerrainLib() {
     
 }
 
+void TerrainLib::setDetailedAsCurrent(){
+    
+}
+
+void TerrainLib::setDistantAsCurrent(){
+    
+}
+    
 Terrain *TerrainLib::getTerrainByXY(int x, int y, bool load){
     return NULL;
 }

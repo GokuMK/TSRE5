@@ -112,6 +112,7 @@ void GLUU::initShader() {
         currentShader->setUniformValue(tex4, 3);
         currentShader->release();
     }
+    
     //currentShader = shaders["StandardFog"];
     currentShader = shaders["StandardBloom"];
 }

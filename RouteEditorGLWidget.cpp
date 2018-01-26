@@ -196,7 +196,22 @@ void RouteEditorGLWidget::initializeGL() {
     setFocus();
     setMouseTracking(true);
     pointer3d = new Pointer3d();
+    
     compass = new GuiGlCompass();
+    compassPointer = new OglObj();
+    float *punkty = new float[3 * 6];
+    int ptr = 0;
+    punkty[ptr++] = 0;
+    punkty[ptr++] = 0.98;
+    punkty[ptr++] = 0;
+    punkty[ptr++] = 0;
+    punkty[ptr++] = 1.0;
+    punkty[ptr++] = 0;
+    compassPointer->setLineWidth(2);
+    compassPointer->setMaterial(0.0, 0.0, 0.0);
+    compassPointer->init(punkty, ptr, compassPointer->V, GL_LINES);
+    delete[] punkty;    
+    
     //selectedObj = NULL;
     setSelectedObj(NULL);
     groupObj = new GroupObj();
@@ -315,6 +330,7 @@ void RouteEditorGLWidget::paintGL() {
         gluu->currentShader->setUniformValue(gluu->currentShader->lod, 0.0f);
 
         compass->render(camera->getRotX()+M_PI);
+        compassPointer->render();
     }
     
     gluu->currentShader->release();
@@ -1646,6 +1662,11 @@ void RouteEditorGLWidget::msg(QString text) {
     }
     if (text == "autoPlacementDeleteLast") {
         route->autoPlacementDeleteLast();
+    }
+    if (text == "editDetailedTerrain") {
+        Game::terrainLib->setDetailedAsCurrent();
+    }if (text == "editDistantTerrain") {
+        Game::terrainLib->setDistantAsCurrent();
     }
 }
 

@@ -151,6 +151,7 @@
         <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h</itemPath>
         <itemPath>SoundManager.h</itemPath>
         <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="TDB" projectFiles="true">
         <itemPath>Ruch.h</itemPath>
@@ -277,6 +278,8 @@
         <itemPath>MapDataUrlImage.cpp</itemPath>
         <itemPath>MapWindow.cpp</itemPath>
         <itemPath>OSMFeatures.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
         <itemPath>ChooseFileDialog.cpp</itemPath>
@@ -384,6 +387,7 @@
         <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp</itemPath>
         <itemPath>SoundManager.cpp</itemPath>
         <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="TDB" projectFiles="true">
         <itemPath>Ruch.cpp</itemPath>
@@ -492,7 +496,15 @@
       <compileType>
         <ccTool>
           <standard>8</standard>
+          <incDir>
+            <pElem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/include</pElem>
+          </incDir>
         </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/libs/Win32/libOpenAL32.dll.a</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="AboutWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -598,6 +610,26 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1283,6 +1315,9 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <standard>8</standard>
+          <incDir>
+            <pElem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/include</pElem>
+          </incDir>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -1290,6 +1325,11 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/libs/Win32/OpenAL32.lib</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="AboutWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1395,6 +1435,26 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2184,6 +2244,26 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2993,6 +3073,26 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
@@ -3774,6 +3874,26 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h"
             ex="false"
             tool="3"
             flavor2="0">

@@ -18,6 +18,8 @@ public:
     TerrainLibQt(const TerrainLibQt& orig);
     Terrain* getTerrainByXY(int x, int y, bool load = false);
     virtual ~TerrainLibQt();
+    void setDetailedAsCurrent();
+    void setDistantAsCurrent();
     void setDetailedTerrainAsCurrent();
     void setLowTerrainAsCurrent();
     void fillRaw(Terrain *cTerr, int mojex, int mojez);

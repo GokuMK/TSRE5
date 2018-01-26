@@ -57,14 +57,17 @@ ActivityTrafficProperties::ActivityTrafficProperties(QWidget* parent) : QWidget(
     lServcies.header()->resizeSection(1,100);    
     vlist->addWidget(&lServcies, row++, 0, 1, 2);
     QPushButton *bAddOutcome = new QPushButton("Add New");
-    QPushButton *bRemoveOutcome = new QPushButton("Remove Selected");
     QObject::connect(bAddOutcome, SIGNAL(released()),
                       this, SLOT(bAddServiceSelected()));
+    vlist->addWidget(bAddOutcome, row++, 0, 1, 2);
+    QPushButton *bRemoveOutcome = new QPushButton("Remove Selected");
     QObject::connect(bRemoveOutcome, SIGNAL(released()),
                       this, SLOT(bRemoveServiceSelected()));
-    
-    vlist->addWidget(bAddOutcome, row++, 0, 1, 2);
     vlist->addWidget(bRemoveOutcome, row++, 0, 1, 2);
+    QPushButton *bCloneOutcome = new QPushButton("Clone Selected");
+    QObject::connect(bCloneOutcome, SIGNAL(released()),
+                      this, SLOT(bCloneOutcomeSelected()));
+    vlist->addWidget(bCloneOutcome, row++, 0, 1, 2);
     
     label = new QLabel("Selected Service:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -142,6 +145,43 @@ void ActivityTrafficProperties::lServciesSelected(QTreeWidgetItem* item, int col
     eTime.setTime(QTime::fromMSecsSinceStartOfDay((s->time*1000)));
 }
 
+void ActivityTrafficProperties::bCloneOutcomeSelected(){
+    if(traffic == NULL)
+        return;
+    
+    ActivityTimetable* s = traffic->service[lServcies.currentItem()->type()];
+    if(s == NULL)
+        return;
+    
+    QDialog dialog;
+    QFormLayout *vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    QLineEdit number, mins;
+    number.setText("0");
+    mins.setText("15");
+    vlist->addRow("Number of services:",&number);
+    vlist->addRow("Duration:",&mins);
+    dialog.setLayout(vlist);
+    dialog.exec();
+    
+    bool ok = false;
+    int count = number.text().toInt(&ok);
+    if(!ok)
+        return;
+    int secs = mins.text().toInt(&ok)*60;
+    if(!ok)
+        return;
+    
+    for(int i = 0; i < count; i++){
+        traffic->service.push_back(new ActivityTimetable());
+        traffic->service.back()->setService(s->name);
+        traffic->service.back()->setTime(s->time + secs*(i+1));
+    }
+    
+    showTraffic(traffic);
+}
+
 void ActivityTrafficProperties::bAddServiceSelected(){
     if(traffic == NULL)
         return;
@@ -154,6 +194,9 @@ void ActivityTrafficProperties::bAddServiceSelected(){
 
 void ActivityTrafficProperties::bRemoveServiceSelected(){
     
+    traffic->service.remove(lServcies.currentItem()->type());
+    
+    showTraffic(traffic);
 }
 
 void ActivityTrafficProperties::serviceActoionListSelected(QString val){

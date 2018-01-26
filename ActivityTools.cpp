@@ -127,6 +127,9 @@ ActivityTools::ActivityTools(QString name)
     vlist1->addWidget(actPathsEdit,0,1);
     vlist1->addWidget(actPathsClone,0,2);
     vlist1->addWidget(actPathsDelete,0,3);
+    QPushButton *actPathsRefreshList = new QPushButton("Refresh List");
+    QObject::connect(actPathsRefreshList, SIGNAL(released()), this, SLOT(actPathsRefreshListSelected()));
+    vlist1->addWidget(actPathsRefreshList,1,1,1,3);
     vbox->addItem(vlist1);    
    
     label = new QLabel("Activity Objects List:");
@@ -410,6 +413,15 @@ void ActivityTools::conFilesRefreshSelected(){
     foreach(QString name, ConLib::conFileList){
         conFilesShow.addItem(name.section('/', -1), QVariant(name));
     }
+}
+
+void ActivityTools::actPathsRefreshListSelected(){
+    if(route == NULL)
+        return;
+    
+    route->loadPaths();
+    
+    reloadPathsList();
 }
 
 void ActivityTools::reloadActivityList(){

@@ -32,6 +32,16 @@ TerrainLibQt::TerrainLibQt(const TerrainLibQt& orig) {
 TerrainLibQt::~TerrainLibQt() {
 }
 
+void TerrainLibQt::setDetailedAsCurrent(){
+    currentQt = &terrainQt;
+    currentQuadTree = quadTree;
+}
+
+void TerrainLibQt::setDistantAsCurrent(){
+    currentQt = &terrainQtLo;
+    currentQuadTree = quadTreeLo;
+}
+
 Terrain* TerrainLibQt::getTerrainByXY(int x, int y, bool load) {
     if(currentQuadTree == NULL)
         currentQuadTree = quadTree;

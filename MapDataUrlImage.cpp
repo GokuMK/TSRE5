@@ -29,6 +29,7 @@
 #include <algorithm>
 #include "Game.h"
 #include "MapWindow.h"
+#include "UriImageDrawThread.h"
 
 double MapDataUrlImage::Resolution = 640;
 
@@ -65,60 +66,25 @@ bool MapDataUrlImage::draw(QImage* myImage) {
     aCoords->setTWxyzU(this->tileX, this->tileZ, tileSize, 0, 0);
     igh = Game::GeoCoordConverter->ConvertToInternal(aCoords);
     Game::GeoCoordConverter->ConvertToLatLon(igh, &llpoint01);
-
-    double tx, tz;
-    double tlat, tlon;
-    double mindist;
-    int minId;
-    double tdist;
-    unsigned char* imageData = myImage->bits();
-    int bytesPerPixel = 3;
-    bool alpha = false;
-    if(myImage->format() == QImage::Format_RGBA8888){
-        bytesPerPixel = 4;
-        alpha = true;
-    }
     
-    for(double i = 0; i < myImage->height(); i++){
-        for(double j = 0; j < myImage->width(); j++){
-            tx = i/myImage->height();
-            tz = j/myImage->width();
-            
-            tlat = llpoint00.Latitude*(1.0 - tx)*(1.0 - tz) +
-                llpoint01.Latitude*(tx)*(1.0 - tz) +
-                llpoint10.Latitude*(1.0 - tx)*(tz) +
-                llpoint11.Latitude*(tx)*(tz);
-            tlon = llpoint00.Longitude*(1.0 - tx)*(1.0 - tz) +
-                llpoint01.Longitude*(tx)*(1.0 - tz) +
-                llpoint10.Longitude*(1.0 - tx)*(tz) +
-                llpoint11.Longitude*(tx)*(tz);
-            
-            minId = -1;
-            mindist = 999999;
-            for(int u = 0; u < images.length(); u++){
-                //if(images[u].isPoint(tlat, tlon)){
-                //    myImage->setPixelColor(i, j, images[u].getPixel(tlat, tlon));
-                //    break;
-                //}
-                //if(images[u].isPoint(tlat, tlon)){
-                tdist = images[u].distanceToCenter(tlat, tlon);
-                if( tdist < mindist ){
-                    minId = u;
-                    mindist = tdist;
-                }
-                //}
-            }
-            //QRgb;
-            //if(minId >= 0 && minId < images.length());
-                //myImage->setPixelColor(i, j, images[minId].getPixel(tlat, tlon));
-                //myImage->setPixelColor(i, j, QColor::fromRgba(images[minId].getPixel(tlat, tlon)));
-            //myImage->setPixel(i, j, qRgba(128,128,128,128));
-            //imageData
-            images[minId].getPixel(tlat, tlon, imageData + (int)j*myImage->width()*bytesPerPixel + (int)i*bytesPerPixel, alpha );
-            //myImage->setPixel(i, j, images[minId].getPixel(tlat, tlon));
-            
-        }
+    int numThreads = 4;
+    UriImageDrawThread threads[numThreads];
+    int wstep = myImage->width() / numThreads;
+    for(int i = 0; i < numThreads; i++){
+        threads[i].llpoint00 = &llpoint00;
+        threads[i].llpoint01 = &llpoint01;
+        threads[i].llpoint10 = &llpoint10;
+        threads[i].llpoint11 = &llpoint11;
+        threads[i].myImage = myImage;
+        threads[i].images = &images;
+        threads[i].wmin = i*wstep;
+        threads[i].wmax = i*wstep+wstep;
+        threads[i].start();
     }
+    for(int i = 0; i < numThreads; i++){
+        threads[i].wait();
+    }
+
     qDebug() << "image draw end";
     return true;
 }
@@ -221,6 +187,8 @@ void MapDataUrlImage::isData(QNetworkReply* r) {
         if(requestCout == totalRequestCout){
             emit statusInfo(QString("Load"));
             emit loaded();
+        } else {
+            emit statusInfo(QString("Wait [")+QString::number(requestCout)+"/"+QString::number(totalRequestCout)+"] ...");
         }
     }
 }

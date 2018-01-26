@@ -85,6 +85,7 @@ public slots:
     void reloadTrafficsList();
     void reloadPathsList();
     void conFilesRefreshSelected();
+    void actPathsRefreshListSelected();
     
 signals:
     void enableTool(QString name);

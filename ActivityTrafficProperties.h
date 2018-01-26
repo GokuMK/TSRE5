@@ -27,6 +27,7 @@ public slots:
     void lServciesSelected(QTreeWidgetItem* item, int column);
     void bAddServiceSelected();
     void bRemoveServiceSelected();
+    void bCloneOutcomeSelected();
     void serviceActoionListSelected(QString val);
     void eTimeSelected(QTime val);
     

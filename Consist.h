@@ -81,6 +81,9 @@ public:
     bool unselect();
     void appendEngItem(int id);
     void appendEngItem(int id, int pos = 2, bool flip = false);
+    int getSelectedEngId();
+    void replaceEngItemSelected(int id);
+    void replaceEngItemById(int oldId, int newId);
     void deteleSelected();
     void flipSelected();
     void moveLeftSelected();
@@ -115,6 +118,8 @@ private:
     bool defaultValue = false;
     bool maxVelocityFixed = false;
     float trainSpeed = 0.0;
+    
+    void replaceEngItem(int id, int pos);
 };
 
 #endif	/* CONSIST_H */

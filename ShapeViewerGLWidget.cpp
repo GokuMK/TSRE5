@@ -13,6 +13,7 @@
 #include <QOpenGLShaderProgram>
 #include <QCoreApplication>
 #include <QDateTime>
+#include <QMenu>
 #include <math.h>
 #include "GLUU.h"
 #include "SFile.h"
@@ -271,15 +272,19 @@ void ShapeViewerGLWidget::keyPressEvent(QKeyEvent * event) {
     if(renderItem == 3 && con != NULL){
         switch (event->key()) {
             case Qt::Key_Delete:
-                con->deteleSelected();
+                if(con != NULL)
+                    con->deteleSelected();
                 break;
             case Qt::Key_F:
-                con->flipSelected();
+                if(con != NULL)
+                    con->flipSelected();
                 break;
             case Qt::Key_Right:
-                con->moveRightSelected();
+                if(con != NULL)
+                    con->moveRightSelected();
                 break;
             case Qt::Key_Left:
+                if(con != NULL)
                 con->moveLeftSelected();
                 break;
         }
@@ -312,6 +317,10 @@ void ShapeViewerGLWidget::mouseReleaseEvent(QMouseEvent* event) {
     mousePressed = false;
     mouseRPressed = false;
     mouseLPressed = false;
+    
+    if ((event->button()) == Qt::RightButton) {
+        showContextMenu(event->pos());
+    }
 }
 
 void ShapeViewerGLWidget::mouseMoveEvent(QMouseEvent *event) {
@@ -334,6 +343,35 @@ void ShapeViewerGLWidget::mouseMoveEvent(QMouseEvent *event) {
     }
     m_lastPos = event->pos();
     m_lastPos *= Game::PixelRatio;
+}
+
+void ShapeViewerGLWidget::showContextMenu(const QPoint & point) {
+    if(defaultMenuActions["flipSelected"] == NULL){
+        defaultMenuActions["flipSelected"] = new QAction(tr("&Flip"), this); 
+        QObject::connect(defaultMenuActions["flipSelected"], SIGNAL(triggered()), this, SLOT(flipConSelected()));
+        defaultMenuActions["leftSelected"] = new QAction(tr("&Move Left"), this); 
+        QObject::connect(defaultMenuActions["leftSelected"], SIGNAL(triggered()), this, SLOT(leftConSelected()));
+        defaultMenuActions["rightSelected"] = new QAction(tr("&Move right"), this); 
+        QObject::connect(defaultMenuActions["rightSelected"], SIGNAL(triggered()), this, SLOT(rightConSelected()));
+        defaultMenuActions["deleteSelected"] = new QAction(tr("&Delete"), this); 
+        QObject::connect(defaultMenuActions["deleteSelected"], SIGNAL(triggered()), this, SLOT(deleteConSelected()));
+    }
+    
+    if(renderItem == 3 && con != NULL){
+        QMenu menu;
+
+        QString menuStyle = QString(
+            "QMenu::separator {\
+              color: ")+Game::StyleMainLabel+";\
+            }";
+        menu.setStyleSheet(menuStyle);
+        menu.addSection("Selected Unit");
+        menu.addAction(defaultMenuActions["flipSelected"]);
+        menu.addAction(defaultMenuActions["leftSelected"]);
+        menu.addAction(defaultMenuActions["rightSelected"]);
+        menu.addAction(defaultMenuActions["deleteSelected"]);
+        menu.exec(mapToGlobal(point));
+    }
 }
 
 void ShapeViewerGLWidget::resetRot(){
@@ -362,6 +400,26 @@ void ShapeViewerGLWidget::showEngSet(int id){
     con->setTextColor(backgroundGlColor);
     eng = NULL;
     renderItem = 2;
+}
+
+void ShapeViewerGLWidget::flipConSelected(){
+    if(con != NULL)
+        con->flipSelected();
+}
+
+void ShapeViewerGLWidget::leftConSelected(){
+    if(con != NULL)
+        con->moveLeftSelected();
+}
+
+void ShapeViewerGLWidget::rightConSelected(){
+    if(con != NULL)
+        con->moveRightSelected();
+}
+
+void ShapeViewerGLWidget::deleteConSelected(){
+    if(con != NULL)
+        con->deteleSelected();
 }
 
 void ShapeViewerGLWidget::showCon(int id){

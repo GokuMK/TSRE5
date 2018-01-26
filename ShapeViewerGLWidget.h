@@ -56,6 +56,10 @@ public slots:
     void showCon(int aid, int id);
     void showShape(QString path, QString texPath);
     void cleanup();
+    void flipConSelected();
+    void leftConSelected();
+    void rightConSelected();
+    void deleteConSelected();
 signals:
     void selected(int id);
     void refreshItem();
@@ -67,6 +71,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void showContextMenu(const QPoint & point);
     void keyPressEvent(QKeyEvent * event) Q_DECL_OVERRIDE;
     void keyReleaseEvent(QKeyEvent * event) Q_DECL_OVERRIDE;
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
@@ -99,6 +104,8 @@ private:
     bool getImage = false;
     float backgroundGlColor[3];
     bool cameraInit = false;
+    
+    QMap<QString, QAction*> defaultMenuActions;
 };
 
 #endif	/* GLSHAPEWIDGET_H */

@@ -25,6 +25,7 @@
 #include "MstsSoundDefinition.h"
 #include "SoundManager.h"
 #include "SoundSource.h"
+#include "SoundVariables.h"
 #include "TrainNetworkEng.h"
 
 Eng::Eng() {
@@ -554,12 +555,40 @@ void Eng::drawBorder3d(){
 };
 
 void Eng::updateSim(float deltaTime){
-    static float inc = 0.1;
-    currentSpeed += inc;
-    if(currentSpeed > 55.0)
-        inc = 0.00;
-    //if(currentSpeed < 0.0)
-    //    inc = 0.01;
+    static SoundDefinitionGroup::Stream::Curve curve1("SpeedControlled");
+    static SoundDefinitionGroup::Stream::Curve curve2("SpeedControlled");
+    static SoundDefinitionGroup::Stream::Curve *curve = &curve1;
+    if(curve1.points.size() == 0){
+        curve1.points.push_back(Vector2f(-1.0, 0.1));
+        curve1.points.push_back(Vector2f(2.0, 0.5));
+        curve1.points.push_back(Vector2f(25.0, 1.0));
+        curve1.points.push_back(Vector2f(56.0, 0.0));
+    }
+    if(curve2.points.size() == 0){
+        curve2.points.push_back(Vector2f(-1.0, -0.1));
+        curve2.points.push_back(Vector2f(2.0, -0.5));
+        curve2.points.push_back(Vector2f(25.0, -1.0));
+        curve2.points.push_back(Vector2f(56.0, 0.0));
+    }
+    
+    if(currentSpeed > 55 && curve == &curve1){
+        curve = &curve2;
+    }
+    if(currentSpeed < 0.1 && curve == &curve2){
+        curve = &curve1;
+    }
+    
+    //qDebug() << curve.points.size();
+    static float acc = 0.1;
+    acc = curve->getValue(soundVariables);
+    //acc*=accmult;
+    float lastSpeed = currentSpeed;
+    currentSpeed += acc*deltaTime;
+
+    
+    
+    float acceleration = (currentSpeed - lastSpeed) / (deltaTime);
+    //qDebug() << acc << acceleration << currentSpeed;
     
     if(Game::useNetworkEng){
         if(networkEng == NULL){
@@ -574,8 +603,10 @@ void Eng::updateSim(float deltaTime){
     }
     
     if(soundVariables != NULL){
-        // dash9
-        soundVariables->value[SoundVariables::VARIABLE2] = currentSpeed / 30.0;
+        // vectron
+        //soundVariables->value[SoundVariables::VARIABLE2] = currentSpeed * 100 / 55.0;
+        soundVariables->value[SoundVariables::VARIABLE2] = acceleration * 100;
+        soundVariables->value[SoundVariables::SPEED] = currentSpeed;
         // acela
         //soundVariables->value[SoundVariables::VARIABLE2] = currentSpeed * 3.0;
     }

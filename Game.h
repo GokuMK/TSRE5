@@ -147,6 +147,7 @@ private:
     static LoadWindow* loadWindow;
     static void CreateNewSettingsFile();
     static void DownloadAppData(QString path);
+    static void CheckForOpenAl();
 };
 
 #endif	/* GAMESETTINGS_H */

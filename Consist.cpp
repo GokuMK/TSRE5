@@ -397,6 +397,51 @@ void Consist::appendEngItem(int id, int pos, bool flip){
     modified = true;
 }
 
+int Consist::getSelectedEngId(){
+    if(selectedIdx < 0)
+        return -1;
+    if(selectedIdx >= engItems.size())
+        return -1;
+    return engItems[selectedIdx].eng;
+}
+
+void Consist::replaceEngItemSelected(int id){
+    if(selectedIdx < 0)
+        return;
+    if(selectedIdx >= engItems.size())
+        return;
+    Consist::replaceEngItem(id, selectedIdx);
+    
+    initPos();
+}
+
+void Consist::replaceEngItemById(int oldId, int newId){
+    for(int i = 0; i < engItems.size(); i++)
+        if(engItems[i].eng == oldId)
+            Consist::replaceEngItem(newId, i);
+    
+    initPos();
+}
+
+void Consist::replaceEngItem(int id, int pos){
+    if(pos < 0)
+        appendEngItem(id, 0, false);
+    if(pos >= engItems.size())
+        appendEngItem(id, 2, false);
+    
+    Eng * eng = Game::currentEngLib->eng[id];
+    if(eng == NULL) return;
+    
+    EngItem* newE = &engItems[pos];
+
+    newE->type = eng->wagonTypeId / 4;
+    newE->eng = id;
+    newE->ename = eng->name.section(".", 0, -2);
+    newE->epath = eng->path.split("/").last();
+    newE->txt = NULL;
+    modified = true;
+}
+
 void Consist::flipSelected(){
     if(selectedIdx < 0)
         return;

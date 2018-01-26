@@ -13,22 +13,7 @@
 
 #include <QVector>
 #include <QString>
-
 #include "MstsSoundDefinition.h"
-
-class SoundVariables {
-public:
-    enum ValueName {
-        SPEED = 0,
-        DISTANCE = 1,
-        BRAKECYL = 2,
-        CURVEFORCE = 3,
-        VARIABLE1 = 4,
-        VARIABLE2 = 5,
-        VARIABLE3 = 6
-    };
-    QMap<ValueName, float> value;
-};
 
 class SoundSource {
 public:

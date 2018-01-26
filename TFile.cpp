@@ -89,7 +89,7 @@ void TFile::setBufferNames(QString name){
 
 bool TFile::readT(QString fSfile) {
         fSfile.replace("//","/");
-        //qDebug() << fSfile;
+        qDebug() << "T File "<< fSfile;
         QFile file(fSfile);
         if (!file.open(QIODevice::ReadOnly)){
             //qDebug() << "fail t file "<< fSfile;

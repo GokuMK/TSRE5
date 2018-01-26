@@ -240,6 +240,16 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     eReload = new QAction(tr("&Reload Shape"), this); 
     engMenu->addAction(eReload);
     QObject::connect(eReload, SIGNAL(triggered(bool)), this, SLOT(eReloadEnabled()));
+    replaceMenu = menuBar()->addMenu(tr("&Replace"));
+    QAction *replaceOne = new QAction(tr("&Only selected Unit"), this); 
+    QObject::connect(replaceOne, SIGNAL(triggered(bool)), this, SLOT(replaceOneEnabled()));
+    replaceMenu->addAction(replaceOne);
+    QAction *replaceAll = new QAction(tr("&All units in selected Consist"), this); 
+    QObject::connect(replaceAll, SIGNAL(triggered(bool)), this, SLOT(replaceAllEnabled()));
+    replaceMenu->addAction(replaceAll);
+    QAction *replaceAllAll = new QAction(tr("&All units in all Consists"), this); 
+    QObject::connect(replaceAllAll, SIGNAL(triggered(bool)), this, SLOT(replaceAllAllEnabled()));
+    replaceMenu->addAction(replaceAllAll);
     viewMenu = menuBar()->addMenu(tr("&View"));
     vConList = GuiFunct::newMenuCheckAction(tr("&Consist List"), this); 
     viewMenu->addAction(vConList);
@@ -841,6 +851,39 @@ void ConEditorWindow::addToRandomConsist(int id){
     new QListWidgetItem ( englib->eng[id]->displayName, &randomConsist->items, id);
 }
 
+void ConEditorWindow::replaceOneEnabled(){
+    int eid = englib->getEngByPointer(currentEng);
+    if(eid < 0)
+        return;
+    if(currentCon == NULL)
+        return;
+    currentCon->replaceEngItemSelected(eid);
+}
+
+void ConEditorWindow::replaceAllEnabled(){
+    int eid = englib->getEngByPointer(currentEng);
+    if(eid < 0)
+        return;
+    if(currentCon == NULL)
+        return;
+    int oeid = currentCon->getSelectedEngId();
+    currentCon->replaceEngItemById(oeid, eid);
+}
+
+void ConEditorWindow::replaceAllAllEnabled(){
+    int eid = englib->getEngByPointer(currentEng);
+    if(eid < 0)
+        return;
+    if(currentCon == NULL)
+        return;
+    int oeid = currentCon->getSelectedEngId();
+    
+    for(int i = 0; i < ConLib::jestcon; i++){
+        if(ConLib::con[i] != NULL)
+            ConLib::con[i]->replaceEngItemById(oeid, eid);
+    }
+}
+    
 void ConEditorWindow::closeEvent( QCloseEvent *event )
 {
     std::vector<int> unsavedConIds;
