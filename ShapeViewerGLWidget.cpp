@@ -13,6 +13,8 @@
 #include <QOpenGLShaderProgram>
 #include <QCoreApplication>
 #include <QDateTime>
+#include <QApplication>
+#include <QClipboard>
 #include <QMenu>
 #include <math.h>
 #include "GLUU.h"
@@ -355,6 +357,10 @@ void ShapeViewerGLWidget::showContextMenu(const QPoint & point) {
         QObject::connect(defaultMenuActions["rightSelected"], SIGNAL(triggered()), this, SLOT(rightConSelected()));
         defaultMenuActions["deleteSelected"] = new QAction(tr("&Delete"), this); 
         QObject::connect(defaultMenuActions["deleteSelected"], SIGNAL(triggered()), this, SLOT(deleteConSelected()));
+        defaultMenuActions["copyUnit"] = new QAction(tr("&Copy"), this); 
+        QObject::connect(defaultMenuActions["copyUnit"], SIGNAL(triggered()), this, SLOT(copyUnitConSelected()));
+        defaultMenuActions["pasteUnit"] = new QAction(tr("&Paste Right"), this); 
+        QObject::connect(defaultMenuActions["pasteUnit"], SIGNAL(triggered()), this, SLOT(pasteUnitConSelected()));
     }
     
     if(renderItem == 3 && con != NULL){
@@ -370,6 +376,8 @@ void ShapeViewerGLWidget::showContextMenu(const QPoint & point) {
         menu.addAction(defaultMenuActions["leftSelected"]);
         menu.addAction(defaultMenuActions["rightSelected"]);
         menu.addAction(defaultMenuActions["deleteSelected"]);
+        menu.addAction(defaultMenuActions["copyUnit"]);
+        menu.addAction(defaultMenuActions["pasteUnit"]);
         menu.exec(mapToGlobal(point));
     }
 }
@@ -420,6 +428,26 @@ void ShapeViewerGLWidget::rightConSelected(){
 void ShapeViewerGLWidget::deleteConSelected(){
     if(con != NULL)
         con->deteleSelected();
+}
+
+void ShapeViewerGLWidget::copyUnitConSelected(){
+    if(con == NULL)
+        return;
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(QString("ENGID ")+QString::number(con->getSelectedEngId()));
+}
+
+void ShapeViewerGLWidget::pasteUnitConSelected(){
+    if(con == NULL)
+        return;
+    QClipboard *clipboard = QApplication::clipboard();
+    QStringList args = clipboard->text().split(" ");
+    if(args[0] != "ENGID")
+        return;
+    if(args.size() != 2)
+        return;
+    int val = args[1].toInt();
+    con->appendEngItem(val, 1, false);
 }
 
 void ShapeViewerGLWidget::showCon(int id){

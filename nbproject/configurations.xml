@@ -44,6 +44,7 @@
         <itemPath>MapDataUrlImage.h</itemPath>
         <itemPath>MapWindow.h</itemPath>
         <itemPath>OSMFeatures.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
         <itemPath>ChooseFileDialog.h</itemPath>
@@ -279,7 +280,6 @@
         <itemPath>MapWindow.cpp</itemPath>
         <itemPath>OSMFeatures.cpp</itemPath>
         <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
         <itemPath>ChooseFileDialog.cpp</itemPath>

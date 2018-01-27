@@ -182,6 +182,11 @@ void Eng::load(){
                     ParserX::SkipToken(data);
                     continue;
                 }
+                if (sh == ("tsrekeywords")) {
+                    searchKeywords = ParserX::GetString(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
                 if (sh == ("freightanim")) {
                     freightanimShape.push_back(EngShape());
                     freightanimShape.back().name = ParserX::GetString(data);
@@ -434,6 +439,7 @@ bool Eng::searchFilter(QString q){
     if(q == "") return true;
     if(this->displayName.contains(q, Qt::CaseInsensitive)) return true;
     if(this->engName.contains(q, Qt::CaseInsensitive)) return true;
+    if(this->searchKeywords.contains(q, Qt::CaseInsensitive)) return true;
     return false;
 }
 

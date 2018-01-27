@@ -13,10 +13,12 @@
 
 #include <QtWidgets>
 
+class Consist;
+
 class RandomConsist : public QWidget {
     Q_OBJECT
 public:
-    RandomConsist();
+    RandomConsist(QWidget *parent);
     virtual ~RandomConsist();
     QListWidget items;
     int changed = 0;
@@ -24,12 +26,20 @@ public:
 public slots:
     void ok();
     void cancel();
+    void save();
+    void listSelected(QString val);
     
 signals:
     void addToConSelected(int id, int pos, int count);
     
 private:
     QLineEdit number;
+    QLineEdit name;
+    QComboBox list;
+    
+    void loadSets();
+    
+    QVector<Consist*> sets;
 };
 
 #endif	/* RANDOMCONSIST_H */

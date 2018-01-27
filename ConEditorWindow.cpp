@@ -37,12 +37,12 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     Game::shadowsEnabled = 0;
     Vec3::set((float*)Game::sunLightDirection,-1.0,0.0,0.0);
     aboutWindow = new AboutWindow(this);
-    randomConsist = new RandomConsist();
     englib = new EngLib();
     englib->loadAll(Game::root);
     Game::currentEngLib = englib;
     ConLib::loadAll(Game::root);
     ActLib::LoadAllAct(Game::root);
+    randomConsist = new RandomConsist(this);
     glShapeWidget = new ShapeViewerGLWidget(this);
     if(Game::colorShapeView != NULL)
         glShapeWidget->setBackgroundGlColor(Game::colorShapeView->redF(), Game::colorShapeView->greenF(), Game::colorShapeView->blueF());

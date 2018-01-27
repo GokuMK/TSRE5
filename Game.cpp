@@ -33,7 +33,7 @@ SoundList *Game::soundList = NULL;
 TerrainLib *Game::terrainLib = NULL;   
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.6954";
+QString Game::AppVersion = "v0.6955";
 QString Game::AppDataVersion = "0.695";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";

@@ -60,6 +60,9 @@ public slots:
     void leftConSelected();
     void rightConSelected();
     void deleteConSelected();
+    void copyUnitConSelected();
+    void pasteUnitConSelected();
+    
 signals:
     void selected(int id);
     void refreshItem();

@@ -49,6 +49,7 @@ public:
 
     QString engName;
     QString displayName;
+    QString searchKeywords;
     QString engType;
     QString typeHash;
     QString type;
