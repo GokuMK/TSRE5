@@ -1131,6 +1131,12 @@ float* Mat4::clone(float* a) {
     return out;
 }
 
+float* Mat4::copy(float* a, float *b) {
+    std::copy(b, b + 16, a);
+    return a;
+}
+
+
 float* Mat4::create() {
     float * f = new float[16]{1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
     return f;

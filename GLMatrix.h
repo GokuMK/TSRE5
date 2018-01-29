@@ -115,6 +115,7 @@ class Mat4 {
 public:
     static float GLMAT_EPSILON;
     static float* clone(float* a);
+    static float* copy(float *a, float *b);
     static float* create();
     static float* identity(float *out);
     static float* fromQuat(float *out, float *q);
