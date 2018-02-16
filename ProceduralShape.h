@@ -18,6 +18,10 @@
 
 class ObjFile;
 class TrackShape;
+class GlobalDefinitions;
+class ComplexLine;
+class ShapeTemplates;
+class ShapeTemplateElement;
 
 struct ShapePrimitive {
     float *data;
@@ -38,22 +42,28 @@ public:
     static QMap<QString, ObjFile*> Files;
     static void GenShape(QVector<OglObj*> &shape, QVector<TSection> &sections);
     static void GenShape(QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
-    static void GenTrackShape(QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
-
-    struct ComplexLine {
-        QVector<TSection> sections;
-        float length;
-        void init(QVector<TSection> s);
-        float getLength();
-        void getDrawPosition(float* posRot, float distance);
-    };
 
 private:
     static float Alpha;
     static void Load();
     static ObjFile* GetObjFile(QString name);
+    
+    static void GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line);
+    static void GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line, float *sPos, float sAngle, float angleB, float angleE);
+    
+    static void GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line);
+    static void GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line, float *sPos, float sAngle, float angleB, float angleE);
+    
+    static void GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line);
+    static void GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line, float *sPos, float sAngle, float angleB, float angleE);
+    
+    static void GenAdvancedTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
+    
     static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix, float* qrot, float distance = 0);
     static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix1, float* matrix2, float* qrot, float dist1, float dist2);
+    
+    static ShapeTemplates *ShapeTemplateFile;
+    static GlobalDefinitions* GlobalDefinitionFile;
 };
 
 #endif	/* PROCEDURALSHAPE_H */

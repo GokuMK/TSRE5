@@ -16,8 +16,11 @@ INPUT(
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityTrafficProperties.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ActivityTrafficWindow.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/Brush.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ComplexLine.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GlobalDefinitions.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/GuiGlCompass.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/MstsSoundDefinition.o
+./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/ShapeTemplates.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SoundLib.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SoundSource.o
 ./build/Release_x64/MinGW_QT_5.7.0_Static_x64-Windows/SoundVariables.o

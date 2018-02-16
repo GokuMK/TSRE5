@@ -73,9 +73,12 @@
         <itemPath>TrackItemObj.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="ProceduralShapes" projectFiles="true">
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h</itemPath>
         <itemPath>ObjFile.h</itemPath>
         <itemPath>ProceduralMstsDyntrack.h</itemPath>
         <itemPath>ProceduralShape.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f2" displayName="activity" projectFiles="true">
@@ -308,9 +311,12 @@
         <itemPath>TrackItemObj.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="ProceduralShapes" projectFiles="true">
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp</itemPath>
         <itemPath>ObjFile.cpp</itemPath>
         <itemPath>ProceduralMstsDyntrack.cpp</itemPath>
         <itemPath>ProceduralShape.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f2" displayName="activity" projectFiles="true">
@@ -574,6 +580,26 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
             ex="false"
             tool="1"
@@ -590,6 +616,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1399,6 +1435,26 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
             ex="false"
             tool="1"
@@ -1415,6 +1471,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2208,6 +2274,26 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
             ex="false"
             tool="1"
@@ -2224,6 +2310,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -3033,6 +3129,26 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
             ex="false"
             tool="1"
@@ -3049,6 +3165,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -3838,6 +3964,26 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
             ex="false"
             tool="1"
@@ -3854,6 +4000,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
             ex="false"
             tool="3"
             flavor2="0">
