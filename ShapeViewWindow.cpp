@@ -14,6 +14,7 @@
 #include "CameraRot.h"
 
 ShapeViewWindow::ShapeViewWindow(QWidget* parent) : QWidget(parent) {
+    this->setWindowFlags(Qt::WindowMaximizeButtonHint);
     this->setWindowFlags(Qt::WindowType::Tool);
     //this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->setWindowTitle(tr("Shape Preview"));

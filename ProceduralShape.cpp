@@ -308,7 +308,7 @@ void ProceduralShape::GenTrackShape(QVector<OglObj*>& shape, TrackShape* tsh, QM
     
     float* p = new float[4000000];
     float* ptr = p;
-    QString resPath = Game::root + "/routes/" + Game::route + "/textures";
+    QString resPath = QString("tsre_appdata/")+Game::AppDataVersion+"/tracks";
     QString* texturePath;
     
     for(int i = 0; i < primitives.count(); i++){
@@ -560,7 +560,7 @@ void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &secti
     float matrix2[16];
     ObjFile *tFile;
     
-    QString resPath = Game::root + "/routes/" + Game::route + "/textures";
+    QString resPath = QString("tsre_appdata/")+Game::AppDataVersion+"/tracks";
     QString* texturePath;
     
     ComplexLine line;

@@ -132,11 +132,15 @@ int main(int argc, char *argv[]){
         }
         if(app.arguments().at(1) == "--play"){
             // Play
-            if(app.arguments().length() > 2)
+            if(app.arguments().length() == 3){
                 Game::ActivityToPlay = app.arguments().at(2);
-            if(Game::ActivityToPlay.length() < 1)
+            } else if(app.arguments().length() == 4){
+                Game::route = app.arguments().at(2);
+                Game::ActivityToPlay = app.arguments().at(3);
+            } else {
                 Game::ActivityToPlay = "#";
-            qDebug() << "Play" << Game::ActivityToPlay;
+            }
+            qDebug() << "Play" << Game::route << Game::ActivityToPlay;
         }
     }
     // Run route editor
