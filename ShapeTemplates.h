@@ -29,10 +29,12 @@ public:
         EMPTY = 0,
         DEFAULT = 1
     };
+    QString name;
     QString shape;
     QString texture;
     ElementType type = NONE;
     ElementId id = EMPTY;
+   
 
     void load(FileBuffer *data);
 };
@@ -51,9 +53,10 @@ public:
     //QHash<TemplateType, Element*> tie;
     //QHash<TemplateType, Element*> rail;
     // QHash<TemplateType, Element*> ballast;
-    ShapeTemplateElement *tie = NULL;
-    ShapeTemplateElement *ballast = NULL;
-    ShapeTemplateElement *rail = NULL;
+    QHash<QString, ShapeTemplateElement*> elements;
+    //ShapeTemplateElement *tie = NULL;
+    //ShapeTemplateElement *ballast = NULL;
+    //ShapeTemplateElement *rail = NULL;
 
 };
 

@@ -55,10 +55,12 @@ void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh, QMap<in
     if(tsh->numpaths == 2 && tsh->mainroute > -1){
         return GenTrackShape(shape, tsh, angles);
     }*/
-    if(ShapeTemplateFile->templates["DefaultTrack"] == NULL)
+    QString templateName = "DefaultTrack";
+    
+    if(ShapeTemplateFile->templates[templateName] == NULL)
         return;
     
-    ShapeTemplate *sTemplate = ShapeTemplateFile->templates["DefaultTrack"];
+    ShapeTemplate *sTemplate = ShapeTemplateFile->templates[templateName];
     
     ComplexLine *line = new ComplexLine[tsh->numpaths];
     for (int j = 0; j < tsh->numpaths; j++) {
@@ -72,29 +74,32 @@ void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh, QMap<in
         line[j].init(sections);
     }
     
-    if(sTemplate->tie != NULL){
-        if(tsh->numpaths == 2 && tsh->xoverpts > 0){
-            GenAdvancedTie(sTemplate->tie, shape, tsh, angles);
-        } else if(tsh->numpaths == 2 && tsh->mainroute > -1){
-            GenAdvancedTie(sTemplate->tie, shape, tsh, angles);
-        } else {
-            for (int j = 0; j < tsh->numpaths; j++) {
-                GenTie(sTemplate->tie, shape, line[j], tsh->path[j].pos, -tsh->path[j].rotDeg, angles[j * 2], angles[j * 2 + 1]);
+    QHashIterator<QString, ShapeTemplateElement*> i(sTemplate->elements);
+    while (i.hasNext()) {
+        i.next();
+        if(i.value() == NULL)
+            continue;
+        if(i.value()->type == ShapeTemplateElement::TIE){
+            if(tsh->numpaths == 2 && tsh->xoverpts > 0){
+                GenAdvancedTie(i.value(), shape, tsh, angles);
+            } else if(tsh->numpaths == 2 && tsh->mainroute > -1){
+                GenAdvancedTie(i.value(), shape, tsh, angles);
+            } else {
+                for (int j = 0; j < tsh->numpaths; j++) {
+                    GenTie(i.value(), shape, line[j], tsh->path[j].pos, -tsh->path[j].rotDeg, angles[j * 2], angles[j * 2 + 1]);
+                }
             }
         }
+
+        if(i.value()->type == ShapeTemplateElement::RAIL)
+            for (int j = 0; j < tsh->numpaths; j++)
+                GenRails(i.value(), shape, line[j], tsh->path[j].pos, -tsh->path[j].rotDeg, angles[j * 2], angles[j * 2 + 1]);
+
+        if(i.value()->type == ShapeTemplateElement::BALLAST)
+            for (int j = 0; j < tsh->numpaths; j++)
+                GenBallast(i.value(), shape, line[j], tsh->path[j].pos, -tsh->path[j].rotDeg, angles[j * 2], angles[j * 2 + 1]);
     }
-    
-    if(sTemplate->rail != NULL){
-        for (int j = 0; j < tsh->numpaths; j++) {
-            GenRails(sTemplate->rail, shape, line[j], tsh->path[j].pos, -tsh->path[j].rotDeg, angles[j * 2], angles[j * 2 + 1]);
-        }
-    }
-    
-    if(sTemplate->ballast != NULL){
-        for (int j = 0; j < tsh->numpaths; j++) {
-            GenBallast(sTemplate->ballast, shape, line[j], tsh->path[j].pos, -tsh->path[j].rotDeg, angles[j * 2], angles[j * 2 + 1]);
-        }
-    }
+
     
     delete[] line;
     
@@ -112,16 +117,27 @@ void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &secti
     line.init(sections);
     //qDebug() << line.length << "length";
     
-    ShapeTemplate *sTemplate = ShapeTemplateFile->templates["DefaultTrack"];
+    QString templateName = "DefaultTrack2";
     
-    if(sTemplate->tie != NULL)
-        GenTie(sTemplate->tie, shape, line);
+    if(ShapeTemplateFile->templates[templateName] == NULL)
+        return;
+    
+    ShapeTemplate *sTemplate = ShapeTemplateFile->templates[templateName];
+    
+    QHashIterator<QString, ShapeTemplateElement*> i(sTemplate->elements);
+    while (i.hasNext()) {
+        i.next();
+        if(i.value()->type == NULL)
+            continue;
+        if(i.value()->type == ShapeTemplateElement::TIE)
+            GenTie(i.value(), shape, line);
 
-    if(sTemplate->rail != NULL)
-        GenRails(sTemplate->rail, shape, line);
-    
-    if(sTemplate->ballast != NULL)
-        GenBallast(sTemplate->ballast, shape, line);
+        if(i.value()->type == ShapeTemplateElement::RAIL)
+            GenRails(i.value(), shape, line);
+
+        if(i.value()->type == ShapeTemplateElement::BALLAST)
+            GenBallast(i.value(), shape, line);
+    }
 
 }
 

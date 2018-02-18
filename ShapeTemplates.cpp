@@ -58,33 +58,37 @@ ShapeTemplates::ShapeTemplates() {
                             continue;
                         }
                         if (sh == ("ballast")) {
-                            templates[name]->ballast = new ShapeTemplateElement();
-                            templates[name]->ballast->type = templates[name]->ballast->BALLAST;
-                            templates[name]->ballast->load(data);
+                            ShapeTemplateElement *e = new ShapeTemplateElement();
+                            e->type = e->BALLAST;
+                            e->load(data);
+                            templates[name]->elements[e->name] = e;
                             ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("rail")) {
-                            templates[name]->rail = new ShapeTemplateElement();
-                            templates[name]->rail->type = templates[name]->rail->RAIL;
-                            templates[name]->rail->load(data);
+                            ShapeTemplateElement *e = new ShapeTemplateElement();
+                            e->type = e->RAIL;
+                            e->load(data);
+                            templates[name]->elements[e->name] = e;
                             ParserX::SkipToken(data);
                             continue;
                         }
                         if (sh == ("tie")) {
-                            templates[name]->tie = new ShapeTemplateElement();
-                            templates[name]->tie->type = templates[name]->tie->TIE;
-                            templates[name]->tie->load(data);
+                            ShapeTemplateElement *e = new ShapeTemplateElement();
+                            e->type = e->TIE;
+                            e->load(data);
+                            templates[name]->elements[e->name] = e;
                             ParserX::SkipToken(data);
                             continue;
                         }
+                        qDebug() << "#Template - undefined token: " << sh;
                         ParserX::SkipToken(data);
                         continue;
                     }
                     ParserX::SkipToken(data);
                     continue;
                 }
-                qDebug() << "#Template - undefined token: " << sh;
+                qDebug() << "#Templates - undefined token: " << sh;
                 ParserX::SkipToken(data);
                 continue;
             }
@@ -101,7 +105,9 @@ ShapeTemplates::ShapeTemplates() {
 }
 
 void ShapeTemplateElement::load(FileBuffer* data){
+    name = ParserX::GetString(data);
     id = DEFAULT;
+    ParserX::GetString(data);
     shape = ParserX::GetString(data);
     texture = ParserX::GetString(data);
 
