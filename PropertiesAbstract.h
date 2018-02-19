@@ -57,6 +57,7 @@ protected:
     QLineEdit uid;
     QLineEdit defaultDetailLevel;
     QLineEdit customDetailLevel;
+    QComboBox eTemplate;
     QCheckBox enableCustomDetailLevel;
     WorldObj *worldObj;
     QMap<QString, QPushButton*> buttonTools;

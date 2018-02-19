@@ -35,6 +35,8 @@ ObjFile* ProceduralShape::GetObjFile(QString name) {
 }
 
 void ProceduralShape::Load() {
+    if(Loaded)
+        return;
     // Load Templates
     ShapeTemplateFile = new ShapeTemplates();
 
@@ -42,7 +44,7 @@ void ProceduralShape::Load() {
     Loaded = true;
 }
 
-void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh, QMap<int, float> &angles) {
+void ProceduralShape::GenShape(QString templateName, QVector<OglObj*>& shape, TrackShape* tsh, QMap<int, float> &angles) {
     if (!Loaded)
         Load();
 
@@ -54,8 +56,9 @@ void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh, QMap<in
     }
     if(tsh->numpaths == 2 && tsh->mainroute > -1){
         return GenTrackShape(shape, tsh, angles);
-    }*/
-    QString templateName = "DefaultTrack";
+    }*/    
+    if(templateName == "" || templateName == "DEFAULT")
+        templateName = "DefaultTrack";
     
     if(ShapeTemplateFile->templates[templateName] == NULL)
         return;
@@ -106,7 +109,7 @@ void ProceduralShape::GenShape(QVector<OglObj*>& shape, TrackShape* tsh, QMap<in
     return;
 }
 
-void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &sections) {
+void ProceduralShape::GenShape(QString templateName, QVector<OglObj*> &shape, QVector<TSection> &sections) {
     if (!Loaded)
         Load();
 
@@ -117,7 +120,8 @@ void ProceduralShape::GenShape(QVector<OglObj*> &shape, QVector<TSection> &secti
     line.init(sections);
     //qDebug() << line.length << "length";
     
-    QString templateName = "DefaultTrack2";
+    if(templateName == "" || templateName == "DEFAULT")
+        templateName = "DefaultTrack";
     
     if(ShapeTemplateFile->templates[templateName] == NULL)
         return;
@@ -186,7 +190,7 @@ void ProceduralShape::GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*>
     float matrix2[16];
     ObjFile *tFile;
 
-    QString resPath = Game::root + "/routes/" + Game::route + "/textures";
+    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
 
@@ -275,7 +279,7 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
     float matrix2[16];
     ObjFile *tFile;
 
-    QString resPath = Game::root + "/routes/" + Game::route + "/textures";
+    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
     float pp[3];
@@ -356,7 +360,7 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
     float matrix2[16];
     ObjFile *tFile;
 
-    QString resPath = Game::root + "/routes/" + Game::route + "/textures";
+    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
 

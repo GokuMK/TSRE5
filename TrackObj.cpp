@@ -87,88 +87,62 @@ bool TrackObj::allowNew(){
     return true;
 }
 
+void TrackObj::setTemplate(QString name){
+    templateName = name;
+    templateDisabled = false;
+    reload();
+}
+
+void TrackObj::reload(){
+    if(!Game::proceduralTracks || roadShape ) {
+        Game::currentShapeLib->shape[shape]->reload();
+    } else {
+        proceduralShapeInit = false;
+        procShape.clear();
+    }
+}
+
 void TrackObj::setElevation(float prom){
     float * q = qDirection;
     float vect[3];
     vect[0] = 0; vect[1] = 0; vect [2] = 1000;
     Vec3::transformQuat(vect, vect, q);
-    vect[1] = -vect[1];
-    //qDebug() << vect[1] << "=" << prom;
-    //qDebug() << (-vect[1]+prom)/1000.0;
-    rotate(asin((-vect[1]+prom)/1000.0),0,0);
+    rotate(asin((vect[1]*this->endp[3]+prom)/1000.0),0,0);
 }
 
 void TrackObj::rotate(float x, float y, float z){
     this->tRotation[0] += x;
     this->tRotation[1] += y;
     if(matrix3x3 != NULL) matrix3x3 = NULL;
-    
-    //if(this->endp[3] == 1){
+
     qDebug() << "rot" << x << y << z;
-    //Mat4::translate(this->matrix, this->matrix, this->endp);
     float vect2[3];
     float vect[3];
     float quat[4];
-    quat[0] = 0;
-    quat[1] = 0;
-    quat[2] = 0;
-    quat[3] = 1;
+    Quat::fill(quat);
     
     if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x*this->endp[3]);
     if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y*this->endp[3]);
     if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z*this->endp[3]);    
     
-    //Quat::rotateY(quat, quat, -this->endp[4]);
-    
-    vect[0] = 0; vect[1] = 0; vect [2] = 10;
+    Vec3::set(vect, 0, 0, 10);
     Vec3::transformQuat(vect, vect, this->qDirection);
-    //float elevation = tan((vect[1]/10.0));
-    //Quat::rotateX(quat, quat, elevation);
-    //Vec3::transformQuat(reinterpret_cast<float*>(&vect), this->endp, this->qDirection);
-    //Vec3::transformQuat(reinterpret_cast<float*>(&vect), this->endp, this->qDirection);
-    quat[0] = this->qDirection[0];
-    quat[1] = this->qDirection[1];
-    quat[2] = this->qDirection[2];
-    quat[3] = this->qDirection[3];
-    //Quat::rotateY(quat, quat, endp[4] + M_PI);
     
-    //Vec3::transformQuat(reinterpret_cast<float*>(&vect), this->endp, quat);
-    /*//vect2[0] = vect[0];
-    //vect2[2] = vect[2];
-    //Vec3::transformQuat(vect, vect, quat);
-    
-    qDebug() << this->endp[0] << " "<< vect[0] << " " << vect2[0];
-    qDebug() << this->endp[2] << " "<< vect[2] << " " << vect2[2];
-    */
-    quat[0] = 0;
-    quat[1] = 0;
-    quat[2] = 0;
-    quat[3] = 1;
+    Quat::fill(quat);
     Quat::rotateY(quat, quat, endp[4]);
-    //Quat::rotateX(quat, quat,-elevation);
+
     Vec3::transformQuat(reinterpret_cast<float*>(&vect), this->endp, this->qDirection);
     Vec3::transformQuat(reinterpret_cast<float*>(&vect2), this->endp, quat);
-    /*vect[0] = -(this->endp[0] - vect2[0]);
-    //vect[1] = 0;
-    vect[2] = (this->endp[2] + vect2[2]);
-    Vec3::transformQuat(vect, vect, this->qDirection)*/
+
     qDebug() << this->endp[0] << " "<< vect[0] << " " << vect2[0];
     qDebug() << this->endp[2] << " "<< vect[2] << " " << vect2[2];
     
-    //Vec3::transformQuat(vect, vect, quat);
-    //Vec3::transformQuat(this->endp, this->endp, quat);
-    
     vect[0] = (vect2[0] - vect[0]);
-    //vect[1] = 0;
     vect[2] = (vect2[2] - vect[2]);
     
     this->position[0] = this->placedAtPosition[0] + vect[0];
     this->position[1] = this->placedAtPosition[1] - vect[1];
     this->position[2] = this->placedAtPosition[2] + vect[2];
-
-    //if(this->endp[3] == 1){
-    //Mat4::translate(this->matrix, this->matrix, -this->endp[0], -this->endp[1], -this->endp[2]);
-    //}
     
     this->modified = true;
     setMartix();
@@ -325,15 +299,19 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         gluu->enableTextures();
     }
     
-    if(!Game::proceduralTracks || roadShape ) {
+    if(!Game::proceduralTracks || roadShape || templateDisabled ) {
         Game::currentShapeLib->shape[shape]->render();
     } else {
         if (!proceduralShapeInit) {
+            if(templateName == "DISABLED"){
+                templateDisabled = true;
+                return;
+            }
             TrackShape *tsh = Game::trackDB->tsection->shape[sectionIdx];
             QMap<int, float> angles;
             if(Game::useSuperelevation)
                 Game::trackDB->fillTrackAngles(x, -y, UiD, angles);
-            ProceduralShape::GenShape(procShape, tsh, angles);
+            ProceduralShape::GenShape(templateName, procShape, tsh, angles);
             proceduralShapeInit = true;
         } else {
             for(int i = 0; i < procShape.size(); i++){
@@ -449,6 +427,8 @@ if(this->jNodePosn.size() != 0)
 *(out) << "		CollideFlags ( "<<this->collideFlags<<" )\n";
 if(this->collideFunction > 0 )
 *(out) << "		CollideFunction ( "<<this->collideFunction<<" )\n";
+if(this->templateName != "" && this->templateName != "DEFAULT")
+*(out) << "		ShapeTemplate ( "<<ParserX::AddComIfReq(this->templateName)<<" )\n";
 *(out) << "		FileName ( "<<ParserX::AddComIfReq(this->fileName)<<" )\n";
 *(out) << "		StaticFlags ( "<<ParserX::MakeFlagsString(this->staticFlags)<<" )\n";
 *(out) << "		Position ( "<<this->position[0]<<" "<<this->position[1]<<" "<<-this->position[2]<<" )\n";

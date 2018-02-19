@@ -374,8 +374,14 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     QObject::connect(engSetAddFlipButton, SIGNAL(released()),
         this, SLOT(engSetFlipAndAddSelected()));
     
-    vEngList2->trigger();
-    vConUnits->trigger();
+    if(!Game::ceWindowLayout.contains("C"))
+        vConList->trigger();
+    if(!Game::ceWindowLayout.contains("1"))
+        vEngList1->trigger();
+    if(!Game::ceWindowLayout.contains("2"))
+        vEngList2->trigger();
+    if(!Game::ceWindowLayout.contains("U"))
+        vConUnits->trigger();
 }
 
 ConEditorWindow::~ConEditorWindow() {

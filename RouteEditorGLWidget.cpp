@@ -248,6 +248,10 @@ void RouteEditorGLWidget::initializeGL() {
             camera->setCameraObject((GameObj*)route->getActivityConsist(0));
         }
     }
+    
+    moveStep = Game::DefaultMoveStep;
+    moveMaxStep = Game::DefaultMoveStep;
+    defaultMoveStep = moveStep;
 }
 
 void RouteEditorGLWidget::reloadRefFile(){
@@ -257,6 +261,11 @@ void RouteEditorGLWidget::reloadRefFile(){
 
 void RouteEditorGLWidget::setCameraObject(GameObj* obj){
     camera->setCameraObject(obj);
+}
+
+void RouteEditorGLWidget::setMoveStep(float val){
+    moveStep = val;
+    moveMaxStep = val; 
 }
 
 void RouteEditorGLWidget::paintGL() {
@@ -618,14 +627,14 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
 
     switch (event->key()) {
         case Qt::Key_Control:
-            moveStep = moveMinStep;
+            moveStep = moveMaxStep / 10.0;
             keyControlEnabled = true;
             break;
         case Qt::Key_Shift:
             keyShiftEnabled = true;
             break;
         case Qt::Key_Alt:
-            moveStep = moveUltraStep;
+            moveStep = moveMaxStep * 10.0;
             keyAltEnabled = true;
             break;
             //case Qt::Key_N:
@@ -1314,6 +1323,12 @@ void RouteEditorGLWidget::editSelect() {
     enableTool("selectTool");
 }
 
+void RouteEditorGLWidget::selectToolresetMoveStep(){
+    Game::DefaultMoveStep = defaultMoveStep;
+    moveStep = defaultMoveStep;
+    moveMaxStep = defaultMoveStep;
+}
+
 void RouteEditorGLWidget::selectToolSelect(){
     resizeTool = false;
     translateTool = false;
@@ -1461,7 +1476,7 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
         menu.addSection(toolName);
         if (toolEnabled == "selectTool"){
             menuTool.setTitle("Mode");
-            menu.addMenu(&menuTool);
+            menu.addMenu(&menuTool);            
             if(defaultMenuActions["selectToolSelect"] == NULL){
                 defaultMenuActions["selectToolSelect"] = GuiFunct::newMenuCheckAction(tr("&Select"), this, !resizeTool|!rotateTool|!translateTool); 
                 QObject::connect(defaultMenuActions["selectToolSelect"], SIGNAL(triggered()), this, SLOT(selectToolSelect()));
@@ -1502,6 +1517,13 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
             defaultMenuActions["placeToolStickToAll"]->setChecked(!stickPointerToTerrain);
             menuPointer.addAction(defaultMenuActions["placeToolStickToTerrain"]);
             menuPointer.addAction(defaultMenuActions["placeToolStickToAll"]);
+        }
+        if (toolEnabled == "placeTool" || toolEnabled == "selectTool"){
+            if(defaultMenuActions["resetMoveStep"] == NULL){
+                defaultMenuActions["resetMoveStep"] = new QAction(tr("&Reset MoveStep"), this); 
+                QObject::connect(defaultMenuActions["resetMoveStep"], SIGNAL(triggered()), this, SLOT(selectToolresetMoveStep()));
+            }
+            menu.addAction(defaultMenuActions["resetMoveStep"]);
         }
         if (toolEnabled == "heightTool" || toolEnabled == "waterTerrTool" || toolEnabled == "gapsTerrainTool"){
             menu.addMenu(&menuTool);

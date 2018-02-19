@@ -18,8 +18,11 @@
 #include "Undo.h"
 #include "Game.h"
 #include "Route.h"
+#include "ProceduralShape.h"
+#include "ShapeTemplates.h"
 
 PropertiesTrackObj::PropertiesTrackObj(){
+    QLabel *label;
     QVBoxLayout *vbox = new QVBoxLayout;
     vbox->setSpacing(2);
     vbox->setContentsMargins(0,1,1,1);
@@ -37,19 +40,15 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vlist->addRow("UiD:",&this->uid);
     vlist->addRow("Tile X:",&this->tX);
     vlist->addRow("Tile Z:",&this->tY);
-    vlist->addRow("TrackShape:",&this->eSectionIdx);
+    vlist->addRow("Id:",&this->eSectionIdx);
+    vlist->addRow("Name:",&this->fileName);
     vbox->addItem(vlist);
-    
-    QLabel * label = new QLabel("FileName:");
-    label->setContentsMargins(3,0,0,0);
-    vbox->addWidget(label);
     this->fileName.setDisabled(true);
     this->fileName.setAlignment(Qt::AlignCenter);
-    vbox->addWidget(&this->fileName);
     QGridLayout *filenameList = new QGridLayout;
     filenameList->setSpacing(2);
     filenameList->setContentsMargins(0,0,0,0);    
-    QPushButton *copyF = new QPushButton("Copy", this);
+    QPushButton *copyF = new QPushButton("Copy Name", this);
     QObject::connect(copyF, SIGNAL(released()),
                       this, SLOT(copyFileNameEnabled()));
     QPushButton *editF = new QPushButton("Edit", this);
@@ -58,6 +57,28 @@ PropertiesTrackObj::PropertiesTrackObj(){
     filenameList->addWidget(copyF, 0, 0);
     filenameList->addWidget(editF, 0, 1);
     vbox->addItem(filenameList);
+    
+    label = new QLabel("Shape Template:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(&eTemplate);
+    eTemplate.setStyleSheet("combobox-popup: 0;");
+    eTemplate.addItem("DEFAULT");
+    eTemplate.addItem("DISABLED");
+    
+    ProceduralShape::Load();
+    if(ProceduralShape::ShapeTemplateFile != NULL){
+        QMapIterator<QString, ShapeTemplate*> i(ProceduralShape::ShapeTemplateFile->templates);
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            eTemplate.addItem(i.value()->name);
+        }
+    }
+    QObject::connect(&eTemplate, SIGNAL(currentTextChanged(QString)),
+                      this, SLOT(eTemplateEdited(QString)));
     
     label = new QLabel("Position & Rotation:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -166,29 +187,48 @@ PropertiesTrackObj::PropertiesTrackObj(){
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vlist = new QFormLayout;
-    vlist->setSpacing(2);
-    vlist->setContentsMargins(3,0,3,0);
+    vlist->setSpacing(0);
+    vlist->setContentsMargins(0,0,0,0);
     QDoubleValidator* doubleValidator = new QDoubleValidator(-10000, 10000, 6, this); 
     doubleValidator->setNotation(QDoubleValidator::StandardNotation);
     QDoubleValidator* doubleValidator1 = new QDoubleValidator(-1000, 1000, 6, this); 
     doubleValidator1->setNotation(QDoubleValidator::StandardNotation);
     
     //‰
-    vlist->addRow("‰",&this->elevProm);
-    this->elevProm.setValidator(doubleValidator1);
-    QObject::connect(&this->elevProm, SIGNAL(textEdited(QString)), this, SLOT(elevPromEnabled(QString)));
+    vlist->addRow("Value: ",&this->elevType);
+    elevType.addItem("Permiles ‰");
+    elevType.addItem("Percents %");
+    elevType.addItem("1 in 'X' m");
+    elevType.addItem("Angle º");
+    elevType.setStyleSheet("combobox-popup: 0;");
+    QObject::connect(&elevType, SIGNAL(currentTextChanged(QString)),
+                      this, SLOT(elevTypeEdited(QString)));
+    
+    elevPromLabel.setText("‰");
+    vlist->addRow(&elevPromLabel,&elevProm);
+    elevProm.setValidator(doubleValidator1);
+    QObject::connect(&elevProm, SIGNAL(textEdited(QString)), this, SLOT(elevPromEnabled(QString)));
     //oneInXm
-    vlist->addRow("1 in 'x' m",&this->elev1inXm);
-    this->elev1inXm.setValidator(doubleValidator);
-    QObject::connect(&this->elev1inXm, SIGNAL(textEdited(QString)), this, SLOT(elev1inXmEnabled(QString)));
+    elev1inXmLabel.setText("1 in 'x' m");
+    vlist->addRow(&elev1inXmLabel,&elev1inXm);
+    elev1inXm.setValidator(doubleValidator);
+    QObject::connect(&elev1inXm, SIGNAL(textEdited(QString)), this, SLOT(elev1inXmEnabled(QString)));
     //º
-    vlist->addRow("º",&this->elevProg);
-    this->elevProg.setValidator(doubleValidator1);
-    QObject::connect(&this->elevProg, SIGNAL(textEdited(QString)), this, SLOT(elevProgEnabled(QString)));
+    elevProgLabel.setText("º");
+    vlist->addRow(&elevProgLabel,&elevProg);
+    elevProg.setValidator(doubleValidator1);
+    QObject::connect(&elevProg, SIGNAL(textEdited(QString)), this, SLOT(elevProgEnabled(QString)));
     //%
-    vlist->addRow("%",&this->elevProp);
-    this->elevProp.setValidator(doubleValidator1);
-    QObject::connect(&this->elevProp, SIGNAL(textEdited(QString)), this, SLOT(elevPropEnabled(QString)));
+    elevPropLabel.setText("%");
+    vlist->addRow(&elevPropLabel,&elevProp);
+    elevProp.setValidator(doubleValidator1);
+    QObject::connect(&elevProp, SIGNAL(textEdited(QString)), this, SLOT(elevPropEnabled(QString)));
+    vlist->addRow("Step:",&elevStep);
+    elevStep.setValidator(doubleValidator);
+    QObject::connect(&elevStep, SIGNAL(textEdited(QString)), this, SLOT(elevStepEnabled(QString)));
+    hideElevBoxes();
+    elevType.setCurrentIndex(Game::DefaultElevationBox);
+    showElevBox(elevType.currentText());
     
     vbox->addItem(vlist);
     label = new QLabel("MSTS Collision:");
@@ -205,18 +245,14 @@ PropertiesTrackObj::PropertiesTrackObj(){
     vbox->addWidget(&cCollisionType);
     QObject::connect(&cCollisionType, SIGNAL(currentIndexChanged(int)),
                       this, SLOT(cCollisionTypeEdited(int)));
-    QPushButton *resetFlags = new QPushButton("Reset Flags", this);
-    QObject::connect(resetFlags, SIGNAL(released()),
-                      this, SLOT(copyFEnabled()));
-    vbox->addWidget(resetFlags);
+    //QPushButton *resetFlags = new QPushButton("Reset Flags", this);
+    //QObject::connect(resetFlags, SIGNAL(released()),
+    //                  this, SLOT(copyFEnabled()));
+    //vbox->addWidget(resetFlags);
     label = new QLabel("Advanced:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
-    QPushButton *fixJNodePosn = new QPushButton("Fix JNodePosn", this);
-    QObject::connect(fixJNodePosn, SIGNAL(released()),
-                      this, SLOT(fixJNodePosnEnabled()));
     vbox->addWidget(label);
-    vbox->addWidget(fixJNodePosn);
     
     QPushButton *hacks = new QPushButton("Hacks", this);
     QObject::connect(hacks, SIGNAL(released()),
@@ -228,6 +264,51 @@ PropertiesTrackObj::PropertiesTrackObj(){
     
     QObject::connect(copyF, SIGNAL(released()),
                       this, SLOT(copyFileNameEnabled()));
+}
+
+void PropertiesTrackObj::eTemplateEdited(QString val){
+    if(trackObj == NULL){
+        return;
+    }
+    Undo::SinglePushWorldObjData(worldObj);
+    trackObj->setTemplate(val);
+    Undo::StateEnd();
+}
+
+void PropertiesTrackObj::elevTypeEdited(QString val){
+    hideElevBoxes();
+    showElevBox(val);
+}
+
+void PropertiesTrackObj::showElevBox(QString val){
+    if(val == "Permiles ‰"){
+        elevProm.show();
+        elevPromLabel.show();
+    }
+    if(val == "Percents %"){
+        elevProp.show();
+        elevPropLabel.show();
+    }
+    if(val == "1 in 'X' m"){
+        elev1inXm.show();
+        elev1inXmLabel.show();
+    }
+    if(val == "Angle º"){
+        elevProg.show();
+        elevProgLabel.show();
+    }    
+    setStepValue(Game::DefaultMoveStep);
+}
+
+void PropertiesTrackObj::hideElevBoxes(){
+    elevProm.hide();
+    elevProg.hide();
+    elevProp.hide();
+    elev1inXm.hide();
+    elevPromLabel.hide();
+    elevProgLabel.hide();
+    elevPropLabel.hide();
+    elev1inXmLabel.hide();
 }
 
 PropertiesTrackObj::~PropertiesTrackObj() {
@@ -256,6 +337,11 @@ void PropertiesTrackObj::hacksButtonEnabled(){
     vbox->addWidget(label);
     label->setWordWrap(true);
     
+    QPushButton *fixJNodePosn = new QPushButton("Fix JNodePosn", this);
+    QObject::connect(fixJNodePosn, SIGNAL(released()),
+                      this, SLOT(fixJNodePosnEnabled()));
+    vbox->addWidget(fixJNodePosn);
+    
     QPushButton *haxRemoveTDBVector = new QPushButton("Remove TDB Vector ( remove TrItems first )", this);
     QObject::connect(haxRemoveTDBVector, SIGNAL(released()),
                       this, SLOT(haxRemoveTDBVectorEnabled()));
@@ -270,7 +356,6 @@ void PropertiesTrackObj::hacksButtonEnabled(){
     QObject::connect(haxElevTDBVector, SIGNAL(released()),
                       this, SLOT(haxElevTDBVectorEnabled()));
     vbox->addWidget(haxElevTDBVector);
-
 
     vbox->setSpacing(2);
     vbox->setContentsMargins(3,3,3,3);
@@ -362,6 +447,8 @@ void PropertiesTrackObj::showObj(GameObj* obj){
     this->elevProg.setText(QString::number(prog));
     this->elevProp.setText(QString::number(prop));
     this->elev1inXm.setText(QString::number(oneInXm));
+    setStepValue(Game::DefaultMoveStep);
+    
     /*float pitch = asin(2*(q[0]*q[2] - q[1]*q[3]));
     
     if(vect[2] < 0)
@@ -379,6 +466,30 @@ void PropertiesTrackObj::showObj(GameObj* obj){
     this->cCollisionType.blockSignals(true);
     this->cCollisionType.setCurrentIndex(collisionType);
     this->cCollisionType.blockSignals(false);
+}
+
+void PropertiesTrackObj::setStepValue(float step){
+    if(elevType.currentIndex() == 0)
+        step = step * 100;
+    if(elevType.currentIndex() == 1)
+        step = step * 10;
+    if(elevType.currentIndex() == 2)
+        step = 10.0/step;
+    if(elevType.currentIndex() == 3)
+        step = qRadiansToDegrees(qAtan(step/10.0));
+    
+    elevStep.setText(QString::number(step));
+}
+
+float PropertiesTrackObj::getStepValue(float step){
+    if(elevType.currentIndex() == 0)
+        return step / 100;
+    if(elevType.currentIndex() == 1)
+        return step / 10;
+    if(elevType.currentIndex() == 2)
+        return 10.0/step;
+    if(elevType.currentIndex() == 3)
+        return qTan(qDegreesToRadians(step))*10.0;
 }
 
 void PropertiesTrackObj::updateObj(GameObj* obj){
@@ -448,6 +559,21 @@ void PropertiesTrackObj::elevPromEnabled(QString val){
     
     Undo::SinglePushWorldObjData(worldObj);
     trackObj->setElevation(prom);
+}
+
+void PropertiesTrackObj::elevStepEnabled(QString val){
+    if(trackObj == NULL)
+        return;
+
+    bool ok = false;
+    float f = val.toFloat(&ok);
+    if(!ok)
+        return;
+    
+    f = getStepValue(f);
+    
+    Game::DefaultMoveStep = f;
+    emit setMoveStep(f);
 }
 
 void PropertiesTrackObj::elev1inXmEnabled(QString val){

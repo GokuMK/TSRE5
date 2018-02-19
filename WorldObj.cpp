@@ -292,6 +292,7 @@ WorldObj::WorldObj(const WorldObj& o) {
     snapable = o.snapable;
     Vec2::copy(tRotation, (float*)o.tRotation);
     endp = o.endp;
+    templateName = o.templateName;
     sectionIdx = o.sectionIdx;
     trLoaded = o.trLoaded;
     if(o.matrix3x3 != NULL){
@@ -488,6 +489,10 @@ void WorldObj::set(QString sh, FileBuffer* data) {
         collideFunction = ParserX::GetNumber(data);
         return;
     }
+    if (sh == ("shapetemplate")) {
+        templateName = ParserX::GetNumber(data);
+        return;
+    }
     qDebug() << "worldObj "<<this->type<<" unknown: " << sh;
     return;
 }
@@ -500,6 +505,14 @@ void WorldObj::reload(){
     
 }
 
+QString WorldObj::getTemplate(){
+    return templateName;
+}
+
+void WorldObj::setTemplate(QString name){
+    templateName = name;
+}
+    
 bool WorldObj::isSimilar(WorldObj* obj){
     return false;
 }

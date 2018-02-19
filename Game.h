@@ -46,6 +46,7 @@ public:
     static QString routeName;
     static QString trkName;
     static QString mainWindowLayout;
+    static QString ceWindowLayout;
     static QString ActivityToPlay;
     static bool useQuadTree;
     static bool playerMode;
@@ -142,6 +143,9 @@ public:
     
     static int AASamples;
     static float PixelRatio;
+    
+    static int DefaultElevationBox;
+    static float DefaultMoveStep;
 private:
     static RouteEditorWindow* window;
     static LoadWindow* loadWindow;

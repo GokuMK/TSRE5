@@ -25,6 +25,8 @@ public:
     WorldObj* clone();
     virtual ~TrackObj();
     bool allowNew();
+    void setTemplate(QString val);
+    void reload();
     void load(int x, int y);
     void set(int sh, FileBuffer* val);
     void set(QString sh, QString val);
@@ -49,6 +51,7 @@ private:
     bool proceduralShapeInit = false;
     QVector<OglObj*> procShape;
     bool roadShape = false;
+    bool templateDisabled = false;
 };
 
 #endif	/* TRACKOBJ_H */

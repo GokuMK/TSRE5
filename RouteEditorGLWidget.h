@@ -83,6 +83,7 @@ public slots:
     void createNewLoTiles(QMap<int, QPair<int, int>*> list);
     void objectSelected(GameObj* obj);
     
+    void selectToolresetMoveStep();
     void selectToolSelect();
     void selectToolRotate();
     void selectToolTranslate();
@@ -99,6 +100,7 @@ public slots:
     void placeToolStickAll();
     void reloadRefFile();
     void setCameraObject(GameObj* obj);
+    void setMoveStep(float val);
     
 signals:
     void routeLoaded(Route * a);
@@ -172,10 +174,11 @@ private:
     bool mouseRPressed = false;
     bool mouseClick = false;
     QString toolEnabled = "";
+    float defaultMoveStep = 0.25;
     float moveStep = 0.25;
-    float moveUltraStep = 2.0;
+    //float moveUltraStep = 2.0;
     float moveMaxStep = 0.25;
-    float moveMinStep = 0.01;
+    //float moveMinStep = 0.01;
     bool resizeTool = false;
     bool rotateTool = false;
     bool translateTool = false;

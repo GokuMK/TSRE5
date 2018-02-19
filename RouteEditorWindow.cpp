@@ -439,6 +439,10 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(objProperties["ActivityConsist"], SIGNAL(cameraObject(GameObj*)),
                       glWidget, SLOT(setCameraObject(GameObj*)));
     
+    QObject::connect(objProperties["TrackObj"], SIGNAL(setMoveStep(float)),
+                      glWidget, SLOT(setMoveStep(float)));
+    
+    
     QObject::connect(terrainTools, SIGNAL(setPaintBrush(Brush*)),
                       glWidget, SLOT(setPaintBrush(Brush*)));   
     

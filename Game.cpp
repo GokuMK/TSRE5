@@ -33,7 +33,7 @@ SoundList *Game::soundList = NULL;
 TerrainLib *Game::terrainLib = NULL;   
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.6955";
+QString Game::AppVersion = "v0.6956";
 QString Game::AppDataVersion = "0.695";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
@@ -42,6 +42,7 @@ QString Game::trkName = "bbb";
 //QString Game::route = "traska";
 //QString Game::route = "cmk";
 QString Game::mainWindowLayout = "PWT";
+QString Game::ceWindowLayout = "C1";
 QString Game::ActivityToPlay = "";
 bool Game::playerMode = false;
 bool Game::useNetworkEng = false;
@@ -137,6 +138,9 @@ float Game::fogDensity = 0.7;
 //float fogColor[4]{0.5, 0.75, 1.0, 1.0};
 float Game::fogColor[4] = {230.0/255.0,248.0/255,255.0/255.0, 1.0};
 float Game::skyColor[4] = {230.0/255.0,248.0/255,255.0/255.0, 1.0};
+
+int Game::DefaultElevationBox = 0;
+float Game::DefaultMoveStep = 0.25;
 
 void Game::InitAssets() {
     QString path;
@@ -401,6 +405,9 @@ void Game::load() {
         if(val == "mainWindowLayout"){
             mainWindowLayout = args[1].trimmed();
         }
+        if(val == "ceWindowLayout"){
+            ceWindowLayout = args[1].trimmed();
+        }
         if(val == "useQuadTree"){
             if(args[1].trimmed().toLower() == "true")
                 useQuadTree = true;
@@ -433,6 +440,12 @@ void Game::load() {
             skyColor[0] = tcolor.redF();
             skyColor[1] = tcolor.greenF();
             skyColor[2] = tcolor.blueF();
+        }
+        if(val == "defaultElevationBox"){
+            DefaultElevationBox = args[1].trimmed().toInt();
+        }
+        if(val == "defaultMoveStep"){
+            DefaultMoveStep = args[1].trimmed().toFloat();
         }
     }
 }
@@ -646,6 +659,8 @@ void Game::CreateNewSettingsFile(){
     out << "#ortsEngEnable = false\n";
     out << "#oglDefaultLineWidth = 2\n";
     out << "shadowsEnabled = 1\n";
+    out << "#shadowMapSize = 8192\n";
+    out << "#textureQuality = 4\n";
     out << "ignoreMissingGlobalShapes = true\n";
     out << "snapableOnlyRot = false\n";
     out << "imageMapsUrl = \n";
@@ -653,6 +668,13 @@ void Game::CreateNewSettingsFile(){
     out << "#mapImageResolution = 2048\n";
     out << "#cameraStickToTerrain = true\n";
     out << "#mouseSpeed = 0.1\n";
+    out << "#mainWindowLayout = W\n";
+    out << "#ceindowLayout = CU1\n";
+    out << "#useQuadTree = false\n";
+    out << "#fogColor = #D0D0FF\n";
+    out << "#fogDensity = 0.5\n";
+    out << "#defaultElevationBox = 0\n";
+    out << "#defaultMoveStep = 0.25\n";
     out.flush();
     file.close();
 }

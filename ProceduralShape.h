@@ -38,14 +38,19 @@ struct ShapePrimitive {
 
 class ProceduralShape {
 public:
+    static ShapeTemplates *ShapeTemplateFile;
+    static GlobalDefinitions* GlobalDefinitionFile;
+    
     static bool Loaded;
     static QMap<QString, ObjFile*> Files;
-    static void GenShape(QVector<OglObj*> &shape, QVector<TSection> &sections);
-    static void GenShape(QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
+    
+    static void Load();
+    static void GenShape(QString templateName, QVector<OglObj*> &shape, QVector<TSection> &sections);
+    static void GenShape(QString templateName, QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
 
 private:
     static float Alpha;
-    static void Load();
+    
     static ObjFile* GetObjFile(QString name);
     
     static void GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line);
@@ -62,8 +67,6 @@ private:
     static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix, float* qrot, float distance = 0);
     static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix1, float* matrix2, float* qrot, float dist1, float dist2);
     
-    static ShapeTemplates *ShapeTemplateFile;
-    static GlobalDefinitions* GlobalDefinitionFile;
 };
 
 #endif	/* PROCEDURALSHAPE_H */

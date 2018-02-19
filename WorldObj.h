@@ -155,13 +155,15 @@ public:
     virtual void updateSim(float deltaTime);
     virtual bool isSimilar(WorldObj * obj);
     virtual void reload();
+    virtual QString getTemplate();
+    virtual void setTemplate(QString name);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 protected:
     virtual void loadSnapablePoints();
     virtual bool getSimpleBorder(float* border);
     virtual bool getBoxPoints(QVector<float> &points);
     float* matrix3x3 = NULL;
-    
+    QString templateName = "DEFAULT";
 };
 
 #endif	/* WORLDOBJ_H */

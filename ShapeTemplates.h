@@ -13,6 +13,7 @@
 
 #include <QVector>
 #include <QHash>
+#include <QMap>
 #include <QString>
 
 class FileBuffer;
@@ -63,7 +64,7 @@ public:
 class ShapeTemplates {
 public:
 
-    QHash<QString, ShapeTemplate*> templates;
+    QMap<QString, ShapeTemplate*> templates;
 
     ShapeTemplates();
     virtual ~ShapeTemplates();

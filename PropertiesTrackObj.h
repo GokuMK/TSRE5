@@ -33,23 +33,38 @@ public slots:
     void elevProgEnabled(QString val);
     void elevPropEnabled(QString val);
     void elev1inXmEnabled(QString val);
+    void elevStepEnabled(QString val);
     void editFileNameEnabled();
     void cCollisionTypeEdited(int val);
     void haxRemoveTDBVectorEnabled();
     void haxElevTDBVectorEnabled();
     void haxRemoveTDBTreeEnabled();
+    void elevTypeEdited(QString val);
+    void eTemplateEdited(QString val);
         
 signals:
+    void setMoveStep(float val);
     
 private:
     TrackObj* trackObj;
+    QComboBox elevType;
+    QLineEdit elevStep;
     QLineEdit elevProm;
     QLineEdit elevProg;
     QLineEdit elevProp;
     QLineEdit elev1inXm;
+    QLabel elevPromLabel;
+    QLabel elevProgLabel;
+    QLabel elevPropLabel;
+    QLabel elev1inXmLabel;
     QComboBox cCollisionType;
     QLineEdit eCollisionFlags;
     QLineEdit eSectionIdx;
+    
+    void hideElevBoxes();
+    void showElevBox(QString val);
+    void setStepValue(float step);
+    float getStepValue(float step);
 };
 
 #endif	/* PROPERTIESTRACKOBJ_H */
