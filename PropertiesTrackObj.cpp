@@ -196,8 +196,8 @@ PropertiesTrackObj::PropertiesTrackObj(){
     
     //‰
     vlist->addRow("Value: ",&this->elevType);
-    elevType.addItem("Permiles ‰");
-    elevType.addItem("Percents %");
+    elevType.addItem("Permille ‰");
+    elevType.addItem("Percent %");
     elevType.addItem("1 in 'X' m");
     elevType.addItem("Angle º");
     elevType.setStyleSheet("combobox-popup: 0;");
@@ -281,11 +281,11 @@ void PropertiesTrackObj::elevTypeEdited(QString val){
 }
 
 void PropertiesTrackObj::showElevBox(QString val){
-    if(val == "Permiles ‰"){
+    if(val == "Permille ‰"){
         elevProm.show();
         elevPromLabel.show();
     }
-    if(val == "Percents %"){
+    if(val == "Percent %"){
         elevProp.show();
         elevPropLabel.show();
     }
