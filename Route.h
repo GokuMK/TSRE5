@@ -69,7 +69,7 @@ public:
     void loadServices();
     void loadTraffic();
     void loadPaths();
-    void newTile(int x, int z);
+    int newTile(int x, int z, bool forced = false);
     void reloadTile(int x, int z);
     void deleteObj(WorldObj* obj);
     void undoPlaceObj(int x, int y, int UiD);

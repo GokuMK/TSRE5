@@ -20,6 +20,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QSslConfiguration> 
 #include <QUrl>
 #include <QUrlQuery>
 #include "CoordsMkr.h"
@@ -543,8 +544,16 @@ void MapDataOSM::get(LatitudeLongitudeCoordinate* min, LatitudeLongitudeCoordina
     QNetworkAccessManager* mgr = new QNetworkAccessManager();
     connect(mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(isData(QNetworkReply*)));
     // the HTTP request
-    qDebug() << "wait";
-    QNetworkRequest req( QUrl( QString("http://www.openstreetmap.org/api/0.6/map?bbox="
+    qDebug() << "wait " << QString("http://www.openstreetmap.org/api/0.6/map?bbox="
+    +QString::number(min->Longitude)
+    +","
+    +QString::number(min->Latitude)
+    +","
+    +QString::number(max->Longitude)
+    +","
+    +QString::number(max->Latitude));
+    
+    QNetworkRequest req( QUrl( QString("https://www.openstreetmap.org/api/0.6/map?bbox="
     +QString::number(min->Longitude)
     +","
     +QString::number(min->Latitude)
@@ -554,12 +563,21 @@ void MapDataOSM::get(LatitudeLongitudeCoordinate* min, LatitudeLongitudeCoordina
     +QString::number(max->Latitude)
     ) ) );
     mgr->get(req);
+    
+    //QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    //config.setProtocol(QSsl::TlsV1_2);
+    //req.setSslConfiguration(config);
 }
 
 void MapDataOSM::isData(QNetworkReply* r){
     QByteArray data = r->readAll();
     qDebug() << "data " << data.length();    
-
+    //QString aaa;
+    //for (byte d : data) {
+    //    aaa += QChar(d);
+    //}
+    //qDebug() << aaa;
+    
     if(data.length()< 100){
         //"No data from the network..." label
         emit statusInfo(QString("No data from the network..."));

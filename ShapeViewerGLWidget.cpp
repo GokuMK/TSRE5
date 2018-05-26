@@ -163,9 +163,13 @@ void ShapeViewerGLWidget::paintGL() {
     glClearColor(backgroundGlColor[0], backgroundGlColor[1], backgroundGlColor[2], 1);
     
     float aspect = float(this->width()) / float(this->height());
-    Mat4::perspective(gluu->pMatrix, camera->fov*M_PI/180*(1/aspect), aspect, 0.2f, Game::objectLod);
     float* lookAt = camera->getMatrix();
+    Mat4::perspective(gluu->pMatrix, camera->fov*M_PI/180*(1/aspect), aspect, 0.2f, Game::objectLod);
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, lookAt);
+    
+    Mat4::perspective(gluu->fMatrix, camera->fov*M_PI/180*(1/aspect), aspect, 0.2f, Game::objectLod);
+    Mat4::multiply(gluu->fMatrix, gluu->pMatrix, lookAt);
+    
     Mat4::identity(gluu->mvMatrix);
 
     Mat4::identity(gluu->objStrMatrix);

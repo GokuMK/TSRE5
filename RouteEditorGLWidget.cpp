@@ -278,8 +278,8 @@ void RouteEditorGLWidget::paintGL() {
         renderShadowMaps();
 
     // Render Scene
-    gluu->currentShader = gluu->shaders["StandardBloom"];
-    //gluu->currentShader = gluu->shaders["StandardFog"];
+    //gluu->currentShader = gluu->shaders["StandardBloom"];
+    gluu->currentShader = gluu->shaders["StandardFog"];
     gluu->currentShader->bind();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE0);
@@ -660,8 +660,15 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
             msgBox.setText("Create new Tile here?");
             msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
             msgBox.setDefaultButton(QMessageBox::Yes);
-            if (msgBox.exec() == QMessageBox::Yes)
-                route->newTile((int) camera->pozT[0], (int) camera->pozT[1]);
+            if (msgBox.exec() == QMessageBox::Yes){
+                int out = 0;
+                out = route->newTile((int) camera->pozT[0], (int) camera->pozT[1]);
+                if(out == 1){
+                    msgBox.setText("Tile exist. Override?");
+                    if (msgBox.exec() == QMessageBox::Yes)
+                        route->newTile((int) camera->pozT[0], (int) camera->pozT[1], true);
+                }
+            }
         }
             break;
         //case Qt::Key_E:

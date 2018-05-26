@@ -1542,13 +1542,15 @@ void Route::reloadTile(int x, int z) {
     return;
 }
 
-void Route::newTile(int x, int z) {
-    if (!Game::writeEnabled) return;
+int Route::newTile(int x, int z, bool forced) {
+    if (!Game::writeEnabled) return 0;
     
     if (tile[x*10000 + z] == NULL)
         tile[x*10000 + z] = new Tile(x, z);
-    if (tile[x*10000 + z]->loaded == 1)
-        return;
+    
+    if(!forced)
+        if (tile[x*10000 + z]->loaded == 1)
+            return 1;
             
     Tile::saveEmpty(x, -z);
     //Terrain::saveEmpty(x, -z);
@@ -1561,6 +1563,8 @@ void Route::newTile(int x, int z) {
         Vec3::set(pos, 0, 0, 0);
         Game::terrainLib->setHeightFromGeo(x, z, (float*)&pos);
     }
+    
+    return 2;
 }
 
 void Route::showTrkEditr(Trk * val){

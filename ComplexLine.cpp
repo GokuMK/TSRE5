@@ -30,7 +30,7 @@ float ComplexLine::getLength(){
     return length;
 }
 
-void ComplexLine::getDrawPosition(float* posRot, float distance){
+void ComplexLine::getDrawPosition(float* posRot, float distance, float xOffset){
     float tLength = 0;
     float sLength = 0;
     float tpos[3];
@@ -38,6 +38,7 @@ void ComplexLine::getDrawPosition(float* posRot, float distance){
     Vec3::set(tpos, 0, 0, 0);
     Vec3::set(trot, 0, 0, 0);
     Vector3f vPos;
+    Vector3f off;
     
     if(distance > length)
         distance = length;
@@ -58,6 +59,10 @@ void ComplexLine::getDrawPosition(float* posRot, float distance){
         vPos.rotateY(trot[1], 0);
         Vec3::set(posRot, vPos.x, vPos.y, vPos.z);
         Vec3::add(posRot, posRot, tpos);
+        /*off.set(xOffset, 0, 0);
+        off.rotateY(sections[i].getDrawAngle(distance - tLength), 0);
+        Vec3::set(tpos, off.x, off.y, off.z);
+        Vec3::add(posRot, posRot, tpos);*/
         posRot[3] = M_PI;
         posRot[4] = - trot[1] - sections[i].getDrawAngle(distance - tLength);
         posRot[5] = 0;

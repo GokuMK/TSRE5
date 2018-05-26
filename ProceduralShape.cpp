@@ -161,16 +161,16 @@ void ProceduralShape::GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*>
     tFile = GetObjFile(stemplate->shape);
     float step = 3;
     for (float i = 0; i < line.length; i += step) {
-        line.getDrawPosition(posRot, i);
+        line.getDrawPosition(posRot, i, stemplate->xOffset);
         Quat::fromRotationXYZ(q, (float*) (posRot + 3));
         Mat4::fromRotationTranslation(matrix1, q, posRot);
-        line.getDrawPosition(posRot, i + step);
+        line.getDrawPosition(posRot, i + step, stemplate->xOffset);
         Quat::fromRotationXYZ(q, (float*) (posRot + 3));
         Mat4::fromRotationTranslation(matrix2, q, posRot);
-        PushShapePart(ptr, tFile, 0.325, matrix1, matrix2, q, i, i + step);
+        PushShapePart(ptr, tFile, stemplate->yOffset, matrix1, matrix2, q, i, i + step);
     }
 
-    texturePath = new QString(resPath.toLower() + "/rails1.png");
+    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -196,34 +196,41 @@ void ProceduralShape::GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*>
 
     float pp[3];
     float zangle;
+    float vOffset[3];
 
     Quat::fill(q);
     Quat::rotateY(q, q, sAngle * M_PI / 180.0);
     Vec3::set(pp, -sPos[0], sPos[1], sPos[2]);
     Mat4::fromRotationTranslation(matrixS, q, pp);
 
-    tFile = GetObjFile("uic60.obj");
+    tFile = GetObjFile(stemplate->shape);
     float step = 3;
     for (float i = 0; i < line.length; i += step) {
-        line.getDrawPosition(posRot, i);
+        line.getDrawPosition(posRot, i, stemplate->xOffset);
         Quat::fill(qr);
         Quat::rotateY(qr, qr, sAngle * M_PI / 180.0);
         Quat::fromRotationXYZ(q, (float*) (posRot + 3));
         zangle = angleB*(1.0 - i / line.length) + angleE*(i / line.length);
         Quat::rotateZ(q, q, zangle);
+        Vec3::set(vOffset, stemplate->xOffset, 0.0, 0.0);
+        Vec3::transformQuat(vOffset, vOffset, q);
+        Vec3::add(posRot, vOffset, posRot);
         Mat4::fromRotationTranslation(matrix1, q, posRot);
         Mat4::multiply(matrix1, matrixS, matrix1);
-        line.getDrawPosition(posRot, i + step);
+        line.getDrawPosition(posRot, i + step, stemplate->xOffset);
         Quat::fromRotationXYZ(q, (float*) (posRot + 3));
         zangle = angleB*(1.0 - (i + step) / line.length) + angleE*((i + step) / line.length);
         Quat::rotateZ(q, q, zangle);
+        Vec3::set(vOffset, stemplate->xOffset, 0.0, 0.0);
+        Vec3::transformQuat(vOffset, vOffset, q);
+        Vec3::add(posRot, vOffset, posRot);
         Mat4::fromRotationTranslation(matrix2, q, posRot);
         Mat4::multiply(matrix2, matrixS, matrix2);
         Quat::multiply(qr, qr, q);
-        PushShapePart(ptr, tFile, 0.325, matrix1, matrix2, qr, i, i + step);
+        PushShapePart(ptr, tFile, stemplate->yOffset, matrix1, matrix2, qr, i, i + step);
     }
 
-    texturePath = new QString(resPath.toLower() + "/rails1.png");
+    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -244,7 +251,7 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
     QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
-    tFile = GetObjFile("ballast2.obj");
+    tFile = GetObjFile(stemplate->shape);
     float step = 4;
     for (float i = 0; i < line.length; i += step) {
         line.getDrawPosition(posRot, i);
@@ -253,10 +260,10 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
         line.getDrawPosition(posRot, i + step);
         Quat::fromRotationXYZ(q, (float*) (posRot + 3));
         Mat4::fromRotationTranslation(matrix2, q, posRot);
-        PushShapePart(ptr, tFile, 0.05, matrix1, matrix2, q, i, i + step);
+        PushShapePart(ptr, tFile, stemplate->yOffset, matrix1, matrix2, q, i, i + step);
     }
 
-    texturePath = new QString(resPath.toLower() + "/ballast1.png");
+    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
     //texturePath = new QString(resPath.toLower()+"/linijka.png");
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
@@ -290,7 +297,7 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
     Vec3::set(pp, -sPos[0], sPos[1], sPos[2]);
     Mat4::fromRotationTranslation(matrixS, q, pp);
 
-    tFile = GetObjFile("ballast2.obj");
+    tFile = GetObjFile(stemplate->shape);
     float step = 4;
     for (float i = 0; i < line.length; i += step) {
         line.getDrawPosition(posRot, i);
@@ -308,10 +315,10 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
         Mat4::fromRotationTranslation(matrix2, q, posRot);
         Mat4::multiply(matrix2, matrixS, matrix2);
         Quat::multiply(qr, qr, q);
-        PushShapePart(ptr, tFile, 0.05, matrix1, matrix2, qr, i, i + step);
+        PushShapePart(ptr, tFile, stemplate->yOffset, matrix1, matrix2, qr, i, i + step);
     }
 
-    texturePath = new QString(resPath.toLower() + "/ballast1.png");
+    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -332,7 +339,7 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
     QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
-    tFile = GetObjFile("inbk3.obj");
+    tFile = GetObjFile(stemplate->shape);
     for (float i = 0; i < line.length; i += 0.65) {
         line.getDrawPosition(posRot, i);
         Quat::fromRotationXYZ(q, (float*) (posRot + 3));
@@ -340,7 +347,7 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
         PushShapePart(ptr, tFile, 0.155, matrix1, q);
     }
 
-    texturePath = new QString(resPath.toLower() + "/rails1.png");
+    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -373,7 +380,7 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
     Mat4::fromRotationTranslation(matrixS, q, pp);
 
 
-    tFile = GetObjFile("inbk3.obj");
+    tFile = GetObjFile(stemplate->shape);
     for (float i = 0; i < line.length; i += 0.65) {
         line.getDrawPosition(posRot, i);
         Quat::fill(qr);
@@ -387,7 +394,7 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
         PushShapePart(ptr, tFile, 0.155, matrix1, qr);
     }
 
-    texturePath = new QString(resPath.toLower() + "/rails1.png");
+    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -456,7 +463,7 @@ void ProceduralShape::GenAdvancedTie(ShapeTemplateElement *stemplate, QVector<Og
             junct = true;
 
         primitives.push_back(QVector<ShapePrimitive>());
-        tFile = GetObjFile("inbk3.obj");
+        tFile = GetObjFile(stemplate->shape);
         float length = line1.length;
         ComplexLine *line3 = &line2;
         int pathidx = 1;
@@ -672,7 +679,7 @@ void ProceduralShape::GenAdvancedTie(ShapeTemplateElement *stemplate, QVector<Og
         }
     }
 
-    texturePath = new QString(resPath.toLower() + "/rails1.png");
+    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);

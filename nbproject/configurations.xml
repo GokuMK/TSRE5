@@ -2191,6 +2191,7 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <qt>
+        <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>
           <Elem>"CONFIG += console"</Elem>
@@ -2199,10 +2200,14 @@
       <compileType>
         <ccTool>
           <standard>8</standard>
+          <incDir>
+            <pElem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/include</pElem>
+          </incDir>
         </ccTool>
         <linkerTool>
           <linkerLibItems>
             <linkerOptionItem>-lopengl32 </linkerOptionItem>
+            <linkerLibFileItem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/libs/Win32/libOpenAL32.dll.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

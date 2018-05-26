@@ -110,7 +110,10 @@ void ShapeTemplateElement::load(FileBuffer* data){
     ParserX::GetString(data);
     shape = ParserX::GetString(data);
     texture = ParserX::GetString(data);
-
+    yOffset = ParserX::GetNumber(data);
+    if(type == RAIL){
+        xOffset = ParserX::GetNumber(data);
+    }
 }
 
 ShapeTemplates::~ShapeTemplates() {

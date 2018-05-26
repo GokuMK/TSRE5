@@ -586,15 +586,18 @@ void Eng::updateSim(float deltaTime){
     
     //qDebug() << curve.points.size();
     static float acc = 0.1;
-    acc = curve->getValue(soundVariables);
+    if(soundVariables != NULL)
+        acc = curve->getValue(soundVariables);
     //acc*=accmult;
     float lastSpeed = currentSpeed;
     currentSpeed += acc*deltaTime;
-
+    
     
     
     float acceleration = (currentSpeed - lastSpeed) / (deltaTime);
     //qDebug() << acc << acceleration << currentSpeed;
+    
+    currentSpeed = 45;
     
     if(Game::useNetworkEng){
         if(networkEng == NULL){
@@ -606,7 +609,7 @@ void Eng::updateSim(float deltaTime){
         data[0] = getCurrentElevation();
         data[1] = getTotalDistanceDownPath();
         networkEng->writeData(data);
-    }
+    } 
     
     if(soundVariables != NULL){
         // vectron

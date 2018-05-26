@@ -23,7 +23,7 @@ public:
     float length;
     void init(QVector<TSection> s);
     float getLength();
-    void getDrawPosition(float* posRot, float distance);
+    void getDrawPosition(float* posRot, float distance, float xOffset = 0);
 private:
 
 };
