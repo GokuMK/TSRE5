@@ -37,7 +37,7 @@ bool RulerObj::allowNew(){
 RulerObj::RulerObj(const RulerObj& o) : WorldObj(o){
 
     for(int i = 0; i < o.points.size(); i++){
-        Point point;
+        ComplexLinePoint point;
         point.position[0] = o.points[i].position[0];
         point.position[1] = o.points[i].position[1];
         point.position[2] = o.points[i].position[2];
@@ -70,11 +70,11 @@ void RulerObj::load(int x, int y) {
     //this->point3dSelected->setMaterial(0.5,0.5,0.5);
 
     if(this->points.size() == 0){
-        Point point;
+        ComplexLinePoint point;
         Vec3::copy(point.position, this->position);
         this->points.push_back(point);
         if(TwoPointRuler){
-            Point point2;
+            ComplexLinePoint point2;
             Vec3::copy(point2.position, this->position);
             point2.position[2] += 1;
             this->points.push_back(point2);
@@ -93,7 +93,7 @@ void RulerObj::set(QString sh, FileBuffer* data) {
     if (sh == ("points")) {
         int pointCount = ParserX::GetNumber(data);
         for(int i=0; i< pointCount; i++){
-            Point point;
+            ComplexLinePoint point;
             point.position[0] = ParserX::GetNumber(data);
             point.position[1] = ParserX::GetNumber(data);
             point.position[2] = -ParserX::GetNumber(data);
@@ -112,7 +112,7 @@ void RulerObj::setPosition(int x, int z, float* p){
         points[selectionValue].position[1] = p[1];
         points[selectionValue].position[2] = -2048*(this->y-z) + p[2];
     } else {
-        Point point;
+        ComplexLinePoint point;
         point.position[0] = -2048*(this->x-x) + p[0];
         point.position[1] = p[1];
         point.position[2] = -2048*(this->y-z) + p[2];

@@ -53,6 +53,7 @@ public:
     bool isModified();
     void setModified(bool value);
     WorldObj* getObj(int id);
+    WorldObj* findNearestObj(float *pos);
     void deleteObject(WorldObj* obj);
     WorldObj* placeObject(WorldObj* obj);
     WorldObj* placeObject(float* p, Ref::RefItem* itemData);

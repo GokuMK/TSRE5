@@ -215,7 +215,7 @@ void TSection::drawSection(float* &ptr, float* matrix, float height, int idx, in
     }
 }
 
-void TSection::getPoints(float* &ptr, float* matrix) {
+void TSection::getPoints(QVector<float> &ptr, float* matrix) {
     float kierunek;
     float step;
     float point1[3];
@@ -228,9 +228,9 @@ void TSection::getPoints(float* &ptr, float* matrix) {
             point1[1] = 0;
             point1[2] = i;
             Vec3::transformMat4(point1, point1, matrix);
-            *ptr++ = point1[0];
-            *ptr++ = point1[1];
-            *ptr++ = point1[2];
+            ptr.push_back(point1[0]);
+            ptr.push_back(point1[1]);
+            ptr.push_back(point1[2]);
         } 
     }
     else if (type == 1) {
@@ -252,9 +252,9 @@ void TSection::getPoints(float* &ptr, float* matrix) {
             point1[2] = 0;
 
             Vec3::transformMat4(point1, point1, matrix);
-            *ptr++ = point1[0];
-            *ptr++ = point1[1];
-            *ptr++ = point1[2];
+            ptr.push_back(point1[0]);
+            ptr.push_back(point1[1]);
+            ptr.push_back(point1[2]);
             Mat4::translate(matrix, matrix, kierunek * a.x, 0, kierunek * a.y);
             Mat4::rotateY(matrix, matrix, -aa);
         }

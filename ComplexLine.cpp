@@ -12,6 +12,16 @@
 #include "GLMatrix.h"
 #include "Vector3f.h"
 
+ComplexLinePoint::ComplexLinePoint(){
+    
+}
+
+ComplexLinePoint::ComplexLinePoint(const ComplexLinePoint& o){
+    this->selected = o.selected;
+    this->shapeType = o.shapeType;
+    Vec3::copy(this->position, o.position);
+}
+
 ComplexLine::ComplexLine() {
 }
 
@@ -23,6 +33,14 @@ void ComplexLine::init(QVector<TSection> s){
     length = 0;
     for(int i = 0; i < sections.size(); i++){
         length += sections[i].getDlugosc();
+    }
+}
+
+void ComplexLine::init(QVector<ComplexLinePoint> s){
+    points.append(s);
+    length = 0;
+    for(int i = 1; i < points.size(); i++){
+        length += Vec3::distance(points[i].position, points[i-1].position);
     }
 }
 

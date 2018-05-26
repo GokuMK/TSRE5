@@ -430,7 +430,7 @@ float* Vec3::fromValues(float x, float y, float z) {
  * @param {vec3} a the source vector
  * @returns {vec3} out
  */
-float* Vec3::copy(float* out, float* a) {
+float* Vec3::copy(float* out, const float* a) {
     out[0] = a[0];
     out[1] = a[1];
     out[2] = a[2];

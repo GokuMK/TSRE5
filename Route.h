@@ -57,6 +57,7 @@ public:
     Route(const Route& orig);
     virtual ~Route();
     WorldObj* getObj(int x, int z, int id);
+    WorldObj* findNearestObj(int x, int z, float *pos);
     Tile * requestTile(int x, int z);
     void activitySelected(Activity* selected);
     void save();
@@ -78,6 +79,7 @@ public:
     void nextDefaultEnd();
     void flipObject(WorldObj *obj);
     void setTerrainTextureToObj(int x, int y, float *pos, Brush* brush, WorldObj* obj = NULL);
+    void setTerrainTextureToTrack(int x, int y, float *pos, Brush* brush, int mode = 0);
     void setTerrainToTrackObj(WorldObj* obj, Brush* brush);
     int getTileObjCount(int x, int z);
     int getTileHiddenObjCount(int x, int z);

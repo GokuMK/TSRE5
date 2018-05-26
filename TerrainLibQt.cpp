@@ -374,9 +374,9 @@ void TerrainLibQt::setTextureToTrackObj(Brush* brush, float* punkty, int length,
         ttx = tx;
         ttz = tz;
         Game::check_coords(ttx, ttz, posx, posz);
-        
         Terrain *terr = this->getTerrainByXY(ttx, ttz);
-        if (terr == NULL) continue;
+        if (terr == NULL)
+            continue;
         if (terr->loaded == false) continue;
         terr->paintTexture(brush, ttx, ttz, posx, posz);
     }

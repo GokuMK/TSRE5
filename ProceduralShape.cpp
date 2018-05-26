@@ -113,12 +113,15 @@ void ProceduralShape::GenShape(QString templateName, QVector<OglObj*> &shape, QV
     if (!Loaded)
         Load();
 
-    //unsigned long long int timeNow = QDateTime::currentMSecsSinceEpoch();
-    Alpha = -0.3;
-
     ComplexLine line;
     line.init(sections);
-    //qDebug() << line.length << "length";
+    
+    ProceduralShape::GenShape(templateName, shape, line);
+}
+    
+void ProceduralShape::GenShape(QString templateName, QVector<OglObj*>& shape, ComplexLine& line){
+    //unsigned long long int timeNow = QDateTime::currentMSecsSinceEpoch();
+    Alpha = -0.3;
     
     if(templateName == "" || templateName == "DEFAULT")
         templateName = "DefaultTrack";

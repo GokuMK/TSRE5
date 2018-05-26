@@ -45,8 +45,10 @@ public:
     static QMap<QString, ObjFile*> Files;
     
     static void Load();
+    
     static void GenShape(QString templateName, QVector<OglObj*> &shape, QVector<TSection> &sections);
     static void GenShape(QString templateName, QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
+    static void GenShape(QString templateName, QVector<OglObj*> &shape, ComplexLine &line);
 
 private:
     static float Alpha;

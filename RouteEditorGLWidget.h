@@ -101,6 +101,10 @@ public slots:
     void reloadRefFile();
     void setCameraObject(GameObj* obj);
     void setMoveStep(float val);
+    void paintToolObj();
+    void paintToolObjSelected();
+    void paintToolTDB();
+    void paintToolTDBVector();
     
 signals:
     void routeLoaded(Route * a);

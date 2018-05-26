@@ -313,6 +313,20 @@ WorldObj* Tile::getObj(int id) {
     return obiekty[id];
 }
 
+WorldObj* Tile::findNearestObj(float* pos) {
+    WorldObj *obj = NULL;
+    float dist = 99999;
+    for(int i = 0; i < this->jestObiektow; i++){
+        if(obiekty[i] == NULL) continue;
+        float tdist = Vec3::dist(pos, obiekty[i]->position);
+        if(tdist < dist){
+            obj = obiekty[i];
+            dist = tdist;
+        }
+    }
+    return obj;
+}
+
 void Tile::ViewDbSphere::set(QString sh, FileBuffer* data){
     if (sh == ("vdbid")) {
         vDbId = ParserX::GetUInt(data);

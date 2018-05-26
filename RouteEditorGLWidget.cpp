@@ -1003,7 +1003,9 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
         if (toolEnabled.startsWith("paintTool")) {
             // qDebug() << aktPointerPos[0] << " " << aktPointerPos[2];
             if (keyControlEnabled)
-                route->setTerrainTextureToObj((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush, (WorldObj*) selectedObj);
+                route->setTerrainTextureToTrack((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush, 0);
+            else if (keyShiftEnabled)
+                route->setTerrainTextureToObj((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush, NULL);
             else
                 Game::terrainLib->paintTexture(defaultPaintBrush, (int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos);
         }
@@ -1401,6 +1403,22 @@ void RouteEditorGLWidget::placeToolStickAll(){
     stickPointerToTerrain = false;
 }
 
+void RouteEditorGLWidget::paintToolObjSelected(){
+    route->setTerrainTextureToObj((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush, (WorldObj*) selectedObj);
+}
+
+void RouteEditorGLWidget::paintToolObj(){
+    route->setTerrainTextureToObj((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush, NULL);
+}
+
+void RouteEditorGLWidget::paintToolTDB(){
+    route->setTerrainTextureToTrack((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush, 0);
+}
+
+void RouteEditorGLWidget::paintToolTDBVector(){
+    route->setTerrainTextureToTrack((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, defaultPaintBrush, 1);
+}
+
 void RouteEditorGLWidget::editFind1x1() {
     editFind(0);
 }
@@ -1603,6 +1621,31 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
             menuTool.addAction(defaultMenuActions["putTerrainTex180"]);
             menuTool.addAction(defaultMenuActions["putTerrainTex270"]);
         }
+        if (toolEnabled.startsWith("paintTool")){
+            menuTool.setTitle("Auto Paint");
+            menu.addMenu(&menuTool);   
+            if(defaultMenuActions["paintToolObjSelected"] == NULL){
+                defaultMenuActions["paintToolObjSelected"] = new QAction(tr("&Selected Object"), this); 
+                QObject::connect(defaultMenuActions["paintToolObjSelected"], SIGNAL(triggered()), this, SLOT(paintToolObjSelected()));
+            }
+            if(defaultMenuActions["paintToolObj"] == NULL){
+                defaultMenuActions["paintToolObj"] = new QAction(tr("&Nearest Object"), this); 
+                QObject::connect(defaultMenuActions["paintToolObj"], SIGNAL(triggered()), this, SLOT(paintToolObj()));
+            }
+            if(defaultMenuActions["paintToolTDB"] == NULL){
+                defaultMenuActions["paintToolTDB"] = new QAction(tr("&Nearest Track or Road"), this); 
+                QObject::connect(defaultMenuActions["paintToolTDB"], SIGNAL(triggered()), this, SLOT(paintToolTDB()));
+            }
+            if(defaultMenuActions["paintToolTDBVector"] == NULL){
+                defaultMenuActions["paintToolTDBVector"] = new QAction(tr("&Nearest TDB/RDB Vector"), this); 
+                QObject::connect(defaultMenuActions["paintToolTDBVector"], SIGNAL(triggered()), this, SLOT(paintToolTDBVector()));
+            }
+            menuTool.addAction(defaultMenuActions["paintToolObjSelected"]);
+            menuTool.addAction(defaultMenuActions["paintToolObj"]);
+            menuTool.addAction(defaultMenuActions["paintToolTDB"]);
+            menuTool.addAction(defaultMenuActions["paintToolTDBVector"]); 
+        }
+
     }
     
     //menu.addSeparator();

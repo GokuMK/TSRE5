@@ -15,17 +15,29 @@
 #include <QVector>
 #include "TSection.h"
 
+class ComplexLinePoint {
+public:
+    bool selected = false;
+    int shapeType = 0;
+    float position[3];
+    
+    ComplexLinePoint();
+    ComplexLinePoint(const ComplexLinePoint& o);
+};
+
 class ComplexLine {
 public:
+    float length;
+    
     ComplexLine();
     virtual ~ComplexLine();
-    QVector<TSection> sections;
-    float length;
     void init(QVector<TSection> s);
+    void init(QVector<ComplexLinePoint> s);
     float getLength();
     void getDrawPosition(float* posRot, float distance, float xOffset = 0);
 private:
-
+    QVector<TSection> sections;
+    QVector<ComplexLinePoint> points;
 };
 
 #endif	/* COMPLEXLINE_H */

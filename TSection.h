@@ -11,6 +11,8 @@
 #ifndef TSECTION_H
 #define	TSECTION_H
 
+#include <QVector>
+
 class Vector3f;
 
 class TSection {
@@ -32,7 +34,7 @@ public:
     void drawSection(float* &ptr, float* matrix, float height);
     void drawSection(float* &ptr, float* matrix, float height, int idx, int vidx);
     void drawSection(float* &ptr, float* matrix, float height, int idx, int vidx, float offset, int step);
-    void getPoints(float* &ptr, float* matrix);
+    void getPoints(QVector<float> &ptr, float* matrix);
     void setDrawPosition(float metry);
     float getAngle();
     void getDrawPosition(Vector3f *out, float metry);

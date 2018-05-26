@@ -14,6 +14,7 @@
 #include "WorldObj.h"
 #include <QString>
 #include "FileBuffer.h"
+#include "ComplexLine.h"
 
 class OglObj;
 
@@ -42,11 +43,7 @@ public:
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 
 private:
-    struct Point {
-        bool selected = false;
-        float position[3];
-    };
-    QVector<Point> points;
+    QVector<ComplexLinePoint> points;
     OglObj* point3d = NULL;
     OglObj* line3d = NULL;
     OglObj* point3dSelected = NULL;

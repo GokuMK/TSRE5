@@ -2444,7 +2444,7 @@ bool TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint
     return true;
 }
 
-void TDB::getVectorSectionPoints(int x, int y, float* pos, float*& ptr){
+void TDB::getVectorSectionPoints(int x, int y, float* pos, QVector<float> &ptr, int mode){
     float posT[2];
     posT[0] = x;
     posT[1] = y;
@@ -2457,10 +2457,22 @@ void TDB::getVectorSectionPoints(int x, int y, float* pos, float*& ptr){
     int nid = tpos[0];
     int sid = tpos[2];
     
-    getVectorSectionPoints(x, y, nid, sid, ptr);
+    if(mode == 0){
+        return getVectorSectionPoints(x, y, nid, sid, ptr);
+    }
+    //All sections
+    if(mode == 1){
+        if(trackNodes[nid] == NULL)
+            return;
+        for(int i = 0; i < trackNodes[nid]->iTrv; i++ ){
+            //float* oldPtr = ptr;
+            getVectorSectionPoints(x, y, nid, i, ptr);
+        }
+        return;
+    }
 }
 
-void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
+void TDB::getVectorSectionPoints(int x, int y, int uid, QVector<float> &ptr){
     y = -y;
     //qDebug() << "aaa";
         for (int j = 1; j <= iTRnodes; j++) {
@@ -2478,7 +2490,7 @@ void TDB::getVectorSectionPoints(int x, int y, int uid, float * &ptr){
     }
 }
 
-void TDB::getVectorSectionPoints(int x, int y, int nId, int sId, float * &ptr){
+void TDB::getVectorSectionPoints(int x, int y, int nId, int sId, QVector<float> &ptr){
     float matrix[16];
     float q[4];
     float p[3];
