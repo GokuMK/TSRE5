@@ -164,6 +164,7 @@ QString ParserX::NextTokenDomIgnore(FileBuffer* bufor){
                     b = bufor->getShort();
                     //bufor->off++;
                     if (b == 40) {
+                        //qDebug() << sekcja;
                         return sekcja;
                     }
                 }

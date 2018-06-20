@@ -90,6 +90,7 @@ bool TrackObj::allowNew(){
 void TrackObj::setTemplate(QString name){
     templateName = name;
     templateDisabled = false;
+    modified = true;
     reload();
 }
 

@@ -397,6 +397,7 @@
                     
                     for(int jjjj = 0; jjjj<vert[jj].material; jjjj++){
                         if(jjjj == 0) vert[jj].uvpoint = (unsigned int) bufor->getInt();
+                        else bufor->getInt();
                     }
                     
                 }

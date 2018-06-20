@@ -466,6 +466,12 @@ void PropertiesTrackObj::showObj(GameObj* obj){
     this->cCollisionType.blockSignals(true);
     this->cCollisionType.setCurrentIndex(collisionType);
     this->cCollisionType.blockSignals(false);
+    
+    QString templateName = worldObj->getTemplate();
+    if(templateName.length() == 0)
+        eTemplate.setCurrentText("DEFAULT");
+    else
+        eTemplate.setCurrentText(templateName);
 }
 
 void PropertiesTrackObj::setStepValue(float step){

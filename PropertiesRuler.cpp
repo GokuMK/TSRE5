@@ -12,6 +12,8 @@
 #include "RulerObj.h"
 #include "Undo.h"
 #include "Game.h"
+#include "ProceduralShape.h"
+#include "ShapeTemplates.h"
 
 PropertiesRuler::PropertiesRuler() {
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -79,11 +81,45 @@ PropertiesRuler::PropertiesRuler() {
     QObject::connect(button, SIGNAL(released()),
                       this, SLOT(removeRoadPathsEdited()));
     
+    label = new QLabel("Shape Template:");
+    //label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vbox->addWidget(&eTemplate);
+    eTemplate.setStyleSheet("combobox-popup: 0;");
+    eTemplate.addItem("DEFAULT");
+    eTemplate.addItem("DISABLED");
+    
+    ProceduralShape::Load();
+    if(ProceduralShape::ShapeTemplateFile != NULL){
+        QMapIterator<QString, ShapeTemplate*> i(ProceduralShape::ShapeTemplateFile->templates);
+        while (i.hasNext()) {
+            i.next();
+            if(i.value() == NULL)
+                continue;
+            eTemplate.addItem(i.value()->name);
+        }
+    }
+    QObject::connect(&eTemplate, SIGNAL(currentTextChanged(QString)),
+                      this, SLOT(eTemplateEdited(QString)));
+    button = new QPushButton("Add Shape");
+    vbox->addWidget(button);
+    QObject::connect(button, SIGNAL(released()),
+                      this, SLOT(addShapeEdited()));
     vbox->addStretch(1);
     this->setLayout(vbox);
 }
 
 PropertiesRuler::~PropertiesRuler() {
+}
+
+void PropertiesRuler::eTemplateEdited(QString val){
+    if(worldObj == NULL){
+        return;
+    }
+    Undo::SinglePushWorldObjData(worldObj);
+    worldObj->setTemplate(val);
+    Undo::StateEnd();
 }
 
 void PropertiesRuler::showObj(GameObj* obj){
@@ -98,6 +134,12 @@ void PropertiesRuler::showObj(GameObj* obj){
     this->tY.setText(QString::number(-robj->y, 10));
     lengthM.setText(QString::number(robj->getLength(), 'G', 4));
     lengthGM.setText(QString::number(robj->getGeoLength(), 'G', 4));
+    
+    QString templateName = worldObj->getTemplate();
+    if(templateName.length() == 0)
+        eTemplate.setCurrentText("DEFAULT");
+    else
+        eTemplate.setCurrentText(templateName);
 }
 
 void PropertiesRuler::updateObj(GameObj* obj){
@@ -141,6 +183,14 @@ void PropertiesRuler::createRoadPathsEdited(){
     RulerObj* robj = (RulerObj*)worldObj;
     //Undo::SinglePushWorldObjData(worldObj);
     robj->createRoadPaths();
+}
+
+void PropertiesRuler::addShapeEdited(){
+    if(worldObj == NULL)
+        return;
+    RulerObj* robj = (RulerObj*)worldObj;
+    //Undo::SinglePushWorldObjData(worldObj);
+    robj->enableShape();
 }
 
 void PropertiesRuler::removeRoadPathsEdited(){

@@ -38,6 +38,8 @@ public:
 private:
     QVector<TSection> sections;
     QVector<ComplexLinePoint> points;
+    void getDrawPositionFromTSection(float* posRot, float distance, float xOffset = 0);
+    void getDrawPositionFromPoints(float* posRot, float distance, float xOffset = 0);
 };
 
 #endif	/* COMPLEXLINE_H */

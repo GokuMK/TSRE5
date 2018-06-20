@@ -24,14 +24,17 @@ public:
         NONE = 0,
         TIE = 1,
         RAIL = 2,
-        BALLAST = 3
+        BALLAST = 3,
+        EXPAND = 4,
+        STRETCH = 5,
+        POINT = 6
     };
     enum ElementId {
         EMPTY = 0,
         DEFAULT = 1
     };
     QString name;
-    QString shape;
+    QVector<QString> shape;
     QString texture;
     ElementType type = NONE;
     ElementId id = EMPTY;

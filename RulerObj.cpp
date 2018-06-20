@@ -19,12 +19,17 @@
 #include "Game.h"
 #include "DynTrackObj.h"
 #include "TDB.h"
+#include "TrackShape.h"
+#include "TSectionDAT.h"
+#include "Route.h"
 #include "GeoCoordinates.h"
+#include "ProceduralShape.h"
 
 bool RulerObj::TwoPointRuler = false;
 bool RulerObj::DrawPoints = false;
 
 RulerObj::RulerObj() {
+    this->internalLodControl = true;
     this->shape = -1;
     this->loaded = false;
     this->modified = false;
@@ -37,7 +42,7 @@ bool RulerObj::allowNew(){
 RulerObj::RulerObj(const RulerObj& o) : WorldObj(o){
 
     for(int i = 0; i < o.points.size(); i++){
-        ComplexLinePoint point;
+        Point point;
         point.position[0] = o.points[i].position[0];
         point.position[1] = o.points[i].position[1];
         point.position[2] = o.points[i].position[2];
@@ -45,6 +50,7 @@ RulerObj::RulerObj(const RulerObj& o) : WorldObj(o){
     }
     selectionValue = o.selectionValue;
     length = o.length;
+    internalLodControl = o.internalLodControl;
 }
 
 WorldObj* RulerObj::clone(){
@@ -70,11 +76,11 @@ void RulerObj::load(int x, int y) {
     //this->point3dSelected->setMaterial(0.5,0.5,0.5);
 
     if(this->points.size() == 0){
-        ComplexLinePoint point;
+        Point point;
         Vec3::copy(point.position, this->position);
         this->points.push_back(point);
         if(TwoPointRuler){
-            ComplexLinePoint point2;
+            Point point2;
             Vec3::copy(point2.position, this->position);
             point2.position[2] += 1;
             this->points.push_back(point2);
@@ -93,7 +99,7 @@ void RulerObj::set(QString sh, FileBuffer* data) {
     if (sh == ("points")) {
         int pointCount = ParserX::GetNumber(data);
         for(int i=0; i< pointCount; i++){
-            ComplexLinePoint point;
+            Point point;
             point.position[0] = ParserX::GetNumber(data);
             point.position[1] = ParserX::GetNumber(data);
             point.position[2] = -ParserX::GetNumber(data);
@@ -102,8 +108,28 @@ void RulerObj::set(QString sh, FileBuffer* data) {
         ParserX::SkipToken(data);
         return;
     }
+    if (sh == ("shapetemplate")) {
+        shapeEnabled = true;
+        templateName = ParserX::GetStringInside(data);
+        return;
+    }
+    
     WorldObj::set(sh, data);
     return;
+}
+
+void RulerObj::reload(){
+    proceduralShapeInit = false;
+    for(int j = 0; j < points.size() - 1; j++){
+        points[j].procShape.clear();
+    }
+}
+
+void RulerObj::setTemplate(QString name){
+    templateName = name;
+    shapeEnabled = true;
+    modified = true;
+    reload();
 }
 
 void RulerObj::setPosition(int x, int z, float* p){
@@ -112,7 +138,7 @@ void RulerObj::setPosition(int x, int z, float* p){
         points[selectionValue].position[1] = p[1];
         points[selectionValue].position[2] = -2048*(this->y-z) + p[2];
     } else {
-        ComplexLinePoint point;
+        Point point;
         point.position[0] = -2048*(this->x-x) + p[0];
         point.position[1] = p[1];
         point.position[2] = -2048*(this->y-z) + p[2];
@@ -186,8 +212,16 @@ void RulerObj::removeRoadPaths(){
     //if(ok)
 }
 
+void RulerObj::enableShape(){
+    if(points.size() < 2)
+        return;
+    
+    shapeEnabled = true;
+    modified = true;
+
+}
+
 void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
-    if (renderMode == GLUU::RENDER_SHADOWMAP) return;
     if (!loaded) return;
     if (jestPQ < 2) return;
     
@@ -198,6 +232,43 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         }
         pointer3d->render(selectionColor);
     }
+    
+    int useSC = (float)selectionColor/(float)(selectionColor+0.000001);
+    
+    if(shapeEnabled){
+        if(proceduralShapeInit){
+            for(int j = 0; j < points.size() - 1; j++){
+                gluu->mvPushMatrix();
+                Mat4::multiply(gluu->mvMatrix, gluu->mvMatrix, points[j].matrix);
+                gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+                for(int i = 0; i < points[j].procShape.size(); i++){
+                    points[j].procShape[i]->render(selectionColor | (i&0xF)*useSC);
+                }
+                gluu->mvPopMatrix();
+            }
+        } else {
+            //templateName = "Siec1";
+            qDebug() << templateName;
+            for(int i = 0; i < points.size() - 1; i++){
+                float tlength = Vec3::distance(points[i].position, points[i+1].position);
+                int someval = (((points[i+1].position[2]-points[i].position[2])+0.00001f)/fabs((points[i+1].position[2]-points[i].position[2])+0.00001f));
+                float rotY = ((float)someval+1.0)*(M_PI/2)+(float)(atan((points[i].position[0]-points[i+1].position[0])/(points[i].position[2]-points[i+1].position[2]))); 
+                float rotX = (float)(asin((points[i].position[1]-points[i+1].position[1])/(tlength))); 
+
+                Quat::fill(points[i].quat);
+                Quat::rotateY(points[i].quat, points[i].quat, rotY + M_PI);
+                Quat::rotateX(points[i].quat, points[i].quat, rotX);
+                Mat4::fromRotationTranslation(points[i].matrix, points[i].quat, points[i].position);
+                QVector<TSection> sections;
+                sections.push_back(TSection());
+                sections.back().size = floor((tlength * 10 ) + 0.5) / 10;
+                ProceduralShape::GenShape(templateName, points[i].procShape, sections, i);
+            }
+            proceduralShapeInit = true;
+        }
+    }
+    
+    if (renderMode == GLUU::RENDER_SHADOWMAP) return;
     if(!Game::viewInteractives) 
         return;
     
@@ -257,7 +328,6 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, points[i].position[0], points[i].position[1], points[i].position[2]);
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-        int useSC = (float)selectionColor/(float)(selectionColor+0.000001);
         if(i == 0 || i == points.size() - 1 || DrawPoints)
             if(this->selected && this->selectionValue == i) 
                 point3dSelected->render(selectionColor | (i&0xF)*useSC);
@@ -331,5 +401,8 @@ void RulerObj::save(QTextStream* out){
 for(int i = 0; i < points.size(); i++)
 *(out) << "			Point ( "<<points[i].position[0]<<" "<<points[i].position[1]<<" "<<-points[i].position[2]<<" )\n";
 *(out) << "		)\n";
+if(shapeEnabled){
+*(out) << "		ShapeTemplate ( "<<ParserX::AddComIfReq(templateName)<<" )\n";
+}
 *(out) << "	)\n";
 }

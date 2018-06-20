@@ -157,6 +157,8 @@ public:
     virtual void reload();
     virtual QString getTemplate();
     virtual void setTemplate(QString name);
+    virtual bool isInternalLodControl();
+    virtual void setInternalLodControl(bool val);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 protected:
     virtual void loadSnapablePoints();
@@ -164,6 +166,7 @@ protected:
     virtual bool getBoxPoints(QVector<float> &points);
     float* matrix3x3 = NULL;
     QString templateName = "DEFAULT";
+    bool internalLodControl = false;
 };
 
 #endif	/* WORLDOBJ_H */

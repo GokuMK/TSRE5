@@ -976,7 +976,11 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
                 if (translateTool) {
                     if (selectedObj->typeObj == GameObj::worldobj) {
                         Undo::PushGameObjData((WorldObj*) selectedObj);
-                        ((WorldObj*) selectedObj)->setPosition(camera->pozT[0], camera->pozT[1], aktPointerPos);
+                        float tempPos[3];
+                        int tx = camera->pozT[0];
+                        int tz = camera->pozT[1];
+                        route->getPointerPosition(tempPos, tx, tz, aktPointerPos);
+                        ((WorldObj*) selectedObj)->setPosition(tx, tz, tempPos);
                         ((WorldObj*) selectedObj)->setMartix();
                     }
                 }

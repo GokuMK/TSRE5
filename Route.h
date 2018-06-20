@@ -91,6 +91,7 @@ public:
     TRitem *getTrackItem(int TID, int UID);
     QMap<QString, Coords*> getMkrList();
     void dragWorldObject(WorldObj* obj, int x, int z, float* pos);
+    float* getPointerPosition(float *out, int &x, int &z, float *pos);
     void setMkrFile(QString name);
     void getUnsavedInfo(std::vector<QString> &items);
     void showTrkEditr(Trk * val = NULL);

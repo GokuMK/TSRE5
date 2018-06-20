@@ -329,6 +329,14 @@ void WorldObj::getLinePoints(float *&punkty){
     return;
 }
 
+bool WorldObj::isInternalLodControl(){
+    return internalLodControl;
+}
+
+void WorldObj::setInternalLodControl(bool val){
+    internalLodControl = val;
+}
+
 void WorldObj::load(int x, int y) {
     this->x = x;
     this->y = y;
@@ -511,6 +519,7 @@ QString WorldObj::getTemplate(){
 
 void WorldObj::setTemplate(QString name){
     templateName = name;
+    modified = true;
 }
     
 bool WorldObj::isSimilar(WorldObj* obj){

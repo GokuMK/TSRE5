@@ -243,6 +243,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
     //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
     // wczytujemy ilosc distancelevels
     pliks->iloscd = ParserX::GetNumber(bufor);
+    //qDebug() << "#SFile distance levels" << pliks->iloscd;
     pliks->distancelevel = new SFile::dist[pliks->iloscd];
 
     // wczytujemy distancelevls
@@ -251,7 +252,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
 
         sh = "distance_level";
         ParserX::FindTokenDomIgnore(sh, bufor);
-        //console.log("znaleziono sekcje " + sh + " na " + bufor.p);
+        //qDebug() << QString("znaleziono sekcje " + sh + " na " + bufor->off);
         //wczytanie hierarchii
         sh = "distance_level_header";
         ParserX::FindTokenDomIgnore(sh, bufor);
@@ -342,6 +343,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
 
                         for (int jjjj = 0; jjjj < vert[jj].material; jjjj++) {
                             if (jjjj == 0) vert[jj].uvpoint = (unsigned int) ParserX::GetNumber(bufor);
+                            else ParserX::GetNumber(bufor);
                         }
                     }
                     ParserX::SkipToken(bufor);

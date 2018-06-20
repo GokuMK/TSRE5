@@ -21,12 +21,14 @@ public:
     bool support(GameObj* obj);
     void showObj(GameObj* obj);
     void updateObj(GameObj* obj);
-    
+        
 public slots:
     void checkboxTwoPointEdited(int val);
     void checkboxDrawPointsEdited(int val);
     void createRoadPathsEdited();
     void removeRoadPathsEdited();
+    void addShapeEdited();
+    void eTemplateEdited(QString val);
     
 signals:
     

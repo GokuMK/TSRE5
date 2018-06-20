@@ -22,11 +22,14 @@ class RulerObj : public WorldObj {
 public:
     static bool TwoPointRuler;
     static bool DrawPoints;
+    
     RulerObj();
     RulerObj(const RulerObj& o);
     WorldObj* clone();
     virtual ~RulerObj();
     bool allowNew();
+    void reload();
+    void setTemplate(QString name);
     void load(int x, int y);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
@@ -40,10 +43,20 @@ public:
     float getGeoLength();
     void createRoadPaths();
     void removeRoadPaths();
+    void enableShape();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 
 private:
-    QVector<ComplexLinePoint> points;
+    struct Point {
+        bool selected = false;
+        int shapeType = 0;
+        float position[3];
+        QVector<OglObj*> procShape;
+        float quat[4];
+        float matrix[16];
+    };
+    
+    QVector<Point> points;
     OglObj* point3d = NULL;
     OglObj* line3d = NULL;
     OglObj* point3dSelected = NULL;
@@ -52,6 +65,9 @@ private:
     float geoLength = 0;
     
     void refreshLength();
+    bool shapeEnabled = false;
+    bool proceduralShapeInit = false;
+
 };
 
 #endif	/* RULEROBJ_H */

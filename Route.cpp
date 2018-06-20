@@ -695,20 +695,50 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     return nowy;
 }
 
+float* Route::getPointerPosition(float* out, int &x, int &z, float* pos){
+    if(out == NULL)
+        return NULL;
+    
+    Vec3::copy(out, pos);
+    
+    if(placementStickToTarget){
+            float ttpos[3];
+            float* playerT = Vec2::fromValues(x, z);
+            float* playerT2 = Vec2::fromValues(x, z);
+            float tp[3], tp2[3];
+            float tq[4], tq2[3];
+            Vec3::copy(tp, pos);
+            Vec3::copy(tp2, pos);
+            int ok = -1;
+            if(placementAutoTargetType == 0) {
+                ok = this->trackDB->findNearestPositionOnTDB(playerT, tp, tq, ttpos);
+            } else if(placementAutoTargetType == 1) {
+                ok = this->roadDB->findNearestPositionOnTDB(playerT, tp, tq, ttpos);
+            } else if(placementAutoTargetType == 2) {
+                ok = this->trackDB->findNearestPositionOnTDB(playerT, tp, tq, ttpos);
+                int ok2 = this->roadDB->findNearestPositionOnTDB(playerT2, tp2, tq2, ttpos);
+                if(ok2 >= 0)
+                    if(ok < 0 || ok2 < ok){
+                        ok = ok2;
+                        Vec3::copy(tp, tp2);
+                        Quat::copy(tq, tq2);
+                        Vec2::copy(playerT, playerT2);
+                    }
+            }
+            if(ok >= 0 && ok <= Game::snapableRadius) {
+                if(!snapableOnlyRotation){
+                    Vec3::copy(out, tp);
+                    x = playerT[0];
+                    z = playerT[1];
+                }
+            }
+    }
+}
+
 void Route::dragWorldObject(WorldObj* obj, int x, int z, float* pos){
     if(obj->typeObj != WorldObj::worldobj)
         return;
-    if(obj->isTrackItem() || obj->typeID == obj->groupobject || obj->typeID == obj->ruler ){
-        obj->setPosition(x, z, pos);
-        obj->setMartix();
-        return;
-    }
-    if (obj->typeID == obj->trackobj || obj->typeID == obj->dyntrack)
-        if(roadDB->ifTrackExist(obj->x, obj->y, obj->UiD) || trackDB->ifTrackExist(obj->x, obj->y, obj->UiD)){
-            obj->setPosition(x, z, pos);
-            obj->setMartix();
-            return;
-    }
+    
     float tpos[3];
     Vec3::copy(tpos, pos);
     Game::check_coords(x, z, tpos);
@@ -718,6 +748,56 @@ void Route::dragWorldObject(WorldObj* obj, int x, int z, float* pos){
     int snapableSide = -1;
     float q[4];
     Quat::copy(q, obj->qDirection);
+    
+    if(placementStickToTarget){
+            float ttpos[3];
+            float* playerT = Vec2::fromValues(x, z);
+            float* playerT2 = Vec2::fromValues(x, z);
+            float tp[3], tp2[3];
+            float tq[4], tq2[3];
+            Vec3::copy(tp, pos);
+            Quat::copy(tq, q);
+            Vec3::copy(tp2, pos);
+            Quat::copy(tq2, q);
+            int ok = -1;
+            if(placementAutoTargetType == 0) {
+                ok = this->trackDB->findNearestPositionOnTDB(playerT, tp, tq, ttpos);
+            } else if(placementAutoTargetType == 1) {
+                ok = this->roadDB->findNearestPositionOnTDB(playerT, tp, tq, ttpos);
+            } else if(placementAutoTargetType == 2) {
+                ok = this->trackDB->findNearestPositionOnTDB(playerT, tp, tq, ttpos);
+                int ok2 = this->roadDB->findNearestPositionOnTDB(playerT2, tp2, tq2, ttpos);
+                if(ok2 >= 0)
+                    if(ok < 0 || ok2 < ok){
+                        ok = ok2;
+                        Vec3::copy(tp, tp2);
+                        Quat::copy(tq, tq2);
+                        Vec2::copy(playerT, playerT2);
+                    }
+            }
+            if(ok >= 0 && ok <= Game::snapableRadius) {
+                Quat::copy(q, tq);
+                if(!snapableOnlyRotation){
+                    Vec3::copy(tpos, tp);
+                    x = playerT[0];
+                    z = playerT[1];
+                }
+            }
+    }
+    
+    
+    if(obj->isTrackItem() || obj->typeID == obj->groupobject || obj->typeID == obj->ruler ){
+        obj->setPosition(x, z, tpos);
+        obj->setMartix();
+        return;
+    }
+    
+    if (obj->typeID == obj->trackobj || obj->typeID == obj->dyntrack)
+        if(roadDB->ifTrackExist(obj->x, obj->y, obj->UiD) || trackDB->ifTrackExist(obj->x, obj->y, obj->UiD)){
+            obj->setPosition(x, z, pos);
+            obj->setMartix();
+            return;
+    }
     
     if(placementStickToTarget && placementAutoTargetType == 3){
         snapableSide = tTile->getNearestSnapablePosition(tpos, q, obj->UiD);

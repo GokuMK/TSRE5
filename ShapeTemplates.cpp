@@ -65,6 +65,22 @@ ShapeTemplates::ShapeTemplates() {
                             ParserX::SkipToken(data);
                             continue;
                         }
+                        if (sh == ("stretch")) {
+                            ShapeTemplateElement *e = new ShapeTemplateElement();
+                            e->type = e->STRETCH;
+                            e->load(data);
+                            templates[name]->elements[e->name] = e;
+                            ParserX::SkipToken(data);
+                            continue;
+                        }
+                        if (sh == ("point")) {
+                            ShapeTemplateElement *e = new ShapeTemplateElement();
+                            e->type = e->POINT;
+                            e->load(data);
+                            templates[name]->elements[e->name] = e;
+                            ParserX::SkipToken(data);
+                            continue;
+                        }
                         if (sh == ("rail")) {
                             ShapeTemplateElement *e = new ShapeTemplateElement();
                             e->type = e->RAIL;
@@ -108,7 +124,9 @@ void ShapeTemplateElement::load(FileBuffer* data){
     name = ParserX::GetString(data);
     id = DEFAULT;
     ParserX::GetString(data);
-    shape = ParserX::GetString(data);
+    int shapeCount = ParserX::GetNumber(data);
+    for(int i = 0; i < shapeCount; i++)
+        shape.push_back(ParserX::GetString(data));
     texture = ParserX::GetString(data);
     yOffset = ParserX::GetNumber(data);
     if(type == RAIL){

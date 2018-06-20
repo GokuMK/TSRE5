@@ -2191,7 +2191,6 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <qt>
-        <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>
           <Elem>"CONFIG += console"</Elem>

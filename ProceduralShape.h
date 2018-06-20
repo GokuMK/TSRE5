@@ -46,9 +46,9 @@ public:
     
     static void Load();
     
-    static void GenShape(QString templateName, QVector<OglObj*> &shape, QVector<TSection> &sections);
+    static void GenShape(QString templateName, QVector<OglObj*> &shape, QVector<TSection> &sections, int shapeOffset = 0);
     static void GenShape(QString templateName, QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
-    static void GenShape(QString templateName, QVector<OglObj*> &shape, ComplexLine &line);
+    static void GenShape(QString templateName, QVector<OglObj*> &shape, ComplexLine &line, int shapeOffset = 0);
 
 private:
     static float Alpha;
@@ -64,10 +64,14 @@ private:
     static void GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line);
     static void GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line, float *sPos, float sAngle, float angleB, float angleE);
     
+    static void GenStretch(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line, int shapeOffset = 0);
+    static void GenPointShape(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line, int shapeOffset = 0);
+    
     static void GenAdvancedTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
     
     static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix, float* qrot, float distance = 0);
-    static void PushShapePart(float* &ptr, ObjFile* tFile, float offsetY, float* matrix1, float* matrix2, float* qrot, float dist1, float dist2);
+    static void PushShapePartExpand(float* &ptr, ObjFile* tFile, float offsetY, float* matrix1, float* matrix2, float* qrot, float dist1, float dist2);
+    static void PushShapePartStretch(float* &ptr, ObjFile* tFile, float offsetY, float* matrix, float* qrot, float length);
     
 };
 

@@ -719,7 +719,7 @@ void Tile::render(float * playerT, float* playerW, float* target, float fov, int
             lodz = (z - playerT[1])*2048 + obiekty[i]->position[2] - playerW[2];
             //console.log(this.x);
             lod = (float) sqrt(lodx * lodx + lodz * lodz);
-            if (lod < Game::objectLod) {
+            if (lod < Game::objectLod || obiekty[i]->isInternalLodControl()) {
                 gluu->mvPushMatrix();
                 //obiekty[i]->render(gluu, lod, x-playerT[0]*2048, z-playerT[1]*2048);
                 if (renderMode == gluu->RENDER_SELECTION) {
