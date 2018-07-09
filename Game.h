@@ -135,6 +135,7 @@ public:
     static bool autoGeoTerrain;
     static bool useSuperelevation;
     static bool soundEnabled;
+    static bool fullscreen;
     
     static float fogDensity;// = 0.7;
     //float fogColor[4]{0.5, 0.75, 1.0, 1.0};

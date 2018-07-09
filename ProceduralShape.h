@@ -54,6 +54,7 @@ private:
     static float Alpha;
     
     static ObjFile* GetObjFile(QString name);
+    static QString GetTexturePath(QString textureName);
     
     static void GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line);
     static void GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line, float *sPos, float sAngle, float angleB, float angleE);

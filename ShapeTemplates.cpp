@@ -18,7 +18,7 @@
 
 ShapeTemplates::ShapeTemplates() {
     
-    QString resPath = QString("tsre_appdata/")+Game::AppDataVersion+"/tracks/";
+    QString resPath = QString("tsre_appdata/")+Game::AppDataVersion+"/procedural/";
     //QString path2 = QString("tsre_appdata/")+Game::AppDataVersion+"/tracks/uic60.obj";
     //QString path3 = QString("tsre_appdata/")+Game::AppDataVersion+"/tracks/ballast1.obj";
     //QString path3 = QString("tsre_appdata/")+Game::AppDataVersion+"/tracks/ballast2.obj";

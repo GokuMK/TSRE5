@@ -33,8 +33,8 @@ SoundList *Game::soundList = NULL;
 TerrainLib *Game::terrainLib = NULL;   
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.6958";
-QString Game::AppDataVersion = "0.695";
+QString Game::AppVersion = "v0.696";
+QString Game::AppDataVersion = "0.696";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
@@ -102,6 +102,7 @@ float Game::snapableRadius = 20;
 bool Game::snapableOnlyRot = false;
 float Game::trackElevationMaxPm = 700.0;
 bool Game::proceduralTracks = false;
+bool Game::fullscreen = false;
 
 QString Game::geoPath = "hgst";
 
@@ -380,6 +381,12 @@ void Game::load() {
             else
                 proceduralTracks = false; 
         }
+        if(val == "fullscreen"){
+            if(args[1].trimmed().toLower() == "true")
+                fullscreen = true;
+            else
+                fullscreen = false; 
+        }
         if(val == "soundEnabled"){
             if(args[1].trimmed().toLower() == "true")
                 soundEnabled = true;
@@ -460,7 +467,12 @@ bool Game::loadRouteEditor(){
     }*/
     
     window = new RouteEditorWindow();
-    window->resize(1280, 800);
+    if(Game::fullscreen){
+        window->setWindowFlags(Qt::CustomizeWindowHint);
+        window->setWindowState(Qt::WindowMaximized);
+    } else {
+        window->resize(1280, 800);
+    }
     
     loadWindow = new LoadWindow();
     QObject::connect(window, SIGNAL(exitNow()),

@@ -16,6 +16,7 @@
 #include "Route.h"
 #include "TSectionDAT.h"
 #include <QDateTime>
+#include <QFile>
 #include "Intersections.h"
 #include "ComplexLine.h"
 #include "ShapeTemplates.h"
@@ -28,10 +29,31 @@ QMap<QString, ObjFile*> ProceduralShape::Files;
 float ProceduralShape::Alpha = 0;
 
 ObjFile* ProceduralShape::GetObjFile(QString name) {
-    QString path = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks/" + name;
+    
+    QString pathRoute = Game::root + "/routes/" + Game::route + "/procedural/" + name;
+    pathRoute.replace("//", "/");
+    QString pathApp = QString("tsre_appdata/") + Game::AppDataVersion + "/procedural/" + name;
+    pathApp.replace("//", "/");
+    QString path = pathApp;
+    QFile file(pathRoute);
+    if(file.exists())
+        path = pathRoute;
+
     if (Files[path] == NULL)
         Files[path] = new ObjFile(path);
     return Files[path];
+}
+
+QString ProceduralShape::GetTexturePath(QString textureName){
+    QString pathRoute = Game::root + "/routes/" + Game::route + "/procedural/" + textureName;
+    pathRoute.replace("//", "/");
+    QString pathApp = QString("tsre_appdata/") + Game::AppDataVersion + "/procedural/" + textureName;
+    pathApp.replace("//", "/");
+    QString path = pathApp;
+    QFile file(pathRoute);
+    if(file.exists())
+        path = pathRoute;
+    return path;
 }
 
 void ProceduralShape::Load() {
@@ -165,7 +187,6 @@ void ProceduralShape::GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*>
     float vOffset[3];
     ObjFile *tFile;
 
-    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
     tFile = GetObjFile(stemplate->shape.first());
@@ -186,7 +207,7 @@ void ProceduralShape::GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*>
         PushShapePartExpand(ptr, tFile, stemplate->yOffset, matrix1, matrix2, q, i, i + step);
     }
 
-    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
+    texturePath = new QString(ProceduralShape::GetTexturePath(stemplate->texture));
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -206,7 +227,6 @@ void ProceduralShape::GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*>
     float matrix2[16];
     ObjFile *tFile;
 
-    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
 
@@ -246,7 +266,7 @@ void ProceduralShape::GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*>
         PushShapePartExpand(ptr, tFile, stemplate->yOffset, matrix1, matrix2, qr, i, i + step);
     }
 
-    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
+    texturePath = new QString(ProceduralShape::GetTexturePath(stemplate->texture));
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -264,7 +284,6 @@ void ProceduralShape::GenPointShape(ShapeTemplateElement *stemplate, QVector<Ogl
     float matrix2[16];
     ObjFile *tFile;
 
-    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
     shapeOffset = shapeOffset % stemplate->shape.size();
@@ -275,8 +294,7 @@ void ProceduralShape::GenPointShape(ShapeTemplateElement *stemplate, QVector<Ogl
     Mat4::fromRotationTranslation(matrix1, q, posRot);
     //PushShapePart(ptr, tFile, 0.0, matrix1, q, line.length);
     PushShapePart(ptr, tFile, 0.0, matrix1, q);
-    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
-    //texturePath = new QString(resPath.toLower()+"/linijka.png");
+    texturePath = new QString(ProceduralShape::GetTexturePath(stemplate->texture));
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -296,7 +314,6 @@ void ProceduralShape::GenStretch(ShapeTemplateElement *stemplate, QVector<OglObj
     float matrix2[16];
     ObjFile *tFile;
 
-    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
     shapeOffset = shapeOffset % stemplate->shape.size();
@@ -307,8 +324,7 @@ void ProceduralShape::GenStretch(ShapeTemplateElement *stemplate, QVector<OglObj
     Mat4::fromRotationTranslation(matrix1, q, posRot);
     PushShapePartStretch(ptr, tFile, 0.0, matrix1, q, line.length);
 
-    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
-    //texturePath = new QString(resPath.toLower()+"/linijka.png");
+    texturePath = new QString(ProceduralShape::GetTexturePath(stemplate->texture));
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -328,7 +344,6 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
     float matrix2[16];
     ObjFile *tFile;
 
-    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
     tFile = GetObjFile(stemplate->shape.first());
@@ -343,8 +358,7 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
         PushShapePartExpand(ptr, tFile, stemplate->yOffset, matrix1, matrix2, q, i, i + step);
     }
 
-    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
-    //texturePath = new QString(resPath.toLower()+"/linijka.png");
+    texturePath = new QString(ProceduralShape::GetTexturePath(stemplate->texture));
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -366,7 +380,6 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
     float matrix2[16];
     ObjFile *tFile;
 
-    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
     float pp[3];
@@ -398,7 +411,7 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
         PushShapePartExpand(ptr, tFile, stemplate->yOffset, matrix1, matrix2, qr, i, i + step);
     }
 
-    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
+    texturePath = new QString(ProceduralShape::GetTexturePath(stemplate->texture));
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -416,7 +429,6 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
     float matrix2[16];
     ObjFile *tFile;
 
-    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
     tFile = GetObjFile(stemplate->shape.first());
@@ -427,7 +439,7 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
         PushShapePart(ptr, tFile, 0.155, matrix1, q);
     }
 
-    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
+    texturePath = new QString(ProceduralShape::GetTexturePath(stemplate->texture));
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -447,7 +459,6 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
     float matrix2[16];
     ObjFile *tFile;
 
-    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
 
@@ -474,7 +485,7 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
         PushShapePart(ptr, tFile, 0.155, matrix1, qr);
     }
 
-    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
+    texturePath = new QString(ProceduralShape::GetTexturePath(stemplate->texture));
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
@@ -747,7 +758,6 @@ void ProceduralShape::GenAdvancedTie(ShapeTemplateElement *stemplate, QVector<Og
 
     float* p = new float[4000000];
     float* ptr = p;
-    QString resPath = QString("tsre_appdata/") + Game::AppDataVersion + "/tracks";
     QString* texturePath;
 
     for (int i = 0; i < primitives.count(); i++) {
@@ -759,7 +769,7 @@ void ProceduralShape::GenAdvancedTie(ShapeTemplateElement *stemplate, QVector<Og
         }
     }
 
-    texturePath = new QString(resPath.toLower() + "/" + stemplate->texture);
+    texturePath = new QString(ProceduralShape::GetTexturePath(stemplate->texture));
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);

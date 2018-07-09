@@ -58,7 +58,7 @@
 #include "ActivityTimetableProperties.h"
 
 RouteEditorWindow::RouteEditorWindow() {
-    
+
     objTools = new ObjTools("ObjTools");
     terrainTools = new TerrainTools("TerrainTools");
     geoTools = new GeoTools("GeoTools");
