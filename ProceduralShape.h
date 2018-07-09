@@ -40,21 +40,30 @@ class ProceduralShape {
 public:
     static ShapeTemplates *ShapeTemplateFile;
     static GlobalDefinitions* GlobalDefinitionFile;
+    static QHash<QString, QVector<OglObj*>> Shapes;
     
     static bool Loaded;
     static QMap<QString, ObjFile*> Files;
     
     static void Load();
     
-    static void GenShape(QString templateName, QVector<OglObj*> &shape, QVector<TSection> &sections, int shapeOffset = 0);
-    static void GenShape(QString templateName, QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
-    static void GenShape(QString templateName, QVector<OglObj*> &shape, ComplexLine &line, int shapeOffset = 0);
+    static void GetShape(QString templateName, QVector<OglObj*> &shape, QVector<TSection> &sections, int shapeOffset = 0);
+    static void GetShape(QString templateName, QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
+    static void GetShape(QString templateName, QVector<OglObj*> &shape, ComplexLine &line, int shapeOffset = 0);
 
 private:
     static float Alpha;
+    static unsigned int ShapeCount;
     
     static ObjFile* GetObjFile(QString name);
     static QString GetTexturePath(QString textureName);
+    static QString GetShapeHash(QString templateName, TrackShape* tsh, QMap<int, float> &angles, int shapeOffset);
+    static QString GetShapeHash(QString templateName, QVector<TSection> &sections, int shapeOffset);
+    static QString GetShapeHash(QString templateName, ComplexLine &line, int shapeOffset);
+    
+    static void GenShape(QString templateName, QVector<OglObj*> &shape, QVector<TSection> &sections, int shapeOffset);
+    static void GenShape(QString templateName, QVector<OglObj*> &shape, TrackShape* tsh, QMap<int, float> &angles);
+    static void GenShape(QString templateName, QVector<OglObj*> &shape, ComplexLine &line, int shapeOffset);
     
     static void GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line);
     static void GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*> &shape, ComplexLine &line, float *sPos, float sAngle, float angleB, float angleE);

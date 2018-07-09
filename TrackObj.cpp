@@ -312,7 +312,7 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
             QMap<int, float> angles;
             if(Game::useSuperelevation)
                 Game::trackDB->fillTrackAngles(x, -y, UiD, angles);
-            ProceduralShape::GenShape(templateName, procShape, tsh, angles);
+            ProceduralShape::GetShape(templateName, procShape, tsh, angles);
             proceduralShapeInit = true;
         } else {
             for(int i = 0; i < procShape.size(); i++){

@@ -55,6 +55,15 @@ float TSection::getDlugosc() {
     return 0;
 }
 
+int TSection::getHash(){
+    if (type == 0) {
+        return size*200;
+    } else if (type == 1) {
+        return radius * 100000 + angle*100;
+    }
+    return 0;
+}
+
 float TSection::getAngle() {
     if (type == 0) {
         return 0;

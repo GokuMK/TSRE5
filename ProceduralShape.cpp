@@ -21,12 +21,14 @@
 #include "ComplexLine.h"
 #include "ShapeTemplates.h"
 
+QHash<QString, QVector<OglObj*>> ProceduralShape::Shapes;
 ShapeTemplates *ProceduralShape::ShapeTemplateFile = NULL;
 GlobalDefinitions *ProceduralShape::GlobalDefinitionFile = NULL;
 
 bool ProceduralShape::Loaded = false;
 QMap<QString, ObjFile*> ProceduralShape::Files;
 float ProceduralShape::Alpha = 0;
+unsigned int ProceduralShape::ShapeCount = 0;
 
 ObjFile* ProceduralShape::GetObjFile(QString name) {
     
@@ -64,6 +66,40 @@ void ProceduralShape::Load() {
 
     Alpha = -0.3;
     Loaded = true;
+}
+
+QString ProceduralShape::GetShapeHash(QString templateName, TrackShape* tsh, QMap<int, float> &angles, int shapeOffset){
+    QString angless;
+    QMapIterator<int, float> i(angles);
+    while (i.hasNext()) {
+        i.next();
+        angless += QString::number(i.key(), 16) + QString::number((int)(i.value()*100), 16) + "_";
+    }
+    return tsh->getHashString() + QString::number(shapeOffset, 16) + angless + templateName;
+    //return QString::number(QTime::currentTime().msecsSinceStartOfDay());
+}
+
+QString ProceduralShape::GetShapeHash(QString templateName, QVector<TSection> &sections, int shapeOffset){
+    QString sectionHash; 
+    for(int i = 0; i < sections.size(); i++)
+        sectionHash += QString::number(sections[i].getHash(), 16);
+    return sectionHash + QString::number(shapeOffset, 16) + templateName;
+    //return QString::number(QTime::currentTime().msecsSinceStartOfDay());
+}
+
+QString ProceduralShape::GetShapeHash(QString templateName, ComplexLine &line, int shapeOffset){
+    QString lineHash = line.getHash();
+    return lineHash + QString::number(shapeOffset, 16) + templateName;
+    //return QString::number(QTime::currentTime().msecsSinceStartOfDay());
+}
+
+void ProceduralShape::GetShape(QString templateName, QVector<OglObj*>& shape, TrackShape* tsh, QMap<int, float> &angles) {
+    QString hash = ProceduralShape::GetShapeHash(templateName, tsh, angles, 0);
+    if(ProceduralShape::Shapes[hash].size() == 0){
+        qDebug() << "New Procedural Shape: "<< ShapeCount++ << hash;
+        ProceduralShape::GenShape(templateName, ProceduralShape::Shapes[hash], tsh, angles);
+    }
+    shape.append(ProceduralShape::Shapes[hash]);
 }
 
 void ProceduralShape::GenShape(QString templateName, QVector<OglObj*>& shape, TrackShape* tsh, QMap<int, float> &angles) {
@@ -131,16 +167,35 @@ void ProceduralShape::GenShape(QString templateName, QVector<OglObj*>& shape, Tr
     return;
 }
 
+void ProceduralShape::GetShape(QString templateName, QVector<OglObj*>& shape, QVector<TSection> &sections, int shapeOffset) {
+    QString hash = ProceduralShape::GetShapeHash(templateName, sections, shapeOffset);
+    if(ProceduralShape::Shapes[hash].size() == 0){
+        qDebug() << "New Procedural Shape: "<< ShapeCount++ << hash;
+        ProceduralShape::GenShape(templateName, ProceduralShape::Shapes[hash], sections, shapeOffset);
+    }
+    shape.append(ProceduralShape::Shapes[hash]);
+}
+
 void ProceduralShape::GenShape(QString templateName, QVector<OglObj*>& shape, QVector<TSection> &sections, int shapeOffset) {
     if (!Loaded)
         Load();
 
     ComplexLine line;
     line.init(sections);
-    
+
     ProceduralShape::GenShape(templateName, shape, line, shapeOffset);
 }
     
+
+void ProceduralShape::GetShape(QString templateName, QVector<OglObj*>& shape, ComplexLine& line, int shapeOffset) {
+    QString hash = ProceduralShape::GetShapeHash(templateName, line, shapeOffset);
+    if(ProceduralShape::Shapes[hash].size() == 0){
+        qDebug() << "New Procedural Shape: "<< ShapeCount++ << hash;
+        ProceduralShape::GenShape(templateName, ProceduralShape::Shapes[hash], line, shapeOffset);
+    }
+    shape.append(ProceduralShape::Shapes[hash]);
+}
+
 void ProceduralShape::GenShape(QString templateName, QVector<OglObj*>& shape, ComplexLine& line, int shapeOffset){
     //unsigned long long int timeNow = QDateTime::currentMSecsSinceEpoch();
     Alpha = -0.3;
@@ -605,7 +660,7 @@ void ProceduralShape::GenAdvancedTie(ShapeTemplateElement *stemplate, QVector<Og
             primitives[0].back().data = new float[1800];
             float* ptr = primitives[0].back().data;
             primitives[0].back().count = tFile->count;
-            qDebug() << "count" << tFile->count;
+            //qDebug() << "count" << tFile->count;
             //Vec3::copy(primitives[0].back().pos, posRot);
             //Vec3::transformMat4(primitives[0].back().pos, primitives[0].back().pos, matrixS);
             //Mat4::copy(primitives[0].back().matrix, matrix1);
@@ -631,7 +686,7 @@ void ProceduralShape::GenAdvancedTie(ShapeTemplateElement *stemplate, QVector<Og
             primitives[0].back().data = new float[1800];
             float* ptr = primitives[0].back().data;
             primitives[0].back().count = tFile->count;
-            qDebug() << "count" << tFile->count;
+            //qDebug() << "count" << tFile->count;
             Vec3::copy(primitives[0].back().pos, posRot);
             Vec3::transformMat4(primitives[0].back().pos, primitives[0].back().pos, matrixS);
             Mat4::copy(primitives[0].back().matrix, matrix1);

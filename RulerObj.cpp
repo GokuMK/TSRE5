@@ -262,7 +262,7 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
                 QVector<TSection> sections;
                 sections.push_back(TSection());
                 sections.back().size = floor((tlength * 10 ) + 0.5) / 10;
-                ProceduralShape::GenShape(templateName, points[i].procShape, sections, i);
+                ProceduralShape::GetShape(templateName, points[i].procShape, sections, i);
             }
             proceduralShapeInit = true;
         }

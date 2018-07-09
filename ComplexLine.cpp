@@ -32,7 +32,9 @@ ComplexLine::~ComplexLine() {
 void ComplexLine::init(QVector<TSection> s){
     sections.append(s);
     length = 0;
+    hash = "";
     for(int i = 0; i < sections.size(); i++){
+        hash += QString::number(sections[i].getHash(), 16) + "_";
         length += sections[i].getDlugosc();
     }
 }
@@ -40,8 +42,10 @@ void ComplexLine::init(QVector<TSection> s){
 void ComplexLine::init(QVector<ComplexLinePoint> s){
     points.append(s);
     length = 0;
+    hash = "";
     for(int i = 1; i < points.size(); i++){
         length += Vec3::distance(points[i].position, points[i-1].position);
+        hash += QString::number((int)(length*200), 16) + "_";
         Vec3::sub(points[i].position, points[i].position, points[0].position);
     }
     Vec3::sub(points[0].position, points[0].position, points[0].position);
@@ -51,6 +55,9 @@ float ComplexLine::getLength(){
     return length;
 }
 
+QString ComplexLine::getHash(){
+    return hash;
+}
 void ComplexLine::getDrawPosition(float* posRot, float distance, float xOffset){
     if(sections.size() > 0)
         return getDrawPositionFromTSection(posRot, distance, xOffset);

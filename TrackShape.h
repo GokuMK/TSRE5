@@ -41,6 +41,7 @@ public:
     TrackShape();
     TrackShape(int t);
     virtual ~TrackShape();
+    QString getHashString();
     //void getShapePath();
 private:
 

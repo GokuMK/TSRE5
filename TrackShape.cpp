@@ -18,6 +18,18 @@ TrackShape::TrackShape(int t) {
     this->id = t;
 }
 
+QString TrackShape::getHashString(){
+    if(filename.length() > 0)
+        return filename;
+    
+    QString hash;
+    for(int i = 0; i < numpaths; i++){
+        for(int j = 0; j < path[i].n; j++)
+        hash += QString::number(path[i].sect[j], 16);
+    }
+    return hash;
+}
+
 TrackShape::~TrackShape() {
 }
 

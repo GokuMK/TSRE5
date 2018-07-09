@@ -309,7 +309,7 @@ void DynTrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* p
                     }
                 }
             }
-            ProceduralShape::GenShape(templateName, shape, tsh, angles);
+            ProceduralShape::GetShape(templateName, shape, tsh, angles);
         } else {
             ProceduralMstsDyntrack::GenShape(shape, tsections);
         }

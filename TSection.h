@@ -37,6 +37,7 @@ public:
     void getPoints(QVector<float> &ptr, float* matrix);
     void setDrawPosition(float metry);
     float getAngle();
+    int getHash();
     void getDrawPosition(Vector3f *out, float metry);
     void setCamPosition(float metry, float ob);
     void setCamRotation(float metry, float ob);

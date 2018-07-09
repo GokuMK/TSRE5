@@ -28,12 +28,14 @@ public:
 class ComplexLine {
 public:
     float length;
+    QString hash;
     
     ComplexLine();
     virtual ~ComplexLine();
     void init(QVector<TSection> s);
     void init(QVector<ComplexLinePoint> s);
     float getLength();
+    QString getHash();
     void getDrawPosition(float* posRot, float distance, float xOffset = 0);
 private:
     QVector<TSection> sections;
