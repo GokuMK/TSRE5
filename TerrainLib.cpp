@@ -131,7 +131,7 @@ void TerrainLib::setTextureToTrackObj(Brush* brush, float* punkty, int length, i
 
 }
 
-void TerrainLib::setTerrainToTrackObj(Brush* brush, float* punkty, int length, int tx, int tz, float* matrix){
+void TerrainLib::setTerrainToTrackObj(Brush* brush, float* punkty, int length, int tx, int tz, float* matrix, float offsetY){
 
 }
 

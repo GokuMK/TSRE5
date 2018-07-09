@@ -48,7 +48,7 @@ public:
     void toggleDraw(int x, int z, float* p);
     void setTileBlob(int x, int z, float* p);
     void setTextureToTrackObj(Brush* brush, float* punkty, int length, int x, int z);
-    void setTerrainToTrackObj(Brush* brush, float* punkty, int length, int x, int z, float* matrix);
+    void setTerrainToTrackObj(Brush* brush, float* punkty, int length, int x, int z, float* matrix, float offsetY = 0);
     int getTexture(int x, int z, float* p);
     bool load(int x, int z);
     void getUnsavedInfo(std::vector<QString> &items);

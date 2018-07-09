@@ -518,9 +518,9 @@ void Route::setTerrainToTrackObj(WorldObj* obj, Brush* brush){
             length = punkty.length();
             qDebug() << "l "<<length;
         }
-        
+        float offset = 0;//-0.4;
         if(length > 0)
-            Game::terrainLib->setTerrainToTrackObj(brush, punkty.data(), length, obj->x, obj->y, obj->matrix);
+            Game::terrainLib->setTerrainToTrackObj(brush, punkty.data(), length, obj->x, obj->y, obj->matrix, offset);
     } else if(obj->hasLinePoints()) {
         float* punkty = new float[10000];
         float* ptr = punkty;

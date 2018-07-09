@@ -145,6 +145,11 @@ void PropertiesSignal::showObj(GameObj* obj){
     
     TDB* tdb = Game::trackDB;
     SignalShape* signalShape = tdb->sigCfg->signalShape[sobj->fileName.toStdString()];
+    /*for(auto kv : tdb->sigCfg->signalShape) {
+        qDebug() << "shape "<< QString::fromStdString(kv.first);
+    } 
+    qDebug() << "req " << sobj->fileName;*/
+    
     if(signalShape == NULL){ 
         infoLabel->setText("NULL");
         return;

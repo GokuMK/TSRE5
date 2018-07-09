@@ -313,7 +313,7 @@ void TerrainLibSimple::setTextureToTrackObj(Brush* brush, float* punkty, int len
     }
 }
 
-void TerrainLibSimple::setTerrainToTrackObj(Brush* brush, float* punkty, int length, int tx, int tz, float* matrix){
+void TerrainLibSimple::setTerrainToTrackObj(Brush* brush, float* punkty, int length, int tx, int tz, float* matrix, float offsetY){
     QSet<Terrain*> uterr;
 
     // calculating plane equation
@@ -419,7 +419,7 @@ void TerrainLibSimple::setTerrainToTrackObj(Brush* brush, float* punkty, int len
                 diffC = sqrt(iis*iis + jjs*jjs)*brush->eCut;
                 diffE = sqrt(iis*iis + jjs*jjs)*brush->eEmb;
                 //qDebug() << diffC <<" "<<diffE;
-                uterr.insert(setHeight256(tx, tz, xx*8, zz*8, h, diffC, diffE));
+                uterr.insert(setHeight256(tx, tz, xx*8, zz*8, h + offsetY, diffC, diffE));
             }
         }
     
