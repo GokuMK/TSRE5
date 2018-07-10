@@ -89,6 +89,7 @@ public:
     void setSignalRot(float rot);
     void setSpeedpostRot(float rot);
     float getSpeedpostRot();
+    QString getTrackItemName();
     void setSoundRegionRot(float rot);
     void setSoundRegionData(float rot, float ttype, float val = 0);
     void setSignalDirection(int dir);

@@ -91,6 +91,7 @@ public:
     float getCurrentElevation();
     float getTotalDistanceDownPath();
     void reload();
+    bool isBroken();
     void updateSim(float deltaTime);
     float getCurrentSpeed();
     void render(int selectionColor = 0);

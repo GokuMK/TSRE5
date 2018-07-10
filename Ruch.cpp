@@ -12,6 +12,7 @@
 #include "TRnode.h"
 #include "TSectionDAT.h"
 #include "Game.h"
+#include "TRitem.h"
 
 Ruch::Ruch() {
 
@@ -59,6 +60,8 @@ void Ruch::next(float m) {
     }
     //nodeDist += m*direction;
     //checkNode();
+    if(trackItems)
+        checkPassingItems();
 }
 
 void Ruch::back(float m) {
@@ -77,9 +80,13 @@ void Ruch::back(float m) {
             }
         }
     }
+    
+    if(trackItems)
+        checkPassingItems();
 }
 
 void Ruch::toNext(float m){
+    lastNodeDist = nodeDist;
     nodeDist += m*direction;
     int sign = 1;
     if(m < 0)
@@ -139,6 +146,7 @@ void Ruch::checkNode(int mSign) {
     } else {
         nodeDist = nodeLength-nodeDistLeft;
     }
+    lastNodeDist = nodeDist;
     direction = (kierunek - 0.5)*2*mSign;
 }
 
@@ -155,6 +163,33 @@ int Ruch::getVectorDirection(){
 
 float Ruch::getDistanceDownPath(){
     return distanceDownPath;
+}
+
+void Ruch::trackPassingItems(bool val){
+    trackItems = val;
+}
+
+QString Ruch::getLastItemName(){
+    return lastItemName;
+}
+
+void Ruch::checkPassingItems(){
+    if(lastNodeDist == nodeDist)
+        return;
+    TDB *tdb = Game::trackDB;
+    TRnode *n = tdb->trackNodes[nodeIdx];
+    for(int i = 0; i < n->iTri; i++){
+        int itemId = n->trItemRef[i];
+        if(tdb->trackItems[itemId] == NULL)
+            return;
+        float dist = tdb->trackItems[itemId]->getTrackPosition();
+        if((dist > lastNodeDist && dist < nodeDist) || (dist < lastNodeDist && dist > nodeDist)){
+            lastItemId = itemId;
+            lastItemName = tdb->trackItems[itemId]->getTrackItemName();
+            qDebug() << "!!!!!!!!!!!!!!!!! item Id" << itemId << lastItemName;
+        }
+    }
+    
 }
 /*
 bool Ruch::next(){

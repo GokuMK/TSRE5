@@ -36,9 +36,12 @@ public:
     float *getCurrentPosition(float *sElev = NULL);
     float getDistanceDownPath();
     int getVectorDirection();
+    void trackPassingItems(bool val);
+    QString getLastItemName();
 
 private:
     void checkNode(int mSign);
+    void checkPassingItems();
     float kierunek = 1;
     float direction = 1;
     int nodeIdx;
@@ -47,7 +50,11 @@ private:
     float drawPosition[8];
     float distanceDownPath = 0;
     QMap<int, int>* junctionDirections = NULL;
-    //bool next();
+    
+    bool trackItems = false;
+    float lastNodeDist = 0;
+    int lastItemId = -1;
+    QString lastItemName;
 };
 
 #endif	/* RUCH_H */

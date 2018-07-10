@@ -29,7 +29,7 @@ void TrainNetworkEng::readData() {
 }
 
 void TrainNetworkEng::writeData(float *data) {
-    socket->write((const char*)data, 8);
+    socket->write((const char*)data, 16);
 }
 
 TrainNetworkEng::~TrainNetworkEng() {

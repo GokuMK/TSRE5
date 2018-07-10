@@ -221,6 +221,7 @@
         <itemPath>QuadTree.h</itemPath>
         <itemPath>Ref.h</itemPath>
         <itemPath>Route.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h</itemPath>
         <itemPath>SoundList.h</itemPath>
         <itemPath>TFile.h</itemPath>
         <itemPath>Terrain.h</itemPath>
@@ -459,6 +460,7 @@
         <itemPath>QuadTree.cpp</itemPath>
         <itemPath>Ref.cpp</itemPath>
         <itemPath>Route.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp</itemPath>
         <itemPath>SoundList.cpp</itemPath>
         <itemPath>TFile.cpp</itemPath>
         <itemPath>Terrain.cpp</itemPath>
@@ -626,6 +628,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1485,6 +1497,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
             ex="false"
             tool="1"
@@ -2324,6 +2346,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -3183,6 +3215,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
             ex="false"
             tool="1"
@@ -4014,6 +4056,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h"
             ex="false"
             tool="3"
             flavor2="0">

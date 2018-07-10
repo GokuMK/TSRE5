@@ -43,6 +43,7 @@
 #include "Activity.h"
 #include "PlayActivitySelectWindow.h"
 #include "SoundManager.h"
+#include "Skydome.h"
 
 RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -295,6 +296,18 @@ void RouteEditorGLWidget::paintGL() {
     Mat4::perspective(gluu->fMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
     Mat4::multiply(gluu->fMatrix, gluu->fMatrix, camera->getMatrix());
     
+    // Render Skydome
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 100.0f, 10000.0f);
+    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, camera->getPos());
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, -50, 0);
+    Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, 2.0, 0, 1, 0);
+    gluu->setMatrixUniforms();
+    gluu->currentShader->setUniformValue(gluu->currentShader->lod, 0.0f);
+    //route->skydome->render(gluu, renderMode);
+    Mat4::identity(gluu->mvMatrix);
+    glClear(GL_DEPTH_BUFFER_BIT); 
+    
     // Render Low Resolution Terrain
     Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 600.0f, 100000.0f);
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
@@ -317,10 +330,10 @@ void RouteEditorGLWidget::paintGL() {
     Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
     Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
     gluu->setMatrixUniforms();
-    
+
     if (stickPointerToTerrain && Game::viewTerrainShape)
         if (!selection) drawPointer();
-
+    
     route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, renderMode);
     
     //if (!selection)

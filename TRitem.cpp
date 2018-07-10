@@ -625,6 +625,13 @@ float TRitem::getSpeedpostRot() {
     return this->speedpostTrItemData[this->speedpostTrItemDataLength - 1];
 }
 
+QString TRitem::getTrackItemName(){
+    if(platformName.length() > 0)
+        return platformName;
+    
+    return type;
+}
+
 void TRitem::flipSignal() {
     this->trSignalType2 = abs(this->trSignalType2 - 1);
     this->trSignalType3 += M_PI;

@@ -32,6 +32,7 @@ class Path;
 class TRitem;
 class Environment;
 class GroupObj;
+class Skydome;
 
 class Route : public QObject {
     Q_OBJECT
@@ -42,10 +43,11 @@ public:
     //QVector<Traffic*> traffic;
     QVector<Path*> path;
     bool loaded = false;
-    TSectionDAT *tsection; 
-    SoundList *soundList;
-    Ref *ref;
-    Environment *env;
+    TSectionDAT *tsection = NULL; 
+    SoundList *soundList = NULL;
+    Ref *ref = NULL;
+    Environment *env = NULL;
+    Skydome *skydome = NULL;
     bool placementStickToTarget = false;
     float placementAutoLength = 50;
     bool placementAutoTwoPointRot = true;

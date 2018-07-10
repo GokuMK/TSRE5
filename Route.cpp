@@ -51,6 +51,7 @@
 #include "OrtsWeatherChange.h"
 #include "GeoCoordinates.h"
 #include "Consist.h"
+#include "Skydome.h"
 
 Route::Route() {
     Game::currentRoute = this;
@@ -125,6 +126,8 @@ Route::Route() {
     
     Vec3::set(placementAutoTranslationOffset, 0, 0, 0);
     Vec3::set(placementAutoRotationOffset, 0, 0, 0);
+    
+    skydome = new Skydome();
 }
 
 Route::Route(const Route& orig) {

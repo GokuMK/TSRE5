@@ -27,6 +27,7 @@
 #include "SoundSource.h"
 #include "SoundVariables.h"
 #include "TrainNetworkEng.h"
+#include "GeoCoordinates.h"
 
 Eng::Eng() {
     
@@ -561,56 +562,72 @@ void Eng::drawBorder3d(){
 };
 
 void Eng::updateSim(float deltaTime){
-    static SoundDefinitionGroup::Stream::Curve curve1("SpeedControlled");
-    static SoundDefinitionGroup::Stream::Curve curve2("SpeedControlled");
-    static SoundDefinitionGroup::Stream::Curve *curve = &curve1;
-    if(curve1.points.size() == 0){
-        curve1.points.push_back(Vector2f(-1.0, 0.1));
-        curve1.points.push_back(Vector2f(2.0, 0.5));
-        curve1.points.push_back(Vector2f(25.0, 1.0));
-        curve1.points.push_back(Vector2f(56.0, 0.0));
-    }
-    if(curve2.points.size() == 0){
-        curve2.points.push_back(Vector2f(-1.0, -0.1));
-        curve2.points.push_back(Vector2f(2.0, -0.5));
-        curve2.points.push_back(Vector2f(25.0, -1.0));
-        curve2.points.push_back(Vector2f(56.0, 0.0));
-    }
+    static float acceleration = 0;
+    static float lastSpeed = 0;
     
-    if(currentSpeed > 55 && curve == &curve1){
-        curve = &curve2;
-    }
-    if(currentSpeed < 0.1 && curve == &curve2){
-        curve = &curve1;
-    }
+    if(!Game::useNetworkEng){
+    // Local Sound Speed test:
+        static SoundDefinitionGroup::Stream::Curve curve1("SpeedControlled");
+        static SoundDefinitionGroup::Stream::Curve curve2("SpeedControlled");
+        static SoundDefinitionGroup::Stream::Curve *curve = &curve1;
+        if(curve1.points.size() == 0){
+            curve1.points.push_back(Vector2f(-1.0, 0.1));
+            curve1.points.push_back(Vector2f(2.0, 0.5));
+            curve1.points.push_back(Vector2f(25.0, 1.0));
+            curve1.points.push_back(Vector2f(56.0, 0.0));
+        }
+        if(curve2.points.size() == 0){
+            curve2.points.push_back(Vector2f(-1.0, -0.1));
+            curve2.points.push_back(Vector2f(2.0, -0.5));
+            curve2.points.push_back(Vector2f(25.0, -1.0));
+            curve2.points.push_back(Vector2f(56.0, 0.0));
+        }
+
+        if(currentSpeed > 55 && curve == &curve1){
+            curve = &curve2;
+        }
+        if(currentSpeed < 0.1 && curve == &curve2){
+            curve = &curve1;
+        }
+
+        static float acc = 0.1;
+        if(soundVariables != NULL)
+            acc = curve->getValue(soundVariables);
+
+        currentSpeed += acc*deltaTime;
+
+        // Static speed
+        //currentSpeed = 120;
     
-    //qDebug() << curve.points.size();
-    static float acc = 0.1;
-    if(soundVariables != NULL)
-        acc = curve->getValue(soundVariables);
-    //acc*=accmult;
-    float lastSpeed = currentSpeed;
-    currentSpeed += acc*deltaTime;
-    
-    
-    
-    float acceleration = (currentSpeed - lastSpeed) / (deltaTime);
-    //qDebug() << acc << acceleration << currentSpeed;
-    
-    currentSpeed = 45;
-    
-    if(Game::useNetworkEng){
+    // Network Speed
+    } else {
+        static IghCoordinate* igh = new IghCoordinate();
+        static LatitudeLongitudeCoordinate* latlon = new LatitudeLongitudeCoordinate();
+        static PreciseTileCoordinate* coords = new PreciseTileCoordinate();
         if(networkEng == NULL){
             networkEng = new TrainNetworkEng();
         }
         currentSpeed = networkEng->getSpeed();
         
-        float data[2];
+        float data[4];
         data[0] = getCurrentElevation();
+        if(isBroken())
+            data[0] = 666;
         data[1] = getTotalDistanceDownPath();
+        float cpos[8];
+        getCameraPosition((float*)cpos);
+        coords->setTWxyz(cpos[0], -cpos[1], cpos[2], cpos[3], cpos[4]);
+        Game::GeoCoordConverter->ConvertToInternal(coords, igh);
+        Game::GeoCoordConverter->ConvertToLatLon(igh, latlon);
+        data[2] = latlon->Latitude;
+        data[3] = latlon->Longitude;
         networkEng->writeData(data);
     } 
     
+    if(currentSpeed != lastSpeed)
+        acceleration = (currentSpeed - lastSpeed) / (deltaTime);
+    
+    //qDebug() << acceleration << currentSpeed << lastSpeed;
     if(soundVariables != NULL){
         // vectron
         //soundVariables->value[SoundVariables::VARIABLE2] = currentSpeed * 100 / 55.0;
@@ -632,6 +649,7 @@ void Eng::updateSim(float deltaTime){
         }
     }
     
+    lastSpeed = currentSpeed;
 }
 
 float Eng::getCurrentSpeed(){
@@ -721,6 +739,14 @@ void Eng::reload(){
             Game::currentShapeLib->shape[freightanimShape[i].id[shapeLibId]]->reload();
         }
     }
+}
+
+bool Eng::isBroken(){
+    QString name = ruch1->getLastItemName();
+    if(name == "E_STOP"){
+        return true;
+    }
+    return false;
 }
 
 float *Eng::getCurrentPositionOnTrack(){
@@ -913,6 +939,7 @@ void Eng::initOnTrack(float *tpos, int direction, QMap<int, int>* junctionDirect
     if(ruch1 == NULL)
         ruch1 = new Ruch();
     ruch1->set(tpos[0], tpos[1], direction, junctionDirections);
+    ruch1->trackPassingItems(true);
     if(ruch2 == NULL)
         ruch2 = new Ruch();
     ruch2->set(tpos[0], tpos[1], direction, junctionDirections);
