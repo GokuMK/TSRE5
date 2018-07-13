@@ -643,9 +643,9 @@ void TerrainTools::updateTexPrev(){
             tlabel = texPreviewLabel;
             res = 192;
             out = this->paintBrush->tex->getImageData(res,res);
-            if(texLastItems[idx].second->bytesPerPixel == 3)
+            if(this->paintBrush->tex->bytesPerPixel == 3)
                 tlabel->setPixmap(QPixmap::fromImage(QImage(out,res,res,QImage::Format_RGB888)));
-            if(texLastItems[idx].second->bytesPerPixel == 4)
+            if(this->paintBrush->tex->bytesPerPixel == 4)
                 tlabel->setPixmap(QPixmap::fromImage(QImage(out,res,res,QImage::Format_RGBA8888)));   
         }// else {
         tlabel = texPreviewLabels[i-1];
