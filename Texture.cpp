@@ -79,6 +79,7 @@ unsigned char * Texture::getImageData(int width, int height){
     if(!editable) 
         setEditable();
     
+    //qDebug() << width << height << bytesPerPixel;
     unsigned char * out = new unsigned char[width*height*bytesPerPixel];
     
     float scalew = (float)this->width/width;
