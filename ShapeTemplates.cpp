@@ -124,6 +124,10 @@ void ShapeTemplateElement::load(FileBuffer* data){
     name = ParserX::GetString(data);
     id = DEFAULT;
     ParserX::GetString(data);
+    QStringList dist = ParserX::GetString(data).split("-");
+    minDistance = dist[0].toFloat();
+    maxDistance = dist[1].toFloat();
+    //qDebug() << minDistance << "-"<<maxDistance;
     int shapeCount = ParserX::GetNumber(data);
     for(int i = 0; i < shapeCount; i++)
         shape.push_back(ParserX::GetString(data));

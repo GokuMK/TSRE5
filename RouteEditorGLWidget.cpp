@@ -228,7 +228,7 @@ void RouteEditorGLWidget::initializeGL() {
     emit mkrList(route->getMkrList());
 
     gluu->makeShadowFramebuffer(FramebufferName1, depthTexture1, Game::shadowMapSize, GL_TEXTURE2);
-    gluu->makeShadowFramebuffer(FramebufferName2, depthTexture2, 1024, GL_TEXTURE3);
+    gluu->makeShadowFramebuffer(FramebufferName2, depthTexture2, Game::shadowLowMapSize, GL_TEXTURE3);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE0);
     
@@ -304,7 +304,7 @@ void RouteEditorGLWidget::paintGL() {
     Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, 2.0, 0, 1, 0);
     gluu->setMatrixUniforms();
     gluu->currentShader->setUniformValue(gluu->currentShader->lod, 0.0f);
-    //route->skydome->render(gluu, renderMode);
+    route->skydome->render(gluu, renderMode);
     Mat4::identity(gluu->mvMatrix);
     glClear(GL_DEPTH_BUFFER_BIT); 
     
@@ -412,7 +412,7 @@ void RouteEditorGLWidget::renderShadowMaps() {
     glBindFramebuffer(GL_FRAMEBUFFER, FramebufferName2);
     glActiveTexture(GL_TEXTURE0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glViewport(0, 0, 1024, 1024);
+    glViewport(0, 0, Game::shadowLowMapSize, Game::shadowLowMapSize);
     Game::objectLod = 1000;
     route->renderShadowMap(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, selection);
     gluu->pShadowMatrix2 = gluu->pShadowMatrix;

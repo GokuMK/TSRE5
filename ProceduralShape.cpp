@@ -266,7 +266,8 @@ void ProceduralShape::GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*>
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
-
+    shape.back()->setDistanceRange(stemplate->minDistance, stemplate->maxDistance);
+    
     delete[] p;
 }
 
@@ -325,7 +326,8 @@ void ProceduralShape::GenRails(ShapeTemplateElement *stemplate, QVector<OglObj*>
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
-
+    shape.back()->setDistanceRange(stemplate->minDistance, stemplate->maxDistance);
+    
     delete[] p;
 }
 
@@ -353,7 +355,8 @@ void ProceduralShape::GenPointShape(ShapeTemplateElement *stemplate, QVector<Ogl
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
-
+    shape.back()->setDistanceRange(stemplate->minDistance, stemplate->maxDistance);
+    
     ptr = p;
 
     delete[] p;
@@ -383,7 +386,8 @@ void ProceduralShape::GenStretch(ShapeTemplateElement *stemplate, QVector<OglObj
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
-
+    shape.back()->setDistanceRange(stemplate->minDistance, stemplate->maxDistance);
+    
     ptr = p;
 
     delete[] p;
@@ -417,6 +421,7 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
+    shape.back()->setDistanceRange(stemplate->minDistance, stemplate->maxDistance);
 
     ptr = p;
 
@@ -470,6 +475,7 @@ void ProceduralShape::GenBallast(ShapeTemplateElement *stemplate, QVector<OglObj
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
+    shape.back()->setDistanceRange(stemplate->minDistance, stemplate->maxDistance);
 
     delete[] p;
 }
@@ -498,6 +504,7 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
+    shape.back()->setDistanceRange(stemplate->minDistance, stemplate->maxDistance);
 
     delete[] p;
 }
@@ -544,6 +551,7 @@ void ProceduralShape::GenTie(ShapeTemplateElement *stemplate, QVector<OglObj*> &
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
+    shape.back()->setDistanceRange(stemplate->minDistance, stemplate->maxDistance);
 
     delete[] p;
 }
@@ -828,7 +836,8 @@ void ProceduralShape::GenAdvancedTie(ShapeTemplateElement *stemplate, QVector<Og
     shape.push_back(new OglObj());
     shape.back()->setMaterial(texturePath);
     shape.back()->init(p, ptr - p, OglObj::VNT, GL_TRIANGLES);
-
+    shape.back()->setDistanceRange(stemplate->minDistance, stemplate->maxDistance);
+    
     delete[] p;
 }
 

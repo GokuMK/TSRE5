@@ -39,6 +39,8 @@ public:
     ElementType type = NONE;
     ElementId id = EMPTY;
    
+    float minDistance = 0;
+    float maxDistance = 2000;
     float xOffset = 0;
     float yOffset = 0;
 

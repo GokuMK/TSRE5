@@ -26,11 +26,12 @@ public:
     virtual ~OglObj();
     void init(float* punkty, int ptr, enum VertexAttr v, int type);
     virtual void render();
-    virtual void render(int selectionColor);
+    virtual void render(int selectionColor, float lod = 0);
     void deleteVBO();
     void setMaterial(float r, float g, float b);
     void setMaterial(QString* path);
     int getTexId();
+    void setDistanceRange(float min, float max);
     void setLineWidth(int val);
     bool getSimpleBorder(float* border);
     void setBound(float *b);
@@ -45,6 +46,8 @@ private:
     int materialType;
     int lineWidth = 0;
     float bound[6];
+    float minDistance = -1;
+    float maxDistance = 999999;
     QString *res;
     Vector4f *color = NULL;
     VertexAttr vAttribures = NO_ATTR;

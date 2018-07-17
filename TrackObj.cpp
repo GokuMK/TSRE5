@@ -316,7 +316,7 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
             proceduralShapeInit = true;
         } else {
             for(int i = 0; i < procShape.size(); i++){
-                procShape[i]->render(selectionColor);
+                procShape[i]->render(selectionColor, lod);
             }
         }
     }

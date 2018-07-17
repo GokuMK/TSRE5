@@ -101,6 +101,10 @@ void GLUU::initShader() {
         currentShader->shaderShadowsEnabled = currentShader->uniformLocation("shadowsEnabled");
         currentShader->shaderBrightness = currentShader->uniformLocation("colorBrightness");
         currentShader->shaderFogDensity = currentShader->uniformLocation("fogDensity");
+        currentShader->shadow1Res = currentShader->uniformLocation("shadow1Res");
+        currentShader->shadow1Bias = currentShader->uniformLocation("shadow1Bias");
+        currentShader->shadow2Res = currentShader->uniformLocation("shadow2Res");
+        currentShader->shadow2Bias = currentShader->uniformLocation("shadow2Bias");
 
         unsigned int tex1 = currentShader->uniformLocation("uSampler");
         currentShader->setUniformValue(tex1, 0);
@@ -153,6 +157,11 @@ void GLUU::setMatrixUniforms() {
     currentShader->setUniformValue(currentShader->shaderShadowsEnabled, Game::shadowsEnabled);
     currentShader->setUniformValue(currentShader->shaderBrightness, currentBrightness);
     currentShader->setUniformValue(currentShader->shaderFogDensity, fogDensity);
+    
+    currentShader->setUniformValue(currentShader->shadow1Res, shadow1Res);
+    currentShader->setUniformValue(currentShader->shadow1Bias, shadow1Bias);
+    currentShader->setUniformValue(currentShader->shadow2Res, shadow2Res);
+    currentShader->setUniformValue(currentShader->shadow2Bias, shadow2Bias);
 };
 
 float GLUU::degToRad(float degrees) {

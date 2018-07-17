@@ -41,6 +41,10 @@ public:
     long long int currentMsMatrinxHash = 0;
     
     float fogDensity = Game::fogDensity;
+    float shadow1Res = Game::shadow1Res;
+    float shadow1Bias = Game::shadow1Bias;
+    float shadow2Res = Game::shadow2Res;
+    float shadow2Bias = Game::shadow2Bias;
     //float fogColor[4]{0.5, 0.75, 1.0, 1.0};
     float fogColor[4] = {Game::fogColor[0], Game::fogColor[1], Game::fogColor[2], Game::fogColor[3]};
     float skyColor[4] = {Game::skyColor[0], Game::skyColor[1], Game::skyColor[2], Game::skyColor[3]};

@@ -597,7 +597,7 @@ void Eng::updateSim(float deltaTime){
         currentSpeed += acc*deltaTime;
 
         // Static speed
-        //currentSpeed = 120;
+        currentSpeed = 37;
     
     // Network Speed
     } else {

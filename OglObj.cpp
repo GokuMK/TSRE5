@@ -118,8 +118,15 @@ void OglObj::render() {
     render(0);
 }
 
-void OglObj::render(int selectionColor) {
+void OglObj::setDistanceRange(float min, float max){
+    minDistance = min;
+    maxDistance = max;
+}
+
+void OglObj::render(int selectionColor, float lod) {
     if(!loaded)
+        return;
+    if(lod > maxDistance || lod < minDistance)
         return;
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     GLUU *gluu = GLUU::get();

@@ -116,6 +116,7 @@ public:
     static int oglDefaultLineWidth;
     static bool showWorldObjPivotPoints;
     static int shadowMapSize;
+    static int shadowLowMapSize;
     static int shadowsEnabled;
     static float sunLightDirection[];
     static int textureQuality;
@@ -138,6 +139,10 @@ public:
     static bool fullscreen;
     
     static float fogDensity;// = 0.7;
+    static float shadow1Res;
+    static float shadow1Bias;
+    static float shadow2Res;
+    static float shadow2Bias;
     //float fogColor[4]{0.5, 0.75, 1.0, 1.0};
     static float fogColor[4];//{230.0/255.0,248.0/255,255.0/255.0, 1.0};
     static float skyColor[4];//{230.0/255.0,248.0/255,255.0/255.0, 1.0};

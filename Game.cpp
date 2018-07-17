@@ -95,6 +95,7 @@ bool Game::sortTileObjects = true;
 int Game::oglDefaultLineWidth = 1;
 bool Game::showWorldObjPivotPoints = false;
 int Game::shadowMapSize = 2048;
+int Game::shadowLowMapSize = 1024;
 int Game::shadowsEnabled = 1;
 float Game::sunLightDirection[] = {-1.0,2.0,1.0};
 int Game::textureQuality = 1;
@@ -136,6 +137,10 @@ int Game::AASamples = 0;
 float Game::PixelRatio = 1.0;
 
 float Game::fogDensity = 0.7;
+float Game::shadow1Res = 2000.0;
+float Game::shadow1Bias = 0.0025;
+float Game::shadow2Res = 4000.0;
+float Game::shadow2Bias = 0.002;
 //float fogColor[4]{0.5, 0.75, 1.0, 1.0};
 float Game::fogColor[4] = {230.0/255.0,248.0/255,255.0/255.0, 1.0};
 float Game::skyColor[4] = {230.0/255.0,248.0/255,255.0/255.0, 1.0};
@@ -356,6 +361,17 @@ void Game::load() {
         }
         if(val == "shadowMapSize"){
             shadowMapSize = args[1].trimmed().toInt();
+            if(shadowMapSize == 8192){
+                shadow1Res = 5000.0;
+                shadow1Bias = 0.0005;
+            }
+        }
+        if(val == "shadowLowMapSize"){
+            shadowLowMapSize = args[1].trimmed().toInt();
+            if(shadowLowMapSize >= 2048){
+                shadow2Res = 4000.0;
+                shadow2Bias = 0.001;
+            }
         }
         if(val == "textureQuality"){
             textureQuality = args[1].trimmed().toInt();
