@@ -342,13 +342,13 @@ void AceLib::save(QString path, Texture* t){
     //data
     for(int i = 0; i < t->height; i++){
         for (int j = 0; j<t->width; j++) {
-            write << (qint8)t->imageData[3*t->width*i + j*3];
+            write << (qint8)t->imageData[t->bytesPerPixel*t->width*i + j*t->bytesPerPixel];
         }
         for (int j = 0; j<t->width; j++) {
-            write << (qint8)t->imageData[3*t->width*i + j*3+1];
+            write << (qint8)t->imageData[t->bytesPerPixel*t->width*i + j*t->bytesPerPixel+1];
         }
         for (int j = 0; j<t->width; j++) {
-            write << (qint8)t->imageData[3*t->width*i + j*3+2];
+            write << (qint8)t->imageData[t->bytesPerPixel*t->width*i + j*t->bytesPerPixel+2];
         }
     }
     
