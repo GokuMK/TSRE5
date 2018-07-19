@@ -369,11 +369,11 @@ void Trk::save() {
     if(this->forestClearDistance >= 0)
     out << "	ORTSUserPreferenceForestClearDistance ( " << this->forestClearDistance << " )" << "\n";
     if(this->tsreProjection != NULL)
-    out << "	TSRE ( " << this->tsreProjection[0] << " " << this->tsreProjection[1] << " " << this->tsreProjection[2] << " " << this->tsreProjection[3] << " " << " )" << "\n";
+    out << "	TsreGeoProjection ( " << this->tsreProjection[0] << " " << this->tsreProjection[1] << " " << this->tsreProjection[2] << " " << this->tsreProjection[3] << " " << " )" << "\n";
     if(this->distantTerrainYOffset > 0)
-    out << "	tsredistantterrainyoffset ( " << this->distantTerrainYOffset << " )" << "\n";
+    out << "	TsreDistantTerrainYoffset ( " << this->distantTerrainYOffset << " )" << "\n";
     if(this->tsreSuperelevation > 0)
-    out << "	tsresuperelevation ( " << this->tsreSuperelevation << " )" << "\n";
+    out << "	TsreSuperelevation ( " << this->tsreSuperelevation << " )" << "\n";
     out << ")" << "\n";
 
     out.flush();

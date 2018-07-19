@@ -44,6 +44,7 @@ void Ruch::set(int nid, int m, int tdirection, QMap<int, int>* jDirections) {
 }
 
 void Ruch::next(float m) {
+    lastNodeDist = nodeDist;
     if(m < 0){
         back(m);
     } else {
@@ -65,6 +66,7 @@ void Ruch::next(float m) {
 }
 
 void Ruch::back(float m) {
+    lastNodeDist = nodeDist;
     if(m > 0){
         next(m);
     } else {
@@ -86,7 +88,6 @@ void Ruch::back(float m) {
 }
 
 void Ruch::toNext(float m){
-    lastNodeDist = nodeDist;
     nodeDist += m*direction;
     int sign = 1;
     if(m < 0)
