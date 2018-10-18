@@ -59,13 +59,13 @@ CELoadWindow::CELoadWindow() {
     vlist->addRow("Rolling Stock:", &trainsNumber);
     info->setLayout(vlist);
     mainLayout->addWidget(info);
-    /*nowa = new QWidget();
-    QHBoxLayout *vbox1 = new QHBoxLayout;
-    vbox1->addWidget(myLabel3);
-    vbox1->addWidget(nowaTrasa);
-    vbox1->setContentsMargins(0,0,0,0);
-    nowa->setLayout(vbox1);
-    mainLayout->addWidget(nowa);*/
+    //nowa = new QWidget();
+    //QHBoxLayout *vbox1 = new QHBoxLayout;
+    //vbox1->addWidget(myLabel3);
+    //vbox1->addWidget(nowaTrasa);
+    //vbox1->setContentsMargins(0,0,0,0);
+    //nowa->setLayout(vbox1);
+    //mainLayout->addWidget(nowa);
     
     QWidget* box = new QWidget();
     QHBoxLayout *vbox = new QHBoxLayout;

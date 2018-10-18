@@ -55,10 +55,10 @@ CoordsKml::CoordsKml(QString path) {
             
             if (name.toUpper() == ("PLACEMARK")) {
                 placemark = true;
-                markerList.emplace_back();
+                markerList.push_back(Marker());
             } else if (name.toUpper() == ("PLACEMARK")) {
                 placemark = true;
-                markerList.emplace_back();
+                markerList.push_back(Marker());
             } else if (name.toUpper() == ("COORDINATES")) {
                 if(placemark)
                     coordinates = true;

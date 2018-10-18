@@ -30,7 +30,7 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-std::vector<ForestObj::ForestList> ForestObj::forestList;
+QVector<ForestObj::ForestList> ForestObj::forestList;
 float ForestObj::ForestClearDistance = 0;
 
 ForestObj::ForestObj() {
@@ -78,7 +78,7 @@ void ForestObj::LoadForestList(){
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         qDebug() << sh;
         if (sh == ("forest")) {
-            ForestObj::forestList.emplace_back();
+            ForestObj::forestList.push_back(ForestObj::ForestList());
             ForestObj::forestList.back().name = ParserX::GetString(data);
             ForestObj::forestList.back().texture = ParserX::GetString(data);
             ForestObj::forestList.back().treeSizeX = ParserX::GetNumber(data);
@@ -361,7 +361,7 @@ void ForestObj::drawShape(){
             //qDebug() << x << y;
             float tposx, tposz;
             
-            std::vector<Vector4f> fpoints;
+            QVector<Vector4f> fpoints;
             float off = ((qDirection[1]+0.00001f)/fabs(qDirection[1]+0.00001f))*(float)-acos(qDirection[3])*2.0;
             for(int uu = 0; uu < population; uu++){
                 
@@ -373,7 +373,7 @@ void ForestObj::drawShape(){
                 tposx = uuu.x;
                 tposz = uuu.y;
                                 
-                fpoints.emplace_back(tposx+position[0], 0, tposz+position[2], 9999);
+                fpoints.push_back(Vector4f(tposx+position[0], 0, tposz+position[2], 9999));
             }
             
             if(ForestClearDistance > 0){

@@ -257,6 +257,11 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         if(this->getShadowType() != WorldObj::ShadowDynamic )
             return;
     }
+    // Skip road shadows
+    if (renderMode == gluu->RENDER_SHADOWMAP && this->roadShape) {
+        if(this->getShadowType() != WorldObj::ShadowDynamic )
+            return;
+    }
 
     if (size > 0) {
         if ((lod > size + 150)) {

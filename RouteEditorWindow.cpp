@@ -530,7 +530,7 @@ void RouteEditorWindow::keyPressEvent(QKeyEvent *e) {
 }
 
 void RouteEditorWindow::closeEvent(QCloseEvent * event ){
-    std::vector<QString> unsavedItems;
+    QVector<QString> unsavedItems;
     glWidget->getUnsavedInfo(unsavedItems);
     if(unsavedItems.size() == 0){
         qDebug() << "nic do zapisania";
@@ -822,6 +822,8 @@ void RouteEditorWindow::show(){
     naviWindow->move(0, this->height() - naviWindow->height() );
     if(!Game::playerMode)
         naviWindow->show();
+    
+    glWidget->initRoute();
     QMainWindow::show();
 }
 

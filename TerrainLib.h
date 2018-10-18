@@ -60,7 +60,7 @@ public:
     virtual void setTerrainToTrackObj(Brush* brush, float* punkty, int length, int x, int z, float* matrix, float offsetY = 0);
     virtual int getTexture(int x, int z, float* p);
     virtual bool load(int x, int z);
-    virtual void getUnsavedInfo(std::vector<QString> &items);
+    virtual void getUnsavedInfo(QVector<QString> &items);
     virtual void save();
     virtual void refresh(int x, int z);
     virtual bool reload(int x, int z);

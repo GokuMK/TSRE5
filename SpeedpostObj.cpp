@@ -309,7 +309,7 @@ void SpeedpostObj::expandTrItems(){
     buffer[8] = position[2]+vec2[2]; 
     int len = 12;
     qDebug() << "and find intersections ";
-    std::vector<TDB::IntersectionPoint> ipoints;
+    QVector<TDB::IntersectionPoint> ipoints;
     tdb->getSegmentIntersectionPositionOnTDB(ipoints, NULL, playerT, buffer, len, (float*)&pos);
     qDebug() << "intersection count: "<<ipoints.size();
     
@@ -650,7 +650,7 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
         drawLine = new OglObj();
         float* tpoints = new float[7];
         int ptr = 0;
-        std::vector<Vector4f> ipoints;
+        QVector<Vector4f> ipoints;
         int minlidx = -1;
         float minlval = 9999;
         
@@ -688,7 +688,7 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
 
             tpoints[0] += 2048 * (tpoints[5] - this->x);
             tpoints[2] -= 2048 * (-tpoints[6] - this->y);
-            ipoints.emplace_back(tpoints[0], tpoints[1]+1.0, -tpoints[2], 0);
+            ipoints.push_back(Vector4f(tpoints[0], tpoints[1]+1.0, -tpoints[2], 0));
             if(tpoints[0] < minlval){
                 minlval = tpoints[0];
                 minlidx = ipoints.size()-1;

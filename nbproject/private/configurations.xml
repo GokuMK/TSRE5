@@ -136,8 +136,8 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -aceconv</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" --play dp.act</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" --play demo1 dp.act</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" --conedit</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" --play</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" --conedit</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
         </runcommandpicklist>
         <runcommand>"${OUTPUT_PATH}"</runcommand>
@@ -172,10 +172,10 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" --conedit</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" --conedit</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <runcommand>"${OUTPUT_PATH}" --conedit</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <console-type>2</console-type>

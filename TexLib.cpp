@@ -60,8 +60,8 @@ int TexLib::addTex(QString path, QString name, bool reload) {
 int TexLib::getTex(QString pathid) {
     for ( auto it = mtex.begin(); it != mtex.end(); ++it ){
         if(it->second == NULL) continue;
-        if (((Texture*) it->second)->pathid.length() == pathid.length()) 
-            if (((Texture*) it->second)->pathid == pathid) {
+        if (((Texture*) it->second)->hashid.length() == pathid.length()) 
+            if (((Texture*) it->second)->hashid == pathid) {
                 ((Texture*) it->second)->ref++;
                 return (int)it->first;
             }
@@ -74,8 +74,8 @@ int TexLib::addTex(QString pathid, bool reload) {
     Texture* newFile = NULL;
     for ( auto it = mtex.begin(); it != mtex.end(); ++it ){
         if(it->second == NULL) continue;
-        if (((Texture*) it->second)->pathid.length() == pathid.length()) 
-            if (((Texture*) it->second)->pathid == pathid) {
+        if (((Texture*) it->second)->hashid.length() == pathid.length()) 
+            if (((Texture*) it->second)->hashid == pathid) {
                 if(!reload){
                     ((Texture*) it->second)->ref++;
                     return (int)it->first;
@@ -86,7 +86,7 @@ int TexLib::addTex(QString pathid, bool reload) {
             }
     }
     //qDebug() << "Nowa " << jesttextur << " textura: " << pathid;
-
+    
     QString tType = pathid.toLower().split(".").last();
     
     // Openrails uses .dds textures instead of .ace
@@ -96,6 +96,7 @@ int TexLib::addTex(QString pathid, bool reload) {
             tType = "dds";
             pathid = pathid.left(pathid.length() - 3)+"dds";
         }
+        //qDebug() << "Using DDS";
     }
     
     int texId = 0;
@@ -121,7 +122,7 @@ int TexLib::addTex(QString pathid, bool reload) {
     } else if(tType == "png"||tType == "bmp"||tType == "jpg"||tType == "dds"||tType == "tga"){
         ImageLib* t = new ImageLib();
         t->texture = newFile;
-        if(AceLib::IsThread && !reload)
+        if(ImageLib::IsThread && !reload)
             t->start();
         else
             t->run();

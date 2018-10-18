@@ -271,7 +271,7 @@ void ConListWidget::deleteCurrentCon(){
     delete e;
 }
 
-void ConListWidget::getUnsaed(std::vector<int> &unsavedConIds){
+void ConListWidget::getUnsaed(QVector<int> &unsavedConIds){
     unsavedConIds.clear();
     //Game::currentEngLib = englib;
     Consist * e;
@@ -285,7 +285,7 @@ void ConListWidget::getUnsaed(std::vector<int> &unsavedConIds){
     }
 }
 
-void ConListWidget::getUnsaedAct(std::vector<int>& unsavedActIds){
+void ConListWidget::getUnsaedAct(QVector<int>& unsavedActIds){
     unsavedActIds.clear();
     //Game::currentEngLib = englib;
     Activity * e;

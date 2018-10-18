@@ -275,8 +275,8 @@ TerrainTools::TerrainTools(QString name)
     //QObject::connect(buttonTools["waterHeightTileTool"], SIGNAL(toggled(bool)),
     //                  this, SLOT(waterHeightTileToolEnabled(bool)));
     
-    QObject::connect(buttonTools["fixedTileTool"], SIGNAL(toggled(bool)),
-                      this, SLOT(fixedTileToolEnabled(bool)));
+    //QObject::connect(buttonTools["fixedTileTool"], SIGNAL(toggled(bool)),
+    //                  this, SLOT(fixedTileToolEnabled(bool)));
     
     QObject::connect(buttonTools["gapsTerrainTool"], SIGNAL(toggled(bool)),
                       this, SLOT(gapsTerrToolEnabled(bool)));

@@ -17,6 +17,7 @@
 #include "TSectionDAT.h"
 #include <QDateTime>
 #include <QFile>
+#include <math.h>
 #include "Intersections.h"
 #include "ComplexLine.h"
 #include "ShapeTemplates.h"

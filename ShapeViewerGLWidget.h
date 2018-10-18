@@ -17,6 +17,7 @@
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
 #include <QBasicTimer>
+#include <math.h>
 
 class SFile;
 class Eng;

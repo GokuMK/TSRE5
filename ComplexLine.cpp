@@ -12,6 +12,7 @@
 #include "GLMatrix.h"
 #include "Vector3f.h"
 #include <QDebug>
+#include <math.h>
 
 ComplexLinePoint::ComplexLinePoint(){
     

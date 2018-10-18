@@ -13,7 +13,7 @@
 
 #include <QString>
 #include <QHash>
-#include <vector>
+#include <QVector>
 
 class FileBuffer;
 class TerrainInfo;
@@ -26,7 +26,7 @@ public:
         int sum;
         int x;
         int y;
-        std::vector<std::pair<int, int>> tile;
+        QVector<std::pair<int, int>> tile;
         
         TreePos(int l){
             level = l;
@@ -45,7 +45,7 @@ public:
         bool populated[2][2];
         
         QuadTile(int l, int p, int xx, int yy);
-        void save(std::vector<unsigned char> &data);
+        void save(QVector<unsigned char> &data);
         void load(FileBuffer* data);
         void addTile(int tileX, int tileY, int dLevel);
         QString getMyName(int tileX, int tileY);

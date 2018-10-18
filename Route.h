@@ -12,6 +12,7 @@
 #define	ROUTE_H
 #include <QMap>
 #include <QString>
+#include <unordered_map>
 #include "GLUU.h"
 #include "TDB.h"
 #include "WorldObj.h"
@@ -95,7 +96,7 @@ public:
     void dragWorldObject(WorldObj* obj, int x, int z, float* pos);
     float* getPointerPosition(float *out, int &x, int &z, float *pos);
     void setMkrFile(QString name);
-    void getUnsavedInfo(std::vector<QString> &items);
+    void getUnsavedInfo(QVector<QString> &items);
     void showTrkEditr(Trk * val = NULL);
     void paintHeightMap(Brush* brush, int x, int z, float* p);
     WorldObj* makeFlexTrack(int x, int z, float* pos);

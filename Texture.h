@@ -17,6 +17,7 @@ class Brush;
 class Texture {
 public:
     Texture();
+    Texture(QString pathid);
     Texture(const Texture* orig);
     virtual ~Texture();
     
@@ -32,14 +33,11 @@ public:
      int typk;
      unsigned int* tex;
      QString pathid;
+     QString hashid;
      bool loaded = false;
      int ref = 0;
      bool glLoaded = false;
      bool editable = false;
-
-    Texture(QString pathid) {
-        this->pathid = pathid;
-    }
     
     void setEditable();
     bool GLTextures(bool mipmaps = false);

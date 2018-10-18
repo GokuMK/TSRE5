@@ -24,6 +24,7 @@
 #include "TextObj.h"
 #include "TDB.h"
 #include "TerrainLib.h"
+#include "SimpleHud.h"
 
 
 std::unordered_map<int, TextObj*> Consist::txtNumbers;
@@ -363,14 +364,14 @@ void Consist::deteleSelected(){
 void Consist::appendEngItem(int id, int pos, bool flip){
     Eng * eng = Game::currentEngLib->eng[id];
     if(eng == NULL) return;
-    std::vector<int>::iterator it;
+
     EngItem* newE;
     if(pos == 0){
-        engItems.emplace(engItems.begin());
+        engItems.insert(0, EngItem());
         newE = &engItems[0];
         selectedIdx++;
     } else if(pos == 2){
-        engItems.emplace_back();
+        engItems.push_back(EngItem());
         newE = &engItems[engItems.size()-1];
     } else if(pos == 1){
         if(selectedIdx > engItems.size() - 1 )
@@ -380,7 +381,7 @@ void Consist::appendEngItem(int id, int pos, bool flip){
         if(selectedIdx < -1 )
             selectedIdx = -1;
         qDebug() << "selectedIdx "<< selectedIdx;
-        engItems.emplace(engItems.begin()+selectedIdx+1);
+        engItems.insert(selectedIdx+1, EngItem());
         newE = &engItems[selectedIdx+1];
     } else {
         return;
@@ -722,6 +723,10 @@ void Consist::setTrainSpeed(float val){
 float Consist::getTrainSpeed(){
     return trainSpeed;
 }
+
+float Consist::getTrainDistanceTravelled(){
+    return trainTotalDistance;
+}
     
 void Consist::updateSim(float deltaTime){
     if (loaded != 1) 
@@ -738,12 +743,21 @@ void Consist::updateSim(float deltaTime){
     
     trainSpeed = engItems[0].engPointer->getCurrentSpeed();
     float deltaMove = trainSpeed*deltaTime;
+    trainTotalDistance = engItems[0].engPointer->getTotalDistanceDownPath();
     
     for(int i = 0; i < engItems.size(); i++){
         //engItems[i].engPointer->move(-55.5*deltaTime);
         engItems[i].engPointer->move(deltaMove);
     }
     
+}
+
+void Consist::renderHud(){
+    if(hud == NULL)
+        hud = new SimpleHud();
+    hud->setAttribute("speed", trainSpeed);
+    hud->setAttribute("dist", trainTotalDistance);
+    hud->render();
 }
 
 void Consist::getCameraPosition(float *out){

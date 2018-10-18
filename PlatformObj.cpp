@@ -592,6 +592,7 @@ void PlatformObj::makelineShape(){
                 }
                 if(endd) break;
             }
+            int lastItem = len;
             if(this->getSideRight() && this->getSideLeft()){
                 punkty[len++] = punkty[0];
                 punkty[len++] = punkty[1];
@@ -599,12 +600,12 @@ void PlatformObj::makelineShape(){
                 punkty[len++] = punkty[6];
                 punkty[len++] = punkty[7];
                 punkty[len++] = punkty[8];
-                punkty[len++] = punkty[len-3-7];
-                punkty[len++] = punkty[len-2-8];
-                punkty[len++] = punkty[len-1-9];
-                punkty[len++] = punkty[len-9-10];
-                punkty[len++] = punkty[len-8-11];
-                punkty[len++] = punkty[len-7-12];
+                punkty[len++] = punkty[lastItem-3];
+                punkty[len++] = punkty[lastItem-2];
+                punkty[len++] = punkty[lastItem-1];
+                punkty[len++] = punkty[lastItem-9];
+                punkty[len++] = punkty[lastItem-8];
+                punkty[len++] = punkty[lastItem-7];
             } else if(this->getSideLeft() || this->getSideRight()){
                 punkty[len++] = punkty[0];
                 punkty[len++] = punkty[1];
@@ -612,9 +613,9 @@ void PlatformObj::makelineShape(){
                 punkty[len++] = posB[0];
                 punkty[len++] = posB[1]+1;
                 punkty[len++] = -posB[2];
-                punkty[len++] = punkty[len-3-7];
-                punkty[len++] = punkty[len-2-8];
-                punkty[len++] = punkty[len-1-9];
+                punkty[len++] = punkty[lastItem-3];
+                punkty[len++] = punkty[lastItem-2];
+                punkty[len++] = punkty[lastItem-1];
                 punkty[len++] = posE[0];
                 punkty[len++] = posE[1]+1;
                 punkty[len++] = -posE[2];

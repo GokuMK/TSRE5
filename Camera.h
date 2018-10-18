@@ -20,6 +20,7 @@
 
 class PreciseTileCoordinate;
 class GameObj;
+class GLUU;
 
 class Camera {
 public:
@@ -51,6 +52,7 @@ public:
     virtual void keyDown(QKeyEvent * e);
     virtual void keyUp(QKeyEvent * e);
     virtual void update(float fps);
+    virtual void renderHud(GLUU *gluu);
     virtual void setCameraObject(GameObj* o);
     virtual PreciseTileCoordinate* getCurrentPos();
     float * pozT;

@@ -21,6 +21,17 @@
 Texture::Texture() {
 }
 
+Texture::Texture(QString pathid) {
+    this->pathid = pathid;
+    this->hashid = pathid;
+    //temp fix for dds/ace loading
+    // Openrails uses .dds textures instead of .ace
+    QString tType = hashid.toLower().split(".").last();
+    if(tType == "dds"){
+        hashid = hashid.left(pathid.length() - 3)+"ace";
+    }
+}
+    
 Texture::Texture(const Texture* orig) {
     qDebug() << "clone tex" << orig->pathid;
     //QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()->functions();
@@ -320,7 +331,7 @@ Texture::~Texture() {
 bool Texture::GLTextures(bool mipmaps) {
     if(!loaded) return false;
     
-    if(Game::AASamples > 0)
+    if(Game::AASamples > 0 && Game::AARemoveBorder)
         if(type == GL_RGBA){
             for (int i = 0; i < height; i++)
                 imageData[i*width*bytesPerPixel + (width-1)*bytesPerPixel + 3] = 0;

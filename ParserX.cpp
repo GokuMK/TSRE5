@@ -11,6 +11,7 @@
 #include "ParserX.h"
 #include "SFile.h"
 #include <QDebug>
+#include <math.h>
 
 QString ParserX::AddComIfReq(QString n){
     if(n.length() == 0)

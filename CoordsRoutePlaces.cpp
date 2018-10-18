@@ -35,7 +35,7 @@ CoordsRoutePlaces::CoordsRoutePlaces(TDB *tdb, QString place) {
         if (n->stationName.length() > 0 && place == "stations"){
             if(stations[n->stationName] == false){
                 stations[n->stationName] = true;
-                markerList.emplace_back();
+                markerList.push_back(Marker());
                 markerList.back().name = n->stationName;
                 markerList.back().type = 0;
                 markerList.back().tileX.push_back(n->trItemRData[3]);
@@ -55,7 +55,7 @@ CoordsRoutePlaces::CoordsRoutePlaces(TDB *tdb, QString place) {
         if (n->type == "sidingitem" && n->platformName.length() > 0 && place == "sidings"){
             if(stations[n->platformName] == false){
                 stations[n->platformName] = true;
-                markerList.emplace_back();
+                markerList.push_back(Marker());
                 markerList.back().name = n->platformName;
                 markerList.back().type = 0;
                 markerList.back().tileX.push_back(n->trItemRData[3]);

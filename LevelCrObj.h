@@ -68,7 +68,7 @@ private:
     int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL;
     TrackItemObj* pointer3dSelected = NULL;
-    std::vector<float*> drawPositions;
+    QVector<float*> drawPositions;
     float* drawPosition = NULL;
     QString ORTSSoundFileName;
     void renderTritems(GLUU* gluu, int selectionColor);

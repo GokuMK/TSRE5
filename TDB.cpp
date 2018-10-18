@@ -1561,7 +1561,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     ////////////////////////////////
     
     if(shp->crossovershape){
-        std::vector<TDB::IntersectionPoint> cPoints;
+        QVector<TDB::IntersectionPoint> cPoints;
         float posT[2];
         Vec2::set(posT, x, z);
         Vector3f cPos;
@@ -2249,7 +2249,7 @@ int TDB::findNearestPositionOnTDB(float* posT, float* pos, float * q, float* tpo
     return minDistance;
 }
 
-int TDB::findNearestPositionsOnTDB(float* posT, float * pos, std::vector<TDB::IntersectionPoint> &points, float maxDistance){
+int TDB::findNearestPositionsOnTDB(float* posT, float * pos, QVector<TDB::IntersectionPoint> &points, float maxDistance){
     float *lineBuffer;
     int length = 0;
     getLines(lineBuffer, length, posT);
@@ -2281,7 +2281,7 @@ int TDB::findNearestPositionsOnTDB(float* posT, float * pos, std::vector<TDB::In
     return minDistance;
 }
 
-void TDB::fillNearestSquaredDistanceToTDBXZ(float* posT, std::vector<Vector4f> &points, float* bbox){
+void TDB::fillNearestSquaredDistanceToTDBXZ(float* posT, QVector<Vector4f> &points, float* bbox){
     float *lineBuffer;
     int length = 0;
     getLines(lineBuffer, length, posT);
@@ -2380,7 +2380,7 @@ bool TDB::getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float
     return true;
 }
 
-bool TDB::getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos){
+bool TDB::getSegmentIntersectionPositionOnTDB(QVector<TDB::IntersectionPoint> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos){
     float *lineBuffer;
     int length = 0;
     getLines(lineBuffer, length, posT);

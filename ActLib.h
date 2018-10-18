@@ -44,7 +44,7 @@ public:
     static QVector<QString> GetServiceInUseList(QString n);
     static int AddPath(QString path, QString name);
     static int LoadAllAct(QString gameRoot);
-    static void GetUnsavedInfo(std::vector<QString> &items);
+    static void GetUnsavedInfo(QVector<QString> &items);
     static void UpdateServiceChanges(QString serviceNameId);
     static void SaveAll();
 private:

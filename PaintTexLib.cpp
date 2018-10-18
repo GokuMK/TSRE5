@@ -22,18 +22,36 @@
 void PaintTexLib::run() {
     
     int size = 4;
+    int resM = 1;
+    QString fontname = "Arial";
+    bool isOutline = false;
     
     QStringList data = texture->pathid.split(".");
     QString val = data.first();
     QColor color;
+    QColor colorOutline;
+    colorOutline.setRgb(0,0,0);
+    
     for(int i = 1; i < data.length()-1; i++){
-        if(data[i].split(":").first() == "color")
+        if(data[i].split(":").first() == "color"){
             color.setNamedColor(data[i].split(":").last());
-        if(data[i].split(":").first() == "size")
+        }
+        if(data[i].split(":").first() == "ocolor"){
+            colorOutline.setNamedColor(data[i].split(":").last());
+            isOutline = true;
+        }
+        if(data[i].split(":").first() == "size"){
             size = data[i].split(":").last().toInt();
+        }
+        if(data[i].split(":").first() == "resm"){
+            resM = data[i].split(":").last().toInt();
+        }
+        if(data[i].split(":").first() == "font"){
+            fontname = data[i].split(":").last();
+        }
     }
     
-    int h = 32;
+    int h = 32*resM;
     int w = size*h;
     
     texture->width = w;
@@ -54,10 +72,27 @@ void PaintTexLib::run() {
     QPainter p;
     p.begin(&img);
     p.setRenderHint(QPainter::RenderHint::Antialiasing, false);
-    QPen niebieski(color);
-    p.setPen(niebieski); 
-    p.setFont(QFont("Arial", 24));
-    p.drawText(QRect(0,0,w,h), Qt::AlignCenter, val);
+    QFont font(fontname, 24*resM);
+    p.setFont(font);
+    QPen spen(color);
+    QPen apen(colorOutline);
+    apen.setWidth(3);
+    QBrush abrush(color);
+    
+    if(!isOutline){
+        p.setPen(spen); 
+        p.drawText(QRect(0,0,w,h), Qt::AlignCenter, val);
+    } else {
+        p.setBrush(abrush);
+        p.setPen(apen); 
+        QFontMetrics fm(font);
+        int pwide = fm.width(val);
+        int phigh = fm.ascent();
+        QPainterPath myPath;
+        myPath.addText(w/2-pwide/2,phigh-2, font, val);
+        p.drawPath(myPath);
+    }
+    
     p.end();
     texture->loaded = true;
 

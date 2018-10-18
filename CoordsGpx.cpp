@@ -54,7 +54,7 @@ CoordsGpx::CoordsGpx(QString path) {
             
             if (name.toUpper() == ("WPT")) {
                 placemark = true;
-                markerList.emplace_back();
+                markerList.push_back(Marker());
                 float lat = 0;
                 float lon = 0;
                 if(attr.size() == 2){
@@ -79,7 +79,7 @@ CoordsGpx::CoordsGpx(QString path) {
                 }
             } else if (name.toUpper() == ("TRK")) {
                 placemark = true;
-                markerList.emplace_back();
+                markerList.push_back(Marker());
             } else if (name.toUpper() == ("TRKPT")) {
                 float lat = 0;
                 float lon = 0;

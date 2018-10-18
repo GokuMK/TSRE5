@@ -13,6 +13,7 @@
 
 #include "WorldObj.h"
 #include <QString>
+#include <QVector>
 #include "FileBuffer.h"
 
 class TrackItemObj;
@@ -53,7 +54,7 @@ private:
     float* drawPosition = NULL;
     OglObj* drawLine = NULL;
     void renderTritems(GLUU* gluu, int selectionColor);
-    std::vector<float*> drawPositions;
+    QVector<float*> drawPositions;
     int selectionValue = 0;
     float angle;
 };

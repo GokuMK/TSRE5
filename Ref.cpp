@@ -81,10 +81,6 @@ Ref::Ref(QString path) {
         ParserX::SkipToken(data);
     }
 
-    //for ( auto it = refItems.begin(); it != refItems.end(); ++it ){
-    //    qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
-    //  //std::cout << " " << it->first << ":" << it->second;
-    //}
     selected = NULL;
 }
 

@@ -12,6 +12,7 @@
 #define	SPEEDPOSTDAT_H
 
 #include <QString>
+#include <QVector>
 //#include "SpeedPost.h"
 class SpeedPost;
 
@@ -21,7 +22,7 @@ public:
     QString restricted_Shape;
     QString end_Restricted_Shape;
     
-    std::vector<SpeedPost*> speedPost;
+    QVector<SpeedPost*> speedPost;
     
     SpeedPostDAT();
     virtual ~SpeedPostDAT();

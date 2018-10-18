@@ -50,6 +50,7 @@ public:
     virtual void setPosition(int x, int z, float* p);
     virtual void setPosition(float* p);
     virtual void setMartix();
+    virtual void renderHud();
     virtual void getCameraPosition(float* out = NULL);
     virtual void pushContextMenuActions(QMenu *menu);
     virtual QString getName();

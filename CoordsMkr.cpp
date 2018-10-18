@@ -42,7 +42,7 @@ CoordsMkr::CoordsMkr(QString path) {
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         //qDebug() << sh;
         if (sh == ("marker")) {
-            markerList.emplace_back();
+            markerList.push_back(Marker());
             markerList.back().lon = ParserX::GetNumber(data);
             markerList.back().lat = ParserX::GetNumber(data);
             markerList.back().name = ParserX::GetString(data);

@@ -498,7 +498,7 @@ void WorldObj::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("shapetemplate")) {
-        templateName = ParserX::GetNumber(data);
+        templateName = ParserX::GetStringInside(data);
         return;
     }
     qDebug() << "worldObj "<<this->type<<" unknown: " << sh;

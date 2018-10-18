@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <QMap>
 #include <QPair>
+#include <QVector>
 
 class OglObj;
 class GLUU;
@@ -28,17 +29,17 @@ public:
         float lon;
         int type;
         OglObj* oglObj = NULL;
-        std::vector<int> tileX;
-        std::vector<int> tileZ;
-        std::vector<int> x;
-        std::vector<int> y;
-        std::vector<int> z;
+        QVector<int> tileX;
+        QVector<int> tileZ;
+        QVector<int> x;
+        QVector<int> y;
+        QVector<int> z;
     };
     //struct Line {
 //
     //};
     
-    std::vector<Marker> markerList;
+    QVector<Marker> markerList;
     std::unordered_map<std::string, TextObj*> nameGl;
     //std::vector<Line> lineList;
     

@@ -14,6 +14,7 @@
 #include "MapData.h"
 #include <unordered_map>
 #include <vector>
+#include <QVector>
 
 class IghCoordinate;
 class LatitudeLongitudeCoordinate;
@@ -63,9 +64,9 @@ public:
         unsigned short type;
         unsigned char val1;
         unsigned char val2;
-        std::vector<int64_t> ref;
-        std::vector<float> lat;
-        std::vector<float> lon;
+        QVector<int64_t> ref;
+        QVector<float> lat;
+        QVector<float> lon;
 
         Way(int64_t id1){
              id = id1;
@@ -105,7 +106,7 @@ private:
     QBrush* brush;
     
     std::unordered_map<int64_t,Node*> nodes;
-    std::vector<Way*> ways[10];
+    QVector<Way*> ways[10];
     float height, width;
     
     int loadCount;

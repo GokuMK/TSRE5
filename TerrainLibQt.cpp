@@ -123,7 +123,7 @@ bool TerrainLibQt::load(int x, int z) {
     return true;
 }
 
-void TerrainLibQt::getUnsavedInfo(std::vector<QString> &items) {
+void TerrainLibQt::getUnsavedInfo(QVector<QString> &items) {
     if (!Game::writeEnabled) return;
     QHashIterator<unsigned int, TerrainInfo*> i(terrainQt);
     while (i.hasNext()) {

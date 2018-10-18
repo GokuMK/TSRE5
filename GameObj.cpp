@@ -57,6 +57,10 @@ void GameObj::updateSim(float deltaTime){
     return;
 }
 
+void GameObj::renderHud(){
+    return;
+}
+
 void GameObj::translate(float px, float py, float pz){
 
 }

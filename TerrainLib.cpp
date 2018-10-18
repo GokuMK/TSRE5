@@ -67,7 +67,7 @@ bool TerrainLib::load(int x, int z) {
     return false;
 }
 
-void TerrainLib::getUnsavedInfo(std::vector<QString> &items){
+void TerrainLib::getUnsavedInfo(QVector<QString> &items){
 
 }
 

@@ -564,9 +564,9 @@ void MapDataOSM::get(LatitudeLongitudeCoordinate* min, LatitudeLongitudeCoordina
     ) ) );
     mgr->get(req);
     
-    //QSslConfiguration config = QSslConfiguration::defaultConfiguration();
-    //config.setProtocol(QSsl::TlsV1_2);
-    //req.setSslConfiguration(config);
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setProtocol(QSsl::TlsV1_2);
+    req.setSslConfiguration(config);
 }
 
 void MapDataOSM::isData(QNetworkReply* r){

@@ -11,19 +11,22 @@
 #include "Game.h"
 #include <QDebug>
 #include <QFile>
+#include <QDir>
 #include <QString>
+#include <QEventLoop>
 //#include <QCoreApplication>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 //#include <QUrl>
 //#include <QUrlQuery>
-#include "RouteEditorWindow.h"
-#include "LoadWindow.h"
-#include "CELoadWindow.h"
+//#include "RouteEditorWindow.h"
+//#include "LoadWindow.h"
+//#include "CELoadWindow.h"
 #include "SoundList.h"
 #include "ShapeLib.h"
 #include "EngLib.h"
+#include <QtWidgets>
 #include <QColor>
 
 GeoWorldCoordinateConverter *Game::GeoCoordConverter = NULL;
@@ -33,7 +36,7 @@ SoundList *Game::soundList = NULL;
 TerrainLib *Game::terrainLib = NULL;   
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.696";
+QString Game::AppVersion = "v0.6963";
 QString Game::AppDataVersion = "0.696";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
@@ -104,11 +107,13 @@ bool Game::snapableOnlyRot = false;
 float Game::trackElevationMaxPm = 700.0;
 bool Game::proceduralTracks = false;
 bool Game::fullscreen = false;
+bool Game::hudEnabled = false;
+float Game::hudScale = 1.0;
 
 QString Game::geoPath = "hgst";
 
-RouteEditorWindow* Game::window = NULL;
-LoadWindow* Game::loadWindow = NULL;
+//RouteEditorWindow* Game::window = NULL;
+//LodWindow* Game::loadWindow = NULL;
 ShapeLib *Game::currentShapeLib = NULL;
 EngLib *Game::currentEngLib = NULL;
 Route *Game::currentRoute = NULL;
@@ -134,6 +139,7 @@ bool Game::useSuperelevation = false;
 bool Game::soundEnabled = false;
 
 int Game::AASamples = 0;
+bool Game::AARemoveBorder = false;
 float Game::PixelRatio = 1.0;
 
 float Game::fogDensity = 0.7;
@@ -362,8 +368,12 @@ void Game::load() {
         if(val == "shadowMapSize"){
             shadowMapSize = args[1].trimmed().toInt();
             if(shadowMapSize == 8192){
-                shadow1Res = 5000.0;
-                shadow1Bias = 0.0005;
+                shadow1Res = 3000.0;
+                shadow1Bias = 0.0004;
+            }
+            if(shadowMapSize == 4096){
+                shadow1Res = 2500.0;
+                shadow1Bias = 0.0007;
             }
         }
         if(val == "shadowLowMapSize"){
@@ -470,17 +480,20 @@ void Game::load() {
         if(val == "defaultMoveStep"){
             DefaultMoveStep = args[1].trimmed().toFloat();
         }
+        if(val == "hudEnabled"){
+            if(args[1].trimmed().toLower() == "true")
+                hudEnabled = true;
+            else
+                hudEnabled = false; 
+        }
+        if(val == "hudScale"){
+            hudScale = args[1].trimmed().toFloat();
+        }
+
     }
 }
-
+/*
 bool Game::loadRouteEditor(){
-    /*if(Game::warningBox){
-        QMessageBox msgBox;
-        msgBox.setText("This is experimental version.\nUsing it may seriously damage your routes."
-                       "\nMake backup first!\n\nTo disable this window, set 'warningBox = false' in settings.txt.");
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.exec();
-    }*/
     
     window = new RouteEditorWindow();
     if(Game::fullscreen){
@@ -497,10 +510,11 @@ bool Game::loadRouteEditor(){
     QObject::connect(loadWindow, SIGNAL(showMainWindow()),
                       window, SLOT(show()));
     
-    if(Game::checkRoot(Game::root) && (Game::checkRoute(Game::route) || Game::createNewRoutes))
+    if(Game::checkRoot(Game::root) && (Game::checkRoute(Game::route) || Game::createNewRoutes)){
         Game::window->show();
-    else
+    } else {
         Game::loadWindow->show();
+    }
 }
 
 bool Game::loadConEditor(){
@@ -517,7 +531,7 @@ bool Game::loadConEditor(){
     //cwindow->resize(1280, 720);
     //cwindow->show();
 }
-
+*/
 bool Game::checkRoot(QString dir){
     QString path;
     path = dir + "/routes";

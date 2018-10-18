@@ -50,6 +50,7 @@ RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 m_xRot(0),
 m_yRot(0),
 m_zRot(0) {
+    
     this->installEventFilter(this);
 }
 
@@ -120,21 +121,72 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
     update();
 }
 
-void RouteEditorGLWidget::initializeGL() {
-    if(Game::soundEnabled)
-        SoundManager::InitAl();
-    
-    //this->setContextMenuPolicy(Qt::CustomContextMenu);
-    //connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), 
-    //        this, SLOT(showContextMenu(const QPoint &)));
-    
+void RouteEditorGLWidget::initRoute(){
     currentShapeLib = new ShapeLib();
     Game::currentShapeLib = currentShapeLib;
-    //qDebug() << "GLUU::get();";
+    
+    engLib = new EngLib();
+    Game::currentEngLib = engLib;
+
+    route = new Route();
+    if (!route->loaded) return;
+    
+    //QDialog aaaaa;
+    //aaaaa.setWindowTitle("dupa");
+    //aaaaa.exec();
+    
+    QObject::connect(route, SIGNAL(objectSelected(GameObj*)), this, SLOT(objectSelected(GameObj*)));
+    QObject::connect(route, SIGNAL(sendMsg(QString)), this, SLOT(msg(QString)));
+
+    float * aaa = new float[2] {
+        0, 0
+    };
+    cameraFree = new CameraFree(aaa);
+    //cameraObj = new CameraConsist();
+    camera = cameraFree;
+    float spos[3];
+    if (Game::start == 2) {
+        camera->setPozT(Game::startTileX, -Game::startTileY);
+    } else {
+        camera->setPozT(route->getStartTileX(), -route->getStartTileZ());
+        spos[0] = route->getStartpX();
+        spos[2] = -route->getStartpZ();
+    }
+    if (Game::terrainLib->load(route->getStartTileX(), -route->getStartTileZ())) {
+        spos[1] = 20 + Game::terrainLib->getHeight(route->getStartTileX(), -route->getStartTileZ(), route->getStartpX(), -route->getStartpZ());
+    } else {
+        spos[1] = 0;
+    }
+    camera->setPos((float*) &spos);
+    
+    // Play?
+    if(Game::ActivityToPlay.length() > 0){
+        int actId = ActLib::GetAct(Game::root + "/routes/" + Game::route + "/activities", Game::ActivityToPlay );
+        qDebug() << "======== actId" << actId << Game::ActivityToPlay;
+        if(actId < 0){
+            PlayActivitySelectWindow actWindow;
+            actWindow.setRoute(route);
+            actWindow.exec();
+            actId = actWindow.actId;
+        }
+        if(actId >= 0){
+            ActLib::Act[actId]->initToPlay();
+            route->activitySelected(ActLib::Act[actId]);
+            setSelectedObj((GameObj*)route->getActivityConsist(0));
+            camera->setCameraObject((GameObj*)route->getActivityConsist(0));
+        }
+    }
+}
+
+void RouteEditorGLWidget::initializeGL() {
+    
+    if(Game::soundEnabled)
+        SoundManager::InitAl();
+
     gluu = GLUU::get();
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &RouteEditorGLWidget::cleanup);
     qDebug() << "# InitializeOpenGLFunctions";
-    //this->ope
+
     initializeOpenGLFunctions();
     //funcs = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
     //if (!funcs) {
@@ -160,34 +212,13 @@ void RouteEditorGLWidget::initializeGL() {
     //sFile->Load("f:/train simulator/routes/cmk/shapes/cottage3.s");
     //tile = new Tile(-5303,-14963);
     //qDebug() << "route = new Route();";
-    engLib = new EngLib();
-    Game::currentEngLib = engLib;
 
-    route = new Route();
-    if (!route->loaded) return;
-    QObject::connect(route, SIGNAL(objectSelected(GameObj*)), this, SLOT(objectSelected(GameObj*)));
-    QObject::connect(route, SIGNAL(sendMsg(QString)), this, SLOT(msg(QString)));
-
-    float * aaa = new float[2] {
-        0, 0
-    };
-    cameraFree = new CameraFree(aaa);
-    //cameraObj = new CameraConsist();
-    camera = cameraFree;
-    float spos[3];
-    if (Game::start == 2) {
-        camera->setPozT(Game::startTileX, -Game::startTileY);
-    } else {
-        camera->setPozT(route->getStartTileX(), -route->getStartTileZ());
-        spos[0] = route->getStartpX();
-        spos[2] = -route->getStartpZ();
-    }
-    if (Game::terrainLib->load(route->getStartTileX(), -route->getStartTileZ())) {
-        spos[1] = 20 + Game::terrainLib->getHeight(route->getStartTileX(), -route->getStartTileZ(), route->getStartpX(), -route->getStartpZ());
-    } else {
-        spos[1] = 0;
-    }
-    camera->setPos((float*) &spos);
+    
+    /*PlayActivitySelectWindow *actWindow = new PlayActivitySelectWindow();
+    actWindow->setRoute(route);
+    qDebug() << "=1a";
+    actWindow->exec();
+     qDebug() << "=1b";*/
 
     lastTime = QDateTime::currentMSecsSinceEpoch();
     int timerStep = 15;
@@ -197,7 +228,6 @@ void RouteEditorGLWidget::initializeGL() {
     setFocus();
     setMouseTracking(true);
     pointer3d = new Pointer3d();
-    
     compass = new GuiGlCompass();
     compassPointer = new OglObj();
     float *punkty = new float[3 * 6];
@@ -231,24 +261,7 @@ void RouteEditorGLWidget::initializeGL() {
     gluu->makeShadowFramebuffer(FramebufferName2, depthTexture2, Game::shadowLowMapSize, GL_TEXTURE3);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE0);
-    
-    // Play?
-    if(Game::ActivityToPlay.length() > 0){
-        int actId = ActLib::GetAct(Game::root + "/routes/" + Game::route + "/activities", Game::ActivityToPlay );
-        qDebug() << "======== actId" << actId << Game::ActivityToPlay;
-        if(actId < 0){
-            PlayActivitySelectWindow actWindow;
-            actWindow.setRoute(route);
-            actWindow.exec();
-            actId = actWindow.actId;
-        }        
-        if(actId >= 0){
-            ActLib::Act[actId]->initToPlay();
-            route->activitySelected(ActLib::Act[actId]);
-            setSelectedObj((GameObj*)route->getActivityConsist(0));
-            camera->setCameraObject((GameObj*)route->getActivityConsist(0));
-        }
-    }
+        
     
     moveStep = Game::DefaultMoveStep;
     moveMaxStep = Game::DefaultMoveStep;
@@ -332,7 +345,7 @@ void RouteEditorGLWidget::paintGL() {
     gluu->setMatrixUniforms();
 
     if (stickPointerToTerrain && Game::viewTerrainShape)
-        if (!selection) drawPointer();
+        if (!selection && !Game::playerMode) drawPointer();
     
     route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, renderMode);
     
@@ -341,7 +354,7 @@ void RouteEditorGLWidget::paintGL() {
         Game::terrainLib->renderWater(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
     
     if (!stickPointerToTerrain || !Game::viewTerrainShape)
-        if (!selection) drawPointer();
+        if (!selection && !Game::playerMode) drawPointer();
     
     // render compass
     if (!selection && Game::viewCompass){
@@ -355,8 +368,21 @@ void RouteEditorGLWidget::paintGL() {
         compassPointer->render();
     }
     
-    gluu->currentShader->release();
-
+    
+    // HUD
+    if(Game::hudEnabled){
+        int shadowsState = Game::shadowsEnabled;
+        Game::shadowsEnabled = 0;
+        float hudScale = Game::hudScale;
+        Mat4::identity(gluu->mvMatrix);
+        Mat4::ortho(gluu->pMatrix, -1.0, -1.0+2.0*hudScale, 1.0 - 2*(float(this->height()) / this->width())*hudScale, 1.0, 0.0, 1.0);
+        Mat4::identity(gluu->objStrMatrix);
+        gluu->setMatrixUniforms();
+        gluu->currentShader->setUniformValue(gluu->currentShader->lod, 0.0f);
+        camera->renderHud(gluu);
+        Game::shadowsEnabled = shadowsState;
+        gluu->currentShader->release();
+    }
     // Handle Selection
     handleSelection();
 
@@ -1713,7 +1739,7 @@ void RouteEditorGLWidget::createNewLoTiles(QMap<int, QPair<int, int>*> list){
     }
 }
 
-void RouteEditorGLWidget::getUnsavedInfo(std::vector<QString> &items) {
+void RouteEditorGLWidget::getUnsavedInfo(QVector<QString> &items) {
     if (this->route == NULL)
         return;
     route->getUnsavedInfo(items);

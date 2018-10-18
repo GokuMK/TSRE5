@@ -20,21 +20,29 @@ class TextObj : public OglObj{
 public:
     bool inUse = false;
     float pos[3];
-    TextObj(QString val, float s = 0, float sc = 0);
+    TextObj(QString val, float s = 0, float sc = 0, int resm = 1);
     TextObj();
-    TextObj(int val, float s = 0, float sc = 0);
+    TextObj(int val, float s = 0, float sc = 0, int resm = 1);
     TextObj(const TextObj& orig);
     virtual ~TextObj();
     void render();
     void render(float rot);
     void setColor(int r, int g, int b);
+    void setOColor(int r, int g, int b);
+    void setFontName(QString val);
+    void setRotOffset(float val);
 private:
     QString text;
+    QString fontName;
     void init();
     QColor color;
+    QColor ocolor;
+    bool isOutline = false;
     bool isInit = false;
     float size = 4;
     float scale = 1;
+    float rotOffset = 3.14;
+    int resMult = 1;
 };
 
 #endif	/* TEXTOBJ_H */

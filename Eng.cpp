@@ -564,8 +564,10 @@ void Eng::drawBorder3d(){
 void Eng::updateSim(float deltaTime){
     static float acceleration = 0;
     static float lastSpeed = 0;
+    // Use True for fake acceleration sound
+    static bool fakesound = true;
     
-    if(!Game::useNetworkEng){
+    if(!Game::useNetworkEng || fakesound){
     // Local Sound Speed test:
         static SoundDefinitionGroup::Stream::Curve curve1("SpeedControlled");
         static SoundDefinitionGroup::Stream::Curve curve2("SpeedControlled");
@@ -590,17 +592,17 @@ void Eng::updateSim(float deltaTime){
             curve = &curve1;
         }
 
-        static float acc = 0.1;
         if(soundVariables != NULL)
-            acc = curve->getValue(soundVariables);
+            acceleration = curve->getValue(soundVariables);
 
-        currentSpeed += acc*deltaTime;
+        currentSpeed += acceleration*deltaTime;
 
         // Static speed
-        currentSpeed = 37;
+        //currentSpeed = 40;
     
     // Network Speed
-    } else {
+    }
+    if(Game::useNetworkEng) {
         static IghCoordinate* igh = new IghCoordinate();
         static LatitudeLongitudeCoordinate* latlon = new LatitudeLongitudeCoordinate();
         static PreciseTileCoordinate* coords = new PreciseTileCoordinate();
@@ -624,8 +626,9 @@ void Eng::updateSim(float deltaTime){
         networkEng->writeData(data);
     } 
     
-    if(currentSpeed != lastSpeed)
+    if(currentSpeed != lastSpeed && !fakesound){
         acceleration = (currentSpeed - lastSpeed) / (deltaTime);
+    }
     
     //qDebug() << acceleration << currentSpeed << lastSpeed;
     if(soundVariables != NULL){

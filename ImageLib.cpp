@@ -21,8 +21,9 @@ ImageLib::ImageLib() {
 
 void ImageLib::run(){
     QImage img(texture->pathid);    
-    if(img.isNull()) {
-        //qDebug() << "IMG: not exist "<<texture->pathid;
+
+    if(img.isNull() && !IsThread) {
+        qDebug() << "IMG: not exist "<<texture->pathid;
         return;
     }
     
@@ -38,7 +39,12 @@ void ImageLib::run(){
     }
     texture->width = img.width();
     texture->height = img.height();
-    
+    if(!IsThread)
+            qDebug() << "tex: " <<  texture->pathid
+                <<  " " <<  texture->width
+                <<  " " <<  texture->height
+                <<  " " <<  texture->bytesPerPixel
+                ;
     texture->imageData = new unsigned char[texture->width*texture->height*texture->bytesPerPixel];//img.bits();
     int lineWidth = (texture->width*texture->bytesPerPixel);
     if( lineWidth%4 == 0){

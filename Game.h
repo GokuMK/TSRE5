@@ -17,8 +17,8 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-class RouteEditorWindow;
-class LoadWindow;
+//class RouteEditorWindow;
+//class LoadWindow;
 class TDB;
 class SoundList;
 class ShapeLib;
@@ -58,8 +58,8 @@ public:
     static bool ignoreLoadLimits;
     static void load();
     static void InitAssets();
-    static bool loadRouteEditor();
-    static bool loadConEditor();
+    //static bool loadRouteEditor();
+    //static bool loadConEditor();
     static bool checkRoot(QString dir);
     static bool checkCERoot(QString dir);
     static bool checkRoute(QString dir);
@@ -148,13 +148,17 @@ public:
     static float skyColor[4];//{230.0/255.0,248.0/255,255.0/255.0, 1.0};
     
     static int AASamples;
+    static bool AARemoveBorder;
     static float PixelRatio;
     
     static int DefaultElevationBox;
     static float DefaultMoveStep;
+    
+    static bool hudEnabled;
+    static float hudScale;
 private:
-    static RouteEditorWindow* window;
-    static LoadWindow* loadWindow;
+    //static RouteEditorWindow* window;
+    //static LoadWindow* loadWindow;
     static void CreateNewSettingsFile();
     static void DownloadAppData(QString path);
     static void CheckForOpenAl();

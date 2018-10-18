@@ -12,13 +12,19 @@
 #include <QDesktopWidget>
 #include <QDebug>
 #include <QtCore>
+#include <QFile>
+#include <QTextStream>
+#include <QPalette>
+#include <QColor>
+#include <QStringList>
 #include <iostream>
 #include "Game.h"
 #include "RouteEditorWindow.h"
 #include "LoadWindow.h"
+#include "CELoadWindow.h"
 #include "MapWindow.h"
-#include <QFile>
-#include <QTextStream>
+
+
 QFile logFile;
 QTextStream logFileOut;
 
@@ -32,6 +38,34 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     logFile.flush(); 
     
     if( type == QtFatalMsg ) abort(); 
+}
+
+void LoadConEditor(){
+    CELoadWindow* ceLoadWindow = new CELoadWindow();
+    ceLoadWindow->show();
+}
+
+void LoadRouteEditor(){
+    RouteEditorWindow *window = new RouteEditorWindow();
+    if(Game::fullscreen){
+        window->setWindowFlags(Qt::CustomizeWindowHint);
+        window->setWindowState(Qt::WindowMaximized);
+    } else {
+        window->resize(1280, 800);
+    }
+    
+    LoadWindow *loadWindow = new LoadWindow();
+    QObject::connect(window, SIGNAL(exitNow()),
+                      loadWindow, SLOT(exitNow()));
+    
+    QObject::connect(loadWindow, SIGNAL(showMainWindow()),
+                      window, SLOT(show()));
+    
+    if(Game::checkRoot(Game::root) && (Game::checkRoute(Game::route) || Game::createNewRoutes)){
+        window->show();
+    } else {
+        loadWindow->show();
+    }
 }
 
 int main(int argc, char *argv[]){
@@ -116,27 +150,28 @@ int main(int argc, char *argv[]){
     //else
     //    window.showMaximized();
 
-    //Game::loadWindow.show();
-    if(app.arguments().count() > 1){
-        qDebug() << "arg1 " << app.arguments().at(1);    
-        if(app.arguments().at(1) == "--aceconv"){
+    QStringList args = app.arguments();
+    if(args.count() > 1){
+        qDebug() << "arg1 " << args.at(1);    
+        if(args.at(1) == "--aceconv"){
             // Run ace converter
             qDebug() << "Run ace converter";
             return app.exec();
         }
-        if(app.arguments().at(1) == "--conedit"){
+        if(args.at(1) == "--conedit"){
             // Run ace converter
             qDebug() << "Run con editor";
-            Game::loadConEditor();
+            LoadConEditor();
             return app.exec();
         }
-        if(app.arguments().at(1) == "--play"){
+
+        if(args.at(1) == "--play"){
             // Play
-            if(app.arguments().length() == 3){
-                Game::ActivityToPlay = app.arguments().at(2);
-            } else if(app.arguments().length() == 4){
-                Game::route = app.arguments().at(2);
-                Game::ActivityToPlay = app.arguments().at(3);
+            if(args.length() == 3){
+                Game::ActivityToPlay = args.at(2);
+            } else if(args.length() == 4){
+                Game::route = args.at(2);
+                Game::ActivityToPlay = args.at(3);
             } else {
                 Game::ActivityToPlay = "#";
             }
@@ -144,7 +179,8 @@ int main(int argc, char *argv[]){
         }
     }
     // Run route editor
-    Game::loadRouteEditor();
+    LoadRouteEditor();
+
     //MapWindow aaa;
     //aaa.show();
     return app.exec();

@@ -14,7 +14,7 @@
 #include "WorldObj.h"
 #include <QString>
 #include "FileBuffer.h"
-#include <vector>
+#include <QVector>
 
 class TrackItemObj;
 class OglObj;
@@ -69,7 +69,7 @@ private:
     //int trItemIdCount = 0;
     TrackItemObj* pointer3d = NULL; 
     TrackItemObj* pointer3dSelected = NULL; 
-    std::vector<float*> drawPositions;
+    QVector<float*> drawPositions;
     float* drawPosition = NULL;
     OglObj* drawLine = NULL;
     

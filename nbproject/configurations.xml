@@ -53,6 +53,10 @@
         <itemPath>TextEditDialog.h</itemPath>
         <itemPath>UnsavedDialog.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f18" displayName="HUD" projectFiles="true">
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f6" displayName="math3d" projectFiles="true">
         <itemPath>Flex.h</itemPath>
         <itemPath>GLMatrix.h</itemPath>
@@ -124,7 +128,6 @@
         <itemPath>AboutWindow.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
         <itemPath>GeoTools.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h</itemPath>
         <itemPath>LoadWindow.h</itemPath>
         <itemPath>NaviBox.h</itemPath>
         <itemPath>NaviWindow.h</itemPath>
@@ -292,6 +295,10 @@
         <itemPath>TextEditDialog.cpp</itemPath>
         <itemPath>UnsavedDialog.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f18" displayName="HUD" projectFiles="true">
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f5" displayName="math3d" projectFiles="true">
         <itemPath>Flex.cpp</itemPath>
         <itemPath>GLMatrix.cpp</itemPath>
@@ -363,7 +370,6 @@
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
         <itemPath>GeoTools.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp</itemPath>
         <itemPath>LoadWindow.cpp</itemPath>
         <itemPath>NaviBox.cpp</itemPath>
         <itemPath>NaviWindow.cpp</itemPath>
@@ -628,6 +634,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1497,6 +1513,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
             ex="false"
             tool="1"
@@ -2350,6 +2376,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
             ex="false"
             tool="1"
@@ -3061,13 +3097,13 @@
     </conf>
     <conf name="Release_x64" type="4">
       <toolsSet>
-        <compilerSet>MinGW_QT_5.7.0_Static_x64|MinGW</compilerSet>
+        <compilerSet>MinGW_QT_5.12.0_Static_x64|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <qt>
         <target>TSRE5</target>
-        <version>0.614</version>
+        <version>0.696</version>
         <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>
@@ -3211,6 +3247,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -3926,7 +3972,7 @@
     </conf>
     <conf name="Debug_x64" type="4">
       <toolsSet>
-        <compilerSet>MinGW_QT_5.7.0_Static_x64|MinGW</compilerSet>
+        <compilerSet>MinGW_QT_5.12.0_Static_x64|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -3940,7 +3986,15 @@
       <compileType>
         <ccTool>
           <standard>8</standard>
+          <incDir>
+            <pElem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/include</pElem>
+          </incDir>
         </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/libs/Win64/libOpenAL32.dll.a</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="AboutWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -4056,6 +4110,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h"
             ex="false"
             tool="3"
             flavor2="0">

@@ -12,7 +12,7 @@
 #include "GLMatrix.h"
 #include "GLUU.h"
 
-TextObj::TextObj(int val, float s, float sc) : OglObj() {
+TextObj::TextObj(int val, float s, float sc, int resm) : OglObj() {
     this->text.setNum(val, 10);
     if(s > 0)
         size = s;
@@ -21,9 +21,10 @@ TextObj::TextObj(int val, float s, float sc) : OglObj() {
     pos[0] = 0;
     pos[1] = 0;
     pos[2] = 0;
+    resMult = resm;
 }
 
-TextObj::TextObj(QString val, float s, float sc) : OglObj() {
+TextObj::TextObj(QString val, float s, float sc, int resm) : OglObj() {
     this->text = val;
     if(s > 0)
         size = s;
@@ -32,6 +33,7 @@ TextObj::TextObj(QString val, float s, float sc) : OglObj() {
     pos[0] = 0;
     pos[1] = 0;
     pos[2] = 0;
+    resMult = resm;
 }
 
 TextObj::TextObj() : OglObj() {
@@ -43,6 +45,19 @@ TextObj::TextObj() : OglObj() {
 
 void TextObj::setColor(int r, int g, int b){
     color.setRgb(r, g, b);
+}
+
+void TextObj::setOColor(int r, int g, int b){
+    ocolor.setRgb(r, g, b);
+    isOutline = true;
+}
+
+void TextObj::setFontName(QString val){
+    fontName = val;
+}
+
+void TextObj::setRotOffset(float val){
+    rotOffset = val;
 }
 
 void TextObj::init(){
@@ -94,7 +109,16 @@ void TextObj::init(){
     punkty[ptr++] = 1.0;
     punkty[ptr++] = 1.0;
     punkty[ptr++] = alpha;
-    this->setMaterial(new QString(text+".size:"+QString::number((int)size)+".color:"+color.name()+".:paintTex"));
+    QString args;
+    if(resMult > 1)
+        args += ".resm:"+QString::number((int)resMult);
+    if(fontName.length() > 0)
+        args += ".font:"+fontName;
+    if(isOutline)
+        args += ".ocolor:"+ocolor.name();
+    args += ".size:"+QString::number((int)size);
+    args += ".color:"+color.name();
+    this->setMaterial(new QString(text+args+".:paintTex"));
     OglObj::init(punkty, ptr, this->VT, GL_TRIANGLES);
     delete[] punkty;
     isInit = true;
@@ -117,7 +141,7 @@ void TextObj::render(float rot) {
     GLUU* gluu = GLUU::get();
     gluu->mvPushMatrix();
     Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, pos[0], pos[1], pos[2]);
-    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, rot+3.14);
+    Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, rot+rotOffset);
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
 
     OglObj::render();

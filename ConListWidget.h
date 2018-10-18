@@ -28,8 +28,8 @@ public:
     void fillConList(QString n);
     void newConsist();
     void newConsist(Consist * con);
-    void getUnsaed(std::vector<int> &unsavedConIds);
-    void getUnsaedAct(std::vector<int> &unsavedActIds);
+    void getUnsaed(QVector<int> &unsavedConIds);
+    void getUnsaedAct(QVector<int> &unsavedActIds);
     void findConsistsByEng(int id);
     bool isActivity();
     int getCurrentActivityId();

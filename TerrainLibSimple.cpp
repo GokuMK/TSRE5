@@ -56,12 +56,12 @@ void TerrainLibSimple::saveEmpty(int x, int z){
 
 bool TerrainLibSimple::isLoaded(int x, int z) {
     Terrain *tTile;
-    //try {
+
     tTile = terrain[((x)*10000 + z)];
-    //} catch (const std::out_of_range& oor) {
+
     if (tTile == NULL)
         return false;
-    //}
+
     if (tTile->loaded) {
         return true;
     }
@@ -82,7 +82,7 @@ bool TerrainLibSimple::load(int x, int z) {
     return false;
 }
 
-void TerrainLibSimple::getUnsavedInfo(std::vector<QString> &items){
+void TerrainLibSimple::getUnsavedInfo(QVector<QString> &items){
     if (!Game::writeEnabled) return;
     for (auto it = terrain.begin(); it != terrain.end(); ++it) {
         //console.log(obj.type);
@@ -738,8 +738,6 @@ QSet<Terrain*> TerrainLibSimple::paintHeightMap(Brush* brush, int x, int z, floa
         }
     
     foreach (Terrain* value, uterr){
-    //for (std::set<int>::iterator it = uterr.begin(); it != uterr.end(); ++it) {
-        //console.log(obj.type);
         value->setModified(true);
         value->refresh();
     }
@@ -856,9 +854,9 @@ void TerrainLibSimple::setWaterLevels(float *w, int mojex, int mojez){
 
 void TerrainLibSimple::fillRaw(Terrain *cTerr, int mojex, int mojez) {
     Terrain *tTile;
-    //try {
+
     tTile = terrain[((mojex + 1)*10000 + mojez)];
-    //} catch (const std::out_of_range& oor) {
+
     if (tTile == NULL) {
         terrain[(mojex + 1)*10000 + mojez] = new Terrain(mojex + 1, mojez);
     }
@@ -871,9 +869,9 @@ void TerrainLibSimple::fillRaw(Terrain *cTerr, int mojex, int mojez) {
             }
     }
 
-    //try {
+    
     tTile = terrain[((mojex)*10000 + mojez + 1)];
-    //} catch (const std::out_of_range& oor) {
+
     if (tTile == NULL) {
         terrain[(mojex)*10000 + mojez + 1] = new Terrain(mojex, mojez + 1);
     }
@@ -886,9 +884,9 @@ void TerrainLibSimple::fillRaw(Terrain *cTerr, int mojex, int mojez) {
             }
     }
 
-    //try {
+
     tTile = terrain[((mojex + 1)*10000 + (mojez + 1))];
-    //} catch (const std::out_of_range& oor) {
+
     if (tTile == NULL) {
         terrain[(mojex + 1)*10000 + mojez + 1] = new Terrain(mojex + 1, mojez + 1);
     }
@@ -929,9 +927,7 @@ void TerrainLibSimple::render(GLUU *gluu, float * playerT, float* playerW, float
             if (tTile == NULL) {
                 terrain[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Terrain((int)playerT[0] + i, (int)playerT[1] + j);
             }
-            //} catch (const std::out_of_range& oor) {
-            //    terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
-            //}
+
             tTile = terrain[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
             tTile->inUse = true;
             if (tTile->loaded == false) continue;
@@ -1036,9 +1032,7 @@ void TerrainLibSimple::renderShadowMap(GLUU *gluu, float * playerT, float* playe
             if (tTile == NULL) {
                 terrain[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Terrain((int)playerT[0] + i, (int)playerT[1] + j);
             }
-            //} catch (const std::out_of_range& oor) {
-            //    terrain[(playerT[0] + i)*10000 + playerT[1] + j] = new Terrain(playerT[0] + i, playerT[1] + j);
-            //}
+
             tTile = terrain[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
             tTile->inUse = true;
             if (tTile->loaded == false) continue;

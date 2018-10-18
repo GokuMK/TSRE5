@@ -95,9 +95,9 @@ public:
     };
     
     // zmienne
-    struct VBO {
-        int w[];
-    };
+    //struct VBO {
+    //    int w[];
+    //};
     
     struct EsdBoundingBox {
         float shape[6];
@@ -167,7 +167,7 @@ public:
     int esdAlternativeTexture = -1;
     QVector<EsdBoundingBox> esdBoundingBox;
     
-    VBO vbo[];
+    //VBO vbo[];
     punlist tpoints;
     // zmienne
     int iloscd;

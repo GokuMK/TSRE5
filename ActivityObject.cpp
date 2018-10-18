@@ -23,6 +23,7 @@
 #include "TRitem.h"
 #include "Activity.h"
 #include "TerrainLib.h"
+#include <math.h>
 
 ActivityObject::~ActivityObject() {
 }

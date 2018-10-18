@@ -496,7 +496,7 @@ void ActivityTools::actPlayEnabled(){
 }
 
 void ActivityTools::actSaveEnabled(){
-    std::vector<QString> unsavedItems;
+    QVector<QString> unsavedItems;
     ActLib::GetUnsavedInfo(unsavedItems);
     if(unsavedItems.size() == 0){
         qDebug() << "nic do zapisania";

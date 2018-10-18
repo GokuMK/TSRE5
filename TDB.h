@@ -12,6 +12,7 @@
 #define	TDB_H
 #include <QString>
 #include <unordered_map>
+#include <QVector>
 #include "OglObj.h"
 #include "TextObj.h"
 #include "SignalObj.h"
@@ -102,8 +103,8 @@ public:
     bool getDrawPositionOnTrNode(float* out, int id, float metry, float *sElev = NULL);
     int findTrItemNodeId(int id);
     int findNearestPositionOnTDB(float* posT, float* pos, float* q = NULL, float* tpos = NULL);
-    int findNearestPositionsOnTDB(float* posT, float * pos, std::vector<TDB::IntersectionPoint> &points, float maxDistance = 10.0);
-    void fillNearestSquaredDistanceToTDBXZ(float* posT, std::vector<Vector4f> &points, float* bbox = NULL);
+    int findNearestPositionsOnTDB(float* posT, float * pos, QVector<TDB::IntersectionPoint> &points, float maxDistance = 10.0);
+    void fillNearestSquaredDistanceToTDBXZ(float* posT, QVector<Vector4f> &points, float* bbox = NULL);
     void deleteTrItem(int trid);
     void deleteTree(int x, int y, int UiD);
     void deleteTree(int d);
@@ -119,7 +120,7 @@ public:
     void newHazardObject(int* &itemId, int trNodeId, float metry, int type);
     void newCrossOverObject(int id1, float m1, int id2, float m2, int shapeIdx);
     bool getSegmentIntersectionPositionOnTDB(float* posT, float* segment, float len, float* pos, float * q, float* tpos);
-    bool getSegmentIntersectionPositionOnTDB(std::vector<TDB::IntersectionPoint> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos);
+    bool getSegmentIntersectionPositionOnTDB(QVector<TDB::IntersectionPoint> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos);
     void newSpeedPostObject(int speedPostType, QVector<int> & itemId, int trNodeId, float metry, int type);
     void newSoundRegionObject(int soundregionTrackType, QVector<int> & itemId, int trNodeId, float metry, int type);
 private:

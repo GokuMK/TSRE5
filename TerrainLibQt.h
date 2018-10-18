@@ -51,7 +51,7 @@ public:
     void setTerrainToTrackObj(Brush* brush, float* punkty, int length, int x, int z, float* matrix, float offsetY = 0);
     int getTexture(int x, int z, float* p);
     bool load(int x, int z);
-    void getUnsavedInfo(std::vector<QString> &items);
+    void getUnsavedInfo(QVector<QString> &items);
     void save();
     void refresh(int x, int z);
     bool reload(int x, int z);

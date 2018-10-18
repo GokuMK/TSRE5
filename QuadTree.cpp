@@ -461,7 +461,7 @@ void QuadTree::saveTD(int x, int y) {
         0x4A, 0x49, 0x4E, 0x58, 0x30, 0x64, 0x31, 0x62, 0x5F, 0x5F, 0x5F, 0x5F, 0x5F, 0x5F, 0x0D, 0x0A
     };
     write.writeRawData(header, 32);
-    std::vector<unsigned char> treeData;
+    QVector<unsigned char> treeData;
 
     x = x * 512;
     y = y * 512;
@@ -509,7 +509,7 @@ QuadTree::QuadTile::QuadTile(int l, int p, int xx, int yy) {
     }
 }
 
-void QuadTree::QuadTile::save(std::vector<unsigned char> &data) {
+void QuadTree::QuadTile::save(QVector<unsigned char> &data) {
     unsigned char isDivided = 0;
     unsigned char isPopulated = 0;
 

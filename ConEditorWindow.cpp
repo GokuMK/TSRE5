@@ -35,6 +35,7 @@
 
 ConEditorWindow::ConEditorWindow() : QMainWindow() {
     Game::shadowsEnabled = 0;
+    Game::fogDensity = 0;
     Vec3::set((float*)Game::sunLightDirection,-1.0,0.0,0.0);
     aboutWindow = new AboutWindow(this);
     englib = new EngLib();
@@ -892,8 +893,8 @@ void ConEditorWindow::replaceAllAllEnabled(){
     
 void ConEditorWindow::closeEvent( QCloseEvent *event )
 {
-    std::vector<int> unsavedConIds;
-    std::vector<int> unsavedActIds;
+    QVector<int> unsavedConIds;
+    QVector<int> unsavedActIds;
     con1->getUnsaed(unsavedConIds);
     con1->getUnsaedAct(unsavedActIds);
     if(unsavedConIds.size()+unsavedActIds.size() == 0){

@@ -109,7 +109,7 @@ void LevelCrObj::initTrItems(float* tpos){
     qDebug() << "road pos "<<tpos[0]<<" "<<tpos[1];
     rdb->getVectorSectionLine(buffer, len, playerT[0], playerT[1], tpos[0]);
     qDebug() << "and find intersections ";
-    std::vector<TDB::IntersectionPoint> ipoints;
+    QVector<TDB::IntersectionPoint> ipoints;
     tdb->getSegmentIntersectionPositionOnTDB(ipoints, rdb, playerT, buffer, len, (float*)&pos);
     qDebug() << "intersection count: "<<ipoints.size();
     

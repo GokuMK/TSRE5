@@ -13,6 +13,7 @@
 
 #include "WorldObj.h"
 #include <QString>
+#include <QVector>
 
 class OglObj;
 class Ref::RefItem;
@@ -33,7 +34,7 @@ public:
         float treeSizeZ = 0;
     };
     static float ForestClearDistance;
-    static std::vector<ForestList> forestList;
+    static QVector<ForestList> forestList;
     QString treeTexture = "";
     float scaleRangeX = 0;
     float scaleRangeZ = 0;

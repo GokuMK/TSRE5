@@ -263,14 +263,12 @@ void Route::loadPaths(){
 
 WorldObj* Route::getObj(int x, int z, int id) {
     Tile *tTile;
-    //try {
+
     tTile = tile[((x)*10000 + z)];
     if (tTile == NULL)
         return NULL;
     return tTile->getObj(id);
-    //} catch (const std::out_of_range& oor) {
 
-    //}
 }
 
 WorldObj* Route::findNearestObj(int x, int z, float* pos){
@@ -285,14 +283,12 @@ WorldObj* Route::findNearestObj(int x, int z, float* pos){
 
 void Route::transalteObj(int x, int z, float px, float py, float pz, int uid) {
     Tile *tTile;
-    //try {
+
     tTile = tile[((x)*10000 + z)];
     if (tTile == NULL)
         return;
     tTile->transalteObj(px, py, pz, uid);
-    //} catch (const std::out_of_range& oor) {
 
-    //}
 }
 
 void Route::updateSim(float *playerT, float deltaTime){
@@ -340,10 +336,8 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     Tile *tTile;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
-            //try {
             tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
-            //    if (tTile->loaded == -2) continue;
-            //} catch (const std::out_of_range& oor) {
+
             if (tTile == NULL){
                 tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Tile((int)playerT[0] + i, (int)playerT[1] + j);
             }
@@ -1460,7 +1454,7 @@ int Route::getTileHiddenObjCount(int x, int z) {
     return tTile->jestHiddenObj;
 }
 
-void Route::getUnsavedInfo(std::vector<QString> &items){
+void Route::getUnsavedInfo(QVector<QString> &items){
     if (!Game::writeEnabled) return;
     for (auto it = tile.begin(); it != tile.end(); ++it) {
         Tile* tTile = (Tile*) it->second;

@@ -242,7 +242,7 @@ int ActLib::LoadAllAct(QString gameRoot){
     return 0;
 }
 
-void ActLib::GetUnsavedInfo(std::vector<QString>& items){
+void ActLib::GetUnsavedInfo(QVector<QString>& items){
     Activity * e;
     for (int i = 0; i < ActLib::jestact; i++){
         e = ActLib::Act[i];
