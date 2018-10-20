@@ -30,8 +30,8 @@ ActivityTrafficWindow::ActivityTrafficWindow(QWidget* parent) : QWidget(parent) 
     QObject::connect(bNew, SIGNAL(released()),
                       this, SLOT(bNewTrafficSelected()));
     QPushButton *bDelete = new QPushButton("Delete");
-    QObject::connect(bDelete, SIGNAL(released()),
-                      this, SLOT(bDeleteTrafficSelected()));
+    //QObject::connect(bDelete, SIGNAL(released()),
+    //                  this, SLOT(bDeleteTrafficSelected()));
     QStringList list;
     list.append("Name:");
     list.append("This:");

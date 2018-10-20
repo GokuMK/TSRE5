@@ -25,6 +25,7 @@
 #include "TSection.h"
 #include "TDB.h"
 #include "TSectionDAT.h"
+#include <math.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -67,6 +68,14 @@ DynTrackObj::~DynTrackObj() {
 
 bool DynTrackObj::allowNew(){
     return true;
+}
+
+void DynTrackObj::setElevation(float prom){
+    float * q = qDirection;
+    float vect[3];
+    vect[0] = 0; vect[1] = 0; vect [2] = 1000;
+    Vec3::transformQuat(vect, vect, q);
+    rotate(asin((vect[1]*this->endp[3]+prom)/1000.0),0,0);
 }
 
 void DynTrackObj::deleteVBO(){

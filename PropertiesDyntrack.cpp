@@ -12,6 +12,7 @@
 #include "DynTrackObj.h"
 #include "Flex.h"
 #include "Game.h"
+#include "GLMatrix.h"
 
 PropertiesDyntrack::PropertiesDyntrack() {
     buttonTools["FlexTool"] = new QPushButton("Flex", this);
@@ -95,6 +96,55 @@ PropertiesDyntrack::PropertiesDyntrack() {
     vbox->addWidget(&wSect[4]);
     
     vbox->addWidget(buttonTools["FlexTool"]);
+    
+    QLabel *label = new QLabel("Elevation:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vlist = new QFormLayout;
+    vlist->setSpacing(0);
+    vlist->setContentsMargins(0,0,0,0);
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-10000, 10000, 6, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    QDoubleValidator* doubleValidator1 = new QDoubleValidator(-1000, 1000, 6, this); 
+    doubleValidator1->setNotation(QDoubleValidator::StandardNotation);
+    
+    //‰
+    vlist->addRow("Value: ",&this->elevType);
+    elevType.addItem("Permille ‰");
+    elevType.addItem("Percent %");
+    elevType.addItem("1 in 'X' m");
+    elevType.addItem("Angle º");
+    elevType.setStyleSheet("combobox-popup: 0;");
+    QObject::connect(&elevType, SIGNAL(currentTextChanged(QString)),
+                      this, SLOT(elevTypeEdited(QString)));
+    
+    elevPromLabel.setText("‰");
+    vlist->addRow(&elevPromLabel,&elevProm);
+    elevProm.setValidator(doubleValidator1);
+    QObject::connect(&elevProm, SIGNAL(textEdited(QString)), this, SLOT(elevPromEnabled(QString)));
+    //oneInXm
+    elev1inXmLabel.setText("1 in 'x' m");
+    vlist->addRow(&elev1inXmLabel,&elev1inXm);
+    elev1inXm.setValidator(doubleValidator);
+    QObject::connect(&elev1inXm, SIGNAL(textEdited(QString)), this, SLOT(elev1inXmEnabled(QString)));
+    //º
+    elevProgLabel.setText("º");
+    vlist->addRow(&elevProgLabel,&elevProg);
+    elevProg.setValidator(doubleValidator1);
+    QObject::connect(&elevProg, SIGNAL(textEdited(QString)), this, SLOT(elevProgEnabled(QString)));
+    //%
+    elevPropLabel.setText("%");
+    vlist->addRow(&elevPropLabel,&elevProp);
+    elevProp.setValidator(doubleValidator1);
+    QObject::connect(&elevProp, SIGNAL(textEdited(QString)), this, SLOT(elevPropEnabled(QString)));
+    vlist->addRow("Step:",&elevStep);
+    elevStep.setValidator(doubleValidator);
+    QObject::connect(&elevStep, SIGNAL(textEdited(QString)), this, SLOT(elevStepEnabled(QString)));
+    hideElevBoxes();
+    elevType.setCurrentIndex(Game::DefaultElevationBox);
+    showElevBox(elevType.currentText());
+    vbox->addItem(vlist);
     
     vbox->addStretch(1);
     this->setLayout(vbox);
@@ -197,8 +247,55 @@ void PropertiesDyntrack::showObj(GameObj* obj){
         this->sSectR[i].blockSignals(false);
     }
     
+    ///////////
+    elevType.setCurrentText(ElevTypeName);
+    
+    float * q = dobj->qDirection;
+    float vect[3];
+    vect[0] = 0; vect[1] = 0; vect [2] = 1000.0;
+    Vec3::transformQuat(vect, vect, q);
+    vect[1] = -vect[1];
+     
+    float oneInXm = 0.0;
+    float prog = qRadiansToDegrees(qAtan(vect[1]/1000.0));
+    float prop = vect[1]/10.0;
+
+    //if(vect[1] > 0)
+        oneInXm = 1000.0/vect[1];
+    this->elevProm.setText(QString::number(vect[1]));
+    this->elevProg.setText(QString::number(prog));
+    this->elevProp.setText(QString::number(prop));
+    this->elev1inXm.setText(QString::number(oneInXm));
+    setStepValue(Game::DefaultMoveStep);
+    
     //this->carNumber.setText(QString::number(pobj->getCarNumber(),10));
     //this->carSpeed.setText(QString::number(pobj->getCarSpeed(),10));
+}
+
+
+void PropertiesDyntrack::updateObj(GameObj* obj){
+    if(obj == NULL){
+        return;
+    }
+    dobj = (DynTrackObj*)obj;
+    float * q = dobj->qDirection;
+    float vect[3];
+    vect[0] = 0; vect[1] = 0; vect [2] = 1000.0;
+    Vec3::transformQuat(vect, vect, q);
+    vect[1] = -vect[1];
+     
+    float oneInXm = 0.0;
+    oneInXm = 1000.0/vect[1];
+    float prog = qRadiansToDegrees(qAtan(vect[1]/1000.0));
+    float prop = vect[1]/10.0;
+       
+    if(!this->elevProm.hasFocus() && !this->elev1inXm.hasFocus() && !this->elevProg.hasFocus() && !this->elevProp.hasFocus()){
+        this->elevProm.setText(QString::number(vect[1]));
+        this->elevProg.setText(QString::number(prog));
+        this->elevProp.setText(QString::number(prop));
+        this->elev1inXm.setText(QString::number(oneInXm));
+    }
+
 }
 
 void PropertiesDyntrack::chSectEnabled(int idx){
@@ -288,4 +385,200 @@ void PropertiesDyntrack::flexData(int x, int z, float* p){
     dobj->set("dyntrackdata", (float*)dyntrackData);
     this->showObj(dobj);
     emit enableTool("selectTool");
+}
+
+void PropertiesDyntrack::elevTypeEdited(QString val){
+    hideElevBoxes();
+    showElevBox(val);
+    ElevTypeName = val;
+}
+
+void PropertiesDyntrack::showElevBox(QString val){
+    if(val == "Permille ‰"){
+        elevProm.show();
+        elevPromLabel.show();
+    }
+    if(val == "Percent %"){
+        elevProp.show();
+        elevPropLabel.show();
+    }
+    if(val == "1 in 'X' m"){
+        elev1inXm.show();
+        elev1inXmLabel.show();
+    }
+    if(val == "Angle º"){
+        elevProg.show();
+        elevProgLabel.show();
+    }    
+    setStepValue(Game::DefaultMoveStep);
+}
+
+void PropertiesDyntrack::hideElevBoxes(){
+    elevProm.hide();
+    elevProg.hide();
+    elevProp.hide();
+    elev1inXm.hide();
+    elevPromLabel.hide();
+    elevProgLabel.hide();
+    elevPropLabel.hide();
+    elev1inXmLabel.hide();
+}
+
+void PropertiesDyntrack::setStepValue(float step){
+    if(elevType.currentIndex() == 0)
+        step = step * 100;
+    if(elevType.currentIndex() == 1)
+        step = step * 10;
+    if(elevType.currentIndex() == 2)
+        step = 10.0/step;
+    if(elevType.currentIndex() == 3)
+        step = qRadiansToDegrees(qAtan(step/10.0));
+    
+    elevStep.setText(QString::number(step));
+}
+
+float PropertiesDyntrack::getStepValue(float step){
+    if(elevType.currentIndex() == 0)
+        return step / 100;
+    if(elevType.currentIndex() == 1)
+        return step / 10;
+    if(elevType.currentIndex() == 2)
+        return 10.0/step;
+    if(elevType.currentIndex() == 3)
+        return qTan(qDegreesToRadians(step))*10.0;
+}
+
+void PropertiesDyntrack::elevPromEnabled(QString val){
+    if(dobj == NULL){
+        return;
+    }
+    bool ok = false;
+    //prom
+    float prom = val.toFloat(&ok);
+    if(!ok) return;
+    if(fabs(prom) > Game::trackElevationMaxPm + 0.000001) {   
+        this->elevProm.setText(QString::number(Game::trackElevationMaxPm));
+        return;
+    }
+    //oneInXm
+    float oneInXm = 1000.0/prom;
+    qDebug () << "oneInXm" << oneInXm;
+    qDebug () << "Game::trackElevationMaxPm" << Game::trackElevationMaxPm;
+    this->elev1inXm.setText(QString::number(oneInXm));
+    //prog 
+    float prog = qRadiansToDegrees(qAtan(prom/1000.0));
+    qDebug () << "prog" << prog;
+    this->elevProg.setText(QString::number(prog));
+    //prop 
+    float prop = prom/10.0;
+    qDebug () << "prop" << prop;
+    this->elevProp.setText(QString::number(prop));  
+    
+    Undo::SinglePushWorldObjData(worldObj);
+    dobj->setElevation(prom);
+}
+
+void PropertiesDyntrack::elevStepEnabled(QString val){
+    if(dobj == NULL)
+        return;
+
+    bool ok = false;
+    float f = val.toFloat(&ok);
+    if(!ok)
+        return;
+    
+    f = getStepValue(f);
+    
+    Game::DefaultMoveStep = f;
+    emit setMoveStep(f);
+}
+
+void PropertiesDyntrack::elev1inXmEnabled(QString val){
+    if(dobj == NULL){
+        return;
+    }
+    bool ok = false;
+    //oneInXm
+    float oneInXm = val.toFloat(&ok);
+    if(!ok) return;
+    //qDebug () << "oneInXm" << oneInXm;
+    //prom
+    float prom = 1000.0/oneInXm;
+    if(fabs(prom) > Game::trackElevationMaxPm + 0.000001) { 
+        return;
+    }
+    
+    qDebug () << "Game::trackElevationMaxPm: " << Game::trackElevationMaxPm;
+    this->elevProm.setText(QString::number(prom));  
+    //prop 
+    float prop = prom/10.0;
+    qDebug () << "prop" << prop;
+    this->elevProp.setText(QString::number(prop));
+    //prog 
+    float prog = qRadiansToDegrees(qAtan(prom/1000.0));
+    qDebug () << "prog" << prog;
+    this->elevProg.setText(QString::number(prog));
+    
+    Undo::SinglePushWorldObjData(worldObj);
+    dobj->setElevation(prom);
+}
+
+void PropertiesDyntrack::elevProgEnabled(QString val){
+    if(dobj == NULL){
+         return;
+    }
+    bool ok = false;
+    //prog
+    float prog = val.toFloat(&ok);
+    if(!ok) return;
+    if(fabs(prog) > qRadiansToDegrees(qAtan(Game::trackElevationMaxPm/1000.0))+ 0.000001) {   
+        this->elevProg.setText(QString::number(qRadiansToDegrees(qAtan(Game::trackElevationMaxPm/1000.0))));
+        return;
+    }
+    //prop 
+    float prop = qTan(qDegreesToRadians(prog))*100.0;
+    qDebug () << "prop" << prop;
+    qDebug () << "prog" << prog;
+    this->elevProp.setText(QString::number(prop));
+    //prom
+    float prom = prop*10.0;
+    qDebug () << "prom" << prom;
+    this->elevProm.setText(QString::number(prom));
+    //oneInXm
+    float oneInXm = 1000.0/prom;
+    qDebug () << "oneInXm" << oneInXm;
+    this->elev1inXm.setText(QString::number(oneInXm));
+     
+    Undo::SinglePushWorldObjData(worldObj);
+    dobj->setElevation(prom);
+}
+ 
+void PropertiesDyntrack::elevPropEnabled(QString val){
+    if(dobj == NULL){
+        return;
+    }
+    bool ok = false;
+    //prop
+    float prop = val.toFloat(&ok);
+    if(!ok) return;
+    if(fabs(prop) > (Game::trackElevationMaxPm/10.0)+ 0.000001)
+    {    this->elevProp.setText(QString::number(Game::trackElevationMaxPm/10.0));
+        return;}
+    //prom    
+    float prom = prop*10.0;
+    qDebug () << "prop" << prop;
+    qDebug () << "prom" << prom;
+    qDebug () << "Game::trackElevationMaxPm/10.0: " << Game::trackElevationMaxPm/10.0;
+    this->elevProm.setText(QString::number(prom));
+    //prog 
+    float prog = qRadiansToDegrees(qAtan(prom/1000.0));
+    qDebug () << "prog" << prog;
+    this->elevProg.setText(QString::number(prog));
+    //oneInXm
+    float oneInXm = 1000.0/prom;
+    qDebug () << "oneInXm" << oneInXm;
+    this->elev1inXm.setText(QString::number(oneInXm));
+    
+    Undo::SinglePushWorldObjData(worldObj);
+    dobj->setElevation(prom);
 }

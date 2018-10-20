@@ -26,13 +26,6 @@ svn:special svn:externals svn:needs-lock
 
 662ccc1e-e2bc-6b3b-5932-940d80fc147a
 
-Makefile-Debug.mk
-file
-
-
-
-add
-
 Makefile-Release.mk
 file
 
@@ -48,13 +41,6 @@ file
 add
 
 Makefile-variables.mk
-file
-
-
-
-add
-
-Package-Debug.bash
 file
 
 

@@ -442,6 +442,8 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(objProperties["TrackObj"], SIGNAL(setMoveStep(float)),
                       glWidget, SLOT(setMoveStep(float)));
     
+    QObject::connect(objProperties["Dyntrack"], SIGNAL(setMoveStep(float)),
+                      glWidget, SLOT(setMoveStep(float)));
     
     QObject::connect(terrainTools, SIGNAL(setPaintBrush(Brush*)),
                       glWidget, SLOT(setPaintBrush(Brush*)));   

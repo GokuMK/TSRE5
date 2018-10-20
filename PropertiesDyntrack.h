@@ -22,6 +22,7 @@ public:
     virtual ~PropertiesDyntrack();
     bool support(GameObj* obj);
     void showObj(GameObj* obj);
+    void updateObj(GameObj* obj);
     
 public slots:
     void flexEnabled();
@@ -30,8 +31,16 @@ public slots:
     void sSectEnabled(int idx);
     void msg(QString name, QString val);
     
+    void elevPromEnabled(QString val);
+    void elevProgEnabled(QString val);
+    void elevPropEnabled(QString val);
+    void elev1inXmEnabled(QString val);
+    void elevStepEnabled(QString val);
+    void elevTypeEdited(QString val);
+    
 signals:
     void enableTool(QString val);
+    void setMoveStep(float val);
     
 private:
     QCheckBox chSect[5];
@@ -43,6 +52,22 @@ private:
     QSignalMapper dyntrackChSect;
     QSignalMapper dyntrackSect;
     QLineEdit eSectionIdx;
+    
+    QComboBox elevType;
+    QLineEdit elevStep;
+    QLineEdit elevProm;
+    QLineEdit elevProg;
+    QLineEdit elevProp;
+    QLineEdit elev1inXm;
+    QLabel elevPromLabel;
+    QLabel elevProgLabel;
+    QLabel elevPropLabel;
+    QLabel elev1inXmLabel;
+    
+    void hideElevBoxes();
+    void showElevBox(QString val);
+    void setStepValue(float step);
+    float getStepValue(float step);
 };
 
 #endif	/* PROPERTIESDYNTRACK_H */

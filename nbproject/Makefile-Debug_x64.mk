@@ -22,7 +22,7 @@ AS=as
 QMAKE=qmake
 
 # Macros
-CND_PLATFORM=MinGW_QT_5.12.0_Static_x64-Windows
+CND_PLATFORM=MinGW_QT_5.7.1_Static_x64-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Debug_x64
 CND_DISTDIR=dist

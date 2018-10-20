@@ -258,3 +258,32 @@ bool PropertiesForest::support(GameObj* obj){
         return true;
     return false;
 }
+
+void PropertiesForest::enableCustomDetailLevelEnabled(int val){
+    if(worldObj == NULL)
+        return;
+    ForestObj* forestObj = (ForestObj*) worldObj;
+    Undo::SinglePushWorldObjData(worldObj);
+    if(val == 2){
+        customDetailLevel.setEnabled(true);
+        customDetailLevel.setText("0");
+        forestObj->setCustomDetailLevel(0);
+    } else {
+        customDetailLevel.setEnabled(false);
+        customDetailLevel.setText("");
+        forestObj->setCustomDetailLevel(-1);
+    }
+}
+
+void PropertiesForest::customDetailLevelEdited(QString val){
+    if(worldObj == NULL)
+        return;
+    ForestObj* forestObj = (ForestObj*) worldObj;
+    bool ok = false;
+    int level = val.toInt(&ok);
+
+    if(ok){
+        Undo::SinglePushWorldObjData(worldObj);
+        forestObj->setCustomDetailLevel(level);
+    }
+}

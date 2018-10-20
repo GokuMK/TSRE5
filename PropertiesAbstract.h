@@ -45,6 +45,8 @@ signals:
     void enableTool(QString);
     
 protected:
+    static QString ElevTypeName;
+    
     QLabel *infoLabel;    
     QLineEdit flags;
     QLineEdit fileName;

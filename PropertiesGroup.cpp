@@ -29,6 +29,11 @@ PropertiesGroup::PropertiesGroup() {
     QFormLayout *vlist = new QFormLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-1500, 1500, 6, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    vlist->addRow("Y:",&this->posY);
+    this->posY.setValidator(doubleValidator);
+    QObject::connect(&this->posY, SIGNAL(textEdited(QString)), this, SLOT(editPositionYEnabled(QString)));
     this->quat.setDisabled(true);
     this->quat.setAlignment(Qt::AlignCenter);
     vlist->addRow("Rot:",&this->quat);
@@ -294,4 +299,14 @@ void PropertiesGroup::chIndividualRotationEdited(int val){
     } else {
         gobj->setIndividualRotation(false);
     }
+}
+
+void PropertiesGroup::editPositionYEnabled(QString val){
+    if(worldObj == NULL)
+        return;
+    GroupObj *gobj = (GroupObj*)worldObj;
+    bool ok = false;
+    float value = this->posY.text().toFloat(&ok);
+    if(!ok) return;
+    gobj->setPositionYValue(value);
 }

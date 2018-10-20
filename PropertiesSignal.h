@@ -35,6 +35,7 @@ public slots:
     void hacksButtonEnabled();
     void haxFixFlagsEnabled();
     void msg(QString name, QString val);
+    void editPositionEnabled(QString val);
     
 signals:
     void enableTool(QString val);

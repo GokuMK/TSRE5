@@ -1,7 +1,7 @@
 # This file is generated automatically. Do not edit.
 # Use project properties -> Build -> Qt -> Expert -> Custom Definitions.
 TEMPLATE = app
-DESTDIR = dist/Release_x64/MinGW_QT_5.12.0_Static_x64-Windows
+DESTDIR = dist/Release_x64/MinGW_QT_5.7.1_Static_x64-Windows
 TARGET = TSRE5
 VERSION = 0.696
 CONFIG -= debug_and_release app_bundle lib_bundle
@@ -13,7 +13,7 @@ HEADERS += AboutWindow.h AceLib.h ActLib.h Activity.h ActivityEvent.h ActivityEv
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=
-OBJECTS_DIR = build/Release_x64/MinGW_QT_5.12.0_Static_x64-Windows
+OBJECTS_DIR = build/Release_x64/MinGW_QT_5.7.1_Static_x64-Windows
 MOC_DIR = 
 RCC_DIR = 
 UI_DIR = 

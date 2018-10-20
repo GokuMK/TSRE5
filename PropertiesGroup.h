@@ -31,6 +31,7 @@ public slots:
     void checkboxTerrainEdited(int val);
     void cShadowTypeEdited(int val);
     void chIndividualRotationEdited(int val);
+    void editPositionYEnabled(QString val);
     
 signals:
     

@@ -62,6 +62,71 @@ PropertiesSignal::PropertiesSignal() {
     vbox->addWidget(button);
     connect(button, SIGNAL(released()), this, SLOT(showSubObjList()));
     
+    label = new QLabel("Position & Rotation:");
+    label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+    label->setContentsMargins(3,0,0,0);
+    vbox->addWidget(label);
+    vlist = new QFormLayout;
+    vlist->setSpacing(2);
+    vlist->setContentsMargins(3,0,3,0);
+    vlist->addRow("X:",&this->posX);
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-1500, 1500, 6, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    this->posX.setValidator(doubleValidator);
+    QObject::connect(&this->posX, SIGNAL(textEdited(QString)), this, SLOT(editPositionEnabled(QString)));
+    vlist->addRow("Y:",&this->posY);
+    this->posY.setValidator(doubleValidator);
+    QObject::connect(&this->posY, SIGNAL(textEdited(QString)), this, SLOT(editPositionEnabled(QString)));
+    vlist->addRow("Z:",&this->posZ);
+    this->posZ.setValidator(doubleValidator);
+    QObject::connect(&this->posZ, SIGNAL(textEdited(QString)), this, SLOT(editPositionEnabled(QString)));
+    this->quat.setDisabled(true);
+    this->quat.setAlignment(Qt::AlignCenter);
+    vlist->addRow("Rot:",&this->quat);
+    vbox->addItem(vlist);
+    QGridLayout *posRotList = new QGridLayout;
+    posRotList->setSpacing(2);
+    posRotList->setContentsMargins(0,0,0,0);    
+
+    QPushButton *copyPos = new QPushButton("Copy Pos", this);
+    QObject::connect(copyPos, SIGNAL(released()),
+                      this, SLOT(copyPEnabled()));
+    QPushButton *pastePos = new QPushButton("Paste", this);
+    QObject::connect(pastePos, SIGNAL(released()),
+                      this, SLOT(pastePEnabled()));
+    QPushButton *copyQrot = new QPushButton("Copy Rot", this);
+    QObject::connect(copyQrot, SIGNAL(released()),
+                      this, SLOT(copyREnabled()));
+    QPushButton *pasteQrot = new QPushButton("Paste", this);
+    QObject::connect(pasteQrot, SIGNAL(released()),
+                      this, SLOT(pasteREnabled()));
+    QPushButton *copyPosRot = new QPushButton("Copy Pos+Rot", this);
+    QObject::connect(copyPosRot, SIGNAL(released()),
+                      this, SLOT(copyPREnabled()));
+    QPushButton *pastePosRot = new QPushButton("Paste", this);
+    QObject::connect(pastePosRot, SIGNAL(released()),
+                      this, SLOT(pastePREnabled()));
+    QPushButton *resetQrot = new QPushButton("Reset Rot", this);
+    QObject::connect(resetQrot, SIGNAL(released()),
+                      this, SLOT(resetRotEnabled()));
+    QPushButton *qRot90 = new QPushButton("Rot Y 90°", this);
+    QObject::connect(qRot90, SIGNAL(released()),
+                      this, SLOT(rotYEnabled()));
+    QPushButton *transform = new QPushButton("Transform ...", this);
+    QObject::connect(transform, SIGNAL(released()),
+                      this, SLOT(transformEnabled()));
+    
+    posRotList->addWidget(copyPos, 0, 0);
+    posRotList->addWidget(pastePos, 0, 1);
+    posRotList->addWidget(copyQrot, 1, 0);
+    posRotList->addWidget(pasteQrot, 1, 1);
+    posRotList->addWidget(copyPosRot, 2, 0);
+    posRotList->addWidget(pastePosRot, 2, 1);
+    posRotList->addWidget(resetQrot, 3, 0);
+    posRotList->addWidget(qRot90, 3, 1);
+    posRotList->addWidget(transform, 4, 0, 1, 2);
+    vbox->addItem(posRotList);
+    
     label = new QLabel("Flags:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
@@ -135,6 +200,16 @@ void PropertiesSignal::showObj(GameObj* obj){
     this->uid.setText(QString::number(sobj->UiD, 10));
     this->tX.setText(QString::number(sobj->x, 10));
     this->tY.setText(QString::number(-sobj->y, 10));
+
+    this->posX.setText(QString::number(worldObj->position[0], 'G', 6));
+    this->posY.setText(QString::number(worldObj->position[1], 'G', 6));
+    this->posZ.setText(QString::number(-worldObj->position[2], 'G', 6));
+    this->quat.setText(
+            QString::number(worldObj->qDirection[0], 'G', 4) + " " +
+            QString::number(worldObj->qDirection[1], 'G', 4) + " " +
+            QString::number(-worldObj->qDirection[2], 'G', 4) + " " +
+            QString::number(worldObj->qDirection[3], 'G', 4)
+            );
     
     /*for (int i = 0; i < maxSubObj; i++) {
         this->wSub[i].hide();
@@ -178,6 +253,21 @@ void PropertiesSignal::showObj(GameObj* obj){
 void PropertiesSignal::updateObj(GameObj* obj){
     if(sobj == NULL){
         return;
+    }
+    
+    if(!posX.hasFocus() && !posY.hasFocus() && !posZ.hasFocus() && !quat.hasFocus()){
+        this->uid.setText(QString::number(worldObj->UiD, 10));
+        this->tX.setText(QString::number(worldObj->x, 10));
+        this->tY.setText(QString::number(-worldObj->y, 10));
+        this->posX.setText(QString::number(worldObj->position[0], 'G', 6));
+        this->posY.setText(QString::number(worldObj->position[1], 'G', 6));
+        this->posZ.setText(QString::number(-worldObj->position[2], 'G', 6));
+        this->quat.setText(
+                QString::number(worldObj->qDirection[0], 'G', 4) + " " +
+                QString::number(worldObj->qDirection[1], 'G', 4) + " " +
+                QString::number(-worldObj->qDirection[2], 'G', 4) + " " +
+                QString::number(worldObj->qDirection[3], 'G', 4)
+                );
     }
     
     this->signalWindow->updateObj(sobj);
@@ -288,4 +378,23 @@ void PropertiesSignal::haxFixFlagsEnabled(){
         sobj->fixFlags();
     }
 
+}
+
+void PropertiesSignal::editPositionEnabled(QString val){
+    if(worldObj == NULL)
+        return;
+    SignalObj* signalObj = (SignalObj*) worldObj;
+    float pos[3];
+    bool ok = false;
+    pos[0] = this->posX.text().toFloat(&ok);
+    if(!ok) return;
+    pos[1] = this->posY.text().toFloat(&ok);
+    if(!ok) return;
+    pos[2] = -this->posZ.text().toFloat(&ok);
+    if(!ok) return;
+    
+    Undo::SinglePushWorldObjData(worldObj);
+    signalObj->setPosition((float*)pos);
+    signalObj->modified = true;
+    signalObj->setMartix();
 }

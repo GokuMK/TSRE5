@@ -229,8 +229,9 @@ PropertiesTrackObj::PropertiesTrackObj(){
     hideElevBoxes();
     elevType.setCurrentIndex(Game::DefaultElevationBox);
     showElevBox(elevType.currentText());
-    
     vbox->addItem(vlist);
+    
+    
     label = new QLabel("MSTS Collision:");
     label->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     label->setContentsMargins(3,0,0,0);
@@ -278,6 +279,7 @@ void PropertiesTrackObj::eTemplateEdited(QString val){
 void PropertiesTrackObj::elevTypeEdited(QString val){
     hideElevBoxes();
     showElevBox(val);
+    ElevTypeName = val;
 }
 
 void PropertiesTrackObj::showElevBox(QString val){
@@ -430,6 +432,8 @@ void PropertiesTrackObj::showObj(GameObj* obj){
     this->flags.setText(ParserX::MakeFlagsString(trackObj->staticFlags));
     
     ///////////
+    elevType.setCurrentText(ElevTypeName);
+    
     TrackObj* track = (TrackObj*)obj;
     float * q = track->qDirection;
     float vect[3];

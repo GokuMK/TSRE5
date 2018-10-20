@@ -248,6 +248,13 @@ void GroupObj::setPosition(int x, int z, float* p){
     }
 }
 
+void GroupObj::setPositionYValue(float val){
+    qDebug() << "val" << val;
+    for(int i = 0; i < objects.size(); i++){
+        objects[i]->translate(0, val-objects[i]->position[1], 0);
+    }
+}
+
 void GroupObj::setPosition(float* p){
     float tpos[3];
     float tp[3];

@@ -34,12 +34,12 @@ public slots:
     void elevPropEnabled(QString val);
     void elev1inXmEnabled(QString val);
     void elevStepEnabled(QString val);
+    void elevTypeEdited(QString val);
     void editFileNameEnabled();
     void cCollisionTypeEdited(int val);
     void haxRemoveTDBVectorEnabled();
     void haxElevTDBVectorEnabled();
     void haxRemoveTDBTreeEnabled();
-    void elevTypeEdited(QString val);
     void eTemplateEdited(QString val);
         
 signals:

@@ -13,6 +13,7 @@
 
 #include "WorldObj.h"
 #include <QString>
+#include <QVector>
 
 class Route;
 
@@ -37,6 +38,7 @@ public:
     void resize(float x, float y, float z);
     void setPosition(float* p);
     void setPosition(int x, int z, float* p);
+    void setPositionYValue(float val);
     void initPQ(float* p, float* q);
     void setQdirection(float* q);
     void setNewQdirection();

@@ -14,6 +14,8 @@
 #include "GLMatrix.h"
 #include "Undo.h"
 
+QString PropertiesAbstract::ElevTypeName = "Permille ‰";
+
 PropertiesAbstract::PropertiesAbstract() : QWidget() {
     foreach (QObject *child, children()) {
         if (child->isWidgetType()) {
