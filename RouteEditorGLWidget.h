@@ -85,6 +85,7 @@ public slots:
     void objectSelected(GameObj* obj);
     
     void selectToolresetMoveStep();
+    void selectToolresetRot();
     void selectToolSelect();
     void selectToolRotate();
     void selectToolTranslate();
@@ -106,6 +107,12 @@ public slots:
     void paintToolObjSelected();
     void paintToolTDB();
     void paintToolTDBVector();
+    void setTerrainToObj();
+    void adjustObjPositionToTerrainMenu();
+    void adjustObjRotationToTerrainMenu();
+    void pickObjForPlacement();
+    void pickObjRotForPlacement();
+    void pickObjRotElevForPlacement();
     
 signals:
     void routeLoaded(Route * a);
@@ -192,6 +199,7 @@ private:
     float lastNewObjPos[3];
     float lastNewObjPosT[2];
     float placeRot[4];
+    float placeElev = 0;
     long long int lastMousePressTime = 0;
     bool keyControlEnabled = false;
     bool keyShiftEnabled = false;

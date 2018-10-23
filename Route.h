@@ -92,6 +92,7 @@ public:
     float getStartpZ();
     Trk *getTrk();
     TRitem *getTrackItem(int TID, int UID);
+    void deleteTrackItem(TRitem *item);
     QMap<QString, Coords*> getMkrList();
     void dragWorldObject(WorldObj* obj, int x, int z, float* pos);
     float* getPointerPosition(float *out, int &x, int &z, float *pos);
@@ -101,8 +102,8 @@ public:
     void paintHeightMap(Brush* brush, int x, int z, float* p);
     WorldObj* makeFlexTrack(int x, int z, float* pos);
     WorldObj* placeObject(int x, int z, float* p);
-    WorldObj* placeObject(int x, int z, float* p, float* q);
-    WorldObj* placeObject(int x, int z, float* p, float* q, Ref::RefItem* r);
+    WorldObj* placeObject(int x, int z, float* p, float* q, float elev = 0);
+    WorldObj* placeObject(int x, int z, float* p, float* q, float elev, Ref::RefItem* r);
     WorldObj* autoPlaceObject(int x, int z, float* p, int mode);
     void replaceWorldObjPointer(WorldObj* o, WorldObj* n);
     void autoPlacementDeleteLast();

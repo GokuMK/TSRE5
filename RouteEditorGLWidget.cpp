@@ -586,7 +586,7 @@ void RouteEditorGLWidget::handleSelection() {
             if (selectedObj == NULL) {
                 qDebug() << "brak obiektu";
             } else {
-                //selectedObj->select(EID);
+                selectedObj->select();
             }
         } else if( ww == 13 ){
             if (selectedObj != NULL) {
@@ -761,7 +761,8 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
 
         switch (event->key()) {
             case Qt::Key_Up:
-                if (Game::usenNumPad) break;
+                if (Game::usenNumPad) 
+                    break;
             case Qt::Key_8:
                 Undo::PushGameObjData(selectedObj);
                 if (resizeTool && selectedObj != NULL) {
@@ -775,7 +776,8 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
                 }
                 break;
             case Qt::Key_Down:
-                if (Game::usenNumPad) break;
+                if (Game::usenNumPad) 
+                    break;
             case Qt::Key_2:
                 Undo::PushGameObjData(selectedObj);
                 if (resizeTool && selectedObj != NULL) {
@@ -789,7 +791,8 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
                 }
                 break;
             case Qt::Key_Left:
-                if (Game::usenNumPad) break;
+                if (Game::usenNumPad) 
+                    break;
             case Qt::Key_4:
                 Undo::PushGameObjData(selectedObj);
                 if (resizeTool && selectedObj != NULL) {
@@ -803,7 +806,8 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
                 }
                 break;
             case Qt::Key_Right:
-                if (Game::usenNumPad) break;
+                if (Game::usenNumPad) 
+                    break;
             case Qt::Key_6:
                 Undo::PushGameObjData(selectedObj);
                 if (resizeTool && selectedObj != NULL) {
@@ -844,28 +848,32 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
                 }
                 break;
             case Qt::Key_F:
-                Undo::StateBegin();
-                if (selectedObj != NULL)
-                    route->setTerrainToTrackObj((WorldObj*)selectedObj, defaultPaintBrush);
-                else
-                    route->setTerrainToTrackObj((WorldObj*)lastSelectedObj, defaultPaintBrush);
-                Undo::StateEnd();
+                setTerrainToObj();
                 break;
             case Qt::Key_H:
-                if (selectedObj != NULL)
-                    if(selectedObj->typeObj == GameObj::worldobj)
-                        ((WorldObj*)selectedObj)->adjustPositionToTerrain();
+                adjustObjPositionToTerrainMenu();
                 break;
             case Qt::Key_N:
-                if (selectedObj != NULL)
-                    if(selectedObj->typeObj == GameObj::worldobj)
-                        ((WorldObj*)selectedObj)->adjustRotationToTerrain();
+                adjustObjRotationToTerrainMenu();
                 break;
             case Qt::Key_Delete:
                 if (selectedObj != NULL) {
                     if(selectedObj->typeObj == GameObj::worldobj){
                         route->deleteObj((WorldObj*)selectedObj);
                         selectedObj->unselect();
+                    }
+                    if(selectedObj->typeObj == GameObj::tritemobj){
+                        QMessageBox msgBox;
+                        msgBox.setWindowTitle("Remove Track Item?");
+                        msgBox.setStyleSheet("QLabel{min-width: 300px;}");
+                        msgBox.setText("Warning!");
+                        msgBox.setInformativeText("Do you want to remove this track item? It will damage your route if you don't know what you are doing!");
+                        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                        msgBox.setDefaultButton(QMessageBox::No);
+                        if(msgBox.exec() == QMessageBox::Yes){
+                            route->deleteTrackItem((TRitem*)selectedObj);
+                            selectedObj->unselect();
+                        }
                     }
                     if(selectedObj->typeObj == GameObj::activityobj){
                         selectedObj->remove();
@@ -879,7 +887,7 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
                 if (selectedObj != NULL) {
                     selectedObj->unselect();
                     if(selectedObj->typeObj == GameObj::worldobj){
-                        setSelectedObj(route->placeObject(((WorldObj*)selectedObj)->x, ((WorldObj*)selectedObj)->y, ((WorldObj*)selectedObj)->position, ((WorldObj*)selectedObj)->qDirection, ((WorldObj*)selectedObj)->getRefInfo()));
+                        setSelectedObj(route->placeObject(((WorldObj*)selectedObj)->x, ((WorldObj*)selectedObj)->y, ((WorldObj*)selectedObj)->position, ((WorldObj*)selectedObj)->qDirection, 0, ((WorldObj*)selectedObj)->getRefInfo()));
                         if (selectedObj != NULL) {
                             selectedObj->select();
                         }
@@ -887,16 +895,12 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
                 }
                 break;
             case Qt::Key_P:
-                if (selectedObj != NULL) {
-                    if(selectedObj->typeObj == GameObj::worldobj){
-                        Quat::copy(this->placeRot, ((WorldObj*)selectedObj)->qDirection);
-                        route->ref->selected = ((WorldObj*)selectedObj)->getRefInfo();
-                        emit itemSelected(route->ref->selected);
-                    }
-                }
-                break;
-            case Qt::Key_L:
-                //route->nextDefaultEnd();
+                if (keyControlEnabled)
+                    pickObjForPlacement();
+                else if(keyShiftEnabled)
+                    pickObjRotElevForPlacement();
+                else
+                    pickObjRotForPlacement();
                 break;
             case Qt::Key_Z:
                 //route->refreshObj(selectedWorldObj);
@@ -914,8 +918,13 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
             case Qt::Key_X:
                 if (selectedObj == NULL)
                     return;
+                if (selectedObj->typeObj != WorldObj::worldobj)
+                    return;
                 //route->refreshObj(selectedWorldObj);
                 route->flipObject((WorldObj*)selectedObj);
+                if(placeElev != 0)
+                    selectedObj->rotate(placeElev, 0, 0);
+                //selectToolresetRot();
                 break;
             default:
                 break;
@@ -981,7 +990,7 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
             lastNewObjPos[2] = aktPointerPos[2];
             float *q = Quat::create();
             Quat::copy(q, this->placeRot);
-            setSelectedObj(route->placeObject((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, q));
+            setSelectedObj(route->placeObject((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, q, placeElev));
             if (selectedObj != NULL)
                 selectedObj->select();
         }
@@ -1360,7 +1369,7 @@ void RouteEditorGLWidget::editPaste() {
                     //qDebug() << "EditPaste object";
                     float *q = Quat::create();
                     Quat::copy(q, copyPasteObj->qDirection);
-                    setSelectedObj(route->placeObject((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, q, copyPasteObj->getRefInfo()));
+                    setSelectedObj(route->placeObject((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos, q, 0, copyPasteObj->getRefInfo()));
                     //qDebug() << "EditPaste setSelectedObj";
                     if (selectedObj != NULL)
                         selectedObj->select();
@@ -1379,6 +1388,11 @@ void RouteEditorGLWidget::selectToolresetMoveStep(){
     Game::DefaultMoveStep = defaultMoveStep;
     moveStep = defaultMoveStep;
     moveMaxStep = defaultMoveStep;
+}
+
+void RouteEditorGLWidget::selectToolresetRot(){
+    Quat::fill(this->placeRot);
+    placeElev = 0;
 }
 
 void RouteEditorGLWidget::selectToolSelect(){
@@ -1492,6 +1506,59 @@ void RouteEditorGLWidget::showTrkEditr() {
         route->showTrkEditr();
 }
 
+void RouteEditorGLWidget::setTerrainToObj(){
+    Undo::StateBegin();
+    if (selectedObj != NULL)
+        route->setTerrainToTrackObj((WorldObj*)selectedObj, defaultPaintBrush);
+    else
+        route->setTerrainToTrackObj((WorldObj*)lastSelectedObj, defaultPaintBrush);
+    Undo::StateEnd();
+}
+
+void RouteEditorGLWidget::adjustObjPositionToTerrainMenu(){
+    Undo::StateBeginIfNotExist();
+    Undo::PushGameObjData(selectedObj);
+    if (selectedObj != NULL)
+        if(selectedObj->typeObj == GameObj::worldobj)
+            ((WorldObj*)selectedObj)->adjustPositionToTerrain();
+}
+
+void RouteEditorGLWidget::adjustObjRotationToTerrainMenu(){
+    Undo::StateBeginIfNotExist();
+    Undo::PushGameObjData(selectedObj);
+    if (selectedObj != NULL)
+        if(selectedObj->typeObj == GameObj::worldobj)
+            ((WorldObj*)selectedObj)->adjustRotationToTerrain();
+}
+
+void RouteEditorGLWidget::pickObjForPlacement(){
+    if (selectedObj != NULL) {
+        if(selectedObj->typeObj == GameObj::worldobj){
+            Quat::copy(this->placeRot, ((WorldObj*)selectedObj)->qDirection);
+            route->ref->selected = ((WorldObj*)selectedObj)->getRefInfo();
+            emit itemSelected(route->ref->selected);
+        }
+    }
+}
+
+void RouteEditorGLWidget::pickObjRotForPlacement(){
+    if (selectedObj != NULL) {
+        if(selectedObj->typeObj == GameObj::worldobj){
+            placeElev = 0;
+            Quat::copy(this->placeRot, ((WorldObj*)selectedObj)->qDirection);
+        }
+    }
+}
+
+void RouteEditorGLWidget::pickObjRotElevForPlacement(){
+    if (selectedObj != NULL) {
+        if(selectedObj->typeObj == GameObj::worldobj){
+            Quat::fill(this->placeRot);
+            placeElev = ((WorldObj*)selectedObj)->getElevation();
+        }
+    }
+}
+
 void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
     if(defaultMenuActions["undo"] == NULL){
         defaultMenuActions["undo"] = new QAction(tr("&Undo"), this); 
@@ -1514,10 +1581,33 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
         QObject::connect(defaultMenuActions["find3x3"], SIGNAL(triggered()), this, SLOT(editFind3x3()));
     }
     if(defaultMenuActions["select"] == NULL){
-        defaultMenuActions["select"] = new QAction(tr("&Select"), this); 
+        defaultMenuActions["select"] = new QAction(tr("&Select Tool"), this); 
         QObject::connect(defaultMenuActions["select"], SIGNAL(triggered()), this, SLOT(editSelect()));
     }
-
+    if(defaultMenuActions["setTerrToObj"] == NULL){
+        defaultMenuActions["setTerrToObj"] = new QAction(tr("&Set Terrain to Object")); 
+        QObject::connect(defaultMenuActions["setTerrToObj"], SIGNAL(triggered()), this, SLOT(setTerrainToObj()));
+    }
+    if(defaultMenuActions["setPosToTerr"] == NULL){
+        defaultMenuActions["setPosToTerr"] = new QAction(tr("&Set position to Terrain")); 
+        QObject::connect(defaultMenuActions["setPosToTerr"], SIGNAL(triggered()), this, SLOT(adjustObjPositionToTerrainMenu()));
+    }
+    if(defaultMenuActions["setRotToTerr"] == NULL){
+        defaultMenuActions["setRotToTerr"] = new QAction(tr("&Set rotation to Terrain")); 
+        QObject::connect(defaultMenuActions["setRotToTerr"], SIGNAL(triggered()), this, SLOT(adjustObjRotationToTerrainMenu()));
+    }
+    if(defaultMenuActions["pickObj"] == NULL){
+        defaultMenuActions["pickObj"] = new QAction(tr("&Pick for placement")); 
+        QObject::connect(defaultMenuActions["pickObj"], SIGNAL(triggered()), this, SLOT(pickObjForPlacement()));
+    }
+    if(defaultMenuActions["pickObjRot"] == NULL){
+        defaultMenuActions["pickObjRot"] = new QAction(tr("&Pick rotation for placement")); 
+        QObject::connect(defaultMenuActions["pickObjRot"], SIGNAL(triggered()), this, SLOT(pickObjRotForPlacement()));
+    }
+    if(defaultMenuActions["pickObjElev"] == NULL){
+        defaultMenuActions["pickObjElev"] = new QAction(tr("&Pick elevation for placement")); 
+        QObject::connect(defaultMenuActions["pickObjElev"], SIGNAL(triggered()), this, SLOT(pickObjRotElevForPlacement()));
+    }
     
     QMenu menu;
     QMenu menuTool;
@@ -1532,6 +1622,12 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
         selectedObj->pushContextMenuActions(&menu);
         
         if(selectedObj->typeObj == selectedObj->worldobj){
+            menu.addAction(defaultMenuActions["setTerrToObj"]);
+            menu.addAction(defaultMenuActions["setPosToTerr"]);
+            menu.addAction(defaultMenuActions["setRotToTerr"]);
+            menu.addAction(defaultMenuActions["pickObj"]);
+            menu.addAction(defaultMenuActions["pickObjRot"]);
+            menu.addAction(defaultMenuActions["pickObjElev"]);
             menu.addAction(defaultMenuActions["find1x1"]);
             menu.addAction(defaultMenuActions["find3x3"]);
         }
@@ -1592,6 +1688,13 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
                 QObject::connect(defaultMenuActions["resetMoveStep"], SIGNAL(triggered()), this, SLOT(selectToolresetMoveStep()));
             }
             menu.addAction(defaultMenuActions["resetMoveStep"]);
+        }
+        if (toolEnabled == "placeTool" || toolEnabled == "selectTool"){
+            if(defaultMenuActions["resetRot"] == NULL){
+                defaultMenuActions["resetRot"] = new QAction(tr("&Reset Rotation"), this); 
+                QObject::connect(defaultMenuActions["resetRot"], SIGNAL(triggered()), this, SLOT(selectToolresetRot()));
+            }
+            menu.addAction(defaultMenuActions["resetRot"]);
         }
         if (toolEnabled == "heightTool" || toolEnabled == "waterTerrTool" || toolEnabled == "gapsTerrainTool"){
             menu.addMenu(&menuTool);
@@ -1696,6 +1799,7 @@ void RouteEditorGLWidget::showContextMenu(const QPoint & point) {
     menu.addAction(defaultMenuActions["undo"]);
     menu.addAction(defaultMenuActions["copy"]); 
     menu.addAction(defaultMenuActions["paste"]);
+    menu.addSeparator();
     menu.addAction(defaultMenuActions["select"]);
     
     

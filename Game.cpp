@@ -50,6 +50,7 @@ QString Game::ActivityToPlay = "";
 bool Game::playerMode = false;
 bool Game::useNetworkEng = false;
 bool Game::useQuadTree = true;
+bool Game::useTdbEmptyItems = true;
 int Game::allowObjLag = 1000;
 int Game::maxObjLag = 10;
 bool Game::ignoreLoadLimits = false;
@@ -489,7 +490,12 @@ void Game::load() {
         if(val == "hudScale"){
             hudScale = args[1].trimmed().toFloat();
         }
-
+        if(val == "useTdbEmptyItems"){
+            if(args[1].trimmed().toLower() == "true")
+                useTdbEmptyItems = true;
+            else
+                useTdbEmptyItems = false; 
+        }
     }
 }
 /*

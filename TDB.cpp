@@ -187,6 +187,9 @@ void TDB::loadTdb(){
                     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
                         //qDebug() <<"ssh1 "<< sh;
                         nowy = new TRitem();
+                        if(this->road)
+                            nowy->tdbId = 1;
+                        
                         if(!nowy->init(sh)){
                             qDebug() << "#TDB TrItemTable undefined token " << sh;
                             ParserX::SkipToken(bufor);
@@ -281,9 +284,10 @@ int TDB::getNewTRitemId(){
     for (int i = 0; i < this->iTRitems; i++) {
         if(this->trackItems[i] == NULL)
             continue;
-        if(this->trackItems[i]->type == "emptyitem"){
-            return i;
-        }
+        if(Game::useTdbEmptyItems)
+            if(this->trackItems[i]->type == "emptyitem"){
+                return i;
+            }
     }
     return this->iTRitems++;
 }
@@ -2810,7 +2814,7 @@ void TDB::deleteTrItem(int trid){
     int nid = findTrItemNodeId(trid);
     if(nid < 1) return;
     deleteItemFromTrNode(nid, trid);
-    
+
 }
 
 void TDB::addItemToTrNode(int tid, int iid){

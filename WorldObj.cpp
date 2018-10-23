@@ -747,6 +747,13 @@ bool WorldObj::isTerrainObj(){
     return false;
 }
 
+float WorldObj::getElevation(){
+    float vect[3];
+    vect[0] = 0; vect[1] = 0; vect [2] = 1000;
+    Vec3::transformQuat(vect, vect, qDirection);
+    return asin(-vect[1]/1000.0);
+}
+
 WorldObj::ShadowType WorldObj::getShadowType(){
     if((staticFlags & 0xFF000) == 0x0)
         return WorldObj::ShadowNone;

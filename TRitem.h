@@ -49,6 +49,7 @@ public:
     
     QString type;
     
+    unsigned int tdbId = 0;
     unsigned int trItemId;
     int trItemSData2;
     float *trItemPData = NULL;

@@ -74,7 +74,7 @@ void GroupObj::fromNewObjects(GroupObj* objList, Route* route, int x, int z, flo
             //Vec3::sub(tpos, p, tpos);
             q = Quat::create();
             Quat::copy(q, objList->objects[pid]->qDirection);
-            wobj = route->placeObject(x, z, p, q, objList->objects[pid]->getRefInfo());
+            wobj = route->placeObject(x, z, p, q, 0, objList->objects[pid]->getRefInfo());
             if(wobj != NULL){
                 this->addObject(wobj);
                 Vec3::add(tp, tp, Vec3::sub(tpos, p, wobj->position));
@@ -100,7 +100,7 @@ void GroupObj::fromNewObjects(GroupObj* objList, Route* route, int x, int z, flo
             q = Quat::create();
             Quat::copy(q, objList->objects[i]->qDirection);
             Quat::multiply(q, q, tQrot);
-            wobj = route->placeObject(x, z, tpos, q, objList->objects[i]->getRefInfo());
+            wobj = route->placeObject(x, z, tpos, q, 0, objList->objects[i]->getRefInfo());
             if(wobj != NULL)
                 this->addObject(wobj);
         }

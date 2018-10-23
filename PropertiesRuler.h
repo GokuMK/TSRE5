@@ -28,7 +28,10 @@ public slots:
     void createRoadPathsEdited();
     void removeRoadPathsEdited();
     void addShapeEdited();
+    void elevTypeEdited(QString val);
     void eTemplateEdited(QString val);
+    void hideElevBoxes();
+    void showElevBox(QString val);
     
 signals:
     
@@ -37,6 +40,16 @@ private:
     QLineEdit lengthGM;
     QCheckBox checkboxTwoPoint;
     QCheckBox checkboxDrawPoints;
+    
+    QComboBox elevType;
+    QLineEdit elevProm;
+    QLineEdit elevProg;
+    QLineEdit elevProp;
+    QLineEdit elev1inXm;
+    QLabel elevPromLabel;
+    QLabel elevProgLabel;
+    QLabel elevPropLabel;
+    QLabel elev1inXmLabel;
 };
 
 #endif	/* PROPERTIESRULER_H */

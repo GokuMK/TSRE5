@@ -52,6 +52,7 @@
 #include "GeoCoordinates.h"
 #include "Consist.h"
 #include "Skydome.h"
+#include "TRitem.h"
 
 Route::Route() {
     Game::currentRoute = this;
@@ -555,14 +556,14 @@ float Route::getDistantTerrainYOffset(){
 WorldObj* Route::placeObject(int x, int z, float* p) {
     float* q = new float[4];
     Quat::fill((float*)q);
-    placeObject(x, z, p, (float*) q, ref->selected);
+    placeObject(x, z, p, (float*) q, 0, ref->selected);
 }
 
-WorldObj* Route::placeObject(int x, int z, float* p, float* q) {
-    placeObject(x, z, p, q, ref->selected);
+WorldObj* Route::placeObject(int x, int z, float* p, float* q, float elev) {
+    placeObject(x, z, p, q, elev, ref->selected);
 }
 
-WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) {
+WorldObj* Route::placeObject(int x, int z, float* p, float* q, float elev, Ref::RefItem* r) {
     if(r == NULL) return NULL;
     Game::check_coords(x, z, p);
 
@@ -688,6 +689,10 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, Ref::RefItem* r) 
     if(nowy->typeID == nowy->sstatic){
         moveWorldObjToTile(nowy->x, nowy->y, nowy);
     }
+    
+    if(elev !=0)
+        nowy->rotate(elev, 0, 0);
+    
     Undo::PushWorldObjPlaced(nowy);
     return nowy;
 }
@@ -827,7 +832,18 @@ TRitem *Route::getTrackItem(int TID, int UID){
     if(TID == 1)
         return roadDB->trackItems[UID];
     return NULL;
-    
+}
+
+void Route::deleteTrackItem(TRitem * item){
+    if(item == NULL)
+        return;
+    unsigned int TID = item->tdbId;
+    unsigned int UID = item->trItemId;
+    if(TID == 0)
+        return trackDB->deleteTrItem(UID);
+    if(TID == 1)
+        return roadDB->deleteTrItem(UID);
+    return;
 }
 
 void Route::actPickNewEventLocation(int x, int z, float* p){
@@ -1066,7 +1082,7 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p, int mode) {
         xyz[1] = drawPosition1[1] + offset[1];
         xyz[2] = -drawPosition1[2] + offset[2];      
         
-        autoPlacementLastPlaced.push_back(placeObject(x, z, (float*) xyz, quat, ref->selected));
+        autoPlacementLastPlaced.push_back(placeObject(x, z, (float*) xyz, quat, 0, ref->selected));
     }
 
     return NULL;
@@ -1142,7 +1158,7 @@ WorldObj* Route::makeFlexTrack(int x, int z, float* p) {
     qe[1] = 0;
     qe[2] = 0;
     qe[3] = 1;
-    DynTrackObj* track = (DynTrackObj*)placeObject(x, z, p, (float*)&qe, &r);
+    DynTrackObj* track = (DynTrackObj*)placeObject(x, z, p, (float*)&qe, 0, &r);
     if(track != NULL){
         qDebug() << "2";
         QString sh = "dyntrackdata";

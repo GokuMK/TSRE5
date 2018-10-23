@@ -174,6 +174,13 @@ void RulerObj::refreshLength(){
     
 }
 
+float RulerObj::getElevation(){
+    if(points.size() < 2)
+        return 0;
+    float height = points[points.size()-1].position[1] - points[0].position[1];
+    return asin(height/length);
+}
+
 float RulerObj::getLength(){
     return length;
     

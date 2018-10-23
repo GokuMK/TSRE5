@@ -41,6 +41,7 @@ public:
     void getPosition(float len, float* pos);
     float getLength();
     float getGeoLength();
+    float getElevation();
     void createRoadPaths();
     void removeRoadPaths();
     void enableShape();

@@ -140,6 +140,7 @@ public:
     virtual bool isAnimated();
     virtual bool isTerrainObj();
     virtual ShadowType getShadowType();
+    virtual float getElevation();
     virtual void setAnimated(bool val);
     virtual void setTerrainObj(bool val);
     virtual void setShadowType(ShadowType val);

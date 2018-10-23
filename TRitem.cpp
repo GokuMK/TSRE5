@@ -225,6 +225,7 @@ TRitem::TRitem(const TRitem& o) {
     typeObj = o.typeObj;
     type = o.type;
     
+    tdbId = o.tdbId;
     trItemId = o.trItemId;
     trItemSData1 = o.trItemSData1;
     trItemSData2 = o.trItemSData2;
@@ -876,10 +877,17 @@ void TRitem::render(TDB *tdb, GLUU *gluu, float* playerT, float playerRot, int s
     if (pointer3d == NULL) {
         pointer3d = new TrackItemObj(1);
     }
+    
     if (tdb->isRoad())
-        pointer3d->setMaterial(0.5, 0.5, 0.5);
+        if(!selected)
+            pointer3d->setMaterial(0.5, 0.5, 0.5);
+        else
+            pointer3d->setMaterial(0.7, 0.7, 0.7);
     else
-        pointer3d->setMaterial(0, 0, 0);
+        if(!selected)
+            pointer3d->setMaterial(0.0, 0.0, 0.0);
+        else
+            pointer3d->setMaterial(0.2, 0.2, 0.2);
     if(selectionColor != 0)
         selectionColor |= trItemId;
     pointer3d->render(selectionColor);

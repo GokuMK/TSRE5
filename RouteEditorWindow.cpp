@@ -205,7 +205,8 @@ RouteEditorWindow::RouteEditorWindow() {
     pasteAction->setShortcut(QKeySequence("Ctrl+V"));
     QObject::connect(pasteAction, SIGNAL(triggered()), glWidget, SLOT(editPaste()));
     editMenu->addAction(pasteAction);
-    selectAction = new QAction(tr("&Select"), this); 
+    editMenu->addSeparator();
+    selectAction = new QAction(tr("&Select Tool"), this); 
     selectAction->setShortcut(QKeySequence("E"));
     QObject::connect(selectAction, SIGNAL(triggered()), glWidget, SLOT(editSelect()));
     editMenu->addAction(selectAction);

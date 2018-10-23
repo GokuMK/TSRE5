@@ -49,6 +49,7 @@ public:
     static QString ceWindowLayout;
     static QString ActivityToPlay;
     static bool useQuadTree;
+    static bool useTdbEmptyItems;
     static bool playerMode;
     static bool useNetworkEng;
     static float objectLod;

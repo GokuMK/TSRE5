@@ -103,6 +103,13 @@ void TrackObj::reload(){
     }
 }
 
+float TrackObj::getElevation(){
+    float vect[3];
+    vect[0] = 0; vect[1] = 0; vect [2] = 1000;
+    Vec3::transformQuat(vect, vect, qDirection);
+    return this->endp[3]*asin(-vect[1]/1000.0);
+}
+
 void TrackObj::setElevation(float prom){
     float * q = qDirection;
     float vect[3];
