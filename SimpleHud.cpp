@@ -39,7 +39,7 @@ SimpleHud::SimpleHud() {
     kmText->setOColor(0,0,0);
     kmText->setFontName("Ni7seg");
     
-    kmsText = new TextObj("km/s", 3, 0.05, 3);
+    kmsText = new TextObj("km/h", 3, 0.05, 3);
     kmsText->setRotOffset(0);
     kmsText->setColor(255,255,0);
     kmsText->setOColor(0,0,0);
