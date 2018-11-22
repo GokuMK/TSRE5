@@ -15,7 +15,7 @@
 #include "ParserX.h"
 #include "ReadFile.h"
 #include "GLMatrix.h"
-#ifdef APPLE
+#ifdef __APPLE__
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #else
