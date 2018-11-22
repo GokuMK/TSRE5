@@ -6,10 +6,10 @@ Train Sim game engine and MSTS / OR editors and tools.
 See more:
 
 Route Editor: 
-http://www.elvastower.com/forums/index.php?/topic/26669-new-route-editor-for-open-rails/
+https://www.trainsim.com/vbts/showthread.php?323507-New-Route-Editor
 
 Consist Editor: 
-http://www.elvastower.com/forums/index.php?/topic/28623-new-consist-editor-for-open-rails/
+https://www.trainsim.com/vbts/showthread.php?324496-New-amazing-Consist-Editor-for-OR-and-MSTS-for-FREE
 
 Homepage, User Manual and build downloads:
 http://koniec.org/tsre5/
