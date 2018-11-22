@@ -16,7 +16,11 @@
 #include "Vector4f.h"
 #include <QDebug>
 #include <QFile>
+#ifndef __APPLE__
 #include <GL/gl.h>
+#else
+#include <OpenGL/gl.h>
+#endif
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846

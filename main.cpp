@@ -81,8 +81,8 @@ int main(int argc, char *argv[]){
     Game::load();
         
     QSurfaceFormat format;
-    //format.setVersion(3, 3);
-    //format.setProfile(QSurfaceFormat::CoreProfile);
+    format.setVersion(3, 3);
+    format.setProfile(QSurfaceFormat::CoreProfile);
     //format.setDepthBufferSize(32);
     //format.setStencilBufferSize(8);
     format.setSamples(Game::AASamples);

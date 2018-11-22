@@ -13,11 +13,6 @@
 
 #include <QImage>
 
-UriImageDrawThread::UriImageDrawThread() {
-}
-
-UriImageDrawThread::~UriImageDrawThread() {
-}
 
 void UriImageDrawThread::run(){
     double tx, tz;

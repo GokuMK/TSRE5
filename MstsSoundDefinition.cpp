@@ -15,8 +15,13 @@
 #include "ParserX.h"
 #include "ReadFile.h"
 #include "GLMatrix.h"
+#ifdef APPLE
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
 #include <AL/al.h>
 #include <AL/alc.h>
+#endif
 #include "SoundManager.h"
 #include "SoundSource.h"
 

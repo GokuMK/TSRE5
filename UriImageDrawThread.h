@@ -32,8 +32,8 @@ public:
     int wmin = 0;
     int wmax = 0;
     
-    UriImageDrawThread();
-    virtual ~UriImageDrawThread();
+    UriImageDrawThread() = default;
+    virtual ~UriImageDrawThread() = default;
     void run();
 private:
 

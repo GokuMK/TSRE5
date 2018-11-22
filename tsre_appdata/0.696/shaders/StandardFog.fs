@@ -1,11 +1,12 @@
-#version 130
+#version 330 core
 
-varying vec2 vTextureCoord;
-varying float fogFactor;
-varying vec3 vNormal;
-varying vec4 shadowPos;
-varying vec4 shadow2Pos;
-varying float vAlpha;
+in vec2 vTextureCoord;
+in float fogFactor;
+in vec3 vNormal;
+in vec4 shadowPos;
+in vec4 shadow2Pos;
+in float vAlpha;
+out vec4 fragColor;
 
 uniform float textureEnabled;
 uniform int shadowsEnabled;
@@ -63,18 +64,18 @@ float insideBox(vec2 v, vec2 bottomLeft, vec2 topRight) {
 
 void main() {
         if(textureEnabled == 0) {
-            gl_FragColor = shapeColor;
+            fragColor = shapeColor;
         } else {
-            gl_FragColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+            fragColor = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
             vec4 tex2 = texture(uSampler2, vec2(vTextureCoord.s*secondTexEnabled, vTextureCoord.t*secondTexEnabled));
             float isSecondTexEnabled = sign(secondTexEnabled);
-            gl_FragColor = gl_FragColor*(1-isSecondTexEnabled) + gl_FragColor*tex2*2.0*isSecondTexEnabled;
+            fragColor = fragColor*(1-isSecondTexEnabled) + fragColor*tex2*2.0*isSecondTexEnabled;
             // discard if transparent
             //if(gl_FragColor.a < alphaTest)
             //    discard;    
-            gl_FragColor.a = max(gl_FragColor.a, vAlpha);  
+            fragColor.a = max(fragColor.a, vAlpha);  
             // discard if transparent 
-            if(gl_FragColor.a < -vAlpha)
+            if(fragColor.a < -vAlpha)
                 discard;
             //gl_FragColor.a = 1.0;
 
@@ -127,8 +128,8 @@ void main() {
             vec3 color = diffuseColor.xyz;
             color *= clamp(visibility, 0.0, 1.0);
             color += ambientColor.xyz;
-            gl_FragColor.xyz *= color*colorBrightness;
+            fragColor.xyz *= color*colorBrightness;
 
-            gl_FragColor = mix(gl_FragColor, skyColor, fogFactor);
+            fragColor = mix(fragColor, skyColor, fogFactor);
         }
 }
