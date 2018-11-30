@@ -81,7 +81,7 @@ int main(int argc, char *argv[]){
     Game::load();
         
     QSurfaceFormat format;
-#define __APPLE__
+#ifdef __APPLE__
     format.setVersion(3, 3);
     format.setProfile(QSurfaceFormat::CoreProfile);
 #endif
