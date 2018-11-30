@@ -16,7 +16,7 @@
 #include <QVector>
 
 class OglObj;
-class Ref::RefItem;
+//class Ref::RefItem;
 
 class ForestObj : public WorldObj{
 public:

@@ -10,6 +10,10 @@
 
 #ifndef TDB_H
 #define	TDB_H
+#ifdef __APPLE__
+#include <string>
+#include <array>
+#endif
 #include <QString>
 #include <unordered_map>
 #include <QVector>

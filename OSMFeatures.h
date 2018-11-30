@@ -11,6 +11,13 @@
 #ifndef OSMFEATURES_H
 #define	OSMFEATURES_H
 
+#ifdef __APPLE__
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
+#include <AL/al.h>
+#include <AL/alc.h>
+#endif
 #include <unordered_map>
 #include <vector>
 

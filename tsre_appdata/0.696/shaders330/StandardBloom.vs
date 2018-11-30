@@ -1,9 +1,9 @@
-#version 130
+#version 330 core
 
-attribute vec4 vertex;
-attribute vec3 normal;
-attribute vec2 aTextureCoord;
-attribute float alpha;
+in vec4 vertex;
+in vec3 normal;
+in vec2 aTextureCoord;
+in float alpha;
 
 uniform float lod;
 uniform mat4 uShadowPMatrix;
@@ -14,12 +14,12 @@ uniform mat4 uMVMatrix;
 uniform mat4 uMSMatrix;
 uniform float fogDensity;
 
-varying vec2 vTextureCoord;
-varying float fogFactor;
-varying vec3 vNormal;
-varying vec4 shadowPos;
-varying vec4 shadow2Pos;
-varying float vAlpha;
+out vec2 vTextureCoord;
+out float fogFactor;
+out vec3 vNormal;
+out vec4 shadowPos;
+out vec4 shadow2Pos;
+out float vAlpha;
 
 void main() {
     shadowPos = uShadowPMatrix * uMVMatrix * uMSMatrix * vertex;
