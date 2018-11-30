@@ -1,6 +1,6 @@
 #version 330 core
 
-in vec4 vertex;
+attribute vec4 vertex;
 
 out vec2 vTextureCoord;
 

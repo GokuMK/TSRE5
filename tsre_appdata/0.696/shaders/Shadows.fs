@@ -1,4 +1,4 @@
-#version 330 core
+#version 130
 
 in vec2 vTextureCoord;
 in float fogFactor;
@@ -25,7 +25,7 @@ uniform float enableNormals;
 void main() {
       //color = vec4(1.0, 1.0, 0.5, 1.0);
         if(textureEnabled != 0){
-            vec4 color = texture(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+            vec4 color = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
             color.a = max(color.a, isAlpha);  
             if(color.a < alphaTest)
                 discard;    

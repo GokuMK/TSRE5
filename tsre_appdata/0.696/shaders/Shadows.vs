@@ -1,8 +1,8 @@
-#version 330 core
+#version 130
 
-in vec4 vertex;
-in vec3 normal;
-in vec2 aTextureCoord;
+attribute vec4 vertex;
+attribute vec3 normal;
+attribute vec2 aTextureCoord;
 
 uniform float lod;
 uniform mat4 uPMatrix;
