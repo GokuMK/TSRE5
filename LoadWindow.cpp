@@ -17,6 +17,7 @@
 #include <QDebug>
 #include "NewRouteWindow.h"
 #include "GeoCoordinates.h"
+#include "TarFile.h"
 
 LoadWindow::LoadWindow() {
     //this->setWindowFlags( Qt::CustomizeWindowHint );
@@ -262,38 +263,26 @@ void LoadWindow::exitNow(){
 
 void LoadWindow::downloadTemplateRoute(QString path){
     QDir().mkdir(path);
+    
+    // Download and extract Route Data
     QNetworkAccessManager* mgr = new QNetworkAccessManager();
     qDebug() << "Wait ..";
-    
-    QString Url = "http://koniec.org/tsre5/data/appdata/templateroute_0.6.cab";
+    QString Url = "http://koniec.org/tsre5/data/appdata/templateRoute_0.6.tar";
     qDebug() << Url;
-    QNetworkRequest req;//(QUrl(Url));
+    QNetworkRequest req;
     req.setUrl(QUrl(Url));
     qDebug() << req.url();
     QNetworkReply* r = mgr->get(req);
     QEventLoop loop;
     QObject::connect(r, SIGNAL(finished()), &loop, SLOT(quit()));
-    //connect(r, SIGNAL(error(QNetworkReply::NetworkError)), &loop, SLOT(quit()));
-    //connect(r, SIGNAL(finished()), this, SLOT(downloadFinished()));
     loop.exec();
+    
     qDebug() << "Network Reply Loop End";
     QByteArray data = r->readAll();
+    FileBuffer *fileData = new FileBuffer((unsigned char*)data.data(), data.length());
+    TarFile tarFile(fileData);
+    tarFile.extractTo("./tsre_assets/");
 
-    QFile file("./temp.cab");
-    file.open(QIODevice::WriteOnly);
-    file.write(data);
-    file.close();
-    
-    QProcess proc;
-    QString command = "expand .\\temp.cab .\\tsre_assets\\templateroute_0.6 -F:*";
-    proc.start(command);
-    if(proc.waitForStarted()){
-        qDebug() << "Windows .cab Epand Started";
-    }
-    proc.waitForFinished(-1);
-        qDebug() << "Finished";
-        
-    qDebug() << file.remove();
 }
 
 void LoadWindow::listRoots(){

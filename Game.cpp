@@ -28,6 +28,7 @@
 #include "EngLib.h"
 #include <QtWidgets>
 #include <QColor>
+#include "TarFile.h"
 
 GeoWorldCoordinateConverter *Game::GeoCoordConverter = NULL;
 TDB *Game::trackDB = NULL;
@@ -36,7 +37,7 @@ SoundList *Game::soundList = NULL;
 TerrainLib *Game::terrainLib = NULL;   
 
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.6963";
+QString Game::AppVersion = "v0.697";
 QString Game::AppDataVersion = "0.696";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
@@ -767,11 +768,11 @@ void Game::CheckForOpenAl(){
 
 void Game::DownloadAppData(QString path){
     QDir().mkdir(path);
-    QNetworkAccessManager* mgr = new QNetworkAccessManager();
-    //connect(mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(isData(QNetworkReply*)));
-    qDebug() << "Wait ..";
     
-    QString Url = "http://koniec.org/tsre5/data/appdata/"+ Game::AppDataVersion + ".cab";
+    // Download and extract AppData
+    QNetworkAccessManager* mgr = new QNetworkAccessManager();
+    qDebug() << "Wait ..";
+    QString Url = "http://koniec.org/tsre5/data/appdata/"+ Game::AppDataVersion + ".tar";
     qDebug() << Url;
     QNetworkRequest req;//(QUrl(Url));
     req.setUrl(QUrl(Url));
@@ -779,29 +780,15 @@ void Game::DownloadAppData(QString path){
     QNetworkReply* r = mgr->get(req);
     QEventLoop loop;
     QObject::connect(r, SIGNAL(finished()), &loop, SLOT(quit()));
-    //connect(r, SIGNAL(error(QNetworkReply::NetworkError)), &loop, SLOT(quit()));
-    //connect(r, SIGNAL(finished()), this, SLOT(downloadFinished()));
     loop.exec();
+    
     qDebug() << "Network Reply Loop End";
     QByteArray data = r->readAll();
-
-    QFile file("./temp.cab");
-    file.open(QIODevice::WriteOnly);
-    file.write(data);
-    file.close();
+    FileBuffer *fileData = new FileBuffer((unsigned char*)data.data(), data.length());
+    TarFile tarFile(fileData);
+    tarFile.extractTo("./tsre_appdata/");
     
-    QProcess proc;
-    QString command = "expand .\\temp.cab .\\tsre_appdata\\";
-    command += Game::AppDataVersion + " -F:*";
-    proc.start(command);
-    if(proc.waitForStarted()){
-        qDebug() << "Windows .cab Epand Started";
-    }
-    proc.waitForFinished(-1);
-        qDebug() << "Finished";
-        
-    qDebug() << file.remove();
-    
+    // Create bat file for Consist Editor.
     QString conBatFile = QFileInfo(QCoreApplication::applicationFilePath()).fileName()+" --conedit";
     
     QFile file1("./ConsistEditor.bat");

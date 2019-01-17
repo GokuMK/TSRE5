@@ -151,7 +151,7 @@ int main(int argc, char *argv[]){
     //    window.show();
     //else
     //    window.showMaximized();
-
+    
     QStringList args = app.arguments();
     if(args.count() > 1){
         qDebug() << "arg1 " << args.at(1);    

@@ -13,6 +13,7 @@
 #include <QFile>
 #include <QDebug>
 #include <string> 
+#include <algorithm>
 
 FileBuffer::FileBuffer() {
     this->off = 0;
@@ -24,7 +25,10 @@ FileBuffer::FileBuffer(unsigned char * data, int nLength) {
     this->off = 0;
 }
 
-FileBuffer::FileBuffer(const FileBuffer& orig) {
+FileBuffer::FileBuffer(const FileBuffer* orig) {
+    length = orig->length;
+    data = new unsigned char[length];
+    std::copy ( orig->data, orig->data+length, data );
 }
 
 FileBuffer::~FileBuffer() {

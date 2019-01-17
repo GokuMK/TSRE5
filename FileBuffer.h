@@ -17,7 +17,7 @@ class FileBuffer {
 public:
     FileBuffer();
     FileBuffer(unsigned char * data, int nLength);
-    FileBuffer(const FileBuffer& orig);
+    FileBuffer(const FileBuffer* orig);
     virtual ~FileBuffer();
     
     int getInt();

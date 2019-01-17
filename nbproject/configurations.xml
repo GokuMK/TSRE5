@@ -32,6 +32,7 @@
         <itemPath>ParserX.h</itemPath>
         <itemPath>ReadFile.h</itemPath>
         <itemPath>TS.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f14" displayName="GEO" projectFiles="true">
         <itemPath>GeoCoordinates.h</itemPath>
@@ -274,6 +275,7 @@
         <itemPath>ParserX.cpp</itemPath>
         <itemPath>ReadFile.cpp</itemPath>
         <itemPath>TS.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f12" displayName="GEO" projectFiles="true">
         <itemPath>GeoCoordinates.cpp</itemPath>
@@ -696,6 +698,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1559,6 +1571,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2438,6 +2460,16 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp"
             ex="false"
             tool="1"
@@ -3297,6 +3329,16 @@
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.h"
             ex="false"
             tool="3"
             flavor2="0">
