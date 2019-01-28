@@ -367,6 +367,8 @@ ActivityEventProperties::ActivityEventProperties(QWidget* parent) : QWidget(pare
     outcomeProperties[(int)ActivityEvent::Outcome::CategorySoundFile]->setLayout(vlist);
     vbox->addWidget(outcomeProperties[(int)ActivityEvent::Outcome::CategorySoundFile]);
     
+    // Outcome Weather Change
+    
     vlist = new QGridLayout;
     vlist->setSpacing(2);
     vlist->setContentsMargins(3,0,3,0);

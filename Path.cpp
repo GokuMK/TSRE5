@@ -278,8 +278,13 @@ void Path::init3dShapes(bool initShapes){
             
             if(tdb->trackNodes[lastNodeId]->typ != 1){
                 currentNodeId = tdb->findVectorNodeBetweenTwoNodes(lastNodeId, nodeId1);
-                distance1 = 0;
-                distance2 = tdb->getVectorSectionLength(currentNodeId);
+                if(tdb->trackNodes[currentNodeId]->TrPinS[0] == nodeId1){
+                    distance2 = 0;
+                    distance1 = tdb->getVectorSectionLength(currentNodeId);
+                } else {
+                    distance1 = 0;
+                    distance2 = tdb->getVectorSectionLength(currentNodeId);
+                }
             } else {
                 currentNodeId = lastNodeId;
                 if(tdb->trackNodes[currentNodeId]->TrPinS[0] == nodeId1){
