@@ -12,6 +12,8 @@
 #define	TEXTURE_H
 
 #include <QString>
+#include <QVector>
+
 class Brush;
 
 class Texture {
@@ -33,7 +35,7 @@ public:
      int typk;
      unsigned int* tex;
      QString pathid;
-     QString hashid;
+     QVector<QString> hashid;
      bool loaded = false;
      int ref = 0;
      bool glLoaded = false;

@@ -60,11 +60,12 @@ int TexLib::addTex(QString path, QString name, bool reload) {
 int TexLib::getTex(QString pathid) {
     for ( auto it = mtex.begin(); it != mtex.end(); ++it ){
         if(it->second == NULL) continue;
-        if (((Texture*) it->second)->hashid.length() == pathid.length()) 
-            if (((Texture*) it->second)->hashid == pathid) {
-                ((Texture*) it->second)->ref++;
-                return (int)it->first;
-            }
+        for(int i = 0; i < ((Texture*) it->second)->hashid.size(); i++)
+            if (((Texture*) it->second)->hashid[i].length() == pathid.length()) 
+                if (((Texture*) it->second)->hashid[i] == pathid) {
+                    ((Texture*) it->second)->ref++;
+                    return (int)it->first;
+                }
     }
     return -1;
 }
@@ -74,18 +75,19 @@ int TexLib::addTex(QString pathid, bool reload) {
     Texture* newFile = NULL;
     for ( auto it = mtex.begin(); it != mtex.end(); ++it ){
         if(it->second == NULL) continue;
-        if (((Texture*) it->second)->hashid.length() == pathid.length()) 
-            if (((Texture*) it->second)->hashid == pathid) {
-                if(!reload){
-                    ((Texture*) it->second)->ref++;
-                    return (int)it->first;
-                } else {
-                    newFile = ((Texture*) it->second);
-                    break;
+        for(int i = 0; i < ((Texture*) it->second)->hashid.size(); i++)
+            if (((Texture*) it->second)->hashid[i].length() == pathid.length()) 
+                if (((Texture*) it->second)->hashid[i] == pathid) {
+                    if(!reload){
+                        ((Texture*) it->second)->ref++;
+                        return (int)it->first;
+                    } else {
+                        newFile = ((Texture*) it->second);
+                        break;
+                    }
                 }
-            }
     }
-    //qDebug() << "Nowa " << jesttextur << " textura: " << pathid;
+    qDebug() << "Nowa " << jesttextur << " textura: " << pathid;
     
     QString tType = pathid.toLower().split(".").last();
     

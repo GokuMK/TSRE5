@@ -23,12 +23,12 @@ Texture::Texture() {
 
 Texture::Texture(QString pathid) {
     this->pathid = pathid;
-    this->hashid = pathid;
+    this->hashid.push_back(pathid);
     //temp fix for dds/ace loading
     // Openrails uses .dds textures instead of .ace
-    QString tType = hashid.toLower().split(".").last();
+    QString tType = pathid.toLower().split(".").last();
     if(tType == "dds"){
-        hashid = hashid.left(pathid.length() - 3)+"ace";
+        hashid.push_back(pathid.left(pathid.length() - 3)+"ace");
     }
 }
     

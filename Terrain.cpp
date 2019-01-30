@@ -1365,7 +1365,7 @@ void Terrain::render(float lodx, float lodz, int tileX, int tileY, float* player
     float size = 512;
 
     QOpenGLVertexArrayObject::Binder vaoBinder(VAO);
-        
+    
     if(Game::viewTerrainShape && (!(showBlob && MapWindow::isAlpha == 0) || selectionColor != 0)){
         float shaderSecondTexUV = 0;
         for (int uu = 0; uu < patches; uu++) {
