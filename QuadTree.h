@@ -50,8 +50,8 @@ public:
         void addTile(int tileX, int tileY, int dLevel);
         QString getMyName(int tileX, int tileY);
         unsigned int getMyNameId(int tileX, int tileY);
-        void fillTerrainInfo(int tileX, int tileY, TerrainInfo* info);
-        void listNames();
+        bool fillTerrainInfo(int tileX, int tileY, TerrainInfo* info);
+        int listNames();
     };
     struct TdFile {
         int x;
