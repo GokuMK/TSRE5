@@ -53,6 +53,7 @@ public:
     static bool playerMode;
     static bool useNetworkEng;
     static float objectLod;
+    static float distantLod;
     static int tileLod;
     static int allowObjLag;
     static int maxObjLag;

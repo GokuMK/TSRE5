@@ -58,6 +58,7 @@ bool Game::ignoreLoadLimits = false;
 int Game::startTileX = 0;
 int Game::startTileY = 0;
 float Game::objectLod = 3000;
+float Game::distantLod = 100000;
 int Game::tileLod = 2;
 int Game::start = 0;
 bool Game::ignoreMissingGlobalShapes = false;

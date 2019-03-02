@@ -1178,7 +1178,8 @@ void TerrainLibQt::render(GLUU *gluu, float * playerT, float* playerW, float* ta
 }
 
 void TerrainLibQt::renderLo(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, int renderMode) {
-    int renderCount = 90*90 ;
+    int distantCount = Game::distantLod/1000 - 10;
+    int renderCount = distantCount*distantCount ;
     if (renderMode == gluu->RENDER_SELECTION) {
         renderCount = 9;
     }

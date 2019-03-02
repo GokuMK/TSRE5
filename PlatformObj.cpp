@@ -126,8 +126,10 @@ void PlatformObj::setPosition(int x, int z, float* p){
         return;
 
     //tdb- >trackItems[trItemId[selectionValue]]-
-    if(nodeId[selectionValue] == tpos[0])
+    if(nodeId[selectionValue] == tpos[0]){
         tdb->trackItems[trItemId[selectionValue]]->setTrackPosition(tpos[1]);
+        tdb->updateTrItemRData(tdb->trackItems[trItemId[selectionValue]]);
+    }
     //if(tpos[0] != nodeId[1])
     //    return;
 

@@ -598,7 +598,7 @@ void Eng::updateSim(float deltaTime){
         currentSpeed += acceleration*deltaTime;
 
         // Static speed
-        //currentSpeed = 40;
+        currentSpeed = 40;
     
     // Network Speed
     }

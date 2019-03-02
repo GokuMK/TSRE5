@@ -87,7 +87,7 @@ int TexLib::addTex(QString pathid, bool reload) {
                     }
                 }
     }
-    qDebug() << "Nowa " << jesttextur << " textura: " << pathid;
+    //qDebug() << "Nowa " << jesttextur << " textura: " << pathid;
     
     QString tType = pathid.toLower().split(".").last();
     
