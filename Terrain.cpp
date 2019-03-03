@@ -982,22 +982,27 @@ float Terrain::getWaterLevelSE(){
 }
 
 void Terrain::setWaterLevelNW(float val){
+    tfile->waterLevel = true;
     tfile->WNW = val;
 }
 
 void Terrain::setWaterLevelNE(float val){
+    tfile->waterLevel = true;
     tfile->WNE = val;
 }
 
 void Terrain::setWaterLevelSW(float val){
+    tfile->waterLevel = true;
     tfile->WSW = val;
 }
 
 void Terrain::setWaterLevelSE(float val){
+    tfile->waterLevel = true;
     tfile->WSE = val;
 }
 
 void Terrain::setAvgWaterLevel(float val){
+    tfile->waterLevel = true;
     tfile->WNE = val;
     tfile->WSE = val;
     tfile->WNW = val;

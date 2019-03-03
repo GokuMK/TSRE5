@@ -38,10 +38,10 @@ public:
     std::unordered_map<int, Mat> materials;
     std::unordered_map<int, Mat> amaterials;
     int* flags;
-    float WSW;
-    float WSE;
-    float WNE;
-    float WNW;
+    float WSW = 0;
+    float WSE = 0;
+    float WNE = 0;
+    float WNW = 0;
     float* errthresholdScale = NULL;
     float* alwaysselectMaxdist = NULL;
     int* nsamples = NULL;
