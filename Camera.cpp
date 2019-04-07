@@ -135,6 +135,9 @@ void Camera::patrzY(float f) {
 void Camera::check_coords() {
 }
 
+void Camera::MouseWheel(QWheelEvent* e) {
+}
+
 void Camera::MouseMove(QMouseEvent* e) {
 }
 

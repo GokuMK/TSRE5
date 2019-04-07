@@ -33,6 +33,7 @@
 #include "EngLib.h"
 #include "ActLib.h"
 #include "Activity.h"
+#include "ShapeTextureInfo.h"
 
 ShapeViewerGLWidget::ShapeViewerGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -151,6 +152,33 @@ void ShapeViewerGLWidget::setBackgroundGlColor(float r, float g, float b){
     }
 }
 
+void ShapeViewerGLWidget::fillCurrentShapeHierarchyInfo(ShapeHierarchyInfo* info){
+    Game::currentShapeLib = currentShapeLib;
+    if(renderItem == 4 && sFile != NULL){
+        sFile->fillShapeHierarchyInfo(info);
+    }
+}
+
+void ShapeViewerGLWidget::fillCurrentShapeTextureInfo(QHash<int, ShapeTextureInfo*>& list){
+    Game::currentShapeLib = currentShapeLib;
+    if(renderItem == 4 && sFile != NULL){
+        sFile->fillShapeTextureInfo(list);
+    }
+}
+
+void ShapeViewerGLWidget::fillCurrentContentHierarchyInfo(QVector<ContentHierarchyInfo*>& list){
+    Game::currentShapeLib = currentShapeLib;
+    if(renderItem == 4 && sFile != NULL){
+        sFile->fillContentHierarchyInfo(list, -1);
+    }
+    if(renderItem == 2 && eng != NULL){
+        eng->fillContentHierarchyInfo(list, -1);
+    }
+    if(renderItem == 5 && con != NULL){
+        con->fillContentHierarchyInfo(list, -1);
+    }
+}
+
 void ShapeViewerGLWidget::paintGL() {
     Game::currentShapeLib = currentShapeLib;
     //Game::currentEngLib = currentEngLib;
@@ -189,6 +217,9 @@ void ShapeViewerGLWidget::paintGL() {
     if(renderItem == 3 && con != NULL){
         con->render((int)selection*65536, true);
     }
+    if(renderItem == 5 && con != NULL){
+        con->render((int)selection*65536, false);
+    }
     if(renderItem == 2 && con != NULL){
         Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, M_PI, 0,1,0);
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 0, -con->conLength/2);
@@ -210,7 +241,7 @@ void ShapeViewerGLWidget::paintGL() {
             qDebug() << fabs(sFile->bound[0]-sFile->bound[1]);
             qDebug() << fabs(sFile->bound[2]-sFile->bound[3]);
             qDebug() << fabs(sFile->bound[4]-sFile->bound[5]);
-            camera->setPos(-max*1.5,fabs(sFile->bound[2]-sFile->bound[3])/2.0,0.0);
+            camera->setPos(-max*1.2,fabs(sFile->bound[2]-sFile->bound[3])/2.0,0.0);
         }
     }
 
@@ -297,8 +328,11 @@ void ShapeViewerGLWidget::keyPressEvent(QKeyEvent * event) {
         
         emit refreshItem();
     }
+}
 
-
+void ShapeViewerGLWidget::wheelEvent(QWheelEvent *event) {
+    camera->MouseWheel(event);
+    event->accept();
 }
 
 void ShapeViewerGLWidget::keyReleaseEvent(QKeyEvent * event) {
@@ -407,6 +441,7 @@ void ShapeViewerGLWidget::showEng(QString path, QString name){
 }
 
 void ShapeViewerGLWidget::showEngSet(int id){
+    Game::currentShapeLib = currentShapeLib;
     qDebug() << "eng set id "<< id;
     con = ConLib::con[id];
     con->setTextColor(backgroundGlColor);
@@ -467,6 +502,21 @@ void ShapeViewerGLWidget::showCon(int id){
     con->setTextColor(backgroundGlColor);
     eng = NULL;
     renderItem = 3;
+}
+
+void ShapeViewerGLWidget::showConSimple(int id){
+    if(id < 0){
+        con = NULL;
+        eng = NULL;
+        sFile = NULL;
+        renderItem = 5;
+        return;
+    }
+    qDebug() << "con id "<< id;
+    con = ConLib::con[id];
+    con->setTextColor(backgroundGlColor);
+    eng = NULL;
+    renderItem = 5;
 }
 
 void ShapeViewerGLWidget::showCon(int aid, int id){

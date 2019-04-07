@@ -26,6 +26,9 @@ AboutWindow::AboutWindow(QWidget* parent) : QWidget(parent) {
     QLabel* myLabel2 = new QLabel("<b>User guide</b> <a href=\"http://koniec.org/tsre5/\"><b>http://koniec.org/tsre5.</b></a>");
     myLabel2->setOpenExternalLinks(true);
     myLabel2->setContentsMargins(5,0,0,0);
+    QLabel* myLabel21 = new QLabel("<b>Official Forum</b> <a href=\"http://www.onrails.eu\"><b>http://www.onrails.eu.</b></a>");
+    myLabel21->setOpenExternalLinks(true);
+    myLabel21->setContentsMargins(5,0,0,0);
     
     QLabel* myLabel3 = new QLabel("Copyright © GokuMK, mail pgadecki@gmail.com ");
     myLabel3->setContentsMargins(5,0,0,0);
@@ -39,6 +42,7 @@ AboutWindow::AboutWindow(QWidget* parent) : QWidget(parent) {
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(myLabel);
     mainLayout->addWidget(myLabel2);
+    mainLayout->addWidget(myLabel21); 
     mainLayout->addWidget(myLabel3);
     mainLayout->addWidget(browse);
     

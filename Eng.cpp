@@ -28,6 +28,7 @@
 #include "SoundVariables.h"
 #include "TrainNetworkEng.h"
 #include "GeoCoordinates.h"
+#include "ContentHierarchyInfo.h"
 
 Eng::Eng() {
     
@@ -956,4 +957,24 @@ void Eng::initOnTrack(float *tpos, int direction, QMap<int, int>* junctionDirect
     //    this->loaded = -1;
     this->loaded = 1;
     qDebug() << "ok";
+}
+
+void Eng::fillContentHierarchyInfo(QVector<ContentHierarchyInfo*>& list, int parent){
+    ContentHierarchyInfo *info = new ContentHierarchyInfo();
+    info->parent = parent;
+    info->name = name;
+    info->eng = this;
+    info->type = "eng";
+    list.push_back(info);
+    parent = list.size()-1;
+    
+    long long int shapeLibId = reinterpret_cast<long long int>(Game::currentShapeLib);
+    if(shape.id[shapeLibId] >= 0) 
+        Game::currentShapeLib->shape[shape.id[shapeLibId]]->fillContentHierarchyInfo(list, list.size()-1);
+
+    for(int i = 0; i < freightanimShape.size(); i++){
+        if(freightanimShape[i].id[shapeLibId] >= 0) {
+            Game::currentShapeLib->shape[freightanimShape[i].id[shapeLibId]]->fillContentHierarchyInfo(list, parent);
+        }
+    }
 }

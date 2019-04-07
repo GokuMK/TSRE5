@@ -22,6 +22,7 @@
 #include "RouteEditorWindow.h"
 #include "LoadWindow.h"
 #include "CELoadWindow.h"
+#include "ShapeViewerWindow.h"
 #include "MapWindow.h"
 
 
@@ -43,6 +44,13 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 void LoadConEditor(){
     CELoadWindow* ceLoadWindow = new CELoadWindow();
     ceLoadWindow->show();
+}
+
+void LoadShapeViewer(QString arg){
+    ShapeViewerWindow* shapeWindow = new ShapeViewerWindow();
+    if(arg.length() > 0)
+        shapeWindow->loadFile(arg);
+    shapeWindow->show();
 }
 
 void LoadRouteEditor(){
@@ -69,16 +77,9 @@ void LoadRouteEditor(){
 }
 
 int main(int argc, char *argv[]){
-    logFile.setFileName("log.txt");
-    logFile.open(QIODevice::WriteOnly);
-    logFileOut.setDevice(&logFile);
-
-    qInstallMessageHandler( myMessageOutput );
     QLocale lepsze(QLocale::English);
     //loc.setNumberOptions(lepsze.numberOptions());
     QLocale::setDefault(lepsze);
-    
-    Game::load();
         
     QSurfaceFormat format;
 #ifdef __APPLE__
@@ -95,9 +96,20 @@ int main(int argc, char *argv[]){
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
     //QApplication::pr
-
-    
     QApplication app(argc, argv);
+    
+    QString workingDir = QDir::currentPath();
+    if(workingDir.contains("windows/system32", Qt::CaseInsensitive)){
+        QDir::setCurrent(QCoreApplication::applicationDirPath());
+    }
+    
+    logFile.setFileName("log.txt");
+    logFile.open(QIODevice::WriteOnly);
+    logFileOut.setDevice(&logFile);
+    qInstallMessageHandler( myMessageOutput );
+    
+    Game::load();
+    
     //app.set
     Game::PixelRatio = app.devicePixelRatio();
     qDebug() << "devicePixelRatio"<< app.devicePixelRatio();
@@ -153,27 +165,38 @@ int main(int argc, char *argv[]){
     //    window.showMaximized();
     
     QStringList args = app.arguments();
+    //Check if file opened with "open in TSRE"
+    if(args.count() == 2){
+        if(QFileInfo::exists(args[1])){
+            args[1] = "--shapeview "+args[1];        }
+    }
     if(args.count() > 1){
-        qDebug() << "arg1 " << args.at(1);    
-        if(args.at(1) == "--aceconv"){
+        qDebug() << "arg1 " << args[1];    
+        if(args[1] == "--aceconv"){
             // Run ace converter
             qDebug() << "Run ace converter";
             return app.exec();
         }
-        if(args.at(1) == "--conedit"){
+        if(args[1] == "--conedit"){
             // Run ace converter
             qDebug() << "Run con editor";
             LoadConEditor();
             return app.exec();
         }
-
-        if(args.at(1) == "--play"){
+        if(args[1].startsWith("--shapeview")){
+            // Run ace converter
+            qDebug() << "Run shape viewer";
+            LoadShapeViewer(args[1].section(" ",1,-1));
+            
+            return app.exec();
+        }
+        if(args[1] == "--play"){
             // Play
             if(args.length() == 3){
-                Game::ActivityToPlay = args.at(2);
+                Game::ActivityToPlay = args[2];
             } else if(args.length() == 4){
-                Game::route = args.at(2);
-                Game::ActivityToPlay = args.at(3);
+                Game::route = args[2];
+                Game::ActivityToPlay = args[3];
             } else {
                 Game::ActivityToPlay = "#";
             }

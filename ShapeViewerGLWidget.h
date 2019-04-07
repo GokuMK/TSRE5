@@ -27,6 +27,9 @@ class Camera;
 class ShapeLib;
 class EngLib;
 class QImage;
+class ShapeTextureInfo;
+class ShapeHierarchyInfo;
+class ContentHierarchyInfo;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -49,11 +52,15 @@ public:
     void resetRot();
     void getImg();
     void setBackgroundGlColor(float r, float g, float b);
+    void fillCurrentShapeHierarchyInfo(ShapeHierarchyInfo *info);
+    void fillCurrentShapeTextureInfo(QHash<int, ShapeTextureInfo*> &list);
+    void fillCurrentContentHierarchyInfo(QVector<ContentHierarchyInfo*> &list);
 public slots:
     void showEng(QString path, QString name);
     void showEng(Eng *e);
     void showEngSet(int id);
     void showCon(int id);
+    void showConSimple(int id);
     void showCon(int aid, int id);
     void showShape(QString path, QString texPath);
     void cleanup();
@@ -72,6 +79,7 @@ protected:
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;
     void resizeGL(int width, int height) Q_DECL_OVERRIDE;
+    void wheelEvent(QWheelEvent *event) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;

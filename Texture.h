@@ -40,6 +40,8 @@ public:
      int ref = 0;
      bool glLoaded = false;
      bool editable = false;
+     bool missing = false;
+     bool error = false;
     
     void setEditable();
     bool GLTextures(bool mipmaps = false);

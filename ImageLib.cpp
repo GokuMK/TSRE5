@@ -23,7 +23,8 @@ void ImageLib::run(){
     QImage img(texture->pathid);    
 
     if(img.isNull() && !IsThread) {
-        qDebug() << "IMG: not exist "<<texture->pathid;
+        texture->missing = true;
+        qDebug() << "IMG: not exist " << texture->pathid;
         return;
     }
     

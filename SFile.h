@@ -18,8 +18,12 @@
 #include <QOpenGLShaderProgram>
 #include <QMatrix4x4>
 #include <QString>
+#include <QVector>
 
 class FileBuffer;
+class ShapeTextureInfo;
+class ShapeHierarchyInfo;
+class ContentHierarchyInfo;
 
 class SFile {
 public:
@@ -51,6 +55,7 @@ public:
     };
 
     struct dist {
+        int levelSelection;
         int ilosch;
         int* hierarchia;
         int iloscs;
@@ -206,6 +211,9 @@ public:
     void setEnabledSubObjs(unsigned int stateId, unsigned int enabledSubObjs);
     void enableSubObjByName(unsigned int stateId, QString name, bool val);
     void enableSubObjByNameQueue(unsigned int stateId, QString name, bool val);
+    void fillShapeTextureInfo(QHash<int, ShapeTextureInfo*> &list);
+    void fillShapeHierarchyInfo(ShapeHierarchyInfo* info);
+    void fillContentHierarchyInfo(QVector<ContentHierarchyInfo*> &list, int parent);
 private:
     struct State {
         bool animated = false; 

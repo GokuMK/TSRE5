@@ -46,6 +46,7 @@ public:
     virtual void patrzX(float f);
     virtual void patrzY(float f);
     virtual void check_coords();
+    virtual void MouseWheel(QWheelEvent* e);
     virtual void MouseMove(QMouseEvent* e);
     virtual void MouseDown(QMouseEvent* e);
     virtual void MouseUp(QMouseEvent* e);
@@ -55,7 +56,7 @@ public:
     virtual void renderHud(GLUU *gluu);
     virtual void setCameraObject(GameObj* o);
     virtual PreciseTileCoordinate* getCurrentPos();
-    float * pozT;
+    float * pozT = NULL;
     int starex, starey;
     float fov;
 protected:

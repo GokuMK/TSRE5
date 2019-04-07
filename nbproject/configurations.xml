@@ -152,7 +152,17 @@
         <itemPath>ShapeLib.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f13" displayName="shapeViewer" projectFiles="true">
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.h</itemPath>
         <itemPath>ShapeViewerGLWidget.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.h</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f17" displayName="sound" projectFiles="true">
         <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h</itemPath>
@@ -395,7 +405,17 @@
         <itemPath>ShapeLib.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f14" displayName="shapeViewer" projectFiles="true">
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.cpp</itemPath>
         <itemPath>ShapeViewerGLWidget.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.cpp</itemPath>
+        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f17" displayName="sound" projectFiles="true">
         <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp</itemPath>
@@ -612,6 +632,36 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
             ex="false"
             tool="1"
@@ -642,12 +692,82 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1485,6 +1605,36 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
             ex="false"
             tool="1"
@@ -1515,12 +1665,82 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -2370,6 +2590,36 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
             ex="false"
             tool="1"
@@ -2400,12 +2650,82 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -3243,6 +3563,36 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
             ex="false"
             tool="1"
@@ -3273,12 +3623,82 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.h"
             ex="false"
             tool="3"
             flavor2="0">

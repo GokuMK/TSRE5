@@ -23,6 +23,9 @@
 #include <QString>
 #include "Game.h"
 #include "TS.h"
+#include "ShapeTextureInfo.h"
+#include "ShapeHierarchyInfo.h"
+#include "ContentHierarchyInfo.h"
 
 SFile::SFile() {
     pathid = "";
@@ -806,8 +809,8 @@ void SFile::reload() {
 
             if(primstate[prim_state].arg4 == -1)
                 continue;
-            if (image[texture[primstate[prim_state].arg4].image].tex == -2)
-                continue;
+            //if (image[texture[primstate[prim_state].arg4].image].tex == -2)
+            //    continue;
             list.push_back(image[texture[primstate[prim_state].arg4].image].name);
        }
     }
@@ -892,6 +895,7 @@ void SFile::updateSim(float deltaTime, unsigned int stateId){
         }
     }
 }
+
 void SFile::render(unsigned int stateId) {
 
     if (isinit != 1 || loaded == 2)
@@ -1006,7 +1010,11 @@ void SFile::render(unsigned int stateId) {
             } else if (TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->loaded) {
                 //if(allowLag) {
                 //    allowLag = false;
+                //if(TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->missing || TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->error){
+                //    image[texture[primstate[prim_state].arg4].image].tex = -2;
+                //} else {
                 TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->GLTextures();
+                //}
                 //glDisable(GL_TEXTURE_2D);
                 //}
             } else {
@@ -1020,6 +1028,114 @@ void SFile::render(unsigned int stateId) {
     //gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
     gluu->setBrightness(1.0);
 }
+
+void SFile::fillContentHierarchyInfo(QVector<ContentHierarchyInfo*>& list, int parent){
+    if (isinit != 1 || loaded != 1)
+        return;
+    
+    ContentHierarchyInfo *info = new ContentHierarchyInfo();
+    info->parent = parent;
+    info->name = nazwa;
+    info->distanceLevelId = -1; // Default
+    info->sfile = this;
+    info->type = "sfile";
+    list.push_back(info);
+    parent = list.size()-1;
+    
+    for (int i = 0; i < iloscd; i++) {
+        ContentHierarchyInfo *info = new ContentHierarchyInfo();
+        info->parent = parent;
+        info->name = "Distance Level: " + QString::number(distancelevel[i].levelSelection) + " m";
+        info->distanceLevelId = i;
+        info->sfile = this;
+        info->type = "sfile";
+        list.push_back(info);
+    }
+}
+
+void SFile::fillShapeHierarchyInfo(ShapeHierarchyInfo* info){
+    if(info == NULL)
+        return;
+    
+    if (isinit != 1 || loaded != 1)
+        return;
+    
+    for(int i = 0; i < distancelevel[0].ilosch; i++){
+        info->hierarchy.push_back(distancelevel[0].hierarchia[i]);
+    }
+    
+    for(int i = 0; i < iloscm; i++){
+        info->matrices.push_back(macierz[i].name);
+    }
+    
+    for (int i = 0; i < distancelevel[0].iloscs; i++) {
+        for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {
+            int prim_state = distancelevel[0].subobiekty[i].czesci[j].prim_state_idx;
+            int vtx_state = primstate[prim_state].vtx_state;
+            int matrix = vtxstate[vtx_state].matrix;
+            
+            info->parts.push_back(ShapeHierarchyInfo::ShapePart());
+            info->parts.last().matrixId = matrix;
+            info->parts.last().textureName = image[texture[primstate[prim_state].arg4].image].name;
+            info->parts.last().polyCount = distancelevel[0].subobiekty[i].czesci[j].iloscv/3;
+        }
+    }
+}
+
+void SFile::fillShapeTextureInfo(QHash<int, ShapeTextureInfo*>& list){
+    if (isinit != 1 || loaded != 1)
+        return;
+
+    for (int i = 0; i < distancelevel[0].iloscs; i++) {
+        for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {
+            int prim_state = distancelevel[0].subobiekty[i].czesci[j].prim_state_idx;
+
+            if(primstate[prim_state].arg4 == -1){
+                continue;
+            } 
+            ShapeTextureInfo *tInfo = new ShapeTextureInfo();
+            tInfo->enabled = true;
+            tInfo->textureName = image[texture[primstate[prim_state].arg4].image].name;
+            tInfo->loaded = "NONE";
+            list[image[texture[primstate[prim_state].arg4].image].tex] = tInfo;
+            
+            if (image[texture[primstate[prim_state].arg4].image].tex == -2){
+                continue;
+            }
+            if (image[texture[primstate[prim_state].arg4].image].tex == -1){
+                tInfo->loading = true;
+                continue;
+            }
+
+            Texture* ttex = TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex];
+            if(ttex == NULL)
+                continue;     
+            
+            if (!ttex->loaded && !ttex->missing && !ttex->error ) {
+                tInfo->loading = true;
+                continue;
+            }
+            
+            if(ttex->missing){
+                tInfo->loaded = "MISSING";
+                continue;
+            }
+            if(ttex->error){
+                tInfo->loaded = "ERROR";
+                continue;
+            }
+            
+            if (!ttex->glLoaded) {
+                tInfo->loading = true;
+                continue;
+            }
+       
+            tInfo->loaded = "YES";
+            tInfo->resolution = QString::number(ttex->width) + "x" + QString::number(ttex->height);
+        }
+    }
+}
+
 
 /*======================================================
 ===== Przekształcenia takie tam

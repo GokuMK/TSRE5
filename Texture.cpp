@@ -373,6 +373,9 @@ void Texture::delVBO() {
     //System.out.println("==== usuwam texture!");
     glLoaded = false;
     loaded = false;
+    editable = false;
+    missing = false;
+    error = false;
     //gl.glDeleteTextures(1, tex, 0);
 }
 

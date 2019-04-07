@@ -36,6 +36,7 @@ public:
     void patrzX(float f);
     void patrzY(float f);
     void check_coords();
+    void MouseWheel(QWheelEvent* e);
     void MouseMove(QMouseEvent* e);
     void MouseDown(QMouseEvent* e);
     void MouseUp(QMouseEvent* e);

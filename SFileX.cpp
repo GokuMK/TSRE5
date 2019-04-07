@@ -256,7 +256,7 @@ void SFileX::odczytajlodd(FileBuffer* bufor, SFile* pliks) {
         //wczytanie hierarchii
         sh = "distance_level_header";
         ParserX::FindTokenDomIgnore(sh, bufor);
-        nul = ParserX::GetNumber(bufor); //dlevel_selection//
+        pliks->distancelevel[j].levelSelection = ParserX::GetNumber(bufor); //dlevel_selection//
         pliks->distancelevel[j].ilosch = ParserX::GetNumber(bufor);
         pliks->distancelevel[j].hierarchia = new int[pliks->distancelevel[j].ilosch + 1];
         for (ii = 0; ii < pliks->distancelevel[j].ilosch; ii++) {

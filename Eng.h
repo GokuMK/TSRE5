@@ -19,6 +19,7 @@ class GLUU;
 class Ruch;
 class SoundVariables;
 class TrainNetworkEng;
+class ContentHierarchyInfo;
 
 class Eng {
 public:
@@ -97,6 +98,7 @@ public:
     void render(int selectionColor = 0);
     void render(int aktwx, int aktwz, int selectionColor);
     float *getCurrentPositionOnTrack();
+    void fillContentHierarchyInfo(QVector<ContentHierarchyInfo*>& list, int parent);
 private:
     bool selected = false;
     OglObj *borderObj = NULL;

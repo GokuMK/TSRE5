@@ -25,7 +25,7 @@
 #include "TDB.h"
 #include "TerrainLib.h"
 #include "SimpleHud.h"
-
+#include "ContentHierarchyInfo.h"
 
 std::unordered_map<int, TextObj*> Consist::txtNumbers;
 int Consist::lastTxtNumbersColor = 0;
@@ -889,4 +889,18 @@ void Consist::save(QString woff, QTextStream* out){
         }
     }
     *out << woff <<"	)\n";
+}
+
+void Consist::fillContentHierarchyInfo(QVector<ContentHierarchyInfo*>& list, int parent){
+    ContentHierarchyInfo *info = new ContentHierarchyInfo();
+    info->parent = parent;
+    info->name = name;
+    info->con = this;
+    info->type = "con";
+    list.push_back(info);
+    parent = list.size()-1;
+    for (int i = 0; i < engItems.size(); i++) {
+        if(Game::currentEngLib->eng[engItems[i].eng] != NULL)
+            Game::currentEngLib->eng[engItems[i].eng]->fillContentHierarchyInfo(list, parent);
+    }
 }

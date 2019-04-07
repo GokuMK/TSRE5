@@ -15,7 +15,13 @@
 #include "GeoCoordinates.h"
 
 CameraRot::CameraRot(float* pt) {
-    pozT = pt;
+    if(pt == NULL){
+        pozT = new float[2];
+        pozT[0] = 0;
+        pozT[1] = 0;
+    } else {
+        pozT = pt;
+    }
     
     up[0] = 0;
     up[1] = 1;
@@ -180,7 +186,7 @@ void CameraRot::patrzY(float f) {
 }
 
 void CameraRot::check_coords() {
-    if (playerPos[0] > 1024) {
+    /*if (playerPos[0] > 1024) {
         playerPos[0] -= 2048;
         pozT[0]++;
     }
@@ -195,7 +201,14 @@ void CameraRot::check_coords() {
     if (playerPos[2]<-1024) {
         playerPos[2] += 2048;
         pozT[1]--;
-    }
+    }*/
+}
+
+void CameraRot::MouseWheel(QWheelEvent* e){
+        if(e->delta() > 0)
+            moveForward(30);
+        if(e->delta() < 0)
+            moveBackward(30);
 }
 
 void CameraRot::MouseMove(QMouseEvent* e) {

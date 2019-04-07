@@ -35,6 +35,7 @@ void AceLib::run() {
 
     QFile file(texture->pathid);
     if (!file.open(QIODevice::ReadOnly)){
+        texture->missing = true;
         if(!IsThread)
             qDebug() << "ACE: not exist "<<texture->pathid;
         //return false;
@@ -72,6 +73,7 @@ void AceLib::run() {
         qDebug() << "--"<<texture->width<<":"<<texture->height<<" "<<texture->bpp;
 
     if ((texture->width <= 1) || (texture->height <= 1) || ((texture->bpp != 24) && (texture->bpp != 32))) {
+        texture->error = true;
         if(!IsThread)
             qDebug() << "!!!!!!!!!!!!! mega fail tex: " <<  texture->pathid
                 <<  " " <<  texture->width
@@ -81,6 +83,7 @@ void AceLib::run() {
         return;
     }
     if (/*(texture->width % 2) != 0 || (texture->height % 2) != 0 ||*/ ((texture->width > 8192) && (texture->height > 8192))) {
+        texture->error = true;
         if(!IsThread)
             qDebug() << "!!!!!!!!!!!!! mega fail tex: " <<  texture->pathid
                 <<  " " <<  texture->width
@@ -90,6 +93,7 @@ void AceLib::run() {
         return;
     }
     if ( texture->width % 2 != 0 || texture->height % 2 != 0 ) {
+        texture->error = true;
         if(!IsThread)
             qDebug() << "!!!!!!!!!!!!! mega fail tex dim % 2 != 0: " << texture->pathid
                 << " " << texture->width

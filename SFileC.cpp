@@ -295,7 +295,8 @@
 
             bufor->off += 27;
             // pomieniecie sekcji dlevel selection
-            bufor->off += 4;
+            //bufor->off += 4;
+            pliks->distancelevel[j].levelSelection = bufor->getFloat();
             bufor->off += 9;
             // odczytanie dlugosci hierarchii obiektow
             pliks->distancelevel[j].ilosch = bufor->getInt();

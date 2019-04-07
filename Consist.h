@@ -23,6 +23,7 @@ class QTextStream;
 class GLUU;
 class Activity;
 class SimpleHud;
+class ContentHierarchyInfo;
 
 class Consist : public GameObj {
 public:
@@ -113,7 +114,8 @@ public:
     void setTrainSpeed(float val);
     float getTrainSpeed();
     float getTrainDistanceTravelled();
-
+    void fillContentHierarchyInfo(QVector<ContentHierarchyInfo*>& list, int parent);
+    
 private:
     bool newConsist = false;
     bool modified = false;
