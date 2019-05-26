@@ -504,6 +504,20 @@ void ShapeViewerGLWidget::showCon(int id){
     renderItem = 3;
 }
 
+void ShapeViewerGLWidget::showConSimple(Consist *currentCon){
+    if(currentCon == NULL){
+        con = NULL;
+        eng = NULL;
+        sFile = NULL;
+        renderItem = 5;
+        return;
+    }
+    con = currentCon;
+    con->setTextColor(backgroundGlColor);
+    eng = NULL;
+    renderItem = 5;
+}
+
 void ShapeViewerGLWidget::showConSimple(int id){
     if(id < 0){
         con = NULL;
@@ -526,18 +540,29 @@ void ShapeViewerGLWidget::showCon(int aid, int id){
     renderItem = 3;
 }
 
-void ShapeViewerGLWidget::showShape(QString path, QString texPath){
+void ShapeViewerGLWidget::showShape(QString path, QString texPath, SFile **currentSFile){
     int shapeId;
     if(texPath.length() > 0)
         shapeId = currentShapeLib->addShape(path, texPath);
     else
         shapeId = currentShapeLib->addShape(path);
-    if(shapeId < 0)
+    if(shapeId < 0){
         sFile = NULL;
-    else {
+    } else {
         sFile = currentShapeLib->shape[shapeId];
+        *currentSFile = sFile;
         cameraInit = true;
     }
+    renderItem = 4;
+    con = NULL;
+    eng = NULL;
+}
+
+void ShapeViewerGLWidget::showShape(SFile *currentSFile){
+    if(currentSFile == NULL)
+        return;
+    sFile = currentSFile;
+    cameraInit = true;
     renderItem = 4;
     con = NULL;
     eng = NULL;

@@ -205,13 +205,15 @@ void GLUU::disableTextures(float x, float y, float z, float a){
 }
 
 void GLUU::enableTextures(){
-    if(this->textureEnabled) return;
+    if(this->textureEnabled) 
+        return;
     this->textureEnabled = true;
     currentShader->setUniformValue(currentShader->shaderTextureEnabled, 1.0f);
 }
 
 void GLUU::disableNormals(){
-    if(!this->normalsEnabled) return;
+    if(!this->normalsEnabled) 
+        return;
     this->normalsEnabled = false;
     currentShader->setUniformValue(currentShader->shaderEnableNormals, 0.0f);
 }

@@ -21,6 +21,7 @@ ShapeViewerNavigatorWidget::ShapeViewerNavigatorWidget(QWidget* parent) : QWidge
     label->setContentsMargins(3,0,0,0);
     vbox->addWidget(label);
     vbox->addWidget(&searchFiles);
+    QObject::connect(&searchFiles, SIGNAL(textEdited(QString)), this, SLOT(searchFilesEnabled(QString)));
     vbox->addWidget(&dirFiles);
     
     label = new QLabel("Current File Items:");
@@ -36,9 +37,24 @@ ShapeViewerNavigatorWidget::ShapeViewerNavigatorWidget(QWidget* parent) : QWidge
     fileItems.setHeaderLabels(list);
     dirFiles.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     fileItems.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    
+    QObject::connect(&dirFiles, SIGNAL(itemClicked(QListWidgetItem*)),
+                      this, SLOT(dirFilesSelected(QListWidgetItem*)));
+    
+    QObject::connect(&fileItems, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+                      this, SLOT(fileItemsSelected(QTreeWidgetItem*, int)));
 }
 
 ShapeViewerNavigatorWidget::~ShapeViewerNavigatorWidget() {
+}
+
+void ShapeViewerNavigatorWidget::dirFilesSelected(QListWidgetItem* item){
+    emit dirFilesSelected(item->data(9999).toString());
+}
+
+void ShapeViewerNavigatorWidget::fileItemsSelected(QTreeWidgetItem* item, int column){
+    qDebug() << item->type() << item->text(0);
+    emit contentHierarchySelected(item->type());
 }
 
 void ShapeViewerNavigatorWidget::listHierarchy(QVector<ContentHierarchyInfo*> info){
@@ -82,13 +98,13 @@ void ShapeViewerNavigatorWidget::listHierarchy(QVector<ContentHierarchyInfo*> in
 void ShapeViewerNavigatorWidget::listDirectoryFiles(QString filepath){
     filepath.replace("\\", "/");
     filepath.replace("//", "/");
-    QString dirp = filepath.section("/",0,-2);
-    qDebug() << dirp;
-    QDir dir(dirp);
+    dirPath = filepath.section("/",0,-2);
+    qDebug() << dirPath;
+    QDir dir(dirPath);
     qDebug() << filepath;
     dir.setFilter(QDir::Files);
     
-    dirFiles.clear();
+    filenames.clear();
     foreach(QString pfile, dir.entryList()){
         if(pfile == "." || pfile == "..")   
             continue;
@@ -97,7 +113,23 @@ void ShapeViewerNavigatorWidget::listDirectoryFiles(QString filepath){
                 && !pfile.endsWith(".eng", Qt::CaseInsensitive)
                 && !pfile.endsWith(".s", Qt::CaseInsensitive))
             continue;
-        QListWidgetItem *item = new QListWidgetItem(pfile.section("/", -1,-1), &dirFiles, 0);
-        item->setData(0, pfile);
+        filenames.push_back(pfile);
     }
+    listFilteredFiles("");
+}
+
+void ShapeViewerNavigatorWidget::searchFilesEnabled(QString val){
+    listFilteredFiles(val);
+}
+
+void ShapeViewerNavigatorWidget::listFilteredFiles(QString query){
+    dirFiles.blockSignals(true);
+    dirFiles.clear();
+    foreach(QString pfile, filenames){
+        if(!pfile.contains(query, Qt::CaseInsensitive))
+            continue;
+        QListWidgetItem *item = new QListWidgetItem(pfile.section("/", -1,-1), &dirFiles, 0);
+        item->setData(9999, dirPath+"/"+pfile);
+    }
+    dirFiles.blockSignals(false);
 }

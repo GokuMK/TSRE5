@@ -11,6 +11,7 @@
 #include "ShapeHierarchyWindow.h"
 #include "Game.h"
 #include "ShapeHierarchyInfo.h"
+#include "SFile.h"
 
 ShapeHierarchyWindow::ShapeHierarchyWindow(QWidget* parent) : QWidget(parent) {
     setWindowFlags(Qt::WindowType::Tool);
@@ -48,6 +49,21 @@ ShapeHierarchyWindow::ShapeHierarchyWindow(QWidget* parent) : QWidget(parent) {
 ShapeHierarchyWindow::~ShapeHierarchyWindow() {
 }
 
+void ShapeHierarchyWindow::hierarchyListSelected(QTreeWidgetItem* item, int id){
+    qDebug() << id;
+    if(currentShape == NULL)
+        return;
+    qDebug() << "T"<< item->type();
+    //qDebug() << "D"<< item->data(0, 50).toUInt();
+    if(item->type() < 0)
+        return;
+    if(item->checkState(0) == Qt::Checked){
+        currentShape->enablePart(item->type());
+    } else {
+        currentShape->disablePart(item->type());
+    }
+}
+
 void ShapeHierarchyWindow::clearLists(){
     hierarchyList.clear();
 }
@@ -62,18 +78,31 @@ void ShapeHierarchyWindow::setHierarchyList(ShapeHierarchyInfo* info){
     QVector<QTreeWidgetItem*> treeItems;
     QVector<bool> treeItemsAssigned;
     
+    QHash<int, int> matricesPolys;
+    foreach( ShapeHierarchyInfo::ShapePart i, info->parts){
+        int idx = i.matrixId;
+        while(idx >= 0){
+            matricesPolys[idx] += i.polyCount;
+            if(idx == info->hierarchy[idx])
+                break;
+            idx = info->hierarchy[idx];
+        }
+    }
+    
     for(int i = 0; i < info->matrices.size(); i++){
         count++;
         list.clear();
         list.append(info->matrices[i]);
+        list.append(QString::number(matricesPolys[i]));
         list.append(QString(""));
-        list.append(QString(""));
-        QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, count );
+        QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, -1 );
         //item->setCheckState(0, Qt::Unchecked);
-        item->setCheckState(0, Qt::Checked);
+        //item->setCheckState(0, Qt::Checked);
         item->setTextColor(0, QColor(Game::StyleMainLabel));
+        item->setTextColor(1, QColor(Game::StyleMainLabel));
         treeItems.append(item);
     }
+    
     for(int i = 0; i < treeItems.count(); i++){
         int idx = info->hierarchy[i];
         if(idx < 0 || idx >= treeItems.size())
@@ -88,9 +117,14 @@ void ShapeHierarchyWindow::setHierarchyList(ShapeHierarchyInfo* info){
         list.append("Shape Part");
         list.append(QString::number(i.polyCount));
         list.append(i.textureName);
-        QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, count );
-        //item->setCheckState(0, Qt::Unchecked);
-        item->setCheckState(0, Qt::Checked);
+        QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, i.uid );
+        //item->setData(0, 50, QVariant::fromValue(i.uid));
+        //qDebug() << "D"<< item->data(0, 50).toUInt();
+        //qDebug() << item->type()<< "===================";
+        if(!i.enabled)
+            item->setCheckState(0, Qt::Unchecked);
+        else
+            item->setCheckState(0, Qt::Checked);
         treeItems[i.matrixId]->insertChild(treeItems[i.matrixId]->childCount(), item);
     }
     

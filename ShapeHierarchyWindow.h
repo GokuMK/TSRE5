@@ -15,17 +15,20 @@
 #include <QtWidgets>
 
 class ShapeHierarchyInfo;
+class SFile;
 
 class ShapeHierarchyWindow : public QWidget {
     Q_OBJECT
 public:
+    SFile *currentShape = NULL;
     ShapeHierarchyWindow(QWidget* parent);
     virtual ~ShapeHierarchyWindow();
     void clearLists();
     void setHierarchyList(ShapeHierarchyInfo* info);
     
 public slots:
-
+    void hierarchyListSelected(QTreeWidgetItem* item, int id);
+    
 signals:
     
 private:

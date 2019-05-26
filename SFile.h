@@ -44,6 +44,7 @@ public:
         //QOpenGLVertexArrayObject VAO;
         int offset;
         int* idx;
+        bool enabled = true;
     };
 
     struct sub {
@@ -187,6 +188,7 @@ public:
     int iloscps;
     primst* primstate;
     dist* distancelevel;
+    int currentDistanceLevel = 0;
     
     int ishaders;
     fshader* shader;
@@ -198,6 +200,8 @@ public:
     SFile(const SFile& orig);
     virtual ~SFile();
     void load();
+    void enablePart(unsigned int uid, unsigned int stateId = 0);
+    void disablePart(unsigned int uid, unsigned int stateId = 0);
     void updateSim(float deltaTime, unsigned int stateId = 0);
     void render(unsigned int stateId = 0);
     void getSize();
@@ -209,10 +213,11 @@ public:
     unsigned int newState();
     void setAnimated(unsigned int stateId, bool animated);
     void setEnabledSubObjs(unsigned int stateId, unsigned int enabledSubObjs);
+    void setCurrentDistanceLevel(unsigned int stateId, int level);
     void enableSubObjByName(unsigned int stateId, QString name, bool val);
     void enableSubObjByNameQueue(unsigned int stateId, QString name, bool val);
-    void fillShapeTextureInfo(QHash<int, ShapeTextureInfo*> &list);
-    void fillShapeHierarchyInfo(ShapeHierarchyInfo* info);
+    void fillShapeTextureInfo(QHash<int, ShapeTextureInfo*> &list, unsigned int stateId = 0);
+    void fillShapeHierarchyInfo(ShapeHierarchyInfo* info, unsigned int stateId = 0);
     void fillContentHierarchyInfo(QVector<ContentHierarchyInfo*> &list, int parent);
 private:
     struct State {
@@ -221,12 +226,13 @@ private:
         float frameCount = 0;
         unsigned long long int lastTime = 0;
         QMap<QString, bool> enableSubObjQueue;
+        int distanceLevel = 0;
     };
     QVector<State> state;
     
     void loadSd();
-    float* getPmatrix(float* pmatrix, int matrix);
-    float* getPmatrixAnimated(float* pmatrix, int matrix, float frame);
+    float* getPmatrix(int currentDlevel, float* pmatrix, int matrix);
+    float* getPmatrixAnimated(int currentDlevel, float* pmatrix, int matrix, float frame);
     void buildFrameIds();
     bool snapable = false;
 };

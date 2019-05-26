@@ -27,6 +27,8 @@ ShapeHierarchyInfo::ShapePart::ShapePart(const ShapePart& orig){
     polyCount = orig.polyCount;
     matrixId = orig.matrixId;
     textureName = orig.textureName;
+    uid = orig.uid;
+    enabled = orig.enabled;
 }
 
 ShapeHierarchyInfo::~ShapeHierarchyInfo() {

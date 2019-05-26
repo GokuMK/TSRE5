@@ -29,6 +29,7 @@ class ShapeViewerNavigatorWidget;
 class EngInfoWidget;
 class ConInfoWidget;
 class ShapeInfoWidget;
+class ContentHierarchyInfo;
 
 class ShapeViewerWindow : public QMainWindow {
     Q_OBJECT
@@ -41,6 +42,16 @@ public slots:
     void about();
     void openFileEnabled();
     void updateTextureInfo();
+    void contentHierarchySelected(int id);
+    void dirFilesSelected(QString file);
+    void viewHierarchySelected(bool show);
+    void viewTexturesSelected(bool show);
+    void vResetShapeViewSelected(); 
+    void copyImgShapeView();
+    void saveImgShapeView();
+    void vGetImgShapeViewSelected(); 
+    void vSaveImgShapeViewSelected();
+    void vSetColorShapeViewSelected();
     
 signals:
     void stopUpdateTimer();
@@ -65,7 +76,13 @@ private:
     QAction *fSave;
     QAction *fNew;
     QAction *fExit;
-
+    QAction *vHierarchyView;
+    QAction *vTexturesView;
+    QAction *vResetShapeView;
+    QAction *vGetImgShapeView;
+    QAction *vSaveImgShapeView;
+    QAction *vSetColorShapeView;
+    QAction *vSetColorConView;
     QAction *aboutAction;
     
     Camera *engCamera;
@@ -76,6 +93,9 @@ private:
     Consist *currentCon = NULL;
     Eng *currentEng = NULL;
     SFile *currentShape = NULL;
+    QVector<ContentHierarchyInfo*> currentContent;
+    
+    void updateTextureInfo(bool refreshContentList);
 };
 
 #endif	/* SHAPEVIEWERWINDOW_H */

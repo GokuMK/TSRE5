@@ -967,7 +967,7 @@ void Eng::fillContentHierarchyInfo(QVector<ContentHierarchyInfo*>& list, int par
     info->type = "eng";
     list.push_back(info);
     parent = list.size()-1;
-    
+
     long long int shapeLibId = reinterpret_cast<long long int>(Game::currentShapeLib);
     if(shape.id[shapeLibId] >= 0) 
         Game::currentShapeLib->shape[shape.id[shapeLibId]]->fillContentHierarchyInfo(list, list.size()-1);

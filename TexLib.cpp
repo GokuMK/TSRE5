@@ -19,10 +19,23 @@
 
 int TexLib::jesttextur = 0;
 std::unordered_map<int, Texture*> TexLib::mtex;
+QHash<int, int> TexLib::disabledTextures;
 
 void TexLib::reset() {
     jesttextur = 0;
     mtex.clear();
+}
+
+void TexLib::enableTexture(int id){
+    Texture* tex = mtex[id];
+    if(tex != NULL)
+        disabledTextures[tex->tex[0]] = 0;
+}
+
+void TexLib::disableTexture(int id){
+    Texture* tex = mtex[id];
+    if(tex != NULL)
+        disabledTextures[tex->tex[0]] = 1;
 }
 
 void TexLib::delRef(int texx) {

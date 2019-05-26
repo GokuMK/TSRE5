@@ -21,6 +21,7 @@ ShapeTextureInfo::ShapeTextureInfo(const ShapeTextureInfo& orig) {
     enabled = orig.enabled;
     loading = orig.loading;
     textureId = orig.textureId;
+    enabled = orig.enabled;
 }
 
 ShapeTextureInfo::~ShapeTextureInfo() {

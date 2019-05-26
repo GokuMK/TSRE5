@@ -22,27 +22,27 @@ public:
     Texture(QString pathid);
     Texture(const Texture* orig);
     virtual ~Texture();
-    
-     unsigned char* imageData;		
-     int bpp;	
-     int imageSize;
-     int bytesPerPixel;
-     int compressed;
-     int width;			
-     int height;			
-     int texID;			
-     int type;		
-     int typk;
-     unsigned int* tex;
-     QString pathid;
-     QVector<QString> hashid;
-     bool loaded = false;
-     int ref = 0;
-     bool glLoaded = false;
-     bool editable = false;
-     bool missing = false;
-     bool error = false;
-    
+
+    unsigned char* imageData;
+    int bpp;
+    int imageSize;
+    int bytesPerPixel;
+    int compressed;
+    int width;
+    int height;
+    int texID;
+    int type;
+    int typk;
+    unsigned int* tex;
+    QString pathid;
+    QVector<QString> hashid;
+    bool loaded = false;
+    int ref = 0;
+    bool glLoaded = false;
+    bool editable = false;
+    bool missing = false;
+    bool error = false;
+
     void setEditable();
     bool GLTextures(bool mipmaps = false);
     void update();
@@ -54,7 +54,7 @@ public:
     unsigned char * getImageData(int width, int height);
     void delVBO();
 private:
-        
+
 };
 
 #endif	/* TEXTURE_H */

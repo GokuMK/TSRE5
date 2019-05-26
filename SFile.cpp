@@ -835,6 +835,15 @@ void SFile::setEnabledSubObjs(unsigned int stateId, unsigned int enabledSubObjs)
     state[stateId].enabledSubObjs = enabledSubObjs;
 }
 
+void SFile::setCurrentDistanceLevel(unsigned int stateId, int level){
+    if(level < 0)
+        level = 0;
+    if(level >= iloscd)
+        level = 0;
+    state[stateId].distanceLevel = level;
+    qDebug() << state[stateId].distanceLevel;
+}
+
 void SFile::enableSubObjByNameQueue(unsigned int stateId, QString name, bool val){
     if(stateId > state.size() - 1) 
         return;
@@ -928,21 +937,23 @@ void SFile::render(unsigned int stateId) {
     //float talpha = gluu->alpha;
     //float talphatest = gluu->alphaTest;
 
-    for (int i = 0; i < distancelevel[0].iloscs; i++) {
-        QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].VAO);
+    int currentDlevel = state[stateId].distanceLevel;
+    for (int i = 0; i < distancelevel[currentDlevel].iloscs; i++) {
+        QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[currentDlevel].subobiekty[i].VAO);
 
         if(((state[stateId].enabledSubObjs >> i) & 1) == 0)
             continue;
         
-        for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {
+        for (int j = 0; j < distancelevel[currentDlevel].subobiekty[i].iloscc; j++) {
 
-            int prim_state = distancelevel[0].subobiekty[i].czesci[j].prim_state_idx;
+            int prim_state = distancelevel[currentDlevel].subobiekty[i].czesci[j].prim_state_idx;
             int vtx_state = primstate[prim_state].vtx_state;
             int matrix = vtxstate[vtx_state].matrix;
+            bool texEnabled = distancelevel[currentDlevel].subobiekty[i].czesci[j].enabled;
 
             if(animated){
                 Mat4::identity(m);
-                getPmatrixAnimated(m, matrix, state[stateId].frameCount);
+                getPmatrixAnimated(currentDlevel, m, matrix, state[stateId].frameCount);
                 oldmatrix = -1;
                 gluu->currentMsMatrinxHash = 0;
                 gluu->currentShader->setUniformValue(gluu->currentShader->msMatrixUniform, *reinterpret_cast<float(*)[4][4]>(&m));
@@ -951,7 +962,7 @@ void SFile::render(unsigned int stateId) {
                     oldmatrix = matrix;
                     if (!macierz[matrix].isFixed) {
                         Mat4::identity(m);
-                        memcpy(macierz[matrix].fixed, getPmatrix(m, matrix), sizeof (float) * 16);
+                        memcpy(macierz[matrix].fixed, getPmatrix(currentDlevel, m, matrix), sizeof (float) * 16);
                         macierz[matrix].isFixed = true;
                         macierz[matrix].hash = gluu->getMatrixHash(macierz[matrix].fixed);
                     }
@@ -984,7 +995,8 @@ void SFile::render(unsigned int stateId) {
                 gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
             */
             //if(gluu->textureEnabled)
-            if(primstate[prim_state].arg4 == -1){
+            if(primstate[prim_state].arg4 == -1 || !texEnabled || TexLib::disabledTextures[image[texture[primstate[prim_state].arg4].image].texAddr] == 1){
+                gluu->disableTextures(1.0, 0.0, 1.0, 1.0);
                 //glDisable(GL_TEXTURE_2D);
             } else if (image[texture[primstate[prim_state].arg4].image].texAddr >= 0) {
                 //glEnable(GL_TEXTURE_2D);
@@ -1022,7 +1034,8 @@ void SFile::render(unsigned int stateId) {
             }/**/
             
             //QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].czesci[j].VAO);
-            f->glDrawArrays(GL_TRIANGLES, distancelevel[0].subobiekty[i].czesci[j].offset, distancelevel[0].subobiekty[i].czesci[j].iloscv);/**/
+            f->glDrawArrays(GL_TRIANGLES, distancelevel[currentDlevel].subobiekty[i].czesci[j].offset, distancelevel[currentDlevel].subobiekty[i].czesci[j].iloscv);/**/
+            gluu->enableTextures();
         }
     }
     //gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
@@ -1038,7 +1051,7 @@ void SFile::fillContentHierarchyInfo(QVector<ContentHierarchyInfo*>& list, int p
     info->name = nazwa;
     info->distanceLevelId = -1; // Default
     info->sfile = this;
-    info->type = "sfile";
+    info->type = "shape";
     list.push_back(info);
     parent = list.size()-1;
     
@@ -1048,47 +1061,76 @@ void SFile::fillContentHierarchyInfo(QVector<ContentHierarchyInfo*>& list, int p
         info->name = "Distance Level: " + QString::number(distancelevel[i].levelSelection) + " m";
         info->distanceLevelId = i;
         info->sfile = this;
-        info->type = "sfile";
+        info->type = "shape";
         list.push_back(info);
     }
 }
 
-void SFile::fillShapeHierarchyInfo(ShapeHierarchyInfo* info){
+void SFile::enablePart(unsigned int uid, unsigned int stateId){
+    if (isinit != 1 || loaded != 1)
+        return;
+    
+    int currentDlevel = state[stateId].distanceLevel;
+
+    unsigned int i = uid / 1000;
+    unsigned int j = uid - i*1000;
+    distancelevel[currentDlevel].subobiekty[i].czesci[j].enabled = true;
+}
+
+void SFile::disablePart(unsigned int uid, unsigned int stateId){
+    if (isinit != 1 || loaded != 1)
+        return;
+    
+    int currentDlevel = state[stateId].distanceLevel;
+
+    unsigned int i = uid / 1000;
+    unsigned int j = uid - i*1000;
+    distancelevel[currentDlevel].subobiekty[i].czesci[j].enabled = false;
+}
+
+void SFile::fillShapeHierarchyInfo(ShapeHierarchyInfo* info, unsigned int stateId){
     if(info == NULL)
         return;
     
     if (isinit != 1 || loaded != 1)
         return;
     
-    for(int i = 0; i < distancelevel[0].ilosch; i++){
-        info->hierarchy.push_back(distancelevel[0].hierarchia[i]);
-    }
+    int currentDlevel = state[stateId].distanceLevel;
     
+    for(int i = 0; i < distancelevel[currentDlevel].ilosch; i++){
+        info->hierarchy.push_back(distancelevel[currentDlevel].hierarchia[i]);
+    }
+
     for(int i = 0; i < iloscm; i++){
         info->matrices.push_back(macierz[i].name);
     }
-    
-    for (int i = 0; i < distancelevel[0].iloscs; i++) {
-        for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {
-            int prim_state = distancelevel[0].subobiekty[i].czesci[j].prim_state_idx;
+
+    for (int i = 0; i < distancelevel[currentDlevel].iloscs; i++) {
+        for (int j = 0; j < distancelevel[currentDlevel].subobiekty[i].iloscc; j++) {
+            int prim_state = distancelevel[currentDlevel].subobiekty[i].czesci[j].prim_state_idx;
             int vtx_state = primstate[prim_state].vtx_state;
             int matrix = vtxstate[vtx_state].matrix;
             
             info->parts.push_back(ShapeHierarchyInfo::ShapePart());
             info->parts.last().matrixId = matrix;
-            info->parts.last().textureName = image[texture[primstate[prim_state].arg4].image].name;
-            info->parts.last().polyCount = distancelevel[0].subobiekty[i].czesci[j].iloscv/3;
+            if(primstate[prim_state].arg4 >= 0)
+                info->parts.last().textureName = image[texture[primstate[prim_state].arg4].image].name;
+            info->parts.last().polyCount = distancelevel[currentDlevel].subobiekty[i].czesci[j].iloscv/3;
+            info->parts.last().uid = i*1000 + j;
+            info->parts.last().enabled = distancelevel[currentDlevel].subobiekty[i].czesci[j].enabled;
         }
     }
 }
 
-void SFile::fillShapeTextureInfo(QHash<int, ShapeTextureInfo*>& list){
+void SFile::fillShapeTextureInfo(QHash<int, ShapeTextureInfo*>& list, unsigned int stateId){
     if (isinit != 1 || loaded != 1)
         return;
-
-    for (int i = 0; i < distancelevel[0].iloscs; i++) {
-        for (int j = 0; j < distancelevel[0].subobiekty[i].iloscc; j++) {
-            int prim_state = distancelevel[0].subobiekty[i].czesci[j].prim_state_idx;
+    
+    int currentDlevel = state[stateId].distanceLevel;
+    
+    for (int i = 0; i < distancelevel[currentDlevel].iloscs; i++) {
+        for (int j = 0; j < distancelevel[currentDlevel].subobiekty[i].iloscc; j++) {
+            int prim_state = distancelevel[currentDlevel].subobiekty[i].czesci[j].prim_state_idx;
 
             if(primstate[prim_state].arg4 == -1){
                 continue;
@@ -1132,6 +1174,7 @@ void SFile::fillShapeTextureInfo(QHash<int, ShapeTextureInfo*>& list){
        
             tInfo->loaded = "YES";
             tInfo->resolution = QString::number(ttex->width) + "x" + QString::number(ttex->height);
+            tInfo->textureId = image[texture[primstate[prim_state].arg4].image].tex;
         }
     }
 }
@@ -1140,25 +1183,25 @@ void SFile::fillShapeTextureInfo(QHash<int, ShapeTextureInfo*>& list){
 /*======================================================
 ===== Przekształcenia takie tam
 =======================================================*/
-float* SFile::getPmatrix(float* pmatrix, int matrix) {
+float* SFile::getPmatrix(int currentDlevel, float* pmatrix, int matrix) {
     if (matrix == -1 || matrix == 0) {
         Mat4::identity(pmatrix);
         pmatrix[0] = -1;
         return pmatrix;
     } else {
-        pmatrix = getPmatrix(pmatrix, distancelevel[0].hierarchia[matrix]);
+        pmatrix = getPmatrix(currentDlevel, pmatrix, distancelevel[currentDlevel].hierarchia[matrix]);
     }
     Mat4::multiply(pmatrix, pmatrix, macierz[matrix].param);
     return pmatrix;
 }
 
-float* SFile::getPmatrixAnimated(float* pmatrix, int matrix, float frame){
+float* SFile::getPmatrixAnimated(int currentDlevel, float* pmatrix, int matrix, float frame){
     if (matrix == -1 || matrix == 0) {
         Mat4::identity(pmatrix);
         pmatrix[0] = -1;
         return pmatrix;
     } else {
-        pmatrix = getPmatrixAnimated(pmatrix, distancelevel[0].hierarchia[matrix], frame);
+        pmatrix = getPmatrixAnimated(currentDlevel, pmatrix, distancelevel[currentDlevel].hierarchia[matrix], frame);
     }
     float m[16];
     memcpy(m, macierz[matrix].param, sizeof (float) * 16);

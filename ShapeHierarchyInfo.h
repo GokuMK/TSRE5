@@ -19,6 +19,8 @@ public:
     struct ShapePart {
         int polyCount = 0;
         int matrixId = 0;
+        unsigned int uid = 0;
+        bool enabled = true;
         QString textureName;
         
         ShapePart();

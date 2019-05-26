@@ -60,9 +60,11 @@ public slots:
     void showEng(Eng *e);
     void showEngSet(int id);
     void showCon(int id);
+    void showConSimple(Consist *currentCon);
     void showConSimple(int id);
     void showCon(int aid, int id);
-    void showShape(QString path, QString texPath);
+    void showShape(QString path, QString texPath, SFile **currentSFile = NULL);
+    void showShape(SFile *currentSFile = NULL);
     void cleanup();
     void flipConSelected();
     void leftConSelected();

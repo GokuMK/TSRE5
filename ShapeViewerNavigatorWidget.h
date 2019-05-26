@@ -23,12 +23,24 @@ public:
     ShapeViewerNavigatorWidget(QWidget* parent);
     virtual ~ShapeViewerNavigatorWidget();
     void listDirectoryFiles(QString filepath);
+    void listFilteredFiles(QString query);
     void listHierarchy(QVector<ContentHierarchyInfo*> info);
-    
+
+public slots:
+    void fileItemsSelected(QTreeWidgetItem* item, int column);
+    void dirFilesSelected(QListWidgetItem* item);
+    void searchFilesEnabled(QString val);
+
+signals:
+    void contentHierarchySelected(int);
+    void dirFilesSelected(QString);
+
 private:
     QListWidget dirFiles;
     QLineEdit searchFiles;
     QTreeWidget fileItems;
+    QVector<QString> filenames;
+    QString dirPath;
 
 };
 

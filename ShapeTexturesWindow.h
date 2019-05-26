@@ -15,6 +15,9 @@
 #include <QtWidgets>
 
 class ShapeTextureInfo;
+class QPixmap;
+class ClickableLabel;
+class Texture;
 
 class ShapeTexturesWindow : public QWidget {
     Q_OBJECT
@@ -25,11 +28,19 @@ public:
     void setTextureList(QHash<int, ShapeTextureInfo*> textureInfoList);
     
 public slots:
+    void textureListChanged(QTreeWidgetItem* item, int id);
+    void textureListSelected(QTreeWidgetItem* item, int id);
+    void saveImg();
 
 signals:
     
 private:
     QTreeWidget textureList;
+    
+    ClickableLabel* texPreviewLabel;
+    QPixmap* texPreview;
+    Texture* currentTex = NULL;
+    //QHash<int, ShapeTextureInfo*> textures = NULL;
 };
 
 #endif	/* SHAPETEXTURESWINDOW_H */
