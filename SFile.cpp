@@ -904,8 +904,11 @@ void SFile::updateSim(float deltaTime, unsigned int stateId){
         }
     }
 }
+void SFile::render() {
+    render(0,0);
+}
 
-void SFile::render(unsigned int stateId) {
+void SFile::render(int selectionColor, unsigned int stateId) {
 
     if (isinit != 1 || loaded == 2)
         return;
@@ -936,7 +939,7 @@ void SFile::render(unsigned int stateId) {
     //for(int iii = 0; iii < 200; iii++)
     //float talpha = gluu->alpha;
     //float talphatest = gluu->alphaTest;
-
+    
     int currentDlevel = state[stateId].distanceLevel;
     for (int i = 0; i < distancelevel[currentDlevel].iloscs; i++) {
         QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[currentDlevel].subobiekty[i].VAO);
@@ -996,7 +999,8 @@ void SFile::render(unsigned int stateId) {
             */
             //if(gluu->textureEnabled)
             if(primstate[prim_state].arg4 == -1 || !texEnabled || TexLib::disabledTextures[image[texture[primstate[prim_state].arg4].image].texAddr] == 1){
-                gluu->disableTextures(1.0, 0.0, 1.0, 1.0);
+                if(selectionColor == 0)
+                    gluu->disableTextures(1.0, 0.0, 1.0, 1.0);
                 //glDisable(GL_TEXTURE_2D);
             } else if (image[texture[primstate[prim_state].arg4].image].texAddr >= 0) {
                 //glEnable(GL_TEXTURE_2D);
@@ -1035,7 +1039,9 @@ void SFile::render(unsigned int stateId) {
             
             //QOpenGLVertexArrayObject::Binder vaoBinder(&distancelevel[0].subobiekty[i].czesci[j].VAO);
             f->glDrawArrays(GL_TRIANGLES, distancelevel[currentDlevel].subobiekty[i].czesci[j].offset, distancelevel[currentDlevel].subobiekty[i].czesci[j].iloscv);/**/
-            gluu->enableTextures();
+            
+            if(selectionColor == 0)
+                gluu->enableTextures();
         }
     }
     //gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlphaTest, gluu->alphaTest);
