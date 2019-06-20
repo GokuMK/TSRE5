@@ -215,7 +215,10 @@ void MapWindow::saveToDisk(){
     if (!QDir(path).exists()) {
         QDir().mkdir(path);
     }
-    MapWindow::mapTileImages[hash]->save(path+QString::number(hash)+".png", "PNG");
+    unsigned long long int timeNow = QDateTime::currentMSecsSinceEpoch();
+    int compressionQuality = 80;
+    MapWindow::mapTileImages[hash]->save(path+QString::number(hash)+".png", "PNG", compressionQuality);
+    qDebug() << "#save time "<< ((float)(QDateTime::currentMSecsSinceEpoch() - timeNow))/1000.0;
 }
 
 bool MapWindow::LoadMapFromDisk(int x, int z){
