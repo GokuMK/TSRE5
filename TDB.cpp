@@ -1931,14 +1931,15 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
         isInitSectLines = true;
 
         int len = 0;
-
+        int tileRadius = 1;
+        //int tileRadius = 5;
         for (int j = 1; j <= iTRnodes; j++) {
             TRnode* n = trackNodes[j];
             if (n == NULL) continue;
             if (n->typ == -1) continue;
             if (n->typ == 1) {
                 for (int i = 0; i < n->iTrv; i++) {
-                    if (fabs(n->trVectorSection[i].param[8] - playerT[0]) > 1 || fabs(-n->trVectorSection[i].param[9] - playerT[1]) > 1) continue;
+                    if (fabs(n->trVectorSection[i].param[8] - playerT[0]) > tileRadius || fabs(-n->trVectorSection[i].param[9] - playerT[1]) > tileRadius) continue;
                     //p.set(
                     //        (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10],
                     //        n->trVectorSection[i].param[11],
@@ -1959,7 +1960,8 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
             if (n->typ == 1) {
                 //qDebug() << j;
                 for (int i = 0; i < n->iTrv; i++) {
-                    if (fabs(n->trVectorSection[i].param[8] - playerT[0]) > 1 || fabs(-n->trVectorSection[i].param[9] - playerT[1]) > 1) continue;
+                    if (fabs(n->trVectorSection[i].param[8] - playerT[0]) > tileRadius || fabs(-n->trVectorSection[i].param[9] - playerT[1]) > tileRadius) 
+                        continue;
                     p.set(
                             (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10],
                             n->trVectorSection[i].param[11],
