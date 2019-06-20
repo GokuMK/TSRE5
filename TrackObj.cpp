@@ -313,7 +313,7 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
     }
     
     if(!Game::proceduralTracks || roadShape || templateDisabled ) {
-        Game::currentShapeLib->shape[shape]->render();
+        Game::currentShapeLib->shape[shape]->render(selectionColor, 0);
     } else {
         if (!proceduralShapeInit) {
             if(templateName == "DISABLED"){

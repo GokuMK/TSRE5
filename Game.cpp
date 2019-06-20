@@ -791,7 +791,6 @@ void Game::DownloadAppData(QString path){
     
     // Create bat file for Consist Editor.
     QString conBatFile = QFileInfo(QCoreApplication::applicationFilePath()).fileName()+" --conedit";
-    
     QFile file1("./ConsistEditor.bat");
     file1.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out;
@@ -799,4 +798,13 @@ void Game::DownloadAppData(QString path){
     out << conBatFile;
     out.flush();
     file1.close();
+    
+    // Create bat file for Shape Viewer.
+    conBatFile = QFileInfo(QCoreApplication::applicationFilePath()).fileName()+" --shapeview";
+    QFile file2("./ShapeViewer.bat");
+    file2.open(QIODevice::WriteOnly | QIODevice::Text);
+    out.setDevice(&file2);
+    out << conBatFile;
+    out.flush();
+    file2.close();
 }

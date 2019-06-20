@@ -716,14 +716,14 @@ void Eng::render(int aktwx, int aktwz, int selectionColor) {
      gl.glColor3f(1.0f, 1.0f, 1.0f);  */
      //gluu.mvPushMatrix();
     if(shape.id[shapeLibId] >= 0) 
-        Game::currentShapeLib->shape[shape.id[shapeLibId]]->render();
+        Game::currentShapeLib->shape[shape.id[shapeLibId]]->render(selectionColor, 0);
 
     for(int i = 0; i < freightanimShape.size(); i++){
         if(freightanimShape[i].id[shapeLibId] >= 0) {
             gluu->mvPushMatrix();
             Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, freightanimShape[i].x, freightanimShape[i].y, -freightanimShape[i].z);
             gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-            Game::currentShapeLib->shape[freightanimShape[i].id[shapeLibId]]->render();
+            Game::currentShapeLib->shape[freightanimShape[i].id[shapeLibId]]->render(selectionColor, 0);
             gluu->mvPopMatrix();
         }
     }
@@ -893,7 +893,7 @@ void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
 
     if(shape.id[shapeLibId] >= 0) 
-        Game::currentShapeLib->shape[shape.id[shapeLibId]]->render();
+        Game::currentShapeLib->shape[shape.id[shapeLibId]]->render(selectionColor, 0);
     
     
     for(int i = 0; i < freightanimShape.size(); i++){
@@ -901,7 +901,7 @@ void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
             gluu->mvPushMatrix();
             Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, freightanimShape[i].x, freightanimShape[i].y, -freightanimShape[i].z);
             gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-            Game::currentShapeLib->shape[freightanimShape[i].id[shapeLibId]]->render();
+            Game::currentShapeLib->shape[freightanimShape[i].id[shapeLibId]]->render(selectionColor, 0);
             gluu->mvPopMatrix();
         }
     }

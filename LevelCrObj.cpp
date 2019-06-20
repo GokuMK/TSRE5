@@ -275,7 +275,7 @@ void LevelCrObj::render(GLUU* gluu, float lod, float posx, float posz, float* po
         gluu->enableTextures();
     }
         
-    Game::currentShapeLib->shape[shape]->render();
+    Game::currentShapeLib->shape[shape]->render(selectionColor, 0);
     
     if(selected){
         drawBox();

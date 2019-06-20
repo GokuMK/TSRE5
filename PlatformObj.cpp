@@ -499,7 +499,8 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     gluu->mvPushMatrix();
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[0] + 0 * (drawPositionB[4] - this->x), drawPositionB[1] + 1, -drawPositionB[2] + 0 * (-drawPositionB[5] - this->y));
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    line->render();
+    if(selectionColor == 0)
+        line->render();
     gluu->mvPopMatrix();
 };
 

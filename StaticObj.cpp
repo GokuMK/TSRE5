@@ -165,7 +165,7 @@ void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
     }
     
     if(shapePointer != NULL)
-        shapePointer->render(shapeState);
+        shapePointer->render(selectionColor, shapeState);
     //Game::currentShapeLib->shape[shape]->render(isAnimated());
     
     if(selected){

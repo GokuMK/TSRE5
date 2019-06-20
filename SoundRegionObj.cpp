@@ -345,7 +345,8 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
     }
 
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    drawLine->render();
+    if(selectionColor == 0)
+        drawLine->render();
     int useSC;
 
     for(int i = 0; i < drawPositions.size(); i++){

@@ -203,7 +203,8 @@ public:
     void enablePart(unsigned int uid, unsigned int stateId = 0);
     void disablePart(unsigned int uid, unsigned int stateId = 0);
     void updateSim(float deltaTime, unsigned int stateId = 0);
-    void render(unsigned int stateId = 0);
+    void render();
+    void render(int selectionColor, unsigned int stateId);
     void getSize();
     bool getBoxPoints(QVector<float> &points);
     void getFloorBorderLinePoints(float *&punkty);

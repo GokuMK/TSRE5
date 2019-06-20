@@ -625,7 +625,7 @@ void SpeedpostObj::render(GLUU* gluu, float lod, float posx, float posz, float* 
         gluu->enableTextures();
     }
         
-    Game::currentShapeLib->shape[shape]->render();
+    Game::currentShapeLib->shape[shape]->render(selectionColor, 0);
     
     if(selected){
         drawBox();
@@ -717,7 +717,8 @@ void SpeedpostObj::renderTritems(GLUU* gluu, int selectionColor){
     //int aaa = drawPosition[0];
     //if(pos == NULL) return;
     gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-    drawLine->render();
+    if(selectionColor == 0)
+        drawLine->render();
     int useSC;
     
     for(int i = 0; i < drawPositions.size(); i++){

@@ -546,7 +546,7 @@ void SignalObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos
         gluu->enableTextures();
     }
     if(shapePointer != NULL)
-        shapePointer->render(shapeState);
+        shapePointer->render(selectionColor, shapeState);
     //Game::currentShapeLib->shape[shape]->render(false, signalSubObj);
     
     if(selected){
