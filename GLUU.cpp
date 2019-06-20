@@ -199,10 +199,20 @@ void GLUU::disableTextures(int color){
 
 void GLUU::disableTextures(float x, float y, float z, float a){
     currentShader->setUniformValue(currentShader->shaderShapeColor, x, y, z, a);
-    if(!this->textureEnabled) return;
+    if(!this->textureEnabled) 
+        return;
     this->textureEnabled = false;
     currentShader->setUniformValue(currentShader->shaderTextureEnabled, 0.0f);
 }
+
+/*bool GLUU::disableTexturesOptional(float x, float y, float z, float a){
+    if(!this->textureEnabled) 
+        return false;
+    currentShader->setUniformValue(currentShader->shaderShapeColor, x, y, z, a);
+    this->textureEnabled = false;
+    currentShader->setUniformValue(currentShader->shaderTextureEnabled, 0.0f);
+    return true;
+}*/
 
 void GLUU::enableTextures(){
     if(this->textureEnabled) 
