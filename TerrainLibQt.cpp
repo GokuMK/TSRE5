@@ -61,7 +61,7 @@ Terrain* TerrainLibQt::getTerrainByXY(int x, int y, bool load) {
     if (load) {
         (*currentQt)[terrainNameId] = new TerrainInfo();
         currentQuadTree->fillTerrainInfo(x, -y, (*currentQt)[terrainNameId]);
-        qDebug() << terrainNameId;
+        //qDebug() << terrainNameId;
         (*currentQt)[terrainNameId]->t = new Terrain((*currentQt)[terrainNameId]);
         return (*currentQt)[terrainNameId]->t;
     }

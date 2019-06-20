@@ -1890,7 +1890,7 @@ void Terrain::vertexInit() {
     for (int i = 0; i < samples+1; i++)
         vertexData[i] = new Vector3f[samples+1];
 
-    qDebug() << "min" << sampleSize << samples;
+    //qDebug() << "min" << sampleSize << samples;
     for (int j = 0, jj = 0; jj < samples; j += sampleSize, jj++) {
         for (int i = 0, ii = 0; ii < samples; i += sampleSize, ii++) {
             vertexData[jj][ii].set(j, terrainData[ii][jj], i);

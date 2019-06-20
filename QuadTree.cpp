@@ -288,7 +288,7 @@ bool QuadTree::QuadTile::fillTerrainInfo(int tileX, int tileY, TerrainInfo* info
         info->cx = x + level*px;//  level/2;
         info->cy = y + level*py;// + level/2;
         info->level = level;
-        qDebug() << "info" << tileX << tileY << info->cx << info->cy << info->level << pow;
+        //qDebug() << "info" << tileX << tileY << info->cx << info->cy << info->level << pow;
         return true;
     }// else if (tile[px][py] != NULL) {
     //        tile[px][py]->fillTerrainInfo(tileX, tileY, info);
