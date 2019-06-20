@@ -700,6 +700,7 @@ void RouteEditorGLWidget::keyPressEvent(QKeyEvent * event) {
             msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
             msgBox.setDefaultButton(QMessageBox::Yes);
             if (msgBox.exec() == QMessageBox::Yes){
+                // New Tile != New Terrain. Need fix for distant terrain!
                 int out = 0;
                 out = route->newTile((int) camera->pozT[0], (int) camera->pozT[1]);
                 if(out == 1){
