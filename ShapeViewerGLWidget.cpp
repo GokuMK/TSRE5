@@ -550,7 +550,8 @@ void ShapeViewerGLWidget::showShape(QString path, QString texPath, SFile **curre
         sFile = NULL;
     } else {
         sFile = currentShapeLib->shape[shapeId];
-        *currentSFile = sFile;
+        if(currentSFile != NULL)
+            *currentSFile = sFile;
         cameraInit = true;
     }
     renderItem = 4;
