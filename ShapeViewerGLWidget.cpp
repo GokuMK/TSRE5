@@ -450,23 +450,31 @@ void ShapeViewerGLWidget::showEngSet(int id){
 }
 
 void ShapeViewerGLWidget::flipConSelected(){
-    if(con != NULL)
+    if(con != NULL){
         con->flipSelected();
+        emit refreshItem();
+    }
 }
 
 void ShapeViewerGLWidget::leftConSelected(){
-    if(con != NULL)
+    if(con != NULL){
         con->moveLeftSelected();
+        emit refreshItem();
+    }
 }
 
 void ShapeViewerGLWidget::rightConSelected(){
-    if(con != NULL)
+    if(con != NULL){
         con->moveRightSelected();
+        emit refreshItem();
+    }
 }
 
 void ShapeViewerGLWidget::deleteConSelected(){
-    if(con != NULL)
+    if(con != NULL){
         con->deteleSelected();
+        emit refreshItem();
+    }
 }
 
 void ShapeViewerGLWidget::copyUnitConSelected(){
@@ -487,6 +495,8 @@ void ShapeViewerGLWidget::pasteUnitConSelected(){
         return;
     int val = args[1].toInt();
     con->appendEngItem(val, 1, false);
+    
+    emit refreshItem();
 }
 
 void ShapeViewerGLWidget::showCon(int id){
