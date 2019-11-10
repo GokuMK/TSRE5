@@ -988,7 +988,7 @@ void TerrainLibQt::renderWater(GLUU* gluu, float* playerT, float* playerW, float
     int selectionColor = 0;
     int i = 0, j = 0;
     QHash<QString, bool> rendered;
-    for (int n = -1; n < (Game::tileLod * 2 + 1)*(Game::tileLod * 2 + 1); n++) {
+    for (int n = -1; n < (Game::tileLod * 2 + 1)*(Game::tileLod * 2 + 1) - 1; n++) {
         if (n != -1)
             spiralLoop(n, i, j);
 
@@ -1082,7 +1082,7 @@ void TerrainLibQt::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, 
     Terrain *tTile;
     int i = 0, j = 0;
     QHash<QString, bool> rendered;
-    for (int n = -1; n < 9; n++) {
+    for (int n = -1; n < 9 - 1; n++) {
         if (n != -1)
             spiralLoop(n, i, j);
 
@@ -1109,7 +1109,7 @@ void TerrainLibQt::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, 
 
 void TerrainLibQt::renderEmpty(GLUU *gluu, float * playerT, float* playerW, float* target, float fov) {
     int i = 0, j = 0;
-    for (int n = -1; n < 9; n++) {
+    for (int n = -1; n < 9 - 1; n++) {
         if (n != -1)
             spiralLoop(n, i, j);
         getTerrainByXY((int) playerT[0] + i, (int) playerT[1] + j, true);
@@ -1128,7 +1128,7 @@ void TerrainLibQt::render(GLUU *gluu, float * playerT, float* playerW, float* ta
     int selectionColor = 0;
     QHash<QString, bool> rendered;
     
-    for (int n = -1, i = 0, j = 0; n < renderCount; n++) {
+    for (int n = -1, i = 0, j = 0; n < renderCount - 1; n++) {
         if (n != -1)
             spiralLoop(n, i, j);
 
