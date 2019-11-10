@@ -152,7 +152,7 @@ void SignalWindow::showObj(SignalObj* obj) {
     }
 
     TDB* tdb = Game::trackDB;
-    SignalShape* signalShape = tdb->sigCfg->signalShape[sobj->fileName.toStdString()];
+    SignalShape* signalShape = tdb->sigCfg->signalShape[sobj->fileName];
 
     int iSubObj = signalShape->iSubObj;
     if (iSubObj > maxSubObj) iSubObj = maxSubObj;
@@ -205,7 +205,7 @@ void SignalWindow::updateObj(SignalObj* obj) {
         return;
     
     TDB* tdb = Game::trackDB;
-    SignalShape* signalShape = tdb->sigCfg->signalShape[sobj->fileName.toStdString()];
+    SignalShape* signalShape = tdb->sigCfg->signalShape[sobj->fileName];
     int iSubObj = signalShape->iSubObj;
     if (iSubObj > maxSubObj) iSubObj = maxSubObj;
     int linkPtr;
