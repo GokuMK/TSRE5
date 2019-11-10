@@ -721,7 +721,7 @@ void Eng::render(int aktwx, int aktwz, int selectionColor) {
     for(int i = 0; i < freightanimShape.size(); i++){
         if(freightanimShape[i].id[shapeLibId] >= 0) {
             gluu->mvPushMatrix();
-            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, freightanimShape[i].x, freightanimShape[i].y, -freightanimShape[i].z);
+            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, -freightanimShape[i].x, freightanimShape[i].y, -freightanimShape[i].z);
             gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
             Game::currentShapeLib->shape[freightanimShape[i].id[shapeLibId]]->render(selectionColor, 0);
             gluu->mvPopMatrix();

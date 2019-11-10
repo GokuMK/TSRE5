@@ -17,6 +17,7 @@
 #include <QFile>
 #include <QDir>
 #include "Game.h"
+#include <QProgressDialog>
 
 int ActLib::jestact = 0;
 int ActLib::jestservice = 0;
@@ -216,12 +217,15 @@ int ActLib::AddPath(QString path, QString name) {
     return jestpath++;
 }
 
-int ActLib::LoadAllAct(QString gameRoot){
+int ActLib::LoadAllAct(QString gameRoot, bool gui){
     QString path;
     path = gameRoot + "/routes";
     QDir dir(path);
     qDebug() << path;
     dir.setFilter(QDir::Dirs);
+    
+    QStringList dirPaths;
+    QStringList actPaths;
     
     foreach(QString dirFile, dir.entryList()){
         if(dirFile == "." || dirFile == "..")   
@@ -235,10 +239,28 @@ int ActLib::LoadAllAct(QString gameRoot){
         aDir.setFilter(QDir::Files);
         aDir.setNameFilters(QStringList()<<"*.act");
         foreach(QString actfile, aDir.entryList()){
-            ActLib::AddAct(path+"/"+dirFile, actfile);
+            //ActLib::AddAct(path+"/"+dirFile, actfile);
+            dirPaths.push_back(path+"/"+dirFile);
+            actPaths.push_back(actfile);
         }
     }
+    
+    QProgressDialog* progress = NULL;
+    if(gui){
+        progress = new QProgressDialog("Loading ACTIVITIES...", "", 0, dirPaths.size());
+        progress->setWindowModality(Qt::WindowModal);
+        progress->setCancelButton(NULL);
+        progress->setWindowFlags(Qt::CustomizeWindowHint);
+    }
+    for(int i = 0; i < dirPaths.size(); i++){
+        //qDebug() << path << dirFile <<"/"<< engfile;
+        ActLib::AddAct(dirPaths[i],actPaths[i]);
+        if(progress != NULL)
+            progress->setValue(i+1);
+    }
+    
     qDebug() << "loaded";
+    delete progress;
     return 0;
 }
 

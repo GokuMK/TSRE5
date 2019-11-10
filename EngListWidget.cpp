@@ -119,6 +119,9 @@ void EngListWidget::fillEngList(QString engFilter, QString couplingFilter, QStri
         new QListWidgetItem ( e->displayName, &items, i);
     }
     items.sortItems(Qt::AscendingOrder);
+    
+    if(items.count() < Game::currentEngLib->jesteng)
+    totalVal.setText(QString::number(items.count()) + " / " + QString::number(Game::currentEngLib->jesteng));
 }
 
 void EngListWidget::itemsSelected(){

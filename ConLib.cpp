@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QDir>
+#include <QProgressDialog>
 
 int ConLib::jestcon = 0;
 std::unordered_map<int, Consist*> ConLib::con;
@@ -52,7 +53,7 @@ int ConLib::refreshEngDataAll(){
     }
 }
 
-int ConLib::loadAll(QString gameRoot){
+int ConLib::loadAll(QString gameRoot, bool gui){
     QString path;
     path = gameRoot + "/trains/consists/";
     QDir dir(path);
@@ -63,9 +64,22 @@ int ConLib::loadAll(QString gameRoot){
     if(!dir.exists())
         qDebug() << "not exist";
     qDebug() << dir.count() <<" con files";
-    foreach(QString engfile, dir.entryList())
+    
+    QProgressDialog *progress = NULL;
+    if(gui){
+        progress = new QProgressDialog("Loading CONSISTS...", "", 0, dir.count());
+        progress->setWindowModality(Qt::WindowModal);
+        progress->setCancelButton(NULL);
+        progress->setWindowFlags(Qt::CustomizeWindowHint);
+    }
+    int i = 0;
+    foreach(QString engfile, dir.entryList()){
         ConLib::addCon(path,engfile);
+        if(progress != NULL)
+            progress->setValue(++i);
+    }
     qDebug() << "loaded";
+    delete progress;
     return 0;
 }
 

@@ -13,6 +13,8 @@
 #include <QDebug>
 #include <QFile>
 #include <QDir>
+#include <QDateTime>
+#include <QProgressDialog>
 
 //int EngLib::jesteng = 0;
 //std::unordered_map<int, Eng*> EngLib::eng;
@@ -76,7 +78,7 @@ int EngLib::getEngByPathid(QString pathid) {
     return -1;
 }
 
-int EngLib::loadAll(QString gameRoot){
+int EngLib::loadAll(QString gameRoot, bool gui){
     QString path;
     path = gameRoot + "/trains/trainset/";
     QDir dir(path);
@@ -88,14 +90,34 @@ int EngLib::loadAll(QString gameRoot){
         qDebug() << "not exist";
     dir.setFilter(QDir::Dirs);
     qDebug() << dir.count() <<" dirs";
+    unsigned long long timeNow = QDateTime::currentMSecsSinceEpoch();
+    QStringList dirPaths;
+    QStringList engPaths;
     foreach(QString dirFile, dir.entryList()){
         //qDebug() << dirFile;
         trainDir.setPath(path+dirFile);
         foreach(QString engfile, trainDir.entryList()){
-            qDebug() << path << dirFile <<"/"<< engfile;
-            addEng(path+dirFile,engfile);
+            //qDebug() << path << dirFile <<"/"<< engfile;
+            //addEng(path+dirFile,engfile);
+            dirPaths.push_back(path+dirFile);
+            engPaths.push_back(engfile);
         }
     }
-    qDebug() << "loaded";
+    
+    QProgressDialog *progress = NULL;
+    if(gui){
+        progress = new QProgressDialog("Loading TRAINS...", "", 0, dirPaths.size());
+        progress->setWindowModality(Qt::WindowModal);
+        progress->setCancelButton(NULL);
+        progress->setWindowFlags(Qt::CustomizeWindowHint);
+    }
+    for(int i = 0; i < dirPaths.size(); i++){
+        //qDebug() << path << dirFile <<"/"<< engfile;
+        addEng(dirPaths[i],engPaths[i]);
+        if(progress != NULL)
+            progress->setValue(i+1);
+    }
+    qDebug() << "loaded" << (QDateTime::currentMSecsSinceEpoch() - timeNow)/1000<< "s";
+    delete progress;
     return 0;
 }

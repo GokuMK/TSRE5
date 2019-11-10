@@ -39,10 +39,10 @@ ConEditorWindow::ConEditorWindow() : QMainWindow() {
     Vec3::set((float*)Game::sunLightDirection,-1.0,0.0,0.0);
     aboutWindow = new AboutWindow(this);
     englib = new EngLib();
-    englib->loadAll(Game::root);
+    englib->loadAll(Game::root, true);
     Game::currentEngLib = englib;
-    ConLib::loadAll(Game::root);
-    ActLib::LoadAllAct(Game::root);
+    ConLib::loadAll(Game::root, true);
+    ActLib::LoadAllAct(Game::root, true);
     randomConsist = new RandomConsist(this);
     glShapeWidget = new ShapeViewerGLWidget(this);
     if(Game::colorShapeView != NULL)
