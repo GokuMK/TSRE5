@@ -40,8 +40,12 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("speed_resume_sign_shape")) {
-        this->speedResumeSignShapeName = ParserX::GetString(data);
         bool ok = false;
+        this->speedResumeSignShapeName = ParserX::GetStringInside(data);
+        if(this->speedResumeSignShapeName == ""){
+            this->speedResumeSignShape = 0;
+            return;
+        }
         this->speedResumeSignShapeCount = ParserX::GetNumberInside(data, &ok);
         if(!ok){
             this->speedResumeSignShape = 0;
@@ -58,8 +62,12 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("speed_warning_sign_shape")) {
-        this->speedWarningSignShapeName = ParserX::GetString(data);
         bool ok = false;
+        this->speedWarningSignShapeName = ParserX::GetStringInside(data);
+        if(this->speedWarningSignShapeName == ""){
+            this->speedWarningSignShape = 0;
+            return;
+        }
         this->speedWarningSignShapeCount = ParserX::GetNumberInside(data, &ok);
         if(!ok){
             this->speedWarningSignShape = 0;
@@ -76,8 +84,12 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("speed_sign_shape")) {
-        this->speedSignShapeName = ParserX::GetString(data);
         bool ok = false;
+        this->speedSignShapeName = ParserX::GetStringInside(data);
+        if(this->speedSignShapeName == ""){
+            this->speedSignShape = 0;
+            return;
+        }
         this->speedSignShapeCount = ParserX::GetNumberInside(data, &ok);
         if(!ok){
             this->speedSignShape = 0;
@@ -93,8 +105,12 @@ void SpeedPost::set(QString sh, FileBuffer* data) {
         return;
     }
     if (sh == ("milepost_shape")) {
-        this->milepostShapeName = ParserX::GetString(data);
         bool ok = false;
+        this->milepostShapeName = ParserX::GetStringInside(data);
+        if(this->milepostShapeName == ""){
+            this->milepostShapeCount = 0;
+            return;
+        }
         this->milepostShapeCount = ParserX::GetNumberInside(data, &ok);
         if(!ok){
             this->milepostShapeCount = 0;
