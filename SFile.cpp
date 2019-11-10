@@ -134,9 +134,13 @@ void SFile::load() {
                     loaded = 1;
                     break;
                 case 29:
-                    int pozycja1,offset1,akto1;
-                    data->off++;
-                    data->off+=4;
+                    int pozycja1,offset1,akto1,some_val;
+                    //some_val = data->getInt();
+                    data->off+=5; // maybe read animation number instead?
+                    //qDebug() << some_val;
+                    //qDebug() << data->off << akto + offset;
+                    //some_val = data->off+=4;
+                    if(data->off >= akto + offset) break;
                     for (;;) {
                         pozycja1 = data->getInt();
                         offset1 = data->getInt();
