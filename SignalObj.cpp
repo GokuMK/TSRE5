@@ -71,7 +71,7 @@ void SignalObj::load(int x, int y) {
     this->size = -1;
     this->skipLevel = 1;
     this->modified = false;
-    this->signalShape = Game::trackDB->sigCfg->signalShape[fileName.toStdString()];
+    this->signalShape = Game::trackDB->sigCfg->signalShape[fileName];
     setMartix();
     
     if(shapePointer != NULL && signalShape != NULL){
@@ -592,7 +592,7 @@ void SignalObj::renderTritems(GLUU* gluu, int selectionColor){
             drawPositions[i] = new float[8];
             bool ok = tdb->getDrawPositionOnTrNode(drawPositions[i], id, tdb->trackItems[this->signalUnit[i].itemId]->getTrackPosition());
             if(!ok){
-                qDebug() << "signal fail tdb";
+                qDebug() << "signal fail tdb" << this->signalUnit[i].itemId ;
                 this->trLoaded = -1;
                 return;
             }

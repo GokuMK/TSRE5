@@ -63,6 +63,7 @@ public:
     void saveTit();
     void loadTdb();
     void loadTit();
+    void checkTrSignalRDirs();
     int getNewTRitemId();
     static void saveEmpty(bool road);
     void fillTrackAngles(int x, int z, int UiD, QMap<int, float>& angles);

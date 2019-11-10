@@ -12,16 +12,20 @@
 #define	SIGCFG_H
 
 #include <QString>
-#include <unordered_map>
+#include <QHash>
 
 class SignalShape;
 class SignalType;
+//class SignalLightTexture;
+//class SignalLightDefinition;
 
 class SigCfg {
 public:
-    std::unordered_map<std::string, SignalShape*> signalShape;
-    std::unordered_map<int, SignalShape*> signalShapeById;
-    std::unordered_map<std::string, SignalType*> signalType;
+    //QHash<QString, SignalLightTexture*> lightTextures;
+    //QHash<QString, SignalLightDefinition*> lights;
+    QHash<QString, SignalShape*> signalShape;
+    QHash<int, SignalShape*> signalShapeById;
+    QHash<QString, SignalType*> signalType;
     SigCfg();
     virtual ~SigCfg();
 private:

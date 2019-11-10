@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="95">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -32,7 +32,7 @@
         <itemPath>ParserX.h</itemPath>
         <itemPath>ReadFile.h</itemPath>
         <itemPath>TS.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.h</itemPath>
+        <itemPath>TarFile.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f14" displayName="GEO" projectFiles="true">
         <itemPath>GeoCoordinates.h</itemPath>
@@ -45,7 +45,7 @@
         <itemPath>MapDataUrlImage.h</itemPath>
         <itemPath>MapWindow.h</itemPath>
         <itemPath>OSMFeatures.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h</itemPath>
+        <itemPath>UriImageDrawThread.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
         <itemPath>ChooseFileDialog.h</itemPath>
@@ -55,8 +55,8 @@
         <itemPath>UnsavedDialog.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f18" displayName="HUD" projectFiles="true">
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h</itemPath>
+        <itemPath>GuiGlCompass.h</itemPath>
+        <itemPath>SimpleHud.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f6" displayName="math3d" projectFiles="true">
         <itemPath>Flex.h</itemPath>
@@ -78,12 +78,12 @@
         <itemPath>TrackItemObj.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="ProceduralShapes" projectFiles="true">
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h</itemPath>
+        <itemPath>ComplexLine.h</itemPath>
+        <itemPath>GlobalDefinitions.h</itemPath>
         <itemPath>ObjFile.h</itemPath>
         <itemPath>ProceduralMstsDyntrack.h</itemPath>
         <itemPath>ProceduralShape.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h</itemPath>
+        <itemPath>ShapeTemplates.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f2" displayName="activity" projectFiles="true">
@@ -152,24 +152,24 @@
         <itemPath>ShapeLib.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f13" displayName="shapeViewer" projectFiles="true">
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.h</itemPath>
+        <itemPath>ConInfoWidget.h</itemPath>
+        <itemPath>ContentHierarchyInfo.h</itemPath>
+        <itemPath>EngInfoWidget.h</itemPath>
+        <itemPath>ShapeHierarchyInfo.h</itemPath>
+        <itemPath>ShapeHierarchyWindow.h</itemPath>
+        <itemPath>ShapeInfoWidget.h</itemPath>
+        <itemPath>ShapeTextureInfo.h</itemPath>
+        <itemPath>ShapeTexturesWindow.h</itemPath>
         <itemPath>ShapeViewerGLWidget.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.h</itemPath>
+        <itemPath>ShapeViewerNavigatorWidget.h</itemPath>
+        <itemPath>ShapeViewerWindow.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f17" displayName="sound" projectFiles="true">
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h</itemPath>
+        <itemPath>MstsSoundDefinition.h</itemPath>
+        <itemPath>SoundLib.h</itemPath>
         <itemPath>SoundManager.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h</itemPath>
+        <itemPath>SoundSource.h</itemPath>
+        <itemPath>SoundVariables.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f8" displayName="TDB" projectFiles="true">
         <itemPath>Ruch.h</itemPath>
@@ -235,7 +235,7 @@
         <itemPath>QuadTree.h</itemPath>
         <itemPath>Ref.h</itemPath>
         <itemPath>Route.h</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h</itemPath>
+        <itemPath>Skydome.h</itemPath>
         <itemPath>SoundList.h</itemPath>
         <itemPath>TFile.h</itemPath>
         <itemPath>Terrain.h</itemPath>
@@ -285,7 +285,7 @@
         <itemPath>ParserX.cpp</itemPath>
         <itemPath>ReadFile.cpp</itemPath>
         <itemPath>TS.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.cpp</itemPath>
+        <itemPath>TarFile.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f12" displayName="GEO" projectFiles="true">
         <itemPath>GeoCoordinates.cpp</itemPath>
@@ -298,7 +298,7 @@
         <itemPath>MapDataUrlImage.cpp</itemPath>
         <itemPath>MapWindow.cpp</itemPath>
         <itemPath>OSMFeatures.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp</itemPath>
+        <itemPath>UriImageDrawThread.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
         <itemPath>ChooseFileDialog.cpp</itemPath>
@@ -308,8 +308,8 @@
         <itemPath>UnsavedDialog.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f18" displayName="HUD" projectFiles="true">
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp</itemPath>
+        <itemPath>GuiGlCompass.cpp</itemPath>
+        <itemPath>SimpleHud.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="math3d" projectFiles="true">
         <itemPath>Flex.cpp</itemPath>
@@ -331,12 +331,12 @@
         <itemPath>TrackItemObj.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f11" displayName="ProceduralShapes" projectFiles="true">
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp</itemPath>
+        <itemPath>ComplexLine.cpp</itemPath>
+        <itemPath>GlobalDefinitions.cpp</itemPath>
         <itemPath>ObjFile.cpp</itemPath>
         <itemPath>ProceduralMstsDyntrack.cpp</itemPath>
         <itemPath>ProceduralShape.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp</itemPath>
+        <itemPath>ShapeTemplates.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f2" displayName="activity" projectFiles="true">
@@ -405,24 +405,24 @@
         <itemPath>ShapeLib.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f14" displayName="shapeViewer" projectFiles="true">
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.cpp</itemPath>
+        <itemPath>ConInfoWidget.cpp</itemPath>
+        <itemPath>ContentHierarchyInfo.cpp</itemPath>
+        <itemPath>EngInfoWidget.cpp</itemPath>
+        <itemPath>ShapeHierarchyInfo.cpp</itemPath>
+        <itemPath>ShapeHierarchyWindow.cpp</itemPath>
+        <itemPath>ShapeInfoWidget.cpp</itemPath>
+        <itemPath>ShapeTextureInfo.cpp</itemPath>
+        <itemPath>ShapeTexturesWindow.cpp</itemPath>
         <itemPath>ShapeViewerGLWidget.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp</itemPath>
+        <itemPath>ShapeViewerNavigatorWidget.cpp</itemPath>
+        <itemPath>ShapeViewerWindow.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f17" displayName="sound" projectFiles="true">
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp</itemPath>
+        <itemPath>MstsSoundDefinition.cpp</itemPath>
+        <itemPath>SoundLib.cpp</itemPath>
         <itemPath>SoundManager.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp</itemPath>
+        <itemPath>SoundSource.cpp</itemPath>
+        <itemPath>SoundVariables.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="TDB" projectFiles="true">
         <itemPath>Ruch.cpp</itemPath>
@@ -488,7 +488,7 @@
         <itemPath>QuadTree.cpp</itemPath>
         <itemPath>Ref.cpp</itemPath>
         <itemPath>Route.cpp</itemPath>
-        <itemPath>C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp</itemPath>
+        <itemPath>Skydome.cpp</itemPath>
         <itemPath>SoundList.cpp</itemPath>
         <itemPath>TFile.cpp</itemPath>
         <itemPath>Terrain.cpp</itemPath>
@@ -622,226 +622,6 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
@@ -874,9 +654,17 @@
       </item>
       <item path="ClickableLabel.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ComplexLine.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ComplexLine.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConInfoWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ConLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -893,6 +681,10 @@
       <item path="Consist.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Consist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ContentHierarchyInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ContentHierarchyInfo.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -925,6 +717,10 @@
       <item path="Eng.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EngInfoWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="EngLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -994,6 +790,10 @@
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GlobalDefinitions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GlobalDefinitions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GroupObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GroupObj.h" ex="false" tool="3" flavor2="0">
@@ -1001,6 +801,10 @@
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GuiGlCompass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GuiGlCompass.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HazardObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1047,6 +851,10 @@
       <item path="MapWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="MapWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MstsSoundDefinition.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MstsSoundDefinition.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="NaviBox.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1274,9 +1082,33 @@
       </item>
       <item path="Shader.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ShapeHierarchyInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeInfoWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTemplates.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTemplates.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTextureInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTextureInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTexturesWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTexturesWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1285,6 +1117,14 @@
       <item path="ShapeViewerGLWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeViewerGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerNavigatorWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerNavigatorWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1310,6 +1150,18 @@
       </item>
       <item path="SignalWindowLink.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="SimpleHud.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SimpleHud.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Skydome.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Skydome.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundLib.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SoundList.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SoundList.h" ex="false" tool="3" flavor2="0">
@@ -1322,9 +1174,17 @@
       </item>
       <item path="SoundRegionObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="SoundSource.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundSource.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SoundSourceObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SoundSourceObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundVariables.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundVariables.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpeedPost.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1369,6 +1229,10 @@
       <item path="TSectionDAT.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TSectionDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TarFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TarFile.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Terrain.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1473,6 +1337,10 @@
       <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="UnsavedDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UriImageDrawThread.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UriImageDrawThread.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Vector2f.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1595,226 +1463,6 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
@@ -1847,9 +1495,17 @@
       </item>
       <item path="ClickableLabel.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ComplexLine.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ComplexLine.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConInfoWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ConLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1866,6 +1522,10 @@
       <item path="Consist.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Consist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ContentHierarchyInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ContentHierarchyInfo.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1898,6 +1558,10 @@
       <item path="Eng.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EngInfoWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="EngLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1967,6 +1631,10 @@
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GlobalDefinitions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GlobalDefinitions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GroupObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GroupObj.h" ex="false" tool="3" flavor2="0">
@@ -1974,6 +1642,10 @@
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GuiGlCompass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GuiGlCompass.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HazardObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2020,6 +1692,10 @@
       <item path="MapWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="MapWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MstsSoundDefinition.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MstsSoundDefinition.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="NaviBox.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2247,9 +1923,33 @@
       </item>
       <item path="Shader.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ShapeHierarchyInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeInfoWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTemplates.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTemplates.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTextureInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTextureInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTexturesWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTexturesWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2258,6 +1958,14 @@
       <item path="ShapeViewerGLWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ShapeViewerGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerNavigatorWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerNavigatorWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2283,6 +1991,18 @@
       </item>
       <item path="SignalWindowLink.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="SimpleHud.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SimpleHud.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Skydome.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Skydome.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundLib.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SoundList.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SoundList.h" ex="false" tool="3" flavor2="0">
@@ -2295,9 +2015,17 @@
       </item>
       <item path="SoundRegionObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="SoundSource.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundSource.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SoundSourceObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SoundSourceObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundVariables.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundVariables.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpeedPost.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2342,6 +2070,10 @@
       <item path="TSectionDAT.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TSectionDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TarFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TarFile.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Terrain.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2447,6 +2179,10 @@
       </item>
       <item path="UnsavedDialog.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="UriImageDrawThread.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UriImageDrawThread.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Vector2f.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Vector2f.h" ex="false" tool="3" flavor2="0">
@@ -2476,7 +2212,7 @@
     </conf>
     <conf name="Release_x64" type="4">
       <toolsSet>
-        <compilerSet>MinGW_QT_5.7.1_Static_x64|MinGW</compilerSet>
+        <compilerSet>QT_5.7_static_MinGW_730_x64|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -2497,7 +2233,7 @@
           <developmentMode>5</developmentMode>
           <standard>8</standard>
           <incDir>
-            <pElem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/include</pElem>
+            <pElem>C:/programy/openal-soft-1.18.2-bin/include</pElem>
           </incDir>
         </ccTool>
         <fortranCompilerTool>
@@ -2508,7 +2244,7 @@
         </asmTool>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/libs/Win64/libOpenAL32.dll.a</linkerLibFileItem>
+            <linkerLibFileItem>C:/programy/openal-soft-1.18.2-bin/libs/Win64/libOpenAL32.dll.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -2580,226 +2316,6 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
@@ -2832,9 +2348,17 @@
       </item>
       <item path="ClickableLabel.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ComplexLine.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ComplexLine.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConInfoWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ConLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -2851,6 +2375,10 @@
       <item path="Consist.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Consist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ContentHierarchyInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ContentHierarchyInfo.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2883,6 +2411,10 @@
       <item path="Eng.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EngInfoWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="EngLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -2952,6 +2484,10 @@
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GlobalDefinitions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GlobalDefinitions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GroupObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GroupObj.h" ex="false" tool="3" flavor2="0">
@@ -2959,6 +2495,10 @@
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GuiGlCompass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GuiGlCompass.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HazardObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3005,6 +2545,10 @@
       <item path="MapWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="MapWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MstsSoundDefinition.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MstsSoundDefinition.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="NaviBox.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3232,9 +2776,33 @@
       </item>
       <item path="Shader.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ShapeHierarchyInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeInfoWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTemplates.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTemplates.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTextureInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTextureInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTexturesWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTexturesWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3243,6 +2811,14 @@
       <item path="ShapeViewerGLWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ShapeViewerGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerNavigatorWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerNavigatorWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3268,6 +2844,18 @@
       </item>
       <item path="SignalWindowLink.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="SimpleHud.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SimpleHud.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Skydome.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Skydome.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundLib.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SoundList.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="SoundList.h" ex="false" tool="3" flavor2="0">
@@ -3280,9 +2868,17 @@
       </item>
       <item path="SoundRegionObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="SoundSource.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundSource.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SoundSourceObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="SoundSourceObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundVariables.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundVariables.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpeedPost.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3327,6 +2923,10 @@
       <item path="TSectionDAT.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TSectionDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TarFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TarFile.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Terrain.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3431,6 +3031,10 @@
       <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="UnsavedDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UriImageDrawThread.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UriImageDrawThread.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Vector2f.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3553,226 +3157,6 @@
       </item>
       <item path="Brush.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ComplexLine.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ConInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ContentHierarchyInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/EngInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GlobalDefinitions.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/GuiGlCompass.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeHierarchyWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeInfoWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTemplates.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTextureInfo.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeTexturesWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerNavigatorWidget.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SimpleHud.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/Skydome.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundLib.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundSource.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/SoundVariables.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/TarFile.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="C:/Users/Goku/Documents/NetBeansProjects/TSRE5/UriImageDrawThread.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="CELoadWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="CELoadWindow.h" ex="false" tool="3" flavor2="0">
@@ -3805,9 +3189,17 @@
       </item>
       <item path="ClickableLabel.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ComplexLine.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ComplexLine.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ConEditorWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ConEditorWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ConInfoWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ConLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3824,6 +3216,10 @@
       <item path="Consist.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Consist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ContentHierarchyInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ContentHierarchyInfo.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Coords.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3856,6 +3252,10 @@
       <item path="Eng.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Eng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EngInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EngInfoWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="EngLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3925,6 +3325,10 @@
       </item>
       <item path="GeoTools.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="GlobalDefinitions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GlobalDefinitions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="GroupObj.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="GroupObj.h" ex="false" tool="3" flavor2="0">
@@ -3932,6 +3336,10 @@
       <item path="GuiFunct.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="GuiFunct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GuiGlCompass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GuiGlCompass.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="HazardObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3978,6 +3386,10 @@
       <item path="MapWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="MapWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MstsSoundDefinition.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MstsSoundDefinition.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="NaviBox.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -4205,9 +3617,33 @@
       </item>
       <item path="Shader.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ShapeHierarchyInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeHierarchyWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeInfoWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeInfoWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ShapeLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ShapeLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTemplates.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTemplates.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTextureInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTextureInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeTexturesWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeTexturesWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ShapeViewWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -4216,6 +3652,14 @@
       <item path="ShapeViewerGLWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ShapeViewerGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerNavigatorWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerNavigatorWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShapeViewerWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShapeViewerWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SigCfg.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -4241,6 +3685,18 @@
       </item>
       <item path="SignalWindowLink.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="SimpleHud.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SimpleHud.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Skydome.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Skydome.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundLib.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SoundList.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="SoundList.h" ex="false" tool="3" flavor2="0">
@@ -4253,9 +3709,17 @@
       </item>
       <item path="SoundRegionObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="SoundSource.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundSource.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="SoundSourceObj.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="SoundSourceObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SoundVariables.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SoundVariables.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpeedPost.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -4300,6 +3764,10 @@
       <item path="TSectionDAT.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TSectionDAT.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TarFile.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TarFile.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Terrain.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -4404,6 +3872,10 @@
       <item path="UnsavedDialog.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="UnsavedDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UriImageDrawThread.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UriImageDrawThread.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Vector2f.cpp" ex="false" tool="1" flavor2="8">
       </item>

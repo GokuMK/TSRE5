@@ -22,7 +22,7 @@ AS=as
 QMAKE=qmake
 
 # Macros
-CND_PLATFORM=MinGW_QT_5.7.1_Static_x64-Windows
+CND_PLATFORM=QT_5.7_static_MinGW_730_x64-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Release_x64
 CND_DISTDIR=dist
@@ -52,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=/C/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/libs/Win64/libOpenAL32.dll.a
+LDLIBSOPTIONS=/C/programy/openal-soft-1.18.2-bin/libs/Win64/libOpenAL32.dll.a
 
 nbproject/qt-${CND_CONF}.mk: nbproject/qt-${CND_CONF}.pro FORCE
 	${QMAKE} VPATH=. -spec win32-g++ -o qttmp-${CND_CONF}.mk nbproject/qt-${CND_CONF}.pro

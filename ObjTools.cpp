@@ -332,9 +332,14 @@ void ObjTools::routeLoaded(Route* a){
     refTrackSelected("a1t");
     
     SignalShape * signal;
-    if(Game::trackDB->sigCfg->signalShape.size() > 0)
-    for (auto it = Game::trackDB->sigCfg->signalShape.begin(); it != Game::trackDB->sigCfg->signalShape.end(); ++it ){
-        signal = it->second;
+    QHashIterator<QString, SignalShape*> i2(Game::trackDB->sigCfg->signalShape);
+    //if(Game::trackDB->sigCfg->signalShape.size() > 0)
+    while (i2.hasNext()) {
+    //for ( auto it = route->ref->refItems.begin(); it != route->ref->refItems.end(); ++it ){
+        //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
+        i2.next();
+    //for (auto it = Game::trackDB->sigCfg->signalShape.begin(); it != Game::trackDB->sigCfg->signalShape.end(); ++it ){
+        signal = i2.value();
         if(signal == NULL) continue;
         Ref::RefItem item;
         item.filename = signal->desc;

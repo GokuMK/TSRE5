@@ -41,10 +41,64 @@ SigCfg::SigCfg() {
             continue;
         }
         if (sh == "lighttextures") {
+            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                //qDebug() << "- " << sh;
+                if (sh == "") {
+                    break;
+                }
+                if (sh == "_info" || sh == "skip" || sh == "_skip") {
+                    ParserX::SkipToken(bufor);
+                    continue;
+                }
+                if (sh == "lighttex") {
+                    /*nowySt = new SignalType();
+                    nowySt->type = ParserX::GetString(bufor);
+
+                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                        nowySt->set(sh, bufor);
+                        ParserX::SkipToken(bufor);
+                    }
+                    //this->signalType[iSignalType++] = nowySt;
+                    iSignalType++;
+                    this->signalType[nowySt->type.toStdString()] = nowySt;*/
+                    ParserX::SkipToken(bufor);
+                    continue;
+                }
+                qDebug() << "#lighttextures - undefined token: "<<sh;
+                ParserX::SkipToken(bufor);
+                continue;
+            }
             ParserX::SkipToken(bufor);
             continue;
         }
         if (sh == "lightstab") {
+            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                //qDebug() << "- " << sh;
+                if (sh == "") {
+                    break;
+                }
+                if (sh == "_info" || sh == "skip" || sh == "_skip") {
+                    ParserX::SkipToken(bufor);
+                    continue;
+                }
+                if (sh == "lightstabentry") {
+                    /*nowySt = new SignalType();
+                    nowySt->type = ParserX::GetString(bufor);
+
+                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+                        nowySt->set(sh, bufor);
+                        ParserX::SkipToken(bufor);
+                    }
+                    //this->signalType[iSignalType++] = nowySt;
+                    iSignalType++;
+                    this->signalType[nowySt->type.toStdString()] = nowySt;*/
+                    ParserX::SkipToken(bufor);
+                    continue;
+                }
+                qDebug() << "#lightstab - undefined token: "<<sh;
+                ParserX::SkipToken(bufor);
+                continue;
+            }
             ParserX::SkipToken(bufor);
             continue;
         }
@@ -69,7 +123,7 @@ SigCfg::SigCfg() {
                     }
                     //this->signalType[iSignalType++] = nowySt;
                     iSignalType++;
-                    this->signalType[nowySt->type.toStdString()] = nowySt;
+                    this->signalType[nowySt->type] = nowySt;
                     ParserX::SkipToken(bufor);
                     continue;
                 }
@@ -107,7 +161,7 @@ SigCfg::SigCfg() {
                     //    }
                     //}
                     nowySs->listId = iSignalShape;
-                    this->signalShape[nowySs->name.toStdString()] = nowySs;
+                    this->signalShape[nowySs->name] = nowySs;
                     this->signalShapeById[iSignalShape] = nowySs;
                     iSignalShape++;
                     ParserX::SkipToken(bufor);

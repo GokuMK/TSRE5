@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="95">
+<configurationDescriptor version="100">
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Release" type="4">
@@ -102,8 +102,8 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" --play dp.act</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" --play demo1 dp.act</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" --play</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" --conedit</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" --shapeview</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" --conedit</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
         </runcommandpicklist>
         <runcommand>"${OUTPUT_PATH}"</runcommand>

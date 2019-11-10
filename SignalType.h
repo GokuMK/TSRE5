@@ -12,12 +12,45 @@
 #define	SIGNALTYPE_H
 
 #include <QString>
+#include <QVector>
+#include <QHash>
 
 class FileBuffer;
 
 class SignalType {
+    
 public:
+    
+    struct Light {
+        int id;
+        QString defName;
+        float position[3];
+        float radius;
+        
+        Light();
+        void set(QString sh, FileBuffer* data);
+    };
+    
+    struct DrawState {
+        int id;
+        QString name;
+        QVector<int> lightDrawList;
+        QVector<int> lightModeList;
+        
+        DrawState();
+        void set(QString sh, FileBuffer* data);
+    };
+    
+    QHash<int, Light*> lights;
+    QHash<QString, DrawState*> drawStates;
+    
     QString type;
+    QString signalFnType;// = NORMAL;
+    QString signalLightTex;// ( "ltex" )
+    QVector<float> sigFlashDuration;// ( 0.6 0.25 )
+    QString signalFlags;//( SEMAPHORE )
+    
+
     SignalType();
     virtual ~SignalType();
     void set(QString sh, FileBuffer* data);
