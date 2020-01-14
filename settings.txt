@@ -34,7 +34,7 @@ writeTDB = true
 #deleteViewDbSpheres = true
 
 # geo data
-geoPath = F:/hgst
+geoPath = C:/hgst
 
 # misc
 #systemTheme = true
@@ -58,7 +58,7 @@ shadowsEnabled = 1
 #textureQuality = 4
 #ignoreMissingGlobalShapes = true
 snapableOnlyRot = true
-imageMapsUrl = http://maps.googleapis.com/maps/api/staticmap?center={lat},{lon}&zoom={zoom}&size={res}x{res}&maptype=satellite&key=AIzaSyB1whSraYMn8y_N2uMT3MYuL1Tdt1Et9g4
+imageMapsUrl = http://maps.googleapis.com/maps/api/staticmap?center={lat},{lon}&zoom={zoom}&size={res}x{res}&maptype=satellite&key=
 shadowLowMapSize = 2048
 #shadowMapSize = 8192
 shadowMapSize = 4096

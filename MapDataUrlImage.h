@@ -16,9 +16,11 @@
 #include <unordered_map>
 #include <vector>
 #include <QImage>
+#include <QHash>
 
 class LatitudeLongitudeCoordinate;
 class QNetworkReply;
+class QTimer;
 
 class MapDataUrlImage : public MapData {
 
@@ -45,6 +47,17 @@ public:
         unsigned char getImagePixelFromFloatXY(double x, double y, int color);
         bool isPoint(double tlat, double tlon);
         double distanceToCenter(double tlat, double tlon);
+    };
+    
+    struct MapRequest {
+        bool complete = false;
+        int id = 0;
+        double lat = 0;
+        double lon = 0;
+        int zoom = 0;
+        
+        MapRequest();
+        MapRequest(const MapRequest &o);
     };
 
     struct Mercator {
@@ -74,14 +87,20 @@ signals:
 
 public slots:
     void isData(QNetworkReply* r);
+    void autoTimerGet();
+    void isTimerData(QNetworkReply* r);
 
 private:
     double zoom;
     QVector<MapImage> images;
+    QVector<MapRequest> requests;
     int requestCout;
+    int requestId;
     int totalRequestCout;
-
+    QTimer* getTimer = NULL;
+    
     void get(LatitudeLongitudeCoordinate* center, double tzoom);
+
 };
 
 #endif	/* MAPDATAURLIMAGE_H */

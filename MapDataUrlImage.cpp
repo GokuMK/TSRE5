@@ -43,6 +43,22 @@ MapDataUrlImage::MapDataUrlImage(const MapDataUrlImage& orig) {
 MapDataUrlImage::~MapDataUrlImage() {
 }
 
+MapDataUrlImage::MapRequest::MapRequest(){
+    complete = false;
+    id = 0;
+    lat = 0;
+    lon = 0;
+    zoom = 0;
+}
+
+MapDataUrlImage::MapRequest::MapRequest(const MapRequest& o){
+    complete = o.complete;
+    id = o.id;
+    lat = o.lat;
+    lon = o.lon;
+    zoom = o.zoom;
+}
+
 bool MapDataUrlImage::draw(QImage* myImage) {
     
     myImage->fill(Qt::red);
@@ -67,7 +83,7 @@ bool MapDataUrlImage::draw(QImage* myImage) {
     igh = Game::GeoCoordConverter->ConvertToInternal(aCoords);
     Game::GeoCoordConverter->ConvertToLatLon(igh, &llpoint01);
     
-    int numThreads = 4;
+    int numThreads = 8;
     UriImageDrawThread threads[numThreads];
     int wstep = myImage->width() / numThreads;
     for(int i = 0; i < numThreads; i++){
@@ -129,15 +145,115 @@ void MapDataUrlImage::load() {
     double lonstep = (maxlon - minlon) / jsteps;
     qDebug() << "Step" <<latstep <<lonstep;
     
+    requests.clear();
+    requestId = 0;
+    
     for(double i = 0; i < isteps+1; i++)
         for(double j = 0; j < jsteps+1; j++){
             p00.Latitude = minlat + i*latstep;
             p00.Longitude = minlon + j*lonstep;
+            //qDebug() << p00.Latitude << p00.Longitude;
             p00.Latitude = floor(p00.Latitude*10000)/10000;
-            p00.Longitude = floor(p00.Longitude*10000)/10000;
-            get(&p00, tzoom);
-        }
+            p00.Longitude = floor(p00.Longitude*1000)/1000;
+            //qDebug() <<  p00.Latitude << p00.Longitude;
 
+            requests.push_back(MapRequest());
+            requests.back().id = requestId;
+            requests.back().lat = p00.Latitude;
+            requests.back().lon = p00.Longitude;
+            requests.back().zoom = tzoom;
+            requestId++;
+        }
+    
+    getTimer = new QTimer(this);
+    connect(getTimer, SIGNAL(timeout()), this, SLOT(autoTimerGet()));
+    autoTimerGet();
+    getTimer->start(5000);
+
+}
+
+void MapDataUrlImage::autoTimerGet(){
+    QNetworkAccessManager* mgr = new QNetworkAccessManager();
+    connect(mgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(isTimerData(QNetworkReply*)));
+    // the HTTP request
+    qDebug() << "wait";
+    static int count = 0;
+    for(int i = 0; i < requests.size(); i++){
+        if(requests[i].complete == true)
+            continue;
+        QString imageMapsUrl = Game::imageMapsUrl;
+        imageMapsUrl.replace("{lat}", QString::number(requests[i].lat));
+        imageMapsUrl.replace("{lon}", QString::number(requests[i].lon));
+        imageMapsUrl.replace("{zoom}", QString::number(requests[i].zoom));
+        imageMapsUrl.replace("{res}", QString::number(Resolution));
+        QNetworkRequest req(QUrl(QString("")+imageMapsUrl));
+        qDebug() << req.url();
+
+        QNetworkReply* r = mgr->get(req);
+        //r->setProperty("centerLat", QVariant(center->Latitude));
+        //r->setProperty("centerLon", QVariant(center->Longitude));
+        r->setProperty("requestId", requests[i].id);
+        r->setProperty("zoom", requests[i].zoom);
+    }
+
+    if(++count > 2)
+        getTimer->stop();
+}
+
+void MapDataUrlImage::isTimerData(QNetworkReply* r) {
+    QByteArray data = r->readAll();
+
+    qDebug() << "data " << data.length();
+    //qDebug() << r->property("centerLat").toDouble();
+    //qDebug() << r->property("centerLon").toDouble();
+    //qDebug() << r->property("zoom");
+    //double lat = r->property("centerLat").toDouble();
+    //double lon = r->property("centerLon").toDouble();
+    int rid = r->property("requestId").toInt();
+    int zoom = r->property("zoom").toInt();
+    double lat = requests[rid].lat;
+    double lon = requests[rid].lon;
+    if(requests[rid].complete == true)
+        return;
+    
+    requests[rid].complete = true;
+    
+    //requestCout++;
+    if (data.length() == 0) {
+        emit statusInfo(QString("No data from the network..."));
+        QTime cTime = QTime::currentTime().addSecs(5);
+        while (QTime::currentTime() < cTime) {
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        }
+        r->close();
+        getTimer->stop();
+        emit statusInfo(QString("Load"));
+    } else if(data.length() < 1000){
+        emit statusInfo(QString("Data read failed, see log.txt..."));
+        QTime cTime = QTime::currentTime().addSecs(5);
+        while (QTime::currentTime() < cTime) {
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        }
+        r->close();
+        getTimer->stop();
+        emit statusInfo(QString("Load"));
+        qDebug() << data;
+    } else {
+        images.push_back(MapImage(lat, lon, zoom, (unsigned char*) data.constData(), data.length()));
+        
+        requestCout = 0;
+        for(int i = 0; i < requests.size(); i++)
+            if(requests[i].complete)
+                requestCout++;
+        
+        if(requestCout == totalRequestCout){
+            getTimer->stop();
+            emit statusInfo(QString("Load"));
+            emit loaded();
+        } else {
+            emit statusInfo(QString("Wait [")+QString::number(requestCout)+"/"+QString::number(totalRequestCout)+"] ...");
+        }
+    }
 }
 
 void MapDataUrlImage::get(LatitudeLongitudeCoordinate* center, double tzoom) {
@@ -157,6 +273,7 @@ void MapDataUrlImage::get(LatitudeLongitudeCoordinate* center, double tzoom) {
     QNetworkReply* r = mgr->get(req);
     r->setProperty("centerLat", QVariant(center->Latitude));
     r->setProperty("centerLon", QVariant(center->Longitude));
+    r->setProperty("requestId", requestId);
     r->setProperty("zoom", tzoom);
 }
 
