@@ -38,6 +38,7 @@ public:
     static SoundList *soundList;
     static TerrainLib *terrainLib;
     
+    static bool UseWorkingDir;
     static QString AppVersion;
     static QString AppDataVersion;
     static QString AppName;

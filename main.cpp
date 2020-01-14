@@ -63,11 +63,8 @@ void LoadRouteEditor(){
     }
     
     LoadWindow *loadWindow = new LoadWindow();
-    QObject::connect(window, SIGNAL(exitNow()),
-                      loadWindow, SLOT(exitNow()));
-    
-    QObject::connect(loadWindow, SIGNAL(showMainWindow()),
-                      window, SLOT(show()));
+    QObject::connect(window, SIGNAL(exitNow()), loadWindow, SLOT(exitNow()));
+    QObject::connect(loadWindow, SIGNAL(showMainWindow()), window, SLOT(show()));
     
     if(Game::checkRoot(Game::root) && (Game::checkRoute(Game::route) || Game::createNewRoutes)){
         window->show();
@@ -99,7 +96,8 @@ int main(int argc, char *argv[]){
     QApplication app(argc, argv);
     
     QString workingDir = QDir::currentPath();
-    if(workingDir.contains("windows/system32", Qt::CaseInsensitive)){
+    
+    if(!Game::UseWorkingDir){
         QDir::setCurrent(QCoreApplication::applicationDirPath());
     }
     
@@ -107,6 +105,8 @@ int main(int argc, char *argv[]){
     logFile.open(QIODevice::WriteOnly);
     logFileOut.setDevice(&logFile);
     qInstallMessageHandler( myMessageOutput );
+    
+    qDebug() << "workingDir" << workingDir;
     
     Game::load();
     

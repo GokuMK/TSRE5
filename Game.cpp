@@ -36,8 +36,9 @@ TDB *Game::roadDB = NULL;
 SoundList *Game::soundList = NULL;    
 TerrainLib *Game::terrainLib = NULL;   
 
+bool Game::UseWorkingDir = false;
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.6975";
+QString Game::AppVersion = "v0.6976";
 QString Game::AppDataVersion = "0.697";
 QString Game::root = "F:/Train Simulator";
 QString Game::route = "bbb1";
