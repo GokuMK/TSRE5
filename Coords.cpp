@@ -67,31 +67,67 @@ void Coords::render(GLUU* gluu, float * playerT, float* playerW, float playerRot
     
     TextObj* txt;
     for (int i = 0; i < markerList.size(); i++ ) {
-        for(int j = 0; j < markerList[i].tileX.size(); j++ ){
-            if (fabs(markerList[i].tileX[j] - playerT[0]) + fabs(-markerList[i].tileZ[j] - playerT[1]) > 2) {
-                continue;
+        if(Game::markerLines){
+            if(markerList[i].line3d == NULL){
+                markerList[i].line3d = new OglObj();
+                markerList[i].line3d->setLineWidth(2);
+                qDebug() << markerList[i].style;
+                QColor color(style[markerList[i].style].color);
+                markerList[i].line3d->setMaterial(color.redF(),color.greenF(),color.blueF());
+                //markerList[i].line3d->setMaterial(((float)((i*10)))/255.0,1,1);
+            }
+            if(!markerList[i].line3d->loaded){
+                //qDebug() << markerList[i].x.size();
+                float *punkty = new float[markerList[i].x.size()*12]; 
+                int ptr = 0;
+
+                for(int j = 0; j < markerList[i].x.size() - 1; j++){
+                    if(markerList[i].segmentPtr[j+1] > 0)
+                        continue;
+                    float h = Game::terrainLib->getHeight(markerList[i].tileX[j], -markerList[i].tileZ[j], markerList[i].x[j], markerList[i].z[j]);
+                    punkty[ptr++] = markerList[i].x[j] + 2048 * ( markerList[i].tileX[j] - markerList[i].tileX[0] );
+                    punkty[ptr++] = markerList[i].y[j] + h;
+                    punkty[ptr++] = markerList[i].z[j] - 2048 * ( markerList[i].tileZ[j] - markerList[i].tileZ[0] );
+                    punkty[ptr++] = markerList[i].x[j+1] + 2048 * ( markerList[i].tileX[j+1] - markerList[i].tileX[0] );
+                    punkty[ptr++] = markerList[i].y[j+1] + h;
+                    punkty[ptr++] = markerList[i].z[j+1] - 2048 * ( markerList[i].tileZ[j+1] - markerList[i].tileZ[0] );
+                }
+                markerList[i].line3d->init(punkty, ptr, markerList[i].line3d->V, GL_LINES);
+                delete[] punkty;
             }
             gluu->mvPushMatrix();
-            //if(pos == NULL) return;
-            float h = Game::terrainLib->getHeight(markerList[i].tileX[j], -markerList[i].tileZ[j], markerList[i].x[j], markerList[i].z[j]);
-            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, markerList[i].x[j] + 2048 * (markerList[i].tileX[j] - playerT[0]), h, markerList[i].z[j] + 2048 * (-markerList[i].tileZ[j] - playerT[1]));
-            //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
-            //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
-            gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-            if(j == 0)
-                simpleMarkerObjP->render();
-            else
-                simpleMarkerObjL->render();
-            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 30, 0);
-            gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-            txt = nameGl[markerList[i].name.toStdString()];
-            if(txt == NULL){
-                txt = new TextObj(markerList[i].name, 16, 1.0);
-                txt->setColor(0,0,0);
-                nameGl[markerList[i].name.toStdString()] = txt;
-            } 
-            txt->render(playerRot);
+            Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0 + 2048 * (markerList[i].tileX[0] - playerT[0]), 10, 0 + 2048 * (-markerList[i].tileZ[0] - playerT[1]));
+            gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));        
+            markerList[i].line3d->render();
             gluu->mvPopMatrix();
+            /////
+        } else {
+            for(int j = 0; j < markerList[i].tileX.size(); j++ ){
+                if (fabs(markerList[i].tileX[j] - playerT[0]) + fabs(-markerList[i].tileZ[j] - playerT[1]) > 2) {
+                    continue;
+                }
+                gluu->mvPushMatrix();
+                //if(pos == NULL) return;
+                float h = Game::terrainLib->getHeight(markerList[i].tileX[j], -markerList[i].tileZ[j], markerList[i].x[j], markerList[i].z[j]);
+                Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, markerList[i].x[j] + 2048 * (markerList[i].tileX[j] - playerT[0]), h, markerList[i].z[j] + 2048 * (-markerList[i].tileZ[j] - playerT[1]));
+                //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
+                //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
+                gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+                if(j == 0)
+                    simpleMarkerObjP->render();
+                else
+                    simpleMarkerObjL->render();
+                Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, 30, 0);
+                gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+                txt = nameGl[markerList[i].name.toStdString()];
+                if(txt == NULL){
+                    txt = new TextObj(markerList[i].name, 16, 1.0);
+                    txt->setColor(0,0,0);
+                    nameGl[markerList[i].name.toStdString()] = txt;
+                } 
+                txt->render(playerRot);
+                gluu->mvPopMatrix();
+            }
         }
         
         /*if (markerList[i].tileX.size() == 1) continue;

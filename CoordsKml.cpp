@@ -39,6 +39,10 @@ CoordsKml::CoordsKml(QString path) {
     bool line = false;
     bool coordinates = false;
     bool nametext = false;
+    bool styletext = false;
+    bool styleobj = false;
+    QString styleName = "";
+    bool colortext = false;
     int iii = 0, uuu = 0;
     IghCoordinate* igh;
     PreciseTileCoordinate* ppp;
@@ -60,13 +64,43 @@ CoordsKml::CoordsKml(QString path) {
                 placemark = true;
                 markerList.push_back(Marker());
             } else if (name.toUpper() == ("COORDINATES")) {
-                if(placemark)
+                if(placemark){
                     coordinates = true;
+                    //if(Game::markerLines){
+                    //    if(markerList.back().tileX.size() > 1)
+                    //        markerList.push_back(Marker());
+                    //}
+                }
+            } else if (name.toUpper() == ("LINESTRING") || name.toUpper() == ("LINEARRING") ) {
+                if(placemark){
+                    if(markerList.back().tileX.size() > 0)
+                        markerList.back().segmentPtr[markerList.back().tileX.size()] = markerList.back().tileX.size();
+                        //markerList.back().segmentPtr.push_back(markerList.back().tileX.size());
+                }
             } else if (name.toUpper() == ("NAME")) {
                 if(placemark){
                     nametext = true;
                 }
+            } else if (name.toUpper() == ("STYLEURL")) {
+                if(placemark){
+                    styletext = true;
+                }
+            } else if (name.toUpper() == ("STYLE")) {
+                    styleobj = true;
+                    if(reader.attributes().size() > 0){
+                        for(iii = 0; iii < reader.attributes().size(); iii++){
+                            //qDebug() << reader.attributes()[iii].name() << reader.attributes()[iii].value();
+                            if(reader.attributes()[iii].name() == "id")
+                                styleName = reader.attributes()[iii].value().toString();
+                        }
+                                
+                    }
+            } else if (name.toUpper() == ("COLOR")) {
+                if(styleobj){
+                    colortext = true;
+                }
             }
+
         } else if (reader.isEndElement()) {
             name = reader.name().toString();
             if (name.toUpper() == ("PLACEMARK")) {
@@ -79,20 +113,41 @@ CoordsKml::CoordsKml(QString path) {
                 if(placemark){
                     nametext = false;
                 }
+            } else if (name.toUpper() == ("STYLEURL")) {
+                if(placemark){
+                    styletext = false;
+                }
+            } else if (name.toUpper() == ("STYLE")) {
+                    styleobj = false;
+            } else if (name.toUpper() == ("COLOR")) {
+                if(styleobj){
+                    colortext = false;
+                }
             }
+
         } else if (reader.isCharacters()) {
             if(nametext){
                 //qDebug() << reader.text();
                 markerList.back().name = reader.text().toString();
             }
+            if(styletext){
+                //qDebug() << reader.text();
+                markerList.back().style = reader.text().toString().trimmed().replace("#","");
+            }
+            if(colortext){
+                //qDebug() << reader.text();
+                style[styleName].color = QString("#") + reader.text().toString().trimmed();
+                //qDebug() << style[styleName].color;
+            }
             if(coordinates){
                 //qDebug() << reader.text();
-                QStringList cl = reader.text().toString().split(" ");
+                QStringList cl = reader.text().toString().trimmed().split(" ");
                 QStringList c = cl[0].split(",");
                 if(c.length() > 1){
                     markerList.back().lat = c[1].toFloat();
                     markerList.back().lon = c[0].toFloat();
                     markerList.back().type = 0;
+                    //qDebug() << markerList.back().lat << markerList.back().lon;
                     float lat;
                     float lon;
                         for(int i = 0; i < cl.length(); i++){
