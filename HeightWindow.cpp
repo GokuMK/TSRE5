@@ -35,14 +35,33 @@ HeightWindow::HeightWindow() : QDialog() {
     imageLabel = new QLabel("");
     imageLabel->setContentsMargins(0,0,0,0);
     imageLabel->setPixmap(QPixmap::fromImage(myImage));
+    
+    QGridLayout *vlist3 = new QGridLayout;
+    vlist3->setSpacing(2);
+    vlist3->setContentsMargins(3,0,1,0);
+    vlist3->addWidget(loadButton,0,0);
+    QLabel *alphaLabel = new QLabel("Y Offset: ");
+    alphaLabel->setFixedWidth(70);
+    vlist3->addWidget(alphaLabel,0,1);
+    QLineEdit *hOffsetEdit = new QLineEdit();
+    hOffsetEdit->setText("0");
+    hOffsetEdit->setFixedWidth(50);
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-9999, 9999, 2, this); 
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    hOffsetEdit->setValidator(doubleValidator);
+    vlist3->addWidget(hOffsetEdit,0,2);
+    
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(loadButton);
+    mainLayout->addItem(vlist3);
     mainLayout->addWidget(imageLabel);
     mainLayout->setContentsMargins(1,1,1,1);
     this->setLayout(mainLayout);
     
     QObject::connect(loadButton, SIGNAL(released()),
                       this, SLOT(load()));
+    
+    QObject::connect(hOffsetEdit, SIGNAL(textEdited(QString)),
+                      this, SLOT(hOffsetEnabled(QString)));
     
     igh = new IghCoordinate();
     mLatlon = new LatitudeLongitudeCoordinate();
@@ -102,6 +121,14 @@ void HeightWindow::CheckForMissingGeodataFiles(QMap<int,QPair<int,int>*>& tileLi
         missingDialog.exec();
     }
     
+}
+
+void HeightWindow::hOffsetEnabled(QString val){
+    bool ok;
+    yOffset = val.toFloat(&ok);
+    if(ok) 
+        return;
+    yOffset = 0;
 }
 
 void HeightWindow::load(bool gui){
@@ -191,7 +218,7 @@ void HeightWindow::drawTile(QImage* &image, bool gui){
                 qDebug() << "fail";
                 continue;
             }
-            terrainData[i][j] = hqtFiles[(int)floor(mLatlon->Latitude)*1000+(int)floor(mLatlon->Longitude)]->getHeight(mLatlon->Latitude, mLatlon->Longitude);
+            terrainData[i][j] = hqtFiles[(int)floor(mLatlon->Latitude)*1000+(int)floor(mLatlon->Longitude)]->getHeight(mLatlon->Latitude, mLatlon->Longitude) + yOffset;
             if(terrainData[i][j] < minVal)
                 minVal = terrainData[i][j];
             if(terrainData[i][j] > maxVal)
