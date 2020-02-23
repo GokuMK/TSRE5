@@ -337,6 +337,15 @@ void WorldObj::setInternalLodControl(bool val){
     internalLodControl = val;
 }
 
+// Use this function to init object if loaded before route data.
+void WorldObj::loadInit(){
+    
+}
+
+int WorldObj::updateTrackSectionInfo(QHash<int,int> shapes, QHash<int,int> sections){
+    return 0;
+}
+
 void WorldObj::load(int x, int y) {
     this->x = x;
     this->y = y;
@@ -432,6 +441,11 @@ void WorldObj::set(int sh, FileBuffer* data) {
     if (sh == TS::CollideFunction) {
         data->off++;
         collideFunction = data->getUint();
+        return;
+    }
+    if (sh == TS::MaxVisDistance) {
+        data->off++;
+        // 4byte undefined data
         return;
     }
     qDebug() << "worldObj "<<this->type<<" unknown: " << sh;

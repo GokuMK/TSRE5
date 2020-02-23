@@ -32,6 +32,7 @@ public:
     WorldObj* clone();
     virtual ~SignalObj();
     void load(int x, int y);
+    void loadInit();
     void set(QString sh, long long int val);
     void set(int sh, FileBuffer* val);
     void set(QString sh, QString val);

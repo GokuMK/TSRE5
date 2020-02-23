@@ -16,9 +16,9 @@
 #include <QFile>
 #include <QTextStream>
 
-TSectionDAT::TSectionDAT() {
+TSectionDAT::TSectionDAT(bool autoFix) {
     loadGlobal();
-    loadRoute();
+    loadRoute(autoFix);
 }
 
 TSectionDAT::TSectionDAT(const TSectionDAT& orig) {
@@ -239,7 +239,7 @@ bool TSectionDAT::saveRoute() {
     file.close();
 }
 
-bool TSectionDAT::loadRoute() {
+bool TSectionDAT::loadRoute(bool autoFix) {
 
     QString sh;
     QString path;
@@ -253,6 +253,7 @@ bool TSectionDAT::loadRoute() {
     ParserX::NextLine(bufor);
     
     int index = 0;
+    int newIdx = 0, newSdx = 0;
     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
         if (sh == "tracksections") {
             while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
@@ -266,8 +267,17 @@ bool TSectionDAT::loadRoute() {
                     //if (sh.toLower() =="sectioncurve") {
                     int typ = (int) ParserX::GetNumber(bufor);
                     index = (int) ParserX::GetNumber(bufor);
+                    if (index < this->tsectionMaxIdx){
+                        if(autoFix){
+                            autoFixedSectionIds[index] = this->tsectionMaxIdx + newIdx;
+                            index = this->tsectionMaxIdx + newIdx;
+                            newIdx++;
+                        } else {
+                            dataOutOfSync = true;
+                        }
+                    }
                     if (index > this->routeMaxIdx)
-                        this->routeMaxIdx = index;
+                        this->routeMaxIdx = index;                    
                     sekcja[index] = new TSection(index);
                     sekcja[index]->type = typ;
                     if (typ == 0) {
@@ -290,8 +300,17 @@ bool TSectionDAT::loadRoute() {
                 if (sh.toLower() == "trackpath") {
                     //   qDebug() << (int) ParserX::GetNumber(bufor);
                     index = (int) ParserX::GetNumber(bufor);
+                    if (index < this->tsectionShapes){
+                        if(autoFix){
+                            autoFixedShapeIds[index] = this->tsectionShapes + newSdx;
+                            index = this->tsectionShapes + newSdx;
+                            newSdx++;
+                        } else {
+                            dataOutOfSync = true;
+                        }
+                    }
                     if (index > this->routeShapes)
-                        this->routeShapes = index;
+                        this->routeShapes = index;                    
                     shape[index] = new TrackShape(index);
                     shape[index]->dyntrack = true;
                     shape[index]->numpaths = 1;
@@ -303,6 +322,14 @@ bool TSectionDAT::loadRoute() {
                     shape[index]->path[0].pos[2] = 0;
                     for (int i = 0; i < shape[index]->path[0].n; i++)
                         shape[index]->path[0].sect[i] = ParserX::GetNumber(bufor);
+                    
+                    if(autoFix){
+                        for (int i = 0; i < shape[index]->path[0].n; i++){
+                            int spid = shape[index]->path[0].sect[i];
+                            if(autoFixedSectionIds[spid] != 0)
+                                shape[index]->path[0].sect[i] = autoFixedSectionIds[spid];
+                        }
+                    }
                 }
                 ParserX::SkipToken(bufor);
             }
@@ -315,6 +342,8 @@ bool TSectionDAT::loadRoute() {
     
     this->routeMaxIdx += 2 - this->routeMaxIdx % 2;
     this->routeShapes++;
+    if(autoFix)
+        updateSectionDataRequired = true;
     //saveRoute();
     return true;
 }

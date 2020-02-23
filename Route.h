@@ -67,12 +67,15 @@ public:
     void saveTrk();
     void createNewPaths();
     void createNew();
+    bool checkTrackSectionDatabase();
     void loadMkrList();
     void createMkrPlaces();
     void loadActivities();
     void loadServices();
     void loadTraffic();
     void loadPaths();
+    void preloadWFiles();
+    void preloadWFilesInit();
     int newTile(int x, int z, bool forced = false);
     void reloadTile(int x, int z);
     void deleteObj(WorldObj* obj);

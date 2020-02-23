@@ -276,6 +276,8 @@ void Texture::paint(Brush* brush, float x, float z){
     float talpha = 0;
     
     int size = (brush->size*this->width)/512;
+    if(size < 1)
+        size = 1;
     //size = (size/512);
     
     for(int i = -size; i < size; i++)

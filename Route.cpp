@@ -53,6 +53,7 @@
 #include "Consist.h"
 #include "Skydome.h"
 #include "TRitem.h"
+#include "ActionChooseDialog.h"
 
 Route::Route() {
     Game::currentRoute = this;
@@ -99,6 +100,14 @@ Route::Route() {
     qDebug() << Game::routeName;
 
     this->tsection = new TSectionDAT();
+    // Check Track Section Databaase
+    if(!checkTrackSectionDatabase())
+        return;
+    
+    if(Game::loadAllWFiles){
+        preloadWFiles();
+    }
+
     this->trackDB = new TDB(tsection, false);
     this->roadDB = new TDB(tsection, true);
     Game::trackDB = this->trackDB;
@@ -111,7 +120,7 @@ Route::Route() {
     loadTraffic();
     loadPaths();
     loadActivities();
-    
+
     soundList = new SoundList();
     soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
     soundList->loadSoundRegions(Game::root + "/routes/" + Game::route + "/ttype.dat");
@@ -122,6 +131,10 @@ Route::Route() {
     ForestObj::LoadForestList();
     ForestObj::ForestClearDistance = trk->forestClearDistance;
     CarSpawnerObj::LoadCarSpawnerList();
+
+    if(Game::loadAllWFiles){
+        preloadWFilesInit();
+    }
     
     loaded = true;
     
@@ -135,6 +148,62 @@ Route::Route(const Route& orig) {
 }
 
 Route::~Route() {
+}
+
+bool Route::checkTrackSectionDatabase(){
+    if(!this->tsection->dataOutOfSync)
+        return true;
+    
+    qDebug() << "tsection out of sync !!!";
+    if(Game::playerMode)
+        return true;
+    if(!Game::writeEnabled)
+        return true;
+    if(!Game::writeTDB)
+        return true;
+    
+    // Edit mode. Make an action regarding not synced tsection data
+    ActionChooseDialog dialog(4);
+    dialog.setWindowTitle("TDB Error");
+    dialog.setInfoText("Route Track Section database is out of sync with your Global database.\n"
+                       "Choose action:");
+    dialog.pushAction("FIX", "Convert route database to current Global now");
+    dialog.pushAction("VIEW", "Disable writing to TDB - avoid editing tracks and interactives");
+    dialog.pushAction("IGNORE", "Ignore and continue - saving route may destroy your route");
+    dialog.pushAction("EXIT", "Quit TSRE now");
+    dialog.exec();
+    qDebug() << dialog.actionChoosen;
+    
+    if(dialog.actionChoosen == "FIX"){
+        Game::loadAllWFiles = true;
+        preloadWFiles();
+        // load tsection with autofix
+        this->tsection = new TSectionDAT(true);
+        // update ids inside W files
+        for (auto it = tile.begin(); it != tile.end(); ++it) {
+            Tile* tTile = (Tile*) it->second;
+            if (tTile == NULL) continue;
+            if (tTile->loaded == 1) {
+                tTile->updateTrackSectionInfo(tsection->autoFixedShapeIds, tsection->autoFixedSectionIds);
+             }
+        }
+        
+        return true;
+    } 
+    if(dialog.actionChoosen == "VIEW"){
+        Game::writeTDB = false;
+        return true;
+    }
+    if(dialog.actionChoosen == "IGNORE"){
+        // just do nothing
+        return true;
+    } 
+    if(dialog.actionChoosen == "EXIT"){
+        loaded = false;
+        return false;
+    }
+
+    return true;
 }
 
 void Route::activitySelected(Activity* selected){
@@ -312,6 +381,51 @@ void Route::updateSim(float *playerT, float deltaTime){
     
     if(currentActivity != NULL){
         currentActivity->updateSim(playerT, deltaTime);
+    }
+}
+
+void Route::preloadWFiles(){
+    Tile *tTile;
+    
+    QString path = Game::root + "/routes/" + Game::route + "/world";
+    QDir dir(path);
+    //qDebug() << path;
+    dir.setFilter(QDir::Files);
+    dir.setNameFilters(QStringList()<<"*.w");
+    
+    if (!dir.exists()) {
+        qDebug() << "route W dir not exist - aborting";
+        return;
+    }
+        
+    int WX = 0, WZ = 0;
+        
+    foreach(QString wfile, dir.entryList()){
+        if(wfile.length() != 17){
+            qDebug() << "# W File undefined name " << wfile;
+        }
+        QStringRef wxString(&wfile, 1, 7);
+        QStringRef wzString(&wfile, 8, 7);
+        WX = wxString.toInt();
+        WZ = -wzString.toInt();
+        tTile = tile[(WX)*10000 + WZ];
+
+        if (tTile == NULL){
+            qDebug() << wxString << wzString << "-" << WX << WZ;
+            tile[(WX)*10000 + WZ] = new Tile(WX, WZ);
+        }
+    }
+
+}
+
+// Use this function to init W files if loaded before route data.
+void Route::preloadWFilesInit(){
+    for (auto it = tile.begin(); it != tile.end(); ++it) {
+        Tile* tTile = (Tile*) it->second;
+        if (tTile == NULL) continue;
+        if (tTile->loaded == 1) {
+            tTile->loadInit();
+        }
     }
 }
 

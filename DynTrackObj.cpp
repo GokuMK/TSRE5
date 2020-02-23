@@ -92,6 +92,23 @@ void DynTrackObj::removedFromTDB(){
     this->sectionIdx = -1;
 }
 
+int DynTrackObj::updateTrackSectionInfo(QHash<int,int> shapes, QHash<int,int> sect){
+    if(shapes[sectionIdx] > 0)
+        sectionIdx = shapes[sectionIdx];
+    if(sections == NULL)
+        return 0;
+    int count = 0;
+    for(int i = 0; i < 5; i++){
+        if(sections[i].sectIdx == 4294967295)
+            continue;
+        if(sect[sections[i].sectIdx] > 0){
+            sections[i].sectIdx = sect[sections[i].sectIdx];
+            count++;
+        }
+    }
+    return count;
+}
+
 void DynTrackObj::load(int x, int y) {
     this->tex1 = -1;
     this->init = false;

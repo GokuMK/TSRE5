@@ -17,6 +17,7 @@
 #include "FileBuffer.h"
 #include "OglObj.h"
 #include "Ref.h"
+#include <QHash>
 
 class SFile;
 class TrackItemObj;
@@ -99,6 +100,7 @@ public:
     virtual ~WorldObj();
     virtual WorldObj* clone();
     virtual void load(int x, int y);
+    virtual void loadInit();
     virtual void set(int sh, FileBuffer* data);
     virtual void set(QString sh, FileBuffer* data);
     virtual void set(QString sh, QString val);
@@ -160,6 +162,7 @@ public:
     virtual void setTemplate(QString name);
     virtual bool isInternalLodControl();
     virtual void setInternalLodControl(bool val);
+    virtual int updateTrackSectionInfo(QHash<int, int> shapes, QHash<int, int> sections);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 protected:
     virtual void loadSnapablePoints();

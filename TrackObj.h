@@ -28,6 +28,7 @@ public:
     void setTemplate(QString val);
     void reload();
     void load(int x, int y);
+    void loadInit();
     void set(int sh, FileBuffer* val);
     void set(QString sh, QString val);
     void set(QString sh, FileBuffer* data);
@@ -38,6 +39,7 @@ public:
     QString getShapePath();
     int getDefaultDetailLevel();
     bool isSimilar(WorldObj* obj);
+    int updateTrackSectionInfo(QHash<int, int> shapes, QHash<int, int> sect);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
     QVector<std::array<float, 5>> jNodePosn;
     void fillJNodePosn();

@@ -138,6 +138,7 @@ private:
     bool isOgl;
     bool modified;
     QString texturepath;
+    QString rootTexturepath;
     Vector3f **vertexData;//[257][257];
     Vector3f **normalData;//[257][257];
     bool hidden[256];

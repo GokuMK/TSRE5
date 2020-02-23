@@ -121,7 +121,7 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
     update();
 }
 
-void RouteEditorGLWidget::initRoute(){
+bool RouteEditorGLWidget::initRoute(){
     currentShapeLib = new ShapeLib();
     Game::currentShapeLib = currentShapeLib;
     
@@ -129,7 +129,9 @@ void RouteEditorGLWidget::initRoute(){
     Game::currentEngLib = engLib;
 
     route = new Route();
-    if (!route->loaded) return;
+    if (!route->loaded){ 
+        return false;
+    }
     
     //QDialog aaaaa;
     //aaaaa.setWindowTitle("dupa");
@@ -176,6 +178,8 @@ void RouteEditorGLWidget::initRoute(){
             camera->setCameraObject((GameObj*)route->getActivityConsist(0));
         }
     }
+    
+    return true;
 }
 
 void RouteEditorGLWidget::initializeGL() {

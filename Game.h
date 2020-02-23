@@ -12,6 +12,7 @@
 #define	GAMESETTINGS_H
 
 #include <QString>
+#include <QHash>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -46,6 +47,7 @@ public:
     static QString route;
     static QString routeName;
     static QString trkName;
+    static QString season;
     static QString mainWindowLayout;
     static QString ceWindowLayout;
     static QString ActivityToPlay;
@@ -159,6 +161,15 @@ public:
     
     static bool hudEnabled;
     static float hudScale;
+    
+    static bool markerLines;
+    static bool seasonalEditing;
+    static int numRecentItems;
+    
+    static bool loadAllWFiles;
+    
+    static QHash<QString, int> TextureFlags;
+    
 private:
     //static RouteEditorWindow* window;
     //static LoadWindow* loadWindow;

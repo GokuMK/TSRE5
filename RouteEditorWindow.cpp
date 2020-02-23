@@ -823,10 +823,16 @@ void RouteEditorWindow::viewCompass(bool show){
 
 void RouteEditorWindow::show(){
     naviWindow->move(0, this->height() - naviWindow->height() );
+    
+    if(!glWidget->initRoute()){
+        emit exitNow();
+        SoundManager::CloseAl();
+        qApp->quit();
+        return;
+    }
     if(!Game::playerMode)
         naviWindow->show();
     
-    glWidget->initRoute();
     QMainWindow::show();
 }
 

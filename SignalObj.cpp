@@ -71,7 +71,9 @@ void SignalObj::load(int x, int y) {
     this->size = -1;
     this->skipLevel = 1;
     this->modified = false;
-    this->signalShape = Game::trackDB->sigCfg->signalShape[fileName];
+    
+    if(Game::trackDB != NULL)
+        this->signalShape = Game::trackDB->sigCfg->signalShape[fileName];
     setMartix();
     
     if(shapePointer != NULL && signalShape != NULL){
@@ -85,6 +87,11 @@ void SignalObj::load(int x, int y) {
     // chec flags
     //QStringList list;
     //checkFlags(list);
+}
+
+void SignalObj::loadInit(){
+    if(Game::trackDB != NULL)
+        this->signalShape = Game::trackDB->sigCfg->signalShape[fileName];
 }
 
 bool SignalObj::allowNew(){

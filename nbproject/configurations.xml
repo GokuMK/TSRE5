@@ -48,6 +48,7 @@
         <itemPath>UriImageDrawThread.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
+        <itemPath>ActionChooseDialog.h</itemPath>
         <itemPath>ChooseFileDialog.h</itemPath>
         <itemPath>ClickableLabel.h</itemPath>
         <itemPath>GuiFunct.h</itemPath>
@@ -301,6 +302,7 @@
         <itemPath>UriImageDrawThread.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f16" displayName="GUI" projectFiles="true">
+        <itemPath>ActionChooseDialog.cpp</itemPath>
         <itemPath>ChooseFileDialog.cpp</itemPath>
         <itemPath>ClickableLabel.cpp</itemPath>
         <itemPath>GuiFunct.cpp</itemPath>
@@ -565,6 +567,10 @@
       <item path="ActLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActionChooseDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActionChooseDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Activity.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1406,6 +1412,10 @@
       <item path="ActLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ActLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActionChooseDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActionChooseDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Activity.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2260,6 +2270,10 @@
       </item>
       <item path="ActLib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ActionChooseDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActionChooseDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Activity.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Activity.h" ex="false" tool="3" flavor2="0">
@@ -3100,6 +3114,10 @@
       <item path="ActLib.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ActLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ActionChooseDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ActionChooseDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Activity.cpp" ex="false" tool="1" flavor2="8">
       </item>

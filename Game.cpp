@@ -40,10 +40,11 @@ bool Game::UseWorkingDir = false;
 QString Game::AppName = "TSRE5";
 QString Game::AppVersion = "v0.6976";
 QString Game::AppDataVersion = "0.697";
-QString Game::root = "F:/Train Simulator";
+QString Game::root = "C:/tsdata/Train Simulator/";
 QString Game::route = "bbb1";
 QString Game::routeName = "bbb";
 QString Game::trkName = "bbb";
+QString Game::season = "";
 //QString Game::route = "traska";
 //QString Game::route = "cmk";
 QString Game::mainWindowLayout = "PWT";
@@ -113,6 +114,9 @@ bool Game::proceduralTracks = false;
 bool Game::fullscreen = false;
 bool Game::hudEnabled = false;
 float Game::hudScale = 1.0;
+bool Game::markerLines = false;
+
+bool Game::loadAllWFiles = false;
 
 QString Game::geoPath = "hgst";
 
@@ -157,6 +161,23 @@ float Game::skyColor[4] = {230.0/255.0,248.0/255,255.0/255.0, 1.0};
 
 int Game::DefaultElevationBox = 0;
 float Game::DefaultMoveStep = 0.25;
+
+bool Game::seasonalEditing = false;
+int Game::numRecentItems = 11;
+    
+QHash<QString, int> Game::TextureFlags {
+        {"None", 0x0},
+        {"Snow", 0x1},
+        {"SnowTrack", 0x2},
+        {"Spring", 0x4},
+        {"Autumn", 0x8},
+        {"Winter", 0x10},
+        {"SpringSnow", 0x20},
+        {"AutumnSnow", 0x40},
+        {"WinterSnow", 0x80},
+        {"Night", 0x100},
+        {"Underground", 0x40000000}
+    };
 
 void Game::InitAssets() {
     QString path;
@@ -499,6 +520,31 @@ void Game::load() {
             else
                 useTdbEmptyItems = false; 
         }
+        if(val == "useWorkingDir"){
+            if(args[1].trimmed().toLower() == "true")
+                UseWorkingDir = true;
+            else
+                UseWorkingDir = false; 
+        }
+        if(val == "numRecentItems"){
+            numRecentItems = args[1].trimmed().toInt();
+        }
+        if(val == "season"){
+            season = args[1].trimmed();
+        }
+        if(val == "markerLines"){
+            if(args[1].trimmed().toLower() == "true")
+                markerLines = true;
+            else
+                markerLines = false; 
+        }
+        if(val == "seasonalEditing"){
+            if(args[1].trimmed().toLower() == "true")
+                seasonalEditing = true;
+            else
+                seasonalEditing = false; 
+        }
+        
     }
 }
 /*

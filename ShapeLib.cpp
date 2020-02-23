@@ -46,9 +46,11 @@ void ShapeLib::addRef(int texx) {
     //if(!mtex.containsKey(texx)) return;
     //mtex.get(texx).ref++;
 }
+
 int ShapeLib::addShape(QString path){
     return addShape(path, Game::root+"/routes/"+Game::route+"/textures");
 }       
+
 int ShapeLib::addShape(QString path, QString texPath) {
     QString pathid = path;//(path + "/" + name).toLower();
     pathid.replace("\\", "/");

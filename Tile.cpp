@@ -94,6 +94,28 @@ void Tile::wczytajObiekty() {
     //save();
 }
 
+// Use this function to init W file if loaded before route data.
+void Tile::loadInit(){
+    for (auto it = obiekty.begin(); it != obiekty.end(); ++it) {
+        WorldObj* obj = (WorldObj*) it->second;
+        if(obj == NULL) 
+            continue;
+        obj->loadInit();
+    }
+}
+
+void Tile::updateTrackSectionInfo(QHash<int, int> shapes, QHash<int, int> sect){
+    int count = 0;
+    for (auto it = obiekty.begin(); it != obiekty.end(); ++it) {
+        WorldObj* obj = (WorldObj*) it->second;
+        if(obj == NULL) 
+            continue;
+        count += obj->updateTrackSectionInfo(shapes, sect);
+    }
+    if(count > 0)
+        modified = true;
+}
+
 void Tile::load() {
 
     QString sh;

@@ -163,8 +163,8 @@ ObjTools::ObjTools(QString name)
     vbox->addWidget(label2);
     vbox->addWidget(&lastItems);
 
-    lastItems.setMinimumHeight(170);
-    lastItems.setMaximumHeight(170);
+    lastItems.setMinimumHeight(Game::numRecentItems*16);
+    lastItems.setMaximumHeight(Game::numRecentItems*16);
     //QSizePolicy* sizePolicy = new QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     //astItems.setSizePolicy(*sizePolicy);
     //) QSizePolicy::MinimumExpanding);
@@ -627,7 +627,7 @@ void ObjTools::itemSelected(Ref::RefItem* item){
     lastItemsPtr.push_back(item);
     
     new QListWidgetItem ( text, &lastItems, lastItemsPtr.size() - 1 );
-    if(lastItems.count() > 11){
+    if(lastItems.count() > Game::numRecentItems){
         int val = 2147483646;
         int itID = -1;
         for(int i = 0; i < lastItems.count(); i++){

@@ -49,6 +49,8 @@ public:
     static void saveEmpty(int x, int z);
     static QString getNameXY(int e);
     void load();
+    void loadInit();
+    void updateTrackSectionInfo(QHash<int, int> shapes, QHash<int, int> sect);
     void loadWS();
     bool isModified();
     void setModified(bool value);

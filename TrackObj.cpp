@@ -56,6 +56,15 @@ WorldObj* TrackObj::clone(){
 TrackObj::~TrackObj() {
 }
 
+int TrackObj::updateTrackSectionInfo(QHash<int,int> shapes, QHash<int,int> sect){
+    int count = 0;
+    if(shapes[sectionIdx] > 0){
+        sectionIdx = shapes[sectionIdx];
+        count++;
+    }
+    return count;
+}
+
 void TrackObj::load(int x, int y) {
     this->shape = Game::currentShapeLib->addShape(resPath +"/"+ fileName);
     this->shapePointer = Game::currentShapeLib->shape[this->shape];
@@ -79,8 +88,14 @@ void TrackObj::load(int x, int y) {
     this->firstPosition[1] = this->position[1];
     this->firstPosition[2] = this->position[2];
     
-    this->roadShape = Game::trackDB->tsection->isRoadShape(sectionIdx);
+    if(Game::trackDB != NULL)
+        this->roadShape = Game::trackDB->tsection->isRoadShape(sectionIdx);
     setMartix();
+}
+
+void TrackObj::loadInit(){
+    if(Game::trackDB != NULL)
+        this->roadShape = Game::trackDB->tsection->isRoadShape(sectionIdx);
 }
 
 bool TrackObj::allowNew(){

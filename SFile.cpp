@@ -575,7 +575,19 @@ void SFile::loadSd() {
             continue;
         }
     }
+    QString seasonPath;
+    //qDebug() << esdAlternativeTexture << this->TextureFlags[Game::season];
+    //qDebug() << (esdAlternativeTexture & this->TextureFlags[Game::season]);
+    if((esdAlternativeTexture & Game::TextureFlags[Game::season]) != 0)
+        seasonPath = "/" + Game::season.toLower();
     
+    if(Game::season == "Winter" || Game::season == "AutumnSnow" || Game::season == "WinterSnow" || Game::season == "SpringSnow" ){
+        if(esdAlternativeTexture & Game::TextureFlags["Snow"] != 0)
+            seasonPath = "/snow";
+        if(esdAlternativeTexture & Game::TextureFlags["SnowTrack"] != 0)
+            seasonPath = "/snow";
+    }
+    texPath += seasonPath;
     loadedSd = true;
     delete data;
 }

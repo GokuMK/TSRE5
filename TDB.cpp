@@ -218,6 +218,23 @@ void TDB::loadTdb(){
         qDebug() << "#TDB undefined token " << sh;
         ParserX::SkipToken(bufor);
     }
+    
+    if(tsection->updateSectionDataRequired){
+        for(int i = 1; i <= iTRnodes; i++){
+            TRnode *n = trackNodes[i];
+            if(n->typ == 2){
+                if(tsection->autoFixedShapeIds[n->args[1]] > 0)
+                    n->args[1] = tsection->autoFixedShapeIds[n->args[1]];
+            }
+            if(n->typ == 1)
+                for(int j = 0; j < n->iTrv; j++){
+                    if(tsection->autoFixedShapeIds[n->trVectorSection[j].param[1]] > 0)
+                        n->trVectorSection[j].param[1] = tsection->autoFixedShapeIds[n->trVectorSection[j].param[1]];
+                    if(tsection->autoFixedSectionIds[n->trVectorSection[j].param[0]] > 0)
+                        n->trVectorSection[j].param[0] = tsection->autoFixedSectionIds[n->trVectorSection[j].param[0]];
+                }
+        }
+    }
     /*for(int i = 1; i <= iTRnodes; i++){
         int old;
         for(int j = 0; j < trackNodes[i]->iTri; j++){

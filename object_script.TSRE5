@@ -2,6 +2,7 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/AboutWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/AceLib.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ActLib.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ActionChooseDialog.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Activity.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ActivityEvent.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ActivityEventProperties.o
@@ -204,6 +205,7 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/tsre5_plugin_import.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_AboutWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_AceLib.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ActionChooseDialog.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ActivityEventProperties.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ActivityEventWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ActivityObject.o

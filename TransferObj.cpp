@@ -343,7 +343,19 @@ void TransferObj::drawShape(int selectionColor){
                 }
             }
             
-        texturePath = new QString(resPath.toLower()+"/"+texture.toLower());
+        int esdAlternativeTexture = 0x01;
+        QString seasonPath;
+        if((esdAlternativeTexture & Game::TextureFlags[Game::season]) != 0)
+            seasonPath = Game::season.toLower() + "/";
+
+        if(Game::season == "Winter" || Game::season == "AutumnSnow" || Game::season == "WinterSnow" || Game::season == "SpringSnow" ){
+            if(esdAlternativeTexture & Game::TextureFlags["Snow"] != 0)
+                seasonPath = "snow/";
+            if(esdAlternativeTexture & Game::TextureFlags["SnowTrack"] != 0)
+                seasonPath = "snow/";
+        }
+        
+        texturePath = new QString(resPath.toLower()+"/"+seasonPath+texture.toLower());
         shape.setMaterial(texturePath);
         shape.init(punkty, ptr, shape.VNT, GL_TRIANGLES);
         delete[] punkty;

@@ -11,6 +11,7 @@
 #ifndef TSECTIONDAT_H
 #define	TSECTIONDAT_H
 #include <unordered_map>
+#include <QHash>
 #include "TSection.h"
 #include "TrackShape.h"
 
@@ -18,14 +19,20 @@ class TSectionDAT {
 public:
     std::unordered_map<int, TSection*> sekcja;
     std::unordered_map<int, TrackShape*> shape;
+    QHash<int, int> autoFixedSectionIds;
+    QHash<int, int> autoFixedShapeIds;
+    
     bool loaded;
+    bool dataOutOfSync = false;
+    bool updateSectionDataRequired = false;
+    
     int tsectionMaxIdx = 0;// = 40000;
     int tsectionShapes = 0;// = 40000;
     int routeMaxIdx;// = 40000;
     int routeShapes;// = 40000;
     //std::unordered_map<int, TrackShape::SectionIdx*> routeShape;
     
-    TSectionDAT();
+    TSectionDAT(bool autoFix = false);
     TSectionDAT(const TSectionDAT& orig);
     virtual ~TSectionDAT();
     bool isRoadShape(int id);
@@ -33,7 +40,7 @@ public:
     bool saveRoute();
 private:
     bool loadGlobal();
-    bool loadRoute();
+    bool loadRoute(bool autoFix = false);
 };
 
 #endif	/* TSECTIONDAT_H */

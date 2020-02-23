@@ -41,12 +41,15 @@ public:
     
 public slots:
     void load(bool gui = true);
+    void hOffsetEnabled(QString val);
     
 private:
     QLabel* imageLabel;
+    QLineEdit *hOffsetEdit;
     float minlat, minlon, maxlat, maxlon;
     float minVal = 999;
     float maxVal = -999;
+    float yOffset = 0;
     
     IghCoordinate* igh = NULL;
     LatitudeLongitudeCoordinate* mLatlon = NULL;

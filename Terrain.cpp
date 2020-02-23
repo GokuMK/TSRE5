@@ -60,7 +60,20 @@ void Terrain::load(){
     VBO = new QOpenGLBuffer();
     VAO = new QOpenGLVertexArrayObject();
 
-    texturepath = Game::root + "/routes/" + Game::route + "/terrtex/";
+    int esdAlternativeTexture = 0x01;
+    QString seasonPath;
+    if((esdAlternativeTexture & Game::TextureFlags[Game::season]) != 0)
+        seasonPath = Game::season.toLower() + "/";
+
+    if(Game::season == "Winter" || Game::season == "AutumnSnow" || Game::season == "WinterSnow" || Game::season == "SpringSnow" ){
+        if(esdAlternativeTexture & Game::TextureFlags["Snow"] != 0)
+            seasonPath = "snow/";
+        if(esdAlternativeTexture & Game::TextureFlags["SnowTrack"] != 0)
+            seasonPath = "snow/";
+    }
+    
+    texturepath = Game::root + "/routes/" + Game::route + "/terrtex/"+seasonPath;
+    rootTexturepath = Game::root + "/routes/" + Game::route + "/terrtex/";
     QString path = Game::root + "/routes/" + Game::route + "/" + TileDir[(int)lowTile] + "/";
     tfile = new TFile();
 
@@ -98,6 +111,14 @@ void Terrain::load(){
             
             if (name2 == *tfile->materials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0])
                 this->uniqueTex[y*patches+u] = true;
+            
+            if(Game::seasonalEditing && Game::season.length() > 0){
+                // copy missing season textures
+                QFile file(texturepath + *tfile->materials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0]);
+                if (!file.exists()){
+                    QFile::copy(rootTexturepath + *tfile->materials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0], texturepath + *tfile->materials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0]);
+                }
+            }
         }
     
     loaded = true;
@@ -609,6 +630,9 @@ void Terrain::setTileBlob(){
 }
 
 void Terrain::makeTextureFromMap(){
+    if(Game::seasonalEditing && Game::season.length() > 0)
+        return;
+    
     int X, Y;
     getLowCornerTileXY(X, Y);
     int hash = (X*10000+Y);
@@ -1170,6 +1194,9 @@ void Terrain::getPatchCoords(int &x, int &z, float &posx, float &posz){
 }
 
 void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
+    if(Game::seasonalEditing && Game::season.length() > 0)
+        return;
+    
     getPatchCoords(x, z, posx, posz);
 
     int patches = tfile->patchsetNpatches;
@@ -1177,6 +1204,9 @@ void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
 }
 
 void Terrain::setTexture(Brush* brush, int u) {
+    if(Game::seasonalEditing && Game::season.length() > 0)
+        return;
+    
     if (brush->texId < 0)
         return;
     bool autoRot = false;
@@ -1255,6 +1285,9 @@ void Terrain::setTexture(Brush* brush, int u) {
 }
 
 void Terrain::paintTexture(Brush* brush, int x, int z, float posx, float posz) {
+    //if(Game::seasonalEditing)
+    //    return;
+    
     int samples = *tfile->nsamples;
     int sampleSize = *tfile->sampleSize;
     float tileSize = sampleSize*samples;
@@ -1301,6 +1334,9 @@ void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
         return;
     
     if (name != *tfile->materials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0]) {
+        if(Game::seasonalEditing && Game::season.length() > 0)
+            return;
+        
         tfile->tdata[(y * patches + u)*13 + 0 + 6] = tfile->cloneMat(tfile->tdata[(y * patches + u)*13 + 0 + 6]);
         tfile->materials[tfile->tdata[(y * patches + u)*13 + 0 + 6]].itex[1][3] = 1107296256;
         *tfile->materials[(int) tfile->tdata[(y * patches + u)*13 + 0 + 6]].tex[0] = name;
