@@ -34,7 +34,7 @@ signals:
     void sendMsg(QString name, QString val);
     
 private:
-    static const int maxSubObj = 30;
+    static const int maxSubObj = 32;
     int currentSubObjLinkInfo = 0;
     QLineEdit name;
     QLineEdit description;
