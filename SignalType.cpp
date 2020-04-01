@@ -113,7 +113,7 @@ void SignalType::set(QString sh, FileBuffer* data) {
             return;
         }
         
-    qDebug() << "-- " << sh;
+    qDebug() << "#signaltype - undefined token: " << sh;
     return;
 }
 
@@ -159,7 +159,7 @@ void SignalType::DrawState::set(QString sh, FileBuffer* data){
             if (sh == "drawlight") {
                 lightDrawList.push_back(ParserX::GetNumber(data));
                 int mode = 0;
-                if(ParserX::NextTokenInside(data) == "SignalFlags"){
+                if(ParserX::NextTokenInside(data).toLower() == "signalflags"){
                     QString optionalFlags = ParserX::GetStringInside(data);
                     if(optionalFlags == "FLASHING")
                         mode = 1;
