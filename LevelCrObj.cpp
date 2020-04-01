@@ -20,6 +20,8 @@
 #include "TrackItemObj.h"
 #include "TS.h"
 #include <QDebug>
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
 
 float LevelCrObj::MaxPlacingDistance = 30;
 
@@ -62,6 +64,17 @@ bool LevelCrObj::allowNew(){
 
 bool LevelCrObj::isTrackItem(){
     return true;
+}
+
+void LevelCrObj::loadingFixes(){
+    if(Game::useOnlyPositiveQuaternions){
+        if(qDirection[3] < 0){
+            Quat::makePositive(qDirection);
+            ErrorMessage *e = new ErrorMessage("info", "Editor", QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
+            ErrorMessagesLib::PushErrorMessage(e);
+            modified = true;
+        }            
+    }
 }
 
 void LevelCrObj::load(int x, int y) {
@@ -563,7 +576,9 @@ void LevelCrObj::translate(float px, float py, float pz){
 
 void LevelCrObj::save(QTextStream* out){
     if (!loaded) return;
-
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
+    
 *(out) << "	LevelCr (\n";
     
 *(out) << "		UiD ( "<<this->UiD<<" )\n";

@@ -170,6 +170,8 @@ public:
     
     static QHash<QString, int> TextureFlags;
     
+    static bool useOnlyPositiveQuaternions;
+    
 private:
     //static RouteEditorWindow* window;
     //static LoadWindow* loadWindow;

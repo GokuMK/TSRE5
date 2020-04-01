@@ -31,6 +31,7 @@ public:
     SignalObj(const SignalObj& o);
     WorldObj* clone();
     virtual ~SignalObj();
+    void loadingFixes();
     void load(int x, int y);
     void loadInit();
     void set(QString sh, long long int val);

@@ -32,6 +32,7 @@ class ActivityEventWindow;
 class ActivityServiceWindow;
 class ActivityTrafficWindow;
 class ActivityTimetableWindow;
+class ErrorMessagesWindow;
 
 class RouteEditorWindow : public QMainWindow
 {
@@ -57,6 +58,7 @@ public slots:
     void hideShowPropertiesWidget(bool show);
     void hideShowNaviWidget(bool);
     void hideShowShapeViewWidget(bool);
+    void hideShowErrorMsgWidget(bool);
     void viewWorldGrid(bool show);
     void viewTileGrid(bool show);
     void viewTerrainShape(bool show);
@@ -77,6 +79,7 @@ public slots:
     void showTerrainTreeEditr();
     void showWorldObjPivotPointsEnabled(bool show);
     void naviWindowClosed();
+    void errorMessagesWindowClosed();
     void shapeVeiwWindowClosed();
     void viewUnselectAll();
     void showActivityEventEditor();
@@ -128,6 +131,7 @@ private:
     QAction *propertiesAction;
     QAction *naviAction;
     QAction *shapeViewAction;
+    QAction *errorViewAction;
     QAction *toolsAction;
     QAction *objectsAction;
     QAction *objectsAndTerrainAction;
@@ -152,6 +156,7 @@ private:
     
     AboutWindow* aboutWindow;
     NaviWindow* naviWindow;
+    ErrorMessagesWindow* errorMessagesWindow;
     ActivityEventWindow* activityEventWindow;
     ActivityServiceWindow* activityServiceWindow;
     ActivityTrafficWindow* activityTrafficWindow;

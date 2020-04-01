@@ -54,6 +54,8 @@
 #include "Skydome.h"
 #include "TRitem.h"
 #include "ActionChooseDialog.h"
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
 
 Route::Route() {
     Game::currentRoute = this;
@@ -136,18 +138,27 @@ Route::Route() {
         preloadWFilesInit();
     }
     
+    checkRouteDatabase();
+    
     loaded = true;
     
     Vec3::set(placementAutoTranslationOffset, 0, 0, 0);
     Vec3::set(placementAutoRotationOffset, 0, 0, 0);
     
     skydome = new Skydome();
+
 }
 
 Route::Route(const Route& orig) {
 }
 
 Route::~Route() {
+}
+
+void Route::checkRouteDatabase(){
+    trackDB->checkDatabase();
+    roadDB->checkDatabase();
+
 }
 
 bool Route::checkTrackSectionDatabase(){
@@ -180,8 +191,7 @@ bool Route::checkTrackSectionDatabase(){
         // load tsection with autofix
         this->tsection = new TSectionDAT(true);
         // update ids inside W files
-        for (auto it = tile.begin(); it != tile.end(); ++it) {
-            Tile* tTile = (Tile*) it->second;
+        foreach (Tile* tTile, tile){
             if (tTile == NULL) continue;
             if (tTile->loaded == 1) {
                 tTile->updateTrackSectionInfo(tsection->autoFixedShapeIds, tsection->autoFixedSectionIds);
@@ -420,8 +430,7 @@ void Route::preloadWFiles(){
 
 // Use this function to init W files if loaded before route data.
 void Route::preloadWFilesInit(){
-    for (auto it = tile.begin(); it != tile.end(); ++it) {
-        Tile* tTile = (Tile*) it->second;
+    foreach (Tile* tTile, tile){
         if (tTile == NULL) continue;
         if (tTile->loaded == 1) {
             tTile->loadInit();
@@ -1586,8 +1595,8 @@ int Route::getTileHiddenObjCount(int x, int z) {
 
 void Route::getUnsavedInfo(QVector<QString> &items){
     if (!Game::writeEnabled) return;
-    for (auto it = tile.begin(); it != tile.end(); ++it) {
-        Tile* tTile = (Tile*) it->second;
+    
+    foreach (Tile* tTile, tile){
         if (tTile == NULL) continue;
         if (tTile->loaded == 1 && tTile->isModified()) {
             items.push_back("[W] "+QString::number(tTile->x)+" "+QString::number(-tTile->z));
@@ -1619,9 +1628,7 @@ void Route::getUnsavedInfo(QVector<QString> &items){
 void Route::save() {
     if (!Game::writeEnabled) return;
     qDebug() << "save";
-    for (auto it = tile.begin(); it != tile.end(); ++it) {
-        //console.log(obj.type);
-        Tile* tTile = (Tile*) it->second;
+    foreach (Tile* tTile, tile){
         if (tTile == NULL) continue;
         if (tTile->loaded == 1 && tTile->isModified()) {
             tTile->save();

@@ -25,6 +25,7 @@ public:
     LevelCrObj(const LevelCrObj& o);
     WorldObj* clone();
     virtual ~LevelCrObj();
+    void loadingFixes();
     void load(int x, int y);
     void set(QString sh, QString val);
     void set(int sh, FileBuffer* data);

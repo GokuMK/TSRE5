@@ -544,6 +544,8 @@ int ForestObj::getDefaultDetailLevel(){
 
 void ForestObj::save(QTextStream* out){
     if (!loaded) return;
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
     
 *(out) << "	Forest (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";

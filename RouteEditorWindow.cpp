@@ -47,6 +47,8 @@
 #include "PropertiesActivityPath.h"
 #include "PropertiesConsist.h"
 #include "NaviWindow.h"
+#include "ErrorMessagesWindow.h"
+#include "ErrorMessagesLib.h"
 #include "UnsavedDialog.h"
 #include "ActivityEventWindow.h"
 #include "ActivityEventProperties.h"
@@ -68,6 +70,7 @@ RouteEditorWindow::RouteEditorWindow() {
     shapeViewWindow = new ShapeViewWindow(this);
     aboutWindow = new AboutWindow(this);
     naviWindow = new NaviWindow(this);
+    errorMessagesWindow = ErrorMessagesLib::GetWindow(this);
     activityEventWindow = new ActivityEventWindow(this);
     activityServiceWindow = new ActivityServiceWindow(this);
     activityTrafficWindow = new ActivityTrafficWindow(this);
@@ -270,6 +273,9 @@ RouteEditorWindow::RouteEditorWindow() {
     shapeViewAction = GuiFunct::newMenuCheckAction(tr("&Shape View Window"), this, false); 
     toolsMenu->addAction(shapeViewAction);
     QObject::connect(shapeViewAction, SIGNAL(triggered(bool)), this, SLOT(hideShowShapeViewWidget(bool)));
+    errorViewAction = GuiFunct::newMenuCheckAction(tr("&Errors and Messages"), this, false); 
+    toolsMenu->addAction(errorViewAction);
+    QObject::connect(errorViewAction, SIGNAL(triggered(bool)), this, SLOT(hideShowErrorMsgWidget(bool)));
     toolsMenu->addSeparator();
     objectsAndTerrainAction = GuiFunct::newMenuCheckAction(tr("&Objects and Terrain"), this); 
     toolsMenu->addAction(objectsAndTerrainAction);
@@ -333,6 +339,7 @@ RouteEditorWindow::RouteEditorWindow() {
     
     if(Game::playerMode){
         naviWindow->hide();
+        errorMessagesWindow->hide();
         box->hide();
         box2->hide();
         menuBar()->hide();
@@ -469,6 +476,9 @@ RouteEditorWindow::RouteEditorWindow() {
     
     QObject::connect(naviWindow, SIGNAL(windowClosed()),
                       this, SLOT(naviWindowClosed())); 
+    
+    QObject::connect(errorMessagesWindow, SIGNAL(windowClosed()),
+                      this, SLOT(errorMessagesWindowClosed())); 
     
     QObject::connect(shapeViewWindow, SIGNAL(windowClosed()),
                       this, SLOT(shapeVeiwWindowClosed())); 
@@ -766,6 +776,13 @@ void RouteEditorWindow::hideShowShapeViewWidget(bool show){
     else shapeViewWindow->hide();
 }
 
+void RouteEditorWindow::hideShowErrorMsgWidget(bool show){
+    if(show) {
+        errorMessagesWindow->show();
+    }
+    else errorMessagesWindow->hide();
+}
+
 void RouteEditorWindow::hideShowNaviWidget(bool show){
     if(show) naviWindow->show();
     else naviWindow->hide();
@@ -830,8 +847,11 @@ void RouteEditorWindow::show(){
         qApp->quit();
         return;
     }
-    if(!Game::playerMode)
+    if(!Game::playerMode){
         naviWindow->show();
+        //errorMessagesWindow->show();
+        //errorMessagesWindow->refreshErrorList();
+    }
     
     QMainWindow::show();
 }
@@ -840,6 +860,12 @@ void RouteEditorWindow::naviWindowClosed(){
     naviAction->blockSignals(true);
     naviAction->setChecked(false);
     naviAction->blockSignals(false);
+}
+
+void RouteEditorWindow::errorMessagesWindowClosed(){
+    errorViewAction->blockSignals(true);
+    errorViewAction->setChecked(false);
+    errorViewAction->blockSignals(false);
 }
 
 void RouteEditorWindow::shapeVeiwWindowClosed(){

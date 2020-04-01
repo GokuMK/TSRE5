@@ -21,6 +21,8 @@
 #include "TrackItemObj.h"
 #include "TSectionDAT.h"
 #include "ProceduralShape.h"
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -63,6 +65,17 @@ int TrackObj::updateTrackSectionInfo(QHash<int,int> shapes, QHash<int,int> sect)
         count++;
     }
     return count;
+}
+
+void TrackObj::loadingFixes(){
+    if(Game::useOnlyPositiveQuaternions){
+        if(qDirection[3] < 0){
+            Quat::makePositive(qDirection);
+            ErrorMessage *e = new ErrorMessage("info", "Editor", QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
+            ErrorMessagesLib::PushErrorMessage(e);
+            modified = true;
+        }            
+    }
 }
 
 void TrackObj::load(int x, int y) {
@@ -443,6 +456,8 @@ int TrackObj::getCollisionType(){
 void TrackObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
     
 *(out) << "	TrackObj (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";

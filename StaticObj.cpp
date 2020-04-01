@@ -19,6 +19,8 @@
 #include <QDebug>
 #include "Game.h"
 #include <QMenu>
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
 
 StaticObj::StaticObj() {
     this->shape = -1;
@@ -40,6 +42,17 @@ WorldObj* StaticObj::clone(){
 }
 
 StaticObj::~StaticObj() {
+}
+
+void StaticObj::loadingFixes(){
+    if(Game::useOnlyPositiveQuaternions){
+        if(qDirection[3] < 0){
+            Quat::makePositive(qDirection);
+            ErrorMessage *e = new ErrorMessage("info", "Editor", QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
+            ErrorMessagesLib::PushErrorMessage(e);
+            modified = true;
+        }            
+    }
 }
 
 void StaticObj::load(int x, int y) {
@@ -353,6 +366,8 @@ void StaticObj::reload(){
 void StaticObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
     
 if(type == "static")
 *(out) << "	Static (\n";

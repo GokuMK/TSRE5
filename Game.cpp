@@ -38,7 +38,7 @@ TerrainLib *Game::terrainLib = NULL;
 
 bool Game::UseWorkingDir = false;
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.6976";
+QString Game::AppVersion = "v0.6977";
 QString Game::AppDataVersion = "0.697";
 QString Game::root = "C:/tsdata/Train Simulator/";
 QString Game::route = "bbb1";
@@ -164,6 +164,7 @@ float Game::DefaultMoveStep = 0.25;
 
 bool Game::seasonalEditing = false;
 int Game::numRecentItems = 11;
+bool Game::useOnlyPositiveQuaternions = false;
     
 QHash<QString, int> Game::TextureFlags {
         {"None", 0x0},
@@ -544,7 +545,18 @@ void Game::load() {
             else
                 seasonalEditing = false; 
         }
-        
+        if(val == "loadAllWFiles"){
+            if(args[1].trimmed().toLower() == "true")
+                loadAllWFiles = true;
+            else
+                loadAllWFiles = false; 
+        }
+        if(val == "useOnlyPositiveQuaternions"){
+            if(args[1].trimmed().toLower() == "true")
+                useOnlyPositiveQuaternions = true;
+            else
+                useOnlyPositiveQuaternions = false; 
+        }
     }
 }
 /*

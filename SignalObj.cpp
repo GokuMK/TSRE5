@@ -23,6 +23,8 @@
 #include "Game.h"
 #include "TS.h"
 #include "TRnode.h"
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -35,6 +37,17 @@ SignalObj::SignalObj() {
     //pointer3d->setMaterial(1,0,0);
     //pointer3dSelected = new TrackItemObj();
     //pointer3dSelected->setMaterial(1,0.5,0.5);
+}
+
+void SignalObj::loadingFixes(){
+    if(Game::useOnlyPositiveQuaternions){
+        if(qDirection[3] < 0){
+            Quat::makePositive(qDirection);
+            ErrorMessage *e = new ErrorMessage("info", "Editor", QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
+            ErrorMessagesLib::PushErrorMessage(e);
+            modified = true;
+        }            
+    }
 }
 
 SignalObj::SignalObj(const SignalObj& o) : WorldObj(o) {
@@ -727,6 +740,8 @@ Ref::RefItem* SignalObj::getRefInfo(){
 void SignalObj::save(QTextStream* out){
     if (!loaded) return;
     if (!trLoaded < 0) return;
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
     
 *(out) << "	Signal (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";

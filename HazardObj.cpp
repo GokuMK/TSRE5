@@ -284,7 +284,9 @@ int HazardObj::getDefaultDetailLevel(){
 
 void HazardObj::save(QTextStream* out){
     if (!loaded) return;
-
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
+    
 *(out) << "	Hazard (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		TrItemId ( "<<this->trItemId[0]<<" "<<this->trItemId[1]<<" )\n";

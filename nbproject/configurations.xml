@@ -129,6 +129,7 @@
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
+        <itemPath>ErrorMessagesWindow.h</itemPath>
         <itemPath>GeoTools.h</itemPath>
         <itemPath>LoadWindow.h</itemPath>
         <itemPath>NaviBox.h</itemPath>
@@ -247,6 +248,8 @@
         <itemPath>Tile.h</itemPath>
         <itemPath>Trk.h</itemPath>
       </logicalFolder>
+      <itemPath>ErrorMessage.h</itemPath>
+      <itemPath>ErrorMessagesLib.h</itemPath>
       <itemPath>Game.h</itemPath>
       <itemPath>GameObj.h</itemPath>
       <itemPath>Undo.h</itemPath>
@@ -383,6 +386,7 @@
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
+        <itemPath>ErrorMessagesWindow.cpp</itemPath>
         <itemPath>GeoTools.cpp</itemPath>
         <itemPath>LoadWindow.cpp</itemPath>
         <itemPath>NaviBox.cpp</itemPath>
@@ -501,6 +505,8 @@
         <itemPath>Tile.cpp</itemPath>
         <itemPath>Trk.cpp</itemPath>
       </logicalFolder>
+      <itemPath>ErrorMessage.cpp</itemPath>
+      <itemPath>ErrorMessagesLib.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
       <itemPath>GameObj.cpp</itemPath>
       <itemPath>Undo.cpp</itemPath>
@@ -739,6 +745,18 @@
       <item path="Environment.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Environment.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessagesLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessagesLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessagesWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessagesWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1584,6 +1602,18 @@
       <item path="Environment.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Environment.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessagesLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessagesLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessagesWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessagesWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2442,6 +2472,18 @@
       </item>
       <item path="Environment.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ErrorMessage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessagesLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessagesLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessagesWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessagesWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="FileBuffer.h" ex="false" tool="3" flavor2="0">
@@ -3079,7 +3121,7 @@
     </conf>
     <conf name="Debug_x64" type="4">
       <toolsSet>
-        <compilerSet>MinGW_QT_5.7.1_Static_x64|MinGW</compilerSet>
+        <compilerSet>QT_5.7_static_MinGW_730_x64|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -3094,12 +3136,12 @@
         <ccTool>
           <standard>8</standard>
           <incDir>
-            <pElem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/include</pElem>
+            <pElem>C:/programy/openal-soft-1.18.2-bin/include</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/libs/Win64/libOpenAL32.dll.a</linkerLibFileItem>
+            <linkerLibFileItem>C:/programy/openal-soft-1.18.2-bin/libs/Win64/libOpenAL32.dll.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -3286,6 +3328,18 @@
       <item path="Environment.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Environment.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessagesLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessagesLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ErrorMessagesWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ErrorMessagesWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FileBuffer.cpp" ex="false" tool="1" flavor2="8">
       </item>

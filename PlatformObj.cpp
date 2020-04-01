@@ -223,10 +223,11 @@ void PlatformObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
     for(int i = 0; i<this->trItemIdCount/2; i++){
-        if(this->trItemId[i*2] == 0)
+        if(this->trItemId[i*2] == 0){
             tdb->deleteTrItem(this->trItemId[i*2+1]);
-        else if(this->trItemId[i*2] == 1)
+        } else if(this->trItemId[i*2] == 1) {
             rdb->deleteTrItem(this->trItemId[i*2+1]);
+        }
         this->trItemId[i*2+1] = -1;
     }
 }
@@ -655,7 +656,9 @@ void PlatformObj::save(QTextStream* out) {
     int l;
     QString flags = ParserX::MakeFlagsString(this->staticFlags);
     QString flags2 = ParserX::MakeFlagsString(this->platformData);
-
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
+    
     if (type == "siding")
         *(out) << "	Siding (\n";
     if (type == "platform")

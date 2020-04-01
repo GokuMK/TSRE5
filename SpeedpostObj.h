@@ -26,6 +26,7 @@ public:
     SpeedpostObj(const SpeedpostObj& o);
     WorldObj* clone();
     virtual ~SpeedpostObj();
+    void loadingFixes();
     void load(int x, int y);
     void set(QString sh, long long int val);
     void set(int sh, FileBuffer* val);

@@ -451,7 +451,9 @@ int PickupObj::getDefaultDetailLevel(){
 
 void PickupObj::save(QTextStream* out){
     if (!loaded) return;
-
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
+    
 *(out) << "	Pickup (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		SpeedRange ( "<<this->speedRange[0]<<" "<<this->speedRange[1]<<" )\n";

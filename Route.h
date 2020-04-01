@@ -12,7 +12,7 @@
 #define	ROUTE_H
 #include <QMap>
 #include <QString>
-#include <unordered_map>
+#include <QHash>
 #include "GLUU.h"
 #include "TDB.h"
 #include "WorldObj.h"
@@ -38,7 +38,7 @@ class Skydome;
 class Route : public QObject {
     Q_OBJECT
 public:
-    std::unordered_map<int, Tile*> tile;
+    QHash<int, Tile*> tile;
     QVector<int> activityId;
     //QVector<Service*> service;
     //QVector<Traffic*> traffic;
@@ -68,6 +68,7 @@ public:
     void createNewPaths();
     void createNew();
     bool checkTrackSectionDatabase();
+    void checkRouteDatabase();
     void loadMkrList();
     void createMkrPlaces();
     void loadActivities();

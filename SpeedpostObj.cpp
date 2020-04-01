@@ -23,6 +23,8 @@
 #include "SpeedPost.h"
 #include <QDebug>
 #include "Vector4f.h"
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -63,6 +65,17 @@ WorldObj* SpeedpostObj::clone(){
 }
 
 SpeedpostObj::~SpeedpostObj() {
+}
+
+void SpeedpostObj::loadingFixes(){
+    if(Game::useOnlyPositiveQuaternions){
+        if(qDirection[3] < 0){
+            Quat::makePositive(qDirection);
+            ErrorMessage *e = new ErrorMessage("info", "Editor", QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
+            ErrorMessagesLib::PushErrorMessage(e);
+            modified = true;
+        }            
+    }
 }
 
 void SpeedpostObj::load(int x, int y) {
@@ -793,6 +806,9 @@ int SpeedpostObj::getDefaultDetailLevel(){
 
 void SpeedpostObj::save(QTextStream* out){
     if (!loaded) return;
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
+    
 *(out) << "	Speedpost (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		Speed_Digit_Tex ( "<<this->speedDigitTex<<" )\n";

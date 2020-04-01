@@ -399,6 +399,8 @@ int DynTrackObj::getDefaultDetailLevel(){
 
 void DynTrackObj::save(QTextStream* out){
     if (!loaded) return;
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
     
 *(out) << "	Dyntrack (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";

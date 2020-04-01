@@ -39,6 +39,7 @@ public:
     void getLinePoints(float *&punkty);
     void reload();
     bool isSimilar(WorldObj *obj);
+    void loadingFixes();
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
     void updateSim(float deltaTime);
     void pushContextMenuActions(QMenu *menu);

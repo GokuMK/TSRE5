@@ -424,7 +424,9 @@ int TransferObj::getDefaultDetailLevel(){
 
 void TransferObj::save(QTextStream* out){
     if (!loaded) return;
-
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
+    
 *(out) << "	Transfer (\n";
 *(out) << "		UiD ( "<<this->UiD<<" )\n";
 *(out) << "		Width ( "<<this->width<<" )\n";

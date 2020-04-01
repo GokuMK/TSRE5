@@ -28,6 +28,9 @@
 #include "SpeedPostDAT.h"
 #include "GLUU.h"
 #include "SignalObj.h"
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
+#include "Route.h"
 
 std::unordered_map<int, TRitem*>* TDB::StaticTrackItems;
 
@@ -305,8 +308,9 @@ void TDB::checkTrSignalRDirs(){
             continue;
         if (it->type != "signalitem") 
             continue;
+        if (it->trSignalDirs == 0) 
+            continue;
         
-        if (it->trSignalDirs == 0) continue;
         if (it->trSignalDirs > 1){
             qDebug() << "# WARNING - signal dirs more than 1" << i;
         }
@@ -2877,8 +2881,68 @@ void TDB::newCrossOverObject(int id1, float m1, int id2, float m2, int shapeIdx)
     
 }
 
-void TDB::deleteTrItem(int trid){
+void TDB::deleteTrItem(int trid, WorldObj* wobj){
     TRitem* trit = this->trackItems[trid];
+    
+    if (trit->type == NULL){
+        ErrorMessage *e = new ErrorMessage("error", "trackDB", "Track Item not found." );
+        ErrorMessagesLib::PushErrorMessage(e);
+        return;
+    }
+    
+    if(wobj != NULL){
+        wobj->typeID;
+        trit->type;
+        
+        if(wobj->typeID == WorldObj::siding){
+            if (trit->type != "sidingitem"){
+                return;
+            }
+        }
+        if(wobj->typeID == WorldObj::platform){
+            if (trit->type != "platformitem"){
+                ErrorMessage *e = new ErrorMessage("error", "trackDB", "Expected 'platformitem' but '"+trit->type+"' found instead." );
+                ErrorMessagesLib::PushErrorMessage(e);
+                return;
+            }
+        }
+        if(wobj->typeID == WorldObj::signal){
+            if (trit->type != "signalitem"){
+                return;
+            }
+        }
+        if(wobj->typeID == WorldObj::levelcr){
+            if (trit->type != "levelcritem"){
+                return;
+            }
+        }
+        if(wobj->typeID == WorldObj::speedpost){
+            if (trit->type != "speedpostitem"){
+                return;
+            }
+        }
+        if(wobj->typeID == WorldObj::carspawner){
+            if (trit->type != "carspawneritem"){
+                return;
+            }
+        }
+        if(wobj->typeID == WorldObj::hazard){
+            if (trit->type != "hazzarditem"){
+                return;
+            }
+        }
+        if(wobj->typeID == WorldObj::pickup){
+            if (trit->type != "pickupitem"){
+                return;
+            }
+        }
+        if(wobj->typeID == WorldObj::soundregion){
+            if (trit->type != "soundregionitem"){
+                return;
+            }
+        }
+    }    
+    
     if(trit != NULL){
         trit->type = "emptyitem";
     }
@@ -3398,4 +3462,42 @@ void TDB::getUsedTileList(QMap<int, QPair<int, int>*> &tileList, int radius, int
                 }
             }
     }
+}
+
+void TDB::checkDatabase(){
+
+    int tid = 0;
+    TRnode* n;
+    for (int i = 0; i < this->iTRitems; i++) {
+        if(trackItems[i] == NULL) 
+            continue;
+        
+        if(Game::currentRoute == NULL)
+            continue;
+        
+        //ErrorMessage *e = new ErrorMessage();
+        //ErrorMessagesLib::PushErrorMessage(e);
+        
+        /*if(trackItems[i]->trSignalDir != NULL){
+            for(int j = 0; j < trackItems[i]->trSignalDirs*4; j+=4){
+                tid = trackItems[i]->trSignalDir[j+0];
+                n = trackNodes[tid];
+                if(n == NULL){
+                    
+                }
+            }
+        }*/
+    }
+
+    
+    /*for(int i = 1; i <= iTRnodes; i++){
+        for(int j = 0; j < trackNodes[i]->iTri; j++){
+            if(j > 0 && old > trackItems[trackNodes[i]->trItemRef[j]]->getTrackPosition())
+                qDebug() << "--fail!--"<< old << trackItems[trackNodes[i]->trItemRef[j]]->getTrackPosition();
+            old = trackItems[trackNodes[i]->trItemRef[j]]->getTrackPosition();
+        }
+    }*/
+    //
+    //ErrorMessage *e = new ErrorMessage();
+    //ErrorMessagesLib::PushErrorMessage(e);
 }

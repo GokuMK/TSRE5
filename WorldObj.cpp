@@ -41,6 +41,10 @@
 
 TrackItemObj* WorldObj::pointer3d = NULL;
 
+void WorldObj::loadingFixes(){
+
+}
+
 int WorldObj::isTrackObj(QString sh) {
     if (sh == "signal") {
         return 1;

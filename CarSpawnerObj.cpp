@@ -25,6 +25,8 @@
 #include <QFile>
 #include "FileBuffer.h"
 #include "ReadFile.h"
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -732,7 +734,9 @@ void CarSpawnerObj::setCarListName(QString val){
 void CarSpawnerObj::save(QTextStream* out) {
     if (!loaded) return;
     QString flags = ParserX::MakeFlagsString(this->staticFlags);
-
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
+    
     *(out) << "	CarSpawner (\n";
     *(out) << "		UiD ( " << this->UiD << " )\n";
     *(out) << "		CarFrequency ( " << this->carFrequency << " )\n";

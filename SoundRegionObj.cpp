@@ -376,6 +376,8 @@ int SoundRegionObj::getSoundregionTrackType(){
 void SoundRegionObj::save(QTextStream* out){
     if (!loaded) return;
     if (jestPQ < 2) return;
+    if(Game::useOnlyPositiveQuaternions)
+        Quat::makePositive(this->qDirection);
     
 *(out) << "	Soundregion (\n";
     

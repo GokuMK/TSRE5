@@ -34,6 +34,8 @@
 #include "TS.h"
 #include "GeoCoordinates.h"
 #include "GroupObj.h"
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
 
 Tile::Tile() {
     modified = false;
@@ -84,10 +86,13 @@ void Tile::wczytajObiekty() {
     for (auto it = obiekty.begin(); it != obiekty.end(); ++it) {
         //console.log(obj.type);
         WorldObj* obj = (WorldObj*) it->second;
-        if(obj == NULL) continue;
+        if(obj == NULL) 
+            continue;
         obj->load(x, z);
         if(obj->UiD < 1000000)
             if(obj->UiD > maxUiD) maxUiD = obj->UiD;
+        
+        obj->loadingFixes();
     }
     //qDebug() << "ok";
     loaded = 1;
