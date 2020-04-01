@@ -109,6 +109,7 @@ public:
     static float* rotateX(float *out, float *a, float rad);
     static float* rotateY(float *out, float *a, float rad);
     static float* rotateZ(float *out, float *a, float rad);
+    static float* makePositive(float *out);
 };
 
 class Mat4 {

@@ -837,6 +837,17 @@ float* Vec4::copy(float* out, float* a) {
     out[3] = a[3];
     return out; 
 };
+
+float* Quat::makePositive(float* out){
+    if(out[3] < 0){
+        out[0] = -out[0];
+        out[1] = -out[1];
+        out[2] = -out[2];
+        out[3] = -out[3];
+    }
+    return out;
+}
+
 /**
  * Creates a new, empty quaternion
  * @returns {vec4} 
