@@ -38,6 +38,7 @@ public slots:
     void pasteFEnabled();
     void rotYEnabled();
     void transformEnabled();
+    void rtransformEnabled();
     void resetRotEnabled();
     void msg(QString name, QString val);
     

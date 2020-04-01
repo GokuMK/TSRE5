@@ -249,39 +249,20 @@ void ObjTools::routeLoaded(Route* a){
     QStringList hash2;
     QMapIterator<QString, QVector<Ref::RefItem>> i(route->ref->refItems);
     while (i.hasNext()) {
-    //for ( auto it = route->ref->refItems.begin(); it != route->ref->refItems.end(); ++it ){
-        //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
         i.next();
         hash.append(i.key());
-        //refClass.addItem(QString::fromStdString(it->first), QVariant(QString::fromStdString(it->first)));
-      //std::cout << " " << it->first << ":" << it->second;
     }
     hash.sort(Qt::CaseInsensitive);
     hash.removeDuplicates();
     refClass.addItems(hash);
     refClass.setMaxVisibleItems(35);
     refClass.view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    //trackList.clear();
-    /*TrackShape * track;
-    for (auto it = route->trackDB->tsection->shape.begin(); it != route->trackDB->tsection->shape.end(); ++it ){
-        track = it->second;
-        //qDebug() << track->filename;
-        if(track->filename.startsWith("a1t", Qt::CaseInsensitive) || track->filename.startsWith("a2t", Qt::CaseInsensitive) )
-            new QListWidgetItem ( track->filename, &trackList, track->id );
-        //refList.addItem(route->ref->refItems[text.toStdString()][it].description);
-        //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
-        //refClass.addItem(QString::fromStdString(it->first), QVariant(QString::fromStdString(it->first)));
-      //std::cout << " " << it->first << ":" << it->second;
-    }*/
 
     TrackShape * track;
-    //std::string hash;
-    //std::unordered_map<std::string, int> types;
-    //refTrack.setInsertPolicy(refTrack.InsertAlphabetically);
+
     hash.clear();
     hash2.clear();
-    //int i = 0;
-    //int a1ti = 0;
+
     QDir globalShapes(Game::root+"/global/shapes");
     QStringList globalShapesList;
     if(Game::ignoreMissingGlobalShapes)
@@ -303,7 +284,7 @@ void ObjTools::routeLoaded(Route* a){
             hash.append(track->filename.left(3).toLower());
         }
         Ref::RefItem item;
-        item.filename = track->filename;
+        item.filename.push_back(track->filename);
         item.description = track->filename;
         item.clas = "";
         item.type = "trackobj";
@@ -335,14 +316,11 @@ void ObjTools::routeLoaded(Route* a){
     QHashIterator<QString, SignalShape*> i2(Game::trackDB->sigCfg->signalShape);
     //if(Game::trackDB->sigCfg->signalShape.size() > 0)
     while (i2.hasNext()) {
-    //for ( auto it = route->ref->refItems.begin(); it != route->ref->refItems.end(); ++it ){
-        //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
         i2.next();
-    //for (auto it = Game::trackDB->sigCfg->signalShape.begin(); it != Game::trackDB->sigCfg->signalShape.end(); ++it ){
         signal = i2.value();
         if(signal == NULL) continue;
         Ref::RefItem item;
-        item.filename = signal->desc;
+        item.filename.push_back(signal->desc);
         item.description = signal->desc;
         item.clas = "signals";
         item.type = "signal";
@@ -351,7 +329,7 @@ void ObjTools::routeLoaded(Route* a){
     }
     for (int i = 0; i < ForestObj::forestList.size(); i++){
         Ref::RefItem item;
-        item.filename = ForestObj::forestList[i].name;
+        item.filename.push_back(ForestObj::forestList[i].name);
         item.description = ForestObj::forestList[i].name;
         item.clas = "forests";
         item.type = "forest";
@@ -362,7 +340,7 @@ void ObjTools::routeLoaded(Route* a){
         if(Game::trackDB->speedPostDAT->speedPost[i]->speedSignShapeCount <= 0)
             continue;
         Ref::RefItem item;
-        item.filename = Game::trackDB->speedPostDAT->speedPost[i]->name;
+        item.filename.push_back(Game::trackDB->speedPostDAT->speedPost[i]->name);
         item.description = Game::trackDB->speedPostDAT->speedPost[i]->name;
         item.clas = "speedsign";
         item.type = "speedpost";
@@ -373,7 +351,7 @@ void ObjTools::routeLoaded(Route* a){
         if(Game::trackDB->speedPostDAT->speedPost[i]->speedResumeSignShapeCount <= 0)
             continue;
         Ref::RefItem item;
-        item.filename = Game::trackDB->speedPostDAT->speedPost[i]->name;
+        item.filename.push_back(Game::trackDB->speedPostDAT->speedPost[i]->name);
         item.description = Game::trackDB->speedPostDAT->speedPost[i]->name;
         item.clas = "speedresume";
         item.type = "speedpost";
@@ -384,7 +362,7 @@ void ObjTools::routeLoaded(Route* a){
         if(Game::trackDB->speedPostDAT->speedPost[i]->speedWarningSignShapeCount <= 0)
             continue;
         Ref::RefItem item;
-        item.filename = Game::trackDB->speedPostDAT->speedPost[i]->name;
+        item.filename.push_back(Game::trackDB->speedPostDAT->speedPost[i]->name);
         item.description = Game::trackDB->speedPostDAT->speedPost[i]->name;
         item.clas = "speedwarning";
         item.type = "speedpost";
@@ -395,7 +373,7 @@ void ObjTools::routeLoaded(Route* a){
         if(Game::trackDB->speedPostDAT->speedPost[i]->milepostShapeCount <= 0)
             continue;
         Ref::RefItem item;
-        item.filename = Game::trackDB->speedPostDAT->speedPost[i]->name;
+        item.filename.push_back(Game::trackDB->speedPostDAT->speedPost[i]->name);
         item.description = Game::trackDB->speedPostDAT->speedPost[i]->name;
         item.clas = "milepost";
         item.type = "speedpost";
@@ -406,7 +384,7 @@ void ObjTools::routeLoaded(Route* a){
     foreach (SoundListItem* it, route->soundList->sources){
    //for (auto it = route->soundList->sources.constBegin(); it != route->soundList->sources.constEnd(); ++it ){
         Ref::RefItem item;
-        item.filename = it->name;
+        item.filename.push_back(it->name);
         item.description = it->name;
         item.clas = "sound sources";
         item.type = "soundsource";
@@ -416,7 +394,7 @@ void ObjTools::routeLoaded(Route* a){
     foreach (SoundListItem* it, route->soundList->regions){
     //for (auto it = route->soundList->regions.begin(); it != route->soundList->regions.end(); ++it ){
         Ref::RefItem item;
-        item.filename = it->name;
+        item.filename.push_back(it->name);
         item.description = it->name;
         item.clas = "sound regions";
         item.type = "soundregion";
@@ -425,7 +403,7 @@ void ObjTools::routeLoaded(Route* a){
     }
     
     Ref::RefItem item;
-    item.filename = "";
+    item.filename.push_back("");
     item.description = "Ruler";
     item.clas = "tsre tools";
     item.type = "ruler";
@@ -471,92 +449,21 @@ void ObjTools::refSearchSelected(const QString & text){
 }
 
 void ObjTools::refTrackSelected(const QString & text){
-    /*trackList.clear();
-    hideAllLists();
-    trackList.show();
-    TrackShape * track;
-    for (auto it = route->tsection->shape.begin(); it != route->tsection->shape.end(); ++it ){
-        track = it->second;
-        //qDebug() << track->filename;
-        if(track == NULL) continue;
-        if(track->filename.startsWith(text, Qt::CaseInsensitive) )
-            new QListWidgetItem ( track->filename, &trackList, track->id );
-        //refList.addItem(route->ref->refItems[text.toStdString()][it].description);
-        //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
-        //refClass.addItem(QString::fromStdString(it->first), QVariant(QString::fromStdString(it->first)));
-      //std::cout << " " << it->first << ":" << it->second;
-    }
-    trackList.sortItems(Qt::AscendingOrder);*/
+
     refList.clear();
     currentItemList.clear();
     for (int it = 0; it < route->ref->refItems[QString("#TDB#")+text].size(); ++it ){
-        //refList.addItem(route->ref->refItems[QString("#TDB#")+text][it].description);
         new QListWidgetItem ( route->ref->refItems[QString("#TDB#")+text][it].description, &refList, it );
         currentItemList.push_back(&route->ref->refItems[QString("#TDB#")+text][it]);
-        //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
-        //refClass.addItem(QString::fromStdString(it->first), QVariant(QString::fromStdString(it->first)));
-      //std::cout << " " << it->first << ":" << it->second;
     }
     refList.sortItems(Qt::AscendingOrder);
 }
 
 void ObjTools::refOtherSelected(const QString & text){
-    /*otherList.clear();
-    hideAllLists();
-    otherList.show();
-    if(text.toLower() == "signals"){
-        SignalShape * signal;
-        for (auto it = Game::trackDB->sigCfg->signalShape.begin(); it != Game::trackDB->sigCfg->signalShape.end(); ++it ){
-            signal = it->second;
-            if(signal == NULL) continue;
-            new QListWidgetItem ( signal->desc, &otherList, signal->listId );
-        }
-    }
-    if(text.toLower() == "forests"){
-        for (int i = 0; i < ForestObj::forestList.size(); i++){
-            new QListWidgetItem ( ForestObj::forestList[i].name, &otherList, i );
-        }
-    }
-    if(text.toLower() == "speedsign"){
-        for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
-            if(Game::trackDB->speedPostDAT->speedPost[i]->speedSignShapeCount > 0)
-                new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i]->name, &otherList, i*1000+0 );
-        }
-    }
-    if(text.toLower() == "speedresume"){
-        for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
-            if(Game::trackDB->speedPostDAT->speedPost[i]->speedResumeSignShapeCount > 0)
-                new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i]->name, &otherList, i*1000+1 );
-        }
-    }
-    if(text.toLower() == "speedwarning"){
-        for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
-            if(Game::trackDB->speedPostDAT->speedPost[i]->speedWarningSignShapeCount > 0)
-                new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i]->name, &otherList, i*1000+2 );
-        }
-    }
-    if(text.toLower() == "milepost"){
-        for (int i = 0; i < Game::trackDB->speedPostDAT->speedPost.size(); i++){
-            if(Game::trackDB->speedPostDAT->speedPost[i]->milepostShapeCount > 0)
-                new QListWidgetItem ( Game::trackDB->speedPostDAT->speedPost[i]->name, &otherList, i*1000+3 );
-        }
-    }
-    if(text.toLower() == "sound sources"){
-        for (auto it = route->soundList->sources.begin(); it != route->soundList->sources.end(); ++it ){
-            new QListWidgetItem ( it->second->name, &otherList, it->second->id );
-        }
-    }
-    if(text.toLower() == "sound regions"){
-        for (auto it = route->soundList->regions.begin(); it != route->soundList->regions.end(); ++it ){
-            new QListWidgetItem ( it->second->name, &otherList, it->second->id );
-        }
-    }
-    otherList.sortItems(Qt::AscendingOrder);*/
-    
+
     refList.clear();
     currentItemList.clear();
     for (int it = 0; it < route->ref->refItems[QString("#TSRE#")+text.toLower()].size(); ++it ){
-        //refList.addItem(route->ref->refItems[QString("#TSRE#")+text][it].description);
         new QListWidgetItem ( route->ref->refItems[QString("#TSRE#")+text.toLower()][it].description, &refList, it );
         currentItemList.push_back(&route->ref->refItems[QString("#TSRE#")+text.toLower()][it]);
     }
@@ -613,8 +520,8 @@ void ObjTools::itemSelected(Ref::RefItem* item){
     QString text;
     if(item->description.length() > 1) 
         text = item->description;
-    else if (item->filename.length() > 1)
-        text = item->filename;
+    else if (item->getShapeName().length() > 1)
+        text = item->getShapeName();
     else
         text = item->type;
     

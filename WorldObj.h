@@ -163,6 +163,7 @@ public:
     virtual bool isInternalLodControl();
     virtual void setInternalLodControl(bool val);
     virtual void loadingFixes();
+    virtual void randomTransform(Ref::RandomTransformation * transformation);
     virtual int updateTrackSectionInfo(QHash<int, int> shapes, QHash<int, int> sections);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 protected:

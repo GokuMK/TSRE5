@@ -427,7 +427,7 @@ bool TrackObj::getBoxPoints(QVector<float>& points){
 Ref::RefItem* TrackObj::getRefInfo(){
     Ref::RefItem* r = new Ref::RefItem();
     r->type = this->type;
-    r->filename = this->fileName;
+    r->filename.push_back(this->fileName);
     r->value = this->sectionIdx;
     r->staticFlags = this->staticFlags;
     return r;

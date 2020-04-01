@@ -150,7 +150,7 @@ void TransferObj::set(QString sh, FileBuffer* data) {
 Ref::RefItem* TransferObj::getRefInfo(){
     Ref::RefItem* r = new Ref::RefItem();
     r->type = this->type;
-    r->filename = this->texture;
+    r->filename.push_back(this->texture);
     
     long long int val1 = this->width*1000;
     long long int val2 = this->height*1000;

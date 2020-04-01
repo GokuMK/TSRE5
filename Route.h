@@ -59,6 +59,7 @@ public:
     Route();
     Route(const Route& orig);
     virtual ~Route();
+    void loadAddons();
     WorldObj* getObj(int x, int z, int id);
     WorldObj* findNearestObj(int x, int z, float *pos);
     Tile * requestTile(int x, int z);

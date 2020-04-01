@@ -231,7 +231,7 @@ void ForestObj::set(QString sh, FileBuffer* data) {
 Ref::RefItem* ForestObj::getRefInfo(){
     Ref::RefItem* r = new Ref::RefItem();
     r->type = type;
-    r->filename = treeTexture;
+    r->filename.push_back(treeTexture);
     
     r->value       = (long long int)this->GetListIdByTexture(treeTexture) & 0xFFFF;
     r->value      |= ((long long int)areaX & 0xFFF) << 16;

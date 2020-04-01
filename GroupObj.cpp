@@ -190,6 +190,12 @@ void GroupObj::translate(float px, float py, float pz){
     }
 }
 
+void GroupObj::randomTransform(Ref::RandomTransformation* transformation){
+    for(int i = 0; i < this->objects.size(); i++){
+        this->objects[i]->randomTransform(transformation);
+    }
+}
+
 void GroupObj::rotate(float x, float y, float z){
     if(individualRotation){
         for(int i = 0; i < this->objects.size(); i++){

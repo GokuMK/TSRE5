@@ -477,8 +477,9 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
         return NULL;
     }
 
+    QString itemShapeName = itemData->getNextShapeName();
     nowy->set("ref_class", itemData->clas);
-    nowy->set("ref_filename", itemData->filename);
+    nowy->set("ref_filename", itemShapeName);
     nowy->set("ref_value", itemData->value);
     if(itemData->staticFlags != 0)
         nowy->set("staticflags", itemData->staticFlags);
@@ -502,9 +503,12 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
         nowy->UiD = ++maxUiDWS;
     else
         nowy->UiD = ++maxUiD;
-    qDebug() << itemData->type << " " << itemData->filename << nowy->UiD;
+    qDebug() << itemData->type << " " << itemShapeName << nowy->UiD;
     //nowy->fileName = itemData->filename;
     nowy->load(x, z);
+    
+    if(itemData->randomTransformation != NULL)
+        nowy->randomTransform(itemData->randomTransformation);
     
     obiekty[jestObiektow++] = nowy;
     //qDebug() << obiekty[jestObiektow-1]->qDirection[3];

@@ -150,7 +150,6 @@ void Eng::load(){
     file->close();
     data->toUtf16();
     data->skipBOM();
-    //ParserX::NextLine(data);
     QString loadedPath;
     
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {

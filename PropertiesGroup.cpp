@@ -12,6 +12,7 @@
 #include "GroupObj.h"
 #include "ParserX.h"
 #include "Game.h"
+#include "RandomTransformWorldObjDialog.h"
 
 PropertiesGroup::PropertiesGroup() {
     QVBoxLayout *vbox = new QVBoxLayout;
@@ -70,6 +71,9 @@ PropertiesGroup::PropertiesGroup() {
     QPushButton *transform = new QPushButton("Transform ...", this);
     QObject::connect(transform, SIGNAL(released()),
                       this, SLOT(transformEnabled()));
+    QPushButton *rtransform = new QPushButton("Random Transform ...", this);
+    QObject::connect(rtransform, SIGNAL(released()),
+                      this, SLOT(rtransformEnabled()));
     chSeparateRotation.setText("Separate Rotation");
     QObject::connect(&chSeparateRotation, SIGNAL(stateChanged(int)),
                       this, SLOT(chIndividualRotationEdited(int)));
@@ -83,7 +87,8 @@ PropertiesGroup::PropertiesGroup() {
     posRotList->addWidget(resetQrot, 3, 0);
     posRotList->addWidget(qRot90, 3, 1);
     posRotList->addWidget(transform, 4, 0, 1, 2);
-    posRotList->addWidget(&chSeparateRotation, 5, 0, 1, 2);
+    posRotList->addWidget(rtransform, 5, 0, 1, 2);
+    posRotList->addWidget(&chSeparateRotation, 6, 0, 1, 2);
     vbox->addItem(posRotList);
     
     label = new QLabel("Detail Level:");

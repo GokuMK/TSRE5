@@ -473,8 +473,6 @@ int MstsSoundDefinition::AddDefinition(QString path, QString name){
     //console.log(pathid);
     QMapIterator<int, MstsSoundDefinition*> i(Definitions);
     while (i.hasNext()) {
-    //for ( auto it = route->ref->refItems.begin(); it != route->ref->refItems.end(); ++it ){
-        //qDebug() << QString::fromStdString(it->first) << " " << it->second.size();
         i.next();
         if(i.value() == NULL) continue;
         if (i.value()->pathid.length() == pathid.length())

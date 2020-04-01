@@ -237,17 +237,17 @@ WorldObj* WorldObj::createObj(QString sh) {
 
 QString WorldObj::getResPath(Ref::RefItem* sh) {
     if (sh->type == "static") {
-        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->filename;
+        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->getShapeName();
     } else if (sh->type == "signal") {
-        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->filename;
+        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->getShapeName();
     } else if (sh->type == "speedpost") {
-        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->filename;
+        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->getShapeName();
     } else if (sh->type == "trackobj") {
-        return Game::root + "/global/shapes/"+sh->filename;
+        return Game::root + "/global/shapes/"+sh->getShapeName();
     } else if (sh->type == "gantry") {
-        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->filename;
+        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->getShapeName();
     } else if (sh->type == "collideobject") {
-        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->filename;
+        return Game::root + "/routes/" + Game::route + "/shapes/"+sh->getShapeName();
     } else {
         return "";
     }
@@ -584,6 +584,46 @@ void WorldObj::translate(float px, float py, float pz){
     setMartix();
 }
 
+void WorldObj::randomTransform(Ref::RandomTransformation * transformation){
+    if((transformation->reX - transformation->rbX) != 0){
+        int range = abs(transformation->reX - transformation->rbX);
+        float angle = (M_PI*(transformation->rbX + (std::rand()%range)))/180.0;
+        Quat::rotateX(this->qDirection, this->qDirection, angle);
+    }
+    if((transformation->reY - transformation->rbY) != 0){
+        int range = abs(transformation->reY - transformation->rbY);
+        float angle = (M_PI*(transformation->rbY + (std::rand()%range)))/180.0;
+        Quat::rotateY(this->qDirection, this->qDirection, angle);
+    }
+    if((transformation->reZ - transformation->rbZ) != 0){
+        int range = abs(transformation->reZ - transformation->rbZ);
+        float angle = (M_PI*(transformation->rbZ + (std::rand()%range)))/180.0;
+        Quat::rotateZ(this->qDirection, this->qDirection, angle);
+    }
+    ///
+    if((transformation->tbX - transformation->teX) != 0){
+        int range = abs(transformation->teX - transformation->tbX);
+        float translation = transformation->tbX + ((float)((std::rand()%1000))/1000)*range;
+        this->position[0] += translation;
+        this->placedAtPosition[0] = this->position[0];
+    }
+    if((transformation->tbY - transformation->teY) != 0){
+        float range = abs(transformation->teY - transformation->tbY);
+        float translation = transformation->tbY + ((float)((std::rand()%1000))/1000)*range;
+        this->position[1] += translation;
+        this->placedAtPosition[1] = this->position[1];
+    }
+    if((transformation->tbZ - transformation->teZ) != 0){
+        float range = abs(transformation->teZ - transformation->tbZ);
+        float translation = transformation->tbZ + ((float)((std::rand()%1000))/1000)*range;
+        this->position[2] += translation;
+        this->placedAtPosition[2] = this->position[2];
+    }
+    if(matrix3x3 != NULL) matrix3x3 = NULL;
+    this->modified = true;
+    setMartix();
+}
+
 void WorldObj::rotate(float x, float y, float z){
     this->tRotation[0] += x;
     this->tRotation[1] += y;
@@ -660,7 +700,7 @@ void WorldObj::save(QTextStream* out){
 Ref::RefItem* WorldObj::getRefInfo(){
     Ref::RefItem* r = new Ref::RefItem();
     r->type = this->type;
-    r->filename = this->fileName;
+    r->filename.push_back(this->fileName);
     r->staticFlags = this->staticFlags;
     return r;
 }

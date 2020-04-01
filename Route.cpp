@@ -114,7 +114,8 @@ Route::Route() {
     this->roadDB = new TDB(tsection, true);
     Game::trackDB = this->trackDB;
     Game::roadDB = this->roadDB;
-    this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
+    
+    loadAddons();
 
     loadMkrList();
     createMkrPlaces();
@@ -153,6 +154,26 @@ Route::Route(const Route& orig) {
 }
 
 Route::~Route() {
+}
+
+void Route::loadAddons(){
+    this->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
+    
+    QString dirFile = Game::root + "/routes/" + Game::route + "/addons";
+    QDir aDir(dirFile);
+    if(!aDir.exists()){
+        qDebug() << dirFile;
+        qDebug() << "# No Addons";
+        return;
+    }
+        
+    aDir.setFilter(QDir::Files);
+    aDir.setNameFilters(QStringList()<<"*.ref");
+    foreach(QString file, aDir.entryList()){
+        //qDebug()<< dirFile + "/" + file;
+        this->ref->loadFile(dirFile + "/" + file);
+    }
+
 }
 
 void Route::checkRouteDatabase(){

@@ -11,6 +11,7 @@
 #include "PropertiesAbstract.h"
 #include "WorldObj.h"
 #include "TransformWorldObjDialog.h"
+#include "RandomTransformWorldObjDialog.h"
 #include "GLMatrix.h"
 #include "Undo.h"
 
@@ -193,5 +194,17 @@ void PropertiesAbstract::transformEnabled(){
             worldObj->modified = true;
             worldObj->setMartix();
         }
+    }
+}
+
+void PropertiesAbstract::rtransformEnabled(){
+    if(worldObj == NULL)
+        return;
+    RandomTransformWorldObjDialog transformWindow;
+    transformWindow.exec();
+    //qDebug() << waterWindow->changed;
+    if(transformWindow.isOk){
+        Undo::SinglePushWorldObjData(worldObj);
+        worldObj->randomTransform(transformWindow.getTransform());
     }
 }

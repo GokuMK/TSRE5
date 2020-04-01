@@ -731,7 +731,7 @@ int SignalObj::getDefaultDetailLevel(){
 Ref::RefItem* SignalObj::getRefInfo(){
     Ref::RefItem* r = new Ref::RefItem();
     r->type = this->type;
-    r->filename = this->fileName;
+    r->filename.push_back(this->fileName);
     r->staticFlags = this->staticFlags;
     r->value = this->signalShape->listId;
     return r;
