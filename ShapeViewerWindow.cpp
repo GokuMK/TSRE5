@@ -88,6 +88,9 @@ ShapeViewerWindow::ShapeViewerWindow() : QMainWindow() {
     fNew = new QAction(tr("&Open"), this); 
     fileMenu->addAction(fNew);
     QObject::connect(fNew, SIGNAL(triggered(bool)), this, SLOT(openFileEnabled()));
+    fReload = new QAction(tr("&Reload"), this); 
+    fileMenu->addAction(fReload);
+    QObject::connect(fReload, SIGNAL(triggered(bool)), this, SLOT(reloadFileEnabled()));
     fExit = new QAction(tr("&Exit"), this); 
     fileMenu->addAction(fExit);
     QObject::connect(fExit, SIGNAL(triggered(bool)), this, SLOT(close()));
@@ -195,6 +198,23 @@ void ShapeViewerWindow::vResetShapeViewSelected(){
 }
 
 ShapeViewerWindow::~ShapeViewerWindow() {
+}
+
+void ShapeViewerWindow::reloadFileEnabled(){
+    if(currentItemType == "shape"){
+        if(currentShape == NULL)
+            return;
+        currentShape->reload();
+    }
+    if(currentItemType == "eng"){
+        if(currentEng == NULL)
+            return;
+        currentEng->reload();
+    }
+    if(currentItemType == "con"){
+        if(currentCon == NULL)
+            return;
+    }
 }
 
 void ShapeViewerWindow::openFileEnabled(){
@@ -323,7 +343,7 @@ void ShapeViewerWindow::contentHierarchySelected(int id){
         glShapeWidget->showConSimple(con);
         currentCon = con;
     }
-    
+
     updateTextureInfo(false);
 }
 

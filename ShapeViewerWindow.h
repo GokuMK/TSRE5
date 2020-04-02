@@ -41,6 +41,7 @@ public:
 public slots:
     void about();
     void openFileEnabled();
+    void reloadFileEnabled();
     void updateTextureInfo();
     void contentHierarchySelected(int id);
     void dirFilesSelected(QString file);
@@ -75,6 +76,7 @@ private:
 
     QAction *fSave;
     QAction *fNew;
+    QAction *fReload;
     QAction *fExit;
     QAction *vHierarchyView;
     QAction *vTexturesView;
