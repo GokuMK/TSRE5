@@ -60,12 +60,15 @@ public:
     WorldObj* placeObject(WorldObj* obj);
     WorldObj* placeObject(float* p, Ref::RefItem* itemData);
     WorldObj* placeObject(float* p, float* q, Ref::RefItem* itemData, float* tpos = NULL);
+    void fillWorldObjectsByTrackItemId(QVector<WorldObj*> &objects, int tdbId, int id);
+    void fillWorldObjectsByTrackItemIds(QHash<int, QVector<WorldObj*>> &objects, int tdbId);
     void transalteObj(float px, float py, float pz, int uid);
     void initNew();
     void updateTerrainObjects();
     float getNearestSnapablePosition(float *pos, float *quat, int uid = -1);
     void updateSim(float deltaTime);
     void findSimilar(WorldObj* obj, GroupObj* group);
+    void checkForErrors();
     void render();
     void render(float *  playerT, float* playerW, float* target, float fov, int renderMode);
     //void renderWS(float *  playerT, float* playerW, float* target, float fov, int renderMode);

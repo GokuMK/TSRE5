@@ -107,7 +107,7 @@ Route::Route() {
         return;
     
     if(Game::loadAllWFiles){
-        preloadWFiles();
+        preloadWFiles(true);
     }
 
     this->trackDB = new TDB(tsection, false);
@@ -208,7 +208,7 @@ bool Route::checkTrackSectionDatabase(){
     
     if(dialog.actionChoosen == "FIX"){
         Game::loadAllWFiles = true;
-        preloadWFiles();
+        preloadWFiles(true);
         // load tsection with autofix
         this->tsection = new TSectionDAT(true);
         // update ids inside W files
@@ -415,7 +415,7 @@ void Route::updateSim(float *playerT, float deltaTime){
     }
 }
 
-void Route::preloadWFiles(){
+void Route::preloadWFiles(bool gui){
     Tile *tTile;
     
     QString path = Game::root + "/routes/" + Game::route + "/world";
@@ -430,7 +430,16 @@ void Route::preloadWFiles(){
     }
         
     int WX = 0, WZ = 0;
-        
+    unsigned long long timeNow = QDateTime::currentMSecsSinceEpoch();
+    QProgressDialog *progress = NULL;
+    if(gui){
+        progress = new QProgressDialog("Loading All World Files ...", "", 0, dir.entryList().size());
+        progress->setWindowModality(Qt::WindowModal);
+        progress->setCancelButton(NULL);
+        progress->setWindowFlags(Qt::CustomizeWindowHint);
+    }
+    
+    int i = 0;
     foreach(QString wfile, dir.entryList()){
         if(wfile.length() != 17){
             qDebug() << "# W File undefined name " << wfile;
@@ -445,8 +454,13 @@ void Route::preloadWFiles(){
             qDebug() << wxString << wzString << "-" << WX << WZ;
             tile[(WX)*10000 + WZ] = new Tile(WX, WZ);
         }
+        if(progress != NULL)
+            progress->setValue((++i));
     }
 
+    qDebug() << "#W Files preloaded: " << (QDateTime::currentMSecsSinceEpoch() - timeNow)/1000<< "s";
+    delete progress;
+    
 }
 
 // Use this function to init W files if loaded before route data.
@@ -1231,6 +1245,24 @@ WorldObj* Route::autoPlaceObject(int x, int z, float* p, int mode) {
 
     return NULL;
     
+}
+
+void Route::fillWorldObjectsByTrackItemIds(QHash<int,QVector<WorldObj*>> &objects, int tdbId){
+    foreach (Tile* tTile, tile){
+        if (tTile == NULL) continue;
+        if (tTile->loaded == 1) {
+            tTile->fillWorldObjectsByTrackItemIds(objects, tdbId);
+        }
+    }
+}
+
+void Route::fillWorldObjectsByTrackItemId(QVector<WorldObj*> &objects, int tdbId, int id){
+    foreach (Tile* tTile, tile){
+        if (tTile == NULL) continue;
+        if (tTile->loaded == 1) {
+            tTile->fillWorldObjectsByTrackItemId(objects, tdbId, id);
+        }
+    }
 }
 
 void Route::findSimilar(WorldObj* obj, GroupObj* group, float *playerT, int tileRadius){

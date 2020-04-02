@@ -131,6 +131,25 @@ void SignalObj::deleteTrItems(){
     }
 }
 
+bool SignalObj::containsTrackItem(int tdbId, int id){
+    for(int i = 0; i < 32; i++){
+        if(this->signalUnit[i].tdbId != tdbId)
+            continue;
+        if(this->signalUnit[i].itemId == id)
+            return true;
+    }
+    return false;
+}
+
+void SignalObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    for(int i = 0; i < 32; i++){
+        if(this->signalUnit[i].tdbId != tdbId)
+            continue;
+        ids.push_back(this->signalUnit[i].itemId);
+    }
+
+}
+
 void SignalObj::initTrItems(float* tpos){
     if(tpos == NULL)
         return;

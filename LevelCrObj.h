@@ -26,6 +26,8 @@ public:
     WorldObj* clone();
     virtual ~LevelCrObj();
     void loadingFixes();
+    bool containsTrackItem(int tdbId, int id);
+    void getTrackItemIds(QVector<int> &ids, int tdbId);
     void load(int x, int y);
     void set(QString sh, QString val);
     void set(int sh, FileBuffer* data);

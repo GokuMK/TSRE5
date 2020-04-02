@@ -13,17 +13,27 @@
 
 #include <QString>
 
+class PreciseTileCoordinate;
+class GameObj;
+
 class ErrorMessage {
 public:
     QString type;
     QString source;
     QString description;
+    QString action;
+    PreciseTileCoordinate *coords = NULL;
+    GameObj* obj = NULL;
     ErrorMessage();
     ErrorMessage(QString type, QString source, QString description );
+    ErrorMessage(QString type, QString source, QString description, QString action );
     ErrorMessage(const ErrorMessage& orig);
+    void setLocation(PreciseTileCoordinate *c);
+    void setLocationXYZ(float wX, float wZ, float x, float y, float z);
+    void setObject(GameObj *o);
     virtual ~ErrorMessage();
 private:
-    
+
 };
 
 #endif /* ERRORMESSAGE_H */

@@ -46,6 +46,7 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/EngListWidget.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Environment.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ErrorMessage.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ErrorMessageProperties.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ErrorMessagesLib.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ErrorMessagesWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/FileBuffer.o
@@ -230,6 +231,7 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_EditFileNameDialog.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_EngInfoWidget.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_EngListWidget.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ErrorMessageProperties.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ErrorMessagesWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_GeoTools.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_HeightWindow.o

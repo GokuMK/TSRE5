@@ -99,6 +99,19 @@ void Tile::wczytajObiekty() {
     //save();
 }
 
+void Tile::checkForErrors(){
+    
+    if(Game::trackDB == NULL)
+        return;
+    
+    for (auto it = obiekty.begin(); it != obiekty.end(); ++it) {
+        WorldObj* obj = (WorldObj*) it->second;
+        if(obj == NULL) 
+            continue;
+        obj->checkForErrors();
+    }
+}
+
 // Use this function to init W file if loaded before route data.
 void Tile::loadInit(){
     for (auto it = obiekty.begin(); it != obiekty.end(); ++it) {
@@ -107,6 +120,8 @@ void Tile::loadInit(){
             continue;
         obj->loadInit();
     }
+    
+    checkForErrors();
 }
 
 void Tile::updateTrackSectionInfo(QHash<int, int> shapes, QHash<int, int> sect){
@@ -239,6 +254,7 @@ void Tile::load() {
     qDebug() << obiekty.size();
     loaded = 0;
     wczytajObiekty();
+    checkForErrors();
     loadWS();
     file->close();
     delete data;
@@ -659,6 +675,27 @@ void Tile::setModified(bool value){
         for (int i = 0; i < jestObiektow; i++) {
             if(obiekty[i] == NULL) continue;
             obiekty[i]->modified = false;
+        }
+    }
+}
+
+void Tile::fillWorldObjectsByTrackItemId(QVector<WorldObj*>& objects, int tdbId, int id){
+    for (int i = 0; i < jestObiektow; i++) {
+        if(obiekty[i] == NULL) continue;
+        
+        if(obiekty[i]->containsTrackItem(tdbId, id))
+            objects.push_back(obiekty[i]);
+    }
+}
+
+void Tile::fillWorldObjectsByTrackItemIds(QHash<int,QVector<WorldObj*> > &objects, int tdbId){
+    for (int i = 0; i < jestObiektow; i++) {
+        if(obiekty[i] == NULL) continue;
+        
+        QVector<int> ids;
+        obiekty[i]->getTrackItemIds(ids, tdbId);
+        foreach(int i, ids){
+            objects[i].push_back(obiekty[i]);
         }
     }
 }

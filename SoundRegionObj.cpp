@@ -182,6 +182,24 @@ void SoundRegionObj::deleteSelectedTrItem(){
     modified = true;
 }
 
+bool SoundRegionObj::containsTrackItem(int tdbId, int id){
+    for(int i = 0; i<this->trItemId.size()/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            if(this->trItemId[i*2+1] == id)
+                return true;
+        }
+    }
+    return false;
+}
+
+void SoundRegionObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    for(int i = 0; i<this->trItemId.size()/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            ids.push_back(this->trItemId[i*2+1]);
+        }
+    }
+}
+
 bool SoundRegionObj::select(int value){
     this->selectionValue = value;
     this->selected = true;

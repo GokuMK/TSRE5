@@ -74,6 +74,24 @@ bool PickupObj::isTrackItem(){
     return true;
 }
 
+bool PickupObj::containsTrackItem(int tdbId, int id){
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            if(this->trItemId[i*2+1] == id)
+                return true;
+        }
+    }
+    return false;
+}
+
+void PickupObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            ids.push_back(this->trItemId[i*2+1]);
+        }
+    }
+}
+
 void PickupObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
@@ -283,7 +301,7 @@ void PickupObj::renderTritems(GLUU* gluu, int selectionColor){
     int useSC;
 
     gluu->mvPushMatrix();
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 0 * (drawPosition[4] - this->x), drawPosition[1] + 1, -drawPosition[2] + 0 * (-drawPosition[5] - this->y));
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPosition[0] + 0 * (drawPosition[5] - this->x), drawPosition[1] + 1, -drawPosition[2] + 0 * (-drawPosition[6] - this->y));
     Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPosition[3]);
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);

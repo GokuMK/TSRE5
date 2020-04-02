@@ -29,6 +29,8 @@ public:
     bool isTrackItem();
     bool isSoundItem();
     void initTrItems(float* tpos);
+    bool containsTrackItem(int tdbId, int id);
+    void getTrackItemIds(QVector<int> &ids, int tdbId);
     void deleteTrItems();
     void load(int x, int y);
     void set(QString sh, long long int val);

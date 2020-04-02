@@ -65,6 +65,8 @@ public:
     void save(QTextStream* out);
     bool select(int value);
     bool isTrackItem();
+    bool containsTrackItem(int tdbId, int id);
+    void getTrackItemIds(QVector<int> &ids, int tdbId);
     void initTrItems(float* tpos);
     void setPosition(int x, int z, float* p);
     void translate(float px, float py, float pz);

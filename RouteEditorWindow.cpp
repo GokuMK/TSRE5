@@ -525,6 +525,12 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(activityTools, SIGNAL(jumpTo(PreciseTileCoordinate*)),
                       glWidget, SLOT(jumpTo(PreciseTileCoordinate*)));
     
+    QObject::connect(errorMessagesWindow, SIGNAL(jumpTo(PreciseTileCoordinate*)),
+                      glWidget, SLOT(jumpTo(PreciseTileCoordinate*)));
+    
+    QObject::connect(errorMessagesWindow, SIGNAL(selectObject(GameObj*)),
+                      glWidget, SLOT(objectSelected(GameObj*)));
+    
     QObject::connect(activityTools, SIGNAL(sendMsg(QString)), glWidget, SLOT(msg(QString)));
     
     QObject::connect(this, SIGNAL(reloadRefFile()),

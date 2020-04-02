@@ -25,7 +25,8 @@ public:
     
 private:
     TRitem* itemObj = NULL;
-
+    QLineEdit eItemType;
+    QLineEdit eItemId;
 };
 
 #endif	/* PROPERTIESTRACKITEM_H */

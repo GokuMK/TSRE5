@@ -76,13 +76,15 @@ public:
     void loadServices();
     void loadTraffic();
     void loadPaths();
-    void preloadWFiles();
+    void preloadWFiles(bool gui = false);
     void preloadWFilesInit();
     int newTile(int x, int z, bool forced = false);
     void reloadTile(int x, int z);
     void deleteObj(WorldObj* obj);
     void undoPlaceObj(int x, int y, int UiD);
     void removeTrackFromTDB(WorldObj* obj);
+    void fillWorldObjectsByTrackItemId(QVector<WorldObj*> &objects, int tdbId, int id);
+    void fillWorldObjectsByTrackItemIds(QHash<int, QVector<WorldObj*>> &objects, int tdbId);
     void findSimilar(WorldObj* obj, GroupObj* group, float *playerT, int tileRadius = 0);
     void nextDefaultEnd();
     void flipObject(WorldObj *obj);

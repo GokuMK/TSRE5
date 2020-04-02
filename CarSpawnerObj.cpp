@@ -124,6 +124,24 @@ CarSpawnerObj::CarSpawnerObj(const CarSpawnerObj& o) : WorldObj(o) {
     carspawnerListName = o.carspawnerListName;
 }
 
+bool CarSpawnerObj::containsTrackItem(int tdbId, int id){
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            if(this->trItemId[i*2+1] == id)
+                return true;
+        }
+    }
+    return false;
+}
+
+void CarSpawnerObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            ids.push_back(this->trItemId[i*2+1]);
+        }
+    }
+}
+
 WorldObj* CarSpawnerObj::clone(){
     return new CarSpawnerObj(*this);
 }
@@ -455,7 +473,6 @@ void CarSpawnerObj::updateSim(float deltaTime){
 };
 
 void CarSpawnerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
-    //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
     if(!this->loaded) 
         return;
     

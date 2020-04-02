@@ -25,12 +25,15 @@ public:
     WorldObj* clone();
     virtual ~PlatformObj();
     void load(int x, int y);
+    void checkForErrors();
     bool allowNew();
     void set(int sh, FileBuffer* val);
     void set(QString sh, FileBuffer* data);
     void save(QTextStream* out);
     bool select(int value);
     bool isTrackItem();
+    bool containsTrackItem(int tdbId, int id);
+    void getTrackItemIds(QVector<int> &ids, int tdbId);
     void initTrItems(float* tpos);
     void translate(float px, float py, float pz);
     void setPosition(int x, int z, float* p);

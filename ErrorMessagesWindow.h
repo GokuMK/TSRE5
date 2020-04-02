@@ -15,6 +15,10 @@
 #include <QtWidgets>
 #include <QMap>
 
+class ErrorMessageProperties;
+class PreciseTileCoordinate;
+class GameObj;
+
 class ErrorMessagesWindow : public QWidget {
     Q_OBJECT
 public:
@@ -25,12 +29,18 @@ public:
 public slots:
     void show();
     void hideEvent(QHideEvent *e);
+    void errorListSelected(QTreeWidgetItem* item, int column);
+    void jumpRequestReceived(PreciseTileCoordinate *c);
+    void selectRequestReceived(GameObj *o);
     
 signals:
     void windowClosed();
+    void jumpTo(PreciseTileCoordinate *c);
+    void selectObject(GameObj *o);
     
 private:
     QTreeWidget errorList;
+    ErrorMessageProperties *properties;
     
 };
 

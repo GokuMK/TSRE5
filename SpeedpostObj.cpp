@@ -78,6 +78,24 @@ void SpeedpostObj::loadingFixes(){
     }
 }
 
+bool SpeedpostObj::containsTrackItem(int tdbId, int id){
+    for(int i = 0; i<this->trItemId.size()/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            if(this->trItemId[i*2+1] == id)
+                return true;
+        }
+    }
+    return false;
+}
+
+void SpeedpostObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    for(int i = 0; i<this->trItemId.size()/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            ids.push_back(this->trItemId[i*2+1]);
+        }
+    }
+}
+
 void SpeedpostObj::load(int x, int y) {
     this->shape = Game::currentShapeLib->addShape(resPath +"/"+ fileName);
     this->x = x;

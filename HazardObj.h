@@ -25,6 +25,8 @@ public:
     virtual ~HazardObj();
     bool allowNew();
     bool isTrackItem();
+    bool containsTrackItem(int tdbId, int id);
+    void getTrackItemIds(QVector<int> &ids, int tdbId);
     void deleteTrItems();
     void initTrItems(float* tpos);
     void load(int x, int y);

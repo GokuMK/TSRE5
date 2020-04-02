@@ -150,6 +150,24 @@ void LevelCrObj::initTrItems(float* tpos){
     this->drawPosition = NULL;
 }
 
+bool LevelCrObj::containsTrackItem(int tdbId, int id){
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            if(this->trItemId[i*2+1] == id)
+                return true;
+        }
+    }
+    return false;
+}
+
+void LevelCrObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            ids.push_back(this->trItemId[i*2+1]);
+        }
+    }
+}
+
 void LevelCrObj::set(QString sh, QString val){
     if (sh == ("filename")) {
         fileName = val;

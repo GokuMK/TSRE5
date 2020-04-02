@@ -142,7 +142,7 @@ WorldObj* WorldObj::createObj(int sh) {
         (nowy)->resPath = Game::root + "/routes/" + Game::route + "/shapes";    
         (nowy)->typeID = (nowy)->soundregion;
     }*/ else {
-        qDebug() << " Unsupported WorldObj !!! " << sh;
+        qDebug() << "# Unsupported WorldObj !!! " << sh;
         //(*nowy) = new WorldObj();
         return NULL;
         //
@@ -325,6 +325,14 @@ bool WorldObj::isSoundItem(){
     return false;
 }
 
+bool WorldObj::containsTrackItem(int tdbId, int id){
+    return false;
+}
+
+void WorldObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    
+}
+
 bool WorldObj::hasLinePoints(){
     return false;
 }
@@ -343,6 +351,10 @@ void WorldObj::setInternalLodControl(bool val){
 
 // Use this function to init object if loaded before route data.
 void WorldObj::loadInit(){
+
+}
+
+void WorldObj::checkForErrors(){
     
 }
 

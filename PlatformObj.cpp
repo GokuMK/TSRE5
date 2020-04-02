@@ -25,6 +25,8 @@
 #include <QFile>
 #include "FileBuffer.h"
 #include "ReadFile.h"
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -232,6 +234,24 @@ void PlatformObj::deleteTrItems(){
     }
 }
 
+bool PlatformObj::containsTrackItem(int tdbId, int id){
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            if(this->trItemId[i*2+1] == id)
+                return true;
+        }
+    }
+    return false;
+}
+
+void PlatformObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == tdbId){
+            ids.push_back(this->trItemId[i*2+1]);
+        }
+    }
+}
+
 int PlatformObj::getTrackBegItemId(){
     if(this->trItemIdCount < 2)
         return -1;
@@ -373,8 +393,49 @@ void PlatformObj::setDisabled(bool val){
     this->modified = true;
 }
 
+void PlatformObj::checkForErrors(){
+    if(!this->loaded) 
+        return;
+    
+    TDB* tdb = Game::trackDB;
+    if(tdb == NULL)
+        return;
+    
+    for(int i = 0; i < 2; i++){
+        int trItemId = this->trItemId[i*2+1];
+        
+        // Check If Track Item match this object.
+        TRitem *item = tdb->trackItems[trItemId];
+        if(item == NULL){
+            ErrorMessage *e = new ErrorMessage("error", 
+                "World", 
+                QString("Object '") + type + "' - reference to trackItem not found. UiD: " + QString::number(UiD) + ". ItemID: " + trItemId,
+                 "World Object requires Interactive Item that does not exist in Track DB. \n"
+            );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            continue;
+        }
+        
+        // Check Track Node Location
+        int id = tdb->findTrItemNodeId(trItemId);
+        if (id < 1) {
+            
+            return;
+        }
+        
+        // Check World Location
+        float data[7];
+        bool ok = tdb->getDrawPositionOnTrNode(data, id, item->getTrackPosition());
+        if(!ok){
+            
+            return;
+        }
+    }
+}
+
 void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
-    //Vector3f *pos = tdb->getDrawPositionOnTrNode(playerT, id, this->trItemSData1);
     if(!this->loaded) 
         return;
     
@@ -471,7 +532,7 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     //(-(float)(atan((drawPositionB[1]-drawPositionE[1])/(dlugosc))
     int useSC;
     gluu->mvPushMatrix();
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[0] + 0 * (drawPositionB[4] - this->x), drawPositionB[1] + 1, -drawPositionB[2] + 0 * (-drawPositionB[5] - this->y));
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[0] + 0 * (drawPositionB[5] - this->x), drawPositionB[1] + 1, -drawPositionB[2] + 0 * (-drawPositionB[6] - this->y));
     Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionB[3] + rotB*M_PI);
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);
@@ -485,7 +546,7 @@ void PlatformObj::renderTritems(GLUU* gluu, int selectionColor){
     gluu->mvPopMatrix();
     
     gluu->mvPushMatrix();
-    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[0] + 0 * (drawPositionE[4] - this->x), drawPositionE[1] + 1, -drawPositionE[2] + 0 * (-drawPositionE[5] - this->y));
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[0] + 0 * (drawPositionE[5] - this->x), drawPositionE[1] + 1, -drawPositionE[2] + 0 * (-drawPositionE[6] - this->y));
     Mat4::rotateY(gluu->mvMatrix, gluu->mvMatrix, drawPositionE[3] + rotE*M_PI);
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 2048*(this->trItemRData[3] - playerT[0] ), this->trItemRData[1]+2, -this->trItemRData[2] + 2048*(-this->trItemRData[4] - playerT[1]));
     //Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, this->trItemRData[0] + 0, this->trItemRData[1]+0, -this->trItemRData[2] + 0);

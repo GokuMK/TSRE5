@@ -2077,8 +2077,10 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
 
 bool TDB::getDrawPositionOnTrNode(float* out, int id, float metry, float *sElev){
     TRnode* n = trackNodes[id];
-    if (n == NULL) return false;
-    if (n->typ != 1) return false;
+    if (n == NULL) 
+        return false;
+    if (n->typ != 1) 
+        return false;
     
     float sectionLength = 0;
     float length = 0;
@@ -3465,19 +3467,97 @@ void TDB::getUsedTileList(QMap<int, QPair<int, int>*> &tileList, int radius, int
 }
 
 void TDB::checkDatabase(){
+    // Variables
+    QHash<int, QVector<WorldObj*>> objects;
+    int tdbId = 0;
+    float *drawPosition = new float[7];
+    bool isPosition = false;
+    QString tdbName = "TrackDB";
+    if(this->road){
+        tdbId = 1;
+        tdbName = "RoadDB";
+    }
+    // Build WorldFile data
+    if(Game::loadAllWFiles){
+        Game::currentRoute->fillWorldObjectsByTrackItemIds(objects, tdbId);
+    }
+        
 
-    int tid = 0;
-    TRnode* n;
     for (int i = 0; i < this->iTRitems; i++) {
         if(trackItems[i] == NULL) 
             continue;
         
-        if(Game::currentRoute == NULL)
-            continue;
+        isPosition = false;
         
-        //ErrorMessage *e = new ErrorMessage();
-        //ErrorMessagesLib::PushErrorMessage(e);
+        if (trackItems[i]->type != "emptyitem"){
+            int id = findTrItemNodeId(i);
+            if (id < 1) {
+                ErrorMessage *e = new ErrorMessage("error", tdbName, QString("Item has no trackNode: ") + QString::number(i) + ". Type: " + trackItems[i]->type );
+                ErrorMessagesLib::PushErrorMessage(e);
+            }
+
+            if(id >= 0 ){
+                isPosition = getDrawPositionOnTrNode(drawPosition, id, trackItems[i]->getTrackPosition());
+                if(!isPosition){
+                    ErrorMessage *e = new ErrorMessage("error", tdbName, QString("Item has no position: ") + QString::number(i) + ". Type: " + trackItems[i]->type );
+                    ErrorMessagesLib::PushErrorMessage(e);
+                }
+            }
+        }
         
+        if(Game::loadAllWFiles){
+            if (trackItems[i]->type == "crossoveritem" || trackItems[i]->type == "emptyitem"){
+                if(objects[i].size() > 0){
+                    ErrorMessage *e = new ErrorMessage(
+                            "error", 
+                            tdbName, 
+                            QString("Item wrongly referenced in W files. Id: ") + QString::number(i) + ". Type: " + trackItems[i]->type
+                            );
+                    if(isPosition)
+                        e->setLocationXYZ(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[1], drawPosition[2]);
+                    ErrorMessagesLib::PushErrorMessage(e);
+                }
+            } else {
+                if(objects[i].size() == 0){
+                    ErrorMessage *e = new ErrorMessage("error", 
+                            tdbName, 
+                            QString("Item not referenced in W files. Id: ") + QString::number(i) + ". Type: " + trackItems[i]->type,
+                            "Interactive Item was not found in World Tile database. \n"
+                            "Enable 'TrackDB Items' View. "
+                            "Jump to it's location and check if it should be removed, "
+                            "or if World File is broken."
+                            );
+                    e->setObject((GameObj*)trackItems[i]);
+                    if(isPosition)
+                        e->setLocationXYZ(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[1], drawPosition[2]);
+                    ErrorMessagesLib::PushErrorMessage(e);
+                }
+            }
+        }
+    }
+
+        /*if(Game::loadAllWFiles){
+            if(Game::currentRoute == NULL)
+                continue;
+            
+            QVector<WorldObj*> objects;
+            int tdbId = 0;
+            if(this->road)
+                tdbId = 1;
+            Game::currentRoute->fillWorldObjectsByTrackItemId(objects, tdbId, i);
+            
+            if (trackItems[i]->type == "crossoveritem" || trackItems[i]->type == "emptyitem"){
+                if(objects.size() > 0){
+                    ErrorMessage *e = new ErrorMessage("error", "TrackDB", QString("Track Item wrongly referenced in W files: ") + i + " type: " + trackItems[i]->type );
+                    ErrorMessagesLib::PushErrorMessage(e);
+                }
+            } else {
+                if(objects.size() == 0){
+                    ErrorMessage *e = new ErrorMessage("error", "TrackDB", QString("Track Item not referenced in W files: ") + i + " type: " + trackItems[i]->type );
+                    ErrorMessagesLib::PushErrorMessage(e);
+                }
+            }
+        }*/
         /*if(trackItems[i]->trSignalDir != NULL){
             for(int j = 0; j < trackItems[i]->trSignalDirs*4; j+=4){
                 tid = trackItems[i]->trSignalDir[j+0];
@@ -3487,8 +3567,6 @@ void TDB::checkDatabase(){
                 }
             }
         }*/
-    }
-
     
     /*for(int i = 1; i <= iTRnodes; i++){
         for(int j = 0; j < trackNodes[i]->iTri; j++){

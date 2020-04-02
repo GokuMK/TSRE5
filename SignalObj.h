@@ -46,6 +46,8 @@ public:
     void getLinkInfo(int *ids);
     bool isSubObjEnabled(int i);
     bool isJunctionAvailable(int i);
+    bool containsTrackItem(int tdbId, int id);
+    void getTrackItemIds(QVector<int> &ids, int tdbId);
     Ref::RefItem* getRefInfo();
     bool allowNew();
     bool isTrackItem();
