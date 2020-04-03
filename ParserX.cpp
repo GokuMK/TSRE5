@@ -583,6 +583,14 @@ float ParserX::NumberUnit(float x, unsigned short int &b, FileBuffer* bufor){
             b = bufor->getShort();
             //bufor->off++;
         }
+    } else if(b == 'h' || b == 'H'){
+        b = bufor->getShort();
+        //bufor->off++;
+        if(b == 'p' || b == 'P'){
+            x = x*0.745699872;
+            b = bufor->getShort();
+            //bufor->off++;
+        }
     }
         
     return x;
