@@ -179,7 +179,7 @@ void Route::loadAddons(){
 void Route::checkRouteDatabase(){
     trackDB->checkDatabase();
     roadDB->checkDatabase();
-
+    
 }
 
 bool Route::checkTrackSectionDatabase(){
@@ -218,9 +218,26 @@ bool Route::checkTrackSectionDatabase(){
                 tTile->updateTrackSectionInfo(tsection->autoFixedShapeIds, tsection->autoFixedSectionIds);
              }
         }
+        ErrorMessage *e = new ErrorMessage(
+            ErrorMessage::Type_Info, 
+            ErrorMessage::Source_Editor, 
+            QString("Route Track Section synced by TSRE. "),
+                    "TSRE made automatic conversion of route database to current Global."
+                    );
+        ErrorMessagesLib::PushErrorMessage(e);
+        
         
         return true;
     } 
+    ErrorMessage *e = new ErrorMessage(
+    ErrorMessage::Type_Error, 
+    ErrorMessage::Source_TDB, 
+    QString("Route Track Section database is out of sync with your Global database. "),
+            "Route Track Section isn't compatibile with your current Global database. \n"
+            "Check route installation for custom Global or convert Route using TSRE. \n"
+            "Editing route may cause fatal errors. Make sure that writing to TDB is disabled."
+        );
+    ErrorMessagesLib::PushErrorMessage(e);
     if(dialog.actionChoosen == "VIEW"){
         Game::writeTDB = false;
         return true;
@@ -437,6 +454,7 @@ void Route::preloadWFiles(bool gui){
         progress->setWindowModality(Qt::WindowModal);
         progress->setCancelButton(NULL);
         progress->setWindowFlags(Qt::CustomizeWindowHint);
+        progress->show();
     }
     
     int i = 0;
@@ -454,8 +472,10 @@ void Route::preloadWFiles(bool gui){
             qDebug() << wxString << wzString << "-" << WX << WZ;
             tile[(WX)*10000 + WZ] = new Tile(WX, WZ);
         }
-        if(progress != NULL)
+        if(progress != NULL){
             progress->setValue((++i));
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 50);
+        }
     }
 
     qDebug() << "#W Files preloaded: " << (QDateTime::currentMSecsSinceEpoch() - timeNow)/1000<< "s";

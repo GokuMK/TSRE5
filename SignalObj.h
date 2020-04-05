@@ -52,6 +52,7 @@ public:
     bool allowNew();
     bool isTrackItem();
     void initTrItems(float* tpos);
+    bool checkForErrors();
     void deleteTrItems();
     void enableSubObj(int i);
     void disableSubObj(int i);

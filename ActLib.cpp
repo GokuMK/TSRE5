@@ -18,6 +18,7 @@
 #include <QDir>
 #include "Game.h"
 #include <QProgressDialog>
+#include <QCoreApplication>
 
 int ActLib::jestact = 0;
 int ActLib::jestservice = 0;
@@ -255,8 +256,10 @@ int ActLib::LoadAllAct(QString gameRoot, bool gui){
     for(int i = 0; i < dirPaths.size(); i++){
         //qDebug() << path << dirFile <<"/"<< engfile;
         ActLib::AddAct(dirPaths[i],actPaths[i]);
-        if(progress != NULL)
+        if(progress != NULL){
             progress->setValue(i+1);
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 50);
+        }
     }
     
     qDebug() << "loaded";

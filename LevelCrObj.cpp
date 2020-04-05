@@ -70,7 +70,11 @@ void LevelCrObj::loadingFixes(){
     if(Game::useOnlyPositiveQuaternions){
         if(qDirection[3] < 0){
             Quat::makePositive(qDirection);
-            ErrorMessage *e = new ErrorMessage("info", "Editor", QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
+            ErrorMessage *e = new ErrorMessage(
+                    ErrorMessage::Type_Info, 
+                    ErrorMessage::Source_Editor, 
+                    QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) 
+                    );
             ErrorMessagesLib::PushErrorMessage(e);
             modified = true;
         }            
@@ -90,9 +94,55 @@ void LevelCrObj::load(int x, int y) {
     setMartix();
 }
 
+bool LevelCrObj::checkForErrors(){
+    TDB* tdb = Game::trackDB;
+    TDB* rdb = Game::roadDB;
+    TRitem *item = NULL;
+    
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == 0)
+            item = tdb->trackItems[this->trItemId[i*2+1]];  
+        else if(this->trItemId[i*2] == 1)
+            item = rdb->trackItems[this->trItemId[i*2+1]];
+        
+        if(item == NULL) {
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - reference to trackItem not found. UiD: " + QString::number(UiD) + ". ",
+                        "World Object requires Interactive Item that does not exist in Track DB. \n"
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+        if(item->type != "levelcritem"){
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced trackItem has wrong type. UiD: " + QString::number(UiD) + ". ",
+                        QString("World Object doesn't match TDB data. Is World Database and TDB out of sync? \n")+
+                        "Expected: levelcritem but found: "+item->type+" .\n"
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+    }
+    return true;
+}
+
 void LevelCrObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
+    
+    if(!checkForErrors()){
+        return;
+    }
+    
     for(int i = 0; i<this->trItemIdCount/2; i++){
         if(this->trItemId[i*2] == 0)
             tdb->deleteTrItem(this->trItemId[i*2+1]);

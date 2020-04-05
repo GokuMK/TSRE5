@@ -111,7 +111,7 @@ public:
     int findNearestPositionOnTDB(float* posT, float* pos, float* q = NULL, float* tpos = NULL);
     int findNearestPositionsOnTDB(float* posT, float * pos, QVector<TDB::IntersectionPoint> &points, float maxDistance = 10.0);
     void fillNearestSquaredDistanceToTDBXZ(float* posT, QVector<Vector4f> &points, float* bbox = NULL);
-    void deleteTrItem(int trid, WorldObj* wobj = NULL);
+    void deleteTrItem(int trid);
     void deleteTree(int x, int y, int UiD);
     void deleteTree(int d);
     int getEndpointType(int trid, int endp);

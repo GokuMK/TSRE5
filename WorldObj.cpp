@@ -354,8 +354,8 @@ void WorldObj::loadInit(){
 
 }
 
-void WorldObj::checkForErrors(){
-    
+bool WorldObj::checkForErrors(){
+    return true;
 }
 
 int WorldObj::updateTrackSectionInfo(QHash<int,int> shapes, QHash<int,int> sections){

@@ -17,9 +17,13 @@
 #include "GeoCoordinates.h"
 
 ErrorMessagesWindow::ErrorMessagesWindow(QWidget* parent) : QWidget(parent) {
+    brushes[(int)ErrorMessage::Type_Error] = QBrush(QColor(Game::StyleRedText));
+    brushes[(int)ErrorMessage::Type_Warning] = QBrush(QColor(200,200,0));
+    brushes[(int)ErrorMessage::Type_Info] = QBrush(QColor(Game::StyleGreenText));
+    brushes[1000] = QBrush(QColor(Game::StyleMainLabel));
     this->setWindowFlags(Qt::WindowType::Tool);
     //this->setFixedWidth(350);
-    this->setMinimumWidth(700);
+    this->setMinimumWidth(730);
     this->setFixedHeight(400);
     this->setWindowTitle(tr("Errors & Messages"));
     
@@ -39,10 +43,11 @@ ErrorMessagesWindow::ErrorMessagesWindow(QWidget* parent) : QWidget(parent) {
     //errorListLayout->addWidget(bNewActionEvent);
     //errorListLayout->addWidget(bDeleteActionEvent);
     QStringList list;
-    list.append("Id:");
+    list.append("ID:");
+    list.append("Time:");
     list.append("Type:");
     list.append("Source:");
-    list.append("Description:");
+    list.append("Message:");
     //list.append("Any:");
     //errorList.setFixedWidth(250);
     errorList.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -51,8 +56,9 @@ ErrorMessagesWindow::ErrorMessagesWindow(QWidget* parent) : QWidget(parent) {
     errorList.setRootIsDecorated(false);
     errorList.header()->resizeSection(0,30);    
     errorList.header()->resizeSection(1,50);    
-    errorList.header()->resizeSection(2,50);    
-    errorList.header()->resizeSection(3,500);    
+    errorList.header()->resizeSection(2,70);    
+    errorList.header()->resizeSection(3,50);    
+    errorList.header()->resizeSection(4,500);    
     //QHBoxLayout *v = new QHBoxLayout;
     //v->setSpacing(2);
     //v->setContentsMargins(1,1,1,1);
@@ -85,21 +91,30 @@ void ErrorMessagesWindow::refreshErrorList(){
     errorList.clear();
     QList<QTreeWidgetItem *> items;
     QStringList list;
-    
     for(int i = ErrorMessagesLib::ErrorMessages.size() - 1; i >= 0 ; i-- ){
         if(ErrorMessagesLib::ErrorMessages[i] == NULL)
             continue;
         
+        ErrorMessage *msg = ErrorMessagesLib::ErrorMessages[i];
         list.clear();
+        
+       //QTime time = QDateTime::fromMSecsSinceEpoch(msg->time).toString("HH:mm:ss");
+        //qDebug() << msg->time << time.isValid()<< time.toString();
         list.append(QString::number(i));
-        list.append(ErrorMessagesLib::ErrorMessages[i]->type);
-        list.append(ErrorMessagesLib::ErrorMessages[i]->source);
-        list.append(ErrorMessagesLib::ErrorMessages[i]->description);
+        list.append(QDateTime::fromMSecsSinceEpoch(msg->time).toString("HH:mm:ss"));
+        list.append(ErrorMessage::TypeNames[msg->type]);
+        list.append(ErrorMessage::SourceNames[msg->source]);
+        list.append(msg->description);
         QTreeWidgetItem *item = new QTreeWidgetItem((QTreeWidget*)0, list, i );
         //item->setCheckState(0, Qt::Unchecked);
         //item->setCheckState(1, Qt::Unchecked);
         //item->setCheckState(2, Qt::Unchecked);
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        item->setForeground(2, brushes[(int)msg->type]);
+        item->setForeground(3, brushes[1000]);
+        item->setTextAlignment(1, Qt::AlignCenter);
+        item->setTextAlignment(2, Qt::AlignCenter);
+        item->setTextAlignment(3, Qt::AlignCenter);
         items.append(item);
     }
     errorList.insertTopLevelItems(0, items);

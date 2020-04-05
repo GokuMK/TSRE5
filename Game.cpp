@@ -38,7 +38,7 @@ TerrainLib *Game::terrainLib = NULL;
 
 bool Game::UseWorkingDir = false;
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.6977";
+QString Game::AppVersion = "v0.698";
 QString Game::AppDataVersion = "0.697";
 QString Game::root = "C:/tsdata/Train Simulator/";
 QString Game::route = "bbb1";

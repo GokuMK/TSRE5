@@ -10,21 +10,39 @@
 
 #include "ErrorMessage.h"
 #include "GeoCoordinates.h"
+#include <QDateTime>
+
+QHash<ErrorMessage::MsgType, QString> ErrorMessage::TypeNames {
+    { ErrorMessage::Type_Info ,"INFO"},
+    { ErrorMessage::Type_Warning ,"WARNING"},
+    { ErrorMessage::Type_Error ,"ERROR"}        
+};
+
+QHash<ErrorMessage::SourceType, QString> ErrorMessage::SourceNames {
+    { ErrorMessage::Source_Other ,"Other"},
+    { ErrorMessage::Source_TDB ,"TrackDB"},
+    { ErrorMessage::Source_RDB ,"RoadDB"},
+    { ErrorMessage::Source_World ,"World"},
+    { ErrorMessage::Source_Editor ,"Editor"}          
+};
 
 ErrorMessage::ErrorMessage() {
+    this->time = QDateTime::currentMSecsSinceEpoch();
 }
 
-ErrorMessage::ErrorMessage(QString type, QString source, QString description) {
+ErrorMessage::ErrorMessage(MsgType type, SourceType source, QString description) {
     this->type = type;
     this->source = source;
     this->description = description;
+    this->time = QDateTime::currentMSecsSinceEpoch();
 }
 
-ErrorMessage::ErrorMessage(QString type, QString source, QString description, QString action) {
+ErrorMessage::ErrorMessage(MsgType type, SourceType source, QString description, QString action) {
     this->type = type;
     this->source = source;
     this->description = description;
     this->action = action;
+    this->time = QDateTime::currentMSecsSinceEpoch();
 }
 
 ErrorMessage::ErrorMessage(const ErrorMessage& orig) {
@@ -32,6 +50,7 @@ ErrorMessage::ErrorMessage(const ErrorMessage& orig) {
     source = orig.source;
     description = orig.description;
     action = orig.action;
+    time = orig.time;
 }
 
 ErrorMessage::~ErrorMessage() {

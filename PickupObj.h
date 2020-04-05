@@ -27,6 +27,7 @@ public:
     bool isTrackItem();
     bool containsTrackItem(int tdbId, int id);
     void getTrackItemIds(QVector<int> &ids, int tdbId);
+    bool checkForErrors();
     void deleteTrItems();
     void initTrItems(float* tpos);
     void load(int x, int y);

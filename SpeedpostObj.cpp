@@ -71,7 +71,11 @@ void SpeedpostObj::loadingFixes(){
     if(Game::useOnlyPositiveQuaternions){
         if(qDirection[3] < 0){
             Quat::makePositive(qDirection);
-            ErrorMessage *e = new ErrorMessage("info", "Editor", QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
+            ErrorMessage *e = new ErrorMessage(
+                    ErrorMessage::Type_Info, 
+                    ErrorMessage::Source_Editor, 
+                    QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) 
+                    );
             ErrorMessagesLib::PushErrorMessage(e);
             modified = true;
         }            
@@ -111,9 +115,75 @@ void SpeedpostObj::load(int x, int y) {
     setMartix();
 }
 
+bool SpeedpostObj::checkForErrors(){
+    TDB* tdb = Game::trackDB;
+
+    TRitem::SType stype;
+
+    TRitem *item = NULL;
+    for(int i = 0; i < trItemId.size()/2; i++){
+        if(this->trItemId[i*2] != 0)
+            continue;
+        
+        item = Game::trackDB->trackItems[this->trItemId[i*2+1]];
+        if(item == NULL) {
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - reference to trackItem not found. UiD: " + QString::number(UiD) + ". ",
+                        "World Object requires Interactive Item that does not exist in Track DB. \n"
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+        if(item->type != "speedpostitem"){
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced trackItem has wrong type. UiD: " + QString::number(UiD) + ". ",
+                        QString("World Object doesn't match TDB data. Is World Database and TDB out of sync? \n")+
+                        "Expected: speedpostitem but found: "+item->type+" .\n"
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+        
+        if(i == 0){
+            stype = item->getSpeedpostType();
+        } else {
+            if(stype != item->getSpeedpostType()){
+                ErrorMessage *e = new ErrorMessage(
+                    ErrorMessage::Type_Error, 
+                    ErrorMessage::Source_World, 
+                    QString("Object '") + type + "' - referenced wrong SpeedPost Type. UiD: " + QString::number(UiD) + ". ",
+                            QString("World Object doesn't match TDB data. Is World Database and TDB out of sync? \n") +
+                            "Expected: " + TRitem::speedpostTypeName(stype) + " but found: " + TRitem::speedpostTypeName(item->getSpeedpostType()) + "\n" +
+                            "This may cause fatal errors."
+                    );
+                e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+                e->setObject((GameObj*)this);
+                ErrorMessagesLib::PushErrorMessage(e);
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
 void SpeedpostObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
+    
+    if(!checkForErrors()){
+        return;
+    }
+    
     for(int i = 0; i<this->trItemId.size()/2; i++){
         if(this->trItemId[i*2] == 0)
             tdb->deleteTrItem(this->trItemId[i*2+1]);

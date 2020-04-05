@@ -224,14 +224,20 @@ void PlatformObj::initTrItems(float* tpos){
 void PlatformObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
-    for(int i = 0; i<this->trItemIdCount/2; i++){
-        if(this->trItemId[i*2] == 0){
-            tdb->deleteTrItem(this->trItemId[i*2+1]);
-        } else if(this->trItemId[i*2] == 1) {
-            rdb->deleteTrItem(this->trItemId[i*2+1]);
-        }
-        this->trItemId[i*2+1] = -1;
+    
+    if(!checkForErrors()){
+        return;
     }
+    
+    if(trItemId[0] == 0)
+        tdb->deleteTrItem(trItemId[1]);
+    else if(trItemId[0] == 1)
+        rdb->deleteTrItem(trItemId[1]);
+    if(trItemId[2] == 0)
+        tdb->deleteTrItem(trItemId[3]);
+    else if(trItemId[2] == 1)
+        rdb->deleteTrItem(trItemId[3]);
+    
 }
 
 bool PlatformObj::containsTrackItem(int tdbId, int id){
@@ -393,13 +399,88 @@ void PlatformObj::setDisabled(bool val){
     this->modified = true;
 }
 
-void PlatformObj::checkForErrors(){
-    if(!this->loaded) 
-        return;
-    
+bool PlatformObj::checkForErrors(){
+
     TDB* tdb = Game::trackDB;
-    if(tdb == NULL)
-        return;
+    TDB* rdb = Game::roadDB;
+
+    //Platform should have two track items
+    if(trItemIdCount < 4){
+        return false;
+    }
+    
+    TRitem *beg = NULL;
+    TRitem *end = NULL;
+    if(trItemId[0] == 0)
+        beg = tdb->trackItems[trItemId[1]];
+    else if(trItemId[0] == 1)
+        beg = rdb->trackItems[trItemId[1]];
+    if(trItemId[2] == 0)
+        end  = tdb->trackItems[trItemId[3]];
+    else if(trItemId[2] == 1)
+        end  = rdb->trackItems[trItemId[3]];
+    
+    if(beg == NULL || end == NULL){
+        ErrorMessage *e = new ErrorMessage(
+            ErrorMessage::Type_Error, 
+            ErrorMessage::Source_World, 
+            QString("Object '") + type + "' - reference to trackItem not found. UiD: " + QString::number(UiD) + ". ",
+                    "World Object requires Interactive Item that does not exist in Track DB. \n"
+            );
+        e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+        e->setObject((GameObj*)this);
+        ErrorMessagesLib::PushErrorMessage(e);
+        return false;
+    }
+    
+    QString iType = "";
+    if(this->typeID == this->platform)
+        iType = "platformitem";
+    if(this->typeID == this->siding)
+        iType = "sidingitem";
+    
+    if(beg->type != iType || end->type != iType){
+        ErrorMessage *e = new ErrorMessage(
+            ErrorMessage::Type_Error, 
+            ErrorMessage::Source_World, 
+            QString("Object '") + type + "' - referenced trackItem has wrong type. UiD: " + QString::number(UiD) + ". ",
+                    QString("World Object doesn't match TDB data. Is World Database and TDB out of sync? \n")+
+                    "Expected: "+iType+" but found: "+beg->type+" and "+end->type+" .\n"+
+                    "This may cause fatal errors."
+            );
+        e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+        e->setObject((GameObj*)this);
+        ErrorMessagesLib::PushErrorMessage(e);
+        return false;
+    }
+    
+    if(beg->platformTrItemData == NULL || end->platformTrItemData == NULL){
+        ErrorMessage *e = new ErrorMessage(
+            ErrorMessage::Type_Error, 
+            ErrorMessage::Source_World, 
+            QString("Object '") + type + "' - referenced trackItem is broken. UiD: " + QString::number(UiD) + ". ",
+                    "Referenced TrackDB item is broken. \n"
+                    "This may cause fatal errors."
+            );
+        e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+        e->setObject((GameObj*)this);
+        ErrorMessagesLib::PushErrorMessage(e);
+        return false;
+    }
+    
+    if(beg->platformTrItemData[1] != trItemId[3] || end->platformTrItemData[1] != trItemId[1] ){
+        ErrorMessage *e = new ErrorMessage(
+            ErrorMessage::Type_Error, 
+            ErrorMessage::Source_World, 
+            QString("Object '") + type + "' - referenced trackItem seems to belong to other object. UiD: " + QString::number(UiD) + ". ",
+                    "Referenced TrackDB item belong to another World Object or is broken. \n"
+                    "This may cause fatal errors."
+            );
+        e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+        e->setObject((GameObj*)this);
+        ErrorMessagesLib::PushErrorMessage(e);
+        return false;
+    }
     
     for(int i = 0; i < 2; i++){
         int trItemId = this->trItemId[i*2+1];
@@ -407,32 +488,44 @@ void PlatformObj::checkForErrors(){
         // Check If Track Item match this object.
         TRitem *item = tdb->trackItems[trItemId];
         if(item == NULL){
-            ErrorMessage *e = new ErrorMessage("error", 
-                "World", 
-                QString("Object '") + type + "' - reference to trackItem not found. UiD: " + QString::number(UiD) + ". ItemID: " + trItemId,
-                 "World Object requires Interactive Item that does not exist in Track DB. \n"
-            );
-            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
-            e->setObject((GameObj*)this);
-            ErrorMessagesLib::PushErrorMessage(e);
             continue;
         }
         
         // Check Track Node Location
         int id = tdb->findTrItemNodeId(trItemId);
         if (id < 1) {
-            
-            return;
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced trackItem has no TrackNode. UiD: " + QString::number(UiD) + ". ",
+                        "Referenced TrackDB Item has no TrackNode. \n"
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
         }
         
         // Check World Location
         float data[7];
         bool ok = tdb->getDrawPositionOnTrNode(data, id, item->getTrackPosition());
         if(!ok){
-            
-            return;
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced trackItem has no location. UiD: " + QString::number(UiD) + ". ",
+                        "Referenced TrackDB has no location. \n"
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
         }
     }
+    
+    return true;
 }
 
 void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {

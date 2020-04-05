@@ -7,13 +7,13 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Release configuration
-CND_PLATFORM_Release=MinGW_QT_5.7.1_Static_x32-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/MinGW_QT_5.7.1_Static_x32-Windows
+CND_PLATFORM_Release=QT_5.7_static_MinGW_730_x32-Windows
+CND_ARTIFACT_DIR_Release=dist/Release/QT_5.7_static_MinGW_730_x32-Windows
 CND_ARTIFACT_NAME_Release=TSRE5
-CND_ARTIFACT_PATH_Release=dist/Release/MinGW_QT_5.7.1_Static_x32-Windows/TSRE5
-CND_PACKAGE_DIR_Release=dist/Release/MinGW_QT_5.7.1_Static_x32-Windows/package
+CND_ARTIFACT_PATH_Release=dist/Release/QT_5.7_static_MinGW_730_x32-Windows/TSRE5
+CND_PACKAGE_DIR_Release=dist/Release/QT_5.7_static_MinGW_730_x32-Windows/package
 CND_PACKAGE_NAME_Release=TSRE5.tar
-CND_PACKAGE_PATH_Release=dist/Release/MinGW_QT_5.7.1_Static_x32-Windows/package/TSRE5.tar
+CND_PACKAGE_PATH_Release=dist/Release/QT_5.7_static_MinGW_730_x32-Windows/package/TSRE5.tar
 # dynamic_release configuration
 CND_PLATFORM_dynamic_release=MinGW_QT_5.7.0-Windows
 CND_ARTIFACT_DIR_dynamic_release=dist/dynamic_release/MinGW_QT_5.7.0-Windows

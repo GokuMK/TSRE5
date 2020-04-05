@@ -530,13 +530,13 @@
   <confs>
     <conf name="Release" type="4">
       <toolsSet>
-        <compilerSet>MinGW_QT_5.7.1_Static_x32|MinGW</compilerSet>
+        <compilerSet>QT_5.7_static_MinGW_730_x32|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <qt>
         <target>TSRE5</target>
-        <version>0.697</version>
+        <version>0.698</version>
         <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>
@@ -551,7 +551,7 @@
           <developmentMode>5</developmentMode>
           <standard>8</standard>
           <incDir>
-            <pElem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/include</pElem>
+            <pElem>C:/programy/openal-soft-1.18.2-bin/include</pElem>
           </incDir>
         </ccTool>
         <fortranCompilerTool>
@@ -562,7 +562,7 @@
         </asmTool>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>C:/Users/Goku/Desktop/Programy/openal-soft-1.18.2-bin/libs/Win32/OpenAL32.lib</linkerLibFileItem>
+            <linkerLibFileItem>C:/programy/openal-soft-1.18.2-bin/libs/Win32/libOpenAL32.dll.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -2278,7 +2278,7 @@
       </toolsSet>
       <qt>
         <target>TSRE5</target>
-        <version>0.697</version>
+        <version>0.698</version>
         <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>

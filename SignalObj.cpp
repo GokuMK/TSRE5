@@ -43,7 +43,11 @@ void SignalObj::loadingFixes(){
     if(Game::useOnlyPositiveQuaternions){
         if(qDirection[3] < 0){
             Quat::makePositive(qDirection);
-            ErrorMessage *e = new ErrorMessage("info", "Editor", QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
+            ErrorMessage *e = new ErrorMessage(
+                    ErrorMessage::Type_Info, 
+                    ErrorMessage::Source_Editor, 
+                    QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) 
+                    );
             ErrorMessagesLib::PushErrorMessage(e);
             modified = true;
         }            
@@ -115,9 +119,135 @@ bool SignalObj::isTrackItem(){
     return true;
 }
 
+bool SignalObj::checkForErrors(){
+    
+    TDB* tdb = Game::trackDB;
+    //Get track items
+    
+    SignalShape* sShape = tdb->sigCfg->signalShape[this->fileName];
+    if(sShape == NULL){
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - reference to SignalShape not found. UiD: " + QString::number(UiD) + ". ",
+                        "Check Route Signal configuration. \n"
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+        return false;
+    }
+    
+    for(int i = 0; i< 32; i++){
+        if(!this->signalUnit[i].enabled)
+            continue;
+        if(!this->signalUnit[i].head)
+            continue;
+        
+        TRitem* item = NULL;
+        item = tdb->trackItems[this->signalUnit[i].itemId];
+        
+        if(item == NULL){
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - reference to trackItem not found. UiD: " + QString::number(UiD) + ". ",
+                        "World Object requires Interactive Item that does not exist in Track DB. \n"
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+        if(item->type != "signalitem"){
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced trackItem has wrong type. UiD: " + QString::number(UiD) + ". ",
+                        QString("World Object doesn't match TDB data. Is World Database and TDB out of sync? \n")+
+                        "Expected: signalitem but found: "+item->type+" .\n"+
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+        if(i >= sShape->iSubObj){
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - has too many Signal Parts. UiD: " + QString::number(UiD) + ". ",
+                        "Signal Object has more patrs than it's definition. \n"
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);            
+            return false;
+        }
+        
+        if(item->trSignalType4.toUpper() != sShape->subObj[i].sigSubSType.toUpper()){
+            qDebug() << "!SS "<< item->trSignalType4<< sShape->subObj[i].sigSubSType;
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced wrong Signal Type. UiD: " + QString::number(UiD) + ". ",
+                        QString("Referenced TrackDB item belong to another World Object or is broken. \n")+
+                        "Expected: "+sShape->subObj[i].sigSubSType.toUpper()+" but found: "+item->trSignalType4.toUpper()+" .\n"+
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+        
+        // Check Track Node Location
+        int id = tdb->findTrItemNodeId(this->signalUnit[i].itemId);
+        if (id < 1) {
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced trackItem has no TrackNode. UiD: " + QString::number(UiD) + ". ",
+                        "Referenced TrackDB has no TrackNode. \n"
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+        
+        // Check World Location
+        float data[7];
+        bool ok = tdb->getDrawPositionOnTrNode(data, id, item->getTrackPosition());
+        if(!ok){
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced trackItem has no location. UiD: " + QString::number(UiD) + ". ",
+                        "Referenced TrackDB Item has no location. \n"
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+    }
+
+    return true;
+}
+
 void SignalObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
+    
+    if(!checkForErrors()){
+        return;
+    }
+    
     for(int i = 0; i< 32; i++){
         if(!this->signalUnit[i].enabled)
             continue;

@@ -15,6 +15,7 @@
 #include <QDir>
 #include <QDateTime>
 #include <QProgressDialog>
+#include <QCoreApplication>
 
 //int EngLib::jesteng = 0;
 //std::unordered_map<int, Eng*> EngLib::eng;
@@ -114,8 +115,10 @@ int EngLib::loadAll(QString gameRoot, bool gui){
     for(int i = 0; i < dirPaths.size(); i++){
         //qDebug() << path << dirFile <<"/"<< engfile;
         addEng(dirPaths[i],engPaths[i]);
-        if(progress != NULL)
+        if(progress != NULL){
             progress->setValue(i+1);
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 50);
+        }
     }
     qDebug() << "loaded" << (QDateTime::currentMSecsSinceEpoch() - timeNow)/1000<< "s";
     delete progress;

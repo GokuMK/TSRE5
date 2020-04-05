@@ -48,11 +48,33 @@ void StaticObj::loadingFixes(){
     if(Game::useOnlyPositiveQuaternions){
         if(qDirection[3] < 0){
             Quat::makePositive(qDirection);
-            ErrorMessage *e = new ErrorMessage("info", "Editor", QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
+            ErrorMessage *e = new ErrorMessage(
+                    ErrorMessage::Type_Info, 
+                    ErrorMessage::Source_Editor, 
+                    QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
             ErrorMessagesLib::PushErrorMessage(e);
             modified = true;
         }            
     }
+}
+
+bool StaticObj::checkForErrors(){
+    
+    if(abs(position[0]) > 2047 || abs(position[2]) > 2047){
+        ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Warning, 
+                ErrorMessage::Source_World, 
+                QString("Object seems to be located too far from it's Tile. ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(UiD),
+                            "This location may cause unwanted behavior. \n"
+                            "Jump to it's location or select it and check if it should be moved or removed. "
+                            );
+        e->setObject((GameObj*)this);
+        e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+        ErrorMessagesLib::PushErrorMessage(e);
+        return false;
+    }
+    
+    return true;
 }
 
 void StaticObj::load(int x, int y) {

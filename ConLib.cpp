@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QDir>
 #include <QProgressDialog>
+#include <QCoreApplication>
 
 int ConLib::jestcon = 0;
 std::unordered_map<int, Consist*> ConLib::con;
@@ -75,8 +76,10 @@ int ConLib::loadAll(QString gameRoot, bool gui){
     int i = 0;
     foreach(QString engfile, dir.entryList()){
         ConLib::addCon(path,engfile);
-        if(progress != NULL)
+        if(progress != NULL){
             progress->setValue(++i);
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 50);
+        }
     }
     qDebug() << "loaded";
     delete progress;

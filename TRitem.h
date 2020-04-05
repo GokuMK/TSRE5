@@ -42,6 +42,8 @@ public:
     static TRitem* newSoundRegionItem(int trItemId, float metry);
     static TRitem* newHazardItem(int trItemId, float metry);
     static TRitem* newCrossOverItem(int trItemId, float metry, int trItemId2, int shapeIdx);
+    
+    static QString speedpostTypeName(SType val);
     TRitem();
     TRitem(int id);
     TRitem(const TRitem& o);

@@ -71,7 +71,10 @@ void TrackObj::loadingFixes(){
     if(Game::useOnlyPositiveQuaternions){
         if(qDirection[3] < 0){
             Quat::makePositive(qDirection);
-            ErrorMessage *e = new ErrorMessage("info", "Editor", QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
+            ErrorMessage *e = new ErrorMessage(
+                    ErrorMessage::Type_Info, 
+                    ErrorMessage::Source_Editor, 
+                    QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
             ErrorMessagesLib::PushErrorMessage(e);
             modified = true;
         }            

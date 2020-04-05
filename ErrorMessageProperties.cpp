@@ -43,11 +43,11 @@ ErrorMessageProperties::ErrorMessageProperties(QWidget* parent) : QWidget(parent
     vlist->addWidget(&lLocation,row,0);
     vlist->addWidget(&eLocation,row,1);
     vlist->addWidget(&bLocation,row++,2);
-    lMessage.setText("Description:");
+    lMessage.setText("Message:");
     lMessage.hide();
     eMessage.hide();
     lAction.hide();
-    lAction.setText("Action:");
+    lAction.setText("Description:");
     lAction.setAlignment(Qt::AlignTop);
     eAction.hide();
     lLocation.setText("Location:");

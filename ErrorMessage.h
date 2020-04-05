@@ -12,21 +12,40 @@
 #define ERRORMESSAGE_H
 
 #include <QString>
+#include <QHash>
 
 class PreciseTileCoordinate;
 class GameObj;
 
 class ErrorMessage {
 public:
-    QString type;
-    QString source;
+    enum MsgType {
+        Type_Info = 0,
+        Type_Warning = 1,
+        Type_Error = 3
+    };
+    
+    enum SourceType {
+        Source_Other,
+        Source_TDB,
+        Source_RDB,
+        Source_World,
+        Source_Editor
+    };
+    
+    static QHash<MsgType, QString> TypeNames;
+    static QHash<SourceType, QString> SourceNames;
+    
+    unsigned long long time = 0;
+    MsgType type;
+    SourceType source;
     QString description;
     QString action;
     PreciseTileCoordinate *coords = NULL;
     GameObj* obj = NULL;
     ErrorMessage();
-    ErrorMessage(QString type, QString source, QString description );
-    ErrorMessage(QString type, QString source, QString description, QString action );
+    ErrorMessage(MsgType type, SourceType source, QString description );
+    ErrorMessage(MsgType type, SourceType source, QString description, QString action );
     ErrorMessage(const ErrorMessage& orig);
     void setLocation(PreciseTileCoordinate *c);
     void setLocationXYZ(float wX, float wZ, float x, float y, float z);

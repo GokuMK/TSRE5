@@ -2883,16 +2883,19 @@ void TDB::newCrossOverObject(int id1, float m1, int id2, float m2, int shapeIdx)
     
 }
 
-void TDB::deleteTrItem(int trid, WorldObj* wobj){
+void TDB::deleteTrItem(int trid){
     TRitem* trit = this->trackItems[trid];
     
-    if (trit->type == NULL){
-        ErrorMessage *e = new ErrorMessage("error", "trackDB", "Track Item not found." );
+    if (trit == NULL){
+        ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_Editor, 
+                "Track Item not found." );
         ErrorMessagesLib::PushErrorMessage(e);
         return;
     }
     
-    if(wobj != NULL){
+    /*if(wobj != NULL){
         wobj->typeID;
         trit->type;
         
@@ -2903,7 +2906,10 @@ void TDB::deleteTrItem(int trid, WorldObj* wobj){
         }
         if(wobj->typeID == WorldObj::platform){
             if (trit->type != "platformitem"){
-                ErrorMessage *e = new ErrorMessage("error", "trackDB", "Expected 'platformitem' but '"+trit->type+"' found instead." );
+                ErrorMessage *e = new ErrorMessage(
+                        ErrorMessage::Type_Error, 
+                        ErrorMessage::Source_TDB, 
+                        "Expected 'platformitem' but '"+trit->type+"' found instead." );
                 ErrorMessagesLib::PushErrorMessage(e);
                 return;
             }
@@ -2943,13 +2949,14 @@ void TDB::deleteTrItem(int trid, WorldObj* wobj){
                 return;
             }
         }
-    }    
+    }*/
     
     if(trit != NULL){
         trit->type = "emptyitem";
     }
     int nid = findTrItemNodeId(trid);
-    if(nid < 1) return;
+    if(nid < 1) 
+        return;
     deleteItemFromTrNode(nid, trid);
 
 }
@@ -3472,10 +3479,10 @@ void TDB::checkDatabase(){
     int tdbId = 0;
     float *drawPosition = new float[7];
     bool isPosition = false;
-    QString tdbName = "TrackDB";
+    ErrorMessage::SourceType tdbName = ErrorMessage::Source_TDB;
     if(this->road){
         tdbId = 1;
-        tdbName = "RoadDB";
+        tdbName = ErrorMessage::Source_RDB;
     }
     // Build WorldFile data
     if(Game::loadAllWFiles){
@@ -3492,14 +3499,22 @@ void TDB::checkDatabase(){
         if (trackItems[i]->type != "emptyitem"){
             int id = findTrItemNodeId(i);
             if (id < 1) {
-                ErrorMessage *e = new ErrorMessage("error", tdbName, QString("Item has no trackNode: ") + QString::number(i) + ". Type: " + trackItems[i]->type );
+                ErrorMessage *e = new ErrorMessage(
+                        ErrorMessage::Type_Error, 
+                        tdbName, 
+                        QString("Item has no trackNode: ") + QString::number(i) + ". Type: " + trackItems[i]->type );
+                e->setObject((GameObj*)trackItems[i]);
                 ErrorMessagesLib::PushErrorMessage(e);
             }
 
             if(id >= 0 ){
                 isPosition = getDrawPositionOnTrNode(drawPosition, id, trackItems[i]->getTrackPosition());
                 if(!isPosition){
-                    ErrorMessage *e = new ErrorMessage("error", tdbName, QString("Item has no position: ") + QString::number(i) + ". Type: " + trackItems[i]->type );
+                    ErrorMessage *e = new ErrorMessage(
+                            ErrorMessage::Type_Error, 
+                            tdbName, 
+                            QString("Item has no position: ") + QString::number(i) + ". Type: " + trackItems[i]->type );
+                    e->setObject((GameObj*)trackItems[i]);
                     ErrorMessagesLib::PushErrorMessage(e);
                 }
             }
@@ -3509,17 +3524,19 @@ void TDB::checkDatabase(){
             if (trackItems[i]->type == "crossoveritem" || trackItems[i]->type == "emptyitem"){
                 if(objects[i].size() > 0){
                     ErrorMessage *e = new ErrorMessage(
-                            "error", 
+                            ErrorMessage::Type_Error, 
                             tdbName, 
                             QString("Item wrongly referenced in W files. Id: ") + QString::number(i) + ". Type: " + trackItems[i]->type
                             );
+                    e->setObject((GameObj*)trackItems[i]);
                     if(isPosition)
                         e->setLocationXYZ(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[1], drawPosition[2]);
                     ErrorMessagesLib::PushErrorMessage(e);
                 }
             } else {
                 if(objects[i].size() == 0){
-                    ErrorMessage *e = new ErrorMessage("error", 
+                    ErrorMessage *e = new ErrorMessage(
+                            ErrorMessage::Type_Error, 
                             tdbName, 
                             QString("Item not referenced in W files. Id: ") + QString::number(i) + ". Type: " + trackItems[i]->type,
                             "Interactive Item was not found in World Tile database. \n"

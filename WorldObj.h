@@ -101,7 +101,7 @@ public:
     virtual WorldObj* clone();
     virtual void load(int x, int y);
     virtual void loadInit();
-    virtual void checkForErrors();
+    virtual bool checkForErrors();
     virtual void set(int sh, FileBuffer* data);
     virtual void set(QString sh, FileBuffer* data);
     virtual void set(QString sh, QString val);

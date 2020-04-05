@@ -20,6 +20,8 @@
 #include "TRitem.h"
 #include "TrackItemObj.h"
 #include "TS.h"
+#include "ErrorMessagesLib.h"
+#include "ErrorMessage.h"
 
 PickupObj::PickupObj() {
     this->shape = -1;
@@ -95,6 +97,11 @@ void PickupObj::getTrackItemIds(QVector<int> &ids, int tdbId){
 void PickupObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
+    
+    if(!checkForErrors()){
+        return;
+    }
+    
     for(int i = 0; i<this->trItemIdCount/2; i++){
         if(this->trItemId[i*2] == 0)
             tdb->deleteTrItem(this->trItemId[i*2+1]);
@@ -102,6 +109,44 @@ void PickupObj::deleteTrItems(){
             rdb->deleteTrItem(this->trItemId[i*2+1]);
         this->trItemId[i*2+1] = -1;
     }
+}
+
+bool PickupObj::checkForErrors(){
+    TDB* tdb = Game::trackDB;
+    TRitem* item = NULL;
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] != 0)
+            continue;
+        item = tdb->trackItems[this->trItemId[i*2+1]];
+        
+        if(item == NULL) {
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - reference to trackItem not found. UiD: " + QString::number(UiD) + ". ",
+                        "World Object requires Interactive Item that does not exist in Track DB. \n"
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+        if(item->type != "pickupitem"){
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced trackItem has wrong type. UiD: " + QString::number(UiD) + ". ",
+                        QString("World Object doesn't match TDB data. Is World Database and TDB out of sync? \n")+
+                        "Expected: pickupitem but found: "+item->type+" .\n"
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+    }
+    return true;
 }
 
 void PickupObj::initTrItems(float* tpos){

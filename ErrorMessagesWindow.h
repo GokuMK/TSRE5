@@ -39,6 +39,7 @@ signals:
     void selectObject(GameObj *o);
     
 private:
+    QHash<int, QBrush> brushes;
     QTreeWidget errorList;
     ErrorMessageProperties *properties;
     

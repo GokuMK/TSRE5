@@ -23,6 +23,8 @@
 #include "SoundList.h"
 #include <QDebug>
 #include "Vector4f.h"
+#include "ErrorMessage.h"
+#include "ErrorMessagesLib.h"
 
 float SoundRegionObj::MaxPlacingDistance = 30;
 
@@ -67,9 +69,69 @@ void SoundRegionObj::load(int x, int y) {
     setMartix();
 }
 
+bool SoundRegionObj::checkForErrors(){
+    TDB* tdb = Game::trackDB;
+
+    TRitem *item = NULL;
+    for(int i = 0; i < trItemId.size()/2; i++){
+        if(this->trItemId[i*2] != 0)
+            continue;
+        
+        item = Game::trackDB->trackItems[this->trItemId[i*2+1]];
+        if(item == NULL) {
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - reference to trackItem not found. UiD: " + QString::number(UiD) + ". ",
+                        "World Object requires Interactive Item that does not exist in Track DB. \n"
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+        if(item->type != "soundregionitem"){
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced trackItem has wrong type. UiD: " + QString::number(UiD) + ". ",
+                        QString("World Object doesn't match TDB data. Is World Database and TDB out of sync? \n")+
+                        "Expected: soundregionitem but found: "+item->type+" .\n"
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+        
+        if(soundregionTrackType != item->trItemSRData[1]){
+            ErrorMessage *e = new ErrorMessage(
+                ErrorMessage::Type_Error, 
+                ErrorMessage::Source_World, 
+                QString("Object '") + type + "' - referenced wrong SoundRegion Type. UiD: " + QString::number(UiD) + ". ",
+                        QString("World Object doesn't match TDB data. Is World Database and TDB out of sync? \n") +
+                        "Expected: " + QString::number(soundregionTrackType) + " but found: " + QString::number(item->trItemSRData[1]) + "\n" +
+                        "This may cause fatal errors."
+                );
+            e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+            e->setObject((GameObj*)this);
+            ErrorMessagesLib::PushErrorMessage(e);
+            return false;
+        }
+    }
+    
+    return true;
+}
+
 void SoundRegionObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
+    
+    if(!checkForErrors()){
+        return;
+    }
+    
     for(int i = 0; i<this->trItemId.size()/2; i++){
         if(this->trItemId[i*2] == 0)
             tdb->deleteTrItem(this->trItemId[i*2+1]);

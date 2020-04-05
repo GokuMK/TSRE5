@@ -999,3 +999,15 @@ void TRitem::save(QTextStream* out, bool tit) {
 
     *(out) << woff + "	)\n";
 }
+
+QString TRitem::speedpostTypeName(SType val){
+    if(val == MILEPOST)
+        return QString("milepost");
+    if(val == WARNING)
+        return QString("warning");
+    if(val == SIGN)
+        return QString("speedsign");
+    if(val == RESUME)
+        return QString("resume");
+    return "";
+}
