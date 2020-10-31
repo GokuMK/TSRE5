@@ -61,9 +61,9 @@ void SFileX::odczytajpunkty(FileBuffer* bufor, SFile* pliks) {
 //-----------------------------------
 
 void SFileX::odczytajuvpunkty(FileBuffer* bufor, SFile* pliks) {
-    int ilosc = ParserX::GetNumber(bufor);
-    pliks->tpoints.uv_points = new SFile::fpoint[ ilosc + 1];
-    for (int i = 0; i < ilosc; i++) {
+    pliks->tpoints.iuv_points = ParserX::GetNumber(bufor);
+    pliks->tpoints.uv_points = new SFile::fpoint[ pliks->tpoints.iuv_points + 1];
+    for (int i = 0; i < pliks->tpoints.iuv_points; i++) {
         pliks->tpoints.uv_points[i].x = ParserX::GetNumber(bufor);
         pliks->tpoints.uv_points[i].y = ParserX::GetNumber(bufor);
     }
@@ -75,9 +75,9 @@ void SFileX::odczytajuvpunkty(FileBuffer* bufor, SFile* pliks) {
 //-----------------------------------
 
 void SFileX::odczytajnormalne(FileBuffer* bufor, SFile* pliks) {
-    int ilosc = ParserX::GetNumber(bufor);
-    pliks->tpoints.normals = new SFile::fpoint[ilosc + 1];
-    for (int i = 0; i < ilosc; i++) {
+    pliks->tpoints.inormals = ParserX::GetNumber(bufor);
+    pliks->tpoints.normals = new SFile::fpoint[pliks->tpoints.inormals + 1];
+    for (int i = 0; i < pliks->tpoints.inormals; i++) {
         pliks->tpoints.normals[i].x = ParserX::GetNumber(bufor);
         pliks->tpoints.normals[i].y = ParserX::GetNumber(bufor);
         pliks->tpoints.normals[i].z = ParserX::GetNumber(bufor);

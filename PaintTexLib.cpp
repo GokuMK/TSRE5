@@ -18,6 +18,7 @@
 #include <QOpenGLShaderProgram>
 #include <QImage>
 #include <QPainter>
+#include <QPainterPath>
 
 void PaintTexLib::run() {
     

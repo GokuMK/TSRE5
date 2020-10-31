@@ -11,7 +11,7 @@
 #include "ActivityTimetable.h"
 #include "ParserX.h"
 #include "FileBuffer.h"
-#include <qDebug>
+#include <QDebug>
 #include <QTextStream>
 #include "ActLib.h"
 #include "Service.h"

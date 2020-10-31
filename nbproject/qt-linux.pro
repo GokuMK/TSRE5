@@ -1,9 +1,9 @@
 # This file is generated automatically. Do not edit.
 # Use project properties -> Build -> Qt -> Expert -> Custom Definitions.
 TEMPLATE = app
-DESTDIR = dist/Release/QT_5.7_static_MinGW_730_x32-Linux
+DESTDIR = dist/linux/GNU-Linux
 TARGET = TSRE5
-VERSION = 0.698
+VERSION = 0.699
 CONFIG -= debug_and_release app_bundle lib_bundle
 CONFIG += release 
 PKGCONFIG +=
@@ -13,15 +13,15 @@ HEADERS += AboutWindow.h AceLib.h ActLib.h ActionChooseDialog.h Activity.h Activ
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=
-OBJECTS_DIR = build/Release/QT_5.7_static_MinGW_730_x32-Linux
+OBJECTS_DIR = build/linux/GNU-Linux
 MOC_DIR = 
 RCC_DIR = 
 UI_DIR = 
 QMAKE_CC = gcc
 QMAKE_CXX = g++
 DEFINES += 
-INCLUDEPATH += 
-LIBS += C:/programy/openal-soft-1.18.2-bin/libs/Win32/libOpenAL32.dll.a  
+INCLUDEPATH += /mnt/windows/programy/openal-soft-1.18.2-bin/include 
+LIBS += -lopenal  
 equals(QT_MAJOR_VERSION, 4) {
 QMAKE_CXXFLAGS += -std=c++11
 }

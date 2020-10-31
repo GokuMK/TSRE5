@@ -28,6 +28,14 @@
                     <name>Debug_x64</name>
                     <type>4</type>
                 </confElem>
+                <confElem>
+                    <name>linux</name>
+                    <type>4</type>
+                </confElem>
+                <confElem>
+                    <name>linux_debug</name>
+                    <type>4</type>
+                </confElem>
             </confList>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>

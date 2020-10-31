@@ -24,7 +24,7 @@ public:
         unsigned short arg2;
         unsigned short arg3;
         unsigned short material;
-        unsigned int uvpoint;
+        unsigned int uvpoint = 0;
     };
     
     SFileX();

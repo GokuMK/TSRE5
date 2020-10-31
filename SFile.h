@@ -98,6 +98,8 @@ public:
         fpoint* uv_points;
         fpoint* normals;
         int ipoints;
+        int iuv_points;
+        int inormals;
     };
     
     // zmienne

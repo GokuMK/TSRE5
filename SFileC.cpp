@@ -85,13 +85,11 @@
     //-----------------------------------
 
     void SFileC::odczytajuvpunktyc(FileBuffer* bufor, SFile* pliks) {
-        int ilosc;
-
         bufor->off += 1;
-        ilosc = bufor->getInt();
+        pliks->tpoints.iuv_points = bufor->getInt();
         
-        pliks->tpoints.uv_points = new SFile::fpoint[ilosc + 1];
-        for (int i = 0; i < ilosc; i++) {
+        pliks->tpoints.uv_points = new SFile::fpoint[pliks->tpoints.iuv_points + 1];
+        for (int i = 0; i < pliks->tpoints.iuv_points; i++) {
             bufor->off += 9;
             //pliks->tpoints.uv_points[i] = new SFile::fpoint();
             pliks->tpoints.uv_points[i].x = bufor->getFloat();
@@ -104,12 +102,10 @@
     //-----------------------------------
 
     void SFileC::odczytajnormalnec(FileBuffer* bufor, SFile* pliks) {
-        int ilosc;
-
         bufor->off += 1;
-        ilosc = bufor->getInt();
-        pliks->tpoints.normals = new SFile::fpoint[ilosc + 1];
-        for (int i = 0; i < ilosc; i++) {
+        pliks->tpoints.inormals = bufor->getInt();
+        pliks->tpoints.normals = new SFile::fpoint[pliks->tpoints.inormals + 1];
+        for (int i = 0; i < pliks->tpoints.inormals; i++) {
             bufor->off += 9;
             //pliks->tpoints.normals[i] = new SFile::fpoint();
             pliks->tpoints.normals[i].x = bufor->getFloat();

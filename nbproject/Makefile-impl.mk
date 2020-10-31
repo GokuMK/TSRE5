@@ -31,7 +31,7 @@ DEFAULTCONF=Release
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Release dynamic_release Release_x64 Debug_x64 
+ALLCONFS=Release dynamic_release Release_x64 Debug_x64 linux linux_debug 
 
 
 # build

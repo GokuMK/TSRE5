@@ -6,8 +6,8 @@
 
 # Macros
 TOP=`pwd`
-CND_PLATFORM=QT_5.7_static_MinGW_730_x32-Linux
-CND_CONF=Release
+CND_PLATFORM=GNU-Linux
+CND_CONF=linux
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 CND_DLIB_EXT=so
