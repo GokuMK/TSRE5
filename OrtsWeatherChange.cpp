@@ -10,7 +10,7 @@
 
 #include "OrtsWeatherChange.h"
 #include <QTextStream>
-#include <qDebug>
+#include <QDebug>
 #include "FileBuffer.h"
 #include "ParserX.h"
 #include "FileBuffer.h"

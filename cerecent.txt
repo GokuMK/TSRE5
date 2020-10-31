@@ -4,3 +4,7 @@ f:/tst
 f:/train simulator bernina
 f:/andrzej
 c:/trainsimulations
+c:/tsdata/train simulator
+c:/tsdata/ts
+c:/tsdata/trainsim
+c:/tsdata/tsb

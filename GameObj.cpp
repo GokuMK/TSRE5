@@ -9,7 +9,7 @@
  */
 
 #include "GameObj.h"
-#include <QMenu.h>
+#include <QMenu>
 
 QMap<GameObj::TypeObj, QString> GameObj::Names = {
     { GameObj::none , "None" },

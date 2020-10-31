@@ -24,7 +24,7 @@ public:
         unsigned short arg2;
         unsigned short arg3;
         unsigned short material;
-        unsigned int uvpoint;
+        unsigned int uvpoint = 0;
     };
     static void odczytajshaders(FileBuffer* bufor, SFile* pliks);
     //static void szukajsekcjic(int szukane, FileBuffer* bufor);

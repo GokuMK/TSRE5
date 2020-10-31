@@ -19,6 +19,7 @@
 #include <AL/alc.h>
 #endif
 #include <unordered_map>
+#include <string>
 #include <vector>
 
 class OSMFeatures {

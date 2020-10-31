@@ -9,7 +9,7 @@
  */
 
 #include "ObjFile.h"
-#include <qDebug>
+#include <QDebug>
 #include <QFile>
 #include <QTextStream>
 #include "Vector3f.h"
