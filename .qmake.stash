@@ -1,0 +1,14 @@
+QMAKE_DEFAULT_INCDIRS = \
+    c:/mingw64_730/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ \
+    c:/mingw64_730/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 \
+    c:/mingw64_730/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward \
+    c:/mingw64_730/lib/gcc/x86_64-w64-mingw32/7.3.0/include \
+    c:/mingw64_730/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed \
+    c:/mingw64_730/x86_64-w64-mingw32/include
+QMAKE_DEFAULT_LIBDIRS = \
+    c \
+    /mingw64_730/lib/gcc/x86_64-w64-mingw32/7.3.0/;c \
+    /mingw64_730/lib/gcc/;c \
+    /mingw64_730/x86_64-w64-mingw32/lib/;c \
+    /mingw64_730/lib/;c \
+    /mingw64_730/lib
