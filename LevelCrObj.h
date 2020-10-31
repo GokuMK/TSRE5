@@ -53,7 +53,7 @@ public:
     bool isSilentMstsHaxEnabled();
     bool allowNew();
     bool isTrackItem();
-    bool checkForErrors();
+    ErrorMessage* checkForErrors();
     void deleteTrItems();
     void initTrItems(float* tpos);
     int getDefaultDetailLevel();

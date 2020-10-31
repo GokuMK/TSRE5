@@ -22,7 +22,8 @@ public:
     enum MsgType {
         Type_Info = 0,
         Type_Warning = 1,
-        Type_Error = 3
+        Type_Error = 3,
+        Type_AutoFix = 4
     };
     
     enum SourceType {

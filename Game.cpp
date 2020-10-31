@@ -38,7 +38,7 @@ TerrainLib *Game::terrainLib = NULL;
 
 bool Game::UseWorkingDir = false;
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.698";
+QString Game::AppVersion = "v0.699";
 QString Game::AppDataVersion = "0.697";
 QString Game::root = "C:/tsdata/Train Simulator/";
 QString Game::route = "bbb1";
@@ -96,7 +96,7 @@ bool Game::leaveTrackShapeAfterDelete = false;
 bool Game::renderTrItems = false;
 int Game::newRouteX = -5000;
 int Game::newRouteZ = 15000;
-bool Game::consoleOutput = true;
+bool Game::consoleOutput = false;
 int Game::fpsLimit = 0;
 bool Game::ortsEngEnable = true;
 bool Game::sortTileObjects = true;
@@ -117,6 +117,7 @@ float Game::hudScale = 1.0;
 bool Game::markerLines = false;
 
 bool Game::loadAllWFiles = false;
+bool Game::autoFix = false;
 
 QString Game::geoPath = "hgst";
 
@@ -550,6 +551,12 @@ void Game::load() {
                 loadAllWFiles = true;
             else
                 loadAllWFiles = false; 
+        }
+        if(val == "autoFix"){
+            if(args[1].trimmed().toLower() == "true")
+                autoFix = true;
+            else
+                autoFix = false; 
         }
         if(val == "useOnlyPositiveQuaternions"){
             if(args[1].trimmed().toLower() == "true")

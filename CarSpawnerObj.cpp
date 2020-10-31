@@ -135,6 +135,8 @@ bool CarSpawnerObj::containsTrackItem(int tdbId, int id){
 }
 
 void CarSpawnerObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    if(!this->loaded)
+        return;
     for(int i = 0; i<this->trItemIdCount/2; i++){
         if(this->trItemId[i*2] == tdbId){
             ids.push_back(this->trItemId[i*2+1]);

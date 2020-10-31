@@ -25,7 +25,7 @@ public:
     WorldObj* clone();
     virtual ~PlatformObj();
     void load(int x, int y);
-    bool checkForErrors();
+    ErrorMessage* checkForErrors();
     bool allowNew();
     void set(int sh, FileBuffer* val);
     void set(QString sh, FileBuffer* data);

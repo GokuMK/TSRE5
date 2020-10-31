@@ -58,7 +58,7 @@ void StaticObj::loadingFixes(){
     }
 }
 
-bool StaticObj::checkForErrors(){
+ErrorMessage* StaticObj::checkForErrors(){
     
     if(abs(position[0]) > 2047 || abs(position[2]) > 2047){
         ErrorMessage *e = new ErrorMessage(
@@ -71,10 +71,10 @@ bool StaticObj::checkForErrors(){
         e->setObject((GameObj*)this);
         e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
         ErrorMessagesLib::PushErrorMessage(e);
-        return false;
+        return e;
     }
     
-    return true;
+    return NULL;
 }
 
 void StaticObj::load(int x, int y) {

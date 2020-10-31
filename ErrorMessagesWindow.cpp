@@ -20,6 +20,7 @@ ErrorMessagesWindow::ErrorMessagesWindow(QWidget* parent) : QWidget(parent) {
     brushes[(int)ErrorMessage::Type_Error] = QBrush(QColor(Game::StyleRedText));
     brushes[(int)ErrorMessage::Type_Warning] = QBrush(QColor(200,200,0));
     brushes[(int)ErrorMessage::Type_Info] = QBrush(QColor(Game::StyleGreenText));
+    brushes[(int)ErrorMessage::Type_AutoFix] =QBrush(QColor(20,20,200));
     brushes[1000] = QBrush(QColor(Game::StyleMainLabel));
     this->setWindowFlags(Qt::WindowType::Tool);
     //this->setFixedWidth(350);

@@ -15,7 +15,8 @@
 QHash<ErrorMessage::MsgType, QString> ErrorMessage::TypeNames {
     { ErrorMessage::Type_Info ,"INFO"},
     { ErrorMessage::Type_Warning ,"WARNING"},
-    { ErrorMessage::Type_Error ,"ERROR"}        
+    { ErrorMessage::Type_Error ,"ERROR"},        
+    { ErrorMessage::Type_AutoFix ,"ERROR_FIX"}        
 };
 
 QHash<ErrorMessage::SourceType, QString> ErrorMessage::SourceNames {

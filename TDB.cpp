@@ -37,6 +37,10 @@ std::unordered_map<int, TRitem*>* TDB::StaticTrackItems;
 TDB::TDB(TSectionDAT* tsection, bool road) {
     loaded = false;
     this->road = road;
+    if(this->road){
+        tdbId = 1;
+        tdbName = ErrorMessage::Source_RDB;
+    }
     serial = 0;
     wysokoscSieci = 4;
     iTRitems = 0;
@@ -65,6 +69,7 @@ void TDB::loadTdb(){
     int i, j, ii, uu;
     float xx;
     int t;
+    bool ok;
     QString sh;
     QString extension = "tdb";
     if(this->road) extension = "rdb";
@@ -102,16 +107,18 @@ void TDB::loadTdb(){
                                     trackNodes[t]->typ = 1; //typ vector 
                                     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
                                         if(sh == "trvectorsections"){
-                                            uu = (int) ParserX::GetNumber(bufor);
-                                            trackNodes[t]->iTrv = uu;
-                                            trackNodes[t]->trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
-                                            for (j = 0; j < uu; j++) {
-                                                for (ii = 0; ii < 16; ii++) {
-                                                    xx = ParserX::GetNumber(bufor);
-                                                    if(std::isnan(xx)){
-                                                        qDebug() << "#TrackDB: NAN found in tracknode: "<<t;
+                                            uu = (int) ParserX::GetNumberInside(bufor, &ok);
+                                            if(ok){
+                                                trackNodes[t]->iTrv = uu;
+                                                trackNodes[t]->trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
+                                                for (j = 0; j < uu; j++) {
+                                                    for (ii = 0; ii < 16; ii++) {
+                                                        xx = ParserX::GetNumber(bufor);
+                                                        if(std::isnan(xx)){
+                                                            qDebug() << "#TrackDB: NAN found in tracknode: "<<t;
+                                                        }
+                                                        trackNodes[t]->trVectorSection[j].param[ii] = xx;
                                                     }
-                                                    trackNodes[t]->trVectorSection[j].param[ii] = xx;
                                                 }
                                             }
                                             ParserX::SkipToken(bufor);
@@ -1783,10 +1790,10 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
             if (n == NULL) continue;
             if (n->typ == -1) continue;
             if (n->typ == 1) {
+                if(n->iTrv < 1 ) continue;
                 lLen += 6 * (n->iTrv - 1);
-                if (n->TrPinS[1] != 0) {
+                if (n->TrPinS[1] != 0 )
                     lLen += 6;
-                }
             } else if (n->typ == 0) {
                 kLen += 6;
             } else if (n->typ == 2) {
@@ -1803,6 +1810,7 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
             if (n == NULL) continue;
             if (n->typ == -1) continue;
             if (n->typ == 1) {
+                if(n->iTrv < 1 ) continue;
                 for (int i = 0; i < n->iTrv - 1; i++) {
                     linie[lPtr++] = ((n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10]);
                     linie[lPtr++] = (n->trVectorSection[i].param[11] + wysokoscSieci);
@@ -1813,6 +1821,7 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
                     linie[lPtr++] = (((-n->trVectorSection[i + 1].param[9] - playerT[1])*2048 - n->trVectorSection[i + 1].param[12]));
                 }
                 if (n->TrPinS[1] != 0) {
+                    //qDebug() << "track line " << i << n->iTrv;
                     linie[lPtr++] = ((n->trVectorSection[n->iTrv - 1].param[8] - playerT[0])*2048 + n->trVectorSection[n->iTrv - 1].param[10]);
                     linie[lPtr++] = (n->trVectorSection[n->iTrv - 1].param[11] + wysokoscSieci);
                     linie[lPtr++] = (((-n->trVectorSection[n->iTrv - 1].param[9] - playerT[1])*2048 - n->trVectorSection[n->iTrv - 1].param[12]));
@@ -3476,14 +3485,10 @@ void TDB::getUsedTileList(QMap<int, QPair<int, int>*> &tileList, int radius, int
 void TDB::checkDatabase(){
     // Variables
     QHash<int, QVector<WorldObj*>> objects;
-    int tdbId = 0;
+
     float *drawPosition = new float[7];
     bool isPosition = false;
-    ErrorMessage::SourceType tdbName = ErrorMessage::Source_TDB;
-    if(this->road){
-        tdbId = 1;
-        tdbName = ErrorMessage::Source_RDB;
-    }
+
     // Build WorldFile data
     if(Game::loadAllWFiles){
         Game::currentRoute->fillWorldObjectsByTrackItemIds(objects, tdbId);
@@ -3505,6 +3510,11 @@ void TDB::checkDatabase(){
                         QString("Item has no trackNode: ") + QString::number(i) + ". Type: " + trackItems[i]->type );
                 e->setObject((GameObj*)trackItems[i]);
                 ErrorMessagesLib::PushErrorMessage(e);
+                if(Game::autoFix){
+                    e->type = ErrorMessage::Type_AutoFix;
+                    e->action += "\nAutoFix: Item removed by TSRE.";
+                    this->deleteTrItem(i);
+                }
             }
 
             if(id >= 0 ){
@@ -3516,7 +3526,57 @@ void TDB::checkDatabase(){
                             QString("Item has no position: ") + QString::number(i) + ". Type: " + trackItems[i]->type );
                     e->setObject((GameObj*)trackItems[i]);
                     ErrorMessagesLib::PushErrorMessage(e);
+                    if(Game::autoFix){
+                        e->type = ErrorMessage::Type_AutoFix;
+                        e->action += "\nAutoFix: Item removed by TSRE.";
+                        this->deleteTrItem(i);
+                    }
                 }
+            }
+        }
+        
+        if(trackItems[i]->type == "signalitem"){
+            if(trackItems[i]->trSignalDirs == 1){
+                int jid = trackItems[i]->trSignalDir[0];
+                TRnode* n = trackNodes[jid];
+                if(n == NULL) { 
+                    ErrorMessage *e = new ErrorMessage(
+                            ErrorMessage::Type_Error, 
+                            tdbName, 
+                            QString("Signal Link broken. Must be linked to junction, but no track found: ") + QString::number(i) + ". Type: " + trackItems[i]->type
+                            );
+                    e->setObject((GameObj*)trackItems[i]);
+                    if(isPosition)
+                        e->setLocationXYZ(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[1], drawPosition[2]);
+                    ErrorMessagesLib::PushErrorMessage(e);
+                    if(Game::autoFix){
+                        e->type = ErrorMessage::Type_AutoFix;
+                        e->action += "\nAutoFix: Broken Signal Link removed by TSRE.";
+                        trackItems[i]->trSignalDirs = 0;
+                        trackItems[i]->trSignalDir = NULL;
+                        trackItems[i]->trSignalRDir = NULL;
+                    }
+                }
+                if(n->typ != 2) {
+                    ErrorMessage *e = new ErrorMessage(
+                            ErrorMessage::Type_Error, 
+                            tdbName, 
+                            QString("Signal Link broken. Id: ") + QString::number(i) + ". Type: " + trackItems[i]->type,
+                            "Signal must be linked to a junction, but other trackNode was found. \nFatal error. Causes Open Rails to crash."
+                            );
+                    e->setObject((GameObj*)trackItems[i]);
+                    if(isPosition)
+                        e->setLocationXYZ(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[1], drawPosition[2]);
+                    ErrorMessagesLib::PushErrorMessage(e);
+                    if(Game::autoFix){
+                        e->type = ErrorMessage::Type_AutoFix;
+                        e->action += "\nAutoFix: Broken Signal Link removed by TSRE.";
+                        trackItems[i]->trSignalDirs = 0;
+                        trackItems[i]->trSignalDir = NULL;
+                        trackItems[i]->trSignalRDir = NULL;
+                    }
+                }
+
             }
         }
         
@@ -3532,6 +3592,11 @@ void TDB::checkDatabase(){
                     if(isPosition)
                         e->setLocationXYZ(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[1], drawPosition[2]);
                     ErrorMessagesLib::PushErrorMessage(e);
+                    if(Game::autoFix){
+                        e->type = ErrorMessage::Type_AutoFix;
+                        e->action += "\nAutoFix: Item removed by TSRE.";
+                        this->deleteTrItem(i);
+                    }
                 }
             } else {
                 if(objects[i].size() == 0){
@@ -3548,6 +3613,11 @@ void TDB::checkDatabase(){
                     if(isPosition)
                         e->setLocationXYZ(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[1], drawPosition[2]);
                     ErrorMessagesLib::PushErrorMessage(e);
+                    if(Game::autoFix){
+                        e->type = ErrorMessage::Type_AutoFix;
+                        e->action += "\nAutoFix: Item removed by TSRE.";
+                        this->deleteTrItem(i);
+                    }
                 }
             }
         }
@@ -3585,13 +3655,26 @@ void TDB::checkDatabase(){
             }
         }*/
     
-    /*for(int i = 1; i <= iTRnodes; i++){
-        for(int j = 0; j < trackNodes[i]->iTri; j++){
+    for(int i = 1; i <= iTRnodes; i++){
+        TRnode* n = trackNodes[i];
+        if (n == NULL) continue;
+        if (n->typ == -1) continue;
+        if (n->typ == 1) {
+            if(n->iTrv == 0){
+                ErrorMessage *e = new ErrorMessage(
+                    ErrorMessage::Type_Error, 
+                    tdbName, 
+                    QString("TrackNode: ") + QString::number(i) + ". Trvectorsection is empty." 
+                );
+                ErrorMessagesLib::PushErrorMessage(e);
+            }
+        }
+        /*for(int j = 0; j < trackNodes[i]->iTri; j++){
             if(j > 0 && old > trackItems[trackNodes[i]->trItemRef[j]]->getTrackPosition())
                 qDebug() << "--fail!--"<< old << trackItems[trackNodes[i]->trItemRef[j]]->getTrackPosition();
             old = trackItems[trackNodes[i]->trItemRef[j]]->getTrackPosition();
-        }
-    }*/
+        }*/
+    }
     //
     //ErrorMessage *e = new ErrorMessage();
     //ErrorMessagesLib::PushErrorMessage(e);

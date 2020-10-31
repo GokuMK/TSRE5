@@ -93,6 +93,8 @@ bool SpeedpostObj::containsTrackItem(int tdbId, int id){
 }
 
 void SpeedpostObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    if(!this->loaded)
+        return;
     for(int i = 0; i<this->trItemId.size()/2; i++){
         if(this->trItemId[i*2] == tdbId){
             ids.push_back(this->trItemId[i*2+1]);
@@ -115,7 +117,7 @@ void SpeedpostObj::load(int x, int y) {
     setMartix();
 }
 
-bool SpeedpostObj::checkForErrors(){
+ErrorMessage* SpeedpostObj::checkForErrors(){
     TDB* tdb = Game::trackDB;
 
     TRitem::SType stype;
@@ -136,7 +138,7 @@ bool SpeedpostObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
         if(item->type != "speedpostitem"){
             ErrorMessage *e = new ErrorMessage(
@@ -150,7 +152,7 @@ bool SpeedpostObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
         
         if(i == 0){
@@ -168,19 +170,19 @@ bool SpeedpostObj::checkForErrors(){
                 e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
                 e->setObject((GameObj*)this);
                 ErrorMessagesLib::PushErrorMessage(e);
-                return false;
+                return e;
             }
         }
     }
     
-    return true;
+    return NULL;
 }
 
 void SpeedpostObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
     
-    if(!checkForErrors()){
+    if(checkForErrors() != NULL){
         return;
     }
     

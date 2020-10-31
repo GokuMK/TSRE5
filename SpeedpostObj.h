@@ -38,7 +38,7 @@ public:
     void getTrackItemIds(QVector<int> &ids, int tdbId);
     void initTrItems(float* tpos);
     void deleteTrItems();
-    bool checkForErrors();
+    ErrorMessage* checkForErrors();
     void save(QTextStream* out);
     QString getSpeedpostType();
     float getSpeed();

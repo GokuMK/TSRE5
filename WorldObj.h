@@ -21,6 +21,7 @@
 
 class SFile;
 class TrackItemObj;
+class ErrorMessage;
 
 class WorldObj : public GameObj {
 public:
@@ -101,7 +102,7 @@ public:
     virtual WorldObj* clone();
     virtual void load(int x, int y);
     virtual void loadInit();
-    virtual bool checkForErrors();
+    virtual ErrorMessage* checkForErrors();
     virtual void set(int sh, FileBuffer* data);
     virtual void set(QString sh, FileBuffer* data);
     virtual void set(QString sh, QString val);

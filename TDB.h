@@ -21,6 +21,7 @@
 #include "TextObj.h"
 #include "SignalObj.h"
 #include "Vector4f.h"
+#include "ErrorMessage.h"
 
 class TRnode;
 class TRitem;
@@ -154,6 +155,8 @@ private:
     bool isInitLines = false;
     bool isInitTrItemsDraw = false;
     bool road = false;
+    int tdbId = 0;
+    ErrorMessage::SourceType tdbName = ErrorMessage::Source_TDB;
     
     float *collisionLineBuffer = NULL;
     int collisionLineLength = 0;

@@ -108,7 +108,16 @@ void Tile::checkForErrors(){
         WorldObj* obj = (WorldObj*) it->second;
         if(obj == NULL) 
             continue;
-        obj->checkForErrors();
+        ErrorMessage* e = obj->checkForErrors();
+        if(e != NULL)
+            if(Game::autoFix){
+                if(e->type == ErrorMessage::Type_Error){
+                    e->type = ErrorMessage::Type_AutoFix;
+                    e->action += "\nAutoFix: Object removed by TSRE.";
+                    obj->loaded = false;
+                    obj->modified = true;
+                }
+            }
     }
 }
 

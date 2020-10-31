@@ -119,7 +119,7 @@ bool SignalObj::isTrackItem(){
     return true;
 }
 
-bool SignalObj::checkForErrors(){
+ErrorMessage* SignalObj::checkForErrors(){
     
     TDB* tdb = Game::trackDB;
     //Get track items
@@ -135,7 +135,7 @@ bool SignalObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-        return false;
+        return e;
     }
     
     for(int i = 0; i< 32; i++){
@@ -157,7 +157,7 @@ bool SignalObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
         if(item->type != "signalitem"){
             ErrorMessage *e = new ErrorMessage(
@@ -171,7 +171,7 @@ bool SignalObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
         if(i >= sShape->iSubObj){
             ErrorMessage *e = new ErrorMessage(
@@ -184,7 +184,7 @@ bool SignalObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);            
-            return false;
+            return e;
         }
         
         if(item->trSignalType4.toUpper() != sShape->subObj[i].sigSubSType.toUpper()){
@@ -200,7 +200,7 @@ bool SignalObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
         
         // Check Track Node Location
@@ -216,7 +216,7 @@ bool SignalObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
         
         // Check World Location
@@ -233,18 +233,18 @@ bool SignalObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
     }
 
-    return true;
+    return NULL;
 }
 
 void SignalObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
     
-    if(!checkForErrors()){
+    if(checkForErrors() != NULL){
         return;
     }
     
@@ -272,6 +272,8 @@ bool SignalObj::containsTrackItem(int tdbId, int id){
 }
 
 void SignalObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    if(!this->loaded)
+        return;
     for(int i = 0; i < 32; i++){
         if(this->signalUnit[i].tdbId != tdbId)
             continue;

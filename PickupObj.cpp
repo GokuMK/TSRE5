@@ -87,6 +87,8 @@ bool PickupObj::containsTrackItem(int tdbId, int id){
 }
 
 void PickupObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    if(!this->loaded)
+        return;
     for(int i = 0; i<this->trItemIdCount/2; i++){
         if(this->trItemId[i*2] == tdbId){
             ids.push_back(this->trItemId[i*2+1]);
@@ -98,7 +100,7 @@ void PickupObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
     
-    if(!checkForErrors()){
+    if(checkForErrors() != NULL){
         return;
     }
     
@@ -111,7 +113,7 @@ void PickupObj::deleteTrItems(){
     }
 }
 
-bool PickupObj::checkForErrors(){
+ErrorMessage* PickupObj::checkForErrors(){
     TDB* tdb = Game::trackDB;
     TRitem* item = NULL;
     for(int i = 0; i<this->trItemIdCount/2; i++){
@@ -129,7 +131,7 @@ bool PickupObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
         if(item->type != "pickupitem"){
             ErrorMessage *e = new ErrorMessage(
@@ -143,10 +145,10 @@ bool PickupObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
     }
-    return true;
+    return NULL;
 }
 
 void PickupObj::initTrItems(float* tpos){

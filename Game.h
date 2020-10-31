@@ -167,6 +167,7 @@ public:
     static int numRecentItems;
     
     static bool loadAllWFiles;
+    static bool autoFix;
     
     static QHash<QString, int> TextureFlags;
     

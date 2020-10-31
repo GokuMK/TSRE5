@@ -225,7 +225,7 @@ void PlatformObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
     
-    if(!checkForErrors()){
+    if(checkForErrors() != NULL){
         return;
     }
     
@@ -251,6 +251,8 @@ bool PlatformObj::containsTrackItem(int tdbId, int id){
 }
 
 void PlatformObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    if(!this->loaded)
+        return;
     for(int i = 0; i<this->trItemIdCount/2; i++){
         if(this->trItemId[i*2] == tdbId){
             ids.push_back(this->trItemId[i*2+1]);
@@ -363,6 +365,7 @@ bool PlatformObj::getDisabled(){
     int id = this->trItemId[1];
     TRitem* trit = tdb->trackItems[id];
     if(trit == NULL) return false;
+    if(trit->platformTrItemData == NULL) return false;
     return ((trit->platformTrItemData[0] & 1) == 1);
 }
 void PlatformObj::setSideLeft(bool val){
@@ -399,14 +402,23 @@ void PlatformObj::setDisabled(bool val){
     this->modified = true;
 }
 
-bool PlatformObj::checkForErrors(){
+ErrorMessage* PlatformObj::checkForErrors(){
 
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
 
     //Platform should have two track items
     if(trItemIdCount < 4){
-        return false;
+        ErrorMessage *e = new ErrorMessage(
+            ErrorMessage::Type_Error, 
+            ErrorMessage::Source_World, 
+            QString("Object '") + type + "' - should have two track items. UiD: " + QString::number(UiD) + ". ",
+                    ""
+            );
+        e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
+        e->setObject((GameObj*)this);
+        ErrorMessagesLib::PushErrorMessage(e);
+        return e;
     }
     
     TRitem *beg = NULL;
@@ -430,7 +442,7 @@ bool PlatformObj::checkForErrors(){
         e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
         e->setObject((GameObj*)this);
         ErrorMessagesLib::PushErrorMessage(e);
-        return false;
+        return e;
     }
     
     QString iType = "";
@@ -451,7 +463,7 @@ bool PlatformObj::checkForErrors(){
         e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
         e->setObject((GameObj*)this);
         ErrorMessagesLib::PushErrorMessage(e);
-        return false;
+        return e;
     }
     
     if(beg->platformTrItemData == NULL || end->platformTrItemData == NULL){
@@ -465,7 +477,7 @@ bool PlatformObj::checkForErrors(){
         e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
         e->setObject((GameObj*)this);
         ErrorMessagesLib::PushErrorMessage(e);
-        return false;
+        return e;
     }
     
     if(beg->platformTrItemData[1] != trItemId[3] || end->platformTrItemData[1] != trItemId[1] ){
@@ -479,7 +491,7 @@ bool PlatformObj::checkForErrors(){
         e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
         e->setObject((GameObj*)this);
         ErrorMessagesLib::PushErrorMessage(e);
-        return false;
+        return e;
     }
     
     for(int i = 0; i < 2; i++){
@@ -504,7 +516,7 @@ bool PlatformObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
         
         // Check World Location
@@ -521,11 +533,11 @@ bool PlatformObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
     }
     
-    return true;
+    return NULL;
 }
 
 void PlatformObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {

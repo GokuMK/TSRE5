@@ -64,6 +64,8 @@ bool HazardObj::containsTrackItem(int tdbId, int id){
 }
 
 void HazardObj::getTrackItemIds(QVector<int> &ids, int tdbId){
+    if(!this->loaded)
+        return;
     for(int i = 0; i<this->trItemIdCount/2; i++){
         if(this->trItemId[i*2] == tdbId){
             ids.push_back(this->trItemId[i*2+1]);
@@ -88,7 +90,7 @@ void HazardObj::deleteTrItems(){
     TDB* tdb = Game::trackDB;
     TDB* rdb = Game::roadDB;
 
-    if(!checkForErrors()){
+    if(checkForErrors() != NULL){
         return;
     }
     
@@ -101,7 +103,7 @@ void HazardObj::deleteTrItems(){
     }
 }
 
-bool HazardObj::checkForErrors(){
+ErrorMessage* HazardObj::checkForErrors(){
     TDB* tdb = Game::trackDB;
     TRitem* item = NULL;
     for(int i = 0; i<this->trItemIdCount/2; i++){
@@ -119,7 +121,7 @@ bool HazardObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
         if(item->type != "hazzarditem"){
             ErrorMessage *e = new ErrorMessage(
@@ -133,10 +135,10 @@ bool HazardObj::checkForErrors(){
             e->setLocationXYZ(x, -y, position[0], position[1], -position[2]);
             e->setObject((GameObj*)this);
             ErrorMessagesLib::PushErrorMessage(e);
-            return false;
+            return e;
         }
     }
-    return true;
+    return NULL;
 }
 
 
