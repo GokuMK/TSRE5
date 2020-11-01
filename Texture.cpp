@@ -32,6 +32,24 @@ Texture::Texture(QString pathid) {
     }
 }
     
+Texture::Texture(int x, int y, int bpp, Brush* brush){
+    width = x;
+    height = y;
+    bpp = bpp;
+    bytesPerPixel = (bpp / 8);
+    imageSize = (bytesPerPixel * width * height);
+    imageData = new unsigned char[imageSize];
+    std::fill(imageData, imageData+imageSize, 255);
+    if (bpp == 24) {
+        type = GL_RGB;
+    } else {
+        type = GL_RGBA;
+    }
+
+    editable = true;
+    loaded = true;
+}
+
 Texture::Texture(const Texture* orig) {
     qDebug() << "clone tex" << orig->pathid;
     //QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()->functions();

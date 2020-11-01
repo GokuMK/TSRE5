@@ -1,7 +1,7 @@
 # This file is generated automatically. Do not edit.
 # Use project properties -> Build -> Qt -> Expert -> Custom Definitions.
 TEMPLATE = app
-DESTDIR = dist/Release/QT_5.7_static_MinGW_730_x32-Linux
+DESTDIR = dist/Release/QT_5.7_static_MinGW_730_x32-Windows
 TARGET = TSRE5
 VERSION = 0.698
 CONFIG -= debug_and_release app_bundle lib_bundle
@@ -13,7 +13,7 @@ HEADERS += AboutWindow.h AceLib.h ActLib.h ActionChooseDialog.h Activity.h Activ
 FORMS +=
 RESOURCES +=
 TRANSLATIONS +=
-OBJECTS_DIR = build/Release/QT_5.7_static_MinGW_730_x32-Linux
+OBJECTS_DIR = build/Release/QT_5.7_static_MinGW_730_x32-Windows
 MOC_DIR = 
 RCC_DIR = 
 UI_DIR = 

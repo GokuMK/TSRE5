@@ -56,6 +56,7 @@
 #include "ActionChooseDialog.h"
 #include "ErrorMessagesLib.h"
 #include "ErrorMessage.h"
+#include "AceLib.h"
 
 Route::Route() {
     Game::currentRoute = this;
@@ -1834,6 +1835,9 @@ void Route::createNew() {
     FileFunctions::copyFiles(res + "sound", path + "sound");
     FileFunctions::copyFiles(res + "terrtex", path + "terrtex");
     FileFunctions::copyFiles(res + "textures", path + "textures");
+    
+    Texture *graphicTexture = new Texture(200,150,24);
+    AceLib::save(path + "graphic.ace", graphicTexture);
 }
 
 void Route::reloadTile(int x, int z) {

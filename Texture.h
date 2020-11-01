@@ -21,6 +21,7 @@ public:
     Texture();
     Texture(QString pathid);
     Texture(const Texture* orig);
+    Texture(int x, int y, int bpp, Brush* brush = NULL);
     virtual ~Texture();
 
     unsigned char* imageData;

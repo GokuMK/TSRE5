@@ -2,7 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>4</activeConfTypeElem>
-        <activeConfIndexElem>0</activeConfIndexElem>
+        <activeConfIndexElem>2</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
@@ -19,14 +19,17 @@
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ActivityEventWindow.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/StaticObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PropertiesPlatform.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SFileX.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TrkWindow.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Game.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/MstsSoundDefinition.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PaintTexLib.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SpeedPost.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TRitem.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PlatformObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Eng.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ObjTools.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SignalWindowLink.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Tile.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/EngLib.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SoundRegionObj.cpp</file>
@@ -44,8 +47,10 @@
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Ref.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Tile.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PropertiesUndefined.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SoundRegionObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/QuadTree.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SimpleHud.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/.qmake.stash</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SpeedpostObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ErrorMessageProperties.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PickupObj.h</file>
@@ -64,7 +69,6 @@
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Consist.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RouteEditorGLWidget.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/OglObj.h</file>
-            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GameObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RulerObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PickupObj.cpp</file>
@@ -72,6 +76,7 @@
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SoundSourceObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/NaviWindow.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/HazardObj.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SignalWindow.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RouteEditorWindow.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Ruch.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/CarSpawnerObj.h</file>
@@ -93,6 +98,7 @@
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GeoCoordinates.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SignalObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PropertiesGroup.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SFileX.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Terrain.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/CarSpawnerObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/StaticObj.h</file>
