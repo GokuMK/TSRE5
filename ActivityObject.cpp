@@ -463,7 +463,7 @@ void ActivityObject::SpeedZone::makelineShape(){
             punkty[len-2] = posE[1]+1;
             punkty[len-1] = -posE[2];
         }
-        lineShape->init(punkty, len, lineShape->V, GL_LINES);
+        lineShape->init(punkty, len, RenderItem::V, GL_LINES);
         delete[] ptr;
         delete[] punkty;
 }

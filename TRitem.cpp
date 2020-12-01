@@ -1011,3 +1011,65 @@ QString TRitem::speedpostTypeName(SType val){
         return QString("resume");
     return "";
 }
+
+void TRitem::addPositionOffset(float offsetXYZ[]){
+    int x, z;
+    //float pos[3];
+    if(this->trItemRData != NULL){
+        trItemRData[0] += offsetXYZ[0];
+        trItemRData[1] += offsetXYZ[1];
+        trItemRData[2] += offsetXYZ[2];
+        x = trItemRData[3];
+        z = trItemRData[4];
+        while(trItemRData[0] > 1024 || trItemRData[0] < -1024 || trItemRData[2] > 1024 || trItemRData[2] < -1024 ){
+            Game::check_coords(x, z, trItemRData);
+        }
+        trItemRData[3] = x;
+        trItemRData[4] = z;
+    }
+    if(this->trItemPData != NULL){
+        trItemPData[0] += offsetXYZ[0];
+        trItemPData[1] += offsetXYZ[2];
+        x = trItemPData[2];
+        z = trItemPData[3];
+        while(trItemPData[0] > 1024 || trItemPData[0] < -1024 || trItemPData[1] > 1024 || trItemPData[1] < -1024 ){
+            Game::check_coords(x, z, trItemPData[0], trItemPData[1]);
+        }
+        trItemPData[2] = x;
+        trItemPData[3] = z;
+    }
+    if(this->trSignalRDir != NULL){
+        trSignalRDir[0] += offsetXYZ[0];
+        trSignalRDir[1] += offsetXYZ[1];
+        trSignalRDir[2] += offsetXYZ[2];
+        x = trSignalRDir[3];
+        z = trSignalRDir[4];
+        while(trSignalRDir[0] > 1024 || trSignalRDir[0] < -1024 || trSignalRDir[2] > 1024 || trSignalRDir[2] < -1024 ){
+            Game::check_coords(x, z, trSignalRDir);
+        }
+        trSignalRDir[3] = x;
+        trSignalRDir[4] = z;
+    }
+}
+
+void TRitem::addTrackNodeItemOffset(unsigned int trackNodeOffset, unsigned int trackItemOffset){
+    this->trItemSData2 += trackNodeOffset;
+    this->trItemId += trackItemOffset;
+    /*if(trItemRef == NULL)
+        return;
+    for(int i = 0; i < this->iTri; i++)
+        trItemRef[i] += trackItemOffset;
+    
+    for(int i = 0; i < this->TrP1+this->TrP2; i++)
+        this->TrPinS[i] += trackNodeOffset;*/
+    if(this->trSignalDirs == 1){
+        if(this->trSignalDir != NULL){
+            this->trSignalDir[0] += trackNodeOffset;
+        }
+    }
+    if(this->platformTrItemData != NULL)
+        this->platformTrItemData[1] += trackItemOffset;
+    if(this->crossoverTrItemData != NULL){
+        this->crossoverTrItemData[0] += trackItemOffset;
+    }
+}

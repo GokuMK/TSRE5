@@ -56,10 +56,13 @@ public:
     int placementAutoTargetType = 0;
     float placementAutoTranslationOffset[3];
     float placementAutoRotationOffset[3];
+    TerrainLib* terrainLib = NULL;
     Route();
+    Route(QString name);
     Route(const Route& orig);
     virtual ~Route();
     void loadAddons();
+    void mergeRoute(QString route2Name, float offsetX, float offsetY, float offsetZ);
     WorldObj* getObj(int x, int z, int id);
     WorldObj* findNearestObj(int x, int z, float *pos);
     Tile * requestTile(int x, int z);
@@ -134,14 +137,22 @@ public:
     Consist* getActivityConsist(int id);
     Activity* getCurrentActivity();
     float getDistantTerrainYOffset();
+    void setAsCurrentGameRoute();
+    void selectObjectsByXYRange(int mojex, int mojez, int minx, int maxx, int minz, int maxz);
+    void pushRenderItems(float* playerT, float* playerW, float* target, float playerRot, float fov, int renderMode);
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, int renderMode);
     void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float playerRot, float fov, bool selection);
 
 signals:
     void objectSelected(GameObj* obj);
+    void objectSelected(QVector<GameObj*> obj);
     void sendMsg(QString val);
 
 private:
+    QString trkName;
+    QString routeDir;
+    QString routeName;
+    
     void loadTrk();
     TDB *trackDB;
     TDB *roadDB; 

@@ -35,6 +35,7 @@ public:
     bool allowNew();
     bool isTrackItem();
     bool containsTrackItem(int tdbId, int id);
+    void addTrackItemIdOffset(unsigned int trackOffset, unsigned int roadOffset);
     void getTrackItemIds(QVector<int> &ids, int tdbId);
     void initTrItems(float* tpos);
     void deleteTrItems();

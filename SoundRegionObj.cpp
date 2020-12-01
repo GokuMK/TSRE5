@@ -254,6 +254,15 @@ bool SoundRegionObj::containsTrackItem(int tdbId, int id){
     return false;
 }
 
+void SoundRegionObj::addTrackItemIdOffset(unsigned int trackOffset, unsigned int roadOffset){
+    for(int i = 0; i<this->trItemId.size()/2; i++){
+        if(this->trItemId[i*2] == 0)
+            this->trItemId[i*2+1] += trackOffset;
+        if(this->trItemId[i*2] == 1)
+            this->trItemId[i*2+1] += roadOffset;
+    }
+}
+
 void SoundRegionObj::getTrackItemIds(QVector<int> &ids, int tdbId){
     if(!this->loaded)
         return;
@@ -421,7 +430,7 @@ void SoundRegionObj::renderTritems(GLUU* gluu, int selectionColor){
                 lpoints[ptr++] = ipoints[i+1].y;
                 lpoints[ptr++] = ipoints[i+1].z;
             }
-            drawLine->init(lpoints, ptr, drawLine->V, GL_LINES);
+            drawLine->init(lpoints, ptr, RenderItem::V, GL_LINES);
             drawLine->setMaterial(1.0, 1.0, 0.0);
         }
     }

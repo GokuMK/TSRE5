@@ -59,9 +59,9 @@ void Coords::render(GLUU* gluu, float * playerT, float* playerW, float playerRot
         punkty[ptr++] = 0;
 
         simpleMarkerObjP->setMaterial(1.0, 0.0, 1.0);
-        simpleMarkerObjP->init(punkty, ptr, simpleMarkerObjP->V, GL_LINES);
+        simpleMarkerObjP->init(punkty, ptr, RenderItem::V, GL_LINES);
         simpleMarkerObjL->setMaterial(0.0, 1.0, 0.0);
-        simpleMarkerObjL->init(punkty, ptr, simpleMarkerObjL->V, GL_LINES);
+        simpleMarkerObjL->init(punkty, ptr, RenderItem::V, GL_LINES);
         delete[] punkty;
     }
     
@@ -92,7 +92,7 @@ void Coords::render(GLUU* gluu, float * playerT, float* playerW, float playerRot
                     punkty[ptr++] = markerList[i].y[j+1] + h;
                     punkty[ptr++] = markerList[i].z[j+1] - 2048 * ( markerList[i].tileZ[j+1] - markerList[i].tileZ[0] );
                 }
-                markerList[i].line3d->init(punkty, ptr, markerList[i].line3d->V, GL_LINES);
+                markerList[i].line3d->init(punkty, ptr, RenderItem::V, GL_LINES);
                 delete[] punkty;
             }
             gluu->mvPushMatrix();

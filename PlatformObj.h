@@ -33,6 +33,7 @@ public:
     bool select(int value);
     bool isTrackItem();
     bool containsTrackItem(int tdbId, int id);
+    void addTrackItemIdOffset(unsigned int trackOffset, unsigned int roadOffset);
     void getTrackItemIds(QVector<int> &ids, int tdbId);
     void initTrItems(float* tpos);
     void translate(float px, float py, float pz);

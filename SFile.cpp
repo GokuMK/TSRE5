@@ -26,6 +26,8 @@
 #include "ShapeTextureInfo.h"
 #include "ShapeHierarchyInfo.h"
 #include "ContentHierarchyInfo.h"
+#include "RenderItem.h"
+#include "Renderer.h"
 
 SFile::SFile() {
     pathid = "";
@@ -920,8 +922,127 @@ void SFile::updateSim(float deltaTime, unsigned int stateId){
         }
     }
 }
+
 void SFile::render() {
     render(0,0);
+}
+
+void SFile::pushRenderItem(){
+    pushRenderItem(0,0);
+}
+
+void SFile::pushRenderItem(int selectionColor, unsigned int stateId){
+    if (isinit != 1 || loaded == 2)
+        return;
+    if (loaded == 0) {
+        if(Game::allowObjLag < 1) return;
+        
+        Game::allowObjLag-=2;
+        loaded = 2;
+        load();
+        return;
+    }
+    
+    if(state[stateId].enableSubObjQueue.size() > 0){
+        for (auto it = state[stateId].enableSubObjQueue.begin(); it != state[stateId].enableSubObjQueue.end();){
+            enableSubObjByName(stateId, it.key(), it.value());
+            it = state[stateId].enableSubObjQueue.erase(it);
+        }
+    }
+
+    if(renderItems[stateId].size() == 0 || requiresUpdate){
+        requiresUpdate = false;
+        renderItems[stateId].clear();
+        
+        RenderItem * r;// = new RenderItem();
+        float m[16];
+        int currentDlevel = state[stateId].distanceLevel;
+        for (int i = 0; i < distancelevel[currentDlevel].iloscs; i++) {
+
+            if(((state[stateId].enabledSubObjs >> i) & 1) == 0)
+                continue;
+
+            for (int j = 0; j < distancelevel[currentDlevel].subobiekty[i].iloscc; j++) {
+                r = new RenderItem();
+
+                int prim_state = distancelevel[currentDlevel].subobiekty[i].czesci[j].prim_state_idx;
+                int vtx_state = primstate[prim_state].vtx_state;
+                int matrix = vtxstate[vtx_state].matrix;
+                bool texEnabled = distancelevel[currentDlevel].subobiekty[i].czesci[j].enabled;
+
+                if(animated){
+                    Mat4::identity(m);
+                    getPmatrixAnimated(currentDlevel, m, matrix, state[stateId].frameCount);
+                    r->msMatrix = (float*)&m;
+                } else {
+                    if (!macierz[matrix].isFixed) {
+                        Mat4::identity(m);
+                        memcpy(macierz[matrix].fixed, getPmatrix(currentDlevel, m, matrix), sizeof (float) * 16);
+                        macierz[matrix].isFixed = true;
+                    }
+                    r->msMatrix = (float*)&macierz[matrix].fixed;
+                }
+
+                if( vtxstate[vtx_state].arg2 < -7 )
+                    r->normalsEnabled = 0;
+                else
+                    r->normalsEnabled = 1;
+
+                if( vtxstate[vtx_state].arg2 == -12 )
+                    r->brightness = 0.5;
+                else
+                    r->brightness = 1.0;
+
+                if(primstate[prim_state].arg4 == -1 || !texEnabled || TexLib::disabledTextures[image[texture[primstate[prim_state].arg4].image].texAddr] == 1){
+                    if(selectionColor == 0){
+                        r->disableTextures(1.0, 0.0, 1.0, 1.0);
+                    }
+                } else if (image[texture[primstate[prim_state].arg4].image].texAddr >= 0) {
+                    r->enableTextures(image[texture[primstate[prim_state].arg4].image].texAddr);
+                } else if (image[texture[primstate[prim_state].arg4].image].tex == -2) {
+                } else if (image[texture[primstate[prim_state].arg4].image].tex == -1) {
+                    image[texture[primstate[prim_state].arg4].image].tex = TexLib::addTex(
+                            texPath,
+                            image[texture[primstate[prim_state].arg4].image].name
+                            );
+                    requiresUpdate = true;
+                } else if (TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->glLoaded) {
+                    image[texture[primstate[prim_state].arg4].image].texAddr = TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->tex[0];
+                    requiresUpdate = true;
+                } else if (TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->loaded) {
+                    TexLib::mtex[image[texture[primstate[prim_state].arg4].image].tex]->GLTextures();
+                    requiresUpdate = true;
+                } else {
+                    //                    requiresUpdate = true;
+                }
+
+                r->VBO = &distancelevel[currentDlevel].subobiekty[i].VBO;
+                r->VAO = &distancelevel[currentDlevel].subobiekty[i].VAO;
+                //r->mvMatrix = Mat4::clone(Game::currentRenderer->mvMatrix);
+                r->vertOffset = distancelevel[currentDlevel].subobiekty[i].czesci[j].offset;
+                r->vertCount = distancelevel[currentDlevel].subobiekty[i].czesci[j].iloscv;
+                r->itemType = GL_TRIANGLES;
+                r->vertexAttr = RenderItem::VNTA;
+                r->shared = true;
+                renderItems[stateId].push_back(r);
+                //Game::currentRenderer->pushItemVNTA(r);
+            }
+        }
+    }
+    
+    if(renderItems[stateId].size() > 0){
+        //for(int i = 0; i < renderItems[stateId].size(); i++){
+        //    Mat4::identity(renderItems[stateId][i]->mvMatrix);
+        //    RenderItem *r;
+            
+            //renderItems[stateId][i]->mvMatrix = 
+        //            Mat4::copy(renderItems[stateId][i]->mvMatrix, Game::currentRenderer->mvMatrix);
+        //    Game::currentRenderer->pushItemVNTA(r);
+        //}
+        //     Mat4::copy(Game::currentRenderer->mvMatrix, renderItems[stateId][i]->mvMatrix);
+        
+        Game::currentRenderer->pushItemsVNTA(renderItems[stateId], Game::currentRenderer->mvMatrix);
+    }
 }
 
 void SFile::render(int selectionColor, unsigned int stateId) {

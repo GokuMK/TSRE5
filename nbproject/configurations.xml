@@ -86,6 +86,11 @@
         <itemPath>ProceduralShape.h</itemPath>
         <itemPath>ShapeTemplates.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f19" displayName="renderer" projectFiles="true">
+        <itemPath>OpenGL3Renderer.h</itemPath>
+        <itemPath>RenderItem.h</itemPath>
+        <itemPath>Renderer.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f11" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f2" displayName="activity" projectFiles="true">
           <itemPath>ActivityEventProperties.h</itemPath>
@@ -344,6 +349,11 @@
         <itemPath>ProceduralMstsDyntrack.cpp</itemPath>
         <itemPath>ProceduralShape.cpp</itemPath>
         <itemPath>ShapeTemplates.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f19" displayName="renderer" projectFiles="true">
+        <itemPath>OpenGL3Renderer.cpp</itemPath>
+        <itemPath>RenderItem.cpp</itemPath>
+        <itemPath>Renderer.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f10" displayName="routeEditor" projectFiles="true">
         <logicalFolder name="f2" displayName="activity" projectFiles="true">
@@ -913,6 +923,10 @@
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="OpenGL3Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OpenGL3Renderer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
@@ -1074,6 +1088,14 @@
       <item path="Ref.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ref.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RenderItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RenderItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Renderer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Route.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1778,6 +1800,10 @@
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="OpenGL3Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OpenGL3Renderer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
@@ -1939,6 +1965,14 @@
       <item path="Ref.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ref.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RenderItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RenderItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Renderer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Route.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2655,6 +2689,10 @@
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="OpenGL3Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OpenGL3Renderer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
@@ -2816,6 +2854,14 @@
       <item path="Ref.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Ref.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RenderItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RenderItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Renderer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Route.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3520,6 +3566,10 @@
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="OpenGL3Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OpenGL3Renderer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
@@ -3681,6 +3731,14 @@
       <item path="Ref.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Ref.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RenderItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RenderItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Renderer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Route.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -4386,6 +4444,10 @@
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="OpenGL3Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OpenGL3Renderer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
@@ -4547,6 +4609,14 @@
       <item path="Ref.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ref.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RenderItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RenderItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Renderer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Route.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -5251,6 +5321,10 @@
       </item>
       <item path="OglObj.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="OpenGL3Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="OpenGL3Renderer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="OrtsWeatherChange.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="OrtsWeatherChange.h" ex="false" tool="3" flavor2="0">
@@ -5412,6 +5486,14 @@
       <item path="Ref.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="Ref.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RenderItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RenderItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Renderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Renderer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Route.cpp" ex="false" tool="1" flavor2="8">
       </item>

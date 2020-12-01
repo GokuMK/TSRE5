@@ -69,7 +69,7 @@ GuiGlCompass::GuiGlCompass() {
     punkty[ptr++] = alpha;
     
     this->setMaterial(&texString);
-    OglObj::init(punkty, ptr, this->VT, GL_TRIANGLES);
+    OglObj::init(punkty, ptr, RenderItem::VT, GL_TRIANGLES);
     
     delete[] punkty;
 }

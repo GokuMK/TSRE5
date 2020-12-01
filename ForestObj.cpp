@@ -465,7 +465,7 @@ void ForestObj::drawShape(){
             
         texturePath = new QString(resPath.toLower()+"/"+treeTexture.toLower());
         shape.setMaterial(texturePath);
-        shape.init(punkty, ptr, shape.VNT, GL_TRIANGLES);
+        shape.init(punkty, ptr, RenderItem::VNTA, GL_TRIANGLES);
         /*shape.VAO.create();
         QOpenGLVertexArrayObject::Binder vaoBinder(&shape.VAO);
 

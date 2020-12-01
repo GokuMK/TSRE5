@@ -25,6 +25,8 @@ public:
     TextObj(int val, float s = 0, float sc = 0, int resm = 1);
     TextObj(const TextObj& orig);
     virtual ~TextObj();
+    void pushRenderItem();
+    void pushRenderItem(float rot);
     void render();
     void render(float rot);
     void setColor(int r, int g, int b);

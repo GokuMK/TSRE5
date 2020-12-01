@@ -271,6 +271,15 @@ bool SignalObj::containsTrackItem(int tdbId, int id){
     return false;
 }
 
+void SignalObj::addTrackItemIdOffset(unsigned int trackOffset, unsigned int roadOffset){
+    for(int i = 0; i < 32; i++){
+        if(this->signalUnit[i].tdbId == 0)
+            this->signalUnit[i].itemId += trackOffset;
+        if(this->signalUnit[i].tdbId == 1)
+            this->signalUnit[i].itemId += roadOffset;
+    }
+}
+
 void SignalObj::getTrackItemIds(QVector<int> &ids, int tdbId){
     if(!this->loaded)
         return;

@@ -137,3 +137,52 @@ float TRnode::getVectorSectionXRot(int id){
     float dlugosc = Vec3::distance(pos1, pos2);
     return (float)(asin((pos1[1]-pos2[1])/(dlugosc))); 
 }
+
+void TRnode::addPositionOffset(float offsetXYZ[]){
+    if(this->typ == 0 || this->typ == 2){
+        int x = UiD[4], z = UiD[5];
+        float pos[3];
+        pos[0] = UiD[6] + offsetXYZ[0];
+        pos[1] = UiD[7] + offsetXYZ[1];
+        pos[2] = UiD[8] + offsetXYZ[2];
+        //qDebug() << "old tile" << wObj->x << wObj->y;
+        while(pos[0] > 1024 || pos[0] < -1024 || pos[2] > 1024 || pos[2] < -1024 ){
+            Game::check_coords(x, z, pos);
+        }
+        UiD[4] = x;
+        UiD[5] = z;
+        UiD[6] = pos[0];
+        UiD[7] = pos[1];
+        UiD[8] = pos[2];
+    } else if(this->typ == 1){
+        for(int i = 0; i < iTrv; i++){
+            int x = this->trVectorSection[i].param[8], z = this->trVectorSection[i].param[9];
+            float pos[3];
+            pos[0] = this->trVectorSection[i].param[10] + offsetXYZ[0];
+            pos[1] = this->trVectorSection[i].param[11] + offsetXYZ[1];
+            pos[2] = this->trVectorSection[i].param[12] + offsetXYZ[2];
+            //qDebug() << "old tile" << wObj->x << wObj->y;
+            while(pos[0] > 1024 || pos[0] < -1024 || pos[2] > 1024 || pos[2] < -1024 ){
+                Game::check_coords(x, z, pos);
+            }
+            this->trVectorSection[i].param[8] = x;
+            this->trVectorSection[i].param[9] = z;
+            this->trVectorSection[i].param[10] = pos[0];
+            this->trVectorSection[i].param[11] = pos[1];
+            this->trVectorSection[i].param[12] = pos[2];
+        }
+    }
+}
+
+void TRnode::addTrackNodeItemOffset(unsigned int trackNodeOffset, unsigned int trackItemOffset){
+    for(int i = 0; i < this->TrP1+this->TrP2; i++)
+        this->TrPinS[i] += trackNodeOffset;
+    
+    if(trItemRef == NULL)
+        return;
+    for(int i = 0; i < this->iTri; i++)
+        trItemRef[i] += trackItemOffset;
+    
+
+    
+}

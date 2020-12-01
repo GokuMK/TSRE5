@@ -51,7 +51,7 @@ PoleObj::PoleObj(float height) {
     };
     int ptr = 36*3;
     this->setMaterial(1.0, 1.0, 0.0);
-    this->init(punkty, ptr, this->V, GL_TRIANGLES);
+    this->init(punkty, ptr, RenderItem::V, GL_TRIANGLES);
 }
 
 PoleObj::~PoleObj() {

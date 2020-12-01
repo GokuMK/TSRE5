@@ -64,6 +64,9 @@ public:
     void saveTit();
     void loadTdb();
     void loadTit();
+    void updateUiDs(QVector<int*> &trackObjUpdates, int startNode);
+    void updateSectionAndShapeIds( QHash<unsigned int,unsigned int>& fixedSectionIds, QHash<unsigned int,unsigned int>& fixedShapeIds );
+    void mergeTDB(TDB *secondTDB, float offsetXYZ[3], unsigned int &trackNodeOffset, unsigned int &trackItemOffset, QHash<unsigned int,unsigned int>& fixedSectionIds, QHash<unsigned int,unsigned int>& fixedShapeIds);
     void checkTrSignalRDirs();
     void checkDatabase();
     int getNewTRitemId();
@@ -109,6 +112,7 @@ public:
     void renderItems(GLUU *gluu, float* playerT, float playerRot, int renderMode);
     bool getDrawPositionOnTrNode(float* out, int id, float metry, float *sElev = NULL);
     int findTrItemNodeId(int id);
+    int findTrItemNodeIds(int id, QVector<int> &ids);
     int findNearestPositionOnTDB(float* posT, float* pos, float* q = NULL, float* tpos = NULL);
     int findNearestPositionsOnTDB(float* posT, float * pos, QVector<TDB::IntersectionPoint> &points, float maxDistance = 10.0);
     void fillNearestSquaredDistanceToTDBXZ(float* posT, QVector<Vector4f> &points, float* bbox = NULL);

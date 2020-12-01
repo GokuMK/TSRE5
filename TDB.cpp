@@ -230,20 +230,7 @@ void TDB::loadTdb(){
     }
     
     if(tsection->updateSectionDataRequired){
-        for(int i = 1; i <= iTRnodes; i++){
-            TRnode *n = trackNodes[i];
-            if(n->typ == 2){
-                if(tsection->autoFixedShapeIds[n->args[1]] > 0)
-                    n->args[1] = tsection->autoFixedShapeIds[n->args[1]];
-            }
-            if(n->typ == 1)
-                for(int j = 0; j < n->iTrv; j++){
-                    if(tsection->autoFixedShapeIds[n->trVectorSection[j].param[1]] > 0)
-                        n->trVectorSection[j].param[1] = tsection->autoFixedShapeIds[n->trVectorSection[j].param[1]];
-                    if(tsection->autoFixedSectionIds[n->trVectorSection[j].param[0]] > 0)
-                        n->trVectorSection[j].param[0] = tsection->autoFixedSectionIds[n->trVectorSection[j].param[0]];
-                }
-        }
+        this->updateSectionAndShapeIds(tsection->autoFixedSectionIds, tsection->autoFixedShapeIds);
     }
     /*for(int i = 1; i <= iTRnodes; i++){
         int old;
@@ -254,6 +241,54 @@ void TDB::loadTdb(){
         }
     }*/
     
+}
+
+void TDB::updateUiDs(QVector<int*> &trackObjUpdates, int startNode){
+        for(int i = startNode; i <= iTRnodes; i++){
+            TRnode *n = trackNodes[i];
+            if(n == NULL)
+                continue;
+            
+            for(int j = 0; j < trackObjUpdates.size(); j++){
+                if(n->typ == 2){
+                    if(n->UiD[0] == trackObjUpdates[j][0]) 
+                        if(n->UiD[1] == -trackObjUpdates[j][1])
+                            if(n->UiD[2] == trackObjUpdates[j][2]){
+                                n->UiD[0] = trackObjUpdates[j][3];
+                                n->UiD[1] = -trackObjUpdates[j][4];
+                                n->UiD[2] = trackObjUpdates[j][5];
+                    }
+                }
+                if(n->typ == 1){
+                    for(int jj = 0; jj < n->iTrv; jj++){
+                        if(n->trVectorSection[jj].param[2] == trackObjUpdates[j][0])
+                            if(n->trVectorSection[jj].param[3] == -trackObjUpdates[j][1])
+                                if(n->trVectorSection[jj].param[4] == trackObjUpdates[j][2]){
+                                    n->trVectorSection[jj].param[2] = trackObjUpdates[j][3];
+                                    n->trVectorSection[jj].param[3] = -trackObjUpdates[j][4];
+                                    n->trVectorSection[jj].param[4] = trackObjUpdates[j][5];
+                        }
+                    }
+                }
+            }
+        }
+}
+
+void TDB::updateSectionAndShapeIds(QHash<unsigned int,unsigned int>& fixedSectionIds, QHash<unsigned int,unsigned int>& fixedShapeIds){
+        for(int i = 1; i <= iTRnodes; i++){
+            TRnode *n = trackNodes[i];
+            if(n->typ == 2){
+                if(fixedShapeIds[n->args[1]] > 0)
+                    n->args[1] = fixedShapeIds[n->args[1]];
+            }
+            if(n->typ == 1)
+                for(int j = 0; j < n->iTrv; j++){
+                    if(fixedShapeIds[n->trVectorSection[j].param[1]] > 0)
+                        n->trVectorSection[j].param[1] = fixedShapeIds[n->trVectorSection[j].param[1]];
+                    if(fixedSectionIds[n->trVectorSection[j].param[0]] > 0)
+                        n->trVectorSection[j].param[0] = fixedSectionIds[n->trVectorSection[j].param[0]];
+                }
+        }
 }
 
 void TDB::loadTit(){
@@ -306,6 +341,43 @@ void TDB::loadTit(){
         ParserX::SkipToken(bufor);
     }
     return;
+}
+
+void TDB::mergeTDB(TDB *secondTDB, float offsetXYZ[3], unsigned int& trackNodeOffset, unsigned int& trackItemOffset, QHash<unsigned int,unsigned int>& fixedSectionIds, QHash<unsigned int,unsigned int>& fixedShapeIds){
+    trackNodeOffset = this->iTRnodes;
+    trackItemOffset = this->iTRitems;
+    
+    // Merge TrackSection file
+    if(!road){
+        qDebug() << "merge tsc";
+        this->tsection->mergeTSection(secondTDB->tsection, fixedSectionIds, fixedShapeIds);
+        qDebug() << "update tdb";
+        secondTDB->updateSectionAndShapeIds(fixedSectionIds, fixedShapeIds);
+    }
+    
+    // Add new trackNodes
+    qDebug() << "merge tdb";
+    for(int i = 1; i <= secondTDB->iTRnodes; i++){
+        TRnode *n = secondTDB->trackNodes[i];
+        if(n == NULL){
+            qDebug() << "NULL" << i;
+            continue;
+        }
+        //qDebug() << "o";
+        n->addPositionOffset(offsetXYZ);
+        //qDebug() << "i";
+        n->addTrackNodeItemOffset(trackNodeOffset, trackItemOffset);
+        this->trackNodes[++iTRnodes] = n;
+    }
+    qDebug() << "new tracknodes" << secondTDB->iTRnodes;
+    
+    // Add new trackItems
+    for(int i = 0; i < secondTDB->iTRitems; i++){
+        TRitem *n = secondTDB->trackItems[i];
+        n->addPositionOffset(offsetXYZ);
+        n->addTrackNodeItemOffset(trackNodeOffset, trackItemOffset);
+        this->trackItems[iTRitems++] = n;
+    }
 }
 
 void TDB::checkTrSignalRDirs(){
@@ -1877,13 +1949,13 @@ void TDB::renderAll(GLUU *gluu, float* playerT, float playerRot) {
             }
         }
         linieSieci.setMaterial(0.5, 0.5, 0.5);
-        linieSieci.init(linie, lPtr, linieSieci.V, GL_LINES);
+        linieSieci.init(linie, lPtr, RenderItem::V, GL_LINES);
 
         konceSieci.setMaterial(0.0, 0.0, 1.0);
-        konceSieci.init(konce, kPtr, konceSieci.V, GL_LINES);
+        konceSieci.init(konce, kPtr, RenderItem::V, GL_LINES);
 
         punktySieci.setMaterial(1.0, 0.0, 0.0);
-        punktySieci.init(punkty, pPtr, punktySieci.V, GL_LINES);
+        punktySieci.init(punkty, pPtr, RenderItem::V, GL_LINES);
 
         delete[] linie;
         delete[] konce;
@@ -2076,7 +2148,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
             sectionLines.setMaterial(0.0, 0.0, 1.0);
         else
             sectionLines.setMaterial(1.0, 1.0, 0.0);
-        sectionLines.init(punkty, ptr - punkty, sectionLines.V, GL_LINES);
+        sectionLines.init(punkty, ptr - punkty, RenderItem::V, GL_LINES);
         delete[] punkty;
     }
 
@@ -2172,6 +2244,22 @@ int TDB::findTrItemNodeId(int id){
         }
     }
     return -1;
+}
+
+int TDB::findTrItemNodeIds(int id, QVector<int>& ids){
+    for (int j = 1; j <= iTRnodes; j++) {
+        TRnode* n = trackNodes[j];
+        if (n == NULL) continue;
+        if (n->typ == 1) {
+            for (int i = 0; i < n->iTri; i++) {
+                if(n->trItemRef[i] == id)
+                    ids.push_back(j);
+            }
+        }
+    }
+    if(ids.size() == 0)
+        return -1;
+    return ids[0];
 }
 
 int TDB::getEndpointType(int trid, int endp){
@@ -2963,10 +3051,12 @@ void TDB::deleteTrItem(int trid){
     if(trit != NULL){
         trit->type = "emptyitem";
     }
-    int nid = findTrItemNodeId(trid);
-    if(nid < 1) 
+    QVector<int> ids;
+    int nid = findTrItemNodeIds(trid, ids);
+    if(ids.size() == 0) 
         return;
-    deleteItemFromTrNode(nid, trid);
+    for(int i = 0; i < ids.size(); i++)
+        deleteItemFromTrNode(ids[i], trid);
 
 }
 
@@ -3502,12 +3592,27 @@ void TDB::checkDatabase(){
         isPosition = false;
         
         if (trackItems[i]->type != "emptyitem"){
-            int id = findTrItemNodeId(i);
-            if (id < 1) {
+            QVector<int> ids;
+            int id = findTrItemNodeIds(i, ids);
+            if (ids.size() == 0) {
                 ErrorMessage *e = new ErrorMessage(
                         ErrorMessage::Type_Error, 
                         tdbName, 
-                        QString("Item has no trackNode: ") + QString::number(i) + ". Type: " + trackItems[i]->type );
+                        QString("Item has no trackNode: ") + QString::number(i) + ". Type: " + trackItems[i]->type,
+                        "Interactive item is not placed on any track. Should it be removed?");
+                e->setObject((GameObj*)trackItems[i]);
+                ErrorMessagesLib::PushErrorMessage(e);
+                if(Game::autoFix){
+                    e->type = ErrorMessage::Type_AutoFix;
+                    e->action += "\nAutoFix: Item removed by TSRE.";
+                    this->deleteTrItem(i);
+                }
+            } else if (ids.size() > 1) {
+                ErrorMessage *e = new ErrorMessage(
+                        ErrorMessage::Type_Error, 
+                        tdbName, 
+                        QString("Item referenced in more than one trackNode: ") + QString::number(i) + ". Type: " + trackItems[i]->type,
+                        "Interactive item is placed on more than one track.\nMay cause fatal errors and Open Rails crash. ");
                 e->setObject((GameObj*)trackItems[i]);
                 ErrorMessagesLib::PushErrorMessage(e);
                 if(Game::autoFix){
@@ -3516,14 +3621,15 @@ void TDB::checkDatabase(){
                     this->deleteTrItem(i);
                 }
             }
-
+            
             if(id >= 0 ){
                 isPosition = getDrawPositionOnTrNode(drawPosition, id, trackItems[i]->getTrackPosition());
                 if(!isPosition){
                     ErrorMessage *e = new ErrorMessage(
                             ErrorMessage::Type_Error, 
                             tdbName, 
-                            QString("Item has no position: ") + QString::number(i) + ". Type: " + trackItems[i]->type );
+                            QString("Item has no position: ") + QString::number(i) + ". Type: " + trackItems[i]->type,
+                            "Item is placed on a track but at incorrect position. Should it be removed?");
                     e->setObject((GameObj*)trackItems[i]);
                     ErrorMessagesLib::PushErrorMessage(e);
                     if(Game::autoFix){
@@ -3576,8 +3682,66 @@ void TDB::checkDatabase(){
                         trackItems[i]->trSignalRDir = NULL;
                     }
                 }
-
             }
+        }
+        
+        if(trackItems[i]->type == "crossoveritem"){
+            if(trackItems[i]->crossoverTrItemData == NULL){
+                    ErrorMessage *e = new ErrorMessage(
+                            ErrorMessage::Type_Error, 
+                            tdbName, 
+                            QString("CrossoverItem no data: ") + QString::number(i) + ". Type: " + trackItems[i]->type,
+                            "Item broken. Should be removed."
+                            );
+                    e->setObject((GameObj*)trackItems[i]);
+                    if(isPosition)
+                        e->setLocationXYZ(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[1], drawPosition[2]);
+                    ErrorMessagesLib::PushErrorMessage(e);
+                    if(Game::autoFix){
+                        e->type = ErrorMessage::Type_AutoFix;
+                        e->action += "\nAutoFix: Item removed by TSRE.";
+                        this->deleteTrItem(i);
+                    }
+            } else {
+                int iid1 = trackItems[i]->crossoverTrItemData[0];
+                if(trackItems[iid1]->crossoverTrItemData == NULL){
+                    ErrorMessage *e = new ErrorMessage(
+                                ErrorMessage::Type_Error, 
+                                tdbName, 
+                                QString("CrossoverItem second item does not match: ") + QString::number(i) + ". Type: " + trackItems[i]->type
+                                );
+                        e->setObject((GameObj*)trackItems[i]);
+                        if(isPosition)
+                            e->setLocationXYZ(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[1], drawPosition[2]);
+                        ErrorMessagesLib::PushErrorMessage(e);
+                    if(Game::autoFix){
+                        e->type = ErrorMessage::Type_AutoFix;
+                        e->action += "\nAutoFix: Item removed by TSRE.";
+                        this->deleteTrItem(i);
+                    }
+                } else {
+                    int iid2 = trackItems[iid1]->crossoverTrItemData[0];
+                    if(iid2 != i){
+                        ErrorMessage *e = new ErrorMessage(
+                                ErrorMessage::Type_Error, 
+                                tdbName, 
+                                QString("CrossoverItems data does not match: ") + QString::number(i) + ". Type: " + trackItems[i]->type
+                                );
+                        e->setObject((GameObj*)trackItems[i]);
+                        if(isPosition)
+                            e->setLocationXYZ(drawPosition[5], drawPosition[6], drawPosition[0], drawPosition[1], drawPosition[2]);
+                        ErrorMessagesLib::PushErrorMessage(e);
+                    if(Game::autoFix){
+                        e->type = ErrorMessage::Type_AutoFix;
+                        e->action += "\nAutoFix: Item removed by TSRE.";
+                        this->deleteTrItem(i);
+                    }
+                    }
+                }
+            }
+            
+            // delete all crossoveritems
+            //this->deleteTrItem(i);
         }
         
         if(Game::loadAllWFiles){

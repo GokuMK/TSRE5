@@ -61,6 +61,7 @@ public:
     void loadQuadTree();
     void createNewRouteTerrain(int x, int z);
     void saveEmpty(int x, int z);
+    void fillTerrainData(Terrain *tTile, float *offsetXYZ);
     void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode);
     void renderWater(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode, int layer);
     void renderEmpty(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);

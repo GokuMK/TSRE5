@@ -50,7 +50,8 @@ public:
     static QString getNameXY(int e);
     void load();
     void loadInit();
-    void updateTrackSectionInfo(QHash<int, int> shapes, QHash<int, int> sect);
+    void selectObjectsByXYRange(QVector<GameObj*> &objects, int minx, int maxx, int minz, int maxz);
+    void updateTrackSectionInfo(QHash<unsigned int, unsigned int> shapes, QHash<unsigned int, unsigned int> sect);
     void loadWS();
     bool isModified();
     void setModified(bool value);
@@ -70,6 +71,7 @@ public:
     void findSimilar(WorldObj* obj, GroupObj* group);
     void checkForErrors();
     void render();
+    void pushRenderItems(float *  playerT, float* playerW, float* target, float fov, int renderMode);
     void render(float *  playerT, float* playerW, float* target, float fov, int renderMode);
     //void renderWS(float *  playerT, float* playerW, float* target, float fov, int renderMode);
     void save();

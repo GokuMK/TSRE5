@@ -51,7 +51,7 @@ void TFile::initNew(QString name, int samples, int sampleS, int patches){
     patchsetNpatches = patches;
     flags = new int[patches*patches];
     tdata = new float[patches*patches*13];
-    erroeBias = new float[patches*patches];
+    errorBias = new float[patches*patches];
     int tileSize = samples*sampleS;
     float patchSize = tileSize/patches;
     float patchPosZ = -0.5*patchSize;
@@ -73,7 +73,7 @@ void TFile::initNew(QString name, int samples, int sampleS, int patches){
             tdata[(j*patches+i)*13+10] = 0;
             tdata[(j*patches+i)*13+11] = 0;
             tdata[(j*patches+i)*13+12] = 0.0625;
-            erroeBias[(j*patches+i)] = 1;
+            errorBias[(j*patches+i)] = 1;
         }
     }
         
@@ -397,7 +397,7 @@ void TFile::get163(FileBuffer* data, int n) {
         //int ilosc = data.getInt();
         //qDebug() << "i to " << n;
         tdata = new float[n*n*13];
-        erroeBias = new float[n*n];
+        errorBias = new float[n*n];
         flags = new int[n*n];
         for (int j = 0; j < n*n; j++) {
             pozycja = data->getInt();
@@ -423,7 +423,7 @@ void TFile::get163(FileBuffer* data, int n) {
             tdata[j*13+10] = data->getFloat();
             tdata[j*13+11] = data->getFloat();
             tdata[j*13+12] = data->getFloat();
-            erroeBias[j] = data->getFloat();
+            errorBias[j] = data->getFloat();
             //qDebug() << tdata[j*7+1] << tdata[j*7+2] << tdata[j*7+3] << tdata[j*7+4] << tdata[j*7+5] << tdata[j*7+6];
             
             //data->off = akto + offset;
@@ -877,7 +877,7 @@ void TFile::save(QString name){
         write << (float)tdata[j*13+10];
         write << (float)tdata[j*13+11];
         write << (float)tdata[j*13+12];
-        write << (float)erroeBias[j];
+        write << (float)errorBias[j];
     }
     
     write.unsetDevice();

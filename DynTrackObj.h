@@ -42,7 +42,7 @@ public:
     void removedFromTDB();
     void deleteVBO();
     int getDefaultDetailLevel();
-    int updateTrackSectionInfo(QHash<int, int> shapes, QHash<int, int> sect);
+    int updateTrackSectionInfo(QHash<unsigned int, unsigned int> shapes, QHash<unsigned int, unsigned int> sect);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 private:
     int tex1;

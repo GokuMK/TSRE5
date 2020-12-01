@@ -19,8 +19,8 @@ class TSectionDAT {
 public:
     std::unordered_map<int, TSection*> sekcja;
     std::unordered_map<int, TrackShape*> shape;
-    QHash<int, int> autoFixedSectionIds;
-    QHash<int, int> autoFixedShapeIds;
+    QHash<unsigned int, unsigned int> autoFixedSectionIds;
+    QHash<unsigned int, unsigned int> autoFixedShapeIds;
     
     bool loaded;
     bool dataOutOfSync = false;
@@ -38,6 +38,7 @@ public:
     bool isRoadShape(int id);
     void getShapeData(int id);
     bool saveRoute();
+    void mergeTSection(TSectionDAT *second, QHash<unsigned int,unsigned int>& fixedSectionIds, QHash<unsigned int,unsigned int>& fixedShapeIds);
 private:
     bool loadGlobal();
     bool loadRoute(bool autoFix = false);

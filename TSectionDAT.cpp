@@ -196,6 +196,45 @@ bool TSectionDAT::loadGlobal() {
     return true;
 }
 
+void TSectionDAT::mergeTSection(TSectionDAT* second, QHash<unsigned int,unsigned int>& fixedSectionIds, QHash<unsigned int,unsigned int>& fixedShapeIds){
+    if (second->routeMaxIdx < 3) return;
+    qDebug() <<"1";
+    int routeCount = routeMaxIdx;
+    for (int i = second->tsectionMaxIdx; i < second->routeMaxIdx; i++) {
+        if (second->sekcja[i] == NULL) 
+            continue;
+        unsigned int foundIdx = -1;
+        for(int j = tsectionMaxIdx; j < routeCount; j++ ){
+            if (sekcja[j] == NULL) 
+                continue;
+            if(sekcja[j]->getHash() == second->sekcja[i]->getHash()){
+                foundIdx = j;
+                break;
+            }
+        }
+        if(foundIdx > -1){
+            fixedSectionIds[i] = foundIdx;
+        } else {
+            second->sekcja[i]->id = routeMaxIdx;
+            sekcja[routeMaxIdx] = second->sekcja[i];
+            fixedSectionIds[i] = routeMaxIdx++;
+        }
+    }
+    qDebug() <<"2";
+    for (int i = second->tsectionShapes; i < second->routeShapes; i++) {
+        if (second->shape[i] == NULL)
+            continue;
+        if (second->shape[i]->numpaths != 1)
+            continue;
+        for(int j = 0; j < second->shape[i]->path[0].n; j++){
+            second->shape[i]->path[0].sect[j] = fixedSectionIds[second->shape[i]->path[0].sect[j]];
+        }
+        shape[routeShapes] = second->shape[i];
+        fixedShapeIds[i] = routeShapes;
+        routeShapes++;
+    }
+}
+
 bool TSectionDAT::saveRoute() {
 
     if (this->routeMaxIdx < 3) return true;

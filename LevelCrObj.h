@@ -27,6 +27,7 @@ public:
     virtual ~LevelCrObj();
     void loadingFixes();
     bool containsTrackItem(int tdbId, int id);
+    void addTrackItemIdOffset(unsigned int trackOffset, unsigned int roadOffset);
     void getTrackItemIds(QVector<int> &ids, int tdbId);
     void load(int x, int y);
     void set(QString sh, QString val);

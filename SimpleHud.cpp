@@ -113,7 +113,7 @@ SimpleHud::SimpleHud() {
     QString resmtext;
 
     gradientObj->setMaterial(new QString(QString("tsre_appdata/")+Game::AppDataVersion+"/gradient.png"));
-    gradientObj->init(punkty, ptr, gradientObj->VT, GL_TRIANGLES);
+    gradientObj->init(punkty, ptr, RenderItem::VT, GL_TRIANGLES);
     delete[] punkty;
 }
 

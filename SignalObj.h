@@ -47,6 +47,7 @@ public:
     bool isSubObjEnabled(int i);
     bool isJunctionAvailable(int i);
     bool containsTrackItem(int tdbId, int id);
+    void addTrackItemIdOffset(unsigned int trackOffset, unsigned int roadOffset);
     void getTrackItemIds(QVector<int> &ids, int tdbId);
     Ref::RefItem* getRefInfo();
     bool allowNew();

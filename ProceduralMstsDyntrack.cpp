@@ -704,8 +704,8 @@ void ProceduralMstsDyntrack::GenShape(QVector<OglObj*> &shape, QVector<TSection>
     shape[0]->setMaterial(texturePath);
     texturePath = new QString(resPath.toLower()+"/acleantrack2.ace");
     shape[1]->setMaterial(texturePath);
-    shape[0]->init(pd, ptr, OglObj::VNT, GL_TRIANGLES );
-    shape[1]->init(sk, str, OglObj::VNT, GL_TRIANGLES );
+    shape[0]->init(pd, ptr, RenderItem::VNTA, GL_TRIANGLES );
+    shape[1]->init(sk, str, RenderItem::VNTA, GL_TRIANGLES );
     
     float bound[6];
     bound[0] = -9999;

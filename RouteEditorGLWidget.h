@@ -83,6 +83,7 @@ public slots:
     void createNewTiles(QMap<int, QPair<int, int>*> list);
     void createNewLoTiles(QMap<int, QPair<int, int>*> list);
     void objectSelected(GameObj* obj);
+    void objectSelected(QVector<GameObj*> obj);
     
     void selectToolresetMoveStep();
     void selectToolresetRot();
@@ -138,6 +139,7 @@ protected:
     bool eventFilter(QObject *object, QEvent *event);
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;
+    void paintGL2();
     void renderShadowMaps();
     void handleSelection();
     void resizeGL(int width, int height) Q_DECL_OVERRIDE;
@@ -149,6 +151,7 @@ protected:
     void keyReleaseEvent(QKeyEvent * event) Q_DECL_OVERRIDE;
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
     void drawPointer();
+    void pushRenderPointer();
 private:
     void setupVertexAttribs();
     void setSelectedObj(GameObj* o);

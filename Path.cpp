@@ -405,7 +405,7 @@ void Path::init3dShapes(bool initShapes){
             if(endd) break;
         }
 
-        line->init(punkty, len, line->V, GL_LINES);
+        line->init(punkty, len, RenderItem::V, GL_LINES);
         delete[] ptr;
         delete[] punkty;
         

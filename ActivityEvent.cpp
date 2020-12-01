@@ -347,7 +347,7 @@ void ActivityEvent::render(GLUU* gluu, float * playerT, float playerRot, int ren
 
             simpleMarkerObj->setMaterial(1.0, 0.0, 0.0);
             simpleMarkerObj->setLineWidth(4);
-            simpleMarkerObj->init(punkty, ptr, simpleMarkerObj->V, GL_LINES);
+            simpleMarkerObj->init(punkty, ptr, RenderItem::V, GL_LINES);
             delete[] punkty;
         }
         

@@ -63,6 +63,7 @@ public:
     void lockTexture(Brush* brush, int x, int z, float posx, float posz);
     void setTexture(Brush* brush, int x, int z, float posx, float posz);
     void setTexture(Brush* brush, int u);
+    void setTexture(QString textureName, int x, int z, float posx, float posz, QString transformation = "");
     void toggleWaterDraw(int x, int z, float posx, float posz, float direction);
     void setWaterLevelGui();
     void setWaterLevel(float nw, float ne, float sw, float se);
@@ -98,7 +99,10 @@ public:
     void scalePatchTexCoordsX(float val);
     void scalePatchTexCoordsY(float val);
     QString getPatchTexTransformString();
+    QString getPatchTexTransformString(int u);
+    QString getPatchTexTransformString(int x, int z, float posx, float posz);
     void setPatchTexTransform(QString val);
+    void setPatchTexTransform(QString val, int u);
     void removeAllGaps();
     void toggleGaps(int x, int z, float posx, float posz, float direction);
     void setErrorBias(int x, int z, float posx, float posz, float val);
@@ -113,11 +117,17 @@ public:
     int getSelectedPathId();
     int getSelectedShaderId();
     QString getPatchMainTextureName();
+    QString getPatchMainTextureName(int u);
+    QString getPatchMainTextureName(int x, int z, float posx, float posz);
+    int getPatchFlags(int x, int z, float posx, float posz);
+    void setPatchFlags(int x, int z, float posx, float posz, int val);
     bool select(int value);
     bool select(int value, bool oneMore);
     bool unselect();
     void resetPatchTexCoords(int uu = -1);
     void pushContextMenuActions(QMenu *menu);
+    void pushRenderItem(float lodx, float lodz, int tileX, int tileY, float* playerW, float* target, float fov, int selectionColor);
+    void pushRenderItemWater(float lodx, float lodz, float tileX, float tileY, float* playerW, float* target, float fov, int layer, int selectionColor = 0);
     void render(float lodx, float lodz, int tileX, int tileY, float* playerW, float* target, float fov, int selectionColor);
     void renderWater(float lodx, float lodz, float tileX, float tileY, float* playerW, float* target, float fov, int layer, int selectionColor = 0);
     void refreshWaterShapes();
@@ -128,6 +138,7 @@ public slots:
     void menuToggleWater();
     void menuToggleDraw();
     void menuPutTexture();
+    void menuSelectObjects();
     
 private:
     static QString TileDir[2];

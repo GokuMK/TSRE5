@@ -29,6 +29,7 @@ class Route;
 class GameObj;
 class TerrainLib;
 class GeoWorldCoordinateConverter;
+class Renderer;
 
 class Game {
 public:
@@ -38,6 +39,7 @@ public:
     static TDB *roadDB;
     static SoundList *soundList;
     static TerrainLib *terrainLib;
+    static Renderer *currentRenderer;
     
     static bool UseWorkingDir;
     static QString AppVersion;
@@ -172,6 +174,9 @@ public:
     static QHash<QString, int> TextureFlags;
     
     static bool useOnlyPositiveQuaternions;
+    
+    static QString routeMergeString;
+    static QStringList objectsToRemove;
     
 private:
     //static RouteEditorWindow* window;

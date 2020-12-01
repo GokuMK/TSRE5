@@ -55,6 +55,10 @@ void TerrainLib::createNewRouteTerrain(int x, int z){
 
 }
 
+void TerrainLib::fillTerrainData(Terrain* tTile, float* offsetXYZ){
+    
+}
+
 void TerrainLib::saveEmpty(int x, int z){
 
 }
@@ -198,6 +202,10 @@ void TerrainLib::setWaterLevels(float *w, int mojex, int mojez){
 
 void TerrainLib::fillRaw(Terrain *cTerr, int mojex, int mojez) {
 
+}
+
+void TerrainLib::pushRenderItems(float* playerT, float* playerW, float* target, float fov, int renderMode){
+    
 }
 
 void TerrainLib::render(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, int renderMode) {

@@ -21,6 +21,7 @@
 #include <QMenu>
 #include "ErrorMessagesLib.h"
 #include "ErrorMessage.h"
+#include "Renderer.h"
 
 StaticObj::StaticObj() {
     this->shape = -1;
@@ -139,6 +140,72 @@ void StaticObj::updateSim(float deltaTime){
     
     if(shapePointer != NULL)
         shapePointer->updateSim(deltaTime, shapeState);
+}
+
+void StaticObj::pushRenderItems(float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor){
+    if (!loaded) return;
+    if (shape < 0) return;
+    if (jestPQ < 2) return;
+    //if (renderMode == gluu->RENDER_SHADOWMAP && Game::mstsShadows) {
+    //    if(this->getShadowType() != WorldObj::ShadowDynamic )
+    //        return;
+    //}
+    //GLUU* gluu = GLUU::get();
+    //if((this.position===undefined)||this.qDirection===undefined) return;
+    
+    if (size > 0) {
+        if ((lod > size + 150)) {
+            float v1[2];
+            v1[0] = playerW[0] - (target[0]);
+            v1[1] = playerW[2] - (target[2]);
+            float v2[2];
+            v2[0] = posx;
+            v2[1] = posz;
+            float iloczyn = v1[0] * v2[0] + v1[1] * v2[1];
+            float d1 = sqrt(v1[0] * v1[0] + v1[1] * v1[1]);
+            float d2 = sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
+            float zz = iloczyn / (d1 * d2);
+            if (zz > 0) return;
+
+            float ccos = cos(fov) + zz;
+            float xxx = sqrt(2 * d2 * d2 * (1 - ccos));
+            //if((ccos > 0) && (xxx > 200+50)) return;
+            if ((ccos > 0) && (xxx > size) && (skipLevel == 1)) return;
+        }
+    } else {
+        if (Game::currentShapeLib->shape[shape]->loaded){
+            size = Game::currentShapeLib->shape[shape]->size;
+            loadSnapablePoints();
+        }
+    }
+
+    //if(Game::viewSnapable)
+    //    if(snapablePoints.size() == 6)
+    //        renderSnapableEndpoints(gluu);  
+    
+    Mat4::multiply(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, matrix);
+    
+    if(Game::showWorldObjPivotPoints){
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0.9,0.9,0.7);
+        }
+        //pointer3d->pushRenderItem(selectionColor);
+    }
+    
+    /*if(selectionColor != 0){
+        gluu->disableTextures(selectionColor);
+    } else {
+        gluu->enableTextures();
+    }*/
+    
+    if(shapePointer != NULL){
+        shapePointer->pushRenderItem(selectionColor, shapeState);
+    }
+
+    if(selected){
+        //drawBox();
+    }
 }
 
 void StaticObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
@@ -263,7 +330,7 @@ void StaticObj::renderSnapableEndpoints(GLUU* gluu) {
         punkty[ptr++] = 30;
         punkty[ptr++] = 0;
         snapableEndPoint->setMaterial(0.0, 1.0, 0.0);
-        snapableEndPoint->init(punkty, ptr, snapableEndPoint->V, GL_LINES);
+        snapableEndPoint->init(punkty, ptr, RenderItem::V, GL_LINES);
         delete[] punkty;
     }
     

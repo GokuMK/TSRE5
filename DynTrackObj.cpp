@@ -92,7 +92,7 @@ void DynTrackObj::removedFromTDB(){
     this->sectionIdx = -1;
 }
 
-int DynTrackObj::updateTrackSectionInfo(QHash<int,int> shapes, QHash<int,int> sect){
+int DynTrackObj::updateTrackSectionInfo(QHash<unsigned int,unsigned int> shapes, QHash<unsigned int,unsigned int> sect){
     if(shapes[sectionIdx] > 0)
         sectionIdx = shapes[sectionIdx];
     if(sections == NULL)

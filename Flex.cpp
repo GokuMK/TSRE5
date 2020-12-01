@@ -112,8 +112,8 @@ bool Flex::NewFlex(int x, int z, float* p, float* q, float * dyntrackSections){
     v2.y = cos(q[1])*1;
     p1.x = FlexP0[0];
     p1.y = FlexP0[2];
-    p2.x = p[0];
-    p2.y = p[2];
+    p2.x = p[0] + 2048*(x - FlexX);
+    p2.y = p[2] - 2048*(z - FlexZ);
     
     //p2.x -= p1.x;
     //p2.y -= p1.y;

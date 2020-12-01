@@ -333,6 +333,10 @@ void WorldObj::getTrackItemIds(QVector<int> &ids, int tdbId){
     
 }
 
+void WorldObj::addTrackItemIdOffset(unsigned int trackOffset, unsigned int roadOffset){
+    
+}
+
 bool WorldObj::hasLinePoints(){
     return false;
 }
@@ -358,7 +362,7 @@ ErrorMessage* WorldObj::checkForErrors(){
     return NULL;
 }
 
-int WorldObj::updateTrackSectionInfo(QHash<int,int> shapes, QHash<int,int> sections){
+int WorldObj::updateTrackSectionInfo(QHash<unsigned int,unsigned int> shapes, QHash<unsigned int,unsigned int> sections){
     return 0;
 }
 
@@ -556,6 +560,10 @@ bool WorldObj::isSimilar(WorldObj* obj){
     return false;
 }
 
+void WorldObj::pushRenderItems(float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor){
+    
+}
+
 void WorldObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {
 
 }
@@ -727,7 +735,7 @@ void WorldObj::drawBox(){
         if (!this->getBoxPoints(punkty)) return;
 
         box.setMaterial(0.0, 0.0, 1.0);
-        box.init((float*)&punkty[0], punkty.size(), box.V, GL_LINES);
+        box.init((float*)&punkty[0], punkty.size(), RenderItem::V, GL_LINES);
         //box.setLineWidth(3);
     }
     

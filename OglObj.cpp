@@ -12,6 +12,9 @@
 #include "TexLib.h"
 #include "Game.h"
 #include "GLMatrix.h"
+#include "RenderItem.h"
+#include "Renderer.h"
+#include "Vector4f.h"
 
 OglObj::OglObj() {
     loaded = false;
@@ -67,7 +70,7 @@ void OglObj::unmapBuffer(){
     VBO.release();
 }
 
-void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
+void OglObj::init(float* punkty, int ptr, enum RenderItem::VertexAttr v, int type) {
     //if(loaded){
     //    VBO.destroy();
     //    VAO.destroy();
@@ -84,17 +87,17 @@ void OglObj::init(float* punkty, int ptr, enum VertexAttr v, int type) {
     VBO.bind();
     VBO.allocate(punkty, ptr * sizeof (GLfloat));
     
-    if (v == V) {
+    if (v == RenderItem::V) {
         f->glEnableVertexAttribArray(0);
         f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof (GLfloat), 0);
-    } else if (v == VT) {
+    } else if (v == RenderItem::VT) {
         f->glEnableVertexAttribArray(0);
         f->glEnableVertexAttribArray(1);
         f->glEnableVertexAttribArray(3);
         f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof (GLfloat), 0);
         f->glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 6 * sizeof (GLfloat), reinterpret_cast<void *> (3 * sizeof (GLfloat)));
         f->glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, 6 * sizeof (GLfloat), reinterpret_cast<void *> (5 * sizeof (GLfloat)));
-    } else if (v == VNT) {
+    } else if (v == RenderItem::VNTA) {
         f->glEnableVertexAttribArray(0);
         f->glEnableVertexAttribArray(1);
         f->glEnableVertexAttribArray(2);
@@ -118,9 +121,56 @@ void OglObj::render() {
     render(0);
 }
 
+void OglObj::pushRenderItem() {
+    pushRenderItem(0);
+}
+
 void OglObj::setDistanceRange(float min, float max){
     minDistance = min;
     maxDistance = max;
+}
+
+void OglObj::pushRenderItem(int selectionColor, float lod){
+    if(!loaded)
+        return;
+    if(lod > maxDistance || lod < minDistance)
+        return;
+    if(vAttribures == RenderItem::NO_ATTR)
+        return;
+    if (texId == -2)
+        return;
+    if(materialType == NONE)
+        return;
+    
+    RenderItem *r = new RenderItem();
+    r->setVertexAttributes(vAttribures);
+
+    if(selectionColor != 0){
+        r->disableTextures(selectionColor);
+    } else if(materialType == TEXTURE){
+        if (texId == -1) {
+            texId = TexLib::addTex(*res);
+        }
+        if (TexLib::mtex[texId]->loaded) {
+            if (!TexLib::mtex[texId]->glLoaded)
+                TexLib::mtex[texId]->GLTextures();
+            r->enableTextures(TexLib::mtex[texId]->tex[0]);
+        } else {
+            r->enableTextures(0);
+        }
+
+    } else if(materialType == COLOR){
+        r->disableTextures(color);
+    }  
+
+    r->lineWidth = lineWidth;
+    r->msMatrix = Game::currentRenderer->objStrMatrix;
+    //r->mvMatrix = Mat4::clone(Game::currentRenderer->mvMatrix);
+    r->itemType = shapeType;
+    r->vertOffset = 0;
+    r->vertCount = length;
+    
+    //Game::currentRenderer->pushItem(r, Game::currentRenderer->mvMatrix);
 }
 
 void OglObj::render(int selectionColor, float lod) {
@@ -131,13 +181,15 @@ void OglObj::render(int selectionColor, float lod) {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     GLUU *gluu = GLUU::get();
     
-    if(vAttribures == NO_ATTR){
+    if(vAttribures == RenderItem::NO_ATTR){
         return;
-    } else if(vAttribures == V){
+    } else if(vAttribures == RenderItem::V){
         gluu->disableNormals();
-    } else if(vAttribures == VT){
+    } else if(vAttribures == RenderItem::VT){
         gluu->disableNormals();
-    } else if(vAttribures == VNT){
+    } else if(vAttribures == RenderItem::VNT){
+        gluu->enableNormals();
+    }   else if(vAttribures == RenderItem::VNTA){
         gluu->enableNormals();
     }  
     

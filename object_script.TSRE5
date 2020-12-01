@@ -86,6 +86,7 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ObjFile.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ObjTools.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/OglObj.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/OpenGL3Renderer.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/OrtsWeatherChange.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/OverwriteDialog.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/PaintTexLib.o
@@ -126,6 +127,8 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RandomTransformWorldObjDialog.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ReadFile.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Ref.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RenderItem.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Renderer.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Route.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RouteEditorGLWidget.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RouteEditorWindow.o

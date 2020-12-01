@@ -250,6 +250,15 @@ bool PlatformObj::containsTrackItem(int tdbId, int id){
     return false;
 }
 
+void PlatformObj::addTrackItemIdOffset(unsigned int trackOffset, unsigned int roadOffset){
+    for(int i = 0; i<this->trItemIdCount/2; i++){
+        if(this->trItemId[i*2] == 0)
+            this->trItemId[i*2+1] += trackOffset;
+        if(this->trItemId[i*2] == 1)
+            this->trItemId[i*2+1] += roadOffset;
+    }
+}
+
 void PlatformObj::getTrackItemIds(QVector<int> &ids, int tdbId){
     if(!this->loaded)
         return;
@@ -808,7 +817,7 @@ void PlatformObj::makelineShape(){
         //punkty[ptr++] = drawPositionE[0]-drawPositionB[0];
         //punkty[ptr++] = drawPositionE[1]-drawPositionB[1];
         //punkty[ptr++] = -drawPositionE[2]+drawPositionB[2];
-        line->init(punkty, len, line->V, GL_LINES);
+        line->init(punkty, len, RenderItem::V, GL_LINES);
         delete[] ptr;
         delete[] punkty;
 }

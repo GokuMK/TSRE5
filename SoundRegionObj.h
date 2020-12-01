@@ -30,6 +30,7 @@ public:
     bool isSoundItem();
     void initTrItems(float* tpos);
     bool containsTrackItem(int tdbId, int id);
+    void addTrackItemIdOffset(unsigned int trackOffset, unsigned int roadOffset);
     void getTrackItemIds(QVector<int> &ids, int tdbId);
     ErrorMessage* checkForErrors();
     void deleteTrItems();

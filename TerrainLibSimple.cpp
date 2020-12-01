@@ -852,6 +852,10 @@ void TerrainLibSimple::setWaterLevels(float *w, int mojex, int mojez){
         }
 }
 
+void TerrainLibSimple::fillTerrainData(Terrain* tTile, float* offsetXYZ){
+    // ToDo
+}
+
 void TerrainLibSimple::fillRaw(Terrain *cTerr, int mojex, int mojez) {
     Terrain *tTile;
 

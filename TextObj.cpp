@@ -11,6 +11,7 @@
 #include "TextObj.h"
 #include "GLMatrix.h"
 #include "GLUU.h"
+#include "Renderer.h"
 
 TextObj::TextObj(int val, float s, float sc, int resm) : OglObj() {
     this->text.setNum(val, 10);
@@ -119,7 +120,7 @@ void TextObj::init(){
     args += ".size:"+QString::number((int)size);
     args += ".color:"+color.name();
     this->setMaterial(new QString(text+args+".:paintTex"));
-    OglObj::init(punkty, ptr, this->VT, GL_TRIANGLES);
+    OglObj::init(punkty, ptr, RenderItem::VT, GL_TRIANGLES);
     delete[] punkty;
     isInit = true;
 }
@@ -132,6 +133,23 @@ TextObj::~TextObj() {
 
 void TextObj::render() {
     render(0.0);
+}
+
+void TextObj::pushRenderItem() {
+    pushRenderItem(0);
+}
+
+void TextObj::pushRenderItem(float rot) {
+    if(!isInit)
+        init();
+
+    Game::currentRenderer->mvPushMatrix();
+    Mat4::translate(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, pos[0], pos[1], pos[2]);
+    Mat4::rotateY(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, rot+rotOffset);
+
+    OglObj::pushRenderItem();
+
+    Game::currentRenderer->mvPopMatrix();
 }
 
 void TextObj::render(float rot) {

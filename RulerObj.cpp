@@ -291,7 +291,7 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         punkty[ptr++] = 0;
         punkty[ptr++] = 10;
         punkty[ptr++] = 0;
-        point3d->init(punkty, ptr, point3d->V, GL_LINES);
+        point3d->init(punkty, ptr, RenderItem::V, GL_LINES);
         
         point3dSelected = new OglObj();
         point3dSelected->setLineWidth(8);
@@ -303,7 +303,7 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         punkty[ptr++] = 0;
         punkty[ptr++] = 10;
         punkty[ptr++] = 0;
-        point3dSelected->init(punkty, ptr, point3dSelected->V, GL_LINES);
+        point3dSelected->init(punkty, ptr, RenderItem::V, GL_LINES);
         delete[] punkty;
     }
     if(line3d == NULL){
@@ -323,7 +323,7 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
             punkty[ptr++] = points[i+1].position[1]+1;
             punkty[ptr++] = points[i+1].position[2];
         }
-        line3d->init(punkty, ptr, line3d->V, GL_LINES);
+        line3d->init(punkty, ptr, RenderItem::V, GL_LINES);
         delete[] punkty;
         refreshLength();
     }

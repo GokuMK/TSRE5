@@ -32,8 +32,8 @@ public:
     };
     bool loaded = false;
     bool used = false;
-    float* tdata;
-    float* erroeBias;
+    float* tdata = NULL;
+    float* errorBias = NULL;
     //mat* materials;
     std::unordered_map<int, Mat> materials;
     std::unordered_map<int, Mat> amaterials;

@@ -24,6 +24,7 @@ class FileBuffer;
 class ShapeTextureInfo;
 class ShapeHierarchyInfo;
 class ContentHierarchyInfo;
+class RenderItem;
 
 class SFile {
 public:
@@ -207,6 +208,8 @@ public:
     void updateSim(float deltaTime, unsigned int stateId = 0);
     void render();
     void render(int selectionColor, unsigned int stateId);
+    void pushRenderItem();
+    void pushRenderItem(int selectionColor, unsigned int stateId);
     void getSize();
     bool getBoxPoints(QVector<float> &points);
     void getFloorBorderLinePoints(float *&punkty);
@@ -238,6 +241,9 @@ private:
     float* getPmatrixAnimated(int currentDlevel, float* pmatrix, int matrix, float frame);
     void buildFrameIds();
     bool snapable = false;
+    //float *mvMatrix = NULL;
+    bool requiresUpdate = false;
+    QHash<unsigned int, QVector<RenderItem *>> renderItems;
 };
 
 #endif	/* SFILE_H */

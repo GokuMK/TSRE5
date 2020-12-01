@@ -23,6 +23,8 @@
 #include "Environment.h"
 #include "AboutWindow.h"
 #include "TerrainInfo.h"
+#include "RenderItem.h"
+#include "Renderer.h"
 
 QString Terrain::TileDir[2] = {"tiles", "lo_tiles"};
 Brush* Terrain::DefaultBrush = NULL;
@@ -134,6 +136,8 @@ void Terrain::setModified(bool value) {
 }
 
 float Terrain::setHeight(int x, int z, float posx, float posz, float val, bool add){
+    setErrorBias(x, z, posx, posz, 0);
+    
     int samples = *tfile->nsamples;
     int sampleSize = *tfile->sampleSize;
     float tileSize = sampleSize*samples;
@@ -146,7 +150,7 @@ float Terrain::setHeight(int x, int z, float posx, float posz, float val, bool a
         terrainData[(int) (posz) / sampleSize][(int) (posx) / sampleSize] += val;
     else
         terrainData[(int) (posz) / sampleSize][(int) (posx) / sampleSize] = val;
-    setErrorBias(x, z, posx, posz, 0);
+
     setModified(true);
     return terrainData[(int) (posz) / sampleSize][(int) (posx) / sampleSize];
 }
@@ -280,10 +284,13 @@ Terrain::~Terrain() {
 void Terrain::SaveEmpty(QString name, int samples, int sampleSize, int patches, bool low) {
     qDebug() << "New terrain tile";
     QString path;
-    if(low)
+    if(low){
+        if(!QDir(Game::root + "/routes/" + Game::route + "/lo_tiles/").exists())
+            QDir().mkdir(Game::root + "/routes/" + Game::route + "/lo_tiles/");
         path = Game::root + "/routes/" + Game::route + "/lo_tiles/" + name + "_y.raw";
-    else
+    } else {
         path = Game::root + "/routes/" + Game::route + "/tiles/" + name + "_y.raw";
+    }
     QFile file(path);
     if (!file.exists()){
         file.open(QIODevice::WriteOnly);
@@ -868,6 +875,23 @@ QString Terrain::getPatchTexTransformString(){
     }
     return "";
 }
+QString Terrain::getPatchTexTransformString(int x, int z, float posx, float posz){
+    getPatchCoords(x, z, posx, posz);
+    int patches = tfile->patchsetNpatches;
+
+    return getPatchTexTransformString(z * patches + x);
+}
+
+QString Terrain::getPatchTexTransformString(int u){
+
+        return QString::number(tfile->tdata[(u)*13 + 1 + 6]) + " "+
+                   QString::number(tfile->tdata[(u)*13 + 2 + 6]) + " "+
+                   QString::number(tfile->tdata[(u)*13 + 3 + 6]) + " "+
+                   QString::number(tfile->tdata[(u)*13 + 4 + 6]) + " "+
+                   QString::number(tfile->tdata[(u)*13 + 5 + 6]) + " "+
+                   QString::number(tfile->tdata[(u)*13 + 6 + 6]);
+    //return "";
+}
 
 void Terrain::setPatchTexTransform(QString val){
     QStringList list = val.split(" ");
@@ -890,6 +914,25 @@ void Terrain::setPatchTexTransform(QString val){
     }
     modified = true;
     this->refresh();
+}
+
+void Terrain::setPatchTexTransform(QString val, int u){
+    QStringList list = val.split(" ");
+    if(list.size() != 6)
+        return;
+    
+    float t[6];
+    bool ok;
+    for (int i = 0; i < 6; i++){
+        t[i] = list[i].toFloat(&ok);
+        if(!ok)
+            return;
+    }
+    
+    for (int i = 0; i < 6; i++)
+        tfile->tdata[(u)*13 + i + 1 + 6] = t[i];
+
+    modified = true;
 }
     
 void Terrain::removeAllGaps(){
@@ -951,7 +994,7 @@ void Terrain::toggleDraw(int x, int z, float posx, float posz) {
 float Terrain::getErrorBias(){
     for (int uu = 0; uu < 256; uu++) {
         if(selectedPatchs[uu]){
-            return tfile->erroeBias[uu];
+            return tfile->errorBias[uu];
         }
     }
     return -1;
@@ -964,10 +1007,36 @@ void Terrain::getWTileIds(QSet<int> &ids){
 void Terrain::setErrorBias(float val){
     for (int uu = 0; uu < 256; uu++) {
         if(selectedPatchs[uu]){
-            tfile->erroeBias[uu] = val;
+            tfile->errorBias[uu] = val;
             this->setModified(true);
         }
     }
+}
+
+void Terrain::setPatchFlags(int x, int z, float posx, float posz, int val){
+    this->getPatchCoords(x, z, posx, posz);
+    int patches = tfile->patchsetNpatches;
+    int u = x;
+    int y = z;
+    int uu = y * patches + u;
+    if(uu < 0 || uu >= patches*patches){
+        qDebug() << "flags fail" << u << y << uu;
+        return;
+    }
+    tfile->flags[uu] = val;
+}
+
+int Terrain::getPatchFlags(int x, int z, float posx, float posz){
+    this->getPatchCoords(x, z, posx, posz);
+    int patches = tfile->patchsetNpatches;
+    int u = x;
+    int y = z;
+    int uu = y * patches + u;
+    if(uu < 0 || uu >= patches*patches){
+        qDebug() << "flags fail" << u << y << uu;
+        return 0;
+    }
+    return tfile->flags[uu];
 }
 
 void Terrain::setErrorBias(int x, int z, float posx, float posz, float val){
@@ -975,7 +1044,13 @@ void Terrain::setErrorBias(int x, int z, float posx, float posz, float val){
     int patches = tfile->patchsetNpatches;
     int u = x;
     int y = z;
-    tfile->erroeBias[y * patches + u] = val;
+    int uu = y * patches + u;
+    if(uu < 0 || uu >= patches*patches){
+        qDebug() << "ebias fail" << u << y << uu;
+        return;
+    }
+    if(tfile->errorBias != NULL)
+        tfile->errorBias[y * patches + u] = val;
 }
 
 float Terrain::getAvgVaterLevel(){
@@ -1193,6 +1268,31 @@ void Terrain::getPatchCoords(int &x, int &z, float &posx, float &posz){
     z = posz / patchSize;
 }
 
+
+void Terrain::setTexture(QString textureName, int x, int z, float posx, float posz, QString transformation){
+    if(Game::seasonalEditing && Game::season.length() > 0)
+        return;
+    
+    getPatchCoords(x, z, posx, posz);
+    int patches = tfile->patchsetNpatches;
+    int u = z*patches + x;
+    int mid = tfile->getMatByTexture(textureName);
+        if(mid < 0){
+            tfile->tdata[(u)*13 + 0 + 6] = tfile->cloneMat(tfile->tdata[(u)*13 + 0 + 6]);
+            *tfile->materials[(int) tfile->tdata[(u)*13 + 0 + 6]].tex[0] = textureName;
+            *tfile->amaterials[(int) tfile->tdata[(u)*13 + 0 + 6]].tex[0] = textureName;
+            //qDebug() << *tfile->materials[(int) tfile->tdata[(u)*13 + 0 + 6]].tex[0];
+            //qDebug() << "new material";
+        } else {
+            tfile->tdata[(u)*13 + 0 + 6] = mid;
+            //qDebug() << "existed material";
+        }
+    if(transformation.length() > 0){
+        this->setPatchTexTransform(transformation);
+        
+    }
+}
+
 void Terrain::setTexture(Brush* brush, int x, int z, float posx, float posz) {
     if(Game::seasonalEditing && Game::season.length() > 0)
         return;
@@ -1356,6 +1456,298 @@ void Terrain::paintTextureOnTile(Brush* brush, int y, int u, float x, float z) {
     TexLib::mtex[texid[y * patches + u]]->update();
     this->texModified[y * patches + u] = true;
     this->modified = true;
+}
+
+void Terrain::pushRenderItem(float lodx, float lodz, int tileX, int tileY, float* playerW, float* target, float fov, int selectionColor){
+    if (!loaded)
+        return;
+    if (!isOgl) {
+        Game::terrainLib->fillRaw(this, (int) mojex, (int) mojez);
+        vertexInit();
+        normalInit();
+        oglInit();
+        isOgl = true;
+    }
+
+    if (!lines.loaded) {
+        reloadLines();
+    }
+    
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    int patches = tfile->patchsetNpatches;
+    int patchRes = samples/patches;
+    
+    if(mojex-tileX != 0 || mojez-tileY != 0){
+        Mat4::translate(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, 2048 * (mojex-tileX) , 0, 2048 * (mojez-tileY) );
+    }
+    Mat4::translate(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, -1024, 0, 1024-sampleSize*samples);
+    /*if(Game::viewWorldGrid && selectionColor == 0)
+        lines.pushRenderItem();
+    if(Game::viewTileGrid && selectionColor == 0){
+        slines.pushRenderItem();
+        ulines.pushRenderItem();
+        lockedlines.pushRenderItem();
+        selectedlines.pushRenderItem();
+    }*/
+    
+    float lod = 0;
+    float size = 512;
+
+    RenderItem *r;
+    if(Game::viewTerrainShape && (!(showBlob && MapWindow::isAlpha == 0) || selectionColor != 0)){
+        float shaderSecondTexUV = 0;
+        for (int uu = 0; uu < patches; uu++) {
+            for (int yy = 0; yy < patches; yy++) {
+                if (hidden[yy * patches + uu]) continue;
+                if ((tfile->flags[yy * patches + uu] & 1) != 0) continue;
+                /*float lodxx = lodx + uu * 128 - 1024;
+                float lodzz = lodz + yy * 128 - 1024;
+                lod = sqrt(lodxx * lodxx + lodzz * lodzz);
+                //System.out.println("-- "+lodxx+" "+lodzz);
+                if (lod > Game::objectLod) continue;
+
+                if ((lod > size)) {
+                    float v1[2];
+                    v1[0] = playerW[0] - (target[0]);
+                    v1[1] = playerW[2] - (target[2]);
+                    float v2[2];
+                    v2[0] = lodxx;
+                    v2[1] = lodzz;
+                    float iloczyn = v1[0] * v2[0] + v1[1] * v2[1];
+                    float d1 = sqrt(v1[0] * v1[0] + v1[1] * v1[1]);
+                    float d2 = sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
+                    float zz = iloczyn / (d1 * d2);
+                    if (zz > 0) continue;
+
+                    float ccos = cos(fov) + zz;
+                    float xxx = sqrt(2 * d2 * d2 * (1 - ccos));
+                    if ((ccos > 0) && (xxx > size)) continue;
+                }*/
+                
+                r = new RenderItem();
+                if(selectionColor != 0){
+                    int tselectionColor = selectionColor | (yy * patches + uu);
+                    int wColor = (int)(tselectionColor/65536);
+                    int sColor = (int)(tselectionColor - wColor*65536)/256;
+                    int bColor = (int)(tselectionColor - wColor*65536 - sColor*256);
+                    //r->disableTextures((float)wColor/255.0f, (float)sColor/255.0f, (float)bColor/255.0f, 1);
+                } else {
+                    if (texid[yy * patches + uu] == -2) {
+                    } else {
+                        if (texid[yy * patches + uu] == -1) {
+                            //texid[uu*16+yy] = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
+                            //qDebug() << texturepath << " "<<tfile->tdata[(yy * 16 + uu)*7+0] <<" "<< tfile->materials[(int)tfile->tdata[(yy * 16 + uu)*7+0]].tex[0];
+                            if (tfile->materialsCount <= (int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]){
+                                texid[yy * patches + uu] = -2;
+                                return;
+                            } else {
+                                texid[yy * patches + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]].tex[0]);
+                            }//System.out.println(tfile.materials[tfile.tdata[uu*16+yy]].tex[0]);
+                            //texid = TexLib.addTex(texturepath,"nasyp-k.ace", gl);
+                            //    gl.glDisable(GL2.GL_TEXTURE_2D);
+                        }
+                        if (TexLib::mtex[texid[yy * patches + uu]]->loaded) {
+                            if (!TexLib::mtex[texid[yy * patches + uu]]->glLoaded)
+                                TexLib::mtex[texid[yy * patches + uu]]->GLTextures();
+                            r->enableTextures(TexLib::mtex[texid[yy * patches + uu]]->tex[0]);
+                        } else {
+                        }
+                    }
+                    /*if (texid2[yy * patches + uu] == -2) {
+                    } else if (tfile->materials[(int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]].count153 < 2){
+                            texid2[yy * patches + uu] = -2;
+                    } else {
+                        if (texid2[yy * patches + uu] == -1) {
+                            if (tfile->materialsCount <= (int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6])
+                                texid[yy * patches + uu] = -2;
+                            else
+                                texid2[yy * patches + uu] = TexLib::addTex(texturepath, *tfile->materials[(int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]].tex[1]);
+                        }
+                        if (TexLib::mtex[texid2[yy * patches + uu]]->loaded) {
+                            if (!TexLib::mtex[texid2[yy * patches + uu]]->glLoaded)
+                                TexLib::mtex[texid2[yy * patches + uu]]->GLTextures(true);
+                            r->enableTextures(TexLib::mtex[texid2[yy * patches + uu]]->tex[0]);
+                            if(shaderSecondTexUV != *(float*)&tfile->materials[(int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]].itex[1][3]){
+                                shaderSecondTexUV = *(float*)&tfile->materials[(int) tfile->tdata[(yy * patches + uu)*13 + 0 + 6]].itex[1][3];
+                                gluu->currentShader->setUniformValue(gluu->currentShader->shaderSecondTexEnabled, shaderSecondTexUV);
+                            }
+                        } else {
+                        }
+                    }*/
+                }
+                r->itemType = GL_TRIANGLES;
+                r->vertOffset = (uu * patches + yy) * patchRes * patchRes * 6;
+                r->vertCount = patchRes * patchRes * 6;
+                //r->mvMatrix = Mat4::clone(Game::currentRenderer->mvMatrix);
+                r->msMatrix = Game::currentRenderer->objStrMatrix;
+                r->setVertexAttributes(r->VNT);
+                Game::currentRenderer->pushItem(r, Game::currentRenderer->mvMatrix);
+            }
+        }
+    }
+    /*    
+    if(Game::viewTerrainGrid || !Game::viewTerrainShape){
+        Game::currentRenderer->mvPushMatrix();
+        Mat4::translate(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, 0, 0.05, 0);
+
+        for (int uu = 0; uu < patches; uu++) {
+            for (int yy = 0; yy < patches; yy++) {
+                r = new RenderItem();
+                r->disableTextures(0.7,0.7,0.7,1.0);
+                if (hidden[yy * patches + uu]) continue;
+                if ((tfile->flags[yy * patches + uu] & 1) != 0) continue;
+                float lodxx = lodx + uu * 128 - 1024;
+                float lodzz = lodz + yy * 128 - 1024;
+                lod = sqrt(lodxx * lodxx + lodzz * lodzz);
+                if(Game::viewTerrainShape)
+                    if (lod > 300) continue;
+                r->itemType = GL_TRIANGLES;
+                r->vertOffset = (uu * patches + yy) * patchRes * patchRes * 6;
+                r->vertCount = patchRes * patchRes * 6;
+                r->setVertexAttributes(r->VNT);
+                r->polygonMode = 1;
+                r->mvMatrix = Mat4::clone(Game::currentRenderer->mvMatrix);
+                r->msMatrix = Game::currentRenderer->objStrMatrix;
+                Game::currentRenderer->pushItem(r);
+            }
+        }
+        Game::currentRenderer->mvPopMatrix();
+    }
+    
+    if(showBlob && selectionColor == 0){
+        if(MapWindow::isAlpha == 0){
+            terrainBlob.pushRenderItem();
+        }else{
+            Game::currentRenderer->mvPushMatrix();
+            Mat4::translate(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, 0, 0.35, 0);
+            terrainBlob.pushRenderItem();
+            Game::currentRenderer->mvPopMatrix();
+        }
+    }*/
+}
+
+void Terrain::pushRenderItemWater(float lodx, float lodz, float tileX, float tileY, float* playerW, float* target, float fov, int layer, int selectionColor){
+    if(showBlob)
+        return;
+    float alpha = 0;
+    int samples = *tfile->nsamples;
+    int sampleSize = *tfile->sampleSize;
+    int patches = tfile->patchsetNpatches;
+    int tileSize = (sampleSize*samples);
+    int patchSize = tileSize/patches;
+    
+    if(mojex-tileX != 0 || mojez-tileY != 0){
+        Mat4::translate(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, 2048 * (mojex-tileX) , 0, 2048 * (mojez-tileY) );
+    }
+    Mat4::translate(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, -1024, 0, 1024-sampleSize*samples);
+    
+    if(water[layer] == NULL)
+        water[layer] = new WaterTile();
+    OglObj *w = water[layer]->w;
+    
+    int tselectionColor = 0;
+    for (int uu = 0; uu < patches; uu++) {
+        for (int yy = 0; yy < patches; yy++) {
+            if (hidden[yy * patches + uu]) continue;
+            if ((tfile->flags[yy * patches + uu] & 0xc0) != 0) {
+                if (!w[uu * patches + yy].loaded) {
+
+                    float x1 = (uu)*patchSize;
+                    float x2 = (uu + 1)*patchSize;
+                    float z1 = (yy)*patchSize;
+                    float z2 = (yy + 1)*patchSize;
+                    float x1z1 = (((x1)*(z1)) / (tileSize * tileSize)) * tfile->WSE +
+                            (((tileSize - x1)*(z1)) / (tileSize * tileSize)) * tfile->WSW +
+                            (((tileSize - x1)*(tileSize - z1)) / (tileSize * tileSize)) * tfile->WNW +
+                            (((x1)*(tileSize - z1)) / (tileSize * tileSize)) * tfile->WNE;
+                    float x2z1 = (((x2)*(z1 )) / (tileSize * tileSize)) * tfile->WSE +
+                            (((tileSize - x2)*(z1 )) / (tileSize * tileSize)) * tfile->WSW +
+                            (((tileSize - x2)*(tileSize - z1)) / (tileSize * tileSize)) * tfile->WNW +
+                            (((x2)*(tileSize - z1)) / (tileSize * tileSize)) * tfile->WNE;
+                    float x1z2 = (((x1 )*(z2 )) / (tileSize * tileSize)) * tfile->WSE +
+                            (((tileSize - x1)*(z2)) / (tileSize * tileSize)) * tfile->WSW +
+                            (((tileSize - x1)*(tileSize - z2)) / (tileSize * tileSize)) * tfile->WNW +
+                            (((x1)*(tileSize - z2)) / (tileSize * tileSize)) * tfile->WNE;
+                    float x2z2 = (((x2)*(z2)) / (tileSize * tileSize)) * tfile->WSE +
+                            (((tileSize - x2)*(z2)) / (tileSize * tileSize)) * tfile->WSW +
+                            (((tileSize - x2)*(tileSize - z2)) / (tileSize * tileSize)) * tfile->WNW +
+                            (((x2)*(tileSize - z2)) / (tileSize * tileSize)) * tfile->WNE;
+
+                    float *punkty = new float[54];
+                    int ptr = 0;
+
+                    punkty[ptr++] = x2;
+                    punkty[ptr++] = x2z2;
+                    punkty[ptr++] = z2;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 4;
+                    punkty[ptr++] = 4;
+                    punkty[ptr++] = alpha;
+
+                    punkty[ptr++] = x2;
+                    punkty[ptr++] = x2z1;
+                    punkty[ptr++] = z1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 4;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = alpha;
+
+                    punkty[ptr++] = x1;
+                    punkty[ptr++] = x1z1;
+                    punkty[ptr++] = z1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = alpha;
+
+                    punkty[ptr++] = x1;
+                    punkty[ptr++] = x1z2;
+                    punkty[ptr++] = z2;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 4;
+                    punkty[ptr++] = alpha;
+
+                    punkty[ptr++] = x2;
+                    punkty[ptr++] = x2z2;
+                    punkty[ptr++] = z2;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 4;
+                    punkty[ptr++] = 4;
+                    punkty[ptr++] = alpha;
+
+                    punkty[ptr++] = x1;
+                    punkty[ptr++] = x1z1;
+                    punkty[ptr++] = z1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 1;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = 0;
+                    punkty[ptr++] = alpha;
+                    //QString *texturePath = new QString("resources/woda.ace");
+                    //water[uu * 16 + yy].setMaterial(texturePath);
+                    w[uu * patches + yy].setMaterial(&Game::currentRoute->env->water[layer].tex);
+                    w[uu * patches + yy].init(punkty, ptr, RenderItem::VNTA, GL_TRIANGLES);
+                    delete punkty;
+                }
+                if(selectionColor != 0)
+                    tselectionColor = selectionColor | (yy * patches + uu);
+                w[uu * patches + yy].pushRenderItem(tselectionColor);
+            }
+        }
+    }
 }
 
 void Terrain::render(float lodx, float lodz, int tileX, int tileY, float* playerW, float* target, float fov, int selectionColor) {
@@ -1666,7 +2058,7 @@ void Terrain::renderWater(float lodx, float lodz, float tileX, float tileY, floa
                     //QString *texturePath = new QString("resources/woda.ace");
                     //water[uu * 16 + yy].setMaterial(texturePath);
                     w[uu * patches + yy].setMaterial(&Game::currentRoute->env->water[layer].tex);
-                    w[uu * patches + yy].init(punkty, ptr, w[uu * patches + yy].VNT, GL_TRIANGLES);
+                    w[uu * patches + yy].init(punkty, ptr, RenderItem::VNTA, GL_TRIANGLES);
                     delete punkty;
                 }
                 if(selectionColor != 0)
@@ -1727,7 +2119,7 @@ void Terrain::reloadLines() {
     }
 
     lines.setMaterial(1.0, 0.0, 0.0);
-    lines.init(punkty, ptr, lines.V, GL_LINES);
+    lines.init(punkty, ptr, RenderItem::V, GL_LINES);
     delete[] punkty;
     //s tile lines
     punkty = new float[samples * 32 * 6];
@@ -1754,7 +2146,7 @@ void Terrain::reloadLines() {
         }
     }
     slines.setMaterial(0.5, 0.5, 0.5);
-    slines.init(punkty, ptr, lines.V, GL_LINES);
+    slines.init(punkty, ptr, RenderItem::V, GL_LINES);
     delete[] punkty;
     
     //////////////////////
@@ -1807,7 +2199,7 @@ void Terrain::reloadLines() {
         }
     
     ulines.setMaterial(0.8, 0.8, 0.8);
-    ulines.init(punkty, ptr, lines.V, GL_LINES);
+    ulines.init(punkty, ptr, RenderItem::V, GL_LINES);
     delete[] punkty;
 
     //////////////////////
@@ -1860,7 +2252,7 @@ void Terrain::reloadLines() {
         }
     
     lockedlines.setMaterial(0.1, 0.1, 0.1);
-    lockedlines.init(punkty, ptr, lines.V, GL_LINES);
+    lockedlines.init(punkty, ptr, RenderItem::V, GL_LINES);
     delete[] punkty;
     
     //////////////////////
@@ -1913,7 +2305,7 @@ void Terrain::reloadLines() {
         }
     
     selectedlines.setMaterial(0.0, 0.0, 0.8);
-    selectedlines.init(punkty, ptr, lines.V, GL_LINES);
+    selectedlines.init(punkty, ptr, RenderItem::V, GL_LINES);
     delete[] punkty;
 }
 
@@ -2343,7 +2735,7 @@ void Terrain::initBlob(){
     *path += QString::number((int)(X)*10000+(int)(Y))+".:maptex";
     //qDebug() << *path;
     terrainBlob.setMaterial(path);
-    terrainBlob.init(punkty, ptr, terrainBlob.VNT, GL_TRIANGLES);
+    terrainBlob.init(punkty, ptr, RenderItem::VNTA, GL_TRIANGLES);
     delete[] punkty;
 }
 
@@ -2539,6 +2931,20 @@ QString Terrain::getPatchMainTextureName(){
     return "UNDEFINED";
 }
 
+QString Terrain::getPatchMainTextureName(int x, int z, float posx, float posz){
+    getPatchCoords(x, z, posx, posz);
+    int patches = tfile->patchsetNpatches;
+
+    return getPatchMainTextureName(z * patches + x);
+}
+
+QString Terrain::getPatchMainTextureName(int u){
+
+    return *tfile->materials[(int) tfile->tdata[(u)*13 + 0 + 6]].tex[0];
+
+    //return "UNDEFINED";
+}
+
 bool Terrain::select(int value, bool oneMore){
     if(oneMore){
         selected = true;
@@ -2608,9 +3014,14 @@ void Terrain::pushContextMenuActions(QMenu *menu){
         contextMenuActions["toggledraw"] = new QAction(tr("&Toggle Draw")); 
         QObject::connect(contextMenuActions["toggledraw"], SIGNAL(triggered()), this, SLOT(menuToggleDraw()));
     }
+    if(contextMenuActions["selectobjects"] == NULL){
+        contextMenuActions["selectobjects"] = new QAction(tr("&Select Objects")); 
+        QObject::connect(contextMenuActions["selectobjects"], SIGNAL(triggered()), this, SLOT(menuSelectObjects()));
+    }
     menu->addAction(contextMenuActions["puttexture"]);
     menu->addAction(contextMenuActions["togglewater"]);
     menu->addAction(contextMenuActions["toggledraw"]);
+    menu->addAction(contextMenuActions["selectobjects"]);
 }
 
 void Terrain::menuToggleWater(){
@@ -2629,4 +3040,28 @@ void Terrain::menuPutTexture(){
             setTexture(DefaultBrush, uu);
         }
     }
+}
+
+void Terrain::menuSelectObjects(){
+    
+    // Adjust for other tiles than 2048x2048m in the future.
+    
+    int minx = 2048, maxx = 0, minz = 2048, maxz = 0;
+    for (int i = 0; i < 16; i++)
+        for (int j = 0; j < 16; j++) {
+            int uu = j*16 + i;
+            if(selectedPatchs[uu]){
+                if(i*128 < minx) minx = i*128;
+                if(i*128+128 > maxx) maxx = i*128+128;
+                if(j*128 < minz) minz = j*128;
+                if(j*128+128 > maxz) maxz = j*128+128;
+                
+                //setTexture(DefaultBrush, uu);
+            }
+        }
+    //minx = 1024 - maxx; maxx = 1024 - minx ; minz = 1024 - maxz; maxz = 1024 - minz;
+    qDebug() << minx << maxx << minz << maxz;
+    qDebug() << minx - 1024 << maxx - 1024 << minz - 1024 << maxz - 1024;
+    if(Game::currentRoute != NULL)
+        Game::currentRoute->selectObjectsByXYRange(mojex, mojez, minx - 1024 , maxx - 1024 , minz - 1024 , maxz - 1024);
 }

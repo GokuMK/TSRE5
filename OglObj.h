@@ -13,18 +13,19 @@
 
 #include <QString>
 #include "GLUU.h"
-#include "Vector4f.h"
+#include "RenderItem.h"
 
 class OglObj {
 public:
-    enum VertexAttr {NO_ATTR = 0, V = 3, VT = 6, VNT = 9};
     enum MaterialType {NONE, TEXTURE, COLOR};
     bool loaded;
     
     OglObj();
     OglObj(const OglObj& orig);
     virtual ~OglObj();
-    void init(float* punkty, int ptr, enum VertexAttr v, int type);
+    void init(float* punkty, int ptr, enum RenderItem::VertexAttr v, int type);
+    virtual void pushRenderItem();
+    virtual void pushRenderItem(int selectionColor, float lod = 0);
     virtual void render();
     virtual void render(int selectionColor, float lod = 0);
     void deleteVBO();
@@ -50,7 +51,7 @@ private:
     float maxDistance = 999999;
     QString *res;
     Vector4f *color = NULL;
-    VertexAttr vAttribures = NO_ATTR;
+    RenderItem::VertexAttr vAttribures = RenderItem::NO_ATTR;
 };
 
 #endif	/* OGLOBJ_H */

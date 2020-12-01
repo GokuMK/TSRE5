@@ -508,7 +508,7 @@ void Eng::drawBorder(){
         *ptr++ = 6;
         *ptr++ = width;
         borderObj->setMaterial(1.0, 0.0, 0.0);
-        borderObj->init(punkty, ptr-punkty, borderObj->V, GL_LINES);
+        borderObj->init(punkty, ptr-punkty, RenderItem::V, GL_LINES);
         delete[] punkty;
     }
 
@@ -554,7 +554,7 @@ void Eng::drawBorder3d(){
                 *ptr++ = width*i;
         }
         borderObj3d->setMaterial(1.0, 0.0, 0.0);
-        borderObj3d->init(punkty, ptr-punkty, borderObj3d->V, GL_LINES);
+        borderObj3d->init(punkty, ptr-punkty, RenderItem::V, GL_LINES);
         delete[] punkty;
     }
 
@@ -844,7 +844,7 @@ void Eng::renderOnTrack(GLUU* gluu, float* playerT, int selectionColor) {
         punkty[ptr++] = 30;
         punkty[ptr++] = 0;
         ruchPoint->setMaterial(0.0, 1.0, 0.0);
-        ruchPoint->init(punkty, ptr, ruchPoint->V, GL_LINES);
+        ruchPoint->init(punkty, ptr, RenderItem::V, GL_LINES);
         delete[] punkty;
     }
     

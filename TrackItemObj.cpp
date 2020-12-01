@@ -34,7 +34,7 @@ TrackItemObj::TrackItemObj(int type) : OglObj() {
             };
         int ptr = 18*3;
         this->setMaterial(0.0, 1.0, 0.0);
-        this->init(punkty, ptr, this->V, GL_TRIANGLES);
+        this->init(punkty, ptr, RenderItem::V, GL_TRIANGLES);
         //delete[] punkty;
     } else if(type == 2) {
         float punkty[18*3]{
@@ -59,7 +59,7 @@ TrackItemObj::TrackItemObj(int type) : OglObj() {
             };
         int ptr = 18*3;
         this->setMaterial(0.0, 1.0, 0.0);
-        this->init(punkty, ptr, this->V, GL_TRIANGLES);
+        this->init(punkty, ptr, RenderItem::V, GL_TRIANGLES);
         //delete[] punkty;
     } else {
         float punkty[36*3]{
@@ -102,7 +102,7 @@ TrackItemObj::TrackItemObj(int type) : OglObj() {
         };
         int ptr = 36*3;
         this->setMaterial(0.0, 1.0, 0.0);
-        this->init(punkty, ptr, this->V, GL_TRIANGLES);
+        this->init(punkty, ptr, RenderItem::V, GL_TRIANGLES);
         //delete[] punkty;
     }
 }

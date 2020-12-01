@@ -116,7 +116,7 @@ SigCfg::SigCfg() {
                 if (sh == "signaltype") {
                     nowySt = new SignalType();
                     nowySt->type = ParserX::GetString(bufor);
-
+                    //    qDebug() << nowySt->type;
                     while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
                         nowySt->set(sh, bufor);
                         ParserX::SkipToken(bufor);

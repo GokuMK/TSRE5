@@ -126,6 +126,7 @@ public:
     virtual bool isSoundItem();
     virtual bool containsTrackItem(int tdbId, int id);
     virtual void getTrackItemIds(QVector<int> &ids, int tdbId);
+    virtual void addTrackItemIdOffset(unsigned int trackOffset, unsigned int roadOffset);
     virtual bool hasLinePoints();
     virtual void getLinePoints(float *&punkty);
     virtual Ref::RefItem* getRefInfo();
@@ -168,7 +169,8 @@ public:
     virtual void setInternalLodControl(bool val);
     virtual void loadingFixes();
     virtual void randomTransform(Ref::RandomTransformation * transformation);
-    virtual int updateTrackSectionInfo(QHash<int, int> shapes, QHash<int, int> sections);
+    virtual int updateTrackSectionInfo(QHash<unsigned int, unsigned int> shapes, QHash<unsigned int, unsigned int> sections);
+    virtual void pushRenderItems(float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     virtual void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
 protected:
     virtual void loadSnapablePoints();

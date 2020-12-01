@@ -357,7 +357,7 @@ void TransferObj::drawShape(int selectionColor){
         
         texturePath = new QString(resPath.toLower()+"/"+seasonPath+texture.toLower());
         shape.setMaterial(texturePath);
-        shape.init(punkty, ptr, shape.VNT, GL_TRIANGLES);
+        shape.init(punkty, ptr, RenderItem::VNTA, GL_TRIANGLES);
         delete[] punkty;
         init = true;
     }

@@ -44,6 +44,7 @@
 #include "PlayActivitySelectWindow.h"
 #include "SoundManager.h"
 #include "Skydome.h"
+#include "OpenGL3Renderer.h"
 
 RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -138,6 +139,7 @@ bool RouteEditorGLWidget::initRoute(){
     //aaaaa.exec();
     
     QObject::connect(route, SIGNAL(objectSelected(GameObj*)), this, SLOT(objectSelected(GameObj*)));
+    QObject::connect(route, SIGNAL(objectSelected(QVector<GameObj*>)), this, SLOT(objectSelected(QVector<GameObj*>)));
     QObject::connect(route, SIGNAL(sendMsg(QString)), this, SLOT(msg(QString)));
 
     float * aaa = new float[2] {
@@ -192,6 +194,9 @@ void RouteEditorGLWidget::initializeGL() {
     qDebug() << "# InitializeOpenGLFunctions";
 
     initializeOpenGLFunctions();
+
+    Game::currentRenderer = new OpenGL3Renderer();
+    
     //funcs = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_3_Core>();
     //if (!funcs) {
     //    qWarning() << "Could not obtain required OpenGL context version";
@@ -244,7 +249,7 @@ void RouteEditorGLWidget::initializeGL() {
     punkty[ptr++] = 0;
     compassPointer->setLineWidth(2);
     compassPointer->setMaterial(0.0, 0.0, 0.0);
-    compassPointer->init(punkty, ptr, compassPointer->V, GL_LINES);
+    compassPointer->init(punkty, ptr, RenderItem::V, GL_LINES);
     delete[] punkty;    
     
     //selectedObj = NULL;
@@ -286,7 +291,127 @@ void RouteEditorGLWidget::setMoveStep(float val){
     moveMaxStep = val; 
 }
 
-void RouteEditorGLWidget::paintGL() {
+void RouteEditorGLWidget::paintGL(){
+    paintGL2();
+    return;
+    
+    Game::currentShapeLib = currentShapeLib;
+    if (route == NULL) return;
+    if (!route->loaded) return;
+    
+    // Render Shadows
+    //if (Game::shadowsEnabled > 0)
+    //    renderShadowMaps();
+
+    // Render Scene
+    //gluu->currentShader = gluu->shaders["StandardBloom"];
+    gluu->currentShader = gluu->shaders["StandardFog"];
+    gluu->currentShader->bind();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glActiveTexture(GL_TEXTURE0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    int renderMode = GLUU::RENDER_DEFAULT;
+    if (selection)
+        renderMode = GLUU::RENDER_SELECTION;
+
+    glClearColor(gluu->skyColor[0], gluu->skyColor[1], gluu->skyColor[2], 1.0);
+    glViewport(0, 0, (float) this->width() * Game::PixelRatio, (float) this->height() * Game::PixelRatio);
+    Mat4::identity(gluu->mvMatrix);
+    Mat4::identity(Game::currentRenderer->mvMatrix);
+    
+    Mat4::perspective(gluu->fMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
+    Mat4::multiply(gluu->fMatrix, gluu->fMatrix, camera->getMatrix());
+    
+    // Render Skydome
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 100.0f, 10000.0f);
+    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, camera->getPos());
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, -50, 0);
+    Mat4::rotate(gluu->mvMatrix, gluu->mvMatrix, 2.0, 0, 1, 0);
+    gluu->setMatrixUniforms();
+    gluu->currentShader->setUniformValue(gluu->currentShader->lod, 0.0f);
+    //route->skydome->render(gluu, renderMode);
+    Mat4::identity(gluu->mvMatrix);
+    Mat4::identity(Game::currentRenderer->mvMatrix);
+    glClear(GL_DEPTH_BUFFER_BIT); 
+    
+    // Render Low Resolution Terrain
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 600.0f, Game::distantLod);
+    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
+    gluu->setMatrixUniforms();
+    //gluu->currentShader->setUniformValue(gluu->currentShader->lod, -0.5f);
+    Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 0, route->getDistantTerrainYOffset(), 0);
+    //Game::terrainLib->renderLo(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode);
+    //for(int i = 0; i < route->env->waterCount; i++)
+    //    Game::terrainLib->renderWaterLo(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
+    Mat4::identity(gluu->mvMatrix);
+    Mat4::identity(Game::currentRenderer->mvMatrix);
+    glClear(GL_DEPTH_BUFFER_BIT);
+
+    // Render High Resolution Terrain
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
+    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
+    gluu->setMatrixUniforms();
+    Game::terrainLib->pushRenderItems(camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode);
+    
+    // Render World
+    Mat4::perspective(gluu->pMatrix, Game::cameraFov * M_PI / 180, float(this->width()) / this->height(), 0.2f, Game::objectLod);
+    Mat4::multiply(gluu->pMatrix, gluu->pMatrix, camera->getMatrix());
+    gluu->setMatrixUniforms();
+
+    if (stickPointerToTerrain && Game::viewTerrainShape)
+        if (!selection && !Game::playerMode) pushRenderPointer();
+
+    route->pushRenderItems(camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, renderMode);
+    //if (!selection)
+    //for(int i = 0; i < route->env->waterCount; i++)
+    //    Game::terrainLib->renderWater(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
+    
+    //if (!stickPointerToTerrain || !Game::viewTerrainShape)
+    //    if (!selection && !Game::playerMode) pushRenderPointer();
+    
+    // render compass
+    /*if (!selection && Game::viewCompass){
+        Mat4::identity(gluu->mvMatrix);
+        Mat4::ortho(gluu->pMatrix, -1.0, 1.0, 1.0 - 2*(float(this->height()) / this->width()), 1.0, 0.0, 1.0);
+        Mat4::identity(gluu->objStrMatrix);
+        gluu->setMatrixUniforms();
+        gluu->currentShader->setUniformValue(gluu->currentShader->lod, 0.0f);
+
+        compass->pushRenderItem(camera->getRotX()+M_PI);
+        compassPointer->pushRenderItem();
+    }*/
+    
+    
+    // HUD
+    /*if(Game::hudEnabled){
+        int shadowsState = Game::shadowsEnabled;
+        Game::shadowsEnabled = 0;
+        float hudScale = Game::hudScale;
+        Mat4::identity(gluu->mvMatrix);
+        Mat4::ortho(gluu->pMatrix, -1.0, -1.0+2.0*hudScale, 1.0 - 2*(float(this->height()) / this->width())*hudScale, 1.0, 0.0, 1.0);
+        Mat4::identity(gluu->objStrMatrix);
+        gluu->setMatrixUniforms();
+        gluu->currentShader->setUniformValue(gluu->currentShader->lod, 0.0f);
+        camera->renderHud(gluu);
+        Game::shadowsEnabled = shadowsState;
+        gluu->currentShader->release();
+    }*/
+
+    Game::currentRenderer->renderFrame();
+    // Handle Selection
+    //handleSelection();
+
+    
+    // Set Info
+    //if (this->isActiveWindow()) {
+    //    emit this->naviInfo(route->getTileObjCount((int) camera->pozT[0], (int) camera->pozT[1]), route->getTileHiddenObjCount((int) camera->pozT[0], (int) camera->pozT[1]));
+    //    emit this->posInfo(camera->getCurrentPos());
+    //    emit this->pointerInfo(aktPointerPos);
+    //}
+}
+
+void RouteEditorGLWidget::paintGL2() {
     Game::currentShapeLib = currentShapeLib;
     if (route == NULL) return;
     if (!route->loaded) return;
@@ -625,11 +750,14 @@ void RouteEditorGLWidget::handleSelection() {
     }
 }
 
-void RouteEditorGLWidget::drawPointer() {
+void RouteEditorGLWidget::pushRenderPointer() {
+    
     int x = mousex;
     int y = mousey;
 
-    float winZ[4];
+    static unsigned long long int oldTime = 0;
+    unsigned long long int newTime = QDateTime::currentMSecsSinceEpoch();
+    static float winZ[4];
     int viewport[4];
     //float wcoord[4];
 
@@ -637,8 +765,47 @@ void RouteEditorGLWidget::drawPointer() {
     //glGetFloatv(GL_MODELVIEW_MATRIX, mvmatrix);
     //glGetFloatv(GL_PROJECTION_MATRIX, projmatrix);
     int realy = viewport[3] - (int) y - 1;
-    glReadPixels(x, realy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+    if(newTime - oldTime > 200){
+        glReadPixels(x, realy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+        oldTime = newTime;
+    }
+    GLH::glhUnProjectf((float) x, (float) realy, winZ[0], // 
+            gluu->mvMatrix,
+            gluu->pMatrix,
+            viewport,
+            aktPointerPos);
+    return;
+    //qDebug()<<aktPointerPos[0]<< aktPointerPos[1]<< aktPointerPos[2];
+    /*if (Game::viewPointer3d) {
+        gluu->mvPushMatrix();
+        Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, aktPointerPos[0], aktPointerPos[1], aktPointerPos[2]);
+        Mat4::identity(gluu->objStrMatrix);
+        gluu->setMatrixUniforms();
+        //gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+        pointer3d->render();
+        gluu->mvPopMatrix();
+    }*/
+}
 
+void RouteEditorGLWidget::drawPointer() {
+    int x = mousex;
+    int y = mousey;
+
+    static unsigned long long int oldTime = 0;
+    unsigned long long int newTime = QDateTime::currentMSecsSinceEpoch();
+    static float winZ[4];
+    int viewport[4];
+    //float wcoord[4];
+
+    
+    glGetIntegerv(GL_VIEWPORT, viewport);
+    //glGetFloatv(GL_MODELVIEW_MATRIX, mvmatrix);
+    //glGetFloatv(GL_PROJECTION_MATRIX, projmatrix);
+    int realy = viewport[3] - (int) y - 1;
+    if(newTime - oldTime > 100){
+        glReadPixels(x, realy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+        oldTime = newTime;
+    }
     GLH::glhUnProjectf((float) x, (float) realy, winZ[0], // 
             gluu->mvMatrix,
             gluu->pMatrix,
@@ -1315,7 +1482,20 @@ void RouteEditorGLWidget::objectSelected(GameObj* obj){
         return;
     obj->select();
     setSelectedObj(obj);
-    
+}
+
+void RouteEditorGLWidget::objectSelected(QVector<GameObj*> obj){
+    if (selectedObj != NULL) {
+        selectedObj->unselect();
+        setSelectedObj(NULL);
+    }
+    if(obj.size() == 0)
+        return;
+    for(int i = 0; i < obj.size(); i++){
+        groupObj->addObject((WorldObj*)obj[i]);
+        groupObj->select();
+        setSelectedObj(groupObj);
+    }
 }
 
 void RouteEditorGLWidget::setPaintBrush(Brush* brush) {

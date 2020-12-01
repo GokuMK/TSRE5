@@ -36,6 +36,7 @@
 #include "GroupObj.h"
 #include "ErrorMessagesLib.h"
 #include "ErrorMessage.h"
+#include "Renderer.h"
 
 Tile::Tile() {
     modified = false;
@@ -118,6 +119,29 @@ void Tile::checkForErrors(){
                     obj->modified = true;
                 }
             }
+        
+        // Remove all objects by type
+        if(Game::objectsToRemove.size() > 0){
+            foreach (QString val, Game::objectsToRemove){
+                if(obj->type == val){
+                    obj->loaded = false;
+                    modified = true;
+                }
+            }
+        }
+    }
+    
+}
+
+void Tile::selectObjectsByXYRange(QVector<GameObj*>& objects, int minx, int maxx, int minz, int maxz){
+    for (auto it = obiekty.begin(); it != obiekty.end(); ++it) {
+        WorldObj* obj = (WorldObj*) it->second;
+        if(obj == NULL) 
+            continue;
+        if(!obj->loaded) 
+            continue;
+        if(obj->position[0] >= minx && obj->position[0] <= maxx && obj->position[2] >= minz && obj->position[2] <= maxz)
+            objects.push_back((GameObj*)obj);
     }
 }
 
@@ -133,7 +157,7 @@ void Tile::loadInit(){
     checkForErrors();
 }
 
-void Tile::updateTrackSectionInfo(QHash<int, int> shapes, QHash<int, int> sect){
+void Tile::updateTrackSectionInfo(QHash<unsigned int, unsigned int> shapes, QHash<unsigned int, unsigned int> sect){
     int count = 0;
     for (auto it = obiekty.begin(); it != obiekty.end(); ++it) {
         WorldObj* obj = (WorldObj*) it->second;
@@ -777,6 +801,43 @@ void Tile::updateSim(float deltaTime){
         if(obiekty[i] == NULL) continue;
         if (obiekty[i]->loaded) {
             obiekty[i]->updateSim(deltaTime);
+        }
+    }
+}
+
+void Tile::pushRenderItems(float* playerT, float* playerW, float* target, float fov, int renderMode){
+    if (loaded != 1) return;
+    int selectionColor = 0;
+    float lodx, lodz, lod;
+
+    for (int i = 0; i < jestObiektow; i++) {
+        if(obiekty[i] == NULL) continue;
+       
+        if (obiekty[i]->loaded) {
+            lodx = (x - playerT[0])*2048 + obiekty[i]->position[0] - playerW[0];
+            lodz = (z - playerT[1])*2048 + obiekty[i]->position[2] - playerW[2];
+            //console.log(this.x);
+            lod = (float) sqrt(lodx * lodx + lodz * lodz);
+            if (lod < Game::objectLod || obiekty[i]->isInternalLodControl()) {
+                Game::currentRenderer->mvPushMatrix();
+                //obiekty[i]->render(gluu, lod, x-playerT[0]*2048, z-playerT[1]*2048);
+                if (renderMode == Game::currentRenderer->RENDER_SELECTION) {
+                    int sxx = 0;
+                         if(x < playerT[0] && z < playerT[1]) sxx = 1;
+                    else if(x < playerT[0] && z == playerT[1]) sxx = 2;
+                    else if(x < playerT[0] && z > playerT[1]) sxx = 3;
+                    else if(x == playerT[0] && z < playerT[1]) sxx = 4;
+                    else if(x == playerT[0] && z == playerT[1]) sxx = 5;
+                    else if(x == playerT[0] && z > playerT[1]) sxx = 6;
+                    else if(x > playerT[0] && z < playerT[1]) sxx = 7;
+                    else if(x > playerT[0] && z == playerT[1]) sxx = 8;
+                    else if(x > playerT[0] && z > playerT[1]) sxx = 9;
+                    selectionColor = sxx << 20;
+                    selectionColor |= (i) << 4;
+                }
+                obiekty[i]->pushRenderItems(lod, lodx, lodz, playerW, target, fov, selectionColor);
+                Game::currentRenderer->mvPopMatrix();
+            }
         }
     }
 }

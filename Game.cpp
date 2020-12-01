@@ -29,6 +29,7 @@
 #include <QtWidgets>
 #include <QColor>
 #include "TarFile.h"
+#include "Renderer.h"
 
 GeoWorldCoordinateConverter *Game::GeoCoordConverter = NULL;
 TDB *Game::trackDB = NULL;
@@ -50,6 +51,7 @@ QString Game::season = "";
 QString Game::mainWindowLayout = "PWT";
 QString Game::ceWindowLayout = "C1";
 QString Game::ActivityToPlay = "";
+Renderer *Game::currentRenderer = NULL;
 bool Game::playerMode = false;
 bool Game::useNetworkEng = false;
 bool Game::useQuadTree = true;
@@ -166,6 +168,9 @@ float Game::DefaultMoveStep = 0.25;
 bool Game::seasonalEditing = false;
 int Game::numRecentItems = 11;
 bool Game::useOnlyPositiveQuaternions = false;
+
+QStringList Game::objectsToRemove;
+QString Game::routeMergeString;
     
 QHash<QString, int> Game::TextureFlags {
         {"None", 0x0},
@@ -564,6 +569,10 @@ void Game::load() {
             else
                 useOnlyPositiveQuaternions = false; 
         }
+        if(val == "routeMergeString")
+            routeMergeString = args[1].trimmed();
+        if(val == "objectsToRemove")
+            objectsToRemove = args[1].trimmed().split(":");
     }
 }
 /*

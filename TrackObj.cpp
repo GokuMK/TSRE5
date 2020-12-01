@@ -23,6 +23,7 @@
 #include "ProceduralShape.h"
 #include "ErrorMessagesLib.h"
 #include "ErrorMessage.h"
+#include "Renderer.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -58,7 +59,7 @@ WorldObj* TrackObj::clone(){
 TrackObj::~TrackObj() {
 }
 
-int TrackObj::updateTrackSectionInfo(QHash<int,int> shapes, QHash<int,int> sect){
+int TrackObj::updateTrackSectionInfo(QHash<unsigned int,unsigned int> shapes, QHash<unsigned int,unsigned int> sect){
     int count = 0;
     if(shapes[sectionIdx] > 0){
         sectionIdx = shapes[sectionIdx];
@@ -285,6 +286,90 @@ bool TrackObj::isSimilar(WorldObj* obj){
     if(obj->fileName == this->fileName)
         return true;
     return false;
+}
+
+void TrackObj::pushRenderItems(float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor){
+    if (!loaded) return;
+    if (shape < 0) return;
+    if (jestPQ < 2) return;
+    //if (renderMode == gluu->RENDER_SHADOWMAP && Game::mstsShadows) {
+    //    if(this->getShadowType() != WorldObj::ShadowDynamic )
+    //        return;
+    //}
+    //GLUU* gluu = GLUU::get();
+    //if((this.position===undefined)||this.qDirection===undefined) return;
+    
+    if (size > 0) {
+        if ((lod > size + 150)) {
+            float v1[2];
+            v1[0] = playerW[0] - (target[0]);
+            v1[1] = playerW[2] - (target[2]);
+            float v2[2];
+            v2[0] = posx;
+            v2[1] = posz;
+            float iloczyn = v1[0] * v2[0] + v1[1] * v2[1];
+            float d1 = sqrt(v1[0] * v1[0] + v1[1] * v1[1]);
+            float d2 = sqrt(v2[0] * v2[0] + v2[1] * v2[1]);
+            float zz = iloczyn / (d1 * d2);
+            if (zz > 0) return;
+
+            float ccos = cos(fov) + zz;
+            float xxx = sqrt(2 * d2 * d2 * (1 - ccos));
+            //if((ccos > 0) && (xxx > 200+50)) return;
+            if ((ccos > 0) && (xxx > size) && (skipLevel == 1)) return;
+        }
+    } else {
+        //if (!Game::proceduralTracks)
+            if (Game::currentShapeLib->shape[shape]->loaded)
+                size = Game::currentShapeLib->shape[shape]->size;
+    }
+    
+    //if(Game::viewSnapable)
+    //    if(snapablePoints.size() == 6)
+    //        renderSnapableEndpoints(gluu);  
+    
+    Mat4::multiply(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, matrix);
+    
+    if(Game::showWorldObjPivotPoints){
+        if(pointer3d == NULL){
+            pointer3d = new TrackItemObj(1);
+            pointer3d->setMaterial(0.9,0.9,0.7);
+        }
+        //pointer3d->pushRenderItem(selectionColor);
+    }
+    
+    /*if(selectionColor != 0){
+        gluu->disableTextures(selectionColor);
+    } else {
+        gluu->enableTextures();
+    }*/
+    if(!Game::proceduralTracks || roadShape || templateDisabled ) {
+        if(shapePointer != NULL){
+            shapePointer->pushRenderItem(selectionColor, 0);
+        }
+    } else {
+        if (!proceduralShapeInit) {
+            if(templateName == "DISABLED"){
+                templateDisabled = true;
+                return;
+            }
+            TrackShape *tsh = Game::trackDB->tsection->shape[sectionIdx];
+            QMap<int, float> angles;
+            if(Game::useSuperelevation)
+                Game::trackDB->fillTrackAngles(x, -y, UiD, angles);
+            ProceduralShape::GetShape(templateName, procShape, tsh, angles);
+            proceduralShapeInit = true;
+        } else {
+            for(int i = 0; i < procShape.size(); i++){
+                procShape[i]->pushRenderItem(selectionColor, lod);
+            }
+        }
+    }
+
+
+    if(selected){
+        //drawBox();
+    }
 }
 
 void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {

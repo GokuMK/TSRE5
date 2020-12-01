@@ -41,6 +41,7 @@ public:
     bool isSimilar(WorldObj *obj);
     void loadingFixes();
     ErrorMessage* checkForErrors();
+    void pushRenderItems(float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);
     void render(GLUU* gluu, float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor, int renderMode);
     void updateSim(float deltaTime);
     void pushContextMenuActions(QMenu *menu);

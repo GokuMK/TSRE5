@@ -57,15 +57,22 @@
 #include "ErrorMessagesLib.h"
 #include "ErrorMessage.h"
 #include "AceLib.h"
+#include "Renderer.h"
+#include "RenderItem.h"
 
 Route::Route() {
     Game::currentRoute = this;
+    trkName = Game::trkName;
+    routeDir = Game::route;
+    
     qDebug() << "# Load Route";
     
     if(!Game::useQuadTree)
-        Game::terrainLib = new TerrainLibSimple();
+        terrainLib = new TerrainLibSimple();
     else
-        Game::terrainLib = new TerrainLibQt();
+        terrainLib = new TerrainLibQt();
+    
+    Game::terrainLib = terrainLib;
     
     QFile file(Game::root + "/routes");
     if (!file.exists()){ 
@@ -100,6 +107,7 @@ Route::Route() {
     }
     env = new Environment(Game::root + "/routes/" + Game::route + "/ENVFILES/editor.env");
     Game::routeName = trk->routeName.toLower();
+    routeName = Game::routeName;
     qDebug() << Game::routeName;
 
     this->tsection = new TSectionDAT();
@@ -148,7 +156,285 @@ Route::Route() {
     Vec3::set(placementAutoRotationOffset, 0, 0, 0);
     
     skydome = new Skydome();
+    
+    // Route Merge. 
+    if(Game::routeMergeString.length() > 0){
+        QStringList args = Game::routeMergeString.split(":");
+        if(args.size() == 4){
+            float offsetX = args[1].toFloat();
+            float offsetY = args[2].toFloat();
+            float offsetZ = args[3].toFloat();
+            mergeRoute(args[0], offsetX, offsetY, offsetZ);
+            setAsCurrentGameRoute();
+        }
+    }
 
+}
+
+Route::Route(QString name){
+
+    if(!Game::useQuadTree)
+        terrainLib = new TerrainLibSimple();
+    else
+        terrainLib = new TerrainLibQt();
+    
+    QFile file(Game::root + "/routes");
+    if (!file.exists()){ 
+        qDebug() << "Route dir not exist " << file.fileName();
+        return;
+    }
+    file.setFileName(Game::root + "/global");
+    if (!file.exists()){ 
+        qDebug() << "Global dir not exist " << file.fileName();
+        return;
+    }
+
+    file.setFileName(Game::root + "/routes/" + name);
+    if (!file.exists()) {
+        qDebug() << "Route does not exist.";
+        return;
+    }
+    Game::route = name;
+    Game::checkRoute(Game::route);
+    routeDir = Game::route;
+    trkName = Game::trkName;
+    trk = new Trk();
+    trk->load();
+    //Game::useSuperelevation = trk->tsreSuperelevation;
+    
+    
+    /*if(trk->tsreProjection != NULL){
+        qDebug() << "TSRE Geo Projection";
+        Game::GeoCoordConverter = new GeoTsreCoordinateConverter(trk->tsreProjection);
+    } else {
+        qDebug() << "MSTS Geo Projection";
+        Game::GeoCoordConverter = new GeoMstsCoordinateConverter();
+    }
+    env = new Environment(Game::root + "/routes/" + Game::route + "/ENVFILES/editor.env");*/
+    Game::routeName = trk->routeName.toLower();
+    routeName = Game::routeName;
+    qDebug() << Game::routeName;
+
+    this->tsection = new TSectionDAT();
+    
+    if(Game::loadAllWFiles){
+        preloadWFiles(true);
+    }
+
+    this->trackDB = new TDB(tsection, false);
+    this->roadDB = new TDB(tsection, true);
+    //Game::trackDB = this->trackDB;
+    //Game::roadDB = this->roadDB;
+    
+    //loadAddons();
+
+    //loadMkrList();
+    //createMkrPlaces();
+    //loadServices();
+    //loadTraffic();
+    //loadPaths();
+    //loadActivities();
+
+    //soundList = new SoundList();
+    //soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
+    //soundList->loadSoundRegions(Game::root + "/routes/" + Game::route + "/ttype.dat");
+    //Game::soundList = soundList;
+    
+    terrainLib->loadQuadTree();
+    //OrtsWeatherChange::LoadList();
+    //ForestObj::LoadForestList();
+    //ForestObj::ForestClearDistance = trk->forestClearDistance;
+    //CarSpawnerObj::LoadCarSpawnerList();
+
+    //if(Game::loadAllWFiles){
+    //    preloadWFilesInit();
+    //}
+    
+    //checkRouteDatabase();
+    
+    loaded = true;
+    
+    //Vec3::set(placementAutoTranslationOffset, 0, 0, 0);
+    //Vec3::set(placementAutoRotationOffset, 0, 0, 0);
+    
+    //skydome = new Skydome();
+    
+}
+
+void Route::setAsCurrentGameRoute(){
+    Game::route = routeDir;
+    Game::routeName = routeName;
+    Game::trkName = trkName;
+    Game::currentRoute = this;
+}
+
+void Route::mergeRoute(QString route2Name, float offsetX, float offsetY, float offsetZ){
+    QProgressDialog *progress = NULL;
+    bool gui = true;
+    
+    Route *route2 = new Route(route2Name);
+    float mOffset[3];
+    mOffset[0] = offsetX;// (-4*2048) - 256;
+    mOffset[1] = offsetY;//81.47992;
+    mOffset[2] = offsetZ;//(-5*2048) + 640;
+    
+    // Merge TDB
+    qDebug() << "## Merge TDB";
+    unsigned int trackNodeOffset = 0; 
+    unsigned int trackItemOffset = 0;
+    unsigned int roadNodeOffset = 0; 
+    unsigned int roadItemOffset = 0;
+    QHash<unsigned int, unsigned int> fixedSectionIds;
+    QHash<unsigned int, unsigned int> fixedShapeIds;
+    unsigned int oldTrackNodeCount = this->trackDB->iTRnodes; 
+    unsigned int oldRoadNodeCount = this->roadDB->iTRnodes;
+    this->trackDB->mergeTDB(route2->trackDB, mOffset, trackNodeOffset, trackItemOffset, fixedSectionIds, fixedShapeIds);
+    this->roadDB->mergeTDB(route2->roadDB, mOffset, roadNodeOffset, roadItemOffset, fixedSectionIds, fixedShapeIds);
+    
+    // Merge world objects
+    if(gui){
+        progress = new QProgressDialog("Merging World Objects ...", "", 0, route2->tile.size());
+        progress->setWindowModality(Qt::WindowModal);
+        progress->setCancelButton(NULL);
+        progress->setWindowFlags(Qt::CustomizeWindowHint);
+        progress->show();
+    }
+    qDebug() << "## Merge World Objects";
+    QHash<int, Tile*> modifiedWorldTiles;
+    Tile *t2Tile;
+    QVector<int*> trackObjUpdates;
+    int pi = 0;
+    foreach (Tile* tTile, route2->tile){
+        if(progress != NULL){
+            progress->setValue((++pi));
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 50);
+        }
+        if (tTile == NULL) 
+            continue;
+        if (tTile->loaded == 1) {
+            tTile->updateTrackSectionInfo(fixedShapeIds, fixedSectionIds);
+        }
+        
+        for(int i = 0; i < tTile->jestObiektow; i++){
+            WorldObj *wObj = tTile->obiekty[i];
+            if(wObj == NULL) continue;
+            //if(wObj->isTrackItem()) continue;
+            wObj->addTrackItemIdOffset(trackItemOffset, roadItemOffset);
+            int x, z, uid, oldx, oldz, olduid;
+            oldx = wObj->x;
+            oldz = wObj->y;
+            olduid = wObj->UiD;
+            wObj->position[0] += mOffset[0];
+            wObj->position[1] += mOffset[1];
+            wObj->position[2] -= mOffset[2];
+            //qDebug() << "old tile" << wObj->x << wObj->y;
+            while(wObj->position[0] > 1024 || wObj->position[0] < -1024 || wObj->position[2] > 1024 || wObj->position[2] < -1024 ){
+                Game::check_coords(wObj->x, wObj->y, wObj->position);
+            }
+            //qDebug() << "new tile" << wObj->x << wObj->y;
+            //qDebug() << "";
+            x = wObj->x;
+            z = wObj->y;
+            
+            t2Tile = tile[((x)*10000 + z)];
+            if (t2Tile == NULL){
+                tile[(x)*10000 + z] = new Tile(x, z);
+                t2Tile = tile[((x)*10000 + z)];
+                t2Tile->initNew();
+            }
+            if (modifiedWorldTiles[((x)*10000 + z)] == NULL)
+                modifiedWorldTiles[((x)*10000 + z)] = t2Tile;
+            //
+            t2Tile->placeObject(wObj);
+            if(wObj->typeID == wObj->trackobj || wObj->typeID == wObj->dyntrack){
+                int *u = new int[6];
+                u[0] = oldx;
+                u[1] = oldz;
+                u[2] = olduid;
+                u[3] = x;
+                u[4] = z;
+                u[5] = wObj->UiD;
+                trackObjUpdates.push_back(u);
+            }
+        }
+        
+    }
+    
+    this->trackDB->updateUiDs(trackObjUpdates, oldTrackNodeCount);
+    this->roadDB->updateUiDs(trackObjUpdates, oldRoadNodeCount);
+    
+    if(progress != NULL)
+        delete progress;
+    
+    qDebug() << "## Create MKR Places";
+    createMkrPlaces();
+    
+    // Merge terrain
+    if(gui){
+        progress = new QProgressDialog("Merging Terrain ...", "", 0, route2->tile.size() + modifiedWorldTiles.size());
+        progress->setWindowModality(Qt::WindowModal);
+        progress->setCancelButton(NULL);
+        progress->setWindowFlags(Qt::CustomizeWindowHint);
+        progress->show();
+    }
+    pi = 0;
+    qDebug() << "Load all route2 terrain tiles";
+    foreach (Tile* wTile, route2->tile){
+        if(progress != NULL){
+            progress->setValue((++pi));
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 50);
+        }
+       if (wTile == NULL) 
+           continue;
+       Terrain *t = route2->terrainLib->getTerrainByXY(wTile->x, wTile->z, true);
+       if (t == NULL)
+           qDebug() << "FAIL terrain NULL";
+       else if (!t->loaded)
+           qDebug() << "FAIL terrain not loaded";
+       qDebug() << t->mojex << t->mojez;
+    }
+    
+    setAsCurrentGameRoute();
+    
+    qDebug() << "Fill Terrain data";
+    Terrain *tTile;
+    foreach (Tile* wTile, modifiedWorldTiles){
+        if(progress != NULL){
+            progress->setValue((++pi));
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 50);
+        }
+        if (wTile == NULL) 
+            continue;
+        tTile = terrainLib->getTerrainByXY(wTile->x, wTile->z, false);
+        if(tTile == NULL){
+            terrainLib->saveEmpty(wTile->x, -wTile->z);
+            if(!terrainLib->reload(wTile->x, wTile->z)){
+                qDebug() << "reload terrain fail";
+            }
+            tTile = terrainLib->getTerrainByXY(wTile->x, wTile->z, false);
+            
+        }
+        if (!tTile->loaded)
+           qDebug() << "FAIL main terrain not loaded";
+        
+        qDebug() << "fill";
+        route2->terrainLib->fillTerrainData(tTile, mOffset);
+        
+    }
+    if(progress != NULL)
+        delete progress;
+    // Other
+    
+
+}
+
+void Route::selectObjectsByXYRange(int mojex, int mojez, int minx, int maxx, int minz, int maxz){
+    Tile *tTile = tile[mojex*10000 + mojez];
+    if (tTile == NULL)
+        return;
+    QVector<GameObj*> objs;
+    tTile->selectObjectsByXYRange(objs, minx, maxx, minz, maxz);
+    this->objectSelected(objs);
 }
 
 Route::Route(const Route& orig) {
@@ -494,24 +780,16 @@ void Route::preloadWFilesInit(){
     }
 }
 
-void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, int renderMode) {
+void Route::pushRenderItems(float * playerT, float* playerW, float* target, float playerRot, float fov, int renderMode) {
     if(!loaded) return;
     
     int mintile = -Game::tileLod;
     int maxtile = Game::tileLod;
 
-    if(renderMode == gluu->RENDER_SELECTION){
+    if(renderMode == Game::currentRenderer->RENDER_SELECTION){
         mintile = -1;
         maxtile = 1;
     }
-    //if (!selection) {
-        //TerrainLib::render(gluu, playerT, playerW, target, fov);
-        //trackDB->renderAll(gluu, playerT, playerRot);
-        //trackDB->renderLines(gluu, playerT, playerRot);
-    //}
-    //for (var key in this.tile){
-    //    this.tile[key].inUse = false;
-    // }
     
     Tile *tTile;
     for (int i = mintile; i <= maxtile; i++) {
@@ -522,7 +800,73 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
                 tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Tile((int)playerT[0] + i, (int)playerT[1] + j);
             }
             tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
-            //tTile->inUse = true;
+
+            if(Game::autoNewTiles)
+                if (i == 0 && j == 0)
+                    if (tTile->loaded == -2) {
+                        Route::newTile((int)playerT[0] + i, (int)playerT[1] + j);
+                        tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
+                    }
+            if (tTile->loaded == 1) {
+                Game::currentRenderer->mvPushMatrix();
+                Mat4::translate(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, 2048 * i, 0, 2048 * j);
+                tTile->pushRenderItems(playerT, playerW, target, fov, renderMode);
+                Game::currentRenderer->mvPopMatrix();
+            }
+        }
+    }
+    
+    /*if (renderMode == gluu->RENDER_DEFAULT) {
+        if(Game::viewTrackDbLines)
+            trackDB->renderAll(gluu, playerT, playerRot);
+        if(Game::viewTsectionLines)
+            trackDB->renderLines(gluu, playerT, playerRot);
+        if(Game::viewTrackDbLines)
+            roadDB->renderAll(gluu, playerT, playerRot);
+        if(Game::viewTsectionLines)
+            roadDB->renderLines(gluu, playerT, playerRot);
+        if(Game::viewMarkers)
+            if(this->mkr != NULL)
+                this->mkr->render(gluu, playerT, playerW, playerRot);
+    }
+    if(Game::renderTrItems){
+        trackDB->renderItems(gluu, playerT, playerRot, renderMode);
+        roadDB->renderItems(gluu, playerT, playerRot, renderMode);
+    }
+    
+    if(currentActivity != NULL){
+        currentActivity->render(gluu, playerT, playerRot, renderMode);
+    }
+    
+    for(int i = 0; i < path.size(); i++){
+        if(path[i]->isSelected())
+            path[i]->render(gluu, playerT, renderMode);
+    }*/
+
+    Game::ignoreLoadLimits = false;
+}
+
+void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, float playerRot, float fov, int renderMode) {
+    if(!loaded) return;
+    
+    int mintile = -Game::tileLod;
+    int maxtile = Game::tileLod;
+
+    if(renderMode == gluu->RENDER_SELECTION){
+        mintile = -1;
+        maxtile = 1;
+    }
+
+    Tile *tTile;
+    for (int i = mintile; i <= maxtile; i++) {
+        for (int j = maxtile; j >= mintile; j--) {
+            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
+
+            if (tTile == NULL){
+                tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Tile((int)playerT[0] + i, (int)playerT[1] + j);
+            }
+            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
+
             if(Game::autoNewTiles)
                 if (i == 0 && j == 0)
                     if (tTile->loaded == -2) {

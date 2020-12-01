@@ -22,6 +22,8 @@
 #include "Route.h"
 #include "Environment.h"
 #include "TerrainInfo.h"
+#include "Renderer.h"
+#include "TexLib.h"
 
 TerrainLibQt::TerrainLibQt() {
 }
@@ -933,6 +935,80 @@ void TerrainLibQt::setLowTerrainAsCurrent(){
     currentQt = &terrainQtLo;
 }
 
+void TerrainLibQt::fillTerrainData(Terrain* tTile, float* offsetXYZ){
+    ///QuadTree* tQuadTree = currentQuadTree;
+    //tTile->mojex;
+    //tTile->mojez;
+    //QHash<int, Terrain*> tt;
+    //Terrain *t;
+    int x, z, xx, zz;
+    float position[3];
+    position[1] = offsetXYZ[1];
+    
+    float h = 0;
+    tTile->setFixedHeight(200);
+    for(int i = -1024; i < 1024; i+= 8)
+        for(int j = -1024; j < 1024; j+= 8){
+            x = tTile->mojex;
+            z = tTile->mojez;
+            position[0] = i - offsetXYZ[0];
+            position[2] = j + offsetXYZ[2];
+            while(position[0] > 1024 || position[0] < -1024 || position[2] > 1024 || position[2] < -1024 ){
+                Game::check_coords(x, z, position);
+            }
+            if(position[0] == 1024){
+                x++;
+                position[0] = -1024;
+            }
+            if(position[2] == 1024){
+                z++;
+                position[2] = -1024;
+            }
+            //qDebug() << tTile->mojex << tTile->mojez << x << z << i << j << position[0] << position[2];
+            Terrain *terr = getTerrainByXY(x, z, false);
+            if (terr == NULL){
+                //qDebug() << "NULL" << tTile->mojex << tTile->mojez << x << z;
+            } else if(terr->loaded){
+                //qDebug() << "fail not loaded" << x << z;
+                h = terr->getHeight(x, z, position[0], position[2], false);
+            }
+            tTile->setHeight(tTile->mojex, tTile->mojez, i, j, h + offsetXYZ[1], false);
+        }
+    
+    Brush *brush = new Brush();
+    for(int i = -1023; i < 1024; i+= 128)
+        for(int j = -1023; j < 1024; j+= 128){
+            x = tTile->mojex;
+            z = tTile->mojez;
+            position[0] = i - offsetXYZ[0];
+            position[2] = j + offsetXYZ[2];
+            while(position[0] > 1024 || position[0] < -1024 || position[2] > 1024 || position[2] < -1024 ){
+                Game::check_coords(x, z, position);
+            }
+            if(position[0] == 1024){
+                x++;
+                position[0] = -1024;
+            }
+            if(position[2] == 1024){
+                z++;
+                position[2] = -1024;
+            }
+            Terrain *terr = getTerrainByXY(x, z, false);
+            if (terr == NULL){
+            } else if(terr->loaded){
+                QString tex = terr->getPatchMainTextureName(x, z, position[0], position[2]);
+                tTile->setTexture(tex, tTile->mojex, tTile->mojez, i, j, terr->getPatchTexTransformString(x, z, position[0], position[2]));
+                
+                int flags = terr->getPatchFlags(x, z, position[0], position[2]);
+                tTile->setPatchFlags(tTile->mojex, tTile->mojez, i, j, flags);
+                if ((flags & 0xc0) != 0){
+                    tTile->setAvgWaterLevel(terr->getAvgVaterLevel() + offsetXYZ[1]);
+                }
+            }
+        }
+
+}
+
 void TerrainLibQt::fillRaw(Terrain *cTerr, int mojex, int mojez) {
     QuadTree* tQuadTree = currentQuadTree;
     QHash<unsigned int, TerrainInfo*> *tterrainQt = currentQt;
@@ -1114,6 +1190,66 @@ void TerrainLibQt::renderEmpty(GLUU *gluu, float * playerT, float* playerW, floa
             spiralLoop(n, i, j);
         getTerrainByXY((int) playerT[0] + i, (int) playerT[1] + j, true);
     }
+}
+
+void TerrainLibQt::pushRenderItems(float * playerT, float* playerW, float* target, float fov, int renderMode) {
+    int renderCount = (Game::tileLod * 2 + 1)*(Game::tileLod * 2 + 1);
+    if (renderMode == Game::currentRenderer->RENDER_SELECTION)
+        renderCount = 9;
+
+    //gluu->currentShader->setUniformValue(gluu->currentShader->shaderAlpha, 0.0f);
+    //gluu->enableNormals();
+
+    Terrain *tTile;
+    int selectionColor = 0;
+    QHash<QString, bool> rendered;
+    
+    for (int n = -1, i = 0, j = 0; n < renderCount - 1; n++) {
+        if (n != -1)
+            spiralLoop(n, i, j);
+
+        tTile = getTerrainByXY((int) playerT[0] + i, (int) playerT[1] + j, true);
+        if(tTile == NULL)
+            continue;
+        
+        tTile->inUse = true;
+        if (tTile->loaded == false)
+            continue;
+        if (rendered[tTile->name])
+            continue;
+        rendered[tTile->name] = true;
+
+        if (tTile->loaded) {
+            float lodx = 2048 * i - playerW[0];
+            float lodz = 2048 * j - playerW[2];
+            Game::currentRenderer->mvPushMatrix();
+            Mat4::translate(Game::currentRenderer->mvMatrix, Game::currentRenderer->mvMatrix, 2048 * i, 0, 2048 * j);
+            if (renderMode == Game::currentRenderer->RENDER_SELECTION) {
+                selectionColor = 10 << 20;
+                selectionColor |= ((i + 1) << 10);
+                selectionColor |= ((j + 1) << 8);
+            }
+            tTile->pushRenderItem(lodx, lodz, playerT[0] + i, playerT[1] + j, playerW, target, fov, selectionColor);
+            Game::currentRenderer->mvPopMatrix();
+        }
+    }
+    
+    if(renderMode == Game::currentRenderer->RENDER_SELECTION)
+        return;
+    
+    QHashIterator<unsigned int, TerrainInfo*> i(terrainQt);
+    /*while (i.hasNext()) {
+        i.next();
+        if (i.value() == NULL) continue;
+        Terrain* obj = (Terrain*) i.value()->t;
+        if(obj == NULL) continue;
+        if(!obj->inUse && obj->loaded && !obj->isModified() && !obj->isSelected()){
+           delete obj;
+           i.value()->t = NULL;
+       } else {
+           obj->inUse = false;
+       }
+    }*/
 }
 
 void TerrainLibQt::render(GLUU *gluu, float * playerT, float* playerW, float* target, float fov, int renderMode) {

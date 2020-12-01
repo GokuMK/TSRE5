@@ -26,8 +26,8 @@ public:
     TRSect *trVectorSection = NULL;
     int iTri = 0;
     int *trItemRef = NULL;
-    int TrP1;
-    int TrP2;
+    int TrP1 = 0;
+    int TrP2 = 0;
     int TrPinS[3];
     int TrPinK[3];
     
@@ -41,6 +41,8 @@ public:
     int podmienTrPin(int stare, int nowe);
     int setTrPinK(int id, int nowe);
     float getVectorSectionXRot(int id);
+    void addPositionOffset(float offsetXYZ[3]);
+    void addTrackNodeItemOffset(unsigned int trackNodeOffset, unsigned int trackItemOffset);
 private:
 
 };

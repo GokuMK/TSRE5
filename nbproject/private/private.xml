@@ -7,16 +7,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TextObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PlatformObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ErrorMessageProperties.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Coords.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PropertiesTrackItem.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TerrainLib.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GLMatrix.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ForestObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Route.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TransformWorldObjDialog.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SimpleHud.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ActivityEventWindow.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TFile.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/StaticObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PropertiesPlatform.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SFileX.h</file>
@@ -27,33 +30,43 @@
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SpeedPost.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TRitem.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PlatformObj.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TSectionDAT.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Eng.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ObjTools.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SignalWindowLink.cpp</file>
-            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Tile.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/EngLib.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Tile.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TrackItemObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SoundRegionObj.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TerrainLibSimple.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Environment.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/HazardObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TransferObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/MapDataUrlImage.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TRnode.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RenderItem.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PropertiesTrackItem.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GLUU.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GroupObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/OglObj.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/DynTrackObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GeoCoordinates.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TrackObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Ref.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Tile.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Skydome.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PropertiesUndefined.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SoundRegionObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/QuadTree.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Texture.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SFileC.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SimpleHud.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/.qmake.stash</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SpeedpostObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ErrorMessageProperties.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PickupObj.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Shader.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ProceduralMstsDyntrack.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ShapeViewerGLWidget.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SignalWindow.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Game.cpp</file>
@@ -61,14 +74,20 @@
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ShapeViewWindow.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/AboutWindow.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/LoadWindow.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Renderer.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/WorldObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ErrorMessagesWindow.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GroupObj.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TSection.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TerrainWaterWindow.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/OpenGL3Renderer.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SigCfg.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TerrainLib.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Consist.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GLUU.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RouteEditorGLWidget.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/OglObj.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GameObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RulerObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ShapeViewerWindow.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PickupObj.cpp</file>
@@ -78,7 +97,10 @@
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/HazardObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SignalWindow.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RouteEditorWindow.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/CoordsRoutePlaces.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Ruch.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Flex.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RenderItem.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/CarSpawnerObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SignalType.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/AceLib.cpp</file>
@@ -89,51 +111,69 @@
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RandomTransformWorldObjDialog.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TrkWindow.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PropertiesSignal.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ProceduralShape.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GLMatrix.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Brush.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ErrorMessage.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TexLib.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TextObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ParserX.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/CELoadWindow.cpp</file>
-            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/GeoCoordinates.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SignalObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PropertiesGroup.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SFileX.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Terrain.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/CarSpawnerObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/StaticObj.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PoleObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Ref.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ErrorMessagesLib.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SignalObj.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PaintTexLib.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Trk.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/WorldObj.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TransformWorldObjDialog.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Route.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RandomTransformWorldObjDialog.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TRitem.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TFile.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/PropertiesAbstract.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TDB.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Pointer3d.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TrackObj.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Camera.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SpeedPostDAT.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SFile.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/MapDataUrlImage.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TerrainLibSimple.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TSection.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/OpenGL3Renderer.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TerrainLibQt.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ErrorMessage.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Coords.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Renderer.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TSectionDAT.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ShapeLib.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/LevelCrObj.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TDB.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/DynTrackObj.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RouteEditorGLWidget.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/RouteEditorWindow.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TRnode.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Texture.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Trk.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Activity.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ActivityServiceWindow.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/CoordsKml.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/ConEditorWindow.cpp</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TerrainLibQt.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/AceLib.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/SFile.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/OSMFeatures.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/TerrainTools.cpp</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Terrain.h</file>
             <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/LevelCrObj.h</file>
+            <file>file:/C:/Users/pgade/Documents/NetBeansProjects/TSRE5/Shader.h</file>
         </group>
     </open-files>
 </project-private>
