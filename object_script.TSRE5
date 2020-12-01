@@ -131,6 +131,7 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Renderer.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Route.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RouteEditorGLWidget.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RouteEditorServer.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RouteEditorWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Ruch.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RulerObj.o

@@ -14,3 +14,6 @@ moc_*.cpp
 /tsre_appdata/0.696/procedural/
 .qmake.stash
 dep.inc
+/nbproject/
+/nbproject/private/private.xml
+/nbproject/configurations.xml

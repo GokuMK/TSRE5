@@ -24,6 +24,7 @@
 #include "CELoadWindow.h"
 #include "ShapeViewerWindow.h"
 #include "MapWindow.h"
+#include "RouteEditorServer.h"
 
 
 QFile logFile;
@@ -71,6 +72,11 @@ void LoadRouteEditor(){
     } else {
         loadWindow->show();
     }
+}
+
+void RunRouteEditorServer(int port){
+    RouteEditorServer *server = new RouteEditorServer(port);
+    //..server->run();
 }
 
 int main(int argc, char *argv[]){
@@ -201,6 +207,14 @@ int main(int argc, char *argv[]){
                 Game::ActivityToPlay = "#";
             }
             qDebug() << "Play" << Game::route << Game::ActivityToPlay;
+        }
+        if(args[1] == "--server"){
+            // Run ace converter
+            qDebug() << "Run shape viewer";
+            int port = 8080;
+            RunRouteEditorServer(port);
+            
+            return app.exec();
         }
     }
     // Run route editor
