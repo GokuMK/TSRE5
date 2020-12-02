@@ -21,7 +21,7 @@ class Flex {
 public:
 
     static bool NewFlex(int x, int z, float *p, float *q, float * dyntrackSections);
-    static bool AutoFlex(int x1, int z1, float* p1, int x2, int z2, float* p2, float* dyntrackSections);
+    static bool AutoFlex(int x1, int z1, float* p1, int x2, int z2, float* p2, float* dyntrackSections, float &elev);
 private:
     static int FlexStage;
     static float FlexP0[3];

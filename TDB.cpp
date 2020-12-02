@@ -2676,14 +2676,14 @@ void TDB::getVectorSectionPoints(int x, int y, int nId, int sId, QVector<float> 
     float rot[3];
 
     TRnode* n = trackNodes[nId];
-        
+
     rot[0] = M_PI;
     rot[1] = -n->trVectorSection[sId].param[14];
     rot[2] = 0;//n->trVectorSection[sId].param[15];
     p[0] = (n->trVectorSection[sId].param[8] - x)*2048 + n->trVectorSection[sId].param[10];
     p[1] = n->trVectorSection[sId].param[11];
     p[2] = (-n->trVectorSection[sId].param[9] + y)*2048 - n->trVectorSection[sId].param[12];
-                        
+
     Quat::fromRotationXYZ(q, rot);
     Mat4::fromRotationTranslation(matrix, q, p);
     Mat4::rotate(matrix, matrix, n->trVectorSection[sId].param[13], 1, 0, 0);

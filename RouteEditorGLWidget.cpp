@@ -45,6 +45,7 @@
 #include "SoundManager.h"
 #include "Skydome.h"
 #include "OpenGL3Renderer.h"
+#include <QtWebSockets/QWebSocket>
 
 RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -122,7 +123,31 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
     update();
 }
 
+void RouteEditorGLWidget::onConnected(){
+    qDebug() << "WebSocket connected";
+    connect(m_webSocket, &QWebSocket::textMessageReceived,
+            this, &RouteEditorGLWidget::onTextMessageReceived);
+    m_webSocket->sendTextMessage(QStringLiteral("Hello, world!"));
+}
+//! [onConnected]
+
+//! [onTextMessageReceived]
+void RouteEditorGLWidget::onTextMessageReceived(QString message){
+    qDebug() << "Message received:" << message;
+    //m_webSocket.close();
+}
+//! [onTextMessageReceived]
+
 bool RouteEditorGLWidget::initRoute(){
+    if(Game::ServerMode){
+        m_webSocket = new QWebSocket();
+        QString url = "ws://127.0.0.1:8080";
+        qDebug() << "WebSocket server:" << url;
+        connect(m_webSocket, &QWebSocket::connected, this, &RouteEditorGLWidget::onConnected);
+        connect(m_webSocket, &QWebSocket::disconnected, this, &RouteEditorGLWidget::close);
+        m_webSocket->open(QUrl(url));
+    }
+    
     currentShapeLib = new ShapeLib();
     Game::currentShapeLib = currentShapeLib;
     

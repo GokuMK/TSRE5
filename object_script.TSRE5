@@ -280,6 +280,7 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RandomTransformWorldObjDialog.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_Route.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RouteEditorGLWidget.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RouteEditorServer.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RouteEditorWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ShapeHierarchyWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ShapeInfoWidget.o

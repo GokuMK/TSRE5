@@ -92,7 +92,7 @@ public:
     OglObj* snapableEndPoint = NULL;
     bool snapable = false;
     float tRotation[2];
-    float *endp = 0;
+    float *endp = NULL;
     int sectionIdx;
     int trLoaded = 0;
         

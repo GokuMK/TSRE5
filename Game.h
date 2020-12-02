@@ -33,6 +33,8 @@ class Renderer;
 
 class Game {
 public:
+    static bool ServerMode;
+    
     static GeoWorldCoordinateConverter *GeoCoordConverter;
     
     static TDB *trackDB;

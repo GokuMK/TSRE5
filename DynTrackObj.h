@@ -16,7 +16,7 @@
 
 class OglObj;
 
-class DynTrackObj : public WorldObj{
+class DynTrackObj : public WorldObj {
 public:
     struct Section{
         int type;
@@ -33,7 +33,9 @@ public:
     virtual ~DynTrackObj();
     bool allowNew();
     void load(int x, int y);
+    float getElevation();
     void setElevation(float prom);
+    void rotate(float x, float y, float z);
     void set(int sh, FileBuffer* val);
     void set(QString sh, FileBuffer* data);
     void set(QString sh, float* val);

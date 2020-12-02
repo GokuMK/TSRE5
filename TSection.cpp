@@ -230,6 +230,8 @@ void TSection::getPoints(QVector<float> &ptr, float* matrix) {
     float point1[3];
     if (type == 0) {
         step = 4;
+        if(size == 0)
+            return;
         if(step > size)
             step = size;
         for (float i = 0; i <= size; i += step) {

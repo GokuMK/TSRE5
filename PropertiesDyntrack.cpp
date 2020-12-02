@@ -220,6 +220,7 @@ void PropertiesDyntrack::showObj(GameObj* obj){
         infoLabel->setText("NULL");
         return;
     }
+    worldObj = (WorldObj*)obj;
     dobj = (DynTrackObj*)obj;
     this->infoLabel->setText("Object: "+dobj->type);
     
@@ -379,10 +380,12 @@ void PropertiesDyntrack::flexData(int x, int z, float* p){
     p2[2] = p[2];
     
     float* dyntrackData[10];
+    float elev = 0;
     
-    bool success = Flex::AutoFlex(dobj->x, dobj->y, (float*)p1, x, z, (float*)p2, (float*)dyntrackData);
-    qDebug() << "flex2";
+    bool success = Flex::AutoFlex(dobj->x, dobj->y, (float*)p1, x, z, (float*)p2, (float*)dyntrackData, elev);
+    qDebug() << "flex2" << elev;
     dobj->set("dyntrackdata", (float*)dyntrackData);
+    dobj->setElevation(elev);
     this->showObj(dobj);
     emit enableTool("selectTool");
 }

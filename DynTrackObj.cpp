@@ -70,12 +70,57 @@ bool DynTrackObj::allowNew(){
     return true;
 }
 
+float DynTrackObj::getElevation(){
+    float vect[3];
+    vect[0] = 0; vect[1] = 0; vect [2] = 1000;
+    Vec3::transformQuat(vect, vect, qDirection);
+    return this->endp[3]*asin(-vect[1]/1000.0);
+}
+
 void DynTrackObj::setElevation(float prom){
     float * q = qDirection;
     float vect[3];
     vect[0] = 0; vect[1] = 0; vect [2] = 1000;
     Vec3::transformQuat(vect, vect, q);
     rotate(asin((vect[1]*this->endp[3]+prom)/1000.0),0,0);
+}
+
+void DynTrackObj::rotate(float x, float y, float z){
+    this->tRotation[0] += x;
+    this->tRotation[1] += y;
+    if(matrix3x3 != NULL) matrix3x3 = NULL;
+
+    qDebug() << "rot" << x << y << z;
+    float vect2[3];
+    float vect[3];
+    float quat[4];
+    Quat::fill(quat);
+    
+    if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x*this->endp[3]);
+    if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y*this->endp[3]);
+    if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z*this->endp[3]);    
+    
+    Vec3::set(vect, 0, 0, 10);
+    Vec3::transformQuat(vect, vect, this->qDirection);
+    
+    Quat::fill(quat);
+    Quat::rotateY(quat, quat, endp[4]);
+
+    Vec3::transformQuat(reinterpret_cast<float*>(&vect), this->endp, this->qDirection);
+    Vec3::transformQuat(reinterpret_cast<float*>(&vect2), this->endp, quat);
+
+    qDebug() << this->endp[0] << " "<< vect[0] << " " << vect2[0];
+    qDebug() << this->endp[2] << " "<< vect[2] << " " << vect2[2];
+    
+    vect[0] = (vect2[0] - vect[0]);
+    vect[2] = (vect2[2] - vect[2]);
+    
+    this->position[0] = this->placedAtPosition[0] + vect[0];
+    this->position[1] = this->placedAtPosition[1] - vect[1];
+    this->position[2] = this->placedAtPosition[2] + vect[2];
+    
+    this->modified = true;
+    setMartix();
 }
 
 void DynTrackObj::deleteVBO(){
@@ -123,6 +168,15 @@ void DynTrackObj::load(int x, int y) {
     this->size = -1;
     this->skipLevel = 3;
     this->modified = false;
+    this->endp = new float[5];
+    this->endp[0] = 0;
+    this->endp[1] = 0;
+    this->endp[2] = 0;
+    this->endp[3] = 1;
+    this->endp[4] = 0;
+    this->placedAtPosition[0] = this->position[0];
+    this->placedAtPosition[1] = this->position[1];
+    this->placedAtPosition[2] = this->position[2];
     
     if(sections == NULL){
         sections = new Section[5];

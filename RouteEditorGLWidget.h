@@ -40,6 +40,7 @@ class EngLib;
 class QOpenGLFunctions_3_3_Core;
 class QAction;
 class GuiGlCompass;
+class QWebSocket;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -64,6 +65,8 @@ public slots:
     void jumpTo(PreciseTileCoordinate*);
     void jumpTo(float *posT, float *pos);
     void jumpTo(int X, int Z, float x, float y, float z);
+    void onConnected();
+    void onTextMessageReceived(QString message);
     
     void msg(QString text);
     void msg(QString name, bool val);
@@ -231,6 +234,8 @@ private:
     
     GuiGlCompass * compass = NULL;
     OglObj * compassPointer = NULL;
+    
+    QWebSocket * m_webSocket = NULL;
 };
 
 #endif

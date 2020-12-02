@@ -31,6 +31,7 @@
 #include "TarFile.h"
 #include "Renderer.h"
 
+bool Game::ServerMode = false;
 GeoWorldCoordinateConverter *Game::GeoCoordConverter = NULL;
 TDB *Game::trackDB = NULL;
 TDB *Game::roadDB = NULL;    

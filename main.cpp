@@ -210,7 +210,11 @@ int main(int argc, char *argv[]){
         }
         if(args[1] == "--server"){
             // Run ace converter
-            qDebug() << "Run shape viewer";
+            Game::route = "bbb";
+            Game::checkRoute(Game::route);
+            //routeDir = Game::route;
+            //trkName = Game::trkName;
+            qDebug() << "Run server";
             int port = 8080;
             RunRouteEditorServer(port);
             

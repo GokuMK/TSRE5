@@ -32,7 +32,7 @@ QPainter* Flex::painter;
 QImage* Flex::img;
 QLabel* Flex::myLabel;
 
-bool Flex::AutoFlex(int x1, int z1, float* p1, int x2, int z2, float* p2, float* dyntrackSections){
+bool Flex::AutoFlex(int x1, int z1, float* p1, int x2, int z2, float* p2, float* dyntrackSections, float &elev){
     float qe[4];
     qe[0] = 0;
     qe[1] = 0;
@@ -44,13 +44,25 @@ bool Flex::AutoFlex(int x1, int z1, float* p1, int x2, int z2, float* p2, float*
     qDebug() <<"flex "<< x2 << " " << z2 << " " << p2[0] << " " << p2[1] << " " << p2[2];
     
     tdb->findNearestNode(x1, z1, p1,(float*) &qe);
+    float *p11 = Vec3::clone(p1);
     success = Flex::NewFlex(x1, z1, p1, (float*)qe, dyntrackSections);
     qe[0] = 0;
     qe[1] = 0;
     qe[2] = 0;
     qe[3] = 1;
     tdb->findNearestNode(x2, z2, p2,(float*) &qe);
+    float *p22 = Vec3::clone(p2);
     success = Flex::NewFlex(x2, z2, p2, (float*)qe, dyntrackSections);
+        
+    p22[0] +=  2048*(x2 - x1);
+    p22[2] +=  2048*(z2 - z1);
+    float dist1 = Vec3::dist(p11, p22);
+    //p11[1] = 0;
+    //p22[1] = 0;
+    //float dist2 = Vec3::dist(p11, p22);
+    
+    elev = (p22[1] - p11[1])*(1000.0/dist1);
+    qDebug() << "elev" << dist1 << p2[1] << p1[1];
     
     return success;
 }

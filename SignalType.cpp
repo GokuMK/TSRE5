@@ -85,7 +85,7 @@ void SignalType::set(QString sh, FileBuffer* data) {
                     newState = new DrawState();
                     newState->id = ParserX::GetNumber(data);
                     newState->name = ParserX::GetString(data);
-                    qDebug() << "0- " << sh;
+                    //qDebug() << "0- " << sh;
                     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                         newState->set(sh, data);
                         ParserX::SkipToken(data);
