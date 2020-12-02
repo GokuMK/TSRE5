@@ -8,6 +8,7 @@
  *  See LICENSE.md or https://www.gnu.org/licenses/gpl.html
  */
 
+#include <QDebug>
 #include <QFile>
 #include <QDir>
 #include "Route.h"
