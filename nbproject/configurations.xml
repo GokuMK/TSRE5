@@ -145,6 +145,7 @@
         <itemPath>ObjTools.h</itemPath>
         <itemPath>PlayActivitySelectWindow.h</itemPath>
         <itemPath>RouteEditorGLWidget.h</itemPath>
+        <itemPath>RouteEditorServer.h</itemPath>
         <itemPath>RouteEditorWindow.h</itemPath>
         <itemPath>ShapeViewWindow.h</itemPath>
         <itemPath>TerrainTools.h</itemPath>
@@ -409,6 +410,7 @@
         <itemPath>ObjTools.cpp</itemPath>
         <itemPath>PlayActivitySelectWindow.cpp</itemPath>
         <itemPath>RouteEditorGLWidget.cpp</itemPath>
+        <itemPath>RouteEditorServer.cpp</itemPath>
         <itemPath>RouteEditorWindow.cpp</itemPath>
         <itemPath>ShapeViewWindow.cpp</itemPath>
         <itemPath>TerrainTools.cpp</itemPath>
@@ -536,6 +538,9 @@
     <itemPath>shaders/shadowt.fs</itemPath>
     <itemPath>shaders/shadowt.vs</itemPath>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>websockets</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Release" type="4">
@@ -1104,6 +1109,10 @@
       <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorServer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorServer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1982,6 +1991,10 @@
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteEditorServer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorServer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RouteEditorWindow.h" ex="false" tool="3" flavor2="0">
@@ -2309,11 +2322,12 @@
       </toolsSet>
       <qt>
         <target>TSRE5</target>
-        <version>0.698</version>
+        <version>0.699</version>
         <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>
-          <Elem>"CONFIG += console"</Elem>
+          <Elem>CONFIG += console</Elem>
+          <Elem>QT += websockets</Elem>
         </defs>
       </qt>
       <compileType>
@@ -2870,6 +2884,10 @@
       <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorServer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorServer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -3747,6 +3765,10 @@
       <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorServer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorServer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -4626,6 +4648,10 @@
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteEditorServer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorServer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RouteEditorWindow.h" ex="false" tool="3" flavor2="0">
@@ -5502,6 +5528,10 @@
       <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorServer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorServer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="RouteEditorWindow.cpp" ex="false" tool="1" flavor2="8">
       </item>
