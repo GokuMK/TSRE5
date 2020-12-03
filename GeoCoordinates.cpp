@@ -18,27 +18,27 @@
 constexpr double GeoMstsCoordinateConverter::IghLongitudeCenter[12];
 
 IghCoordinate* GeoWorldCoordinateConverter::ConvertToInternal(PreciseTileCoordinate* coordinates, IghCoordinate* out){
-    
+    return NULL;
 }
 
 IghCoordinate* GeoWorldCoordinateConverter::ConvertToInternal(int tilex, int tilez, double x, double z, IghCoordinate* out){
-    
+    return NULL;
 }
 
 PreciseTileCoordinate* GeoWorldCoordinateConverter::ConvertToTile(IghCoordinate* coordinates, PreciseTileCoordinate* out){
-    
+    return NULL;
 }
 
 LatitudeLongitudeCoordinate* GeoWorldCoordinateConverter::ConvertToLatLon(IghCoordinate* coordinates, LatitudeLongitudeCoordinate* out){
-    
+    return NULL;
 }
 
 IghCoordinate* GeoWorldCoordinateConverter::ConvertToInternal(LatitudeLongitudeCoordinate* coordinates, IghCoordinate* out){
-    
+    return NULL;
 }
 
 IghCoordinate* GeoWorldCoordinateConverter::ConvertToInternal(double lat, double lon, IghCoordinate* out){
-    
+    return NULL;
 }
 
 IghCoordinate* GeoMstsCoordinateConverter::ConvertToInternal(PreciseTileCoordinate* coordinates, IghCoordinate* out) {

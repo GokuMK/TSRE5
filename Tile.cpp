@@ -511,7 +511,7 @@ WorldObj* Tile::placeObject(float* p, Ref::RefItem* itemData) {
     q[1] = 0;
     q[2] = 0;
     q[3] = 1;
-    placeObject(p, (float*)&q, itemData, NULL);
+    return placeObject(p, (float*)&q, itemData, NULL);
 }
 
 WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* tpos) {
@@ -555,10 +555,10 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
     qDebug() << itemData->type << " " << itemShapeName << nowy->UiD;
     //nowy->fileName = itemData->filename;
     nowy->load(x, z);
-    
+
     if(itemData->randomTransformation != NULL)
         nowy->randomTransform(itemData->randomTransformation);
-    
+
     obiekty[jestObiektow++] = nowy;
     //qDebug() << obiekty[jestObiektow-1]->qDirection[3];
 

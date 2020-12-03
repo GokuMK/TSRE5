@@ -587,7 +587,7 @@ void Route::loadMkrList(){
         if(dirFile.endsWith(".gpx", Qt::CaseInsensitive))
             mkrList[(dirFile).toLower()] = new CoordsGpx(Game::root + "/routes/" + Game::route + "/" + dirFile);
     }
-    if(mkrList.size() > 0)
+    if(mkrList.size() > 0){
         if(mkrList[(Game::routeName+".mkr").toLower()] != NULL){
             if(mkrList[(Game::routeName+".mkr").toLower()]->loaded)
                 mkr = mkrList[(Game::routeName+".mkr").toLower()];
@@ -597,6 +597,7 @@ void Route::loadMkrList(){
         } else {
             mkr = mkrList.begin().value();
         }
+    }
 }
 
 void Route::setMkrFile(QString name){
@@ -1080,15 +1081,16 @@ float Route::getDistantTerrainYOffset(){
 WorldObj* Route::placeObject(int x, int z, float* p) {
     float* q = new float[4];
     Quat::fill((float*)q);
-    placeObject(x, z, p, (float*) q, 0, ref->selected);
+    return placeObject(x, z, p, (float*) q, 0, ref->selected);
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p, float* q, float elev) {
-    placeObject(x, z, p, q, elev, ref->selected);
+    return placeObject(x, z, p, q, elev, ref->selected);
 }
 
 WorldObj* Route::placeObject(int x, int z, float* p, float* q, float elev, Ref::RefItem* r) {
-    if(r == NULL) return NULL;
+    if(r == NULL) 
+        return NULL;
     Game::check_coords(x, z, p);
 
     // pozycja wzgledem TDB:
@@ -1201,23 +1203,23 @@ WorldObj* Route::placeObject(int x, int z, float* p, float* q, float elev, Ref::
         if(tTile == NULL) return NULL;
         if(tTile->loaded != 1) return NULL;
     }
-    
+
     WorldObj* nowy = tTile->placeObject(p, q, r, tpos);
 
     if ((r->type == "trackobj" || r->type == "dyntrack" )&& nowy != NULL) {
         if(nowy->endp == 0) nowy->endp = new float[5];
         memcpy(nowy->endp, endp, sizeof(float)*5);
         Vec3::copy(nowy->firstPosition,firstPos);
-    }
+    }   
     nowy->snapped(snapableSide);
     if(nowy->typeID == nowy->sstatic){
         moveWorldObjToTile(nowy->x, nowy->y, nowy);
     }
-    
+
     if(elev !=0)
         nowy->rotate(elev, 0, 0);
-    
-    Undo::PushWorldObjPlaced(nowy);
+
+    Undo::PushWorldObjPlaced(nowy); 
     return nowy;
 }
 
@@ -1259,6 +1261,7 @@ float* Route::getPointerPosition(float* out, int &x, int &z, float* pos){
                 }
             }
     }
+    return out;
 }
 
 void Route::dragWorldObject(WorldObj* obj, int x, int z, float* pos){

@@ -834,6 +834,7 @@ int SignalObj::getBaseSignalItemId(){
 bool SignalObj::select(int value){
     this->selectionValue = value;
     this->selected = true;
+    return true;
 }
 
 bool SignalObj::getSimpleBorder(float* border){

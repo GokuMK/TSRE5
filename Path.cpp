@@ -302,11 +302,12 @@ void Path::init3dShapes(bool initShapes){
                 else 
                     startDirection = 0;
             
-            if(tdb->trackNodes[lastNodeId]->typ == 2)
+            if(tdb->trackNodes[lastNodeId]->typ == 2){
                 if(tdb->trackNodes[lastNodeId]->TrPinS[1] == currentNodeId)
                     junctionDirections[lastNodeId] = 0;
                 else
                     junctionDirections[lastNodeId] = 1;
+            }
 
             lastNodeId = nodeId1;
         } else {

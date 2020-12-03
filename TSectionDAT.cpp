@@ -276,6 +276,7 @@ bool TSectionDAT::saveRoute() {
     out << ")";
 
     file.close();
+    return true;
 }
 
 bool TSectionDAT::loadRoute(bool autoFix) {

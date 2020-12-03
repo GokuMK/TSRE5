@@ -686,6 +686,7 @@ void SpeedpostObj::set(QString sh, FileBuffer* data) {
 bool SpeedpostObj::select(int value){
     this->selectionValue = value;
     this->selected = true;
+    return true;
 }
 
 void SpeedpostObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos, float* target, float fov, int selectionColor, int renderMode) {

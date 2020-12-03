@@ -276,6 +276,7 @@ void SoundRegionObj::getTrackItemIds(QVector<int> &ids, int tdbId){
 bool SoundRegionObj::select(int value){
     this->selectionValue = value;
     this->selected = true;
+    return true;
 }
 
 void SoundRegionObj::set(QString sh, long long int val){

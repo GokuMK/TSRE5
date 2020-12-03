@@ -79,7 +79,7 @@ void HeightWindow::CheckForMissingGeodataFiles(QMap<int,QPair<int,int>*>& tileLi
     QMapIterator<int, QPair<int, int>*> i(tileList);
     
     QMap<QString, bool> missingFiles;
-    bool fail;
+    bool fail = false;
     
     while (i.hasNext()) {
         i.next();

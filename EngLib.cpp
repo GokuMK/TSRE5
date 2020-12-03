@@ -61,6 +61,7 @@ int EngLib::removeBroken() {
         if (eng[i]->loaded != 1)
             eng[i] = NULL;
     }
+    return 0;
 }
 
 void EngLib::removeAll(){

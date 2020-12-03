@@ -191,6 +191,7 @@ void PlatformObj::translate(float px, float py, float pz){
 bool PlatformObj::select(int value){
     this->selectionValue = value;
     this->selected = true;
+    return true;
 }
 
 bool PlatformObj::isTrackItem(){

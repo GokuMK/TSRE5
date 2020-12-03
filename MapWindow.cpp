@@ -242,6 +242,7 @@ bool MapWindow::LoadMapFromDisk(int x, int z){
         }
     }
     MapWindow::mapTileImages[hash] = img;
+    return true;
 }
 
 MapWindow::~MapWindow() {

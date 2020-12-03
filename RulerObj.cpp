@@ -335,12 +335,13 @@ void RulerObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
         gluu->mvPushMatrix();
         Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, points[i].position[0], points[i].position[1], points[i].position[2]);
         gluu->currentShader->setUniformValue(gluu->currentShader->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
-        if(i == 0 || i == points.size() - 1 || DrawPoints)
+        if(i == 0 || i == points.size() - 1 || DrawPoints){
             if(this->selected && this->selectionValue == i) 
                 point3dSelected->render(selectionColor | (i&0xF)*useSC);
             else
                 point3d->render(selectionColor | (i&0xF)*useSC);
         //    pointer3d->render(selectionColor + (i+1)*131072*8*useSC);
+        }
         gluu->mvPopMatrix();
     }
 };
@@ -392,6 +393,7 @@ void RulerObj::getPosition(float len, float* pos){
 bool RulerObj::select(int value){
     this->selectionValue = value;
     this->selected = true;
+    return true;
 }
 
 

@@ -756,7 +756,7 @@ void Terrain::setDrawAdjacent(){
                         continue;
                     tfile->flags[i*16+j] = tfile->flags[i*16+j] & ~(0x1);
                 }
-                this->setModified(true);
+            this->setModified(true);
         }
     }
 }

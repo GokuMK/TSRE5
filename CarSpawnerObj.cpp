@@ -375,6 +375,7 @@ void CarSpawnerObj::translate(float px, float py, float pz){
 bool CarSpawnerObj::select(int value){
     this->selectionValue = value;
     this->selected = true;
+    return true;
 }
 
 bool CarSpawnerObj::isTrackItem(){

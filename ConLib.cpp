@@ -52,6 +52,7 @@ int ConLib::refreshEngDataAll(){
         if(it->second == NULL) continue;
         (it->second)->refreshEngData();
     }
+    return 0;
 }
 
 int ConLib::loadAll(QString gameRoot, bool gui){

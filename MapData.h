@@ -31,8 +31,8 @@ public:
     virtual void load();
     
 signals:
-    virtual void loaded();
-    virtual void statusInfo(QString val);
+    void loaded();
+    void statusInfo(QString val);
     
 public slots:
 

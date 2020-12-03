@@ -500,6 +500,7 @@ float PropertiesTrackObj::getStepValue(float step){
         return 10.0/step;
     if(elevType.currentIndex() == 3)
         return qTan(qDegreesToRadians(step))*10.0;
+    return 0;
 }
 
 void PropertiesTrackObj::updateObj(GameObj* obj){

@@ -206,8 +206,10 @@ void AceLib::run() {
             for (int iw = 0; iw<texture->width; iw += 4) {
 
                 //May be undefined
-                c[0] = bufor[ptr++] + bufor[ptr++]*256;
-                c[1] = bufor[ptr++] + bufor[ptr++]*256;
+                c[0] = bufor[ptr] + bufor[ptr+1]*256;
+                ptr+=2;
+                c[1] = bufor[ptr] + bufor[ptr+1]*256;
+                ptr+=2;
                 bits[0] = bufor[ptr++];
                 bits[1] = bufor[ptr++];
                 bits[2] = bufor[ptr++];

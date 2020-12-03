@@ -605,7 +605,6 @@ int TDB::findNearestNode(int &x, int &z, float* p, float* q, float maxD, bool up
 int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
     TRnode* endNode = trackNodes[id];
     float p[3];
-
     if (endNode->typ == 0) {
         int kierunek = endNode->TrPinK[0];
         TRnode* n = trackNodes[endNode->TrPinS[0]];
@@ -698,7 +697,7 @@ int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
 }
 
 int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect, int uid) {
-    newTrack(x, z,  p,  qe, ends, r, sect, uid, NULL);
+    return newTrack(x, z,  p,  qe, ends, r, sect, uid, NULL);
 }
 
 int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect, int uid, int* start) {
@@ -893,7 +892,7 @@ int TDB::joinTracks(int iendp) {
             }
         }
     }
-    
+
     if(endp->typ == 2){
         for (int j = 1; j <= iTRnodes; j++) {
             TRnode* n = trackNodes[j];
@@ -909,6 +908,7 @@ int TDB::joinTracks(int iendp) {
             }
         }
     }
+    return 0;
 }
 
 int TDB::fillJunction(int id){
@@ -970,6 +970,7 @@ int TDB::joinVectorSections(int id1, int id2) {
     trackNodes[id2] = NULL;
     trackNodes[endpk1] = NULL;
     trackNodes[endpk2] = NULL;
+    return 0;
 }
 
 void TDB::moveItemsFrom2to1(int id2, int id1){
@@ -1232,6 +1233,7 @@ bool TDB::deleteAllTrItemsFromVectorSection(int id){
         }
     }
     vect->iTri = 0;
+    return true;
 }
 
 bool TDB::deleteFromVectorSection(int id, int j){
@@ -1419,7 +1421,7 @@ int TDB::rotate(int id){
     for(int i = 0; i < vect->iTri; i++){
         this->trackItems[vect->trItemRef[i]]->flipTrackPos(d);
     }
-
+    return 0;
 }
 
 int TDB::appendToJunction(int junctionId, int eId, int idx){
@@ -1454,6 +1456,7 @@ int TDB::appendToJunction(int junctionId, int eId, int idx){
         //junction->TrPinK[idx] = 1;
         junction->TrPinK[idx] = e1->TrPinK[0];
     }
+    return 0;
 }
 
 void TDB::setDefaultEnd(int val){
@@ -1665,7 +1668,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     }
     
     ////////////////////////////////
-    
+
     for (int i = 0; i < shp->numpaths; i++) {
         aa.set(shp->path[i].pos[0], shp->path[i].pos[1], shp->path[i].pos[2]);
         //aa.rotateY(-qe[1] + shp->path[i].rotDeg*M_PI/180 - shp->path[startEnd].rotDeg*M_PI/180, 0);
@@ -1696,7 +1699,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
         }
 
         endp = newTrack(x, z, pp, qee, (int*)ends, sectionIdx, shp->path[i].sect[0], uid, &start);
-        
+
         for (int j = 1; j < shp->path[i].n; j++) {
             if (endp > 0) {
                 endp = appendTrack(endp, (int*)ends, sectionIdx, shp->path[i].sect[j], uid);
@@ -1710,7 +1713,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
         } else {
             joinTracks(start);
         }
-        
+
         joinTracks(endp);
     }
     
@@ -1737,7 +1740,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
             this->newCrossOverObject(cPoints[0].idx, cPoints[0].m, cPoints[1].idx, cPoints[1].m, sectionIdx);
         }
     }
-    
+
     refresh();
     return true;
 }
@@ -3466,7 +3469,7 @@ void TDB::saveTit() {
 }
 
 void TDB::checkSignals(){
-    int trtype[3];
+    int trtype[4];
     trtype[0] = 0;
     trtype[1] = 0;
     trtype[2] = 0;

@@ -155,6 +155,7 @@ bool GroupObj::unselect(){
     for(int i = 0; i < this->objects.size(); i++){
         this->objects[i]->unselect();
     }
+    return false;
 }
 
 void GroupObj::setIndividualRotation(bool val){

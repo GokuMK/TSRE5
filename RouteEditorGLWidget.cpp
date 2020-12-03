@@ -46,6 +46,7 @@
 #include "Skydome.h"
 #include "OpenGL3Renderer.h"
 #include <QtWebSockets/QWebSocket>
+#include <QDebug>
 
 RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -666,8 +667,8 @@ void RouteEditorGLWidget::handleSelection() {
                     groupObj->unselect();
                     setSelectedObj(NULL);
                 }
-            } else {
-                WorldObj* twobj = route->getObj(wx, wz, UiD);
+            } else { 
+                WorldObj* twobj = route->getObj(wx, wz, UiD); 
                 if (selectedWorldObj != NULL && twobj != selectedWorldObj) {
                     selectedWorldObj->unselect();
                     if (autoAddToTDB) {
@@ -680,7 +681,7 @@ void RouteEditorGLWidget::handleSelection() {
                     qDebug() << "brak obiektu";
                 } else {
                     selectedObj->select(cdata);
-                }
+                } 
             }
         } else if( ww == 10 ){
             int wx = camera->pozT[0] - 1 + ((colorHash >> 10) & 0x3);
@@ -1534,7 +1535,7 @@ void RouteEditorGLWidget::setSelectedObj(GameObj* o) {
     emit showProperties(selectedObj);
     if (o != NULL)
         if (o->typeObj == o->worldobj)
-            emit sendMsg("showShape", ((WorldObj*) o)->getShapePath());
+           emit sendMsg("showShape", ((WorldObj*) o)->getShapePath());
 }
 
 void RouteEditorGLWidget::editCopy() {

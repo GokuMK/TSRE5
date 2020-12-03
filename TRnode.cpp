@@ -110,6 +110,7 @@ int TRnode::podmienTrPin(int stare, int nowe) {
                 TrPinS[j] = nowe;
                 return j;
             }
+        return 0;
     }
 
 int TRnode::setTrPinK(int id, int nowe) {
@@ -118,6 +119,7 @@ int TRnode::setTrPinK(int id, int nowe) {
                 TrPinK[j] = nowe;
                 return j;
             }
+        return 0;
     }
 
 float TRnode::getVectorSectionXRot(int id){

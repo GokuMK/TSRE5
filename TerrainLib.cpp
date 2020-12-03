@@ -168,7 +168,7 @@ void TerrainLib::toggleDraw(int x, int z, float* p){
 }
 
 int TerrainLib::getTexture(int x, int z, float* p){
-
+    return 0;
 }
 
 void TerrainLib::paintTexture(Brush* brush, int x, int z, float* p){

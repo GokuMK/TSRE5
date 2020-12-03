@@ -40,7 +40,7 @@ LevelCrObj::LevelCrObj() {
 LevelCrObj::LevelCrObj(const LevelCrObj& o) : WorldObj(o) {
     selectionValue = o.selectionValue;
     levelCrParameters[0] = o.levelCrParameters[0];
-    levelCrParameters[1] = o.levelCrParameters[2];
+    levelCrParameters[1] = o.levelCrParameters[1];
     crashProbability = o.crashProbability;
     levelCrData[0] = o.levelCrData[0];
     levelCrData[1] = o.levelCrData[1];
@@ -444,6 +444,7 @@ void LevelCrObj::renderTritems(GLUU* gluu, int selectionColor){
 bool LevelCrObj::select(int value){
     this->selectionValue = value;
     this->selected = true;
+    return true;
 }
 
 void LevelCrObj::deleteSelectedTrItem(){

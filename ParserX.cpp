@@ -660,4 +660,5 @@ int ParserX::SkipToken(FileBuffer* bufor){
         }
         if (poziom < 0) return 0;
     }
+    return 0;
 }

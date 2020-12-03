@@ -15,7 +15,6 @@
 
 #include "Ref.h"
 
-class Ref::RandomTransformation;
 
 class RandomTransformWorldObjDialog : public QDialog {
     Q_OBJECT
