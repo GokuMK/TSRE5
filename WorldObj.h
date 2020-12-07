@@ -83,7 +83,7 @@ public:
     int shape = -1;
     SFile* shapePointer = NULL;
     unsigned int shapeState = 0;
-    bool loaded;
+    bool loaded = false;
     float size;
     int jestPQ = 0;
     bool modified = false;
@@ -168,6 +168,7 @@ public:
     virtual bool isInternalLodControl();
     virtual void setInternalLodControl(bool val);
     virtual void loadingFixes();
+    virtual void setModified(bool val = true);
     virtual void randomTransform(Ref::RandomTransformation * transformation);
     virtual int updateTrackSectionInfo(QHash<unsigned int, unsigned int> shapes, QHash<unsigned int, unsigned int> sections);
     virtual void pushRenderItems(float lod, float posx, float posz, float* playerW, float* target, float fov, int selectionColor);

@@ -168,7 +168,7 @@ void TransferObj::translate(float px, float py, float pz){
     this->position[0]+=px;
     //this->position[1]+=py;
     this->position[2]+=pz;
-    this->modified = true;
+    setModified();
     deleteVBO();
 }
 
@@ -177,7 +177,7 @@ void TransferObj::rotate(float x, float y, float z){
     if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x);
     if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y);
     if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z);
-    this->modified = true;
+    setModified();
     deleteVBO();
 }
 
@@ -185,7 +185,7 @@ void TransferObj::resize(float x, float y, float z){
     if(x == 0 && y == 0) return;
     this->width += x;
     this->height += y;
-    this->modified = true;
+    setModified();
     deleteVBO();
 }
 

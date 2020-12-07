@@ -119,7 +119,7 @@ void DynTrackObj::rotate(float x, float y, float z){
     this->position[1] = this->placedAtPosition[1] - vect[1];
     this->position[2] = this->placedAtPosition[2] + vect[2];
     
-    this->modified = true;
+    setModified();
     setMartix();
 }
 
@@ -245,7 +245,7 @@ void DynTrackObj::resize(float x, float y, float z){
         if(this->sections[this->sidxSelected].a < 0) this->sections[this->sidxSelected].a = 0;
     }
 
-    this->modified = true;
+    setModified();
     deleteVBO();
 }
 
@@ -345,7 +345,7 @@ void DynTrackObj::set(QString sh, float* val) {
     //sections[0].sectIdx = 4294967295;
     //sections[0].a = 0;
     //sections[0].r = 0;
-    this->modified = true;
+    setModified();
     deleteVBO();
 }
 

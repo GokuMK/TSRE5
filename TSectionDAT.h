@@ -15,6 +15,9 @@
 #include "TSection.h"
 #include "TrackShape.h"
 
+class FileBuffer;
+class QTextStream;
+
 class TSectionDAT {
 public:
     std::unordered_map<int, TSection*> sekcja;
@@ -32,16 +35,19 @@ public:
     int routeShapes;// = 40000;
     //std::unordered_map<int, TrackShape::SectionIdx*> routeShape;
     
-    TSectionDAT(bool autoFix = false);
+    TSectionDAT(bool autoFix = false, bool loadRouteNow = true);
     TSectionDAT(const TSectionDAT& orig);
     virtual ~TSectionDAT();
     bool isRoadShape(int id);
     void getShapeData(int id);
     bool saveRoute();
+    bool loadRoute(bool autoFix = false);
+    void loadRouteUtf16Data(FileBuffer *data, bool autoFix = false);
+    void saveRouteToStream(QTextStream &out);
     void mergeTSection(TSectionDAT *second, QHash<unsigned int,unsigned int>& fixedSectionIds, QHash<unsigned int,unsigned int>& fixedShapeIds);
 private:
     bool loadGlobal();
-    bool loadRoute(bool autoFix = false);
+    
 };
 
 #endif	/* TSECTIONDAT_H */

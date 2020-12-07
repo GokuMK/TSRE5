@@ -79,8 +79,10 @@ void OglObj::init(float* punkty, int ptr, enum RenderItem::VertexAttr v, int typ
     shapeType = type;
     vAttribures = v;
     if(!loaded){
-        VAO.create();
-        VBO.create();
+        if(!VAO.isCreated()){
+            VAO.create();
+            VBO.create();
+        }
     }
     QOpenGLVertexArrayObject::Binder vaoBinder(&VAO);
     //VBO.setUsagePattern(QOpenGLBuffer::DynamicDraw);

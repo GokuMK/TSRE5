@@ -97,8 +97,12 @@ bool TFile::readT(QString fSfile) {
         }
         FileBuffer* data = ReadFile::read(&file);
         //qDebug() << "Date:" << data->length;
-        data->off = 32;
-        
+        load(data);
+        delete data;
+        return true;
+}
+void TFile::load(FileBuffer* data){
+        data->off += 32;
         int pozycja, offset, akto;
         data->findToken(136);
         //qDebug() << "znaleziono sekcje 136 na " << data->off << " ";
@@ -141,10 +145,6 @@ bool TFile::readT(QString fSfile) {
             data->off = akto + offset;
             if(data->off >= data->length) break;
         }
-        delete data;
-        
-        //print();
-        return true;
     }
 
 void TFile::get139(FileBuffer* data, int length) {
@@ -588,6 +588,12 @@ void TFile::save(QString name){
     QDataStream write(file);
     write.setByteOrder(QDataStream::LittleEndian);
     write.setFloatingPointPrecision(QDataStream::SinglePrecision);
+    save(write);
+    write.unsetDevice();
+    file->close();
+}
+
+void TFile::save(QDataStream &write){
     //calculate size
     
     int t137 = 0;
@@ -879,9 +885,6 @@ void TFile::save(QString name){
         write << (float)tdata[j*13+12];
         write << (float)errorBias[j];
     }
-    
-    write.unsetDevice();
-    file->close();
 }
 
 void TFile::print(){

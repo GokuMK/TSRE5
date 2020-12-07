@@ -14,6 +14,9 @@
 #include <QString>
 #include <unordered_map>
 
+class FileBuffer;
+class QTextStream;
+
 class Trk {
 public:
     QString idName;
@@ -59,8 +62,10 @@ public:
     void setModified(bool val);
     Trk();
     void load();
+    void loadUtf16Data(FileBuffer *data);
     void load(QString path);
     void save();
+    void saveToStream(QTextStream &out);
     virtual ~Trk();
     
 private:

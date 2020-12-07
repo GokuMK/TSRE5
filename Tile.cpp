@@ -59,6 +59,21 @@ Tile::Tile(int xx, int zz) {
     load();
 }
 
+Tile::Tile(int xx, int zz, FileBuffer *data) {
+    modified = false;
+    loaded = -2;
+    inUse = false;
+    x = xx;
+    z = zz;
+    qDebug() << xx << zz;
+    jestObiektow = 0;
+    vDbIdCount = 0;
+    loadUtf16Data(data);
+    qDebug() << obiekty.size();
+    loaded = 0;
+    wczytajObiekty();
+}
+
 void Tile::initNew(){
     loaded = 1;
     jestObiektow = 0;
@@ -90,8 +105,13 @@ void Tile::wczytajObiekty() {
         if(obj == NULL) 
             continue;
         obj->load(x, z);
-        if(obj->UiD < 1000000)
-            if(obj->UiD > maxUiD) maxUiD = obj->UiD;
+        if(!obj->isSoundItem()){
+            if(obj->UiD < 1000000)
+                if(obj->UiD > maxUiD) maxUiD = obj->UiD;
+        } else {
+            if(obj->UiD < 1000000)
+                if(obj->UiD > maxUiDWS) maxUiDWS = obj->UiD;
+        }
         
         obj->loadingFixes();
     }
@@ -169,6 +189,33 @@ void Tile::updateTrackSectionInfo(QHash<unsigned int, unsigned int> shapes, QHas
         modified = true;
 }
 
+void Tile::replaceWorldObj(WorldObj *nowy){
+    nowy->load(x, z);
+    
+    if(!Game::ServerMode)
+        nowy->setModified();
+    
+    for (int i = 0; i < jestObiektow; i++) {
+        //console.log(obj.type);
+        WorldObj* obj = obiekty[i];
+        if(obj == NULL) 
+            continue;
+        if(obj->UiD == nowy->UiD && obj->typeID == nowy->typeID){
+            qDebug() << "replace obj";
+            obiekty[i] = nowy;
+            return;
+        }
+    }
+    if(nowy->isSoundItem()){
+        if(nowy->UiD > maxUiDWS)
+            maxUiDWS = nowy->UiD;
+    } else {
+        if(nowy->UiD > maxUiD)
+            maxUiD = nowy->UiD;
+    }
+    obiekty[jestObiektow++] = nowy;
+}
+
 void Tile::load() {
 
     QString sh;
@@ -189,46 +236,9 @@ void Tile::load() {
         qDebug() << "w file uncompressed " << path;
         data->off = 0;
         ParserX::NextLine(data);
-    
-        QString sh = "";
         while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
             if(sh == "tr_worldfile"){
-                WorldObj* nowy;
-                while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-                    if (sh == "tr_watermark") {
-                        nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::GetNumber(data)));
-                        obiekty[jestObiektow++] = nowy;
-                        ParserX::SkipToken(data);
-                        continue;
-                    }
-                    if (sh == "vdbidcount") {
-                        vDbIdCount = ParserX::GetNumber(data);
-                        //viewDbSphere = new ViewDbSphere[vDbIdCount];
-                        ParserX::SkipToken(data);
-                        continue;
-                    }
-                    if (sh == "viewdbsphere") {
-                        viewDbSphere.push_back(ViewDbSphere());
-                        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-                            viewDbSphere.back().set(sh, data);
-                            ParserX::SkipToken(data);
-                        }
-                        ParserX::SkipToken(data);
-                        continue;
-                    }
-                    if ((nowy = WorldObj::createObj(sh)) != NULL) {
-                        //qDebug() << nowy->type;
-                        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-                            nowy->set(sh, data);
-                            ParserX::SkipToken(data);
-                        }
-                        obiekty[jestObiektow++] = nowy;
-                        ParserX::SkipToken(data);
-                        continue;
-                    }
-                    qDebug() << "#tr_worldfile - undefined token " << sh;
-                    ParserX::SkipToken(data);
-                }
+                loadUtf16Data(data);
                 ParserX::SkipToken(data);
                 continue;
             }
@@ -291,6 +301,48 @@ void Tile::load() {
     loadWS();
     file->close();
     delete data;
+}
+
+void Tile::loadUtf16Data(FileBuffer *data){
+    QString sh = "";
+    WorldObj* nowy;
+                while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                    //qDebug() << sh;
+                    if (sh == "tr_watermark") {
+                        nowy = (WorldObj*)(new TrWatermarkObj((int)ParserX::GetNumber(data)));
+                        obiekty[jestObiektow++] = nowy;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if (sh == "vdbidcount") {
+                        vDbIdCount = ParserX::GetNumber(data);
+                        //viewDbSphere = new ViewDbSphere[vDbIdCount];
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if (sh == "viewdbsphere") {
+                        viewDbSphere.push_back(ViewDbSphere());
+                        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                            viewDbSphere.back().set(sh, data);
+                            ParserX::SkipToken(data);
+                        }
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    if ((nowy = WorldObj::createObj(sh)) != NULL) {
+                        //qDebug() << nowy->type;
+                        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                            nowy->set(sh, data);
+                            ParserX::SkipToken(data);
+                        }
+                        obiekty[jestObiektow++] = nowy;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    qDebug() << "#tr_worldfile - undefined token " << sh;
+                    ParserX::SkipToken(data);
+                }
+    return;
 }
 
 void Tile::loadWS() {
@@ -495,7 +547,7 @@ WorldObj* Tile::placeObject(WorldObj* obj){
     //qDebug() << obiekty[jestObiektow-1]->qDirection[3];
     obj->set("x", x);
     obj->set("z", z);
-    obj->modified = true;
+    obj->setModified();
     if(obj->isSoundItem())
         obj->UiD = ++maxUiDWS;
     else
@@ -563,6 +615,7 @@ WorldObj* Tile::placeObject(float* p, float* q, Ref::RefItem* itemData, float* t
     //qDebug() << obiekty[jestObiektow-1]->qDirection[3];
 
     modified = true;
+    nowy->setModified();
     return nowy;
 }
 
@@ -585,6 +638,18 @@ void Tile::saveEmpty(int nx, int nz) {
     out << ")";
 
     file.close(); 
+}
+
+void Tile::saveToStream(QTextStream &out){
+    out << "Tr_Worldfile (\n";
+
+    for(int i = 0; i < this->jestObiektow; i++){
+        if(obiekty[i] == NULL) continue;
+        if(!obiekty[i]->loaded) continue;
+        this->obiekty[i]->save(&out);
+    }
+    
+    out << ")";
 }
 
 void Tile::save() {

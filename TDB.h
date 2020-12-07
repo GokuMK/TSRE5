@@ -59,17 +59,28 @@ public:
     TDB(TSectionDAT* tsection, bool road);
     TDB(const TDB& o);
     virtual ~TDB();
+    virtual int getNextItrNode();
     void refresh();
+    virtual void updateTrNode(int nid);
+    virtual void updateTrItem(int iid);
+    virtual void updateTrackSection(int id);
+    virtual void updateTrackShape(int id);
     void save();
+    void saveToStream(QTextStream &out);
+    int updateTrNodeData(FileBuffer *data);
+    TRitem *updateTrItemData(FileBuffer *data);
+    void updateTrackShapeData(FileBuffer *data);
+    void updateTrackSectionData(FileBuffer *data);
     void saveTit();
     void loadTdb();
+    void loadUtf16Data(FileBuffer *data);
     void loadTit();
     void updateUiDs(QVector<int*> &trackObjUpdates, int startNode);
     void updateSectionAndShapeIds( QHash<unsigned int,unsigned int>& fixedSectionIds, QHash<unsigned int,unsigned int>& fixedShapeIds );
     void mergeTDB(TDB *secondTDB, float offsetXYZ[3], unsigned int &trackNodeOffset, unsigned int &trackItemOffset, QHash<unsigned int,unsigned int>& fixedSectionIds, QHash<unsigned int,unsigned int>& fixedShapeIds);
     void checkTrSignalRDirs();
     void checkDatabase();
-    int getNewTRitemId();
+    virtual int getNewTRitemId();
     static void saveEmpty(bool road);
     void fillTrackAngles(int x, int z, int UiD, QMap<int, float>& angles);
     bool ifTrackExist(int x, int y, int UiD);
@@ -134,7 +145,8 @@ public:
     bool getSegmentIntersectionPositionOnTDB(QVector<TDB::IntersectionPoint> &ipoints, TDB* segmentTDB, float* posT, float* segment, float len, float* pos);
     void newSpeedPostObject(int speedPostType, QVector<int> & itemId, int trNodeId, float metry, int type);
     void newSoundRegionObject(int soundregionTrackType, QVector<int> & itemId, int trNodeId, float metry, int type);
-private:
+
+protected:
     bool deleteNulls();
     void sortItemRefs();
     int findBiggest();

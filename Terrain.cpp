@@ -29,6 +29,10 @@
 QString Terrain::TileDir[2] = {"tiles", "lo_tiles"};
 Brush* Terrain::DefaultBrush = NULL;
 
+Terrain::Terrain(){
+
+}
+
 Terrain::Terrain(TerrainInfo *ti){
     mojex = ti->cx;
     mojez = -ti->cy;
@@ -250,6 +254,49 @@ void Terrain::setFixedHeight(float val){
 }
 
 Terrain::Terrain(const Terrain& orig) {
+}
+
+void Terrain::saveTfileToStream(QDataStream &out){
+    this->tfile->save(out);
+}
+
+void Terrain::saveRAWfileToStream(QDataStream &out){
+    this->saveRAW(out);
+}
+
+void Terrain::saveRAWfileToStreamFloat(QDataStream &out){
+    this->saveRAWFloat(out);
+}
+
+void Terrain::saveFfileToStream(QDataStream &out){
+    if(jestF)
+        this->saveF(out);
+}
+
+void Terrain::loadTFile(FileBuffer *data){
+    qDebug() << "aaa";
+    //this->tfile = new TFile();
+    this->tfile->load(data);
+    for (int i = 0; i < 256; i++) {
+        texid[i] = -1;
+        texid2[i] = -1;
+        hidden[i] = false;
+        texModified[i] = false;
+        texLocked[i] = false;
+        uniqueTex[i] = false;
+        //selectedPatchs[i] = false;
+    }
+}
+    
+void Terrain::loadRAWFile(FileBuffer *data){
+    this->readRAWFloat(data);
+}
+
+void Terrain::loadFFile(FileBuffer *data){
+    if(data->off == data->length)
+        return;
+    jestF = true;
+    this->readF(data);
 }
 
 Terrain::~Terrain() {
@@ -711,6 +758,7 @@ void Terrain::setWaterDraw() {
             this->setModified(true);
         }
     }
+    updateTFile();
 }
 
 void Terrain::toggleWaterDraw() {
@@ -721,6 +769,7 @@ void Terrain::toggleWaterDraw() {
             this->setModified(true);
         }
     }
+    updateTFile();
 }
 
 void Terrain::hideWaterDraw() {
@@ -731,6 +780,11 @@ void Terrain::hideWaterDraw() {
             this->setModified(true);
         }
     }
+    updateTFile();
+}
+
+void Terrain::updateTFile(){
+    
 }
 
 void Terrain::toggleWaterDraw(int x, int z, float posx, float posz, float direction) {
@@ -743,6 +797,7 @@ void Terrain::toggleWaterDraw(int x, int z, float posx, float posz, float direct
     if(direction == -1)
         tfile->flags[z * patches + x] = tfile->flags[z * patches + x] & ~0x10000c0;
     this->setModified(true);
+    updateTFile();
 }
 
 void Terrain::setDrawAdjacent(){
@@ -759,6 +814,7 @@ void Terrain::setDrawAdjacent(){
             this->setModified(true);
         }
     }
+    updateTFile();
 }
 
 void Terrain::rotatePatchTexture(){
@@ -972,6 +1028,7 @@ void Terrain::toggleDraw() {
             this->setModified(true);
         }
     }
+    updateTFile();
 }
 
 void Terrain::hideDraw() {
@@ -982,6 +1039,7 @@ void Terrain::hideDraw() {
             this->setModified(true);
         }
     }
+    updateTFile();
 }
 
 void Terrain::toggleDraw(int x, int z, float posx, float posz) {
@@ -989,6 +1047,7 @@ void Terrain::toggleDraw(int x, int z, float posx, float posz) {
     int patches = tfile->patchsetNpatches;
     tfile->flags[z * patches + x] = tfile->flags[z * patches + x] ^ 0x1;
     this->setModified(true);
+    updateTFile();
 }
 
 float Terrain::getErrorBias(){
@@ -2747,6 +2806,12 @@ bool Terrain::readRAW(QString fSfile) {
     if (!file.open(QIODevice::ReadOnly))
         return false;
     FileBuffer* data = ReadFile::readRAW(&file);
+    readRAW(data);
+    delete data;
+    return true;
+}
+
+void Terrain::readRAW(FileBuffer* data) {
 
     int samples = *tfile->nsamples;
     //qDebug() << data->length;
@@ -2767,8 +2832,29 @@ bool Terrain::readRAW(QString fSfile) {
             }
         }
     }
-    delete data;
-    return true;
+
+}
+
+void Terrain::readRAWFloat(FileBuffer* data) {
+    int samples = *tfile->nsamples;
+    //qDebug() << data->length;
+    terrainData = new float*[samples+1];
+    //int u = 0;
+    for (int i = 0; i < samples+1; i++) {
+        terrainData[i] = new float[samples+1];
+        for (int j = 0; j < samples+1; j++) {
+            if (i == samples && j == samples) {
+                terrainData[i][j] = terrainData[(i - 1)][j - 1];
+            } else if (i == samples) {
+                terrainData[i][j] = terrainData[(i - 1)][j];
+            } else if (j == samples) {
+                terrainData[i][j] = terrainData[i][j - 1];
+            } else {
+                terrainData[i][j] = data->getFloat();
+            }
+        }
+    }
+
 }
 
 void Terrain::fillHeightMap(float* data){
@@ -2813,7 +2899,12 @@ void Terrain::saveRAW(QString name) {
     qDebug() << "w";
     QDataStream write(file);
     write.setByteOrder(QDataStream::LittleEndian);
+    saveRAW(write);
+    file->close();
+    return;
+}
 
+void Terrain::saveRAW(QDataStream &write){
     int samples = *tfile->nsamples;
     float min = 999999, max = -999999;
     for (int i = 0; i < samples; i++) {
@@ -2841,8 +2932,15 @@ void Terrain::saveRAW(QString name) {
             //terrainData[i][j] = tfile->floor + tfile->scale * (data->get() + 256*data->get());
         }
     }
-    file->close();
-    return;
+}
+
+void Terrain::saveRAWFloat(QDataStream &write){
+    int samples = *tfile->nsamples;
+    for (int i = 0; i < samples; i++) {
+        for (int j = 0; j < samples; j++) {
+            write << (float)terrainData[i][j];
+        }
+    }
 }
 
 void Terrain::newF(){
@@ -2864,7 +2962,12 @@ bool Terrain::readF(QString fSfile) {
     if (!file.open(QIODevice::ReadOnly))
         return false;
     FileBuffer* data = ReadFile::readRAW(&file);
+    readF(data);
+    delete data;
+    return true;
+}
 
+void Terrain::readF(FileBuffer *data){
     //qDebug() << "Wczytam teren F: " << fSfile << data->length;
 
     int samples = *tfile->nsamples;
@@ -2879,8 +2982,7 @@ bool Terrain::readF(QString fSfile) {
                 fData[j][i] = data->data[u++];
         }
     }
-    delete data;
-    return true;
+
 } 
 
 void Terrain::saveF(QString name) {
@@ -2892,6 +2994,13 @@ void Terrain::saveF(QString name) {
     qDebug() << "w";
     QDataStream write(file);
     write.setByteOrder(QDataStream::LittleEndian);
+    saveF(write);
+    modifiedF = false;
+    file->close();
+    return;
+}
+
+void Terrain::saveF(QDataStream &write) {
 
     int samples = *tfile->nsamples;
     for (int i = 0; i < samples; i++) {
@@ -2899,9 +3008,7 @@ void Terrain::saveF(QString name) {
             write << fData[i][j];
         }
     }
-    modifiedF = false;
-    file->close();
-    return;
+
 }
 
 int Terrain::getSelectedPathId(){

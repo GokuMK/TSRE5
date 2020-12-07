@@ -313,6 +313,7 @@ void TerrainLibQt::setHeightFromGeoGui(int x, int z, float* p) {
                 if (tterr != NULL) 
                     tterr->refresh();
             }
+        updateTerrainHeightmap(terr);
     }
 }
 
@@ -364,6 +365,7 @@ void TerrainLibQt::setHeightFromGeo(int x, int z, float* p) {
         tterr = getTerrainByXY(X, Y);
         if (tterr != NULL) 
             tterr->refresh();
+        updateTerrainHeightmap(terr);
     }
 }
 
@@ -517,6 +519,7 @@ void TerrainLibQt::setTerrainToTrackObj(Brush* brush, float* punkty, int length,
             continue;
         value->setModified(true);
         value->refresh();
+        updateTerrainHeightmap(value);
     }
 }
 
@@ -530,6 +533,7 @@ void TerrainLibQt::setTerrainTexture(Brush* brush, int x, int z, float* p) {
     if (terr == NULL) return;
     if (terr->loaded == false) return;
     terr->setTexture(brush, x, z, posx, posz);
+    updateTerrainTFile(terr);
 }
 
 void TerrainLibQt::toggleWaterDraw(int x, int z, float* p, float direction) {
@@ -602,6 +606,7 @@ void TerrainLibQt::toggleDraw(int x, int z, float* p) {
     if (terr == NULL) return;
     if (terr->loaded == false) return;
     terr->toggleDraw(x, z, posx, posz);
+    updateTerrainTFile(terr);
 }
 
 int TerrainLibQt::getTexture(int x, int z, float* p) {
@@ -662,6 +667,7 @@ void TerrainLibQt::setFixedTileHeight(Brush* brush, int x, int z, float* p) {
     if (terr->loaded == false) return;
     Undo::PushTerrainHeightMap(terr->mojex, terr->mojez, terr->terrainData, terr->getSampleCount());
     terr->setFixedHeight(brush->hFixed);
+    updateTerrainHeightmap(terr);
 }
 
 QSet<Terrain*> TerrainLibQt::paintHeightMap(Brush* brush, int x, int z, float* p) {
@@ -794,6 +800,7 @@ QSet<Terrain*> TerrainLibQt::paintHeightMap(Brush* brush, int x, int z, float* p
     foreach (Terrain *value, uterr){
         value->setModified(true);
         value->refresh();
+        updateTerrainHeightmap(value);
     }
     return uterr;
 }
@@ -859,6 +866,8 @@ void TerrainLibQt::fillWaterLevels(float *w, int mojex, int mojez) {
 
 void TerrainLibQt::setWaterLevels(float *w, int mojex, int mojez) {
     Terrain *cTile = getTerrainByXY(mojex, mojez);
+    if(!cTile->loaded)
+        return;
     Terrain *tTile;
     int X, Y;
     

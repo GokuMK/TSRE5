@@ -16,7 +16,7 @@ class TerrainLibQt : public TerrainLib {
 public:
     TerrainLibQt();
     TerrainLibQt(const TerrainLibQt& orig);
-    Terrain* getTerrainByXY(int x, int y, bool load = false);
+    virtual Terrain* getTerrainByXY(int x, int y, bool load = false);
     virtual ~TerrainLibQt();
     void setDetailedAsCurrent();
     void setDistantAsCurrent();
@@ -66,7 +66,7 @@ public:
     void renderWaterLo(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode, int layer);
     void renderEmpty(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
     void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
-private:
+protected:
     QuadTree* quadTree;
     QuadTree* quadTreeLo;
     QuadTree* currentQuadTree = NULL;

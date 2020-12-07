@@ -49,7 +49,7 @@ void SignalObj::loadingFixes(){
                     QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) 
                     );
             ErrorMessagesLib::PushErrorMessage(e);
-            modified = true;
+            setModified();
         }            
     }
 }
@@ -330,7 +330,7 @@ void SignalObj::set(QString sh, long long int val) {
         return;
     }
     WorldObj::set(sh, val);
-    this->modified = true;
+    setModified();
 }
 
 void SignalObj::set(QString sh, QString val){
@@ -516,7 +516,7 @@ void SignalObj::enableSubObj(int i){
             if(signalShape->subObj[i].backFacing == signalShape->subObj[j].backFacing)
                 tdb->trackItems[this->signalUnit[j].itemId]->enableSignalSubObjFlag(signalShape->subObj[i].sigSubType);
         }
-    this->modified = true;
+    setModified();
     if(shapePointer != NULL)
         shapePointer->enableSubObjByName(shapeState, signalShape->subObj[i].type, true);
     return;
@@ -550,7 +550,7 @@ void SignalObj::disableSubObj(int i){
             if(signalShape->subObj[i].backFacing == signalShape->subObj[j].backFacing)
                 tdb->trackItems[this->signalUnit[j].itemId]->disableSignalSubObjFlag(signalShape->subObj[i].sigSubType);
         }
-    this->modified = true; 
+    setModified();
     if(shapePointer != NULL)
         shapePointer->enableSubObjByName(shapeState, signalShape->subObj[i].type, false);
 }
@@ -635,7 +635,7 @@ void SignalObj::fixFlags(){
         }
         tdb->trackItems[signalUnit[i].itemId]->trSignalType1 = tFlags;
     }
-    this->modified = true;
+    setModified();
 }
 
 void SignalObj::flip(bool flipShape){
@@ -654,7 +654,7 @@ void SignalObj::flip(bool flipShape){
             continue;
         tdb->trackItems[this->signalUnit[j].itemId]->flipSignal();
     }
-    this->modified = true; 
+    setModified();
     delete[] drawPositions;
     drawPositions = NULL;
 }

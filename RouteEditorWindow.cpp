@@ -48,6 +48,7 @@
 #include "PropertiesConsist.h"
 #include "NaviWindow.h"
 #include "ErrorMessagesWindow.h"
+#include "ClientUsersWindow.h"
 #include "ErrorMessagesLib.h"
 #include "UnsavedDialog.h"
 #include "ActivityEventWindow.h"
@@ -71,6 +72,7 @@ RouteEditorWindow::RouteEditorWindow() {
     aboutWindow = new AboutWindow(this);
     naviWindow = new NaviWindow(this);
     errorMessagesWindow = ErrorMessagesLib::GetWindow(this);
+    clientUsersWindow = new ClientUsersWindow(this);
     activityEventWindow = new ActivityEventWindow(this);
     activityServiceWindow = new ActivityServiceWindow(this);
     activityTrafficWindow = new ActivityTrafficWindow(this);
@@ -117,7 +119,9 @@ RouteEditorWindow::RouteEditorWindow() {
     mainLayout2->addWidget(objTools);
     mainLayout2->addWidget(terrainTools);
     mainLayout2->addWidget(geoTools);
-    mainLayout2->addWidget(activityTools);
+    if(!Game::ServerMode){
+        mainLayout2->addWidget(activityTools);
+    }
     //mainLayout2->addWidget(naviBox);
     //mainLayout2->setAlignment(naviBox, Qt::AlignBottom);
     box->setLayout(mainLayout2);
@@ -188,18 +192,25 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
     trkEditr = new QAction(tr("&Edit route settings"), this);
     QObject::connect(trkEditr, SIGNAL(triggered()), glWidget, SLOT(showTrkEditr()));
-    routeMenu = menuBar()->addMenu(tr("&Route"));
-    routeMenu->addAction(saveAction);
-    routeMenu->addAction(reloadRefAction);
-    routeMenu->addAction(createPathsAction);
-    routeMenu->addAction(trkEditr);
-    routeMenu->addAction(exitAction);
+    if(!Game::ServerMode){
+        routeMenu = menuBar()->addMenu(tr("&Route"));
+        routeMenu->addAction(saveAction);
+        routeMenu->addAction(reloadRefAction);
+        routeMenu->addAction(createPathsAction);
+        routeMenu->addAction(trkEditr);
+        routeMenu->addAction(exitAction);
+    } else {
+        routeMenu = menuBar()->addMenu(tr("&Server"));
+        routeMenu->addAction(exitAction);
+    }
     // Edit
     editMenu = menuBar()->addMenu(tr("&Edit"));
-    undoAction = new QAction(tr("&Undo"), this); 
-    undoAction->setShortcut(QKeySequence("Ctrl+Z"));
-    QObject::connect(undoAction, SIGNAL(triggered()), glWidget, SLOT(editUndo()));
-    editMenu->addAction(undoAction);
+    if(Undo::UndoEnabled){
+        undoAction = new QAction(tr("&Undo"), this); 
+        undoAction->setShortcut(QKeySequence("Ctrl+Z"));
+        QObject::connect(undoAction, SIGNAL(triggered()), glWidget, SLOT(editUndo()));
+        editMenu->addAction(undoAction);
+    }
     copyAction = new QAction(tr("&Copy"), this); 
     copyAction->setShortcut(QKeySequence("Ctrl+C"));
     QObject::connect(copyAction, SIGNAL(triggered()), glWidget, SLOT(editCopy()));
@@ -346,6 +357,10 @@ RouteEditorWindow::RouteEditorWindow() {
         this->viewUnselectAll();
     }
     
+    if(Game::ServerMode){
+        clientUsersWindow->show();
+    }
+    
     QObject::connect(this, SIGNAL(sendMsg(QString)),
                       glWidget, SLOT(msg(QString)));
     
@@ -479,7 +494,7 @@ RouteEditorWindow::RouteEditorWindow() {
     
     QObject::connect(errorMessagesWindow, SIGNAL(windowClosed()),
                       this, SLOT(errorMessagesWindowClosed())); 
-    
+
     QObject::connect(shapeViewWindow, SIGNAL(windowClosed()),
                       this, SLOT(shapeVeiwWindowClosed())); 
     
@@ -719,8 +734,10 @@ void RouteEditorWindow::setToolbox(QString name){
     }
     if(name == "activityTools"){
         hideAllTools();
-        activityTools->show();
-        activityAction->setChecked(true);
+        if(!Game::ServerMode){
+            activityTools->show();
+            activityAction->setChecked(true);
+        }
     }
 }
 
@@ -844,15 +861,24 @@ void RouteEditorWindow::viewCompass(bool show){
     Game::viewCompass = show;
 }
 
+void RouteEditorWindow::showRoute(){
+    if(!Game::ServerMode){
+        if(!glWidget->initRoute()){
+            emit exitNow();
+            SoundManager::CloseAl();
+            qApp->quit();
+            return;
+        }
+        show();
+    } else {
+        QObject::connect(glWidget, SIGNAL(showWindow()), this, SLOT(show()));
+        glWidget->initRoute();
+    }
+}
+
 void RouteEditorWindow::show(){
     naviWindow->move(0, this->height() - naviWindow->height() );
     
-    if(!glWidget->initRoute()){
-        emit exitNow();
-        SoundManager::CloseAl();
-        qApp->quit();
-        return;
-    }
     if(!Game::playerMode){
         naviWindow->show();
         //errorMessagesWindow->show();

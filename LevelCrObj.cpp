@@ -76,7 +76,7 @@ void LevelCrObj::loadingFixes(){
                     QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) 
                     );
             ErrorMessagesLib::PushErrorMessage(e);
-            modified = true;
+            setModified();
         }            
     }
 }
@@ -474,7 +474,7 @@ void LevelCrObj::deleteSelectedTrItem(){
         this->levelCrData[1]-=1;
         drawPositions.clear();
         //qDebug() << drawPositions.size();
-        this->modified = true;
+        setModified();
     }
 }
 
@@ -532,32 +532,32 @@ int LevelCrObj::getDefaultDetailLevel(){
 
 void LevelCrObj::setSensitivityActivateLevel(float val){
     this->levelCrParameters[0] = val;
-    this->modified = true;
+    setModified();
 }
 
 void LevelCrObj::setSensitivityMinimunDistance(float val){
     this->levelCrParameters[1] = val;
-    this->modified = true;
+    setModified();
 }
 
 void LevelCrObj::setTimingInitialWarning(float val){
     this->levelCrTiming[0] = val;
-    this->modified = true;
+    setModified();
 }
 
 void LevelCrObj::setTimingSeriousWarning(float val){
     this->levelCrTiming[1] = val;
-    this->modified = true;
+    setModified();
 }
 
 void LevelCrObj::setTimingAnimationLength(float val){
     this->levelCrTiming[2] = val;
-    this->modified = true;
+    setModified();
 }
 
 void LevelCrObj::setCrashProbability(float val){
     this->crashProbability = val;
-    this->modified = true;
+    setModified();
 }
 
 void LevelCrObj::setInvisible(bool val){
@@ -565,7 +565,7 @@ void LevelCrObj::setInvisible(bool val){
         this->levelCrData[0] = this->levelCrData[0] | 1;
     else
         this->levelCrData[0] = this->levelCrData[0] & ~(1);
-    this->modified = true;
+    setModified();
 }
 
 void LevelCrObj::setSilentMstsHax(bool val){
@@ -573,12 +573,12 @@ void LevelCrObj::setSilentMstsHax(bool val){
         this->levelCrData[0] = this->levelCrData[0] | 6;
     else
         this->levelCrData[0] = this->levelCrData[0] & ~(6);
-    this->modified = true;
+    setModified();
 }
 
 void LevelCrObj::setSoundFileName(QString val){
     ORTSSoundFileName = val;
-    modified = true;
+    setModified();
 }
 
 QString LevelCrObj::getSoundFileName(){
@@ -650,7 +650,7 @@ void LevelCrObj::translate(float px, float py, float pz){
         tdb->updateTrItemRData(trit);
     }
     drawPositions.clear();
-    this->modified = true;
+    setModified();
     setMartix();
 }
 

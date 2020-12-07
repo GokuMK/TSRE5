@@ -225,7 +225,7 @@ void PropertiesForest::sizeEnabled(QString val){
     Undo::SinglePushWorldObjData(worldObj);
     forestObj->set("areaX", sizeX.text().toFloat());
     forestObj->set("areaZ", sizeY.text().toFloat());
-    forestObj->modified = true;
+    forestObj->setModified();
     forestObj->deleteVBO();
 }
 
@@ -235,7 +235,7 @@ void PropertiesForest::populationEnabled(QString val){
     Undo::SinglePushWorldObjData(worldObj);
     forestObj->set("population", population.text().toLongLong());
     this->densitykm.setText(QString::number((int)(forestObj->population*(1000000.0/(forestObj->areaX*forestObj->areaZ))), 10));
-    forestObj->modified = true;
+    forestObj->setModified();
     forestObj->deleteVBO();
 }
 
@@ -245,7 +245,7 @@ void PropertiesForest::densitykmEnabled(QString val){
     Undo::SinglePushWorldObjData(worldObj);
     this->population.setText(QString::number((int)(densitykm.text().toUInt()/(1000000.0/(forestObj->areaX*forestObj->areaZ))), 10));
     forestObj->set("population", population.text().toLongLong());
-    forestObj->modified = true;
+    forestObj->setModified();
     forestObj->deleteVBO();
 }
 

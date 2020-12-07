@@ -19,13 +19,15 @@
 
 class Brush;
 class TerrainInfo;
+class FileBuffer;
+class QDataStream;
 
 class Terrain : public GameObj {
     Q_OBJECT
 public:
     static Brush* DefaultBrush;
     
-    int loaded;
+    int loaded = false;
     float **terrainData;
     bool inUse = true;
     bool showBlob = false;
@@ -33,9 +35,18 @@ public:
     float mojez = 0;
     QString name;
     bool lowTile = false;
+    Terrain();
     Terrain(TerrainInfo *ti);
     Terrain(float x, float y);
     Terrain(const Terrain& orig);
+    virtual void saveTfileToStream(QDataStream &out);
+    virtual void saveRAWfileToStream(QDataStream &out);
+    virtual void saveRAWfileToStreamFloat(QDataStream &out);
+    virtual void saveFfileToStream(QDataStream &out);
+    virtual void loadTFile(FileBuffer *data);
+    virtual void loadRAWFile(FileBuffer *data);
+    virtual void loadFFile(FileBuffer *data);
+    virtual void updateTFile();
     virtual ~Terrain();
     static void SaveEmpty(QString name, int samples = 256, int sampleSize = 8, int patches = 16, bool low = false);
     static QString getTileName(int x, int y);
@@ -54,7 +65,7 @@ public:
     void save();
     void refresh();
     bool isModified();
-    void setModified(bool value);
+    void setModified(bool value = true);
     void getLowCornerTileXY(int &X, int &Y);
     int getSampleCount();
     float setHeight(int x, int z, float posx, float posz, float val, bool add = false);
@@ -140,14 +151,14 @@ public slots:
     void menuPutTexture();
     void menuSelectObjects();
     
-private:
+protected:
     static QString TileDir[2];
     
     unsigned char **fData;
     bool jestF = false;
-    bool modifiedF;
-    bool isOgl;
-    bool modified;
+    bool modifiedF = false;
+    bool isOgl = false;
+    bool modified = false;
     QString texturepath;
     QString rootTexturepath;
     Vector3f **vertexData;//[257][257];
@@ -185,9 +196,15 @@ private:
     //int selectedPathId = -1;
     
     void saveRAW(QString name);
+    void saveRAW(QDataStream &write);
+    void saveRAWFloat(QDataStream &write);
     bool readRAW(QString fSfile);
+    void readRAW(FileBuffer *data);
+    void readRAWFloat(FileBuffer *data);
     bool readF(QString fSfile);
+    void readF(FileBuffer *data);
     void saveF(QString name);
+    void saveF(QDataStream &write);
     void newF();
     void vertexInit();
     void normalInit();
@@ -206,7 +223,7 @@ private:
     void paintTextureOnTile(Brush* brush, int y, int u, float x, float z);
     void reloadLines();
     
-    void load();
+    virtual void load();
 };
 
 #endif	/* TERRAIN_H */

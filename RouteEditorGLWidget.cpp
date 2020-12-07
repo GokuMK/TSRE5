@@ -45,8 +45,10 @@
 #include "SoundManager.h"
 #include "Skydome.h"
 #include "OpenGL3Renderer.h"
-#include <QtWebSockets/QWebSocket>
 #include <QDebug>
+#include "RouteEditorClient.h"
+#include "RouteClient.h"
+#include "ClientInfo.h"
 
 RouteEditorGLWidget::RouteEditorGLWidget(QWidget *parent)
 : QOpenGLWidget(parent),
@@ -101,6 +103,13 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
         Undo::StateEndIfLongTime();
     }
     
+    if (timeNow % 100 < lastTime % 100) {
+        //qDebug() << "new second" << timeNow;
+        if(Game::serverClient != NULL){
+            Game::serverClient->updatePointerPosition((int) camera->pozT[0], (int) camera->pozT[1], aktPointerPos[0], aktPointerPos[1], aktPointerPos[2]);
+        }
+    }
+    
     if(Game::soundEnabled){
         if (timeNow % 200 < lastTime % 200) {
             SoundManager::UpdateListenerPos((int)camera->pozT[0], (int)camera->pozT[1], camera->getPos(), camera->getTarget(), camera->getUp());
@@ -124,53 +133,70 @@ void RouteEditorGLWidget::timerEvent(QTimerEvent * event) {
     update();
 }
 
-void RouteEditorGLWidget::onConnected(){
-    qDebug() << "WebSocket connected";
-    connect(m_webSocket, &QWebSocket::textMessageReceived,
-            this, &RouteEditorGLWidget::onTextMessageReceived);
-    m_webSocket->sendTextMessage(QStringLiteral("Hello, world!"));
-}
-//! [onConnected]
-
-//! [onTextMessageReceived]
-void RouteEditorGLWidget::onTextMessageReceived(QString message){
-    qDebug() << "Message received:" << message;
-    //m_webSocket.close();
-}
-//! [onTextMessageReceived]
-
 bool RouteEditorGLWidget::initRoute(){
-    if(Game::ServerMode){
-        m_webSocket = new QWebSocket();
-        QString url = "ws://127.0.0.1:8080";
-        qDebug() << "WebSocket server:" << url;
-        connect(m_webSocket, &QWebSocket::connected, this, &RouteEditorGLWidget::onConnected);
-        connect(m_webSocket, &QWebSocket::disconnected, this, &RouteEditorGLWidget::close);
-        m_webSocket->open(QUrl(url));
-    }
-    
+    // Init Shape and Trains libs
     currentShapeLib = new ShapeLib();
     Game::currentShapeLib = currentShapeLib;
-    
     engLib = new EngLib();
     Game::currentEngLib = engLib;
-
-    route = new Route();
-    if (!route->loaded){ 
-        return false;
+    
+    // Init Route
+    if(Game::serverClient != NULL){
+        qDebug() << "dupa";
+        route = new RouteClient();
+        QObject::connect(route, SIGNAL(initDone()), this, SLOT(initRoute2()));
+        route->load();
+        return true;
+    } else {
+        route = new Route();
+        route->load();
+        if (!route->loaded){ 
+            return false;
+        }
+        initRoute2();
+        return true;
     }
-    
-    //QDialog aaaaa;
-    //aaaaa.setWindowTitle("dupa");
-    //aaaaa.exec();
-    
+    return false;
+}
+
+void RouteEditorGLWidget::initRoute2(){
     QObject::connect(route, SIGNAL(objectSelected(GameObj*)), this, SLOT(objectSelected(GameObj*)));
     QObject::connect(route, SIGNAL(objectSelected(QVector<GameObj*>)), this, SLOT(objectSelected(QVector<GameObj*>)));
     QObject::connect(route, SIGNAL(sendMsg(QString)), this, SLOT(msg(QString)));
 
-    float * aaa = new float[2] {
-        0, 0
-    };
+    // Init Camera
+    cameraInit();
+
+    // Play?
+    if(Game::ActivityToPlay.length() > 0){
+        playInit();
+    }
+    
+    emit routeLoaded(route);
+    
+    emit showWindow();
+    return;
+}
+
+void RouteEditorGLWidget::playInit(){
+        int actId = ActLib::GetAct(Game::root + "/routes/" + Game::route + "/activities", Game::ActivityToPlay );
+        qDebug() << "======== actId" << actId << Game::ActivityToPlay;
+        if(actId < 0){
+            PlayActivitySelectWindow actWindow;
+            actWindow.setRoute(route);
+            actWindow.exec();
+            actId = actWindow.actId;
+        }
+        if(actId >= 0){
+            ActLib::Act[actId]->initToPlay();
+            route->activitySelected(ActLib::Act[actId]);
+            setSelectedObj((GameObj*)route->getActivityConsist(0));
+            camera->setCameraObject((GameObj*)route->getActivityConsist(0));
+        }
+}
+
+void RouteEditorGLWidget::cameraInit(){
+    float * aaa = new float[2] { 0, 0 };
     cameraFree = new CameraFree(aaa);
     //cameraObj = new CameraConsist();
     camera = cameraFree;
@@ -188,26 +214,6 @@ bool RouteEditorGLWidget::initRoute(){
         spos[1] = 0;
     }
     camera->setPos((float*) &spos);
-    
-    // Play?
-    if(Game::ActivityToPlay.length() > 0){
-        int actId = ActLib::GetAct(Game::root + "/routes/" + Game::route + "/activities", Game::ActivityToPlay );
-        qDebug() << "======== actId" << actId << Game::ActivityToPlay;
-        if(actId < 0){
-            PlayActivitySelectWindow actWindow;
-            actWindow.setRoute(route);
-            actWindow.exec();
-            actId = actWindow.actId;
-        }
-        if(actId >= 0){
-            ActLib::Act[actId]->initToPlay();
-            route->activitySelected(ActLib::Act[actId]);
-            setSelectedObj((GameObj*)route->getActivityConsist(0));
-            camera->setCameraObject((GameObj*)route->getActivityConsist(0));
-        }
-    }
-    
-    return true;
 }
 
 void RouteEditorGLWidget::initializeGL() {
@@ -289,7 +295,7 @@ void RouteEditorGLWidget::initializeGL() {
     SoundManager::listenerX = camera->pozT[0];
     SoundManager::listenerZ = camera->pozT[1];
     
-    emit routeLoaded(route);
+    //emit routeLoaded(route);
     emit mkrList(route->getMkrList());
 
     gluu->makeShadowFramebuffer(FramebufferName1, depthTexture1, Game::shadowMapSize, GL_TEXTURE2);
@@ -828,7 +834,7 @@ void RouteEditorGLWidget::drawPointer() {
     //glGetFloatv(GL_MODELVIEW_MATRIX, mvmatrix);
     //glGetFloatv(GL_PROJECTION_MATRIX, projmatrix);
     int realy = viewport[3] - (int) y - 1;
-    if(newTime - oldTime > 100){
+    if(newTime - oldTime > 50){
         glReadPixels(x, realy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
         oldTime = newTime;
     }
@@ -846,6 +852,23 @@ void RouteEditorGLWidget::drawPointer() {
         //gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
         pointer3d->render();
         gluu->mvPopMatrix();
+
+        if(Game::serverClient != NULL){
+            foreach(ClientInfo *info, Game::serverClient->clientUsersList){
+                if(info == NULL)
+                    continue;
+                if(info->username == Game::serverClient->username)
+                    continue;
+                gluu->mvPushMatrix();
+                //qDebug() << camera->pozT[0] << info->X;
+                Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048*(info->X-camera->pozT[0])+info->x, info->y, 2048*(info->Z-camera->pozT[1])+info->z);
+                Mat4::identity(gluu->objStrMatrix);
+                gluu->setMatrixUniforms();
+                //gluu->m_program->setUniformValue(gluu->mvMatrixUniform, *reinterpret_cast<float(*)[4][4]> (gluu->mvMatrix));
+                info->render(camera->getRotX());
+                gluu->mvPopMatrix();
+            }
+        }
     }
 }
 
@@ -1293,6 +1316,8 @@ void RouteEditorGLWidget::mousePressEvent(QMouseEvent *event) {
             Game::check_coords(x, z, posx, posz);
             Terrain *t = Game::terrainLib->getTerrainByXY(x, z);
             if(t == NULL)
+                return;
+            if(!t->loaded)
                 return;
             t->getLowCornerTileXY(mapWindow->tileX, mapWindow->tileZ);
             mapWindow->tileSize = t->getSampleCount()*t->getSampleSize();

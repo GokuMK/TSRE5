@@ -13,6 +13,9 @@
 
 #include <QString>
 
+class QTextStream;
+class FileBuffer;
+
 class TrackShape {
 public:
     struct SectionIdx{
@@ -43,6 +46,8 @@ public:
     virtual ~TrackShape();
     QString getHashString();
     //void getShapePath();
+    void saveToStream(QTextStream &out);
+    void loadUtf16Data(FileBuffer *data);
 private:
 
 };

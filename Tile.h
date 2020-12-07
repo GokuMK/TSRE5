@@ -44,12 +44,15 @@ public:
     //std::unordered_map<int, WorldObj*> obiektyWS;
     Tile();
     Tile(int xx, int zz);
+    Tile(int xx, int zz, FileBuffer *data);
     Tile(const Tile& orig);
     virtual ~Tile();
     static void saveEmpty(int x, int z);
     static QString getNameXY(int e);
     void load();
+    void loadUtf16Data(FileBuffer *data);
     void loadInit();
+    void replaceWorldObj(WorldObj *nowy);
     void selectObjectsByXYRange(QVector<GameObj*> &objects, int minx, int maxx, int minz, int maxz);
     void updateTrackSectionInfo(QHash<unsigned int, unsigned int> shapes, QHash<unsigned int, unsigned int> sect);
     void loadWS();
@@ -75,6 +78,7 @@ public:
     void render(float *  playerT, float* playerW, float* target, float fov, int renderMode);
     //void renderWS(float *  playerT, float* playerW, float* target, float fov, int renderMode);
     void save();
+    void saveToStream(QTextStream &out);
     
 private:
     int maxUiD = 0;

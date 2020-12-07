@@ -68,6 +68,8 @@ public:
     virtual void createNewRouteTerrain(int x, int z);
     virtual void saveEmpty(int x, int z);
     virtual void fillTerrainData(Terrain *tTile, float *offsetXYZ);
+    virtual void updateTerrainHeightmap(Terrain *t);
+    virtual void updateTerrainTFile(Terrain *t);
     virtual void pushRenderItems(float* playerT, float* playerW, float* target, float fov, int renderMode);
     virtual void render(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode);
     virtual void renderLo(GLUU *gluu, float* playerT, float* playerW, float* target, float fov, int renderMode);

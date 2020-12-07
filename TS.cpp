@@ -1455,5 +1455,11 @@ std::unordered_map< int, const char* > TS::IdName = {
     { Gantry ,"gantry"},
     { Pickup ,"pickup"},
     { Wagon ,"wagon"},
-    { Engine ,"engine"}
+    { Engine ,"engine"},
+    { TSRE_Requested_Terrain_tFile, "TSRE_Requested_Terrain_tFile"},
+    { TSRE_Requested_Terrain_RawFile, "TSRE_Requested_Terrain_RawFile"},
+    { TSRE_Requested_Terrain_FtFile, "TSRE_Requested_Terrain_FtFile"},
+    { TSRE_Requested_Terrain_tFile, "TSRE_Terrain_tFile"},
+    { TSRE_Requested_Terrain_RawFile, "TSRE_Terrain_RawFile"},
+    { TSRE_Requested_Terrain_FtFile, "TSRE_Terrain_FtFile"}
 };

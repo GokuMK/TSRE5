@@ -1460,7 +1460,14 @@ public:
         Gantry = 1544,
         Pickup = 1545,
         Wagon = 1546,
-        Engine = 1547
+        Engine = 1547,
+        
+        TSRE_Requested_Terrain_tFile = 100001,
+        TSRE_Requested_Terrain_RawFile = 100002,
+        TSRE_Requested_Terrain_FtFile = 100003,
+        TSRE_Terrain_tFile = 100004,
+        TSRE_Terrain_RawFile = 100005,
+        TSRE_Terrain_FtFile = 100006
     };
     static std::unordered_map< int, const char* > IdName;
 };

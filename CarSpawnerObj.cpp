@@ -330,7 +330,7 @@ void CarSpawnerObj::setPosition(int x, int z, float* p){
     }
     delete line;
     line = NULL;
-    this->modified = true;
+    setModified();
 }
 
 void CarSpawnerObj::translate(float px, float py, float pz){
@@ -368,7 +368,7 @@ void CarSpawnerObj::translate(float px, float py, float pz){
     }
     delete line;
     line = NULL;
-    this->modified = true;
+    setModified();
     setMartix();
 }
 
@@ -436,12 +436,12 @@ float CarSpawnerObj::getCarSpeed(){
 
 void CarSpawnerObj::setCarNumber(float val){
     this->carFrequency = val;
-    this->modified = true;
+    setModified();
 }
 
 void CarSpawnerObj::setCarSpeed(float val){
     this->carAvSpeed = val;
-    this->modified = true;
+    setModified();
 }
 
 
@@ -646,7 +646,7 @@ void CarSpawnerObj::expand(){
     drawPositionE = NULL;
     delete line;
     line = NULL;
-    this->modified = true;
+    setModified();
     
 }
 
@@ -757,7 +757,7 @@ void CarSpawnerObj::setCarListName(QString val){
             carListId = i;
             break;
         }
-    modified = true;
+    setModified();
 }
 
 void CarSpawnerObj::save(QTextStream* out) {

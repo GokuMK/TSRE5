@@ -77,7 +77,7 @@ void TrackObj::loadingFixes(){
                     ErrorMessage::Source_Editor, 
                     QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
             ErrorMessagesLib::PushErrorMessage(e);
-            modified = true;
+            setModified();
         }            
     }
 }
@@ -122,7 +122,7 @@ bool TrackObj::allowNew(){
 void TrackObj::setTemplate(QString name){
     templateName = name;
     templateDisabled = false;
-    modified = true;
+    setModified();
     reload();
 }
 
@@ -184,7 +184,7 @@ void TrackObj::rotate(float x, float y, float z){
     this->position[1] = this->placedAtPosition[1] - vect[1];
     this->position[2] = this->placedAtPosition[2] + vect[2];
     
-    this->modified = true;
+    setModified();
     setMartix();
 }
 
@@ -198,7 +198,7 @@ void TrackObj::set(QString sh, long long int val) {
         return;
     }
     WorldObj::set(sh, val);
-    this->modified = true;
+    setModified();
 }
 
 void TrackObj::set(QString sh, QString val){ 
@@ -456,7 +456,7 @@ void TrackObj::render(GLUU* gluu, float lod, float posx, float posz, float* pos,
 
 void TrackObj::fillJNodePosn(){
     TDB* tdb = Game::trackDB;
-    this->modified = tdb->fillJNodePosn(this->x, this->y, this->UiD, &this->jNodePosn);
+    setModified(tdb->fillJNodePosn(this->x, this->y, this->UiD, &this->jNodePosn));
 }
 
 bool TrackObj::getSimpleBorder(float* border){

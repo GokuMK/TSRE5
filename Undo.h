@@ -43,6 +43,7 @@ struct UndoState {
 class Undo {
 
 public:
+    static bool UndoEnabled;
     static void UndoLast();
     static void Clear();
     static void StateBegin();

@@ -30,10 +30,13 @@ class GameObj;
 class TerrainLib;
 class GeoWorldCoordinateConverter;
 class Renderer;
+class RouteEditorClient;
 
 class Game {
 public:
     static bool ServerMode;
+    static QString serverLogin;
+    static RouteEditorClient* serverClient;
     
     static GeoWorldCoordinateConverter *GeoCoordConverter;
     
@@ -72,6 +75,7 @@ public:
     static bool checkRoot(QString dir);
     static bool checkCERoot(QString dir);
     static bool checkRoute(QString dir);
+    static bool checkRemoteRoute(QString dir);
     template<class T>
     static void check_coords(T&& x, T&& z, float* p);
     template<class T, class K>
@@ -172,6 +176,7 @@ public:
     
     static bool loadAllWFiles;
     static bool autoFix;
+    static bool gui;
     
     static QHash<QString, int> TextureFlags;
     

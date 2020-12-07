@@ -14,6 +14,9 @@
 #include "Vector2i.h"
 #include <QString>
 
+class QTextStream;
+class FileBuffer;
+
 class TRnode {
 public:
     struct TRSect {
@@ -35,6 +38,8 @@ public:
     TRnode(const TRnode& orig);
     virtual ~TRnode();
     Vector2i* getTile();
+    void loadUtf16Data(FileBuffer *data);
+    void saveToStream(QTextStream &out, int nid);
     bool isEnd();
     bool equals(TRnode* r);
     bool equalsIgnoreType(TRnode* r);

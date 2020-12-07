@@ -418,17 +418,17 @@ bool PickupObj::getBoxPoints(QVector<float>& points){
 
 void PickupObj::setTypeId(int val){
     pickupType[0] = val + 1;
-    this->modified = true;
+    setModified();
 }
 
 void PickupObj::setCapacity(float val){
     pickupCapacity1 = val;
-    this->modified = true;
+    setModified();
 }
 
 void PickupObj::setFillRate(float val){
     pickupCapacity2 = val;
-    this->modified = true;
+    setModified();
 }
 
 void PickupObj::setPickupContent(float val){
@@ -440,22 +440,22 @@ void PickupObj::setPickupContent(float val){
 
 void PickupObj::setSpeedMin(float val){
     speedRange[0] = val;
-    this->modified = true;
+    setModified();
 }
 
 void PickupObj::setSpeedMax(float val){
     speedRange[1] = val;
-    this->modified = true;
+    setModified();
 }
 
 void PickupObj::setAnimTypeId(int val){
     pickupAnimData1 = val;
-    this->modified = true;
+    setModified();
 }
 
 void PickupObj::setAnimLength(float val){
     pickupAnimData2 = val;
-    this->modified = true;
+    setModified();
 }
 
 void PickupObj::setInfinite(bool val){
@@ -463,7 +463,7 @@ void PickupObj::setInfinite(bool val){
         pickupType[1] = 1;
     else
         pickupType[1] = 0;
-    this->modified = true;
+    setModified();
 }
 
 void PickupObj::setBroken(bool val){
@@ -472,7 +472,7 @@ void PickupObj::setBroken(bool val){
     } else {
         //nothing to do
     }
-    this->modified = true;
+    setModified();
 }
 
 int PickupObj::getTypeId(){

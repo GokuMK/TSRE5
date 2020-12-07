@@ -25,7 +25,8 @@
 #include "ShapeViewerWindow.h"
 #include "MapWindow.h"
 #include "RouteEditorServer.h"
-
+#include "RouteEditorClient.h"
+#include "Undo.h"
 
 QFile logFile;
 QTextStream logFileOut;
@@ -55,6 +56,13 @@ void LoadShapeViewer(QString arg){
 }
 
 void LoadRouteEditor(){
+    if(Game::serverLogin.length() > 0)
+        Game::ServerMode = true;
+    if(Game::ServerMode){
+        Game::useQuadTree = true;
+        Undo::UndoEnabled = false;
+    }
+    
     RouteEditorWindow *window = new RouteEditorWindow();
     if(Game::fullscreen){
         window->setWindowFlags(Qt::CustomizeWindowHint);
@@ -62,19 +70,28 @@ void LoadRouteEditor(){
     } else {
         window->resize(1280, 800);
     }
-    
-    LoadWindow *loadWindow = new LoadWindow();
-    QObject::connect(window, SIGNAL(exitNow()), loadWindow, SLOT(exitNow()));
-    QObject::connect(loadWindow, SIGNAL(showMainWindow()), window, SLOT(show()));
-    
-    if(Game::checkRoot(Game::root) && (Game::checkRoute(Game::route) || Game::createNewRoutes)){
-        window->show();
+        
+    if(!Game::ServerMode){
+        LoadWindow *loadWindow = new LoadWindow();
+        QObject::connect(window, SIGNAL(exitNow()), loadWindow, SLOT(exitNow()));
+        QObject::connect(loadWindow, SIGNAL(showMainWindow()), window, SLOT(showRoute()));
+
+        if(Game::checkRoot(Game::root) && (Game::checkRoute(Game::route) || Game::createNewRoutes)){
+            window->showRoute();
+        } else {
+            loadWindow->show();
+        }
     } else {
-        loadWindow->show();
+        // Create Server Client
+        Game::serverClient = new RouteEditorClient();
+        QObject::connect(Game::serverClient, SIGNAL(loadRoute()), window, SLOT(showRoute()));
+        Game::serverClient->connectNow();
     }
 }
 
 void RunRouteEditorServer(int port){
+    Game::loadAllWFiles = true;
+    Game::gui = false;
     RouteEditorServer *server = new RouteEditorServer(port);
     //..server->run();
 }
@@ -215,7 +232,9 @@ int main(int argc, char *argv[]){
             //routeDir = Game::route;
             //trkName = Game::trkName;
             qDebug() << "Run server";
-            int port = 8080;
+            int port = 65534;
+            if(args.size() > 2)
+                port = args[2].toInt();
             RunRouteEditorServer(port);
             
             return app.exec();

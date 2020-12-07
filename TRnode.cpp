@@ -14,6 +14,8 @@
 #include "Game.h"
 #include <QString>
 #include <QDebug>
+#include "FileBuffer.h"
+#include "ParserX.h"
 
 TRnode::TRnode() {
     typ = -1;
@@ -54,6 +56,158 @@ TRnode::~TRnode() {
         
     if(trItemRef != NULL)
         delete[] trItemRef;
+}
+
+void TRnode::loadUtf16Data(FileBuffer *data){
+    bool ok = false;
+    QString sh = "";
+    int i = 0, j = 0, ii = 0, uu = 0;
+    float xx = 0;
+    int t = (int) ParserX::GetNumber(data); // odczytanie numeru sciezki
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                                if(sh == "trendnode"){
+                                    typ = 0; //typ endnode
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if(sh == "trvectornode"){
+                                    typ = 1; //typ vector 
+                                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                                        if(sh == "trvectorsections"){
+                                            int uu = (int) ParserX::GetNumberInside(data, &ok);
+                                            if(ok){
+                                                iTrv = uu;
+                                                trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
+                                                for (j = 0; j < uu; j++) {
+                                                    for (ii = 0; ii < 16; ii++) {
+                                                        xx = ParserX::GetNumber(data);
+                                                        if(std::isnan(xx)){
+                                                            qDebug() << "#TrackDB: NAN found in tracknode: "<<t;
+                                                        }
+                                                        trVectorSection[j].param[ii] = xx;
+                                                    }
+                                                }
+                                            }
+                                            ParserX::SkipToken(data);
+                                            continue;
+                                        }
+                                        if(sh == "tritemrefs"){
+                                            uu = (int) ParserX::GetNumber(data);
+                                            iTri = uu;
+                                            trItemRef = new int[uu]; // przydzielenie pamieci dla sciezki
+                                            if(uu > 0){
+                                                for (j = 0; j < uu; j++) {
+                                                    trItemRef[j] = ParserX::GetNumber(data);
+                                                }
+                                                ParserX::SkipToken(data);
+                                            }
+                                            ParserX::SkipToken(data);
+                                            continue;
+                                        }
+                                        qDebug() << "#TDB TrVectorNode - undefined token " << sh;
+                                        ParserX::SkipToken(data);
+                                    }
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if(sh == "trjunctionnode"){
+                                    typ = 2; //typ rozjazd
+                                    args[0] = ParserX::GetNumber(data);
+                                    args[1] = ParserX::GetNumber(data);
+                                    args[2] = ParserX::GetNumber(data);
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if(sh == "trpins"){
+                                    TrP1 = (int) ParserX::GetNumber(data);
+                                    TrP2 = (int) ParserX::GetNumber(data);
+
+                                    for (int i = 0; i < TrP1 + TrP2; i++) {
+                                        TrPinS[i] = (int) ParserX::GetNumber(data);
+                                        TrPinK[i] = (int) ParserX::GetNumber(data);
+                                    }
+                                    ParserX::SkipToken(data);
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if(sh == "uid"){
+                                    for (ii = 0; ii < 12; ii++) {
+                                        xx = ParserX::GetNumber(data);
+                                        if(std::isnan(xx)){
+                                            qDebug() << "#TrackDB: NAN found in tracknode: "<<t;
+                                        }
+                                        UiD[ii] = xx;
+                                        //qDebug() << "load uid7" << UiD[ii];
+                                    }
+                                    ParserX::SkipToken(data);
+                                    continue;              
+                                }
+                                qDebug() << "#TDB TrackNode - undefined token " << sh;
+                                //trackNodes[t] = NULL;
+                                ParserX::SkipToken(data);
+                            }
+    return;
+}
+
+void TRnode::saveToStream(QTextStream &out, int nid){
+    out << "TrackNode ( " << nid << "\n";
+        switch (typ) {
+            case 0:
+                out << "	TrEndNode ( " << args[0] << " )\n";
+                out << "	UiD ( ";
+                for (int j = 0; j < 12; j++) {
+                    out << UiD[j] << " ";
+                    //qDebug() << "save uid " << UiD[j];
+                }
+                out << ")\n";
+                out << "	TrPins ( 1 0\n";
+                out << "		TrPin ( " << TrPinS[0] << " " << TrPinK[0] << " )\n";
+                out << "	)\n";
+                break;
+            case 1:
+                out << "	TrVectorNode (\n";
+                out << "		TrVectorSections ( " << iTrv << "";
+                for (int j = 0; j < iTrv; j++) {
+                    for (int jj = 0; jj < 7; jj++) {
+                        out << " " << trVectorSection[j].param[jj];
+                    }
+                    out << " 00";
+                    for (int jj = 8; jj < 16; jj++) {
+                        out << " " << trVectorSection[j].param[jj];
+                    }
+                    if (j % 11 == 0 && j > 0 && j < iTrv - 1)
+                        out << "\n					";
+                }
+                out << " )\n";
+                if(trItemRef != 0 && iTri > 0){
+                    out << "		TrItemRefs ( "<<iTri<<"\n";
+                    for(int j = 0; j<iTri; j++){
+                        out << "			TrItemRef ( "<<trItemRef[j]<<" )\n";
+                    }
+                    out << "		)\n";
+                }
+                out << "	)\n";
+                out << "	TrPins ( 1 1\n";
+                out << "		TrPin ( " << TrPinS[0] << " " << TrPinK[0] << " )\n";
+                out << "		TrPin ( " << TrPinS[1] << " " << TrPinK[1] << " )\n";
+                out << "	)\n";
+                break;
+            case 2:
+                out << "	TrJunctionNode ( " << args[0] << " " << args[1] << " " << args[2] << " )\n";
+                out << "	UiD ( ";
+                for (int j = 0; j < 12; j++) {
+                    out << UiD[j] << " ";
+                }
+                out << ")\n";
+                out << "	TrPins ( 1 2\n";
+                out << "		TrPin ( " << TrPinS[0] << " " << TrPinK[0] << " )\n";
+                out << "		TrPin ( " << TrPinS[1] << " " << TrPinK[1] << " )\n";
+                out << "		TrPin ( " << TrPinS[2] << " " << TrPinK[2] << " )\n";
+                out << "	)\n";
+                break;
+        }
+
+        out << ")\n";
 }
 
 Vector2i* TRnode::getTile() {

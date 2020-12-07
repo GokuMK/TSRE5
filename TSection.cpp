@@ -14,6 +14,9 @@
 #include <QDebug>
 #include "Vector2f.h"
 #include "Vector3f.h"
+#include "ParserX.h"
+#include <QTextStream>
+#include "FileBuffer.h"
 
 TSection::TSection() {
     id = 0;
@@ -386,3 +389,23 @@ void TSection::setCamRotation(float metry, float ob) {
      }*/
 }
 
+void TSection::saveToStream(QTextStream &out){
+            out << "	TrackSection ( \n";
+            if (type == 0)
+                out << "		SectionCurve ( " << type << " ) " << id << " " << size << " " << val1 << " \n";
+            else
+                out << "		SectionCurve ( " << type << " ) " << id << " " << angle << " " << radius << " \n";
+            out << "	)\n";
+}
+
+void TSection::loadUtf16Data(FileBuffer *data){
+                    type = (int) ParserX::GetNumber(data);
+                    id = (int) ParserX::GetNumber(data);
+                    if (type == 0) {
+                        size = ParserX::GetNumber(data);
+                        val1 = ParserX::GetNumber(data);
+                    } else {
+                        angle = ParserX::GetNumber(data);
+                        radius = ParserX::GetNumber(data);
+                    }
+}

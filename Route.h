@@ -34,6 +34,7 @@ class TRitem;
 class Environment;
 class GroupObj;
 class Skydome;
+class FileBuffer;
 
 class Route : public QObject {
     Q_OBJECT
@@ -57,18 +58,25 @@ public:
     float placementAutoTranslationOffset[3];
     float placementAutoRotationOffset[3];
     TerrainLib* terrainLib = NULL;
+    Trk * trk = NULL;
     Route();
-    Route(QString name);
+    virtual void load();
+    virtual void load(QString name);
     Route(const Route& orig);
     virtual ~Route();
     void loadAddons();
+    void loadTdbData(FileBuffer *data, QString type);
+    void loadTSectionData(FileBuffer *data);
+    void loadTrkData(FileBuffer *data);
+    void updateTileData(FileBuffer *data);
+    WorldObj* updateWorldObjData(FileBuffer *data);
     void mergeRoute(QString route2Name, float offsetX, float offsetY, float offsetZ);
     WorldObj* getObj(int x, int z, int id);
     WorldObj* findNearestObj(int x, int z, float *pos);
-    Tile * requestTile(int x, int z);
+    virtual Tile * requestTile(int x, int z, bool allowNew = true);
     void activitySelected(Activity* selected);
-    void save();
-    void saveTrk();
+    virtual void save();
+    //void saveTrk();
     void createNewPaths();
     void createNew();
     bool checkTrackSectionDatabase();
@@ -107,7 +115,7 @@ public:
     void dragWorldObject(WorldObj* obj, int x, int z, float* pos);
     float* getPointerPosition(float *out, int &x, int &z, float *pos);
     void setMkrFile(QString name);
-    void getUnsavedInfo(QVector<QString> &items);
+    virtual void getUnsavedInfo(QVector<QString> &items);
     void showTrkEditr(Trk * val = NULL);
     void paintHeightMap(Brush* brush, int x, int z, float* p);
     WorldObj* makeFlexTrack(int x, int z, float* pos);
@@ -148,19 +156,19 @@ signals:
     void objectSelected(QVector<GameObj*> obj);
     void sendMsg(QString val);
 
-private:
+protected:
     QString trkName;
     QString routeDir;
     QString routeName;
     
     void loadTrk();
-    TDB *trackDB;
-    TDB *roadDB; 
+    TDB *trackDB = NULL;
+    TDB *roadDB = NULL; 
     QMap<QString, Coords*> mkrList;
     Coords * mkr = NULL;
-    Trk * trk = NULL;
     QVector<WorldObj*> autoPlacementLastPlaced;
     Activity* currentActivity = NULL;
+    int loadingProgress = 0;
 };
 
 #endif	/* ROUTE_H */

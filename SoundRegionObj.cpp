@@ -170,7 +170,7 @@ void SoundRegionObj::flip(bool flipShape){
     float *srd = tdb->trackItems[this->trItemId[1]]->trItemSRData;
     this->soundregionRoty = srd[2];
     Quat::rotateY(this->qDirection, this->qDirection, M_PI);
-    this->modified = true; 
+    setModified();
     this->drawPositions.clear();
 }
 
@@ -221,7 +221,7 @@ void SoundRegionObj::expandTrItems(){
         tdb->trackItems[this->trItemId.last()]->trItemSRData[2] = this->soundregionRoty;
     }
     drawPositions.clear();
-    modified = true;
+    setModified();
 }
 
 void SoundRegionObj::deleteSelectedTrItem(){
@@ -241,7 +241,7 @@ void SoundRegionObj::deleteSelectedTrItem(){
     trItemId.remove(i*2+0);
     
     drawPositions.clear();
-    modified = true;
+    setModified();
 }
 
 bool SoundRegionObj::containsTrackItem(int tdbId, int id){

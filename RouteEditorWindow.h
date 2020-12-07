@@ -33,6 +33,7 @@ class ActivityServiceWindow;
 class ActivityTrafficWindow;
 class ActivityTimetableWindow;
 class ErrorMessagesWindow;
+class ClientUsersWindow;
 
 class RouteEditorWindow : public QMainWindow
 {
@@ -43,6 +44,7 @@ public:
     
 public slots:
     void save();
+    void showRoute();
     void show();
     void createPaths();
     void reloadRef();
@@ -157,6 +159,7 @@ private:
     AboutWindow* aboutWindow;
     NaviWindow* naviWindow;
     ErrorMessagesWindow* errorMessagesWindow;
+    ClientUsersWindow* clientUsersWindow;
     ActivityEventWindow* activityEventWindow;
     ActivityServiceWindow* activityServiceWindow;
     ActivityTrafficWindow* activityTrafficWindow;

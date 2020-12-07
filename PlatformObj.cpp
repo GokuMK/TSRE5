@@ -144,7 +144,7 @@ void PlatformObj::setPosition(int x, int z, float* p){
     }
     delete line;
     line = NULL;
-    this->modified = true;
+    setModified();
 }
 
 void PlatformObj::translate(float px, float py, float pz){
@@ -184,7 +184,7 @@ void PlatformObj::translate(float px, float py, float pz){
     }
     delete line;
     line = NULL;
-    this->modified = true;
+    setModified();
     setMartix();
 }
 
@@ -315,7 +315,7 @@ void PlatformObj::setStationName(QString name){
     trit = tdb->trackItems[id];
     if(trit == NULL) return;
     trit->stationName = name;
-    this->modified = true;
+    setModified();
 }
 void PlatformObj::setPlatformName(QString name){
     TDB* tdb = Game::trackDB;
@@ -327,7 +327,7 @@ void PlatformObj::setPlatformName(QString name){
     trit = tdb->trackItems[id];
     if(trit == NULL) return;
     trit->platformName = name;
-    this->modified = true;
+    setModified();
 }
 void PlatformObj::setPlatformMinWaitingTime(int val){
     TDB* tdb = Game::trackDB;
@@ -339,7 +339,7 @@ void PlatformObj::setPlatformMinWaitingTime(int val){
     trit = tdb->trackItems[id];
     if(trit == NULL) return;
     trit->platformMinWaitingTime = val;
-    this->modified = true;
+    setModified();
 }
 void PlatformObj::setPlatformNumPassengersWaiting(int val){
     TDB* tdb = Game::trackDB;
@@ -351,7 +351,7 @@ void PlatformObj::setPlatformNumPassengersWaiting(int val){
     trit = tdb->trackItems[id];
     if(trit == NULL) return;
     trit->platformNumPassengersWaiting = val;
-    this->modified = true;
+    setModified();
 }
     
 float PlatformObj::getLength(){
@@ -385,7 +385,7 @@ void PlatformObj::setSideLeft(bool val){
         this->platformData = this->platformData ^ 2;
     delete line;
     line = NULL;
-    this->modified = true;
+    setModified();
 }
 
 void PlatformObj::setSideRight(bool val){
@@ -395,7 +395,7 @@ void PlatformObj::setSideRight(bool val){
         this->platformData = this->platformData ^ 4;
     delete line;
     line = NULL;
-    this->modified = true;
+    setModified();
 }
 
 void PlatformObj::setDisabled(bool val){
@@ -409,7 +409,7 @@ void PlatformObj::setDisabled(bool val){
         trit->platformTrItemData[0] = trit->platformTrItemData[0] ^ 1;
     delete line;
     line = NULL;
-    this->modified = true;
+    setModified();
 }
 
 ErrorMessage* PlatformObj::checkForErrors(){

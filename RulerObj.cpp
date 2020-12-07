@@ -128,7 +128,7 @@ void RulerObj::reload(){
 void RulerObj::setTemplate(QString name){
     templateName = name;
     shapeEnabled = true;
-    modified = true;
+    setModified();
     reload();
 }
 
@@ -145,7 +145,7 @@ void RulerObj::setPosition(int x, int z, float* p){
         if(Vec3::dist(points.back().position, point.position) > 1)
             points.push_back(point);
     }
-    modified = true;
+    setModified();
     if(line3d != NULL)
         line3d->deleteVBO();
 }
@@ -224,7 +224,7 @@ void RulerObj::enableShape(){
         return;
     
     shapeEnabled = true;
-    modified = true;
+    setModified();
 
 }
 

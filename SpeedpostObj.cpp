@@ -77,7 +77,7 @@ void SpeedpostObj::loadingFixes(){
                     QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) 
                     );
             ErrorMessagesLib::PushErrorMessage(e);
-            modified = true;
+            setModified();
         }            
     }
 }
@@ -254,7 +254,7 @@ void SpeedpostObj::setSpeed(float val){
             continue;
         tdb->trackItems[this->trItemId[j*2+1]]->setSpeedpostSpeed(val);
     }
-    this->modified = true; 
+    setModified();
 }
 
 void SpeedpostObj::setNumber(float val){
@@ -268,7 +268,7 @@ void SpeedpostObj::setNumber(float val){
             continue;
         tdb->trackItems[this->trItemId[j*2+1]]->setSpeedpostNumber(val);
     }
-    this->modified = true; 
+    setModified();
 }
 
 void SpeedpostObj::setSpeedUnitId(int val){
@@ -282,7 +282,7 @@ void SpeedpostObj::setSpeedUnitId(int val){
             continue;
         tdb->trackItems[this->trItemId[j*2+1]]->setSpeedPostSpeedUnitId(val);
     }
-    this->modified = true; 
+    setModified();
 }
 
 int SpeedpostObj::getSpeedUnitId(){
@@ -301,7 +301,7 @@ void SpeedpostObj::setSpeedInsteadNumber(bool val){
     if(tdb->trackItems[this->trItemId[1]] == NULL)
         return;
     tdb->trackItems[this->trItemId[1]]->setSpeedpostSpeedInsteadNumber(val);
-    this->modified = true; 
+    setModified();
 }
 
 void SpeedpostObj::setNumberInsteadSpeed(bool val){
@@ -311,7 +311,7 @@ void SpeedpostObj::setNumberInsteadSpeed(bool val){
     if(tdb->trackItems[this->trItemId[1]] == NULL)
         return;
     tdb->trackItems[this->trItemId[1]]->setSpeedpostNumberInsteadSpeed(val);
-    this->modified = true; 
+    setModified();
 }
 
 bool SpeedpostObj::getSpeedInsteadNumber(){
@@ -361,7 +361,7 @@ void SpeedpostObj::setNumberDot(bool val){
             continue;
         tdb->trackItems[this->trItemId[j*2+1]]->setSpeedPostNumberDot(val);
     }
-    this->modified = true; 
+    setModified();
 }
 
 void SpeedpostObj::setTrainType(int val){
@@ -372,7 +372,7 @@ void SpeedpostObj::setTrainType(int val){
             continue;
         tdb->trackItems[this->trItemId[j*2+1]]->setSpeedPostTrainType(val);
     }
-    this->modified = true; 
+    setModified();
 }
 
 
@@ -388,7 +388,7 @@ void SpeedpostObj::flip(bool flipShape){
             continue;
         tdb->trackItems[this->trItemId[j*2+1]]->flipSpeedpost();
     }
-    this->modified = true; 
+    setModified();
     drawPositions.clear();
     //delete[] drawPositions;
     //drawPositions = NULL;
@@ -446,7 +446,7 @@ void SpeedpostObj::expandTrItems(){
         tdb->trackItems[this->trItemId.last()]->setSpeedPostSpeedUnitId(tdb->trackItems[this->trItemId[1]]->getSpeedPostSpeedUnitId());
     }
     drawPositions.clear();
-    modified = true;
+    setModified();
 }
 
 int SpeedpostObj::fixTrackItems(){
@@ -507,7 +507,7 @@ void SpeedpostObj::deleteSelectedTrItem(){
     trItemId.remove(i*2+0);
     
     drawPositions.clear();
-    modified = true;
+    setModified();
 }
 
 void SpeedpostObj::initTrItems(float* tpos){

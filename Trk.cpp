@@ -80,8 +80,13 @@ void Trk::load(QString path){
     FileBuffer* data = ReadFile::read(&file);
     data->toUtf16();
     ParserX::NextLine(data);
-    
+    loadUtf16Data(data);
+
+}
+
+void Trk::loadUtf16Data(FileBuffer* data){
     this->milepostUnitsKilometers = false;
+    
     QString sh = "";
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         if(sh == "tr_routefile"){
@@ -315,6 +320,13 @@ void Trk::save() {
     out.setGenerateByteOrderMark(true);
 
     out << "SIMISA@@@@@@@@@@JINX0r1t______" << "\n\n";
+    saveToStream(out);
+    out.flush();
+    file.close();
+    modified = false;
+}
+
+void Trk::saveToStream(QTextStream &out){
     out << "Tr_RouteFile (" << "\n";
     out << "	RouteID ( " << ParserX::AddComIfReq(this->idName) << " )" << "\n";
     out << "	Name ( " << ParserX::AddComIfReq(this->displayName) << " )" << "\n";
@@ -375,8 +387,4 @@ void Trk::save() {
     if(this->tsreSuperelevation > 0)
     out << "	TsreSuperelevation ( " << this->tsreSuperelevation << " )" << "\n";
     out << ")" << "\n";
-
-    out.flush();
-    file.close();
-    modified = false;
 }

@@ -52,15 +52,17 @@ TerrainTools::TerrainTools(QString name)
     buttonTools["heightTool"] = new QPushButton("HeightMap +", this);
     buttonTools["pickTerrainTexTool"] = new QPushButton("Pick", this);
     buttonTools["putTerrainTexTool"] = new QPushButton("Put", this);
-    buttonTools["lockTexTool"] = new QPushButton("Lock", this);
     buttonTools["waterTerrTool"] = new QPushButton("Water +", this);
     //buttonTools["drawTerrTool"] = new QPushButton("Show/H Tile", this);
     buttonTools["gapsTerrainTool"] = new QPushButton("Gaps +", this);
     //buttonTools["waterHeightTileTool"] = new QPushButton("Water level", this);
     //buttonTools["fixedTileTool"] = new QPushButton("Fixed Height", this);
     //buttonTools["waTileTool"] = new QPushButton("Fixed Height", this);
-    buttonTools["paintToolColor"] = new QPushButton("Color", this);
-    buttonTools["paintToolTexture"] = new QPushButton("Texture", this);
+    if(!Game::ServerMode){
+        buttonTools["paintToolColor"] = new QPushButton("Color", this);
+        buttonTools["paintToolTexture"] = new QPushButton("Texture", this);
+        buttonTools["lockTexTool"] = new QPushButton("Lock", this);
+    }
     QMapIterator<QString, QPushButton*> i(buttonTools);
     while (i.hasNext()) {
         i.next();
@@ -123,11 +125,14 @@ TerrainTools::TerrainTools(QString name)
     label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
     vbox->addItem(vlist4);*/
-    label0 = new QLabel("Paint Texture:");
-    label0->setContentsMargins(3,0,0,0);
-    label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
-    vbox->addWidget(label0);
-    vbox->addItem(vlist0);
+    if(!Game::ServerMode){
+        label0 = new QLabel("Paint Texture:");
+        label0->setContentsMargins(3,0,0,0);
+        label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
+        vbox->addWidget(label0);
+        vbox->addItem(vlist0);
+    }
+
     label0 = new QLabel("Texture:");
     label0->setContentsMargins(3,0,0,0);
     label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -256,16 +261,16 @@ TerrainTools::TerrainTools(QString name)
     // signals
     QObject::connect(buttonTools["heightTool"], SIGNAL(toggled(bool)),
                       this, SLOT(heightToolEnabled(bool)));
-    
-    QObject::connect(buttonTools["paintToolColor"], SIGNAL(toggled(bool)),
-                      this, SLOT(paintColorToolEnabled(bool)));
-    
-    QObject::connect(buttonTools["paintToolTexture"], SIGNAL(toggled(bool)),
-                      this, SLOT(paintTexToolEnabled(bool)));
-    
-    QObject::connect(buttonTools["lockTexTool"], SIGNAL(toggled(bool)),
-                      this, SLOT(lockTexToolEnabled(bool)));
-    
+    if(!Game::ServerMode){
+        QObject::connect(buttonTools["paintToolColor"], SIGNAL(toggled(bool)),
+                          this, SLOT(paintColorToolEnabled(bool)));
+
+        QObject::connect(buttonTools["paintToolTexture"], SIGNAL(toggled(bool)),
+                          this, SLOT(paintTexToolEnabled(bool)));
+
+        QObject::connect(buttonTools["lockTexTool"], SIGNAL(toggled(bool)),
+                          this, SLOT(lockTexToolEnabled(bool)));
+    }
     QObject::connect(buttonTools["pickTerrainTexTool"], SIGNAL(toggled(bool)),
                       this, SLOT(pickTexToolEnabled(bool)));
     

@@ -20,6 +20,7 @@
 #include "Route.h"
 #include "GroupObj.h"
 
+bool Undo::UndoEnabled = true;
 UndoState* Undo::currentState = NULL;
 QVector<UndoState*> Undo::undoStates;
 unsigned long long int Undo::undoTime;
@@ -68,6 +69,9 @@ void Undo::Clear(){
 }
 
 void Undo::UndoLast(){
+    if(!Undo::UndoEnabled)
+        return;
+    
     if(currentState != NULL)
         StateEnd();
     
@@ -141,6 +145,9 @@ void Undo::UndoLast(){
 }
 
 void Undo::StateBeginIfNotExist(){
+    if(!Undo::UndoEnabled)
+        return;
+    
     if(currentState != NULL)
         return;
     
@@ -150,6 +157,9 @@ void Undo::StateBeginIfNotExist(){
 }
 
 void Undo::StateBegin(){
+    if(!Undo::UndoEnabled)
+        return;
+    
     if(currentState != NULL)
         StateEnd();
     
@@ -255,6 +265,8 @@ void Undo::PushWorldObjData(WorldObj* obj){
 }
 
 void Undo::PushWorldObjDataInfo(WorldObj* obj){
+    if(currentState == NULL)
+        return;
     UndoState::WorldObjInfo * tdata = currentState->objData[(long long int)obj];
     if(tdata == NULL){
         currentState->objData[(long long int)obj] = new UndoState::WorldObjInfo();

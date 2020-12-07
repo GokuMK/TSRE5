@@ -32,6 +32,8 @@
 #include "Renderer.h"
 
 bool Game::ServerMode = false;
+QString Game::serverLogin = "";
+RouteEditorClient *Game::serverClient = NULL;
 GeoWorldCoordinateConverter *Game::GeoCoordConverter = NULL;
 TDB *Game::trackDB = NULL;
 TDB *Game::roadDB = NULL;    
@@ -40,7 +42,7 @@ TerrainLib *Game::terrainLib = NULL;
 
 bool Game::UseWorkingDir = false;
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.699";
+QString Game::AppVersion = "v0.7";
 QString Game::AppDataVersion = "0.697";
 QString Game::root = "C:/tsdata/Train Simulator/";
 QString Game::route = "bbb1";
@@ -121,6 +123,7 @@ bool Game::markerLines = false;
 
 bool Game::loadAllWFiles = false;
 bool Game::autoFix = false;
+bool Game::gui = true;
 
 QString Game::geoPath = "hgst";
 
@@ -574,6 +577,9 @@ void Game::load() {
             routeMergeString = args[1].trimmed();
         if(val == "objectsToRemove")
             objectsToRemove = args[1].trimmed().split(":");
+        if(val == "serverLogin"){
+            serverLogin = args[1].trimmed();
+        }
     }
 }
 /*
@@ -688,6 +694,16 @@ bool Game::checkRoute(QString dir){
     
     //qDebug() << file.fileName();
     //qDebug() << file.exists();
+    return false;
+}
+
+bool Game::checkRemoteRoute(QString dir){
+    QFile file;
+    file.setFileName(Game::root+"/routes/"+dir);
+    if(file.exists()){
+        //Game::trkName = dir;
+        return true;
+    }
     return false;
 }
 

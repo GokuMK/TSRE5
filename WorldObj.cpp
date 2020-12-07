@@ -34,6 +34,7 @@
 #include "Game.h"
 #include "TS.h"
 #include "TerrainLib.h"
+#include "RouteEditorClient.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -43,6 +44,19 @@ TrackItemObj* WorldObj::pointer3d = NULL;
 
 void WorldObj::loadingFixes(){
 
+}
+
+void WorldObj::setModified(bool val){
+    modified = val;
+    
+    if(Game::serverClient != NULL){
+        if(val){
+            Game::serverClient->updateWorldObjData(this);
+        } else {
+            
+        }
+    }
+        
 }
 
 int WorldObj::isTrackObj(QString sh) {
@@ -553,7 +567,7 @@ QString WorldObj::getTemplate(){
 
 void WorldObj::setTemplate(QString name){
     templateName = name;
-    modified = true;
+    setModified();
 }
     
 bool WorldObj::isSimilar(WorldObj* obj){
@@ -600,7 +614,7 @@ void WorldObj::translate(float px, float py, float pz){
     this->placedAtPosition[0] = this->position[0];
     this->placedAtPosition[1] = this->position[1];
     this->placedAtPosition[2] = this->position[2];
-    this->modified = true;
+    setModified();
     setMartix();
 }
 
@@ -640,7 +654,7 @@ void WorldObj::randomTransform(Ref::RandomTransformation * transformation){
         this->placedAtPosition[2] = this->position[2];
     }
     if(matrix3x3 != NULL) matrix3x3 = NULL;
-    this->modified = true;
+    setModified();
     setMartix();
 }
 
@@ -652,7 +666,7 @@ void WorldObj::rotate(float x, float y, float z){
     if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x);
     if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y);
     if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z);
-    this->modified = true;
+    setModified();
     setMartix();
 }
 
@@ -667,7 +681,7 @@ void WorldObj::setPosition(int x, int z, float* p){
     this->placedAtPosition[0] = this->position[0];
     this->placedAtPosition[1] = this->position[1];
     this->placedAtPosition[2] = this->position[2];
-    this->modified = true;
+    setModified();
     deleteVBO();
 }
 
@@ -678,7 +692,7 @@ void WorldObj::setPosition(float* p){
     this->placedAtPosition[0] = this->position[0];
     this->placedAtPosition[1] = this->position[1];
     this->placedAtPosition[2] = this->position[2];
-    this->modified = true;
+    setModified();
     deleteVBO();
 }
 
@@ -805,7 +819,7 @@ void WorldObj::setCustomDetailLevel(int val){
     if(val < 0) val = -1;
     if(val > 10) val = 10;
     staticDetailLevel = val;
-    this->modified = true;
+    setModified();
 }
 
 bool WorldObj::customDetailLevelEnabled(){
@@ -855,7 +869,7 @@ void WorldObj::setAnimated(bool val){
     if(shapePointer != NULL && shapeState > 0)
         shapePointer->setAnimated(shapeState, isAnimated());
     
-    this->modified = true;
+    setModified();
 }
 
 void WorldObj::setTerrainObj(bool val){
@@ -863,11 +877,11 @@ void WorldObj::setTerrainObj(bool val){
         staticFlags = staticFlags | 0x40000;
     else
         staticFlags = staticFlags & (~0x40000);
-    this->modified = true;
+    setModified();
 }
 
 void WorldObj::setShadowType(WorldObj::ShadowType val){
-    this->modified = true;
+    setModified();
     staticFlags = staticFlags & (~0x1E000);
     if(val == WorldObj::ShadowNone)
         return;
@@ -882,7 +896,7 @@ void WorldObj::setShadowType(WorldObj::ShadowType val){
 }
 
 void WorldObj::setCollisionType(int val){
-    this->modified = true;
+    setModified();
     if(val < 0){
         collideFlags = collideFlags | (2);
         return;
@@ -894,7 +908,7 @@ void WorldObj::setCollisionType(int val){
 
 void WorldObj::adjustPositionToTerrain(){
     position[1] = Game::terrainLib->getHeight(x, y, position[0], position[2]);
-    this->modified = true;
+    setModified();
     setMartix();
 }
 
@@ -920,7 +934,7 @@ void WorldObj::adjustRotationToTerrain(){
     this->qDirection[1] = q[1];
     this->qDirection[2] = q[2];
     this->qDirection[3] = q[3];
-    this->modified = true;
+    setModified();
     setMartix();
 }
 

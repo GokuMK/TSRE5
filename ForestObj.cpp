@@ -149,7 +149,7 @@ void ForestObj::set(QString sh, long long int val) {
         return;
     }
     WorldObj::set(sh, val);
-    this->modified = true;
+    setModified();
 }
 
 void ForestObj::set(QString sh, float val) {
@@ -162,7 +162,7 @@ void ForestObj::set(QString sh, float val) {
         return;
     }
     WorldObj::set(sh, val);
-    this->modified = true;
+    setModified();
 }
 
 void ForestObj::set(int sh, FileBuffer* data) {
@@ -244,7 +244,7 @@ void ForestObj::translate(float px, float py, float pz){
     this->position[0]+=px;
     //this->position[1]+=py;
     this->position[2]+=pz;
-    this->modified = true;
+    setModified();
     deleteVBO();
 }
 
@@ -253,7 +253,7 @@ void ForestObj::rotate(float x, float y, float z){
     if(x!=0) Quat::rotateX(this->qDirection, this->qDirection, x);
     if(y!=0) Quat::rotateY(this->qDirection, this->qDirection, y);
     if(z!=0) Quat::rotateZ(this->qDirection, this->qDirection, z);
-    this->modified = true;
+    setModified();
     deleteVBO();
 }
 
@@ -261,7 +261,7 @@ void ForestObj::resize(float x, float y, float z){
     if(x == 0 && y == 0) return;
     this->areaX += x;
     this->areaZ += y;
-    this->modified = true;
+    setModified();
     deleteVBO();
 }
 

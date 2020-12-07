@@ -66,7 +66,9 @@ public:
     TFile(const TFile& orig);
     virtual ~TFile();
     bool readT(QString fSfile);
+    void load(FileBuffer* data);
     void save(QString name);
+    void save(QDataStream &write);
     int newMat();
     int cloneMat(int id);
     int getMatByTexture(QString tname);

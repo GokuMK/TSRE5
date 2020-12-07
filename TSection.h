@@ -14,6 +14,8 @@
 #include <QVector>
 
 class Vector3f;
+class QTextStream;
+class FileBuffer;
 
 class TSection {
 public:
@@ -42,6 +44,8 @@ public:
     void setCamPosition(float metry, float ob);
     void setCamRotation(float metry, float ob);
     float getDrawAngle(float metry);
+    void saveToStream(QTextStream &out);
+    void loadUtf16Data(FileBuffer *data);
 private:
 
 };

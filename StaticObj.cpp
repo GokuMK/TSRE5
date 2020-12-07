@@ -54,7 +54,7 @@ void StaticObj::loadingFixes(){
                     ErrorMessage::Source_Editor, 
                     QString("Fixed negative quaternion in tile ") + QString::number(x) + " " + QString::number(y) + " : " + QString::number(typeID) );
             ErrorMessagesLib::PushErrorMessage(e);
-            modified = true;
+            setModified();
         }            
     }
 }
@@ -421,7 +421,7 @@ int StaticObj::getCollisionType(){
 }
 
 void StaticObj::setCollisionType(int val){
-    this->modified = true;
+    setModified();
     if(val < 0){
         if(this->type == "collideobject")
             collideFlags = collideFlags | (2);
@@ -443,7 +443,7 @@ void StaticObj::removeCollisions(){
         typeID = WorldObj::sstatic;
         collideFlags = 0;
         collideFunction = 0;
-        modified = true;
+        setModified();
     }
 }
 

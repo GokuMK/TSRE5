@@ -60,8 +60,15 @@
 #include "AceLib.h"
 #include "Renderer.h"
 #include "RenderItem.h"
+#include "SpeedPostDAT.h"
+#include "SigCfg.h"
+#include "TDBClient.h"
 
 Route::Route() {
+
+}
+
+void Route::load(){
     Game::currentRoute = this;
     trkName = Game::trkName;
     routeDir = Game::route;
@@ -117,11 +124,13 @@ Route::Route() {
         return;
     
     if(Game::loadAllWFiles){
-        preloadWFiles(true);
+        preloadWFiles(Game::gui);
     }
 
     this->trackDB = new TDB(tsection, false);
+    this->trackDB->loadTdb();
     this->roadDB = new TDB(tsection, true);
+    this->roadDB->loadTdb();
     Game::trackDB = this->trackDB;
     Game::roadDB = this->roadDB;
     
@@ -157,7 +166,7 @@ Route::Route() {
     Vec3::set(placementAutoRotationOffset, 0, 0, 0);
     
     skydome = new Skydome();
-    
+
     // Route Merge. 
     if(Game::routeMergeString.length() > 0){
         QStringList args = Game::routeMergeString.split(":");
@@ -172,8 +181,7 @@ Route::Route() {
 
 }
 
-Route::Route(QString name){
-
+void Route::load(QString name){
     if(!Game::useQuadTree)
         terrainLib = new TerrainLibSimple();
     else
@@ -223,7 +231,9 @@ Route::Route(QString name){
     }
 
     this->trackDB = new TDB(tsection, false);
+    this->trackDB->loadTdb();
     this->roadDB = new TDB(tsection, true);
+    this->roadDB->loadTdb();
     //Game::trackDB = this->trackDB;
     //Game::roadDB = this->roadDB;
     
@@ -273,7 +283,8 @@ void Route::mergeRoute(QString route2Name, float offsetX, float offsetY, float o
     QProgressDialog *progress = NULL;
     bool gui = true;
     
-    Route *route2 = new Route(route2Name);
+    Route *route2 = new Route();
+    route2->load(route2Name);
     float mOffset[3];
     mOffset[0] = offsetX;// (-4*2048) - 256;
     mOffset[1] = offsetY;//81.47992;
@@ -721,6 +732,137 @@ void Route::updateSim(float *playerT, float deltaTime){
     }
 }
 
+WorldObj* Route::updateWorldObjData(FileBuffer *data){
+    QString sh;
+    int x = 0;
+    int z = 0;
+    WorldObj *nowy = NULL;
+    bool objloaded = true;
+    
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == ("x")) {
+            x = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("z")) {
+            z = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("remove")) {
+            objloaded = false;
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if ((nowy = WorldObj::createObj(sh)) != NULL) {
+            qDebug() << nowy->type;
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                nowy->set(sh, data);
+                ParserX::SkipToken(data);
+            }
+            if(tile[x*10000+z] != NULL){
+                tile[x*10000+z]->replaceWorldObj(nowy);
+            }
+            nowy->loaded = objloaded;
+            qDebug() << nowy->loaded;
+            //obiekty[jestObiektow++] = nowy;
+            ParserX::SkipToken(data);
+            continue;
+        }
+        ParserX::SkipToken(data);
+        continue;
+    }
+    return nowy;
+}
+
+void Route::loadTSectionData(FileBuffer *data){
+    tsection->loadRouteUtf16Data(data, false);
+    tsection->routeMaxIdx += 2 - tsection->routeMaxIdx % 2;
+    tsection->routeShapes++;
+    if(Game::ServerMode){
+        loadingProgress++;
+        load();
+    }
+}
+
+void Route::loadTrkData(FileBuffer *data){
+    trk = new Trk();
+    trk->loadUtf16Data(data);
+    if(Game::ServerMode){
+        loadingProgress++;
+        load();
+    }
+}
+    
+void Route::loadTdbData(FileBuffer *data, QString type){
+    bool road = false;
+    if(type == "rdb")
+        road = true;
+    
+    QString sh;
+    int x = 0;
+    int z = 0;
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == "trackdb") {
+            TDB *t = NULL;
+            if(!Game::ServerMode){
+                t = new TDB(tsection, road);
+            } else {
+                t = new TDBClient(tsection, road);
+            }
+            t->loadUtf16Data(data);
+            if(!t->isRoad()){
+                t->speedPostDAT = new SpeedPostDAT();
+                t->sigCfg = new SigCfg();
+                this->trackDB = t;
+                Game::trackDB = t;
+            } else {
+                this->roadDB = t;
+                Game::roadDB = t;
+            }
+            t->loaded = true;
+            
+            if(Game::ServerMode){
+                loadingProgress++;
+                load();
+            }
+            ParserX::SkipToken(data);
+            continue;
+            
+        }
+        ParserX::SkipToken(data);
+    }
+}
+
+void Route::updateTileData(FileBuffer *data){
+    QString sh;
+    int x = 0;
+    int z = 0;
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == ("x")) {
+            x = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("z")) {
+            z = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("tr_worldfile")) {
+            tile[x*10000+z] = new Tile(x, z, data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        ParserX::SkipToken(data);
+        continue;
+    }
+}
+
 void Route::preloadWFiles(bool gui){
     Tile *tTile;
     
@@ -796,13 +938,10 @@ void Route::pushRenderItems(float * playerT, float* playerW, float* target, floa
     Tile *tTile;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
-            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
-
-            if (tTile == NULL){
-                tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Tile((int)playerT[0] + i, (int)playerT[1] + j);
-            }
-            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
-
+            tTile = requestTile((int)playerT[0] + i, (int)playerT[1] + j, false);
+            if(tTile == NULL)
+                continue;
+            
             if(Game::autoNewTiles)
                 if (i == 0 && j == 0)
                     if (tTile->loaded == -2) {
@@ -862,13 +1001,10 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
     Tile *tTile;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
-            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
-
-            if (tTile == NULL){
-                tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Tile((int)playerT[0] + i, (int)playerT[1] + j);
-            }
-            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
-
+            tTile = requestTile((int)playerT[0] + i, (int)playerT[1] + j, false);
+            if(tTile == NULL)
+                continue;
+            
             if(Game::autoNewTiles)
                 if (i == 0 && j == 0)
                     if (tTile->loaded == -2) {
@@ -884,13 +1020,13 @@ void Route::render(GLUU *gluu, float * playerT, float* playerW, float* target, f
         }
     }
     if (renderMode == gluu->RENDER_DEFAULT) {
-        if(Game::viewTrackDbLines)
+        if(Game::viewTrackDbLines && trackDB != NULL)
             trackDB->renderAll(gluu, playerT, playerRot);
-        if(Game::viewTsectionLines)
+        if(Game::viewTsectionLines && trackDB != NULL)
             trackDB->renderLines(gluu, playerT, playerRot);
-        if(Game::viewTrackDbLines)
+        if(Game::viewTrackDbLines && roadDB != NULL)
             roadDB->renderAll(gluu, playerT, playerRot);
-        if(Game::viewTsectionLines)
+        if(Game::viewTsectionLines && roadDB != NULL)
             roadDB->renderLines(gluu, playerT, playerRot);
         if(Game::viewMarkers)
             if(this->mkr != NULL)
@@ -933,11 +1069,9 @@ void Route::renderShadowMap(GLUU *gluu, float * playerT, float* playerW, float* 
     Tile *tTile;
     for (int i = mintile; i <= maxtile; i++) {
         for (int j = maxtile; j >= mintile; j--) {
-            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
-            if (tTile == NULL){
-                tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j] = new Tile((int)playerT[0] + i, (int)playerT[1] + j);
-            }
-            tTile = tile[((int)playerT[0] + i)*10000 + (int)playerT[1] + j];
+            tTile = requestTile((int)playerT[0] + i, (int)playerT[1] + j, false);
+            if(tTile == NULL)
+                continue;
             if (tTile->loaded == 1) {
                 gluu->mvPushMatrix();
                 Mat4::translate(gluu->mvMatrix, gluu->mvMatrix, 2048 * i, 0, 2048 * j);
@@ -1439,12 +1573,16 @@ void Route::actNewNewSpeedZone(int x, int z, float* p){
     }
 }
 
-Tile * Route::requestTile(int x, int z){
-    Tile *tTile;
-    tTile = tile[((x)*10000 + z)];
-    if (tTile == NULL)
+Tile * Route::requestTile(int x, int z, bool allowNew){
+    Tile *tTile = tile[((x)*10000 + z)];
+    if (tTile == NULL){
         tile[(x)*10000 + z] = new Tile(x, z);
-    tTile = tile[((x)*10000 + z)];
+        tTile = tile[(x)*10000 + z];
+    }
+
+    if(!allowNew)
+        return tTile;
+
     if (tTile->loaded == -2) {
         if (Game::terrainLib->isLoaded(x, z)) {
             tTile->initNew();
@@ -1977,7 +2115,7 @@ void Route::deleteObj(WorldObj* obj) {
     }
     
     obj->loaded = false;
-    obj->modified = true;
+    obj->setModified();
     if (obj->isTrackItem()) {
         Undo::PushTrackDB(trackDB, false);
         Undo::PushTrackDB(roadDB, true);

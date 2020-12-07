@@ -40,7 +40,6 @@ class EngLib;
 class QOpenGLFunctions_3_3_Core;
 class QAction;
 class GuiGlCompass;
-class QWebSocket;
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -56,6 +55,9 @@ public:
     QSize sizeHint() const Q_DECL_OVERRIDE;
     
     bool initRoute();
+    void cameraInit();
+    void playInit();
+    
     void getUnsavedInfo(QVector<QString> &items);
 
 public slots:
@@ -65,8 +67,6 @@ public slots:
     void jumpTo(PreciseTileCoordinate*);
     void jumpTo(float *posT, float *pos);
     void jumpTo(int X, int Z, float x, float y, float z);
-    void onConnected();
-    void onTextMessageReceived(QString message);
     
     void msg(QString text);
     void msg(QString name, bool val);
@@ -118,7 +118,10 @@ public slots:
     void pickObjRotForPlacement();
     void pickObjRotElevForPlacement();
     
+    void initRoute2();
+    
 signals:
+    void showWindow();
     void routeLoaded(Route * a);
     void itemSelected(Ref::RefItem* pointer);
     void naviInfo(int all, int hidden);
@@ -235,7 +238,8 @@ private:
     GuiGlCompass * compass = NULL;
     OglObj * compassPointer = NULL;
     
-    QWebSocket * m_webSocket = NULL;
+    
+    
 };
 
 #endif

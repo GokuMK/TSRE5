@@ -51,25 +51,11 @@ TDB::TDB(TSectionDAT* tsection, bool road) {
     else
         this->tsection = tsection;
     
-    loadTdb();
-    
-    if(!this->road){
-        loadTit();
-        checkTrSignalRDirs();
-        this->speedPostDAT = new SpeedPostDAT();
-        this->sigCfg = new SigCfg();
-        //checkSignals();
-    }
-    //save();
-    loaded = true;
     return;
 }
 
 void TDB::loadTdb(){
-    int i, j, ii, uu;
-    float xx;
-    int t;
-    bool ok;
+
     QString sh;
     QString extension = "tdb";
     if(this->road) extension = "rdb";
@@ -79,154 +65,22 @@ void TDB::loadTdb(){
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
         return;
-    FileBuffer* bufor = ReadFile::read(&file);
+    FileBuffer* data = ReadFile::read(&file);
     file.close();
-    bufor->toUtf16();
-    bufor->skipBOM();
-    ParserX::NextLine(bufor);
+    data->toUtf16();
+    data->skipBOM();
+    ParserX::NextLine(data);
     iTRnodes = 0;
     
-    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         if (sh == "trackdb") {
-            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-                if(sh == "tracknodes"){
-                    iTRnodes = (int) ParserX::GetNumber(bufor); //odczytanie ilosci sciezek
-                    qDebug() << "TDB TrackNodes count " << iTRnodes;
-
-                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-                        if(sh == "tracknode"){
-                            t = (int) ParserX::GetNumber(bufor); // odczytanie numeru sciezki
-                            trackNodes[t] = new TRnode();
-                            while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-                                if(sh == "trendnode"){
-                                    trackNodes[t]->typ = 0; //typ endnode
-                                    ParserX::SkipToken(bufor);
-                                    continue;
-                                }
-                                if(sh == "trvectornode"){
-                                    trackNodes[t]->typ = 1; //typ vector 
-                                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-                                        if(sh == "trvectorsections"){
-                                            uu = (int) ParserX::GetNumberInside(bufor, &ok);
-                                            if(ok){
-                                                trackNodes[t]->iTrv = uu;
-                                                trackNodes[t]->trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
-                                                for (j = 0; j < uu; j++) {
-                                                    for (ii = 0; ii < 16; ii++) {
-                                                        xx = ParserX::GetNumber(bufor);
-                                                        if(std::isnan(xx)){
-                                                            qDebug() << "#TrackDB: NAN found in tracknode: "<<t;
-                                                        }
-                                                        trackNodes[t]->trVectorSection[j].param[ii] = xx;
-                                                    }
-                                                }
-                                            }
-                                            ParserX::SkipToken(bufor);
-                                            continue;
-                                        }
-                                        if(sh == "tritemrefs"){
-                                            uu = (int) ParserX::GetNumber(bufor);
-                                            trackNodes[t]->iTri = uu;
-                                            trackNodes[t]->trItemRef = new int[uu]; // przydzielenie pamieci dla sciezki
-                                            if(uu > 0){
-                                                for (j = 0; j < uu; j++) {
-                                                    trackNodes[t]->trItemRef[j] = ParserX::GetNumber(bufor);
-                                                }
-                                                ParserX::SkipToken(bufor);
-                                            }
-                                            ParserX::SkipToken(bufor);
-                                            continue;
-                                        }
-                                        qDebug() << "#TDB TrVectorNode - undefined token " << sh;
-                                        ParserX::SkipToken(bufor);
-                                    }
-                                    ParserX::SkipToken(bufor);
-                                    continue;
-                                }
-                                if(sh == "trjunctionnode"){
-                                    trackNodes[t]->typ = 2; //typ rozjazd
-                                    trackNodes[t]->args[0] = ParserX::GetNumber(bufor);
-                                    trackNodes[t]->args[1] = ParserX::GetNumber(bufor);
-                                    trackNodes[t]->args[2] = ParserX::GetNumber(bufor);
-                                    ParserX::SkipToken(bufor);
-                                    continue;
-                                }
-                                if(sh == "trpins"){
-                                    trackNodes[t]->TrP1 = (int) ParserX::GetNumber(bufor);
-                                    trackNodes[t]->TrP2 = (int) ParserX::GetNumber(bufor);
-
-                                    for (int i = 0; i < (trackNodes[t]->TrP1 + trackNodes[t]->TrP2); i++) {
-                                        trackNodes[t]->TrPinS[i] = (int) ParserX::GetNumber(bufor);
-                                        trackNodes[t]->TrPinK[i] = (int) ParserX::GetNumber(bufor);
-                                    }
-                                    ParserX::SkipToken(bufor);
-                                    ParserX::SkipToken(bufor);
-                                    continue;
-                                }
-                                if(sh == "uid"){
-                                    for (ii = 0; ii < 12; ii++) {
-                                        xx = ParserX::GetNumber(bufor);
-                                        if(std::isnan(xx)){
-                                            qDebug() << "#TrackDB: NAN found in tracknode: "<<t;
-                                        }
-                                        trackNodes[t]->UiD[ii] = xx;
-                                    }
-                                    ParserX::SkipToken(bufor);
-                                    continue;              
-                                }
-                                qDebug() << "#TDB TrackNode - undefined token " << sh;
-                                //trackNodes[t] = NULL;
-                                ParserX::SkipToken(bufor);
-                            }
-                            ParserX::SkipToken(bufor);
-                            continue;
-                        }
-                        qDebug() << "#TDB TrackNodes - undefined token " << sh;
-                        ParserX::SkipToken(bufor);
-                    }
-                    ParserX::SkipToken(bufor);
-                    continue;
-                }
-                if(sh == "serial"){
-                    this->serial = (int) ParserX::GetNumber(bufor);
-                    ParserX::SkipToken(bufor);
-                    continue;
-                }
-                if(sh == "tritemtable"){
-                    iTRitems = (int) ParserX::GetNumber(bufor); //odczytanie ilosci sciezek
-                    TRitem* nowy;
-                    while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-                        //qDebug() <<"ssh1 "<< sh;
-                        nowy = new TRitem();
-                        if(this->road)
-                            nowy->tdbId = 1;
-                        
-                        if(!nowy->init(sh)){
-                            qDebug() << "#TDB TrItemTable undefined token " << sh;
-                            ParserX::SkipToken(bufor);
-                            continue;
-                        }
-
-                        while (!((sh = ParserX::NextTokenInside(bufor).toLower()) == "")) {
-                            nowy->set(sh, bufor);
-                            ParserX::SkipToken(bufor);
-                        }
-
-                        this->trackItems[nowy->trItemId] = nowy;
-                        ParserX::SkipToken(bufor);
-                        continue;
-                    }
-                    ParserX::SkipToken(bufor);
-                    continue;
-                }
-                qDebug() << "#TDB trackdb undefined token " << sh;
-                ParserX::SkipToken(bufor);
-            }
-            ParserX::SkipToken(bufor);
+            loadUtf16Data(data);
+            ParserX::SkipToken(data);
             continue;
+            
         }
         qDebug() << "#TDB undefined token " << sh;
-        ParserX::SkipToken(bufor);
+        ParserX::SkipToken(data);
     }
     
     if(tsection->updateSectionDataRequired){
@@ -240,7 +94,157 @@ void TDB::loadTdb(){
             old = trackItems[trackNodes[i]->trItemRef[j]]->getTrackPosition();
         }
     }*/
-    
+    if(!this->road){
+        loadTit();
+        checkTrSignalRDirs();
+        this->speedPostDAT = new SpeedPostDAT();
+        this->sigCfg = new SigCfg();
+        //checkSignals();
+    }
+    //save();
+    loaded = true;
+}
+
+void TDB::loadUtf16Data(FileBuffer *data){
+    int i, j, ii, uu;
+    float xx;
+    int t;
+    bool ok;
+    QString sh;
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                if(sh == "tracknodes"){
+                    iTRnodes = (int) ParserX::GetNumber(data); //odczytanie ilosci sciezek
+                    qDebug() << "TDB TrackNodes count " << iTRnodes;
+
+                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                        if(sh == "tracknode"){
+                            t = (int) ParserX::GetNumber(data); // odczytanie numeru sciezki
+                            trackNodes[t] = new TRnode();
+                            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                                if(sh == "trendnode"){
+                                    trackNodes[t]->typ = 0; //typ endnode
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if(sh == "trvectornode"){
+                                    trackNodes[t]->typ = 1; //typ vector 
+                                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                                        if(sh == "trvectorsections"){
+                                            uu = (int) ParserX::GetNumberInside(data, &ok);
+                                            if(ok){
+                                                trackNodes[t]->iTrv = uu;
+                                                trackNodes[t]->trVectorSection = new TRnode::TRSect[uu]; // przydzielenie pamieci dla sciezki
+                                                for (j = 0; j < uu; j++) {
+                                                    for (ii = 0; ii < 16; ii++) {
+                                                        xx = ParserX::GetNumber(data);
+                                                        if(std::isnan(xx)){
+                                                            qDebug() << "#TrackDB: NAN found in tracknode: "<<t;
+                                                        }
+                                                        trackNodes[t]->trVectorSection[j].param[ii] = xx;
+                                                    }
+                                                }
+                                            }
+                                            ParserX::SkipToken(data);
+                                            continue;
+                                        }
+                                        if(sh == "tritemrefs"){
+                                            uu = (int) ParserX::GetNumber(data);
+                                            trackNodes[t]->iTri = uu;
+                                            trackNodes[t]->trItemRef = new int[uu]; // przydzielenie pamieci dla sciezki
+                                            if(uu > 0){
+                                                for (j = 0; j < uu; j++) {
+                                                    trackNodes[t]->trItemRef[j] = ParserX::GetNumber(data);
+                                                }
+                                                ParserX::SkipToken(data);
+                                            }
+                                            ParserX::SkipToken(data);
+                                            continue;
+                                        }
+                                        qDebug() << "#TDB TrVectorNode - undefined token " << sh;
+                                        ParserX::SkipToken(data);
+                                    }
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if(sh == "trjunctionnode"){
+                                    trackNodes[t]->typ = 2; //typ rozjazd
+                                    trackNodes[t]->args[0] = ParserX::GetNumber(data);
+                                    trackNodes[t]->args[1] = ParserX::GetNumber(data);
+                                    trackNodes[t]->args[2] = ParserX::GetNumber(data);
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if(sh == "trpins"){
+                                    trackNodes[t]->TrP1 = (int) ParserX::GetNumber(data);
+                                    trackNodes[t]->TrP2 = (int) ParserX::GetNumber(data);
+
+                                    for (int i = 0; i < (trackNodes[t]->TrP1 + trackNodes[t]->TrP2); i++) {
+                                        trackNodes[t]->TrPinS[i] = (int) ParserX::GetNumber(data);
+                                        trackNodes[t]->TrPinK[i] = (int) ParserX::GetNumber(data);
+                                    }
+                                    ParserX::SkipToken(data);
+                                    ParserX::SkipToken(data);
+                                    continue;
+                                }
+                                if(sh == "uid"){
+                                    for (ii = 0; ii < 12; ii++) {
+                                        xx = ParserX::GetNumber(data);
+                                        if(std::isnan(xx)){
+                                            qDebug() << "#TrackDB: NAN found in tracknode: "<<t;
+                                        }
+                                        trackNodes[t]->UiD[ii] = xx;
+                                    }
+                                    ParserX::SkipToken(data);
+                                    continue;              
+                                }
+                                qDebug() << "#TDB TrackNode - undefined token " << sh;
+                                //trackNodes[t] = NULL;
+                                ParserX::SkipToken(data);
+                            }
+                            ParserX::SkipToken(data);
+                            continue;
+                        }
+                        qDebug() << "#TDB TrackNodes - undefined token " << sh;
+                        ParserX::SkipToken(data);
+                    }
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if(sh == "serial"){
+                    this->serial = (int) ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                if(sh == "tritemtable"){
+                    iTRitems = (int) ParserX::GetNumber(data); //odczytanie ilosci sciezek
+                    TRitem* nowy;
+                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                        //qDebug() <<"ssh1 "<< sh;
+                        nowy = new TRitem();
+                        if(this->road)
+                            nowy->tdbId = 1;
+                        
+                        if(!nowy->init(sh)){
+                            qDebug() << "#TDB TrItemTable undefined token " << sh;
+                            ParserX::SkipToken(data);
+                            continue;
+                        }
+
+                        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                            nowy->set(sh, data);
+                            ParserX::SkipToken(data);
+                        }
+
+                        this->trackItems[nowy->trItemId] = nowy;
+                        ParserX::SkipToken(data);
+                        continue;
+                    }
+                    ParserX::SkipToken(data);
+                    continue;
+                }
+                qDebug() << "#TDB trackdb undefined token " << sh;
+                ParserX::SkipToken(data);
+            }
 }
 
 void TDB::updateUiDs(QVector<int*> &trackObjUpdates, int startNode){
@@ -277,6 +281,8 @@ void TDB::updateUiDs(QVector<int*> &trackObjUpdates, int startNode){
 void TDB::updateSectionAndShapeIds(QHash<unsigned int,unsigned int>& fixedSectionIds, QHash<unsigned int,unsigned int>& fixedShapeIds){
         for(int i = 1; i <= iTRnodes; i++){
             TRnode *n = trackNodes[i];
+            if(n == NULL)
+                continue;
             if(n->typ == 2){
                 if(fixedShapeIds[n->args[1]] > 0)
                     n->args[1] = fixedShapeIds[n->args[1]];
@@ -519,6 +525,8 @@ void TDB::fillDynTrack(DynTrackObj* track){
                 newSect1->radius = tRadius[j];
                 tsection->sekcja[newSect0->id] = newSect0;
                 tsection->sekcja[newSect1->id] = newSect1;
+                this->updateTrackSection(newSect0->id);
+                this->updateTrackSection(newSect1->id);
                 
                 if(tAngle[j]<0) 
                     newRShape[0].sect[j] = newSect0->id;
@@ -531,6 +539,7 @@ void TDB::fillDynTrack(DynTrackObj* track){
                 newSect0->val1 = tRadius[j];
                 
                 tsection->sekcja[newSect0->id] = newSect0;
+                this->updateTrackSection(newSect0->id);
                 newRShape[0].sect[j] = newSect0->id;
             }
             //qDebug() << "sid "<< newSect0->id;
@@ -538,7 +547,7 @@ void TDB::fillDynTrack(DynTrackObj* track){
             tsection->routeMaxIdx+=2;
         }
         foundIdx = tsection->routeShapes;
-        TrackShape* newShape = new TrackShape();
+        TrackShape* newShape = new TrackShape(tsection->routeShapes);
         newShape->dyntrack = true;
         newShape->path = newRShape;
         newRShape->pos[0] = 0;
@@ -546,6 +555,7 @@ void TDB::fillDynTrack(DynTrackObj* track){
         newRShape->pos[2] = 0;
         newShape->numpaths = 1;
         tsection->shape[tsection->routeShapes++] = newShape;
+        this->updateTrackShape(newShape->id);
     }
     //qDebug() << "foundIdx "<<foundIdx;
     track->sectionIdx = foundIdx;
@@ -693,6 +703,8 @@ int TDB::appendTrack(int id, int* ends, int r, int sect, int uid) {
         endNode->UiD[10] = endNode->UiD[10] + angle;
         endNode->UiD[11] = endNode->UiD[11];
     }
+    updateTrNode(id);
+    updateTrNode(endNode->TrPinS[0]);
     return id;
 }
 
@@ -705,9 +717,9 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     //TrackShape* shp = this->tsection->shape[r->value];
     //qDebug() << shp->filename;
 
-    int end1Id = ++this->iTRnodes;
-    int vecId = ++this->iTRnodes;
-    int end2Id = ++this->iTRnodes;
+    int end1Id = getNextItrNode();//++this->iTRnodes;
+    int vecId = getNextItrNode();//++this->iTRnodes;
+    int end2Id = getNextItrNode();//++this->iTRnodes;
 
     int xx = x;
     int zz = z;
@@ -800,6 +812,7 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     newNode->UiD[5] = zz;
     newNode->UiD[6] = pp[0];
     newNode->UiD[7] = pp[1];
+    qDebug() << "uid7" << newNode->UiD[7];
     newNode->UiD[8] = pp[2];
     newNode->UiD[9] = qe[0];
     newNode->UiD[10] = qe[1] + angle;
@@ -808,7 +821,11 @@ int TDB::newTrack(int x, int z, float* p, float* qe, int* ends, int r, int sect,
     newNode->TrP1 = 1;
     newNode->TrPinS[0] = vecId;
     newNode->TrPinK[0] = 0;
-
+    
+    updateTrNode(end1Id);
+    updateTrNode(vecId);
+    updateTrNode(end2Id);
+    
     if(start != NULL)
         *start = end1Id;
     return end2Id;
@@ -819,7 +836,7 @@ int TDB::newJunction(int x, int z, float* p, float* qe, int r, int uid, int end)
     //TrackShape* shp = this->tsection->shape[r->value];
     //qDebug() << shp->filename;
 
-    int junction = ++this->iTRnodes;
+    int junction = getNextItrNode();//++this->iTRnodes;
     
     int xx = x;
     int zz = z;
@@ -923,6 +940,8 @@ int TDB::joinVectorSections(int id1, int id2) {
         return 0;
     int endpk1 = section1->TrPinS[1];
     int endpk2 = section2->TrPinS[0];
+    int endpk11 = section1->TrPinS[0];
+    int endpk22 = section2->TrPinS[1];
     TRnode* section1e1 = trackNodes[section1->TrPinS[0]];
     TRnode* section1e2 = trackNodes[section1->TrPinS[1]];
     TRnode* section2e1 = trackNodes[section2->TrPinS[0]];
@@ -970,6 +989,13 @@ int TDB::joinVectorSections(int id1, int id2) {
     trackNodes[id2] = NULL;
     trackNodes[endpk1] = NULL;
     trackNodes[endpk2] = NULL;
+    
+    updateTrNode(id1);
+    updateTrNode(id2);
+    updateTrNode(endpk1);
+    updateTrNode(endpk2);
+    updateTrNode(endpk11);
+    updateTrNode(endpk22);
     return 0;
 }
 
@@ -1031,10 +1057,12 @@ int TDB::splitVectorSection(int id, int j){
     TRnode* end2 = trackNodes[vect->TrPinS[1]];
     TRnode* newNode;
     
-    int end1Id = ++this->iTRnodes;
-    int vecId = ++this->iTRnodes;
-    int end2Id = ++this->iTRnodes;
+    int end1Id = getNextItrNode();//++this->iTRnodes;
+    int vecId = getNextItrNode();//++this->iTRnodes;
+    int end2Id = getNextItrNode();//++this->iTRnodes;
     end2->podmienTrPin(id, vecId);
+    
+    updateTrNode(vect->TrPinS[1]);
     
     this->trackNodes[vecId] = new TRnode();
     newNode = this->trackNodes[vecId];
@@ -1140,6 +1168,10 @@ int TDB::splitVectorSection(int id, int j){
     delete vect->trVectorSection;
     vect->trVectorSection = newV;
     
+    updateTrNode(id);
+    updateTrNode(end1Id);
+    updateTrNode(end2Id);
+    updateTrNode(vecId);
     return vecId;
 }
 
@@ -1148,7 +1180,7 @@ void TDB::deleteJunction(int id){
     if(junction->typ != 2) return;
     
     int count = 0;
-    
+    int vecId = 0;
     for(int i = 0; i < 3; i++){
         if(junction->TrPinS[i] != 0) count++;
     }
@@ -1159,10 +1191,11 @@ void TDB::deleteJunction(int id){
     if(count == 0){
         delete trackNodes[id];
         trackNodes[id] = NULL;
+        updateTrNode(id);
         return;
     }
     if(count == 1){
-        int vecId = 0;
+        vecId = 0;
         for(int i = 0; i < 3; i++){
             if(junction->TrPinS[i] != 0){
                 junction->TrPinS[0] = junction->TrPinS[i];
@@ -1186,6 +1219,8 @@ void TDB::deleteJunction(int id){
         junction->typ = 0;
         junction->TrP1 = 1;
         junction->TrP2 = 0;
+        updateTrNode(vecId);
+        updateTrNode(id);
     }
 }
 
@@ -1214,6 +1249,11 @@ void TDB::deleteVectorSection(int id){
         end2->podmienTrPin(id, 0);
         end2->setTrPinK(0, 0);
     }
+    
+    updateTrNode(id);
+    updateTrNode(vect->TrPinS[0]);
+    updateTrNode(vect->TrPinS[1]);
+    
 }
 
 bool TDB::deleteAllTrItemsFromVectorSection(int id){
@@ -1242,11 +1282,14 @@ bool TDB::deleteFromVectorSection(int id, int j){
         deleteVectorSection(id);
         return false;
     }
+    int vid = -1;
     if(j > 0 && j < vect->iTrv - 1){
-        vect = trackNodes[splitVectorSection(id, j)];
+        vid = splitVectorSection(id, j);
+        vect = trackNodes[vid];
         j = 0;
     }
-
+    int endNId1 = vect->TrPinS[0];
+    int endNId2 = vect->TrPinS[1];
     TRnode* end1 = trackNodes[vect->TrPinS[0]];
     TRnode* end2 = trackNodes[vect->TrPinS[1]];
     //deleteAllTrItemsFromVectorSection(id);
@@ -1268,22 +1311,25 @@ bool TDB::deleteFromVectorSection(int id, int j){
                     this->deleteTrItem(trit->trItemId);
                     i--;
                 }
+                updateTrItem(vect->trItemRef[i]);
             }
         }
         
         std::copy(vect->trVectorSection + 1, vect->trVectorSection + vect->iTrv, newV);
+        
         if(end1->typ == 2){
             end1->podmienTrPin(id, 0);
             end1->setTrPinK(0, 0);
+            updateTrNode(endNId1);
             
-            int endNId = ++this->iTRnodes;
-            this->trackNodes[endNId] = new TRnode();
-            end1 = trackNodes[endNId];
+            endNId1 = getNextItrNode();//++this->iTRnodes;
+            this->trackNodes[endNId1] = new TRnode();
+            end1 = trackNodes[endNId1];
             end1->typ = 0;
             end1->TrP1 = 1;
             end1->TrPinS[0] = id;
             end1->TrPinK[0] = 1;
-            vect->TrPinS[0] = endNId;
+            vect->TrPinS[0] = endNId1;
             vect->TrPinK[0] = 1;
         }
         
@@ -1299,7 +1345,9 @@ bool TDB::deleteFromVectorSection(int id, int j){
             end1->UiD[9] = vect->trVectorSection[1].param[13];
             end1->UiD[10] = vect->trVectorSection[1].param[14] + M_PI;
             end1->UiD[11] = vect->trVectorSection[1].param[15];
-
+            updateTrNode(endNId1);
+            
+            
     } else if(j == vect->iTrv - 1) {
         // check items
         if(vect->iTri > 0){
@@ -1323,15 +1371,16 @@ bool TDB::deleteFromVectorSection(int id, int j){
         if(end2->typ == 2){
             end2->podmienTrPin(id, 0);
             end2->setTrPinK(0, 0);
+            updateTrNode(endNId2);
             
-            int endNId = ++this->iTRnodes;
-            this->trackNodes[endNId] = new TRnode();
-            end2 = trackNodes[endNId];
+            endNId2 = getNextItrNode();//++this->iTRnodes;
+            this->trackNodes[endNId2] = new TRnode();
+            end2 = trackNodes[endNId2];
             end2->typ = 0;
             end2->TrP1 = 1;
             end2->TrPinS[0] = id;
             end2->TrPinK[0] = 0;
-            vect->TrPinS[1] = endNId;
+            vect->TrPinS[1] = endNId2;
             vect->TrPinK[1] = 1;
         }
             end2->UiD[0] = vect->trVectorSection[vect->iTrv-2].param[2];
@@ -1346,12 +1395,15 @@ bool TDB::deleteFromVectorSection(int id, int j){
             end2->UiD[9] = vect->trVectorSection[vect->iTrv-1].param[13];
             end2->UiD[10] = vect->trVectorSection[vect->iTrv-1].param[14];
             end2->UiD[11] = vect->trVectorSection[vect->iTrv-1].param[15];
-
+            updateTrNode(endNId2);
     }
     
     vect->iTrv -= 1;
     delete vect->trVectorSection;
     vect->trVectorSection = newV;
+    updateTrNode(id);
+    if(vid >= 0)
+        updateTrNode(vid);
     
     return true;
 }
@@ -1456,6 +1508,9 @@ int TDB::appendToJunction(int junctionId, int eId, int idx){
         //junction->TrPinK[idx] = 1;
         junction->TrPinK[idx] = e1->TrPinK[0];
     }
+    updateTrNode(trackId);
+    updateTrNode(junctionId);
+    updateTrNode(eId);
     return 0;
 }
 
@@ -1831,6 +1886,10 @@ bool TDB::ifTrackExist(int x, int y, int UiD){
             }
         }
     return false;
+}
+
+int TDB::getNextItrNode(){
+    return ++this->iTRnodes;
 }
 
 void TDB::refresh() {
@@ -2724,6 +2783,8 @@ void TDB::newPickupObject(int* &itemId, int trNodeId, float metry, int type){
     itemId[1] = newTRitemId;
     
     this->addItemToTrNode(trNodeId, itemId[1]);
+    updateTrItem(newTRitemId);
+    updateTrNode(trNodeId);
 }
 
 void TDB::newPlatformObject(int* itemId, int trNodeId, float metry, int type){
@@ -2754,6 +2815,10 @@ void TDB::newPlatformObject(int* itemId, int trNodeId, float metry, int type){
     
     this->addItemToTrNode(trNodeId, itemId[0]);
     this->addItemToTrNode(trNodeId, itemId[1]);
+    updateTrItem(itemId[0]);
+    updateTrItem(itemId[1]);
+    updateTrNode(trNodeId);
+    
 }
 
 void TDB::newSignalObject(QString filename, SignalObj::SignalUnit* units, int &signalUnits, int trNodeId, float metry, int type){
@@ -2841,6 +2906,8 @@ void TDB::newSignalObject(QString filename, SignalObj::SignalUnit* units, int &s
         units[i].tdbId = 0;
         units[i].itemId =  newTRitemId;
         this->addItemToTrNode(trNodeId, units[i].itemId);
+        updateTrItem(newTRitemId);
+        updateTrNode(trNodeId);
     }
 }
 
@@ -2906,6 +2973,8 @@ void TDB::newSpeedPostObject(int speedPostType, QVector<int> & itemId, int trNod
     itemId.push_back(newTRitemId);
     //qDebug() << "tritem size"<<itemId.size();
     this->addItemToTrNode(trNodeId, itemId.last());
+    updateTrItem(newTRitemId);
+    updateTrNode(trNodeId);
 }
 
 void TDB::newLevelCrObject(int* &itemId, int trNodeId, float metry, int type){
@@ -2927,6 +2996,8 @@ void TDB::newLevelCrObject(int* &itemId, int trNodeId, float metry, int type){
     }
     itemId[1] = newTRitemId;
     this->addItemToTrNode(trNodeId, itemId[1]);
+    updateTrItem(newTRitemId);
+    updateTrNode(trNodeId);
 }
 
 void TDB::newSoundRegionObject(int soundregionTrackType, QVector<int> &itemId, int trNodeId, float metry, int type){
@@ -2944,6 +3015,8 @@ void TDB::newSoundRegionObject(int soundregionTrackType, QVector<int> &itemId, i
     itemId.push_back(newTRitemId);
     
     this->addItemToTrNode(trNodeId, itemId.last());
+    updateTrItem(newTRitemId);
+    updateTrNode(trNodeId);
 }
 
 void TDB::newHazardObject(int * &itemId, int trNodeId, float metry, int type){
@@ -2960,6 +3033,8 @@ void TDB::newHazardObject(int * &itemId, int trNodeId, float metry, int type){
     itemId[1] = newTRitemId;
     
     this->addItemToTrNode(trNodeId, itemId[1]);
+    updateTrItem(newTRitemId);
+    updateTrNode(trNodeId);
 }
 
 void TDB::newCrossOverObject(int id1, float m1, int id2, float m2, int shapeIdx){
@@ -2980,7 +3055,10 @@ void TDB::newCrossOverObject(int id1, float m1, int id2, float m2, int shapeIdx)
     //qDebug() << trPosition[0]<< trPosition[1]<< trPosition[2];
     trackItems[newTRitemId2]->setTrItemRData((float*)&trPosition+5, (float*)&trPosition);
     addItemToTrNode(id2, newTRitemId2);
-    
+    updateTrItem(newTRitemId1);
+    updateTrItem(newTRitemId2);
+    updateTrNode(id1);
+    updateTrNode(id2);
 }
 
 void TDB::deleteTrItem(int trid){
@@ -3053,6 +3131,7 @@ void TDB::deleteTrItem(int trid){
     
     if(trit != NULL){
         trit->type = "emptyitem";
+        updateTrItem(trid);
     }
     QVector<int> ids;
     int nid = findTrItemNodeIds(trid, ids);
@@ -3078,6 +3157,7 @@ void TDB::deleteItemFromTrNode(int tid, int iid){
     if(n == NULL) return;
     if(n->iTri == 1){
         n->iTri = 0;
+        updateTrNode(tid);
         return;
     }
     int* newVec = new int[n->iTri-1];
@@ -3090,6 +3170,7 @@ void TDB::deleteItemFromTrNode(int tid, int iid){
     n->iTri--;
     delete[] n->trItemRef;
     n->trItemRef = newVec;
+    updateTrNode(tid);
 }
 
 void TDB::fixTDBVectorElevation(int x, int y, int UiD){
@@ -3248,12 +3329,15 @@ bool TDB::deleteNulls() {
                 }
                 trackNodes[i] = trackNodes[stare];
                 trackNodes[stare] = NULL;
-                qDebug() << "zastopiony przez " << stare;
+                qDebug() << i << "zastopiony przez " << stare;
                 
                 for(int j = 0; j < 3; j++){
                     if(trackNodes[i]->TrPinS[j] == 0) 
                         continue;
-                    trackNodes[trackNodes[i]->TrPinS[j]]->podmienTrPin(stare, i);
+                    if(trackNodes[trackNodes[i]->TrPinS[j]] == NULL)
+                        qDebug() << "fail NULL" << trackNodes[i]->TrPinS[j];
+                    else
+                        trackNodes[trackNodes[i]->TrPinS[j]]->podmienTrPin(stare, i);
                 }
                 replaceSignalDirJunctionId(stare, i);
                 return true;
@@ -3266,6 +3350,8 @@ bool TDB::deleteNulls() {
 void TDB::sortItemRefs(){
     StaticTrackItems = &trackItems;
     for(int i = 1; i <= iTRnodes; i++){
+        if(trackNodes[i] == NULL)
+                continue;
         if(trackNodes[i]->iTri > 0){
             int *pointer = trackNodes[i]->trItemRef;
             int len = trackNodes[i]->iTri;
@@ -3321,6 +3407,22 @@ void TDB::saveEmpty(bool road) {
     file.close();
 }
     
+void TDB::updateTrNode(int nid){
+    
+}
+
+void TDB::updateTrItem(int iid){
+    
+}
+
+void TDB::updateTrackSection(int id){
+    
+}
+
+void TDB::updateTrackShape(int id){
+    
+}
+
 void TDB::save() {
     if(!Game::writeEnabled) return;
     if(!Game::writeTDB) return;
@@ -3345,14 +3447,142 @@ void TDB::save() {
     out.setCodec("UTF-16");
     out.setGenerateByteOrderMark(true);
     out << "SIMISA@@@@@@@@@@JINX0T0t______\n\n";
+    saveToStream(out);
+    file.close();
+
+    saveTit();
+    if(!this->road) 
+        this->tsection->saveRoute();
+    qDebug() << "Zapisane";
+}
+
+int TDB::updateTrNodeData(FileBuffer *data){
+    QString sh;
+    int nid = 0;
+
+    TRnode *nowy = NULL;
+    
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == ("id")) {
+            nid = ParserX::GetNumber(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("remove")) {
+            qDebug() << "remove trnode" << nid;
+            trackNodes[nid] = NULL;
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("tracknode")) {
+            //objloaded = false;
+            nowy = new TRnode();
+            nowy->loadUtf16Data(data);
+            trackNodes[nid] = nowy;
+            ParserX::SkipToken(data);
+            continue;
+        }
+        
+        ParserX::SkipToken(data);
+        continue;
+    }
+    return nid;
+}
+
+TRitem *TDB::updateTrItemData(FileBuffer *data){
+    QString sh;
+    int nid = 0;
+
+    TRitem *nowy = new TRitem();
+    if(this->road)
+        nowy->tdbId = 1;
+    
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == ("id")) {
+            nid = ParserX::GetNumber(data);
+            nowy->trItemId = nid;
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("remove")) {
+            qDebug() << "remove trnode" << nid;
+            trackItems[nid] = NULL;
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if(!nowy->init(sh)){
+            qDebug() << "#TDB TrItemTable undefined token " << sh;
+            ParserX::SkipToken(data);
+            continue;
+        } else {
+            while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                nowy->set(sh, data);
+                ParserX::SkipToken(data);
+            }
+            this->trackItems[nowy->trItemId] = nowy;
+            ParserX::SkipToken(data);
+            continue;
+        }
+        
+        ParserX::SkipToken(data);
+        continue;
+    }
+    return nowy;
+}
+
+void TDB::updateTrackShapeData(FileBuffer *data){
+    QString sh;
+    TrackShape *nowy = new TrackShape();
+    
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == ("trackshape")) {
+            nowy->loadUtf16Data(data);
+            this->tsection->shape[nowy->id] = nowy;
+            if(nowy->id >= tsection->routeShapes)
+                tsection->routeShapes = nowy->id + 1;
+            ParserX::SkipToken(data);
+            continue;
+        }
+        ParserX::SkipToken(data);
+        continue;
+    }
+}
+
+void TDB::updateTrackSectionData(FileBuffer *data){
+    QString sh;
+    TSection *nowy = new TSection();
+    
+    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+        qDebug() << sh;
+        if (sh == ("tracksection")) {
+            nowy->loadUtf16Data(data);
+            this->tsection->sekcja[nowy->id] = nowy;
+            if(nowy->id >= tsection->routeMaxIdx){
+                tsection->routeMaxIdx = nowy->id + 1;
+                if(tsection->routeMaxIdx % 2 == 1)
+                    tsection->routeMaxIdx++;
+            }
+            ParserX::SkipToken(data);
+            continue;
+        }
+        ParserX::SkipToken(data);
+        continue;
+    }
+}
+
+void TDB::saveToStream(QTextStream &out){
     out << "TrackDB (\n";
     out << "	Serial ( " << this->serial << " )\n";
     if(this->iTRnodes > 0){
     out << "	TrackNodes ( " << (this->iTRnodes) << "\n";
 
     for (int i = 1; i <= this->iTRnodes; i++) {
+        if (trackNodes[i] == NULL) 
+            continue;
         out << "		TrackNode ( " << i << "\n";
-        if (trackNodes[i] == NULL) continue;
         switch (trackNodes[i]->typ) {
             case 0:
                 out << "			TrEndNode ( " << trackNodes[i]->args[0] << " )\n";
@@ -3421,15 +3651,9 @@ void TDB::save() {
         }
         out << "	)\n";
     }
-    
-    
-    out << ")";
-    file.close();
 
-    saveTit();
-    if(!this->road) 
-        this->tsection->saveRoute();
-    qDebug() << "Zapisane";
+    out << ")";
+
 }
 
 void TDB::saveTit() {
