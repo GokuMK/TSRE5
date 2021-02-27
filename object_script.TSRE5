@@ -25,6 +25,8 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/CarSpawnerObj.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ChooseFileDialog.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ClickableLabel.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ClientInfo.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ClientUsersWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ComplexLine.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ConEditorWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/ConInfoWidget.o
@@ -130,6 +132,8 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RenderItem.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Renderer.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Route.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RouteClient.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RouteEditorClient.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RouteEditorGLWidget.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RouteEditorServer.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/RouteEditorWindow.o
@@ -171,6 +175,7 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/SpeedpostObj.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/StaticObj.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TDB.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TDBClient.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TFile.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TRitem.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TRnode.o
@@ -179,9 +184,11 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TSectionDAT.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TarFile.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/Terrain.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TerrainClient.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TerrainInfo.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TerrainLib.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TerrainLibQt.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TerrainLibQtClient.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TerrainLibSimple.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TerrainTools.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/TerrainTreeWindow.o
@@ -228,6 +235,7 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_CELoadWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ChooseFileDialog.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ClickableLabel.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ClientUsersWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ConEditorWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ConInfoWidget.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_ConListWidget.o
@@ -279,6 +287,8 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RandomConsist.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RandomTransformWorldObjDialog.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_Route.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RouteClient.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RouteEditorClient.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RouteEditorGLWidget.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RouteEditorServer.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_RouteEditorWindow.o
@@ -293,6 +303,7 @@ INPUT(
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_SignalWindowLink.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_StaticObj.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_Terrain.o
+./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_TerrainClient.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_TerrainTools.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_TerrainTreeWindow.o
 ./build/Release_x64/QT_5.7_static_MinGW_730_x64-Windows/moc_TerrainWaterWindow.o

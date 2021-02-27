@@ -135,6 +135,7 @@
         </logicalFolder>
         <itemPath>AboutWindow.h</itemPath>
         <itemPath>ActivityTools.h</itemPath>
+        <itemPath>ClientUsersWindow.h</itemPath>
         <itemPath>ErrorMessageProperties.h</itemPath>
         <itemPath>ErrorMessagesWindow.h</itemPath>
         <itemPath>GeoTools.h</itemPath>
@@ -144,6 +145,7 @@
         <itemPath>NewRouteWindow.h</itemPath>
         <itemPath>ObjTools.h</itemPath>
         <itemPath>PlayActivitySelectWindow.h</itemPath>
+        <itemPath>RouteEditorClient.h</itemPath>
         <itemPath>RouteEditorGLWidget.h</itemPath>
         <itemPath>RouteEditorServer.h</itemPath>
         <itemPath>RouteEditorWindow.h</itemPath>
@@ -189,6 +191,7 @@
         <itemPath>SpeedPost.h</itemPath>
         <itemPath>SpeedPostDAT.h</itemPath>
         <itemPath>TDB.h</itemPath>
+        <itemPath>TDBClient.h</itemPath>
         <itemPath>TRitem.h</itemPath>
         <itemPath>TRnode.h</itemPath>
         <itemPath>TSection.h</itemPath>
@@ -245,10 +248,12 @@
         <itemPath>QuadTree.h</itemPath>
         <itemPath>Ref.h</itemPath>
         <itemPath>Route.h</itemPath>
+        <itemPath>RouteClient.h</itemPath>
         <itemPath>Skydome.h</itemPath>
         <itemPath>SoundList.h</itemPath>
         <itemPath>TFile.h</itemPath>
         <itemPath>Terrain.h</itemPath>
+        <itemPath>TerrainClient.h</itemPath>
         <itemPath>TerrainInfo.h</itemPath>
         <itemPath>TerrainLib.h</itemPath>
         <itemPath>TerrainLibQt.h</itemPath>
@@ -256,6 +261,7 @@
         <itemPath>Tile.h</itemPath>
         <itemPath>Trk.h</itemPath>
       </logicalFolder>
+      <itemPath>ClientInfo.h</itemPath>
       <itemPath>ErrorMessage.h</itemPath>
       <itemPath>ErrorMessagesLib.h</itemPath>
       <itemPath>Game.h</itemPath>
@@ -400,6 +406,7 @@
         </logicalFolder>
         <itemPath>AboutWindow.cpp</itemPath>
         <itemPath>ActivityTools.cpp</itemPath>
+        <itemPath>ClientUsersWindow.cpp</itemPath>
         <itemPath>ErrorMessageProperties.cpp</itemPath>
         <itemPath>ErrorMessagesWindow.cpp</itemPath>
         <itemPath>GeoTools.cpp</itemPath>
@@ -409,6 +416,7 @@
         <itemPath>NewRouteWindow.cpp</itemPath>
         <itemPath>ObjTools.cpp</itemPath>
         <itemPath>PlayActivitySelectWindow.cpp</itemPath>
+        <itemPath>RouteEditorClient.cpp</itemPath>
         <itemPath>RouteEditorGLWidget.cpp</itemPath>
         <itemPath>RouteEditorServer.cpp</itemPath>
         <itemPath>RouteEditorWindow.cpp</itemPath>
@@ -454,6 +462,7 @@
         <itemPath>SpeedPost.cpp</itemPath>
         <itemPath>SpeedPostDAT.cpp</itemPath>
         <itemPath>TDB.cpp</itemPath>
+        <itemPath>TDBClient.cpp</itemPath>
         <itemPath>TRitem.cpp</itemPath>
         <itemPath>TRnode.cpp</itemPath>
         <itemPath>TSection.cpp</itemPath>
@@ -510,17 +519,21 @@
         <itemPath>QuadTree.cpp</itemPath>
         <itemPath>Ref.cpp</itemPath>
         <itemPath>Route.cpp</itemPath>
+        <itemPath>RouteClient.cpp</itemPath>
         <itemPath>Skydome.cpp</itemPath>
         <itemPath>SoundList.cpp</itemPath>
         <itemPath>TFile.cpp</itemPath>
         <itemPath>Terrain.cpp</itemPath>
+        <itemPath>TerrainClient.cpp</itemPath>
         <itemPath>TerrainInfo.cpp</itemPath>
         <itemPath>TerrainLib.cpp</itemPath>
         <itemPath>TerrainLibQt.cpp</itemPath>
+        <itemPath>TerrainLibQtClient.cpp</itemPath>
         <itemPath>TerrainLibSimple.cpp</itemPath>
         <itemPath>Tile.cpp</itemPath>
         <itemPath>Trk.cpp</itemPath>
       </logicalFolder>
+      <itemPath>ClientInfo.cpp</itemPath>
       <itemPath>ErrorMessage.cpp</itemPath>
       <itemPath>ErrorMessagesLib.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
@@ -551,7 +564,7 @@
       </toolsSet>
       <qt>
         <target>TSRE5</target>
-        <version>0.698</version>
+        <version>0.7</version>
         <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>
@@ -681,6 +694,14 @@
       <item path="ClickableLabel.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ClickableLabel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ClientInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ComplexLine.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1106,6 +1127,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteClient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
@@ -1270,6 +1299,10 @@
       </item>
       <item path="TDB.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TDBClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TDBClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TFile.h" ex="false" tool="3" flavor2="0">
@@ -1302,6 +1335,10 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
@@ -1313,6 +1350,8 @@
       <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQtClient.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1563,6 +1602,14 @@
       </item>
       <item path="ClickableLabel.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ClientInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ComplexLine.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ComplexLine.h" ex="false" tool="3" flavor2="0">
@@ -1987,6 +2034,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteClient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
@@ -2151,6 +2206,10 @@
       </item>
       <item path="TDB.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TDBClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TDBClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TFile.h" ex="false" tool="3" flavor2="0">
@@ -2183,6 +2242,10 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
@@ -2194,6 +2257,8 @@
       <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQtClient.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2322,7 +2387,7 @@
       </toolsSet>
       <qt>
         <target>TSRE5</target>
-        <version>0.699</version>
+        <version>0.7</version>
         <buildMode>1</buildMode>
         <modules>core gui widgets network opengl</modules>
         <defs>
@@ -2456,6 +2521,14 @@
       <item path="ClickableLabel.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ClickableLabel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ClientInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ComplexLine.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -2881,6 +2954,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteClient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
@@ -3045,6 +3126,10 @@
       </item>
       <item path="TDB.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TDBClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TDBClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TFile.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TFile.h" ex="false" tool="3" flavor2="0">
@@ -3077,6 +3162,10 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
@@ -3088,6 +3177,8 @@
       <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQtClient.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -3338,6 +3429,14 @@
       </item>
       <item path="ClickableLabel.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ClientInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ComplexLine.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ComplexLine.h" ex="false" tool="3" flavor2="0">
@@ -3762,6 +3861,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteClient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
@@ -3926,6 +4033,10 @@
       </item>
       <item path="TDB.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TDBClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TDBClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TFile.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TFile.h" ex="false" tool="3" flavor2="0">
@@ -3958,6 +4069,10 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
@@ -3969,6 +4084,8 @@
       <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQtClient.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -4220,6 +4337,14 @@
       </item>
       <item path="ClickableLabel.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ClientInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="ComplexLine.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ComplexLine.h" ex="false" tool="3" flavor2="0">
@@ -4644,6 +4769,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteClient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
@@ -4808,6 +4941,10 @@
       </item>
       <item path="TDB.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TDBClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TDBClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TFile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TFile.h" ex="false" tool="3" flavor2="0">
@@ -4840,6 +4977,10 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
@@ -4851,6 +4992,8 @@
       <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQtClient.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -5100,6 +5243,14 @@
       <item path="ClickableLabel.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="ClickableLabel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ClientInfo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientInfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ClientUsersWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ComplexLine.cpp" ex="false" tool="1" flavor2="8">
       </item>
@@ -5525,6 +5676,14 @@
       </item>
       <item path="Route.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="RouteClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteClient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RouteEditorClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="RouteEditorGLWidget.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="RouteEditorGLWidget.h" ex="false" tool="3" flavor2="0">
@@ -5689,6 +5848,10 @@
       </item>
       <item path="TDB.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TDBClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TDBClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TFile.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TFile.h" ex="false" tool="3" flavor2="0">
@@ -5721,6 +5884,10 @@
       </item>
       <item path="Terrain.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="TerrainClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TerrainClient.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TerrainInfo.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TerrainInfo.h" ex="false" tool="3" flavor2="0">
@@ -5732,6 +5899,8 @@
       <item path="TerrainLibQt.cpp" ex="false" tool="1" flavor2="8">
       </item>
       <item path="TerrainLibQt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TerrainLibQtClient.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TerrainLibSimple.cpp" ex="false" tool="1" flavor2="8">
       </item>

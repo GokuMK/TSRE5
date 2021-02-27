@@ -1605,7 +1605,7 @@ bool TDB::findPosition(int &x, int &z, float* p, float* q, float* endp, int sect
     aa.z += shp->path[0].pos[2];
     aa.rotateY(-qe[1], 0);
     p[0] = p[0] + aa.x + startPos[0];
-    p[1] = p[1] + shp->path[0].pos[1];
+    p[1] = p[1] - shp->path[0].pos[1];
     p[2] = p[2] - aa.z - startPos[2];
     p[0] -= bb.x;
     p[2] += bb.z;
@@ -1727,12 +1727,16 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     for (int i = 0; i < shp->numpaths; i++) {
         aa.set(shp->path[i].pos[0], shp->path[i].pos[1], shp->path[i].pos[2]);
         //aa.rotateY(-qe[1] + shp->path[i].rotDeg*M_PI/180 - shp->path[startEnd].rotDeg*M_PI/180, 0);
+        aa.rotateX(-qe[0], 0);
         aa.rotateY(-qe[1], 0);
 
         pp[0] = p[0] + aa.x;
-        pp[1] = p[1] + shp->path[i].pos[1];
+        pp[1] = p[1] - aa.y;// po[1];//shp->path[i].pos[1];
         pp[2] = p[2] - aa.z;
-        qee[0] = qe[0];
+        if(fabs(shp->path[i].rotDeg) > 90)
+            qee[0] = -qe[0];
+        else
+            qee[0] = qe[0];
         qee[1] = qe[1] + shp->path[i].rotDeg*M_PI/180;
         qee[2] = qe[2];
         
@@ -2148,6 +2152,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
 
         int len = 0;
         int tileRadius = 1;
+        int hOffset = 0;
         //int tileRadius = 5;
         for (int j = 1; j <= iTRnodes; j++) {
             TRnode* n = trackNodes[j];
@@ -2180,7 +2185,7 @@ void TDB::renderLines(GLUU *gluu, float* playerT, float playerRot) {
                         continue;
                     p.set(
                             (n->trVectorSection[i].param[8] - playerT[0])*2048 + n->trVectorSection[i].param[10],
-                            n->trVectorSection[i].param[11],
+                            n->trVectorSection[i].param[11] + hOffset ,
                             (-n->trVectorSection[i].param[9] - playerT[1])*2048 - n->trVectorSection[i].param[12]
                             );
                     o.set(

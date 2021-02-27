@@ -36,14 +36,13 @@ RouteEditorClient::RouteEditorClient() {
     url = "ws://"+args[1];
     args = args[0].split(":");
     username = args[0];
-    if(args.size() > 0)
+    if(args.size() > 1)
         password = args[1];
     username.truncate(12);
     for (int i = 0; i < username.size(); ++i) {
         if (!username[i].isLetterOrNumber())
            username.remove(i--,1);
     }
-    
     m_webSocket = new QWebSocket();
     qDebug() << "WebSocket server:" << url;
     connect(m_webSocket, &QWebSocket::connected, this, &RouteEditorClient::onConnected);

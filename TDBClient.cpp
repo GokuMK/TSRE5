@@ -61,6 +61,6 @@ int TDBClient::getNewTRitemId(){
 }
 
 TDBClient::~TDBClient() {
-    TDB::~TDB();
+    //TDB::~TDB();
 }
 
