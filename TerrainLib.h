@@ -20,6 +20,8 @@ class Brush;
 class HeightWindow;
 class QuadTree;
 class TerrainInfo;
+class QTextStream;
+class FileBuffer;
 
 class TerrainLib {
 public:
@@ -28,6 +30,12 @@ public:
     virtual ~TerrainLib();
     virtual void setDetailedAsCurrent();
     virtual void setDistantAsCurrent();
+    virtual void loadQuadTreeDetailed(FileBuffer *data);
+    virtual void loadQuadTreeDistant(FileBuffer *data);
+    virtual QuadTree* getQuadTreeDetailed();
+    virtual QuadTree* getQuadTreeDistant();
+    virtual void saveQtLoToStream(QTextStream &out);
+    virtual void saveQtToStream(QTextStream &out);
     virtual Terrain* getTerrainByXY(int x, int y, bool load = false);
     virtual void fillRaw(Terrain *cTerr, int mojex, int mojez);
     virtual float getHeight(int x, int z, float posx, float posz);

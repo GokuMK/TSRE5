@@ -1467,7 +1467,9 @@ public:
         TSRE_Requested_Terrain_FtFile = 100003,
         TSRE_Terrain_tFile = 100004,
         TSRE_Terrain_RawFile = 100005,
-        TSRE_Terrain_FtFile = 100006
+        TSRE_Terrain_FtFile = 100006,
+        TSRE_Requested_TD_File = 100007,
+        TSRE_Requested_TD_Lo_File = 100008
     };
     static std::unordered_map< int, const char* > IdName;
 };

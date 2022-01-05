@@ -17,6 +17,7 @@
 
 class FileBuffer;
 class TerrainInfo;
+class QTextStream;
 
 class QuadTree {
 public:
@@ -64,7 +65,9 @@ public:
     QuadTree(bool l = false);
     virtual ~QuadTree();
     void load();
+    void load(FileBuffer *data, bool loadtd = true);
     void save();
+    void save(QTextStream &out);
     void createNew(int tileX, int tileY);
     void addTile(int tileX, int tileY);
     void fillTerrainInfo(int tileX, int tileY, TerrainInfo* info);
@@ -72,12 +75,14 @@ public:
     unsigned int getMyNameId(int tileX, int tileY);
     void listNames();
     bool isLow();
+    void loadTD(int x, int y);
+    void loadTD(int x, int y, FileBuffer *data);
+    void saveTD(int x, int y);
+    void saveTD(int x, int y, QDataStream *out);
 private:
     int terrainDescSize = 67108864;
     int depth = 6;
     bool low = false;
-    void loadTD(int x, int y);
-    void saveTD(int x, int y);
     QString getNameXY(int e);
 };
 

@@ -403,7 +403,8 @@ void Route::mergeRoute(QString route2Name, float offsetX, float offsetY, float o
            qDebug() << "FAIL terrain NULL";
        else if (!t->loaded)
            qDebug() << "FAIL terrain not loaded";
-       qDebug() << t->mojex << t->mojez;
+       else
+           qDebug() << t->mojex << t->mojez;
     }
     
     setAsCurrentGameRoute();
@@ -787,6 +788,22 @@ void Route::loadTSectionData(FileBuffer *data){
     }
 }
 
+void Route::loadQuadTreeDetailed(FileBuffer *data){
+    terrainLib->loadQuadTreeDetailed(data);
+    if(Game::ServerMode){
+        loadingProgress++;
+        load();
+    }
+}
+
+void Route::loadQuadTreeDistant(FileBuffer *data){
+    terrainLib->loadQuadTreeDistant(data);
+    if(Game::ServerMode){
+        loadingProgress++;
+        load();
+    }
+}
+
 void Route::loadTrkData(FileBuffer *data){
     trk = new Trk();
     trk->loadUtf16Data(data);
@@ -922,6 +939,28 @@ void Route::preloadWFilesInit(){
             tTile->loadInit();
         }
     }
+    /*
+    // Do some stats
+    QHash<QString, int> names;
+    
+    foreach (Tile* tTile, tile){
+        if (tTile == NULL) continue;
+        if (tTile->loaded != 1) continue;
+        for (auto it = tTile->obiekty.begin(); it != tTile->obiekty.end(); ++it) {
+            WorldObj* obj = (WorldObj*) it->second;
+            if(obj == NULL) 
+                continue;
+            if(obj->typeID == obj->trackobj)
+                names[obj->fileName] += 1;
+        }
+    }
+    
+    QHashIterator<QString, int> i(names);
+    qDebug() << "Track Shapes";
+    while (i.hasNext()) {
+        i.next();
+        qDebug() << i.key() << " : " << i.value();
+    }*/
 }
 
 void Route::pushRenderItems(float * playerT, float* playerW, float* target, float playerRot, float fov, int renderMode) {

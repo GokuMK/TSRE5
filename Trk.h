@@ -58,6 +58,7 @@ public:
     int imageLoadId;
     int imageDetailsId;
     double *tsreProjection = NULL;
+    int tsreMaxStaticDetailLevel = 10;
     bool isModified();
     void setModified(bool val);
     Trk();

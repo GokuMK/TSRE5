@@ -12,8 +12,12 @@
 
 #include "TerrainLib.h"
 
+class FileBuffer;
+class QTextStream;
+
 class TerrainLibQt : public TerrainLib {
 public:
+    
     TerrainLibQt();
     TerrainLibQt(const TerrainLibQt& orig);
     virtual Terrain* getTerrainByXY(int x, int y, bool load = false);
@@ -22,6 +26,12 @@ public:
     void setDistantAsCurrent();
     void setDetailedTerrainAsCurrent();
     void setLowTerrainAsCurrent();
+    void saveQtToStream(QTextStream &out);
+    void saveQtLoToStream(QTextStream &out);
+    void loadQuadTreeDetailed(FileBuffer *data);
+    void loadQuadTreeDistant(FileBuffer *data);
+    QuadTree* getQuadTreeDetailed();
+    QuadTree* getQuadTreeDistant();
     void fillRaw(Terrain *cTerr, int mojex, int mojez);
     float getHeight(int x, int z, float posx, float posz);
     float getHeight(int x, int z, float posx, float posz, bool addR);
@@ -67,8 +77,8 @@ public:
     void renderEmpty(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
     void renderShadowMap(GLUU *gluu, float* playerT, float* playerW, float* target, float fov);
 protected:
-    QuadTree* quadTree;
-    QuadTree* quadTreeLo;
+    QuadTree* quadTree = NULL;
+    QuadTree* quadTreeLo = NULL;
     QuadTree* currentQuadTree = NULL;
     QHash<unsigned int, TerrainInfo*> terrainQt;
     QHash<unsigned int, TerrainInfo*> terrainQtLo;

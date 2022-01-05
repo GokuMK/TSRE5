@@ -59,6 +59,7 @@
 #include "ActivityTrafficProperties.h"
 #include "ActivityTimetableWindow.h"
 #include "ActivityTimetableProperties.h"
+#include "RouteEditorClient.h"
 
 RouteEditorWindow::RouteEditorWindow() {
 
@@ -552,6 +553,10 @@ RouteEditorWindow::RouteEditorWindow() {
                       glWidget, SLOT(reloadRefFile()));
     
     QObject::connect(glWidget, SIGNAL(refreshObjLists()),
+                      objTools, SLOT(refreshObjLists()));
+    
+    if(Game::serverClient != NULL)
+        QObject::connect(Game::serverClient, SIGNAL(refreshObjLists()),
                       objTools, SLOT(refreshObjLists()));
 }
 

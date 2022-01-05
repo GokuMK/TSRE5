@@ -29,6 +29,7 @@
 #include "Trk.h"
 #include "ClientInfo.h"
 #include "TRitem.h"
+#include "QuadTree.h"
 #include <QTimer>
 
 RouteEditorServer::RouteEditorServer(int port) {
@@ -188,6 +189,20 @@ void RouteEditorServer::readUtf16Message(QWebSocket *client, QByteArray &message
             ParserX::SkipToken(data);
             continue;
         }
+        
+        if (sh == "request_addons") {
+            clients[client]->lastAction = "Requested Addons ";
+            QByteArray outd;
+            QTextStream out(&outd);
+            out.setCodec("UTF-16");
+            out.setGenerateByteOrderMark(true);
+            out << "requested_addon (\n";
+            route->ref->saveToStream(&out);
+            out << ")\n";
+            out.flush();
+            client->sendBinaryMessage(outd);
+        }
+        
         if (sh == "request_tile") {
             int x = ParserX::GetNumber(data);
             int z = ParserX::GetNumber(data);
@@ -206,6 +221,68 @@ void RouteEditorServer::readUtf16Message(QWebSocket *client, QByteArray &message
                 out << ")\n";
                 out.flush();
                 client->sendBinaryMessage(outd);
+            }
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == "request_terrain_qt") {
+            QByteArray outd;
+            QTextStream out(&outd);
+            out.setCodec("UTF-16");
+            out.setGenerateByteOrderMark(true);
+            out << "requested_td (\n";
+            Game::terrainLib->saveQtToStream(out);
+            out << ") \n";
+            out << "requested_td_lo (\n";
+            Game::terrainLib->saveQtLoToStream(out);
+            out << ") \n";
+            out.flush();
+            client->sendBinaryMessage(outd);
+            client->flush();
+            // send qt files
+            QuadTree *qt = Game::terrainLib->getQuadTreeDetailed();
+            if(qt != NULL){
+                QHashIterator<int, QuadTree::TdFile*> i(qt->td);
+                while (i.hasNext()) {
+                    i.next();
+                    QByteArray outd2;
+                    QDataStream out2(&outd2, QIODevice::WriteOnly);
+                    out2.setByteOrder(QDataStream::LittleEndian);
+                    out2.setFloatingPointPrecision(QDataStream::SinglePrecision);
+                    out2 << (qint8)'B';
+
+                    out2 << TS::TSRE_Requested_TD_File;
+                    out2 << (qint32)0; //should be size in bytes;
+                    out2 << (qint8)0;
+                    out2 << (qint32)i.value()->x;
+                    out2 << (qint32)i.value()->y;
+                    qDebug() << "sending qt";
+                    qt->saveTD(i.value()->x, i.value()->y, &out2);
+                    out2.unsetDevice();
+                    client->sendBinaryMessage(outd2);
+                }
+            }
+            qt = Game::terrainLib->getQuadTreeDistant();
+            if(qt != NULL){
+                QHashIterator<int, QuadTree::TdFile*> i(qt->td);
+                while (i.hasNext()) {
+                    i.next();
+                    QByteArray outd2;
+                    QDataStream out2(&outd2, QIODevice::WriteOnly);
+                    out2.setByteOrder(QDataStream::LittleEndian);
+                    out2.setFloatingPointPrecision(QDataStream::SinglePrecision);
+                    out2 << (qint8)'B';
+
+                    out2 << TS::TSRE_Requested_TD_Lo_File;
+                    out2 << (qint32)0; //should be size in bytes;
+                    out2 << (qint8)0;
+                    out2 << (qint32)i.value()->x;
+                    out2 << (qint32)i.value()->y;
+                    qDebug() << "sending qtl";
+                    qt->saveTD(i.value()->x, i.value()->y, &out2);
+                    out2.unsetDevice();
+                    client->sendBinaryMessage(outd2);
+                }
             }
             ParserX::SkipToken(data);
             continue;

@@ -25,6 +25,7 @@
 #include "TSection.h"
 #include "TrackShape.h"
 #include "ClientInfo.h"
+#include "QuadTree.h"
 #include <QDateTime>
 
 RouteEditorClient::RouteEditorClient() {
@@ -118,7 +119,29 @@ void RouteEditorClient::readBinaryMessage(QWebSocket *client, FileBuffer* data) 
     int token = data->getInt();
     int x, z;
     Terrain *t;
+    QuadTree *qt;
+    qDebug() << "Token: " << token <<" : "<< TS::IdName[token];
     switch (token) {
+        case TS::TSRE_Requested_TD_File:
+            qDebug() << TS::IdName[TS::TSRE_Requested_TD_File];
+            data->getInt();
+            data->get();
+            x = data->getInt();
+            z = data->getInt();
+            qDebug() << x << z;
+            qt = Game::terrainLib->getQuadTreeDetailed();
+            qt->loadTD(x, z, data);
+            break;
+        case TS::TSRE_Requested_TD_Lo_File:
+            qDebug() << TS::IdName[TS::TSRE_Requested_TD_Lo_File];
+            data->getInt();
+            data->get();
+            x = data->getInt();
+            z = data->getInt();
+            qDebug() << x << z;
+            qt = Game::terrainLib->getQuadTreeDistant();
+            qt->loadTD(x, z, data);
+            break;
         case TS::TSRE_Requested_Terrain_tFile:
             qDebug() << TS::IdName[TS::TSRE_Requested_Terrain_tFile];
             data->getInt();
@@ -249,6 +272,23 @@ void RouteEditorClient::readUtf16Message(QWebSocket *client, FileBuffer* data) {
         }
         if (sh == ("requested_trk")) {
             Game::currentRoute->loadTrkData(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("requested_td")) {
+            Game::currentRoute->loadQuadTreeDetailed(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("requested_td_lo")) {
+            Game::currentRoute->loadQuadTreeDistant(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("requested_addon")) {
+            Game::currentRoute->ref = new Ref("");
+            Game::currentRoute->ref->loadUtf16Data(data, "");
+            emit refreshObjLists();
             ParserX::SkipToken(data);
             continue;
         }

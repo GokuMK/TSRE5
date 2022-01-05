@@ -310,7 +310,8 @@ void RouteEditorGLWidget::initializeGL() {
 }
 
 void RouteEditorGLWidget::reloadRefFile(){
-    route->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
+    route->loadAddons();
+    //route->ref = new Ref((Game::root + "/routes/" + Game::route + "/" + Game::routeName + ".ref"));
     emit refreshObjLists();
 }
 

@@ -56,6 +56,7 @@ public slots:
     
 signals:
     void loadRoute();
+    void refreshObjLists();
     
 private:
     QWebSocket * m_webSocket = NULL;

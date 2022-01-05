@@ -35,6 +35,8 @@
 #include "TS.h"
 #include "TerrainLib.h"
 #include "RouteEditorClient.h"
+#include "Route.h"
+#include "Trk.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -807,8 +809,8 @@ int WorldObj::getCustomDetailLevel(){
 }
 
 int WorldObj::getCurrentDetailLevel(){
-    if(staticDetailLevel >= 10)
-        return 10;
+    if(staticDetailLevel >= Game::currentRoute->trk->tsreMaxStaticDetailLevel)
+        return Game::currentRoute->trk->tsreMaxStaticDetailLevel;
     if(staticDetailLevel >= 0)
         return staticDetailLevel;
     else

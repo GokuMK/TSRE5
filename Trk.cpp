@@ -279,6 +279,11 @@ void Trk::loadUtf16Data(FileBuffer* data){
                     ParserX::SkipToken(data);
                     continue;
                 }
+                if (sh == ("tsremaxstaticdetaillevel")) {
+                    tsreMaxStaticDetailLevel = ParserX::GetNumber(data);
+                    ParserX::SkipToken(data);
+                    continue;
+                }
 
                 qDebug() << "#TRK tr_routefile - undefined token: " << sh;
                 ParserX::SkipToken(data);
@@ -382,6 +387,8 @@ void Trk::saveToStream(QTextStream &out){
     out << "	ORTSUserPreferenceForestClearDistance ( " << this->forestClearDistance << " )" << "\n";
     if(this->tsreProjection != NULL)
     out << "	TsreGeoProjection ( " << this->tsreProjection[0] << " " << this->tsreProjection[1] << " " << this->tsreProjection[2] << " " << this->tsreProjection[3] << " " << " )" << "\n";
+    if(this->tsreMaxStaticDetailLevel != 10)
+    out << "	TsreMaxStaticDetailLevel ( " << this->tsreMaxStaticDetailLevel << " )" << "\n";
     if(this->distantTerrainYOffset > 0)
     out << "	TsreDistantTerrainYoffset ( " << this->distantTerrainYOffset << " )" << "\n";
     if(this->tsreSuperelevation > 0)

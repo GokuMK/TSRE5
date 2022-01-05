@@ -71,6 +71,22 @@ Terrain* TerrainLibQt::getTerrainByXY(int x, int y, bool load) {
     return NULL;
 }
 
+QuadTree* TerrainLibQt::getQuadTreeDetailed(){
+    return quadTree;
+}
+
+QuadTree* TerrainLibQt::getQuadTreeDistant(){
+    return quadTreeLo;
+}
+
+void TerrainLibQt::saveQtToStream(QTextStream &out){
+    quadTree->save(out);
+}
+
+void TerrainLibQt::saveQtLoToStream(QTextStream &out){
+    quadTreeLo->save(out);
+}
+
 void TerrainLibQt::loadQuadTree() {
     quadTree = new QuadTree();
     quadTree->load();
@@ -80,8 +96,17 @@ void TerrainLibQt::loadQuadTree() {
 
     //currentQt = &terrainQtLo;
     //currentQuadTree = quadTreeLo;
-    
     //quadTree->listNames();
+}
+
+void TerrainLibQt::loadQuadTreeDetailed(FileBuffer *data) {
+    quadTree = new QuadTree();
+    quadTree->load(data, false);
+}
+
+void TerrainLibQt::loadQuadTreeDistant(FileBuffer *data) {
+    quadTreeLo = new QuadTree();
+    quadTreeLo->load(data, false);
 }
 
 void TerrainLibQt::createNewRouteTerrain(int x, int z) {

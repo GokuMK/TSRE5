@@ -15,6 +15,9 @@
 #include <QVector>
 #include <QMap>
 
+class FileBuffer;
+class QTextStream;
+
 class Ref {
 public:
     struct RandomTransformation {
@@ -55,6 +58,8 @@ public:
     Ref(QString path);
     virtual ~Ref();
     void loadFile(QString path);
+    void loadUtf16Data(FileBuffer *data, QString path);
+    void saveToStream(QTextStream *out);
     bool loaded;
     RefItem *selected = NULL;
     

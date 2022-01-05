@@ -818,6 +818,11 @@ void TRitem::addToTrackPos(float d) {
 
 void TRitem::flipTrackPos(float d) {
     this->trItemSData1 = d - this->trItemSData1;
+    
+    // change signal direction when flipping track vector
+    if(this->type == "signalitem")
+        this->trSignalType2 = abs(this->trSignalType2 - 1);
+
 }
 
 float TRitem::getTrackPosition(){

@@ -17,16 +17,12 @@
 
 Ref::Ref(QString path) {
     loaded = false;
-    loadFile(path);
+    if(path.length() > 1)
+        loadFile(path);
 }
 
 void Ref::loadFile(QString path){
     qDebug() << "Wczytywanie pliku ref: " << path;
-
-    int x, i, j, ii, jj, uu;
-    float xx;
-    int t;
-    QString sh;
     path.replace("//", "/");
     qDebug() << path;
     QFile file(path);
@@ -35,7 +31,12 @@ void Ref::loadFile(QString path){
     FileBuffer* data = ReadFile::read(&file);
     data->toUtf16();
     data->skipBOM();    
+    loadUtf16Data(data, path);
+    selected = NULL;
+}
 
+void Ref::loadUtf16Data(FileBuffer* data, QString path){
+    QString sh;
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         //qDebug() << sh;
         if (sh == ("simisa@@@@@@@@@@jinx0r1t______")) {
@@ -45,9 +46,13 @@ void Ref::loadFile(QString path){
             continue;
         }
         if (sh == ("include")) {
-            QString incPath = ParserX::GetStringInside(data);
-            ParserX::SkipToken(data);
-            data->insertFile(path + "/" + incPath);
+            if(path.length() > 0){
+                QString incPath = ParserX::GetStringInside(data);
+                ParserX::SkipToken(data);
+                data->insertFile(path + "/" + incPath);
+            } else {
+                ParserX::SkipToken(data);
+            }
             continue;
         }
         if (sh == ("skip")) {
@@ -61,31 +66,31 @@ void Ref::loadFile(QString path){
         RefItem item;
         item.type = sh;
         while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-            //qDebug() << sh;
+            //qDebug() << "-" << sh;
             if (sh == ("class")) {
-                item.clas = ParserX::GetString(data);
+                item.clas = ParserX::GetStringInside(data);
                 ParserX::SkipToken(data);
                 continue;
             }
             if (sh == ("filename")) {
-                item.filename.push_back(ParserX::GetString(data));
+                item.filename.push_back(ParserX::GetStringInside(data));
                 ParserX::SkipToken(data);
                 continue;
             }
             if (sh == ("align")) {
-                item.align = ParserX::GetString(data);
+                item.align = ParserX::GetStringInside(data);
                 ParserX::SkipToken(data);
                 continue;
             }
             if (sh == ("description")) {
-                item.description = ParserX::GetString(data);
+                item.description = ParserX::GetStringInside(data);
                 ParserX::SkipToken(data);
                 continue;
             }
             if (sh == ("selectionmethod")) {
                 /*SequentialSelection*/
                 /*RandomSelection*/
-                item.selectionMethod = ParserX::GetString(data);
+                item.selectionMethod = ParserX::GetStringInside(data);
                 ParserX::SkipToken(data);
                 continue;
             }
@@ -141,7 +146,38 @@ void Ref::loadFile(QString path){
         ParserX::SkipToken(data);
     }
 
-    selected = NULL;
+}
+
+void Ref::saveToStream(QTextStream* out){
+    
+    foreach (QVector<RefItem> items, refItems){
+        if(items.size() == 0)
+            continue;
+        if(items[0].clas.startsWith("#"))
+            continue;
+        for(int i = 0; i < items.size(); i++){
+            //qDebug() << items[i].type;
+            *out << items[i].type << " (\n";
+            *out << "class ( " << ParserX::AddComIfReq(items[i].clas) << " )\n";
+            for(int j = 0; j < items[i].filename.size(); j++)
+                *out << "filename ( " << ParserX::AddComIfReq(items[i].filename[j]) << " )\n";
+            if(items[i].align.length() > 0)
+            *out << "align ( " << items[i].align << " )\n";
+            if(items[i].description.length() > 0)
+                *out << "description ( " << ParserX::AddComIfReq(items[i].description) << " )\n";
+            if(items[i].selectionMethod.length() > 0)
+                *out << "selectionmethod ( " << items[i].selectionMethod << " )\n";
+            if(items[i].randomTransformation != NULL){
+                *out << "randomrotx ( " << QString::number(items[i].randomTransformation->rbX) << " " << QString::number(items[i].randomTransformation->reX) << " )\n";
+                *out << "randomroty ( " << QString::number(items[i].randomTransformation->rbY) << " " << QString::number(items[i].randomTransformation->reY) << " )\n";
+                *out << "randomrotz ( " << QString::number(items[i].randomTransformation->rbZ) << " " << QString::number(items[i].randomTransformation->reZ) << " )\n";
+                *out << "randomtranslationx ( " << QString::number(items[i].randomTransformation->tbX) << " " << QString::number(items[i].randomTransformation->teX) << " )\n";
+                *out << "randomtranslationy ( " << QString::number(items[i].randomTransformation->tbY) << " " << QString::number(items[i].randomTransformation->teY) << " )\n";
+                *out << "randomtranslationz ( " << QString::number(items[i].randomTransformation->tbZ) << " " << QString::number(items[i].randomTransformation->teZ) << " )\n";
+            }
+            *out << ") \n";
+        }
+    }
 }
 
 Ref::Ref() {

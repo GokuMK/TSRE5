@@ -105,31 +105,31 @@ void RouteClient::load(){
             
         case 2:
             Game::serverClient->sendUtf16Message("request_tdb ( ) \n request_rdb ( ) \n ");
+            Game::serverClient->sendUtf16Message("request_terrain_qt ( ) \n ");
             break;
-            
-        case 3:
-            break;
-            
-        case 4:
-            loadAddons();
 
-            loadMkrList();
-            createMkrPlaces();
-            loadServices();
-            loadTraffic();
-            loadPaths();
-            loadActivities();
+        case 6:
+            this->ref = new Ref("");
+            Game::serverClient->sendUtf16Message("request_addons ( ) \n ");
+            //loadAddons();
+
+            //loadMkrList();
+            //createMkrPlaces();
+            //loadServices();
+            //loadTraffic();
+            //loadPaths();
+            //loadActivities();
 
             soundList = new SoundList();
-            soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
-            soundList->loadSoundRegions(Game::root + "/routes/" + Game::route + "/ttype.dat");
+            //soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
+            //soundList->loadSoundRegions(Game::root + "/routes/" + Game::route + "/ttype.dat");
             Game::soundList = soundList;/**/
 
-            Game::terrainLib->loadQuadTree();
-            OrtsWeatherChange::LoadList();
-            ForestObj::LoadForestList();
+            //Game::terrainLib->loadQuadTree();
+            //OrtsWeatherChange::LoadList();
+            //ForestObj::LoadForestList();
             ForestObj::ForestClearDistance = trk->forestClearDistance;
-            CarSpawnerObj::LoadCarSpawnerList();
+            //CarSpawnerObj::LoadCarSpawnerList();
 
             loaded = true;
 
@@ -139,6 +139,9 @@ void RouteClient::load(){
             skydome = new Skydome();
 
             emit initDone();
+            break;
+        default:
+            break;
     }
 }
 

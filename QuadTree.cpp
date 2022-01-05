@@ -23,7 +23,7 @@ QuadTree::QuadTree(bool l) {
 }
 
 void QuadTree::load() {
-    QString sh;
+
     QString path;
     if(low)
         path = Game::root + "/routes/" + Game::route + "/td/lo_td_idx.dat";
@@ -45,7 +45,11 @@ void QuadTree::load() {
     //}
     data->toUtf16();
     ParserX::NextLine(data);
+    load(data);
+}
 
+void QuadTree::load(FileBuffer *data, bool loadtd){
+    QString sh;
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         if (sh == "terrain_desc") {
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
@@ -59,18 +63,21 @@ void QuadTree::load() {
                     ParserX::SkipToken(data);
                     continue;
                 } else if (sh == "terrain_desc_tiles") {
-                    while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-                        if (sh == "tdfile") {
-                            int x = ParserX::GetNumber(data);
-                            int y = ParserX::GetNumber(data);
-                            qDebug() << sh << " " << x << " " << y;
-                            loadTD(x, y);
-                            ParserX::SkipToken(data);
+                    if(loadtd){
+                        while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
+                            if (sh == "tdfile") {
+                                int x = ParserX::GetNumber(data);
+                                int y = ParserX::GetNumber(data);
+                                qDebug() << sh << " " << x << " " << y;
+                                loadTD(x, y);
+                                ParserX::SkipToken(data);
+                            }
                         }
                     }
                     ParserX::SkipToken(data);
                     continue;
                 }
+                qDebug() << "#QuadTree terrain_desc - undefined token " << sh;
                 ParserX::SkipToken(data);
             }
             ParserX::SkipToken(data);
@@ -417,6 +424,21 @@ void QuadTree::save() {
     out.setGenerateByteOrderMark(true);
     out << "SIMISA@@@@@@@@@@JINX0D0t______\n";
     out << "\n";
+    save(out);
+    
+    file.close();
+
+    QHashIterator<int, TdFile*> i2(td);
+    while (i2.hasNext()) {
+        i2.next();
+        if(i2.value() == NULL)
+            continue;
+        if (i2.value()->modified)
+            saveTD((float) i2.value()->x / 512.0, (float) i2.value()->y / 512.0);
+    }
+}
+
+void QuadTree::save(QTextStream& out){
     out << "terrain_desc (\n";
     out << "	terrain_desc_size ( " << this->terrainDescSize << " )\n";
     out << "	Depth ( " << this->depth << " )\n";
@@ -429,17 +451,8 @@ void QuadTree::save() {
         out << "		TdFile ( " << (i.value()->x / 512) << " " << (i.value()->y / 512) << " )\n";
     }
     out << "	) \n";
-    out << ")";
-    file.close();
+    out << ") \n";
 
-    QHashIterator<int, TdFile*> i2(td);
-    while (i2.hasNext()) {
-        i2.next();
-        if(i2.value() == NULL)
-            continue;
-        if (i2.value()->modified)
-            saveTD((float) i2.value()->x / 512.0, (float) i2.value()->y / 512.0);
-    }
 }
 
 void QuadTree::loadTD(int x, int y) {
@@ -457,16 +470,17 @@ void QuadTree::loadTD(int x, int y) {
         return;
     }
     FileBuffer* data = ReadFile::read(&file);
+    loadTD(x*512, y*512, data);
+    delete data;
+}
+
+void QuadTree::loadTD(int x, int y, FileBuffer* data){
     TdFile* ttd = new TdFile();
-    ttd->x = x * 512;
-    ttd->y = y * 512;
+    ttd->x = x;
+    ttd->y = y;
     td[ttd->x * 100000 + ttd->y] = ttd;
-
-    data->off = 38 + 16;
-
-    int tx = x * 512;
-    int ty = y * 512;
-    ttd->qt = new QuadTile(256, 1, tx, ty);
+    data->off += 38 + 16;
+    ttd->qt = new QuadTile(256, 1, ttd->x, ttd->y);
     ttd->qt->load(data);
     //saveTD(x, y);
 }
@@ -485,33 +499,37 @@ void QuadTree::saveTD(int x, int y) {
         qDebug() << "td write fail";
         return;
     }
-    QDataStream write(file);
-    write.setByteOrder(QDataStream::LittleEndian);
-    write.setFloatingPointPrecision(QDataStream::SinglePrecision);
+    QDataStream out(file);
+    out.setByteOrder(QDataStream::LittleEndian);
+    out.setFloatingPointPrecision(QDataStream::SinglePrecision);
+    x = x * 512;
+    y = y * 512;
+    int id = x * 100000 + y;
+    saveTD(x, y, &out);
+    out.unsetDevice();
+    file->close();
+    td[id]->modified = false;
+}
 
+void QuadTree::saveTD(int x, int y, QDataStream* out){
     //write
     const char header[] = {
         0x53, 0x49, 0x4D, 0x49, 0x53, 0x41, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40,
         0x4A, 0x49, 0x4E, 0x58, 0x30, 0x64, 0x31, 0x62, 0x5F, 0x5F, 0x5F, 0x5F, 0x5F, 0x5F, 0x0D, 0x0A
     };
-    write.writeRawData(header, 32);
+    out->writeRawData(header, 32);
     QVector<unsigned char> treeData;
+    int id = x * 100000 + y;
+    td[id]->qt->save(treeData);
 
-    x = x * 512;
-    y = y * 512;
-    td[x * 100000 + y]->qt->save(treeData);
-
-    write << (qint32) 0x84;
-    write << (qint32) treeData.size() + 14;
-    write << (qint8) 0;
-    write << (qint32) 0x87;
-    write << (qint32) treeData.size() + 5;
-    write << (qint8) 0;
-    write << (qint32) treeData.size();
-    write.writeRawData((char*) &treeData[0], treeData.size());
-    write.unsetDevice();
-    file->close();
-    td[x * 100000 + y]->modified = false;
+    *out << (qint32) 0x84;
+    *out << (qint32) treeData.size() + 14;
+    *out << (qint8) 0;
+    *out << (qint32) 0x87;
+    *out << (qint32) treeData.size() + 5;
+    *out << (qint8) 0;
+    *out << (qint32) treeData.size();
+    out->writeRawData((char*) &treeData[0], treeData.size());
 }
 
 QChar QuadTree::QuadTile::PrefixString[2] = {'_', '-'};

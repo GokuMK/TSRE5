@@ -58,9 +58,12 @@ void LoadShapeViewer(QString arg){
 void LoadRouteEditor(){
     if(Game::serverLogin.length() > 0)
         Game::ServerMode = true;
+    
     if(Game::ServerMode){
         Game::useQuadTree = true;
         Undo::UndoEnabled = false;
+        // Create Server Client
+        Game::serverClient = new RouteEditorClient();
     }
     
     RouteEditorWindow *window = new RouteEditorWindow();
@@ -82,8 +85,6 @@ void LoadRouteEditor(){
             loadWindow->show();
         }
     } else {
-        // Create Server Client
-        Game::serverClient = new RouteEditorClient();
         QObject::connect(Game::serverClient, SIGNAL(loadRoute()), window, SLOT(showRoute()));
         Game::serverClient->connectNow();
     }

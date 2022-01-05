@@ -43,6 +43,30 @@ void TerrainLib::setDistantAsCurrent(){
     
 }
 
+QuadTree* TerrainLib::getQuadTreeDetailed(){
+    return NULL;
+}
+
+QuadTree* TerrainLib::getQuadTreeDistant(){
+    return NULL;
+}
+
+void TerrainLib::loadQuadTreeDetailed(FileBuffer *data){
+    
+}
+
+void TerrainLib::loadQuadTreeDistant(FileBuffer *data){
+    
+}
+    
+void TerrainLib::saveQtToStream(QTextStream &out){
+    
+}
+
+void TerrainLib::saveQtLoToStream(QTextStream &out){
+    
+}
+
 void TerrainLib::updateTerrainHeightmap(Terrain *t){
     
 }

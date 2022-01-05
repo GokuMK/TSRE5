@@ -67,6 +67,8 @@ public:
     void loadAddons();
     void loadTdbData(FileBuffer *data, QString type);
     void loadTSectionData(FileBuffer *data);
+    void loadQuadTreeDetailed(FileBuffer *data);
+    void loadQuadTreeDistant(FileBuffer *data);
     void loadTrkData(FileBuffer *data);
     void updateTileData(FileBuffer *data);
     WorldObj* updateWorldObjData(FileBuffer *data);
