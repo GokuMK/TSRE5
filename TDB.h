@@ -53,9 +53,9 @@ public:
     std::unordered_map<int, TRitem*> trackItems;
     std::unordered_map<int, TRnode*> trackNodes;
     //std::vector<TRnode> trackNodes;
-    int iTRnodes;
-    int iTRitems;
-    int serial;
+    int iTRnodes = 0;
+    int iTRitems = 0;
+    int serial = 0;
     TDB(TSectionDAT* tsection, bool road);
     TDB(const TDB& o);
     virtual ~TDB();

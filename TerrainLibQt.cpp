@@ -1032,7 +1032,6 @@ void TerrainLibQt::fillTerrainData(Terrain* tTile, float* offsetXYZ){
             } else if(terr->loaded){
                 QString tex = terr->getPatchMainTextureName(x, z, position[0], position[2]);
                 tTile->setTexture(tex, tTile->mojex, tTile->mojez, i, j, terr->getPatchTexTransformString(x, z, position[0], position[2]));
-                
                 int flags = terr->getPatchFlags(x, z, position[0], position[2]);
                 tTile->setPatchFlags(tTile->mojex, tTile->mojez, i, j, flags);
                 if ((flags & 0xc0) != 0){

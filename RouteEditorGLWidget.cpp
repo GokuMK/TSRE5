@@ -328,6 +328,10 @@ void RouteEditorGLWidget::paintGL(){
     paintGL2();
     return;
     
+    // Here is not finishes, future version of TSRE renderer.
+    // Unlike old TSRE renderer, here collect all render items first
+    // And then use renderer to render them
+    
     Game::currentShapeLib = currentShapeLib;
     if (route == NULL) return;
     if (!route->loaded) return;
@@ -1519,7 +1523,11 @@ void RouteEditorGLWidget::jumpTo(int X, int Z, float x, float y, float z) {
     qDebug() << "jump: " << X << " " << Z;
     Game::terrainLib->load(X, Z);
     float h = Game::terrainLib->getHeight(X, Z, x, z);
-    if ((y < h) || (y > h + 100)) y = h + 20;
+    //if(h == -1)
+        y = y + 10;
+    if ((y < h) || (y > h + 100)) 
+        y = h + 20;
+
     camera->setPozT(X, Z);
     camera->setPos(x, y, z);
 

@@ -44,6 +44,7 @@ public:
     bool equals(TRnode* r);
     bool equalsIgnoreType(TRnode* r);
     int podmienTrPin(int stare, int nowe);
+    bool isLikedTo(int id);
     int setTrPinK(int id, int nowe);
     float getVectorSectionXRot(int id);
     void addPositionOffset(float offsetXYZ[3]);

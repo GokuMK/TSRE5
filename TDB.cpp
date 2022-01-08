@@ -335,8 +335,10 @@ void TDB::loadTit(){
                 if(this->trackItems[nowy->trItemId] == NULL){
                     qDebug() << "#TIT tdb fail" << nowy->trItemId;
                 } else {
-                    this->trackItems[nowy->trItemId]->trSignalRDir = new float[nowy->trSignalDirs * 6];
-                    memcpy(this->trackItems[nowy->trItemId]->trSignalRDir, nowy->trSignalRDir, sizeof(float[nowy->trSignalDirs * 6]));
+                    if(nowy->trSignalDirs > 0){
+                        this->trackItems[nowy->trItemId]->trSignalRDir = new float[nowy->trSignalDirs * 6];
+                        memcpy(this->trackItems[nowy->trItemId]->trSignalRDir, nowy->trSignalRDir, sizeof(float[nowy->trSignalDirs * 6]));
+                    }
                 }
                 ParserX::SkipToken(bufor);
             }
@@ -366,7 +368,7 @@ void TDB::mergeTDB(TDB *secondTDB, float offsetXYZ[3], unsigned int& trackNodeOf
     for(int i = 1; i <= secondTDB->iTRnodes; i++){
         TRnode *n = secondTDB->trackNodes[i];
         if(n == NULL){
-            qDebug() << "NULL" << i;
+            qDebug() << "TRnode NULL" << i;
             continue;
         }
         //qDebug() << "o";
@@ -379,11 +381,19 @@ void TDB::mergeTDB(TDB *secondTDB, float offsetXYZ[3], unsigned int& trackNodeOf
     
     // Add new trackItems
     for(int i = 0; i < secondTDB->iTRitems; i++){
+        //qDebug() << i;
         TRitem *n = secondTDB->trackItems[i];
+        if(n == NULL){
+            qDebug() << "TRitem NULL" << i;
+            continue;
+        }
+        //qDebug() << "addPositionOffset";
         n->addPositionOffset(offsetXYZ);
+        //qDebug() << "addTrackNodeItemOffset";
         n->addTrackNodeItemOffset(trackNodeOffset, trackItemOffset);
         this->trackItems[iTRitems++] = n;
     }
+    qDebug() << "tdb end";
 }
 
 void TDB::checkTrSignalRDirs(){
@@ -1177,13 +1187,16 @@ int TDB::splitVectorSection(int id, int j){
 
 void TDB::deleteJunction(int id){
     TRnode* junction = trackNodes[id];
-    if(junction->typ != 2) return;
+    if(junction->typ != 2) 
+        return;
     
     int count = 0;
     int vecId = 0;
     for(int i = 0; i < 3; i++){
+        qDebug() << junction->TrPinS[i];
         if(junction->TrPinS[i] != 0) count++;
     }
+    qDebug() << count;
     if(count > 1){
         qDebug() << "junction delete fail";
         return;
@@ -1205,6 +1218,14 @@ void TDB::deleteJunction(int id){
             }
         }
         TRnode* vect = trackNodes[vecId];
+        
+        if(!vect->isLikedTo(id)){
+            qDebug() << "FAIL, TrackNode not linked to this juction!";
+            trackNodes[id] = NULL;
+            updateTrNode(id);
+            return;
+        }
+        
         vect->setTrPinK(id, 1);
 
         if(junction->TrPinK[0] == 1){
@@ -4053,8 +4074,10 @@ void TDB::checkDatabase(){
     
     for(int i = 1; i <= iTRnodes; i++){
         TRnode* n = trackNodes[i];
-        if (n == NULL) continue;
-        if (n->typ == -1) continue;
+        if (n == NULL) 
+            continue;
+        if (n->typ == -1) 
+            continue;
         if (n->typ == 1) {
             if(n->iTrv == 0){
                 ErrorMessage *e = new ErrorMessage(
@@ -4063,6 +4086,49 @@ void TDB::checkDatabase(){
                     QString("TrackNode: ") + QString::number(i) + ". Trvectorsection is empty." 
                 );
                 ErrorMessagesLib::PushErrorMessage(e);
+            }
+        }
+        if (n->typ == 2) {
+            int originId = n->TrPinS[0];
+            if(originId == 0){
+                    ErrorMessage *e = new ErrorMessage(
+                        ErrorMessage::Type_Warning, 
+                        tdbName, 
+                        QString("TrackNode: ") + QString::number(i) + ". Junction origin linked to nothing.",
+                        "Junction is not finished. Junction origin must be linked to a track section, otherwise OR simulation will crash."
+                    );
+                    e->setLocationXYZ(n->UiD[4], n->UiD[5], n->UiD[6], n->UiD[7], n->UiD[8]);
+                    ErrorMessagesLib::PushErrorMessage(e);
+            } else {
+                TRnode *origin = trackNodes[originId];
+                if(origin == NULL) {
+                    ErrorMessage *e = new ErrorMessage(
+                        ErrorMessage::Type_Error, 
+                        tdbName, 
+                        QString("TrackNode: ") + QString::number(i) + ". Junction origin linked to a NULL TrackNode.",
+                        "There might be a fatal error inside Track Database."
+                    );
+                    e->setLocationXYZ(n->UiD[4], n->UiD[5], n->UiD[6], n->UiD[7], n->UiD[8]);
+                    ErrorMessagesLib::PushErrorMessage(e);
+                } else if(!origin->isLikedTo(i)){
+                    ErrorMessage *e = new ErrorMessage(
+                        ErrorMessage::Type_Error, 
+                        tdbName, 
+                        QString("TrackNode: ") + QString::number(i) + ". Link Error.",
+                        QString("Fatal Track Database error. Junction origin linked to TrackNode ") + QString::number(originId) + ", but this TrackNode is not linked to this Junction."
+                    );
+                    e->setLocationXYZ(n->UiD[4], n->UiD[5], n->UiD[6], n->UiD[7], n->UiD[8]);
+                    ErrorMessagesLib::PushErrorMessage(e);
+                } else if(origin->typ == 2){
+                    ErrorMessage *e = new ErrorMessage(
+                        ErrorMessage::Type_Error, 
+                        tdbName, 
+                        QString("TrackNode: ") + QString::number(i) + ".  Junction linked to another Junction.",
+                        QString("Fatal Track Database error. Junction origin linked to another Junction origin. ") + QString::number(originId)
+                    );
+                    e->setLocationXYZ(n->UiD[4], n->UiD[5], n->UiD[6], n->UiD[7], n->UiD[8]);
+                    ErrorMessagesLib::PushErrorMessage(e);
+                }
             }
         }
         /*for(int j = 0; j < trackNodes[i]->iTri; j++){

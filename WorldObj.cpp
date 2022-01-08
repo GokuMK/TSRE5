@@ -819,7 +819,7 @@ int WorldObj::getCurrentDetailLevel(){
 
 void WorldObj::setCustomDetailLevel(int val){
     if(val < 0) val = -1;
-    if(val > 10) val = 10;
+    if(val > Game::currentRoute->trk->tsreMaxStaticDetailLevel) val = Game::currentRoute->trk->tsreMaxStaticDetailLevel;
     staticDetailLevel = val;
     setModified();
 }

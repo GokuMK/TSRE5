@@ -37,6 +37,8 @@
 #include "ErrorMessagesLib.h"
 #include "ErrorMessage.h"
 #include "Renderer.h"
+#include "Trk.h"
+#include "Route.h"
 
 Tile::Tile() {
     modified = false;
@@ -684,7 +686,7 @@ void Tile::save() {
         }
     } else {
         int count = 0;
-        for(int iLevel = -15; iLevel < 11; iLevel++){
+        for(int iLevel = -15; iLevel < Game::currentRoute->trk->tsreMaxStaticDetailLevel+1; iLevel++){
             // get current level count;
             count = 0;
             if( iLevel > 0 ){

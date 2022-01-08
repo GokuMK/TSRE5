@@ -1347,7 +1347,7 @@ void Terrain::setTexture(QString textureName, int x, int z, float posx, float po
             //qDebug() << "existed material";
         }
     if(transformation.length() > 0){
-        this->setPatchTexTransform(transformation);
+        this->setPatchTexTransform(transformation, u);
         
     }
 }

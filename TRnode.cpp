@@ -267,6 +267,14 @@ int TRnode::podmienTrPin(int stare, int nowe) {
         return 0;
     }
 
+bool TRnode::isLikedTo(int id) {
+        for(int j = 0; j < 3; j++)
+            if(TrPinS[j] == id){
+                return true;
+            }
+        return false;
+    }
+
 int TRnode::setTrPinK(int id, int nowe) {
         for(int j = 0; j < 3; j++)
             if(TrPinS[j] == id){
