@@ -228,7 +228,7 @@ int main(int argc, char *argv[]){
         }
         if(args[1] == "--server"){
             // Run ace converter
-            Game::route = "bbb";
+            // Game::route = "bbb";
             Game::checkRoute(Game::route);
             //routeDir = Game::route;
             //trkName = Game::trkName;
