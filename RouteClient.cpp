@@ -121,15 +121,15 @@ void RouteClient::load(){
             //loadActivities();
 
             soundList = new SoundList();
-            //soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
-            //soundList->loadSoundRegions(Game::root + "/routes/" + Game::route + "/ttype.dat");
+            soundList->loadSoundSources(Game::root + "/routes/" + Game::route + "/ssource.dat");
+            soundList->loadSoundRegions(Game::root + "/routes/" + Game::route + "/ttype.dat");
             Game::soundList = soundList;/**/
 
             //Game::terrainLib->loadQuadTree();
             //OrtsWeatherChange::LoadList();
-            //ForestObj::LoadForestList();
+            ForestObj::LoadForestList();
             ForestObj::ForestClearDistance = trk->forestClearDistance;
-            //CarSpawnerObj::LoadCarSpawnerList();
+            CarSpawnerObj::LoadCarSpawnerList();
 
             loaded = true;
 

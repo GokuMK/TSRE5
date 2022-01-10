@@ -183,7 +183,7 @@ void RouteEditorServer::readUtf16Message(QWebSocket *client, QByteArray &message
             }
             clients[client]->password = ParserX::GetStringInside(data);
             clients[client]->lastAction = "Logged in";
-            QString msg = "load_route ( \"bbb\" )";
+            QString msg = "load_route ( \""+Game::route+"\" )";
             this->sendUtf16Message(client, msg);
             qDebug() << clients[client]->username << " Logged in";
             ParserX::SkipToken(data);

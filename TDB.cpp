@@ -1746,7 +1746,7 @@ bool TDB::placeTrack(int x, int z, float* p, float* q, int sectionIdx, int uid, 
     ////////////////////////////////
 
     for (int i = 0; i < shp->numpaths; i++) {
-        aa.set(shp->path[i].pos[0], shp->path[i].pos[1], shp->path[i].pos[2]);
+        aa.set(shp->path[i].pos[0], -shp->path[i].pos[1], shp->path[i].pos[2]);
         //aa.rotateY(-qe[1] + shp->path[i].rotDeg*M_PI/180 - shp->path[startEnd].rotDeg*M_PI/180, 0);
         aa.rotateX(-qe[0], 0);
         aa.rotateY(-qe[1], 0);

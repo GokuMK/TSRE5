@@ -106,6 +106,8 @@ void Tile::wczytajObiekty() {
         WorldObj* obj = (WorldObj*) it->second;
         if(obj == NULL) 
             continue;
+        //if(obj->typeID != obj->carspawner)
+        //    continue;
         obj->load(x, z);
         if(!obj->isSoundItem()){
             if(obj->UiD < 1000000)

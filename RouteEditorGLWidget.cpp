@@ -455,7 +455,7 @@ void RouteEditorGLWidget::paintGL2() {
 
     // Render Shadows
     if (Game::shadowsEnabled > 0)
-        renderShadowMaps();
+       renderShadowMaps();
 
     // Render Scene
     //gluu->currentShader = gluu->shaders["StandardBloom"];
@@ -514,11 +514,11 @@ void RouteEditorGLWidget::paintGL2() {
         if (!selection && !Game::playerMode) drawPointer();
     
     route->render(gluu, camera->pozT, camera->getPos(), camera->getTarget(), camera->getRotX(), 3.14f / 3, renderMode);
-    
+
     //if (!selection)
     for(int i = 0; i < route->env->waterCount; i++)
         Game::terrainLib->renderWater(gluu, camera->pozT, camera->getPos(), camera->getTarget(), 3.14f / 3, renderMode, i);
-    
+
     if (!stickPointerToTerrain || !Game::viewTerrainShape)
         if (!selection && !Game::playerMode) drawPointer();
     
