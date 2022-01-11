@@ -54,6 +54,15 @@ void WorldObj::setModified(bool val){
     if(Game::serverClient != NULL){
         if(val){
             Game::serverClient->updateWorldObjData(this);
+            QVector<int> ids;
+            getTrackItemIds(ids, 0);
+            foreach(int i, ids){
+                Game::trackDB->updateTrItem(i);
+            }
+            getTrackItemIds(ids, 1);
+            foreach(int i, ids){
+                Game::roadDB->updateTrItem(i);
+            }
         } else {
             
         }

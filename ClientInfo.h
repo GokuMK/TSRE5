@@ -23,6 +23,7 @@ public:
     QWebSocket *socket = NULL;
     QString username;
     QString password;
+    bool loggedIn = false;
     int X;
     int Z;
     float x, y, z;

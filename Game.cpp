@@ -33,6 +33,7 @@
 
 bool Game::ServerMode = false;
 QString Game::serverLogin = "";
+QString Game::serverAuth = "";
 RouteEditorClient *Game::serverClient = NULL;
 GeoWorldCoordinateConverter *Game::GeoCoordConverter = NULL;
 TDB *Game::trackDB = NULL;
@@ -42,7 +43,7 @@ TerrainLib *Game::terrainLib = NULL;
 
 bool Game::UseWorkingDir = false;
 QString Game::AppName = "TSRE5";
-QString Game::AppVersion = "v0.7.008";
+QString Game::AppVersion = "v0.7.010";
 QString Game::AppDataVersion = "0.697";
 QString Game::root = "C:/tsdata/Train Simulator/";
 QString Game::route = "bbb1";
@@ -247,6 +248,7 @@ void Game::load() {
     qDebug() << path;
 
     QTextStream in(&file);
+    in.setCodec("UTF-8");
     QString line;
     QStringList args;
     QString val;
@@ -580,6 +582,10 @@ void Game::load() {
         if(val == "serverLogin"){
             serverLogin = args[1].trimmed();
         }
+        if(val == "serverAuth"){
+            serverAuth = args[1].trimmed();
+        }
+        
     }
 }
 /*

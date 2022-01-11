@@ -142,7 +142,7 @@ bool RouteEditorGLWidget::initRoute(){
     
     // Init Route
     if(Game::serverClient != NULL){
-        qDebug() << "dupa";
+        qDebug() << "RouteClient";
         route = new RouteClient();
         QObject::connect(route, SIGNAL(initDone()), this, SLOT(initRoute2()));
         route->load();

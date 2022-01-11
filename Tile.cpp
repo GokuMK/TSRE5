@@ -196,7 +196,7 @@ void Tile::updateTrackSectionInfo(QHash<unsigned int, unsigned int> shapes, QHas
 void Tile::replaceWorldObj(WorldObj *nowy){
     nowy->load(x, z);
     
-    if(!Game::ServerMode)
+    if(Game::serverClient == NULL)
         nowy->setModified();
     
     for (int i = 0; i < jestObiektow; i++) {

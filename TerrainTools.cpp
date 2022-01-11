@@ -58,7 +58,7 @@ TerrainTools::TerrainTools(QString name)
     //buttonTools["waterHeightTileTool"] = new QPushButton("Water level", this);
     //buttonTools["fixedTileTool"] = new QPushButton("Fixed Height", this);
     //buttonTools["waTileTool"] = new QPushButton("Fixed Height", this);
-    if(!Game::ServerMode){
+    if(Game::serverClient == NULL){
         buttonTools["paintToolColor"] = new QPushButton("Color", this);
         buttonTools["paintToolTexture"] = new QPushButton("Texture", this);
         buttonTools["lockTexTool"] = new QPushButton("Lock", this);
@@ -125,7 +125,7 @@ TerrainTools::TerrainTools(QString name)
     label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
     vbox->addWidget(label0);
     vbox->addItem(vlist4);*/
-    if(!Game::ServerMode){
+    if(Game::serverClient == NULL){
         label0 = new QLabel("Paint Texture:");
         label0->setContentsMargins(3,0,0,0);
         label0->setStyleSheet(QString("QLabel { color : ")+Game::StyleMainLabel+"; }");
@@ -261,7 +261,7 @@ TerrainTools::TerrainTools(QString name)
     // signals
     QObject::connect(buttonTools["heightTool"], SIGNAL(toggled(bool)),
                       this, SLOT(heightToolEnabled(bool)));
-    if(!Game::ServerMode){
+    if(Game::serverClient == NULL){
         QObject::connect(buttonTools["paintToolColor"], SIGNAL(toggled(bool)),
                           this, SLOT(paintColorToolEnabled(bool)));
 

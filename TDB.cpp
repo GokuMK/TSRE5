@@ -3346,22 +3346,22 @@ void TDB::addToDeletedTree(int* drzewo, int d){
 bool TDB::deleteNulls() {
         for(int i = 1; i <= iTRnodes; i++){
             if(trackNodes[i] == NULL){
-                qDebug() << "Usuwam NULL na "<<i;
+                qDebug() << "Removing NULL TrackNode at: "<<i;
                 int stare = findBiggest();
                 if(stare <= i) {
-                    qDebug() << "Juz nie ma nulli ";
+                    qDebug() << "There is no more NULL TrackNodes.";
                     iTRnodes = stare;
                     return false;
                 }
                 trackNodes[i] = trackNodes[stare];
                 trackNodes[stare] = NULL;
-                qDebug() << i << "zastopiony przez " << stare;
+                qDebug() << i << "Replaced by: " << stare;
                 
                 for(int j = 0; j < 3; j++){
                     if(trackNodes[i]->TrPinS[j] == 0) 
                         continue;
                     if(trackNodes[trackNodes[i]->TrPinS[j]] == NULL)
-                        qDebug() << "fail NULL" << trackNodes[i]->TrPinS[j];
+                        qDebug() << "Fail, unexpected NULL TrackNode found!" << trackNodes[i]->TrPinS[j];
                     else
                         trackNodes[trackNodes[i]->TrPinS[j]]->podmienTrPin(stare, i);
                 }
@@ -3369,7 +3369,7 @@ bool TDB::deleteNulls() {
                 return true;
             }
         }
-        qDebug() << "Juz nie ma nulli ";
+        qDebug() << "There is no more NULL TrackNodes.";
         return false;
     }
 
@@ -3479,7 +3479,7 @@ void TDB::save() {
     saveTit();
     if(!this->road) 
         this->tsection->saveRoute();
-    qDebug() << "Zapisane";
+    qDebug() << "Route Saved";
 }
 
 int TDB::updateTrNodeData(FileBuffer *data){
@@ -3715,7 +3715,7 @@ void TDB::saveTit() {
 
     file.close();
 
-    qDebug() << "Zapisane";
+    //qDebug() << "TIT Saved";
 }
 
 void TDB::checkSignals(){

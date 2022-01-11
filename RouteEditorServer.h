@@ -16,6 +16,7 @@
 #include <QtCore/QByteArray>
 #include <QHash>
 #include <QThread>
+#include <QMap>
 
 class QWebSocketServer;
 class QWebSocket;
@@ -41,8 +42,9 @@ signals:
 class RouteEditorServer : public QObject {
     Q_OBJECT
 public:
-    
-    RouteEditorServer(int port);
+    static QString IP;
+    static int Port;
+    RouteEditorServer();
     RouteEditorServer(const RouteEditorServer& orig);
     virtual ~RouteEditorServer();
     void sendUtf16Message(QWebSocket *client, QString msg);
@@ -67,8 +69,13 @@ private:
     void sendMessageToClients(QWebSocket *client, QByteArray &message);
     void readUtf16Message(QWebSocket *client, QByteArray &message, FileBuffer* data);
     void readBinaryMessage(QWebSocket *client, QByteArray &message, FileBuffer* data);
+    void usersAuthInit();
+    bool userAuth(QString user, QString pass);
+    void loadUsersFromFile();
+    void listUsers();
     //QSocketNotifier *m_notifier;
     ConsoleThread *c = NULL;
+    QMap<QString, QString> usersAuth;
 };
 
 #endif /* ROUTEEDITORSERVER_H */

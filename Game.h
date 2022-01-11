@@ -36,6 +36,7 @@ class Game {
 public:
     static bool ServerMode;
     static QString serverLogin;
+    static QString serverAuth;
     static RouteEditorClient* serverClient;
     
     static GeoWorldCoordinateConverter *GeoCoordConverter;

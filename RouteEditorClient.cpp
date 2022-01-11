@@ -27,6 +27,7 @@
 #include "ClientInfo.h"
 #include "QuadTree.h"
 #include <QDateTime>
+#include <QMessageBox>
 
 RouteEditorClient::RouteEditorClient() {
     QStringList args = Game::serverLogin.split("@");
@@ -68,7 +69,7 @@ void RouteEditorClient::onConnected() {
     srand (QDateTime::currentMSecsSinceEpoch());
     int uu = rand() % 99999;
     //username = "user"+QString::number(uu);
-    sendUtf16Message(QString("login ( ")+username+" passw )\n");
+    sendUtf16Message(QString("login ( ")+username+" "+password+" )\n");
 }
 //! [onConnected]
 
@@ -227,6 +228,10 @@ void RouteEditorClient::readUtf16Message(QWebSocket *client, FileBuffer* data) {
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
         if (sh == ("set_username")) {
             username = ParserX::GetStringInside(data);
+            ParserX::SkipToken(data);
+            continue;
+        }
+        if (sh == ("auth_fail")) {
             ParserX::SkipToken(data);
             continue;
         }

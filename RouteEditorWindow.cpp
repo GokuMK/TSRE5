@@ -120,7 +120,7 @@ RouteEditorWindow::RouteEditorWindow() {
     mainLayout2->addWidget(objTools);
     mainLayout2->addWidget(terrainTools);
     mainLayout2->addWidget(geoTools);
-    if(!Game::ServerMode){
+    if(Game::serverClient == NULL){
         mainLayout2->addWidget(activityTools);
     }
     //mainLayout2->addWidget(naviBox);
@@ -193,7 +193,7 @@ RouteEditorWindow::RouteEditorWindow() {
     QObject::connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
     trkEditr = new QAction(tr("&Edit route settings"), this);
     QObject::connect(trkEditr, SIGNAL(triggered()), glWidget, SLOT(showTrkEditr()));
-    if(!Game::ServerMode){
+    if(Game::serverClient == NULL){
         routeMenu = menuBar()->addMenu(tr("&Route"));
         routeMenu->addAction(saveAction);
         routeMenu->addAction(reloadRefAction);
@@ -358,7 +358,7 @@ RouteEditorWindow::RouteEditorWindow() {
         this->viewUnselectAll();
     }
     
-    if(Game::ServerMode){
+    if(Game::serverClient != NULL){
         clientUsersWindow->show();
     }
     
@@ -739,7 +739,7 @@ void RouteEditorWindow::setToolbox(QString name){
     }
     if(name == "activityTools"){
         hideAllTools();
-        if(!Game::ServerMode){
+        if(Game::serverClient == NULL){
             activityTools->show();
             activityAction->setChecked(true);
         }
@@ -867,7 +867,7 @@ void RouteEditorWindow::viewCompass(bool show){
 }
 
 void RouteEditorWindow::showRoute(){
-    if(!Game::ServerMode){
+    if(Game::serverClient == NULL){
         if(!glWidget->initRoute()){
             emit exitNow();
             SoundManager::CloseAl();

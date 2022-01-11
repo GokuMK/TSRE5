@@ -31,17 +31,28 @@
 #include "TRitem.h"
 #include "QuadTree.h"
 #include <QTimer>
+#include <QFile>
 
-RouteEditorServer::RouteEditorServer(int port) {
+QString RouteEditorServer::IP;
+int RouteEditorServer::Port = 65535;
+    
+RouteEditorServer::RouteEditorServer() {
     if(!loadRoute()){
         return;
     }
+    
+    usersAuthInit();
+    
     m_pWebSocketServer = new QWebSocketServer(
-            QStringLiteral("Echo Server"),
+            QStringLiteral("Route Editor Server"),
             QWebSocketServer::NonSecureMode, this);
 
-    if (m_pWebSocketServer->listen(QHostAddress::Any, port)) {
-        qDebug() << "Echoserver listening on port" << port;
+    QHostAddress addr(QHostAddress::Any);
+    if(IP.length() > 0)
+        addr.setAddress(IP);
+    
+    if (m_pWebSocketServer->listen(addr, Port)) {
+        qDebug() << "Route Editor Server listening on ip " << addr.toString() << " port " << Port;
         connect(m_pWebSocketServer, &QWebSocketServer::newConnection,
             this, &RouteEditorServer::onNewConnection);
         connect(m_pWebSocketServer, &QWebSocketServer::closed, this, &RouteEditorServer::closed);
@@ -54,6 +65,64 @@ RouteEditorServer::RouteEditorServer(int port) {
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, QOverload<>::of(&RouteEditorServer::update));
     timer->start(100);
+}
+
+void RouteEditorServer::usersAuthInit(){
+    if(Game::serverAuth == " "){
+
+    } else if(Game::serverAuth == "file"){
+        loadUsersFromFile();
+    }
+}
+
+void RouteEditorServer::loadUsersFromFile(){
+    QString path = "users.txt";
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly)){
+        qDebug() << "users file failed to open";
+        return;
+    }
+    
+    qDebug() << path;
+
+    QTextStream in(&file);
+    in.setCodec("UTF-8");
+    QString line;
+    QStringList args;
+    QString val;
+    while (!in.atEnd()) {
+        line = in.readLine();
+        //qDebug() << line;
+        if(line.startsWith("#", Qt::CaseInsensitive)) continue;
+        //args = line.split("=");
+        args.clear();
+        args.push_back(line.section('=', 0, 0).trimmed());
+        args.push_back(line.section('=', 1).trimmed());
+        //qDebug() << args[0] << args[1];
+        if(args.count() < 2) continue;
+        usersAuth[args[0]] = args[1];
+    }
+}
+
+void RouteEditorServer::listUsers(){
+    qDebug() << "Users:" << clients.size();
+    foreach (ClientInfo *value, clients) {
+        if(value == NULL)
+            continue;
+        qDebug() << value->username << value->X << value->Z << value->lastAction;
+    }
+}
+
+bool RouteEditorServer::userAuth(QString user, QString pass){
+    if(Game::serverAuth == ""){
+        return true;
+    } else if(Game::serverAuth == "file"){
+        if(!usersAuth.contains(user))
+            return false;
+        if(usersAuth[user] == pass)
+            return true;
+    }
+    return false;
 }
 
 void RouteEditorServer::update(){
@@ -108,6 +177,8 @@ void RouteEditorServer::readCommand(QString val){
         qApp->quit();
     } else if (val == "save") {
         route->save();
+    } else if (val == "users") {
+        listUsers();
     }
 }
 
@@ -198,10 +269,28 @@ void RouteEditorServer::readUtf16Message(QWebSocket *client, QByteArray &message
                    clients[client]->username.remove(i--,1);
             }
             clients[client]->password = ParserX::GetStringInside(data);
-            clients[client]->lastAction = "Logged in";
-            QString msg = "load_route ( \""+Game::route+"\" )";
-            this->sendUtf16Message(client, msg);
-            qDebug() << clients[client]->username << " Logged in";
+            if(userAuth(clients[client]->username, clients[client]->password)){
+                clients[client]->lastAction = "Logged in";
+                clients[client]->loggedIn = true;
+                QString msg = "load_route ( \""+Game::route+"\" )";
+                this->sendUtf16Message(client, msg);
+                qDebug() << clients[client]->username << " Logged in";
+            } else {
+                clients[client]->lastAction = "Authentication failed";
+                clients[client]->loggedIn = false;
+                QString msg = "auth_fail ( )";
+                this->sendUtf16Message(client, msg);
+                client->flush();
+                qDebug() << clients[client]->username << " Authentication failed";
+                client->close();
+            }
+                    
+            ParserX::SkipToken(data);
+            continue;
+        }
+        
+        // Allow not authenticated users to do nothing more
+        if(!clients[client]->loggedIn){
             ParserX::SkipToken(data);
             continue;
         }
@@ -537,6 +626,11 @@ void RouteEditorServer::sendMessageToClients(QWebSocket *client, QByteArray &mes
 }
 
 void RouteEditorServer::readBinaryMessage(QWebSocket *client, QByteArray &message, FileBuffer* data) {
+    // Allow not authenticated users to do nothing more
+    if(!clients[client]->loggedIn){
+        return;
+    }
+    
     data->get(); // get B;
     int token = data->getInt();
     int x, z;

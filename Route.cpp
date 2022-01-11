@@ -782,7 +782,7 @@ void Route::loadTSectionData(FileBuffer *data){
     tsection->loadRouteUtf16Data(data, false);
     tsection->routeMaxIdx += 2 - tsection->routeMaxIdx % 2;
     tsection->routeShapes++;
-    if(Game::ServerMode){
+    if(Game::serverClient != NULL){
         loadingProgress++;
         load();
     }
@@ -790,7 +790,7 @@ void Route::loadTSectionData(FileBuffer *data){
 
 void Route::loadQuadTreeDetailed(FileBuffer *data){
     terrainLib->loadQuadTreeDetailed(data);
-    if(Game::ServerMode){
+    if(Game::serverClient != NULL){
         loadingProgress++;
         load();
     }
@@ -798,7 +798,7 @@ void Route::loadQuadTreeDetailed(FileBuffer *data){
 
 void Route::loadQuadTreeDistant(FileBuffer *data){
     terrainLib->loadQuadTreeDistant(data);
-    if(Game::ServerMode){
+    if(Game::serverClient != NULL){
         loadingProgress++;
         load();
     }
@@ -807,7 +807,7 @@ void Route::loadQuadTreeDistant(FileBuffer *data){
 void Route::loadTrkData(FileBuffer *data){
     trk = new Trk();
     trk->loadUtf16Data(data);
-    if(Game::ServerMode){
+    if(Game::serverClient != NULL){
         loadingProgress++;
         load();
     }
@@ -825,7 +825,7 @@ void Route::loadTdbData(FileBuffer *data, QString type){
         qDebug() << sh;
         if (sh == "trackdb") {
             TDB *t = NULL;
-            if(!Game::ServerMode){
+            if(Game::serverClient == NULL){
                 t = new TDB(tsection, road);
             } else {
                 t = new TDBClient(tsection, road);
@@ -842,7 +842,7 @@ void Route::loadTdbData(FileBuffer *data, QString type){
             }
             t->loaded = true;
             
-            if(Game::ServerMode){
+            if(Game::serverClient != NULL){
                 loadingProgress++;
                 load();
             }

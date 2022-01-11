@@ -90,11 +90,90 @@ void LoadRouteEditor(){
     }
 }
 
-void RunRouteEditorServer(int port){
+void RunRouteEditorServer(){
     Game::loadAllWFiles = true;
     Game::gui = false;
-    RouteEditorServer *server = new RouteEditorServer(port);
+    RouteEditorServer *server = new RouteEditorServer();
     //..server->run();
+}
+
+enum CommandLineParseResult {
+    CommandLineOk,
+    CommandLineError,
+    CommandLineVersionRequested,
+    CommandLineHelpRequested
+};
+
+QHash<QString, QString> consoleArgs;
+
+CommandLineParseResult parseCommandLineArgs(QCommandLineParser &parser){
+    parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
+    const QCommandLineOption helpOption = parser.addHelpOption();
+    const QCommandLineOption versionOption = parser.addVersionOption();
+    const QCommandLineOption ServerIpOption("ip", "Server IP address.", "ip");
+    parser.addOption(ServerIpOption);
+    const QCommandLineOption ServerPortOption("port", "Server Port.", "port");
+    parser.addOption(ServerPortOption);
+    const QCommandLineOption FileOption("file", "Optional file to load with shapeview or play.", "file");
+    parser.addOption(FileOption);
+    const QCommandLineOption ShapeViewOption("shapeview", "Run ShapeViewer.");
+    parser.addOption(ShapeViewOption);
+    const QCommandLineOption RouteOption("route", "Route to run.", "file");
+    parser.addOption(RouteOption);
+    const QCommandLineOption AceConvOption("aceconv", "Run Ace Converter.");
+    parser.addOption(AceConvOption);
+    const QCommandLineOption ConEditOption("conedit", "Run Consist Editor.");
+    parser.addOption(ConEditOption);
+    const QCommandLineOption PlayOption("play", "Play Activity.");
+    parser.addOption(PlayOption);
+    const QCommandLineOption ServerOption("server", "Run Editor Server.");
+    parser.addOption(ServerOption);
+    
+    if (!parser.parse(QCoreApplication::arguments())) {
+        return CommandLineError;
+    }
+    
+    
+    if (parser.isSet(versionOption))
+        return CommandLineVersionRequested;
+
+    if (parser.isSet(helpOption))
+        return CommandLineHelpRequested;
+
+    if (parser.isSet(ServerIpOption)) {
+        const QString ip = parser.value(ServerIpOption);
+        consoleArgs["IP"] = ip;
+    }
+    if (parser.isSet(ServerPortOption)) {
+        const QString port = parser.value(ServerPortOption);
+        consoleArgs["PORT"] = port;
+    }
+    if (parser.isSet(RouteOption)) {
+        const QString route = parser.value(RouteOption);
+        consoleArgs["ROUTE"] = route;
+    }
+    if (parser.isSet(FileOption)) {
+        const QString file = parser.value(FileOption);
+        consoleArgs["FILENAME"] = file;
+    }
+    
+    if (parser.isSet(ShapeViewOption)) {
+        consoleArgs["SV"] = "TRUE";
+    }
+    if (parser.isSet(AceConvOption)) {
+        consoleArgs["ACE"] = "TRUE";
+    }
+    if (parser.isSet(ConEditOption)) {
+        consoleArgs["CON"] = "TRUE";
+    }
+    if (parser.isSet(PlayOption)) {
+        consoleArgs["PLAY"] = "TRUE";
+    }
+    if (parser.isSet(ServerOption)) {
+        consoleArgs["SERVER"] = "TRUE";
+    }
+    
+    return CommandLineOk;
 }
 
 int main(int argc, char *argv[]){
@@ -121,6 +200,8 @@ int main(int argc, char *argv[]){
     QSurfaceFormat::setDefaultFormat(format);
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+    QApplication::setApplicationName(Game::AppName);
+    QApplication::setApplicationVersion(Game::AppVersion);
     //QApplication::pr
     QApplication app(argc, argv);
     
@@ -130,6 +211,8 @@ int main(int argc, char *argv[]){
         QDir::setCurrent(QCoreApplication::applicationDirPath());
     }
     
+    Game::load();
+        
     logFile.setFileName("log.txt");
     logFile.open(QIODevice::WriteOnly);
     logFileOut.setDevice(&logFile);
@@ -137,8 +220,21 @@ int main(int argc, char *argv[]){
     
     qDebug() << "workingDir" << workingDir;
     
-    Game::load();
-    
+    QCommandLineParser parser;
+    switch (parseCommandLineArgs(parser)) {
+        case CommandLineOk:
+            break;
+        case CommandLineError:
+            return 1;
+        case CommandLineVersionRequested:
+            printf("%s %s\n", qPrintable(QCoreApplication::applicationName()),
+                   qPrintable(QCoreApplication::applicationVersion()));
+            return 0;
+        case CommandLineHelpRequested:
+            parser.showHelp();
+            Q_UNREACHABLE();
+    }
+
     //app.set
     Game::PixelRatio = app.devicePixelRatio();
     qDebug() << "devicePixelRatio"<< app.devicePixelRatio();
@@ -193,59 +289,59 @@ int main(int argc, char *argv[]){
     //else
     //    window.showMaximized();
     
-    QStringList args = app.arguments();
     //Check if file opened with "open in TSRE"
+    QStringList args = app.arguments();
     if(args.count() == 2){
         if(QFileInfo::exists(args[1])){
-            args[1] = "--shapeview "+args[1];        }
-    }
-    if(args.count() > 1){
-        qDebug() << "arg1 " << args[1];    
-        if(args[1] == "--aceconv"){
-            // Run ace converter
-            qDebug() << "Run ace converter";
-            return app.exec();
-        }
-        if(args[1] == "--conedit"){
-            // Run ace converter
-            qDebug() << "Run con editor";
-            LoadConEditor();
-            return app.exec();
-        }
-        if(args[1].startsWith("--shapeview")){
-            // Run ace converter
-            qDebug() << "Run shape viewer";
-            LoadShapeViewer(args[1].section(" ",1,-1));
-            
-            return app.exec();
-        }
-        if(args[1] == "--play"){
-            // Play
-            if(args.length() == 3){
-                Game::ActivityToPlay = args[2];
-            } else if(args.length() == 4){
-                Game::route = args[2];
-                Game::ActivityToPlay = args[3];
-            } else {
-                Game::ActivityToPlay = "#";
-            }
-            qDebug() << "Play" << Game::route << Game::ActivityToPlay;
-        }
-        if(args[1] == "--server"){
-            // Run ace converter
-            // Game::route = "bbb";
-            Game::checkRoute(Game::route);
-            //routeDir = Game::route;
-            //trkName = Game::trkName;
-            qDebug() << "Run server";
-            int port = 65534;
-            if(args.size() > 2)
-                port = args[2].toInt();
-            RunRouteEditorServer(port);
-            
-            return app.exec();
+            consoleArgs["SV"] = "TRUE";
+            consoleArgs["FILENAME"] = args[1];
         }
     }
+    //////////////////////////////////////////
+    //qDebug() << "arg1 " << args[1];    
+    if(consoleArgs["ROUTE"].length() > 0){
+        Game::route = consoleArgs["ROUTE"];
+    }
+    if(consoleArgs["IP"].length() > 0){
+        RouteEditorServer::IP = consoleArgs["IP"];
+    }
+    if(consoleArgs["PORT"].length() > 0){
+        RouteEditorServer::Port = consoleArgs["PORT"].toInt();
+        qDebug() << RouteEditorServer::Port ;
+    }
+    
+    if(consoleArgs["ACE"] == "TRUE"){
+        // Run ace converter
+        qDebug() << "Run ace converter";
+        return app.exec();
+    }
+    if(consoleArgs["CON"] == "TRUE"){
+        // Run ace converter
+        qDebug() << "Run con editor";
+        LoadConEditor();
+        return app.exec();
+    }
+    if(consoleArgs["SV"] == "TRUE"){
+        // Run ace converter
+        qDebug() << "Run shape viewer";
+        LoadShapeViewer(consoleArgs["FILENAME"]);
+        return app.exec();
+    }
+    if(consoleArgs["PLAY"] == "TRUE"){
+        // Play
+        if(consoleArgs["FILENAME"].length() > 0)
+            Game::ActivityToPlay = consoleArgs["FILENAME"];
+        else
+            Game::ActivityToPlay = "#";
+        qDebug() << "Play" << Game::route << Game::ActivityToPlay;
+    }
+    if(consoleArgs["SERVER"] == "TRUE"){
+        Game::checkRoute(Game::route);
+        qDebug() << "Run server";
+        RunRouteEditorServer();
+        return app.exec();
+    }
+    
     // Run route editor
     LoadRouteEditor();
 
