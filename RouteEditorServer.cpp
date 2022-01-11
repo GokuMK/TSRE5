@@ -46,9 +46,10 @@ RouteEditorServer::RouteEditorServer(int port) {
             this, &RouteEditorServer::onNewConnection);
         connect(m_pWebSocketServer, &QWebSocketServer::closed, this, &RouteEditorServer::closed);
     };
-    
-    m_notifier = new QSocketNotifier(fileno(stdin), QSocketNotifier::Read, this);
-    connect(m_notifier, SIGNAL(activated(int)), this, SLOT(readCommand()));
+
+    c = new ConsoleThread();
+    c->start();
+    connect(c, SIGNAL(sendCommand(QString)), this, SLOT(readCommand(QString)));
     
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, QOverload<>::of(&RouteEditorServer::update));
@@ -86,15 +87,28 @@ void RouteEditorServer::update(){
     sendMessageToClients(NULL, outd);
 }
 
-void RouteEditorServer::readCommand(){
-    std::string line;
-    std::getline(std::cin, line);
-    if (std::cin.eof() || line == "quit") {
-        qApp->quit();
-    } else if (line == "save") {
-        route->save();
-    } 
+ConsoleThread::ConsoleThread(){
+    cin = new QTextStream(stdin);
+}
 
+ConsoleThread::~ConsoleThread(){
+
+}
+
+void ConsoleThread::run(){
+    while(true){
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+        consoleCommand = cin->readLine();
+        emit sendCommand(consoleCommand);
+    }
+}
+
+void RouteEditorServer::readCommand(QString val){
+    if (val == "quit") {
+        qApp->quit();
+    } else if (val == "save") {
+        route->save();
+    }
 }
 
 bool RouteEditorServer::loadRoute(){
@@ -116,6 +130,8 @@ RouteEditorServer::RouteEditorServer(const RouteEditorServer& orig) {
 RouteEditorServer::~RouteEditorServer() {
     m_pWebSocketServer->close();
     qDeleteAll(clients.begin(), clients.end());
+    if(c != NULL)
+        c->quit();
 }
 
 

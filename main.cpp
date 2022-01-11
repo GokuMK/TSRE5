@@ -98,6 +98,11 @@ void RunRouteEditorServer(int port){
 }
 
 int main(int argc, char *argv[]){
+
+   // #ifdef  Q_OS_WIN32 
+   //     ::ShowWindow( ::GetConsoleWindow(), SW_HIDE ); //hide console window
+   // #endif
+
     QLocale lepsze(QLocale::English);
     //loc.setNumberOptions(lepsze.numberOptions());
     QLocale::setDefault(lepsze);

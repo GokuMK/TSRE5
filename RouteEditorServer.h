@@ -15,6 +15,7 @@
 #include <QtCore/QList>
 #include <QtCore/QByteArray>
 #include <QHash>
+#include <QThread>
 
 class QWebSocketServer;
 class QWebSocket;
@@ -23,10 +24,24 @@ class FileBuffer;
 class QSocketNotifier;
 class QByteArray;
 class ClientInfo;
+class QTextStream;
+
+class ConsoleThread : public QThread {
+    Q_OBJECT
+public:
+    ConsoleThread();
+    virtual ~ConsoleThread();
+    void run();
+    QTextStream* cin = NULL;
+    QString consoleCommand;
+signals:
+    void sendCommand(QString val);
+};
 
 class RouteEditorServer : public QObject {
     Q_OBJECT
 public:
+    
     RouteEditorServer(int port);
     RouteEditorServer(const RouteEditorServer& orig);
     virtual ~RouteEditorServer();
@@ -37,7 +52,7 @@ public slots:
     void processTextMessage(QString message);
     void processBinaryMessage(QByteArray message);
     void socketDisconnected();
-    void readCommand();
+    void readCommand(QString val);
     void update();
     
 signals:
@@ -52,7 +67,8 @@ private:
     void sendMessageToClients(QWebSocket *client, QByteArray &message);
     void readUtf16Message(QWebSocket *client, QByteArray &message, FileBuffer* data);
     void readBinaryMessage(QWebSocket *client, QByteArray &message, FileBuffer* data);
-    QSocketNotifier *m_notifier;
+    //QSocketNotifier *m_notifier;
+    ConsoleThread *c = NULL;
 };
 
 #endif /* ROUTEEDITORSERVER_H */
