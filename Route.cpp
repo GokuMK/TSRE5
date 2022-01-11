@@ -1524,6 +1524,7 @@ void Route::dragWorldObject(WorldObj* obj, int x, int z, float* pos){
     obj->snapped(snapableSide);
     moveWorldObjToTile(x, z, obj);
     obj->setMartix();
+    obj->setModified();
 }
 
 TRitem *Route::getTrackItem(int TID, int UID){
@@ -1937,6 +1938,7 @@ void Route::addToTDB(WorldObj* obj) {
         this->trackDB->placeTrack(x, z, (float*) &p, (float*) &q, dynTrack->sectionIdx, obj->UiD);
         obj->setPosition(p);
         obj->setQdirection(q);
+        obj->setModified();
         obj->setMartix();
     } 
 }
@@ -2032,7 +2034,7 @@ void Route::newPositionTDB(WorldObj* obj) {
         obj->setPosition(p);
         obj->setQdirection(q);
         obj->setMartix();
-        
+        obj->setModified();
         moveWorldObjToTile(x, z, obj);
     }
 }

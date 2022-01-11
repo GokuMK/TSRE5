@@ -551,12 +551,12 @@ WorldObj* Tile::placeObject(WorldObj* obj){
     //qDebug() << obiekty[jestObiektow-1]->qDirection[3];
     obj->set("x", x);
     obj->set("z", z);
-    obj->setModified();
     if(obj->isSoundItem())
         obj->UiD = ++maxUiDWS;
     else
         obj->UiD = ++maxUiD;
     modified = true;
+    obj->setModified();
     obj->setMartix();
     return obj;
 }

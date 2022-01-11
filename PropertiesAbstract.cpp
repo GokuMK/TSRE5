@@ -115,7 +115,7 @@ void PropertiesAbstract::pasteREnabled(){
     
     Undo::SinglePushWorldObjData(worldObj);
     worldObj->setQdirection((float*)&nq);
-    worldObj->modified = true;
+    worldObj->setModified();
     worldObj->setMartix();
     quat.setText(clipboard->text());
 }
@@ -161,7 +161,7 @@ void PropertiesAbstract::pastePREnabled(){
     Undo::SinglePushWorldObjData(worldObj);
     worldObj->setPosition((float*)&nq);
     worldObj->setQdirection((float*)&rq);
-    worldObj->modified = true;
+    worldObj->setModified();
     worldObj->setMartix();
     this->posX.setText(args[0]);
     this->posY.setText(args[1]);
