@@ -59,6 +59,7 @@ void WorldObj::setModified(bool val){
             foreach(int i, ids){
                 Game::trackDB->updateTrItem(i);
             }
+            ids.clear();
             getTrackItemIds(ids, 1);
             foreach(int i, ids){
                 Game::roadDB->updateTrItem(i);

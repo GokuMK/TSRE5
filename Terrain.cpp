@@ -274,7 +274,7 @@ void Terrain::saveFfileToStream(QDataStream &out){
 }
 
 void Terrain::loadTFile(FileBuffer *data){
-    qDebug() << "aaa";
+    //qDebug() << "aaa";
     //this->tfile = new TFile();
     this->tfile->load(data);
     for (int i = 0; i < 256; i++) {

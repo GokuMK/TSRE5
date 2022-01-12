@@ -205,7 +205,7 @@ void Tile::replaceWorldObj(WorldObj *nowy){
         if(obj == NULL) 
             continue;
         if(obj->UiD == nowy->UiD && obj->typeID == nowy->typeID){
-            qDebug() << "replace obj";
+            //qDebug() << "replace obj";
             obiekty[i] = nowy;
             return;
         }

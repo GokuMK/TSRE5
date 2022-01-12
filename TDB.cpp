@@ -3533,7 +3533,7 @@ TRitem *TDB::updateTrItemData(FileBuffer *data){
             continue;
         }
         if (sh == ("remove")) {
-            qDebug() << "remove trnode" << nid;
+            qDebug() << "remove tritem" << nid;
             trackItems[nid] = NULL;
             ParserX::SkipToken(data);
             continue;

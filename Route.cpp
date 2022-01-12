@@ -741,7 +741,7 @@ WorldObj* Route::updateWorldObjData(FileBuffer *data){
     bool objloaded = true;
     
     while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
-        qDebug() << sh;
+        //qDebug() << sh;
         if (sh == ("x")) {
             x = ParserX::GetNumber(data);
             ParserX::SkipToken(data);
@@ -758,7 +758,7 @@ WorldObj* Route::updateWorldObjData(FileBuffer *data){
             continue;
         }
         if ((nowy = WorldObj::createObj(sh)) != NULL) {
-            qDebug() << nowy->type;
+            //qDebug() << nowy->type;
             while (!((sh = ParserX::NextTokenInside(data).toLower()) == "")) {
                 nowy->set(sh, data);
                 ParserX::SkipToken(data);
@@ -767,7 +767,7 @@ WorldObj* Route::updateWorldObjData(FileBuffer *data){
                 tile[x*10000+z]->replaceWorldObj(nowy);
             }
             nowy->loaded = objloaded;
-            qDebug() << nowy->loaded;
+            //qDebug() << nowy->loaded;
             //obiekty[jestObiektow++] = nowy;
             ParserX::SkipToken(data);
             continue;
