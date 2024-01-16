@@ -22,7 +22,7 @@ public:
         int n = 0;
         float pos[3];
         float rotDeg = 0;
-        unsigned short sect[12];
+        unsigned int sect[12];
     };
     
     QString filename;
