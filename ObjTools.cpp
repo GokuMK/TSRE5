@@ -74,8 +74,8 @@ ObjTools::ObjTools(QString name)
     vlist3->addWidget(buttonTools["autoPlaceSimpleTool"],row,0);
     vlist3->addWidget(&autoPlacementLength,row,1);
     autoPlacementLength.setText("50");
-    QDoubleValidator* doubleValidator = new QDoubleValidator(-999, 999, 6, this); 
-    QDoubleValidator* doubleValidator1 = new QDoubleValidator(1, 999, 6, this); 
+    QDoubleValidator* doubleValidator = new QDoubleValidator(-9999, 9999, 6, this); 
+    QDoubleValidator* doubleValidator1 = new QDoubleValidator(1, 9999, 6, this); 
     doubleValidator->setNotation(QDoubleValidator::StandardNotation);
     doubleValidator1->setNotation(QDoubleValidator::StandardNotation);
     autoPlacementLength.setValidator(doubleValidator1);
