@@ -330,11 +330,24 @@ RouteEditorWindow::RouteEditorWindow() {
     settingsMenu->addAction(terrainCameraAction);
     settingsMenu->addAction(mstsShadowsAction);
     settingsMenu->addMenu(terrainMenu);
-    // Help
-    aboutAction = new QAction(tr("&About"), this);
-    QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
-    helpMenu = menuBar()->addMenu(tr("&Help"));
-    helpMenu->addAction(aboutAction);
+// Help
+aboutAction = new QAction(tr("&About"), this);
+QObject::connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
+
+openHelpAction = new QAction(tr("Open &Manual"), this);
+QObject::connect(openHelpAction, &QAction::triggered, this, [=]() {
+    QString chmPath = QCoreApplication::applicationDirPath() + "/TSREManual.chm";
+    if (QFile::exists(chmPath)) {
+        QProcess::startDetached("hh.exe", QStringList() << chmPath);
+    } else {
+        QMessageBox::warning(this, tr("Help"), tr("Help file not found:\n%1").arg(chmPath));
+    }
+});
+
+helpMenu = menuBar()->addMenu(tr("&Help"));
+helpMenu->addAction(openHelpAction);
+helpMenu->addSeparator();
+helpMenu->addAction(aboutAction);
     
     hideAllTools();
     objTools->show();
